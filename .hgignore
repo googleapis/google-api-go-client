@@ -1,0 +1,12 @@
+_obj
+_testmain.go
+_test
+clientid.dat
+clientsecret.dat
+google-api-go-gen
+
+syntax:glob
+*.6
+*.8
+*~
+*.out

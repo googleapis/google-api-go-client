@@ -1,0 +1,454 @@
+{
+ "kind": "discovery#restDescription",
+ "id": "customsearch:v1",
+ "name": "customsearch",
+ "version": "v1",
+ "title": "CustomSearch API",
+ "description": "Lets you search over a website or collection of websites",
+ "icons": {
+  "x16": "http://www.google.com/images/icons/product/search-16.gif",
+  "x32": "http://www.google.com/images/icons/product/search-32.gif"
+ },
+ "documentationLink": "http://code.google.com/apis/customsearch/v1/using_rest.html",
+ "labels": [
+  "labs"
+ ],
+ "protocol": "rest",
+ "basePath": "/customsearch/",
+ "parameters": {
+  "alt": {
+   "type": "string",
+   "description": "Data format for the response.",
+   "default": "json",
+   "enum": [
+    "json",
+    "atom"
+   ],
+   "enumDescriptions": [
+    "Responses with Content-Type of application/json",
+    "Responses with Content-Type of application/atom+xml"
+   ],
+   "location": "query"
+  },
+  "fields": {
+   "type": "string",
+   "description": "Selector specifying which fields to include in a partial response.",
+   "location": "query"
+  },
+  "key": {
+   "type": "string",
+   "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
+   "location": "query"
+  },
+  "oauth_token": {
+   "type": "string",
+   "description": "OAuth 2.0 token for the current user.",
+   "location": "query"
+  },
+  "prettyPrint": {
+   "type": "boolean",
+   "description": "Returns response with indentations and line breaks.",
+   "default": "true",
+   "location": "query"
+  },
+  "userIp": {
+   "type": "string",
+   "description": "IP address of the site where the request originates. Use this if you want to enforce per-user limits.",
+   "location": "query"
+  }
+ },
+ "schemas": {
+  "Context": {
+   "id": "Context",
+   "type": "object",
+   "properties": {
+    "facets": {
+     "type": "array",
+     "items": {
+      "type": "array",
+      "items": {
+       "type": "object",
+       "properties": {
+        "anchor": {
+         "type": "string"
+        },
+        "label": {
+         "type": "string"
+        }
+       }
+      }
+     }
+    },
+    "title": {
+     "type": "string"
+    }
+   }
+  },
+  "Promotion": {
+   "id": "Promotion",
+   "type": "object",
+   "properties": {
+    "bodyLines": {
+     "type": "array",
+     "items": {
+      "type": "object",
+      "properties": {
+       "link": {
+        "type": "string"
+       },
+       "title": {
+        "type": "string"
+       },
+       "url": {
+        "type": "string"
+       }
+      }
+     }
+    },
+    "displayLink": {
+     "type": "string"
+    },
+    "image": {
+     "type": "object",
+     "properties": {
+      "height": {
+       "type": "integer",
+       "format": "int32"
+      },
+      "source": {
+       "type": "string"
+      },
+      "width": {
+       "type": "integer",
+       "format": "int32"
+      }
+     }
+    },
+    "link": {
+     "type": "string"
+    },
+    "title": {
+     "type": "string"
+    }
+   }
+  },
+  "Query": {
+   "id": "Query",
+   "type": "object",
+   "properties": {
+    "count": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "cr": {
+     "type": "string"
+    },
+    "cref": {
+     "type": "string"
+    },
+    "cx": {
+     "type": "string"
+    },
+    "filter": {
+     "type": "string"
+    },
+    "gl": {
+     "type": "string"
+    },
+    "inputEncoding": {
+     "type": "string"
+    },
+    "language": {
+     "type": "string"
+    },
+    "outputEncoding": {
+     "type": "string"
+    },
+    "safe": {
+     "type": "string"
+    },
+    "searchTerms": {
+     "type": "string"
+    },
+    "sort": {
+     "type": "string"
+    },
+    "startIndex": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "startPage": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "title": {
+     "type": "string"
+    },
+    "totalResults": {
+     "type": "integer",
+     "format": "int32"
+    }
+   }
+  },
+  "Result": {
+   "id": "Result",
+   "type": "object",
+   "properties": {
+    "cacheId": {
+     "type": "string"
+    },
+    "displayLink": {
+     "type": "string"
+    },
+    "htmlSnippet": {
+     "type": "string"
+    },
+    "htmlTitle": {
+     "type": "string"
+    },
+    "kind": {
+     "type": "string",
+     "default": "customsearch#result"
+    },
+    "link": {
+     "type": "string"
+    },
+    "pagemap": {
+     "type": "object",
+     "additionalProperties": {
+      "type": "array",
+      "items": {
+       "type": "object",
+       "additionalProperties": {
+        "type": "any"
+       }
+      }
+     }
+    },
+    "snippet": {
+     "type": "string"
+    },
+    "title": {
+     "type": "string"
+    }
+   }
+  },
+  "Search": {
+   "id": "Search",
+   "type": "object",
+   "properties": {
+    "context": {
+     "$ref": "Context"
+    },
+    "items": {
+     "type": "array",
+     "items": {
+      "$ref": "Result"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "default": "customsearch#search"
+    },
+    "promotions": {
+     "type": "array",
+     "items": {
+      "$ref": "Promotion"
+     }
+    },
+    "queries": {
+     "type": "object",
+     "additionalProperties": {
+      "type": "array",
+      "items": {
+       "$ref": "Query"
+      }
+     }
+    },
+    "url": {
+     "type": "object",
+     "properties": {
+      "template": {
+       "type": "string",
+       "default": "https://www.googleapis.com/customsearch/v1?q={searchTerms}&num={count?}&start={startIndex?}&hr={language?}&safe={safe?}&cx={cx?}&cref={cref?}&sort={sort?}&filter={filter?}&gl={gl?}&cr={cr?}&alt=json"
+      },
+      "type": {
+       "type": "string",
+       "default": "application/json"
+      }
+     }
+    }
+   }
+  }
+ },
+ "resources": {
+  "cse": {
+   "methods": {
+    "list": {
+     "id": "search.cse.list",
+     "path": "v1",
+     "httpMethod": "GET",
+     "description": "Returns metadata about the search performed, metadata about the custom search engine used for the search, and the search results.",
+     "parameters": {
+      "cr": {
+       "type": "string",
+       "description": "Country restrict(s).",
+       "location": "query"
+      },
+      "cref": {
+       "type": "string",
+       "description": "The URL of a linked custom search engine",
+       "location": "query"
+      },
+      "cx": {
+       "type": "string",
+       "description": "The custom search engine ID to scope this search query",
+       "location": "query"
+      },
+      "filter": {
+       "type": "string",
+       "description": "Controls turning on or off the duplicate content filter.",
+       "enum": [
+        "0",
+        "1"
+       ],
+       "enumDescriptions": [
+        "Turns off duplicate content filter.",
+        "Turns on duplicate content filter."
+       ],
+       "location": "query"
+      },
+      "gl": {
+       "type": "string",
+       "description": "Geolocation of end user.",
+       "location": "query"
+      },
+      "lr": {
+       "type": "string",
+       "description": "The language restriction for the search results",
+       "enum": [
+        "lang_ar",
+        "lang_bg",
+        "lang_ca",
+        "lang_cs",
+        "lang_da",
+        "lang_de",
+        "lang_el",
+        "lang_en",
+        "lang_es",
+        "lang_et",
+        "lang_fi",
+        "lang_fr",
+        "lang_hr",
+        "lang_hu",
+        "lang_id",
+        "lang_is",
+        "lang_it",
+        "lang_iw",
+        "lang_ja",
+        "lang_ko",
+        "lang_lt",
+        "lang_lv",
+        "lang_nl",
+        "lang_no",
+        "lang_pl",
+        "lang_pt",
+        "lang_ro",
+        "lang_ru",
+        "lang_sk",
+        "lang_sl",
+        "lang_sr",
+        "lang_sv",
+        "lang_tr",
+        "lang_zh-CN",
+        "lang_zh-TW"
+       ],
+       "enumDescriptions": [
+        "Arabic",
+        "Bulgarian",
+        "Catalan",
+        "Czech",
+        "Danish",
+        "German",
+        "Greek",
+        "English",
+        "Spanish",
+        "Estonian",
+        "Finnish",
+        "French",
+        "Croatian",
+        "Hungarian",
+        "Indonesian",
+        "Icelandic",
+        "Italian",
+        "Hebrew",
+        "Japanese",
+        "Korean",
+        "Lithuanian",
+        "Latvian",
+        "Dutch",
+        "Norwegian",
+        "Polish",
+        "Portuguese",
+        "Romanian",
+        "Russian",
+        "Slovak",
+        "Slovenian",
+        "Serbian",
+        "Swedish",
+        "Turkish",
+        "Chinese (Simplified)",
+        "Chinese (Traditional)"
+       ],
+       "location": "query"
+      },
+      "num": {
+       "type": "string",
+       "description": "Number of search results to return",
+       "default": "10",
+       "location": "query"
+      },
+      "q": {
+       "type": "string",
+       "description": "Query",
+       "required": true,
+       "location": "query"
+      },
+      "safe": {
+       "type": "string",
+       "description": "Search safety level",
+       "default": "off",
+       "enum": [
+        "high",
+        "medium",
+        "off"
+       ],
+       "enumDescriptions": [
+        "Enables highest level of safe search filtering.",
+        "Enables moderate safe search filtering.",
+        "Disables safe search filtering."
+       ],
+       "location": "query"
+      },
+      "sort": {
+       "type": "string",
+       "description": "The sort expression to apply to the results",
+       "location": "query"
+      },
+      "start": {
+       "type": "string",
+       "description": "The index of the first result to return",
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "q"
+     ],
+     "response": {
+      "$ref": "Search"
+     }
+    }
+   }
+  }
+ }
+}

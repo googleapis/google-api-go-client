@@ -1,0 +1,277 @@
+{
+ "kind": "discovery#restDescription",
+ "id": "audit:v1",
+ "name": "audit",
+ "version": "v1",
+ "title": "Enterprise Audit API",
+ "description": "Lets you access user activities in your enterprise made through various applications.",
+ "icons": {
+  "x16": "http://www.google.com/images/icons/product/search-16.gif",
+  "x32": "http://www.google.com/images/icons/product/search-32.gif"
+ },
+ "documentationLink": "http://code.google.com/googleapps/domain/audit_admin/v1/getting_started.html",
+ "labels": [
+  "labs"
+ ],
+ "protocol": "rest",
+ "basePath": "/apps/reporting/audit/v1/",
+ "parameters": {
+  "alt": {
+   "type": "string",
+   "description": "Data format for the response.",
+   "default": "json",
+   "enum": [
+    "atom",
+    "json"
+   ],
+   "enumDescriptions": [
+    "Responses with Content-Type of application/atom+xml",
+    "Responses with Content-Type of application/json"
+   ],
+   "location": "query"
+  },
+  "fields": {
+   "type": "string",
+   "description": "Selector specifying which fields to include in a partial response.",
+   "location": "query"
+  },
+  "key": {
+   "type": "string",
+   "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
+   "location": "query"
+  },
+  "oauth_token": {
+   "type": "string",
+   "description": "OAuth 2.0 token for the current user.",
+   "location": "query"
+  },
+  "prettyPrint": {
+   "type": "boolean",
+   "description": "Returns response with indentations and line breaks.",
+   "default": "true",
+   "location": "query"
+  },
+  "userIp": {
+   "type": "string",
+   "description": "IP address of the site where the request originates. Use this if you want to enforce per-user limits.",
+   "location": "query"
+  }
+ },
+ "schemas": {
+  "Activities": {
+   "id": "Activities",
+   "type": "object",
+   "properties": {
+    "items": {
+     "type": "array",
+     "description": "Each record in read response.",
+     "items": {
+      "$ref": "Activity"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Kind of list response this is.",
+     "default": "audit#activities"
+    },
+    "next": {
+     "type": "string",
+     "description": "Next page URL."
+    }
+   }
+  },
+  "Activity": {
+   "id": "Activity",
+   "type": "object",
+   "properties": {
+    "actor": {
+     "type": "object",
+     "description": "User doing the action.",
+     "properties": {
+      "applicationId": {
+       "type": "string",
+       "description": "ID of application which interacted on behalf of the user.",
+       "format": "int64"
+      },
+      "callerType": {
+       "type": "string",
+       "description": "User or OAuth 2LO request."
+      },
+      "email": {
+       "type": "string",
+       "description": "Email address of the user."
+      },
+      "key": {
+       "type": "string",
+       "description": "For OAuth 2LO API requests, consumer_key of the requestor."
+      }
+     }
+    },
+    "events": {
+     "type": "array",
+     "description": "Activity events.",
+     "items": {
+      "type": "object",
+      "properties": {
+       "eventType": {
+        "type": "string",
+        "description": "Type of event."
+       },
+       "name": {
+        "type": "string",
+        "description": "Name of event."
+       },
+       "parameters": {
+        "type": "array",
+        "description": "Event parameters.",
+        "items": {
+         "type": "object",
+         "properties": {
+          "name": {
+           "type": "string",
+           "description": "Name of the parameter."
+          },
+          "value": {
+           "type": "string",
+           "description": "Value of the parameter."
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "id": {
+     "type": "object",
+     "description": "Unique identifier for each activity record.",
+     "properties": {
+      "applicationId": {
+       "type": "string",
+       "description": "Application ID of the source application.",
+       "format": "int64"
+      },
+      "customerId": {
+       "type": "string",
+       "description": "Obfuscated customer ID of the source customer."
+      },
+      "time": {
+       "type": "string",
+       "description": "Time of occurrence of the activity.",
+       "format": "date-time"
+      },
+      "uniqQualifier": {
+       "type": "string",
+       "description": "Unique qualifier if multiple events have the same time.",
+       "format": "int64"
+      }
+     }
+    },
+    "ipAddress": {
+     "type": "string",
+     "description": "IP Address of the user doing the action."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Kind of resource this is.",
+     "default": "audit#activity"
+    },
+    "ownerDomain": {
+     "type": "string",
+     "description": "Domain of source customer."
+    }
+   }
+  }
+ },
+ "resources": {
+  "activities": {
+   "methods": {
+    "list": {
+     "id": "audit.activities.list",
+     "path": "{customerId}/{applicationId}",
+     "httpMethod": "GET",
+     "description": "Retrieves a list of activities for a specific customer and application.",
+     "parameters": {
+      "actorApplicationId": {
+       "type": "string",
+       "description": "Application ID of the application which interacted on behalf of the user while performing the event.",
+       "format": "int64",
+       "location": "query"
+      },
+      "actorEmail": {
+       "type": "string",
+       "description": "Email address of the user who performed the action.",
+       "location": "query"
+      },
+      "applicationId": {
+       "type": "string",
+       "description": "Application ID of the application on which the event was performed.",
+       "required": true,
+       "format": "int64",
+       "location": "path"
+      },
+      "caller": {
+       "type": "string",
+       "description": "Type of the caller.",
+       "enum": [
+        "application_owner",
+        "customer"
+       ],
+       "enumDescriptions": [
+        "Caller is an application owner.",
+        "Caller is a customer."
+       ],
+       "location": "query"
+      },
+      "continuationToken": {
+       "type": "string",
+       "description": "Next page URL.",
+       "location": "query"
+      },
+      "customerId": {
+       "type": "string",
+       "description": "Represents the customer who is the owner of target object on which action was performed.",
+       "required": true,
+       "pattern": "C.+",
+       "location": "path"
+      },
+      "endTime": {
+       "type": "string",
+       "description": "Return events which occured at or before this time.",
+       "location": "query"
+      },
+      "eventName": {
+       "type": "string",
+       "description": "Name of the event being queried.",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "Number of activity records to be shown in each page.",
+       "format": "int32",
+       "minimum": "1",
+       "maximum": "1000",
+       "location": "query"
+      },
+      "parameters": {
+       "type": "string",
+       "description": "Event parameters in the form [parameter1 name]:[parameter1 value],[parameter2 name]:[parameter2 value],...",
+       "location": "query"
+      },
+      "startTime": {
+       "type": "string",
+       "description": "Return events which occured at or after this time.",
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "customerId",
+      "applicationId"
+     ],
+     "response": {
+      "$ref": "Activities"
+     }
+    }
+   }
+  }
+ }
+}

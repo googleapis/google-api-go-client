@@ -1,8 +1,2 @@
--- stringified ints (type "string", format "uint64", etc)
-   http://codereview.appspot.com/4918051/
-
--- more auto-generate docs
-
--- enums (check them? document them?)
-
--- more examples
+Moved to:
+http://code.google.com/p/google-api-go-client/issues/

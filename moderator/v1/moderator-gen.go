@@ -147,8 +147,12 @@ type SubmissionCounters struct {
 type TagId struct {
 	TagId string `json:"tagId,omitempty"`
 
+	// WARNING: this field may not work, until this bug is fixed:
+	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
 	SubmissionId int64 `json:"submissionId,omitempty"`
 
+	// WARNING: this field may not work, until this bug is fixed:
+	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
 	SeriesId int64 `json:"seriesId,omitempty"`
 }
 
@@ -171,8 +175,12 @@ type Tag struct {
 }
 
 type SubmissionParentSubmissionId struct {
+	// WARNING: this field may not work, until this bug is fixed:
+	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
 	SubmissionId int64 `json:"submissionId,omitempty"`
 
+	// WARNING: this field may not work, until this bug is fixed:
+	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
 	SeriesId int64 `json:"seriesId,omitempty"`
 }
 
@@ -191,8 +199,12 @@ type TopicList struct {
 }
 
 type TopicRulesVotes struct {
+	// WARNING: this field may not work, until this bug is fixed:
+	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
 	Close uint64 `json:"close,omitempty"`
 
+	// WARNING: this field may not work, until this bug is fixed:
+	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
 	Open uint64 `json:"open,omitempty"`
 }
 
@@ -201,8 +213,12 @@ type ProfileId struct {
 }
 
 type SeriesRulesSubmissions struct {
+	// WARNING: this field may not work, until this bug is fixed:
+	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
 	Close uint64 `json:"close,omitempty"`
 
+	// WARNING: this field may not work, until this bug is fixed:
+	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
 	Open uint64 `json:"open,omitempty"`
 }
 
@@ -213,12 +229,18 @@ type SubmissionList struct {
 }
 
 type VoteId struct {
+	// WARNING: this field may not work, until this bug is fixed:
+	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
 	SubmissionId int64 `json:"submissionId,omitempty"`
 
+	// WARNING: this field may not work, until this bug is fixed:
+	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
 	SeriesId int64 `json:"seriesId,omitempty"`
 }
 
 type SeriesId struct {
+	// WARNING: this field may not work, until this bug is fixed:
+	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
 	SeriesId int64 `json:"seriesId,omitempty"`
 }
 
@@ -261,6 +283,8 @@ type Submission struct {
 
 	Id *SubmissionId `json:"id,omitempty"`
 
+	// WARNING: this field may not work, until this bug is fixed:
+	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
 	Created uint64 `json:"created,omitempty"`
 
 	Translations []*SubmissionTranslations `json:"translations,omitempty"`
@@ -271,14 +295,22 @@ type Submission struct {
 }
 
 type TopicId struct {
+	// WARNING: this field may not work, until this bug is fixed:
+	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
 	TopicId int64 `json:"topicId,omitempty"`
 
+	// WARNING: this field may not work, until this bug is fixed:
+	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
 	SeriesId int64 `json:"seriesId,omitempty"`
 }
 
 type ModeratorTopicsResourcePartialId struct {
+	// WARNING: this field may not work, until this bug is fixed:
+	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
 	TopicId int64 `json:"topicId,omitempty"`
 
+	// WARNING: this field may not work, until this bug is fixed:
+	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
 	SeriesId int64 `json:"seriesId,omitempty"`
 }
 
@@ -367,8 +399,12 @@ type Series struct {
 }
 
 type SubmissionId struct {
+	// WARNING: this field may not work, until this bug is fixed:
+	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
 	SubmissionId int64 `json:"submissionId,omitempty"`
 
+	// WARNING: this field may not work, until this bug is fixed:
+	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
 	SeriesId int64 `json:"seriesId,omitempty"`
 }
 
@@ -379,8 +415,12 @@ type SubmissionTranslations struct {
 }
 
 type TopicRulesSubmissions struct {
+	// WARNING: this field may not work, until this bug is fixed:
+	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
 	Close uint64 `json:"close,omitempty"`
 
+	// WARNING: this field may not work, until this bug is fixed:
+	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
 	Open uint64 `json:"open,omitempty"`
 }
 
@@ -391,8 +431,12 @@ type TopicRules struct {
 }
 
 type SeriesRulesVotes struct {
+	// WARNING: this field may not work, until this bug is fixed:
+	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
 	Close uint64 `json:"close,omitempty"`
 
+	// WARNING: this field may not work, until this bug is fixed:
+	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
 	Open uint64 `json:"open,omitempty"`
 }
 

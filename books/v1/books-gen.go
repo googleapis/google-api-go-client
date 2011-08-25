@@ -385,9 +385,8 @@ type VolumeVolumeInfo struct {
 	RatingsCount int64 `json:"ratingsCount,omitempty"`
 
 	// Description: A synopsis of the volume. The text of the description is
-	// formatted in HTML and includes simple formatting elements, such as ,
-	// ,
-	// , etc. (In LITE projection.)
+	// formatted in HTML and includes simple formatting elements, such as b,
+	// i, and br tags. (In LITE projection.)
 	Description string `json:"description,omitempty"`
 }
 
@@ -590,10 +589,24 @@ func (c *VolumesListCall) Country(country string) *VolumesListCall {
 	return c
 }
 
+// LibraryRestrict sets the optional parameter "libraryRestrict":
+// Restrict search to this user's library.
+func (c *VolumesListCall) LibraryRestrict(libraryRestrict string) *VolumesListCall {
+	c.opt_["libraryRestrict"] = libraryRestrict
+	return c
+}
+
 // PrintType sets the optional parameter "printType": Restrict to books
 // or magazines.
 func (c *VolumesListCall) PrintType(printType string) *VolumesListCall {
 	c.opt_["printType"] = printType
+	return c
+}
+
+// Partner sets the optional parameter "partner": Identifier of partner
+// for whom to restrict and brand results.
+func (c *VolumesListCall) Partner(partner string) *VolumesListCall {
+	c.opt_["partner"] = partner
 	return c
 }
 
@@ -637,8 +650,14 @@ func (c *VolumesListCall) Do() (*Volumes, os.Error) {
 	if v, ok := c.opt_["country"]; ok {
 		params.Set("country", fmt.Sprintf("%v", v))
 	}
+	if v, ok := c.opt_["libraryRestrict"]; ok {
+		params.Set("libraryRestrict", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["printType"]; ok {
 		params.Set("printType", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["partner"]; ok {
+		params.Set("partner", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
@@ -710,6 +729,19 @@ func (c *VolumesListCall) Do() (*Volumes, os.Error) {
 	//       "location": "query",
 	//       "type": "string"
 	//     },
+	//     "libraryRestrict": {
+	//       "description": "Restrict search to this user's library.",
+	//       "enum": [
+	//         "my-library",
+	//         "no-restrict"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Restrict to the user's library, any shelf.",
+	//         "Do not restrict based on user's library."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "maxResults": {
 	//       "description": "Maximum number of results to return.",
 	//       "format": "uint32",
@@ -728,6 +760,11 @@ func (c *VolumesListCall) Do() (*Volumes, os.Error) {
 	//         "Most recently published.",
 	//         "Relevance to search terms."
 	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "partner": {
+	//       "description": "Identifier of partner for whom to restrict and brand results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -818,6 +855,13 @@ func (c *VolumesGetCall) Country(country string) *VolumesGetCall {
 	return c
 }
 
+// Partner sets the optional parameter "partner": Identifier of partner
+// for whom to brand results.
+func (c *VolumesGetCall) Partner(partner string) *VolumesGetCall {
+	c.opt_["partner"] = partner
+	return c
+}
+
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *VolumesGetCall) Source(source string) *VolumesGetCall {
@@ -834,6 +878,9 @@ func (c *VolumesGetCall) Do() (*Volume, os.Error) {
 	}
 	if v, ok := c.opt_["country"]; ok {
 		params.Set("country", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["partner"]; ok {
+		params.Set("partner", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
@@ -865,6 +912,11 @@ func (c *VolumesGetCall) Do() (*Volume, os.Error) {
 	//   "parameters": {
 	//     "country": {
 	//       "description": "ISO-3166-1 code to override the IP-based location.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "partner": {
+	//       "description": "Identifier of partner for whom to brand results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

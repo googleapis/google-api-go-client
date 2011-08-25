@@ -118,15 +118,21 @@ type ResultFormattedResultsRuleResults struct {
 type ResultPageStats struct {
 	// ImageResponseBytes: Number of response bytes for image resources on
 	// the page.
+	// WARNING: this field may not work, until this bug is fixed:
+	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
 	ImageResponseBytes int64 `json:"imageResponseBytes,omitempty"`
 
 	// TextResponseBytes: Number of uncompressed response bytes for text
 	// resources not covered by other statistics (i.e non-HTML, non-script,
 	// non-CSS resources) on the page.
+	// WARNING: this field may not work, until this bug is fixed:
+	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
 	TextResponseBytes int64 `json:"textResponseBytes,omitempty"`
 
 	// OtherResponseBytes: Number of response bytes for other resources on
 	// the page.
+	// WARNING: this field may not work, until this bug is fixed:
+	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
 	OtherResponseBytes int64 `json:"otherResponseBytes,omitempty"`
 
 	// NumberStaticResources: Number of static (i.e. cacheable) resources on
@@ -138,14 +144,20 @@ type ResultPageStats struct {
 
 	// HtmlResponseBytes: Number of uncompressed response bytes for the main
 	// HTML document and all iframes on the page.
+	// WARNING: this field may not work, until this bug is fixed:
+	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
 	HtmlResponseBytes int64 `json:"htmlResponseBytes,omitempty"`
 
 	// FlashResponseBytes: Number of response bytes for flash resources on
 	// the page.
+	// WARNING: this field may not work, until this bug is fixed:
+	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
 	FlashResponseBytes int64 `json:"flashResponseBytes,omitempty"`
 
 	// CssResponseBytes: Number of uncompressed response bytes for CSS
 	// resources on the page.
+	// WARNING: this field may not work, until this bug is fixed:
+	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
 	CssResponseBytes int64 `json:"cssResponseBytes,omitempty"`
 
 	// NumberJsResources: Number of JavaScript resources referenced by the
@@ -154,9 +166,13 @@ type ResultPageStats struct {
 
 	// JavascriptResponseBytes: Number of uncompressed response bytes for JS
 	// resources on the page.
+	// WARNING: this field may not work, until this bug is fixed:
+	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
 	JavascriptResponseBytes int64 `json:"javascriptResponseBytes,omitempty"`
 
 	// TotalRequestBytes: Total size of all request bytes sent by the page.
+	// WARNING: this field may not work, until this bug is fixed:
+	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
 	TotalRequestBytes int64 `json:"totalRequestBytes,omitempty"`
 
 	// NumberResources: Number of HTTP resources loaded by the page.

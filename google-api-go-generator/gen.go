@@ -494,6 +494,10 @@ func (t *Type) apiTypeFormat() string {
 	return ""
 }
 
+func (t *Type) isIntAsString() bool {
+	return t.apiType() == "string" && strings.Contains(t.apiTypeFormat(), "int")
+}
+
 func (t *Type) asSimpleGoType() (goType string, ok bool) {
 	return simpleTypeConvert(t.apiType(), t.apiTypeFormat())
 }
@@ -713,6 +717,10 @@ func (s *Schema) writeSchemaStruct() {
 		pname := p.GoName()
 		if des := p.Description(); des != "" {
 			s.api.p("%s", asComment("\t", fmt.Sprintf("%s: %s", pname, des)))
+		}
+		if p.Type().isIntAsString() {
+			s.api.p("\t// WARNING: this field may not work, until this bug is fixed:\n")
+			s.api.p("\t// http://code.google.com/p/google-api-go-client/issues/detail?id=1\n")
 		}
 		s.api.p("\t%s %s `json:\"%s,omitempty\"`\n", pname, p.Type().AsGo(), p.APIName())
 	}
@@ -1012,6 +1020,9 @@ func (p *Param) Location() string {
 
 func (p *Param) GoType() string {
 	typ, format := jstr(p.m, "type"), jstr(p.m, "format")
+	if typ == "string" && strings.Contains(format, "int") && p.Location() != "query" {
+		panic("unexpected int parameter encoded as string, not in query: " + p.name)
+	}
 	t, ok := simpleTypeConvert(typ, format)
 	if !ok {
 		panic("failed to convert parameter type " + fmt.Sprintf("type=%q, format=%q", typ, format))

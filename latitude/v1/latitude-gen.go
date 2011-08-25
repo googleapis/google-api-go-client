@@ -35,6 +35,21 @@ const apiName = "latitude"
 const apiVersion = "v1"
 const basePath = "https://www.googleapis.com/latitude/v1/"
 
+// OAuth2 scopes used by this API.
+const (
+	// Manage your city-level location
+	LatitudeCurrentCityScope = "https://www.googleapis.com/auth/latitude.current.city"
+
+	// Manage your best-available location
+	LatitudeCurrentBestScope = "https://www.googleapis.com/auth/latitude.current.best"
+
+	// Manage your city-level location and location history
+	LatitudeAllCityScope = "https://www.googleapis.com/auth/latitude.all.city"
+
+	// Manage your best-available location and location history
+	LatitudeAllBestScope = "https://www.googleapis.com/auth/latitude.all.best"
+)
+
 func New(client *http.Client) (*Service, os.Error) {
 	if client == nil {
 		return nil, os.NewError("client is nil")
@@ -162,7 +177,13 @@ func (c *CurrentLocationInsertCall) Do() (*LatitudeCurrentlocationResourceJson, 
 	//   },
 	//   "response": {
 	//     "$ref": "LatitudeCurrentlocationResourceJson"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/latitude.all.best",
+	//     "https://www.googleapis.com/auth/latitude.all.city",
+	//     "https://www.googleapis.com/auth/latitude.current.best",
+	//     "https://www.googleapis.com/auth/latitude.current.city"
+	//   ]
 	// }
 
 }
@@ -224,7 +245,13 @@ func (c *CurrentLocationGetCall) Do() (*LatitudeCurrentlocationResourceJson, os.
 	//   "path": "currentLocation",
 	//   "response": {
 	//     "$ref": "LatitudeCurrentlocationResourceJson"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/latitude.all.best",
+	//     "https://www.googleapis.com/auth/latitude.all.city",
+	//     "https://www.googleapis.com/auth/latitude.current.best",
+	//     "https://www.googleapis.com/auth/latitude.current.city"
+	//   ]
 	// }
 
 }
@@ -262,7 +289,13 @@ func (c *CurrentLocationDeleteCall) Do() os.Error {
 	//   "description": "Deletes the authenticated user's current location.",
 	//   "httpMethod": "DELETE",
 	//   "id": "latitude.currentLocation.delete",
-	//   "path": "currentLocation"
+	//   "path": "currentLocation",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/latitude.all.best",
+	//     "https://www.googleapis.com/auth/latitude.all.city",
+	//     "https://www.googleapis.com/auth/latitude.current.best",
+	//     "https://www.googleapis.com/auth/latitude.current.city"
+	//   ]
 	// }
 
 }
@@ -369,7 +402,11 @@ func (c *LocationListCall) Do() (*LocationFeed, os.Error) {
 	//   "path": "location",
 	//   "response": {
 	//     "$ref": "LocationFeed"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/latitude.all.best",
+	//     "https://www.googleapis.com/auth/latitude.all.city"
+	//   ]
 	// }
 
 }
@@ -425,7 +462,11 @@ func (c *LocationInsertCall) Do() (*Location, os.Error) {
 	//   },
 	//   "response": {
 	//     "$ref": "Location"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/latitude.all.best",
+	//     "https://www.googleapis.com/auth/latitude.all.city"
+	//   ]
 	// }
 
 }
@@ -499,7 +540,11 @@ func (c *LocationGetCall) Do() (*Location, os.Error) {
 	//   "path": "location/{locationId}",
 	//   "response": {
 	//     "$ref": "Location"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/latitude.all.best",
+	//     "https://www.googleapis.com/auth/latitude.all.city"
+	//   ]
 	// }
 
 }
@@ -551,7 +596,11 @@ func (c *LocationDeleteCall) Do() os.Error {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "location/{locationId}"
+	//   "path": "location/{locationId}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/latitude.all.best",
+	//     "https://www.googleapis.com/auth/latitude.all.city"
+	//   ]
 	// }
 
 }

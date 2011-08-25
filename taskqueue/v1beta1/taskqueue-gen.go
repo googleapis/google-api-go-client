@@ -73,6 +73,8 @@ type TaskqueuesService struct {
 type Task struct {
 	// EnqueueTimestamp: Time (in seconds since the epoch) at which the task
 	// was enqueued.
+	// WARNING: this field may not work, until this bug is fixed:
+	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
 	EnqueueTimestamp int64 `json:"enqueueTimestamp,omitempty"`
 
 	// QueueName: Name of the queue that the task is in.
@@ -91,6 +93,8 @@ type Task struct {
 	// LeaseTimestamp: Time (in seconds since the epoch) at which the task
 	// lease will expire. This value is 0 if the task isnt currently leased
 	// out to a worker.
+	// WARNING: this field may not work, until this bug is fixed:
+	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
 	LeaseTimestamp int64 `json:"leaseTimestamp,omitempty"`
 }
 
@@ -113,12 +117,18 @@ type TaskqueueAcl struct {
 type TaskqueueStats struct {
 	// OldestTask: The timestamp (in seconds since the epoch) of the oldest
 	// unfinished task.
+	// WARNING: this field may not work, until this bug is fixed:
+	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
 	OldestTask int64 `json:"oldestTask,omitempty"`
 
 	// LeasedLastMinute: Number of tasks leased in the last minute.
+	// WARNING: this field may not work, until this bug is fixed:
+	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
 	LeasedLastMinute int64 `json:"leasedLastMinute,omitempty"`
 
 	// LeasedLastHour: Number of tasks leased in the last hour.
+	// WARNING: this field may not work, until this bug is fixed:
+	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
 	LeasedLastHour int64 `json:"leasedLastHour,omitempty"`
 
 	// TotalTasks: Number of tasks in the queue.

@@ -75,9 +75,13 @@ type AnalyticsSnapshot struct {
 
 	// LongUrlClicks: Number of clicks on all goo.gl short URLs pointing to
 	// this long URL.
+	// WARNING: this field may not work, until this bug is fixed:
+	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
 	LongUrlClicks int64 `json:"longUrlClicks,omitempty"`
 
 	// ShortUrlClicks: Number of clicks on this short URL.
+	// WARNING: this field may not work, until this bug is fixed:
+	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
 	ShortUrlClicks int64 `json:"shortUrlClicks,omitempty"`
 
 	// Countries: Top countries (expressed as country codes), e.g. "US" or
@@ -126,6 +130,8 @@ type UrlHistory struct {
 type StringCount struct {
 	// Count: Number of clicks for this top entry, e.g. for this particular
 	// country or browser.
+	// WARNING: this field may not work, until this bug is fixed:
+	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
 	Count int64 `json:"count,omitempty"`
 
 	// Id: Label assigned to this top entry, e.g. "US" or "Chrome".

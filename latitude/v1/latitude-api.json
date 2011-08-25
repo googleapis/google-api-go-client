@@ -57,6 +57,24 @@
    "location": "query"
   }
  },
+ "auth": {
+  "oauth2": {
+   "scopes": {
+    "https://www.googleapis.com/auth/latitude.all.best": {
+     "description": "Manage your best-available location and location history"
+    },
+    "https://www.googleapis.com/auth/latitude.all.city": {
+     "description": "Manage your city-level location and location history"
+    },
+    "https://www.googleapis.com/auth/latitude.current.best": {
+     "description": "Manage your best-available location"
+    },
+    "https://www.googleapis.com/auth/latitude.current.city": {
+     "description": "Manage your city-level location"
+    }
+   }
+  }
+ },
  "features": [
   "dataWrapper"
  ],
@@ -136,7 +154,13 @@
      "id": "latitude.currentLocation.delete",
      "path": "currentLocation",
      "httpMethod": "DELETE",
-     "description": "Deletes the authenticated user's current location."
+     "description": "Deletes the authenticated user's current location.",
+     "scopes": [
+      "https://www.googleapis.com/auth/latitude.all.best",
+      "https://www.googleapis.com/auth/latitude.all.city",
+      "https://www.googleapis.com/auth/latitude.current.best",
+      "https://www.googleapis.com/auth/latitude.current.city"
+     ]
     },
     "get": {
      "id": "latitude.currentLocation.get",
@@ -152,7 +176,13 @@
      },
      "response": {
       "$ref": "LatitudeCurrentlocationResourceJson"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/latitude.all.best",
+      "https://www.googleapis.com/auth/latitude.all.city",
+      "https://www.googleapis.com/auth/latitude.current.best",
+      "https://www.googleapis.com/auth/latitude.current.city"
+     ]
     },
     "insert": {
      "id": "latitude.currentLocation.insert",
@@ -164,7 +194,13 @@
      },
      "response": {
       "$ref": "LatitudeCurrentlocationResourceJson"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/latitude.all.best",
+      "https://www.googleapis.com/auth/latitude.all.city",
+      "https://www.googleapis.com/auth/latitude.current.best",
+      "https://www.googleapis.com/auth/latitude.current.city"
+     ]
     }
    }
   },
@@ -185,6 +221,10 @@
      },
      "parameterOrder": [
       "locationId"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/latitude.all.best",
+      "https://www.googleapis.com/auth/latitude.all.city"
      ]
     },
     "get": {
@@ -210,7 +250,11 @@
      ],
      "response": {
       "$ref": "Location"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/latitude.all.best",
+      "https://www.googleapis.com/auth/latitude.all.city"
+     ]
     },
     "insert": {
      "id": "latitude.location.insert",
@@ -222,7 +266,11 @@
      },
      "response": {
       "$ref": "Location"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/latitude.all.best",
+      "https://www.googleapis.com/auth/latitude.all.city"
+     ]
     },
     "list": {
      "id": "latitude.location.list",
@@ -253,7 +301,11 @@
      },
      "response": {
       "$ref": "LocationFeed"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/latitude.all.best",
+      "https://www.googleapis.com/auth/latitude.all.city"
+     ]
     }
    }
   }

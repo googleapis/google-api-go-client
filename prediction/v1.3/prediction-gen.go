@@ -151,6 +151,8 @@ type TrainingModelInfo struct {
 
 	// NumberInstances: Number of valid data instances used in the trained
 	// model.
+	// WARNING: this field may not work, until this bug is fixed:
+	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
 	NumberInstances int64 `json:"numberInstances,omitempty"`
 
 	// ConfusionMatrix: An output confusion matrix. This shows an estimate
@@ -170,6 +172,8 @@ type TrainingModelInfo struct {
 
 	// NumberClasses: Number of classes in the trained model [Categorical
 	// models only].
+	// WARNING: this field may not work, until this bug is fixed:
+	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
 	NumberClasses int64 `json:"numberClasses,omitempty"`
 
 	// ClassWeightedAccuracy: Estimated accuracy of model taking utility

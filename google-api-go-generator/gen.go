@@ -718,11 +718,11 @@ func (s *Schema) writeSchemaStruct() {
 		if des := p.Description(); des != "" {
 			s.api.p("%s", asComment("\t", fmt.Sprintf("%s: %s", pname, des)))
 		}
+		var extraOpt string
 		if p.Type().isIntAsString() {
-			s.api.p("\t// WARNING: this field may not work, until this bug is fixed:\n")
-			s.api.p("\t// http://code.google.com/p/google-api-go-client/issues/detail?id=1\n")
+			extraOpt += ",string"
 		}
-		s.api.p("\t%s %s `json:\"%s,omitempty\"`\n", pname, p.Type().AsGo(), p.APIName())
+		s.api.p("\t%s %s `json:\"%s,omitempty%s\"`\n", pname, p.Type().AsGo(), p.APIName(), extraOpt)
 	}
 	s.api.p("}\n")
 }

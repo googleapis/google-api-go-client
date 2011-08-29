@@ -125,6 +125,8 @@ type Query struct {
 
 	Cref string `json:"cref,omitempty"`
 
+	GoogleHost string `json:"googleHost,omitempty"`
+
 	Title string `json:"title,omitempty"`
 
 	Gl string `json:"gl,omitempty"`
@@ -199,6 +201,13 @@ func (c *CseListCall) Start(start string) *CseListCall {
 	return c
 }
 
+// Googlehost sets the optional parameter "googlehost": The local Google
+// domain to use to perform the search.
+func (c *CseListCall) Googlehost(googlehost string) *CseListCall {
+	c.opt_["googlehost"] = googlehost
+	return c
+}
+
 // Lr sets the optional parameter "lr": The language restriction for the
 // search results
 func (c *CseListCall) Lr(lr string) *CseListCall {
@@ -266,6 +275,9 @@ func (c *CseListCall) Do() (*Search, os.Error) {
 	params.Set("q", fmt.Sprintf("%v", c.q))
 	if v, ok := c.opt_["start"]; ok {
 		params.Set("start", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["googlehost"]; ok {
+		params.Set("googlehost", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["lr"]; ok {
 		params.Set("lr", fmt.Sprintf("%v", v))
@@ -348,6 +360,11 @@ func (c *CseListCall) Do() (*Search, os.Error) {
 	//     },
 	//     "gl": {
 	//       "description": "Geolocation of end user.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "googlehost": {
+	//       "description": "The local Google domain to use to perform the search.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

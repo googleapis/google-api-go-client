@@ -356,8 +356,8 @@ func (r *TrainingService) Insert(training *Training) *TrainingInsertCall {
 	return c
 }
 
-// Data sets the optional parameter "data": mybucket%2Fmydata resource
-// in Google Storage
+// Data sets the optional parameter "data": mybucket/mydata resource in
+// Google Storage
 func (c *TrainingInsertCall) Data(data string) *TrainingInsertCall {
 	c.opt_["data"] = data
 	return c
@@ -398,7 +398,7 @@ func (c *TrainingInsertCall) Do() (*Training, os.Error) {
 	//   "id": "prediction.training.insert",
 	//   "parameters": {
 	//     "data": {
-	//       "description": "mybucket%2Fmydata resource in Google Storage",
+	//       "description": "mybucket/mydata resource in Google Storage",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -462,7 +462,7 @@ func (c *TrainingGetCall) Do() (*Training, os.Error) {
 	//   ],
 	//   "parameters": {
 	//     "data": {
-	//       "description": "mybucket%2Fmydata resource in Google Storage",
+	//       "description": "mybucket/mydata resource in Google Storage",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -520,7 +520,7 @@ func (c *TrainingDeleteCall) Do() os.Error {
 	//   ],
 	//   "parameters": {
 	//     "data": {
-	//       "description": "mybucket%2Fmydata resource in Google Storage",
+	//       "description": "mybucket/mydata resource in Google Storage",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"

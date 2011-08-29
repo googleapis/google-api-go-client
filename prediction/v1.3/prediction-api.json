@@ -279,7 +279,7 @@
      "parameters": {
       "data": {
        "type": "string",
-       "description": "mybucket%2Fmydata resource in Google Storage",
+       "description": "mybucket/mydata resource in Google Storage",
        "required": true,
        "location": "path"
       }
@@ -299,7 +299,7 @@
      "parameters": {
       "data": {
        "type": "string",
-       "description": "mybucket%2Fmydata resource in Google Storage",
+       "description": "mybucket/mydata resource in Google Storage",
        "required": true,
        "location": "path"
       }
@@ -337,7 +337,7 @@
      "parameters": {
       "data": {
        "type": "string",
-       "description": "mybucket%2Fmydata resource in Google Storage",
+       "description": "mybucket/mydata resource in Google Storage",
        "required": true,
        "location": "path"
       }

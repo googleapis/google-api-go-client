@@ -113,14 +113,10 @@ type ActivityId struct {
 
 	// UniqQualifier: Unique qualifier if multiple events have the same
 	// time.
-	// WARNING: this field may not work, until this bug is fixed:
-	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
-	UniqQualifier int64 `json:"uniqQualifier,omitempty"`
+	UniqQualifier int64 `json:"uniqQualifier,omitempty,string"`
 
 	// ApplicationId: Application ID of the source application.
-	// WARNING: this field may not work, until this bug is fixed:
-	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
-	ApplicationId int64 `json:"applicationId,omitempty"`
+	ApplicationId int64 `json:"applicationId,omitempty,string"`
 }
 
 type ActivityActor struct {
@@ -135,9 +131,7 @@ type ActivityActor struct {
 
 	// ApplicationId: ID of application which interacted on behalf of the
 	// user.
-	// WARNING: this field may not work, until this bug is fixed:
-	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
-	ApplicationId int64 `json:"applicationId,omitempty"`
+	ApplicationId int64 `json:"applicationId,omitempty,string"`
 }
 
 // method id "audit.activities.list":

@@ -151,9 +151,7 @@ type TrainingModelInfo struct {
 
 	// NumberInstances: Number of valid data instances used in the trained
 	// model.
-	// WARNING: this field may not work, until this bug is fixed:
-	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
-	NumberInstances int64 `json:"numberInstances,omitempty"`
+	NumberInstances int64 `json:"numberInstances,omitempty,string"`
 
 	// ConfusionMatrix: An output confusion matrix. This shows an estimate
 	// for how this model will do in predictions. This is first indexed by
@@ -172,9 +170,7 @@ type TrainingModelInfo struct {
 
 	// NumberClasses: Number of classes in the trained model [Categorical
 	// models only].
-	// WARNING: this field may not work, until this bug is fixed:
-	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
-	NumberClasses int64 `json:"numberClasses,omitempty"`
+	NumberClasses int64 `json:"numberClasses,omitempty,string"`
 
 	// ClassWeightedAccuracy: Estimated accuracy of model taking utility
 	// weights into account [Categorical models only].
@@ -443,7 +439,7 @@ func (c *TrainingGetCall) Do() (*Training, os.Error) {
 	//   ],
 	//   "parameters": {
 	//     "data": {
-	//       "description": "mybucket%2Fmydata resource in Google Storage",
+	//       "description": "mybucket/mydata resource in Google Storage",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -501,7 +497,7 @@ func (c *TrainingDeleteCall) Do() os.Error {
 	//   ],
 	//   "parameters": {
 	//     "data": {
-	//       "description": "mybucket%2Fmydata resource in Google Storage",
+	//       "description": "mybucket/mydata resource in Google Storage",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -568,7 +564,7 @@ func (c *TrainingPredictCall) Do() (*Output, os.Error) {
 	//   ],
 	//   "parameters": {
 	//     "data": {
-	//       "description": "mybucket%2Fmydata resource in Google Storage",
+	//       "description": "mybucket/mydata resource in Google Storage",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"

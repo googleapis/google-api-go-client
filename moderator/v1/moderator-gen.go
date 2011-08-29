@@ -147,13 +147,9 @@ type SubmissionCounters struct {
 type TagId struct {
 	TagId string `json:"tagId,omitempty"`
 
-	// WARNING: this field may not work, until this bug is fixed:
-	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
-	SubmissionId int64 `json:"submissionId,omitempty"`
+	SubmissionId int64 `json:"submissionId,omitempty,string"`
 
-	// WARNING: this field may not work, until this bug is fixed:
-	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
-	SeriesId int64 `json:"seriesId,omitempty"`
+	SeriesId int64 `json:"seriesId,omitempty,string"`
 }
 
 type Vote struct {
@@ -175,13 +171,9 @@ type Tag struct {
 }
 
 type SubmissionParentSubmissionId struct {
-	// WARNING: this field may not work, until this bug is fixed:
-	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
-	SubmissionId int64 `json:"submissionId,omitempty"`
+	SubmissionId int64 `json:"submissionId,omitempty,string"`
 
-	// WARNING: this field may not work, until this bug is fixed:
-	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
-	SeriesId int64 `json:"seriesId,omitempty"`
+	SeriesId int64 `json:"seriesId,omitempty,string"`
 }
 
 type Profile struct {
@@ -199,13 +191,9 @@ type TopicList struct {
 }
 
 type TopicRulesVotes struct {
-	// WARNING: this field may not work, until this bug is fixed:
-	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
-	Close uint64 `json:"close,omitempty"`
+	Close uint64 `json:"close,omitempty,string"`
 
-	// WARNING: this field may not work, until this bug is fixed:
-	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
-	Open uint64 `json:"open,omitempty"`
+	Open uint64 `json:"open,omitempty,string"`
 }
 
 type ProfileId struct {
@@ -213,13 +201,9 @@ type ProfileId struct {
 }
 
 type SeriesRulesSubmissions struct {
-	// WARNING: this field may not work, until this bug is fixed:
-	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
-	Close uint64 `json:"close,omitempty"`
+	Close uint64 `json:"close,omitempty,string"`
 
-	// WARNING: this field may not work, until this bug is fixed:
-	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
-	Open uint64 `json:"open,omitempty"`
+	Open uint64 `json:"open,omitempty,string"`
 }
 
 type SubmissionList struct {
@@ -229,19 +213,13 @@ type SubmissionList struct {
 }
 
 type VoteId struct {
-	// WARNING: this field may not work, until this bug is fixed:
-	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
-	SubmissionId int64 `json:"submissionId,omitempty"`
+	SubmissionId int64 `json:"submissionId,omitempty,string"`
 
-	// WARNING: this field may not work, until this bug is fixed:
-	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
-	SeriesId int64 `json:"seriesId,omitempty"`
+	SeriesId int64 `json:"seriesId,omitempty,string"`
 }
 
 type SeriesId struct {
-	// WARNING: this field may not work, until this bug is fixed:
-	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
-	SeriesId int64 `json:"seriesId,omitempty"`
+	SeriesId int64 `json:"seriesId,omitempty,string"`
 }
 
 type Topic struct {
@@ -283,9 +261,7 @@ type Submission struct {
 
 	Id *SubmissionId `json:"id,omitempty"`
 
-	// WARNING: this field may not work, until this bug is fixed:
-	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
-	Created uint64 `json:"created,omitempty"`
+	Created uint64 `json:"created,omitempty,string"`
 
 	Translations []*SubmissionTranslations `json:"translations,omitempty"`
 
@@ -295,23 +271,15 @@ type Submission struct {
 }
 
 type TopicId struct {
-	// WARNING: this field may not work, until this bug is fixed:
-	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
-	TopicId int64 `json:"topicId,omitempty"`
+	TopicId int64 `json:"topicId,omitempty,string"`
 
-	// WARNING: this field may not work, until this bug is fixed:
-	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
-	SeriesId int64 `json:"seriesId,omitempty"`
+	SeriesId int64 `json:"seriesId,omitempty,string"`
 }
 
 type ModeratorTopicsResourcePartialId struct {
-	// WARNING: this field may not work, until this bug is fixed:
-	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
-	TopicId int64 `json:"topicId,omitempty"`
+	TopicId int64 `json:"topicId,omitempty,string"`
 
-	// WARNING: this field may not work, until this bug is fixed:
-	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
-	SeriesId int64 `json:"seriesId,omitempty"`
+	SeriesId int64 `json:"seriesId,omitempty,string"`
 }
 
 type VoteList struct {
@@ -399,13 +367,9 @@ type Series struct {
 }
 
 type SubmissionId struct {
-	// WARNING: this field may not work, until this bug is fixed:
-	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
-	SubmissionId int64 `json:"submissionId,omitempty"`
+	SubmissionId int64 `json:"submissionId,omitempty,string"`
 
-	// WARNING: this field may not work, until this bug is fixed:
-	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
-	SeriesId int64 `json:"seriesId,omitempty"`
+	SeriesId int64 `json:"seriesId,omitempty,string"`
 }
 
 type SubmissionTranslations struct {
@@ -415,13 +379,9 @@ type SubmissionTranslations struct {
 }
 
 type TopicRulesSubmissions struct {
-	// WARNING: this field may not work, until this bug is fixed:
-	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
-	Close uint64 `json:"close,omitempty"`
+	Close uint64 `json:"close,omitempty,string"`
 
-	// WARNING: this field may not work, until this bug is fixed:
-	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
-	Open uint64 `json:"open,omitempty"`
+	Open uint64 `json:"open,omitempty,string"`
 }
 
 type TopicRules struct {
@@ -431,13 +391,9 @@ type TopicRules struct {
 }
 
 type SeriesRulesVotes struct {
-	// WARNING: this field may not work, until this bug is fixed:
-	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
-	Close uint64 `json:"close,omitempty"`
+	Close uint64 `json:"close,omitempty,string"`
 
-	// WARNING: this field may not work, until this bug is fixed:
-	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
-	Open uint64 `json:"open,omitempty"`
+	Open uint64 `json:"open,omitempty,string"`
 }
 
 type TopicCounters struct {

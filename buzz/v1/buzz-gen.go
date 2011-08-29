@@ -231,9 +231,7 @@ type ChiliPhotosResourceJson struct {
 
 	Video *Video `json:"video,omitempty"`
 
-	// WARNING: this field may not work, until this bug is fixed:
-	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
-	Version int64 `json:"version,omitempty"`
+	Version int64 `json:"version,omitempty,string"`
 
 	Kind string `json:"kind,omitempty"`
 
@@ -245,9 +243,7 @@ type ChiliPhotosResourceJson struct {
 
 	Title string `json:"title,omitempty"`
 
-	// WARNING: this field may not work, until this bug is fixed:
-	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
-	FileSize int64 `json:"fileSize,omitempty"`
+	FileSize int64 `json:"fileSize,omitempty,string"`
 
 	Description string `json:"description,omitempty"`
 
@@ -401,9 +397,7 @@ type Album struct {
 
 	Links *AlbumLinks `json:"links,omitempty"`
 
-	// WARNING: this field may not work, until this bug is fixed:
-	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
-	Version int64 `json:"version,omitempty"`
+	Version int64 `json:"version,omitempty,string"`
 
 	Kind string `json:"kind,omitempty"`
 
@@ -419,9 +413,7 @@ type Album struct {
 
 	Owner *AlbumOwner `json:"owner,omitempty"`
 
-	// WARNING: this field may not work, until this bug is fixed:
-	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
-	FirstPhotoId uint64 `json:"firstPhotoId,omitempty"`
+	FirstPhotoId uint64 `json:"firstPhotoId,omitempty,string"`
 }
 
 type Person struct {
@@ -571,13 +563,9 @@ type Video struct {
 
 	Status string `json:"status,omitempty"`
 
-	// WARNING: this field may not work, until this bug is fixed:
-	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
-	Duration int64 `json:"duration,omitempty"`
+	Duration int64 `json:"duration,omitempty,string"`
 
-	// WARNING: this field may not work, until this bug is fixed:
-	// http://code.google.com/p/google-api-go-client/issues/detail?id=1
-	Size uint64 `json:"size,omitempty"`
+	Size uint64 `json:"size,omitempty,string"`
 }
 
 type AlbumLite struct {

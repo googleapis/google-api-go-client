@@ -1,0 +1,262 @@
+{
+ "kind": "discovery#restDescription",
+ "id": "analytics:v2.4",
+ "name": "analytics",
+ "version": "v2.4",
+ "title": "Google Analytics API",
+ "description": "View and manage your Google Analytics data",
+ "icons": {
+  "x16": "http://www.google.com/images/icons/product/analytics-16.png",
+  "x32": "http://www.google.com/images/icons/product/analytics-32.png"
+ },
+ "documentationLink": "http://code.google.com/apis/analytics",
+ "labels": [
+  "labs"
+ ],
+ "protocol": "rest",
+ "basePath": "/analytics/v2.4/management/",
+ "parameters": {
+  "alt": {
+   "type": "string",
+   "description": "Data format for the response.",
+   "default": "atom",
+   "enum": [
+    "atom"
+   ],
+   "enumDescriptions": [
+    "Responses with Content-Type of application/atom+xml"
+   ],
+   "location": "query"
+  },
+  "fields": {
+   "type": "string",
+   "description": "Selector specifying which fields to include in a partial response.",
+   "location": "query"
+  },
+  "key": {
+   "type": "string",
+   "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
+   "location": "query"
+  },
+  "oauth_token": {
+   "type": "string",
+   "description": "OAuth 2.0 token for the current user.",
+   "location": "query"
+  },
+  "prettyPrint": {
+   "type": "boolean",
+   "description": "Returns response with indentations and line breaks.",
+   "default": "false",
+   "location": "query"
+  },
+  "userIp": {
+   "type": "string",
+   "description": "IP address of the site where the request originates. Use this if you want to enforce per-user limits.",
+   "location": "query"
+  }
+ },
+ "auth": {
+  "oauth2": {
+   "scopes": {
+    "https://www.googleapis.com/auth/analytics.readonly": {
+     "description": "View your Google Analytics data"
+    }
+   }
+  }
+ },
+ "resources": {
+  "management": {
+   "resources": {
+    "accounts": {
+     "methods": {
+      "list": {
+       "id": "analytics.management.accounts.list",
+       "path": "accounts",
+       "httpMethod": "GET",
+       "description": "Lists all accounts that a user has access to.",
+       "parameters": {
+        "max-results": {
+         "type": "string",
+         "description": "The maximum number of entries to include in this feed.",
+         "location": "query"
+        },
+        "start-index": {
+         "type": "integer",
+         "description": "An index of the first entity to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.",
+         "format": "int32",
+         "minimum": "1",
+         "location": "query"
+        }
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics.readonly"
+       ]
+      }
+     }
+    },
+    "goals": {
+     "methods": {
+      "list": {
+       "id": "analytics.management.goals.list",
+       "path": "accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/goals",
+       "httpMethod": "GET",
+       "description": "Lists goals that a user has access to.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account ID to retrieve web properties for. Can either be a specific account ID or '~all', which refers to all the accounts that user has access to.",
+         "required": true,
+         "pattern": "~all|[0-9]+",
+         "location": "path"
+        },
+        "max-results": {
+         "type": "string",
+         "description": "The maximum number of entries to include in this feed.",
+         "location": "query"
+        },
+        "profileId": {
+         "type": "string",
+         "description": "Profile ID to retrieve web properties for. Can either be a specific profile ID or '~all', which refers to all the profiles that user has access to.",
+         "required": true,
+         "pattern": "~all|[0-9]+",
+         "location": "path"
+        },
+        "start-index": {
+         "type": "integer",
+         "description": "An index of the first entity to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.",
+         "format": "int32",
+         "minimum": "1",
+         "location": "query"
+        },
+        "webPropertyId": {
+         "type": "string",
+         "description": "Web property ID to retrieve web properties for. Can either be a specific web property ID or '~all', which refers to all the web properties that user has access to.",
+         "required": true,
+         "pattern": "~all|UA-[0-9]+-[0-9]+",
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "webPropertyId",
+        "profileId"
+       ],
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics.readonly"
+       ]
+      }
+     }
+    },
+    "profiles": {
+     "methods": {
+      "list": {
+       "id": "analytics.management.profiles.list",
+       "path": "accounts/{accountId}/webproperties/{webPropertyId}/profiles",
+       "httpMethod": "GET",
+       "description": "Lists profiles that a user has access to.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account ID to retrieve web properties for. Can either be a specific account ID or '~all', which refers to all the accounts that user has access to.",
+         "required": true,
+         "pattern": "~all|[0-9]+",
+         "location": "path"
+        },
+        "max-results": {
+         "type": "string",
+         "description": "The maximum number of entries to include in this feed.",
+         "location": "query"
+        },
+        "start-index": {
+         "type": "integer",
+         "description": "An index of the first entity to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.",
+         "format": "int32",
+         "minimum": "1",
+         "location": "query"
+        },
+        "webPropertyId": {
+         "type": "string",
+         "description": "Web property ID to retrieve web properties for. Can either be a specific web property ID or '~all', which refers to all the web properties that user has access to.",
+         "required": true,
+         "pattern": "~all|UA-[0-9]+-[0-9]+",
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "webPropertyId"
+       ],
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics.readonly"
+       ]
+      }
+     }
+    },
+    "segments": {
+     "methods": {
+      "list": {
+       "id": "analytics.management.segments.list",
+       "path": "segments",
+       "httpMethod": "GET",
+       "description": "Lists advanced segments that a user has access to.",
+       "parameters": {
+        "max-results": {
+         "type": "string",
+         "description": "The maximum number of entries to include in this feed.",
+         "location": "query"
+        },
+        "start-index": {
+         "type": "integer",
+         "description": "An index of the first entity to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.",
+         "format": "int32",
+         "minimum": "1",
+         "location": "query"
+        }
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics.readonly"
+       ]
+      }
+     }
+    },
+    "webproperties": {
+     "methods": {
+      "list": {
+       "id": "analytics.management.webproperties.list",
+       "path": "accounts/{accountId}/webproperties",
+       "httpMethod": "GET",
+       "description": "Lists web properties that a user has access to.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account ID to retrieve web properties for. Can either be a specific account ID or '~all', which refers to all the accounts that user has access to.",
+         "required": true,
+         "pattern": "~all|[0-9]+",
+         "location": "path"
+        },
+        "max-results": {
+         "type": "string",
+         "description": "The maximum number of entries to include in this feed.",
+         "location": "query"
+        },
+        "start-index": {
+         "type": "integer",
+         "description": "An index of the first entity to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.",
+         "format": "int32",
+         "minimum": "1",
+         "location": "query"
+        }
+       },
+       "parameterOrder": [
+        "accountId"
+       ],
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics.readonly"
+       ]
+      }
+     }
+    }
+   }
+  }
+ }
+}

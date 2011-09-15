@@ -358,6 +358,9 @@ type ShoppingModelProductJsonV1Inventories struct {
 	// Price: Price of product inventory.
 	Price float64 `json:"price,omitempty"`
 
+	// Shipping: Shipping cost of product inventory.
+	Shipping float64 `json:"shipping,omitempty"`
+
 	// DistanceUnit: Distance unit of product inventory.
 	DistanceUnit string `json:"distanceUnit,omitempty"`
 
@@ -369,6 +372,9 @@ type ShoppingModelProductJsonV1Inventories struct {
 
 	// Channel: Channel of product inventory (one of: online, local).
 	Channel string `json:"channel,omitempty"`
+
+	// Tax: Tax of product inventory.
+	Tax float64 `json:"tax,omitempty"`
 }
 
 type ProductsShelfSpaceAds struct {
@@ -540,6 +546,13 @@ func (c *ProductsListCall) DebugSearchRequest(debugSearchRequest bool) *Products
 // Whether to return facet information as configured in the GCS account
 func (c *ProductsListCall) FacetsUseGcsConfig(facetsUseGcsConfig bool) *ProductsListCall {
 	c.opt_["facets.useGcsConfig"] = facetsUseGcsConfig
+	return c
+}
+
+// Location sets the optional parameter "location": Location used to
+// determine tax and shipping
+func (c *ProductsListCall) Location(location string) *ProductsListCall {
+	c.opt_["location"] = location
 	return c
 }
 
@@ -816,6 +829,9 @@ func (c *ProductsListCall) Do() (*Products, os.Error) {
 	if v, ok := c.opt_["facets.useGcsConfig"]; ok {
 		params.Set("facets.useGcsConfig", fmt.Sprintf("%v", v))
 	}
+	if v, ok := c.opt_["location"]; ok {
+		params.Set("location", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["relatedQueries.useGcsConfig"]; ok {
 		params.Set("relatedQueries.useGcsConfig", fmt.Sprintf("%v", v))
 	}
@@ -1050,6 +1066,11 @@ func (c *ProductsListCall) Do() (*Products, os.Error) {
 	//       "location": "query",
 	//       "type": "string"
 	//     },
+	//     "location": {
+	//       "description": "Location used to determine tax and shipping",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "maxResults": {
 	//       "description": "Maximum number of results to return",
 	//       "format": "uint32",
@@ -1261,6 +1282,13 @@ func (c *ProductsGetCall) DebugSearchRequest(debugSearchRequest bool) *ProductsG
 	return c
 }
 
+// Location sets the optional parameter "location": Location used to
+// determine tax and shipping
+func (c *ProductsGetCall) Location(location string) *ProductsGetCall {
+	c.opt_["location"] = location
+	return c
+}
+
 // RecommendationsEnabled sets the optional parameter
 // "recommendations.enabled": Whether to return recommendation
 // information
@@ -1339,6 +1367,9 @@ func (c *ProductsGetCall) Do() (*Product, os.Error) {
 	}
 	if v, ok := c.opt_["debug.searchRequest"]; ok {
 		params.Set("debug.searchRequest", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["location"]; ok {
+		params.Set("location", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["recommendations.enabled"]; ok {
 		params.Set("recommendations.enabled", fmt.Sprintf("%v", v))
@@ -1441,6 +1472,11 @@ func (c *ProductsGetCall) Do() (*Product, os.Error) {
 	//       "description": "Google Internal",
 	//       "location": "query",
 	//       "type": "boolean"
+	//     },
+	//     "location": {
+	//       "description": "Location used to determine tax and shipping",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "productFields": {
 	//       "description": "Google Internal",

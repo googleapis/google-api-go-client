@@ -1,0 +1,947 @@
+{
+ "kind": "discovery#restDescription",
+ "id": "analytics:v3",
+ "name": "analytics",
+ "version": "v3",
+ "title": "Google Analytics API",
+ "description": "View and manage your Google Analytics data",
+ "icons": {
+  "x16": "http://www.google.com/images/icons/product/analytics-16.png",
+  "x32": "http://www.google.com/images/icons/product/analytics-32.png"
+ },
+ "documentationLink": "http://code.google.com/apis/analytics",
+ "labels": [
+  "labs"
+ ],
+ "protocol": "rest",
+ "basePath": "/analytics/v3/management/",
+ "parameters": {
+  "alt": {
+   "type": "string",
+   "description": "Data format for the response.",
+   "default": "json",
+   "enum": [
+    "json"
+   ],
+   "enumDescriptions": [
+    "Responses with Content-Type of application/json"
+   ],
+   "location": "query"
+  },
+  "fields": {
+   "type": "string",
+   "description": "Selector specifying which fields to include in a partial response.",
+   "location": "query"
+  },
+  "key": {
+   "type": "string",
+   "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
+   "location": "query"
+  },
+  "oauth_token": {
+   "type": "string",
+   "description": "OAuth 2.0 token for the current user.",
+   "location": "query"
+  },
+  "prettyPrint": {
+   "type": "boolean",
+   "description": "Returns response with indentations and line breaks.",
+   "default": "false",
+   "location": "query"
+  },
+  "userIp": {
+   "type": "string",
+   "description": "IP address of the site where the request originates. Use this if you want to enforce per-user limits.",
+   "location": "query"
+  }
+ },
+ "auth": {
+  "oauth2": {
+   "scopes": {
+    "https://www.googleapis.com/auth/analytics.readonly": {
+     "description": "View your Google Analytics data"
+    }
+   }
+  }
+ },
+ "schemas": {
+  "Account": {
+   "id": "Account",
+   "type": "object",
+   "properties": {
+    "childLink": {
+     "type": "object",
+     "description": "Child link for an account entry. Points to the list of web properties for this account.",
+     "properties": {
+      "href": {
+       "type": "string",
+       "description": "Link to the list of web properties for this account."
+      },
+      "type": {
+       "type": "string",
+       "description": "Type of the child link. Its value is \"analytics#webproperties\".",
+       "default": "analytics#webproperties"
+      }
+     }
+    },
+    "created": {
+     "type": "string",
+     "description": "Time the account was created.",
+     "format": "date-time"
+    },
+    "id": {
+     "type": "string",
+     "description": "Account ID."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Resource type for Analytics account.",
+     "default": "analytics#account"
+    },
+    "name": {
+     "type": "string",
+     "description": "Account name."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "Link for this account."
+    },
+    "updated": {
+     "type": "string",
+     "description": "Time the account was last modified.",
+     "format": "date-time"
+    }
+   }
+  },
+  "Accounts": {
+   "id": "Accounts",
+   "type": "object",
+   "properties": {
+    "items": {
+     "type": "array",
+     "description": "A list of accounts.",
+     "items": {
+      "$ref": "Account"
+     }
+    },
+    "itemsPerPage": {
+     "type": "integer",
+     "description": "The maximum number of entries the response can contain, regardless of the actual number of entries returned. Its value ranges from 1 to 10,000 with a value of 1000 by default, or otherwise specified by the max-results query parameter.",
+     "format": "int32"
+    },
+    "kind": {
+     "type": "string",
+     "description": "Resource type.",
+     "default": "analytics#accounts"
+    },
+    "nextLink": {
+     "type": "string",
+     "description": "Next link for this account collection."
+    },
+    "previousLink": {
+     "type": "string",
+     "description": "Previous link for this account collection."
+    },
+    "startIndex": {
+     "type": "integer",
+     "description": "The starting index of the entries, which is 1 by default or otherwise specified by the start-index query parameter.",
+     "format": "int32"
+    },
+    "totalResults": {
+     "type": "integer",
+     "description": "The total number of results for the query, regardless of the number of results in the response.",
+     "format": "int32"
+    },
+    "username": {
+     "type": "string",
+     "description": "Email ID of the authenticated user"
+    }
+   }
+  },
+  "Goal": {
+   "id": "Goal",
+   "type": "object",
+   "properties": {
+    "accountId": {
+     "type": "string",
+     "description": "Account ID to which this goal belongs."
+    },
+    "active": {
+     "type": "boolean",
+     "description": "Determines whether this goal is active."
+    },
+    "created": {
+     "type": "string",
+     "description": "Time this goal was created.",
+     "format": "date-time"
+    },
+    "eventDetails": {
+     "type": "object",
+     "description": "Details for the goal of the type EVENT.",
+     "properties": {
+      "eventConditions": {
+       "type": "array",
+       "items": {
+        "type": "object",
+        "properties": {
+         "comparisonType": {
+          "type": "string",
+          "description": "Type of comparison. Possible values are LESS_THAN, GREATER_THAN or EQUAL."
+         },
+         "comparisonValue": {
+          "type": "string",
+          "description": "Value used for this comparison.",
+          "format": "int64"
+         },
+         "expression": {
+          "type": "string",
+          "description": "Expression used for this match."
+         },
+         "matchType": {
+          "type": "string",
+          "description": "Type of the match to be performed. Possible values are REGEXP, BEGINS_WITH, or EXACT."
+         },
+         "type": {
+          "type": "string",
+          "description": "Type of this event condition. Possible values are CATEGORY, ACTION, LABEL, or VALUE."
+         }
+        }
+       }
+      },
+      "useEventValue": {
+       "type": "boolean",
+       "description": "Determines if the event value should be used as the value for this goal."
+      }
+     }
+    },
+    "id": {
+     "type": "string",
+     "description": "Goal ID."
+    },
+    "internalWebPropertyId": {
+     "type": "string",
+     "description": "Internal ID for the web property to which this goal belongs."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Resource type for an Analytics goal.",
+     "default": "analytics#goal"
+    },
+    "name": {
+     "type": "string",
+     "description": "Goal name."
+    },
+    "parentLink": {
+     "type": "object",
+     "description": "Parent link for a goal. Points to the profile to which this goal belongs.",
+     "properties": {
+      "href": {
+       "type": "string"
+      },
+      "type": {
+       "type": "string",
+       "default": "analytics#profile"
+      }
+     }
+    },
+    "profileId": {
+     "type": "string",
+     "description": "Profile ID to which this goal belongs."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "Link for this goal."
+    },
+    "type": {
+     "type": "string",
+     "description": "Goal type. Possible values are URL_DESTINATION, VISIT_TIME_ON_SITE, VISIT_NUM_PAGES, AND EVENT."
+    },
+    "updated": {
+     "type": "string",
+     "description": "Time this goal was last modified.",
+     "format": "date-time"
+    },
+    "urlDestinationDetails": {
+     "type": "object",
+     "description": "Details for the goal of the type URL_DESTINATION.",
+     "properties": {
+      "caseSensitive": {
+       "type": "boolean",
+       "description": "Determines if the goal URL must exactly match the capitalization of visited URLs."
+      },
+      "firstStepRequired": {
+       "type": "boolean",
+       "description": "Determines if the first step in this goal is required."
+      },
+      "matchType": {
+       "type": "string",
+       "description": "Match type for the goal URL. Possible values are HEAD, EXACT, or REGEX."
+      },
+      "steps": {
+       "type": "array",
+       "description": "List of steps configured for this goal funnel.",
+       "items": {
+        "type": "object",
+        "properties": {
+         "name": {
+          "type": "string",
+          "description": "Step name."
+         },
+         "number": {
+          "type": "integer",
+          "description": "Step number.",
+          "format": "int32"
+         },
+         "url": {
+          "type": "string",
+          "description": "URL for this step."
+         }
+        }
+       }
+      },
+      "url": {
+       "type": "string",
+       "description": "URL for this goal."
+      }
+     }
+    },
+    "value": {
+     "type": "number",
+     "description": "Goal value.",
+     "format": "float"
+    },
+    "visitNumPagesDetails": {
+     "type": "object",
+     "description": "Details for the goal of the type VISIT_NUM_PAGES.",
+     "properties": {
+      "comparisonType": {
+       "type": "string",
+       "description": "Type of comparison. Possible values are LESS_THAN, GREATER_THAN, or EQUAL."
+      },
+      "comparisonValue": {
+       "type": "string",
+       "description": "Value used for this comparison.",
+       "format": "int64"
+      }
+     }
+    },
+    "visitTimeOnSiteDetails": {
+     "type": "object",
+     "description": "Details for the goal of the type VISIT_TIME_ON_SITE.",
+     "properties": {
+      "comparisonType": {
+       "type": "string",
+       "description": "Type of comparison. Possible values are LESS_THAN or GREATER_THAN."
+      },
+      "comparisonValue": {
+       "type": "string",
+       "description": "Value used for this comparison.",
+       "format": "int64"
+      }
+     }
+    },
+    "webPropertyId": {
+     "type": "string",
+     "description": "Web property ID to which this goal belongs. The web property ID is of the form UA-XXXXX-YY."
+    }
+   }
+  },
+  "Goals": {
+   "id": "Goals",
+   "type": "object",
+   "properties": {
+    "items": {
+     "type": "array",
+     "description": "A list of goals.",
+     "items": {
+      "$ref": "Goal"
+     }
+    },
+    "itemsPerPage": {
+     "type": "integer",
+     "description": "The maximum number of resources the response can contain, regardless of the actual number of resources returned. Its value ranges from 1 to 10,000 with a value of 1000 by default, or otherwise specified by the max-results query parameter.",
+     "format": "int32"
+    },
+    "kind": {
+     "type": "string",
+     "description": "Resource type.",
+     "default": "analytics#goals"
+    },
+    "nextLink": {
+     "type": "string",
+     "description": "Link to next page for this goal collection."
+    },
+    "previousLink": {
+     "type": "string",
+     "description": "Link to previous page for this goal collection."
+    },
+    "startIndex": {
+     "type": "integer",
+     "description": "The starting index of the resources, which is 1 by default or otherwise specified by the start-index query parameter.",
+     "format": "int32"
+    },
+    "totalResults": {
+     "type": "integer",
+     "description": "The total number of results for the query, regardless of the number of resources in the result.",
+     "format": "int32"
+    },
+    "username": {
+     "type": "string",
+     "description": "Email ID of the authenticated user"
+    }
+   }
+  },
+  "Profile": {
+   "id": "Profile",
+   "type": "object",
+   "properties": {
+    "accountId": {
+     "type": "string",
+     "description": "Account ID to which this profile belongs."
+    },
+    "childLink": {
+     "type": "object",
+     "description": "Child link for this profile. Points to the list of goals for this profile.",
+     "properties": {
+      "href": {
+       "type": "string"
+      },
+      "type": {
+       "type": "string",
+       "default": "analytics#goals"
+      }
+     }
+    },
+    "created": {
+     "type": "string",
+     "description": "Time this profile was created.",
+     "format": "date-time"
+    },
+    "currency": {
+     "type": "string",
+     "description": "The currency type associated with this profile."
+    },
+    "defaultPage": {
+     "type": "string",
+     "description": "Default page for this profile."
+    },
+    "excludeQueryParameters": {
+     "type": "string",
+     "description": "The query parameters that are excluded from this profile."
+    },
+    "id": {
+     "type": "string",
+     "description": "Profile ID."
+    },
+    "internalWebPropertyId": {
+     "type": "string",
+     "description": "Internal ID for the web property to which this profile belongs."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Resource type for Analytics profile.",
+     "default": "analytics#profile"
+    },
+    "name": {
+     "type": "string",
+     "description": "Name of this profile."
+    },
+    "parentLink": {
+     "type": "object",
+     "description": "Parent link for this profile. Points to the web property to which this profile belongs.",
+     "properties": {
+      "href": {
+       "type": "string"
+      },
+      "type": {
+       "type": "string",
+       "default": "analytics#webproperty"
+      }
+     }
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "Link for this profile."
+    },
+    "siteSearchCategoryParameters": {
+     "type": "string",
+     "description": "Site search category parameters for this profile."
+    },
+    "siteSearchQueryParameters": {
+     "type": "string",
+     "description": "The site search query parameters for this profile."
+    },
+    "timezone": {
+     "type": "string",
+     "description": "Time zone for which this profile has been configured."
+    },
+    "updated": {
+     "type": "string",
+     "description": "Time this profile was last modified.",
+     "format": "date-time"
+    },
+    "webPropertyId": {
+     "type": "string",
+     "description": "Web property ID of the form UA-XXXXX-YY to which this profile belongs."
+    }
+   }
+  },
+  "Profiles": {
+   "id": "Profiles",
+   "type": "object",
+   "properties": {
+    "items": {
+     "type": "array",
+     "description": "A list of profiles.",
+     "items": {
+      "$ref": "Profile"
+     }
+    },
+    "itemsPerPage": {
+     "type": "integer",
+     "description": "The maximum number of resources the response can contain, regardless of the actual number of resources returned. Its value ranges from 1 to 10,000 with a value of 1000 by default, or otherwise specified by the max-results query parameter.",
+     "format": "int32"
+    },
+    "kind": {
+     "type": "string",
+     "description": "Resource type for a profile.",
+     "default": "analytics#profiles"
+    },
+    "nextLink": {
+     "type": "string",
+     "description": "Link to next page for this profile collection."
+    },
+    "previousLink": {
+     "type": "string",
+     "description": "Link to previous page for this profile collection."
+    },
+    "startIndex": {
+     "type": "integer",
+     "description": "The starting index of the resources, which is 1 by default or otherwise specified by the start-index query parameter.",
+     "format": "int32"
+    },
+    "totalResults": {
+     "type": "integer",
+     "description": "The total number of results for the query, regardless of the number of results in the response.",
+     "format": "int32"
+    },
+    "username": {
+     "type": "string",
+     "description": "Email ID of the authenticated user"
+    }
+   }
+  },
+  "Segment": {
+   "id": "Segment",
+   "type": "object",
+   "properties": {
+    "created": {
+     "type": "string",
+     "description": "Time the advanced segment was created.",
+     "format": "date-time"
+    },
+    "definition": {
+     "type": "string",
+     "description": "Advanced segment definition."
+    },
+    "id": {
+     "type": "string",
+     "description": "Advanced segment ID."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Resource type for Analytics advanced segment.",
+     "default": "analytics#segment"
+    },
+    "name": {
+     "type": "string",
+     "description": "Advanced segment name."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "Link for this advanced segment."
+    },
+    "updated": {
+     "type": "string",
+     "description": "Time the advanced segment was last modified.",
+     "format": "date-time"
+    }
+   }
+  },
+  "Segments": {
+   "id": "Segments",
+   "type": "object",
+   "properties": {
+    "items": {
+     "type": "array",
+     "description": "A list of advanced segments.",
+     "items": {
+      "$ref": "Segment"
+     }
+    },
+    "itemsPerPage": {
+     "type": "integer",
+     "description": "The maximum number of resources the response can contain, regardless of the actual number of resources returned. Its value ranges from 1 to 10,000 with a value of 1000 by default, or otherwise specified by the max-results query parameter.",
+     "format": "int32"
+    },
+    "kind": {
+     "type": "string",
+     "description": "Resource type for advanced segments.",
+     "default": "analytics#segments"
+    },
+    "nextLink": {
+     "type": "string",
+     "description": "Link to next page for this advanced segment collection."
+    },
+    "previousLink": {
+     "type": "string",
+     "description": "Link to previous page for this advanced segment collection."
+    },
+    "startIndex": {
+     "type": "integer",
+     "description": "The starting index of the resources, which is 1 by default or otherwise specified by the start-index query parameter.",
+     "format": "int32"
+    },
+    "totalResults": {
+     "type": "integer",
+     "description": "The total number of results for the query, regardless of the number of results in the response.",
+     "format": "int32"
+    },
+    "username": {
+     "type": "string",
+     "description": "Email ID of the authenticated user"
+    }
+   }
+  },
+  "Webproperties": {
+   "id": "Webproperties",
+   "type": "object",
+   "properties": {
+    "items": {
+     "type": "array",
+     "description": "A list of web properties.",
+     "items": {
+      "$ref": "Webproperty"
+     }
+    },
+    "itemsPerPage": {
+     "type": "integer",
+     "description": "The maximum number of resources the response can contain, regardless of the actual number of resources returned. Its value ranges from 1 to 10,000 with a value of 1000 by default, or otherwise specified by the max-results query parameter.",
+     "format": "int32"
+    },
+    "kind": {
+     "type": "string",
+     "description": "Resource type.",
+     "default": "analytics#webproperties"
+    },
+    "nextLink": {
+     "type": "string",
+     "description": "Link to next page for this web property collection."
+    },
+    "previousLink": {
+     "type": "string",
+     "description": "Link to previous page for this web property collection."
+    },
+    "startIndex": {
+     "type": "integer",
+     "description": "The starting index of the resources, which is 1 by default or otherwise specified by the start-index query parameter.",
+     "format": "int32"
+    },
+    "totalResults": {
+     "type": "integer",
+     "description": "The total number of results for the query, regardless of the number of results in the response.",
+     "format": "int32"
+    },
+    "username": {
+     "type": "string",
+     "description": "Email ID of the authenticated user"
+    }
+   }
+  },
+  "Webproperty": {
+   "id": "Webproperty",
+   "type": "object",
+   "properties": {
+    "accountId": {
+     "type": "string",
+     "description": "Account ID to which this web property belongs."
+    },
+    "childLink": {
+     "type": "object",
+     "description": "Child link for this web property. Points to the list of profiles for this web property.",
+     "properties": {
+      "href": {
+       "type": "string",
+       "description": "Link to the list of profiles for this web property."
+      },
+      "type": {
+       "type": "string",
+       "description": "Type of the parent link. Its value is \"analytics#profiles\".",
+       "default": "analytics#profiles"
+      }
+     }
+    },
+    "created": {
+     "type": "string",
+     "description": "Time this web property was created.",
+     "format": "date-time"
+    },
+    "id": {
+     "type": "string",
+     "description": "Web property ID of the form UA-XXXXX-YY."
+    },
+    "internalWebPropertyId": {
+     "type": "string",
+     "description": "Internal ID for this web property."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Resource type for Analytics WebProperty.",
+     "default": "analytics#webproperty"
+    },
+    "name": {
+     "type": "string",
+     "description": "Name of this web property."
+    },
+    "parentLink": {
+     "type": "object",
+     "description": "Parent link for this web property. Points to the account to which this web property belongs.",
+     "properties": {
+      "href": {
+       "type": "string",
+       "description": "Link to the account for this web property."
+      },
+      "type": {
+       "type": "string",
+       "description": "Type of the parent link. Its value is \"analytics#account\".",
+       "default": "analytics#account"
+      }
+     }
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "Link for this web property."
+    },
+    "updated": {
+     "type": "string",
+     "description": "Time this web property was last modified.",
+     "format": "date-time"
+    },
+    "websiteUrl": {
+     "type": "string",
+     "description": "Website url for this web property."
+    }
+   }
+  }
+ },
+ "resources": {
+  "management": {
+   "resources": {
+    "accounts": {
+     "methods": {
+      "list": {
+       "id": "analytics.management.accounts.list",
+       "path": "accounts",
+       "httpMethod": "GET",
+       "description": "Lists all accounts to which the user has access.",
+       "parameters": {
+        "max-results": {
+         "type": "string",
+         "description": "The maximum number of entries to include in this response.",
+         "location": "query"
+        },
+        "start-index": {
+         "type": "integer",
+         "description": "An index of the first entity to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.",
+         "format": "int32",
+         "minimum": "1",
+         "location": "query"
+        }
+       },
+       "response": {
+        "$ref": "Accounts"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics.readonly"
+       ]
+      }
+     }
+    },
+    "goals": {
+     "methods": {
+      "list": {
+       "id": "analytics.management.goals.list",
+       "path": "accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/goals",
+       "httpMethod": "GET",
+       "description": "Lists goals to which the user has access.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account ID for the web properties to retrieve. Can either be a specific account ID or '~all', which refers to all the accounts to which the user has access.",
+         "required": true,
+         "pattern": "~all|[0-9]+",
+         "location": "path"
+        },
+        "max-results": {
+         "type": "string",
+         "description": "The maximum number of entries to include in this response.",
+         "location": "query"
+        },
+        "profileId": {
+         "type": "string",
+         "description": "Profile ID for the web properties to retrieve. Can either be a specific profile ID or '~all', which refers to all the profiles to which the user has access.",
+         "required": true,
+         "pattern": "~all|[0-9]+",
+         "location": "path"
+        },
+        "start-index": {
+         "type": "integer",
+         "description": "An index of the first entity to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.",
+         "format": "int32",
+         "minimum": "1",
+         "location": "query"
+        },
+        "webPropertyId": {
+         "type": "string",
+         "description": "Web property ID for the web properties to retrieve. Can either be a specific web property ID or '~all', which refers to all the web properties to which the user has access.",
+         "required": true,
+         "pattern": "~all|UA-[0-9]+-[0-9]+",
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "webPropertyId",
+        "profileId"
+       ],
+       "response": {
+        "$ref": "Goals"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics.readonly"
+       ]
+      }
+     }
+    },
+    "profiles": {
+     "methods": {
+      "list": {
+       "id": "analytics.management.profiles.list",
+       "path": "accounts/{accountId}/webproperties/{webPropertyId}/profiles",
+       "httpMethod": "GET",
+       "description": "Lists profiles to which the user has access.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account ID for the web properties to retrieve. Can either be a specific account ID or '~all', which refers to all the accounts to which the user has access.",
+         "required": true,
+         "pattern": "~all|[0-9]+",
+         "location": "path"
+        },
+        "max-results": {
+         "type": "string",
+         "description": "The maximum number of entries to include in this response.",
+         "location": "query"
+        },
+        "start-index": {
+         "type": "integer",
+         "description": "An index of the first entity to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.",
+         "format": "int32",
+         "minimum": "1",
+         "location": "query"
+        },
+        "webPropertyId": {
+         "type": "string",
+         "description": "Web property ID for the web properties to retrieve. Can either be a specific web property ID or '~all', which refers to all the web properties to which the user has access.",
+         "required": true,
+         "pattern": "~all|UA-[0-9]+-[0-9]+",
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "webPropertyId"
+       ],
+       "response": {
+        "$ref": "Profiles"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics.readonly"
+       ]
+      }
+     }
+    },
+    "segments": {
+     "methods": {
+      "list": {
+       "id": "analytics.management.segments.list",
+       "path": "segments",
+       "httpMethod": "GET",
+       "description": "Lists advanced segments to which the user has access.",
+       "parameters": {
+        "max-results": {
+         "type": "string",
+         "description": "The maximum number of entries to include in this response.",
+         "location": "query"
+        },
+        "start-index": {
+         "type": "integer",
+         "description": "An index of the first entity to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.",
+         "format": "int32",
+         "minimum": "1",
+         "location": "query"
+        }
+       },
+       "response": {
+        "$ref": "Segments"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics.readonly"
+       ]
+      }
+     }
+    },
+    "webproperties": {
+     "methods": {
+      "list": {
+       "id": "analytics.management.webproperties.list",
+       "path": "accounts/{accountId}/webproperties",
+       "httpMethod": "GET",
+       "description": "Lists web properties to which the user has access.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account ID for the web properties to retrieve. Can either be a specific account ID or '~all', which refers to all the accounts to which user has access.",
+         "required": true,
+         "pattern": "~all|[0-9]+",
+         "location": "path"
+        },
+        "max-results": {
+         "type": "string",
+         "description": "The maximum number of entries to include in this response.",
+         "location": "query"
+        },
+        "start-index": {
+         "type": "integer",
+         "description": "An index of the first entity to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.",
+         "format": "int32",
+         "minimum": "1",
+         "location": "query"
+        }
+       },
+       "parameterOrder": [
+        "accountId"
+       ],
+       "response": {
+        "$ref": "Webproperties"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics.readonly"
+       ]
+      }
+     }
+    }
+   }
+  }
+ }
+}

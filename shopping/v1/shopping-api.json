@@ -599,9 +599,19 @@
         "description": "Price of product inventory.",
         "format": "float"
        },
+       "shipping": {
+        "type": "number",
+        "description": "Shipping cost of product inventory.",
+        "format": "float"
+       },
        "storeId": {
         "type": "string",
         "description": "Store ID of product inventory."
+       },
+       "tax": {
+        "type": "number",
+        "description": "Tax of product inventory.",
+        "format": "float"
        }
       }
      }
@@ -684,6 +694,11 @@
       "debug.searchResponse": {
        "type": "boolean",
        "description": "Google Internal",
+       "location": "query"
+      },
+      "location": {
+       "type": "string",
+       "description": "Location used to determine tax and shipping",
        "location": "query"
       },
       "productFields": {
@@ -859,6 +874,11 @@
       "language": {
        "type": "string",
        "description": "Language restriction (BCP 47)",
+       "location": "query"
+      },
+      "location": {
+       "type": "string",
+       "description": "Location used to determine tax and shipping",
        "location": "query"
       },
       "maxResults": {

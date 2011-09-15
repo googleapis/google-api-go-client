@@ -216,6 +216,14 @@ func (c *ActivitiesListCall) StartTime(startTime string) *ActivitiesListCall {
 	return c
 }
 
+// ActorIpAddress sets the optional parameter "actorIpAddress": IP
+// Address of host where the event was performed. Supports both IPv4 and
+// IPv6 addresses.
+func (c *ActivitiesListCall) ActorIpAddress(actorIpAddress string) *ActivitiesListCall {
+	c.opt_["actorIpAddress"] = actorIpAddress
+	return c
+}
+
 func (c *ActivitiesListCall) Do() (*Activities, os.Error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -246,6 +254,9 @@ func (c *ActivitiesListCall) Do() (*Activities, os.Error) {
 	}
 	if v, ok := c.opt_["startTime"]; ok {
 		params.Set("startTime", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["actorIpAddress"]; ok {
+		params.Set("actorIpAddress", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/apps/reporting/audit/v1/", "{customerId}/{applicationId}")
 	urls = strings.Replace(urls, "{customerId}", cleanPathString(c.customerId), 1)
@@ -282,6 +293,11 @@ func (c *ActivitiesListCall) Do() (*Activities, os.Error) {
 	//     },
 	//     "actorEmail": {
 	//       "description": "Email address of the user who performed the action.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "actorIpAddress": {
+	//       "description": "IP Address of host where the event was performed. Supports both IPv4 and IPv6 addresses.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

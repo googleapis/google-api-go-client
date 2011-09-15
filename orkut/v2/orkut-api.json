@@ -1,0 +1,965 @@
+{
+ "kind": "discovery#restDescription",
+ "id": "orkut:v2",
+ "name": "orkut",
+ "version": "v2",
+ "title": "Orkut API",
+ "description": "Lets you manage activities, comments and badges in orkut. More stuff coming in time.",
+ "icons": {
+  "x16": "http://www.google.com/images/icons/product/orkut-16.png",
+  "x32": "http://www.google.com/images/icons/product/orkut-32.png"
+ },
+ "documentationLink": "http://code.google.com/apis/orkut/v2/",
+ "labels": [
+  "labs"
+ ],
+ "protocol": "rest",
+ "basePath": "/orkut/v2/",
+ "parameters": {
+  "alt": {
+   "type": "string",
+   "description": "Data format for the response.",
+   "default": "json",
+   "enum": [
+    "json"
+   ],
+   "enumDescriptions": [
+    "Responses with Content-Type of application/json"
+   ],
+   "location": "query"
+  },
+  "fields": {
+   "type": "string",
+   "description": "Selector specifying which fields to include in a partial response.",
+   "location": "query"
+  },
+  "key": {
+   "type": "string",
+   "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
+   "location": "query"
+  },
+  "oauth_token": {
+   "type": "string",
+   "description": "OAuth 2.0 token for the current user.",
+   "location": "query"
+  },
+  "prettyPrint": {
+   "type": "boolean",
+   "description": "Returns response with indentations and line breaks.",
+   "default": "true",
+   "location": "query"
+  },
+  "userIp": {
+   "type": "string",
+   "description": "IP address of the site where the request originates. Use this if you want to enforce per-user limits.",
+   "location": "query"
+  }
+ },
+ "auth": {
+  "oauth2": {
+   "scopes": {
+    "https://www.googleapis.com/auth/orkut": {
+     "description": "Manage your Orkut activity"
+    },
+    "https://www.googleapis.com/auth/orkut.readonly": {
+     "description": "View your Orkut data"
+    }
+   }
+  }
+ },
+ "schemas": {
+  "Acl": {
+   "id": "Acl",
+   "type": "object",
+   "properties": {
+    "description": {
+     "type": "string",
+     "description": "Human readable description of the access granted."
+    },
+    "items": {
+     "type": "array",
+     "description": "The list of ACL entries.",
+     "items": {
+      "type": "object",
+      "properties": {
+       "id": {
+        "type": "string",
+        "description": "The ID of the entity. For entities of type \"person\" or \"circle\", this is the ID of the resource. For other types, this will be unset."
+       },
+       "type": {
+        "type": "string",
+        "description": "The type of entity to whom access is granted."
+       }
+      }
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies this resource as an access control list. Value: \"orkut#acl\"",
+     "default": "orkut#acl"
+    },
+    "totalParticipants": {
+     "type": "integer",
+     "description": "The total count of participants of the parent resource.",
+     "format": "int32"
+    }
+   }
+  },
+  "Activity": {
+   "id": "Activity",
+   "type": "object",
+   "properties": {
+    "access": {
+     "$ref": "Acl",
+     "description": "Identifies who has access to see this activity."
+    },
+    "actor": {
+     "$ref": "OrkutAuthorResource",
+     "description": "The person who performed the activity."
+    },
+    "id": {
+     "type": "string",
+     "description": "The ID for the activity."
+    },
+    "kind": {
+     "type": "string",
+     "description": "The kind of activity. Always orkut#activity.",
+     "default": "orkut#activity"
+    },
+    "links": {
+     "type": "array",
+     "description": "Links to resources related to this activity.",
+     "items": {
+      "$ref": "OrkutLinkResource"
+     }
+    },
+    "object": {
+     "type": "object",
+     "description": "The activity's object.",
+     "properties": {
+      "content": {
+       "type": "string",
+       "description": "The HTML-formatted content, suitable for display. When updating an activity's content, post the changes to this property, using the value of originalContent as a starting point. If the update is successful, the server adds HTML formatting and responds with this formatted content."
+      },
+      "items": {
+       "type": "array",
+       "description": "The list of additional items.",
+       "items": {
+        "$ref": "OrkutActivityobjectsResource"
+       }
+      },
+      "objectType": {
+       "type": "string",
+       "description": "The type of the object affected by the activity. Clients can use this information to style the rendered activity object differently depending on the content."
+      },
+      "replies": {
+       "type": "object",
+       "description": "Comments in reply to this activity.",
+       "properties": {
+        "items": {
+         "type": "array",
+         "description": "The list of comments.",
+         "items": {
+          "$ref": "Comment"
+         }
+        },
+        "totalItems": {
+         "type": "string",
+         "description": "Total number of comments.",
+         "format": "uint64"
+        },
+        "url": {
+         "type": "string",
+         "description": "URL for the collection of comments in reply to this activity."
+        }
+       }
+      }
+     }
+    },
+    "published": {
+     "type": "string",
+     "description": "The time at which the activity was initially published.",
+     "format": "date-time"
+    },
+    "title": {
+     "type": "string",
+     "description": "Title of the activity."
+    },
+    "updated": {
+     "type": "string",
+     "description": "The time at which the activity was last updated.",
+     "format": "date-time"
+    },
+    "verb": {
+     "type": "string",
+     "description": "This activity's verb, indicating what action was performed. Possible values are:  \n- add - User added new content to profile or album, e.g. video, photo. \n- post - User publish content to the stream, e.g. status, scrap. \n- update - User commented on an activity. \n- make-friend - User added a new friend. \n- birthday - User has a birthday."
+    }
+   }
+  },
+  "ActivityList": {
+   "id": "ActivityList",
+   "type": "object",
+   "properties": {
+    "items": {
+     "type": "array",
+     "description": "List of activities retrieved.",
+     "items": {
+      "$ref": "Activity"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies this resource as a collection of activities. Value: \"orkut#activityList\"",
+     "default": "orkut#activityList"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "The value of pageToken query parameter in activities.list request to get the next page, if there are more to retrieve."
+    }
+   }
+  },
+  "Badge": {
+   "id": "Badge",
+   "type": "object",
+   "properties": {
+    "badgeLargeLogo": {
+     "type": "string",
+     "description": "The URL for the 64x64 badge logo."
+    },
+    "badgeSmallLogo": {
+     "type": "string",
+     "description": "The URL for the 24x24 badge logo."
+    },
+    "caption": {
+     "type": "string",
+     "description": "The name of the badge, suitable for display."
+    },
+    "description": {
+     "type": "string",
+     "description": "The description for the badge, suitable for display."
+    },
+    "id": {
+     "type": "string",
+     "description": "The unique ID for the badge.",
+     "format": "int64"
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies this resource as a badge. Value: \"orkut#badge\"",
+     "default": "orkut#badge"
+    },
+    "sponsorLogo": {
+     "type": "string",
+     "description": "The URL for the 32x32 badge sponsor logo."
+    },
+    "sponsorName": {
+     "type": "string",
+     "description": "The name of the badge sponsor, suitable for display."
+    },
+    "sponsorUrl": {
+     "type": "string",
+     "description": "The URL for the badge sponsor."
+    }
+   }
+  },
+  "BadgeList": {
+   "id": "BadgeList",
+   "type": "object",
+   "properties": {
+    "items": {
+     "type": "array",
+     "description": "List of badges retrieved.",
+     "items": {
+      "$ref": "Badge"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies this resource as a collection of badges. Value: \"orkut#badgeList\"",
+     "default": "orkut#badgeList"
+    }
+   }
+  },
+  "Comment": {
+   "id": "Comment",
+   "type": "object",
+   "properties": {
+    "actor": {
+     "$ref": "OrkutAuthorResource",
+     "description": "The person who posted the comment."
+    },
+    "content": {
+     "type": "string",
+     "description": "The content of the comment in text/html"
+    },
+    "id": {
+     "type": "string",
+     "description": "The unique ID for the comment."
+    },
+    "inReplyTo": {
+     "type": "object",
+     "description": "Link to the original activity where this comment was posted.",
+     "properties": {
+      "href": {
+       "type": "string",
+       "description": "Link to the post on activity stream being commented."
+      },
+      "ref": {
+       "type": "string",
+       "description": "Unique identifier of the post on activity stream being commented."
+      },
+      "rel": {
+       "type": "string",
+       "description": "Relationship between the comment and the post on activity stream being commented. Always inReplyTo.",
+       "default": "inReplyTo"
+      },
+      "source": {
+       "type": "string",
+       "description": "URL of the source of the post in the activity stream identified by inReplyTo.ref. [not yet implemented]."
+      },
+      "type": {
+       "type": "string",
+       "description": "Type of the post on activity stream being commented. Always text/html."
+      }
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies this resource as a comment. Value: \"orkut#comment\"",
+     "default": "orkut#comment"
+    },
+    "links": {
+     "type": "array",
+     "description": "List of resources for the comment.",
+     "items": {
+      "$ref": "OrkutLinkResource"
+     }
+    },
+    "published": {
+     "type": "string",
+     "description": "The time the comment was initially published, in RFC 3339 format.",
+     "format": "date-time"
+    }
+   }
+  },
+  "CommentList": {
+   "id": "CommentList",
+   "type": "object",
+   "properties": {
+    "items": {
+     "type": "array",
+     "description": "List of comments retrieved.",
+     "items": {
+      "$ref": "Comment"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies this resource as a collection of comments. Value: \"orkut#commentList\"",
+     "default": "orkut#commentList"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "The value of pageToken query parameter in comments.list request to get the next page, if there are more to retrieve."
+    },
+    "previousPageToken": {
+     "type": "string",
+     "description": "The value of pageToken query parameter in comments.list request to get the previous page, if there are more to retrieve."
+    }
+   }
+  },
+  "Counters": {
+   "id": "Counters",
+   "type": "object",
+   "properties": {
+    "items": {
+     "type": "array",
+     "description": "List of counters retrieved.",
+     "items": {
+      "$ref": "OrkutCounterResource"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies this resource as a collection of counters. Value: \"orkut#counters\"",
+     "default": "orkut#counters"
+    }
+   }
+  },
+  "OrkutActivityobjectsResource": {
+   "id": "OrkutActivityobjectsResource",
+   "type": "object",
+   "properties": {
+    "content": {
+     "type": "string",
+     "description": "The HTML-formatted content, suitable for display. When updating an activity's content, post the changes to this property, using the value of originalContent as a starting point. If the update is successful, the server adds HTML formatting and responds with this formatted content."
+    },
+    "displayName": {
+     "type": "string",
+     "description": "The title of the object."
+    },
+    "id": {
+     "type": "string",
+     "description": "The ID for the object."
+    },
+    "links": {
+     "type": "array",
+     "description": "Links to other resources related to this object.",
+     "items": {
+      "$ref": "OrkutLinkResource"
+     }
+    },
+    "objectType": {
+     "type": "string",
+     "description": "The object type."
+    },
+    "person": {
+     "$ref": "OrkutActivitypersonResource",
+     "description": "The person who is related with this activity, e.g. an Added User."
+    }
+   }
+  },
+  "OrkutActivitypersonResource": {
+   "id": "OrkutActivitypersonResource",
+   "type": "object",
+   "properties": {
+    "birthday": {
+     "type": "string",
+     "description": "The person's date of birth, represented as YYYY-MM-DD."
+    },
+    "gender": {
+     "type": "string",
+     "description": "The person's gender. Values include \"male\", \"female\", and \"other\"."
+    },
+    "id": {
+     "type": "string",
+     "description": "The person's opensocial ID."
+    },
+    "image": {
+     "type": "object",
+     "description": "The person's profile photo. This is adapted from Google+ and was originaly introduced as extra OpenSocial convenience fields.",
+     "properties": {
+      "url": {
+       "type": "string",
+       "description": "The URL of the person's profile photo."
+      }
+     }
+    },
+    "name": {
+     "type": "object",
+     "description": "An object that encapsulates the individual components of a person's name.",
+     "properties": {
+      "familyName": {
+       "type": "string",
+       "description": "The family name (last name) of this person."
+      },
+      "givenName": {
+       "type": "string",
+       "description": "The given name (first name) of this person."
+      }
+     }
+    },
+    "url": {
+     "type": "string",
+     "description": "The person's profile url. This is adapted from Google+ and was originaly introduced as extra OpenSocial convenience fields."
+    }
+   }
+  },
+  "OrkutAuthorResource": {
+   "id": "OrkutAuthorResource",
+   "type": "object",
+   "properties": {
+    "displayName": {
+     "type": "string",
+     "description": "The name of the author, suitable for display."
+    },
+    "id": {
+     "type": "string",
+     "description": "Unique identifier of the person who posted the comment. This is the person's OpenSocial ID."
+    },
+    "image": {
+     "type": "object",
+     "description": "Image data about the actor.",
+     "properties": {
+      "url": {
+       "type": "string",
+       "description": "A URL that points to a thumbnail photo of the author."
+      }
+     }
+    },
+    "url": {
+     "type": "string",
+     "description": "The URL of the author who posted the comment [not yet implemented]"
+    }
+   }
+  },
+  "OrkutCounterResource": {
+   "id": "OrkutCounterResource",
+   "type": "object",
+   "properties": {
+    "name": {
+     "type": "string"
+    },
+    "total": {
+     "type": "integer",
+     "format": "int32"
+    }
+   }
+  },
+  "OrkutLinkResource": {
+   "id": "OrkutLinkResource",
+   "type": "object",
+   "description": "Links to resources related to the parent object.",
+   "properties": {
+    "href": {
+     "type": "string",
+     "description": "URL of the link."
+    },
+    "rel": {
+     "type": "string",
+     "description": "Relation between the resurce and the parent object."
+    },
+    "title": {
+     "type": "string",
+     "description": "Title of the link."
+    },
+    "type": {
+     "type": "string",
+     "description": "Media type of the link."
+    }
+   }
+  },
+  "Visibility": {
+   "id": "Visibility",
+   "type": "object",
+   "properties": {
+    "kind": {
+     "type": "string",
+     "description": "Identifies this resource as a visibility item. Value: \"orkut#visibility\"",
+     "default": "orkut#visibility"
+    },
+    "visibility": {
+     "type": "string",
+     "description": "The visibility of the resource. Possible values are:  \n- default: not hidden by the user \n- hidden: hidden"
+    }
+   }
+  }
+ },
+ "resources": {
+  "acl": {
+   "methods": {
+    "delete": {
+     "id": "orkut.acl.delete",
+     "path": "activities/{activityId}/acl/{userId}",
+     "httpMethod": "DELETE",
+     "description": "Excludes an element from the ACL of the activity.",
+     "parameters": {
+      "activityId": {
+       "type": "string",
+       "description": "ID of the activity.",
+       "required": true,
+       "location": "path"
+      },
+      "userId": {
+       "type": "string",
+       "description": "ID of the user to be removed from the activity.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "activityId",
+      "userId"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/orkut"
+     ]
+    }
+   }
+  },
+  "activities": {
+   "methods": {
+    "delete": {
+     "id": "orkut.activities.delete",
+     "path": "activities/{activityId}",
+     "httpMethod": "DELETE",
+     "description": "Deletes an existing activity, if the access controls allow it.",
+     "parameters": {
+      "activityId": {
+       "type": "string",
+       "description": "ID of the activity to remove.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "activityId"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/orkut"
+     ]
+    },
+    "list": {
+     "id": "orkut.activities.list",
+     "path": "people/{userId}/activities/{collection}",
+     "httpMethod": "GET",
+     "description": "Retrieves a list of activities.",
+     "parameters": {
+      "collection": {
+       "type": "string",
+       "description": "The collection of activities to list.",
+       "required": true,
+       "enum": [
+        "all",
+        "scraps",
+        "stream"
+       ],
+       "enumDescriptions": [
+        "All activities created by the specified user that the authenticated user is authorized to view.",
+        "The specified user's scrapbook.",
+        "The specified user's stream feed, intended for consumption. This includes activities posted by people that the user is following, and activities in which the user has been mentioned."
+       ],
+       "location": "path"
+      },
+      "hl": {
+       "type": "string",
+       "description": "Specifies the interface language (host language) of your user interface.",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "The maximum number of activities to include in the response.",
+       "format": "uint32",
+       "minimum": "1",
+       "maximum": "100",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "A continuation token that allows pagination.",
+       "location": "query"
+      },
+      "userId": {
+       "type": "string",
+       "description": "The ID of the user whose activities will be listed. Can be me to refer to the viewer (i.e. the authenticated user).",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "userId",
+      "collection"
+     ],
+     "response": {
+      "$ref": "ActivityList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/orkut",
+      "https://www.googleapis.com/auth/orkut.readonly"
+     ]
+    }
+   }
+  },
+  "activityVisibility": {
+   "methods": {
+    "get": {
+     "id": "orkut.activityVisibility.get",
+     "path": "activities/{activityId}/visibility",
+     "httpMethod": "GET",
+     "description": "Gets the visibility of an existing activity.",
+     "parameters": {
+      "activityId": {
+       "type": "string",
+       "description": "ID of the activity to get the visibility.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "activityId"
+     ],
+     "response": {
+      "$ref": "Visibility"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/orkut",
+      "https://www.googleapis.com/auth/orkut.readonly"
+     ]
+    },
+    "patch": {
+     "id": "orkut.activityVisibility.patch",
+     "path": "activities/{activityId}/visibility",
+     "httpMethod": "PATCH",
+     "description": "Updates the visibility of an existing activity. This method supports patch semantics.",
+     "parameters": {
+      "activityId": {
+       "type": "string",
+       "description": "ID of the activity.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "activityId"
+     ],
+     "request": {
+      "$ref": "Visibility"
+     },
+     "response": {
+      "$ref": "Visibility"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/orkut"
+     ]
+    },
+    "update": {
+     "id": "orkut.activityVisibility.update",
+     "path": "activities/{activityId}/visibility",
+     "httpMethod": "PUT",
+     "description": "Updates the visibility of an existing activity.",
+     "parameters": {
+      "activityId": {
+       "type": "string",
+       "description": "ID of the activity.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "activityId"
+     ],
+     "request": {
+      "$ref": "Visibility"
+     },
+     "response": {
+      "$ref": "Visibility"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/orkut"
+     ]
+    }
+   }
+  },
+  "badges": {
+   "methods": {
+    "get": {
+     "id": "orkut.badges.get",
+     "path": "people/{userId}/badges/{badgeId}",
+     "httpMethod": "GET",
+     "description": "Retrieves a badge from a user.",
+     "parameters": {
+      "badgeId": {
+       "type": "string",
+       "description": "The ID of the badge that will be retrieved.",
+       "required": true,
+       "format": "int64",
+       "location": "path"
+      },
+      "userId": {
+       "type": "string",
+       "description": "The ID of the user whose badges will be listed. Can be me to refer to caller.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "userId",
+      "badgeId"
+     ],
+     "response": {
+      "$ref": "Badge"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/orkut",
+      "https://www.googleapis.com/auth/orkut.readonly"
+     ]
+    },
+    "list": {
+     "id": "orkut.badges.list",
+     "path": "people/{userId}/badges",
+     "httpMethod": "GET",
+     "description": "Retrieves the list of visible badges of a user.",
+     "parameters": {
+      "userId": {
+       "type": "string",
+       "description": "The id of the user whose badges will be listed. Can be me to refer to caller.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "userId"
+     ],
+     "response": {
+      "$ref": "BadgeList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/orkut",
+      "https://www.googleapis.com/auth/orkut.readonly"
+     ]
+    }
+   }
+  },
+  "comments": {
+   "methods": {
+    "delete": {
+     "id": "orkut.comments.delete",
+     "path": "comments/{commentId}",
+     "httpMethod": "DELETE",
+     "description": "Deletes an existing comment.",
+     "parameters": {
+      "commentId": {
+       "type": "string",
+       "description": "ID of the comment to remove.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "commentId"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/orkut"
+     ]
+    },
+    "get": {
+     "id": "orkut.comments.get",
+     "path": "comments/{commentId}",
+     "httpMethod": "GET",
+     "description": "Retrieves an existing comment.",
+     "parameters": {
+      "commentId": {
+       "type": "string",
+       "description": "ID of the comment to get.",
+       "required": true,
+       "location": "path"
+      },
+      "hl": {
+       "type": "string",
+       "description": "Specifies the interface language (host language) of your user interface.",
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "commentId"
+     ],
+     "response": {
+      "$ref": "Comment"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/orkut",
+      "https://www.googleapis.com/auth/orkut.readonly"
+     ]
+    },
+    "insert": {
+     "id": "orkut.comments.insert",
+     "path": "activities/{activityId}/comments",
+     "httpMethod": "POST",
+     "description": "Inserts a new comment to an activity.",
+     "parameters": {
+      "activityId": {
+       "type": "string",
+       "description": "The ID of the activity to contain the new comment.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "activityId"
+     ],
+     "request": {
+      "$ref": "Comment"
+     },
+     "response": {
+      "$ref": "Comment"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/orkut"
+     ]
+    },
+    "list": {
+     "id": "orkut.comments.list",
+     "path": "activities/{activityId}/comments",
+     "httpMethod": "GET",
+     "description": "Retrieves a list of comments, possibly filtered.",
+     "parameters": {
+      "activityId": {
+       "type": "string",
+       "description": "The ID of the activity containing the comments.",
+       "required": true,
+       "location": "path"
+      },
+      "hl": {
+       "type": "string",
+       "description": "Specifies the interface language (host language) of your user interface.",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "The maximum number of activities to include in the response.",
+       "format": "uint32",
+       "minimum": "1",
+       "location": "query"
+      },
+      "orderBy": {
+       "type": "string",
+       "description": "Sort search results.",
+       "default": "descending",
+       "enum": [
+        "ascending",
+        "descending"
+       ],
+       "enumDescriptions": [
+        "Use ascending sort order.",
+        "Use descending sort order."
+       ],
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "A continuation token that allows pagination.",
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "activityId"
+     ],
+     "response": {
+      "$ref": "CommentList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/orkut",
+      "https://www.googleapis.com/auth/orkut.readonly"
+     ]
+    }
+   }
+  },
+  "counters": {
+   "methods": {
+    "list": {
+     "id": "orkut.counters.list",
+     "path": "people/{userId}/counters",
+     "httpMethod": "GET",
+     "description": "Retrieves the counters of an user.",
+     "parameters": {
+      "userId": {
+       "type": "string",
+       "description": "The ID of the user whose counters will be listed. Can be me to refer to caller.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "userId"
+     ],
+     "response": {
+      "$ref": "Counters"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/orkut"
+     ]
+    }
+   }
+  }
+ }
+}

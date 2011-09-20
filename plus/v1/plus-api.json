@@ -3,11 +3,13 @@
  "id": "plus:v1",
  "name": "plus",
  "version": "v1",
- "description": "Google+ API",
+ "title": "Google+ API",
+ "description": "The Google+ API enables developers to build on top of the Google+ platform.",
  "icons": {
-  "x16": "http://www.google.com/images/icons/product/search-16.gif",
-  "x32": "http://www.google.com/images/icons/product/search-32.gif"
+  "x16": "http://www.google.com/images/icons/product/gplus-16.png",
+  "x32": "http://www.google.com/images/icons/product/gplus-32.png"
  },
+ "documentationLink": "http://developers.google.com/+/api/",
  "labels": [
   "labs"
  ],

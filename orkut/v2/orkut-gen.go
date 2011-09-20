@@ -1,6 +1,6 @@
 // Package orkut provides access to the Orkut API.
 //
-// See http://code.google.com/apis/orkut/v2/
+// See http://code.google.com/apis/orkut/v2/reference.html
 //
 // Usage example:
 //

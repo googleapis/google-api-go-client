@@ -1,4 +1,6 @@
-// Package plus provides access to the .
+// Package plus provides access to the Google+ API.
+//
+// See http://developers.google.com/+/api/
 //
 // Usage example:
 //

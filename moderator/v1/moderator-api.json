@@ -241,6 +241,12 @@
       }
      }
     },
+    "unauthSubmissionAllowed": {
+     "type": "boolean"
+    },
+    "unauthVotingAllowed": {
+     "type": "boolean"
+    },
     "videoSubmissionAllowed": {
      "type": "boolean"
     }
@@ -477,6 +483,9 @@
     },
     "description": {
      "type": "string"
+    },
+    "featuredSubmission": {
+     "$ref": "Submission"
     },
     "id": {
      "type": "object",
@@ -775,6 +784,11 @@
        "required": true,
        "format": "uint32",
        "location": "path"
+      },
+      "unauthToken": {
+       "type": "string",
+       "description": "User identifier for unauthenticated usage mode",
+       "location": "query"
       }
      },
      "parameterOrder": [
@@ -1186,6 +1200,11 @@
        "required": true,
        "format": "uint32",
        "location": "path"
+      },
+      "unauthToken": {
+       "type": "string",
+       "description": "User identifier for unauthenticated usage mode",
+       "location": "query"
       }
      },
      "parameterOrder": [
@@ -1550,6 +1569,11 @@
        "format": "uint32",
        "location": "path"
       },
+      "unauthToken": {
+       "type": "string",
+       "description": "User identifier for unauthenticated usage mode",
+       "location": "query"
+      },
       "userId": {
        "type": "string",
        "location": "query"
@@ -1585,6 +1609,11 @@
        "required": true,
        "format": "uint32",
        "location": "path"
+      },
+      "unauthToken": {
+       "type": "string",
+       "description": "User identifier for unauthenticated usage mode",
+       "location": "query"
       }
      },
      "parameterOrder": [
@@ -1657,6 +1686,11 @@
        "format": "uint32",
        "location": "path"
       },
+      "unauthToken": {
+       "type": "string",
+       "description": "User identifier for unauthenticated usage mode",
+       "location": "query"
+      },
       "userId": {
        "type": "string",
        "location": "query"
@@ -1695,6 +1729,11 @@
        "required": true,
        "format": "uint32",
        "location": "path"
+      },
+      "unauthToken": {
+       "type": "string",
+       "description": "User identifier for unauthenticated usage mode",
+       "location": "query"
       },
       "userId": {
        "type": "string",

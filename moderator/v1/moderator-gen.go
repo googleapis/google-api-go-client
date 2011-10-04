@@ -233,6 +233,8 @@ type Topic struct {
 
 	Id *TopicId `json:"id,omitempty"`
 
+	FeaturedSubmission *Submission `json:"featuredSubmission,omitempty"`
+
 	Counters *TopicCounters `json:"counters,omitempty"`
 
 	Description string `json:"description,omitempty"`
@@ -355,9 +357,13 @@ type Series struct {
 
 	Rules *SeriesRules `json:"rules,omitempty"`
 
+	UnauthVotingAllowed bool `json:"unauthVotingAllowed,omitempty"`
+
 	Kind string `json:"kind,omitempty"`
 
 	Id *SeriesId `json:"id,omitempty"`
+
+	UnauthSubmissionAllowed bool `json:"unauthSubmissionAllowed,omitempty"`
 
 	AnonymousSubmissionAllowed bool `json:"anonymousSubmissionAllowed,omitempty"`
 
@@ -1058,6 +1064,13 @@ func (r *VotesService) Update(seriesId int64, submissionId int64, vote *Vote) *V
 	return c
 }
 
+// UnauthToken sets the optional parameter "unauthToken": User
+// identifier for unauthenticated usage mode
+func (c *VotesUpdateCall) UnauthToken(unauthToken string) *VotesUpdateCall {
+	c.opt_["unauthToken"] = unauthToken
+	return c
+}
+
 // UserId sets the optional parameter "userId": 
 func (c *VotesUpdateCall) UserId(userId string) *VotesUpdateCall {
 	c.opt_["userId"] = userId
@@ -1073,6 +1086,9 @@ func (c *VotesUpdateCall) Do() (*Vote, os.Error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["unauthToken"]; ok {
+		params.Set("unauthToken", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["userId"]; ok {
 		params.Set("userId", fmt.Sprintf("%v", v))
 	}
@@ -1118,6 +1134,11 @@ func (c *VotesUpdateCall) Do() (*Vote, os.Error) {
 	//       "required": true,
 	//       "type": "integer"
 	//     },
+	//     "unauthToken": {
+	//       "description": "User identifier for unauthenticated usage mode",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "userId": {
 	//       "location": "query",
 	//       "type": "string"
@@ -1157,6 +1178,13 @@ func (r *VotesService) Insert(seriesId int64, submissionId int64, vote *Vote) *V
 	return c
 }
 
+// UnauthToken sets the optional parameter "unauthToken": User
+// identifier for unauthenticated usage mode
+func (c *VotesInsertCall) UnauthToken(unauthToken string) *VotesInsertCall {
+	c.opt_["unauthToken"] = unauthToken
+	return c
+}
+
 func (c *VotesInsertCall) Do() (*Vote, os.Error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithDataWrapper.JSONReader(c.vote)
@@ -1166,6 +1194,9 @@ func (c *VotesInsertCall) Do() (*Vote, os.Error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["unauthToken"]; ok {
+		params.Set("unauthToken", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/moderator/v1/", "series/{seriesId}/submissions/{submissionId}/votes/@me")
 	urls = strings.Replace(urls, "{seriesId}", strconv.Itoa64(c.seriesId), 1)
 	urls = strings.Replace(urls, "{submissionId}", strconv.Itoa64(c.submissionId), 1)
@@ -1207,6 +1238,11 @@ func (c *VotesInsertCall) Do() (*Vote, os.Error) {
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "integer"
+	//     },
+	//     "unauthToken": {
+	//       "description": "User identifier for unauthenticated usage mode",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "series/{seriesId}/submissions/{submissionId}/votes/@me",
@@ -1241,6 +1277,13 @@ func (r *VotesService) Get(seriesId int64, submissionId int64) *VotesGetCall {
 	return c
 }
 
+// UnauthToken sets the optional parameter "unauthToken": User
+// identifier for unauthenticated usage mode
+func (c *VotesGetCall) UnauthToken(unauthToken string) *VotesGetCall {
+	c.opt_["unauthToken"] = unauthToken
+	return c
+}
+
 // UserId sets the optional parameter "userId": 
 func (c *VotesGetCall) UserId(userId string) *VotesGetCall {
 	c.opt_["userId"] = userId
@@ -1251,6 +1294,9 @@ func (c *VotesGetCall) Do() (*Vote, os.Error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["unauthToken"]; ok {
+		params.Set("unauthToken", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["userId"]; ok {
 		params.Set("userId", fmt.Sprintf("%v", v))
 	}
@@ -1295,6 +1341,11 @@ func (c *VotesGetCall) Do() (*Vote, os.Error) {
 	//       "required": true,
 	//       "type": "integer"
 	//     },
+	//     "unauthToken": {
+	//       "description": "User identifier for unauthenticated usage mode",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "userId": {
 	//       "location": "query",
 	//       "type": "string"
@@ -1332,6 +1383,13 @@ func (r *VotesService) Patch(seriesId int64, submissionId int64, vote *Vote) *Vo
 	return c
 }
 
+// UnauthToken sets the optional parameter "unauthToken": User
+// identifier for unauthenticated usage mode
+func (c *VotesPatchCall) UnauthToken(unauthToken string) *VotesPatchCall {
+	c.opt_["unauthToken"] = unauthToken
+	return c
+}
+
 // UserId sets the optional parameter "userId": 
 func (c *VotesPatchCall) UserId(userId string) *VotesPatchCall {
 	c.opt_["userId"] = userId
@@ -1347,6 +1405,9 @@ func (c *VotesPatchCall) Do() (*Vote, os.Error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["unauthToken"]; ok {
+		params.Set("unauthToken", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["userId"]; ok {
 		params.Set("userId", fmt.Sprintf("%v", v))
 	}
@@ -1391,6 +1452,11 @@ func (c *VotesPatchCall) Do() (*Vote, os.Error) {
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "integer"
+	//     },
+	//     "unauthToken": {
+	//       "description": "User identifier for unauthenticated usage mode",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "userId": {
 	//       "location": "query",
@@ -1676,6 +1742,13 @@ func (c *SubmissionsInsertCall) Anonymous(anonymous bool) *SubmissionsInsertCall
 	return c
 }
 
+// UnauthToken sets the optional parameter "unauthToken": User
+// identifier for unauthenticated usage mode
+func (c *SubmissionsInsertCall) UnauthToken(unauthToken string) *SubmissionsInsertCall {
+	c.opt_["unauthToken"] = unauthToken
+	return c
+}
+
 func (c *SubmissionsInsertCall) Do() (*Submission, os.Error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithDataWrapper.JSONReader(c.submission)
@@ -1687,6 +1760,9 @@ func (c *SubmissionsInsertCall) Do() (*Submission, os.Error) {
 	params.Set("alt", "json")
 	if v, ok := c.opt_["anonymous"]; ok {
 		params.Set("anonymous", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["unauthToken"]; ok {
+		params.Set("unauthToken", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/moderator/v1/", "series/{seriesId}/topics/{topicId}/submissions")
 	urls = strings.Replace(urls, "{seriesId}", strconv.Itoa64(c.seriesId), 1)
@@ -1734,6 +1810,11 @@ func (c *SubmissionsInsertCall) Do() (*Submission, os.Error) {
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "integer"
+	//     },
+	//     "unauthToken": {
+	//       "description": "User identifier for unauthenticated usage mode",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "series/{seriesId}/topics/{topicId}/submissions",
@@ -2416,6 +2497,13 @@ func (c *ResponsesInsertCall) Anonymous(anonymous bool) *ResponsesInsertCall {
 	return c
 }
 
+// UnauthToken sets the optional parameter "unauthToken": User
+// identifier for unauthenticated usage mode
+func (c *ResponsesInsertCall) UnauthToken(unauthToken string) *ResponsesInsertCall {
+	c.opt_["unauthToken"] = unauthToken
+	return c
+}
+
 func (c *ResponsesInsertCall) Do() (*Submission, os.Error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithDataWrapper.JSONReader(c.submission)
@@ -2427,6 +2515,9 @@ func (c *ResponsesInsertCall) Do() (*Submission, os.Error) {
 	params.Set("alt", "json")
 	if v, ok := c.opt_["anonymous"]; ok {
 		params.Set("anonymous", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["unauthToken"]; ok {
+		params.Set("unauthToken", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/moderator/v1/", "series/{seriesId}/topics/{topicId}/submissions/{parentSubmissionId}/responses")
 	urls = strings.Replace(urls, "{seriesId}", strconv.Itoa64(c.seriesId), 1)
@@ -2483,6 +2574,11 @@ func (c *ResponsesInsertCall) Do() (*Submission, os.Error) {
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "integer"
+	//     },
+	//     "unauthToken": {
+	//       "description": "User identifier for unauthenticated usage mode",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "series/{seriesId}/topics/{topicId}/submissions/{parentSubmissionId}/responses",

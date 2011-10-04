@@ -714,6 +714,13 @@
          "description": "ISO-3166-1 code to override the IP-based location.",
          "location": "query"
         },
+        "maxResults": {
+         "type": "integer",
+         "description": "Maximum number of results to return",
+         "format": "uint32",
+         "minimum": "0",
+         "location": "query"
+        },
         "shelf": {
          "type": "string",
          "description": "Id of bookshelf to retrieve volumes.",
@@ -723,6 +730,13 @@
         "source": {
          "type": "string",
          "description": "String to identify the originator of this request.",
+         "location": "query"
+        },
+        "startIndex": {
+         "type": "integer",
+         "description": "Index of the first element to return (starts at 0)",
+         "format": "uint32",
+         "minimum": "0",
          "location": "query"
         },
         "userId": {

@@ -96,6 +96,20 @@ type ProductsFacets struct {
 	Type string `json:"type,omitempty"`
 }
 
+type ShoppingModelDebugJsonV1BackendTimes struct {
+	// Name: Google internal
+	Name string `json:"name,omitempty"`
+
+	// ServerMillis: Google internal
+	ServerMillis int64 `json:"serverMillis,omitempty,string"`
+
+	// ElapsedMillis: Google internal
+	ElapsedMillis int64 `json:"elapsedMillis,omitempty,string"`
+
+	// HostName: Google internal
+	HostName string `json:"hostName,omitempty"`
+}
+
 type Products struct {
 	// Categories: List of categories.
 	Categories []*ShoppingModelCategoryJsonV1 `json:"categories,omitempty"`
@@ -408,8 +422,14 @@ type ShoppingModelDebugJsonV1 struct {
 	// SearchResponse: Google internal.
 	SearchResponse string `json:"searchResponse,omitempty"`
 
+	// BackendTimes: Google internal
+	BackendTimes []*ShoppingModelDebugJsonV1BackendTimes `json:"backendTimes,omitempty"`
+
 	// RdcResponse: Google internal.
 	RdcResponse string `json:"rdcResponse,omitempty"`
+
+	// ElapsedMillis: Google internal.
+	ElapsedMillis int64 `json:"elapsedMillis,omitempty,string"`
 
 	// SearchRequest: Google internal.
 	SearchRequest string `json:"searchRequest,omitempty"`

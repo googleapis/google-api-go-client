@@ -411,6 +411,38 @@
    "id": "ShoppingModelDebugJsonV1",
    "type": "object",
    "properties": {
+    "backendTimes": {
+     "type": "array",
+     "description": "Google internal",
+     "items": {
+      "type": "object",
+      "properties": {
+       "elapsedMillis": {
+        "type": "string",
+        "description": "Google internal",
+        "format": "int64"
+       },
+       "hostName": {
+        "type": "string",
+        "description": "Google internal"
+       },
+       "name": {
+        "type": "string",
+        "description": "Google internal"
+       },
+       "serverMillis": {
+        "type": "string",
+        "description": "Google internal",
+        "format": "int64"
+       }
+      }
+     }
+    },
+    "elapsedMillis": {
+     "type": "string",
+     "description": "Google internal.",
+     "format": "int64"
+    },
     "rdcResponse": {
      "type": "string",
      "description": "Google internal."

@@ -1833,11 +1833,11 @@
       "protocols": {
        "simple": {
         "multipart": true,
-        "path": "upload/activities/{userId}/@self"
+        "path": "/upload/buzz/v1/activities/{userId}/@self"
        },
        "resumable": {
         "multipart": true,
-        "path": "resumable/upload/activities/{userId}/@self"
+        "path": "/resumable/upload/buzz/v1/activities/{userId}/@self"
        }
       }
      }
@@ -3819,11 +3819,11 @@
       "protocols": {
        "simple": {
         "multipart": true,
-        "path": "upload/photos/{userId}/{albumId}"
+        "path": "/upload/buzz/v1/photos/{userId}/{albumId}"
        },
        "resumable": {
         "multipart": true,
-        "path": "resumable/upload/photos/{userId}/{albumId}"
+        "path": "/resumable/upload/buzz/v1/photos/{userId}/{albumId}"
        }
       }
      }
@@ -3887,11 +3887,11 @@
       "protocols": {
        "simple": {
         "multipart": true,
-        "path": "upload/photos/{userId}/@self/{albumId}/@photos"
+        "path": "/upload/buzz/v1/photos/{userId}/@self/{albumId}/@photos"
        },
        "resumable": {
         "multipart": true,
-        "path": "resumable/upload/photos/{userId}/@self/{albumId}/@photos"
+        "path": "/resumable/upload/buzz/v1/photos/{userId}/@self/{albumId}/@photos"
        }
       }
      }

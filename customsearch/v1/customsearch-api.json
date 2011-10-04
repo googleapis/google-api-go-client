@@ -188,8 +188,8 @@
      "type": "string"
     },
     "totalResults": {
-     "type": "integer",
-     "format": "int32"
+     "type": "string",
+     "format": "int64"
     }
    }
   },

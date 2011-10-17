@@ -647,8 +647,8 @@ func (s *Schema) populateSubSchemas() (outerr os.Error) {
 					addSubStruct(subApiName, at) // was p.Type()?
 					continue
 				}
-				if atat, ok := at.ArrayType(); ok {
-					addSubStruct(subApiName, atat)
+				if _, ok := at.ArrayType(); ok {
+					addSubStruct(subApiName, at)
 					continue
 				}
 				panicf("Unknown property array type for %q: %s", subApiName, at)

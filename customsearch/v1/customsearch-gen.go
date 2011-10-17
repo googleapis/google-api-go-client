@@ -54,12 +54,6 @@ type CseService struct {
 	s *Service
 }
 
-type ContextFacets struct {
-	Label string `json:"label,omitempty"`
-
-	Anchor string `json:"anchor,omitempty"`
-}
-
 type Result struct {
 	Snippet string `json:"snippet,omitempty"`
 
@@ -96,6 +90,12 @@ type Search struct {
 
 type SearchQueries struct {
 
+}
+
+type ContextFacetsItem struct {
+	Label string `json:"label,omitempty"`
+
+	Anchor string `json:"anchor,omitempty"`
 }
 
 type SearchUrl struct {
@@ -151,7 +151,7 @@ type PromotionBodyLines struct {
 type Context struct {
 	Title string `json:"title,omitempty"`
 
-	Facets [][]*ContextFacets `json:"facets,omitempty"`
+	Facets [][]*ContextFacetsItem `json:"facets,omitempty"`
 }
 
 type Promotion struct {

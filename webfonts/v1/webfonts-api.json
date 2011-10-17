@@ -3,7 +3,8 @@
  "id": "webfonts:v1",
  "name": "webfonts",
  "version": "v1",
- "description": "Google Web Fonts Developer API",
+ "title": "Google Web Fonts Developer API",
+ "description": "The Google Web Fonts Developer API.",
  "icons": {
   "x16": "http://www.google.com/images/icons/feature/font_api-16.png",
   "x32": "http://www.google.com/images/icons/feature/font_api-32.gif"
@@ -46,6 +47,11 @@
    "type": "boolean",
    "description": "Returns response with indentations and line breaks.",
    "default": "true",
+   "location": "query"
+  },
+  "quotaUser": {
+   "type": "string",
+   "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.",
    "location": "query"
   },
   "userIp": {

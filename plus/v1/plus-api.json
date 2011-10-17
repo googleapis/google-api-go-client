@@ -49,6 +49,11 @@
    "default": "true",
    "location": "query"
   },
+  "quotaUser": {
+   "type": "string",
+   "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.",
+   "location": "query"
+  },
   "userIp": {
    "type": "string",
    "description": "IP address of the site where the request originates. Use this if you want to enforce per-user limits.",
@@ -186,9 +191,44 @@
        "items": {
         "type": "object",
         "properties": {
+         "categories": {
+          "type": "array",
+          "description": "Specifies zero or more categories the attachment belongs to.",
+          "items": {
+           "type": "object",
+           "properties": {
+            "label": {
+             "type": "string",
+             "description": "Human readable label, e.g \"album cover."
+            },
+            "schema": {
+             "type": "string",
+             "description": "Domain of schema, e.g. http://google.com."
+            },
+            "term": {
+             "type": "string",
+             "description": "The tag, e.g. album."
+            }
+           }
+          }
+         },
          "content": {
           "type": "string",
           "description": "If the attachment is an article, this property contains a snippet of text from the article."
+         },
+         "contentsource": {
+          "type": "object",
+          "description": "If the attachment is audio, the link to the content.",
+          "properties": {
+           "type": {
+            "type": "string",
+            "description": "Media type of the link."
+           },
+           "url": {
+            "type": "string",
+            "description": "URL of the link."
+           }
+          }
          },
          "displayName": {
           "type": "string",
@@ -293,7 +333,7 @@
        "properties": {
         "selfLink": {
          "type": "string",
-         "description": "The URL for collection of people who +1'd this activity."
+         "description": "The URL for the collection of people who +1'd this activity."
         },
         "totalItems": {
          "type": "integer",

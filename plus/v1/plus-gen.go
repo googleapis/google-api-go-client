@@ -268,6 +268,17 @@ type PersonUrls struct {
 	Type string `json:"type,omitempty"`
 }
 
+type ActivityObjectAttachmentsCategories struct {
+	// Schema: Domain of schema, e.g. http://google.com.
+	Schema string `json:"schema,omitempty"`
+
+	// Label: Human readable label, e.g "album cover.
+	Label string `json:"label,omitempty"`
+
+	// Term: The tag, e.g. album.
+	Term string `json:"term,omitempty"`
+}
+
 type ActivityProvider struct {
 	// Title: Name of the service provider.
 	Title string `json:"title,omitempty"`
@@ -280,6 +291,14 @@ type ActivityObjectAttachmentsFullImage struct {
 	// Width: The width, in pixels, of the linked resource.
 	Width int64 `json:"width,omitempty"`
 
+	// Url: URL of the link.
+	Url string `json:"url,omitempty"`
+
+	// Type: Media type of the link.
+	Type string `json:"type,omitempty"`
+}
+
+type ActivityObjectAttachmentsContentsource struct {
 	// Url: URL of the link.
 	Url string `json:"url,omitempty"`
 
@@ -609,7 +628,8 @@ type PersonOrganizations struct {
 }
 
 type ActivityObjectPlusoners struct {
-	// SelfLink: The URL for collection of people who +1'd this activity.
+	// SelfLink: The URL for the collection of people who +1'd this
+	// activity.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// TotalItems: Total number of people who +1'd this activity.
@@ -622,6 +642,10 @@ type ActivityObjectActorImage struct {
 }
 
 type ActivityObjectAttachments struct {
+	// Categories: Specifies zero or more categories the attachment belongs
+	// to.
+	Categories []*ActivityObjectAttachmentsCategories `json:"categories,omitempty"`
+
 	// Image: The preview image for photos or videos.
 	Image *ActivityObjectAttachmentsImage `json:"image,omitempty"`
 
@@ -652,6 +676,9 @@ type ActivityObjectAttachments struct {
 	// DisplayName: The title of the attachment (such as a photo caption or
 	// an article title).
 	DisplayName string `json:"displayName,omitempty"`
+
+	// Contentsource: If the attachment is audio, the link to the content.
+	Contentsource *ActivityObjectAttachmentsContentsource `json:"contentsource,omitempty"`
 }
 
 type ActivityActorImage struct {

@@ -1,4 +1,4 @@
-// Package webfonts provides access to the .
+// Package webfonts provides access to the Google Web Fonts Developer API.
 //
 // See http://code.google.com/apis/webfonts/docs/developer_api.html
 //

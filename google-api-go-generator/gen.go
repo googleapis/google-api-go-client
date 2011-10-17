@@ -32,6 +32,7 @@ var (
 	genDir        = flag.String("gendir", "", "Directory to use to write out generated Go files and Makefiles")
 	build         = flag.Bool("build", false, "Compile generated packages.")
 	install       = flag.Bool("install", false, "Install generated packages.")
+	apisURL       = flag.String("discoveryurl", "https://www.googleapis.com/discovery/v1/apis", "URL to root discovery document")
 
 	publicOnly = flag.Bool("publiconly", true, "Only build public, released APIs. Only applicable for Google employees.")
 )
@@ -131,10 +132,8 @@ func (a *API) want() bool {
 }
 
 func getAPIs() []*API {
-	const apisURL = "https://www.googleapis.com/discovery/v1/apis"
-
 	var all AllAPIs
-	disco := slurpURL(apisURL)
+	disco := slurpURL(*apisURL)
 	if err := json.Unmarshal(disco, &all); err != nil {
 		log.Fatalf("error decoding JSON in %s: %v", apisURL, err)
 	}
@@ -210,7 +209,7 @@ func (a *API) DiscoveryURL() string {
 	if a.DiscoveryLink == "" {
 		log.Fatalf("API %s has no DiscoveryLink", a.ID)
 	}
-	base, _ := url.Parse("https://www.googleapis.com/discovery/v1/apis")
+	base, _ := url.Parse(*apisURL)
 	u, err := base.Parse(a.DiscoveryLink)
 	if err != nil {
 		log.Fatalf("API %s has bogus DiscoveryLink %s: %v", a.ID, a.DiscoveryLink, err)
@@ -233,7 +232,7 @@ func (a *API) GetName(preferred string) string {
 }
 
 func (a *API) apiBaseURL() string {
-	return resolveRelative("https://www.googleapis.com/discovery/v1/apis", jstr(a.m, "basePath"))
+	return resolveRelative(*apisURL, jstr(a.m, "basePath"))
 }
 
 func (a *API) needsDataWrapper() bool {
@@ -1054,8 +1053,14 @@ func (a *API) Resources() []*Resource {
 }
 
 func resolveRelative(basestr, relstr string) string {
-	u, _ := url.Parse(basestr)
-	rel, _ := url.Parse(relstr)
+	u, err := url.Parse(basestr)
+	if err != nil {
+		log.Fatalf("Error parsing base URL %q: %v", basestr, err)
+	}
+	rel, err := url.Parse(relstr)
+	if err != nil {
+		log.Fatalf("Error parsing relative URL %q: %v", relstr, err)
+	}
 	u = u.ResolveReference(rel)
 	return u.String()
 }

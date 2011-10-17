@@ -181,6 +181,10 @@ func slurpURL(urlStr string) []byte {
 	return bs
 }
 
+func panicf(format string, args ...interface{}) {
+	panic(fmt.Sprintf(format, args...))
+}
+
 // namePool keeps track of used names and assigns free ones based on a
 // preferred name
 type namePool struct {
@@ -561,7 +565,7 @@ func (t *Type) ReferenceSchema() (s *Schema, ok bool) {
 
 	s = t.api.schemas[apiName]
 	if s == nil {
-		log.Fatalf("failed to find t.api.schemas[%q] while resolving reference",
+		panicf("failed to find t.api.schemas[%q] while resolving reference",
 			apiName)
 	}
 	return s, true
@@ -573,7 +577,7 @@ func (t *Type) ArrayType() (elementType *Type, ok bool) {
 	}
 	items := jobj(t.m, "items")
 	if items == nil {
-		log.Fatalf("can't handle array type missing its 'items' key. map is %#v", t.m)
+		panicf("can't handle array type missing its 'items' key. map is %#v", t.m)
 	}
 	return &Type{api: t.api, m: items}, true
 }
@@ -601,7 +605,15 @@ func (s *Schema) properties() []*Property {
 	return pl
 }
 
-func (s *Schema) populateSubSchemas() {
+func (s *Schema) populateSubSchemas() (outerr os.Error) {
+	defer func() {
+		r := recover()
+		if r == nil {
+			return
+		}
+		outerr = fmt.Errorf("%v", r)
+	}()
+
 	addSubStruct := func(subApiName string, t *Type) {
 		if s.api.schemas[subApiName] != nil {
 			panic("dup schema apiName: " + subApiName)
@@ -615,7 +627,10 @@ func (s *Schema) populateSubSchemas() {
 			apiName: subApiName,
 		}
 		s.api.schemas[subApiName] = subs
-		subs.populateSubSchemas()
+		err := subs.populateSubSchemas()
+		if err != nil {
+			panicf("in sub-struct %q: %v", subApiName, err)
+		}
 	}
 
 	if s.Type().IsStruct() {
@@ -636,7 +651,7 @@ func (s *Schema) populateSubSchemas() {
 					addSubStruct(subApiName, atat)
 					continue
 				}
-				log.Fatalf("Unknown property array type for %q: %s", subApiName, at)
+				panicf("Unknown property array type for %q: %s", subApiName, at)
 				continue
 			}
 			subApiName := fmt.Sprintf("%s.%s", s.apiName, p.apiName)
@@ -647,7 +662,7 @@ func (s *Schema) populateSubSchemas() {
 			if p.Type().IsReference() {
 				continue
 			}
-			log.Fatalf("Unknown type for %q: %s", subApiName, p.Type())
+			panicf("Unknown type for %q: %s", subApiName, p.Type())
 		}
 		return
 	}
@@ -657,11 +672,12 @@ func (s *Schema) populateSubSchemas() {
 			return
 		}
 		subApiName := fmt.Sprintf("%s.Item", s.apiName)
+
 		if at.IsStruct() {
 			addSubStruct(subApiName, at)
 			return
 		}
-		log.Fatalf("Unknown array type for %q: %s", subApiName, at)
+		panicf("Unknown array type for %q: %s", subApiName, at)
 		return
 	}
 
@@ -670,7 +686,8 @@ func (s *Schema) populateSubSchemas() {
 	}
 
 	fmt.Fprintf(os.Stderr, "in populateSubSchemas, schema is: %s", prettyJSON(s.m))
-	log.Fatalf("populateSubSchemas: unsupported type for schema %q", s.apiName)
+	panicf("populateSubSchemas: unsupported type for schema %q", s.apiName)
+	panic("unreachable")
 }
 
 // GoName returns (or creates and returns) the bare Go name
@@ -703,7 +720,7 @@ func (s *Schema) writeSchemaCode() {
 	}
 
 	fmt.Fprintf(os.Stderr, "in writeSchemaCode, schema is: %s", prettyJSON(s.m))
-	log.Fatalf("writeSchemaCode: unsupported type for schema %q", s.apiName)
+	panicf("writeSchemaCode: unsupported type for schema %q", s.apiName)
 }
 
 func (s *Schema) writeSchemaStruct() {
@@ -754,7 +771,10 @@ func (a *API) PopulateSchemas() {
 		s.m["_apiName"] = name
 
 		a.schemas[name] = s
-		s.populateSubSchemas()
+		err := s.populateSubSchemas()
+		if err != nil {
+			panicf("Error populating schema with API name %q: %v", name, err)
+		}
 	}
 }
 
@@ -1055,11 +1075,11 @@ func (a *API) Resources() []*Resource {
 func resolveRelative(basestr, relstr string) string {
 	u, err := url.Parse(basestr)
 	if err != nil {
-		log.Fatalf("Error parsing base URL %q: %v", basestr, err)
+		panicf("Error parsing base URL %q: %v", basestr, err)
 	}
 	rel, err := url.Parse(relstr)
 	if err != nil {
-		log.Fatalf("Error parsing relative URL %q: %v", relstr, err)
+		panicf("Error parsing relative URL %q: %v", relstr, err)
 	}
 	u = u.ResolveReference(rel)
 	return u.String()

@@ -1733,11 +1733,11 @@ func (c *PhotosInsertCall) Do() (*AlbumLite, os.Error) {
 	//     "protocols": {
 	//       "resumable": {
 	//         "multipart": true,
-	//         "path": "resumable/upload/photos/{userId}/{albumId}"
+	//         "path": "/resumable/upload/buzz/v1/photos/{userId}/{albumId}"
 	//       },
 	//       "simple": {
 	//         "multipart": true,
-	//         "path": "upload/photos/{userId}/{albumId}"
+	//         "path": "/upload/buzz/v1/photos/{userId}/{albumId}"
 	//       }
 	//     }
 	//   },
@@ -2004,11 +2004,11 @@ func (c *PhotosInsert2Call) Do() (*ChiliPhotosResourceJson, os.Error) {
 	//     "protocols": {
 	//       "resumable": {
 	//         "multipart": true,
-	//         "path": "resumable/upload/photos/{userId}/@self/{albumId}/@photos"
+	//         "path": "/resumable/upload/buzz/v1/photos/{userId}/@self/{albumId}/@photos"
 	//       },
 	//       "simple": {
 	//         "multipart": true,
-	//         "path": "upload/photos/{userId}/@self/{albumId}/@photos"
+	//         "path": "/upload/buzz/v1/photos/{userId}/@self/{albumId}/@photos"
 	//       }
 	//     }
 	//   },
@@ -5655,11 +5655,11 @@ func (c *ActivitiesInsertCall) Do() (*Activity, os.Error) {
 	//     "protocols": {
 	//       "resumable": {
 	//         "multipart": true,
-	//         "path": "resumable/upload/activities/{userId}/@self"
+	//         "path": "/resumable/upload/buzz/v1/activities/{userId}/@self"
 	//       },
 	//       "simple": {
 	//         "multipart": true,
-	//         "path": "upload/activities/{userId}/@self"
+	//         "path": "/upload/buzz/v1/activities/{userId}/@self"
 	//       }
 	//     }
 	//   },

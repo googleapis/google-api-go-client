@@ -51,6 +51,11 @@
    "default": "false",
    "location": "query"
   },
+  "quotaUser": {
+   "type": "string",
+   "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.",
+   "location": "query"
+  },
   "userIp": {
    "type": "string",
    "description": "IP address of the site where the request originates. Use this if you want to enforce per-user limits.",
@@ -1833,11 +1838,11 @@
       "protocols": {
        "simple": {
         "multipart": true,
-        "path": "upload/activities/{userId}/@self"
+        "path": "/upload/buzz/v1/activities/{userId}/@self"
        },
        "resumable": {
         "multipart": true,
-        "path": "resumable/upload/activities/{userId}/@self"
+        "path": "/resumable/upload/buzz/v1/activities/{userId}/@self"
        }
       }
      }
@@ -3819,11 +3824,11 @@
       "protocols": {
        "simple": {
         "multipart": true,
-        "path": "upload/photos/{userId}/{albumId}"
+        "path": "/upload/buzz/v1/photos/{userId}/{albumId}"
        },
        "resumable": {
         "multipart": true,
-        "path": "resumable/upload/photos/{userId}/{albumId}"
+        "path": "/resumable/upload/buzz/v1/photos/{userId}/{albumId}"
        }
       }
      }
@@ -3887,11 +3892,11 @@
       "protocols": {
        "simple": {
         "multipart": true,
-        "path": "upload/photos/{userId}/@self/{albumId}/@photos"
+        "path": "/upload/buzz/v1/photos/{userId}/@self/{albumId}/@photos"
        },
        "resumable": {
         "multipart": true,
-        "path": "resumable/upload/photos/{userId}/@self/{albumId}/@photos"
+        "path": "/resumable/upload/buzz/v1/photos/{userId}/@self/{albumId}/@photos"
        }
       }
      }

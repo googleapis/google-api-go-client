@@ -1,0 +1,211 @@
+{
+ "kind": "discovery#restDescription",
+ "id": "adexchangebuyer:v1",
+ "name": "adexchangebuyer",
+ "version": "v1",
+ "title": "Ad Exchange Buyer API",
+ "description": "Lets you manage your Ad Exchange Buyer account",
+ "icons": {
+  "x16": "http://www.google.com/images/icons/product/doubleclick-16.png",
+  "x32": "http://www.google.com/images/icons/product/doubleclick-32.png"
+ },
+ "documentationLink": "http://code.google.com/apis/adexchangebuyer/docs",
+ "labels": [
+  "labs"
+ ],
+ "protocol": "rest",
+ "basePath": "/adexchangebuyer/v1/",
+ "parameters": {
+  "alt": {
+   "type": "string",
+   "description": "Data format for the response.",
+   "default": "json",
+   "enum": [
+    "json"
+   ],
+   "enumDescriptions": [
+    "Responses with Content-Type of application/json"
+   ],
+   "location": "query"
+  },
+  "fields": {
+   "type": "string",
+   "description": "Selector specifying which fields to include in a partial response.",
+   "location": "query"
+  },
+  "key": {
+   "type": "string",
+   "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
+   "location": "query"
+  },
+  "oauth_token": {
+   "type": "string",
+   "description": "OAuth 2.0 token for the current user.",
+   "location": "query"
+  },
+  "prettyPrint": {
+   "type": "boolean",
+   "description": "Returns response with indentations and line breaks.",
+   "default": "true",
+   "location": "query"
+  },
+  "quotaUser": {
+   "type": "string",
+   "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.",
+   "location": "query"
+  },
+  "userIp": {
+   "type": "string",
+   "description": "IP address of the site where the request originates. Use this if you want to enforce per-user limits.",
+   "location": "query"
+  }
+ },
+ "schemas": {
+  "Account": {
+   "id": "Account",
+   "type": "object",
+   "properties": {
+    "bidderLocation": {
+     "type": "array",
+     "description": "Your bidder locations that have distinct URLs.",
+     "items": {
+      "type": "object",
+      "properties": {
+       "maximumQps": {
+        "type": "integer",
+        "description": "The maximum queries per second the Ad Exchange will send.",
+        "format": "int32"
+       },
+       "url": {
+        "type": "string",
+        "description": "The URL to which the Ad Exchange will send bid requests."
+       }
+      }
+     }
+    },
+    "cookieMatchingNid": {
+     "type": "string",
+     "description": "The nid parameter value used in cookie match requests. This value cannot by changed through an update operation. Please contact your technical account manager if you need to change it."
+    },
+    "cookieMatchingUrl": {
+     "type": "string",
+     "description": "The base url used in cookie match requests."
+    },
+    "id": {
+     "type": "string",
+     "description": "Account id.",
+     "format": "int64"
+    },
+    "kind": {
+     "type": "string",
+     "description": "Resource type.",
+     "default": "adexchangebuyer#account"
+    },
+    "maximumTotalQps": {
+     "type": "integer",
+     "description": "The sum of all bidderLocation.maximumQps values cannot exceed this. This value cannot by changed through an update operation. Please contact your technical account manager if you need to change it.",
+     "format": "int32"
+    }
+   }
+  },
+  "AccountsList": {
+   "id": "AccountsList",
+   "type": "object",
+   "properties": {
+    "items": {
+     "type": "array",
+     "description": "A list of accounts.",
+     "items": {
+      "$ref": "Account"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Resource type.",
+     "default": "adexchangebuyer#accountsList"
+    }
+   }
+  }
+ },
+ "resources": {
+  "accounts": {
+   "methods": {
+    "get": {
+     "id": "adexchangebuyer.accounts.get",
+     "path": "accounts/{id}",
+     "httpMethod": "GET",
+     "description": "Gets one account by id.",
+     "parameters": {
+      "id": {
+       "type": "string",
+       "description": "The account id",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "id"
+     ],
+     "response": {
+      "$ref": "Account"
+     }
+    },
+    "list": {
+     "id": "adexchangebuyer.accounts.list",
+     "path": "accounts",
+     "httpMethod": "GET",
+     "description": "Retrieves a list of accounts.",
+     "response": {
+      "$ref": "AccountsList"
+     }
+    },
+    "patch": {
+     "id": "adexchangebuyer.accounts.patch",
+     "path": "accounts/{id}",
+     "httpMethod": "PATCH",
+     "description": "Updates an existing account. This method supports patch semantics.",
+     "parameters": {
+      "id": {
+       "type": "string",
+       "description": "The account id",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "id"
+     ],
+     "request": {
+      "$ref": "Account"
+     },
+     "response": {
+      "$ref": "Account"
+     }
+    },
+    "update": {
+     "id": "adexchangebuyer.accounts.update",
+     "path": "accounts/{id}",
+     "httpMethod": "PUT",
+     "description": "Updates an existing account.",
+     "parameters": {
+      "id": {
+       "type": "string",
+       "description": "The account id",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "id"
+     ],
+     "request": {
+      "$ref": "Account"
+     },
+     "response": {
+      "$ref": "Account"
+     }
+    }
+   }
+  }
+ }
+}

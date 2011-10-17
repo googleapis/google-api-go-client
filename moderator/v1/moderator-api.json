@@ -49,6 +49,11 @@
    "default": "false",
    "location": "query"
   },
+  "quotaUser": {
+   "type": "string",
+   "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.",
+   "location": "query"
+  },
   "userIp": {
    "type": "string",
    "description": "IP address of the site where the request originates. Use this if you want to enforce per-user limits.",
@@ -240,6 +245,12 @@
        }
       }
      }
+    },
+    "unauthSubmissionAllowed": {
+     "type": "boolean"
+    },
+    "unauthVotingAllowed": {
+     "type": "boolean"
     },
     "videoSubmissionAllowed": {
      "type": "boolean"
@@ -477,6 +488,9 @@
     },
     "description": {
      "type": "string"
+    },
+    "featuredSubmission": {
+     "$ref": "Submission"
     },
     "id": {
      "type": "object",
@@ -775,6 +789,11 @@
        "required": true,
        "format": "uint32",
        "location": "path"
+      },
+      "unauthToken": {
+       "type": "string",
+       "description": "User identifier for unauthenticated usage mode",
+       "location": "query"
       }
      },
      "parameterOrder": [
@@ -1186,6 +1205,11 @@
        "required": true,
        "format": "uint32",
        "location": "path"
+      },
+      "unauthToken": {
+       "type": "string",
+       "description": "User identifier for unauthenticated usage mode",
+       "location": "query"
       }
      },
      "parameterOrder": [
@@ -1550,6 +1574,11 @@
        "format": "uint32",
        "location": "path"
       },
+      "unauthToken": {
+       "type": "string",
+       "description": "User identifier for unauthenticated usage mode",
+       "location": "query"
+      },
       "userId": {
        "type": "string",
        "location": "query"
@@ -1585,6 +1614,11 @@
        "required": true,
        "format": "uint32",
        "location": "path"
+      },
+      "unauthToken": {
+       "type": "string",
+       "description": "User identifier for unauthenticated usage mode",
+       "location": "query"
       }
      },
      "parameterOrder": [
@@ -1657,6 +1691,11 @@
        "format": "uint32",
        "location": "path"
       },
+      "unauthToken": {
+       "type": "string",
+       "description": "User identifier for unauthenticated usage mode",
+       "location": "query"
+      },
       "userId": {
        "type": "string",
        "location": "query"
@@ -1695,6 +1734,11 @@
        "required": true,
        "format": "uint32",
        "location": "path"
+      },
+      "unauthToken": {
+       "type": "string",
+       "description": "User identifier for unauthenticated usage mode",
+       "location": "query"
       },
       "userId": {
        "type": "string",

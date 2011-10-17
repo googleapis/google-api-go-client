@@ -96,6 +96,20 @@ type ProductsFacets struct {
 	Type string `json:"type,omitempty"`
 }
 
+type ShoppingModelDebugJsonV1BackendTimes struct {
+	// Name: Google internal
+	Name string `json:"name,omitempty"`
+
+	// ServerMillis: Google internal
+	ServerMillis int64 `json:"serverMillis,omitempty,string"`
+
+	// ElapsedMillis: Google internal
+	ElapsedMillis int64 `json:"elapsedMillis,omitempty,string"`
+
+	// HostName: Google internal
+	HostName string `json:"hostName,omitempty"`
+}
+
 type Products struct {
 	// Categories: List of categories.
 	Categories []*ShoppingModelCategoryJsonV1 `json:"categories,omitempty"`
@@ -237,6 +251,9 @@ type ShoppingModelProductJsonV1 struct {
 
 	// Title: Title of product.
 	Title string `json:"title,omitempty"`
+
+	// PlusOne: Code to add to the page to render the +1 content.
+	PlusOne string `json:"plusOne,omitempty"`
 
 	// Images: Images of product.
 	Images []*ShoppingModelProductJsonV1Images `json:"images,omitempty"`
@@ -408,8 +425,14 @@ type ShoppingModelDebugJsonV1 struct {
 	// SearchResponse: Google internal.
 	SearchResponse string `json:"searchResponse,omitempty"`
 
+	// BackendTimes: Google internal
+	BackendTimes []*ShoppingModelDebugJsonV1BackendTimes `json:"backendTimes,omitempty"`
+
 	// RdcResponse: Google internal.
 	RdcResponse string `json:"rdcResponse,omitempty"`
+
+	// ElapsedMillis: Google internal.
+	ElapsedMillis int64 `json:"elapsedMillis,omitempty,string"`
 
 	// SearchRequest: Google internal.
 	SearchRequest string `json:"searchRequest,omitempty"`
@@ -701,6 +724,13 @@ func (c *ProductsListCall) SpellingUseGcsConfig(spellingUseGcsConfig bool) *Prod
 	return c
 }
 
+// PlusOne sets the optional parameter "plusOne": +1 rendering
+// specification.
+func (c *ProductsListCall) PlusOne(plusOne string) *ProductsListCall {
+	c.opt_["plusOne"] = plusOne
+	return c
+}
+
 // RelatedQueriesEnabled sets the optional parameter
 // "relatedQueries.enabled": Whether to return related queries
 func (c *ProductsListCall) RelatedQueriesEnabled(relatedQueriesEnabled bool) *ProductsListCall {
@@ -894,6 +924,9 @@ func (c *ProductsListCall) Do() (*Products, os.Error) {
 	}
 	if v, ok := c.opt_["spelling.useGcsConfig"]; ok {
 		params.Set("spelling.useGcsConfig", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["plusOne"]; ok {
+		params.Set("plusOne", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["relatedQueries.enabled"]; ok {
 		params.Set("relatedQueries.enabled", fmt.Sprintf("%v", v))
@@ -1090,6 +1123,11 @@ func (c *ProductsListCall) Do() (*Products, os.Error) {
 	//         "Out of stock, limited availability and in stock products will be returned",
 	//         "All products will be returned"
 	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "plusOne": {
+	//       "description": "+1 rendering specification.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1332,6 +1370,13 @@ func (c *ProductsGetCall) CategoriesInclude(categoriesInclude string) *ProductsG
 	return c
 }
 
+// PlusOne sets the optional parameter "plusOne": +1 rendering
+// specification.
+func (c *ProductsGetCall) PlusOne(plusOne string) *ProductsGetCall {
+	c.opt_["plusOne"] = plusOne
+	return c
+}
+
 // DebugSearchResponse sets the optional parameter
 // "debug.searchResponse": Google Internal
 func (c *ProductsGetCall) DebugSearchResponse(debugSearchResponse bool) *ProductsGetCall {
@@ -1388,6 +1433,9 @@ func (c *ProductsGetCall) Do() (*Product, os.Error) {
 	}
 	if v, ok := c.opt_["categories.include"]; ok {
 		params.Set("categories.include", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["plusOne"]; ok {
+		params.Set("plusOne", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["debug.searchResponse"]; ok {
 		params.Set("debug.searchResponse", fmt.Sprintf("%v", v))
@@ -1475,6 +1523,11 @@ func (c *ProductsGetCall) Do() (*Product, os.Error) {
 	//     },
 	//     "location": {
 	//       "description": "Location used to determine tax and shipping",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "plusOne": {
+	//       "description": "+1 rendering specification.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

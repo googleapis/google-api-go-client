@@ -49,6 +49,11 @@
    "default": "true",
    "location": "query"
   },
+  "quotaUser": {
+   "type": "string",
+   "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.",
+   "location": "query"
+  },
   "userIp": {
    "type": "string",
    "description": "IP address of the site where the request originates. Use this if you want to enforce per-user limits.",
@@ -714,6 +719,13 @@
          "description": "ISO-3166-1 code to override the IP-based location.",
          "location": "query"
         },
+        "maxResults": {
+         "type": "integer",
+         "description": "Maximum number of results to return",
+         "format": "uint32",
+         "minimum": "0",
+         "location": "query"
+        },
         "shelf": {
          "type": "string",
          "description": "Id of bookshelf to retrieve volumes.",
@@ -723,6 +735,13 @@
         "source": {
          "type": "string",
          "description": "String to identify the originator of this request.",
+         "location": "query"
+        },
+        "startIndex": {
+         "type": "integer",
+         "description": "Index of the first element to return (starts at 0)",
+         "format": "uint32",
+         "minimum": "0",
          "location": "query"
         },
         "userId": {

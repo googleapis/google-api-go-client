@@ -51,6 +51,11 @@
    "default": "true",
    "location": "query"
   },
+  "quotaUser": {
+   "type": "string",
+   "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.",
+   "location": "query"
+  },
   "userIp": {
    "type": "string",
    "description": "IP address of the site where the request originates. Use this if you want to enforce per-user limits.",
@@ -411,6 +416,38 @@
    "id": "ShoppingModelDebugJsonV1",
    "type": "object",
    "properties": {
+    "backendTimes": {
+     "type": "array",
+     "description": "Google internal",
+     "items": {
+      "type": "object",
+      "properties": {
+       "elapsedMillis": {
+        "type": "string",
+        "description": "Google internal",
+        "format": "int64"
+       },
+       "hostName": {
+        "type": "string",
+        "description": "Google internal"
+       },
+       "name": {
+        "type": "string",
+        "description": "Google internal"
+       },
+       "serverMillis": {
+        "type": "string",
+        "description": "Google internal",
+        "format": "int64"
+       }
+      }
+     }
+    },
+    "elapsedMillis": {
+     "type": "string",
+     "description": "Google internal.",
+     "format": "int64"
+    },
     "rdcResponse": {
      "type": "string",
      "description": "Google internal."
@@ -629,6 +666,10 @@
      "description": "RFC 3339 formatted modification time and date of product.",
      "format": "date-time"
     },
+    "plusOne": {
+     "type": "string",
+     "description": "Code to add to the page to render the +1 content."
+    },
     "providedId": {
      "type": "string",
      "description": "Merchant-provided id of product (available only with a cx source)."
@@ -699,6 +740,11 @@
       "location": {
        "type": "string",
        "description": "Location used to determine tax and shipping",
+       "location": "query"
+      },
+      "plusOne": {
+       "type": "string",
+       "description": "+1 rendering specification.",
        "location": "query"
       },
       "productFields": {
@@ -901,6 +947,11 @@
         "Out of stock, limited availability and in stock products will be returned",
         "All products will be returned"
        ],
+       "location": "query"
+      },
+      "plusOne": {
+       "type": "string",
+       "description": "+1 rendering specification.",
        "location": "query"
       },
       "productFields": {

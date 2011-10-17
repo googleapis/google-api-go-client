@@ -111,7 +111,7 @@ type Query struct {
 
 	Language string `json:"language,omitempty"`
 
-	TotalResults int64 `json:"totalResults,omitempty"`
+	TotalResults int64 `json:"totalResults,omitempty,string"`
 
 	OutputEncoding string `json:"outputEncoding,omitempty"`
 

@@ -128,6 +128,22 @@ func main() {
 }
 
 func (a *API) want() bool {
+	if strings.Contains(a.ID, "buzz") {
+		// R.I.P.
+		return false
+	}
+	if strings.Contains(a.ID, "freebase") {
+		// TODO(bradfitz): this one doesn't work. bug with string.
+		return false
+	}
+	if strings.Contains(a.ID, "analytics") {
+		// TODO(bradfitz): this one doesn't work either:
+		// analytics-gen.go:750: c.end undefined (type *ReportGetCall has no field or method end)
+		// analytics-gen.go:750: undefined: date
+		// analytics-gen.go:751: c.start undefined (type *ReportGetCall has no field or method start)
+		// analytics-gen.go:751: undefined: date
+		return false
+	}
 	return *apiToGenerate == "*" || *apiToGenerate == a.ID
 }
 

@@ -4,7 +4,7 @@
  "name": "orkut",
  "version": "v2",
  "title": "Orkut API",
- "description": "Lets you manage activities, comments and badges in orkut. More stuff coming in time.",
+ "description": "Lets you manage activities, comments and badges in Orkut. More stuff coming in time.",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/orkut-16.png",
   "x32": "http://www.google.com/images/icons/product/orkut-32.png"
@@ -318,10 +318,6 @@
        "description": "Relationship between the comment and the post on activity stream being commented. Always inReplyTo.",
        "default": "inReplyTo"
       },
-      "source": {
-       "type": "string",
-       "description": "URL of the source of the post in the activity stream identified by inReplyTo.ref. [not yet implemented]."
-      },
       "type": {
        "type": "string",
        "description": "Type of the post on activity stream being commented. Always text/html."
@@ -502,11 +498,17 @@
    "id": "OrkutCounterResource",
    "type": "object",
    "properties": {
+    "link": {
+     "$ref": "OrkutLinkResource",
+     "description": "Link to the collection being counted."
+    },
     "name": {
-     "type": "string"
+     "type": "string",
+     "description": "The name of the counted collection. Currently supported collections are:  \n- scraps - The scraps of the user. \n- photos - The photos of the user. \n- videos - The videos of the user."
     },
     "total": {
      "type": "integer",
+     "description": "The number of resources on the counted collection.",
      "format": "int32"
     }
    }
@@ -522,7 +524,7 @@
     },
     "rel": {
      "type": "string",
-     "description": "Relation between the resurce and the parent object."
+     "description": "Relation between the resource and the parent object."
     },
     "title": {
      "type": "string",
@@ -542,6 +544,13 @@
      "type": "string",
      "description": "Identifies this resource as a visibility item. Value: \"orkut#visibility\"",
      "default": "orkut#visibility"
+    },
+    "links": {
+     "type": "array",
+     "description": "List of resources for the visibility item.",
+     "items": {
+      "$ref": "OrkutLinkResource"
+     }
     },
     "visibility": {
      "type": "string",
@@ -909,7 +918,7 @@
       "orderBy": {
        "type": "string",
        "description": "Sort search results.",
-       "default": "descending",
+       "default": "DESCENDING_SORT",
        "enum": [
         "ascending",
         "descending"
@@ -959,6 +968,26 @@
      ],
      "response": {
       "$ref": "Counters"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/orkut",
+      "https://www.googleapis.com/auth/orkut.readonly"
+     ]
+    }
+   }
+  },
+  "scraps": {
+   "methods": {
+    "insert": {
+     "id": "orkut.scraps.insert",
+     "path": "activities/scraps",
+     "httpMethod": "POST",
+     "description": "Creates a new scrap.",
+     "request": {
+      "$ref": "Activity"
+     },
+     "response": {
+      "$ref": "Activity"
      },
      "scopes": [
       "https://www.googleapis.com/auth/orkut"

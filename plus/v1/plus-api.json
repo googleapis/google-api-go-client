@@ -199,7 +199,7 @@
            "properties": {
             "label": {
              "type": "string",
-             "description": "Human readable label, e.g \"album cover."
+             "description": "The category label, suitable for display (e.g. \"album cover\")."
             },
             "schema": {
              "type": "string",
@@ -575,6 +575,7 @@
     },
     "items": {
      "type": "array",
+     "description": "The comments in this page of results.",
      "items": {
       "$ref": "Comment"
      }
@@ -961,6 +962,12 @@
      "httpMethod": "GET",
      "description": "Search public activities.",
      "parameters": {
+      "language": {
+       "type": "string",
+       "description": "Specify the preferred language to search with. See Language Codes for available values.",
+       "default": "",
+       "location": "query"
+      },
       "maxResults": {
        "type": "integer",
        "description": "The maximum number of activities to include in the response, used for paging. For any response, the actual number returned may be less than the specified maxResults.",
@@ -992,9 +999,13 @@
       "query": {
        "type": "string",
        "description": "Full-text search query string.",
+       "required": true,
        "location": "query"
       }
      },
+     "parameterOrder": [
+      "query"
+     ],
      "response": {
       "$ref": "ActivityFeed"
      },
@@ -1164,9 +1175,15 @@
      "httpMethod": "GET",
      "description": "Search all public profiles.",
      "parameters": {
+      "language": {
+       "type": "string",
+       "description": "Specify the preferred language to search with. See Language Codes for available values.",
+       "default": "",
+       "location": "query"
+      },
       "maxResults": {
        "type": "integer",
-       "description": "The maximum number of activities to include in the response, used for paging. For any response, the actual number returned may be less than the specified maxResults.",
+       "description": "The maximum number of people to include in the response, used for paging. For any response, the actual number returned may be less than the specified maxResults.",
        "default": "10",
        "format": "uint32",
        "minimum": "1",
@@ -1181,9 +1198,13 @@
       "query": {
        "type": "string",
        "description": "Full-text search query string.",
+       "required": true,
        "location": "query"
       }
      },
+     "parameterOrder": [
+      "query"
+     ],
      "response": {
       "$ref": "PeopleFeed"
      },

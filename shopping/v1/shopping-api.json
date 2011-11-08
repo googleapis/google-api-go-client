@@ -117,6 +117,10 @@
       }
      }
     },
+    "requestId": {
+     "type": "string",
+     "description": "Unique identifier for this request."
+    },
     "selfLink": {
      "type": "string",
      "description": "Self link of product."
@@ -316,6 +320,10 @@
      "items": {
       "type": "string"
      }
+    },
+    "requestId": {
+     "type": "string",
+     "description": "Unique identifier for this request."
     },
     "selfLink": {
      "type": "string",
@@ -674,9 +682,31 @@
      "type": "string",
      "description": "Merchant-provided id of product (available only with a cx source)."
     },
+    "queryMatched": {
+     "type": "boolean",
+     "description": "Whether this product matched the user query. Only set for the variant offers (if any) attached to a product offer."
+    },
     "title": {
      "type": "string",
      "description": "Title of product."
+    },
+    "totalMatchingVariants": {
+     "type": "integer",
+     "description": "The number of variant offers returned that matched the query.",
+     "format": "int32"
+    },
+    "variants": {
+     "type": "array",
+     "description": "A list of variant offers associated with this product.",
+     "items": {
+      "type": "object",
+      "properties": {
+       "variant": {
+        "$ref": "ShoppingModelProductJsonV1",
+        "description": "The detailed offer data for a particular variant offer."
+       }
+      }
+     }
     }
    }
   }
@@ -933,6 +963,12 @@
        "format": "uint32",
        "location": "query"
       },
+      "maxVariants": {
+       "type": "integer",
+       "description": "Maximum number of variant results to return per result",
+       "format": "uint32",
+       "location": "query"
+      },
       "minAvailability": {
        "type": "string",
        "enum": [
@@ -1017,22 +1053,6 @@
       "sayt.useGcsConfig": {
        "type": "boolean",
        "description": "Google Internal",
-       "location": "query"
-      },
-      "shelfSpaceAds.enabled": {
-       "type": "boolean",
-       "description": "Whether to return shelf space ads",
-       "location": "query"
-      },
-      "shelfSpaceAds.maxResults": {
-       "type": "integer",
-       "description": "The maximum number of shelf space ads to return",
-       "format": "uint32",
-       "location": "query"
-      },
-      "shelfSpaceAds.useGcsConfig": {
-       "type": "boolean",
-       "description": "This parameter is currently ignored",
        "location": "query"
       },
       "source": {

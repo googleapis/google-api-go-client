@@ -51,6 +51,7 @@ func New(client *http.Client) (*Service, os.Error) {
 	s := &Service{client: client}
 	s.Acl = &AclService{s: s}
 	s.ActivityVisibility = &ActivityVisibilityService{s: s}
+	s.Scraps = &ScrapsService{s: s}
 	s.Badges = &BadgesService{s: s}
 	s.Comments = &CommentsService{s: s}
 	s.Counters = &CountersService{s: s}
@@ -64,6 +65,8 @@ type Service struct {
 	Acl *AclService
 
 	ActivityVisibility *ActivityVisibilityService
+
+	Scraps *ScrapsService
 
 	Badges *BadgesService
 
@@ -79,6 +82,10 @@ type AclService struct {
 }
 
 type ActivityVisibilityService struct {
+	s *Service
+}
+
+type ScrapsService struct {
 	s *Service
 }
 
@@ -229,10 +236,6 @@ type CommentInReplyTo struct {
 	// Href: Link to the post on activity stream being commented.
 	Href string `json:"href,omitempty"`
 
-	// Source: URL of the source of the post in the activity stream
-	// identified by inReplyTo.ref. [not yet implemented].
-	Source string `json:"source,omitempty"`
-
 	// Rel: Relationship between the comment and the post on activity stream
 	// being commented. Always inReplyTo.
 	Rel string `json:"rel,omitempty"`
@@ -350,7 +353,7 @@ type OrkutLinkResource struct {
 	// Title: Title of the link.
 	Title string `json:"title,omitempty"`
 
-	// Rel: Relation between the resurce and the parent object.
+	// Rel: Relation between the resource and the parent object.
 	Rel string `json:"rel,omitempty"`
 
 	// Type: Media type of the link.
@@ -372,9 +375,19 @@ type ActivityList struct {
 }
 
 type OrkutCounterResource struct {
+	// Name: The name of the counted collection. Currently supported
+	// collections are:  
+	// - scraps - The scraps of the user. 
+	// - photos - The
+	// photos of the user. 
+	// - videos - The videos of the user.
 	Name string `json:"name,omitempty"`
 
+	// Total: The number of resources on the counted collection.
 	Total int64 `json:"total,omitempty"`
+
+	// Link: Link to the collection being counted.
+	Link *OrkutLinkResource `json:"link,omitempty"`
 }
 
 type Badge struct {
@@ -426,6 +439,9 @@ type CommentList struct {
 }
 
 type Visibility struct {
+	// Links: List of resources for the visibility item.
+	Links []*OrkutLinkResource `json:"links,omitempty"`
+
 	// Kind: Identifies this resource as a visibility item. Value:
 	// "orkut#visibility"
 	Kind string `json:"kind,omitempty"`
@@ -712,6 +728,65 @@ func (c *ActivityVisibilityPatchCall) Do() (*Visibility, os.Error) {
 
 }
 
+// method id "orkut.scraps.insert":
+
+type ScrapsInsertCall struct {
+	s        *Service
+	activity *Activity
+	opt_     map[string]interface{}
+}
+
+// Insert: Creates a new scrap.
+func (r *ScrapsService) Insert(activity *Activity) *ScrapsInsertCall {
+	c := &ScrapsInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.activity = activity
+	return c
+}
+
+func (c *ScrapsInsertCall) Do() (*Activity, os.Error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.activity)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "activities/scraps")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Activity)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new scrap.",
+	//   "httpMethod": "POST",
+	//   "id": "orkut.scraps.insert",
+	//   "path": "activities/scraps",
+	//   "request": {
+	//     "$ref": "Activity"
+	//   },
+	//   "response": {
+	//     "$ref": "Activity"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/orkut"
+	//   ]
+	// }
+
+}
+
 // method id "orkut.badges.list":
 
 type BadgesListCall struct {
@@ -951,7 +1026,7 @@ func (c *CommentsListCall) Do() (*CommentList, os.Error) {
 	//       "type": "integer"
 	//     },
 	//     "orderBy": {
-	//       "default": "descending",
+	//       "default": "DESCENDING_SORT",
 	//       "description": "Sort search results.",
 	//       "enum": [
 	//         "ascending",
@@ -1244,7 +1319,8 @@ func (c *CountersListCall) Do() (*Counters, os.Error) {
 	//     "$ref": "Counters"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/orkut"
+	//     "https://www.googleapis.com/auth/orkut",
+	//     "https://www.googleapis.com/auth/orkut.readonly"
 	//   ]
 	// }
 

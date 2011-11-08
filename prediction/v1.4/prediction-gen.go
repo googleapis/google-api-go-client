@@ -74,23 +74,19 @@ type InputInput struct {
 }
 
 type Output struct {
-	// SelfLink: A URL to re-request this resource. A URL to re-request this
-	// resource.
+	// SelfLink: A URL to re-request this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// OutputValue: The estimated regression value [Regression models only].
-	// The estimated regression value [Regression models only].
 	OutputValue float64 `json:"outputValue,omitempty"`
 
 	// OutputLabel: The most likely class label [Categorical models only].
-	// The most likely class label [Categorical models only].
 	OutputLabel string `json:"outputLabel,omitempty"`
 
-	// Kind: What kind of resource this is. What kind of resource this is.
+	// Kind: What kind of resource this is.
 	Kind string `json:"kind,omitempty"`
 
-	// Id: The unique name for the predictive model. The unique name for the
-	// predictive model.
+	// Id: The unique name for the predictive model.
 	Id string `json:"id,omitempty"`
 
 	// OutputMulti: A list of class labels with their estimated
@@ -103,11 +99,10 @@ type TrainingDataAnalysis struct {
 }
 
 type OutputOutputMulti struct {
-	// Score: The probability of the class label. The probability of the
-	// class label.
+	// Score: The probability of the class label.
 	Score float64 `json:"score,omitempty"`
 
-	// Label: The class label. The class label.
+	// Label: The class label.
 	Label string `json:"label,omitempty"`
 }
 

@@ -272,7 +272,7 @@ type ActivityObjectAttachmentsCategories struct {
 	// Schema: Domain of schema, e.g. http://google.com.
 	Schema string `json:"schema,omitempty"`
 
-	// Label: Human readable label, e.g "album cover.
+	// Label: The category label, suitable for display (e.g. "album cover").
 	Label string `json:"label,omitempty"`
 
 	// Term: The tag, e.g. album.
@@ -712,6 +712,7 @@ type CommentFeed struct {
 	// NextLink: Link to the next page of activities.
 	NextLink string `json:"nextLink,omitempty"`
 
+	// Items: The comments in this page of results.
 	Items []*Comment `json:"items,omitempty"`
 
 	// NextPageToken: The continuation token, used to page through large
@@ -921,29 +922,32 @@ func (c *CommentsGetCall) Do() (*Comment, os.Error) {
 // method id "plus.people.search":
 
 type PeopleSearchCall struct {
-	s    *Service
-	opt_ map[string]interface{}
+	s     *Service
+	query string
+	opt_  map[string]interface{}
 }
 
 // Search: Search all public profiles.
-func (r *PeopleService) Search() *PeopleSearchCall {
+func (r *PeopleService) Search(query string) *PeopleSearchCall {
 	c := &PeopleSearchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.query = query
+	return c
+}
+
+// Language sets the optional parameter "language": Specify the
+// preferred language to search with. See Language Codes for available
+// values.
+func (c *PeopleSearchCall) Language(language string) *PeopleSearchCall {
+	c.opt_["language"] = language
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": The maximum
-// number of activities to include in the response, used for paging. For
-// any response, the actual number returned may be less than the
-// specified maxResults.
+// number of people to include in the response, used for paging. For any
+// response, the actual number returned may be less than the specified
+// maxResults.
 func (c *PeopleSearchCall) MaxResults(maxResults int64) *PeopleSearchCall {
 	c.opt_["maxResults"] = maxResults
-	return c
-}
-
-// Query sets the optional parameter "query": Full-text search query
-// string.
-func (c *PeopleSearchCall) Query(query string) *PeopleSearchCall {
-	c.opt_["query"] = query
 	return c
 }
 
@@ -960,11 +964,12 @@ func (c *PeopleSearchCall) Do() (*PeopleFeed, os.Error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	params.Set("query", fmt.Sprintf("%v", c.query))
+	if v, ok := c.opt_["language"]; ok {
+		params.Set("language", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["query"]; ok {
-		params.Set("query", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
@@ -989,10 +994,19 @@ func (c *PeopleSearchCall) Do() (*PeopleFeed, os.Error) {
 	//   "description": "Search all public profiles.",
 	//   "httpMethod": "GET",
 	//   "id": "plus.people.search",
+	//   "parameterOrder": [
+	//     "query"
+	//   ],
 	//   "parameters": {
+	//     "language": {
+	//       "default": "",
+	//       "description": "Specify the preferred language to search with. See Language Codes for available values.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "maxResults": {
 	//       "default": "10",
-	//       "description": "The maximum number of activities to include in the response, used for paging. For any response, the actual number returned may be less than the specified maxResults.",
+	//       "description": "The maximum number of people to include in the response, used for paging. For any response, the actual number returned may be less than the specified maxResults.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "20",
@@ -1007,6 +1021,7 @@ func (c *PeopleSearchCall) Do() (*PeopleFeed, os.Error) {
 	//     "query": {
 	//       "description": "Full-text search query string.",
 	//       "location": "query",
+	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
@@ -1206,13 +1221,15 @@ func (c *PeopleListByActivityCall) Do() (*PeopleFeed, os.Error) {
 // method id "plus.activities.search":
 
 type ActivitiesSearchCall struct {
-	s    *Service
-	opt_ map[string]interface{}
+	s     *Service
+	query string
+	opt_  map[string]interface{}
 }
 
 // Search: Search public activities.
-func (r *ActivitiesService) Search() *ActivitiesSearchCall {
+func (r *ActivitiesService) Search(query string) *ActivitiesSearchCall {
 	c := &ActivitiesSearchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.query = query
 	return c
 }
 
@@ -1223,19 +1240,20 @@ func (c *ActivitiesSearchCall) OrderBy(orderBy string) *ActivitiesSearchCall {
 	return c
 }
 
+// Language sets the optional parameter "language": Specify the
+// preferred language to search with. See Language Codes for available
+// values.
+func (c *ActivitiesSearchCall) Language(language string) *ActivitiesSearchCall {
+	c.opt_["language"] = language
+	return c
+}
+
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of activities to include in the response, used for paging. For
 // any response, the actual number returned may be less than the
 // specified maxResults.
 func (c *ActivitiesSearchCall) MaxResults(maxResults int64) *ActivitiesSearchCall {
 	c.opt_["maxResults"] = maxResults
-	return c
-}
-
-// Query sets the optional parameter "query": Full-text search query
-// string.
-func (c *ActivitiesSearchCall) Query(query string) *ActivitiesSearchCall {
-	c.opt_["query"] = query
 	return c
 }
 
@@ -1252,14 +1270,15 @@ func (c *ActivitiesSearchCall) Do() (*ActivityFeed, os.Error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	params.Set("query", fmt.Sprintf("%v", c.query))
 	if v, ok := c.opt_["orderBy"]; ok {
 		params.Set("orderBy", fmt.Sprintf("%v", v))
 	}
+	if v, ok := c.opt_["language"]; ok {
+		params.Set("language", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["query"]; ok {
-		params.Set("query", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
@@ -1284,7 +1303,16 @@ func (c *ActivitiesSearchCall) Do() (*ActivityFeed, os.Error) {
 	//   "description": "Search public activities.",
 	//   "httpMethod": "GET",
 	//   "id": "plus.activities.search",
+	//   "parameterOrder": [
+	//     "query"
+	//   ],
 	//   "parameters": {
+	//     "language": {
+	//       "default": "",
+	//       "description": "Specify the preferred language to search with. See Language Codes for available values.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "maxResults": {
 	//       "default": "10",
 	//       "description": "The maximum number of activities to include in the response, used for paging. For any response, the actual number returned may be less than the specified maxResults.",
@@ -1316,6 +1344,7 @@ func (c *ActivitiesSearchCall) Do() (*ActivityFeed, os.Error) {
 	//     "query": {
 	//       "description": "Full-text search query string.",
 	//       "location": "query",
+	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },

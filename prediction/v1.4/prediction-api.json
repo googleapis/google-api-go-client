@@ -95,16 +95,16 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "The unique name for the predictive model. The unique name for the predictive model."
+     "description": "The unique name for the predictive model."
     },
     "kind": {
      "type": "string",
-     "description": "What kind of resource this is. What kind of resource this is.",
+     "description": "What kind of resource this is.",
      "default": "prediction#output"
     },
     "outputLabel": {
      "type": "string",
-     "description": "The most likely class label [Categorical models only]. The most likely class label [Categorical models only]."
+     "description": "The most likely class label [Categorical models only]."
     },
     "outputMulti": {
      "type": "array",
@@ -114,11 +114,11 @@
       "properties": {
        "label": {
         "type": "string",
-        "description": "The class label. The class label."
+        "description": "The class label."
        },
        "score": {
         "type": "number",
-        "description": "The probability of the class label. The probability of the class label.",
+        "description": "The probability of the class label.",
         "format": "double"
        }
       }
@@ -126,12 +126,12 @@
     },
     "outputValue": {
      "type": "number",
-     "description": "The estimated regression value [Regression models only]. The estimated regression value [Regression models only].",
+     "description": "The estimated regression value [Regression models only].",
      "format": "double"
     },
     "selfLink": {
      "type": "string",
-     "description": "A URL to re-request this resource. A URL to re-request this resource."
+     "description": "A URL to re-request this resource."
     }
    }
   },

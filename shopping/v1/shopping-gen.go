@@ -142,6 +142,9 @@ type Products struct {
 	// Id: Id of feed.
 	Id string `json:"id,omitempty"`
 
+	// RequestId: Unique identifier for this request.
+	RequestId string `json:"requestId,omitempty"`
+
 	// CurrentItemCount: Current item count.
 	CurrentItemCount int64 `json:"currentItemCount,omitempty"`
 
@@ -220,6 +223,10 @@ type ShoppingModelProductJsonV1 struct {
 	// Gtins: List of all the product's GTINs (in GTIN-14 format).
 	Gtins []string `json:"gtins,omitempty"`
 
+	// QueryMatched: Whether this product matched the user query. Only set
+	// for the variant offers (if any) attached to a product offer.
+	QueryMatched bool `json:"queryMatched,omitempty"`
+
 	// ModificationTime: RFC 3339 formatted modification time and date of
 	// product.
 	ModificationTime string `json:"modificationTime,omitempty"`
@@ -242,6 +249,9 @@ type ShoppingModelProductJsonV1 struct {
 	// Link: Link to product.
 	Link string `json:"link,omitempty"`
 
+	// Variants: A list of variant offers associated with this product.
+	Variants []*ShoppingModelProductJsonV1Variants `json:"variants,omitempty"`
+
 	// Inventories: Inventories of product.
 	Inventories []*ShoppingModelProductJsonV1Inventories `json:"inventories,omitempty"`
 
@@ -254,6 +264,10 @@ type ShoppingModelProductJsonV1 struct {
 
 	// PlusOne: Code to add to the page to render the +1 content.
 	PlusOne string `json:"plusOne,omitempty"`
+
+	// TotalMatchingVariants: The number of variant offers returned that
+	// matched the query.
+	TotalMatchingVariants int64 `json:"totalMatchingVariants,omitempty"`
 
 	// Images: Images of product.
 	Images []*ShoppingModelProductJsonV1Images `json:"images,omitempty"`
@@ -297,6 +311,11 @@ type ProductsFacetsBuckets struct {
 	// MaxExclusive: Whether the upper bound of the bucket is exclusive
 	// (omitted for value buckets or if the range has no upper bound).
 	MaxExclusive bool `json:"maxExclusive,omitempty"`
+}
+
+type ShoppingModelProductJsonV1Variants struct {
+	// Variant: The detailed offer data for a particular variant offer.
+	Variant *ShoppingModelProductJsonV1 `json:"variant,omitempty"`
 }
 
 type ShoppingModelCategoryJsonV1 struct {
@@ -413,6 +432,9 @@ type Product struct {
 
 	// Id: Id of product.
 	Id string `json:"id,omitempty"`
+
+	// RequestId: Unique identifier for this request.
+	RequestId string `json:"requestId,omitempty"`
 
 	// Debug: Google internal.
 	Debug *ShoppingModelDebugJsonV1 `json:"debug,omitempty"`
@@ -607,13 +629,6 @@ func (c *ProductsListCall) MaxResults(maxResults int64) *ProductsListCall {
 	return c
 }
 
-// ShelfSpaceAdsUseGcsConfig sets the optional parameter
-// "shelfSpaceAds.useGcsConfig": This parameter is currently ignored
-func (c *ProductsListCall) ShelfSpaceAdsUseGcsConfig(shelfSpaceAdsUseGcsConfig bool) *ProductsListCall {
-	c.opt_["shelfSpaceAds.useGcsConfig"] = shelfSpaceAdsUseGcsConfig
-	return c
-}
-
 // UseCase sets the optional parameter "useCase": One of
 // CommerceSearchUseCase, ShoppingApiUseCase
 func (c *ProductsListCall) UseCase(useCase string) *ProductsListCall {
@@ -632,14 +647,6 @@ func (c *ProductsListCall) FacetsInclude(facetsInclude string) *ProductsListCall
 // Google Internal
 func (c *ProductsListCall) SaytUseGcsConfig(saytUseGcsConfig bool) *ProductsListCall {
 	c.opt_["sayt.useGcsConfig"] = saytUseGcsConfig
-	return c
-}
-
-// ShelfSpaceAdsMaxResults sets the optional parameter
-// "shelfSpaceAds.maxResults": The maximum number of shelf space ads to
-// return
-func (c *ProductsListCall) ShelfSpaceAdsMaxResults(shelfSpaceAdsMaxResults int64) *ProductsListCall {
-	c.opt_["shelfSpaceAds.maxResults"] = shelfSpaceAdsMaxResults
 	return c
 }
 
@@ -758,6 +765,13 @@ func (c *ProductsListCall) FacetsDiscover(facetsDiscover string) *ProductsListCa
 	return c
 }
 
+// MaxVariants sets the optional parameter "maxVariants": Maximum number
+// of variant results to return per result
+func (c *ProductsListCall) MaxVariants(maxVariants int64) *ProductsListCall {
+	c.opt_["maxVariants"] = maxVariants
+	return c
+}
+
 // RestrictBy sets the optional parameter "restrictBy": Restriction
 // specification
 func (c *ProductsListCall) RestrictBy(restrictBy string) *ProductsListCall {
@@ -806,13 +820,6 @@ func (c *ProductsListCall) SaytEnabled(saytEnabled bool) *ProductsListCall {
 // Whether to return redirect information
 func (c *ProductsListCall) RedirectsEnabled(redirectsEnabled bool) *ProductsListCall {
 	c.opt_["redirects.enabled"] = redirectsEnabled
-	return c
-}
-
-// ShelfSpaceAdsEnabled sets the optional parameter
-// "shelfSpaceAds.enabled": Whether to return shelf space ads
-func (c *ProductsListCall) ShelfSpaceAdsEnabled(shelfSpaceAdsEnabled bool) *ProductsListCall {
-	c.opt_["shelfSpaceAds.enabled"] = shelfSpaceAdsEnabled
 	return c
 }
 
@@ -874,9 +881,6 @@ func (c *ProductsListCall) Do() (*Products, os.Error) {
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
-	if v, ok := c.opt_["shelfSpaceAds.useGcsConfig"]; ok {
-		params.Set("shelfSpaceAds.useGcsConfig", fmt.Sprintf("%v", v))
-	}
 	if v, ok := c.opt_["useCase"]; ok {
 		params.Set("useCase", fmt.Sprintf("%v", v))
 	}
@@ -885,9 +889,6 @@ func (c *ProductsListCall) Do() (*Products, os.Error) {
 	}
 	if v, ok := c.opt_["sayt.useGcsConfig"]; ok {
 		params.Set("sayt.useGcsConfig", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["shelfSpaceAds.maxResults"]; ok {
-		params.Set("shelfSpaceAds.maxResults", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["crowdBy"]; ok {
 		params.Set("crowdBy", fmt.Sprintf("%v", v))
@@ -940,6 +941,9 @@ func (c *ProductsListCall) Do() (*Products, os.Error) {
 	if v, ok := c.opt_["facets.discover"]; ok {
 		params.Set("facets.discover", fmt.Sprintf("%v", v))
 	}
+	if v, ok := c.opt_["maxVariants"]; ok {
+		params.Set("maxVariants", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["restrictBy"]; ok {
 		params.Set("restrictBy", fmt.Sprintf("%v", v))
 	}
@@ -960,9 +964,6 @@ func (c *ProductsListCall) Do() (*Products, os.Error) {
 	}
 	if v, ok := c.opt_["redirects.enabled"]; ok {
 		params.Set("redirects.enabled", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["shelfSpaceAds.enabled"]; ok {
-		params.Set("shelfSpaceAds.enabled", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/shopping/search/v1/", "{source}/products")
 	urls = strings.Replace(urls, "{source}", cleanPathString(c.source), 1)
@@ -1110,6 +1111,12 @@ func (c *ProductsListCall) Do() (*Products, os.Error) {
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
+	//     "maxVariants": {
+	//       "description": "Maximum number of variant results to return per result",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
 	//     "minAvailability": {
 	//       "enum": [
 	//         "inStock",
@@ -1193,22 +1200,6 @@ func (c *ProductsListCall) Do() (*Products, os.Error) {
 	//     },
 	//     "sayt.useGcsConfig": {
 	//       "description": "Google Internal",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "shelfSpaceAds.enabled": {
-	//       "description": "Whether to return shelf space ads",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "shelfSpaceAds.maxResults": {
-	//       "description": "The maximum number of shelf space ads to return",
-	//       "format": "uint32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "shelfSpaceAds.useGcsConfig": {
-	//       "description": "This parameter is currently ignored",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },

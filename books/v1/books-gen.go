@@ -155,6 +155,10 @@ type Volume struct {
 }
 
 type VolumeUserInfo struct {
+	// IsPreordered: Whether or not this volume was pre-ordered by the
+	// authenticated user making the request. (In LITE projection.)
+	IsPreordered bool `json:"isPreordered,omitempty"`
+
 	// IsPurchased: Whether or not this volume was purchased by the
 	// authenticated user making the request. (In LITE projection.)
 	IsPurchased bool `json:"isPurchased,omitempty"`
@@ -250,13 +254,17 @@ type VolumeSaleInfo struct {
 
 	// Saleability: Whether or not this book is available for sale or
 	// offered for free in the Google eBookstore for the country listed
-	// above. Possible values are FOR_SALE, FREE or NOT_FOR_SALE.
+	// above. Possible values are FOR_SALE, FREE, NOT_FOR_SALE, or
+	// FOR_PREORDER.
 	Saleability string `json:"saleability,omitempty"`
 
 	// RetailPrice: The actual selling price of the book. This is the same
 	// as the suggested retail or list price unless there are offers or
 	// discounts on this volume. (In LITE projection.)
 	RetailPrice *VolumeSaleInfoRetailPrice `json:"retailPrice,omitempty"`
+
+	// OnSaleDate: The date on which this book is available for sale.
+	OnSaleDate string `json:"onSaleDate,omitempty"`
 
 	// BuyLink: URL to purchase this volume on the Google Books site. (In
 	// LITE projection)
@@ -617,6 +625,13 @@ func (c *VolumesListCall) Source(source string) *VolumesListCall {
 	return c
 }
 
+// ShowPreorders sets the optional parameter "showPreorders": Set to
+// true to show books available for preorder. Defaults to false.
+func (c *VolumesListCall) ShowPreorders(showPreorders bool) *VolumesListCall {
+	c.opt_["showPreorders"] = showPreorders
+	return c
+}
+
 // LangRestrict sets the optional parameter "langRestrict": Restrict
 // results to books with this language code.
 func (c *VolumesListCall) LangRestrict(langRestrict string) *VolumesListCall {
@@ -661,6 +676,9 @@ func (c *VolumesListCall) Do() (*Volumes, os.Error) {
 	}
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["showPreorders"]; ok {
+		params.Set("showPreorders", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["langRestrict"]; ok {
 		params.Set("langRestrict", fmt.Sprintf("%v", v))
@@ -801,6 +819,11 @@ func (c *VolumesListCall) Do() (*Volumes, os.Error) {
 	//       "location": "query",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "showPreorders": {
+	//       "description": "Set to true to show books available for preorder. Defaults to false.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     },
 	//     "source": {
 	//       "description": "String to identify the originator of this request.",

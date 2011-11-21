@@ -444,6 +444,13 @@ type Person struct {
 	// - "other" - Other.
 	Gender string `json:"gender,omitempty"`
 
+	// ObjectType: Type of person within Google+. Possible values are:  
+	// -
+	// "person" - represents an actual person. 
+	// - "page" - represents a
+	// page.
+	ObjectType string `json:"objectType,omitempty"`
+
 	// Emails: A list of email addresses for this person.
 	Emails []*PersonEmails `json:"emails,omitempty"`
 
@@ -935,8 +942,8 @@ func (r *PeopleService) Search(query string) *PeopleSearchCall {
 }
 
 // Language sets the optional parameter "language": Specify the
-// preferred language to search with. See Language Codes for available
-// values.
+// preferred language to search with. See search language codes for
+// available values.
 func (c *PeopleSearchCall) Language(language string) *PeopleSearchCall {
 	c.opt_["language"] = language
 	return c
@@ -1000,7 +1007,7 @@ func (c *PeopleSearchCall) Do() (*PeopleFeed, os.Error) {
 	//   "parameters": {
 	//     "language": {
 	//       "default": "",
-	//       "description": "Specify the preferred language to search with. See Language Codes for available values.",
+	//       "description": "Specify the preferred language to search with. See search language codes for available values.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1241,8 +1248,8 @@ func (c *ActivitiesSearchCall) OrderBy(orderBy string) *ActivitiesSearchCall {
 }
 
 // Language sets the optional parameter "language": Specify the
-// preferred language to search with. See Language Codes for available
-// values.
+// preferred language to search with. See search language code for
+// available values.
 func (c *ActivitiesSearchCall) Language(language string) *ActivitiesSearchCall {
 	c.opt_["language"] = language
 	return c
@@ -1309,7 +1316,7 @@ func (c *ActivitiesSearchCall) Do() (*ActivityFeed, os.Error) {
 	//   "parameters": {
 	//     "language": {
 	//       "default": "",
-	//       "description": "Specify the preferred language to search with. See Language Codes for available values.",
+	//       "description": "Specify the preferred language to search with. See search language code for available values.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

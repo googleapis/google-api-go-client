@@ -743,6 +743,10 @@
      "type": "string",
      "description": "The nickname of this person."
     },
+    "objectType": {
+     "type": "string",
+     "description": "Type of person within Google+. Possible values are:  \n- \"person\" - represents an actual person. \n- \"page\" - represents a page."
+    },
     "organizations": {
      "type": "array",
      "description": "A list of current or past organizations with which this person is associated.",
@@ -964,7 +968,7 @@
      "parameters": {
       "language": {
        "type": "string",
-       "description": "Specify the preferred language to search with. See Language Codes for available values.",
+       "description": "Specify the preferred language to search with. See search language code for available values.",
        "default": "",
        "location": "query"
       },
@@ -1177,7 +1181,7 @@
      "parameters": {
       "language": {
        "type": "string",
-       "description": "Specify the preferred language to search with. See Language Codes for available values.",
+       "description": "Specify the preferred language to search with. See search language codes for available values.",
        "default": "",
        "location": "query"
       },

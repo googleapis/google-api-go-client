@@ -697,7 +697,7 @@ func (s *Schema) populateSubSchemas() (outerr os.Error) {
 		return
 	}
 
-	if s.Type().IsReference() {
+	if s.Type().IsSimple() || s.Type().IsReference() {
 		return
 	}
 
@@ -732,6 +732,10 @@ func (s *Schema) writeSchemaCode() {
 		s.api.p("\ntype %s struct {\n", s.GoName())
 		s.api.p("\t%s\n", destSchema.GoName())
 		s.api.p("}\n")
+		return
+	}
+
+	if s.Type().IsSimple() {
 		return
 	}
 
@@ -979,7 +983,7 @@ func (meth *Method) generateCode() {
 	// XML replies elsewhere.  TODO(bradfitz): hide this option in the generated code?
 	pn(`params.Set("alt", "json")`)
 	for _, p := range meth.RequiredQueryParams() {
-		pn("params.Set(%q, fmt.Sprintf(\"%%v\", c.%s))", p.name, p.name)
+		pn("params.Set(%q, fmt.Sprintf(\"%%v\", c.%s))", p.name, validGoIdentifer(p.name))
 	}
 	for _, p := range meth.RequiredRepeatedQueryParams() {
 		pn("for _, v := range c.%s { params.Add(%q, fmt.Sprintf(\"%%v\", v)) }",
@@ -1135,7 +1139,7 @@ func NewArg(apiname string, m map[string]interface{}) *argument {
 	apitype := jstr(m, "type")
 	des := jstr(m, "description")
 	goname := validGoIdentifer(apiname) // but might be changed later, if conflicts
-	if strings.Contains(des, "identifier") {
+	if strings.Contains(des, "identifier") && !strings.HasSuffix(strings.ToLower(goname), "id") {
 		goname += "id" // yay
 	}
 	gotype := mustSimpleTypeConvert(apitype, jstr(m, "format"))
@@ -1163,12 +1167,16 @@ func (a *argument) String() string {
 
 func (a *argument) cleanExpr(prefix string) string {
 	switch a.gotype {
+	case "[]string":
+		log.Printf("TODO(bradfitz): only including the first parameter in path query.")
+		return "cleanPathString(" + prefix + a.goname + "[0])"
 	case "string":
 		return "cleanPathString(" + prefix + a.goname + ")"
 	case "integer", "int64":
 		return "strconv.Itoa64(" + prefix + a.goname + ")"
 	}
-	panic("unknown type: " + a.apitype)
+	log.Panicf("unknown type: apitype=%q, gotype=%q", a.apitype, a.gotype)
+	return ""
 }
 
 // arguments are the arguments that a method takes

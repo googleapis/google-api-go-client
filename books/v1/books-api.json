@@ -410,6 +410,11 @@
         }
        }
       },
+      "onSaleDate": {
+       "type": "string",
+       "description": "The date on which this book is available for sale.",
+       "format": "date-time"
+      },
       "retailPrice": {
        "type": "object",
        "description": "The actual selling price of the book. This is the same as the suggested retail or list price unless there are offers or discounts on this volume. (In LITE projection.)",
@@ -427,7 +432,7 @@
       },
       "saleability": {
        "type": "string",
-       "description": "Whether or not this book is available for sale or offered for free in the Google eBookstore for the country listed above. Possible values are FOR_SALE, FREE or NOT_FOR_SALE."
+       "description": "Whether or not this book is available for sale or offered for free in the Google eBookstore for the country listed above. Possible values are FOR_SALE, FREE, NOT_FOR_SALE, or FOR_PREORDER."
       }
      }
     },
@@ -439,6 +444,10 @@
      "type": "object",
      "description": "User specific information related to this volume. (e.g. page this user last read or whether they purchased this book)",
      "properties": {
+      "isPreordered": {
+       "type": "boolean",
+       "description": "Whether or not this volume was pre-ordered by the authenticated user making the request. (In LITE projection.)"
+      },
       "isPurchased": {
        "type": "boolean",
        "description": "Whether or not this volume was purchased by the authenticated user making the request. (In LITE projection.)"
@@ -732,6 +741,11 @@
          "required": true,
          "location": "path"
         },
+        "showPreorders": {
+         "type": "boolean",
+         "description": "Set to true to show pre-ordered books. Defaults to false.",
+         "location": "query"
+        },
         "source": {
          "type": "string",
          "description": "String to identify the originator of this request.",
@@ -976,6 +990,11 @@
            "description": "The bookshelf id or name retrieve volumes for.",
            "location": "path"
           },
+          "showPreorders": {
+           "type": "boolean",
+           "description": "Set to true to show pre-ordered books. Defaults to false.",
+           "location": "query"
+          },
           "source": {
            "type": "string",
            "description": "String to identify the originator of this request.",
@@ -1175,6 +1194,11 @@
        "type": "string",
        "description": "Full-text search query string.",
        "required": true,
+       "location": "query"
+      },
+      "showPreorders": {
+       "type": "boolean",
+       "description": "Set to true to show books available for preorder. Defaults to false.",
        "location": "query"
       },
       "source": {

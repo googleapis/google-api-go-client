@@ -870,6 +870,19 @@ func (m *Method) grepParams(f func(*Param) bool) []*Param {
 	return matches
 }
 
+func (m *Method) NamedParam(name string) *Param {
+	matches := m.grepParams(func(p *Param) bool {
+		return p.name == name
+	})
+	if len(matches) < 1 {
+		log.Panicf("failed to find named parameter %q", name)
+	}
+	if len(matches) > 1 {
+		log.Panicf("found multiple parameters for parameter name %q", name)
+	}
+	return matches[0]
+}
+
 func (m *Method) OptParams() []*Param {
 	return m.grepParams(func(p *Param) bool {
 		return !p.IsRequired()
@@ -900,7 +913,7 @@ func (meth *Method) generateCode() {
 		retTypeComma += ", "
 	}
 
-	args := NewArguments(meth.m)
+	args := meth.NewArguments()
 	methodName := initialCap(meth.name)
 
 	prefix := ""
@@ -983,7 +996,7 @@ func (meth *Method) generateCode() {
 	// XML replies elsewhere.  TODO(bradfitz): hide this option in the generated code?
 	pn(`params.Set("alt", "json")`)
 	for _, p := range meth.RequiredQueryParams() {
-		pn("params.Set(%q, fmt.Sprintf(\"%%v\", c.%s))", p.name, validGoIdentifer(p.name))
+		pn("params.Set(%q, fmt.Sprintf(\"%%v\", c.%s))", p.name, p.goCallFieldName())
 	}
 	for _, p := range meth.RequiredRepeatedQueryParams() {
 		pn("for _, v := range c.%s { params.Add(%q, fmt.Sprintf(\"%%v\", v)) }",
@@ -1038,9 +1051,10 @@ func (meth *Method) generateCode() {
 }
 
 type Param struct {
-	method *Method
-	name   string
-	m      map[string]interface{}
+	method        *Method
+	name          string
+	m             map[string]interface{}
+	callFieldName string // empty means to use the default
 }
 
 func (p *Param) IsRequired() bool {
@@ -1067,6 +1081,15 @@ func (p *Param) GoType() string {
 		panic("failed to convert parameter type " + fmt.Sprintf("type=%q, format=%q", typ, format))
 	}
 	return t
+}
+
+// goCallFieldName returns the name of this parameter's field in a
+// method's "Call" struct.
+func (p *Param) goCallFieldName() string {
+	if p.callFieldName != "" {
+		return p.callFieldName
+	}
+	return validGoIdentifer(p.name)
 }
 
 // APIMethods returns top-level ("API-level") methods. They don't have an associated resource.
@@ -1105,45 +1128,47 @@ func resolveRelative(basestr, relstr string) string {
 	return u.String()
 }
 
-func NewArguments(m map[string]interface{}) (args *arguments) {
+func (meth *Method) NewArguments() (args *arguments) {
 	args = &arguments{
-		m: make(map[string]*argument),
+		method: meth,
+		m:      make(map[string]*argument),
 	}
-	po, ok := m["parameterOrder"].([]interface{})
+	po, ok := meth.m["parameterOrder"].([]interface{})
 	if ok {
 		for _, poi := range po {
 			pname := poi.(string)
-			arg := NewArg(pname, jobj(jobj(m, "parameters"), pname))
+			arg := meth.NewArg(pname, meth.NamedParam(pname))
 			args.AddArg(arg)
 		}
 	}
-	if ro := jobj(m, "request"); ro != nil {
-		arg := NewArg("REQUEST", ro)
-		args.AddArg(arg)
+	if ro := jobj(meth.m, "request"); ro != nil {
+		args.AddArg(meth.NewBodyArg(ro))
 	}
 	return
 }
 
-func NewArg(apiname string, m map[string]interface{}) *argument {
-	if apiname == "REQUEST" {
-		reftype := jstr(m, "$ref")
-		return &argument{
-			goname:   validGoIdentifer(strings.ToLower(reftype)),
-			apiname:  apiname,
-			gotype:   "*" + reftype,
-			apitype:  reftype,
-			location: "body",
-		}
+func (meth *Method) NewBodyArg(m map[string]interface{}) *argument {
+	reftype := jstr(m, "$ref")
+	return &argument{
+		goname:   validGoIdentifer(strings.ToLower(reftype)),
+		apiname:  "REQUEST",
+		gotype:   "*" + reftype,
+		apitype:  reftype,
+		location: "body",
 	}
-	repeated, _ := m["repeated"].(bool)
+}
+
+func (meth *Method) NewArg(apiname string, p *Param) *argument {
+	m := p.m
 	apitype := jstr(m, "type")
 	des := jstr(m, "description")
 	goname := validGoIdentifer(apiname) // but might be changed later, if conflicts
 	if strings.Contains(des, "identifier") && !strings.HasSuffix(strings.ToLower(goname), "id") {
 		goname += "id" // yay
+		p.callFieldName = goname
 	}
 	gotype := mustSimpleTypeConvert(apitype, jstr(m, "format"))
-	if repeated {
+	if p.IsRepeated() {
 		gotype = "[]" + gotype
 	}
 	return &argument{
@@ -1156,6 +1181,7 @@ func NewArg(apiname string, m map[string]interface{}) *argument {
 }
 
 type argument struct {
+	method           *Method
 	apiname, apitype string
 	goname, gotype   string
 	location         string // "path", "query", "body"
@@ -1181,8 +1207,9 @@ func (a *argument) cleanExpr(prefix string) string {
 
 // arguments are the arguments that a method takes
 type arguments struct {
-	l []*argument
-	m map[string]*argument
+	l      []*argument
+	m      map[string]*argument
+	method *Method
 }
 
 func (args *arguments) forLocation(loc string) []*argument {

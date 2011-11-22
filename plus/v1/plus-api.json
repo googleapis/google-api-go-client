@@ -191,44 +191,9 @@
        "items": {
         "type": "object",
         "properties": {
-         "categories": {
-          "type": "array",
-          "description": "Specifies zero or more categories the attachment belongs to.",
-          "items": {
-           "type": "object",
-           "properties": {
-            "label": {
-             "type": "string",
-             "description": "The category label, suitable for display (e.g. \"album cover\")."
-            },
-            "schema": {
-             "type": "string",
-             "description": "Domain of schema, e.g. http://google.com."
-            },
-            "term": {
-             "type": "string",
-             "description": "The tag, e.g. album."
-            }
-           }
-          }
-         },
          "content": {
           "type": "string",
           "description": "If the attachment is an article, this property contains a snippet of text from the article."
-         },
-         "contentsource": {
-          "type": "object",
-          "description": "If the attachment is audio, the link to the content.",
-          "properties": {
-           "type": {
-            "type": "string",
-            "description": "Media type of the link."
-           },
-           "url": {
-            "type": "string",
-            "description": "URL of the link."
-           }
-          }
          },
          "displayName": {
           "type": "string",
@@ -968,7 +933,7 @@
      "parameters": {
       "language": {
        "type": "string",
-       "description": "Specify the preferred language to search with. See search language code for available values.",
+       "description": "Specify the preferred language to search with. See search language codes for available values.",
        "default": "",
        "location": "query"
       },

@@ -268,17 +268,6 @@ type PersonUrls struct {
 	Type string `json:"type,omitempty"`
 }
 
-type ActivityObjectAttachmentsCategories struct {
-	// Schema: Domain of schema, e.g. http://google.com.
-	Schema string `json:"schema,omitempty"`
-
-	// Label: The category label, suitable for display (e.g. "album cover").
-	Label string `json:"label,omitempty"`
-
-	// Term: The tag, e.g. album.
-	Term string `json:"term,omitempty"`
-}
-
 type ActivityProvider struct {
 	// Title: Name of the service provider.
 	Title string `json:"title,omitempty"`
@@ -291,14 +280,6 @@ type ActivityObjectAttachmentsFullImage struct {
 	// Width: The width, in pixels, of the linked resource.
 	Width int64 `json:"width,omitempty"`
 
-	// Url: URL of the link.
-	Url string `json:"url,omitempty"`
-
-	// Type: Media type of the link.
-	Type string `json:"type,omitempty"`
-}
-
-type ActivityObjectAttachmentsContentsource struct {
 	// Url: URL of the link.
 	Url string `json:"url,omitempty"`
 
@@ -649,10 +630,6 @@ type ActivityObjectActorImage struct {
 }
 
 type ActivityObjectAttachments struct {
-	// Categories: Specifies zero or more categories the attachment belongs
-	// to.
-	Categories []*ActivityObjectAttachmentsCategories `json:"categories,omitempty"`
-
 	// Image: The preview image for photos or videos.
 	Image *ActivityObjectAttachmentsImage `json:"image,omitempty"`
 
@@ -683,9 +660,6 @@ type ActivityObjectAttachments struct {
 	// DisplayName: The title of the attachment (such as a photo caption or
 	// an article title).
 	DisplayName string `json:"displayName,omitempty"`
-
-	// Contentsource: If the attachment is audio, the link to the content.
-	Contentsource *ActivityObjectAttachmentsContentsource `json:"contentsource,omitempty"`
 }
 
 type ActivityActorImage struct {
@@ -1248,7 +1222,7 @@ func (c *ActivitiesSearchCall) OrderBy(orderBy string) *ActivitiesSearchCall {
 }
 
 // Language sets the optional parameter "language": Specify the
-// preferred language to search with. See search language code for
+// preferred language to search with. See search language codes for
 // available values.
 func (c *ActivitiesSearchCall) Language(language string) *ActivitiesSearchCall {
 	c.opt_["language"] = language
@@ -1316,7 +1290,7 @@ func (c *ActivitiesSearchCall) Do() (*ActivityFeed, os.Error) {
 	//   "parameters": {
 	//     "language": {
 	//       "default": "",
-	//       "description": "Specify the preferred language to search with. See search language code for available values.",
+	//       "description": "Specify the preferred language to search with. See search language codes for available values.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

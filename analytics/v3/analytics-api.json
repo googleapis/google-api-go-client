@@ -14,7 +14,7 @@
   "labs"
  ],
  "protocol": "rest",
- "basePath": "/analytics/v3/management/",
+ "basePath": "/analytics/v3/",
  "parameters": {
   "alt": {
    "type": "string",
@@ -136,7 +136,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "Resource type.",
+     "description": "Collection type.",
      "default": "analytics#accounts"
     },
     "nextLink": {
@@ -163,6 +163,169 @@
     }
    }
   },
+  "GaData": {
+   "id": "GaData",
+   "type": "object",
+   "properties": {
+    "columnHeaders": {
+     "type": "array",
+     "description": "Column headers that list dimension names followed by the metric names. The order of dimensions and metrics is same as specified in the request.",
+     "items": {
+      "type": "object",
+      "properties": {
+       "columnType": {
+        "type": "string",
+        "description": "Column Type. Either DIMENSION or METRIC."
+       },
+       "dataType": {
+        "type": "string",
+        "description": "Data type. Dimension column headers have only STRING as the data type. Metric column headers have data types for metric values such as INTEGER, DOUBLE, CURRENCY etc."
+       },
+       "name": {
+        "type": "string",
+        "description": "Column name."
+       }
+      }
+     }
+    },
+    "containsSampledData": {
+     "type": "boolean",
+     "description": "Determines if Analytics data contains samples."
+    },
+    "id": {
+     "type": "string",
+     "description": "Unique ID for this data response."
+    },
+    "itemsPerPage": {
+     "type": "integer",
+     "description": "The maximum number of rows the response can contain, regardless of the actual number of rows returned. Its value ranges from 1 to 10,000 with a value of 1000 by default, or otherwise specified by the max-results query parameter.",
+     "format": "int32"
+    },
+    "kind": {
+     "type": "string",
+     "description": "Resource type.",
+     "default": "analytics#gaData"
+    },
+    "nextLink": {
+     "type": "string",
+     "description": "Link to next page for this Analytics data query."
+    },
+    "previousLink": {
+     "type": "string",
+     "description": "Link to previous page for this Analytics data query."
+    },
+    "profileInfo": {
+     "type": "object",
+     "description": "Information for the profile, for which the Analytics data was requested.",
+     "properties": {
+      "accountId": {
+       "type": "string",
+       "description": "Account ID to which this profile belongs."
+      },
+      "internalWebPropertyId": {
+       "type": "string",
+       "description": "Internal ID for the web property to which this profile belongs."
+      },
+      "profileId": {
+       "type": "string",
+       "description": "Profile ID."
+      },
+      "profileName": {
+       "type": "string",
+       "description": "Profile name."
+      },
+      "tableId": {
+       "type": "string",
+       "description": "Table ID for profile."
+      },
+      "webPropertyId": {
+       "type": "string",
+       "description": "Web Property ID to which this profile belongs."
+      }
+     }
+    },
+    "query": {
+     "type": "object",
+     "description": "Analytics data request query parameters.",
+     "properties": {
+      "dimensions": {
+       "type": "string",
+       "description": "List of analytics dimensions."
+      },
+      "end-date": {
+       "type": "string",
+       "description": "End date."
+      },
+      "filters": {
+       "type": "string",
+       "description": "Comma-separated list of dimension or metric filters."
+      },
+      "ids": {
+       "type": "string",
+       "description": "Unique table ID."
+      },
+      "max-results": {
+       "type": "integer",
+       "description": "Maximum results per page.",
+       "format": "int32"
+      },
+      "metrics": {
+       "type": "array",
+       "description": "List of analytics metrics.",
+       "items": {
+        "type": "string"
+       }
+      },
+      "segment": {
+       "type": "string",
+       "description": "Analytics advanced segment."
+      },
+      "sort": {
+       "type": "array",
+       "description": "List of dimensions or metrics based on which Analytics data is sorted.",
+       "items": {
+        "type": "string"
+       }
+      },
+      "start-date": {
+       "type": "string",
+       "description": "Start date."
+      },
+      "start-index": {
+       "type": "integer",
+       "description": "Start index.",
+       "format": "int32"
+      }
+     }
+    },
+    "rows": {
+     "type": "array",
+     "description": "Analytics data rows, where each row contains a list of dimension values followed by the metric values. The order of dimensions and metrics is same as specified in the request.",
+     "items": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      }
+     }
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "Link to this page."
+    },
+    "totalResults": {
+     "type": "integer",
+     "description": "The total number of rows for the query, regardless of the number of rows in the response.",
+     "format": "int32"
+    },
+    "totalsForAllResults": {
+     "type": "object",
+     "description": "Total values for the requested metrics over all the results, not just the results returned in this response. The order of the metric totals is same as the metric order specified in the request.",
+     "additionalProperties": {
+      "type": "string"
+     }
+    }
+   }
+  },
   "Goal": {
    "id": "Goal",
    "type": "object",
@@ -186,6 +349,7 @@
      "properties": {
       "eventConditions": {
        "type": "array",
+       "description": "List of event conditions.",
        "items": {
         "type": "object",
         "properties": {
@@ -241,10 +405,12 @@
      "description": "Parent link for a goal. Points to the profile to which this goal belongs.",
      "properties": {
       "href": {
-       "type": "string"
+       "type": "string",
+       "description": "Link to the profile to which this goal belongs."
       },
       "type": {
        "type": "string",
+       "description": "Value is \"analytics#profile\".",
        "default": "analytics#profile"
       }
      }
@@ -369,7 +535,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "Resource type.",
+     "description": "Collection type.",
      "default": "analytics#goals"
     },
     "nextLink": {
@@ -409,10 +575,12 @@
      "description": "Child link for this profile. Points to the list of goals for this profile.",
      "properties": {
       "href": {
-       "type": "string"
+       "type": "string",
+       "description": "Link to the list of goals for this profile."
       },
       "type": {
        "type": "string",
+       "description": "Value is \"analytics#goals\".",
        "default": "analytics#goals"
       }
      }
@@ -456,10 +624,12 @@
      "description": "Parent link for this profile. Points to the web property to which this profile belongs.",
      "properties": {
       "href": {
-       "type": "string"
+       "type": "string",
+       "description": "Link to the web property to which this profile belongs."
       },
       "type": {
        "type": "string",
+       "description": "Value is \"analytics#webproperty\".",
        "default": "analytics#webproperty"
       }
      }
@@ -509,7 +679,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "Resource type for a profile.",
+     "description": "Collection type.",
      "default": "analytics#profiles"
     },
     "nextLink": {
@@ -562,6 +732,10 @@
      "type": "string",
      "description": "Advanced segment name."
     },
+    "segmentId": {
+     "type": "string",
+     "description": "Segment ID. Can be used with the 'segment' parameter in Data Feed."
+    },
     "selfLink": {
      "type": "string",
      "description": "Link for this advanced segment."
@@ -591,7 +765,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "Resource type for advanced segments.",
+     "description": "Collection type for advanced segments.",
      "default": "analytics#segments"
     },
     "nextLink": {
@@ -636,7 +810,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "Resource type.",
+     "description": "Collection type.",
      "default": "analytics#webproperties"
     },
     "nextLink": {
@@ -740,19 +914,112 @@
   }
  },
  "resources": {
+  "data": {
+   "resources": {
+    "ga": {
+     "methods": {
+      "get": {
+       "id": "analytics.data.ga.get",
+       "path": "data/ga",
+       "httpMethod": "GET",
+       "description": "Returns Analytics data for a profile.",
+       "parameters": {
+        "dimensions": {
+         "type": "string",
+         "description": "A comma-separated list of Analytics dimensions. E.g., 'ga:browser,ga:city'.",
+         "pattern": "(ga:.+)?",
+         "location": "query"
+        },
+        "end-date": {
+         "type": "string",
+         "description": "End date for fetching Analytics data. All requests should specify an end date formatted as YYYY-MM-DD.",
+         "required": true,
+         "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2}",
+         "location": "query"
+        },
+        "filters": {
+         "type": "string",
+         "description": "A comma-separated list of dimension or metric filters to be applied to Analytics data.",
+         "pattern": "ga:.+",
+         "location": "query"
+        },
+        "ids": {
+         "type": "string",
+         "description": "Unique table ID for retrieving Analytics data. Table ID is of the form ga:XXXX, where XXXX is the Analytics profile ID.",
+         "required": true,
+         "pattern": "ga:[0-9]+",
+         "location": "query"
+        },
+        "max-results": {
+         "type": "integer",
+         "description": "The maximum number of entries to include in this feed.",
+         "format": "int32",
+         "location": "query"
+        },
+        "metrics": {
+         "type": "string",
+         "description": "A comma-separated list of Analytics metrics. E.g., 'ga:visits,ga:pageviews'. At least one metric must be specified.",
+         "required": true,
+         "pattern": "ga:.+",
+         "location": "query"
+        },
+        "segment": {
+         "type": "string",
+         "description": "An Analytics advanced segment to be applied to data.",
+         "location": "query"
+        },
+        "sort": {
+         "type": "string",
+         "description": "A comma-separated list of dimensions or metrics that determine the sort order for Analytics data.",
+         "pattern": "(-)?ga:.+",
+         "location": "query"
+        },
+        "start-date": {
+         "type": "string",
+         "description": "Start date for fetching Analytics data. All requests should specify a start date formatted as YYYY-MM-DD.",
+         "required": true,
+         "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2}",
+         "location": "query"
+        },
+        "start-index": {
+         "type": "integer",
+         "description": "An index of the first entity to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.",
+         "format": "int32",
+         "minimum": "1",
+         "location": "query"
+        }
+       },
+       "parameterOrder": [
+        "ids",
+        "start-date",
+        "end-date",
+        "metrics"
+       ],
+       "response": {
+        "$ref": "GaData"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics.readonly"
+       ]
+      }
+     }
+    }
+   }
+  },
   "management": {
    "resources": {
     "accounts": {
      "methods": {
       "list": {
        "id": "analytics.management.accounts.list",
-       "path": "accounts",
+       "path": "management/accounts",
        "httpMethod": "GET",
        "description": "Lists all accounts to which the user has access.",
        "parameters": {
         "max-results": {
-         "type": "string",
+         "type": "integer",
          "description": "The maximum number of entries to include in this response.",
+         "format": "int32",
          "location": "query"
         },
         "start-index": {
@@ -776,7 +1043,7 @@
      "methods": {
       "list": {
        "id": "analytics.management.goals.list",
-       "path": "accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/goals",
+       "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/goals",
        "httpMethod": "GET",
        "description": "Lists goals to which the user has access.",
        "parameters": {
@@ -788,8 +1055,9 @@
          "location": "path"
         },
         "max-results": {
-         "type": "string",
+         "type": "integer",
          "description": "The maximum number of entries to include in this response.",
+         "format": "int32",
          "location": "query"
         },
         "profileId": {
@@ -832,7 +1100,7 @@
      "methods": {
       "list": {
        "id": "analytics.management.profiles.list",
-       "path": "accounts/{accountId}/webproperties/{webPropertyId}/profiles",
+       "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles",
        "httpMethod": "GET",
        "description": "Lists profiles to which the user has access.",
        "parameters": {
@@ -844,8 +1112,9 @@
          "location": "path"
         },
         "max-results": {
-         "type": "string",
+         "type": "integer",
          "description": "The maximum number of entries to include in this response.",
+         "format": "int32",
          "location": "query"
         },
         "start-index": {
@@ -880,13 +1149,14 @@
      "methods": {
       "list": {
        "id": "analytics.management.segments.list",
-       "path": "segments",
+       "path": "management/segments",
        "httpMethod": "GET",
        "description": "Lists advanced segments to which the user has access.",
        "parameters": {
         "max-results": {
-         "type": "string",
+         "type": "integer",
          "description": "The maximum number of entries to include in this response.",
+         "format": "int32",
          "location": "query"
         },
         "start-index": {
@@ -910,7 +1180,7 @@
      "methods": {
       "list": {
        "id": "analytics.management.webproperties.list",
-       "path": "accounts/{accountId}/webproperties",
+       "path": "management/accounts/{accountId}/webproperties",
        "httpMethod": "GET",
        "description": "Lists web properties to which the user has access.",
        "parameters": {
@@ -922,8 +1192,9 @@
          "location": "path"
         },
         "max-results": {
-         "type": "string",
+         "type": "integer",
          "description": "The maximum number of entries to include in this response.",
+         "format": "int32",
          "location": "query"
         },
         "start-index": {

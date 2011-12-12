@@ -112,6 +112,54 @@ type ReviewAuthor struct {
 	DisplayName string `json:"displayName,omitempty"`
 }
 
+type Annotation struct {
+	// CurrentVersionRanges: Selection ranges for the most recent content
+	// version.
+	CurrentVersionRanges *AnnotationCurrentVersionRanges `json:"currentVersionRanges,omitempty"`
+
+	// SelfLink: URL to this resource.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// AfterSelectedText: Anchor text after excerpt.
+	AfterSelectedText string `json:"afterSelectedText,omitempty"`
+
+	// ClientVersionRanges: Selection ranges sent from the client.
+	ClientVersionRanges *AnnotationClientVersionRanges `json:"clientVersionRanges,omitempty"`
+
+	// VolumeId: The volume that this annotation belongs to.
+	VolumeId string `json:"volumeId,omitempty"`
+
+	// Kind: Resource type.
+	Kind string `json:"kind,omitempty"`
+
+	// Updated: Timestamp for the last time this annotation was modified.
+	Updated string `json:"updated,omitempty"`
+
+	// Data: User-created data for this annotation.
+	Data string `json:"data,omitempty"`
+
+	// Id: Id of this annotation, in the form of a GUID.
+	Id string `json:"id,omitempty"`
+
+	// Created: Timestamp for the created time of this annotation.
+	Created string `json:"created,omitempty"`
+
+	// HighlightStyle: The highlight style for this annotation.
+	HighlightStyle string `json:"highlightStyle,omitempty"`
+
+	// SelectedText: Excerpt from the volume.
+	SelectedText string `json:"selectedText,omitempty"`
+
+	// LayerId: The layer this annotation is for.
+	LayerId string `json:"layerId,omitempty"`
+
+	// PageIds: Pages that this annotation spans.
+	PageIds []string `json:"pageIds,omitempty"`
+
+	// BeforeSelectedText: Anchor text before excerpt.
+	BeforeSelectedText string `json:"beforeSelectedText,omitempty"`
+}
+
 type VolumeSaleInfoRetailPrice struct {
 	// CurrencyCode: An ISO 4217, three-letter currency code. (In LITE
 	// projection.)
@@ -176,6 +224,22 @@ type VolumeUserInfo struct {
 	Review *Review `json:"review,omitempty"`
 }
 
+type AnnotationClientVersionRanges struct {
+	// GbTextRange: Range in GB text format for this annotation sent by
+	// client.
+	GbTextRange *BooksAnnotationsRange `json:"gbTextRange,omitempty"`
+
+	// ContentVersion: Content version the client sent in.
+	ContentVersion string `json:"contentVersion,omitempty"`
+
+	// CfiRange: Range in CFI format for this annotation sent by client.
+	CfiRange *BooksAnnotationsRange `json:"cfiRange,omitempty"`
+
+	// GbImageRange: Range in GB image format for this annotation sent by
+	// client.
+	GbImageRange *BooksAnnotationsRange `json:"gbImageRange,omitempty"`
+}
+
 type VolumeVolumeInfoImageLinks struct {
 	// Large: Image link for large size (width of ~800 pixels). (In LITE
 	// projection)
@@ -200,6 +264,22 @@ type VolumeVolumeInfoImageLinks struct {
 	// ExtraLarge: Image link for extra large size (width of ~1280 pixels).
 	// (In LITE projection)
 	ExtraLarge string `json:"extraLarge,omitempty"`
+}
+
+type AnnotationCurrentVersionRanges struct {
+	// GbTextRange: Range in GB text format for this annotation for version
+	// above.
+	GbTextRange *BooksAnnotationsRange `json:"gbTextRange,omitempty"`
+
+	// ContentVersion: Content version applicable to ranges below.
+	ContentVersion string `json:"contentVersion,omitempty"`
+
+	// CfiRange: Range in CFI format for this annotation for version above.
+	CfiRange *BooksAnnotationsRange `json:"cfiRange,omitempty"`
+
+	// GbImageRange: Range in GB image format for this annotation for
+	// version above.
+	GbImageRange *BooksAnnotationsRange `json:"gbImageRange,omitempty"`
 }
 
 type VolumeAccessInfoEpub struct {
@@ -392,6 +472,10 @@ type VolumeVolumeInfo struct {
 	// RatingsCount: The number of review ratings for this volume.
 	RatingsCount int64 `json:"ratingsCount,omitempty"`
 
+	// CanonicalVolumeLink: Canonical URL for a volume. Use this URL to plus
+	// one a Google Book. (In LITE projection)
+	CanonicalVolumeLink string `json:"canonicalVolumeLink,omitempty"`
+
 	// Description: A synopsis of the volume. The text of the description is
 	// formatted in HTML and includes simple formatting elements, such as b,
 	// i, and br tags. (In LITE projection.)
@@ -454,6 +538,23 @@ type ReviewSource struct {
 
 	// Description: Name of the source.
 	Description string `json:"description,omitempty"`
+}
+
+type Annotations struct {
+	// Items: A list of annotations.
+	Items []*Annotation `json:"items,omitempty"`
+
+	// NextPageToken: Token to pass in for pagination for the next page.
+	// This will not be present if this request does not have more results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// TotalItems: Total number of annotations found. This may be greater
+	// than the number of notes returned in this response if results have
+	// been paginated.
+	TotalItems int64 `json:"totalItems,omitempty"`
+
+	// Kind: Resource type.
+	Kind string `json:"kind,omitempty"`
 }
 
 type Review struct {
@@ -533,6 +634,20 @@ type VolumeAccessInfo struct {
 	// volume. Values can be ALLOWED, ALLOWED_FOR_ACCESSIBILITY, or
 	// NOT_ALLOWED.
 	TextToSpeechPermission string `json:"textToSpeechPermission,omitempty"`
+}
+
+type BooksAnnotationsRange struct {
+	// EndPosition: The ending position for the range.
+	EndPosition string `json:"endPosition,omitempty"`
+
+	// EndOffset: The offset from the ending position.
+	EndOffset string `json:"endOffset,omitempty"`
+
+	// StartPosition: The starting position for the range.
+	StartPosition string `json:"startPosition,omitempty"`
+
+	// StartOffset: The offset from the starting position.
+	StartOffset string `json:"startOffset,omitempty"`
 }
 
 // method id "books.volumes.list":

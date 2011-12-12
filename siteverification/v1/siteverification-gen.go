@@ -60,27 +60,21 @@ type WebResourceService struct {
 	s *Service
 }
 
-type SiteverificationWebResourceGettokenRequest struct {
-	// VerificationMethod: The verification method that will be used to
-	// verify this site. For sites, 'FILE' or 'META' methods may be used.
-	// For domains, only 'DNS' may be used.
-	VerificationMethod string `json:"verificationMethod,omitempty"`
+type SiteVerificationWebResourceResource struct {
+	// Id: The string used to identify this site. This value should be used
+	// in the "id" portion of the REST URL for the Get, Update, and Delete
+	// operations.
+	Id string `json:"id,omitempty"`
 
-	// Site: The site for which a verification token will be generated.
-	Site *SiteverificationWebResourceGettokenRequestSite `json:"site,omitempty"`
+	// Site: The address and type of a site that is verified or will be
+	// verified.
+	Site *SiteVerificationWebResourceResourceSite `json:"site,omitempty"`
+
+	// Owners: The email addresses of all verified owners.
+	Owners []string `json:"owners,omitempty"`
 }
 
-type SiteverificationWebResourceResourceSite struct {
-	// Identifier: The site identifier. If the type is set to SITE, the
-	// identifier is a URL. If the type is set to INET_DOMAIN, the site
-	// identifier is a domain name.
-	Identifier string `json:"identifier,omitempty"`
-
-	// Type: The site type. Can be SITE or INET_DOMAIN (domain name).
-	Type string `json:"type,omitempty"`
-}
-
-type SiteverificationWebResourceGettokenResponse struct {
+type SiteVerificationWebResourceGettokenResponse struct {
 	// Token: The verification token. The token must be placed appropriately
 	// in order for verification to succeed.
 	Token string `json:"token,omitempty"`
@@ -94,12 +88,22 @@ type SiteverificationWebResourceGettokenResponse struct {
 	Method string `json:"method,omitempty"`
 }
 
-type SiteverificationWebResourceListResponse struct {
-	// Items: The list of sites that are owned by the authenticated user.
-	Items []*SiteverificationWebResourceResource `json:"items,omitempty"`
+type SiteVerificationWebResourceGettokenRequest struct {
+	// VerificationMethod: The verification method that will be used to
+	// verify this site. For sites, 'FILE' or 'META' methods may be used.
+	// For domains, only 'DNS' may be used.
+	VerificationMethod string `json:"verificationMethod,omitempty"`
+
+	// Site: The site for which a verification token will be generated.
+	Site *SiteVerificationWebResourceGettokenRequestSite `json:"site,omitempty"`
 }
 
-type SiteverificationWebResourceGettokenRequestSite struct {
+type SiteVerificationWebResourceListResponse struct {
+	// Items: The list of sites that are owned by the authenticated user.
+	Items []*SiteVerificationWebResourceResource `json:"items,omitempty"`
+}
+
+type SiteVerificationWebResourceGettokenRequestSite struct {
 	// Identifier: The site identifier. If the type is set to SITE, the
 	// identifier is a URL. If the type is set to INET_DOMAIN, the site
 	// identifier is a domain name.
@@ -110,18 +114,14 @@ type SiteverificationWebResourceGettokenRequestSite struct {
 	Type string `json:"type,omitempty"`
 }
 
-type SiteverificationWebResourceResource struct {
-	// Id: The string used to identify this site. This value should be used
-	// in the "id" portion of the REST URL for the Get, Update, and Delete
-	// operations.
-	Id string `json:"id,omitempty"`
+type SiteVerificationWebResourceResourceSite struct {
+	// Identifier: The site identifier. If the type is set to SITE, the
+	// identifier is a URL. If the type is set to INET_DOMAIN, the site
+	// identifier is a domain name.
+	Identifier string `json:"identifier,omitempty"`
 
-	// Site: The address and type of a site that is verified or will be
-	// verified.
-	Site *SiteverificationWebResourceResourceSite `json:"site,omitempty"`
-
-	// Owners: The email addresses of all verified owners.
-	Owners []string `json:"owners,omitempty"`
+	// Type: The site type. Can be SITE or INET_DOMAIN (domain name).
+	Type string `json:"type,omitempty"`
 }
 
 // method id "siteVerification.webResource.list":
@@ -137,7 +137,7 @@ func (r *WebResourceService) List() *WebResourceListCall {
 	return c
 }
 
-func (c *WebResourceListCall) Do() (*SiteverificationWebResourceListResponse, os.Error) {
+func (c *WebResourceListCall) Do() (*SiteVerificationWebResourceListResponse, os.Error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -152,7 +152,7 @@ func (c *WebResourceListCall) Do() (*SiteverificationWebResourceListResponse, os
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(SiteverificationWebResourceListResponse)
+	ret := new(SiteVerificationWebResourceListResponse)
 	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
 		return nil, err
 	}
@@ -163,7 +163,7 @@ func (c *WebResourceListCall) Do() (*SiteverificationWebResourceListResponse, os
 	//   "id": "siteVerification.webResource.list",
 	//   "path": "webResource",
 	//   "response": {
-	//     "$ref": "SiteverificationWebResourceListResponse"
+	//     "$ref": "SiteVerificationWebResourceListResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/siteverification"
@@ -177,19 +177,19 @@ func (c *WebResourceListCall) Do() (*SiteverificationWebResourceListResponse, os
 type WebResourceUpdateCall struct {
 	s                                   *Service
 	id                                  string
-	siteverificationwebresourceresource *SiteverificationWebResourceResource
+	siteverificationwebresourceresource *SiteVerificationWebResourceResource
 	opt_                                map[string]interface{}
 }
 
 // Update: Modify the list of owners for your website or domain.
-func (r *WebResourceService) Update(id string, siteverificationwebresourceresource *SiteverificationWebResourceResource) *WebResourceUpdateCall {
+func (r *WebResourceService) Update(id string, siteverificationwebresourceresource *SiteVerificationWebResourceResource) *WebResourceUpdateCall {
 	c := &WebResourceUpdateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.id = id
 	c.siteverificationwebresourceresource = siteverificationwebresourceresource
 	return c
 }
 
-func (c *WebResourceUpdateCall) Do() (*SiteverificationWebResourceResource, os.Error) {
+func (c *WebResourceUpdateCall) Do() (*SiteVerificationWebResourceResource, os.Error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.siteverificationwebresourceresource)
 	if err != nil {
@@ -211,7 +211,7 @@ func (c *WebResourceUpdateCall) Do() (*SiteverificationWebResourceResource, os.E
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(SiteverificationWebResourceResource)
+	ret := new(SiteVerificationWebResourceResource)
 	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
 		return nil, err
 	}
@@ -233,10 +233,10 @@ func (c *WebResourceUpdateCall) Do() (*SiteverificationWebResourceResource, os.E
 	//   },
 	//   "path": "webResource/{id}",
 	//   "request": {
-	//     "$ref": "SiteverificationWebResourceResource"
+	//     "$ref": "SiteVerificationWebResourceResource"
 	//   },
 	//   "response": {
-	//     "$ref": "SiteverificationWebResourceResource"
+	//     "$ref": "SiteVerificationWebResourceResource"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/siteverification"
@@ -250,19 +250,19 @@ func (c *WebResourceUpdateCall) Do() (*SiteverificationWebResourceResource, os.E
 type WebResourceInsertCall struct {
 	s                                   *Service
 	verificationMethod                  string
-	siteverificationwebresourceresource *SiteverificationWebResourceResource
+	siteverificationwebresourceresource *SiteVerificationWebResourceResource
 	opt_                                map[string]interface{}
 }
 
 // Insert: Attempt verification of a website or domain.
-func (r *WebResourceService) Insert(verificationMethod string, siteverificationwebresourceresource *SiteverificationWebResourceResource) *WebResourceInsertCall {
+func (r *WebResourceService) Insert(verificationMethod string, siteverificationwebresourceresource *SiteVerificationWebResourceResource) *WebResourceInsertCall {
 	c := &WebResourceInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.verificationMethod = verificationMethod
 	c.siteverificationwebresourceresource = siteverificationwebresourceresource
 	return c
 }
 
-func (c *WebResourceInsertCall) Do() (*SiteverificationWebResourceResource, os.Error) {
+func (c *WebResourceInsertCall) Do() (*SiteVerificationWebResourceResource, os.Error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.siteverificationwebresourceresource)
 	if err != nil {
@@ -284,7 +284,7 @@ func (c *WebResourceInsertCall) Do() (*SiteverificationWebResourceResource, os.E
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(SiteverificationWebResourceResource)
+	ret := new(SiteVerificationWebResourceResource)
 	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
 		return nil, err
 	}
@@ -306,10 +306,10 @@ func (c *WebResourceInsertCall) Do() (*SiteverificationWebResourceResource, os.E
 	//   },
 	//   "path": "webResource",
 	//   "request": {
-	//     "$ref": "SiteverificationWebResourceResource"
+	//     "$ref": "SiteVerificationWebResourceResource"
 	//   },
 	//   "response": {
-	//     "$ref": "SiteverificationWebResourceResource"
+	//     "$ref": "SiteVerificationWebResourceResource"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/siteverification"
@@ -333,7 +333,7 @@ func (r *WebResourceService) Get(id string) *WebResourceGetCall {
 	return c
 }
 
-func (c *WebResourceGetCall) Do() (*SiteverificationWebResourceResource, os.Error) {
+func (c *WebResourceGetCall) Do() (*SiteVerificationWebResourceResource, os.Error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -349,7 +349,7 @@ func (c *WebResourceGetCall) Do() (*SiteverificationWebResourceResource, os.Erro
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(SiteverificationWebResourceResource)
+	ret := new(SiteVerificationWebResourceResource)
 	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
 		return nil, err
 	}
@@ -371,7 +371,7 @@ func (c *WebResourceGetCall) Do() (*SiteverificationWebResourceResource, os.Erro
 	//   },
 	//   "path": "webResource/{id}",
 	//   "response": {
-	//     "$ref": "SiteverificationWebResourceResource"
+	//     "$ref": "SiteVerificationWebResourceResource"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/siteverification"
@@ -470,7 +470,7 @@ func (c *WebResourceGetTokenCall) Type(type_ string) *WebResourceGetTokenCall {
 	return c
 }
 
-func (c *WebResourceGetTokenCall) Do() (*SiteverificationWebResourceGettokenResponse, os.Error) {
+func (c *WebResourceGetTokenCall) Do() (*SiteVerificationWebResourceGettokenResponse, os.Error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -494,7 +494,7 @@ func (c *WebResourceGetTokenCall) Do() (*SiteverificationWebResourceGettokenResp
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(SiteverificationWebResourceGettokenResponse)
+	ret := new(SiteVerificationWebResourceGettokenResponse)
 	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
 		return nil, err
 	}
@@ -522,7 +522,7 @@ func (c *WebResourceGetTokenCall) Do() (*SiteverificationWebResourceGettokenResp
 	//   },
 	//   "path": "token",
 	//   "response": {
-	//     "$ref": "SiteverificationWebResourceGettokenResponse"
+	//     "$ref": "SiteVerificationWebResourceGettokenResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/siteverification"
@@ -536,20 +536,20 @@ func (c *WebResourceGetTokenCall) Do() (*SiteverificationWebResourceGettokenResp
 type WebResourcePatchCall struct {
 	s                                   *Service
 	id                                  string
-	siteverificationwebresourceresource *SiteverificationWebResourceResource
+	siteverificationwebresourceresource *SiteVerificationWebResourceResource
 	opt_                                map[string]interface{}
 }
 
 // Patch: Modify the list of owners for your website or domain. This
 // method supports patch semantics.
-func (r *WebResourceService) Patch(id string, siteverificationwebresourceresource *SiteverificationWebResourceResource) *WebResourcePatchCall {
+func (r *WebResourceService) Patch(id string, siteverificationwebresourceresource *SiteVerificationWebResourceResource) *WebResourcePatchCall {
 	c := &WebResourcePatchCall{s: r.s, opt_: make(map[string]interface{})}
 	c.id = id
 	c.siteverificationwebresourceresource = siteverificationwebresourceresource
 	return c
 }
 
-func (c *WebResourcePatchCall) Do() (*SiteverificationWebResourceResource, os.Error) {
+func (c *WebResourcePatchCall) Do() (*SiteVerificationWebResourceResource, os.Error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.siteverificationwebresourceresource)
 	if err != nil {
@@ -571,7 +571,7 @@ func (c *WebResourcePatchCall) Do() (*SiteverificationWebResourceResource, os.Er
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(SiteverificationWebResourceResource)
+	ret := new(SiteVerificationWebResourceResource)
 	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
 		return nil, err
 	}
@@ -593,10 +593,10 @@ func (c *WebResourcePatchCall) Do() (*SiteverificationWebResourceResource, os.Er
 	//   },
 	//   "path": "webResource/{id}",
 	//   "request": {
-	//     "$ref": "SiteverificationWebResourceResource"
+	//     "$ref": "SiteVerificationWebResourceResource"
 	//   },
 	//   "response": {
-	//     "$ref": "SiteverificationWebResourceResource"
+	//     "$ref": "SiteVerificationWebResourceResource"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/siteverification"

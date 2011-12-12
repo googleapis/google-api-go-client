@@ -21,10 +21,12 @@
    "description": "Data format for the response.",
    "default": "json",
    "enum": [
-    "json"
+    "json",
+    "csv"
    ],
    "enumDescriptions": [
-    "Responses with Content-Type of application/json"
+    "Responses with Content-Type of application/json",
+    "Responses with Content-Type of text/csv"
    ],
    "location": "query"
   },
@@ -206,6 +208,11 @@
        }
       }
      }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Kind this is, in this case adsense#report.",
+     "default": "adsense#report"
     },
     "rows": {
      "type": "array",

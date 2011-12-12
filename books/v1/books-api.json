@@ -70,6 +70,163 @@
   }
  },
  "schemas": {
+  "Annotation": {
+   "id": "Annotation",
+   "type": "object",
+   "properties": {
+    "afterSelectedText": {
+     "type": "string",
+     "description": "Anchor text after excerpt."
+    },
+    "beforeSelectedText": {
+     "type": "string",
+     "description": "Anchor text before excerpt."
+    },
+    "clientVersionRanges": {
+     "type": "object",
+     "description": "Selection ranges sent from the client.",
+     "properties": {
+      "cfiRange": {
+       "$ref": "BooksAnnotationsRange",
+       "description": "Range in CFI format for this annotation sent by client."
+      },
+      "contentVersion": {
+       "type": "string",
+       "description": "Content version the client sent in."
+      },
+      "gbImageRange": {
+       "$ref": "BooksAnnotationsRange",
+       "description": "Range in GB image format for this annotation sent by client."
+      },
+      "gbTextRange": {
+       "$ref": "BooksAnnotationsRange",
+       "description": "Range in GB text format for this annotation sent by client."
+      }
+     }
+    },
+    "created": {
+     "type": "string",
+     "description": "Timestamp for the created time of this annotation.",
+     "format": "date-time"
+    },
+    "currentVersionRanges": {
+     "type": "object",
+     "description": "Selection ranges for the most recent content version.",
+     "properties": {
+      "cfiRange": {
+       "$ref": "BooksAnnotationsRange",
+       "description": "Range in CFI format for this annotation for version above."
+      },
+      "contentVersion": {
+       "type": "string",
+       "description": "Content version applicable to ranges below."
+      },
+      "gbImageRange": {
+       "$ref": "BooksAnnotationsRange",
+       "description": "Range in GB image format for this annotation for version above."
+      },
+      "gbTextRange": {
+       "$ref": "BooksAnnotationsRange",
+       "description": "Range in GB text format for this annotation for version above."
+      }
+     }
+    },
+    "data": {
+     "type": "string",
+     "description": "User-created data for this annotation."
+    },
+    "highlightStyle": {
+     "type": "string",
+     "description": "The highlight style for this annotation."
+    },
+    "id": {
+     "type": "string",
+     "description": "Id of this annotation, in the form of a GUID."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Resource type.",
+     "default": "books#annotation"
+    },
+    "layerId": {
+     "type": "string",
+     "description": "The layer this annotation is for."
+    },
+    "pageIds": {
+     "type": "array",
+     "description": "Pages that this annotation spans.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "selectedText": {
+     "type": "string",
+     "description": "Excerpt from the volume."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "URL to this resource."
+    },
+    "updated": {
+     "type": "string",
+     "description": "Timestamp for the last time this annotation was modified.",
+     "format": "date-time"
+    },
+    "volumeId": {
+     "type": "string",
+     "description": "The volume that this annotation belongs to."
+    }
+   }
+  },
+  "Annotations": {
+   "id": "Annotations",
+   "type": "object",
+   "properties": {
+    "items": {
+     "type": "array",
+     "description": "A list of annotations.",
+     "items": {
+      "$ref": "Annotation"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Resource type.",
+     "default": "books#annotations"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "Token to pass in for pagination for the next page. This will not be present if this request does not have more results."
+    },
+    "totalItems": {
+     "type": "integer",
+     "description": "Total number of annotations found. This may be greater than the number of notes returned in this response if results have been paginated.",
+     "format": "int32"
+    }
+   }
+  },
+  "BooksAnnotationsRange": {
+   "id": "BooksAnnotationsRange",
+   "type": "object",
+   "properties": {
+    "endOffset": {
+     "type": "string",
+     "description": "The offset from the ending position."
+    },
+    "endPosition": {
+     "type": "string",
+     "description": "The ending position for the range."
+    },
+    "startOffset": {
+     "type": "string",
+     "description": "The offset from the starting position."
+    },
+    "startPosition": {
+     "type": "string",
+     "description": "The starting position for the range."
+    }
+   }
+  },
   "Bookshelf": {
    "id": "Bookshelf",
    "type": "object",
@@ -483,6 +640,10 @@
        "description": "The mean review rating for this volume. (min = 1.0, max = 5.0)",
        "format": "double"
       },
+      "canonicalVolumeLink": {
+       "type": "string",
+       "description": "Canonical URL for a volume. Use this URL to plus one a Google Book. (In LITE projection)"
+      },
       "categories": {
        "type": "array",
        "description": "A list of subject categories, such as \"Fiction\", \"Suspense\", etc.",
@@ -782,6 +943,194 @@
   },
   "mylibrary": {
    "resources": {
+    "annotations": {
+     "methods": {
+      "delete": {
+       "id": "books.mylibrary.annotations.delete",
+       "path": "mylibrary/annotations/{annotationId}",
+       "httpMethod": "DELETE",
+       "description": "Deletes an annotation.",
+       "parameters": {
+        "annotationId": {
+         "type": "string",
+         "description": "The annotation identifier for the annotation to delete.",
+         "required": true,
+         "location": "path"
+        },
+        "country": {
+         "type": "string",
+         "description": "ISO-3166-1 code to override the IP-based location.",
+         "location": "query"
+        },
+        "source": {
+         "type": "string",
+         "description": "String to identify the originator of this request.",
+         "location": "query"
+        }
+       },
+       "parameterOrder": [
+        "annotationId"
+       ],
+       "scopes": [
+        "https://www.googleapis.com/auth/books"
+       ]
+      },
+      "get": {
+       "id": "books.mylibrary.annotations.get",
+       "path": "mylibrary/annotations/{annotationId}",
+       "httpMethod": "GET",
+       "description": "Gets an annotation by its id.",
+       "parameters": {
+        "annotationId": {
+         "type": "string",
+         "description": "The annotation identifier for the annotation to retrieve.",
+         "required": true,
+         "location": "path"
+        },
+        "country": {
+         "type": "string",
+         "description": "ISO-3166-1 code to override the IP-based location.",
+         "location": "query"
+        },
+        "source": {
+         "type": "string",
+         "description": "String to identify the originator of this request.",
+         "location": "query"
+        }
+       },
+       "parameterOrder": [
+        "annotationId"
+       ],
+       "response": {
+        "$ref": "Annotation"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/books"
+       ]
+      },
+      "insert": {
+       "id": "books.mylibrary.annotations.insert",
+       "path": "mylibrary/annotations",
+       "httpMethod": "POST",
+       "description": "Inserts a new annotation.",
+       "parameters": {
+        "country": {
+         "type": "string",
+         "description": "ISO-3166-1 code to override the IP-based location.",
+         "location": "query"
+        },
+        "source": {
+         "type": "string",
+         "description": "String to identify the originator of this request.",
+         "location": "query"
+        }
+       },
+       "request": {
+        "$ref": "Annotation"
+       },
+       "response": {
+        "$ref": "Annotation"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/books"
+       ]
+      },
+      "list": {
+       "id": "books.mylibrary.annotations.list",
+       "path": "mylibrary/annotations",
+       "httpMethod": "GET",
+       "description": "Retrieves a list of annotations, possibly filtered.",
+       "parameters": {
+        "contentVersion": {
+         "type": "string",
+         "description": "The content version for the requested volume.",
+         "location": "query"
+        },
+        "country": {
+         "type": "string",
+         "description": "ISO-3166-1 code to override the IP-based location.",
+         "location": "query"
+        },
+        "layerId": {
+         "type": "string",
+         "description": "The layer id to limit annotation by.",
+         "location": "query"
+        },
+        "maxResults": {
+         "type": "integer",
+         "description": "Maximum number of results to return",
+         "format": "uint32",
+         "minimum": "0",
+         "maximum": "40",
+         "location": "query"
+        },
+        "pageIds": {
+         "type": "string",
+         "description": "The page id(s) for the volume that is being queried.",
+         "repeated": true,
+         "location": "query"
+        },
+        "pageToken": {
+         "type": "string",
+         "description": "The value of the nextToken from the previous page.",
+         "location": "query"
+        },
+        "source": {
+         "type": "string",
+         "description": "String to identify the originator of this request.",
+         "location": "query"
+        },
+        "volumeId": {
+         "type": "string",
+         "description": "The volume to restrict annotations to.",
+         "location": "query"
+        }
+       },
+       "response": {
+        "$ref": "Annotations"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/books"
+       ]
+      },
+      "update": {
+       "id": "books.mylibrary.annotations.update",
+       "path": "mylibrary/annotations/{annotationId}",
+       "httpMethod": "PUT",
+       "description": "Updates an existing annotation.",
+       "parameters": {
+        "annotationId": {
+         "type": "string",
+         "description": "The annotation identifier for the annotation to update.",
+         "required": true,
+         "location": "path"
+        },
+        "country": {
+         "type": "string",
+         "description": "ISO-3166-1 code to override the IP-based location.",
+         "location": "query"
+        },
+        "source": {
+         "type": "string",
+         "description": "String to identify the originator of this request.",
+         "location": "query"
+        }
+       },
+       "parameterOrder": [
+        "annotationId"
+       ],
+       "request": {
+        "$ref": "Annotation"
+       },
+       "response": {
+        "$ref": "Annotation"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/books"
+       ]
+      }
+     }
+    },
     "bookshelves": {
      "methods": {
       "addVolume": {

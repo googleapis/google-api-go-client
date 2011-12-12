@@ -54,24 +54,7 @@ type ApisService struct {
 	s *Service
 }
 
-type RestDescriptionIcons struct {
-	// X16: The url of the 16x16 icon.
-	X16 string `json:"x16,omitempty"`
-
-	// X32: The url of the 32x32 icon.
-	X32 string `json:"x32,omitempty"`
-}
-
-type RestresourceResources struct {
-
-}
-
-type RestmethodRequest struct {
-	// Ref: Schema ID for the request schema.
-	Ref string `json:"$ref,omitempty"`
-}
-
-type Jsonschema struct {
+type JsonSchema struct {
 	// Format: An additional regular expression or key that helps constrain
 	// the value. For more details see:
 	// http://tools.ietf.org/html/draft-zyp-json-schema-03#section-5.23
@@ -86,7 +69,7 @@ type Jsonschema struct {
 
 	// Items: If this is a schema for an array, this property is the schema
 	// for each element in the array.
-	Items *Jsonschema `json:"items,omitempty"`
+	Items *JsonSchema `json:"items,omitempty"`
 
 	// Ref: A reference to another schema. The value of this property is the
 	// "id" of another schema.
@@ -98,7 +81,7 @@ type Jsonschema struct {
 
 	// Properties: If this is a schema for an object, list the schema for
 	// each property of this object.
-	Properties *JsonschemaProperties `json:"properties,omitempty"`
+	Properties *JsonSchemaProperties `json:"properties,omitempty"`
 
 	// Id: Unique identifier for this schema.
 	Id string `json:"id,omitempty"`
@@ -131,15 +114,28 @@ type Jsonschema struct {
 	// AdditionalProperties: If this is a schema for an object, this
 	// property is the schema for any additional properties with dynamic
 	// keys on this object.
-	AdditionalProperties *Jsonschema `json:"additionalProperties,omitempty"`
+	AdditionalProperties *JsonSchema `json:"additionalProperties,omitempty"`
 }
 
-type RestmethodMediaUploadProtocols struct {
-	// Resumable: Supports the Resumable Media Upload protocol.
-	Resumable *RestmethodMediaUploadProtocolsResumable `json:"resumable,omitempty"`
+type RestDescriptionIcons struct {
+	// X16: The url of the 16x16 icon.
+	X16 string `json:"x16,omitempty"`
 
-	// Simple: Supports uploading as a single HTTP request.
-	Simple *RestmethodMediaUploadProtocolsSimple `json:"simple,omitempty"`
+	// X32: The url of the 32x32 icon.
+	X32 string `json:"x32,omitempty"`
+}
+
+type RestMethodMediaUpload struct {
+	// Protocols: Supported upload protocols.
+	Protocols *RestMethodMediaUploadProtocols `json:"protocols,omitempty"`
+
+	// MaxSize: Maximum size of a media upload, such as "1MB", "2GB" or
+	// "3TB".
+	MaxSize string `json:"maxSize,omitempty"`
+
+	// Accept: MIME Media Ranges for acceptable media uploads to this
+	// method.
+	Accept []string `json:"accept,omitempty"`
 }
 
 type RestDescription struct {
@@ -201,17 +197,53 @@ type RestDescriptionMethods struct {
 
 }
 
-type RestmethodMediaUpload struct {
-	// Protocols: Supported upload protocols.
-	Protocols *RestmethodMediaUploadProtocols `json:"protocols,omitempty"`
+type RestMethodRequest struct {
+	// Ref: Schema ID for the request schema.
+	Ref string `json:"$ref,omitempty"`
+}
 
-	// MaxSize: Maximum size of a media upload, such as "1MB", "2GB" or
-	// "3TB".
-	MaxSize string `json:"maxSize,omitempty"`
+type RestResource struct {
+	// Resources: Sub-resources on this resource.
+	Resources *RestResourceResources `json:"resources,omitempty"`
 
-	// Accept: MIME Media Ranges for acceptable media uploads to this
-	// method.
-	Accept []string `json:"accept,omitempty"`
+	// Methods: Methods on this resource.
+	Methods *RestResourceMethods `json:"methods,omitempty"`
+}
+
+type RestMethod struct {
+	// Scopes: OAuth 2.0 scopes applicable to this method.
+	Scopes []string `json:"scopes,omitempty"`
+
+	// Response: The schema for the response.
+	Response *RestMethodResponse `json:"response,omitempty"`
+
+	// Path: The URI path of this REST method. Should be used in conjunction
+	// with the basePath property at the api-level.
+	Path string `json:"path,omitempty"`
+
+	// Id: A unique ID for this method. This property can be used to match
+	// methods between different versions of Discovery.
+	Id string `json:"id,omitempty"`
+
+	// Request: The schema for the request.
+	Request *RestMethodRequest `json:"request,omitempty"`
+
+	// Parameters: Details for all parameters in this method.
+	Parameters *RestMethodParameters `json:"parameters,omitempty"`
+
+	// ParameterOrder: Ordered list of required parameters, serves as a hint
+	// to clients on how to structure their method signatures. The array is
+	// ordered such that the "most-significant" parameter appears first.
+	ParameterOrder []string `json:"parameterOrder,omitempty"`
+
+	// HttpMethod: HTTP method used by this method.
+	HttpMethod string `json:"httpMethod,omitempty"`
+
+	// Description: Description of this method.
+	Description string `json:"description,omitempty"`
+
+	// MediaUpload: Media upload parameters.
+	MediaUpload *RestMethodMediaUpload `json:"mediaUpload,omitempty"`
 }
 
 type RestDescriptionAuthOauth2 struct {
@@ -228,11 +260,19 @@ type RestDescriptionSchemas struct {
 
 }
 
+type JsonSchemaProperties struct {
+
+}
+
 type RestDescriptionAuthOauth2Scopes struct {
 
 }
 
 type RestDescriptionResources struct {
+
+}
+
+type RestResourceResources struct {
 
 }
 
@@ -273,40 +313,16 @@ type DirectoryListItems struct {
 	Description string `json:"description,omitempty"`
 }
 
-type Restmethod struct {
-	// Scopes: OAuth 2.0 scopes applicable to this method.
-	Scopes []string `json:"scopes,omitempty"`
+type RestMethodMediaUploadProtocols struct {
+	// Resumable: Supports the Resumable Media Upload protocol.
+	Resumable *RestMethodMediaUploadProtocolsResumable `json:"resumable,omitempty"`
 
-	// Response: The schema for the response.
-	Response *RestmethodResponse `json:"response,omitempty"`
+	// Simple: Supports uploading as a single HTTP request.
+	Simple *RestMethodMediaUploadProtocolsSimple `json:"simple,omitempty"`
+}
 
-	// Path: The URI path of this REST method. Should be used in conjunction
-	// with the basePath property at the api-level.
-	Path string `json:"path,omitempty"`
+type RestMethodParameters struct {
 
-	// Id: A unique ID for this method. This property can be used to match
-	// methods between different versions of Discovery.
-	Id string `json:"id,omitempty"`
-
-	// Request: The schema for the request.
-	Request *RestmethodRequest `json:"request,omitempty"`
-
-	// Parameters: Details for all parameters in this method.
-	Parameters *RestmethodParameters `json:"parameters,omitempty"`
-
-	// ParameterOrder: Ordered list of required parameters, serves as a hint
-	// to clients on how to structure their method signatures. The array is
-	// ordered such that the "most-significant" parameter appears first.
-	ParameterOrder []string `json:"parameterOrder,omitempty"`
-
-	// HttpMethod: HTTP method used by this method.
-	HttpMethod string `json:"httpMethod,omitempty"`
-
-	// Description: Description of this method.
-	Description string `json:"description,omitempty"`
-
-	// MediaUpload: Media upload parameters.
-	MediaUpload *RestmethodMediaUpload `json:"mediaUpload,omitempty"`
 }
 
 type RestDescriptionParameters struct {
@@ -322,6 +338,10 @@ type DirectoryList struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+type RestResourceMethods struct {
+
+}
+
 type DirectoryListItemsIcons struct {
 	// X16: The url of the 16x16 icon.
 	X16 string `json:"x16,omitempty"`
@@ -330,29 +350,7 @@ type DirectoryListItemsIcons struct {
 	X32 string `json:"x32,omitempty"`
 }
 
-type RestmethodMediaUploadProtocolsResumable struct {
-	// Path: The URI path to be used for upload. Should be used in
-	// conjunction with the basePath property at the api-level.
-	Path string `json:"path,omitempty"`
-
-	// Multipart: True if this endpoint supports uploading multipart media.
-	Multipart bool `json:"multipart,omitempty"`
-}
-
-type RestresourceMethods struct {
-
-}
-
-type JsonschemaProperties struct {
-
-}
-
-type RestmethodResponse struct {
-	// Ref: Schema ID for the response schema.
-	Ref string `json:"$ref,omitempty"`
-}
-
-type RestmethodMediaUploadProtocolsSimple struct {
+type RestMethodMediaUploadProtocolsSimple struct {
 	// Path: The URI path to be used for upload. Should be used in
 	// conjunction with the basePath property at the api-level.
 	Path string `json:"path,omitempty"`
@@ -361,16 +359,18 @@ type RestmethodMediaUploadProtocolsSimple struct {
 	Multipart bool `json:"multipart,omitempty"`
 }
 
-type RestmethodParameters struct {
-
+type RestMethodResponse struct {
+	// Ref: Schema ID for the response schema.
+	Ref string `json:"$ref,omitempty"`
 }
 
-type Restresource struct {
-	// Resources: Sub-resources on this resource.
-	Resources *RestresourceResources `json:"resources,omitempty"`
+type RestMethodMediaUploadProtocolsResumable struct {
+	// Path: The URI path to be used for upload. Should be used in
+	// conjunction with the basePath property at the api-level.
+	Path string `json:"path,omitempty"`
 
-	// Methods: Methods on this resource.
-	Methods *RestresourceMethods `json:"methods,omitempty"`
+	// Multipart: True if this endpoint supports uploading multipart media.
+	Multipart bool `json:"multipart,omitempty"`
 }
 
 // method id "discovery.apis.list":
@@ -462,6 +462,7 @@ func (c *ApisListCall) Do() (*DirectoryList, os.Error) {
 	//       "type": "string"
 	//     },
 	//     "preferred": {
+	//       "default": "false",
 	//       "description": "Return only the preferred version of an API.",
 	//       "location": "query",
 	//       "type": "boolean"

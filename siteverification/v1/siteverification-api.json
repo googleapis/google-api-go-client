@@ -70,8 +70,8 @@
   }
  },
  "schemas": {
-  "SiteverificationWebResourceGettokenRequest": {
-   "id": "SiteverificationWebResourceGettokenRequest",
+  "SiteVerificationWebResourceGettokenRequest": {
+   "id": "SiteVerificationWebResourceGettokenRequest",
    "type": "object",
    "properties": {
     "site": {
@@ -94,8 +94,8 @@
     }
    }
   },
-  "SiteverificationWebResourceGettokenResponse": {
-   "id": "SiteverificationWebResourceGettokenResponse",
+  "SiteVerificationWebResourceGettokenResponse": {
+   "id": "SiteVerificationWebResourceGettokenResponse",
    "type": "object",
    "properties": {
     "method": {
@@ -108,21 +108,21 @@
     }
    }
   },
-  "SiteverificationWebResourceListResponse": {
-   "id": "SiteverificationWebResourceListResponse",
+  "SiteVerificationWebResourceListResponse": {
+   "id": "SiteVerificationWebResourceListResponse",
    "type": "object",
    "properties": {
     "items": {
      "type": "array",
      "description": "The list of sites that are owned by the authenticated user.",
      "items": {
-      "$ref": "SiteverificationWebResourceResource"
+      "$ref": "SiteVerificationWebResourceResource"
      }
     }
    }
   },
-  "SiteverificationWebResourceResource": {
-   "id": "SiteverificationWebResourceResource",
+  "SiteVerificationWebResourceResource": {
+   "id": "SiteVerificationWebResourceResource",
    "type": "object",
    "properties": {
     "id": {
@@ -193,7 +193,7 @@
       "id"
      ],
      "response": {
-      "$ref": "SiteverificationWebResourceResource"
+      "$ref": "SiteVerificationWebResourceResource"
      },
      "scopes": [
       "https://www.googleapis.com/auth/siteverification"
@@ -222,7 +222,7 @@
       }
      },
      "response": {
-      "$ref": "SiteverificationWebResourceGettokenResponse"
+      "$ref": "SiteVerificationWebResourceGettokenResponse"
      },
      "scopes": [
       "https://www.googleapis.com/auth/siteverification"
@@ -245,10 +245,10 @@
       "verificationMethod"
      ],
      "request": {
-      "$ref": "SiteverificationWebResourceResource"
+      "$ref": "SiteVerificationWebResourceResource"
      },
      "response": {
-      "$ref": "SiteverificationWebResourceResource"
+      "$ref": "SiteVerificationWebResourceResource"
      },
      "scopes": [
       "https://www.googleapis.com/auth/siteverification"
@@ -260,7 +260,7 @@
      "httpMethod": "GET",
      "description": "Get the list of your verified websites and domains.",
      "response": {
-      "$ref": "SiteverificationWebResourceListResponse"
+      "$ref": "SiteVerificationWebResourceListResponse"
      },
      "scopes": [
       "https://www.googleapis.com/auth/siteverification"
@@ -283,10 +283,10 @@
       "id"
      ],
      "request": {
-      "$ref": "SiteverificationWebResourceResource"
+      "$ref": "SiteVerificationWebResourceResource"
      },
      "response": {
-      "$ref": "SiteverificationWebResourceResource"
+      "$ref": "SiteVerificationWebResourceResource"
      },
      "scopes": [
       "https://www.googleapis.com/auth/siteverification"
@@ -309,10 +309,10 @@
       "id"
      ],
      "request": {
-      "$ref": "SiteverificationWebResourceResource"
+      "$ref": "SiteVerificationWebResourceResource"
      },
      "response": {
-      "$ref": "SiteverificationWebResourceResource"
+      "$ref": "SiteVerificationWebResourceResource"
      },
      "scopes": [
       "https://www.googleapis.com/auth/siteverification"

@@ -387,6 +387,7 @@
      "parameters": {
       "id": {
        "type": "string",
+       "description": "The unique name for the predictive model.",
        "required": true,
        "location": "path"
       }

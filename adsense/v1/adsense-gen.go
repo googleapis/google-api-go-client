@@ -228,6 +228,9 @@ type AdsenseReportsGenerateResponse struct {
 	// Warnings: Any warnings associated with generation of the report.
 	Warnings []string `json:"warnings,omitempty"`
 
+	// Kind: Kind this is, in this case adsense#report.
+	Kind string `json:"kind,omitempty"`
+
 	// TotalMatchedRows: The total number of rows matched by the report
 	// request. Fewer rows may be returned in the response due to being
 	// limited by the row count requested or the report row limit.

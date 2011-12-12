@@ -331,6 +331,7 @@ func (c *TrainedmodelsUpdateCall) Do() (*Training, os.Error) {
 	//   ],
 	//   "parameters": {
 	//     "id": {
+	//       "description": "The unique name for the predictive model.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"

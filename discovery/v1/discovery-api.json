@@ -139,8 +139,8 @@
     }
    }
   },
-  "Jsonschema": {
-   "id": "Jsonschema",
+  "JsonSchema": {
+   "id": "JsonSchema",
    "type": "object",
    "properties": {
     "$ref": {
@@ -148,7 +148,7 @@
      "description": "A reference to another schema. The value of this property is the \"id\" of another schema."
     },
     "additionalProperties": {
-     "$ref": "Jsonschema",
+     "$ref": "JsonSchema",
      "description": "If this is a schema for an object, this property is the schema for any additional properties with dynamic keys on this object."
     },
     "default": {
@@ -182,7 +182,7 @@
      "description": "Unique identifier for this schema."
     },
     "items": {
-     "$ref": "Jsonschema",
+     "$ref": "JsonSchema",
      "description": "If this is a schema for an array, this property is the schema for each element in the array."
     },
     "location": {
@@ -205,7 +205,7 @@
      "type": "object",
      "description": "If this is a schema for an object, list the schema for each property of this object.",
      "additionalProperties": {
-      "$ref": "Jsonschema"
+      "$ref": "JsonSchema"
      }
     },
     "repeated": {
@@ -305,7 +305,7 @@
      "type": "object",
      "description": "API-level methods for this API.",
      "additionalProperties": {
-      "$ref": "Restmethod"
+      "$ref": "RestMethod"
      }
     },
     "name": {
@@ -316,7 +316,7 @@
      "type": "object",
      "description": "Common parameters that apply across all apis.",
      "additionalProperties": {
-      "$ref": "Jsonschema"
+      "$ref": "JsonSchema"
      }
     },
     "protocol": {
@@ -328,14 +328,14 @@
      "type": "object",
      "description": "The resources in this API.",
      "additionalProperties": {
-      "$ref": "Restresource"
+      "$ref": "RestResource"
      }
     },
     "schemas": {
      "type": "object",
      "description": "The schemas for this API.",
      "additionalProperties": {
-      "$ref": "Jsonschema"
+      "$ref": "JsonSchema"
      }
     },
     "title": {
@@ -348,8 +348,8 @@
     }
    }
   },
-  "Restmethod": {
-   "id": "Restmethod",
+  "RestMethod": {
+   "id": "RestMethod",
    "type": "object",
    "properties": {
     "description": {
@@ -428,7 +428,7 @@
      "type": "object",
      "description": "Details for all parameters in this method.",
      "additionalProperties": {
-      "$ref": "Jsonschema"
+      "$ref": "JsonSchema"
      }
     },
     "path": {
@@ -464,22 +464,22 @@
     }
    }
   },
-  "Restresource": {
-   "id": "Restresource",
+  "RestResource": {
+   "id": "RestResource",
    "type": "object",
    "properties": {
     "methods": {
      "type": "object",
      "description": "Methods on this resource.",
      "additionalProperties": {
-      "$ref": "Restmethod"
+      "$ref": "RestMethod"
      }
     },
     "resources": {
      "type": "object",
      "description": "Sub-resources on this resource.",
      "additionalProperties": {
-      "$ref": "Restresource"
+      "$ref": "RestResource"
      }
     }
    }
@@ -544,6 +544,7 @@
       "preferred": {
        "type": "boolean",
        "description": "Return only the preferred version of an API.",
+       "default": "false",
        "location": "query"
       }
      },

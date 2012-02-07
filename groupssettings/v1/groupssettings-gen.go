@@ -2,7 +2,7 @@
 //
 // Usage example:
 //
-//   import "google-api-go-client.googlecode.com/hg/groupssettings/v1"
+//   import "code.google.com/p/google-api-go-client/groupssettings/v1"
 //   ...
 //   groupssettingsService, err := groupssettings.New(oauthHttpClient)
 package groupssettings
@@ -10,14 +10,14 @@ package groupssettings
 import (
 	"bytes"
 	"fmt"
-	"http"
+	"net/http"
 	"io"
-	"json"
-	"os"
+	"encoding/json"
+	"errors"
 	"strings"
 	"strconv"
-	"url"
-	"google-api-go-client.googlecode.com/hg/google-api"
+	"net/url"
+	"code.google.com/p/google-api-go-client/googleapi"
 )
 
 var _ = bytes.NewBuffer
@@ -27,6 +27,7 @@ var _ = json.NewDecoder
 var _ = io.Copy
 var _ = url.Parse
 var _ = googleapi.Version
+var _ = errors.New
 
 const apiId = "groupssettings:v1"
 const apiName = "groupssettings"
@@ -39,9 +40,9 @@ const (
 	AppsGroupsSettingsScope = "https://www.googleapis.com/auth/apps.groups.settings"
 )
 
-func New(client *http.Client) (*Service, os.Error) {
+func New(client *http.Client) (*Service, error) {
 	if client == nil {
-		return nil, os.NewError("client is nil")
+		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
 	s.Groups = &GroupsService{s: s}
@@ -59,16 +60,6 @@ type GroupsService struct {
 }
 
 type Groups struct {
-	// Email: Email id of the group
-	Email string `json:"email,omitempty"`
-
-	// DefaultMessageDenyNotificationText: Default message deny notification
-	// message
-	DefaultMessageDenyNotificationText string `json:"defaultMessageDenyNotificationText,omitempty"`
-
-	// IsArchived: If the contents of the group are archived.
-	IsArchived string `json:"isArchived,omitempty"`
-
 	// MessageDisplayFont: Default message display font. Possible values
 	// are: DEFAULT_FONT FIXED_WIDTH_FONT
 	MessageDisplayFont string `json:"messageDisplayFont,omitempty"`
@@ -147,6 +138,90 @@ type Groups struct {
 
 	// Description: Description of the group
 	Description string `json:"description,omitempty"`
+
+	// Email: Email id of the group
+	Email string `json:"email,omitempty"`
+
+	// DefaultMessageDenyNotificationText: Default message deny notification
+	// message
+	DefaultMessageDenyNotificationText string `json:"defaultMessageDenyNotificationText,omitempty"`
+
+	// IsArchived: If the contents of the group are archived.
+	IsArchived string `json:"isArchived,omitempty"`
+}
+
+// method id "groupsSettings.groups.patch":
+
+type GroupsPatchCall struct {
+	s             *Service
+	groupUniqueId string
+	groups        *Groups
+	opt_          map[string]interface{}
+}
+
+// Patch: Updates an existing resource. This method supports patch
+// semantics.
+func (r *GroupsService) Patch(groupUniqueId string, groups *Groups) *GroupsPatchCall {
+	c := &GroupsPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.groupUniqueId = groupUniqueId
+	c.groups = groups
+	return c
+}
+
+func (c *GroupsPatchCall) Do() (*Groups, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.groups)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/groups/v1/groups/", "{groupUniqueId}")
+	urls = strings.Replace(urls, "{groupUniqueId}", cleanPathString(c.groupUniqueId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Groups)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an existing resource. This method supports patch semantics.",
+	//   "httpMethod": "PATCH",
+	//   "id": "groupsSettings.groups.patch",
+	//   "parameterOrder": [
+	//     "groupUniqueId"
+	//   ],
+	//   "parameters": {
+	//     "groupUniqueId": {
+	//       "description": "The resource ID",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{groupUniqueId}",
+	//   "request": {
+	//     "$ref": "Groups"
+	//   },
+	//   "response": {
+	//     "$ref": "Groups"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/apps.groups.settings"
+	//   ]
+	// }
+
 }
 
 // method id "groupsSettings.groups.update":
@@ -166,7 +241,7 @@ func (r *GroupsService) Update(groupUniqueId string, groups *Groups) *GroupsUpda
 	return c
 }
 
-func (c *GroupsUpdateCall) Do() (*Groups, os.Error) {
+func (c *GroupsUpdateCall) Do() (*Groups, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.groups)
 	if err != nil {
@@ -237,7 +312,7 @@ func (r *GroupsService) Get(groupUniqueId string) *GroupsGetCall {
 	return c
 }
 
-func (c *GroupsGetCall) Do() (*Groups, os.Error) {
+func (c *GroupsGetCall) Do() (*Groups, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -284,82 +359,8 @@ func (c *GroupsGetCall) Do() (*Groups, os.Error) {
 
 }
 
-// method id "groupsSettings.groups.patch":
-
-type GroupsPatchCall struct {
-	s             *Service
-	groupUniqueId string
-	groups        *Groups
-	opt_          map[string]interface{}
-}
-
-// Patch: Updates an existing resource. This method supports patch
-// semantics.
-func (r *GroupsService) Patch(groupUniqueId string, groups *Groups) *GroupsPatchCall {
-	c := &GroupsPatchCall{s: r.s, opt_: make(map[string]interface{})}
-	c.groupUniqueId = groupUniqueId
-	c.groups = groups
-	return c
-}
-
-func (c *GroupsPatchCall) Do() (*Groups, os.Error) {
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.groups)
-	if err != nil {
-		return nil, err
-	}
-	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/groups/v1/groups/", "{groupUniqueId}")
-	urls = strings.Replace(urls, "{groupUniqueId}", cleanPathString(c.groupUniqueId), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("PATCH", urls, body)
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(Groups)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Updates an existing resource. This method supports patch semantics.",
-	//   "httpMethod": "PATCH",
-	//   "id": "groupsSettings.groups.patch",
-	//   "parameterOrder": [
-	//     "groupUniqueId"
-	//   ],
-	//   "parameters": {
-	//     "groupUniqueId": {
-	//       "description": "The resource ID",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "{groupUniqueId}",
-	//   "request": {
-	//     "$ref": "Groups"
-	//   },
-	//   "response": {
-	//     "$ref": "Groups"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.groups.settings"
-	//   ]
-	// }
-
-}
-
 func cleanPathString(s string) string {
-	return strings.Map(func(r int) int {
+	return strings.Map(func(r rune) rune {
 		if r >= 0x30 && r <= 0x7a {
 			return r
 		}

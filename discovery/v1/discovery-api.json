@@ -14,6 +14,7 @@
   "labs"
  ],
  "protocol": "rest",
+ "baseUrl": "https://www.googleapis.com/discovery/v1/",
  "basePath": "/discovery/v1/",
  "parameters": {
   "alt": {
@@ -78,6 +79,10 @@
        "discoveryLink": {
         "type": "string",
         "description": "A link to the discovery document."
+       },
+       "discoveryRestUrl": {
+        "type": "string",
+        "description": "The url for the discovery REST document."
        },
        "documentationLink": {
         "type": "string",
@@ -254,7 +259,11 @@
     },
     "basePath": {
      "type": "string",
-     "description": "The base URI path for REST requests."
+     "description": "The base path for REST requests."
+    },
+    "baseUrl": {
+     "type": "string",
+     "description": "The base URL for REST requests."
     },
     "description": {
      "type": "string",

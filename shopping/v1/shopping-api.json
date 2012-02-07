@@ -14,6 +14,7 @@
   "labs"
  ],
  "protocol": "rest",
+ "baseUrl": "https://www.googleapis.com/shopping/search/v1/",
  "basePath": "/shopping/search/v1/",
  "parameters": {
   "alt": {
@@ -60,6 +61,15 @@
    "type": "string",
    "description": "IP address of the site where the request originates. Use this if you want to enforce per-user limits.",
    "location": "query"
+  }
+ },
+ "auth": {
+  "oauth2": {
+   "scopes": {
+    "https://www.googleapis.com/auth/shoppingapi": {
+     "description": "View your product data"
+    }
+   }
   }
  },
  "schemas": {
@@ -329,17 +339,6 @@
      "type": "string",
      "description": "Self link of feed."
     },
-    "shelfSpaceAds": {
-     "type": "array",
-     "items": {
-      "type": "object",
-      "properties": {
-       "product": {
-        "$ref": "ShoppingModelProductJsonV1"
-       }
-      }
-     }
-    },
     "spelling": {
      "type": "object",
      "description": "Spelling.",
@@ -511,21 +510,9 @@
        "type": "string",
        "description": "Account id of product author."
       },
-      "aggregatorId": {
-       "type": "string",
-       "description": "Aggregator id of product author."
-      },
-      "email": {
-       "type": "string",
-       "description": "Email address of product author."
-      },
       "name": {
        "type": "string",
        "description": "Name of product author."
-      },
-      "uri": {
-       "type": "string",
-       "description": "URI of product author."
       }
      }
     },
@@ -610,6 +597,75 @@
         }
        }
       }
+     }
+    },
+    "internal1": {
+     "type": "array",
+     "description": "Google Internal.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "internal10": {
+     "type": "array",
+     "description": "Google Internal.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "internal12": {
+     "type": "string",
+     "description": "Google Internal."
+    },
+    "internal13": {
+     "type": "number",
+     "description": "Google Internal.",
+     "format": "double"
+    },
+    "internal14": {
+     "type": "number",
+     "description": "Google Internal.",
+     "format": "double"
+    },
+    "internal15": {
+     "type": "number",
+     "description": "Google Internal.",
+     "format": "double"
+    },
+    "internal3": {
+     "type": "string",
+     "description": "Google Internal."
+    },
+    "internal4": {
+     "type": "array",
+     "description": "Google Internal.",
+     "items": {
+      "type": "object",
+      "properties": {
+       "confidence": {
+        "type": "number",
+        "format": "double"
+       },
+       "node": {
+        "type": "integer",
+        "format": "int32"
+       }
+      }
+     }
+    },
+    "internal6": {
+     "type": "string",
+     "description": "Google Internal."
+    },
+    "internal7": {
+     "type": "boolean",
+     "description": "Google Internal."
+    },
+    "internal8": {
+     "type": "array",
+     "description": "Google Internal.",
+     "items": {
+      "type": "string"
      }
     },
     "inventories": {
@@ -834,7 +890,10 @@
      ],
      "response": {
       "$ref": "Product"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/shoppingapi"
+     ]
     },
     "list": {
      "id": "shopping.products.list",
@@ -1098,7 +1157,10 @@
      ],
      "response": {
       "$ref": "Products"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/shoppingapi"
+     ]
     }
    }
   }

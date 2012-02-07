@@ -4,7 +4,7 @@
 //
 // Usage example:
 //
-//   import "google-api-go-client.googlecode.com/hg/analytics/v2.4"
+//   import "code.google.com/p/google-api-go-client/analytics/v2.4"
 //   ...
 //   analyticsService, err := analytics.New(oauthHttpClient)
 package analytics
@@ -12,14 +12,14 @@ package analytics
 import (
 	"bytes"
 	"fmt"
-	"http"
+	"net/http"
 	"io"
-	"json"
-	"os"
+	"encoding/json"
+	"errors"
 	"strings"
 	"strconv"
-	"url"
-	"google-api-go-client.googlecode.com/hg/google-api"
+	"net/url"
+	"code.google.com/p/google-api-go-client/googleapi"
 )
 
 var _ = bytes.NewBuffer
@@ -29,6 +29,7 @@ var _ = json.NewDecoder
 var _ = io.Copy
 var _ = url.Parse
 var _ = googleapi.Version
+var _ = errors.New
 
 const apiId = "analytics:v2.4"
 const apiName = "analytics"
@@ -44,9 +45,9 @@ const (
 	AnalyticsScope = "https://www.googleapis.com/auth/analytics"
 )
 
-func New(client *http.Client) (*Service, os.Error) {
+func New(client *http.Client) (*Service, error) {
 	if client == nil {
-		return nil, os.NewError("client is nil")
+		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
 	s.Management = &ManagementService{s: s}
@@ -91,13 +92,6 @@ func (r *DataService) Get(ids string, startDate string, endDate string, metrics 
 	return c
 }
 
-// Filters sets the optional parameter "filters": A comma-separated list
-// of dimension or metric filters to be applied to the report data.
-func (c *DataGetCall) Filters(filters string) *DataGetCall {
-	c.opt_["filters"] = filters
-	return c
-}
-
 // Segment sets the optional parameter "segment": An Analytics advanced
 // segment to be applied to the report data.
 func (c *DataGetCall) Segment(segment string) *DataGetCall {
@@ -136,17 +130,21 @@ func (c *DataGetCall) MaxResults(maxResults int64) *DataGetCall {
 	return c
 }
 
-func (c *DataGetCall) Do() os.Error {
+// Filters sets the optional parameter "filters": A comma-separated list
+// of dimension or metric filters to be applied to the report data.
+func (c *DataGetCall) Filters(filters string) *DataGetCall {
+	c.opt_["filters"] = filters
+	return c
+}
+
+func (c *DataGetCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	params.Set("metrics", fmt.Sprintf("%v", c.metrics))
 	params.Set("end-date", fmt.Sprintf("%v", c.endDate))
 	params.Set("start-date", fmt.Sprintf("%v", c.startDate))
 	params.Set("ids", fmt.Sprintf("%v", c.ids))
-	if v, ok := c.opt_["filters"]; ok {
-		params.Set("filters", fmt.Sprintf("%v", v))
-	}
+	params.Set("metrics", fmt.Sprintf("%v", c.metrics))
 	if v, ok := c.opt_["segment"]; ok {
 		params.Set("segment", fmt.Sprintf("%v", v))
 	}
@@ -161,6 +159,9 @@ func (c *DataGetCall) Do() os.Error {
 	}
 	if v, ok := c.opt_["max-results"]; ok {
 		params.Set("max-results", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["filters"]; ok {
+		params.Set("filters", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v2.4/", "data")
 	urls += "?" + params.Encode()
@@ -259,7 +260,7 @@ func (c *DataGetCall) Do() os.Error {
 }
 
 func cleanPathString(s string) string {
-	return strings.Map(func(r int) int {
+	return strings.Map(func(r rune) rune {
 		if r >= 0x30 && r <= 0x7a {
 			return r
 		}

@@ -4,7 +4,7 @@
 //
 // Usage example:
 //
-//   import "google-api-go-client.googlecode.com/hg/freebase/v1"
+//   import "code.google.com/p/google-api-go-client/freebase/v1"
 //   ...
 //   freebaseService, err := freebase.New(oauthHttpClient)
 package freebase
@@ -12,14 +12,14 @@ package freebase
 import (
 	"bytes"
 	"fmt"
-	"http"
+	"net/http"
 	"io"
-	"json"
-	"os"
+	"encoding/json"
+	"errors"
 	"strings"
 	"strconv"
-	"url"
-	"google-api-go-client.googlecode.com/hg/google-api"
+	"net/url"
+	"code.google.com/p/google-api-go-client/googleapi"
 )
 
 var _ = bytes.NewBuffer
@@ -29,15 +29,16 @@ var _ = json.NewDecoder
 var _ = io.Copy
 var _ = url.Parse
 var _ = googleapi.Version
+var _ = errors.New
 
 const apiId = "freebase:v1"
 const apiName = "freebase"
 const apiVersion = "v1"
 const basePath = "https://www.googleapis.com/freebase/v1/"
 
-func New(client *http.Client) (*Service, os.Error) {
+func New(client *http.Client) (*Service, error) {
 	if client == nil {
-		return nil, os.NewError("client is nil")
+		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
 	s.Text = &TextService{s: s}
@@ -110,7 +111,7 @@ func (c *ImageCall) Maxheight(maxheight int64) *ImageCall {
 	return c
 }
 
-func (c *ImageCall) Do() os.Error {
+func (c *ImageCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -230,6 +231,13 @@ func (c *MqlreadCall) Callback(callback string) *MqlreadCall {
 	return c
 }
 
+// Dateline sets the optional parameter "dateline": The dateline that
+// you get in a mqlwrite response to ensure consistent results.
+func (c *MqlreadCall) Dateline(dateline string) *MqlreadCall {
+	c.opt_["dateline"] = dateline
+	return c
+}
+
 // Cost sets the optional parameter "cost": Show the costs or not.
 func (c *MqlreadCall) Cost(cost bool) *MqlreadCall {
 	c.opt_["cost"] = cost
@@ -277,13 +285,16 @@ func (c *MqlreadCall) As_of_time(as_of_time string) *MqlreadCall {
 	return c
 }
 
-func (c *MqlreadCall) Do() os.Error {
+func (c *MqlreadCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("query", fmt.Sprintf("%v", c.query))
 	if v, ok := c.opt_["callback"]; ok {
 		params.Set("callback", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["dateline"]; ok {
+		params.Set("dateline", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["cost"]; ok {
 		params.Set("cost", fmt.Sprintf("%v", v))
@@ -345,6 +356,11 @@ func (c *MqlreadCall) Do() os.Error {
 	//     },
 	//     "cursor": {
 	//       "description": "The mql cursor.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "dateline": {
+	//       "description": "The dateline that you get in a mqlwrite response to ensure consistent results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -423,7 +439,7 @@ func (c *TextGetCall) Maxlength(maxlength int64) *TextGetCall {
 	return c
 }
 
-func (c *TextGetCall) Do() (*ContentserviceGet, os.Error) {
+func (c *TextGetCall) Do() (*ContentserviceGet, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -497,7 +513,7 @@ func (c *TextGetCall) Do() (*ContentserviceGet, os.Error) {
 }
 
 func cleanPathString(s string) string {
-	return strings.Map(func(r int) int {
+	return strings.Map(func(r rune) rune {
 		if r >= 0x30 && r <= 0x7a {
 			return r
 		}

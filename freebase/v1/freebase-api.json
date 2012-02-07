@@ -14,6 +14,7 @@
   "labs"
  ],
  "protocol": "rest",
+ "baseUrl": "https://www.googleapis.com/freebase/v1/",
  "basePath": "/freebase/v1/",
  "parameters": {
   "alt": {
@@ -162,6 +163,11 @@
     "cursor": {
      "type": "string",
      "description": "The mql cursor.",
+     "location": "query"
+    },
+    "dateline": {
+     "type": "string",
+     "description": "The dateline that you get in a mqlwrite response to ensure consistent results.",
      "location": "query"
     },
     "html_escape": {

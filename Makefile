@@ -1,4 +1,9 @@
 all:
-	make -C google-api clean install
-	make -C google-api-go-generator clean install
-	google-api-go-generator/google-api-go-gen -cache=false -install -api=*
+	go install code.google.com/p/google-api-go-client/googleapi
+	go install code.google.com/p/google-api-go-client/google-api-go-generator
+	$(GOPATH)/bin/google-api-go-generator -cache=false -install -api=*
+
+cached:
+	go install code.google.com/p/google-api-go-client/googleapi
+	go install code.google.com/p/google-api-go-client/google-api-go-generator
+	$(GOPATH)/bin/google-api-go-generator -cache=true -install -api=*

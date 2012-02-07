@@ -11,9 +11,10 @@
  },
  "documentationLink": "https://code.google.com/apis/blogger/docs/2.0/json/getting_started.html",
  "labels": [
-  "labs"
+  "limited_availability"
  ],
  "protocol": "rest",
+ "baseUrl": "https://www.googleapis.com/blogger/v2/",
  "basePath": "/blogger/v2/",
  "parameters": {
   "alt": {
@@ -192,8 +193,7 @@
       },
       "id": {
        "type": "string",
-       "description": "The identifier of the Comment creator.",
-       "format": "int64"
+       "description": "The identifier of the Comment creator."
       },
       "image": {
        "type": "object",
@@ -230,6 +230,17 @@
      "type": "string",
      "description": "The identifier for this resource.",
      "format": "int64"
+    },
+    "inReplyTo": {
+     "type": "object",
+     "description": "Data about the comment this is in reply to.",
+     "properties": {
+      "id": {
+       "type": "string",
+       "description": "The identified of the parent of this comment.",
+       "format": "int64"
+      }
+     }
     },
     "kind": {
      "type": "string",
@@ -303,8 +314,7 @@
       },
       "id": {
        "type": "string",
-       "description": "The identifier of the Page creator.",
-       "format": "int64"
+       "description": "The identifier of the Page creator."
       },
       "image": {
        "type": "object",
@@ -403,8 +413,7 @@
       },
       "id": {
        "type": "string",
-       "description": "The identifier of the Post creator.",
-       "format": "int64"
+       "description": "The identifier of the Post creator."
       },
       "image": {
        "type": "object",
@@ -548,8 +557,7 @@
     },
     "id": {
      "type": "string",
-     "description": "The identifier for this User.",
-     "format": "int64"
+     "description": "The identifier for this User."
     },
     "kind": {
      "type": "string",
@@ -598,6 +606,7 @@
        "type": "string",
        "description": "The ID of the blog to get.",
        "required": true,
+       "format": "int64",
        "location": "path"
       }
      },
@@ -625,18 +634,21 @@
        "type": "string",
        "description": "ID of the blog to containing the comment.",
        "required": true,
+       "format": "int64",
        "location": "path"
       },
       "commentId": {
        "type": "string",
        "description": "The ID of the comment to get.",
        "required": true,
+       "format": "int64",
        "location": "path"
       },
       "postId": {
        "type": "string",
        "description": "ID of the post to fetch posts from.",
        "required": true,
+       "format": "int64",
        "location": "path"
       }
      },
@@ -662,6 +674,7 @@
        "type": "string",
        "description": "ID of the blog to fetch comments from.",
        "required": true,
+       "format": "int64",
        "location": "path"
       },
       "fetchBodies": {
@@ -684,6 +697,7 @@
        "type": "string",
        "description": "ID of the post to fetch posts from.",
        "required": true,
+       "format": "int64",
        "location": "path"
       },
       "startDate": {
@@ -717,12 +731,14 @@
        "type": "string",
        "description": "ID of the blog containing the page.",
        "required": true,
+       "format": "int64",
        "location": "path"
       },
       "pageId": {
        "type": "string",
        "description": "The ID of the page to get.",
        "required": true,
+       "format": "int64",
        "location": "path"
       }
      },
@@ -747,6 +763,7 @@
        "type": "string",
        "description": "ID of the blog to fetch pages from.",
        "required": true,
+       "format": "int64",
        "location": "path"
       },
       "fetchBodies": {
@@ -779,12 +796,14 @@
        "type": "string",
        "description": "ID of the blog to fetch the post from.",
        "required": true,
+       "format": "int64",
        "location": "path"
       },
       "postId": {
        "type": "string",
        "description": "The ID of the post",
        "required": true,
+       "format": "int64",
        "location": "path"
       }
      },
@@ -809,6 +828,7 @@
        "type": "string",
        "description": "ID of the blog to fetch posts from.",
        "required": true,
+       "format": "int64",
        "location": "path"
       },
       "fetchBodies": {
@@ -882,7 +902,7 @@
        "parameters": {
         "userId": {
          "type": "string",
-         "description": "ID of the user whose blogs are to be fetched.",
+         "description": "ID of the user whose blogs are to be fetched. Either the word 'self' (sans quote marks) or the user's profile identifier.",
          "required": true,
          "location": "path"
         }

@@ -14,6 +14,7 @@
   "labs"
  ],
  "protocol": "rest",
+ "baseUrl": "https://www.googleapis.com/analytics/v3/",
  "basePath": "/analytics/v3/",
  "parameters": {
   "alt": {
@@ -1018,13 +1019,13 @@
        "parameters": {
         "max-results": {
          "type": "integer",
-         "description": "The maximum number of entries to include in this response.",
+         "description": "The maximum number of accounts to include in this response.",
          "format": "int32",
          "location": "query"
         },
         "start-index": {
          "type": "integer",
-         "description": "An index of the first entity to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.",
+         "description": "An index of the first account to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.",
          "format": "int32",
          "minimum": "1",
          "location": "query"
@@ -1049,36 +1050,33 @@
        "parameters": {
         "accountId": {
          "type": "string",
-         "description": "Account ID for the web properties to retrieve. Can either be a specific account ID or '~all', which refers to all the accounts to which the user has access.",
+         "description": "Account ID to retrieve goals for. Can either be a specific account ID or '~all', which refers to all the accounts that user has access to.",
          "required": true,
-         "pattern": "~all|[0-9]+",
          "location": "path"
         },
         "max-results": {
          "type": "integer",
-         "description": "The maximum number of entries to include in this response.",
+         "description": "The maximum number of goals to include in this response.",
          "format": "int32",
          "location": "query"
         },
         "profileId": {
          "type": "string",
-         "description": "Profile ID for the web properties to retrieve. Can either be a specific profile ID or '~all', which refers to all the profiles to which the user has access.",
+         "description": "Profile ID to retrieve goals for. Can either be a specific profile ID or '~all', which refers to all the profiles that user has access to.",
          "required": true,
-         "pattern": "~all|[0-9]+",
          "location": "path"
         },
         "start-index": {
          "type": "integer",
-         "description": "An index of the first entity to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.",
+         "description": "An index of the first goal to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.",
          "format": "int32",
          "minimum": "1",
          "location": "query"
         },
         "webPropertyId": {
          "type": "string",
-         "description": "Web property ID for the web properties to retrieve. Can either be a specific web property ID or '~all', which refers to all the web properties to which the user has access.",
+         "description": "Web property ID to retrieve goals for. Can either be a specific web property ID or '~all', which refers to all the web properties that user has access to.",
          "required": true,
-         "pattern": "~all|UA-[0-9]+-[0-9]+",
          "location": "path"
         }
        },
@@ -1106,14 +1104,13 @@
        "parameters": {
         "accountId": {
          "type": "string",
-         "description": "Account ID for the web properties to retrieve. Can either be a specific account ID or '~all', which refers to all the accounts to which the user has access.",
+         "description": "Account ID for the profiles to retrieve. Can either be a specific account ID or '~all', which refers to all the accounts to which the user has access.",
          "required": true,
-         "pattern": "~all|[0-9]+",
          "location": "path"
         },
         "max-results": {
          "type": "integer",
-         "description": "The maximum number of entries to include in this response.",
+         "description": "The maximum number of profiles to include in this response.",
          "format": "int32",
          "location": "query"
         },
@@ -1126,9 +1123,8 @@
         },
         "webPropertyId": {
          "type": "string",
-         "description": "Web property ID for the web properties to retrieve. Can either be a specific web property ID or '~all', which refers to all the web properties to which the user has access.",
+         "description": "Web property ID for the profiles to retrieve. Can either be a specific web property ID or '~all', which refers to all the web properties to which the user has access.",
          "required": true,
-         "pattern": "~all|UA-[0-9]+-[0-9]+",
          "location": "path"
         }
        },
@@ -1155,13 +1151,13 @@
        "parameters": {
         "max-results": {
          "type": "integer",
-         "description": "The maximum number of entries to include in this response.",
+         "description": "The maximum number of advanced segments to include in this response.",
          "format": "int32",
          "location": "query"
         },
         "start-index": {
          "type": "integer",
-         "description": "An index of the first entity to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.",
+         "description": "An index of the first advanced segment to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.",
          "format": "int32",
          "minimum": "1",
          "location": "query"
@@ -1186,14 +1182,13 @@
        "parameters": {
         "accountId": {
          "type": "string",
-         "description": "Account ID for the web properties to retrieve. Can either be a specific account ID or '~all', which refers to all the accounts to which user has access.",
+         "description": "Account ID to retrieve web properties for. Can either be a specific account ID or '~all', which refers to all the accounts that user has access to.",
          "required": true,
-         "pattern": "~all|[0-9]+",
          "location": "path"
         },
         "max-results": {
          "type": "integer",
-         "description": "The maximum number of entries to include in this response.",
+         "description": "The maximum number of web properties to include in this response.",
          "format": "int32",
          "location": "query"
         },

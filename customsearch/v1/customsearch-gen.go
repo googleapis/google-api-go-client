@@ -4,7 +4,7 @@
 //
 // Usage example:
 //
-//   import "google-api-go-client.googlecode.com/hg/customsearch/v1"
+//   import "code.google.com/p/google-api-go-client/customsearch/v1"
 //   ...
 //   customsearchService, err := customsearch.New(oauthHttpClient)
 package customsearch
@@ -12,14 +12,14 @@ package customsearch
 import (
 	"bytes"
 	"fmt"
-	"http"
+	"net/http"
 	"io"
-	"json"
-	"os"
+	"encoding/json"
+	"errors"
 	"strings"
 	"strconv"
-	"url"
-	"google-api-go-client.googlecode.com/hg/google-api"
+	"net/url"
+	"code.google.com/p/google-api-go-client/googleapi"
 )
 
 var _ = bytes.NewBuffer
@@ -29,15 +29,16 @@ var _ = json.NewDecoder
 var _ = io.Copy
 var _ = url.Parse
 var _ = googleapi.Version
+var _ = errors.New
 
 const apiId = "customsearch:v1"
 const apiName = "customsearch"
 const apiVersion = "v1"
 const basePath = "https://www.googleapis.com/customsearch/"
 
-func New(client *http.Client) (*Service, os.Error) {
+func New(client *http.Client) (*Service, error) {
 	if client == nil {
-		return nil, os.NewError("client is nil")
+		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
 	s.Cse = &CseService{s: s}
@@ -54,50 +55,6 @@ type CseService struct {
 	s *Service
 }
 
-type Result struct {
-	Snippet string `json:"snippet,omitempty"`
-
-	Pagemap *ResultPagemap `json:"pagemap,omitempty"`
-
-	Kind string `json:"kind,omitempty"`
-
-	Link string `json:"link,omitempty"`
-
-	HtmlTitle string `json:"htmlTitle,omitempty"`
-
-	Title string `json:"title,omitempty"`
-
-	HtmlSnippet string `json:"htmlSnippet,omitempty"`
-
-	CacheId string `json:"cacheId,omitempty"`
-
-	DisplayLink string `json:"displayLink,omitempty"`
-}
-
-type Search struct {
-	Items []*Result `json:"items,omitempty"`
-
-	Context *Context `json:"context,omitempty"`
-
-	Kind string `json:"kind,omitempty"`
-
-	Url *SearchUrl `json:"url,omitempty"`
-
-	Queries *SearchQueries `json:"queries,omitempty"`
-
-	Promotions []*Promotion `json:"promotions,omitempty"`
-}
-
-type SearchQueries struct {
-
-}
-
-type ContextFacetsItem struct {
-	Label string `json:"label,omitempty"`
-
-	Anchor string `json:"anchor,omitempty"`
-}
-
 type SearchUrl struct {
 	Template string `json:"template,omitempty"`
 
@@ -105,6 +62,12 @@ type SearchUrl struct {
 }
 
 type Query struct {
+	Sort string `json:"sort,omitempty"`
+
+	Cx string `json:"cx,omitempty"`
+
+	Cr string `json:"cr,omitempty"`
+
 	Count int64 `json:"count,omitempty"`
 
 	StartIndex int64 `json:"startIndex,omitempty"`
@@ -132,20 +95,14 @@ type Query struct {
 	Gl string `json:"gl,omitempty"`
 
 	SearchTerms string `json:"searchTerms,omitempty"`
-
-	Sort string `json:"sort,omitempty"`
-
-	Cx string `json:"cx,omitempty"`
-
-	Cr string `json:"cr,omitempty"`
 }
 
 type PromotionBodyLines struct {
+	Title string `json:"title,omitempty"`
+
 	Link string `json:"link,omitempty"`
 
 	Url string `json:"url,omitempty"`
-
-	Title string `json:"title,omitempty"`
 }
 
 type Context struct {
@@ -155,19 +112,18 @@ type Context struct {
 }
 
 type Promotion struct {
+	BodyLines []*PromotionBodyLines `json:"bodyLines,omitempty"`
+
+	DisplayLink string `json:"displayLink,omitempty"`
+
 	Image *PromotionImage `json:"image,omitempty"`
 
 	Link string `json:"link,omitempty"`
 
 	Title string `json:"title,omitempty"`
-
-	BodyLines []*PromotionBodyLines `json:"bodyLines,omitempty"`
-
-	DisplayLink string `json:"displayLink,omitempty"`
 }
 
 type ResultPagemap struct {
-
 }
 
 type PromotionImage struct {
@@ -176,6 +132,49 @@ type PromotionImage struct {
 	Width int64 `json:"width,omitempty"`
 
 	Source string `json:"source,omitempty"`
+}
+
+type Result struct {
+	HtmlTitle string `json:"htmlTitle,omitempty"`
+
+	Title string `json:"title,omitempty"`
+
+	HtmlSnippet string `json:"htmlSnippet,omitempty"`
+
+	CacheId string `json:"cacheId,omitempty"`
+
+	DisplayLink string `json:"displayLink,omitempty"`
+
+	Snippet string `json:"snippet,omitempty"`
+
+	Pagemap *ResultPagemap `json:"pagemap,omitempty"`
+
+	Kind string `json:"kind,omitempty"`
+
+	Link string `json:"link,omitempty"`
+}
+
+type Search struct {
+	Items []*Result `json:"items,omitempty"`
+
+	Context *Context `json:"context,omitempty"`
+
+	Kind string `json:"kind,omitempty"`
+
+	Url *SearchUrl `json:"url,omitempty"`
+
+	Queries *SearchQueries `json:"queries,omitempty"`
+
+	Promotions []*Promotion `json:"promotions,omitempty"`
+}
+
+type SearchQueries struct {
+}
+
+type ContextFacetsItem struct {
+	Label string `json:"label,omitempty"`
+
+	Anchor string `json:"anchor,omitempty"`
 }
 
 // method id "search.cse.list":
@@ -268,7 +267,7 @@ func (c *CseListCall) Cr(cr string) *CseListCall {
 	return c
 }
 
-func (c *CseListCall) Do() (*Search, os.Error) {
+func (c *CseListCall) Do() (*Search, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -495,7 +494,7 @@ func (c *CseListCall) Do() (*Search, os.Error) {
 }
 
 func cleanPathString(s string) string {
-	return strings.Map(func(r int) int {
+	return strings.Map(func(r rune) rune {
 		if r >= 0x30 && r <= 0x7a {
 			return r
 		}

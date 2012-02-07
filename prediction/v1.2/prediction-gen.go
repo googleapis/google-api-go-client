@@ -4,7 +4,7 @@
 //
 // Usage example:
 //
-//   import "google-api-go-client.googlecode.com/hg/prediction/v1.2"
+//   import "code.google.com/p/google-api-go-client/prediction/v1.2"
 //   ...
 //   predictionService, err := prediction.New(oauthHttpClient)
 package prediction
@@ -12,14 +12,14 @@ package prediction
 import (
 	"bytes"
 	"fmt"
-	"http"
+	"net/http"
 	"io"
-	"json"
-	"os"
+	"encoding/json"
+	"errors"
 	"strings"
 	"strconv"
-	"url"
-	"google-api-go-client.googlecode.com/hg/google-api"
+	"net/url"
+	"code.google.com/p/google-api-go-client/googleapi"
 )
 
 var _ = bytes.NewBuffer
@@ -29,6 +29,7 @@ var _ = json.NewDecoder
 var _ = io.Copy
 var _ = url.Parse
 var _ = googleapi.Version
+var _ = errors.New
 
 const apiId = "prediction:v1.2"
 const apiName = "prediction"
@@ -41,9 +42,9 @@ const (
 	PredictionScope = "https://www.googleapis.com/auth/prediction"
 )
 
-func New(client *http.Client) (*Service, os.Error) {
+func New(client *http.Client) (*Service, error) {
 	if client == nil {
-		return nil, os.NewError("client is nil")
+		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
 	s.Hostedmodels = &HostedmodelsService{s: s}
@@ -65,24 +66,6 @@ type HostedmodelsService struct {
 
 type TrainingService struct {
 	s *Service
-}
-
-type InputInput struct {
-	CsvInstance []interface{} `json:"csvInstance,omitempty"`
-}
-
-type Output struct {
-	SelfLink string `json:"selfLink,omitempty"`
-
-	OutputValue float64 `json:"outputValue,omitempty"`
-
-	OutputLabel string `json:"outputLabel,omitempty"`
-
-	Kind string `json:"kind,omitempty"`
-
-	Id string `json:"id,omitempty"`
-
-	OutputMulti []*OutputOutputMulti `json:"outputMulti,omitempty"`
 }
 
 type OutputOutputMulti struct {
@@ -123,6 +106,24 @@ type TrainingModelInfo struct {
 	ClassificationAccuracy float64 `json:"classificationAccuracy,omitempty"`
 }
 
+type InputInput struct {
+	CsvInstance []interface{} `json:"csvInstance,omitempty"`
+}
+
+type Output struct {
+	OutputValue float64 `json:"outputValue,omitempty"`
+
+	OutputLabel string `json:"outputLabel,omitempty"`
+
+	Kind string `json:"kind,omitempty"`
+
+	Id string `json:"id,omitempty"`
+
+	OutputMulti []*OutputOutputMulti `json:"outputMulti,omitempty"`
+
+	SelfLink string `json:"selfLink,omitempty"`
+}
+
 // method id "prediction.predict":
 
 type PredictCall struct {
@@ -140,7 +141,7 @@ func (s *Service) Predict(data string, input *Input) *PredictCall {
 	return c
 }
 
-func (c *PredictCall) Do() (*Output, os.Error) {
+func (c *PredictCall) Do() (*Output, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.input)
 	if err != nil {
@@ -213,7 +214,7 @@ func (r *HostedmodelsService) Predict(hostedModelName string, input *Input) *Hos
 	return c
 }
 
-func (c *HostedmodelsPredictCall) Do() (*Output, os.Error) {
+func (c *HostedmodelsPredictCall) Do() (*Output, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.input)
 	if err != nil {
@@ -286,7 +287,7 @@ func (r *TrainingService) Update(data string, update *Update) *TrainingUpdateCal
 	return c
 }
 
-func (c *TrainingUpdateCall) Do() (*Training, os.Error) {
+func (c *TrainingUpdateCall) Do() (*Training, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.update)
 	if err != nil {
@@ -322,6 +323,7 @@ func (c *TrainingUpdateCall) Do() (*Training, os.Error) {
 	//   ],
 	//   "parameters": {
 	//     "data": {
+	//       "description": "mybucket/mydata resource in Google Storage",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -363,7 +365,7 @@ func (c *TrainingInsertCall) Data(data string) *TrainingInsertCall {
 	return c
 }
 
-func (c *TrainingInsertCall) Do() (*Training, os.Error) {
+func (c *TrainingInsertCall) Do() (*Training, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.training)
 	if err != nil {
@@ -432,7 +434,7 @@ func (r *TrainingService) Get(data string) *TrainingGetCall {
 	return c
 }
 
-func (c *TrainingGetCall) Do() (*Training, os.Error) {
+func (c *TrainingGetCall) Do() (*Training, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -494,7 +496,7 @@ func (r *TrainingService) Delete(data string) *TrainingDeleteCall {
 	return c
 }
 
-func (c *TrainingDeleteCall) Do() os.Error {
+func (c *TrainingDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -535,7 +537,7 @@ func (c *TrainingDeleteCall) Do() os.Error {
 }
 
 func cleanPathString(s string) string {
-	return strings.Map(func(r int) int {
+	return strings.Map(func(r rune) rune {
 		if r >= 0x30 && r <= 0x7a {
 			return r
 		}

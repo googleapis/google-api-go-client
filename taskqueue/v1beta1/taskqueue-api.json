@@ -14,6 +14,7 @@
   "labs"
  ],
  "protocol": "rest",
+ "baseUrl": "https://www.googleapis.com/taskqueue/v1beta1/projects/",
  "basePath": "/taskqueue/v1beta1/projects/",
  "parameters": {
   "alt": {
@@ -368,8 +369,8 @@
      "parameterOrder": [
       "project",
       "taskqueue",
-      "numTasks",
-      "leaseSecs"
+      "leaseSecs",
+      "numTasks"
      ],
      "response": {
       "$ref": "Tasks"

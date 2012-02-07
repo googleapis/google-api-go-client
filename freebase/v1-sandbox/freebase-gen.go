@@ -4,7 +4,7 @@
 //
 // Usage example:
 //
-//   import "google-api-go-client.googlecode.com/hg/freebase/v1-sandbox"
+//   import "code.google.com/p/google-api-go-client/freebase/v1-sandbox"
 //   ...
 //   freebaseService, err := freebase.New(oauthHttpClient)
 package freebase
@@ -12,14 +12,14 @@ package freebase
 import (
 	"bytes"
 	"fmt"
-	"http"
+	"net/http"
 	"io"
-	"json"
-	"os"
+	"encoding/json"
+	"errors"
 	"strings"
 	"strconv"
-	"url"
-	"google-api-go-client.googlecode.com/hg/google-api"
+	"net/url"
+	"code.google.com/p/google-api-go-client/googleapi"
 )
 
 var _ = bytes.NewBuffer
@@ -29,15 +29,16 @@ var _ = json.NewDecoder
 var _ = io.Copy
 var _ = url.Parse
 var _ = googleapi.Version
+var _ = errors.New
 
 const apiId = "freebase:v1-sandbox"
 const apiName = "freebase"
 const apiVersion = "v1-sandbox"
 const basePath = "https://www.googleapis.com/freebase/v1-sandbox/"
 
-func New(client *http.Client) (*Service, os.Error) {
+func New(client *http.Client) (*Service, error) {
 	if client == nil {
-		return nil, os.NewError("client is nil")
+		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
 	s.Text = &TextService{s: s}
@@ -59,6 +60,207 @@ type ContentserviceGet struct {
 	Result string `json:"result,omitempty"`
 }
 
+// method id "freebase.mqlread":
+
+type MqlreadCall struct {
+	s     *Service
+	query string
+	opt_  map[string]interface{}
+}
+
+// Mqlread: Performs MQL Queries.
+func (s *Service) Mqlread(query string) *MqlreadCall {
+	c := &MqlreadCall{s: s, opt_: make(map[string]interface{})}
+	c.query = query
+	return c
+}
+
+// Cursor sets the optional parameter "cursor": The mql cursor.
+func (c *MqlreadCall) Cursor(cursor string) *MqlreadCall {
+	c.opt_["cursor"] = cursor
+	return c
+}
+
+// Lang sets the optional parameter "lang": The language of the results
+// - an id of a /type/lang object.
+func (c *MqlreadCall) Lang(lang string) *MqlreadCall {
+	c.opt_["lang"] = lang
+	return c
+}
+
+// Html_escape sets the optional parameter "html_escape": Whether or not
+// to escape entities.
+func (c *MqlreadCall) Html_escape(html_escape bool) *MqlreadCall {
+	c.opt_["html_escape"] = html_escape
+	return c
+}
+
+// As_of_time sets the optional parameter "as_of_time": Run the query as
+// it would've been run at the specified point in time.
+func (c *MqlreadCall) As_of_time(as_of_time string) *MqlreadCall {
+	c.opt_["as_of_time"] = as_of_time
+	return c
+}
+
+// Callback sets the optional parameter "callback": JS method name for
+// JSONP callbacks.
+func (c *MqlreadCall) Callback(callback string) *MqlreadCall {
+	c.opt_["callback"] = callback
+	return c
+}
+
+// Dateline sets the optional parameter "dateline": The dateline that
+// you get in a mqlwrite response to ensure consistent results.
+func (c *MqlreadCall) Dateline(dateline string) *MqlreadCall {
+	c.opt_["dateline"] = dateline
+	return c
+}
+
+// Cost sets the optional parameter "cost": Show the costs or not.
+func (c *MqlreadCall) Cost(cost bool) *MqlreadCall {
+	c.opt_["cost"] = cost
+	return c
+}
+
+// Uniqueness_failure sets the optional parameter "uniqueness_failure":
+// How MQL responds to uniqueness failures.
+func (c *MqlreadCall) Uniqueness_failure(uniqueness_failure string) *MqlreadCall {
+	c.opt_["uniqueness_failure"] = uniqueness_failure
+	return c
+}
+
+// Indent sets the optional parameter "indent": How many spaces to
+// indent the json.
+func (c *MqlreadCall) Indent(indent int64) *MqlreadCall {
+	c.opt_["indent"] = indent
+	return c
+}
+
+func (c *MqlreadCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("query", fmt.Sprintf("%v", c.query))
+	if v, ok := c.opt_["cursor"]; ok {
+		params.Set("cursor", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["lang"]; ok {
+		params.Set("lang", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["html_escape"]; ok {
+		params.Set("html_escape", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["as_of_time"]; ok {
+		params.Set("as_of_time", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["callback"]; ok {
+		params.Set("callback", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["dateline"]; ok {
+		params.Set("dateline", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["cost"]; ok {
+		params.Set("cost", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["uniqueness_failure"]; ok {
+		params.Set("uniqueness_failure", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["indent"]; ok {
+		params.Set("indent", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/freebase/v1-sandbox/", "mqlread")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Performs MQL Queries.",
+	//   "httpMethod": "GET",
+	//   "id": "freebase.mqlread",
+	//   "parameterOrder": [
+	//     "query"
+	//   ],
+	//   "parameters": {
+	//     "as_of_time": {
+	//       "description": "Run the query as it would've been run at the specified point in time.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "callback": {
+	//       "description": "JS method name for JSONP callbacks.",
+	//       "location": "query",
+	//       "pattern": "([A-Za-z0-9_$.]|\\[|\\])+",
+	//       "type": "string"
+	//     },
+	//     "cost": {
+	//       "default": "false",
+	//       "description": "Show the costs or not.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "cursor": {
+	//       "description": "The mql cursor.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "dateline": {
+	//       "description": "The dateline that you get in a mqlwrite response to ensure consistent results.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "html_escape": {
+	//       "default": "true",
+	//       "description": "Whether or not to escape entities.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "indent": {
+	//       "default": "0",
+	//       "description": "How many spaces to indent the json.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "10",
+	//       "type": "integer"
+	//     },
+	//     "lang": {
+	//       "default": "/lang/en",
+	//       "description": "The language of the results - an id of a /type/lang object.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "query": {
+	//       "description": "An envelope containing a single MQL query.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "uniqueness_failure": {
+	//       "default": "hard",
+	//       "description": "How MQL responds to uniqueness failures.",
+	//       "enum": [
+	//         "hard",
+	//         "soft"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Be strict - throw an error.",
+	//         "Just return the first encountered object."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "mqlread"
+	// }
+
+}
+
 // method id "freebase.image":
 
 type ImageCall struct {
@@ -71,6 +273,13 @@ type ImageCall struct {
 func (s *Service) Image(id []string) *ImageCall {
 	c := &ImageCall{s: s, opt_: make(map[string]interface{})}
 	c.id = id
+	return c
+}
+
+// Maxheight sets the optional parameter "maxheight": Maximum height in
+// pixels for resulting image.
+func (c *ImageCall) Maxheight(maxheight int64) *ImageCall {
+	c.opt_["maxheight"] = maxheight
 	return c
 }
 
@@ -103,17 +312,13 @@ func (c *ImageCall) Mode(mode string) *ImageCall {
 	return c
 }
 
-// Maxheight sets the optional parameter "maxheight": Maximum height in
-// pixels for resulting image.
-func (c *ImageCall) Maxheight(maxheight int64) *ImageCall {
-	c.opt_["maxheight"] = maxheight
-	return c
-}
-
-func (c *ImageCall) Do() os.Error {
+func (c *ImageCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["maxheight"]; ok {
+		params.Set("maxheight", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["pad"]; ok {
 		params.Set("pad", fmt.Sprintf("%v", v))
 	}
@@ -125,9 +330,6 @@ func (c *ImageCall) Do() os.Error {
 	}
 	if v, ok := c.opt_["mode"]; ok {
 		params.Set("mode", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["maxheight"]; ok {
-		params.Set("maxheight", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/freebase/v1-sandbox/", "image{/id*}")
 	urls = strings.Replace(urls, "{id}", cleanPathString(c.id[0]), 1)
@@ -208,192 +410,6 @@ func (c *ImageCall) Do() os.Error {
 
 }
 
-// method id "freebase.mqlread":
-
-type MqlreadCall struct {
-	s     *Service
-	query string
-	opt_  map[string]interface{}
-}
-
-// Mqlread: Performs MQL Queries.
-func (s *Service) Mqlread(query string) *MqlreadCall {
-	c := &MqlreadCall{s: s, opt_: make(map[string]interface{})}
-	c.query = query
-	return c
-}
-
-// Callback sets the optional parameter "callback": JS method name for
-// JSONP callbacks.
-func (c *MqlreadCall) Callback(callback string) *MqlreadCall {
-	c.opt_["callback"] = callback
-	return c
-}
-
-// Cost sets the optional parameter "cost": Show the costs or not.
-func (c *MqlreadCall) Cost(cost bool) *MqlreadCall {
-	c.opt_["cost"] = cost
-	return c
-}
-
-// Uniqueness_failure sets the optional parameter "uniqueness_failure":
-// How MQL responds to uniqueness failures.
-func (c *MqlreadCall) Uniqueness_failure(uniqueness_failure string) *MqlreadCall {
-	c.opt_["uniqueness_failure"] = uniqueness_failure
-	return c
-}
-
-// Indent sets the optional parameter "indent": How many spaces to
-// indent the json.
-func (c *MqlreadCall) Indent(indent int64) *MqlreadCall {
-	c.opt_["indent"] = indent
-	return c
-}
-
-// Cursor sets the optional parameter "cursor": The mql cursor.
-func (c *MqlreadCall) Cursor(cursor string) *MqlreadCall {
-	c.opt_["cursor"] = cursor
-	return c
-}
-
-// Lang sets the optional parameter "lang": The language of the results
-// - an id of a /type/lang object.
-func (c *MqlreadCall) Lang(lang string) *MqlreadCall {
-	c.opt_["lang"] = lang
-	return c
-}
-
-// Html_escape sets the optional parameter "html_escape": Whether or not
-// to escape entities.
-func (c *MqlreadCall) Html_escape(html_escape bool) *MqlreadCall {
-	c.opt_["html_escape"] = html_escape
-	return c
-}
-
-// As_of_time sets the optional parameter "as_of_time": Run the query as
-// it would've been run at the specified point in time.
-func (c *MqlreadCall) As_of_time(as_of_time string) *MqlreadCall {
-	c.opt_["as_of_time"] = as_of_time
-	return c
-}
-
-func (c *MqlreadCall) Do() os.Error {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	params.Set("query", fmt.Sprintf("%v", c.query))
-	if v, ok := c.opt_["callback"]; ok {
-		params.Set("callback", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["cost"]; ok {
-		params.Set("cost", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["uniqueness_failure"]; ok {
-		params.Set("uniqueness_failure", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["indent"]; ok {
-		params.Set("indent", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["cursor"]; ok {
-		params.Set("cursor", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["lang"]; ok {
-		params.Set("lang", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["html_escape"]; ok {
-		params.Set("html_escape", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["as_of_time"]; ok {
-		params.Set("as_of_time", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/freebase/v1-sandbox/", "mqlread")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return err
-	}
-	return nil
-	// {
-	//   "description": "Performs MQL Queries.",
-	//   "httpMethod": "GET",
-	//   "id": "freebase.mqlread",
-	//   "parameterOrder": [
-	//     "query"
-	//   ],
-	//   "parameters": {
-	//     "as_of_time": {
-	//       "description": "Run the query as it would've been run at the specified point in time.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "callback": {
-	//       "description": "JS method name for JSONP callbacks.",
-	//       "location": "query",
-	//       "pattern": "([A-Za-z0-9_$.]|\\[|\\])+",
-	//       "type": "string"
-	//     },
-	//     "cost": {
-	//       "default": "false",
-	//       "description": "Show the costs or not.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "cursor": {
-	//       "description": "The mql cursor.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "html_escape": {
-	//       "default": "true",
-	//       "description": "Whether or not to escape entities.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "indent": {
-	//       "default": "0",
-	//       "description": "How many spaces to indent the json.",
-	//       "format": "uint32",
-	//       "location": "query",
-	//       "maximum": "10",
-	//       "type": "integer"
-	//     },
-	//     "lang": {
-	//       "default": "/lang/en",
-	//       "description": "The language of the results - an id of a /type/lang object.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "query": {
-	//       "description": "An envelope containing a single MQL query.",
-	//       "location": "query",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "uniqueness_failure": {
-	//       "default": "hard",
-	//       "description": "How MQL responds to uniqueness failures.",
-	//       "enum": [
-	//         "hard",
-	//         "soft"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Be strict - throw an error.",
-	//         "Just return the first encountered object."
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "mqlread"
-	// }
-
-}
-
 // method id "freebase.text.get":
 
 type TextGetCall struct {
@@ -423,7 +439,7 @@ func (c *TextGetCall) Maxlength(maxlength int64) *TextGetCall {
 	return c
 }
 
-func (c *TextGetCall) Do() (*ContentserviceGet, os.Error) {
+func (c *TextGetCall) Do() (*ContentserviceGet, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -497,7 +513,7 @@ func (c *TextGetCall) Do() (*ContentserviceGet, os.Error) {
 }
 
 func cleanPathString(s string) string {
-	return strings.Map(func(r int) int {
+	return strings.Map(func(r rune) rune {
 		if r >= 0x30 && r <= 0x7a {
 			return r
 		}

@@ -14,6 +14,7 @@
   "labs"
  ],
  "protocol": "rest",
+ "baseUrl": "https://www.googleapis.com/books/v1/",
  "basePath": "/books/v1/",
  "parameters": {
   "alt": {
@@ -297,6 +298,59 @@
     }
    }
   },
+  "ConcurrentAccessRestriction": {
+   "id": "ConcurrentAccessRestriction",
+   "type": "object",
+   "properties": {
+    "deviceAllowed": {
+     "type": "boolean",
+     "description": "Whether access is granted for this (user, device, volume)."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Resource type.",
+     "default": "books#concurrentAccessRestriction"
+    },
+    "maxConcurrentDevices": {
+     "type": "integer",
+     "description": "The maximum number of concurrent access licenses for this volume.",
+     "format": "int32"
+    },
+    "message": {
+     "type": "string",
+     "description": "Error/warning message."
+    },
+    "nonce": {
+     "type": "string",
+     "description": "Client nonce for verification. Download access and client-validation only."
+    },
+    "reasonCode": {
+     "type": "string",
+     "description": "Error/warning reason code."
+    },
+    "restricted": {
+     "type": "boolean",
+     "description": "Whether this volume has any concurrent access restrictions."
+    },
+    "signature": {
+     "type": "string",
+     "description": "Response signature."
+    },
+    "source": {
+     "type": "string",
+     "description": "Client app identifier for verification. Download access and client-validation only."
+    },
+    "timeWindowSeconds": {
+     "type": "integer",
+     "description": "Time in seconds for license auto-expiration.",
+     "format": "int32"
+    },
+    "volumeId": {
+     "type": "string",
+     "description": "Identifies the volume for which this entry applies."
+    }
+   }
+  },
   "DownloadAccessRestriction": {
    "id": "DownloadAccessRestriction",
    "type": "object",
@@ -354,6 +408,24 @@
     }
    }
   },
+  "DownloadAccesses": {
+   "id": "DownloadAccesses",
+   "type": "object",
+   "properties": {
+    "downloadAccessList": {
+     "type": "array",
+     "description": "A list of download access responses.",
+     "items": {
+      "$ref": "DownloadAccessRestriction"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Resource type.",
+     "default": "books#downloadAccesses"
+    }
+   }
+  },
   "ReadingPosition": {
    "id": "ReadingPosition",
    "type": "object",
@@ -387,6 +459,25 @@
     "volumeId": {
      "type": "string",
      "description": "Volume id associated with this reading position."
+    }
+   }
+  },
+  "RequestAccess": {
+   "id": "RequestAccess",
+   "type": "object",
+   "properties": {
+    "concurrentAccess": {
+     "$ref": "ConcurrentAccessRestriction",
+     "description": "A concurrent access response."
+    },
+    "downloadAccess": {
+     "$ref": "DownloadAccessRestriction",
+     "description": "A download access response."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Resource type.",
+     "default": "books#requestAccess"
     }
    }
   },
@@ -492,6 +583,10 @@
         "downloadLink": {
          "type": "string",
          "description": "URL to download epub. (In LITE projection.)"
+        },
+        "isAvailable": {
+         "type": "boolean",
+         "description": "Is a flowing text epub available either as public domain or for purchase. (In LITE projection.)"
         }
        }
       },
@@ -506,6 +601,10 @@
         "downloadLink": {
          "type": "string",
          "description": "URL to download pdf. (In LITE projection.)"
+        },
+        "isAvailable": {
+         "type": "boolean",
+         "description": "Is a scanned image pdf available either as public domain or for purchase. (In LITE projection.)"
         }
        }
       },
@@ -520,6 +619,10 @@
       "viewability": {
        "type": "string",
        "description": "The read access of a volume. Possible values are PARTIAL, ALL_PAGES, NO_PAGES or UNKNOWN. This value depends on the country listed above. A value of PARTIAL means that the publisher has allowed some portion of the volume to be viewed publicly, without purchase. This can apply to eBooks as well as non-eBooks. Public domain books will always have a value of ALL_PAGES."
+      },
+      "webReaderLink": {
+       "type": "string",
+       "description": "URL to read this volume on the Google Books site. Link will not allow users to read non-viewable volumes."
       }
      }
     },
@@ -593,6 +696,16 @@
       }
      }
     },
+    "searchInfo": {
+     "type": "object",
+     "description": "Search result information related to this volume.",
+     "properties": {
+      "textSnippet": {
+       "type": "string",
+       "description": "A text snippet containing the search query."
+      }
+     }
+    },
     "selfLink": {
      "type": "string",
      "description": "URL to this resource. (In LITE projection.)"
@@ -642,7 +755,7 @@
       },
       "canonicalVolumeLink": {
        "type": "string",
-       "description": "Canonical URL for a volume. Use this URL to plus one a Google Book. (In LITE projection)"
+       "description": "Canonical URL for a volume. (In LITE projection.)"
       },
       "categories": {
        "type": "array",
@@ -792,7 +905,7 @@
     },
     "totalItems": {
      "type": "integer",
-     "description": "Total number of volumes found. This might be greater than the number of volumes returned in this response if results have been paginated.",
+     "description": "Total number of volumes found. This might be greater than the number of volumes returned in this response if results have been paginated. Total number of volumes found.",
      "format": "int32"
     }
    }
@@ -805,7 +918,7 @@
      "id": "books.bookshelves.get",
      "path": "users/{userId}/bookshelves/{shelf}",
      "httpMethod": "GET",
-     "description": "Retrieves a specific bookshelf for the specified user.",
+     "description": "Retrieves metadata for a specific bookshelf for the specified user.",
      "parameters": {
       "country": {
        "type": "string",
@@ -938,6 +1051,168 @@
        ]
       }
      }
+    }
+   }
+  },
+  "myconfig": {
+   "methods": {
+    "releaseDownloadAccess": {
+     "id": "books.myconfig.releaseDownloadAccess",
+     "path": "myconfig/releaseDownloadAccess",
+     "httpMethod": "POST",
+     "description": "Release downloaded content access restriction.",
+     "parameters": {
+      "country": {
+       "type": "string",
+       "description": "ISO-3166-1 code to override the IP-based location.",
+       "location": "query"
+      },
+      "cpksver": {
+       "type": "string",
+       "description": "The device/version identifier from which to release the restriction.",
+       "required": true,
+       "location": "query"
+      },
+      "locale": {
+       "type": "string",
+       "description": "ISO-639-1, ISO-3166-1 codes for message localization, i.e. en_US.",
+       "location": "query"
+      },
+      "source": {
+       "type": "string",
+       "description": "String to identify the originator of this request.",
+       "location": "query"
+      },
+      "volumeIds": {
+       "type": "string",
+       "description": "The volume(s) to release restrictions for.",
+       "required": true,
+       "repeated": true,
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "volumeIds",
+      "cpksver"
+     ],
+     "response": {
+      "$ref": "DownloadAccesses"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/books"
+     ]
+    },
+    "requestAccess": {
+     "id": "books.myconfig.requestAccess",
+     "path": "myconfig/requestAccess",
+     "httpMethod": "POST",
+     "description": "Request concurrent and download access restrictions.",
+     "parameters": {
+      "country": {
+       "type": "string",
+       "description": "ISO-3166-1 code to override the IP-based location.",
+       "location": "query"
+      },
+      "cpksver": {
+       "type": "string",
+       "description": "The device/version identifier from which to request the restrictions.",
+       "required": true,
+       "location": "query"
+      },
+      "locale": {
+       "type": "string",
+       "description": "ISO-639-1, ISO-3166-1 codes for message localization, i.e. en_US.",
+       "location": "query"
+      },
+      "nonce": {
+       "type": "string",
+       "description": "The client nonce value.",
+       "required": true,
+       "location": "query"
+      },
+      "source": {
+       "type": "string",
+       "description": "String to identify the originator of this request.",
+       "required": true,
+       "location": "query"
+      },
+      "volumeId": {
+       "type": "string",
+       "description": "The volume to request concurrent/download restrictions for.",
+       "required": true,
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "source",
+      "volumeId",
+      "nonce",
+      "cpksver"
+     ],
+     "response": {
+      "$ref": "RequestAccess"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/books"
+     ]
+    },
+    "syncVolumeLicenses": {
+     "id": "books.myconfig.syncVolumeLicenses",
+     "path": "myconfig/syncVolumeLicenses",
+     "httpMethod": "POST",
+     "description": "Request downloaded content access for specified volumes on the My eBooks shelf.",
+     "parameters": {
+      "country": {
+       "type": "string",
+       "description": "ISO-3166-1 code to override the IP-based location.",
+       "location": "query"
+      },
+      "cpksver": {
+       "type": "string",
+       "description": "The device/version identifier from which to release the restriction.",
+       "required": true,
+       "location": "query"
+      },
+      "locale": {
+       "type": "string",
+       "description": "ISO-639-1, ISO-3166-1 codes for message localization, i.e. en_US.",
+       "location": "query"
+      },
+      "nonce": {
+       "type": "string",
+       "description": "The client nonce value.",
+       "required": true,
+       "location": "query"
+      },
+      "showPreorders": {
+       "type": "boolean",
+       "description": "Set to true to show pre-ordered books. Defaults to false.",
+       "location": "query"
+      },
+      "source": {
+       "type": "string",
+       "description": "String to identify the originator of this request.",
+       "required": true,
+       "location": "query"
+      },
+      "volumeIds": {
+       "type": "string",
+       "description": "The volume(s) to request download restrictions for.",
+       "repeated": true,
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "source",
+      "nonce",
+      "cpksver"
+     ],
+     "response": {
+      "$ref": "Volumes"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/books"
+     ]
     }
    }
   },
@@ -1080,6 +1355,16 @@
          "description": "String to identify the originator of this request.",
          "location": "query"
         },
+        "updatedMax": {
+         "type": "string",
+         "description": "RFC 3339 timestamp to restrict to items updated prior to this timestamp (exclusive).",
+         "location": "query"
+        },
+        "updatedMin": {
+         "type": "string",
+         "description": "RFC 3339 timestamp to restrict to items updated since this timestamp (inclusive).",
+         "location": "query"
+        },
         "volumeId": {
          "type": "string",
          "description": "The volume to restrict annotations to.",
@@ -1204,7 +1489,7 @@
        "id": "books.mylibrary.bookshelves.get",
        "path": "mylibrary/bookshelves/{shelf}",
        "httpMethod": "GET",
-       "description": "Retrieves a specific bookshelf belonging to the authenticated user.",
+       "description": "Retrieves metadata for a specific bookshelf belonging to the authenticated user.",
        "parameters": {
         "country": {
          "type": "string",
@@ -1253,6 +1538,51 @@
        "response": {
         "$ref": "Bookshelves"
        },
+       "scopes": [
+        "https://www.googleapis.com/auth/books"
+       ]
+      },
+      "moveVolume": {
+       "id": "books.mylibrary.bookshelves.moveVolume",
+       "path": "mylibrary/bookshelves/{shelf}/moveVolume",
+       "httpMethod": "POST",
+       "description": "Moves a volume within a bookshelf.",
+       "parameters": {
+        "country": {
+         "type": "string",
+         "description": "ISO-3166-1 code to override the IP-based location.",
+         "location": "query"
+        },
+        "shelf": {
+         "type": "string",
+         "description": "Id of bookshelf with the volume.",
+         "required": true,
+         "location": "path"
+        },
+        "source": {
+         "type": "string",
+         "description": "String to identify the originator of this request.",
+         "location": "query"
+        },
+        "volumeId": {
+         "type": "string",
+         "description": "Id of volume to move.",
+         "required": true,
+         "location": "query"
+        },
+        "volumePosition": {
+         "type": "integer",
+         "description": "Position on shelf to move the item (0 puts the item before the current first item, 1 puts it between the first and the second and so on.)",
+         "required": true,
+         "format": "int32",
+         "location": "query"
+        }
+       },
+       "parameterOrder": [
+        "shelf",
+        "volumeId",
+        "volumePosition"
+       ],
        "scopes": [
         "https://www.googleapis.com/auth/books"
        ]
@@ -1368,6 +1698,118 @@
          ]
         }
        }
+      }
+     }
+    },
+    "readingpositions": {
+     "methods": {
+      "get": {
+       "id": "books.mylibrary.readingpositions.get",
+       "path": "mylibrary/readingpositions/{volumeId}",
+       "httpMethod": "GET",
+       "description": "Retrieves my reading position information for a volume.",
+       "parameters": {
+        "contentVersion": {
+         "type": "string",
+         "description": "Volume content version for which this reading position is requested.",
+         "location": "query"
+        },
+        "country": {
+         "type": "string",
+         "description": "ISO-3166-1 code to override the IP-based location.",
+         "location": "query"
+        },
+        "source": {
+         "type": "string",
+         "description": "String to identify the originator of this request.",
+         "location": "query"
+        },
+        "volumeId": {
+         "type": "string",
+         "description": "Id of volume for which to retrieve a reading position.",
+         "required": true,
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "volumeId"
+       ],
+       "response": {
+        "$ref": "ReadingPosition"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/books"
+       ]
+      },
+      "setPosition": {
+       "id": "books.mylibrary.readingpositions.setPosition",
+       "path": "mylibrary/readingpositions/{volumeId}/setPosition",
+       "httpMethod": "POST",
+       "description": "Sets my reading position information for a volume.",
+       "parameters": {
+        "action": {
+         "type": "string",
+         "description": "Action that caused this reading position to be set.",
+         "enum": [
+          "bookmark",
+          "chapter",
+          "next-page",
+          "prev-page",
+          "scroll",
+          "search"
+         ],
+         "enumDescriptions": [
+          "User chose bookmark within volume.",
+          "User selected chapter from list.",
+          "Next page event.",
+          "Previous page event.",
+          "User navigated to page.",
+          "User chose search results within volume."
+         ],
+         "location": "query"
+        },
+        "contentVersion": {
+         "type": "string",
+         "description": "Volume content version for which this reading position applies.",
+         "location": "query"
+        },
+        "country": {
+         "type": "string",
+         "description": "ISO-3166-1 code to override the IP-based location.",
+         "location": "query"
+        },
+        "position": {
+         "type": "string",
+         "description": "Position string for the new volume reading position.",
+         "required": true,
+         "location": "query"
+        },
+        "source": {
+         "type": "string",
+         "description": "String to identify the originator of this request.",
+         "location": "query"
+        },
+        "timestamp": {
+         "type": "string",
+         "description": "RFC 3339 UTC format timestamp associated with this reading position.",
+         "required": true,
+         "location": "query"
+        },
+        "volumeId": {
+         "type": "string",
+         "description": "Id of volume for which to update the reading position.",
+         "required": true,
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "volumeId",
+        "timestamp",
+        "position"
+       ],
+       "scopes": [
+        "https://www.googleapis.com/auth/books"
+       ]
       }
      }
     }

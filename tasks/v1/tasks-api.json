@@ -14,6 +14,7 @@
   "labs"
  ],
  "protocol": "rest",
+ "baseUrl": "https://www.googleapis.com/tasks/v1/",
  "basePath": "/tasks/v1/",
  "parameters": {
   "alt": {
@@ -108,6 +109,27 @@
      "description": "Type of the resource. This is always \"tasks#task\".",
      "default": "tasks#task"
     },
+    "links": {
+     "type": "array",
+     "description": "Collection of links. This collection is read-only.",
+     "items": {
+      "type": "object",
+      "properties": {
+       "description": {
+        "type": "string",
+        "description": "The description. In HTML speak: Everything between \u003ca\u003e and \u003c/a\u003e."
+       },
+       "link": {
+        "type": "string",
+        "description": "The URL."
+       },
+       "type": {
+        "type": "string",
+        "description": "Type of the link, e.g. \"email\"."
+       }
+      }
+     }
+    },
     "notes": {
      "type": "string",
      "description": "Notes describing the task. Optional."
@@ -163,6 +185,11 @@
     "title": {
      "type": "string",
      "description": "Title of the task list."
+    },
+    "updated": {
+     "type": "string",
+     "description": "Last modification time of the task list (as a RFC 3339 timestamp).",
+     "format": "date-time"
     }
    }
   },

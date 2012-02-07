@@ -9,9 +9,10 @@
   "x32": "http://www.google.com/images/icons/product/search-32.gif"
  },
  "labels": [
-  "labs"
+  "limited_availability"
  ],
  "protocol": "rest",
+ "baseUrl": "https://www.googleapis.com/groups/v1/groups/",
  "basePath": "/groups/v1/groups/",
  "parameters": {
   "alt": {

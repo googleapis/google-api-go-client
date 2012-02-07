@@ -4,7 +4,7 @@
 //
 // Usage example:
 //
-//   import "google-api-go-client.googlecode.com/hg/translate/v2"
+//   import "code.google.com/p/google-api-go-client/translate/v2"
 //   ...
 //   translateService, err := translate.New(oauthHttpClient)
 package translate
@@ -12,14 +12,14 @@ package translate
 import (
 	"bytes"
 	"fmt"
-	"http"
+	"net/http"
 	"io"
-	"json"
-	"os"
+	"encoding/json"
+	"errors"
 	"strings"
 	"strconv"
-	"url"
-	"google-api-go-client.googlecode.com/hg/google-api"
+	"net/url"
+	"code.google.com/p/google-api-go-client/googleapi"
 )
 
 var _ = bytes.NewBuffer
@@ -29,15 +29,16 @@ var _ = json.NewDecoder
 var _ = io.Copy
 var _ = url.Parse
 var _ = googleapi.Version
+var _ = errors.New
 
 const apiId = "translate:v2"
 const apiName = "translate"
 const apiVersion = "v2"
 const basePath = "https://www.googleapis.com/language/translate/"
 
-func New(client *http.Client) (*Service, os.Error) {
+func New(client *http.Client) (*Service, error) {
 	if client == nil {
-		return nil, os.NewError("client is nil")
+		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
 	s.Detections = &DetectionsService{s: s}
@@ -87,12 +88,12 @@ type DetectionsResourceItem struct {
 }
 
 type TranslationsResource struct {
-	// TranslatedText: The translation.
-	TranslatedText string `json:"translatedText,omitempty"`
-
 	// DetectedSourceLanguage: Detected source language if source parameter
 	// is unspecified.
 	DetectedSourceLanguage string `json:"detectedSourceLanguage,omitempty"`
+
+	// TranslatedText: The translation.
+	TranslatedText string `json:"translatedText,omitempty"`
 }
 
 type LanguagesListResponse struct {
@@ -133,7 +134,7 @@ func (r *DetectionsService) List(q []string) *DetectionsListCall {
 	return c
 }
 
-func (c *DetectionsListCall) Do() (*DetectionsListResponse, os.Error) {
+func (c *DetectionsListCall) Do() (*DetectionsListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -200,7 +201,7 @@ func (c *LanguagesListCall) Target(target string) *LanguagesListCall {
 	return c
 }
 
-func (c *LanguagesListCall) Do() (*LanguagesListResponse, os.Error) {
+func (c *LanguagesListCall) Do() (*LanguagesListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -259,6 +260,13 @@ func (r *TranslationsService) List(q []string, target string) *TranslationsListC
 	return c
 }
 
+// Source sets the optional parameter "source": The source language of
+// the text
+func (c *TranslationsListCall) Source(source string) *TranslationsListCall {
+	c.opt_["source"] = source
+	return c
+}
+
 // Format sets the optional parameter "format": The format of the text
 func (c *TranslationsListCall) Format(format string) *TranslationsListCall {
 	c.opt_["format"] = format
@@ -272,14 +280,7 @@ func (c *TranslationsListCall) Cid(cid string) *TranslationsListCall {
 	return c
 }
 
-// Source sets the optional parameter "source": The source language of
-// the text
-func (c *TranslationsListCall) Source(source string) *TranslationsListCall {
-	c.opt_["source"] = source
-	return c
-}
-
-func (c *TranslationsListCall) Do() (*TranslationsListResponse, os.Error) {
+func (c *TranslationsListCall) Do() (*TranslationsListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -287,14 +288,14 @@ func (c *TranslationsListCall) Do() (*TranslationsListResponse, os.Error) {
 	for _, v := range c.q {
 		params.Add("q", fmt.Sprintf("%v", v))
 	}
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["format"]; ok {
 		params.Set("format", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["cid"]; ok {
 		params.Set("cid", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["source"]; ok {
-		params.Set("source", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/language/translate/", "v2")
 	urls += "?" + params.Encode()
@@ -368,7 +369,7 @@ func (c *TranslationsListCall) Do() (*TranslationsListResponse, os.Error) {
 }
 
 func cleanPathString(s string) string {
-	return strings.Map(func(r int) int {
+	return strings.Map(func(r rune) rune {
 		if r >= 0x30 && r <= 0x7a {
 			return r
 		}

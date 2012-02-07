@@ -14,6 +14,7 @@
   "labs"
  ],
  "protocol": "rest",
+ "baseUrl": "https://www.googleapis.com/webfonts/v1/",
  "basePath": "/webfonts/v1/",
  "parameters": {
   "alt": {

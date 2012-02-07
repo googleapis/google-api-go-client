@@ -4,7 +4,7 @@
 //
 // Usage example:
 //
-//   import "google-api-go-client.googlecode.com/hg/audit/v1"
+//   import "code.google.com/p/google-api-go-client/audit/v1"
 //   ...
 //   auditService, err := audit.New(oauthHttpClient)
 package audit
@@ -12,14 +12,14 @@ package audit
 import (
 	"bytes"
 	"fmt"
-	"http"
+	"net/http"
 	"io"
-	"json"
-	"os"
+	"encoding/json"
+	"errors"
 	"strings"
 	"strconv"
-	"url"
-	"google-api-go-client.googlecode.com/hg/google-api"
+	"net/url"
+	"code.google.com/p/google-api-go-client/googleapi"
 )
 
 var _ = bytes.NewBuffer
@@ -29,15 +29,16 @@ var _ = json.NewDecoder
 var _ = io.Copy
 var _ = url.Parse
 var _ = googleapi.Version
+var _ = errors.New
 
 const apiId = "audit:v1"
 const apiName = "audit"
 const apiVersion = "v1"
 const basePath = "https://www.googleapis.com/apps/reporting/audit/v1/"
 
-func New(client *http.Client) (*Service, os.Error) {
+func New(client *http.Client) (*Service, error) {
 	if client == nil {
-		return nil, os.NewError("client is nil")
+		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
 	s.Activities = &ActivitiesService{s: s}
@@ -52,17 +53,6 @@ type Service struct {
 
 type ActivitiesService struct {
 	s *Service
-}
-
-type Activities struct {
-	// Items: Each record in read response.
-	Items []*Activity `json:"items,omitempty"`
-
-	// Kind: Kind of list response this is.
-	Kind string `json:"kind,omitempty"`
-
-	// Next: Next page URL.
-	Next string `json:"next,omitempty"`
 }
 
 type Activity struct {
@@ -86,14 +76,14 @@ type Activity struct {
 }
 
 type ActivityEvents struct {
+	// Parameters: Event parameters.
+	Parameters []*ActivityEventsParameters `json:"parameters,omitempty"`
+
 	// EventType: Type of event.
 	EventType string `json:"eventType,omitempty"`
 
 	// Name: Name of event.
 	Name string `json:"name,omitempty"`
-
-	// Parameters: Event parameters.
-	Parameters []*ActivityEventsParameters `json:"parameters,omitempty"`
 }
 
 type ActivityEventsParameters struct {
@@ -120,18 +110,29 @@ type ActivityId struct {
 }
 
 type ActivityActor struct {
-	// Email: Email address of the user.
-	Email string `json:"email,omitempty"`
-
-	// Key: For OAuth 2LO API requests, consumer_key of the requestor.
-	Key string `json:"key,omitempty"`
-
 	// CallerType: User or OAuth 2LO request.
 	CallerType string `json:"callerType,omitempty"`
 
 	// ApplicationId: ID of application which interacted on behalf of the
 	// user.
 	ApplicationId int64 `json:"applicationId,omitempty,string"`
+
+	// Email: Email address of the user.
+	Email string `json:"email,omitempty"`
+
+	// Key: For OAuth 2LO API requests, consumer_key of the requestor.
+	Key string `json:"key,omitempty"`
+}
+
+type Activities struct {
+	// Next: Next page URL.
+	Next string `json:"next,omitempty"`
+
+	// Items: Each record in read response.
+	Items []*Activity `json:"items,omitempty"`
+
+	// Kind: Kind of list response this is.
+	Kind string `json:"kind,omitempty"`
 }
 
 // method id "audit.activities.list":
@@ -224,7 +225,7 @@ func (c *ActivitiesListCall) ActorIpAddress(actorIpAddress string) *ActivitiesLi
 	return c
 }
 
-func (c *ActivitiesListCall) Do() (*Activities, os.Error) {
+func (c *ActivitiesListCall) Do() (*Activities, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -260,7 +261,7 @@ func (c *ActivitiesListCall) Do() (*Activities, os.Error) {
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/apps/reporting/audit/v1/", "{customerId}/{applicationId}")
 	urls = strings.Replace(urls, "{customerId}", cleanPathString(c.customerId), 1)
-	urls = strings.Replace(urls, "{applicationId}", strconv.Itoa64(c.applicationId), 1)
+	urls = strings.Replace(urls, "{applicationId}", strconv.FormatInt(c.applicationId, 10), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
@@ -371,7 +372,7 @@ func (c *ActivitiesListCall) Do() (*Activities, os.Error) {
 }
 
 func cleanPathString(s string) string {
-	return strings.Map(func(r int) int {
+	return strings.Map(func(r rune) rune {
 		if r >= 0x30 && r <= 0x7a {
 			return r
 		}

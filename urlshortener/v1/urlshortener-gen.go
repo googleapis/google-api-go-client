@@ -4,7 +4,7 @@
 //
 // Usage example:
 //
-//   import "google-api-go-client.googlecode.com/hg/urlshortener/v1"
+//   import "code.google.com/p/google-api-go-client/urlshortener/v1"
 //   ...
 //   urlshortenerService, err := urlshortener.New(oauthHttpClient)
 package urlshortener
@@ -12,14 +12,14 @@ package urlshortener
 import (
 	"bytes"
 	"fmt"
-	"http"
+	"net/http"
 	"io"
-	"json"
-	"os"
+	"encoding/json"
+	"errors"
 	"strings"
 	"strconv"
-	"url"
-	"google-api-go-client.googlecode.com/hg/google-api"
+	"net/url"
+	"code.google.com/p/google-api-go-client/googleapi"
 )
 
 var _ = bytes.NewBuffer
@@ -29,6 +29,7 @@ var _ = json.NewDecoder
 var _ = io.Copy
 var _ = url.Parse
 var _ = googleapi.Version
+var _ = errors.New
 
 const apiId = "urlshortener:v1"
 const apiName = "urlshortener"
@@ -41,9 +42,9 @@ const (
 	UrlshortenerScope = "https://www.googleapis.com/auth/urlshortener"
 )
 
-func New(client *http.Client) (*Service, os.Error) {
+func New(client *http.Client) (*Service, error) {
 	if client == nil {
-		return nil, os.NewError("client is nil")
+		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
 	s.Url = &UrlService{s: s}
@@ -87,6 +88,12 @@ type AnalyticsSnapshot struct {
 }
 
 type AnalyticsSummary struct {
+	// TwoHours: Click analytics over the last two hours.
+	TwoHours *AnalyticsSnapshot `json:"twoHours,omitempty"`
+
+	// Day: Click analytics over the last day.
+	Day *AnalyticsSnapshot `json:"day,omitempty"`
+
 	// Week: Click analytics over the last week.
 	Week *AnalyticsSnapshot `json:"week,omitempty"`
 
@@ -95,15 +102,14 @@ type AnalyticsSummary struct {
 
 	// Month: Click analytics over the last month.
 	Month *AnalyticsSnapshot `json:"month,omitempty"`
-
-	// TwoHours: Click analytics over the last two hours.
-	TwoHours *AnalyticsSnapshot `json:"twoHours,omitempty"`
-
-	// Day: Click analytics over the last day.
-	Day *AnalyticsSnapshot `json:"day,omitempty"`
 }
 
 type UrlHistory struct {
+	// ItemsPerPage: Number of items returned with each full "page" of
+	// results. Note that the last page could have fewer items than the
+	// "itemsPerPage" value.
+	ItemsPerPage int64 `json:"itemsPerPage,omitempty"`
+
 	// Items: A list of URL resources.
 	Items []*Url `json:"items,omitempty"`
 
@@ -116,11 +122,6 @@ type UrlHistory struct {
 
 	// Kind: The fixed string "urlshortener#urlHistory".
 	Kind string `json:"kind,omitempty"`
-
-	// ItemsPerPage: Number of items returned with each full "page" of
-	// results. Note that the last page could have fewer items than the
-	// "itemsPerPage" value.
-	ItemsPerPage int64 `json:"itemsPerPage,omitempty"`
 }
 
 type StringCount struct {
@@ -185,7 +186,7 @@ func (c *UrlListCall) StartToken(startToken string) *UrlListCall {
 	return c
 }
 
-func (c *UrlListCall) Do() (*UrlHistory, os.Error) {
+func (c *UrlListCall) Do() (*UrlHistory, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -261,7 +262,7 @@ func (r *UrlService) Insert(url *Url) *UrlInsertCall {
 	return c
 }
 
-func (c *UrlInsertCall) Do() (*Url, os.Error) {
+func (c *UrlInsertCall) Do() (*Url, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.url)
 	if err != nil {
@@ -327,7 +328,7 @@ func (c *UrlGetCall) Projection(projection string) *UrlGetCall {
 	return c
 }
 
-func (c *UrlGetCall) Do() (*Url, os.Error) {
+func (c *UrlGetCall) Do() (*Url, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -390,7 +391,7 @@ func (c *UrlGetCall) Do() (*Url, os.Error) {
 }
 
 func cleanPathString(s string) string {
-	return strings.Map(func(r int) int {
+	return strings.Map(func(r rune) rune {
 		if r >= 0x30 && r <= 0x7a {
 			return r
 		}

@@ -14,6 +14,7 @@
   "labs"
  ],
  "protocol": "rest",
+ "baseUrl": "https://www.googleapis.com/adsense/v1/",
  "basePath": "/adsense/v1/",
  "parameters": {
   "alt": {
@@ -379,7 +380,7 @@
      "id": "adsense.adunits.list",
      "path": "adclients/{adClientId}/adunits",
      "httpMethod": "GET",
-     "description": "List all ad units in this AdSense account.",
+     "description": "List all ad units in the specified ad client for this AdSense account.",
      "parameters": {
       "adClientId": {
        "type": "string",
@@ -425,7 +426,7 @@
      "id": "adsense.customchannels.list",
      "path": "adclients/{adClientId}/customchannels",
      "httpMethod": "GET",
-     "description": "List all custom channels in this AdSense account.",
+     "description": "List all custom channels in the specified ad client for this AdSense account.",
      "parameters": {
       "adClientId": {
        "type": "string",
@@ -559,7 +560,7 @@
      "id": "adsense.urlchannels.list",
      "path": "adclients/{adClientId}/urlchannels",
      "httpMethod": "GET",
-     "description": "List all URL channels in this AdSense account.",
+     "description": "List all URL channels in the specified ad client for this AdSense account.",
      "parameters": {
       "adClientId": {
        "type": "string",

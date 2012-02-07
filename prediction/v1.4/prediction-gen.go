@@ -4,7 +4,7 @@
 //
 // Usage example:
 //
-//   import "google-api-go-client.googlecode.com/hg/prediction/v1.4"
+//   import "code.google.com/p/google-api-go-client/prediction/v1.4"
 //   ...
 //   predictionService, err := prediction.New(oauthHttpClient)
 package prediction
@@ -12,14 +12,14 @@ package prediction
 import (
 	"bytes"
 	"fmt"
-	"http"
+	"net/http"
 	"io"
-	"json"
-	"os"
+	"encoding/json"
+	"errors"
 	"strings"
 	"strconv"
-	"url"
-	"google-api-go-client.googlecode.com/hg/google-api"
+	"net/url"
+	"code.google.com/p/google-api-go-client/googleapi"
 )
 
 var _ = bytes.NewBuffer
@@ -29,6 +29,7 @@ var _ = json.NewDecoder
 var _ = io.Copy
 var _ = url.Parse
 var _ = googleapi.Version
+var _ = errors.New
 
 const apiId = "prediction:v1.4"
 const apiName = "prediction"
@@ -41,9 +42,9 @@ const (
 	PredictionScope = "https://www.googleapis.com/auth/prediction"
 )
 
-func New(client *http.Client) (*Service, os.Error) {
+func New(client *http.Client) (*Service, error) {
 	if client == nil {
-		return nil, os.NewError("client is nil")
+		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
 	s.Hostedmodels = &HostedmodelsService{s: s}
@@ -67,97 +68,7 @@ type TrainedmodelsService struct {
 	s *Service
 }
 
-type InputInput struct {
-	// CsvInstance: A list of input features, these can be strings or
-	// doubles.
-	CsvInstance []interface{} `json:"csvInstance,omitempty"`
-}
-
-type Output struct {
-	// SelfLink: A URL to re-request this resource.
-	SelfLink string `json:"selfLink,omitempty"`
-
-	// OutputValue: The estimated regression value [Regression models only].
-	OutputValue float64 `json:"outputValue,omitempty"`
-
-	// OutputLabel: The most likely class label [Categorical models only].
-	OutputLabel string `json:"outputLabel,omitempty"`
-
-	// Kind: What kind of resource this is.
-	Kind string `json:"kind,omitempty"`
-
-	// Id: The unique name for the predictive model.
-	Id string `json:"id,omitempty"`
-
-	// OutputMulti: A list of class labels with their estimated
-	// probabilities [Categorical models only].
-	OutputMulti []*OutputOutputMulti `json:"outputMulti,omitempty"`
-}
-
-type TrainingDataAnalysis struct {
-	Warnings []string `json:"warnings,omitempty"`
-}
-
-type OutputOutputMulti struct {
-	// Score: The probability of the class label.
-	Score float64 `json:"score,omitempty"`
-
-	// Label: The class label.
-	Label string `json:"label,omitempty"`
-}
-
-type Training struct {
-	// Utility: A class weighting function, which allows the importance
-	// weights for class labels to be specified [Categorical models only].
-	Utility []*TrainingUtility `json:"utility,omitempty"`
-
-	// SelfLink: A URL to re-request this resource.
-	SelfLink string `json:"selfLink,omitempty"`
-
-	// StorageDataLocation: Google storage location of the training data
-	// file.
-	StorageDataLocation string `json:"storageDataLocation,omitempty"`
-
-	// DataAnalysis: Data Analysis.
-	DataAnalysis *TrainingDataAnalysis `json:"dataAnalysis,omitempty"`
-
-	// ModelInfo: Model metadata.
-	ModelInfo *TrainingModelInfo `json:"modelInfo,omitempty"`
-
-	// Kind: What kind of resource this is.
-	Kind string `json:"kind,omitempty"`
-
-	// TrainingStatus: The current status of the training job. This can be
-	// one of following: RUNNING; DONE; ERROR; ERROR: TRAINING JOB NOT FOUND
-	TrainingStatus string `json:"trainingStatus,omitempty"`
-
-	// Id: The unique name for the predictive model.
-	Id string `json:"id,omitempty"`
-
-	// StoragePMMLLocation: Google storage location of the preprocessing
-	// pmml file.
-	StoragePMMLLocation string `json:"storagePMMLLocation,omitempty"`
-}
-
-type Input struct {
-	// Input: Input to the model for a prediction
-	Input *InputInput `json:"input,omitempty"`
-}
-
-type Update struct {
-	// Label: The true class label of this instance
-	Label string `json:"label,omitempty"`
-
-	// CsvInstance: The input features for this instance
-	CsvInstance []interface{} `json:"csvInstance,omitempty"`
-}
-
-type TrainingModelInfoConfusionMatrix struct {
-
-}
-
 type TrainingUtility struct {
-
 }
 
 type TrainingModelInfo struct {
@@ -172,8 +83,9 @@ type TrainingModelInfo struct {
 	// for how this model will do in predictions. This is first indexed by
 	// the true class label. For each true class label, this provides a pair
 	// {predicted_label, count}, where count is the estimated number of
-	// times the model will predict the predicted label given the true label
-	// [Categorical models only].
+	// times the model will predict the predicted label given the true
+	// label. Will not output if more then 100 classes [Categorical models
+	// only].
 	ConfusionMatrix *TrainingModelInfoConfusionMatrix `json:"confusionMatrix,omitempty"`
 
 	// MeanSquaredError: An estimated mean squared error. The can be used to
@@ -202,7 +114,98 @@ type TrainingModelInfo struct {
 }
 
 type TrainingModelInfoConfusionMatrixRowTotals struct {
+}
 
+type InputInput struct {
+	// CsvInstance: A list of input features, these can be strings or
+	// doubles.
+	CsvInstance []interface{} `json:"csvInstance,omitempty"`
+}
+
+type Output struct {
+	// OutputLabel: The most likely class label [Categorical models only].
+	OutputLabel string `json:"outputLabel,omitempty"`
+
+	// Kind: What kind of resource this is.
+	Kind string `json:"kind,omitempty"`
+
+	// Id: The unique name for the predictive model.
+	Id string `json:"id,omitempty"`
+
+	// OutputMulti: A list of class labels with their estimated
+	// probabilities [Categorical models only].
+	OutputMulti []*OutputOutputMulti `json:"outputMulti,omitempty"`
+
+	// SelfLink: A URL to re-request this resource.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// OutputValue: The estimated regression value [Regression models only].
+	OutputValue float64 `json:"outputValue,omitempty"`
+}
+
+type TrainingDataAnalysis struct {
+	Warnings []string `json:"warnings,omitempty"`
+}
+
+type OutputOutputMulti struct {
+	// Label: The class label.
+	Label string `json:"label,omitempty"`
+
+	// Score: The probability of the class label.
+	Score float64 `json:"score,omitempty"`
+}
+
+type Training struct {
+	// StoragePMMLModelLocation: Google storage location of the pmml model
+	// file.
+	StoragePMMLModelLocation string `json:"storagePMMLModelLocation,omitempty"`
+
+	// StoragePMMLLocation: Google storage location of the preprocessing
+	// pmml file.
+	StoragePMMLLocation string `json:"storagePMMLLocation,omitempty"`
+
+	// Utility: A class weighting function, which allows the importance
+	// weights for class labels to be specified [Categorical models only].
+	Utility []*TrainingUtility `json:"utility,omitempty"`
+
+	// SelfLink: A URL to re-request this resource.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// StorageDataLocation: Google storage location of the training data
+	// file.
+	StorageDataLocation string `json:"storageDataLocation,omitempty"`
+
+	// DataAnalysis: Data Analysis.
+	DataAnalysis *TrainingDataAnalysis `json:"dataAnalysis,omitempty"`
+
+	// ModelInfo: Model metadata.
+	ModelInfo *TrainingModelInfo `json:"modelInfo,omitempty"`
+
+	// Kind: What kind of resource this is.
+	Kind string `json:"kind,omitempty"`
+
+	// TrainingStatus: The current status of the training job. This can be
+	// one of following: RUNNING; DONE; ERROR; ERROR: TRAINING JOB NOT FOUND
+	TrainingStatus string `json:"trainingStatus,omitempty"`
+
+	// Id: The unique name for the predictive model.
+	Id string `json:"id,omitempty"`
+}
+
+type Input struct {
+	// Input: Input to the model for a prediction
+	Input *InputInput `json:"input,omitempty"`
+}
+
+type Update struct {
+	// Label: The true class label of this instance
+	Label string `json:"label,omitempty"`
+
+	// CsvInstance: The input features for this instance
+	CsvInstance []interface{} `json:"csvInstance,omitempty"`
+}
+
+type TrainingModelInfoConfusionMatrix struct {
 }
 
 // method id "prediction.hostedmodels.predict":
@@ -222,7 +225,7 @@ func (r *HostedmodelsService) Predict(hostedModelName string, input *Input) *Hos
 	return c
 }
 
-func (c *HostedmodelsPredictCall) Do() (*Output, os.Error) {
+func (c *HostedmodelsPredictCall) Do() (*Output, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.input)
 	if err != nil {
@@ -278,6 +281,134 @@ func (c *HostedmodelsPredictCall) Do() (*Output, os.Error) {
 
 }
 
+// method id "prediction.trainedmodels.delete":
+
+type TrainedmodelsDeleteCall struct {
+	s    *Service
+	id   string
+	opt_ map[string]interface{}
+}
+
+// Delete: Delete a trained model.
+func (r *TrainedmodelsService) Delete(id string) *TrainedmodelsDeleteCall {
+	c := &TrainedmodelsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	return c
+}
+
+func (c *TrainedmodelsDeleteCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/prediction/v1.4/", "trainedmodels/{id}")
+	urls = strings.Replace(urls, "{id}", cleanPathString(c.id), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Delete a trained model.",
+	//   "httpMethod": "DELETE",
+	//   "id": "prediction.trainedmodels.delete",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The unique name for the predictive model.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "trainedmodels/{id}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/prediction"
+	//   ]
+	// }
+
+}
+
+// method id "prediction.trainedmodels.predict":
+
+type TrainedmodelsPredictCall struct {
+	s     *Service
+	id    string
+	input *Input
+	opt_  map[string]interface{}
+}
+
+// Predict: Submit model id and request a prediction
+func (r *TrainedmodelsService) Predict(id string, input *Input) *TrainedmodelsPredictCall {
+	c := &TrainedmodelsPredictCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	c.input = input
+	return c
+}
+
+func (c *TrainedmodelsPredictCall) Do() (*Output, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.input)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/prediction/v1.4/", "trainedmodels/{id}/predict")
+	urls = strings.Replace(urls, "{id}", cleanPathString(c.id), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Output)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Submit model id and request a prediction",
+	//   "httpMethod": "POST",
+	//   "id": "prediction.trainedmodels.predict",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The unique name for the predictive model.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "trainedmodels/{id}/predict",
+	//   "request": {
+	//     "$ref": "Input"
+	//   },
+	//   "response": {
+	//     "$ref": "Output"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/prediction"
+	//   ]
+	// }
+
+}
+
 // method id "prediction.trainedmodels.update":
 
 type TrainedmodelsUpdateCall struct {
@@ -295,7 +426,7 @@ func (r *TrainedmodelsService) Update(id string, update *Update) *TrainedmodelsU
 	return c
 }
 
-func (c *TrainedmodelsUpdateCall) Do() (*Training, os.Error) {
+func (c *TrainedmodelsUpdateCall) Do() (*Training, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.update)
 	if err != nil {
@@ -366,7 +497,7 @@ func (r *TrainedmodelsService) Insert(training *Training) *TrainedmodelsInsertCa
 	return c
 }
 
-func (c *TrainedmodelsInsertCall) Do() (*Training, os.Error) {
+func (c *TrainedmodelsInsertCall) Do() (*Training, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.training)
 	if err != nil {
@@ -425,7 +556,7 @@ func (r *TrainedmodelsService) Get(id string) *TrainedmodelsGetCall {
 	return c
 }
 
-func (c *TrainedmodelsGetCall) Do() (*Training, os.Error) {
+func (c *TrainedmodelsGetCall) Do() (*Training, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -472,136 +603,8 @@ func (c *TrainedmodelsGetCall) Do() (*Training, os.Error) {
 
 }
 
-// method id "prediction.trainedmodels.delete":
-
-type TrainedmodelsDeleteCall struct {
-	s    *Service
-	id   string
-	opt_ map[string]interface{}
-}
-
-// Delete: Delete a trained model.
-func (r *TrainedmodelsService) Delete(id string) *TrainedmodelsDeleteCall {
-	c := &TrainedmodelsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
-	c.id = id
-	return c
-}
-
-func (c *TrainedmodelsDeleteCall) Do() os.Error {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/prediction/v1.4/", "trainedmodels/{id}")
-	urls = strings.Replace(urls, "{id}", cleanPathString(c.id), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("DELETE", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return err
-	}
-	return nil
-	// {
-	//   "description": "Delete a trained model.",
-	//   "httpMethod": "DELETE",
-	//   "id": "prediction.trainedmodels.delete",
-	//   "parameterOrder": [
-	//     "id"
-	//   ],
-	//   "parameters": {
-	//     "id": {
-	//       "description": "The unique name for the predictive model.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "trainedmodels/{id}",
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/prediction"
-	//   ]
-	// }
-
-}
-
-// method id "prediction.trainedmodels.predict":
-
-type TrainedmodelsPredictCall struct {
-	s     *Service
-	id    string
-	input *Input
-	opt_  map[string]interface{}
-}
-
-// Predict: Submit model id and request a prediction
-func (r *TrainedmodelsService) Predict(id string, input *Input) *TrainedmodelsPredictCall {
-	c := &TrainedmodelsPredictCall{s: r.s, opt_: make(map[string]interface{})}
-	c.id = id
-	c.input = input
-	return c
-}
-
-func (c *TrainedmodelsPredictCall) Do() (*Output, os.Error) {
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.input)
-	if err != nil {
-		return nil, err
-	}
-	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/prediction/v1.4/", "trainedmodels/{id}/predict")
-	urls = strings.Replace(urls, "{id}", cleanPathString(c.id), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("POST", urls, body)
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(Output)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Submit model id and request a prediction",
-	//   "httpMethod": "POST",
-	//   "id": "prediction.trainedmodels.predict",
-	//   "parameterOrder": [
-	//     "id"
-	//   ],
-	//   "parameters": {
-	//     "id": {
-	//       "description": "The unique name for the predictive model.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "trainedmodels/{id}/predict",
-	//   "request": {
-	//     "$ref": "Input"
-	//   },
-	//   "response": {
-	//     "$ref": "Output"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/prediction"
-	//   ]
-	// }
-
-}
-
 func cleanPathString(s string) string {
-	return strings.Map(func(r int) int {
+	return strings.Map(func(r rune) rune {
 		if r >= 0x30 && r <= 0x7a {
 			return r
 		}

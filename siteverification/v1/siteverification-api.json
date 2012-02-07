@@ -14,6 +14,7 @@
   "labs"
  ],
  "protocol": "rest",
+ "baseUrl": "https://www.googleapis.com/siteVerification/v1/",
  "basePath": "/siteVerification/v1/",
  "parameters": {
   "alt": {
@@ -65,6 +66,9 @@
    "scopes": {
     "https://www.googleapis.com/auth/siteverification": {
      "description": "Manage the list of sites and domains you control"
+    },
+    "https://www.googleapis.com/auth/siteverification.verify_only": {
+     "description": "Manage your new site verifications with Google"
     }
    }
   }
@@ -202,30 +206,17 @@
     "getToken": {
      "id": "siteVerification.webResource.getToken",
      "path": "token",
-     "httpMethod": "GET",
+     "httpMethod": "POST",
      "description": "Get a verification token for placing on a website or domain.",
-     "parameters": {
-      "identifier": {
-       "type": "string",
-       "description": "The URL or domain to verify.",
-       "location": "query"
-      },
-      "type": {
-       "type": "string",
-       "description": "Type of resource to verify. Can be 'site' (URL) or 'inet_domain' (domain name).",
-       "location": "query"
-      },
-      "verificationMethod": {
-       "type": "string",
-       "description": "The method to use for verifying a site or domain.",
-       "location": "query"
-      }
+     "request": {
+      "$ref": "SiteVerificationWebResourceGettokenRequest"
      },
      "response": {
       "$ref": "SiteVerificationWebResourceGettokenResponse"
      },
      "scopes": [
-      "https://www.googleapis.com/auth/siteverification"
+      "https://www.googleapis.com/auth/siteverification",
+      "https://www.googleapis.com/auth/siteverification.verify_only"
      ]
     },
     "insert": {
@@ -251,7 +242,8 @@
       "$ref": "SiteVerificationWebResourceResource"
      },
      "scopes": [
-      "https://www.googleapis.com/auth/siteverification"
+      "https://www.googleapis.com/auth/siteverification",
+      "https://www.googleapis.com/auth/siteverification.verify_only"
      ]
     },
     "list": {

@@ -14,6 +14,7 @@
   "labs"
  ],
  "protocol": "rest",
+ "baseUrl": "https://www.googleapis.com/prediction/v1.4/",
  "basePath": "/prediction/v1.4/",
  "parameters": {
   "alt": {
@@ -176,7 +177,7 @@
       },
       "confusionMatrix": {
        "type": "object",
-       "description": "An output confusion matrix. This shows an estimate for how this model will do in predictions. This is first indexed by the true class label. For each true class label, this provides a pair {predicted_label, count}, where count is the estimated number of times the model will predict the predicted label given the true label [Categorical models only].",
+       "description": "An output confusion matrix. This shows an estimate for how this model will do in predictions. This is first indexed by the true class label. For each true class label, this provides a pair {predicted_label, count}, where count is the estimated number of times the model will predict the predicted label given the true label. Will not output if more then 100 classes [Categorical models only].",
        "additionalProperties": {
         "type": "object",
         "additionalProperties": {
@@ -225,6 +226,10 @@
     "storagePMMLLocation": {
      "type": "string",
      "description": "Google storage location of the preprocessing pmml file."
+    },
+    "storagePMMLModelLocation": {
+     "type": "string",
+     "description": "Google storage location of the pmml model file."
     },
     "trainingStatus": {
      "type": "string",

@@ -4,7 +4,7 @@
 //
 // Usage example:
 //
-//   import "google-api-go-client.googlecode.com/hg/adsense/v1"
+//   import "code.google.com/p/google-api-go-client/adsense/v1"
 //   ...
 //   adsenseService, err := adsense.New(oauthHttpClient)
 package adsense
@@ -12,14 +12,14 @@ package adsense
 import (
 	"bytes"
 	"fmt"
-	"http"
+	"net/http"
 	"io"
-	"json"
-	"os"
+	"encoding/json"
+	"errors"
 	"strings"
 	"strconv"
-	"url"
-	"google-api-go-client.googlecode.com/hg/google-api"
+	"net/url"
+	"code.google.com/p/google-api-go-client/googleapi"
 )
 
 var _ = bytes.NewBuffer
@@ -29,6 +29,7 @@ var _ = json.NewDecoder
 var _ = io.Copy
 var _ = url.Parse
 var _ = googleapi.Version
+var _ = errors.New
 
 const apiId = "adsense:v1"
 const apiName = "adsense"
@@ -44,9 +45,9 @@ const (
 	AdsenseReadonlyScope = "https://www.googleapis.com/auth/adsense.readonly"
 )
 
-func New(client *http.Client) (*Service, os.Error) {
+func New(client *http.Client) (*Service, error) {
 	if client == nil {
-		return nil, os.NewError("client is nil")
+		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
 	s.Adunits = &AdunitsService{s: s}
@@ -91,51 +92,6 @@ type AdclientsService struct {
 	s *Service
 }
 
-type UrlChannels struct {
-	// Items: The URL channels returned in this list response.
-	Items []*UrlChannel `json:"items,omitempty"`
-
-	// NextPageToken: Continuation token used to page through URL channels.
-	// To retrieve the next page of results, set the next request's
-	// "pageToken" value to this.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// Etag: ETag of this response for caching purposes.
-	Etag string `json:"etag,omitempty"`
-
-	// Kind: Kind of list this is, in this case adsense#urlChannels.
-	Kind string `json:"kind,omitempty"`
-}
-
-type AdClient struct {
-	// ProductCode: This ad client's product code, which corresponds to the
-	// PRODUCT_CODE report dimension.
-	ProductCode string `json:"productCode,omitempty"`
-
-	// Kind: Kind of resource this is, in this case adsense#adClient.
-	Kind string `json:"kind,omitempty"`
-
-	// Id: Unique identifier of this ad client.
-	Id string `json:"id,omitempty"`
-
-	// SupportsReporting: Whether this ad client supports being reported on.
-	SupportsReporting bool `json:"supportsReporting,omitempty"`
-}
-
-type UrlChannel struct {
-	// UrlPattern: URL Pattern of this URL channel. Does not include
-	// "http://" or "https://". Example: www.example.com/home
-	UrlPattern string `json:"urlPattern,omitempty"`
-
-	// Kind: Kind of resource this is, in this case adsense#urlChannel.
-	Kind string `json:"kind,omitempty"`
-
-	// Id: Unique identifier of this URL channel. This should be considered
-	// an opaque identifier; it is not safe to rely on it being in any
-	// particular format.
-	Id string `json:"id,omitempty"`
-}
-
 type AdUnits struct {
 	// Items: The ad units returned in this list response.
 	Items []*AdUnit `json:"items,omitempty"`
@@ -169,6 +125,12 @@ type CustomChannels struct {
 }
 
 type AdClients struct {
+	// Etag: ETag of this response for caching purposes.
+	Etag string `json:"etag,omitempty"`
+
+	// Kind: Kind of list this is, in this case adsense#adClients.
+	Kind string `json:"kind,omitempty"`
+
 	// Items: The ad clients returned in this list response.
 	Items []*AdClient `json:"items,omitempty"`
 
@@ -176,22 +138,9 @@ type AdClients struct {
 	// retrieve the next page of results, set the next request's "pageToken"
 	// value to this.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// Etag: ETag of this response for caching purposes.
-	Etag string `json:"etag,omitempty"`
-
-	// Kind: Kind of list this is, in this case adsense#adClients.
-	Kind string `json:"kind,omitempty"`
 }
 
 type AdUnit struct {
-	// Code: Identity code of this ad unit, not necessarily unique across ad
-	// clients.
-	Code string `json:"code,omitempty"`
-
-	// Name: Name of this ad unit.
-	Name string `json:"name,omitempty"`
-
 	// Kind: Kind of resource this is, in this case adsense#adUnit.
 	Kind string `json:"kind,omitempty"`
 
@@ -212,19 +161,16 @@ type AdUnit struct {
 	// INACTIVE: Indicates that there has been no activity on this ad
 	// unit in the last seven days.
 	Status string `json:"status,omitempty"`
+
+	// Code: Identity code of this ad unit, not necessarily unique across ad
+	// clients.
+	Code string `json:"code,omitempty"`
+
+	// Name: Name of this ad unit.
+	Name string `json:"name,omitempty"`
 }
 
 type AdsenseReportsGenerateResponse struct {
-	// Averages: The averages of the report. This is the same length as any
-	// other row in the report; cells corresponding to dimension columns are
-	// empty.
-	Averages []string `json:"averages,omitempty"`
-
-	// Totals: The totals of the report. This is the same length as any
-	// other row in the report; cells corresponding to dimension columns are
-	// empty.
-	Totals []string `json:"totals,omitempty"`
-
 	// Warnings: Any warnings associated with generation of the report.
 	Warnings []string `json:"warnings,omitempty"`
 
@@ -246,6 +192,16 @@ type AdsenseReportsGenerateResponse struct {
 	// the request. The dimension cells contain strings, and the metric
 	// cells contain numbers.
 	Rows [][]string `json:"rows,omitempty"`
+
+	// Averages: The averages of the report. This is the same length as any
+	// other row in the report; cells corresponding to dimension columns are
+	// empty.
+	Averages []string `json:"averages,omitempty"`
+
+	// Totals: The totals of the report. This is the same length as any
+	// other row in the report; cells corresponding to dimension columns are
+	// empty.
+	Totals []string `json:"totals,omitempty"`
 }
 
 type CustomChannel struct {
@@ -278,6 +234,51 @@ type AdsenseReportsGenerateResponseHeaders struct {
 	Type string `json:"type,omitempty"`
 }
 
+type UrlChannels struct {
+	// Items: The URL channels returned in this list response.
+	Items []*UrlChannel `json:"items,omitempty"`
+
+	// NextPageToken: Continuation token used to page through URL channels.
+	// To retrieve the next page of results, set the next request's
+	// "pageToken" value to this.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Etag: ETag of this response for caching purposes.
+	Etag string `json:"etag,omitempty"`
+
+	// Kind: Kind of list this is, in this case adsense#urlChannels.
+	Kind string `json:"kind,omitempty"`
+}
+
+type AdClient struct {
+	// Id: Unique identifier of this ad client.
+	Id string `json:"id,omitempty"`
+
+	// SupportsReporting: Whether this ad client supports being reported on.
+	SupportsReporting bool `json:"supportsReporting,omitempty"`
+
+	// ProductCode: This ad client's product code, which corresponds to the
+	// PRODUCT_CODE report dimension.
+	ProductCode string `json:"productCode,omitempty"`
+
+	// Kind: Kind of resource this is, in this case adsense#adClient.
+	Kind string `json:"kind,omitempty"`
+}
+
+type UrlChannel struct {
+	// UrlPattern: URL Pattern of this URL channel. Does not include
+	// "http://" or "https://". Example: www.example.com/home
+	UrlPattern string `json:"urlPattern,omitempty"`
+
+	// Kind: Kind of resource this is, in this case adsense#urlChannel.
+	Kind string `json:"kind,omitempty"`
+
+	// Id: Unique identifier of this URL channel. This should be considered
+	// an opaque identifier; it is not safe to rely on it being in any
+	// particular format.
+	Id string `json:"id,omitempty"`
+}
+
 // method id "adsense.adunits.list":
 
 type AdunitsListCall struct {
@@ -286,17 +287,11 @@ type AdunitsListCall struct {
 	opt_       map[string]interface{}
 }
 
-// List: List all ad units in this AdSense account.
+// List: List all ad units in the specified ad client for this AdSense
+// account.
 func (r *AdunitsService) List(adClientId string) *AdunitsListCall {
 	c := &AdunitsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.adClientId = adClientId
-	return c
-}
-
-// MaxResults sets the optional parameter "maxResults": The maximum
-// number of ad units to include in the response, used for paging.
-func (c *AdunitsListCall) MaxResults(maxResults int64) *AdunitsListCall {
-	c.opt_["maxResults"] = maxResults
 	return c
 }
 
@@ -316,18 +311,25 @@ func (c *AdunitsListCall) PageToken(pageToken string) *AdunitsListCall {
 	return c
 }
 
-func (c *AdunitsListCall) Do() (*AdUnits, os.Error) {
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of ad units to include in the response, used for paging.
+func (c *AdunitsListCall) MaxResults(maxResults int64) *AdunitsListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+func (c *AdunitsListCall) Do() (*AdUnits, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
 	if v, ok := c.opt_["includeInactive"]; ok {
 		params.Set("includeInactive", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsense/v1/", "adclients/{adClientId}/adunits")
 	urls = strings.Replace(urls, "{adClientId}", cleanPathString(c.adClientId), 1)
@@ -347,7 +349,7 @@ func (c *AdunitsListCall) Do() (*AdUnits, os.Error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "List all ad units in this AdSense account.",
+	//   "description": "List all ad units in the specified ad client for this AdSense account.",
 	//   "httpMethod": "GET",
 	//   "id": "adsense.adunits.list",
 	//   "parameterOrder": [
@@ -399,7 +401,8 @@ type CustomchannelsListCall struct {
 	opt_       map[string]interface{}
 }
 
-// List: List all custom channels in this AdSense account.
+// List: List all custom channels in the specified ad client for this
+// AdSense account.
 func (r *CustomchannelsService) List(adClientId string) *CustomchannelsListCall {
 	c := &CustomchannelsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.adClientId = adClientId
@@ -423,7 +426,7 @@ func (c *CustomchannelsListCall) PageToken(pageToken string) *CustomchannelsList
 	return c
 }
 
-func (c *CustomchannelsListCall) Do() (*CustomChannels, os.Error) {
+func (c *CustomchannelsListCall) Do() (*CustomChannels, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -451,7 +454,7 @@ func (c *CustomchannelsListCall) Do() (*CustomChannels, os.Error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "List all custom channels in this AdSense account.",
+	//   "description": "List all custom channels in the specified ad client for this AdSense account.",
 	//   "httpMethod": "GET",
 	//   "id": "adsense.customchannels.list",
 	//   "parameterOrder": [
@@ -569,12 +572,12 @@ func (c *ReportsGenerateCall) Dimension(dimension string) *ReportsGenerateCall {
 	return c
 }
 
-func (c *ReportsGenerateCall) Do() (*AdsenseReportsGenerateResponse, os.Error) {
+func (c *ReportsGenerateCall) Do() (*AdsenseReportsGenerateResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	params.Set("startDate", fmt.Sprintf("%v", c.startDate))
 	params.Set("endDate", fmt.Sprintf("%v", c.endDate))
+	params.Set("startDate", fmt.Sprintf("%v", c.startDate))
 	if v, ok := c.opt_["locale"]; ok {
 		params.Set("locale", fmt.Sprintf("%v", v))
 	}
@@ -715,17 +718,11 @@ type UrlchannelsListCall struct {
 	opt_       map[string]interface{}
 }
 
-// List: List all URL channels in this AdSense account.
+// List: List all URL channels in the specified ad client for this
+// AdSense account.
 func (r *UrlchannelsService) List(adClientId string) *UrlchannelsListCall {
 	c := &UrlchannelsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.adClientId = adClientId
-	return c
-}
-
-// MaxResults sets the optional parameter "maxResults": The maximum
-// number of URL channels to include in the response, used for paging.
-func (c *UrlchannelsListCall) MaxResults(maxResults int64) *UrlchannelsListCall {
-	c.opt_["maxResults"] = maxResults
 	return c
 }
 
@@ -738,15 +735,22 @@ func (c *UrlchannelsListCall) PageToken(pageToken string) *UrlchannelsListCall {
 	return c
 }
 
-func (c *UrlchannelsListCall) Do() (*UrlChannels, os.Error) {
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of URL channels to include in the response, used for paging.
+func (c *UrlchannelsListCall) MaxResults(maxResults int64) *UrlchannelsListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+func (c *UrlchannelsListCall) Do() (*UrlChannels, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsense/v1/", "adclients/{adClientId}/urlchannels")
 	urls = strings.Replace(urls, "{adClientId}", cleanPathString(c.adClientId), 1)
@@ -766,7 +770,7 @@ func (c *UrlchannelsListCall) Do() (*UrlChannels, os.Error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "List all URL channels in this AdSense account.",
+	//   "description": "List all URL channels in the specified ad client for this AdSense account.",
 	//   "httpMethod": "GET",
 	//   "id": "adsense.urlchannels.list",
 	//   "parameterOrder": [
@@ -818,13 +822,6 @@ func (r *AdclientsService) List() *AdclientsListCall {
 	return c
 }
 
-// MaxResults sets the optional parameter "maxResults": The maximum
-// number of ad clients to include in the response, used for paging.
-func (c *AdclientsListCall) MaxResults(maxResults int64) *AdclientsListCall {
-	c.opt_["maxResults"] = maxResults
-	return c
-}
-
 // PageToken sets the optional parameter "pageToken": A continuation
 // token, used to page through ad clients. To retrieve the next page,
 // set this parameter to the value of "nextPageToken" from the previous
@@ -834,15 +831,22 @@ func (c *AdclientsListCall) PageToken(pageToken string) *AdclientsListCall {
 	return c
 }
 
-func (c *AdclientsListCall) Do() (*AdClients, os.Error) {
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of ad clients to include in the response, used for paging.
+func (c *AdclientsListCall) MaxResults(maxResults int64) *AdclientsListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+func (c *AdclientsListCall) Do() (*AdClients, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsense/v1/", "adclients")
 	urls += "?" + params.Encode()
@@ -892,7 +896,7 @@ func (c *AdclientsListCall) Do() (*AdClients, os.Error) {
 }
 
 func cleanPathString(s string) string {
-	return strings.Map(func(r int) int {
+	return strings.Map(func(r rune) rune {
 		if r >= 0x30 && r <= 0x7a {
 			return r
 		}

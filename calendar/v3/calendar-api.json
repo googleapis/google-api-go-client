@@ -14,6 +14,7 @@
   "labs"
  ],
  "protocol": "rest",
+ "baseUrl": "https://www.googleapis.com/calendar/v3/",
  "basePath": "/calendar/v3/",
  "parameters": {
   "alt": {
@@ -365,7 +366,7 @@
     },
     "end": {
      "$ref": "EventDateTime",
-     "description": "The end time of the event. For a recurring event, this is the end time of the first instance."
+     "description": "The (exclusive) end time of the event. For a recurring event, this is the end time of the first instance."
     },
     "etag": {
      "type": "string",
@@ -469,7 +470,7 @@
     },
     "organizer": {
      "type": "object",
-     "description": "The organizer of the event. If the organizer is also an attendee, this is indicated with a separate entry in 'attendees' with the 'organizer' field set to True.",
+     "description": "The organizer of the event. If the organizer is also an attendee, this is indicated with a separate entry in 'attendees' with the 'organizer' field set to True. To change the organizer, use the \"move\" operation. Read-only, except when importing an event.",
      "properties": {
       "displayName": {
        "type": "string",
@@ -524,7 +525,7 @@
     },
     "start": {
      "$ref": "EventDateTime",
-     "description": "The start time of the event. For a recurring event, this is the start time of the first instance."
+     "description": "The (inclusive) start time of the event. For a recurring event, this is the start time of the first instance."
     },
     "status": {
      "type": "string",
@@ -854,12 +855,12 @@
    "properties": {
     "end": {
      "type": "string",
-     "description": "The end of the time period.",
+     "description": "The (exclusive) end of the time period.",
      "format": "date-time"
     },
     "start": {
      "type": "string",
-     "description": "The start of the time period.",
+     "description": "The (inclusive) start of the time period.",
      "format": "date-time"
     }
    }

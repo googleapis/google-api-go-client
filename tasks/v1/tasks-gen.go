@@ -4,7 +4,7 @@
 //
 // Usage example:
 //
-//   import "google-api-go-client.googlecode.com/hg/tasks/v1"
+//   import "code.google.com/p/google-api-go-client/tasks/v1"
 //   ...
 //   tasksService, err := tasks.New(oauthHttpClient)
 package tasks
@@ -12,14 +12,14 @@ package tasks
 import (
 	"bytes"
 	"fmt"
-	"http"
+	"net/http"
 	"io"
-	"json"
-	"os"
+	"encoding/json"
+	"errors"
 	"strings"
 	"strconv"
-	"url"
-	"google-api-go-client.googlecode.com/hg/google-api"
+	"net/url"
+	"code.google.com/p/google-api-go-client/googleapi"
 )
 
 var _ = bytes.NewBuffer
@@ -29,6 +29,7 @@ var _ = json.NewDecoder
 var _ = io.Copy
 var _ = url.Parse
 var _ = googleapi.Version
+var _ = errors.New
 
 const apiId = "tasks:v1"
 const apiName = "tasks"
@@ -44,9 +45,9 @@ const (
 	TasksReadonlyScope = "https://www.googleapis.com/auth/tasks.readonly"
 )
 
-func New(client *http.Client) (*Service, os.Error) {
+func New(client *http.Client) (*Service, error) {
 	if client == nil {
-		return nil, os.NewError("client is nil")
+		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
 	s.Tasklists = &TasklistsService{s: s}
@@ -71,9 +72,8 @@ type TasksService struct {
 }
 
 type Task struct {
-	// SelfLink: URL pointing to this task. Used to retrieve, update, or
-	// delete this task.
-	SelfLink string `json:"selfLink,omitempty"`
+	// Links: Collection of links. This collection is read-only.
+	Links []*TaskLinks `json:"links,omitempty"`
 
 	// Parent: Parent task identifier. This field is omitted if it is a
 	// top-level task. This field is read-only. Use the "move" method to
@@ -127,6 +127,10 @@ type Task struct {
 	// field is read-only. Use the "move" method to move the task to another
 	// position.
 	Position string `json:"position,omitempty"`
+
+	// SelfLink: URL pointing to this task. Used to retrieve, update, or
+	// delete this task.
+	SelfLink string `json:"selfLink,omitempty"`
 }
 
 type TaskList struct {
@@ -140,11 +144,27 @@ type TaskList struct {
 	// Kind: Type of the resource. This is always "tasks#taskList".
 	Kind string `json:"kind,omitempty"`
 
+	// Updated: Last modification time of the task list (as a RFC 3339
+	// timestamp).
+	Updated string `json:"updated,omitempty"`
+
 	// Id: Task list identifier.
 	Id string `json:"id,omitempty"`
 
 	// Title: Title of the task list.
 	Title string `json:"title,omitempty"`
+}
+
+type TaskLinks struct {
+	// Type: Type of the link, e.g. "email".
+	Type string `json:"type,omitempty"`
+
+	// Description: The description. In HTML speak: Everything between <a>
+	// and </a>.
+	Description string `json:"description,omitempty"`
+
+	// Link: The URL.
+	Link string `json:"link,omitempty"`
 }
 
 type TaskLists struct {
@@ -163,17 +183,146 @@ type TaskLists struct {
 }
 
 type Tasks struct {
-	// Items: Collection of tasks.
-	Items []*Task `json:"items,omitempty"`
-
-	// NextPageToken: Token used to access the next page of this result.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
 
 	// Kind: Type of the resource. This is always "tasks#tasks".
 	Kind string `json:"kind,omitempty"`
+
+	// Items: Collection of tasks.
+	Items []*Task `json:"items,omitempty"`
+
+	// NextPageToken: Token used to access the next page of this result.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+}
+
+// method id "tasks.tasklists.delete":
+
+type TasklistsDeleteCall struct {
+	s          *Service
+	tasklistid string
+	opt_       map[string]interface{}
+}
+
+// Delete: Deletes the authenticated user's specified task list.
+func (r *TasklistsService) Delete(tasklistid string) *TasklistsDeleteCall {
+	c := &TasklistsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.tasklistid = tasklistid
+	return c
+}
+
+func (c *TasklistsDeleteCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/tasks/v1/", "users/@me/lists/{tasklist}")
+	urls = strings.Replace(urls, "{tasklist}", cleanPathString(c.tasklistid), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Deletes the authenticated user's specified task list.",
+	//   "httpMethod": "DELETE",
+	//   "id": "tasks.tasklists.delete",
+	//   "parameterOrder": [
+	//     "tasklist"
+	//   ],
+	//   "parameters": {
+	//     "tasklist": {
+	//       "description": "Task list identifier.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "users/@me/lists/{tasklist}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/tasks"
+	//   ]
+	// }
+
+}
+
+// method id "tasks.tasklists.patch":
+
+type TasklistsPatchCall struct {
+	s          *Service
+	tasklistid string
+	tasklist   *TaskList
+	opt_       map[string]interface{}
+}
+
+// Patch: Updates the authenticated user's specified task list. This
+// method supports patch semantics.
+func (r *TasklistsService) Patch(tasklistid string, tasklist *TaskList) *TasklistsPatchCall {
+	c := &TasklistsPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.tasklistid = tasklistid
+	c.tasklist = tasklist
+	return c
+}
+
+func (c *TasklistsPatchCall) Do() (*TaskList, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.tasklist)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/tasks/v1/", "users/@me/lists/{tasklist}")
+	urls = strings.Replace(urls, "{tasklist}", cleanPathString(c.tasklistid), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(TaskList)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the authenticated user's specified task list. This method supports patch semantics.",
+	//   "httpMethod": "PATCH",
+	//   "id": "tasks.tasklists.patch",
+	//   "parameterOrder": [
+	//     "tasklist"
+	//   ],
+	//   "parameters": {
+	//     "tasklist": {
+	//       "description": "Task list identifier.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "users/@me/lists/{tasklist}",
+	//   "request": {
+	//     "$ref": "TaskList"
+	//   },
+	//   "response": {
+	//     "$ref": "TaskList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/tasks"
+	//   ]
+	// }
+
 }
 
 // method id "tasks.tasklists.list":
@@ -203,7 +352,7 @@ func (c *TasklistsListCall) PageToken(pageToken string) *TasklistsListCall {
 	return c
 }
 
-func (c *TasklistsListCall) Do() (*TaskLists, os.Error) {
+func (c *TasklistsListCall) Do() (*TaskLists, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -275,7 +424,7 @@ func (r *TasklistsService) Update(tasklistid string, tasklist *TaskList) *Taskli
 	return c
 }
 
-func (c *TasklistsUpdateCall) Do() (*TaskList, os.Error) {
+func (c *TasklistsUpdateCall) Do() (*TaskList, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.tasklist)
 	if err != nil {
@@ -347,7 +496,7 @@ func (r *TasklistsService) Insert(tasklist *TaskList) *TasklistsInsertCall {
 	return c
 }
 
-func (c *TasklistsInsertCall) Do() (*TaskList, os.Error) {
+func (c *TasklistsInsertCall) Do() (*TaskList, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.tasklist)
 	if err != nil {
@@ -406,7 +555,7 @@ func (r *TasklistsService) Get(tasklistid string) *TasklistsGetCall {
 	return c
 }
 
-func (c *TasklistsGetCall) Do() (*TaskList, os.Error) {
+func (c *TasklistsGetCall) Do() (*TaskList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -454,90 +603,38 @@ func (c *TasklistsGetCall) Do() (*TaskList, os.Error) {
 
 }
 
-// method id "tasks.tasklists.delete":
+// method id "tasks.tasks.patch":
 
-type TasklistsDeleteCall struct {
+type TasksPatchCall struct {
 	s          *Service
 	tasklistid string
+	taskid     string
+	task       *Task
 	opt_       map[string]interface{}
 }
 
-// Delete: Deletes the authenticated user's specified task list.
-func (r *TasklistsService) Delete(tasklistid string) *TasklistsDeleteCall {
-	c := &TasklistsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+// Patch: Updates the specified task. This method supports patch
+// semantics.
+func (r *TasksService) Patch(tasklistid string, taskid string, task *Task) *TasksPatchCall {
+	c := &TasksPatchCall{s: r.s, opt_: make(map[string]interface{})}
 	c.tasklistid = tasklistid
+	c.taskid = taskid
+	c.task = task
 	return c
 }
 
-func (c *TasklistsDeleteCall) Do() os.Error {
+func (c *TasksPatchCall) Do() (*Task, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/tasks/v1/", "users/@me/lists/{tasklist}")
-	urls = strings.Replace(urls, "{tasklist}", cleanPathString(c.tasklistid), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("DELETE", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return err
-	}
-	return nil
-	// {
-	//   "description": "Deletes the authenticated user's specified task list.",
-	//   "httpMethod": "DELETE",
-	//   "id": "tasks.tasklists.delete",
-	//   "parameterOrder": [
-	//     "tasklist"
-	//   ],
-	//   "parameters": {
-	//     "tasklist": {
-	//       "description": "Task list identifier.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "users/@me/lists/{tasklist}",
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tasks"
-	//   ]
-	// }
-
-}
-
-// method id "tasks.tasklists.patch":
-
-type TasklistsPatchCall struct {
-	s          *Service
-	tasklistid string
-	tasklist   *TaskList
-	opt_       map[string]interface{}
-}
-
-// Patch: Updates the authenticated user's specified task list. This
-// method supports patch semantics.
-func (r *TasklistsService) Patch(tasklistid string, tasklist *TaskList) *TasklistsPatchCall {
-	c := &TasklistsPatchCall{s: r.s, opt_: make(map[string]interface{})}
-	c.tasklistid = tasklistid
-	c.tasklist = tasklist
-	return c
-}
-
-func (c *TasklistsPatchCall) Do() (*TaskList, os.Error) {
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.tasklist)
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.task)
 	if err != nil {
 		return nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/tasks/v1/", "users/@me/lists/{tasklist}")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/tasks/v1/", "lists/{tasklist}/tasks/{task}")
 	urls = strings.Replace(urls, "{tasklist}", cleanPathString(c.tasklistid), 1)
+	urls = strings.Replace(urls, "{task}", cleanPathString(c.taskid), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	req.Header.Set("Content-Type", ctype)
@@ -549,19 +646,26 @@ func (c *TasklistsPatchCall) Do() (*TaskList, os.Error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(TaskList)
+	ret := new(Task)
 	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the authenticated user's specified task list. This method supports patch semantics.",
+	//   "description": "Updates the specified task. This method supports patch semantics.",
 	//   "httpMethod": "PATCH",
-	//   "id": "tasks.tasklists.patch",
+	//   "id": "tasks.tasks.patch",
 	//   "parameterOrder": [
-	//     "tasklist"
+	//     "tasklist",
+	//     "task"
 	//   ],
 	//   "parameters": {
+	//     "task": {
+	//       "description": "Task identifier.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
 	//     "tasklist": {
 	//       "description": "Task list identifier.",
 	//       "location": "path",
@@ -569,12 +673,12 @@ func (c *TasklistsPatchCall) Do() (*TaskList, os.Error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "users/@me/lists/{tasklist}",
+	//   "path": "lists/{tasklist}/tasks/{task}",
 	//   "request": {
-	//     "$ref": "TaskList"
+	//     "$ref": "Task"
 	//   },
 	//   "response": {
-	//     "$ref": "TaskList"
+	//     "$ref": "Task"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/tasks"
@@ -595,6 +699,14 @@ type TasksListCall struct {
 func (r *TasksService) List(tasklistid string) *TasksListCall {
 	c := &TasksListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.tasklistid = tasklistid
+	return c
+}
+
+// DueMin sets the optional parameter "dueMin": Lower bound for a task's
+// due date (as a RFC 3339 timestamp) to filter by.  The default is not
+// to filter by due date.
+func (c *TasksListCall) DueMin(dueMin string) *TasksListCall {
+	c.opt_["dueMin"] = dueMin
 	return c
 }
 
@@ -668,18 +780,13 @@ func (c *TasksListCall) PageToken(pageToken string) *TasksListCall {
 	return c
 }
 
-// DueMin sets the optional parameter "dueMin": Lower bound for a task's
-// due date (as a RFC 3339 timestamp) to filter by.  The default is not
-// to filter by due date.
-func (c *TasksListCall) DueMin(dueMin string) *TasksListCall {
-	c.opt_["dueMin"] = dueMin
-	return c
-}
-
-func (c *TasksListCall) Do() (*Tasks, os.Error) {
+func (c *TasksListCall) Do() (*Tasks, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["dueMin"]; ok {
+		params.Set("dueMin", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["completedMax"]; ok {
 		params.Set("completedMax", fmt.Sprintf("%v", v))
 	}
@@ -706,9 +813,6 @@ func (c *TasksListCall) Do() (*Tasks, os.Error) {
 	}
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["dueMin"]; ok {
-		params.Set("dueMin", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/tasks/v1/", "lists/{tasklist}/tasks")
 	urls = strings.Replace(urls, "{tasklist}", cleanPathString(c.tasklistid), 1)
@@ -824,7 +928,7 @@ func (r *TasksService) Update(tasklistid string, taskid string, task *Task) *Tas
 	return c
 }
 
-func (c *TasksUpdateCall) Do() (*Task, os.Error) {
+func (c *TasksUpdateCall) Do() (*Task, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.task)
 	if err != nil {
@@ -905,13 +1009,6 @@ func (r *TasksService) Insert(tasklistid string, task *Task) *TasksInsertCall {
 	return c
 }
 
-// Parent sets the optional parameter "parent": Parent task identifier.
-// If the task is created at the top level, this parameter is omitted.
-func (c *TasksInsertCall) Parent(parent string) *TasksInsertCall {
-	c.opt_["parent"] = parent
-	return c
-}
-
 // Previous sets the optional parameter "previous": Previous sibling
 // task identifier. If the task is created at the first position among
 // its siblings, this parameter is omitted.
@@ -920,7 +1017,14 @@ func (c *TasksInsertCall) Previous(previous string) *TasksInsertCall {
 	return c
 }
 
-func (c *TasksInsertCall) Do() (*Task, os.Error) {
+// Parent sets the optional parameter "parent": Parent task identifier.
+// If the task is created at the top level, this parameter is omitted.
+func (c *TasksInsertCall) Parent(parent string) *TasksInsertCall {
+	c.opt_["parent"] = parent
+	return c
+}
+
+func (c *TasksInsertCall) Do() (*Task, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.task)
 	if err != nil {
@@ -929,11 +1033,11 @@ func (c *TasksInsertCall) Do() (*Task, os.Error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	if v, ok := c.opt_["parent"]; ok {
-		params.Set("parent", fmt.Sprintf("%v", v))
-	}
 	if v, ok := c.opt_["previous"]; ok {
 		params.Set("previous", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["parent"]; ok {
+		params.Set("parent", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/tasks/v1/", "lists/{tasklist}/tasks")
 	urls = strings.Replace(urls, "{tasklist}", cleanPathString(c.tasklistid), 1)
@@ -1009,7 +1113,7 @@ func (r *TasksService) Get(tasklistid string, taskid string) *TasksGetCall {
 	return c
 }
 
-func (c *TasksGetCall) Do() (*Task, os.Error) {
+func (c *TasksGetCall) Do() (*Task, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1082,7 +1186,7 @@ func (r *TasksService) Delete(tasklistid string, taskid string) *TasksDeleteCall
 	return c
 }
 
-func (c *TasksDeleteCall) Do() os.Error {
+func (c *TasksDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1165,7 +1269,7 @@ func (c *TasksMoveCall) Previous(previous string) *TasksMoveCall {
 	return c
 }
 
-func (c *TasksMoveCall) Do() (*Task, os.Error) {
+func (c *TasksMoveCall) Do() (*Task, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1253,7 +1357,7 @@ func (r *TasksService) Clear(tasklistid string) *TasksClearCall {
 	return c
 }
 
-func (c *TasksClearCall) Do() os.Error {
+func (c *TasksClearCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1293,92 +1397,8 @@ func (c *TasksClearCall) Do() os.Error {
 
 }
 
-// method id "tasks.tasks.patch":
-
-type TasksPatchCall struct {
-	s          *Service
-	tasklistid string
-	taskid     string
-	task       *Task
-	opt_       map[string]interface{}
-}
-
-// Patch: Updates the specified task. This method supports patch
-// semantics.
-func (r *TasksService) Patch(tasklistid string, taskid string, task *Task) *TasksPatchCall {
-	c := &TasksPatchCall{s: r.s, opt_: make(map[string]interface{})}
-	c.tasklistid = tasklistid
-	c.taskid = taskid
-	c.task = task
-	return c
-}
-
-func (c *TasksPatchCall) Do() (*Task, os.Error) {
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.task)
-	if err != nil {
-		return nil, err
-	}
-	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/tasks/v1/", "lists/{tasklist}/tasks/{task}")
-	urls = strings.Replace(urls, "{tasklist}", cleanPathString(c.tasklistid), 1)
-	urls = strings.Replace(urls, "{task}", cleanPathString(c.taskid), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("PATCH", urls, body)
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(Task)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Updates the specified task. This method supports patch semantics.",
-	//   "httpMethod": "PATCH",
-	//   "id": "tasks.tasks.patch",
-	//   "parameterOrder": [
-	//     "tasklist",
-	//     "task"
-	//   ],
-	//   "parameters": {
-	//     "task": {
-	//       "description": "Task identifier.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "tasklist": {
-	//       "description": "Task list identifier.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "lists/{tasklist}/tasks/{task}",
-	//   "request": {
-	//     "$ref": "Task"
-	//   },
-	//   "response": {
-	//     "$ref": "Task"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tasks"
-	//   ]
-	// }
-
-}
-
 func cleanPathString(s string) string {
-	return strings.Map(func(r int) int {
+	return strings.Map(func(r rune) rune {
 		if r >= 0x30 && r <= 0x7a {
 			return r
 		}

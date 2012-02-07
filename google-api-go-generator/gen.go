@@ -6,21 +6,22 @@ package main
 
 import (
 	"bytes"
-	"exec"
+	"encoding/json"
+	"errors"
 	"flag"
 	"fmt"
-	"go/token"
 	"go/parser"
 	"go/printer"
-	"http"
+	"go/token"
 	"io/ioutil"
-	"json"
-	"os"
-	"path/filepath"
 	"log"
+	"net/http"
+	"net/url"
+	"os"
+	"os/exec"
+	"path/filepath"
 	"strings"
 	"unicode"
-	"url"
 )
 
 // goGenVersion is the version of the Go code generator
@@ -62,10 +63,10 @@ type AllAPIs struct {
 
 type generateError struct {
 	api   *API
-	error os.Error
+	error error
 }
 
-func (e *generateError) String() string {
+func (e *generateError) Error() string {
 	return fmt.Sprintf("API %s failed to generate code: %v", e.api.ID, e.error)
 }
 
@@ -74,7 +75,7 @@ type compileError struct {
 	output string
 }
 
-func (e *compileError) String() string {
+func (e *compileError) Error() string {
 	return fmt.Sprintf("API %s failed to compile:\n%v", e.api.ID, e.output)
 }
 
@@ -88,7 +89,7 @@ func main() {
 	var (
 		apiIds  = []string{}
 		matches = []*API{}
-		errors  = []os.Error{}
+		errors  = []error{}
 	)
 	for _, api := range getAPIs() {
 		apiIds = append(apiIds, api.ID)
@@ -103,11 +104,14 @@ func main() {
 			continue
 		}
 		if *build {
-			args := []string{"-C", api.SourceDir()}
+			var args []string
 			if *install {
 				args = append(args, "install")
+			} else {
+				args = append(args, "build")
 			}
-			out, err := exec.Command("make", args...).CombinedOutput()
+			args = append(args, "./" + api.SourceDir())
+			out, err := exec.Command("go", args...).CombinedOutput()
 			if err != nil {
 				errors = append(errors, &compileError{api, string(out)})
 			}
@@ -121,7 +125,7 @@ func main() {
 	if len(errors) > 0 {
 		log.Printf("%d API(s) failed to generate or compile:", len(errors))
 		for _, ce := range errors {
-			log.Printf(ce.String())
+			log.Printf(ce.Error())
 		}
 		os.Exit(1)
 	}
@@ -144,7 +148,7 @@ func getAPIs() []*API {
 	return all.Items
 }
 
-func writeFile(file string, contents []byte) os.Error {
+func writeFile(file string, contents []byte) error {
 	// Don't write it if the contents are identical.
 	existing, err := ioutil.ReadFile(file)
 	if err == nil && bytes.Equal(existing, contents) {
@@ -230,7 +234,7 @@ func (a *API) Package() string {
 }
 
 func (a *API) Target() string {
-	return fmt.Sprintf("google-api-go-client.googlecode.com/hg/%s/%s", a.Package(), a.Version)
+	return fmt.Sprintf("code.google.com/p/google-api-go-client/%s/%s", a.Package(), a.Version)
 }
 
 // GetName returns a free top-level function/type identifier in the package.
@@ -252,7 +256,7 @@ func (a *API) needsDataWrapper() bool {
 	return false
 }
 
-func (a *API) GenerateCode() (outerr os.Error) {
+func (a *API) GenerateCode() (outerr error) {
 	a.m = make(map[string]interface{})
 	m := a.m
 	jsonBytes := slurpURL(a.DiscoveryURL())
@@ -268,16 +272,6 @@ func (a *API) GenerateCode() (outerr os.Error) {
 	}
 
 	pkg := a.Package()
-	makefilename := filepath.Join(outdir, "Makefile")
-	makefile := "include $(GOROOT)/src/Make.inc\n" +
-		"PREREQ=$(QUOTED_GOROOT)/pkg/$(GOOS)_$(GOARCH)/google-api-go-client.googlecode.com/hg/google-api.a\n" +
-		"TARG=" + a.Target() + "\n" +
-		"GOFILES=" + a.Package() + "-gen.go\n" +
-		"include $(GOROOT)/src/Make.pkg\n"
-	err = ioutil.WriteFile(makefilename, []byte(makefile), 0666)
-	if err != nil {
-		return fmt.Errorf("failed to write Makefile %s: %v", makefilename, err)
-	}
 	writeFile(filepath.Join(outdir, a.Package()+"-api.json"), jsonBytes)
 
 	genfilename := filepath.Join(outdir, pkg+"-gen.go")
@@ -310,7 +304,7 @@ func (a *API) GenerateCode() (outerr os.Error) {
 		}
 
 		var clean bytes.Buffer
-		_, err = (&printer.Config{printer.TabIndent | printer.UseSpaces, 8}).Fprint(&clean, fset, ast)
+		err = (&printer.Config{printer.TabIndent | printer.UseSpaces, 8}).Fprint(&clean, fset, ast)
 		if err != nil {
 			outerr = err
 			writeFile(genfilename, buf.Bytes())
@@ -339,8 +333,8 @@ func (a *API) GenerateCode() (outerr os.Error) {
 	p("package %s\n", pkg)
 	p("\n")
 	p("import (\n")
-	for _, pkg := range []string{"bytes", "fmt", "http", "io", "json", "os", "strings", "strconv", "url",
-		"google-api-go-client.googlecode.com/hg/google-api"} {
+	for _, pkg := range []string{"bytes", "fmt", "net/http", "io", "encoding/json", "errors", "strings", "strconv", "net/url",
+		"code.google.com/p/google-api-go-client/googleapi"} {
 		p("\t%q\n", pkg)
 	}
 	p(")\n\n")
@@ -351,6 +345,7 @@ func (a *API) GenerateCode() (outerr os.Error) {
 	pn("var _ = io.Copy")
 	pn("var _ = url.Parse")
 	pn("var _ = googleapi.Version")
+	pn("var _ = errors.New")
 	pn("")
 	pn("const apiId = %q", jstr(m, "id"))
 	pn("const apiName = %q", jstr(m, "name"))
@@ -361,8 +356,8 @@ func (a *API) GenerateCode() (outerr os.Error) {
 	a.generateScopeConstants()
 
 	a.GetName("New") // ignore return value; we're the first caller
-	pn("func New(client *http.Client) (*Service, os.Error) {")
-	pn("if client == nil { return nil, os.NewError(\"client is nil\") }")
+	pn("func New(client *http.Client) (*Service, error) {")
+	pn("if client == nil { return nil, errors.New(\"client is nil\") }")
 	pn("s := &Service{client: client}")
 	for _, res := range reslist {
 		pn("s.%s = &%s{s: s}", res.GoField(), res.GoType())
@@ -400,7 +395,7 @@ func (a *API) GenerateCode() (outerr os.Error) {
 		}
 	}
 
-	pn("\nfunc cleanPathString(s string) string { return strings.Map(func(r int) int { if r >= 0x30 && r <= 0x7a { return r }; return -1 }, s) }")
+	pn("\nfunc cleanPathString(s string) string { return strings.Map(func(r rune) rune { if r >= 0x30 && r <= 0x7a { return r }; return -1 }, s) }")
 	return nil
 }
 
@@ -609,7 +604,7 @@ func (s *Schema) properties() []*Property {
 	return pl
 }
 
-func (s *Schema) populateSubSchemas() (outerr os.Error) {
+func (s *Schema) populateSubSchemas() (outerr error) {
 	defer func() {
 		r := recover()
 		if r == nil {
@@ -961,7 +956,7 @@ func (meth *Method) generateCode() {
 		p("}\n")
 	}
 
-	pn("\nfunc (c *%s) Do() (%sos.Error) {", callName, retTypeComma)
+	pn("\nfunc (c *%s) Do() (%serror) {", callName, retTypeComma)
 
 	nilRet := ""
 	if retTypeComma != "" {
@@ -1187,7 +1182,7 @@ func (a *argument) cleanExpr(prefix string) string {
 	case "string":
 		return "cleanPathString(" + prefix + a.goname + ")"
 	case "integer", "int64":
-		return "strconv.Itoa64(" + prefix + a.goname + ")"
+		return "strconv.FormatInt(" + prefix + a.goname + ", 10)"
 	}
 	log.Panicf("unknown type: apitype=%q, gotype=%q", a.apitype, a.gotype)
 	return ""
@@ -1299,13 +1294,13 @@ func mustSimpleTypeConvert(apiType, format string) string {
 	panic(fmt.Sprintf("failed to simpleTypeConvert(%q, %q)", apiType, format))
 }
 
-func (a *API) goTypeOfJsonObject(outerName, memberName string, m map[string]interface{}) (string, os.Error) {
+func (a *API) goTypeOfJsonObject(outerName, memberName string, m map[string]interface{}) (string, error) {
 	apitype := jstr(m, "type")
 	switch apitype {
 	case "array":
 		items := jobj(m, "items")
 		if items == nil {
-			return "", os.NewError("no items but type was array")
+			return "", errors.New("no items but type was array")
 		}
 		if ref := jstr(items, "$ref"); ref != "" {
 			return "[]*" + ref, nil // TODO: wrong; delete this whole function
@@ -1313,7 +1308,7 @@ func (a *API) goTypeOfJsonObject(outerName, memberName string, m map[string]inte
 		if atype := jstr(items, "type"); atype != "" {
 			return "[]" + mustSimpleTypeConvert(atype, jstr(items, "format")), nil
 		}
-		return "", os.NewError("unsupported 'array' type")
+		return "", errors.New("unsupported 'array' type")
 	case "object":
 		return "*" + outerName + "_" + memberName, nil
 		//return "", os.NewError("unsupported 'object' type")

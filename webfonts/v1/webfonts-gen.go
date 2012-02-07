@@ -4,7 +4,7 @@
 //
 // Usage example:
 //
-//   import "google-api-go-client.googlecode.com/hg/webfonts/v1"
+//   import "code.google.com/p/google-api-go-client/webfonts/v1"
 //   ...
 //   webfontsService, err := webfonts.New(oauthHttpClient)
 package webfonts
@@ -12,14 +12,14 @@ package webfonts
 import (
 	"bytes"
 	"fmt"
-	"http"
+	"net/http"
 	"io"
-	"json"
-	"os"
+	"encoding/json"
+	"errors"
 	"strings"
 	"strconv"
-	"url"
-	"google-api-go-client.googlecode.com/hg/google-api"
+	"net/url"
+	"code.google.com/p/google-api-go-client/googleapi"
 )
 
 var _ = bytes.NewBuffer
@@ -29,15 +29,16 @@ var _ = json.NewDecoder
 var _ = io.Copy
 var _ = url.Parse
 var _ = googleapi.Version
+var _ = errors.New
 
 const apiId = "webfonts:v1"
 const apiName = "webfonts"
 const apiVersion = "v1"
 const basePath = "https://www.googleapis.com/webfonts/v1/"
 
-func New(client *http.Client) (*Service, os.Error) {
+func New(client *http.Client) (*Service, error) {
 	if client == nil {
-		return nil, os.NewError("client is nil")
+		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
 	s.Webfonts = &WebfontsService{s: s}
@@ -95,7 +96,7 @@ func (c *WebfontsListCall) Sort(sort string) *WebfontsListCall {
 	return c
 }
 
-func (c *WebfontsListCall) Do() (*WebfontList, os.Error) {
+func (c *WebfontsListCall) Do() (*WebfontList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -152,7 +153,7 @@ func (c *WebfontsListCall) Do() (*WebfontList, os.Error) {
 }
 
 func cleanPathString(s string) string {
-	return strings.Map(func(r int) int {
+	return strings.Map(func(r rune) rune {
 		if r >= 0x30 && r <= 0x7a {
 			return r
 		}

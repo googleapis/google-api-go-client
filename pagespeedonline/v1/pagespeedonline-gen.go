@@ -4,7 +4,7 @@
 //
 // Usage example:
 //
-//   import "google-api-go-client.googlecode.com/hg/pagespeedonline/v1"
+//   import "code.google.com/p/google-api-go-client/pagespeedonline/v1"
 //   ...
 //   pagespeedonlineService, err := pagespeedonline.New(oauthHttpClient)
 package pagespeedonline
@@ -12,14 +12,14 @@ package pagespeedonline
 import (
 	"bytes"
 	"fmt"
-	"http"
+	"net/http"
 	"io"
-	"json"
-	"os"
+	"encoding/json"
+	"errors"
 	"strings"
 	"strconv"
-	"url"
-	"google-api-go-client.googlecode.com/hg/google-api"
+	"net/url"
+	"code.google.com/p/google-api-go-client/googleapi"
 )
 
 var _ = bytes.NewBuffer
@@ -29,15 +29,16 @@ var _ = json.NewDecoder
 var _ = io.Copy
 var _ = url.Parse
 var _ = googleapi.Version
+var _ = errors.New
 
 const apiId = "pagespeedonline:v1"
 const apiName = "pagespeedonline"
 const apiVersion = "v1"
 const basePath = "https://www.googleapis.com/pagespeedonline/v1/"
 
-func New(client *http.Client) (*Service, os.Error) {
+func New(client *http.Client) (*Service, error) {
 	if client == nil {
-		return nil, os.NewError("client is nil")
+		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
 	s.Pagespeedapi = &PagespeedapiService{s: s}
@@ -64,16 +65,6 @@ type ResultFormattedResults struct {
 }
 
 type Result struct {
-	// Score: The Page Speed Score (0-100), which indicates how much faster
-	// a page could be. A high score indicates little room for improvement,
-	// while a lower score indicates more room for improvement.
-	Score int64 `json:"score,omitempty"`
-
-	// FormattedResults: Localized Page Speed results. Contains a
-	// ruleResults entry for each Page Speed rule instantiated and run by
-	// the server.
-	FormattedResults *ResultFormattedResults `json:"formattedResults,omitempty"`
-
 	// Version: The version of the Page Speed SDK used to generate these
 	// results.
 	Version *ResultVersion `json:"version,omitempty"`
@@ -99,6 +90,16 @@ type Result struct {
 	// ResponseCode: Response code for the document. 200 indicates a normal
 	// page load. 4xx/5xx indicates an error.
 	ResponseCode int64 `json:"responseCode,omitempty"`
+
+	// Score: The Page Speed Score (0-100), which indicates how much faster
+	// a page could be. A high score indicates little room for improvement,
+	// while a lower score indicates more room for improvement.
+	Score int64 `json:"score,omitempty"`
+
+	// FormattedResults: Localized Page Speed results. Contains a
+	// ruleResults entry for each Page Speed rule instantiated and run by
+	// the server.
+	FormattedResults *ResultFormattedResults `json:"formattedResults,omitempty"`
 }
 
 type ResultVersion struct {
@@ -112,10 +113,15 @@ type ResultVersion struct {
 }
 
 type ResultFormattedResultsRuleResults struct {
-
 }
 
 type ResultPageStats struct {
+	// NumberResources: Number of HTTP resources loaded by the page.
+	NumberResources int64 `json:"numberResources,omitempty"`
+
+	// NumberHosts: Number of unique hosts referenced by the page.
+	NumberHosts int64 `json:"numberHosts,omitempty"`
+
 	// ImageResponseBytes: Number of response bytes for image resources on
 	// the page.
 	ImageResponseBytes int64 `json:"imageResponseBytes,omitempty,string"`
@@ -158,12 +164,6 @@ type ResultPageStats struct {
 
 	// TotalRequestBytes: Total size of all request bytes sent by the page.
 	TotalRequestBytes int64 `json:"totalRequestBytes,omitempty,string"`
-
-	// NumberResources: Number of HTTP resources loaded by the page.
-	NumberResources int64 `json:"numberResources,omitempty"`
-
-	// NumberHosts: Number of unique hosts referenced by the page.
-	NumberHosts int64 `json:"numberHosts,omitempty"`
 }
 
 // method id "pagespeedonline.pagespeedapi.runpagespeed":
@@ -183,13 +183,6 @@ func (r *PagespeedapiService) Runpagespeed(url string) *PagespeedapiRunpagespeed
 	return c
 }
 
-// Locale sets the optional parameter "locale": The locale used to
-// localize formatted results
-func (c *PagespeedapiRunpagespeedCall) Locale(locale string) *PagespeedapiRunpagespeedCall {
-	c.opt_["locale"] = locale
-	return c
-}
-
 // Strategy sets the optional parameter "strategy": The analysis
 // strategy to use
 func (c *PagespeedapiRunpagespeedCall) Strategy(strategy string) *PagespeedapiRunpagespeedCall {
@@ -204,19 +197,26 @@ func (c *PagespeedapiRunpagespeedCall) Rule(rule string) *PagespeedapiRunpagespe
 	return c
 }
 
-func (c *PagespeedapiRunpagespeedCall) Do() (*Result, os.Error) {
+// Locale sets the optional parameter "locale": The locale used to
+// localize formatted results
+func (c *PagespeedapiRunpagespeedCall) Locale(locale string) *PagespeedapiRunpagespeedCall {
+	c.opt_["locale"] = locale
+	return c
+}
+
+func (c *PagespeedapiRunpagespeedCall) Do() (*Result, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("url", fmt.Sprintf("%v", c.url))
-	if v, ok := c.opt_["locale"]; ok {
-		params.Set("locale", fmt.Sprintf("%v", v))
-	}
 	if v, ok := c.opt_["strategy"]; ok {
 		params.Set("strategy", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["rule"]; ok {
 		params.Set("rule", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["locale"]; ok {
+		params.Set("locale", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/pagespeedonline/v1/", "runPagespeed")
 	urls += "?" + params.Encode()
@@ -285,7 +285,7 @@ func (c *PagespeedapiRunpagespeedCall) Do() (*Result, os.Error) {
 }
 
 func cleanPathString(s string) string {
-	return strings.Map(func(r int) int {
+	return strings.Map(func(r rune) rune {
 		if r >= 0x30 && r <= 0x7a {
 			return r
 		}

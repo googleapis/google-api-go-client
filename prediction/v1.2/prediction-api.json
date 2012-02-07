@@ -14,6 +14,7 @@
   "labs"
  ],
  "protocol": "rest",
+ "baseUrl": "https://www.googleapis.com/prediction/v1.2/",
  "basePath": "/prediction/v1.2/",
  "parameters": {
   "alt": {
@@ -312,6 +313,7 @@
      "parameters": {
       "data": {
        "type": "string",
+       "description": "mybucket/mydata resource in Google Storage",
        "required": true,
        "location": "path"
       }

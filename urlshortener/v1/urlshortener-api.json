@@ -14,6 +14,7 @@
   "labs"
  ],
  "protocol": "rest",
+ "baseUrl": "https://www.googleapis.com/urlshortener/v1/",
  "basePath": "/urlshortener/v1/",
  "parameters": {
   "alt": {

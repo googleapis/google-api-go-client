@@ -14,6 +14,7 @@
   "labs"
  ],
  "protocol": "rest",
+ "baseUrl": "https://www.googleapis.com/moderator/v1/",
  "basePath": "/moderator/v1/",
  "parameters": {
   "alt": {

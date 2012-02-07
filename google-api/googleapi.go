@@ -8,16 +8,16 @@ package googleapi
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
-	"http"
 	"io"
 	"io/ioutil"
-	"json"
 	"mime/multipart"
+	"net/http"
 	"net/textproto"
+	"net/url"
 	"os"
 	"strings"
-	"url"
 )
 
 // ContentTyper is an interface for Readers which know (or would like
@@ -35,7 +35,7 @@ type Error struct {
 	Message string `json:"message"`
 }
 
-func (e *Error) String() string {
+func (e *Error) Error() string {
 	return fmt.Sprintf("googleapi: Error %d: %s", e.Code, e.Message)
 }
 
@@ -43,7 +43,7 @@ type errorReply struct {
 	Error *Error `json:"error"`
 }
 
-func CheckResponse(res *http.Response) os.Error {
+func CheckResponse(res *http.Response) error {
 	if res.StatusCode >= 200 && res.StatusCode <= 299 {
 		return nil
 	}
@@ -64,7 +64,7 @@ type MarshalStyle bool
 var WithDataWrapper = MarshalStyle(true)
 var WithoutDataWrapper = MarshalStyle(false)
 
-func (wrap MarshalStyle) JSONReader(v interface{}) (io.Reader, os.Error) {
+func (wrap MarshalStyle) JSONReader(v interface{}) (io.Reader, error) {
 	buf := new(bytes.Buffer)
 	if wrap {
 		buf.Write([]byte(`{"data": `))
@@ -102,12 +102,12 @@ type Lengther interface {
 // final error from r is os.EOF and e is non-nil, e is used instead.
 type endingWithErrorReader struct {
 	r io.Reader
-	e os.Error
+	e error
 }
 
-func (er endingWithErrorReader) Read(p []byte) (n int, err os.Error) {
+func (er endingWithErrorReader) Read(p []byte) (n int, err error) {
 	n, err = er.r.Read(p)
-	if err == os.EOF && er.e != nil {
+	if err == io.EOF && er.e != nil {
 		err = er.e
 	}
 	return
@@ -157,7 +157,7 @@ type countingWriter struct {
 	n *int64
 }
 
-func (w countingWriter) Write(p []byte) (int, os.Error) {
+func (w countingWriter) Write(p []byte) (int, error) {
 	*w.n += int64(len(p))
 	return len(p), nil
 }

@@ -1,10 +1,10 @@
 package main
 
 import (
-	"http"
 	"log"
+	"net/http"
 
-	tasks "google-api-go-client.googlecode.com/hg/tasks/v1"
+	tasks "code.google.com/p/google-api-go-client/tasks/v1"
 )
 
 func init() {

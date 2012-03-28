@@ -5,22 +5,23 @@
 package main
 
 import (
-	"exec"
+	"encoding/gob"
+	"errors"
 	"flag"
 	"fmt"
-	"gob"
-	"http"
-	"http/httptest"
 	"io/ioutil"
-	"os"
-	"path/filepath"
 	"log"
+	"net/http"
+	"net/http/httptest"
+	"net/url"
+	"os"
+	"os/exec"
+	"path/filepath"
 	"runtime"
 	"strings"
 	"time"
-	"url"
 
-	"goauth2.googlecode.com/hg/oauth"
+	"code.google.com/p/goauth2/oauth"
 )
 
 var config = &oauth.Config{
@@ -100,9 +101,9 @@ func tokenCacheFile(config *oauth.Config) string {
 		fmt.Sprintf("go-api-demo-%s-%s-%s", config.ClientId, config.ClientSecret, config.Scope)))
 }
 
-func tokenFromFile(file string) (*oauth.Token, os.Error) {
+func tokenFromFile(file string) (*oauth.Token, error) {
 	if !*cacheToken {
-		return nil, os.NewError("--cachetoken is false")
+		return nil, errors.New("--cachetoken is false")
 	}
 	f, err := os.Open(file)
 	if err != nil {
@@ -150,7 +151,7 @@ func getOAuthClient(config *oauth.Config) *http.Client {
 
 func tokenFromWeb(config *oauth.Config) *oauth.Token {
 	ch := make(chan string)
-	randState := fmt.Sprintf("st%d", time.Nanoseconds())
+	randState := fmt.Sprintf("st%d", time.Now())
 	ts := httptest.NewServer(http.HandlerFunc(func(rw http.ResponseWriter, req *http.Request) {
 		if req.URL.Path == "/favicon.ico" {
 			http.Error(rw, "", 404)

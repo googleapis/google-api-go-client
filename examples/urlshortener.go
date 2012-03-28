@@ -2,12 +2,12 @@ package main
 
 import (
 	"fmt"
-	"http"
-	"os"
 	"log"
+	"net/http"
+	"os"
 	"strings"
 
-	urlshortener "google-api-go-client.googlecode.com/hg/urlshortener/v1"
+	urlshortener "code.google.com/p/google-api-go-client/urlshortener/v1"
 )
 
 func init() {

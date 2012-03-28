@@ -3,9 +3,9 @@ package main
 import (
 	"bytes"
 	"fmt"
-	"http"
 	"io"
 	"io/ioutil"
+	"net/http"
 	"os"
 )
 
@@ -13,7 +13,7 @@ type logTransport struct {
 	rt http.RoundTripper
 }
 
-func (t *logTransport) RoundTrip(req *http.Request) (*http.Response, os.Error) {
+func (t *logTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 	var buf bytes.Buffer
 
 	os.Stdout.Write([]byte("\n[request]\n"))
@@ -47,12 +47,12 @@ type echoAsRead struct {
 	src io.Reader
 }
 
-func (r *echoAsRead) Read(p []byte) (int, os.Error) {
+func (r *echoAsRead) Read(p []byte) (int, error) {
 	n, err := r.src.Read(p)
 	if n > 0 {
 		os.Stdout.Write(p[:n])
 	}
-	if err == os.EOF {
+	if err == io.EOF {
 		fmt.Printf("\n[/response]\n")
 	}
 	return n, err
@@ -63,7 +63,7 @@ type readButCopy struct {
 	dst io.Writer
 }
 
-func (r *readButCopy) Read(p []byte) (int, os.Error) {
+func (r *readButCopy) Read(p []byte) (int, error) {
 	n, err := r.src.Read(p)
 	if n > 0 {
 		r.dst.Write(p[:n])

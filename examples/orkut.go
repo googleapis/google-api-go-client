@@ -1,10 +1,10 @@
 package main
 
 import (
-	"http"
 	"log"
+	"net/http"
 
-	orkut "google-api-go-client.googlecode.com/hg/orkut/v2"
+	orkut "code.google.com/p/google-api-go-client/orkut/v2"
 )
 
 func init() {

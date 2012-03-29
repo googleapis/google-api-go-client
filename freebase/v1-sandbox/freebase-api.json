@@ -1,18 +1,17 @@
 {
  "kind": "discovery#restDescription",
+ "discoveryVersion": "v1",
  "id": "freebase:v1-sandbox",
  "name": "freebase",
  "version": "v1-sandbox",
+ "revision": "20120306",
  "title": "Freebase API",
  "description": "Lets you access the Freebase repository of open data.",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/freebase-16.png",
   "x32": "http://www.google.com/images/icons/product/freebase-32.png"
  },
- "documentationLink": "http://wiki.freebase.com/wiki/New_Freebase_API",
- "labels": [
-  "labs"
- ],
+ "documentationLink": "http://wiki.freebase.com/wiki/API",
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/freebase/v1-sandbox/",
  "basePath": "/freebase/v1-sandbox/",

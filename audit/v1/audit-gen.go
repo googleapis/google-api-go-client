@@ -55,6 +55,47 @@ type ActivitiesService struct {
 	s *Service
 }
 
+type ActivityId struct {
+	// UniqQualifier: Unique qualifier if multiple events have the same
+	// time.
+	UniqQualifier int64 `json:"uniqQualifier,omitempty,string"`
+
+	// ApplicationId: Application ID of the source application.
+	ApplicationId int64 `json:"applicationId,omitempty,string"`
+
+	// CustomerId: Obfuscated customer ID of the source customer.
+	CustomerId string `json:"customerId,omitempty"`
+
+	// Time: Time of occurrence of the activity.
+	Time string `json:"time,omitempty"`
+}
+
+type ActivityActor struct {
+	// Key: For OAuth 2LO API requests, consumer_key of the requestor.
+	Key string `json:"key,omitempty"`
+
+	// CallerType: User or OAuth 2LO request.
+	CallerType string `json:"callerType,omitempty"`
+
+	// ApplicationId: ID of application which interacted on behalf of the
+	// user.
+	ApplicationId int64 `json:"applicationId,omitempty,string"`
+
+	// Email: Email address of the user.
+	Email string `json:"email,omitempty"`
+}
+
+type Activities struct {
+	// Next: Next page URL.
+	Next string `json:"next,omitempty"`
+
+	// Items: Each record in read response.
+	Items []*Activity `json:"items,omitempty"`
+
+	// Kind: Kind of list response this is.
+	Kind string `json:"kind,omitempty"`
+}
+
 type Activity struct {
 	// OwnerDomain: Domain of source customer.
 	OwnerDomain string `json:"ownerDomain,omitempty"`
@@ -76,14 +117,14 @@ type Activity struct {
 }
 
 type ActivityEvents struct {
-	// Parameters: Event parameters.
-	Parameters []*ActivityEventsParameters `json:"parameters,omitempty"`
-
 	// EventType: Type of event.
 	EventType string `json:"eventType,omitempty"`
 
 	// Name: Name of event.
 	Name string `json:"name,omitempty"`
+
+	// Parameters: Event parameters.
+	Parameters []*ActivityEventsParameters `json:"parameters,omitempty"`
 }
 
 type ActivityEventsParameters struct {
@@ -92,47 +133,6 @@ type ActivityEventsParameters struct {
 
 	// Name: Name of the parameter.
 	Name string `json:"name,omitempty"`
-}
-
-type ActivityId struct {
-	// CustomerId: Obfuscated customer ID of the source customer.
-	CustomerId string `json:"customerId,omitempty"`
-
-	// Time: Time of occurrence of the activity.
-	Time string `json:"time,omitempty"`
-
-	// UniqQualifier: Unique qualifier if multiple events have the same
-	// time.
-	UniqQualifier int64 `json:"uniqQualifier,omitempty,string"`
-
-	// ApplicationId: Application ID of the source application.
-	ApplicationId int64 `json:"applicationId,omitempty,string"`
-}
-
-type ActivityActor struct {
-	// CallerType: User or OAuth 2LO request.
-	CallerType string `json:"callerType,omitempty"`
-
-	// ApplicationId: ID of application which interacted on behalf of the
-	// user.
-	ApplicationId int64 `json:"applicationId,omitempty,string"`
-
-	// Email: Email address of the user.
-	Email string `json:"email,omitempty"`
-
-	// Key: For OAuth 2LO API requests, consumer_key of the requestor.
-	Key string `json:"key,omitempty"`
-}
-
-type Activities struct {
-	// Next: Next page URL.
-	Next string `json:"next,omitempty"`
-
-	// Items: Each record in read response.
-	Items []*Activity `json:"items,omitempty"`
-
-	// Kind: Kind of list response this is.
-	Kind string `json:"kind,omitempty"`
 }
 
 // method id "audit.activities.list":
@@ -150,6 +150,28 @@ func (r *ActivitiesService) List(customerId string, applicationId int64) *Activi
 	c := &ActivitiesListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.customerId = customerId
 	c.applicationId = applicationId
+	return c
+}
+
+// EndTime sets the optional parameter "endTime": Return events which
+// occured at or before this time.
+func (c *ActivitiesListCall) EndTime(endTime string) *ActivitiesListCall {
+	c.opt_["endTime"] = endTime
+	return c
+}
+
+// StartTime sets the optional parameter "startTime": Return events
+// which occured at or after this time.
+func (c *ActivitiesListCall) StartTime(startTime string) *ActivitiesListCall {
+	c.opt_["startTime"] = startTime
+	return c
+}
+
+// ActorIpAddress sets the optional parameter "actorIpAddress": IP
+// Address of host where the event was performed. Supports both IPv4 and
+// IPv6 addresses.
+func (c *ActivitiesListCall) ActorIpAddress(actorIpAddress string) *ActivitiesListCall {
+	c.opt_["actorIpAddress"] = actorIpAddress
 	return c
 }
 
@@ -203,32 +225,19 @@ func (c *ActivitiesListCall) Parameters(parameters string) *ActivitiesListCall {
 	return c
 }
 
-// EndTime sets the optional parameter "endTime": Return events which
-// occured at or before this time.
-func (c *ActivitiesListCall) EndTime(endTime string) *ActivitiesListCall {
-	c.opt_["endTime"] = endTime
-	return c
-}
-
-// StartTime sets the optional parameter "startTime": Return events
-// which occured at or after this time.
-func (c *ActivitiesListCall) StartTime(startTime string) *ActivitiesListCall {
-	c.opt_["startTime"] = startTime
-	return c
-}
-
-// ActorIpAddress sets the optional parameter "actorIpAddress": IP
-// Address of host where the event was performed. Supports both IPv4 and
-// IPv6 addresses.
-func (c *ActivitiesListCall) ActorIpAddress(actorIpAddress string) *ActivitiesListCall {
-	c.opt_["actorIpAddress"] = actorIpAddress
-	return c
-}
-
 func (c *ActivitiesListCall) Do() (*Activities, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["endTime"]; ok {
+		params.Set("endTime", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["startTime"]; ok {
+		params.Set("startTime", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["actorIpAddress"]; ok {
+		params.Set("actorIpAddress", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["actorEmail"]; ok {
 		params.Set("actorEmail", fmt.Sprintf("%v", v))
 	}
@@ -249,15 +258,6 @@ func (c *ActivitiesListCall) Do() (*Activities, error) {
 	}
 	if v, ok := c.opt_["parameters"]; ok {
 		params.Set("parameters", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["endTime"]; ok {
-		params.Set("endTime", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["startTime"]; ok {
-		params.Set("startTime", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["actorIpAddress"]; ok {
-		params.Set("actorIpAddress", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/apps/reporting/audit/v1/", "{customerId}/{applicationId}")
 	urls = strings.Replace(urls, "{customerId}", cleanPathString(c.customerId), 1)

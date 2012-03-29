@@ -1,8 +1,10 @@
 {
  "kind": "discovery#restDescription",
+ "discoveryVersion": "v1",
  "id": "groupssettings:v1",
  "name": "groupssettings",
  "version": "v1",
+ "revision": "20111220",
  "description": "Groups Settings Api",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/search-16.gif",

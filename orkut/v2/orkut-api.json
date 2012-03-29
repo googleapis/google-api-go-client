@@ -1,8 +1,10 @@
 {
  "kind": "discovery#restDescription",
+ "discoveryVersion": "v1",
  "id": "orkut:v2",
  "name": "orkut",
  "version": "v2",
+ "revision": "20120223",
  "title": "Orkut API",
  "description": "Lets you manage activities, comments and badges in Orkut. More stuff coming in time.",
  "icons": {
@@ -10,9 +12,6 @@
   "x32": "http://www.google.com/images/icons/product/orkut-32.png"
  },
  "documentationLink": "http://code.google.com/apis/orkut/v2/reference.html",
- "labels": [
-  "labs"
- ],
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/orkut/v2/",
  "basePath": "/orkut/v2/",
@@ -421,12 +420,12 @@
     },
     "member_count": {
      "type": "integer",
-     "description": "The count of members on the community.",
+     "description": "The number of users who are part of the community. This number may be approximate, so do not rely on it for iteration.",
      "format": "int32"
     },
     "moderators": {
      "type": "array",
-     "description": "The moderator of the community.",
+     "description": "The list of moderators of the community.",
      "items": {
       "$ref": "OrkutAuthorResource"
      }
@@ -1090,7 +1089,7 @@
     },
     "image": {
      "type": "object",
-     "description": "Image data about the actor.",
+     "description": "Image data about the author.",
      "properties": {
       "url": {
        "type": "string",
@@ -1594,7 +1593,7 @@
      "id": "orkut.communities.get",
      "path": "communities/{communityId}",
      "httpMethod": "GET",
-     "description": "Retrieves the profile of a community.",
+     "description": "Retrieves the basic information (aka. profile) of a community.",
      "parameters": {
       "communityId": {
        "type": "integer",
@@ -1624,7 +1623,7 @@
      "id": "orkut.communities.list",
      "path": "people/{userId}/communities",
      "httpMethod": "GET",
-     "description": "Retrieves the communities an user is member of.",
+     "description": "Retrieves the list of communities the current user is a member of.",
      "parameters": {
       "hl": {
        "type": "string",
@@ -1677,7 +1676,7 @@
      "id": "orkut.communityFollow.delete",
      "path": "communities/{communityId}/followers/{userId}",
      "httpMethod": "DELETE",
-     "description": "Removes an user from the followers of a community.",
+     "description": "Removes a user from the followers of a community.",
      "parameters": {
       "communityId": {
        "type": "integer",
@@ -1705,7 +1704,7 @@
      "id": "orkut.communityFollow.insert",
      "path": "communities/{communityId}/followers/{userId}",
      "httpMethod": "POST",
-     "description": "Adds an user as a follower of a community.",
+     "description": "Adds a user as a follower of a community.",
      "parameters": {
       "communityId": {
        "type": "integer",
@@ -1836,7 +1835,7 @@
      "id": "orkut.communityMembers.list",
      "path": "communities/{communityId}/members",
      "httpMethod": "GET",
-     "description": "Lists members of a community.",
+     "description": "Lists members of a community. Use the pagination tokens to retrieve the full list; do not rely on the member count available in the community profile information to know when to stop iterating, as that count may be approximate.",
      "parameters": {
       "communityId": {
        "type": "integer",
@@ -2402,7 +2401,7 @@
      "id": "orkut.counters.list",
      "path": "people/{userId}/counters",
      "httpMethod": "GET",
-     "description": "Retrieves the counters of an user.",
+     "description": "Retrieves the counters of a user.",
      "parameters": {
       "userId": {
        "type": "string",

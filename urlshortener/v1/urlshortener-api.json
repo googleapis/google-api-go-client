@@ -1,5 +1,6 @@
 {
  "kind": "discovery#restDescription",
+ "discoveryVersion": "v1",
  "id": "urlshortener:v1",
  "name": "urlshortener",
  "version": "v1",
@@ -10,9 +11,6 @@
   "x32": "http://www.google.com/images/icons/product/search-32.gif"
  },
  "documentationLink": "http://code.google.com/apis/urlshortener/v1/getting_started.html",
- "labels": [
-  "labs"
- ],
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/urlshortener/v1/",
  "basePath": "/urlshortener/v1/",

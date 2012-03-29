@@ -1,5 +1,6 @@
 {
  "kind": "discovery#restDescription",
+ "discoveryVersion": "v1",
  "id": "discovery:v1",
  "name": "discovery",
  "version": "v1",
@@ -10,9 +11,6 @@
   "x32": "http://www.google.com/images/icons/feature/filing_cabinet_search-g32.png"
  },
  "documentationLink": "http://code.google.com/apis/discovery",
- "labels": [
-  "labs"
- ],
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/discovery/v1/",
  "basePath": "/discovery/v1/",
@@ -66,6 +64,11 @@
    "id": "DirectoryList",
    "type": "object",
    "properties": {
+    "discoveryVersion": {
+     "type": "string",
+     "description": "Indicate the version of the Discovery API used to generate this doc.",
+     "default": "v1"
+    },
     "items": {
      "type": "array",
      "description": "The individual directory entries. One entry per api/version pair.",
@@ -210,7 +213,8 @@
      "type": "object",
      "description": "If this is a schema for an object, list the schema for each property of this object.",
      "additionalProperties": {
-      "$ref": "JsonSchema"
+      "$ref": "JsonSchema",
+      "description": "A single property of this object. The value is itself a JSON Schema object describing this property."
      }
     },
     "repeated": {
@@ -269,6 +273,11 @@
      "type": "string",
      "description": "The description of this API."
     },
+    "discoveryVersion": {
+     "type": "string",
+     "description": "Indicate the version of the Discovery API used to generate this doc.",
+     "default": "v1"
+    },
     "documentationLink": {
      "type": "string",
      "description": "A link to human readable documentation for the API."
@@ -314,7 +323,8 @@
      "type": "object",
      "description": "API-level methods for this API.",
      "additionalProperties": {
-      "$ref": "RestMethod"
+      "$ref": "RestMethod",
+      "description": "An individual method description."
      }
     },
     "name": {
@@ -325,7 +335,8 @@
      "type": "object",
      "description": "Common parameters that apply across all apis.",
      "additionalProperties": {
-      "$ref": "JsonSchema"
+      "$ref": "JsonSchema",
+      "description": "Description of a single parameter."
      }
     },
     "protocol": {
@@ -337,14 +348,20 @@
      "type": "object",
      "description": "The resources in this API.",
      "additionalProperties": {
-      "$ref": "RestResource"
+      "$ref": "RestResource",
+      "description": "An individual resource description. Contains methods and sub-resources related to this resource."
      }
+    },
+    "revision": {
+     "type": "string",
+     "description": "The version of this API."
     },
     "schemas": {
      "type": "object",
      "description": "The schemas for this API.",
      "additionalProperties": {
-      "$ref": "JsonSchema"
+      "$ref": "JsonSchema",
+      "description": "An individual schema description."
      }
     },
     "title": {
@@ -437,7 +454,8 @@
      "type": "object",
      "description": "Details for all parameters in this method.",
      "additionalProperties": {
-      "$ref": "JsonSchema"
+      "$ref": "JsonSchema",
+      "description": "Details for a single parameter in this method."
      }
     },
     "path": {
@@ -468,7 +486,7 @@
      "type": "array",
      "description": "OAuth 2.0 scopes applicable to this method.",
      "items": {
-      "type": "string"
+      "type": "any"
      }
     }
    }
@@ -481,14 +499,16 @@
      "type": "object",
      "description": "Methods on this resource.",
      "additionalProperties": {
-      "$ref": "RestMethod"
+      "$ref": "RestMethod",
+      "description": "Description for any methods on this resource."
      }
     },
     "resources": {
      "type": "object",
      "description": "Sub-resources on this resource.",
      "additionalProperties": {
-      "$ref": "RestResource"
+      "$ref": "RestResource",
+      "description": "Description for any sub-resources on this resource."
      }
     }
    }

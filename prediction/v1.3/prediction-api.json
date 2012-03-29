@@ -1,8 +1,10 @@
 {
  "kind": "discovery#restDescription",
+ "discoveryVersion": "v1",
  "id": "prediction:v1.3",
  "name": "prediction",
  "version": "v1.3",
+ "revision": "20120320",
  "title": "Prediction API",
  "description": "Lets you access a cloud hosted machine learning service that makes it easy to build smart apps",
  "icons": {
@@ -10,9 +12,6 @@
   "x32": "http://www.google.com/images/icons/feature/predictionapi-32.png"
  },
  "documentationLink": "http://code.google.com/apis/predict/docs/developer-guide.html",
- "labels": [
-  "labs"
- ],
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/prediction/v1.3/",
  "basePath": "/prediction/v1.3/",
@@ -109,7 +108,6 @@
     },
     "outputMulti": {
      "type": "array",
-     "description": "A list of classes with their estimated probabilities [Categorical models only].",
      "items": {
       "type": "object",
       "properties": {
@@ -171,6 +169,7 @@
         "description": "The true class label.",
         "additionalProperties": {
          "type": "number",
+         "description": "The pair {predicted_label, count}.",
          "format": "double"
         }
        }
@@ -180,6 +179,7 @@
        "description": "A list of the confusion matrix row totals",
        "additionalProperties": {
         "type": "number",
+        "description": "The true class associated with how many instances it had",
         "format": "double"
        }
       },

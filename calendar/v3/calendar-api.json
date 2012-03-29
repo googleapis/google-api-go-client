@@ -1,8 +1,10 @@
 {
  "kind": "discovery#restDescription",
+ "discoveryVersion": "v1",
  "id": "calendar:v3",
  "name": "calendar",
  "version": "v3",
+ "revision": "20120227",
  "title": "Calendar API",
  "description": "Lets you manipulate events and other calendar data.",
  "icons": {
@@ -10,9 +12,6 @@
   "x32": "http://www.google.com/images/icons/product/calendar-32.png"
  },
  "documentationLink": "http://code.google.com/apis/calendar/v3/using.html",
- "labels": [
-  "labs"
- ],
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/calendar/v3/",
  "basePath": "/calendar/v3/",
@@ -244,7 +243,7 @@
     },
     "selected": {
      "type": "boolean",
-     "description": "Whether the calendar content shows up in the calendar UI. Optional. The default is True."
+     "description": "Whether the calendar content shows up in the calendar UI. Optional. The default is False."
     },
     "summary": {
      "type": "string",
@@ -282,14 +281,16 @@
      "type": "object",
      "description": "Palette of calendar colors, mapping from the color ID to its definition. An 'calendarListEntry' resource refers to one of these color IDs in its 'color' field. Read-only.",
      "additionalProperties": {
-      "$ref": "ColorDefinition"
+      "$ref": "ColorDefinition",
+      "description": "A calendar color defintion."
      }
     },
     "event": {
      "type": "object",
      "description": "Palette of event colors, mapping from the color ID to its definition. An 'event' resource may refer to one of these color IDs in its 'color' field. Read-only.",
      "additionalProperties": {
-      "$ref": "ColorDefinition"
+      "$ref": "ColorDefinition",
+      "description": "An event color definition."
      }
     },
     "kind": {
@@ -380,14 +381,16 @@
        "type": "object",
        "description": "Properties that are private to the copy of the event that appears on this calendar.",
        "additionalProperties": {
-        "type": "string"
+        "type": "string",
+        "description": "The name of the private property and the corresponding value."
        }
       },
       "shared": {
        "type": "object",
        "description": "Properties that are shared between copies of the event on other attendees' calendars.",
        "additionalProperties": {
-        "type": "string"
+        "type": "string",
+        "description": "The name of the shared property and the corresponding value."
        }
       }
      }
@@ -417,7 +420,8 @@
        "type": "object",
        "description": "Preferences.",
        "additionalProperties": {
-        "type": "string"
+        "type": "string",
+        "description": "The preference name and corresponding value."
        }
       },
       "title": {
@@ -777,14 +781,16 @@
      "type": "object",
      "description": "List of free/busy information for calendars.",
      "additionalProperties": {
-      "$ref": "FreeBusyCalendar"
+      "$ref": "FreeBusyCalendar",
+      "description": "Free/busy expansions for a single calendar."
      }
     },
     "groups": {
      "type": "object",
      "description": "Expansion of groups.",
      "additionalProperties": {
-      "$ref": "FreeBusyGroup"
+      "$ref": "FreeBusyGroup",
+      "description": "List of calendars that are members of this group."
      }
     },
     "kind": {
@@ -1353,7 +1359,11 @@
      "description": "Returns the color definitions for calendars and events.",
      "response": {
       "$ref": "Colors"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/calendar",
+      "https://www.googleapis.com/auth/calendar.readonly"
+     ]
     }
    }
   },
@@ -1764,41 +1774,6 @@
      "parameterOrder": [
       "calendarId",
       "text"
-     ],
-     "response": {
-      "$ref": "Event"
-     },
-     "scopes": [
-      "https://www.googleapis.com/auth/calendar"
-     ]
-    },
-    "reset": {
-     "id": "calendar.events.reset",
-     "path": "calendars/{calendarId}/events/{eventId}/reset",
-     "httpMethod": "POST",
-     "description": "Resets a specialized instance of a recurring event to its original state.",
-     "parameters": {
-      "calendarId": {
-       "type": "string",
-       "description": "Calendar identifier.",
-       "required": true,
-       "location": "path"
-      },
-      "eventId": {
-       "type": "string",
-       "description": "Event identifier.",
-       "required": true,
-       "location": "path"
-      },
-      "sendNotifications": {
-       "type": "boolean",
-       "description": "Whether to send notifications about the event update. Optional. The default is False.",
-       "location": "query"
-      }
-     },
-     "parameterOrder": [
-      "calendarId",
-      "eventId"
      ],
      "response": {
       "$ref": "Event"

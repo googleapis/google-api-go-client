@@ -61,6 +61,61 @@ type UrlService struct {
 	s *Service
 }
 
+type UrlHistory struct {
+	// Items: A list of URL resources.
+	Items []*Url `json:"items,omitempty"`
+
+	// NextPageToken: A token to provide to get the next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// TotalItems: Total number of short URLs associated with this user (may
+	// be approximate).
+	TotalItems int64 `json:"totalItems,omitempty"`
+
+	// Kind: The fixed string "urlshortener#urlHistory".
+	Kind string `json:"kind,omitempty"`
+
+	// ItemsPerPage: Number of items returned with each full "page" of
+	// results. Note that the last page could have fewer items than the
+	// "itemsPerPage" value.
+	ItemsPerPage int64 `json:"itemsPerPage,omitempty"`
+}
+
+type StringCount struct {
+	// Id: Label assigned to this top entry, e.g. "US" or "Chrome".
+	Id string `json:"id,omitempty"`
+
+	// Count: Number of clicks for this top entry, e.g. for this particular
+	// country or browser.
+	Count int64 `json:"count,omitempty,string"`
+}
+
+type Url struct {
+	// Kind: The fixed string "urlshortener#url".
+	Kind string `json:"kind,omitempty"`
+
+	// Id: Short URL, e.g. "http://goo.gl/l6MS".
+	Id string `json:"id,omitempty"`
+
+	// Created: Time the short URL was created; ISO 8601 representation
+	// using the yyyy-MM-dd'T'HH:mm:ss.SSSZZ format, e.g.
+	// "2010-10-14T19:01:24.944+00:00".
+	Created string `json:"created,omitempty"`
+
+	// Status: Status of the target URL. Possible values: "OK", "MALWARE",
+	// "PHISHING", or "REMOVED". A URL might be marked "REMOVED" if it was
+	// flagged as spam, for example.
+	Status string `json:"status,omitempty"`
+
+	// LongUrl: Long URL, e.g. "http://www.google.com/". Might not be
+	// present if the status is "REMOVED".
+	LongUrl string `json:"longUrl,omitempty"`
+
+	// Analytics: A summary of the click analytics for the short and long
+	// URL. Might not be present if not requested or currently unavailable.
+	Analytics *AnalyticsSummary `json:"analytics,omitempty"`
+}
+
 type AnalyticsSnapshot struct {
 	// Browsers: Top browsers, e.g. "Chrome"; sorted by (descending) click
 	// counts. Only present if this data is available.
@@ -102,61 +157,6 @@ type AnalyticsSummary struct {
 
 	// Month: Click analytics over the last month.
 	Month *AnalyticsSnapshot `json:"month,omitempty"`
-}
-
-type UrlHistory struct {
-	// ItemsPerPage: Number of items returned with each full "page" of
-	// results. Note that the last page could have fewer items than the
-	// "itemsPerPage" value.
-	ItemsPerPage int64 `json:"itemsPerPage,omitempty"`
-
-	// Items: A list of URL resources.
-	Items []*Url `json:"items,omitempty"`
-
-	// NextPageToken: A token to provide to get the next page of results.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// TotalItems: Total number of short URLs associated with this user (may
-	// be approximate).
-	TotalItems int64 `json:"totalItems,omitempty"`
-
-	// Kind: The fixed string "urlshortener#urlHistory".
-	Kind string `json:"kind,omitempty"`
-}
-
-type StringCount struct {
-	// Count: Number of clicks for this top entry, e.g. for this particular
-	// country or browser.
-	Count int64 `json:"count,omitempty,string"`
-
-	// Id: Label assigned to this top entry, e.g. "US" or "Chrome".
-	Id string `json:"id,omitempty"`
-}
-
-type Url struct {
-	// Kind: The fixed string "urlshortener#url".
-	Kind string `json:"kind,omitempty"`
-
-	// Id: Short URL, e.g. "http://goo.gl/l6MS".
-	Id string `json:"id,omitempty"`
-
-	// Created: Time the short URL was created; ISO 8601 representation
-	// using the yyyy-MM-dd'T'HH:mm:ss.SSSZZ format, e.g.
-	// "2010-10-14T19:01:24.944+00:00".
-	Created string `json:"created,omitempty"`
-
-	// Status: Status of the target URL. Possible values: "OK", "MALWARE",
-	// "PHISHING", or "REMOVED". A URL might be marked "REMOVED" if it was
-	// flagged as spam, for example.
-	Status string `json:"status,omitempty"`
-
-	// LongUrl: Long URL, e.g. "http://www.google.com/". Might not be
-	// present if the status is "REMOVED".
-	LongUrl string `json:"longUrl,omitempty"`
-
-	// Analytics: A summary of the click analytics for the short and long
-	// URL. Might not be present if not requested or currently unavailable.
-	Analytics *AnalyticsSummary `json:"analytics,omitempty"`
 }
 
 // method id "urlshortener.url.list":

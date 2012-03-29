@@ -1,16 +1,15 @@
 {
  "kind": "discovery#restDescription",
+ "discoveryVersion": "v1",
  "id": "oauth2:v2",
  "name": "oauth2",
  "version": "v2",
+ "revision": "20120227",
  "description": "OAuth2 API",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/search-16.gif",
   "x32": "http://www.google.com/images/icons/product/search-32.gif"
  },
- "labels": [
-  "labs"
- ],
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/",
  "basePath": "/",

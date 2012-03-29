@@ -55,77 +55,6 @@ type ApisService struct {
 	s *Service
 }
 
-type RestMethodMediaUpload struct {
-	// Accept: MIME Media Ranges for acceptable media uploads to this
-	// method.
-	Accept []string `json:"accept,omitempty"`
-
-	// Protocols: Supported upload protocols.
-	Protocols *RestMethodMediaUploadProtocols `json:"protocols,omitempty"`
-
-	// MaxSize: Maximum size of a media upload, such as "1MB", "2GB" or
-	// "3TB".
-	MaxSize string `json:"maxSize,omitempty"`
-}
-
-type RestDescription struct {
-	// Resources: The resources in this API.
-	Resources *RestDescriptionResources `json:"resources,omitempty"`
-
-	// Methods: API-level methods for this API.
-	Methods *RestDescriptionMethods `json:"methods,omitempty"`
-
-	// Description: The description of this API.
-	Description string `json:"description,omitempty"`
-
-	// BaseUrl: The base URL for REST requests.
-	BaseUrl string `json:"baseUrl,omitempty"`
-
-	// Protocol: The protocol described by this document.
-	Protocol string `json:"protocol,omitempty"`
-
-	// Labels: Labels for the status of this API, such as labs or
-	// deprecated.
-	Labels []string `json:"labels,omitempty"`
-
-	// Features: A list of supported features for this API.
-	Features []string `json:"features,omitempty"`
-
-	// Name: The name of this API.
-	Name string `json:"name,omitempty"`
-
-	// DocumentationLink: A link to human readable documentation for the
-	// API.
-	DocumentationLink string `json:"documentationLink,omitempty"`
-
-	// Icons: Links to 16x16 and 32x32 icons representing the API.
-	Icons *RestDescriptionIcons `json:"icons,omitempty"`
-
-	// Version: The version of this API.
-	Version string `json:"version,omitempty"`
-
-	// Kind: The kind for this response.
-	Kind string `json:"kind,omitempty"`
-
-	// Schemas: The schemas for this API.
-	Schemas *RestDescriptionSchemas `json:"schemas,omitempty"`
-
-	// BasePath: The base path for REST requests.
-	BasePath string `json:"basePath,omitempty"`
-
-	// Auth: Authentication information.
-	Auth *RestDescriptionAuth `json:"auth,omitempty"`
-
-	// Id: The id of this API.
-	Id string `json:"id,omitempty"`
-
-	// Parameters: Common parameters that apply across all apis.
-	Parameters *RestDescriptionParameters `json:"parameters,omitempty"`
-
-	// Title: The title of this API.
-	Title string `json:"title,omitempty"`
-}
-
 type RestDescriptionMethods struct {
 }
 
@@ -143,6 +72,18 @@ type RestResource struct {
 }
 
 type RestMethod struct {
+	// HttpMethod: HTTP method used by this method.
+	HttpMethod string `json:"httpMethod,omitempty"`
+
+	// Description: Description of this method.
+	Description string `json:"description,omitempty"`
+
+	// MediaUpload: Media upload parameters.
+	MediaUpload *RestMethodMediaUpload `json:"mediaUpload,omitempty"`
+
+	// Scopes: OAuth 2.0 scopes applicable to this method.
+	Scopes []interface{} `json:"scopes,omitempty"`
+
 	// Response: The schema for the response.
 	Response *RestMethodResponse `json:"response,omitempty"`
 
@@ -164,18 +105,6 @@ type RestMethod struct {
 	// to clients on how to structure their method signatures. The array is
 	// ordered such that the "most-significant" parameter appears first.
 	ParameterOrder []string `json:"parameterOrder,omitempty"`
-
-	// HttpMethod: HTTP method used by this method.
-	HttpMethod string `json:"httpMethod,omitempty"`
-
-	// Description: Description of this method.
-	Description string `json:"description,omitempty"`
-
-	// MediaUpload: Media upload parameters.
-	MediaUpload *RestMethodMediaUpload `json:"mediaUpload,omitempty"`
-
-	// Scopes: OAuth 2.0 scopes applicable to this method.
-	Scopes []string `json:"scopes,omitempty"`
 }
 
 type RestDescriptionAuthOauth2 struct {
@@ -204,6 +133,18 @@ type RestResourceResources struct {
 }
 
 type DirectoryListItems struct {
+	// Icons: Links to 16x16 and 32x32 icons representing the API.
+	Icons *DirectoryListItemsIcons `json:"icons,omitempty"`
+
+	// Version: The version of the API.
+	Version string `json:"version,omitempty"`
+
+	// DiscoveryRestUrl: The url for the discovery REST document.
+	DiscoveryRestUrl string `json:"discoveryRestUrl,omitempty"`
+
+	// Kind: The kind for this response.
+	Kind string `json:"kind,omitempty"`
+
 	// Id: The id of this API.
 	Id string `json:"id,omitempty"`
 
@@ -229,26 +170,14 @@ type DirectoryListItems struct {
 	// DocumentationLink: A link to human readable documentation for the
 	// API.
 	DocumentationLink string `json:"documentationLink,omitempty"`
-
-	// Icons: Links to 16x16 and 32x32 icons representing the API.
-	Icons *DirectoryListItemsIcons `json:"icons,omitempty"`
-
-	// Version: The version of the API.
-	Version string `json:"version,omitempty"`
-
-	// DiscoveryRestUrl: The url for the discovery REST document.
-	DiscoveryRestUrl string `json:"discoveryRestUrl,omitempty"`
-
-	// Kind: The kind for this response.
-	Kind string `json:"kind,omitempty"`
 }
 
 type RestMethodMediaUploadProtocols struct {
-	// Simple: Supports uploading as a single HTTP request.
-	Simple *RestMethodMediaUploadProtocolsSimple `json:"simple,omitempty"`
-
 	// Resumable: Supports the Resumable Media Upload protocol.
 	Resumable *RestMethodMediaUploadProtocolsResumable `json:"resumable,omitempty"`
+
+	// Simple: Supports uploading as a single HTTP request.
+	Simple *RestMethodMediaUploadProtocolsSimple `json:"simple,omitempty"`
 }
 
 type RestMethodParameters struct {
@@ -264,6 +193,10 @@ type DirectoryList struct {
 
 	// Kind: The kind for this response.
 	Kind string `json:"kind,omitempty"`
+
+	// DiscoveryVersion: Indicate the version of the Discovery API used to
+	// generate this doc.
+	DiscoveryVersion string `json:"discoveryVersion,omitempty"`
 }
 
 type RestResourceMethods struct {
@@ -301,6 +234,14 @@ type RestMethodMediaUploadProtocolsResumable struct {
 }
 
 type JsonSchema struct {
+	// Items: If this is a schema for an array, this property is the schema
+	// for each element in the array.
+	Items *JsonSchema `json:"items,omitempty"`
+
+	// Ref: A reference to another schema. The value of this property is the
+	// "id" of another schema.
+	Ref string `json:"$ref,omitempty"`
+
 	// EnumDescriptions: The descriptions for the enums. Each position maps
 	// to the corresponding value in the "enum" array.
 	EnumDescriptions []string `json:"enumDescriptions,omitempty"`
@@ -353,14 +294,6 @@ type JsonSchema struct {
 
 	// Pattern: The regular expression this parameter must conform to.
 	Pattern string `json:"pattern,omitempty"`
-
-	// Items: If this is a schema for an array, this property is the schema
-	// for each element in the array.
-	Items *JsonSchema `json:"items,omitempty"`
-
-	// Ref: A reference to another schema. The value of this property is the
-	// "id" of another schema.
-	Ref string `json:"$ref,omitempty"`
 }
 
 type RestDescriptionIcons struct {
@@ -369,6 +302,153 @@ type RestDescriptionIcons struct {
 
 	// X32: The url of the 32x32 icon.
 	X32 string `json:"x32,omitempty"`
+}
+
+type RestMethodMediaUpload struct {
+	// Protocols: Supported upload protocols.
+	Protocols *RestMethodMediaUploadProtocols `json:"protocols,omitempty"`
+
+	// MaxSize: Maximum size of a media upload, such as "1MB", "2GB" or
+	// "3TB".
+	MaxSize string `json:"maxSize,omitempty"`
+
+	// Accept: MIME Media Ranges for acceptable media uploads to this
+	// method.
+	Accept []string `json:"accept,omitempty"`
+}
+
+type RestDescription struct {
+	// DiscoveryVersion: Indicate the version of the Discovery API used to
+	// generate this doc.
+	DiscoveryVersion string `json:"discoveryVersion,omitempty"`
+
+	// Id: The id of this API.
+	Id string `json:"id,omitempty"`
+
+	// Parameters: Common parameters that apply across all apis.
+	Parameters *RestDescriptionParameters `json:"parameters,omitempty"`
+
+	// Title: The title of this API.
+	Title string `json:"title,omitempty"`
+
+	// Resources: The resources in this API.
+	Resources *RestDescriptionResources `json:"resources,omitempty"`
+
+	// Methods: API-level methods for this API.
+	Methods *RestDescriptionMethods `json:"methods,omitempty"`
+
+	// Description: The description of this API.
+	Description string `json:"description,omitempty"`
+
+	// BaseUrl: The base URL for REST requests.
+	BaseUrl string `json:"baseUrl,omitempty"`
+
+	// Protocol: The protocol described by this document.
+	Protocol string `json:"protocol,omitempty"`
+
+	// Labels: Labels for the status of this API, such as labs or
+	// deprecated.
+	Labels []string `json:"labels,omitempty"`
+
+	// Revision: The version of this API.
+	Revision string `json:"revision,omitempty"`
+
+	// Features: A list of supported features for this API.
+	Features []string `json:"features,omitempty"`
+
+	// Name: The name of this API.
+	Name string `json:"name,omitempty"`
+
+	// DocumentationLink: A link to human readable documentation for the
+	// API.
+	DocumentationLink string `json:"documentationLink,omitempty"`
+
+	// Icons: Links to 16x16 and 32x32 icons representing the API.
+	Icons *RestDescriptionIcons `json:"icons,omitempty"`
+
+	// Version: The version of this API.
+	Version string `json:"version,omitempty"`
+
+	// Kind: The kind for this response.
+	Kind string `json:"kind,omitempty"`
+
+	// Schemas: The schemas for this API.
+	Schemas *RestDescriptionSchemas `json:"schemas,omitempty"`
+
+	// BasePath: The base path for REST requests.
+	BasePath string `json:"basePath,omitempty"`
+
+	// Auth: Authentication information.
+	Auth *RestDescriptionAuth `json:"auth,omitempty"`
+}
+
+// method id "discovery.apis.getRest":
+
+type ApisGetRestCall struct {
+	s       *Service
+	api     string
+	version string
+	opt_    map[string]interface{}
+}
+
+// GetRest: Retrieve the description of a particular version of an api.
+func (r *ApisService) GetRest(api string, version string) *ApisGetRestCall {
+	c := &ApisGetRestCall{s: r.s, opt_: make(map[string]interface{})}
+	c.api = api
+	c.version = version
+	return c
+}
+
+func (c *ApisGetRestCall) Do() (*RestDescription, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/discovery/v1/", "apis/{api}/{version}/rest")
+	urls = strings.Replace(urls, "{api}", cleanPathString(c.api), 1)
+	urls = strings.Replace(urls, "{version}", cleanPathString(c.version), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(RestDescription)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieve the description of a particular version of an api.",
+	//   "httpMethod": "GET",
+	//   "id": "discovery.apis.getRest",
+	//   "parameterOrder": [
+	//     "api",
+	//     "version"
+	//   ],
+	//   "parameters": {
+	//     "api": {
+	//       "description": "The name of the API.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "version": {
+	//       "description": "The version of the API.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "apis/{api}/{version}/rest",
+	//   "response": {
+	//     "$ref": "RestDescription"
+	//   }
+	// }
+
 }
 
 // method id "discovery.apis.list":
@@ -469,75 +549,6 @@ func (c *ApisListCall) Do() (*DirectoryList, error) {
 	//   "path": "apis",
 	//   "response": {
 	//     "$ref": "DirectoryList"
-	//   }
-	// }
-
-}
-
-// method id "discovery.apis.getRest":
-
-type ApisGetRestCall struct {
-	s       *Service
-	api     string
-	version string
-	opt_    map[string]interface{}
-}
-
-// GetRest: Retrieve the description of a particular version of an api.
-func (r *ApisService) GetRest(api string, version string) *ApisGetRestCall {
-	c := &ApisGetRestCall{s: r.s, opt_: make(map[string]interface{})}
-	c.api = api
-	c.version = version
-	return c
-}
-
-func (c *ApisGetRestCall) Do() (*RestDescription, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/discovery/v1/", "apis/{api}/{version}/rest")
-	urls = strings.Replace(urls, "{api}", cleanPathString(c.api), 1)
-	urls = strings.Replace(urls, "{version}", cleanPathString(c.version), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(RestDescription)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Retrieve the description of a particular version of an api.",
-	//   "httpMethod": "GET",
-	//   "id": "discovery.apis.getRest",
-	//   "parameterOrder": [
-	//     "api",
-	//     "version"
-	//   ],
-	//   "parameters": {
-	//     "api": {
-	//       "description": "The name of the API.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "version": {
-	//       "description": "The version of the API.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "apis/{api}/{version}/rest",
-	//   "response": {
-	//     "$ref": "RestDescription"
 	//   }
 	// }
 

@@ -1,8 +1,10 @@
 {
  "kind": "discovery#restDescription",
+ "discoveryVersion": "v1",
  "id": "adsense:v1.1",
  "name": "adsense",
  "version": "v1.1",
+ "revision": "20120320",
  "title": "AdSense Management API",
  "description": "Gives AdSense publishers access to their inventory and the ability to generate reports",
  "icons": {
@@ -10,9 +12,6 @@
   "x32": "http://www.google.com/images/icons/product/adsense-32.png"
  },
  "documentationLink": "https://code.google.com/apis/adsense/management/",
- "labels": [
-  "labs"
- ],
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/adsense/v1.1/",
  "basePath": "/adsense/v1.1/",
@@ -22,12 +21,12 @@
    "description": "Data format for the response.",
    "default": "json",
    "enum": [
-    "json",
-    "csv"
+    "csv",
+    "json"
    ],
    "enumDescriptions": [
-    "Responses with Content-Type of application/json",
-    "Responses with Content-Type of text/csv"
+    "Responses with Content-Type of text/csv",
+    "Responses with Content-Type of application/json"
    ],
    "location": "query"
   },
@@ -825,6 +824,7 @@
         "accountId": {
          "type": "string",
          "description": "Account upon which to report.",
+         "required": true,
          "location": "path"
         },
         "currency": {
@@ -844,7 +844,7 @@
          "type": "string",
          "description": "End of the date range to report on in \"YYYY-MM-DD\" format, inclusive.",
          "required": true,
-         "pattern": "\\d{4}-\\d{2}-\\d{2}",
+         "pattern": "\\d{4}-\\d{2}-\\d{2}|(today|startOfMonth|startOfYear)(([\\-\\+]\\d+[dwmy]){0,2}?)",
          "location": "query"
         },
         "filter": {
@@ -886,7 +886,7 @@
          "type": "string",
          "description": "Start of the date range to report on in \"YYYY-MM-DD\" format, inclusive.",
          "required": true,
-         "pattern": "\\d{4}-\\d{2}-\\d{2}",
+         "pattern": "\\d{4}-\\d{2}-\\d{2}|(today|startOfMonth|startOfYear)(([\\-\\+]\\d+[dwmy]){0,2}?)",
          "location": "query"
         },
         "startIndex": {
@@ -1280,7 +1280,7 @@
        "type": "string",
        "description": "End of the date range to report on in \"YYYY-MM-DD\" format, inclusive.",
        "required": true,
-       "pattern": "\\d{4}-\\d{2}-\\d{2}",
+       "pattern": "\\d{4}-\\d{2}-\\d{2}|(today|startOfMonth|startOfYear)(([\\-\\+]\\d+[dwmy]){0,2}?)",
        "location": "query"
       },
       "filter": {
@@ -1322,7 +1322,7 @@
        "type": "string",
        "description": "Start of the date range to report on in \"YYYY-MM-DD\" format, inclusive.",
        "required": true,
-       "pattern": "\\d{4}-\\d{2}-\\d{2}",
+       "pattern": "\\d{4}-\\d{2}-\\d{2}|(today|startOfMonth|startOfYear)(([\\-\\+]\\d+[dwmy]){0,2}?)",
        "location": "query"
       },
       "startIndex": {

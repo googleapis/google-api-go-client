@@ -82,7 +82,50 @@ type MylibraryService struct {
 	s *Service
 }
 
+type ReviewSource struct {
+	// Description: Name of the source.
+	Description string `json:"description,omitempty"`
+
+	// ExtraDescription: Extra text about the source of the review.
+	ExtraDescription string `json:"extraDescription,omitempty"`
+
+	// Url: URL of the source of the review.
+	Url string `json:"url,omitempty"`
+}
+
+type Annotations struct {
+	// Items: A list of annotations.
+	Items []*Annotation `json:"items,omitempty"`
+
+	// NextPageToken: Token to pass in for pagination for the next page.
+	// This will not be present if this request does not have more results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// TotalItems: Total number of annotations found. This may be greater
+	// than the number of notes returned in this response if results have
+	// been paginated.
+	TotalItems int64 `json:"totalItems,omitempty"`
+
+	// Kind: Resource type.
+	Kind string `json:"kind,omitempty"`
+}
+
 type Review struct {
+	// Rating: Star rating for this review. Possible values are ONE, TWO,
+	// THREE, FOUR, FIVE or NOT_RATED.
+	Rating string `json:"rating,omitempty"`
+
+	// Type: Source type for this review. Possible values are EDITORIAL,
+	// WEB_USER or GOOGLE_USER.
+	Type string `json:"type,omitempty"`
+
+	// FullTextUrl: URL for the full review text, for reviews gathered from
+	// the web.
+	FullTextUrl string `json:"fullTextUrl,omitempty"`
+
+	// Author: Author of this review.
+	Author *ReviewAuthor `json:"author,omitempty"`
+
 	// VolumeId: Volume that this review is for.
 	VolumeId string `json:"volumeId,omitempty"`
 
@@ -101,31 +144,9 @@ type Review struct {
 
 	// Title: Title for this review.
 	Title string `json:"title,omitempty"`
-
-	// Rating: Star rating for this review. Possible values are ONE, TWO,
-	// THREE, FOUR, FIVE or NOT_RATED.
-	Rating string `json:"rating,omitempty"`
-
-	// Type: Source type for this review. Possible values are EDITORIAL,
-	// WEB_USER or GOOGLE_USER.
-	Type string `json:"type,omitempty"`
-
-	// FullTextUrl: URL for the full review text, for reviews gathered from
-	// the web.
-	FullTextUrl string `json:"fullTextUrl,omitempty"`
-
-	// Author: Author of this review.
-	Author *ReviewAuthor `json:"author,omitempty"`
 }
 
 type VolumeAccessInfo struct {
-	// Country: The two-letter ISO_3166-1 country code for which this access
-	// information is valid. (In LITE projection.)
-	Country string `json:"country,omitempty"`
-
-	// Pdf: Information about pdf content. (In LITE projection.)
-	Pdf *VolumeAccessInfoPdf `json:"pdf,omitempty"`
-
 	// Viewability: The read access of a volume. Possible values are
 	// PARTIAL, ALL_PAGES, NO_PAGES or UNKNOWN. This value depends on the
 	// country listed above. A value of PARTIAL means that the publisher has
@@ -163,9 +184,19 @@ type VolumeAccessInfo struct {
 	// PublicDomain: Whether or not this book is public domain in the
 	// country listed above.
 	PublicDomain bool `json:"publicDomain,omitempty"`
+
+	// Country: The two-letter ISO_3166-1 country code for which this access
+	// information is valid. (In LITE projection.)
+	Country string `json:"country,omitempty"`
+
+	// Pdf: Information about pdf content. (In LITE projection.)
+	Pdf *VolumeAccessInfoPdf `json:"pdf,omitempty"`
 }
 
 type BooksAnnotationsRange struct {
+	// StartOffset: The offset from the starting position.
+	StartOffset string `json:"startOffset,omitempty"`
+
 	// EndPosition: The ending position for the range.
 	EndPosition string `json:"endPosition,omitempty"`
 
@@ -174,9 +205,6 @@ type BooksAnnotationsRange struct {
 
 	// StartPosition: The starting position for the range.
 	StartPosition string `json:"startPosition,omitempty"`
-
-	// StartOffset: The offset from the starting position.
-	StartOffset string `json:"startOffset,omitempty"`
 }
 
 type VolumeSaleInfoListPrice struct {
@@ -242,6 +270,9 @@ type Annotation struct {
 	// SelectedText: Excerpt from the volume.
 	SelectedText string `json:"selectedText,omitempty"`
 
+	// Deleted: Indicates that this annotation is deleted.
+	Deleted bool `json:"deleted,omitempty"`
+
 	// LayerId: The layer this annotation is for.
 	LayerId string `json:"layerId,omitempty"`
 
@@ -275,6 +306,9 @@ type VolumeSaleInfoRetailPrice struct {
 }
 
 type Volume struct {
+	// SelfLink: URL to this resource. (In LITE projection.)
+	SelfLink string `json:"selfLink,omitempty"`
+
 	// SaleInfo: Any information about a volume related to the eBookstore
 	// and/or purchaseability. This information can depend on the country
 	// where the request originates from (i.e. books may not be for sale in
@@ -305,9 +339,6 @@ type Volume struct {
 	// obtaining that volume text. This information can depend on country
 	// (books may be public domain in one country but not in another, e.g.).
 	AccessInfo *VolumeAccessInfo `json:"accessInfo,omitempty"`
-
-	// SelfLink: URL to this resource. (In LITE projection.)
-	SelfLink string `json:"selfLink,omitempty"`
 }
 
 type VolumeSearchInfo struct {
@@ -316,6 +347,14 @@ type VolumeSearchInfo struct {
 }
 
 type VolumeUserInfo struct {
+	// IsPreordered: Whether or not this volume was pre-ordered by the
+	// authenticated user making the request. (In LITE projection.)
+	IsPreordered bool `json:"isPreordered,omitempty"`
+
+	// IsPurchased: Whether or not this volume was purchased by the
+	// authenticated user making the request. (In LITE projection.)
+	IsPurchased bool `json:"isPurchased,omitempty"`
+
 	// Updated: Timestamp when this volume was last modified by a user
 	// action, such as a reading position update, volume purchase or writing
 	// a review. (RFC 3339 UTC date-time format).
@@ -327,14 +366,6 @@ type VolumeUserInfo struct {
 
 	// Review: This user's review of this volume, if one exists.
 	Review *Review `json:"review,omitempty"`
-
-	// IsPreordered: Whether or not this volume was pre-ordered by the
-	// authenticated user making the request. (In LITE projection.)
-	IsPreordered bool `json:"isPreordered,omitempty"`
-
-	// IsPurchased: Whether or not this volume was purchased by the
-	// authenticated user making the request. (In LITE projection.)
-	IsPurchased bool `json:"isPurchased,omitempty"`
 }
 
 type AnnotationClientVersionRanges struct {
@@ -362,14 +393,6 @@ type DownloadAccesses struct {
 }
 
 type VolumeVolumeInfoImageLinks struct {
-	// SmallThumbnail: Image link for small thumbnail size (width of ~80
-	// pixels). (In LITE projection)
-	SmallThumbnail string `json:"smallThumbnail,omitempty"`
-
-	// Medium: Image link for medium size (width of ~575 pixels). (In LITE
-	// projection)
-	Medium string `json:"medium,omitempty"`
-
 	// Thumbnail: Image link for thumbnail size (width of ~128 pixels). (In
 	// LITE projection)
 	Thumbnail string `json:"thumbnail,omitempty"`
@@ -385,9 +408,21 @@ type VolumeVolumeInfoImageLinks struct {
 	// Small: Image link for small size (width of ~300 pixels). (In LITE
 	// projection)
 	Small string `json:"small,omitempty"`
+
+	// SmallThumbnail: Image link for small thumbnail size (width of ~80
+	// pixels). (In LITE projection)
+	SmallThumbnail string `json:"smallThumbnail,omitempty"`
+
+	// Medium: Image link for medium size (width of ~575 pixels). (In LITE
+	// projection)
+	Medium string `json:"medium,omitempty"`
 }
 
 type AnnotationCurrentVersionRanges struct {
+	// GbImageRange: Range in GB image format for this annotation for
+	// version above.
+	GbImageRange *BooksAnnotationsRange `json:"gbImageRange,omitempty"`
+
 	// GbTextRange: Range in GB text format for this annotation for version
 	// above.
 	GbTextRange *BooksAnnotationsRange `json:"gbTextRange,omitempty"`
@@ -397,13 +432,12 @@ type AnnotationCurrentVersionRanges struct {
 
 	// CfiRange: Range in CFI format for this annotation for version above.
 	CfiRange *BooksAnnotationsRange `json:"cfiRange,omitempty"`
-
-	// GbImageRange: Range in GB image format for this annotation for
-	// version above.
-	GbImageRange *BooksAnnotationsRange `json:"gbImageRange,omitempty"`
 }
 
 type VolumeAccessInfoEpub struct {
+	// DownloadLink: URL to download epub. (In LITE projection.)
+	DownloadLink string `json:"downloadLink,omitempty"`
+
 	// AcsTokenLink: URL to retrieve ACS token for epub download. (In LITE
 	// projection.)
 	AcsTokenLink string `json:"acsTokenLink,omitempty"`
@@ -411,9 +445,6 @@ type VolumeAccessInfoEpub struct {
 	// IsAvailable: Is a flowing text epub available either as public domain
 	// or for purchase. (In LITE projection.)
 	IsAvailable bool `json:"isAvailable,omitempty"`
-
-	// DownloadLink: URL to download epub. (In LITE projection.)
-	DownloadLink string `json:"downloadLink,omitempty"`
 }
 
 type VolumeVolumeInfoIndustryIdentifiers struct {
@@ -426,14 +457,14 @@ type VolumeVolumeInfoIndustryIdentifiers struct {
 }
 
 type RequestAccess struct {
-	// DownloadAccess: A download access response.
-	DownloadAccess *DownloadAccessRestriction `json:"downloadAccess,omitempty"`
-
 	// Kind: Resource type.
 	Kind string `json:"kind,omitempty"`
 
 	// ConcurrentAccess: A concurrent access response.
 	ConcurrentAccess *ConcurrentAccessRestriction `json:"concurrentAccess,omitempty"`
+
+	// DownloadAccess: A download access response.
+	DownloadAccess *DownloadAccessRestriction `json:"downloadAccess,omitempty"`
 }
 
 type Volumes struct {
@@ -442,7 +473,7 @@ type Volumes struct {
 
 	// TotalItems: Total number of volumes found. This might be greater than
 	// the number of volumes returned in this response if results have been
-	// paginated. Total number of volumes found.
+	// paginated.
 	TotalItems int64 `json:"totalItems,omitempty"`
 
 	// Kind: Resource type.
@@ -461,10 +492,6 @@ type VolumeVolumeInfoDimensions struct {
 }
 
 type VolumeSaleInfo struct {
-	// Country: The two-letter ISO_3166-1 country code for which this sale
-	// information is valid. (In LITE projection.)
-	Country string `json:"country,omitempty"`
-
 	// Saleability: Whether or not this book is available for sale or
 	// offered for free in the Google eBookstore for the country listed
 	// above. Possible values are FOR_SALE, FREE, NOT_FOR_SALE, or
@@ -489,6 +516,10 @@ type VolumeSaleInfo struct {
 
 	// ListPrice: Suggested retail price. (In LITE projection.)
 	ListPrice *VolumeSaleInfoListPrice `json:"listPrice,omitempty"`
+
+	// Country: The two-letter ISO_3166-1 country code for which this sale
+	// information is valid. (In LITE projection.)
+	Country string `json:"country,omitempty"`
 }
 
 type Bookshelves struct {
@@ -500,6 +531,19 @@ type Bookshelves struct {
 }
 
 type Bookshelf struct {
+	// VolumeCount: Number of volumes in this bookshelf.
+	VolumeCount int64 `json:"volumeCount,omitempty"`
+
+	// VolumesLastUpdated: Last time a volume was added or removed from this
+	// bookshelf (formatted UTC timestamp with millisecond resolution).
+	VolumesLastUpdated string `json:"volumesLastUpdated,omitempty"`
+
+	// Description: Description of this bookshelf.
+	Description string `json:"description,omitempty"`
+
+	// SelfLink: URL to this resource.
+	SelfLink string `json:"selfLink,omitempty"`
+
 	// Kind: Resource type for bookshelf metadata.
 	Kind string `json:"kind,omitempty"`
 
@@ -519,25 +563,9 @@ type Bookshelf struct {
 
 	// Title: Title of this bookshelf.
 	Title string `json:"title,omitempty"`
-
-	// VolumeCount: Number of volumes in this bookshelf.
-	VolumeCount int64 `json:"volumeCount,omitempty"`
-
-	// VolumesLastUpdated: Last time a volume was added or removed from this
-	// bookshelf (formatted UTC timestamp with millisecond resolution).
-	VolumesLastUpdated string `json:"volumesLastUpdated,omitempty"`
-
-	// Description: Description of this bookshelf.
-	Description string `json:"description,omitempty"`
-
-	// SelfLink: URL to this resource.
-	SelfLink string `json:"selfLink,omitempty"`
 }
 
 type VolumeAccessInfoPdf struct {
-	// DownloadLink: URL to download pdf. (In LITE projection.)
-	DownloadLink string `json:"downloadLink,omitempty"`
-
 	// AcsTokenLink: URL to retrieve ACS token for pdf download. (In LITE
 	// projection.)
 	AcsTokenLink string `json:"acsTokenLink,omitempty"`
@@ -545,9 +573,16 @@ type VolumeAccessInfoPdf struct {
 	// IsAvailable: Is a scanned image pdf available either as public domain
 	// or for purchase. (In LITE projection.)
 	IsAvailable bool `json:"isAvailable,omitempty"`
+
+	// DownloadLink: URL to download pdf. (In LITE projection.)
+	DownloadLink string `json:"downloadLink,omitempty"`
 }
 
 type VolumeVolumeInfo struct {
+	// ContentVersion: An identifier for the version of the volume content
+	// (text & images). (In LITE projection)
+	ContentVersion string `json:"contentVersion,omitempty"`
+
 	// MainCategory: The main category to which this volume belongs. It will
 	// be the category from the categories list returned below that has the
 	// highest weight.
@@ -616,13 +651,21 @@ type VolumeVolumeInfo struct {
 
 	// PublishedDate: Date of publication. (In LITE projection.)
 	PublishedDate string `json:"publishedDate,omitempty"`
-
-	// ContentVersion: An identifier for the version of the volume content
-	// (text & images). (In LITE projection)
-	ContentVersion string `json:"contentVersion,omitempty"`
 }
 
 type ConcurrentAccessRestriction struct {
+	// Source: Client app identifier for verification. Download access and
+	// client-validation only.
+	Source string `json:"source,omitempty"`
+
+	// DeviceAllowed: Whether access is granted for this (user, device,
+	// volume).
+	DeviceAllowed bool `json:"deviceAllowed,omitempty"`
+
+	// Nonce: Client nonce for verification. Download access and
+	// client-validation only.
+	Nonce string `json:"nonce,omitempty"`
+
 	// Message: Error/warning message.
 	Message string `json:"message,omitempty"`
 
@@ -648,25 +691,9 @@ type ConcurrentAccessRestriction struct {
 
 	// TimeWindowSeconds: Time in seconds for license auto-expiration.
 	TimeWindowSeconds int64 `json:"timeWindowSeconds,omitempty"`
-
-	// Source: Client app identifier for verification. Download access and
-	// client-validation only.
-	Source string `json:"source,omitempty"`
-
-	// DeviceAllowed: Whether access is granted for this (user, device,
-	// volume).
-	DeviceAllowed bool `json:"deviceAllowed,omitempty"`
-
-	// Nonce: Client nonce for verification. Download access and
-	// client-validation only.
-	Nonce string `json:"nonce,omitempty"`
 }
 
 type DownloadAccessRestriction struct {
-	// MaxDownloadDevices: If restricted, the maximum number of content
-	// download licenses for this volume.
-	MaxDownloadDevices int64 `json:"maxDownloadDevices,omitempty"`
-
 	// Message: Error/warning message.
 	Message string `json:"message,omitempty"`
 
@@ -707,34 +734,10 @@ type DownloadAccessRestriction struct {
 	// Nonce: Client nonce for verification. Download access and
 	// client-validation only.
 	Nonce string `json:"nonce,omitempty"`
-}
 
-type ReviewSource struct {
-	// ExtraDescription: Extra text about the source of the review.
-	ExtraDescription string `json:"extraDescription,omitempty"`
-
-	// Url: URL of the source of the review.
-	Url string `json:"url,omitempty"`
-
-	// Description: Name of the source.
-	Description string `json:"description,omitempty"`
-}
-
-type Annotations struct {
-	// Items: A list of annotations.
-	Items []*Annotation `json:"items,omitempty"`
-
-	// NextPageToken: Token to pass in for pagination for the next page.
-	// This will not be present if this request does not have more results.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// TotalItems: Total number of annotations found. This may be greater
-	// than the number of notes returned in this response if results have
-	// been paginated.
-	TotalItems int64 `json:"totalItems,omitempty"`
-
-	// Kind: Resource type.
-	Kind string `json:"kind,omitempty"`
+	// MaxDownloadDevices: If restricted, the maximum number of content
+	// download licenses for this volume.
+	MaxDownloadDevices int64 `json:"maxDownloadDevices,omitempty"`
 }
 
 // method id "books.volumes.list":
@@ -749,20 +752,6 @@ type VolumesListCall struct {
 func (r *VolumesService) List(q string) *VolumesListCall {
 	c := &VolumesListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.q = q
-	return c
-}
-
-// ShowPreorders sets the optional parameter "showPreorders": Set to
-// true to show books available for preorder. Defaults to false.
-func (c *VolumesListCall) ShowPreorders(showPreorders bool) *VolumesListCall {
-	c.opt_["showPreorders"] = showPreorders
-	return c
-}
-
-// LangRestrict sets the optional parameter "langRestrict": Restrict
-// results to books with this language code.
-func (c *VolumesListCall) LangRestrict(langRestrict string) *VolumesListCall {
-	c.opt_["langRestrict"] = langRestrict
 	return c
 }
 
@@ -841,17 +830,25 @@ func (c *VolumesListCall) Source(source string) *VolumesListCall {
 	return c
 }
 
+// ShowPreorders sets the optional parameter "showPreorders": Set to
+// true to show books available for preorder. Defaults to false.
+func (c *VolumesListCall) ShowPreorders(showPreorders bool) *VolumesListCall {
+	c.opt_["showPreorders"] = showPreorders
+	return c
+}
+
+// LangRestrict sets the optional parameter "langRestrict": Restrict
+// results to books with this language code.
+func (c *VolumesListCall) LangRestrict(langRestrict string) *VolumesListCall {
+	c.opt_["langRestrict"] = langRestrict
+	return c
+}
+
 func (c *VolumesListCall) Do() (*Volumes, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("q", fmt.Sprintf("%v", c.q))
-	if v, ok := c.opt_["showPreorders"]; ok {
-		params.Set("showPreorders", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["langRestrict"]; ok {
-		params.Set("langRestrict", fmt.Sprintf("%v", v))
-	}
 	if v, ok := c.opt_["orderBy"]; ok {
 		params.Set("orderBy", fmt.Sprintf("%v", v))
 	}
@@ -884,6 +881,12 @@ func (c *VolumesListCall) Do() (*Volumes, error) {
 	}
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["showPreorders"]; ok {
+		params.Set("showPreorders", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["langRestrict"]; ok {
+		params.Set("langRestrict", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "volumes")
 	urls += "?" + params.Encode()
@@ -1066,13 +1069,6 @@ func (r *VolumesService) Get(volumeId string) *VolumesGetCall {
 	return c
 }
 
-// Projection sets the optional parameter "projection": Restrict
-// information returned to a set of selected fields.
-func (c *VolumesGetCall) Projection(projection string) *VolumesGetCall {
-	c.opt_["projection"] = projection
-	return c
-}
-
 // Country sets the optional parameter "country": ISO-3166-1 code to
 // override the IP-based location.
 func (c *VolumesGetCall) Country(country string) *VolumesGetCall {
@@ -1094,13 +1090,17 @@ func (c *VolumesGetCall) Source(source string) *VolumesGetCall {
 	return c
 }
 
+// Projection sets the optional parameter "projection": Restrict
+// information returned to a set of selected fields.
+func (c *VolumesGetCall) Projection(projection string) *VolumesGetCall {
+	c.opt_["projection"] = projection
+	return c
+}
+
 func (c *VolumesGetCall) Do() (*Volume, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	if v, ok := c.opt_["projection"]; ok {
-		params.Set("projection", fmt.Sprintf("%v", v))
-	}
 	if v, ok := c.opt_["country"]; ok {
 		params.Set("country", fmt.Sprintf("%v", v))
 	}
@@ -1109,6 +1109,9 @@ func (c *VolumesGetCall) Do() (*Volume, error) {
 	}
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["projection"]; ok {
+		params.Set("projection", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "volumes/{volumeId}")
 	urls = strings.Replace(urls, "{volumeId}", cleanPathString(c.volumeId), 1)
@@ -1364,10 +1367,10 @@ func (c *MyconfigRequestAccessCall) Do() (*RequestAccess, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	params.Set("nonce", fmt.Sprintf("%v", c.nonce))
-	params.Set("cpksver", fmt.Sprintf("%v", c.cpksverid))
 	params.Set("volumeId", fmt.Sprintf("%v", c.volumeId))
 	params.Set("source", fmt.Sprintf("%v", c.source))
+	params.Set("nonce", fmt.Sprintf("%v", c.nonce))
+	params.Set("cpksver", fmt.Sprintf("%v", c.cpksverid))
 	if v, ok := c.opt_["locale"]; ok {
 		params.Set("locale", fmt.Sprintf("%v", v))
 	}
@@ -1464,6 +1467,13 @@ func (r *MyconfigService) ReleaseDownloadAccess(volumeIds []string, cpksverid st
 	return c
 }
 
+// Country sets the optional parameter "country": ISO-3166-1 code to
+// override the IP-based location.
+func (c *MyconfigReleaseDownloadAccessCall) Country(country string) *MyconfigReleaseDownloadAccessCall {
+	c.opt_["country"] = country
+	return c
+}
+
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *MyconfigReleaseDownloadAccessCall) Source(source string) *MyconfigReleaseDownloadAccessCall {
@@ -1478,13 +1488,6 @@ func (c *MyconfigReleaseDownloadAccessCall) Locale(locale string) *MyconfigRelea
 	return c
 }
 
-// Country sets the optional parameter "country": ISO-3166-1 code to
-// override the IP-based location.
-func (c *MyconfigReleaseDownloadAccessCall) Country(country string) *MyconfigReleaseDownloadAccessCall {
-	c.opt_["country"] = country
-	return c
-}
-
 func (c *MyconfigReleaseDownloadAccessCall) Do() (*DownloadAccesses, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1493,14 +1496,14 @@ func (c *MyconfigReleaseDownloadAccessCall) Do() (*DownloadAccesses, error) {
 	for _, v := range c.volumeIds {
 		params.Add("volumeIds", fmt.Sprintf("%v", v))
 	}
+	if v, ok := c.opt_["country"]; ok {
+		params.Set("country", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["locale"]; ok {
 		params.Set("locale", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["country"]; ok {
-		params.Set("country", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "myconfig/releaseDownloadAccess")
 	urls += "?" + params.Encode()

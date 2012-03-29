@@ -68,6 +68,24 @@ type TrainingService struct {
 	s *Service
 }
 
+type InputInput struct {
+	CsvInstance []interface{} `json:"csvInstance,omitempty"`
+}
+
+type Output struct {
+	OutputLabel string `json:"outputLabel,omitempty"`
+
+	Kind string `json:"kind,omitempty"`
+
+	Id string `json:"id,omitempty"`
+
+	OutputMulti []*OutputOutputMulti `json:"outputMulti,omitempty"`
+
+	SelfLink string `json:"selfLink,omitempty"`
+
+	OutputValue float64 `json:"outputValue,omitempty"`
+}
+
 type OutputOutputMulti struct {
 	Score float64 `json:"score,omitempty"`
 
@@ -104,24 +122,6 @@ type TrainingModelInfo struct {
 	ModelType string `json:"modelType,omitempty"`
 
 	ClassificationAccuracy float64 `json:"classificationAccuracy,omitempty"`
-}
-
-type InputInput struct {
-	CsvInstance []interface{} `json:"csvInstance,omitempty"`
-}
-
-type Output struct {
-	OutputValue float64 `json:"outputValue,omitempty"`
-
-	OutputLabel string `json:"outputLabel,omitempty"`
-
-	Kind string `json:"kind,omitempty"`
-
-	Id string `json:"id,omitempty"`
-
-	OutputMulti []*OutputOutputMulti `json:"outputMulti,omitempty"`
-
-	SelfLink string `json:"selfLink,omitempty"`
 }
 
 // method id "prediction.predict":
@@ -263,6 +263,61 @@ func (c *HostedmodelsPredictCall) Do() (*Output, error) {
 	//   "response": {
 	//     "$ref": "Output"
 	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/prediction"
+	//   ]
+	// }
+
+}
+
+// method id "prediction.training.delete":
+
+type TrainingDeleteCall struct {
+	s    *Service
+	data string
+	opt_ map[string]interface{}
+}
+
+// Delete: Delete a trained model
+func (r *TrainingService) Delete(data string) *TrainingDeleteCall {
+	c := &TrainingDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.data = data
+	return c
+}
+
+func (c *TrainingDeleteCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/prediction/v1.2/", "training/{data}")
+	urls = strings.Replace(urls, "{data}", cleanPathString(c.data), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Delete a trained model",
+	//   "httpMethod": "DELETE",
+	//   "id": "prediction.training.delete",
+	//   "parameterOrder": [
+	//     "data"
+	//   ],
+	//   "parameters": {
+	//     "data": {
+	//       "description": "mybucket/mydata resource in Google Storage",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "training/{data}",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/prediction"
 	//   ]
@@ -474,61 +529,6 @@ func (c *TrainingGetCall) Do() (*Training, error) {
 	//   "response": {
 	//     "$ref": "Training"
 	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/prediction"
-	//   ]
-	// }
-
-}
-
-// method id "prediction.training.delete":
-
-type TrainingDeleteCall struct {
-	s    *Service
-	data string
-	opt_ map[string]interface{}
-}
-
-// Delete: Delete a trained model
-func (r *TrainingService) Delete(data string) *TrainingDeleteCall {
-	c := &TrainingDeleteCall{s: r.s, opt_: make(map[string]interface{})}
-	c.data = data
-	return c
-}
-
-func (c *TrainingDeleteCall) Do() error {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/prediction/v1.2/", "training/{data}")
-	urls = strings.Replace(urls, "{data}", cleanPathString(c.data), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("DELETE", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return err
-	}
-	return nil
-	// {
-	//   "description": "Delete a trained model",
-	//   "httpMethod": "DELETE",
-	//   "id": "prediction.training.delete",
-	//   "parameterOrder": [
-	//     "data"
-	//   ],
-	//   "parameters": {
-	//     "data": {
-	//       "description": "mybucket/mydata resource in Google Storage",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "training/{data}",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/prediction"
 	//   ]

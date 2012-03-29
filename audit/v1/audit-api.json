@@ -1,8 +1,10 @@
 {
  "kind": "discovery#restDescription",
+ "discoveryVersion": "v1",
  "id": "audit:v1",
  "name": "audit",
  "version": "v1",
+ "revision": "20111110",
  "title": "Enterprise Audit API",
  "description": "Lets you access user activities in your enterprise made through various applications.",
  "icons": {
@@ -10,9 +12,6 @@
   "x32": "http://www.google.com/images/icons/product/search-32.gif"
  },
  "documentationLink": "http://code.google.com/googleapps/domain/audit_admin/v1/getting_started.html",
- "labels": [
-  "labs"
- ],
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/apps/reporting/audit/v1/",
  "basePath": "/apps/reporting/audit/v1/",

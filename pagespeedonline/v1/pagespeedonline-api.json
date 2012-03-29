@@ -1,8 +1,10 @@
 {
  "kind": "discovery#restDescription",
+ "discoveryVersion": "v1",
  "id": "pagespeedonline:v1",
  "name": "pagespeedonline",
  "version": "v1",
+ "revision": "20120214",
  "title": "Page Speed Online API",
  "description": "Lets you analyze the performance of a web page and get tailored suggestions to make that page faster.",
  "icons": {
@@ -10,9 +12,6 @@
   "x32": "http://www.google.com/images/icons/product/pagespeed-32.png"
  },
  "documentationLink": "https://code.google.com/apis/pagespeedonline/v1/getting_started.html",
- "labels": [
-  "labs"
- ],
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/pagespeedonline/v1/",
  "basePath": "/pagespeedonline/v1/",

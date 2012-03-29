@@ -38,9 +38,6 @@ const basePath = "https://www.googleapis.com/latitude/v1/"
 
 // OAuth2 scopes used by this API.
 const (
-	// Manage your city-level location
-	LatitudeCurrentCityScope = "https://www.googleapis.com/auth/latitude.current.city"
-
 	// Manage your best-available location
 	LatitudeCurrentBestScope = "https://www.googleapis.com/auth/latitude.current.best"
 
@@ -49,6 +46,9 @@ const (
 
 	// Manage your best-available location and location history
 	LatitudeAllBestScope = "https://www.googleapis.com/auth/latitude.all.best"
+
+	// Manage your city-level location
+	LatitudeCurrentCityScope = "https://www.googleapis.com/auth/latitude.current.city"
 )
 
 func New(client *http.Client) (*Service, error) {
@@ -78,6 +78,19 @@ type LocationService struct {
 }
 
 type Location struct {
+	// Heading: Direction of travel of the user when this location was
+	// recorded. In degrees, clockwise relative to true north. Optional.
+	Heading interface{} `json:"heading,omitempty"`
+
+	// Speed: Ground speed of the user at the time this location was
+	// recorded, in meters per second. Non-negative. Optional.
+	Speed interface{} `json:"speed,omitempty"`
+
+	// TimestampMs: Timestamp of the Location Resource, in milliseconds
+	// since the epoch (UTC). This is also the Location Resource's unique
+	// id.
+	TimestampMs interface{} `json:"timestampMs,omitempty"`
+
 	// AltitudeAccuracy: Accuracy of the altitude value, in meters.
 	// Optional.
 	AltitudeAccuracy interface{} `json:"altitudeAccuracy,omitempty"`
@@ -102,19 +115,6 @@ type Location struct {
 	// check-in associated with this location. Available only for check-in
 	// locations. Optional.
 	ActivityId interface{} `json:"activityId,omitempty"`
-
-	// Heading: Direction of travel of the user when this location was
-	// recorded. In degrees, clockwise relative to true north. Optional.
-	Heading interface{} `json:"heading,omitempty"`
-
-	// Speed: Ground speed of the user at the time this location was
-	// recorded, in meters per second. Non-negative. Optional.
-	Speed interface{} `json:"speed,omitempty"`
-
-	// TimestampMs: Timestamp of the Location Resource, in milliseconds
-	// since the epoch (UTC). This is also the Location Resource's unique
-	// id.
-	TimestampMs interface{} `json:"timestampMs,omitempty"`
 }
 
 type LatitudeCurrentlocationResourceJson struct {
@@ -296,6 +296,117 @@ func (c *CurrentLocationDeleteCall) Do() error {
 	//     "https://www.googleapis.com/auth/latitude.all.city",
 	//     "https://www.googleapis.com/auth/latitude.current.best",
 	//     "https://www.googleapis.com/auth/latitude.current.city"
+	//   ]
+	// }
+
+}
+
+// method id "latitude.location.list":
+
+type LocationListCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// List: Lists the user's location history.
+func (r *LocationService) List() *LocationListCall {
+	c := &LocationListCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+// MaxResults sets the optional parameter "max-results": Maximum number
+// of locations to return.
+func (c *LocationListCall) MaxResults(maxResults string) *LocationListCall {
+	c.opt_["max-results"] = maxResults
+	return c
+}
+
+// Granularity sets the optional parameter "granularity": Granularity of
+// the requested locations.
+func (c *LocationListCall) Granularity(granularity string) *LocationListCall {
+	c.opt_["granularity"] = granularity
+	return c
+}
+
+// MaxTime sets the optional parameter "max-time": Maximum timestamp of
+// locations to return (ms since epoch).
+func (c *LocationListCall) MaxTime(maxTime string) *LocationListCall {
+	c.opt_["max-time"] = maxTime
+	return c
+}
+
+// MinTime sets the optional parameter "min-time": Minimum timestamp of
+// locations to return (ms since epoch).
+func (c *LocationListCall) MinTime(minTime string) *LocationListCall {
+	c.opt_["min-time"] = minTime
+	return c
+}
+
+func (c *LocationListCall) Do() (*LocationFeed, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["max-results"]; ok {
+		params.Set("max-results", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["granularity"]; ok {
+		params.Set("granularity", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["max-time"]; ok {
+		params.Set("max-time", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["min-time"]; ok {
+		params.Set("min-time", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/latitude/v1/", "location")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(LocationFeed)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the user's location history.",
+	//   "httpMethod": "GET",
+	//   "id": "latitude.location.list",
+	//   "parameters": {
+	//     "granularity": {
+	//       "description": "Granularity of the requested locations.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "max-results": {
+	//       "description": "Maximum number of locations to return.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "max-time": {
+	//       "description": "Maximum timestamp of locations to return (ms since epoch).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "min-time": {
+	//       "description": "Minimum timestamp of locations to return (ms since epoch).",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "location",
+	//   "response": {
+	//     "$ref": "LocationFeed"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/latitude.all.best",
+	//     "https://www.googleapis.com/auth/latitude.all.city"
 	//   ]
 	// }
 
@@ -487,117 +598,6 @@ func (c *LocationDeleteCall) Do() error {
 	//     }
 	//   },
 	//   "path": "location/{locationId}",
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/latitude.all.best",
-	//     "https://www.googleapis.com/auth/latitude.all.city"
-	//   ]
-	// }
-
-}
-
-// method id "latitude.location.list":
-
-type LocationListCall struct {
-	s    *Service
-	opt_ map[string]interface{}
-}
-
-// List: Lists the user's location history.
-func (r *LocationService) List() *LocationListCall {
-	c := &LocationListCall{s: r.s, opt_: make(map[string]interface{})}
-	return c
-}
-
-// MaxResults sets the optional parameter "max-results": Maximum number
-// of locations to return.
-func (c *LocationListCall) MaxResults(maxResults string) *LocationListCall {
-	c.opt_["max-results"] = maxResults
-	return c
-}
-
-// Granularity sets the optional parameter "granularity": Granularity of
-// the requested locations.
-func (c *LocationListCall) Granularity(granularity string) *LocationListCall {
-	c.opt_["granularity"] = granularity
-	return c
-}
-
-// MaxTime sets the optional parameter "max-time": Maximum timestamp of
-// locations to return (ms since epoch).
-func (c *LocationListCall) MaxTime(maxTime string) *LocationListCall {
-	c.opt_["max-time"] = maxTime
-	return c
-}
-
-// MinTime sets the optional parameter "min-time": Minimum timestamp of
-// locations to return (ms since epoch).
-func (c *LocationListCall) MinTime(minTime string) *LocationListCall {
-	c.opt_["min-time"] = minTime
-	return c
-}
-
-func (c *LocationListCall) Do() (*LocationFeed, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	if v, ok := c.opt_["max-results"]; ok {
-		params.Set("max-results", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["granularity"]; ok {
-		params.Set("granularity", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["max-time"]; ok {
-		params.Set("max-time", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["min-time"]; ok {
-		params.Set("min-time", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/latitude/v1/", "location")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(LocationFeed)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Lists the user's location history.",
-	//   "httpMethod": "GET",
-	//   "id": "latitude.location.list",
-	//   "parameters": {
-	//     "granularity": {
-	//       "description": "Granularity of the requested locations.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "max-results": {
-	//       "description": "Maximum number of locations to return.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "max-time": {
-	//       "description": "Maximum timestamp of locations to return (ms since epoch).",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "min-time": {
-	//       "description": "Minimum timestamp of locations to return (ms since epoch).",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "location",
-	//   "response": {
-	//     "$ref": "LocationFeed"
-	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/latitude.all.best",
 	//     "https://www.googleapis.com/auth/latitude.all.city"

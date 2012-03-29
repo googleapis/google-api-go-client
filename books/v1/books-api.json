@@ -1,8 +1,10 @@
 {
  "kind": "discovery#restDescription",
+ "discoveryVersion": "v1",
  "id": "books:v1",
  "name": "books",
  "version": "v1",
+ "revision": "20120131",
  "title": "Books API",
  "description": "Lets you search for books and manage your Google Books library.",
  "icons": {
@@ -10,9 +12,6 @@
   "x32": "http://www.google.com/images/icons/product/ebooks-32.png"
  },
  "documentationLink": "https://code.google.com/apis/books/docs/v1/getting_started.html",
- "labels": [
-  "labs"
- ],
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/books/v1/",
  "basePath": "/books/v1/",
@@ -135,6 +134,10 @@
     "data": {
      "type": "string",
      "description": "User-created data for this annotation."
+    },
+    "deleted": {
+     "type": "boolean",
+     "description": "Indicates that this annotation is deleted."
     },
     "highlightStyle": {
      "type": "string",
@@ -905,7 +908,7 @@
     },
     "totalItems": {
      "type": "integer",
-     "description": "Total number of volumes found. This might be greater than the number of volumes returned in this response if results have been paginated. Total number of volumes found.",
+     "description": "Total number of volumes found. This might be greater than the number of volumes returned in this response if results have been paginated.",
      "format": "int32"
     }
    }
@@ -1350,6 +1353,11 @@
          "description": "The value of the nextToken from the previous page.",
          "location": "query"
         },
+        "showDeleted": {
+         "type": "boolean",
+         "description": "Set to true to return deleted annotations. updatedMin must be in the request to use this. Defaults to false.",
+         "location": "query"
+        },
         "source": {
          "type": "string",
          "description": "String to identify the originator of this request.",
@@ -1667,6 +1675,7 @@
           "shelf": {
            "type": "string",
            "description": "The bookshelf id or name retrieve volumes for.",
+           "required": true,
            "location": "path"
           },
           "showPreorders": {

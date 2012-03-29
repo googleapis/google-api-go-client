@@ -1,8 +1,10 @@
 {
  "kind": "discovery#restDescription",
+ "discoveryVersion": "v1",
  "id": "plus:v1",
  "name": "plus",
  "version": "v1",
+ "revision": "20120214",
  "title": "Google+ API",
  "description": "The Google+ API enables developers to build on top of the Google+ platform.",
  "icons": {
@@ -10,9 +12,6 @@
   "x32": "http://www.google.com/images/icons/product/gplus-32.png"
  },
  "documentationLink": "http://developers.google.com/+/api/",
- "labels": [
-  "labs"
- ],
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/plus/v1/",
  "basePath": "/plus/v1/",
@@ -112,14 +111,6 @@
        "type": "string",
        "description": "The name of the actor, suitable for display."
       },
-      "familyName": {
-       "type": "string",
-       "description": "The family name of the actor."
-      },
-      "givenName": {
-       "type": "string",
-       "description": "The given name of the actor."
-      },
       "id": {
        "type": "string",
        "description": "The ID of the actor's person resource."
@@ -131,6 +122,20 @@
         "url": {
          "type": "string",
          "description": "The URL of the actor's profile photo. To re-size the image and crop it to a square, append the query string ?sz=x, where x is the dimension in pixels of each side."
+        }
+       }
+      },
+      "name": {
+       "type": "object",
+       "description": "An object representation of the individual components of name.",
+       "properties": {
+        "familyName": {
+         "type": "string",
+         "description": "The family name (last name) of the actor."
+        },
+        "givenName": {
+         "type": "string",
+         "description": "The given name (first name) of the actor."
         }
        }
       },
@@ -1083,10 +1088,18 @@
        "description": "The continuation token, used to page through large result sets. To get the next page of results, set this parameter to the value of \"nextPageToken\" from the previous response.",
        "location": "query"
       },
-      "reverse": {
-       "type": "boolean",
-       "description": "Whether to return comments in reverse chronological order, newest first.",
-       "default": "false",
+      "sortOrder": {
+       "type": "string",
+       "description": "The order in which to sort the list of comments.",
+       "default": "ascending",
+       "enum": [
+        "ascending",
+        "descending"
+       ],
+       "enumDescriptions": [
+        "Sort oldest comments first.",
+        "Sort newest comments first."
+       ],
        "location": "query"
       }
      },

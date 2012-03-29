@@ -55,54 +55,12 @@ type CseService struct {
 	s *Service
 }
 
-type SearchUrl struct {
-	Template string `json:"template,omitempty"`
-
-	Type string `json:"type,omitempty"`
-}
-
-type Query struct {
-	Sort string `json:"sort,omitempty"`
-
-	Cx string `json:"cx,omitempty"`
-
-	Cr string `json:"cr,omitempty"`
-
-	Count int64 `json:"count,omitempty"`
-
-	StartIndex int64 `json:"startIndex,omitempty"`
-
-	Language string `json:"language,omitempty"`
-
-	TotalResults int64 `json:"totalResults,omitempty,string"`
-
-	OutputEncoding string `json:"outputEncoding,omitempty"`
-
-	Filter string `json:"filter,omitempty"`
-
-	Safe string `json:"safe,omitempty"`
-
-	StartPage int64 `json:"startPage,omitempty"`
-
-	InputEncoding string `json:"inputEncoding,omitempty"`
-
-	Cref string `json:"cref,omitempty"`
-
-	GoogleHost string `json:"googleHost,omitempty"`
-
-	Title string `json:"title,omitempty"`
-
-	Gl string `json:"gl,omitempty"`
-
-	SearchTerms string `json:"searchTerms,omitempty"`
-}
-
 type PromotionBodyLines struct {
-	Title string `json:"title,omitempty"`
-
 	Link string `json:"link,omitempty"`
 
 	Url string `json:"url,omitempty"`
+
+	Title string `json:"title,omitempty"`
 }
 
 type Context struct {
@@ -112,18 +70,24 @@ type Context struct {
 }
 
 type Promotion struct {
+	Link string `json:"link,omitempty"`
+
+	Title string `json:"title,omitempty"`
+
 	BodyLines []*PromotionBodyLines `json:"bodyLines,omitempty"`
 
 	DisplayLink string `json:"displayLink,omitempty"`
 
 	Image *PromotionImage `json:"image,omitempty"`
-
-	Link string `json:"link,omitempty"`
-
-	Title string `json:"title,omitempty"`
 }
 
 type ResultPagemap struct {
+}
+
+type ResultLabels struct {
+	Name string `json:"name,omitempty"`
+
+	DisplayName string `json:"displayName,omitempty"`
 }
 
 type PromotionImage struct {
@@ -134,16 +98,42 @@ type PromotionImage struct {
 	Source string `json:"source,omitempty"`
 }
 
+type SearchSearchInformation struct {
+	TotalResults int64 `json:"totalResults,omitempty,string"`
+
+	FormattedTotalResults string `json:"formattedTotalResults,omitempty"`
+
+	FormattedSearchTime string `json:"formattedSearchTime,omitempty"`
+
+	SearchTime float64 `json:"searchTime,omitempty"`
+}
+
+type SearchSpelling struct {
+	HtmlCorrectedQuery string `json:"htmlCorrectedQuery,omitempty"`
+
+	CorrectedQuery string `json:"correctedQuery,omitempty"`
+}
+
+type ResultImage struct {
+	Height int64 `json:"height,omitempty"`
+
+	Width int64 `json:"width,omitempty"`
+
+	ContextLink string `json:"contextLink,omitempty"`
+
+	ByteSize int64 `json:"byteSize,omitempty"`
+
+	ThumbnailHeight int64 `json:"thumbnailHeight,omitempty"`
+
+	ThumbnailWidth int64 `json:"thumbnailWidth,omitempty"`
+
+	ThumbnailLink string `json:"thumbnailLink,omitempty"`
+}
+
 type Result struct {
-	HtmlTitle string `json:"htmlTitle,omitempty"`
+	Labels []*ResultLabels `json:"labels,omitempty"`
 
-	Title string `json:"title,omitempty"`
-
-	HtmlSnippet string `json:"htmlSnippet,omitempty"`
-
-	CacheId string `json:"cacheId,omitempty"`
-
-	DisplayLink string `json:"displayLink,omitempty"`
+	Image *ResultImage `json:"image,omitempty"`
 
 	Snippet string `json:"snippet,omitempty"`
 
@@ -152,9 +142,33 @@ type Result struct {
 	Kind string `json:"kind,omitempty"`
 
 	Link string `json:"link,omitempty"`
+
+	HtmlTitle string `json:"htmlTitle,omitempty"`
+
+	Title string `json:"title,omitempty"`
+
+	HtmlSnippet string `json:"htmlSnippet,omitempty"`
+
+	FileFormat string `json:"fileFormat,omitempty"`
+
+	CacheId string `json:"cacheId,omitempty"`
+
+	FormattedUrl string `json:"formattedUrl,omitempty"`
+
+	HtmlFormattedUrl string `json:"htmlFormattedUrl,omitempty"`
+
+	DisplayLink string `json:"displayLink,omitempty"`
+
+	Mime string `json:"mime,omitempty"`
 }
 
 type Search struct {
+	Queries *SearchQueries `json:"queries,omitempty"`
+
+	Promotions []*Promotion `json:"promotions,omitempty"`
+
+	Spelling *SearchSpelling `json:"spelling,omitempty"`
+
 	Items []*Result `json:"items,omitempty"`
 
 	Context *Context `json:"context,omitempty"`
@@ -163,9 +177,7 @@ type Search struct {
 
 	Url *SearchUrl `json:"url,omitempty"`
 
-	Queries *SearchQueries `json:"queries,omitempty"`
-
-	Promotions []*Promotion `json:"promotions,omitempty"`
+	SearchInformation *SearchSearchInformation `json:"searchInformation,omitempty"`
 }
 
 type SearchQueries struct {
@@ -175,6 +187,88 @@ type ContextFacetsItem struct {
 	Label string `json:"label,omitempty"`
 
 	Anchor string `json:"anchor,omitempty"`
+}
+
+type SearchUrl struct {
+	Template string `json:"template,omitempty"`
+
+	Type string `json:"type,omitempty"`
+}
+
+type Query struct {
+	Sort string `json:"sort,omitempty"`
+
+	ExcludeTerms string `json:"excludeTerms,omitempty"`
+
+	Cx string `json:"cx,omitempty"`
+
+	Cr string `json:"cr,omitempty"`
+
+	ImgSize string `json:"imgSize,omitempty"`
+
+	RelatedSite string `json:"relatedSite,omitempty"`
+
+	ImgColorType string `json:"imgColorType,omitempty"`
+
+	SiteSearch string `json:"siteSearch,omitempty"`
+
+	HighRange string `json:"highRange,omitempty"`
+
+	Rights string `json:"rights,omitempty"`
+
+	ImgDominantColor string `json:"imgDominantColor,omitempty"`
+
+	Count int64 `json:"count,omitempty"`
+
+	StartIndex int64 `json:"startIndex,omitempty"`
+
+	FileType string `json:"fileType,omitempty"`
+
+	Language string `json:"language,omitempty"`
+
+	LinkSite string `json:"linkSite,omitempty"`
+
+	TotalResults int64 `json:"totalResults,omitempty,string"`
+
+	OutputEncoding string `json:"outputEncoding,omitempty"`
+
+	ImgType string `json:"imgType,omitempty"`
+
+	DateRestrict string `json:"dateRestrict,omitempty"`
+
+	Filter string `json:"filter,omitempty"`
+
+	Hq string `json:"hq,omitempty"`
+
+	ExactTerms string `json:"exactTerms,omitempty"`
+
+	Safe string `json:"safe,omitempty"`
+
+	StartPage int64 `json:"startPage,omitempty"`
+
+	InputEncoding string `json:"inputEncoding,omitempty"`
+
+	Hl string `json:"hl,omitempty"`
+
+	Cref string `json:"cref,omitempty"`
+
+	LowRange string `json:"lowRange,omitempty"`
+
+	OrTerms string `json:"orTerms,omitempty"`
+
+	GoogleHost string `json:"googleHost,omitempty"`
+
+	DisableCnTwTranslation string `json:"disableCnTwTranslation,omitempty"`
+
+	SiteSearchFilter string `json:"siteSearchFilter,omitempty"`
+
+	Title string `json:"title,omitempty"`
+
+	SearchType string `json:"searchType,omitempty"`
+
+	Gl string `json:"gl,omitempty"`
+
+	SearchTerms string `json:"searchTerms,omitempty"`
 }
 
 // method id "search.cse.list":
@@ -193,9 +287,91 @@ func (r *CseService) List(q string) *CseListCall {
 	return c
 }
 
+// Cx sets the optional parameter "cx": The custom search engine ID to
+// scope this search query
+func (c *CseListCall) Cx(cx string) *CseListCall {
+	c.opt_["cx"] = cx
+	return c
+}
+
+// Cr sets the optional parameter "cr": Country restrict(s).
+func (c *CseListCall) Cr(cr string) *CseListCall {
+	c.opt_["cr"] = cr
+	return c
+}
+
+// ImgSize sets the optional parameter "imgSize": Returns images of a
+// specified size, where size can be one of: icon, small, medium, large,
+// xlarge, xxlarge, and huge.
+func (c *CseListCall) ImgSize(imgSize string) *CseListCall {
+	c.opt_["imgSize"] = imgSize
+	return c
+}
+
+// RelatedSite sets the optional parameter "relatedSite": Specifies that
+// all search results should be pages that are related to the specified
+// URL
+func (c *CseListCall) RelatedSite(relatedSite string) *CseListCall {
+	c.opt_["relatedSite"] = relatedSite
+	return c
+}
+
+// ImgColorType sets the optional parameter "imgColorType": Returns
+// black and white, grayscale, or color images: mono, gray, and color.
+func (c *CseListCall) ImgColorType(imgColorType string) *CseListCall {
+	c.opt_["imgColorType"] = imgColorType
+	return c
+}
+
+// SiteSearch sets the optional parameter "siteSearch": Specifies all
+// search results should be pages from a given site
+func (c *CseListCall) SiteSearch(siteSearch string) *CseListCall {
+	c.opt_["siteSearch"] = siteSearch
+	return c
+}
+
+// C2coff sets the optional parameter "c2coff": Turns off the
+// translation between zh-CN and zh-TW.
+func (c *CseListCall) C2coff(c2coff string) *CseListCall {
+	c.opt_["c2coff"] = c2coff
+	return c
+}
+
+// HighRange sets the optional parameter "highRange": Creates a range in
+// form as_nlo value..as_nhi value and attempts to append it to query
+func (c *CseListCall) HighRange(highRange string) *CseListCall {
+	c.opt_["highRange"] = highRange
+	return c
+}
+
+// Rights sets the optional parameter "rights": Filters based on
+// licensing. Supported values include: cc_publicdomain, cc_attribute,
+// cc_sharealike, cc_noncommercial, cc_nonderived and combinations of
+// these.
+func (c *CseListCall) Rights(rights string) *CseListCall {
+	c.opt_["rights"] = rights
+	return c
+}
+
+// ImgDominantColor sets the optional parameter "imgDominantColor":
+// Returns images of a specific dominant color: yellow, green, teal,
+// blue, purple, pink, white, gray, black and brown.
+func (c *CseListCall) ImgDominantColor(imgDominantColor string) *CseListCall {
+	c.opt_["imgDominantColor"] = imgDominantColor
+	return c
+}
+
+// FileType sets the optional parameter "fileType": Returns images of a
+// specified type. Some of the allowed values are: bmp, gif, png, jpg,
+// svg, pdf, ...
+func (c *CseListCall) FileType(fileType string) *CseListCall {
+	c.opt_["fileType"] = fileType
+	return c
+}
+
 // Start sets the optional parameter "start": The index of the first
 // result to return
-func (c *CseListCall) Start(start string) *CseListCall {
+func (c *CseListCall) Start(start int64) *CseListCall {
 	c.opt_["start"] = start
 	return c
 }
@@ -204,6 +380,13 @@ func (c *CseListCall) Start(start string) *CseListCall {
 // domain to use to perform the search.
 func (c *CseListCall) Googlehost(googlehost string) *CseListCall {
 	c.opt_["googlehost"] = googlehost
+	return c
+}
+
+// LinkSite sets the optional parameter "linkSite": Specifies that all
+// search results should contain a link to a particular URL
+func (c *CseListCall) LinkSite(linkSite string) *CseListCall {
+	c.opt_["linkSite"] = linkSite
 	return c
 }
 
@@ -216,8 +399,22 @@ func (c *CseListCall) Lr(lr string) *CseListCall {
 
 // Num sets the optional parameter "num": Number of search results to
 // return
-func (c *CseListCall) Num(num string) *CseListCall {
+func (c *CseListCall) Num(num int64) *CseListCall {
 	c.opt_["num"] = num
+	return c
+}
+
+// ImgType sets the optional parameter "imgType": Returns images of a
+// type, which can be one of: clipart, face, lineart, news, and photo.
+func (c *CseListCall) ImgType(imgType string) *CseListCall {
+	c.opt_["imgType"] = imgType
+	return c
+}
+
+// DateRestrict sets the optional parameter "dateRestrict": Specifies
+// all search results are from a time period
+func (c *CseListCall) DateRestrict(dateRestrict string) *CseListCall {
+	c.opt_["dateRestrict"] = dateRestrict
 	return c
 }
 
@@ -228,9 +425,30 @@ func (c *CseListCall) Filter(filter string) *CseListCall {
 	return c
 }
 
+// Hq sets the optional parameter "hq": Appends the extra query terms to
+// the query.
+func (c *CseListCall) Hq(hq string) *CseListCall {
+	c.opt_["hq"] = hq
+	return c
+}
+
+// ExactTerms sets the optional parameter "exactTerms": Identifies a
+// phrase that all documents in the search results must contain
+func (c *CseListCall) ExactTerms(exactTerms string) *CseListCall {
+	c.opt_["exactTerms"] = exactTerms
+	return c
+}
+
 // Safe sets the optional parameter "safe": Search safety level
 func (c *CseListCall) Safe(safe string) *CseListCall {
 	c.opt_["safe"] = safe
+	return c
+}
+
+// Hl sets the optional parameter "hl": Sets the user interface
+// language.
+func (c *CseListCall) Hl(hl string) *CseListCall {
+	c.opt_["hl"] = hl
 	return c
 }
 
@@ -238,6 +456,37 @@ func (c *CseListCall) Safe(safe string) *CseListCall {
 // search engine
 func (c *CseListCall) Cref(cref string) *CseListCall {
 	c.opt_["cref"] = cref
+	return c
+}
+
+// LowRange sets the optional parameter "lowRange": Creates a range in
+// form as_nlo value..as_nhi value and attempts to append it to query
+func (c *CseListCall) LowRange(lowRange string) *CseListCall {
+	c.opt_["lowRange"] = lowRange
+	return c
+}
+
+// OrTerms sets the optional parameter "orTerms": Provides additional
+// search terms to check for in a document, where each document in the
+// search results must contain at least one of the additional search
+// terms
+func (c *CseListCall) OrTerms(orTerms string) *CseListCall {
+	c.opt_["orTerms"] = orTerms
+	return c
+}
+
+// SiteSearchFilter sets the optional parameter "siteSearchFilter":
+// Controls whether to include or exclude results from the site named in
+// the as_sitesearch parameter
+func (c *CseListCall) SiteSearchFilter(siteSearchFilter string) *CseListCall {
+	c.opt_["siteSearchFilter"] = siteSearchFilter
+	return c
+}
+
+// SearchType sets the optional parameter "searchType": Specifies the
+// search type: image.
+func (c *CseListCall) SearchType(searchType string) *CseListCall {
+	c.opt_["searchType"] = searchType
 	return c
 }
 
@@ -254,16 +503,11 @@ func (c *CseListCall) Sort(sort string) *CseListCall {
 	return c
 }
 
-// Cx sets the optional parameter "cx": The custom search engine ID to
-// scope this search query
-func (c *CseListCall) Cx(cx string) *CseListCall {
-	c.opt_["cx"] = cx
-	return c
-}
-
-// Cr sets the optional parameter "cr": Country restrict(s).
-func (c *CseListCall) Cr(cr string) *CseListCall {
-	c.opt_["cr"] = cr
+// ExcludeTerms sets the optional parameter "excludeTerms": Identifies a
+// word or phrase that should not appear in any documents in the search
+// results
+func (c *CseListCall) ExcludeTerms(excludeTerms string) *CseListCall {
+	c.opt_["excludeTerms"] = excludeTerms
 	return c
 }
 
@@ -272,11 +516,47 @@ func (c *CseListCall) Do() (*Search, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("q", fmt.Sprintf("%v", c.q))
+	if v, ok := c.opt_["cx"]; ok {
+		params.Set("cx", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["cr"]; ok {
+		params.Set("cr", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["imgSize"]; ok {
+		params.Set("imgSize", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["relatedSite"]; ok {
+		params.Set("relatedSite", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["imgColorType"]; ok {
+		params.Set("imgColorType", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["siteSearch"]; ok {
+		params.Set("siteSearch", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["c2coff"]; ok {
+		params.Set("c2coff", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["highRange"]; ok {
+		params.Set("highRange", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["rights"]; ok {
+		params.Set("rights", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["imgDominantColor"]; ok {
+		params.Set("imgDominantColor", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fileType"]; ok {
+		params.Set("fileType", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["start"]; ok {
 		params.Set("start", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["googlehost"]; ok {
 		params.Set("googlehost", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["linkSite"]; ok {
+		params.Set("linkSite", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["lr"]; ok {
 		params.Set("lr", fmt.Sprintf("%v", v))
@@ -284,14 +564,41 @@ func (c *CseListCall) Do() (*Search, error) {
 	if v, ok := c.opt_["num"]; ok {
 		params.Set("num", fmt.Sprintf("%v", v))
 	}
+	if v, ok := c.opt_["imgType"]; ok {
+		params.Set("imgType", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["dateRestrict"]; ok {
+		params.Set("dateRestrict", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["filter"]; ok {
 		params.Set("filter", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["hq"]; ok {
+		params.Set("hq", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["exactTerms"]; ok {
+		params.Set("exactTerms", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["safe"]; ok {
 		params.Set("safe", fmt.Sprintf("%v", v))
 	}
+	if v, ok := c.opt_["hl"]; ok {
+		params.Set("hl", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["cref"]; ok {
 		params.Set("cref", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["lowRange"]; ok {
+		params.Set("lowRange", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["orTerms"]; ok {
+		params.Set("orTerms", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["siteSearchFilter"]; ok {
+		params.Set("siteSearchFilter", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["searchType"]; ok {
+		params.Set("searchType", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["gl"]; ok {
 		params.Set("gl", fmt.Sprintf("%v", v))
@@ -299,11 +606,8 @@ func (c *CseListCall) Do() (*Search, error) {
 	if v, ok := c.opt_["sort"]; ok {
 		params.Set("sort", fmt.Sprintf("%v", v))
 	}
-	if v, ok := c.opt_["cx"]; ok {
-		params.Set("cx", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["cr"]; ok {
-		params.Set("cr", fmt.Sprintf("%v", v))
+	if v, ok := c.opt_["excludeTerms"]; ok {
+		params.Set("excludeTerms", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/customsearch/", "v1")
 	urls += "?" + params.Encode()
@@ -329,6 +633,11 @@ func (c *CseListCall) Do() (*Search, error) {
 	//     "q"
 	//   ],
 	//   "parameters": {
+	//     "c2coff": {
+	//       "description": "Turns off the translation between zh-CN and zh-TW.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "cr": {
 	//       "description": "Country restrict(s).",
 	//       "location": "query",
@@ -341,6 +650,26 @@ func (c *CseListCall) Do() (*Search, error) {
 	//     },
 	//     "cx": {
 	//       "description": "The custom search engine ID to scope this search query",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "dateRestrict": {
+	//       "description": "Specifies all search results are from a time period",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "exactTerms": {
+	//       "description": "Identifies a phrase that all documents in the search results must contain",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "excludeTerms": {
+	//       "description": "Identifies a word or phrase that should not appear in any documents in the search results",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "fileType": {
+	//       "description": "Returns images of a specified type. Some of the allowed values are: bmp, gif, png, jpg, svg, pdf, ...",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -364,6 +693,117 @@ func (c *CseListCall) Do() (*Search, error) {
 	//     },
 	//     "googlehost": {
 	//       "description": "The local Google domain to use to perform the search.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "highRange": {
+	//       "description": "Creates a range in form as_nlo value..as_nhi value and attempts to append it to query",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "hl": {
+	//       "description": "Sets the user interface language.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "hq": {
+	//       "description": "Appends the extra query terms to the query.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "imgColorType": {
+	//       "description": "Returns black and white, grayscale, or color images: mono, gray, and color.",
+	//       "enum": [
+	//         "color",
+	//         "gray",
+	//         "mono"
+	//       ],
+	//       "enumDescriptions": [
+	//         "color",
+	//         "gray",
+	//         "mono"
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "imgDominantColor": {
+	//       "description": "Returns images of a specific dominant color: yellow, green, teal, blue, purple, pink, white, gray, black and brown.",
+	//       "enum": [
+	//         "black",
+	//         "blue",
+	//         "brown",
+	//         "gray",
+	//         "green",
+	//         "pink",
+	//         "purple",
+	//         "teal",
+	//         "white",
+	//         "yellow"
+	//       ],
+	//       "enumDescriptions": [
+	//         "black",
+	//         "blue",
+	//         "brown",
+	//         "gray",
+	//         "green",
+	//         "pink",
+	//         "purple",
+	//         "teal",
+	//         "white",
+	//         "yellow"
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "imgSize": {
+	//       "description": "Returns images of a specified size, where size can be one of: icon, small, medium, large, xlarge, xxlarge, and huge.",
+	//       "enum": [
+	//         "huge",
+	//         "icon",
+	//         "large",
+	//         "medium",
+	//         "small",
+	//         "xlarge",
+	//         "xxlarge"
+	//       ],
+	//       "enumDescriptions": [
+	//         "huge",
+	//         "icon",
+	//         "large",
+	//         "medium",
+	//         "small",
+	//         "xlarge",
+	//         "xxlarge"
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "imgType": {
+	//       "description": "Returns images of a type, which can be one of: clipart, face, lineart, news, and photo.",
+	//       "enum": [
+	//         "clipart",
+	//         "face",
+	//         "lineart",
+	//         "news",
+	//         "photo"
+	//       ],
+	//       "enumDescriptions": [
+	//         "clipart",
+	//         "face",
+	//         "lineart",
+	//         "news",
+	//         "photo"
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "linkSite": {
+	//       "description": "Specifies that all search results should contain a link to a particular URL",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "lowRange": {
+	//       "description": "Creates a range in form as_nlo value..as_nhi value and attempts to append it to query",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -449,6 +889,12 @@ func (c *CseListCall) Do() (*Search, error) {
 	//     "num": {
 	//       "default": "10",
 	//       "description": "Number of search results to return",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "orTerms": {
+	//       "description": "Provides additional search terms to check for in a document, where each document in the search results must contain at least one of the additional search terms",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -456,6 +902,16 @@ func (c *CseListCall) Do() (*Search, error) {
 	//       "description": "Query",
 	//       "location": "query",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "relatedSite": {
+	//       "description": "Specifies that all search results should be pages that are related to the specified URL",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "rights": {
+	//       "description": "Filters based on licensing. Supported values include: cc_publicdomain, cc_attribute, cc_sharealike, cc_noncommercial, cc_nonderived and combinations of these.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "safe": {
@@ -474,6 +930,35 @@ func (c *CseListCall) Do() (*Search, error) {
 	//       "location": "query",
 	//       "type": "string"
 	//     },
+	//     "searchType": {
+	//       "description": "Specifies the search type: image.",
+	//       "enum": [
+	//         "image"
+	//       ],
+	//       "enumDescriptions": [
+	//         "custom image search"
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "siteSearch": {
+	//       "description": "Specifies all search results should be pages from a given site",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "siteSearchFilter": {
+	//       "description": "Controls whether to include or exclude results from the site named in the as_sitesearch parameter",
+	//       "enum": [
+	//         "e",
+	//         "i"
+	//       ],
+	//       "enumDescriptions": [
+	//         "exclude",
+	//         "include"
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "sort": {
 	//       "description": "The sort expression to apply to the results",
 	//       "location": "query",
@@ -481,8 +966,9 @@ func (c *CseListCall) Do() (*Search, error) {
 	//     },
 	//     "start": {
 	//       "description": "The index of the first result to return",
+	//       "format": "uint32",
 	//       "location": "query",
-	//       "type": "string"
+	//       "type": "integer"
 	//     }
 	//   },
 	//   "path": "v1",

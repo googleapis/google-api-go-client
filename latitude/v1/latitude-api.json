@@ -1,8 +1,10 @@
 {
  "kind": "discovery#restDescription",
+ "discoveryVersion": "v1",
  "id": "latitude:v1",
  "name": "latitude",
  "version": "v1",
+ "revision": "19700115",
  "title": "Google Latitude API",
  "description": "Lets you read and update your current location and work with your location history",
  "icons": {
@@ -10,9 +12,6 @@
   "x32": "http://www.google.com/images/icons/product/search-32.gif"
  },
  "documentationLink": "http://code.google.com/apis/latitude/v1/using_rest.html",
- "labels": [
-  "labs"
- ],
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/latitude/v1/",
  "basePath": "/latitude/v1/",

@@ -1,8 +1,10 @@
 {
  "kind": "discovery#restDescription",
+ "discoveryVersion": "v1",
  "id": "moderator:v1",
  "name": "moderator",
  "version": "v1",
+ "revision": "19700115",
  "title": "Moderator API",
  "description": "Moderator API",
  "icons": {
@@ -10,9 +12,6 @@
   "x32": "http://www.google.com/images/icons/product/search-32.gif"
  },
  "documentationLink": "http://code.google.com/apis/moderator/v1/using_rest.html",
- "labels": [
-  "labs"
- ],
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/moderator/v1/",
  "basePath": "/moderator/v1/",

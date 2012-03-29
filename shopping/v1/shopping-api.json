@@ -1,8 +1,10 @@
 {
  "kind": "discovery#restDescription",
+ "discoveryVersion": "v1",
  "id": "shopping:v1",
  "name": "shopping",
  "version": "v1",
+ "revision": "20120327",
  "title": "Search API for Shopping",
  "description": "Lets you search over product data",
  "icons": {
@@ -10,9 +12,6 @@
   "x32": "http://www.google.com/images/icons/product/search-32.gif"
  },
  "documentationLink": "http://code.google.com/apis/shopping/search/v1/getting_started.html",
- "labels": [
-  "labs"
- ],
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/shopping/search/v1/",
  "basePath": "/shopping/search/v1/",
@@ -22,12 +21,12 @@
    "description": "Data format for the response.",
    "default": "json",
    "enum": [
-    "json",
-    "atom"
+    "atom",
+    "json"
    ],
    "enumDescriptions": [
-    "Responses with Content-Type of application/json",
-    "Responses with Content-Type of application/atom+xml"
+    "Responses with Content-Type of application/atom+xml",
+    "Responses with Content-Type of application/json"
    ],
    "location": "query"
   },
@@ -122,7 +121,7 @@
        },
        "type": {
         "type": "string",
-        "description": "Type of recommendation list (one of: all, purchaseToPurchase, visitToVisit, visitToPurchase)."
+        "description": "Type of recommendation list (one of: all, purchaseToPurchase, visitToVisit, visitToPurchase, relatedItems)."
        }
       }
      }
@@ -455,6 +454,14 @@
      "description": "Google internal.",
      "format": "int64"
     },
+    "facetsRequest": {
+     "type": "string",
+     "description": "Google internal."
+    },
+    "facetsResponse": {
+     "type": "string",
+     "description": "Google internal."
+    },
     "rdcResponse": {
      "type": "string",
      "description": "Google internal."
@@ -508,7 +515,8 @@
      "properties": {
       "accountId": {
        "type": "string",
-       "description": "Account id of product author."
+       "description": "Account id of product author.",
+       "format": "uint64"
       },
       "name": {
        "type": "string",
@@ -546,7 +554,8 @@
     },
     "googleId": {
      "type": "string",
-     "description": "Google id of product."
+     "description": "Google id of product.",
+     "format": "uint64"
     },
     "gtin": {
      "type": "string",
@@ -644,10 +653,12 @@
       "properties": {
        "confidence": {
         "type": "number",
+        "description": "Google Internal.",
         "format": "double"
        },
        "node": {
         "type": "integer",
+        "description": "Google Internal.",
         "format": "int32"
        }
       }
@@ -730,6 +741,13 @@
      "description": "RFC 3339 formatted modification time and date of product.",
      "format": "date-time"
     },
+    "mpns": {
+     "type": "array",
+     "description": "List of all the product's MPNs.",
+     "items": {
+      "type": "string"
+     }
+    },
     "plusOne": {
      "type": "string",
      "description": "Code to add to the page to render the +1 content."
@@ -803,39 +821,24 @@
        "description": "This parameter is currently ignored",
        "location": "query"
       },
-      "debug.enableLogging": {
-       "type": "boolean",
-       "description": "Google Internal",
-       "location": "query"
-      },
-      "debug.enabled": {
-       "type": "boolean",
-       "description": "Google Internal",
-       "location": "query"
-      },
-      "debug.searchRequest": {
-       "type": "boolean",
-       "description": "Google Internal",
-       "location": "query"
-      },
-      "debug.searchResponse": {
-       "type": "boolean",
-       "description": "Google Internal",
-       "location": "query"
-      },
       "location": {
        "type": "string",
        "description": "Location used to determine tax and shipping",
        "location": "query"
       },
-      "plusOne": {
-       "type": "string",
-       "description": "+1 rendering specification.",
+      "plusOne.enabled": {
+       "type": "boolean",
+       "description": "Whether to return +1 button code",
        "location": "query"
       },
-      "productFields": {
+      "plusOne.options": {
        "type": "string",
-       "description": "Google Internal",
+       "description": "+1 button rendering specification",
+       "location": "query"
+      },
+      "plusOne.useGcsConfig": {
+       "type": "boolean",
+       "description": "Whether to use +1 button styles configured in the GCS account",
        "location": "query"
       },
       "productId": {
@@ -906,6 +909,11 @@
        "description": "Comma separated list of attributes to return",
        "location": "query"
       },
+      "availability": {
+       "type": "string",
+       "description": "Comma separated list of availabilities (outOfStock, limited, inStock, backOrder, preOrder, onDisplayToOrder) to return",
+       "location": "query"
+      },
       "boostBy": {
        "type": "string",
        "description": "Boosting specification",
@@ -944,46 +952,6 @@
       "currency": {
        "type": "string",
        "description": "Currency restriction (ISO 4217)",
-       "location": "query"
-      },
-      "debug.enableLogging": {
-       "type": "boolean",
-       "description": "Google Internal",
-       "location": "query"
-      },
-      "debug.enabled": {
-       "type": "boolean",
-       "description": "Google Internal",
-       "location": "query"
-      },
-      "debug.geocodeRequest": {
-       "type": "boolean",
-       "description": "Google Internal",
-       "location": "query"
-      },
-      "debug.geocodeResponse": {
-       "type": "boolean",
-       "description": "Google Internal",
-       "location": "query"
-      },
-      "debug.rdcRequest": {
-       "type": "boolean",
-       "description": "Google Internal",
-       "location": "query"
-      },
-      "debug.rdcResponse": {
-       "type": "boolean",
-       "description": "Google Internal",
-       "location": "query"
-      },
-      "debug.searchRequest": {
-       "type": "boolean",
-       "description": "Google Internal",
-       "location": "query"
-      },
-      "debug.searchResponse": {
-       "type": "boolean",
-       "description": "Google Internal",
        "location": "query"
       },
       "facets.discover": {
@@ -1025,33 +993,22 @@
       "maxVariants": {
        "type": "integer",
        "description": "Maximum number of variant results to return per result",
-       "format": "uint32",
+       "format": "int32",
        "location": "query"
       },
-      "minAvailability": {
-       "type": "string",
-       "enum": [
-        "inStock",
-        "limited",
-        "outOfStock",
-        "unknown"
-       ],
-       "enumDescriptions": [
-        "Only in stcok prodicts will be returned",
-        "Limited availability and in stock products will be returned",
-        "Out of stock, limited availability and in stock products will be returned",
-        "All products will be returned"
-       ],
+      "plusOne.enabled": {
+       "type": "boolean",
+       "description": "Whether to return +1 button code",
        "location": "query"
       },
-      "plusOne": {
+      "plusOne.options": {
        "type": "string",
-       "description": "+1 rendering specification.",
+       "description": "+1 button rendering specification",
        "location": "query"
       },
-      "productFields": {
-       "type": "string",
-       "description": "Google Internal",
+      "plusOne.useGcsConfig": {
+       "type": "boolean",
+       "description": "Whether to use +1 button styles configured in the GCS account",
        "location": "query"
       },
       "promotions.enabled": {
@@ -1102,16 +1059,6 @@
       "safe": {
        "type": "boolean",
        "description": "Whether safe search is enabled. Default: true",
-       "location": "query"
-      },
-      "sayt.enabled": {
-       "type": "boolean",
-       "description": "Google Internal",
-       "location": "query"
-      },
-      "sayt.useGcsConfig": {
-       "type": "boolean",
-       "description": "Google Internal",
        "location": "query"
       },
       "source": {

@@ -1,8 +1,10 @@
 {
  "kind": "discovery#restDescription",
+ "discoveryVersion": "v1",
  "id": "webfonts:v1",
  "name": "webfonts",
  "version": "v1",
+ "revision": "20111110",
  "title": "Google Web Fonts Developer API",
  "description": "The Google Web Fonts Developer API.",
  "icons": {
@@ -10,9 +12,6 @@
   "x32": "http://www.google.com/images/icons/feature/font_api-32.gif"
  },
  "documentationLink": "http://code.google.com/apis/webfonts/docs/developer_api.html",
- "labels": [
-  "labs"
- ],
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/webfonts/v1/",
  "basePath": "/webfonts/v1/",

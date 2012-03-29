@@ -1,8 +1,10 @@
 {
  "kind": "discovery#restDescription",
+ "discoveryVersion": "v1",
  "id": "analytics:v3",
  "name": "analytics",
  "version": "v3",
+ "revision": "20120227",
  "title": "Google Analytics API",
  "description": "View and manage your Google Analytics data",
  "icons": {
@@ -10,9 +12,6 @@
   "x32": "http://www.google.com/images/icons/product/analytics-32.png"
  },
  "documentationLink": "http://code.google.com/apis/analytics",
- "labels": [
-  "labs"
- ],
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/analytics/v3/",
  "basePath": "/analytics/v3/",
@@ -322,7 +321,8 @@
      "type": "object",
      "description": "Total values for the requested metrics over all the results, not just the results returned in this response. The order of the metric totals is same as the metric order specified in the request.",
      "additionalProperties": {
-      "type": "string"
+      "type": "string",
+      "description": "Key-value pair for the total value of a metric. Key is the metric name and the value is the total value for that metric."
      }
     }
    }

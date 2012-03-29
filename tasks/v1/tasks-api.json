@@ -1,8 +1,10 @@
 {
  "kind": "discovery#restDescription",
+ "discoveryVersion": "v1",
  "id": "tasks:v1",
  "name": "tasks",
  "version": "v1",
+ "revision": "20111027",
  "title": "Tasks API",
  "description": "Lets you manage your tasks and task lists.",
  "icons": {
@@ -10,9 +12,6 @@
   "x32": "http://www.google.com/images/icons/product/tasks-32.png"
  },
  "documentationLink": "http://code.google.com/apis/tasks/v1/using.html",
- "labels": [
-  "labs"
- ],
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/tasks/v1/",
  "basePath": "/tasks/v1/",

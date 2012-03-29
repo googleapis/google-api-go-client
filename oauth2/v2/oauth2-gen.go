@@ -54,6 +54,16 @@ type UserinfoService struct {
 }
 
 type Userinfo struct {
+	Email string `json:"email,omitempty"`
+
+	Locale string `json:"locale,omitempty"`
+
+	Given_name string `json:"given_name,omitempty"`
+
+	Picture string `json:"picture,omitempty"`
+
+	Name string `json:"name,omitempty"`
+
 	Family_name string `json:"family_name,omitempty"`
 
 	Link string `json:"link,omitempty"`
@@ -67,19 +77,20 @@ type Userinfo struct {
 	Timezone string `json:"timezone,omitempty"`
 
 	Birthday string `json:"birthday,omitempty"`
-
-	Email string `json:"email,omitempty"`
-
-	Locale string `json:"locale,omitempty"`
-
-	Given_name string `json:"given_name,omitempty"`
-
-	Picture string `json:"picture,omitempty"`
-
-	Name string `json:"name,omitempty"`
 }
 
 type Tokeninfo struct {
+	// Email: The email address of the user. Present only if the email scope
+	// is present in the request.
+	Email string `json:"email,omitempty"`
+
+	// Issued_to: To whom was the token issued to. In general the same as
+	// audience.
+	Issued_to string `json:"issued_to,omitempty"`
+
+	// Scope: The space separated list of scopes granted to this token.
+	Scope string `json:"scope,omitempty"`
+
 	// Audience: Who is the intended audience for this token. In general the
 	// same as issued_to.
 	Audience string `json:"audience,omitempty"`
@@ -98,17 +109,6 @@ type Tokeninfo struct {
 	// Verified_email: Boolean flag which is true if the email address is
 	// verified. Present only if the email scope is present in the request.
 	Verified_email bool `json:"verified_email,omitempty"`
-
-	// Email: The email address of the user. Present only if the email scope
-	// is present in the request.
-	Email string `json:"email,omitempty"`
-
-	// Issued_to: To whom was the token issued to. In general the same as
-	// audience.
-	Issued_to string `json:"issued_to,omitempty"`
-
-	// Scope: The space separated list of scopes granted to this token.
-	Scope string `json:"scope,omitempty"`
 }
 
 // method id "oauth2.tokeninfo":

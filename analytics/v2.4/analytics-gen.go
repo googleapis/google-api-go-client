@@ -141,10 +141,10 @@ func (c *DataGetCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	params.Set("end-date", fmt.Sprintf("%v", c.endDate))
 	params.Set("start-date", fmt.Sprintf("%v", c.startDate))
 	params.Set("ids", fmt.Sprintf("%v", c.ids))
 	params.Set("metrics", fmt.Sprintf("%v", c.metrics))
+	params.Set("end-date", fmt.Sprintf("%v", c.endDate))
 	if v, ok := c.opt_["segment"]; ok {
 		params.Set("segment", fmt.Sprintf("%v", v))
 	}
@@ -253,6 +253,7 @@ func (c *DataGetCall) Do() error {
 	//   },
 	//   "path": "data",
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics",
 	//     "https://www.googleapis.com/auth/analytics.readonly"
 	//   ]
 	// }

@@ -1,6 +1,6 @@
 // Package freebase provides access to the Freebase API.
 //
-// See http://wiki.freebase.com/wiki/New_Freebase_API
+// See http://wiki.freebase.com/wiki/API
 //
 // Usage example:
 //

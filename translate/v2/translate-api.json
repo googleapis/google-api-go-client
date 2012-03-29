@@ -1,8 +1,10 @@
 {
  "kind": "discovery#restDescription",
+ "discoveryVersion": "v1",
  "id": "translate:v2",
  "name": "translate",
  "version": "v2",
+ "revision": "20120112",
  "title": "Translate API",
  "description": "Lets you translate text from one language to another",
  "icons": {
@@ -10,9 +12,6 @@
   "x32": "http://www.google.com/images/icons/product/translate-32.png"
  },
  "documentationLink": "http://code.google.com/apis/language/translate/v2/using_rest.html",
- "labels": [
-  "labs"
- ],
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/language/translate/",
  "basePath": "/language/translate/",

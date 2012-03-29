@@ -60,23 +60,6 @@ type GroupsService struct {
 }
 
 type Groups struct {
-	// MessageDisplayFont: Default message display font. Possible values
-	// are: DEFAULT_FONT FIXED_WIDTH_FONT
-	MessageDisplayFont string `json:"messageDisplayFont,omitempty"`
-
-	// WhoCanJoin: Permissions to join the group. Possible values are:
-	// ANYONE_CAN_JOIN ALL_IN_DOMAIN_CAN_JOIN INVITED_CAN_JOIN
-	// CAN_REQUEST_TO_JOIN
-	WhoCanJoin string `json:"whoCanJoin,omitempty"`
-
-	// Name: Name of the Group
-	Name string `json:"name,omitempty"`
-
-	// ReplyTo: Whome should the default reply to a message go to. Possible
-	// values are: REPLY_TO_CUSTOM REPLY_TO_SENDER REPLY_TO_LIST
-	// REPLY_TO_OWNER REPLY_TO_IGNORE REPLY_TO_MANAGERS
-	ReplyTo string `json:"replyTo,omitempty"`
-
 	// MaxMessageBytes: Maximum message size allowed.
 	MaxMessageBytes int64 `json:"maxMessageBytes,omitempty"`
 
@@ -148,80 +131,23 @@ type Groups struct {
 
 	// IsArchived: If the contents of the group are archived.
 	IsArchived string `json:"isArchived,omitempty"`
-}
 
-// method id "groupsSettings.groups.patch":
+	// MessageDisplayFont: Default message display font. Possible values
+	// are: DEFAULT_FONT FIXED_WIDTH_FONT
+	MessageDisplayFont string `json:"messageDisplayFont,omitempty"`
 
-type GroupsPatchCall struct {
-	s             *Service
-	groupUniqueId string
-	groups        *Groups
-	opt_          map[string]interface{}
-}
+	// WhoCanJoin: Permissions to join the group. Possible values are:
+	// ANYONE_CAN_JOIN ALL_IN_DOMAIN_CAN_JOIN INVITED_CAN_JOIN
+	// CAN_REQUEST_TO_JOIN
+	WhoCanJoin string `json:"whoCanJoin,omitempty"`
 
-// Patch: Updates an existing resource. This method supports patch
-// semantics.
-func (r *GroupsService) Patch(groupUniqueId string, groups *Groups) *GroupsPatchCall {
-	c := &GroupsPatchCall{s: r.s, opt_: make(map[string]interface{})}
-	c.groupUniqueId = groupUniqueId
-	c.groups = groups
-	return c
-}
+	// Name: Name of the Group
+	Name string `json:"name,omitempty"`
 
-func (c *GroupsPatchCall) Do() (*Groups, error) {
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.groups)
-	if err != nil {
-		return nil, err
-	}
-	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/groups/v1/groups/", "{groupUniqueId}")
-	urls = strings.Replace(urls, "{groupUniqueId}", cleanPathString(c.groupUniqueId), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("PATCH", urls, body)
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(Groups)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Updates an existing resource. This method supports patch semantics.",
-	//   "httpMethod": "PATCH",
-	//   "id": "groupsSettings.groups.patch",
-	//   "parameterOrder": [
-	//     "groupUniqueId"
-	//   ],
-	//   "parameters": {
-	//     "groupUniqueId": {
-	//       "description": "The resource ID",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "{groupUniqueId}",
-	//   "request": {
-	//     "$ref": "Groups"
-	//   },
-	//   "response": {
-	//     "$ref": "Groups"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.groups.settings"
-	//   ]
-	// }
-
+	// ReplyTo: Whome should the default reply to a message go to. Possible
+	// values are: REPLY_TO_CUSTOM REPLY_TO_SENDER REPLY_TO_LIST
+	// REPLY_TO_OWNER REPLY_TO_IGNORE REPLY_TO_MANAGERS
+	ReplyTo string `json:"replyTo,omitempty"`
 }
 
 // method id "groupsSettings.groups.update":
@@ -349,6 +275,80 @@ func (c *GroupsGetCall) Do() (*Groups, error) {
 	//     }
 	//   },
 	//   "path": "{groupUniqueId}",
+	//   "response": {
+	//     "$ref": "Groups"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/apps.groups.settings"
+	//   ]
+	// }
+
+}
+
+// method id "groupsSettings.groups.patch":
+
+type GroupsPatchCall struct {
+	s             *Service
+	groupUniqueId string
+	groups        *Groups
+	opt_          map[string]interface{}
+}
+
+// Patch: Updates an existing resource. This method supports patch
+// semantics.
+func (r *GroupsService) Patch(groupUniqueId string, groups *Groups) *GroupsPatchCall {
+	c := &GroupsPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.groupUniqueId = groupUniqueId
+	c.groups = groups
+	return c
+}
+
+func (c *GroupsPatchCall) Do() (*Groups, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.groups)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/groups/v1/groups/", "{groupUniqueId}")
+	urls = strings.Replace(urls, "{groupUniqueId}", cleanPathString(c.groupUniqueId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Groups)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an existing resource. This method supports patch semantics.",
+	//   "httpMethod": "PATCH",
+	//   "id": "groupsSettings.groups.patch",
+	//   "parameterOrder": [
+	//     "groupUniqueId"
+	//   ],
+	//   "parameters": {
+	//     "groupUniqueId": {
+	//       "description": "The resource ID",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{groupUniqueId}",
+	//   "request": {
+	//     "$ref": "Groups"
+	//   },
 	//   "response": {
 	//     "$ref": "Groups"
 	//   },

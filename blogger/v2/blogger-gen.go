@@ -89,21 +89,95 @@ type PostsService struct {
 	s *Service
 }
 
+type CommentInReplyTo struct {
+	// Id: The identified of the parent of this comment.
+	Id int64 `json:"id,omitempty,string"`
+}
+
+type Page struct {
+	// Updated: RFC 3339 date-time when this Page was last updated.
+	Updated string `json:"updated,omitempty"`
+
+	// Content: The body content of this Page, in HTML.
+	Content string `json:"content,omitempty"`
+
+	// Url: The URL that this Page is displayed at.
+	Url string `json:"url,omitempty"`
+
+	// Id: The identifier for this resource.
+	Id int64 `json:"id,omitempty,string"`
+
+	// Title: The title of this entity. This is the name displayed in the
+	// Admin user interface.
+	Title string `json:"title,omitempty"`
+
+	// Blog: Data about the blog containing this Page.
+	Blog *PageBlog `json:"blog,omitempty"`
+
+	// Author: The author of this Page.
+	Author *PageAuthor `json:"author,omitempty"`
+
+	// SelfLink: The API REST URL to fetch this resource from.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// Published: RFC 3339 date-time when this Page was published.
+	Published string `json:"published,omitempty"`
+
+	// Kind: The kind of this entity. Always blogger#page
+	Kind string `json:"kind,omitempty"`
+}
+
+type CommentBlog struct {
+	// Id: The identifier of the blog containing this comment.
+	Id int64 `json:"id,omitempty,string"`
+}
+
+type PageList struct {
+	// Items: The list of Pages for a Blog.
+	Items []*Page `json:"items,omitempty"`
+
+	// Kind: The kind of this entity. Always blogger#pageList
+	Kind string `json:"kind,omitempty"`
+}
+
+type PostAuthor struct {
+	// Image: The Post author's avatar.
+	Image *PostAuthorImage `json:"image,omitempty"`
+
+	// Url: The URL of the Post creator's Profile page.
+	Url string `json:"url,omitempty"`
+
+	// Id: The identifier of the Post creator.
+	Id string `json:"id,omitempty"`
+
+	// DisplayName: The display name.
+	DisplayName string `json:"displayName,omitempty"`
+}
+
+type CommentPost struct {
+	// Id: The identifier of the post containing this comment.
+	Id int64 `json:"id,omitempty,string"`
+}
+
+type BlogPages struct {
+	// TotalItems: The count of pages in this blog.
+	TotalItems int64 `json:"totalItems,omitempty"`
+
+	// SelfLink: The URL of the container for pages in this blog.
+	SelfLink string `json:"selfLink,omitempty"`
+}
+
+type PostBlog struct {
+	// Id: The identifier of the Blog that contains this Post.
+	Id int64 `json:"id,omitempty,string"`
+}
+
 type UserBlogs struct {
 	// SelfLink: The URL of the Blogs for this user.
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
 type Comment struct {
-	// Blog: Data about the blog containing this comment.
-	Blog *CommentBlog `json:"blog,omitempty"`
-
-	// InReplyTo: Data about the comment this is in reply to.
-	InReplyTo *CommentInReplyTo `json:"inReplyTo,omitempty"`
-
-	// Author: The author of this Comment.
-	Author *CommentAuthor `json:"author,omitempty"`
-
 	// SelfLink: The API REST URL to fetch this resource from.
 	SelfLink string `json:"selfLink,omitempty"`
 
@@ -124,9 +198,24 @@ type Comment struct {
 
 	// Id: The identifier for this resource.
 	Id int64 `json:"id,omitempty,string"`
+
+	// Blog: Data about the blog containing this comment.
+	Blog *CommentBlog `json:"blog,omitempty"`
+
+	// InReplyTo: Data about the comment this is in reply to.
+	InReplyTo *CommentInReplyTo `json:"inReplyTo,omitempty"`
+
+	// Author: The author of this Comment.
+	Author *CommentAuthor `json:"author,omitempty"`
 }
 
 type Post struct {
+	// Replies: The container of comments on this Post.
+	Replies *PostReplies `json:"replies,omitempty"`
+
+	// Kind: The kind of this entity. Always blogger#post
+	Kind string `json:"kind,omitempty"`
+
 	// Updated: RFC 3339 date-time when this Post was last updated.
 	Updated string `json:"updated,omitempty"`
 
@@ -156,12 +245,6 @@ type Post struct {
 
 	// Published: RFC 3339 date-time when this Post was published.
 	Published string `json:"published,omitempty"`
-
-	// Replies: The container of comments on this Post.
-	Replies *PostReplies `json:"replies,omitempty"`
-
-	// Kind: The kind of this entity. Always blogger#post
-	Kind string `json:"kind,omitempty"`
 }
 
 type PostAuthorImage struct {
@@ -170,14 +253,14 @@ type PostAuthorImage struct {
 }
 
 type BlogLocale struct {
-	// Language: The language this blog is authored in.
-	Language string `json:"language,omitempty"`
-
 	// Country: The country this blog's locale is set to.
 	Country string `json:"country,omitempty"`
 
 	// Variant: The language variant this blog is authored in.
 	Variant string `json:"variant,omitempty"`
+
+	// Language: The language this blog is authored in.
+	Language string `json:"language,omitempty"`
 }
 
 type CommentList struct {
@@ -197,14 +280,29 @@ type CommentList struct {
 }
 
 type PostReplies struct {
-	// TotalItems: The count of comments on this post.
-	TotalItems int64 `json:"totalItems,omitempty,string"`
-
 	// SelfLink: The URL of the comments on this post.
 	SelfLink string `json:"selfLink,omitempty"`
+
+	// TotalItems: The count of comments on this post.
+	TotalItems int64 `json:"totalItems,omitempty,string"`
 }
 
 type Blog struct {
+	// Posts: The container of posts in this blog.
+	Posts *BlogPosts `json:"posts,omitempty"`
+
+	// Kind: The kind of this entry. Always blogger#blog
+	Kind string `json:"kind,omitempty"`
+
+	// Updated: RFC 3339 date-time when this blog was last updated.
+	Updated string `json:"updated,omitempty"`
+
+	// Url: The URL where this blog is published.
+	Url string `json:"url,omitempty"`
+
+	// Id: The identifier for this resource.
+	Id int64 `json:"id,omitempty,string"`
+
 	// Pages: The container of pages in this blog.
 	Pages *BlogPages `json:"pages,omitempty"`
 
@@ -223,21 +321,6 @@ type Blog struct {
 
 	// Published: RFC 3339 date-time when this blog was published.
 	Published string `json:"published,omitempty"`
-
-	// Posts: The container of posts in this blog.
-	Posts *BlogPosts `json:"posts,omitempty"`
-
-	// Kind: The kind of this entry. Always blogger#blog
-	Kind string `json:"kind,omitempty"`
-
-	// Updated: RFC 3339 date-time when this blog was last updated.
-	Updated string `json:"updated,omitempty"`
-
-	// Url: The URL where this blog is published.
-	Url string `json:"url,omitempty"`
-
-	// Id: The identifier for this resource.
-	Id int64 `json:"id,omitempty,string"`
 }
 
 type PageBlog struct {
@@ -262,6 +345,9 @@ type PostList struct {
 }
 
 type PageAuthor struct {
+	// Image: The page author's avatar.
+	Image *PageAuthorImage `json:"image,omitempty"`
+
 	// Url: The URL of the Page creator's Profile page.
 	Url string `json:"url,omitempty"`
 
@@ -270,9 +356,6 @@ type PageAuthor struct {
 
 	// DisplayName: The display name.
 	DisplayName string `json:"displayName,omitempty"`
-
-	// Image: The page author's avatar.
-	Image *PageAuthorImage `json:"image,omitempty"`
 }
 
 type CommentAuthorImage struct {
@@ -294,6 +377,9 @@ type BlogPosts struct {
 }
 
 type CommentAuthor struct {
+	// Image: The comment creator's avatar.
+	Image *CommentAuthorImage `json:"image,omitempty"`
+
 	// Url: The URL of the Comment creator's Profile page.
 	Url string `json:"url,omitempty"`
 
@@ -302,41 +388,29 @@ type CommentAuthor struct {
 
 	// DisplayName: The display name.
 	DisplayName string `json:"displayName,omitempty"`
-
-	// Image: The comment creator's avatar.
-	Image *CommentAuthorImage `json:"image,omitempty"`
 }
 
 type BlogList struct {
+	// Kind: The kind of this entity. Always blogger#blogList
+	Kind string `json:"kind,omitempty"`
+
 	// Items: The list of Blogs this user has Authorship or Admin rights
 	// over.
 	Items []*Blog `json:"items,omitempty"`
-
-	// Kind: The kind of this entity. Always blogger#blogList
-	Kind string `json:"kind,omitempty"`
 }
 
 type UserLocale struct {
+	// Country: The user's country setting.
+	Country string `json:"country,omitempty"`
+
 	// Variant: The user's language variant setting.
 	Variant string `json:"variant,omitempty"`
 
 	// Language: The user's language setting.
 	Language string `json:"language,omitempty"`
-
-	// Country: The user's country setting.
-	Country string `json:"country,omitempty"`
 }
 
 type User struct {
-	// Blogs: The container of blogs for this user.
-	Blogs *UserBlogs `json:"blogs,omitempty"`
-
-	// About: Profile summary information.
-	About string `json:"about,omitempty"`
-
-	// Locale: This user's locale
-	Locale *UserLocale `json:"locale,omitempty"`
-
 	// SelfLink: The API REST URL to fetch this resource from.
 	SelfLink string `json:"selfLink,omitempty"`
 
@@ -355,101 +429,27 @@ type User struct {
 
 	// DisplayName: The display name.
 	DisplayName string `json:"displayName,omitempty"`
-}
 
-type CommentInReplyTo struct {
-	// Id: The identified of the parent of this comment.
-	Id int64 `json:"id,omitempty,string"`
-}
+	// Blogs: The container of blogs for this user.
+	Blogs *UserBlogs `json:"blogs,omitempty"`
 
-type Page struct {
-	// Author: The author of this Page.
-	Author *PageAuthor `json:"author,omitempty"`
+	// About: Profile summary information.
+	About string `json:"about,omitempty"`
 
-	// SelfLink: The API REST URL to fetch this resource from.
-	SelfLink string `json:"selfLink,omitempty"`
-
-	// Published: RFC 3339 date-time when this Page was published.
-	Published string `json:"published,omitempty"`
-
-	// Kind: The kind of this entity. Always blogger#page
-	Kind string `json:"kind,omitempty"`
-
-	// Updated: RFC 3339 date-time when this Page was last updated.
-	Updated string `json:"updated,omitempty"`
-
-	// Content: The body content of this Page, in HTML.
-	Content string `json:"content,omitempty"`
-
-	// Url: The URL that this Page is displayed at.
-	Url string `json:"url,omitempty"`
-
-	// Id: The identifier for this resource.
-	Id int64 `json:"id,omitempty,string"`
-
-	// Title: The title of this entity. This is the name displayed in the
-	// Admin user interface.
-	Title string `json:"title,omitempty"`
-
-	// Blog: Data about the blog containing this Page.
-	Blog *PageBlog `json:"blog,omitempty"`
-}
-
-type CommentBlog struct {
-	// Id: The identifier of the blog containing this comment.
-	Id int64 `json:"id,omitempty,string"`
-}
-
-type PageList struct {
-	// Items: The list of Pages for a Blog.
-	Items []*Page `json:"items,omitempty"`
-
-	// Kind: The kind of this entity. Always blogger#pageList
-	Kind string `json:"kind,omitempty"`
-}
-
-type PostAuthor struct {
-	// Url: The URL of the Post creator's Profile page.
-	Url string `json:"url,omitempty"`
-
-	// Id: The identifier of the Post creator.
-	Id string `json:"id,omitempty"`
-
-	// DisplayName: The display name.
-	DisplayName string `json:"displayName,omitempty"`
-
-	// Image: The Post author's avatar.
-	Image *PostAuthorImage `json:"image,omitempty"`
-}
-
-type CommentPost struct {
-	// Id: The identifier of the post containing this comment.
-	Id int64 `json:"id,omitempty,string"`
-}
-
-type BlogPages struct {
-	// SelfLink: The URL of the container for pages in this blog.
-	SelfLink string `json:"selfLink,omitempty"`
-
-	// TotalItems: The count of pages in this blog.
-	TotalItems int64 `json:"totalItems,omitempty"`
-}
-
-type PostBlog struct {
-	// Id: The identifier of the Blog that contains this Post.
-	Id int64 `json:"id,omitempty,string"`
+	// Locale: This user's locale
+	Locale *UserLocale `json:"locale,omitempty"`
 }
 
 // method id "blogger.blogs.get":
 
 type BlogsGetCall struct {
 	s      *Service
-	blogId int64
+	blogId string
 	opt_   map[string]interface{}
 }
 
 // Get: Gets one blog by id.
-func (r *BlogsService) Get(blogId int64) *BlogsGetCall {
+func (r *BlogsService) Get(blogId string) *BlogsGetCall {
 	c := &BlogsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.blogId = blogId
 	return c
@@ -460,7 +460,7 @@ func (c *BlogsGetCall) Do() (*Blog, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/blogger/v2/", "blogs/{blogId}")
-	urls = strings.Replace(urls, "{blogId}", strconv.FormatInt(c.blogId, 10), 1)
+	urls = strings.Replace(urls, "{blogId}", cleanPathString(c.blogId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
@@ -486,7 +486,6 @@ func (c *BlogsGetCall) Do() (*Blog, error) {
 	//   "parameters": {
 	//     "blogId": {
 	//       "description": "The ID of the blog to get.",
-	//       "format": "int64",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -507,23 +506,16 @@ func (c *BlogsGetCall) Do() (*Blog, error) {
 
 type CommentsListCall struct {
 	s      *Service
-	blogId int64
-	postId int64
+	blogId string
+	postId string
 	opt_   map[string]interface{}
 }
 
 // List: Retrieves the comments for a blog, possibly filtered.
-func (r *CommentsService) List(blogId int64, postId int64) *CommentsListCall {
+func (r *CommentsService) List(blogId string, postId string) *CommentsListCall {
 	c := &CommentsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.blogId = blogId
 	c.postId = postId
-	return c
-}
-
-// MaxResults sets the optional parameter "maxResults": Maximum number
-// of comments to include in the result.
-func (c *CommentsListCall) MaxResults(maxResults int64) *CommentsListCall {
-	c.opt_["maxResults"] = maxResults
 	return c
 }
 
@@ -548,13 +540,17 @@ func (c *CommentsListCall) PageToken(pageToken string) *CommentsListCall {
 	return c
 }
 
+// MaxResults sets the optional parameter "maxResults": Maximum number
+// of comments to include in the result.
+func (c *CommentsListCall) MaxResults(maxResults int64) *CommentsListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
 func (c *CommentsListCall) Do() (*CommentList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
 	if v, ok := c.opt_["fetchBodies"]; ok {
 		params.Set("fetchBodies", fmt.Sprintf("%v", v))
 	}
@@ -564,9 +560,12 @@ func (c *CommentsListCall) Do() (*CommentList, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/blogger/v2/", "blogs/{blogId}/posts/{postId}/comments")
-	urls = strings.Replace(urls, "{blogId}", strconv.FormatInt(c.blogId, 10), 1)
-	urls = strings.Replace(urls, "{postId}", strconv.FormatInt(c.postId, 10), 1)
+	urls = strings.Replace(urls, "{blogId}", cleanPathString(c.blogId), 1)
+	urls = strings.Replace(urls, "{postId}", cleanPathString(c.postId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
@@ -593,7 +592,6 @@ func (c *CommentsListCall) Do() (*CommentList, error) {
 	//   "parameters": {
 	//     "blogId": {
 	//       "description": "ID of the blog to fetch comments from.",
-	//       "format": "int64",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -616,7 +614,6 @@ func (c *CommentsListCall) Do() (*CommentList, error) {
 	//     },
 	//     "postId": {
 	//       "description": "ID of the post to fetch posts from.",
-	//       "format": "int64",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -642,14 +639,14 @@ func (c *CommentsListCall) Do() (*CommentList, error) {
 
 type CommentsGetCall struct {
 	s         *Service
-	blogId    int64
-	postId    int64
-	commentId int64
+	blogId    string
+	postId    string
+	commentId string
 	opt_      map[string]interface{}
 }
 
 // Get: Gets one comment by id.
-func (r *CommentsService) Get(blogId int64, postId int64, commentId int64) *CommentsGetCall {
+func (r *CommentsService) Get(blogId string, postId string, commentId string) *CommentsGetCall {
 	c := &CommentsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.blogId = blogId
 	c.postId = postId
@@ -662,9 +659,9 @@ func (c *CommentsGetCall) Do() (*Comment, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/blogger/v2/", "blogs/{blogId}/posts/{postId}/comments/{commentId}")
-	urls = strings.Replace(urls, "{blogId}", strconv.FormatInt(c.blogId, 10), 1)
-	urls = strings.Replace(urls, "{postId}", strconv.FormatInt(c.postId, 10), 1)
-	urls = strings.Replace(urls, "{commentId}", strconv.FormatInt(c.commentId, 10), 1)
+	urls = strings.Replace(urls, "{blogId}", cleanPathString(c.blogId), 1)
+	urls = strings.Replace(urls, "{postId}", cleanPathString(c.postId), 1)
+	urls = strings.Replace(urls, "{commentId}", cleanPathString(c.commentId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
@@ -692,21 +689,18 @@ func (c *CommentsGetCall) Do() (*Comment, error) {
 	//   "parameters": {
 	//     "blogId": {
 	//       "description": "ID of the blog to containing the comment.",
-	//       "format": "int64",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "commentId": {
 	//       "description": "The ID of the comment to get.",
-	//       "format": "int64",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "postId": {
 	//       "description": "ID of the post to fetch posts from.",
-	//       "format": "int64",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -727,12 +721,12 @@ func (c *CommentsGetCall) Do() (*Comment, error) {
 
 type PagesListCall struct {
 	s      *Service
-	blogId int64
+	blogId string
 	opt_   map[string]interface{}
 }
 
 // List: Retrieves pages for a blog, possibly filtered.
-func (r *PagesService) List(blogId int64) *PagesListCall {
+func (r *PagesService) List(blogId string) *PagesListCall {
 	c := &PagesListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.blogId = blogId
 	return c
@@ -753,7 +747,7 @@ func (c *PagesListCall) Do() (*PageList, error) {
 		params.Set("fetchBodies", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/blogger/v2/", "blogs/{blogId}/pages")
-	urls = strings.Replace(urls, "{blogId}", strconv.FormatInt(c.blogId, 10), 1)
+	urls = strings.Replace(urls, "{blogId}", cleanPathString(c.blogId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
@@ -779,7 +773,6 @@ func (c *PagesListCall) Do() (*PageList, error) {
 	//   "parameters": {
 	//     "blogId": {
 	//       "description": "ID of the blog to fetch pages from.",
-	//       "format": "int64",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -805,13 +798,13 @@ func (c *PagesListCall) Do() (*PageList, error) {
 
 type PagesGetCall struct {
 	s      *Service
-	blogId int64
-	pageId int64
+	blogId string
+	pageId string
 	opt_   map[string]interface{}
 }
 
 // Get: Gets one blog page by id.
-func (r *PagesService) Get(blogId int64, pageId int64) *PagesGetCall {
+func (r *PagesService) Get(blogId string, pageId string) *PagesGetCall {
 	c := &PagesGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.blogId = blogId
 	c.pageId = pageId
@@ -823,8 +816,8 @@ func (c *PagesGetCall) Do() (*Page, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/blogger/v2/", "blogs/{blogId}/pages/{pageId}")
-	urls = strings.Replace(urls, "{blogId}", strconv.FormatInt(c.blogId, 10), 1)
-	urls = strings.Replace(urls, "{pageId}", strconv.FormatInt(c.pageId, 10), 1)
+	urls = strings.Replace(urls, "{blogId}", cleanPathString(c.blogId), 1)
+	urls = strings.Replace(urls, "{pageId}", cleanPathString(c.pageId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
@@ -851,14 +844,12 @@ func (c *PagesGetCall) Do() (*Page, error) {
 	//   "parameters": {
 	//     "blogId": {
 	//       "description": "ID of the blog containing the page.",
-	//       "format": "int64",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "pageId": {
 	//       "description": "The ID of the page to get.",
-	//       "format": "int64",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -941,13 +932,13 @@ func (c *UsersGetCall) Do() (*User, error) {
 
 type PostsGetCall struct {
 	s      *Service
-	blogId int64
-	postId int64
+	blogId string
+	postId string
 	opt_   map[string]interface{}
 }
 
 // Get: Get a post by id.
-func (r *PostsService) Get(blogId int64, postId int64) *PostsGetCall {
+func (r *PostsService) Get(blogId string, postId string) *PostsGetCall {
 	c := &PostsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.blogId = blogId
 	c.postId = postId
@@ -959,8 +950,8 @@ func (c *PostsGetCall) Do() (*Post, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/blogger/v2/", "blogs/{blogId}/posts/{postId}")
-	urls = strings.Replace(urls, "{blogId}", strconv.FormatInt(c.blogId, 10), 1)
-	urls = strings.Replace(urls, "{postId}", strconv.FormatInt(c.postId, 10), 1)
+	urls = strings.Replace(urls, "{blogId}", cleanPathString(c.blogId), 1)
+	urls = strings.Replace(urls, "{postId}", cleanPathString(c.postId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
@@ -987,14 +978,12 @@ func (c *PostsGetCall) Do() (*Post, error) {
 	//   "parameters": {
 	//     "blogId": {
 	//       "description": "ID of the blog to fetch the post from.",
-	//       "format": "int64",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "postId": {
 	//       "description": "The ID of the post",
-	//       "format": "int64",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1015,12 +1004,12 @@ func (c *PostsGetCall) Do() (*Post, error) {
 
 type PostsListCall struct {
 	s      *Service
-	blogId int64
+	blogId string
 	opt_   map[string]interface{}
 }
 
 // List: Retrieves a list of posts, possibly filtered.
-func (r *PostsService) List(blogId int64) *PostsListCall {
+func (r *PostsService) List(blogId string) *PostsListCall {
 	c := &PostsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.blogId = blogId
 	return c
@@ -1071,7 +1060,7 @@ func (c *PostsListCall) Do() (*PostList, error) {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/blogger/v2/", "blogs/{blogId}/posts")
-	urls = strings.Replace(urls, "{blogId}", strconv.FormatInt(c.blogId, 10), 1)
+	urls = strings.Replace(urls, "{blogId}", cleanPathString(c.blogId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
@@ -1097,7 +1086,6 @@ func (c *PostsListCall) Do() (*PostList, error) {
 	//   "parameters": {
 	//     "blogId": {
 	//       "description": "ID of the blog to fetch posts from.",
-	//       "format": "int64",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"

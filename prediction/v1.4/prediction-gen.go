@@ -68,81 +68,6 @@ type TrainedmodelsService struct {
 	s *Service
 }
 
-type TrainingUtility struct {
-}
-
-type TrainingModelInfo struct {
-	// ConfusionMatrixRowTotals: A list of the confusion matrix row totals
-	ConfusionMatrixRowTotals *TrainingModelInfoConfusionMatrixRowTotals `json:"confusionMatrixRowTotals,omitempty"`
-
-	// NumberInstances: Number of valid data instances used in the trained
-	// model.
-	NumberInstances int64 `json:"numberInstances,omitempty,string"`
-
-	// ConfusionMatrix: An output confusion matrix. This shows an estimate
-	// for how this model will do in predictions. This is first indexed by
-	// the true class label. For each true class label, this provides a pair
-	// {predicted_label, count}, where count is the estimated number of
-	// times the model will predict the predicted label given the true
-	// label. Will not output if more then 100 classes [Categorical models
-	// only].
-	ConfusionMatrix *TrainingModelInfoConfusionMatrix `json:"confusionMatrix,omitempty"`
-
-	// MeanSquaredError: An estimated mean squared error. The can be used to
-	// measure the quality of the predicted model [Regression models only].
-	MeanSquaredError float64 `json:"meanSquaredError,omitempty"`
-
-	// ModelType: Type of predictive model (CLASSIFICATION or REGRESSION)
-	ModelType string `json:"modelType,omitempty"`
-
-	// NumberLabels: Number of class labels in the trained model
-	// [Categorical models only].
-	NumberLabels int64 `json:"numberLabels,omitempty,string"`
-
-	// ClassWeightedAccuracy: Estimated accuracy of model taking utility
-	// weights into account [Categorical models only].
-	ClassWeightedAccuracy float64 `json:"classWeightedAccuracy,omitempty"`
-
-	// ClassificationAccuracy: A number between 0.0 and 1.0, where 1.0 is
-	// 100% accurate. This is an estimate, based on the amount and quality
-	// of the training data, of the estimated prediction accuracy. You can
-	// use this is a guide to decide whether the results are accurate enough
-	// for your needs. This estimate will be more reliable if your real
-	// input data is similar to your training data [Categorical models
-	// only].
-	ClassificationAccuracy float64 `json:"classificationAccuracy,omitempty"`
-}
-
-type TrainingModelInfoConfusionMatrixRowTotals struct {
-}
-
-type InputInput struct {
-	// CsvInstance: A list of input features, these can be strings or
-	// doubles.
-	CsvInstance []interface{} `json:"csvInstance,omitempty"`
-}
-
-type Output struct {
-	// OutputLabel: The most likely class label [Categorical models only].
-	OutputLabel string `json:"outputLabel,omitempty"`
-
-	// Kind: What kind of resource this is.
-	Kind string `json:"kind,omitempty"`
-
-	// Id: The unique name for the predictive model.
-	Id string `json:"id,omitempty"`
-
-	// OutputMulti: A list of class labels with their estimated
-	// probabilities [Categorical models only].
-	OutputMulti []*OutputOutputMulti `json:"outputMulti,omitempty"`
-
-	// SelfLink: A URL to re-request this resource.
-	SelfLink string `json:"selfLink,omitempty"`
-
-	// OutputValue: The estimated regression value [Regression models only].
-	OutputValue float64 `json:"outputValue,omitempty"`
-}
-
 type TrainingDataAnalysis struct {
 	Warnings []string `json:"warnings,omitempty"`
 }
@@ -156,14 +81,6 @@ type OutputOutputMulti struct {
 }
 
 type Training struct {
-	// StoragePMMLModelLocation: Google storage location of the pmml model
-	// file.
-	StoragePMMLModelLocation string `json:"storagePMMLModelLocation,omitempty"`
-
-	// StoragePMMLLocation: Google storage location of the preprocessing
-	// pmml file.
-	StoragePMMLLocation string `json:"storagePMMLLocation,omitempty"`
-
 	// Utility: A class weighting function, which allows the importance
 	// weights for class labels to be specified [Categorical models only].
 	Utility []*TrainingUtility `json:"utility,omitempty"`
@@ -190,6 +107,14 @@ type Training struct {
 
 	// Id: The unique name for the predictive model.
 	Id string `json:"id,omitempty"`
+
+	// StoragePMMLModelLocation: Google storage location of the pmml model
+	// file.
+	StoragePMMLModelLocation string `json:"storagePMMLModelLocation,omitempty"`
+
+	// StoragePMMLLocation: Google storage location of the preprocessing
+	// pmml file.
+	StoragePMMLLocation string `json:"storagePMMLLocation,omitempty"`
 }
 
 type Input struct {
@@ -206,6 +131,81 @@ type Update struct {
 }
 
 type TrainingModelInfoConfusionMatrix struct {
+}
+
+type TrainingUtility struct {
+}
+
+type TrainingModelInfo struct {
+	// NumberLabels: Number of class labels in the trained model
+	// [Categorical models only].
+	NumberLabels int64 `json:"numberLabels,omitempty,string"`
+
+	// ClassWeightedAccuracy: Estimated accuracy of model taking utility
+	// weights into account [Categorical models only].
+	ClassWeightedAccuracy float64 `json:"classWeightedAccuracy,omitempty"`
+
+	// ClassificationAccuracy: A number between 0.0 and 1.0, where 1.0 is
+	// 100% accurate. This is an estimate, based on the amount and quality
+	// of the training data, of the estimated prediction accuracy. You can
+	// use this is a guide to decide whether the results are accurate enough
+	// for your needs. This estimate will be more reliable if your real
+	// input data is similar to your training data [Categorical models
+	// only].
+	ClassificationAccuracy float64 `json:"classificationAccuracy,omitempty"`
+
+	// ConfusionMatrixRowTotals: A list of the confusion matrix row totals
+	ConfusionMatrixRowTotals *TrainingModelInfoConfusionMatrixRowTotals `json:"confusionMatrixRowTotals,omitempty"`
+
+	// NumberInstances: Number of valid data instances used in the trained
+	// model.
+	NumberInstances int64 `json:"numberInstances,omitempty,string"`
+
+	// ConfusionMatrix: An output confusion matrix. This shows an estimate
+	// for how this model will do in predictions. This is first indexed by
+	// the true class label. For each true class label, this provides a pair
+	// {predicted_label, count}, where count is the estimated number of
+	// times the model will predict the predicted label given the true
+	// label. Will not output if more then 100 classes [Categorical models
+	// only].
+	ConfusionMatrix *TrainingModelInfoConfusionMatrix `json:"confusionMatrix,omitempty"`
+
+	// MeanSquaredError: An estimated mean squared error. The can be used to
+	// measure the quality of the predicted model [Regression models only].
+	MeanSquaredError float64 `json:"meanSquaredError,omitempty"`
+
+	// ModelType: Type of predictive model (CLASSIFICATION or REGRESSION)
+	ModelType string `json:"modelType,omitempty"`
+}
+
+type TrainingModelInfoConfusionMatrixRowTotals struct {
+}
+
+type InputInput struct {
+	// CsvInstance: A list of input features, these can be strings or
+	// doubles.
+	CsvInstance []interface{} `json:"csvInstance,omitempty"`
+}
+
+type Output struct {
+	// OutputMulti: A list of class labels with their estimated
+	// probabilities [Categorical models only].
+	OutputMulti []*OutputOutputMulti `json:"outputMulti,omitempty"`
+
+	// SelfLink: A URL to re-request this resource.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// OutputValue: The estimated regression value [Regression models only].
+	OutputValue float64 `json:"outputValue,omitempty"`
+
+	// OutputLabel: The most likely class label [Categorical models only].
+	OutputLabel string `json:"outputLabel,omitempty"`
+
+	// Kind: What kind of resource this is.
+	Kind string `json:"kind,omitempty"`
+
+	// Id: The unique name for the predictive model.
+	Id string `json:"id,omitempty"`
 }
 
 // method id "prediction.hostedmodels.predict":
@@ -273,6 +273,68 @@ func (c *HostedmodelsPredictCall) Do() (*Output, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "Output"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/prediction"
+	//   ]
+	// }
+
+}
+
+// method id "prediction.trainedmodels.get":
+
+type TrainedmodelsGetCall struct {
+	s    *Service
+	id   string
+	opt_ map[string]interface{}
+}
+
+// Get: Check training status of your model.
+func (r *TrainedmodelsService) Get(id string) *TrainedmodelsGetCall {
+	c := &TrainedmodelsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	return c
+}
+
+func (c *TrainedmodelsGetCall) Do() (*Training, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/prediction/v1.4/", "trainedmodels/{id}")
+	urls = strings.Replace(urls, "{id}", cleanPathString(c.id), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Training)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Check training status of your model.",
+	//   "httpMethod": "GET",
+	//   "id": "prediction.trainedmodels.get",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The unique name for the predictive model.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "trainedmodels/{id}",
+	//   "response": {
+	//     "$ref": "Training"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/prediction"
@@ -531,68 +593,6 @@ func (c *TrainedmodelsInsertCall) Do() (*Training, error) {
 	//   "request": {
 	//     "$ref": "Training"
 	//   },
-	//   "response": {
-	//     "$ref": "Training"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/prediction"
-	//   ]
-	// }
-
-}
-
-// method id "prediction.trainedmodels.get":
-
-type TrainedmodelsGetCall struct {
-	s    *Service
-	id   string
-	opt_ map[string]interface{}
-}
-
-// Get: Check training status of your model.
-func (r *TrainedmodelsService) Get(id string) *TrainedmodelsGetCall {
-	c := &TrainedmodelsGetCall{s: r.s, opt_: make(map[string]interface{})}
-	c.id = id
-	return c
-}
-
-func (c *TrainedmodelsGetCall) Do() (*Training, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/prediction/v1.4/", "trainedmodels/{id}")
-	urls = strings.Replace(urls, "{id}", cleanPathString(c.id), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(Training)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Check training status of your model.",
-	//   "httpMethod": "GET",
-	//   "id": "prediction.trainedmodels.get",
-	//   "parameterOrder": [
-	//     "id"
-	//   ],
-	//   "parameters": {
-	//     "id": {
-	//       "description": "The unique name for the predictive model.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "trainedmodels/{id}",
 	//   "response": {
 	//     "$ref": "Training"
 	//   },

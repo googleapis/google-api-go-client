@@ -38,11 +38,11 @@ const basePath = "https://www.googleapis.com/plus/v1/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View your email address
-	UserinfoEmailScope = "https://www.googleapis.com/auth/userinfo.email"
-
 	// Know who you are on Google
 	PlusMeScope = "https://www.googleapis.com/auth/plus.me"
+
+	// View your email address
+	UserinfoEmailScope = "https://www.googleapis.com/auth/userinfo.email"
 )
 
 func New(client *http.Client) (*Service, error) {
@@ -112,6 +112,14 @@ type ActivityObjectActor struct {
 }
 
 type PersonName struct {
+	// HonorificPrefix: The honorific prefixes (such as "Dr." or "Mrs.") for
+	// this person.
+	HonorificPrefix string `json:"honorificPrefix,omitempty"`
+
+	// Formatted: The full name of this person, including middle names,
+	// suffixes, etc.
+	Formatted string `json:"formatted,omitempty"`
+
 	// FamilyName: The family name (last name) of this person.
 	FamilyName string `json:"familyName,omitempty"`
 
@@ -124,14 +132,6 @@ type PersonName struct {
 	// HonorificSuffix: The honorific suffixes (such as "Jr.") for this
 	// person.
 	HonorificSuffix string `json:"honorificSuffix,omitempty"`
-
-	// HonorificPrefix: The honorific prefixes (such as "Dr." or "Mrs.") for
-	// this person.
-	HonorificPrefix string `json:"honorificPrefix,omitempty"`
-
-	// Formatted: The full name of this person, including middle names,
-	// suffixes, etc.
-	Formatted string `json:"formatted,omitempty"`
 }
 
 type CommentInReplyTo struct {
@@ -248,20 +248,14 @@ type Person struct {
 }
 
 type ActivityObjectAttachmentsEmbed struct {
-	// Type: Media type of the link.
-	Type string `json:"type,omitempty"`
-
 	// Url: URL of the link.
 	Url string `json:"url,omitempty"`
+
+	// Type: Media type of the link.
+	Type string `json:"type,omitempty"`
 }
 
 type ActivityActor struct {
-	// Image: The image representation of the actor.
-	Image *ActivityActorImage `json:"image,omitempty"`
-
-	// GivenName: The given name of the actor.
-	GivenName string `json:"givenName,omitempty"`
-
 	// Url: The link to the actor's Google profile.
 	Url string `json:"url,omitempty"`
 
@@ -271,19 +265,14 @@ type ActivityActor struct {
 	// DisplayName: The name of the actor, suitable for display.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// FamilyName: The family name of the actor.
-	FamilyName string `json:"familyName,omitempty"`
+	// Image: The image representation of the actor.
+	Image *ActivityActorImage `json:"image,omitempty"`
+
+	// Name: An object representation of the individual components of name.
+	Name *ActivityActorName `json:"name,omitempty"`
 }
 
 type ActivityFeed struct {
-	// Items: The activities in this page of results.
-	Items []*Activity `json:"items,omitempty"`
-
-	// NextPageToken: The continuation token, used to page through large
-	// result sets. Provide this value in a subsequent request to return the
-	// next page of results.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Etag: ETag of this response for caching purposes.
 	Etag string `json:"etag,omitempty"`
 
@@ -306,6 +295,14 @@ type ActivityFeed struct {
 
 	// NextLink: Link to the next page of activities.
 	NextLink string `json:"nextLink,omitempty"`
+
+	// Items: The activities in this page of results.
+	Items []*Activity `json:"items,omitempty"`
+
+	// NextPageToken: The continuation token, used to page through large
+	// result sets. Provide this value in a subsequent request to return the
+	// next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
 type CommentActor struct {
@@ -331,16 +328,6 @@ type ActivityObjectResharers struct {
 }
 
 type Comment struct {
-	// SelfLink: Link to this comment resource.
-	SelfLink string `json:"selfLink,omitempty"`
-
-	// Actor: The person who posted this comment.
-	Actor *CommentActor `json:"actor,omitempty"`
-
-	// Published: The time at which this comment was initially published.
-	// Formatted as an RFC 3339 timestamp.
-	Published string `json:"published,omitempty"`
-
 	// Etag: ETag of this response for caching purposes.
 	Etag string `json:"etag,omitempty"`
 
@@ -364,6 +351,16 @@ type Comment struct {
 	// Possible values are:  
 	// - "post" - Publish content to the stream.
 	Verb string `json:"verb,omitempty"`
+
+	// SelfLink: Link to this comment resource.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// Actor: The person who posted this comment.
+	Actor *CommentActor `json:"actor,omitempty"`
+
+	// Published: The time at which this comment was initially published.
+	// Formatted as an RFC 3339 timestamp.
+	Published string `json:"published,omitempty"`
 }
 
 type PersonImage struct {
@@ -374,6 +371,12 @@ type PersonImage struct {
 }
 
 type PersonOrganizations struct {
+	// Title: The person's job title or role within the organization.
+	Title string `json:"title,omitempty"`
+
+	// StartDate: The date the person joined this organization.
+	StartDate string `json:"startDate,omitempty"`
+
 	// EndDate: The date the person left this organization.
 	EndDate string `json:"endDate,omitempty"`
 
@@ -399,12 +402,14 @@ type PersonOrganizations struct {
 	// Primary: If "true", indicates this organization is the person's
 	// primary one (typically interpreted as current one).
 	Primary bool `json:"primary,omitempty"`
+}
 
-	// Title: The person's job title or role within the organization.
-	Title string `json:"title,omitempty"`
+type ActivityActorName struct {
+	// FamilyName: The family name (last name) of the actor.
+	FamilyName string `json:"familyName,omitempty"`
 
-	// StartDate: The date the person joined this organization.
-	StartDate string `json:"startDate,omitempty"`
+	// GivenName: The given name (first name) of the actor.
+	GivenName string `json:"givenName,omitempty"`
 }
 
 type ActivityObjectPlusoners struct {
@@ -422,6 +427,12 @@ type ActivityObjectActorImage struct {
 }
 
 type ActivityObjectAttachments struct {
+	// Image: The preview image for photos or videos.
+	Image *ActivityObjectAttachmentsImage `json:"image,omitempty"`
+
+	// FullImage: The full image url for photo attachments.
+	FullImage *ActivityObjectAttachmentsFullImage `json:"fullImage,omitempty"`
+
 	// ObjectType: The type of media object. Possible values are:  
 	// -
 	// "photo" - A photo. 
@@ -446,12 +457,6 @@ type ActivityObjectAttachments struct {
 	// DisplayName: The title of the attachment (such as a photo caption or
 	// an article title).
 	DisplayName string `json:"displayName,omitempty"`
-
-	// Image: The preview image for photos or videos.
-	Image *ActivityObjectAttachmentsImage `json:"image,omitempty"`
-
-	// FullImage: The full image url for photo attachments.
-	FullImage *ActivityObjectAttachmentsFullImage `json:"fullImage,omitempty"`
 }
 
 type ActivityActorImage struct {
@@ -462,6 +467,11 @@ type ActivityActorImage struct {
 }
 
 type PlusAclentryResource struct {
+	// Id: The ID of the entry. For entries of type "person" or "circle",
+	// this is the ID of the resource. For other types, this property is not
+	// set.
+	Id string `json:"id,omitempty"`
+
 	// Type: The type of entry describing to whom access is granted.
 	// Possible values are:  
 	// - "person" - Access to an individual. 
@@ -474,11 +484,6 @@ type PlusAclentryResource struct {
 	// their circles. 
 	// - "public" - Access to anyone on the web.
 	Type string `json:"type,omitempty"`
-
-	// Id: The ID of the entry. For entries of type "person" or "circle",
-	// this is the ID of the resource. For other types, this property is not
-	// set.
-	Id string `json:"id,omitempty"`
 }
 
 type CommentFeed struct {
@@ -519,6 +524,21 @@ type CommentActorImage struct {
 }
 
 type Activity struct {
+	// Radius: Radius, in meters, of the region where this activity
+	// occurred, centered at the latitude and longitude identified in
+	// geocode.
+	Radius string `json:"radius,omitempty"`
+
+	// PlaceId: ID of the place where this activity occurred.
+	PlaceId string `json:"placeId,omitempty"`
+
+	// Actor: The person who performed this activity.
+	Actor *ActivityActor `json:"actor,omitempty"`
+
+	// Published: The time at which this activity was initially published.
+	// Formatted as an RFC 3339 timestamp.
+	Published string `json:"published,omitempty"`
+
 	// Geocode: Latitude and longitude where this activity occurred. Format
 	// is latitude followed by longitude, space separated.
 	Geocode string `json:"geocode,omitempty"`
@@ -577,36 +597,28 @@ type Activity struct {
 	// "checkin" - Check in to a location. 
 	// - "share" - Reshare an activity.
 	Verb string `json:"verb,omitempty"`
-
-	// Radius: Radius, in meters, of the region where this activity
-	// occurred, centered at the latitude and longitude identified in
-	// geocode.
-	Radius string `json:"radius,omitempty"`
-
-	// PlaceId: ID of the place where this activity occurred.
-	PlaceId string `json:"placeId,omitempty"`
-
-	// Actor: The person who performed this activity.
-	Actor *ActivityActor `json:"actor,omitempty"`
-
-	// Published: The time at which this activity was initially published.
-	// Formatted as an RFC 3339 timestamp.
-	Published string `json:"published,omitempty"`
 }
 
 type Acl struct {
+	// Description: Description of the access granted, suitable for display.
+	Description string `json:"description,omitempty"`
+
 	// Items: The list of access entries.
 	Items []*PlusAclentryResource `json:"items,omitempty"`
 
 	// Kind: Identifies this resource as a collection of access controls.
 	// Value: "plus#acl".
 	Kind string `json:"kind,omitempty"`
-
-	// Description: Description of the access granted, suitable for display.
-	Description string `json:"description,omitempty"`
 }
 
 type PeopleFeed struct {
+	// Kind: Identifies this resource as a collection of people. Value:
+	// "plus#peopleFeed".
+	Kind string `json:"kind,omitempty"`
+
+	// Title: The title of this collection of people.
+	Title string `json:"title,omitempty"`
+
 	// SelfLink: Link to this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
@@ -622,13 +634,6 @@ type PeopleFeed struct {
 
 	// Etag: ETag of this response for caching purposes.
 	Etag string `json:"etag,omitempty"`
-
-	// Kind: Identifies this resource as a collection of people. Value:
-	// "plus#peopleFeed".
-	Kind string `json:"kind,omitempty"`
-
-	// Title: The title of this collection of people.
-	Title string `json:"title,omitempty"`
 }
 
 type ActivityObject struct {
@@ -678,10 +683,6 @@ type ActivityObject struct {
 }
 
 type PersonEmails struct {
-	// Primary: If "true", indicates this email address is the person's
-	// primary one.
-	Primary bool `json:"primary,omitempty"`
-
 	// Type: The type of address. Possible values are:  
 	// - "home" - Home
 	// email address. 
@@ -691,15 +692,13 @@ type PersonEmails struct {
 
 	// Value: The email address.
 	Value string `json:"value,omitempty"`
+
+	// Primary: If "true", indicates this email address is the person's
+	// primary one.
+	Primary bool `json:"primary,omitempty"`
 }
 
 type PersonUrls struct {
-	// Value: The URL value.
-	Value string `json:"value,omitempty"`
-
-	// Primary: If "true", this URL is the person's primary URL.
-	Primary bool `json:"primary,omitempty"`
-
 	// Type: The type of URL. Possible values are:  
 	// - "home" - URL for
 	// home. 
@@ -709,6 +708,12 @@ type PersonUrls struct {
 	// "profile" - URL for profile. 
 	// - "other" - Other.
 	Type string `json:"type,omitempty"`
+
+	// Value: The URL value.
+	Value string `json:"value,omitempty"`
+
+	// Primary: If "true", this URL is the person's primary URL.
+	Primary bool `json:"primary,omitempty"`
 }
 
 type ActivityProvider struct {
@@ -717,6 +722,9 @@ type ActivityProvider struct {
 }
 
 type ActivityObjectAttachmentsFullImage struct {
+	// Type: Media type of the link.
+	Type string `json:"type,omitempty"`
+
 	// Height: The height, in pixels, of the linked resource.
 	Height int64 `json:"height,omitempty"`
 
@@ -725,23 +733,20 @@ type ActivityObjectAttachmentsFullImage struct {
 
 	// Url: URL of the link.
 	Url string `json:"url,omitempty"`
-
-	// Type: Media type of the link.
-	Type string `json:"type,omitempty"`
 }
 
 type ActivityObjectAttachmentsImage struct {
-	// Url: URL of the link.
-	Url string `json:"url,omitempty"`
-
-	// Type: Media type of the link.
-	Type string `json:"type,omitempty"`
-
 	// Height: The height, in pixels, of the linked resource.
 	Height int64 `json:"height,omitempty"`
 
 	// Width: The width, in pixels, of the linked resource.
 	Width int64 `json:"width,omitempty"`
+
+	// Url: URL of the link.
+	Url string `json:"url,omitempty"`
+
+	// Type: Media type of the link.
+	Type string `json:"type,omitempty"`
 }
 
 // method id "plus.comments.list":
@@ -759,19 +764,26 @@ func (r *CommentsService) List(activityId string) *CommentsListCall {
 	return c
 }
 
+// Alt sets the optional parameter "alt": Specifies an alternative
+// representation type.
+func (c *CommentsListCall) Alt(alt string) *CommentsListCall {
+	c.opt_["alt"] = alt
+	return c
+}
+
+// SortOrder sets the optional parameter "sortOrder": The order in which
+// to sort the list of comments.
+func (c *CommentsListCall) SortOrder(sortOrder string) *CommentsListCall {
+	c.opt_["sortOrder"] = sortOrder
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": The continuation
 // token, used to page through large result sets. To get the next page
 // of results, set this parameter to the value of "nextPageToken" from
 // the previous response.
 func (c *CommentsListCall) PageToken(pageToken string) *CommentsListCall {
 	c.opt_["pageToken"] = pageToken
-	return c
-}
-
-// Reverse sets the optional parameter "reverse": Whether to return
-// comments in reverse chronological order, newest first.
-func (c *CommentsListCall) Reverse(reverse bool) *CommentsListCall {
-	c.opt_["reverse"] = reverse
 	return c
 }
 
@@ -784,28 +796,21 @@ func (c *CommentsListCall) MaxResults(maxResults int64) *CommentsListCall {
 	return c
 }
 
-// Alt sets the optional parameter "alt": Specifies an alternative
-// representation type.
-func (c *CommentsListCall) Alt(alt string) *CommentsListCall {
-	c.opt_["alt"] = alt
-	return c
-}
-
 func (c *CommentsListCall) Do() (*CommentFeed, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["alt"]; ok {
+		params.Set("alt", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["sortOrder"]; ok {
+		params.Set("sortOrder", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	if v, ok := c.opt_["reverse"]; ok {
-		params.Set("reverse", fmt.Sprintf("%v", v))
-	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["alt"]; ok {
-		params.Set("alt", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/plus/v1/", "activities/{activityId}/comments")
 	urls = strings.Replace(urls, "{activityId}", cleanPathString(c.activityId), 1)
@@ -864,11 +869,19 @@ func (c *CommentsListCall) Do() (*CommentFeed, error) {
 	//       "location": "query",
 	//       "type": "string"
 	//     },
-	//     "reverse": {
-	//       "default": "false",
-	//       "description": "Whether to return comments in reverse chronological order, newest first.",
+	//     "sortOrder": {
+	//       "default": "ascending",
+	//       "description": "The order in which to sort the list of comments.",
+	//       "enum": [
+	//         "ascending",
+	//         "descending"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Sort oldest comments first.",
+	//         "Sort newest comments first."
+	//       ],
 	//       "location": "query",
-	//       "type": "boolean"
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "activities/{activityId}/comments",
@@ -1259,15 +1272,6 @@ func (r *ActivitiesService) Search(query string) *ActivitiesSearchCall {
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The continuation
-// token, used to page through large result sets. To get the next page
-// of results, set this parameter to the value of "nextPageToken" from
-// the previous response. This token may be of any length.
-func (c *ActivitiesSearchCall) PageToken(pageToken string) *ActivitiesSearchCall {
-	c.opt_["pageToken"] = pageToken
-	return c
-}
-
 // OrderBy sets the optional parameter "orderBy": Specifies how to order
 // search results.
 func (c *ActivitiesSearchCall) OrderBy(orderBy string) *ActivitiesSearchCall {
@@ -1292,14 +1296,20 @@ func (c *ActivitiesSearchCall) MaxResults(maxResults int64) *ActivitiesSearchCal
 	return c
 }
 
+// PageToken sets the optional parameter "pageToken": The continuation
+// token, used to page through large result sets. To get the next page
+// of results, set this parameter to the value of "nextPageToken" from
+// the previous response. This token may be of any length.
+func (c *ActivitiesSearchCall) PageToken(pageToken string) *ActivitiesSearchCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
 func (c *ActivitiesSearchCall) Do() (*ActivityFeed, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("query", fmt.Sprintf("%v", c.query))
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
 	if v, ok := c.opt_["orderBy"]; ok {
 		params.Set("orderBy", fmt.Sprintf("%v", v))
 	}
@@ -1308,6 +1318,9 @@ func (c *ActivitiesSearchCall) Do() (*ActivityFeed, error) {
 	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/plus/v1/", "activities")
 	urls += "?" + params.Encode()

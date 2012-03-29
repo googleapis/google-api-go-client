@@ -1,8 +1,10 @@
 {
  "kind": "discovery#restDescription",
+ "discoveryVersion": "v1",
  "id": "blogger:v2",
  "name": "blogger",
  "version": "v2",
+ "revision": "20111216",
  "title": "Blogger API",
  "description": "API for access to the data within Blogger.",
  "icons": {
@@ -606,7 +608,6 @@
        "type": "string",
        "description": "The ID of the blog to get.",
        "required": true,
-       "format": "int64",
        "location": "path"
       }
      },
@@ -634,21 +635,18 @@
        "type": "string",
        "description": "ID of the blog to containing the comment.",
        "required": true,
-       "format": "int64",
        "location": "path"
       },
       "commentId": {
        "type": "string",
        "description": "The ID of the comment to get.",
        "required": true,
-       "format": "int64",
        "location": "path"
       },
       "postId": {
        "type": "string",
        "description": "ID of the post to fetch posts from.",
        "required": true,
-       "format": "int64",
        "location": "path"
       }
      },
@@ -674,7 +672,6 @@
        "type": "string",
        "description": "ID of the blog to fetch comments from.",
        "required": true,
-       "format": "int64",
        "location": "path"
       },
       "fetchBodies": {
@@ -697,7 +694,6 @@
        "type": "string",
        "description": "ID of the post to fetch posts from.",
        "required": true,
-       "format": "int64",
        "location": "path"
       },
       "startDate": {
@@ -731,14 +727,12 @@
        "type": "string",
        "description": "ID of the blog containing the page.",
        "required": true,
-       "format": "int64",
        "location": "path"
       },
       "pageId": {
        "type": "string",
        "description": "The ID of the page to get.",
        "required": true,
-       "format": "int64",
        "location": "path"
       }
      },
@@ -763,7 +757,6 @@
        "type": "string",
        "description": "ID of the blog to fetch pages from.",
        "required": true,
-       "format": "int64",
        "location": "path"
       },
       "fetchBodies": {
@@ -796,14 +789,12 @@
        "type": "string",
        "description": "ID of the blog to fetch the post from.",
        "required": true,
-       "format": "int64",
        "location": "path"
       },
       "postId": {
        "type": "string",
        "description": "The ID of the post",
        "required": true,
-       "format": "int64",
        "location": "path"
       }
      },
@@ -828,7 +819,6 @@
        "type": "string",
        "description": "ID of the blog to fetch posts from.",
        "required": true,
-       "format": "int64",
        "location": "path"
       },
       "fetchBodies": {

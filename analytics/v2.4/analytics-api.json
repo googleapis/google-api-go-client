@@ -1,8 +1,10 @@
 {
  "kind": "discovery#restDescription",
+ "discoveryVersion": "v1",
  "id": "analytics:v2.4",
  "name": "analytics",
  "version": "v2.4",
+ "revision": "20120227",
  "title": "Google Analytics API",
  "description": "View and manage your Google Analytics data",
  "icons": {
@@ -10,9 +12,6 @@
   "x32": "http://www.google.com/images/icons/product/analytics-32.png"
  },
  "documentationLink": "http://code.google.com/apis/analytics",
- "labels": [
-  "labs"
- ],
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/analytics/v2.4/",
  "basePath": "/analytics/v2.4/",
@@ -154,6 +153,7 @@
       "metrics"
      ],
      "scopes": [
+      "https://www.googleapis.com/auth/analytics",
       "https://www.googleapis.com/auth/analytics.readonly"
      ]
     }

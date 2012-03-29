@@ -38,11 +38,11 @@ const basePath = "https://www.googleapis.com/siteVerification/v1/"
 
 // OAuth2 scopes used by this API.
 const (
-	// Manage the list of sites and domains you control
-	SiteverificationScope = "https://www.googleapis.com/auth/siteverification"
-
 	// Manage your new site verifications with Google
 	SiteverificationVerify_onlyScope = "https://www.googleapis.com/auth/siteverification.verify_only"
+
+	// Manage the list of sites and domains you control
+	SiteverificationScope = "https://www.googleapis.com/auth/siteverification"
 )
 
 func New(client *http.Client) (*Service, error) {
@@ -64,14 +64,54 @@ type WebResourceService struct {
 	s *Service
 }
 
-type SiteVerificationWebResourceResourceSite struct {
-	// Type: The site type. Can be SITE or INET_DOMAIN (domain name).
+type SiteVerificationWebResourceGettokenResponse struct {
+	// Token: The verification token. The token must be placed appropriately
+	// in order for verification to succeed.
+	Token string `json:"token,omitempty"`
+
+	// Method: The verification method to use in conjunction with this
+	// token. For FILE, the token should be placed in the top-level
+	// directory of the site, stored inside a file of the same name. For
+	// META, the token should be placed in the HEAD tag of the default page
+	// that is loaded for the site. For DNS, the token should be placed in a
+	// TXT record of the domain.
+	Method string `json:"method,omitempty"`
+}
+
+type SiteVerificationWebResourceGettokenRequest struct {
+	// VerificationMethod: The verification method that will be used to
+	// verify this site. For sites, 'FILE' or 'META' methods may be used.
+	// For domains, only 'DNS' may be used.
+	VerificationMethod string `json:"verificationMethod,omitempty"`
+
+	// Site: The site for which a verification token will be generated.
+	Site *SiteVerificationWebResourceGettokenRequestSite `json:"site,omitempty"`
+}
+
+type SiteVerificationWebResourceListResponse struct {
+	// Items: The list of sites that are owned by the authenticated user.
+	Items []*SiteVerificationWebResourceResource `json:"items,omitempty"`
+}
+
+type SiteVerificationWebResourceGettokenRequestSite struct {
+	// Type: The type of resource to be verified. Can be SITE or INET_DOMAIN
+	// (domain name).
 	Type string `json:"type,omitempty"`
 
 	// Identifier: The site identifier. If the type is set to SITE, the
 	// identifier is a URL. If the type is set to INET_DOMAIN, the site
 	// identifier is a domain name.
 	Identifier string `json:"identifier,omitempty"`
+}
+
+type SiteVerificationWebResourceResourceSite struct {
+	// Identifier: The site identifier. If the type is set to SITE, the
+	// identifier is a URL. If the type is set to INET_DOMAIN, the site
+	// identifier is a domain name.
+	Identifier string `json:"identifier,omitempty"`
+
+	// Type: The site type. Can be SITE or INET_DOMAIN (domain name).
+	Type string `json:"type,omitempty"`
 }
 
 type SiteVerificationWebResourceResource struct {
@@ -88,44 +128,59 @@ type SiteVerificationWebResourceResource struct {
 	Owners []string `json:"owners,omitempty"`
 }
 
-type SiteVerificationWebResourceGettokenResponse struct {
-	// Method: The verification method to use in conjunction with this
-	// token. For FILE, the token should be placed in the top-level
-	// directory of the site, stored inside a file of the same name. For
-	// META, the token should be placed in the HEAD tag of the default page
-	// that is loaded for the site. For DNS, the token should be placed in a
-	// TXT record of the domain.
-	Method string `json:"method,omitempty"`
+// method id "siteVerification.webResource.delete":
 
-	// Token: The verification token. The token must be placed appropriately
-	// in order for verification to succeed.
-	Token string `json:"token,omitempty"`
+type WebResourceDeleteCall struct {
+	s    *Service
+	id   string
+	opt_ map[string]interface{}
 }
 
-type SiteVerificationWebResourceGettokenRequest struct {
-	// Site: The site for which a verification token will be generated.
-	Site *SiteVerificationWebResourceGettokenRequestSite `json:"site,omitempty"`
-
-	// VerificationMethod: The verification method that will be used to
-	// verify this site. For sites, 'FILE' or 'META' methods may be used.
-	// For domains, only 'DNS' may be used.
-	VerificationMethod string `json:"verificationMethod,omitempty"`
+// Delete: Relinquish ownership of a website or domain.
+func (r *WebResourceService) Delete(id string) *WebResourceDeleteCall {
+	c := &WebResourceDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	return c
 }
 
-type SiteVerificationWebResourceListResponse struct {
-	// Items: The list of sites that are owned by the authenticated user.
-	Items []*SiteVerificationWebResourceResource `json:"items,omitempty"`
-}
+func (c *WebResourceDeleteCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/siteVerification/v1/", "webResource/{id}")
+	urls = strings.Replace(urls, "{id}", cleanPathString(c.id), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Relinquish ownership of a website or domain.",
+	//   "httpMethod": "DELETE",
+	//   "id": "siteVerification.webResource.delete",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The id of a verified site or domain.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "webResource/{id}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/siteverification"
+	//   ]
+	// }
 
-type SiteVerificationWebResourceGettokenRequestSite struct {
-	// Identifier: The site identifier. If the type is set to SITE, the
-	// identifier is a URL. If the type is set to INET_DOMAIN, the site
-	// identifier is a domain name.
-	Identifier string `json:"identifier,omitempty"`
-
-	// Type: The type of resource to be verified. Can be SITE or INET_DOMAIN
-	// (domain name).
-	Type string `json:"type,omitempty"`
 }
 
 // method id "siteVerification.webResource.getToken":
@@ -513,61 +568,6 @@ func (c *WebResourceGetCall) Do() (*SiteVerificationWebResourceResource, error) 
 	//   "response": {
 	//     "$ref": "SiteVerificationWebResourceResource"
 	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/siteverification"
-	//   ]
-	// }
-
-}
-
-// method id "siteVerification.webResource.delete":
-
-type WebResourceDeleteCall struct {
-	s    *Service
-	id   string
-	opt_ map[string]interface{}
-}
-
-// Delete: Relinquish ownership of a website or domain.
-func (r *WebResourceService) Delete(id string) *WebResourceDeleteCall {
-	c := &WebResourceDeleteCall{s: r.s, opt_: make(map[string]interface{})}
-	c.id = id
-	return c
-}
-
-func (c *WebResourceDeleteCall) Do() error {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/siteVerification/v1/", "webResource/{id}")
-	urls = strings.Replace(urls, "{id}", cleanPathString(c.id), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("DELETE", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return err
-	}
-	return nil
-	// {
-	//   "description": "Relinquish ownership of a website or domain.",
-	//   "httpMethod": "DELETE",
-	//   "id": "siteVerification.webResource.delete",
-	//   "parameterOrder": [
-	//     "id"
-	//   ],
-	//   "parameters": {
-	//     "id": {
-	//       "description": "The id of a verified site or domain.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "webResource/{id}",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/siteverification"
 	//   ]

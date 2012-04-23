@@ -92,67 +92,6 @@ type AdclientsService struct {
 	s *Service
 }
 
-type UrlChannels struct {
-	// Etag: ETag of this response for caching purposes.
-	Etag string `json:"etag,omitempty"`
-
-	// Kind: Kind of list this is, in this case adsense#urlChannels.
-	Kind string `json:"kind,omitempty"`
-
-	// Items: The URL channels returned in this list response.
-	Items []*UrlChannel `json:"items,omitempty"`
-
-	// NextPageToken: Continuation token used to page through URL channels.
-	// To retrieve the next page of results, set the next request's
-	// "pageToken" value to this.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-}
-
-type AdClient struct {
-	// Kind: Kind of resource this is, in this case adsense#adClient.
-	Kind string `json:"kind,omitempty"`
-
-	// Id: Unique identifier of this ad client.
-	Id string `json:"id,omitempty"`
-
-	// SupportsReporting: Whether this ad client supports being reported on.
-	SupportsReporting bool `json:"supportsReporting,omitempty"`
-
-	// ProductCode: This ad client's product code, which corresponds to the
-	// PRODUCT_CODE report dimension.
-	ProductCode string `json:"productCode,omitempty"`
-}
-
-type UrlChannel struct {
-	// UrlPattern: URL Pattern of this URL channel. Does not include
-	// "http://" or "https://". Example: www.example.com/home
-	UrlPattern string `json:"urlPattern,omitempty"`
-
-	// Kind: Kind of resource this is, in this case adsense#urlChannel.
-	Kind string `json:"kind,omitempty"`
-
-	// Id: Unique identifier of this URL channel. This should be considered
-	// an opaque identifier; it is not safe to rely on it being in any
-	// particular format.
-	Id string `json:"id,omitempty"`
-}
-
-type AdUnits struct {
-	// Items: The ad units returned in this list response.
-	Items []*AdUnit `json:"items,omitempty"`
-
-	// NextPageToken: Continuation token used to page through ad units. To
-	// retrieve the next page of results, set the next request's "pageToken"
-	// value to this.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// Etag: ETag of this response for caching purposes.
-	Etag string `json:"etag,omitempty"`
-
-	// Kind: Kind of list this is, in this case adsense#adUnits.
-	Kind string `json:"kind,omitempty"`
-}
-
 type CustomChannels struct {
 	// Items: The custom channels returned in this list response.
 	Items []*CustomChannel `json:"items,omitempty"`
@@ -216,6 +155,14 @@ type AdUnit struct {
 }
 
 type AdsenseReportsGenerateResponse struct {
+	// Totals: The totals of the report. This is the same length as any
+	// other row in the report; cells corresponding to dimension columns are
+	// empty.
+	Totals []string `json:"totals,omitempty"`
+
+	// Warnings: Any warnings associated with generation of the report.
+	Warnings []string `json:"warnings,omitempty"`
+
 	// Kind: Kind this is, in this case adsense#report.
 	Kind string `json:"kind,omitempty"`
 
@@ -239,17 +186,16 @@ type AdsenseReportsGenerateResponse struct {
 	// other row in the report; cells corresponding to dimension columns are
 	// empty.
 	Averages []string `json:"averages,omitempty"`
-
-	// Totals: The totals of the report. This is the same length as any
-	// other row in the report; cells corresponding to dimension columns are
-	// empty.
-	Totals []string `json:"totals,omitempty"`
-
-	// Warnings: Any warnings associated with generation of the report.
-	Warnings []string `json:"warnings,omitempty"`
 }
 
 type CustomChannel struct {
+	// Code: Code of this custom channel, not necessarily unique across ad
+	// clients.
+	Code string `json:"code,omitempty"`
+
+	// Name: Name of this custom channel.
+	Name string `json:"name,omitempty"`
+
 	// Kind: Kind of resource this is, in this case adsense#customChannel.
 	Kind string `json:"kind,omitempty"`
 
@@ -257,26 +203,80 @@ type CustomChannel struct {
 	// considered an opaque identifier; it is not safe to rely on it being
 	// in any particular format.
 	Id string `json:"id,omitempty"`
-
-	// Code: Code of this custom channel, not necessarily unique across ad
-	// clients.
-	Code string `json:"code,omitempty"`
-
-	// Name: Name of this custom channel.
-	Name string `json:"name,omitempty"`
 }
 
 type AdsenseReportsGenerateResponseHeaders struct {
-	// Type: The type of the header; one of DIMENSION, METRIC_TALLY,
-	// METRIC_RATIO, or METRIC_CURRENCY.
-	Type string `json:"type,omitempty"`
-
 	// Currency: The currency of this column. Only present if the header
 	// type is METRIC_CURRENCY.
 	Currency string `json:"currency,omitempty"`
 
 	// Name: The name of the header.
 	Name string `json:"name,omitempty"`
+
+	// Type: The type of the header; one of DIMENSION, METRIC_TALLY,
+	// METRIC_RATIO, or METRIC_CURRENCY.
+	Type string `json:"type,omitempty"`
+}
+
+type UrlChannels struct {
+	// Items: The URL channels returned in this list response.
+	Items []*UrlChannel `json:"items,omitempty"`
+
+	// NextPageToken: Continuation token used to page through URL channels.
+	// To retrieve the next page of results, set the next request's
+	// "pageToken" value to this.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Etag: ETag of this response for caching purposes.
+	Etag string `json:"etag,omitempty"`
+
+	// Kind: Kind of list this is, in this case adsense#urlChannels.
+	Kind string `json:"kind,omitempty"`
+}
+
+type AdClient struct {
+	// ProductCode: This ad client's product code, which corresponds to the
+	// PRODUCT_CODE report dimension.
+	ProductCode string `json:"productCode,omitempty"`
+
+	// Kind: Kind of resource this is, in this case adsense#adClient.
+	Kind string `json:"kind,omitempty"`
+
+	// Id: Unique identifier of this ad client.
+	Id string `json:"id,omitempty"`
+
+	// SupportsReporting: Whether this ad client supports being reported on.
+	SupportsReporting bool `json:"supportsReporting,omitempty"`
+}
+
+type UrlChannel struct {
+	// UrlPattern: URL Pattern of this URL channel. Does not include
+	// "http://" or "https://". Example: www.example.com/home
+	UrlPattern string `json:"urlPattern,omitempty"`
+
+	// Kind: Kind of resource this is, in this case adsense#urlChannel.
+	Kind string `json:"kind,omitempty"`
+
+	// Id: Unique identifier of this URL channel. This should be considered
+	// an opaque identifier; it is not safe to rely on it being in any
+	// particular format.
+	Id string `json:"id,omitempty"`
+}
+
+type AdUnits struct {
+	// Items: The ad units returned in this list response.
+	Items []*AdUnit `json:"items,omitempty"`
+
+	// NextPageToken: Continuation token used to page through ad units. To
+	// retrieve the next page of results, set the next request's "pageToken"
+	// value to this.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Etag: ETag of this response for caching purposes.
+	Etag string `json:"etag,omitempty"`
+
+	// Kind: Kind of list this is, in this case adsense#adUnits.
+	Kind string `json:"kind,omitempty"`
 }
 
 // method id "adsense.adunits.list":
@@ -295,15 +295,6 @@ func (r *AdunitsService) List(adClientId string) *AdunitsListCall {
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A continuation
-// token, used to page through ad units. To retrieve the next page, set
-// this parameter to the value of "nextPageToken" from the previous
-// response.
-func (c *AdunitsListCall) PageToken(pageToken string) *AdunitsListCall {
-	c.opt_["pageToken"] = pageToken
-	return c
-}
-
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of ad units to include in the response, used for paging.
 func (c *AdunitsListCall) MaxResults(maxResults int64) *AdunitsListCall {
@@ -318,18 +309,27 @@ func (c *AdunitsListCall) IncludeInactive(includeInactive bool) *AdunitsListCall
 	return c
 }
 
+// PageToken sets the optional parameter "pageToken": A continuation
+// token, used to page through ad units. To retrieve the next page, set
+// this parameter to the value of "nextPageToken" from the previous
+// response.
+func (c *AdunitsListCall) PageToken(pageToken string) *AdunitsListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
 func (c *AdunitsListCall) Do() (*AdUnits, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["includeInactive"]; ok {
 		params.Set("includeInactive", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsense/v1/", "adclients/{adClientId}/adunits")
 	urls = strings.Replace(urls, "{adClientId}", cleanPathString(c.adClientId), 1)
@@ -512,6 +512,29 @@ func (r *ReportsService) Generate(startDate string, endDate string) *ReportsGene
 	return c
 }
 
+// Locale sets the optional parameter "locale": Optional locale to use
+// for translating report output to a local language. Defaults to
+// "en_US" if not specified.
+func (c *ReportsGenerateCall) Locale(locale string) *ReportsGenerateCall {
+	c.opt_["locale"] = locale
+	return c
+}
+
+// StartIndex sets the optional parameter "startIndex": Index of the
+// first row of report data to return.
+func (c *ReportsGenerateCall) StartIndex(startIndex int64) *ReportsGenerateCall {
+	c.opt_["startIndex"] = startIndex
+	return c
+}
+
+// Currency sets the optional parameter "currency": Optional currency to
+// use when reporting on monetary metrics. Defaults to the account's
+// currency if not set.
+func (c *ReportsGenerateCall) Currency(currency string) *ReportsGenerateCall {
+	c.opt_["currency"] = currency
+	return c
+}
+
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of rows of report data to return.
 func (c *ReportsGenerateCall) MaxResults(maxResults int64) *ReportsGenerateCall {
@@ -549,35 +572,21 @@ func (c *ReportsGenerateCall) Dimension(dimension string) *ReportsGenerateCall {
 	return c
 }
 
-// Locale sets the optional parameter "locale": Optional locale to use
-// for translating report output to a local language. Defaults to
-// "en_US" if not specified.
-func (c *ReportsGenerateCall) Locale(locale string) *ReportsGenerateCall {
-	c.opt_["locale"] = locale
-	return c
-}
-
-// StartIndex sets the optional parameter "startIndex": Index of the
-// first row of report data to return.
-func (c *ReportsGenerateCall) StartIndex(startIndex int64) *ReportsGenerateCall {
-	c.opt_["startIndex"] = startIndex
-	return c
-}
-
-// Currency sets the optional parameter "currency": Optional currency to
-// use when reporting on monetary metrics. Defaults to the account's
-// currency if not set.
-func (c *ReportsGenerateCall) Currency(currency string) *ReportsGenerateCall {
-	c.opt_["currency"] = currency
-	return c
-}
-
 func (c *ReportsGenerateCall) Do() (*AdsenseReportsGenerateResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("startDate", fmt.Sprintf("%v", c.startDate))
 	params.Set("endDate", fmt.Sprintf("%v", c.endDate))
+	if v, ok := c.opt_["locale"]; ok {
+		params.Set("locale", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["startIndex"]; ok {
+		params.Set("startIndex", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["currency"]; ok {
+		params.Set("currency", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
@@ -592,15 +601,6 @@ func (c *ReportsGenerateCall) Do() (*AdsenseReportsGenerateResponse, error) {
 	}
 	if v, ok := c.opt_["dimension"]; ok {
 		params.Set("dimension", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["locale"]; ok {
-		params.Set("locale", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["startIndex"]; ok {
-		params.Set("startIndex", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["currency"]; ok {
-		params.Set("currency", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsense/v1/", "reports")
 	urls += "?" + params.Encode()
@@ -822,6 +822,13 @@ func (r *AdclientsService) List() *AdclientsListCall {
 	return c
 }
 
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of ad clients to include in the response, used for paging.
+func (c *AdclientsListCall) MaxResults(maxResults int64) *AdclientsListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": A continuation
 // token, used to page through ad clients. To retrieve the next page,
 // set this parameter to the value of "nextPageToken" from the previous
@@ -831,22 +838,15 @@ func (c *AdclientsListCall) PageToken(pageToken string) *AdclientsListCall {
 	return c
 }
 
-// MaxResults sets the optional parameter "maxResults": The maximum
-// number of ad clients to include in the response, used for paging.
-func (c *AdclientsListCall) MaxResults(maxResults int64) *AdclientsListCall {
-	c.opt_["maxResults"] = maxResults
-	return c
-}
-
 func (c *AdclientsListCall) Do() (*AdClients, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsense/v1/", "adclients")
 	urls += "?" + params.Encode()

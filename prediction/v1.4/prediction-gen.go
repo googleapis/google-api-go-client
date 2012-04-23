@@ -40,6 +40,9 @@ const basePath = "https://www.googleapis.com/prediction/v1.4/"
 const (
 	// Manage your data in the Google Prediction API
 	PredictionScope = "https://www.googleapis.com/auth/prediction"
+
+	// View your data in Google Cloud Storage
+	DevstorageRead_onlyScope = "https://www.googleapis.com/auth/devstorage.read_only"
 )
 
 func New(client *http.Client) (*Service, error) {
@@ -73,11 +76,11 @@ type TrainingDataAnalysis struct {
 }
 
 type OutputOutputMulti struct {
-	// Label: The class label.
-	Label string `json:"label,omitempty"`
-
 	// Score: The probability of the class label.
 	Score float64 `json:"score,omitempty"`
+
+	// Label: The class label.
+	Label string `json:"label,omitempty"`
 }
 
 type Training struct {
@@ -137,23 +140,6 @@ type TrainingUtility struct {
 }
 
 type TrainingModelInfo struct {
-	// NumberLabels: Number of class labels in the trained model
-	// [Categorical models only].
-	NumberLabels int64 `json:"numberLabels,omitempty,string"`
-
-	// ClassWeightedAccuracy: Estimated accuracy of model taking utility
-	// weights into account [Categorical models only].
-	ClassWeightedAccuracy float64 `json:"classWeightedAccuracy,omitempty"`
-
-	// ClassificationAccuracy: A number between 0.0 and 1.0, where 1.0 is
-	// 100% accurate. This is an estimate, based on the amount and quality
-	// of the training data, of the estimated prediction accuracy. You can
-	// use this is a guide to decide whether the results are accurate enough
-	// for your needs. This estimate will be more reliable if your real
-	// input data is similar to your training data [Categorical models
-	// only].
-	ClassificationAccuracy float64 `json:"classificationAccuracy,omitempty"`
-
 	// ConfusionMatrixRowTotals: A list of the confusion matrix row totals
 	ConfusionMatrixRowTotals *TrainingModelInfoConfusionMatrixRowTotals `json:"confusionMatrixRowTotals,omitempty"`
 
@@ -176,6 +162,23 @@ type TrainingModelInfo struct {
 
 	// ModelType: Type of predictive model (CLASSIFICATION or REGRESSION)
 	ModelType string `json:"modelType,omitempty"`
+
+	// NumberLabels: Number of class labels in the trained model
+	// [Categorical models only].
+	NumberLabels int64 `json:"numberLabels,omitempty,string"`
+
+	// ClassWeightedAccuracy: Estimated accuracy of model taking utility
+	// weights into account [Categorical models only].
+	ClassWeightedAccuracy float64 `json:"classWeightedAccuracy,omitempty"`
+
+	// ClassificationAccuracy: A number between 0.0 and 1.0, where 1.0 is
+	// 100% accurate. This is an estimate, based on the amount and quality
+	// of the training data, of the estimated prediction accuracy. You can
+	// use this is a guide to decide whether the results are accurate enough
+	// for your needs. This estimate will be more reliable if your real
+	// input data is similar to your training data [Categorical models
+	// only].
+	ClassificationAccuracy float64 `json:"classificationAccuracy,omitempty"`
 }
 
 type TrainingModelInfoConfusionMatrixRowTotals struct {
@@ -188,6 +191,9 @@ type InputInput struct {
 }
 
 type Output struct {
+	// Id: The unique name for the predictive model.
+	Id string `json:"id,omitempty"`
+
 	// OutputMulti: A list of class labels with their estimated
 	// probabilities [Categorical models only].
 	OutputMulti []*OutputOutputMulti `json:"outputMulti,omitempty"`
@@ -203,9 +209,6 @@ type Output struct {
 
 	// Kind: What kind of resource this is.
 	Kind string `json:"kind,omitempty"`
-
-	// Id: The unique name for the predictive model.
-	Id string `json:"id,omitempty"`
 }
 
 // method id "prediction.hostedmodels.predict":
@@ -275,6 +278,139 @@ func (c *HostedmodelsPredictCall) Do() (*Output, error) {
 	//     "$ref": "Output"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/prediction"
+	//   ]
+	// }
+
+}
+
+// method id "prediction.trainedmodels.update":
+
+type TrainedmodelsUpdateCall struct {
+	s      *Service
+	id     string
+	update *Update
+	opt_   map[string]interface{}
+}
+
+// Update: Add new data to a trained model.
+func (r *TrainedmodelsService) Update(id string, update *Update) *TrainedmodelsUpdateCall {
+	c := &TrainedmodelsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	c.update = update
+	return c
+}
+
+func (c *TrainedmodelsUpdateCall) Do() (*Training, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.update)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/prediction/v1.4/", "trainedmodels/{id}")
+	urls = strings.Replace(urls, "{id}", cleanPathString(c.id), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Training)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Add new data to a trained model.",
+	//   "httpMethod": "PUT",
+	//   "id": "prediction.trainedmodels.update",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The unique name for the predictive model.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "trainedmodels/{id}",
+	//   "request": {
+	//     "$ref": "Update"
+	//   },
+	//   "response": {
+	//     "$ref": "Training"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/prediction"
+	//   ]
+	// }
+
+}
+
+// method id "prediction.trainedmodels.insert":
+
+type TrainedmodelsInsertCall struct {
+	s        *Service
+	training *Training
+	opt_     map[string]interface{}
+}
+
+// Insert: Begin training your model.
+func (r *TrainedmodelsService) Insert(training *Training) *TrainedmodelsInsertCall {
+	c := &TrainedmodelsInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.training = training
+	return c
+}
+
+func (c *TrainedmodelsInsertCall) Do() (*Training, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.training)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/prediction/v1.4/", "trainedmodels")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Training)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Begin training your model.",
+	//   "httpMethod": "POST",
+	//   "id": "prediction.trainedmodels.insert",
+	//   "path": "trainedmodels",
+	//   "request": {
+	//     "$ref": "Training"
+	//   },
+	//   "response": {
+	//     "$ref": "Training"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/devstorage.read_only",
 	//     "https://www.googleapis.com/auth/prediction"
 	//   ]
 	// }
@@ -463,138 +599,6 @@ func (c *TrainedmodelsPredictCall) Do() (*Output, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "Output"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/prediction"
-	//   ]
-	// }
-
-}
-
-// method id "prediction.trainedmodels.update":
-
-type TrainedmodelsUpdateCall struct {
-	s      *Service
-	id     string
-	update *Update
-	opt_   map[string]interface{}
-}
-
-// Update: Add new data to a trained model.
-func (r *TrainedmodelsService) Update(id string, update *Update) *TrainedmodelsUpdateCall {
-	c := &TrainedmodelsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
-	c.id = id
-	c.update = update
-	return c
-}
-
-func (c *TrainedmodelsUpdateCall) Do() (*Training, error) {
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.update)
-	if err != nil {
-		return nil, err
-	}
-	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/prediction/v1.4/", "trainedmodels/{id}")
-	urls = strings.Replace(urls, "{id}", cleanPathString(c.id), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("PUT", urls, body)
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(Training)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Add new data to a trained model.",
-	//   "httpMethod": "PUT",
-	//   "id": "prediction.trainedmodels.update",
-	//   "parameterOrder": [
-	//     "id"
-	//   ],
-	//   "parameters": {
-	//     "id": {
-	//       "description": "The unique name for the predictive model.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "trainedmodels/{id}",
-	//   "request": {
-	//     "$ref": "Update"
-	//   },
-	//   "response": {
-	//     "$ref": "Training"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/prediction"
-	//   ]
-	// }
-
-}
-
-// method id "prediction.trainedmodels.insert":
-
-type TrainedmodelsInsertCall struct {
-	s        *Service
-	training *Training
-	opt_     map[string]interface{}
-}
-
-// Insert: Begin training your model.
-func (r *TrainedmodelsService) Insert(training *Training) *TrainedmodelsInsertCall {
-	c := &TrainedmodelsInsertCall{s: r.s, opt_: make(map[string]interface{})}
-	c.training = training
-	return c
-}
-
-func (c *TrainedmodelsInsertCall) Do() (*Training, error) {
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.training)
-	if err != nil {
-		return nil, err
-	}
-	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/prediction/v1.4/", "trainedmodels")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("POST", urls, body)
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(Training)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Begin training your model.",
-	//   "httpMethod": "POST",
-	//   "id": "prediction.trainedmodels.insert",
-	//   "path": "trainedmodels",
-	//   "request": {
-	//     "$ref": "Training"
-	//   },
-	//   "response": {
-	//     "$ref": "Training"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/prediction"

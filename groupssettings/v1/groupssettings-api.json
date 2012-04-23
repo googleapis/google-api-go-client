@@ -4,8 +4,9 @@
  "id": "groupssettings:v1",
  "name": "groupssettings",
  "version": "v1",
- "revision": "20111220",
- "description": "Groups Settings Api",
+ "revision": "20120417",
+ "title": "Groups Settings API",
+ "description": "Lets you manage permission levels and related settings of a group",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/search-16.gif",
   "x32": "http://www.google.com/images/icons/product/search-32.gif"
@@ -16,6 +17,9 @@
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/groups/v1/groups/",
  "basePath": "/groups/v1/groups/",
+ "rootUrl": "https://www.googleapis.com/",
+ "servicePath": "groups/v1/groups/",
+ "batchPath": "batch",
  "parameters": {
   "alt": {
    "type": "string",

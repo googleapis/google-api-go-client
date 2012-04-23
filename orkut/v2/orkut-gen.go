@@ -50,6 +50,13 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
+	s.CommunityRelated = &CommunityRelatedService{s: s}
+	s.ActivityVisibility = &ActivityVisibilityService{s: s}
+	s.Scraps = &ScrapsService{s: s}
+	s.CommunityFollow = &CommunityFollowService{s: s}
+	s.Communities = &CommunitiesService{s: s}
+	s.Badges = &BadgesService{s: s}
+	s.CommunityMembers = &CommunityMembersService{s: s}
 	s.CommunityPolls = &CommunityPollsService{s: s}
 	s.CommunityTopics = &CommunityTopicsService{s: s}
 	s.Comments = &CommentsService{s: s}
@@ -59,18 +66,25 @@ func New(client *http.Client) (*Service, error) {
 	s.Acl = &AclService{s: s}
 	s.CommunityPollComments = &CommunityPollCommentsService{s: s}
 	s.CommunityPollVotes = &CommunityPollVotesService{s: s}
-	s.CommunityRelated = &CommunityRelatedService{s: s}
-	s.ActivityVisibility = &ActivityVisibilityService{s: s}
-	s.Scraps = &ScrapsService{s: s}
-	s.CommunityFollow = &CommunityFollowService{s: s}
-	s.Communities = &CommunitiesService{s: s}
-	s.Badges = &BadgesService{s: s}
-	s.CommunityMembers = &CommunityMembersService{s: s}
 	return s, nil
 }
 
 type Service struct {
 	client *http.Client
+
+	CommunityRelated *CommunityRelatedService
+
+	ActivityVisibility *ActivityVisibilityService
+
+	Scraps *ScrapsService
+
+	CommunityFollow *CommunityFollowService
+
+	Communities *CommunitiesService
+
+	Badges *BadgesService
+
+	CommunityMembers *CommunityMembersService
 
 	CommunityPolls *CommunityPollsService
 
@@ -89,20 +103,34 @@ type Service struct {
 	CommunityPollComments *CommunityPollCommentsService
 
 	CommunityPollVotes *CommunityPollVotesService
+}
 
-	CommunityRelated *CommunityRelatedService
+type CommunityRelatedService struct {
+	s *Service
+}
 
-	ActivityVisibility *ActivityVisibilityService
+type ActivityVisibilityService struct {
+	s *Service
+}
 
-	Scraps *ScrapsService
+type ScrapsService struct {
+	s *Service
+}
 
-	CommunityFollow *CommunityFollowService
+type CommunityFollowService struct {
+	s *Service
+}
 
-	Communities *CommunitiesService
+type CommunitiesService struct {
+	s *Service
+}
 
-	Badges *BadgesService
+type BadgesService struct {
+	s *Service
+}
 
-	CommunityMembers *CommunityMembersService
+type CommunityMembersService struct {
+	s *Service
 }
 
 type CommunityPollsService struct {
@@ -141,698 +169,10 @@ type CommunityPollVotesService struct {
 	s *Service
 }
 
-type CommunityRelatedService struct {
-	s *Service
-}
-
-type ActivityVisibilityService struct {
-	s *Service
-}
-
-type ScrapsService struct {
-	s *Service
-}
-
-type CommunityFollowService struct {
-	s *Service
-}
-
-type CommunitiesService struct {
-	s *Service
-}
-
-type BadgesService struct {
-	s *Service
-}
-
-type CommunityMembersService struct {
-	s *Service
-}
-
-type AclItems struct {
-	// Id: The ID of the entity. For entities of type "person" or "circle",
-	// this is the ID of the resource. For other types, this will be unset.
-	Id string `json:"id,omitempty"`
-
-	// Type: The type of entity to whom access is granted.
-	Type string `json:"type,omitempty"`
-}
-
-type CommunityMessage struct {
-	// Subject: The subject of the message.
-	Subject string `json:"subject,omitempty"`
-
-	// Author: The creator of the message. If ommited, the message is
-	// annonimous.
-	Author *OrkutAuthorResource `json:"author,omitempty"`
-
-	// Links: List of resources for the community message.
-	Links []*OrkutLinkResource `json:"links,omitempty"`
-
-	// IsSpam: Whether this post was marked as spam by the viewer, when
-	// he/she is not the community owner or one of its moderators.
-	IsSpam bool `json:"isSpam,omitempty"`
-
-	// AddedDate: The timestamp of the date when the message was added, in
-	// RFC 3339 format.
+type CommunityPollComment struct {
+	// AddedDate: The date when the message was added, in RFC 3339 format.
 	AddedDate string `json:"addedDate,omitempty"`
 
-	// Kind: Identifies this resource as a community message. Value:
-	// "orkut#communityMessage"
-	Kind string `json:"kind,omitempty"`
-
-	// Id: The ID of the message.
-	Id int64 `json:"id,omitempty,string"`
-
-	// Body: The body of the message.
-	Body string `json:"body,omitempty"`
-}
-
-type ActivityObjectReplies struct {
-	// Items: The list of comments.
-	Items []*Comment `json:"items,omitempty"`
-
-	// TotalItems: Total number of comments.
-	TotalItems uint64 `json:"totalItems,omitempty,string"`
-
-	// Url: URL for the collection of comments in reply to this activity.
-	Url string `json:"url,omitempty"`
-}
-
-type CommunityTopicList struct {
-	// LastPageToken: The value of pageToken query parameter in
-	// community_topic.list request to get the last page.
-	LastPageToken string `json:"lastPageToken,omitempty"`
-
-	// Items: List of topics retrieved.
-	Items []*CommunityTopic `json:"items,omitempty"`
-
-	// NextPageToken: The value of pageToken query parameter in
-	// community_topic.list request to get the next page, if there are more
-	// to retrieve.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// Kind: Identifies this resource as a collection of community topics.
-	// Value: "orkut#communityTopicList"
-	Kind string `json:"kind,omitempty"`
-
-	// FirstPageToken: The value of pageToken query parameter in
-	// community_topic.list request to get the first page.
-	FirstPageToken string `json:"firstPageToken,omitempty"`
-
-	// PrevPageToken: The value of pageToken query parameter in
-	// community_topic.list request to get the previous page, if there are
-	// more to retrieve.
-	PrevPageToken string `json:"prevPageToken,omitempty"`
-}
-
-type OrkutActivitypersonResource struct {
-	// Birthday: The person's date of birth, represented as YYYY-MM-DD.
-	Birthday string `json:"birthday,omitempty"`
-
-	// Image: The person's profile photo. This is adapted from Google+ and
-	// was originaly introduced as extra OpenSocial convenience fields.
-	Image *OrkutActivitypersonResourceImage `json:"image,omitempty"`
-
-	// Name: An object that encapsulates the individual components of a
-	// person's name.
-	Name *OrkutActivitypersonResourceName `json:"name,omitempty"`
-
-	// Gender: The person's gender. Values include "male", "female", and
-	// "other".
-	Gender string `json:"gender,omitempty"`
-
-	// Url: The person's profile url. This is adapted from Google+ and was
-	// originaly introduced as extra OpenSocial convenience fields.
-	Url string `json:"url,omitempty"`
-
-	// Id: The person's opensocial ID.
-	Id string `json:"id,omitempty"`
-}
-
-type OrkutActivitypersonResourceImage struct {
-	// Url: The URL of the person's profile photo.
-	Url string `json:"url,omitempty"`
-}
-
-type CommentInReplyTo struct {
-	// Type: Type of the post on activity stream being commented. Always
-	// text/html.
-	Type string `json:"type,omitempty"`
-
-	// Href: Link to the post on activity stream being commented.
-	Href string `json:"href,omitempty"`
-
-	// Rel: Relationship between the comment and the post on activity stream
-	// being commented. Always inReplyTo.
-	Rel string `json:"rel,omitempty"`
-
-	// Ref: Unique identifier of the post on activity stream being
-	// commented.
-	Ref string `json:"ref,omitempty"`
-}
-
-type Counters struct {
-	// Items: List of counters retrieved.
-	Items []*OrkutCounterResource `json:"items,omitempty"`
-
-	// Kind: Identifies this resource as a collection of counters. Value:
-	// "orkut#counters"
-	Kind string `json:"kind,omitempty"`
-}
-
-type Community struct {
-	// Co_owners: The co-owners of the community.
-	Co_owners []*OrkutAuthorResource `json:"co_owners,omitempty"`
-
-	// Creation_date: The time the community was created, in RFC 3339
-	// format.
-	Creation_date string `json:"creation_date,omitempty"`
-
-	// Description: The description of the community.
-	Description string `json:"description,omitempty"`
-
-	// Owner: The person who owns the community.
-	Owner *OrkutAuthorResource `json:"owner,omitempty"`
-
-	// Language: The official language of the community.
-	Language string `json:"language,omitempty"`
-
-	// Location: The location of the community.
-	Location string `json:"location,omitempty"`
-
-	// Category: The category of the community.
-	Category string `json:"category,omitempty"`
-
-	// Moderators: The list of moderators of the community.
-	Moderators []*OrkutAuthorResource `json:"moderators,omitempty"`
-
-	// Name: The name of the community.
-	Name string `json:"name,omitempty"`
-
-	// Links: List of resources for the community.
-	Links []*OrkutLinkResource `json:"links,omitempty"`
-
-	// Kind: Identifies this resource as a community. Value:
-	// "orkut#community"
-	Kind string `json:"kind,omitempty"`
-
-	// Photo_url: The photo of the community.
-	Photo_url string `json:"photo_url,omitempty"`
-
-	// Id: The id of the community.
-	Id int64 `json:"id,omitempty"`
-
-	// Member_count: The number of users who are part of the community. This
-	// number may be approximate, so do not rely on it for iteration.
-	Member_count int64 `json:"member_count,omitempty"`
-}
-
-type OrkutAuthorResource struct {
-	// Image: Image data about the author.
-	Image *OrkutAuthorResourceImage `json:"image,omitempty"`
-
-	// Url: The URL of the author who posted the comment [not yet
-	// implemented]
-	Url string `json:"url,omitempty"`
-
-	// Id: Unique identifier of the person who posted the comment. This is
-	// the person's OpenSocial ID.
-	Id string `json:"id,omitempty"`
-
-	// DisplayName: The name of the author, suitable for display.
-	DisplayName string `json:"displayName,omitempty"`
-}
-
-type BadgeList struct {
-	// Items: List of badges retrieved.
-	Items []*Badge `json:"items,omitempty"`
-
-	// Kind: Identifies this resource as a collection of badges. Value:
-	// "orkut#badgeList"
-	Kind string `json:"kind,omitempty"`
-}
-
-type OrkutActivityobjectsResource struct {
-	// Community: The community which is related with this activity, e.g. a
-	// joined community.
-	Community *Community `json:"community,omitempty"`
-
-	// Links: Links to other resources related to this object.
-	Links []*OrkutLinkResource `json:"links,omitempty"`
-
-	// Person: The person who is related with this activity, e.g. an Added
-	// User.
-	Person *OrkutActivitypersonResource `json:"person,omitempty"`
-
-	// ObjectType: The object type.
-	ObjectType string `json:"objectType,omitempty"`
-
-	// Content: The HTML-formatted content, suitable for display. When
-	// updating an activity's content, post the changes to this property,
-	// using the value of originalContent as a starting point. If the update
-	// is successful, the server adds HTML formatting and responds with this
-	// formatted content.
-	Content string `json:"content,omitempty"`
-
-	// Id: The ID for the object.
-	Id string `json:"id,omitempty"`
-
-	// DisplayName: The title of the object.
-	DisplayName string `json:"displayName,omitempty"`
-}
-
-type OrkutAuthorResourceImage struct {
-	// Url: A URL that points to a thumbnail photo of the author.
-	Url string `json:"url,omitempty"`
-}
-
-type CommunityTopic struct {
-	// NumberOfReplies: The total number of replies this topic has received.
-	NumberOfReplies int64 `json:"numberOfReplies,omitempty"`
-
-	// Body: The body of the topic.
-	Body string `json:"body,omitempty"`
-
-	// Author: The creator of the topic.
-	Author *OrkutAuthorResource `json:"author,omitempty"`
-
-	// Links: List of resources for the community.
-	Links []*OrkutLinkResource `json:"links,omitempty"`
-
-	// Kind: Identifies this resource as a community topic. Value:
-	// "orkut#communityTopic"
-	Kind string `json:"kind,omitempty"`
-
-	// LatestMessageSnippet: Snippet of the last message posted on this
-	// topic.
-	LatestMessageSnippet string `json:"latestMessageSnippet,omitempty"`
-
-	// LastUpdate: The timestamp of the last update, in RFC 3339 format.
-	LastUpdate string `json:"lastUpdate,omitempty"`
-
-	// Id: The ID of the topic.
-	Id int64 `json:"id,omitempty,string"`
-
-	// Messages: Most recent messages.
-	Messages []*CommunityMessage `json:"messages,omitempty"`
-
-	// Title: The title of the topic.
-	Title string `json:"title,omitempty"`
-
-	// IsClosed: Whether the topic is closed for new messages.
-	IsClosed bool `json:"isClosed,omitempty"`
-}
-
-type Comment struct {
-	// Links: List of resources for the comment.
-	Links []*OrkutLinkResource `json:"links,omitempty"`
-
-	// Actor: The person who posted the comment.
-	Actor *OrkutAuthorResource `json:"actor,omitempty"`
-
-	// Published: The time the comment was initially published, in RFC 3339
-	// format.
-	Published string `json:"published,omitempty"`
-
-	// Kind: Identifies this resource as a comment. Value: "orkut#comment"
-	Kind string `json:"kind,omitempty"`
-
-	// Content: The content of the comment in text/html
-	Content string `json:"content,omitempty"`
-
-	// Id: The unique ID for the comment.
-	Id string `json:"id,omitempty"`
-
-	// InReplyTo: Link to the original activity where this comment was
-	// posted.
-	InReplyTo *CommentInReplyTo `json:"inReplyTo,omitempty"`
-}
-
-type OrkutActivitypersonResourceName struct {
-	// FamilyName: The family name (last name) of this person.
-	FamilyName string `json:"familyName,omitempty"`
-
-	// GivenName: The given name (first name) of this person.
-	GivenName string `json:"givenName,omitempty"`
-}
-
-type CommunityList struct {
-	// Items: List of communities retrieved.
-	Items []*Community `json:"items,omitempty"`
-
-	// Kind: Identifies this resource as a collection of communities. Value:
-	// "orkut#communityList"
-	Kind string `json:"kind,omitempty"`
-}
-
-type CommunityMembers struct {
-	// Person: Description of the community member.
-	Person *OrkutActivitypersonResource `json:"person,omitempty"`
-
-	// CommunityMembershipStatus: Status and permissions of the user related
-	// to the community.
-	CommunityMembershipStatus *CommunityMembershipStatus `json:"communityMembershipStatus,omitempty"`
-
-	// Kind: Kind of this item. Always orkut#communityMembers.
-	Kind string `json:"kind,omitempty"`
-}
-
-type OrkutLinkResource struct {
-	// Href: URL of the link.
-	Href string `json:"href,omitempty"`
-
-	// Title: Title of the link.
-	Title string `json:"title,omitempty"`
-
-	// Rel: Relation between the resource and the parent object.
-	Rel string `json:"rel,omitempty"`
-
-	// Type: Media type of the link.
-	Type string `json:"type,omitempty"`
-}
-
-type ActivityList struct {
-	// Items: List of activities retrieved.
-	Items []*Activity `json:"items,omitempty"`
-
-	// NextPageToken: The value of pageToken query parameter in
-	// activities.list request to get the next page, if there are more to
-	// retrieve.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// Kind: Identifies this resource as a collection of activities. Value:
-	// "orkut#activityList"
-	Kind string `json:"kind,omitempty"`
-}
-
-type CommunityPollList struct {
-	// PrevPageToken: The value of pageToken query parameter in
-	// community_polls.list request to get the previous page, if there are
-	// more to retrieve.
-	PrevPageToken string `json:"prevPageToken,omitempty"`
-
-	// LastPageToken: The value of pageToken query parameter in
-	// community_polls.list request to get the last page.
-	LastPageToken string `json:"lastPageToken,omitempty"`
-
-	// Items: List of community polls retrieved.
-	Items []*CommunityPoll `json:"items,omitempty"`
-
-	// NextPageToken: The value of pageToken query parameter in
-	// community_polls.list request to get the next page, if there are more
-	// to retrieve.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// Kind: Identifies this resource as a collection of community polls.
-	// Value: "orkut#communityPollList"
-	Kind string `json:"kind,omitempty"`
-
-	// FirstPageToken: The value of pageToken query parameter in
-	// community_polls.list request to get the first page.
-	FirstPageToken string `json:"firstPageToken,omitempty"`
-}
-
-type CommunityMembershipStatus struct {
-	// IsTakebackAvailable: Whether the take-back operation is available for
-	// the community.
-	IsTakebackAvailable bool `json:"isTakebackAvailable,omitempty"`
-
-	// Kind: Kind of this item. Always orkut#communityMembershipStatus.
-	Kind string `json:"kind,omitempty"`
-
-	// CanCreateTopic: Whether the user can create a topic in this
-	// community.
-	CanCreateTopic bool `json:"canCreateTopic,omitempty"`
-
-	// IsCoOwner: Whether the session user is a community co-owner.
-	IsCoOwner bool `json:"isCoOwner,omitempty"`
-
-	// IsOwner: Whether the session user is the community owner.
-	IsOwner bool `json:"isOwner,omitempty"`
-
-	// CanCreatePoll: Whether the user can create a poll in this community.
-	CanCreatePoll bool `json:"canCreatePoll,omitempty"`
-
-	// Status: The status of the current link between the community and the
-	// user.
-	Status string `json:"status,omitempty"`
-
-	// IsRestoreAvailable: Whether the restore operation is available for
-	// the community.
-	IsRestoreAvailable bool `json:"isRestoreAvailable,omitempty"`
-
-	// CanShout: Whether the user can perform a shout operation in this
-	// community.
-	CanShout bool `json:"canShout,omitempty"`
-
-	// IsModerator: Whether the session user is a community moderator.
-	IsModerator bool `json:"isModerator,omitempty"`
-
-	// IsFollowing: Whether the user is following this community.
-	IsFollowing bool `json:"isFollowing,omitempty"`
-}
-
-type OrkutCounterResource struct {
-	// Name: The name of the counted collection. Currently supported
-	// collections are:  
-	// - scraps - The scraps of the user. 
-	// - photos - The
-	// photos of the user. 
-	// - videos - The videos of the user. 
-	// -
-	// pendingTestimonials - The pending testimonials of the user.
-	Name string `json:"name,omitempty"`
-
-	// Total: The number of resources on the counted collection.
-	Total int64 `json:"total,omitempty"`
-
-	// Link: Link to the collection being counted.
-	Link *OrkutLinkResource `json:"link,omitempty"`
-}
-
-type Badge struct {
-	// Id: The unique ID for the badge.
-	Id int64 `json:"id,omitempty,string"`
-
-	// Caption: The name of the badge, suitable for display.
-	Caption string `json:"caption,omitempty"`
-
-	// SponsorUrl: The URL for the badge sponsor.
-	SponsorUrl string `json:"sponsorUrl,omitempty"`
-
-	// BadgeSmallLogo: The URL for the 24x24 badge logo.
-	BadgeSmallLogo string `json:"badgeSmallLogo,omitempty"`
-
-	// BadgeLargeLogo: The URL for the 64x64 badge logo.
-	BadgeLargeLogo string `json:"badgeLargeLogo,omitempty"`
-
-	// Description: The description for the badge, suitable for display.
-	Description string `json:"description,omitempty"`
-
-	// SponsorLogo: The URL for the 32x32 badge sponsor logo.
-	SponsorLogo string `json:"sponsorLogo,omitempty"`
-
-	// Kind: Identifies this resource as a badge. Value: "orkut#badge"
-	Kind string `json:"kind,omitempty"`
-
-	// SponsorName: The name of the badge sponsor, suitable for display.
-	SponsorName string `json:"sponsorName,omitempty"`
-}
-
-type CommentList struct {
-	// PreviousPageToken: The value of pageToken query parameter in
-	// comments.list request to get the previous page, if there are more to
-	// retrieve.
-	PreviousPageToken string `json:"previousPageToken,omitempty"`
-
-	// Items: List of comments retrieved.
-	Items []*Comment `json:"items,omitempty"`
-
-	// NextPageToken: The value of pageToken query parameter in
-	// comments.list request to get the next page, if there are more to
-	// retrieve.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// Kind: Identifies this resource as a collection of comments. Value:
-	// "orkut#commentList"
-	Kind string `json:"kind,omitempty"`
-}
-
-type Visibility struct {
-	// Links: List of resources for the visibility item.
-	Links []*OrkutLinkResource `json:"links,omitempty"`
-
-	// Kind: Identifies this resource as a visibility item. Value:
-	// "orkut#visibility"
-	Kind string `json:"kind,omitempty"`
-
-	// Visibility: The visibility of the resource. Possible values are:  
-	// -
-	// default: not hidden by the user 
-	// - hidden: hidden
-	Visibility string `json:"visibility,omitempty"`
-}
-
-type CommunityPollCommentList struct {
-	// LastPageToken: The value of pageToken query parameter in
-	// community_poll_comments.list request to get the last page.
-	LastPageToken string `json:"lastPageToken,omitempty"`
-
-	// Items: List of community poll comments retrieved.
-	Items []*CommunityPollComment `json:"items,omitempty"`
-
-	// NextPageToken: The value of pageToken query parameter in
-	// community_poll_comments.list request to get the next page, if there
-	// are more to retrieve.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// Kind: Identifies this resource as a collection of community poll
-	// comments. Value: "orkut#CommunityPollCommentList"
-	Kind string `json:"kind,omitempty"`
-
-	// FirstPageToken: The value of pageToken query parameter in
-	// community_poll_comments.list request to get the first page.
-	FirstPageToken string `json:"firstPageToken,omitempty"`
-
-	// PrevPageToken: The value of pageToken query parameter in
-	// community_poll_comments.list request to get the previous page, if
-	// there are more to retrieve.
-	PrevPageToken string `json:"prevPageToken,omitempty"`
-}
-
-type CommunityMessageList struct {
-	// NextPageToken: The value of pageToken query parameter in
-	// community_messages.list request to get the next page, if there are
-	// more to retrieve.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// Kind: Identifies this resource as a collection of community messages.
-	// Value: "orkut#communityMessageList"
-	Kind string `json:"kind,omitempty"`
-
-	// FirstPageToken: The value of pageToken query parameter in
-	// community_messages.list request to get the first page.
-	FirstPageToken string `json:"firstPageToken,omitempty"`
-
-	// PrevPageToken: The value of pageToken query parameter in
-	// community_messages.list request to get the previous page, if there
-	// are more to retrieve.
-	PrevPageToken string `json:"prevPageToken,omitempty"`
-
-	// LastPageToken: The value of pageToken query parameter in
-	// community_messages.list request to get the last page.
-	LastPageToken string `json:"lastPageToken,omitempty"`
-
-	// Items: List of messages retrieved.
-	Items []*CommunityMessage `json:"items,omitempty"`
-}
-
-type CommunityPollVote struct {
-	// OptionIds: The ids of the voted options.
-	OptionIds []int64 `json:"optionIds,omitempty"`
-
-	// Kind: Identifies this resource as a community poll vote. Value:
-	// "orkut#communityPollVote"
-	Kind string `json:"kind,omitempty"`
-
-	// IsVotevisible: Whether this vote is visible to other users or not.
-	IsVotevisible bool `json:"isVotevisible,omitempty"`
-}
-
-type CommunityPoll struct {
-	// EndingTime: The ending date of this poll or empty if the poll doesn't
-	// have one.
-	EndingTime string `json:"endingTime,omitempty"`
-
-	// IsUsersVotePublic: If user has already voted, whether his vote is
-	// publicly visible.
-	IsUsersVotePublic bool `json:"isUsersVotePublic,omitempty"`
-
-	// Description: The poll description.
-	Description string `json:"description,omitempty"`
-
-	// IsRestricted: Whether this poll is restricted for members only. If a
-	// poll is open but the user can't vote on it, it's been restricted to
-	// members only. This information is important to tell this case apart
-	// from the one where the user can't vote simply because the poll is
-	// already closed.
-	IsRestricted bool `json:"isRestricted,omitempty"`
-
-	// Author: The person who created the poll.
-	Author *OrkutAuthorResource `json:"author,omitempty"`
-
-	// CommunityId: The ID of the community.
-	CommunityId int64 `json:"communityId,omitempty"`
-
-	// Image: The image representing the poll. Field is omitted if no image
-	// exists.
-	Image *CommunityPollImage `json:"image,omitempty"`
-
-	// IsMultipleAnswers: Whether this poll allows voting for more than one
-	// option.
-	IsMultipleAnswers bool `json:"isMultipleAnswers,omitempty"`
-
-	// Links: List of resources for the community poll.
-	Links []*OrkutLinkResource `json:"links,omitempty"`
-
-	// CreationTime: The date of creation of this poll
-	CreationTime string `json:"creationTime,omitempty"`
-
-	// IsSpam: Whether the user has marked this poll as spam. This only
-	// affects the poll for this user, not globally.
-	IsSpam bool `json:"isSpam,omitempty"`
-
-	// Question: The poll question.
-	Question string `json:"question,omitempty"`
-
-	// Kind: Identifies this resource as a community poll. Value:
-	// "orkut#communityPoll"
-	Kind string `json:"kind,omitempty"`
-
-	// VotedOptions: List of options the user has voted on, if there are
-	// any.
-	VotedOptions []int64 `json:"votedOptions,omitempty"`
-
-	// Options: List of options of this poll.
-	Options []*OrkutCommunitypolloptionResource `json:"options,omitempty"`
-
-	// HasVoted: Whether the user has voted on this poll.
-	HasVoted bool `json:"hasVoted,omitempty"`
-
-	// LastUpdate: The date of the last update of this poll.
-	LastUpdate string `json:"lastUpdate,omitempty"`
-
-	// IsOpenForVoting: Whether this poll is still opened for voting. A poll
-	// is open for voting if it is not closed, the user has not yet voted on
-	// it and the user has the permission to do so, which happens if he/she
-	// is either a community member or the poll is open for everybody.
-	IsOpenForVoting bool `json:"isOpenForVoting,omitempty"`
-
-	// Id: The poll ID.
-	Id string `json:"id,omitempty"`
-
-	// IsVotingAllowedForNonMembers: Whether non-members of the community
-	// can vote on the poll.
-	IsVotingAllowedForNonMembers bool `json:"isVotingAllowedForNonMembers,omitempty"`
-
-	// IsClosed: Whether the poll is not expired if there is an expiration
-	// date. A poll is open (that is, not closed for voting) if it either is
-	// not expired or doesn't have an expiration date at all. Note that just
-	// because a poll is open, it doesn't mean that the requester can vote
-	// on it.
-	IsClosed bool `json:"isClosed,omitempty"`
-
-	// TotalNumberOfVotes: The total number of votes this poll has received.
-	TotalNumberOfVotes int64 `json:"totalNumberOfVotes,omitempty"`
-}
-
-type CommunityPollImage struct {
-	// Url: A URL that points to an image of the poll.
-	Url string `json:"url,omitempty"`
-}
-
-type CommunityPollComment struct {
 	// Kind: Identifies this resource as a community poll comment. Value:
 	// "orkut#communityPollComment"
 	Kind string `json:"kind,omitempty"`
@@ -845,12 +185,18 @@ type CommunityPollComment struct {
 
 	// Author: The creator of the comment.
 	Author *OrkutAuthorResource `json:"author,omitempty"`
-
-	// AddedDate: The date when the message was added, in RFC 3339 format.
-	AddedDate string `json:"addedDate,omitempty"`
 }
 
 type Activity struct {
+	// Links: Links to resources related to this activity.
+	Links []*OrkutLinkResource `json:"links,omitempty"`
+
+	// Actor: The person who performed the activity.
+	Actor *OrkutAuthorResource `json:"actor,omitempty"`
+
+	// Published: The time at which the activity was initially published.
+	Published string `json:"published,omitempty"`
+
 	// Kind: The kind of activity. Always orkut#activity.
 	Kind string `json:"kind,omitempty"`
 
@@ -881,18 +227,12 @@ type Activity struct {
 	// - birthday -
 	// User has a birthday.
 	Verb string `json:"verb,omitempty"`
-
-	// Links: Links to resources related to this activity.
-	Links []*OrkutLinkResource `json:"links,omitempty"`
-
-	// Actor: The person who performed the activity.
-	Actor *OrkutAuthorResource `json:"actor,omitempty"`
-
-	// Published: The time at which the activity was initially published.
-	Published string `json:"published,omitempty"`
 }
 
 type Acl struct {
+	// Description: Human readable description of the access granted.
+	Description string `json:"description,omitempty"`
+
 	// Items: The list of ACL entries.
 	Items []*AclItems `json:"items,omitempty"`
 
@@ -903,9 +243,6 @@ type Acl struct {
 	// TotalParticipants: The total count of participants of the parent
 	// resource.
 	TotalParticipants int64 `json:"totalParticipants,omitempty"`
-
-	// Description: Human readable description of the access granted.
-	Description string `json:"description,omitempty"`
 }
 
 type ActivityObject struct {
@@ -972,6 +309,1848 @@ type OrkutCommunitypolloptionResource struct {
 	// Image: Image data about the poll option. Field is omitted if no image
 	// exists.
 	Image *OrkutCommunitypolloptionResourceImage `json:"image,omitempty"`
+}
+
+type AclItems struct {
+	// Type: The type of entity to whom access is granted.
+	Type string `json:"type,omitempty"`
+
+	// Id: The ID of the entity. For entities of type "person" or "circle",
+	// this is the ID of the resource. For other types, this will be unset.
+	Id string `json:"id,omitempty"`
+}
+
+type CommunityMessage struct {
+	// Subject: The subject of the message.
+	Subject string `json:"subject,omitempty"`
+
+	// Author: The creator of the message. If ommited, the message is
+	// annonimous.
+	Author *OrkutAuthorResource `json:"author,omitempty"`
+
+	// Links: List of resources for the community message.
+	Links []*OrkutLinkResource `json:"links,omitempty"`
+
+	// IsSpam: Whether this post was marked as spam by the viewer, when
+	// he/she is not the community owner or one of its moderators.
+	IsSpam bool `json:"isSpam,omitempty"`
+
+	// AddedDate: The timestamp of the date when the message was added, in
+	// RFC 3339 format.
+	AddedDate string `json:"addedDate,omitempty"`
+
+	// Kind: Identifies this resource as a community message. Value:
+	// "orkut#communityMessage"
+	Kind string `json:"kind,omitempty"`
+
+	// Id: The ID of the message.
+	Id int64 `json:"id,omitempty,string"`
+
+	// Body: The body of the message.
+	Body string `json:"body,omitempty"`
+}
+
+type ActivityObjectReplies struct {
+	// Url: URL for the collection of comments in reply to this activity.
+	Url string `json:"url,omitempty"`
+
+	// Items: The list of comments.
+	Items []*Comment `json:"items,omitempty"`
+
+	// TotalItems: Total number of comments.
+	TotalItems uint64 `json:"totalItems,omitempty,string"`
+}
+
+type CommunityTopicList struct {
+	// LastPageToken: The value of pageToken query parameter in
+	// community_topic.list request to get the last page.
+	LastPageToken string `json:"lastPageToken,omitempty"`
+
+	// Items: List of topics retrieved.
+	Items []*CommunityTopic `json:"items,omitempty"`
+
+	// NextPageToken: The value of pageToken query parameter in
+	// community_topic.list request to get the next page, if there are more
+	// to retrieve.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Kind: Identifies this resource as a collection of community topics.
+	// Value: "orkut#communityTopicList"
+	Kind string `json:"kind,omitempty"`
+
+	// FirstPageToken: The value of pageToken query parameter in
+	// community_topic.list request to get the first page.
+	FirstPageToken string `json:"firstPageToken,omitempty"`
+
+	// PrevPageToken: The value of pageToken query parameter in
+	// community_topic.list request to get the previous page, if there are
+	// more to retrieve.
+	PrevPageToken string `json:"prevPageToken,omitempty"`
+}
+
+type OrkutActivitypersonResource struct {
+	// Image: The person's profile photo. This is adapted from Google+ and
+	// was originaly introduced as extra OpenSocial convenience fields.
+	Image *OrkutActivitypersonResourceImage `json:"image,omitempty"`
+
+	// Name: An object that encapsulates the individual components of a
+	// person's name.
+	Name *OrkutActivitypersonResourceName `json:"name,omitempty"`
+
+	// Gender: The person's gender. Values include "male", "female", and
+	// "other".
+	Gender string `json:"gender,omitempty"`
+
+	// Url: The person's profile url. This is adapted from Google+ and was
+	// originaly introduced as extra OpenSocial convenience fields.
+	Url string `json:"url,omitempty"`
+
+	// Id: The person's opensocial ID.
+	Id string `json:"id,omitempty"`
+
+	// Birthday: The person's date of birth, represented as YYYY-MM-DD.
+	Birthday string `json:"birthday,omitempty"`
+}
+
+type OrkutActivitypersonResourceImage struct {
+	// Url: The URL of the person's profile photo.
+	Url string `json:"url,omitempty"`
+}
+
+type CommentInReplyTo struct {
+	// Href: Link to the post on activity stream being commented.
+	Href string `json:"href,omitempty"`
+
+	// Rel: Relationship between the comment and the post on activity stream
+	// being commented. Always inReplyTo.
+	Rel string `json:"rel,omitempty"`
+
+	// Ref: Unique identifier of the post on activity stream being
+	// commented.
+	Ref string `json:"ref,omitempty"`
+
+	// Type: Type of the post on activity stream being commented. Always
+	// text/html.
+	Type string `json:"type,omitempty"`
+}
+
+type Counters struct {
+	// Items: List of counters retrieved.
+	Items []*OrkutCounterResource `json:"items,omitempty"`
+
+	// Kind: Identifies this resource as a collection of counters. Value:
+	// "orkut#counters"
+	Kind string `json:"kind,omitempty"`
+}
+
+type Community struct {
+	// Id: The id of the community.
+	Id int64 `json:"id,omitempty"`
+
+	// Member_count: The number of users who are part of the community. This
+	// number may be approximate, so do not rely on it for iteration.
+	Member_count int64 `json:"member_count,omitempty"`
+
+	// Co_owners: The co-owners of the community.
+	Co_owners []*OrkutAuthorResource `json:"co_owners,omitempty"`
+
+	// Creation_date: The time the community was created, in RFC 3339
+	// format.
+	Creation_date string `json:"creation_date,omitempty"`
+
+	// Description: The description of the community.
+	Description string `json:"description,omitempty"`
+
+	// Owner: The person who owns the community.
+	Owner *OrkutAuthorResource `json:"owner,omitempty"`
+
+	// Language: The official language of the community.
+	Language string `json:"language,omitempty"`
+
+	// Location: The location of the community.
+	Location string `json:"location,omitempty"`
+
+	// Category: The category of the community.
+	Category string `json:"category,omitempty"`
+
+	// Moderators: The list of moderators of the community.
+	Moderators []*OrkutAuthorResource `json:"moderators,omitempty"`
+
+	// Name: The name of the community.
+	Name string `json:"name,omitempty"`
+
+	// Links: List of resources for the community.
+	Links []*OrkutLinkResource `json:"links,omitempty"`
+
+	// Kind: Identifies this resource as a community. Value:
+	// "orkut#community"
+	Kind string `json:"kind,omitempty"`
+
+	// Photo_url: The photo of the community.
+	Photo_url string `json:"photo_url,omitempty"`
+}
+
+type OrkutAuthorResource struct {
+	// Image: Image data about the author.
+	Image *OrkutAuthorResourceImage `json:"image,omitempty"`
+
+	// Url: The URL of the author who posted the comment [not yet
+	// implemented]
+	Url string `json:"url,omitempty"`
+
+	// Id: Unique identifier of the person who posted the comment. This is
+	// the person's OpenSocial ID.
+	Id string `json:"id,omitempty"`
+
+	// DisplayName: The name of the author, suitable for display.
+	DisplayName string `json:"displayName,omitempty"`
+}
+
+type BadgeList struct {
+	// Items: List of badges retrieved.
+	Items []*Badge `json:"items,omitempty"`
+
+	// Kind: Identifies this resource as a collection of badges. Value:
+	// "orkut#badgeList"
+	Kind string `json:"kind,omitempty"`
+}
+
+type OrkutActivityobjectsResource struct {
+	// Community: The community which is related with this activity, e.g. a
+	// joined community.
+	Community *Community `json:"community,omitempty"`
+
+	// Links: Links to other resources related to this object.
+	Links []*OrkutLinkResource `json:"links,omitempty"`
+
+	// Person: The person who is related with this activity, e.g. an Added
+	// User.
+	Person *OrkutActivitypersonResource `json:"person,omitempty"`
+
+	// ObjectType: The object type.
+	ObjectType string `json:"objectType,omitempty"`
+
+	// Content: The HTML-formatted content, suitable for display. When
+	// updating an activity's content, post the changes to this property,
+	// using the value of originalContent as a starting point. If the update
+	// is successful, the server adds HTML formatting and responds with this
+	// formatted content.
+	Content string `json:"content,omitempty"`
+
+	// Id: The ID for the object.
+	Id string `json:"id,omitempty"`
+
+	// DisplayName: The title of the object.
+	DisplayName string `json:"displayName,omitempty"`
+}
+
+type OrkutAuthorResourceImage struct {
+	// Url: A URL that points to a thumbnail photo of the author.
+	Url string `json:"url,omitempty"`
+}
+
+type CommunityTopic struct {
+	// LatestMessageSnippet: Snippet of the last message posted on this
+	// topic.
+	LatestMessageSnippet string `json:"latestMessageSnippet,omitempty"`
+
+	// LastUpdate: The timestamp of the last update, in RFC 3339 format.
+	LastUpdate string `json:"lastUpdate,omitempty"`
+
+	// Id: The ID of the topic.
+	Id int64 `json:"id,omitempty,string"`
+
+	// Messages: Most recent messages.
+	Messages []*CommunityMessage `json:"messages,omitempty"`
+
+	// Title: The title of the topic.
+	Title string `json:"title,omitempty"`
+
+	// IsClosed: Whether the topic is closed for new messages.
+	IsClosed bool `json:"isClosed,omitempty"`
+
+	// NumberOfReplies: The total number of replies this topic has received.
+	NumberOfReplies int64 `json:"numberOfReplies,omitempty"`
+
+	// Body: The body of the topic.
+	Body string `json:"body,omitempty"`
+
+	// Author: The creator of the topic.
+	Author *OrkutAuthorResource `json:"author,omitempty"`
+
+	// Links: List of resources for the community.
+	Links []*OrkutLinkResource `json:"links,omitempty"`
+
+	// Kind: Identifies this resource as a community topic. Value:
+	// "orkut#communityTopic"
+	Kind string `json:"kind,omitempty"`
+}
+
+type Comment struct {
+	// InReplyTo: Link to the original activity where this comment was
+	// posted.
+	InReplyTo *CommentInReplyTo `json:"inReplyTo,omitempty"`
+
+	// Links: List of resources for the comment.
+	Links []*OrkutLinkResource `json:"links,omitempty"`
+
+	// Actor: The person who posted the comment.
+	Actor *OrkutAuthorResource `json:"actor,omitempty"`
+
+	// Published: The time the comment was initially published, in RFC 3339
+	// format.
+	Published string `json:"published,omitempty"`
+
+	// Kind: Identifies this resource as a comment. Value: "orkut#comment"
+	Kind string `json:"kind,omitempty"`
+
+	// Content: The content of the comment in text/html
+	Content string `json:"content,omitempty"`
+
+	// Id: The unique ID for the comment.
+	Id string `json:"id,omitempty"`
+}
+
+type OrkutActivitypersonResourceName struct {
+	// FamilyName: The family name (last name) of this person.
+	FamilyName string `json:"familyName,omitempty"`
+
+	// GivenName: The given name (first name) of this person.
+	GivenName string `json:"givenName,omitempty"`
+}
+
+type CommunityList struct {
+	// Items: List of communities retrieved.
+	Items []*Community `json:"items,omitempty"`
+
+	// Kind: Identifies this resource as a collection of communities. Value:
+	// "orkut#communityList"
+	Kind string `json:"kind,omitempty"`
+}
+
+type CommunityMembers struct {
+	// Person: Description of the community member.
+	Person *OrkutActivitypersonResource `json:"person,omitempty"`
+
+	// CommunityMembershipStatus: Status and permissions of the user related
+	// to the community.
+	CommunityMembershipStatus *CommunityMembershipStatus `json:"communityMembershipStatus,omitempty"`
+
+	// Kind: Kind of this item. Always orkut#communityMembers.
+	Kind string `json:"kind,omitempty"`
+}
+
+type OrkutLinkResource struct {
+	// Href: URL of the link.
+	Href string `json:"href,omitempty"`
+
+	// Title: Title of the link.
+	Title string `json:"title,omitempty"`
+
+	// Rel: Relation between the resource and the parent object.
+	Rel string `json:"rel,omitempty"`
+
+	// Type: Media type of the link.
+	Type string `json:"type,omitempty"`
+}
+
+type ActivityList struct {
+	// Items: List of activities retrieved.
+	Items []*Activity `json:"items,omitempty"`
+
+	// NextPageToken: The value of pageToken query parameter in
+	// activities.list request to get the next page, if there are more to
+	// retrieve.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Kind: Identifies this resource as a collection of activities. Value:
+	// "orkut#activityList"
+	Kind string `json:"kind,omitempty"`
+}
+
+type CommunityPollList struct {
+	// LastPageToken: The value of pageToken query parameter in
+	// community_polls.list request to get the last page.
+	LastPageToken string `json:"lastPageToken,omitempty"`
+
+	// Items: List of community polls retrieved.
+	Items []*CommunityPoll `json:"items,omitempty"`
+
+	// NextPageToken: The value of pageToken query parameter in
+	// community_polls.list request to get the next page, if there are more
+	// to retrieve.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Kind: Identifies this resource as a collection of community polls.
+	// Value: "orkut#communityPollList"
+	Kind string `json:"kind,omitempty"`
+
+	// FirstPageToken: The value of pageToken query parameter in
+	// community_polls.list request to get the first page.
+	FirstPageToken string `json:"firstPageToken,omitempty"`
+
+	// PrevPageToken: The value of pageToken query parameter in
+	// community_polls.list request to get the previous page, if there are
+	// more to retrieve.
+	PrevPageToken string `json:"prevPageToken,omitempty"`
+}
+
+type CommunityMembershipStatus struct {
+	// IsRestoreAvailable: Whether the restore operation is available for
+	// the community.
+	IsRestoreAvailable bool `json:"isRestoreAvailable,omitempty"`
+
+	// CanShout: Whether the user can perform a shout operation in this
+	// community.
+	CanShout bool `json:"canShout,omitempty"`
+
+	// IsModerator: Whether the session user is a community moderator.
+	IsModerator bool `json:"isModerator,omitempty"`
+
+	// IsFollowing: Whether the user is following this community.
+	IsFollowing bool `json:"isFollowing,omitempty"`
+
+	// IsTakebackAvailable: Whether the take-back operation is available for
+	// the community.
+	IsTakebackAvailable bool `json:"isTakebackAvailable,omitempty"`
+
+	// Kind: Kind of this item. Always orkut#communityMembershipStatus.
+	Kind string `json:"kind,omitempty"`
+
+	// CanCreateTopic: Whether the user can create a topic in this
+	// community.
+	CanCreateTopic bool `json:"canCreateTopic,omitempty"`
+
+	// IsCoOwner: Whether the session user is a community co-owner.
+	IsCoOwner bool `json:"isCoOwner,omitempty"`
+
+	// IsOwner: Whether the session user is the community owner.
+	IsOwner bool `json:"isOwner,omitempty"`
+
+	// CanCreatePoll: Whether the user can create a poll in this community.
+	CanCreatePoll bool `json:"canCreatePoll,omitempty"`
+
+	// Status: The status of the current link between the community and the
+	// user.
+	Status string `json:"status,omitempty"`
+}
+
+type OrkutCounterResource struct {
+	// Name: The name of the counted collection. Currently supported
+	// collections are:  
+	// - scraps - The scraps of the user. 
+	// - photos - The
+	// photos of the user. 
+	// - videos - The videos of the user. 
+	// -
+	// pendingTestimonials - The pending testimonials of the user.
+	Name string `json:"name,omitempty"`
+
+	// Total: The number of resources on the counted collection.
+	Total int64 `json:"total,omitempty"`
+
+	// Link: Link to the collection being counted.
+	Link *OrkutLinkResource `json:"link,omitempty"`
+}
+
+type Badge struct {
+	// Description: The description for the badge, suitable for display.
+	Description string `json:"description,omitempty"`
+
+	// SponsorLogo: The URL for the 32x32 badge sponsor logo.
+	SponsorLogo string `json:"sponsorLogo,omitempty"`
+
+	// Kind: Identifies this resource as a badge. Value: "orkut#badge"
+	Kind string `json:"kind,omitempty"`
+
+	// SponsorName: The name of the badge sponsor, suitable for display.
+	SponsorName string `json:"sponsorName,omitempty"`
+
+	// Id: The unique ID for the badge.
+	Id int64 `json:"id,omitempty,string"`
+
+	// Caption: The name of the badge, suitable for display.
+	Caption string `json:"caption,omitempty"`
+
+	// SponsorUrl: The URL for the badge sponsor.
+	SponsorUrl string `json:"sponsorUrl,omitempty"`
+
+	// BadgeSmallLogo: The URL for the 24x24 badge logo.
+	BadgeSmallLogo string `json:"badgeSmallLogo,omitempty"`
+
+	// BadgeLargeLogo: The URL for the 64x64 badge logo.
+	BadgeLargeLogo string `json:"badgeLargeLogo,omitempty"`
+}
+
+type CommentList struct {
+	// PreviousPageToken: The value of pageToken query parameter in
+	// comments.list request to get the previous page, if there are more to
+	// retrieve.
+	PreviousPageToken string `json:"previousPageToken,omitempty"`
+
+	// Items: List of comments retrieved.
+	Items []*Comment `json:"items,omitempty"`
+
+	// NextPageToken: The value of pageToken query parameter in
+	// comments.list request to get the next page, if there are more to
+	// retrieve.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Kind: Identifies this resource as a collection of comments. Value:
+	// "orkut#commentList"
+	Kind string `json:"kind,omitempty"`
+}
+
+type Visibility struct {
+	// Visibility: The visibility of the resource. Possible values are:  
+	// -
+	// default: not hidden by the user 
+	// - hidden: hidden
+	Visibility string `json:"visibility,omitempty"`
+
+	// Links: List of resources for the visibility item.
+	Links []*OrkutLinkResource `json:"links,omitempty"`
+
+	// Kind: Identifies this resource as a visibility item. Value:
+	// "orkut#visibility"
+	Kind string `json:"kind,omitempty"`
+}
+
+type CommunityPollCommentList struct {
+	// PrevPageToken: The value of pageToken query parameter in
+	// community_poll_comments.list request to get the previous page, if
+	// there are more to retrieve.
+	PrevPageToken string `json:"prevPageToken,omitempty"`
+
+	// LastPageToken: The value of pageToken query parameter in
+	// community_poll_comments.list request to get the last page.
+	LastPageToken string `json:"lastPageToken,omitempty"`
+
+	// Items: List of community poll comments retrieved.
+	Items []*CommunityPollComment `json:"items,omitempty"`
+
+	// NextPageToken: The value of pageToken query parameter in
+	// community_poll_comments.list request to get the next page, if there
+	// are more to retrieve.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Kind: Identifies this resource as a collection of community poll
+	// comments. Value: "orkut#CommunityPollCommentList"
+	Kind string `json:"kind,omitempty"`
+
+	// FirstPageToken: The value of pageToken query parameter in
+	// community_poll_comments.list request to get the first page.
+	FirstPageToken string `json:"firstPageToken,omitempty"`
+}
+
+type CommunityMessageList struct {
+	// PrevPageToken: The value of pageToken query parameter in
+	// community_messages.list request to get the previous page, if there
+	// are more to retrieve.
+	PrevPageToken string `json:"prevPageToken,omitempty"`
+
+	// LastPageToken: The value of pageToken query parameter in
+	// community_messages.list request to get the last page.
+	LastPageToken string `json:"lastPageToken,omitempty"`
+
+	// Items: List of messages retrieved.
+	Items []*CommunityMessage `json:"items,omitempty"`
+
+	// NextPageToken: The value of pageToken query parameter in
+	// community_messages.list request to get the next page, if there are
+	// more to retrieve.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Kind: Identifies this resource as a collection of community messages.
+	// Value: "orkut#communityMessageList"
+	Kind string `json:"kind,omitempty"`
+
+	// FirstPageToken: The value of pageToken query parameter in
+	// community_messages.list request to get the first page.
+	FirstPageToken string `json:"firstPageToken,omitempty"`
+}
+
+type CommunityPollVote struct {
+	// IsVotevisible: Whether this vote is visible to other users or not.
+	IsVotevisible bool `json:"isVotevisible,omitempty"`
+
+	// OptionIds: The ids of the voted options.
+	OptionIds []int64 `json:"optionIds,omitempty"`
+
+	// Kind: Identifies this resource as a community poll vote. Value:
+	// "orkut#communityPollVote"
+	Kind string `json:"kind,omitempty"`
+}
+
+type CommunityPoll struct {
+	// Links: List of resources for the community poll.
+	Links []*OrkutLinkResource `json:"links,omitempty"`
+
+	// CreationTime: The date of creation of this poll
+	CreationTime string `json:"creationTime,omitempty"`
+
+	// IsSpam: Whether the user has marked this poll as spam. This only
+	// affects the poll for this user, not globally.
+	IsSpam bool `json:"isSpam,omitempty"`
+
+	// Question: The poll question.
+	Question string `json:"question,omitempty"`
+
+	// Kind: Identifies this resource as a community poll. Value:
+	// "orkut#communityPoll"
+	Kind string `json:"kind,omitempty"`
+
+	// VotedOptions: List of options the user has voted on, if there are
+	// any.
+	VotedOptions []int64 `json:"votedOptions,omitempty"`
+
+	// Options: List of options of this poll.
+	Options []*OrkutCommunitypolloptionResource `json:"options,omitempty"`
+
+	// HasVoted: Whether the user has voted on this poll.
+	HasVoted bool `json:"hasVoted,omitempty"`
+
+	// LastUpdate: The date of the last update of this poll.
+	LastUpdate string `json:"lastUpdate,omitempty"`
+
+	// IsOpenForVoting: Whether this poll is still opened for voting. A poll
+	// is open for voting if it is not closed, the user has not yet voted on
+	// it and the user has the permission to do so, which happens if he/she
+	// is either a community member or the poll is open for everybody.
+	IsOpenForVoting bool `json:"isOpenForVoting,omitempty"`
+
+	// Id: The poll ID.
+	Id string `json:"id,omitempty"`
+
+	// IsVotingAllowedForNonMembers: Whether non-members of the community
+	// can vote on the poll.
+	IsVotingAllowedForNonMembers bool `json:"isVotingAllowedForNonMembers,omitempty"`
+
+	// IsClosed: Whether the poll is not expired if there is an expiration
+	// date. A poll is open (that is, not closed for voting) if it either is
+	// not expired or doesn't have an expiration date at all. Note that just
+	// because a poll is open, it doesn't mean that the requester can vote
+	// on it.
+	IsClosed bool `json:"isClosed,omitempty"`
+
+	// TotalNumberOfVotes: The total number of votes this poll has received.
+	TotalNumberOfVotes int64 `json:"totalNumberOfVotes,omitempty"`
+
+	// EndingTime: The ending date of this poll or empty if the poll doesn't
+	// have one.
+	EndingTime string `json:"endingTime,omitempty"`
+
+	// IsUsersVotePublic: If user has already voted, whether his vote is
+	// publicly visible.
+	IsUsersVotePublic bool `json:"isUsersVotePublic,omitempty"`
+
+	// Description: The poll description.
+	Description string `json:"description,omitempty"`
+
+	// IsRestricted: Whether this poll is restricted for members only. If a
+	// poll is open but the user can't vote on it, it's been restricted to
+	// members only. This information is important to tell this case apart
+	// from the one where the user can't vote simply because the poll is
+	// already closed.
+	IsRestricted bool `json:"isRestricted,omitempty"`
+
+	// Author: The person who created the poll.
+	Author *OrkutAuthorResource `json:"author,omitempty"`
+
+	// CommunityId: The ID of the community.
+	CommunityId int64 `json:"communityId,omitempty"`
+
+	// Image: The image representing the poll. Field is omitted if no image
+	// exists.
+	Image *CommunityPollImage `json:"image,omitempty"`
+
+	// IsMultipleAnswers: Whether this poll allows voting for more than one
+	// option.
+	IsMultipleAnswers bool `json:"isMultipleAnswers,omitempty"`
+}
+
+type CommunityPollImage struct {
+	// Url: A URL that points to an image of the poll.
+	Url string `json:"url,omitempty"`
+}
+
+// method id "orkut.communityRelated.list":
+
+type CommunityRelatedListCall struct {
+	s           *Service
+	communityId int64
+	opt_        map[string]interface{}
+}
+
+// List: Retrieves the communities related to another one.
+func (r *CommunityRelatedService) List(communityId int64) *CommunityRelatedListCall {
+	c := &CommunityRelatedListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.communityId = communityId
+	return c
+}
+
+// Hl sets the optional parameter "hl": Specifies the interface language
+// (host language) of your user interface.
+func (c *CommunityRelatedListCall) Hl(hl string) *CommunityRelatedListCall {
+	c.opt_["hl"] = hl
+	return c
+}
+
+func (c *CommunityRelatedListCall) Do() (*CommunityList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["hl"]; ok {
+		params.Set("hl", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}/related")
+	urls = strings.Replace(urls, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(CommunityList)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the communities related to another one.",
+	//   "httpMethod": "GET",
+	//   "id": "orkut.communityRelated.list",
+	//   "parameterOrder": [
+	//     "communityId"
+	//   ],
+	//   "parameters": {
+	//     "communityId": {
+	//       "description": "The ID of the community whose related communities will be listed.",
+	//       "format": "int32",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "integer"
+	//     },
+	//     "hl": {
+	//       "description": "Specifies the interface language (host language) of your user interface.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "communities/{communityId}/related",
+	//   "response": {
+	//     "$ref": "CommunityList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/orkut",
+	//     "https://www.googleapis.com/auth/orkut.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "orkut.activityVisibility.patch":
+
+type ActivityVisibilityPatchCall struct {
+	s          *Service
+	activityId string
+	visibility *Visibility
+	opt_       map[string]interface{}
+}
+
+// Patch: Updates the visibility of an existing activity. This method
+// supports patch semantics.
+func (r *ActivityVisibilityService) Patch(activityId string, visibility *Visibility) *ActivityVisibilityPatchCall {
+	c := &ActivityVisibilityPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.activityId = activityId
+	c.visibility = visibility
+	return c
+}
+
+func (c *ActivityVisibilityPatchCall) Do() (*Visibility, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.visibility)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "activities/{activityId}/visibility")
+	urls = strings.Replace(urls, "{activityId}", cleanPathString(c.activityId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Visibility)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the visibility of an existing activity. This method supports patch semantics.",
+	//   "httpMethod": "PATCH",
+	//   "id": "orkut.activityVisibility.patch",
+	//   "parameterOrder": [
+	//     "activityId"
+	//   ],
+	//   "parameters": {
+	//     "activityId": {
+	//       "description": "ID of the activity.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "activities/{activityId}/visibility",
+	//   "request": {
+	//     "$ref": "Visibility"
+	//   },
+	//   "response": {
+	//     "$ref": "Visibility"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/orkut"
+	//   ]
+	// }
+
+}
+
+// method id "orkut.activityVisibility.update":
+
+type ActivityVisibilityUpdateCall struct {
+	s          *Service
+	activityId string
+	visibility *Visibility
+	opt_       map[string]interface{}
+}
+
+// Update: Updates the visibility of an existing activity.
+func (r *ActivityVisibilityService) Update(activityId string, visibility *Visibility) *ActivityVisibilityUpdateCall {
+	c := &ActivityVisibilityUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.activityId = activityId
+	c.visibility = visibility
+	return c
+}
+
+func (c *ActivityVisibilityUpdateCall) Do() (*Visibility, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.visibility)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "activities/{activityId}/visibility")
+	urls = strings.Replace(urls, "{activityId}", cleanPathString(c.activityId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Visibility)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the visibility of an existing activity.",
+	//   "httpMethod": "PUT",
+	//   "id": "orkut.activityVisibility.update",
+	//   "parameterOrder": [
+	//     "activityId"
+	//   ],
+	//   "parameters": {
+	//     "activityId": {
+	//       "description": "ID of the activity.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "activities/{activityId}/visibility",
+	//   "request": {
+	//     "$ref": "Visibility"
+	//   },
+	//   "response": {
+	//     "$ref": "Visibility"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/orkut"
+	//   ]
+	// }
+
+}
+
+// method id "orkut.activityVisibility.get":
+
+type ActivityVisibilityGetCall struct {
+	s          *Service
+	activityId string
+	opt_       map[string]interface{}
+}
+
+// Get: Gets the visibility of an existing activity.
+func (r *ActivityVisibilityService) Get(activityId string) *ActivityVisibilityGetCall {
+	c := &ActivityVisibilityGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.activityId = activityId
+	return c
+}
+
+func (c *ActivityVisibilityGetCall) Do() (*Visibility, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "activities/{activityId}/visibility")
+	urls = strings.Replace(urls, "{activityId}", cleanPathString(c.activityId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Visibility)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the visibility of an existing activity.",
+	//   "httpMethod": "GET",
+	//   "id": "orkut.activityVisibility.get",
+	//   "parameterOrder": [
+	//     "activityId"
+	//   ],
+	//   "parameters": {
+	//     "activityId": {
+	//       "description": "ID of the activity to get the visibility.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "activities/{activityId}/visibility",
+	//   "response": {
+	//     "$ref": "Visibility"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/orkut",
+	//     "https://www.googleapis.com/auth/orkut.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "orkut.scraps.insert":
+
+type ScrapsInsertCall struct {
+	s        *Service
+	activity *Activity
+	opt_     map[string]interface{}
+}
+
+// Insert: Creates a new scrap.
+func (r *ScrapsService) Insert(activity *Activity) *ScrapsInsertCall {
+	c := &ScrapsInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.activity = activity
+	return c
+}
+
+func (c *ScrapsInsertCall) Do() (*Activity, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.activity)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "activities/scraps")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Activity)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new scrap.",
+	//   "httpMethod": "POST",
+	//   "id": "orkut.scraps.insert",
+	//   "path": "activities/scraps",
+	//   "request": {
+	//     "$ref": "Activity"
+	//   },
+	//   "response": {
+	//     "$ref": "Activity"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/orkut"
+	//   ]
+	// }
+
+}
+
+// method id "orkut.communityFollow.insert":
+
+type CommunityFollowInsertCall struct {
+	s           *Service
+	communityId int64
+	userId      string
+	opt_        map[string]interface{}
+}
+
+// Insert: Adds a user as a follower of a community.
+func (r *CommunityFollowService) Insert(communityId int64, userId string) *CommunityFollowInsertCall {
+	c := &CommunityFollowInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.communityId = communityId
+	c.userId = userId
+	return c
+}
+
+func (c *CommunityFollowInsertCall) Do() (*CommunityMembers, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}/followers/{userId}")
+	urls = strings.Replace(urls, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
+	urls = strings.Replace(urls, "{userId}", cleanPathString(c.userId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(CommunityMembers)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Adds a user as a follower of a community.",
+	//   "httpMethod": "POST",
+	//   "id": "orkut.communityFollow.insert",
+	//   "parameterOrder": [
+	//     "communityId",
+	//     "userId"
+	//   ],
+	//   "parameters": {
+	//     "communityId": {
+	//       "description": "ID of the community.",
+	//       "format": "int32",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "integer"
+	//     },
+	//     "userId": {
+	//       "description": "ID of the user.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "communities/{communityId}/followers/{userId}",
+	//   "response": {
+	//     "$ref": "CommunityMembers"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/orkut"
+	//   ]
+	// }
+
+}
+
+// method id "orkut.communityFollow.delete":
+
+type CommunityFollowDeleteCall struct {
+	s           *Service
+	communityId int64
+	userId      string
+	opt_        map[string]interface{}
+}
+
+// Delete: Removes a user from the followers of a community.
+func (r *CommunityFollowService) Delete(communityId int64, userId string) *CommunityFollowDeleteCall {
+	c := &CommunityFollowDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.communityId = communityId
+	c.userId = userId
+	return c
+}
+
+func (c *CommunityFollowDeleteCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}/followers/{userId}")
+	urls = strings.Replace(urls, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
+	urls = strings.Replace(urls, "{userId}", cleanPathString(c.userId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Removes a user from the followers of a community.",
+	//   "httpMethod": "DELETE",
+	//   "id": "orkut.communityFollow.delete",
+	//   "parameterOrder": [
+	//     "communityId",
+	//     "userId"
+	//   ],
+	//   "parameters": {
+	//     "communityId": {
+	//       "description": "ID of the community.",
+	//       "format": "int32",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "integer"
+	//     },
+	//     "userId": {
+	//       "description": "ID of the user.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "communities/{communityId}/followers/{userId}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/orkut"
+	//   ]
+	// }
+
+}
+
+// method id "orkut.communities.get":
+
+type CommunitiesGetCall struct {
+	s           *Service
+	communityId int64
+	opt_        map[string]interface{}
+}
+
+// Get: Retrieves the basic information (aka. profile) of a community.
+func (r *CommunitiesService) Get(communityId int64) *CommunitiesGetCall {
+	c := &CommunitiesGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.communityId = communityId
+	return c
+}
+
+// Hl sets the optional parameter "hl": Specifies the interface language
+// (host language) of your user interface.
+func (c *CommunitiesGetCall) Hl(hl string) *CommunitiesGetCall {
+	c.opt_["hl"] = hl
+	return c
+}
+
+func (c *CommunitiesGetCall) Do() (*Community, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["hl"]; ok {
+		params.Set("hl", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}")
+	urls = strings.Replace(urls, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Community)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the basic information (aka. profile) of a community.",
+	//   "httpMethod": "GET",
+	//   "id": "orkut.communities.get",
+	//   "parameterOrder": [
+	//     "communityId"
+	//   ],
+	//   "parameters": {
+	//     "communityId": {
+	//       "description": "The ID of the community to get.",
+	//       "format": "int32",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "integer"
+	//     },
+	//     "hl": {
+	//       "description": "Specifies the interface language (host language) of your user interface.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "communities/{communityId}",
+	//   "response": {
+	//     "$ref": "Community"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/orkut",
+	//     "https://www.googleapis.com/auth/orkut.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "orkut.communities.list":
+
+type CommunitiesListCall struct {
+	s      *Service
+	userId string
+	opt_   map[string]interface{}
+}
+
+// List: Retrieves the list of communities the current user is a member
+// of.
+func (r *CommunitiesService) List(userId string) *CommunitiesListCall {
+	c := &CommunitiesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.userId = userId
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": How to order the
+// communities by.
+func (c *CommunitiesListCall) OrderBy(orderBy string) *CommunitiesListCall {
+	c.opt_["orderBy"] = orderBy
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of communities to include in the response.
+func (c *CommunitiesListCall) MaxResults(maxResults int64) *CommunitiesListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// Hl sets the optional parameter "hl": Specifies the interface language
+// (host language) of your user interface.
+func (c *CommunitiesListCall) Hl(hl string) *CommunitiesListCall {
+	c.opt_["hl"] = hl
+	return c
+}
+
+func (c *CommunitiesListCall) Do() (*CommunityList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["orderBy"]; ok {
+		params.Set("orderBy", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["hl"]; ok {
+		params.Set("hl", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "people/{userId}/communities")
+	urls = strings.Replace(urls, "{userId}", cleanPathString(c.userId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(CommunityList)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the list of communities the current user is a member of.",
+	//   "httpMethod": "GET",
+	//   "id": "orkut.communities.list",
+	//   "parameterOrder": [
+	//     "userId"
+	//   ],
+	//   "parameters": {
+	//     "hl": {
+	//       "description": "Specifies the interface language (host language) of your user interface.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "description": "The maximum number of communities to include in the response.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "How to order the communities by.",
+	//       "enum": [
+	//         "id",
+	//         "ranked"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Returns the communities sorted by a fixed, natural order.",
+	//         "Returns the communities ranked accordingly to how they are displayed on the orkut web application."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "userId": {
+	//       "description": "The ID of the user whose communities will be listed. Can be me to refer to caller.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "people/{userId}/communities",
+	//   "response": {
+	//     "$ref": "CommunityList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/orkut",
+	//     "https://www.googleapis.com/auth/orkut.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "orkut.badges.list":
+
+type BadgesListCall struct {
+	s      *Service
+	userId string
+	opt_   map[string]interface{}
+}
+
+// List: Retrieves the list of visible badges of a user.
+func (r *BadgesService) List(userId string) *BadgesListCall {
+	c := &BadgesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.userId = userId
+	return c
+}
+
+func (c *BadgesListCall) Do() (*BadgeList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "people/{userId}/badges")
+	urls = strings.Replace(urls, "{userId}", cleanPathString(c.userId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(BadgeList)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the list of visible badges of a user.",
+	//   "httpMethod": "GET",
+	//   "id": "orkut.badges.list",
+	//   "parameterOrder": [
+	//     "userId"
+	//   ],
+	//   "parameters": {
+	//     "userId": {
+	//       "description": "The id of the user whose badges will be listed. Can be me to refer to caller.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "people/{userId}/badges",
+	//   "response": {
+	//     "$ref": "BadgeList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/orkut",
+	//     "https://www.googleapis.com/auth/orkut.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "orkut.badges.get":
+
+type BadgesGetCall struct {
+	s       *Service
+	userId  string
+	badgeId int64
+	opt_    map[string]interface{}
+}
+
+// Get: Retrieves a badge from a user.
+func (r *BadgesService) Get(userId string, badgeId int64) *BadgesGetCall {
+	c := &BadgesGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.userId = userId
+	c.badgeId = badgeId
+	return c
+}
+
+func (c *BadgesGetCall) Do() (*Badge, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "people/{userId}/badges/{badgeId}")
+	urls = strings.Replace(urls, "{userId}", cleanPathString(c.userId), 1)
+	urls = strings.Replace(urls, "{badgeId}", strconv.FormatInt(c.badgeId, 10), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Badge)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a badge from a user.",
+	//   "httpMethod": "GET",
+	//   "id": "orkut.badges.get",
+	//   "parameterOrder": [
+	//     "userId",
+	//     "badgeId"
+	//   ],
+	//   "parameters": {
+	//     "badgeId": {
+	//       "description": "The ID of the badge that will be retrieved.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "userId": {
+	//       "description": "The ID of the user whose badges will be listed. Can be me to refer to caller.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "people/{userId}/badges/{badgeId}",
+	//   "response": {
+	//     "$ref": "Badge"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/orkut",
+	//     "https://www.googleapis.com/auth/orkut.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "orkut.communityMembers.insert":
+
+type CommunityMembersInsertCall struct {
+	s           *Service
+	communityId int64
+	userId      string
+	opt_        map[string]interface{}
+}
+
+// Insert: Makes the user join a community.
+func (r *CommunityMembersService) Insert(communityId int64, userId string) *CommunityMembersInsertCall {
+	c := &CommunityMembersInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.communityId = communityId
+	c.userId = userId
+	return c
+}
+
+func (c *CommunityMembersInsertCall) Do() (*CommunityMembers, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}/members/{userId}")
+	urls = strings.Replace(urls, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
+	urls = strings.Replace(urls, "{userId}", cleanPathString(c.userId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(CommunityMembers)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Makes the user join a community.",
+	//   "httpMethod": "POST",
+	//   "id": "orkut.communityMembers.insert",
+	//   "parameterOrder": [
+	//     "communityId",
+	//     "userId"
+	//   ],
+	//   "parameters": {
+	//     "communityId": {
+	//       "description": "ID of the community.",
+	//       "format": "int32",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "integer"
+	//     },
+	//     "userId": {
+	//       "description": "ID of the user.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "communities/{communityId}/members/{userId}",
+	//   "response": {
+	//     "$ref": "CommunityMembers"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/orkut"
+	//   ]
+	// }
+
+}
+
+// method id "orkut.communityMembers.get":
+
+type CommunityMembersGetCall struct {
+	s           *Service
+	communityId int64
+	userId      string
+	opt_        map[string]interface{}
+}
+
+// Get: Retrieves the relationship between a user and a community.
+func (r *CommunityMembersService) Get(communityId int64, userId string) *CommunityMembersGetCall {
+	c := &CommunityMembersGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.communityId = communityId
+	c.userId = userId
+	return c
+}
+
+// Hl sets the optional parameter "hl": Specifies the interface language
+// (host language) of your user interface.
+func (c *CommunityMembersGetCall) Hl(hl string) *CommunityMembersGetCall {
+	c.opt_["hl"] = hl
+	return c
+}
+
+func (c *CommunityMembersGetCall) Do() (*CommunityMembers, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["hl"]; ok {
+		params.Set("hl", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}/members/{userId}")
+	urls = strings.Replace(urls, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
+	urls = strings.Replace(urls, "{userId}", cleanPathString(c.userId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(CommunityMembers)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the relationship between a user and a community.",
+	//   "httpMethod": "GET",
+	//   "id": "orkut.communityMembers.get",
+	//   "parameterOrder": [
+	//     "communityId",
+	//     "userId"
+	//   ],
+	//   "parameters": {
+	//     "communityId": {
+	//       "description": "ID of the community.",
+	//       "format": "int32",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "integer"
+	//     },
+	//     "hl": {
+	//       "description": "Specifies the interface language (host language) of your user interface.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "userId": {
+	//       "description": "ID of the user.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "communities/{communityId}/members/{userId}",
+	//   "response": {
+	//     "$ref": "CommunityMembers"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/orkut",
+	//     "https://www.googleapis.com/auth/orkut.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "orkut.communityMembers.delete":
+
+type CommunityMembersDeleteCall struct {
+	s           *Service
+	communityId int64
+	userId      string
+	opt_        map[string]interface{}
+}
+
+// Delete: Makes the user leave a community.
+func (r *CommunityMembersService) Delete(communityId int64, userId string) *CommunityMembersDeleteCall {
+	c := &CommunityMembersDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.communityId = communityId
+	c.userId = userId
+	return c
+}
+
+func (c *CommunityMembersDeleteCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}/members/{userId}")
+	urls = strings.Replace(urls, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
+	urls = strings.Replace(urls, "{userId}", cleanPathString(c.userId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Makes the user leave a community.",
+	//   "httpMethod": "DELETE",
+	//   "id": "orkut.communityMembers.delete",
+	//   "parameterOrder": [
+	//     "communityId",
+	//     "userId"
+	//   ],
+	//   "parameters": {
+	//     "communityId": {
+	//       "description": "ID of the community.",
+	//       "format": "int32",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "integer"
+	//     },
+	//     "userId": {
+	//       "description": "ID of the user.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "communities/{communityId}/members/{userId}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/orkut"
+	//   ]
+	// }
+
+}
+
+// method id "orkut.communityMembers.list":
+
+type CommunityMembersListCall struct {
+	s           *Service
+	communityId int64
+	opt_        map[string]interface{}
+}
+
+// List: Lists members of a community. Use the pagination tokens to
+// retrieve the full list; do not rely on the member count available in
+// the community profile information to know when to stop iterating, as
+// that count may be approximate.
+func (r *CommunityMembersService) List(communityId int64) *CommunityMembersListCall {
+	c := &CommunityMembersListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.communityId = communityId
+	return c
+}
+
+// FriendsOnly sets the optional parameter "friendsOnly": Whether to
+// list only community members who are friends of the user.
+func (c *CommunityMembersListCall) FriendsOnly(friendsOnly bool) *CommunityMembersListCall {
+	c.opt_["friendsOnly"] = friendsOnly
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A continuation
+// token that allows pagination.
+func (c *CommunityMembersListCall) PageToken(pageToken string) *CommunityMembersListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of members to include in the response.
+func (c *CommunityMembersListCall) MaxResults(maxResults int64) *CommunityMembersListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// Hl sets the optional parameter "hl": Specifies the interface language
+// (host language) of your user interface.
+func (c *CommunityMembersListCall) Hl(hl string) *CommunityMembersListCall {
+	c.opt_["hl"] = hl
+	return c
+}
+
+func (c *CommunityMembersListCall) Do() (*CommunityMembersList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["friendsOnly"]; ok {
+		params.Set("friendsOnly", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["hl"]; ok {
+		params.Set("hl", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}/members")
+	urls = strings.Replace(urls, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(CommunityMembersList)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists members of a community. Use the pagination tokens to retrieve the full list; do not rely on the member count available in the community profile information to know when to stop iterating, as that count may be approximate.",
+	//   "httpMethod": "GET",
+	//   "id": "orkut.communityMembers.list",
+	//   "parameterOrder": [
+	//     "communityId"
+	//   ],
+	//   "parameters": {
+	//     "communityId": {
+	//       "description": "The ID of the community whose members will be listed.",
+	//       "format": "int32",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "integer"
+	//     },
+	//     "friendsOnly": {
+	//       "description": "Whether to list only community members who are friends of the user.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "hl": {
+	//       "description": "Specifies the interface language (host language) of your user interface.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "description": "The maximum number of members to include in the response.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A continuation token that allows pagination.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "communities/{communityId}/members",
+	//   "response": {
+	//     "$ref": "CommunityMembersList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/orkut",
+	//     "https://www.googleapis.com/auth/orkut.readonly"
+	//   ]
+	// }
+
 }
 
 // method id "orkut.communityPolls.list":
@@ -1169,73 +2348,6 @@ func (c *CommunityPollsGetCall) Do() (*CommunityPoll, error) {
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/orkut",
 	//     "https://www.googleapis.com/auth/orkut.readonly"
-	//   ]
-	// }
-
-}
-
-// method id "orkut.communityTopics.delete":
-
-type CommunityTopicsDeleteCall struct {
-	s           *Service
-	communityId int64
-	topicId     int64
-	opt_        map[string]interface{}
-}
-
-// Delete: Moves a topic of the community to the trash folder.
-func (r *CommunityTopicsService) Delete(communityId int64, topicId int64) *CommunityTopicsDeleteCall {
-	c := &CommunityTopicsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
-	c.communityId = communityId
-	c.topicId = topicId
-	return c
-}
-
-func (c *CommunityTopicsDeleteCall) Do() error {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}/topics/{topicId}")
-	urls = strings.Replace(urls, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
-	urls = strings.Replace(urls, "{topicId}", strconv.FormatInt(c.topicId, 10), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("DELETE", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return err
-	}
-	return nil
-	// {
-	//   "description": "Moves a topic of the community to the trash folder.",
-	//   "httpMethod": "DELETE",
-	//   "id": "orkut.communityTopics.delete",
-	//   "parameterOrder": [
-	//     "communityId",
-	//     "topicId"
-	//   ],
-	//   "parameters": {
-	//     "communityId": {
-	//       "description": "The ID of the community whose topic will be moved to the trash folder.",
-	//       "format": "int32",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "integer"
-	//     },
-	//     "topicId": {
-	//       "description": "The ID of the topic to be moved to the trash folder.",
-	//       "format": "int64",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "communities/{communityId}/topics/{topicId}",
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/orkut"
 	//   ]
 	// }
 
@@ -1532,6 +2644,206 @@ func (c *CommunityTopicsGetCall) Do() (*CommunityTopic, error) {
 
 }
 
+// method id "orkut.communityTopics.delete":
+
+type CommunityTopicsDeleteCall struct {
+	s           *Service
+	communityId int64
+	topicId     int64
+	opt_        map[string]interface{}
+}
+
+// Delete: Moves a topic of the community to the trash folder.
+func (r *CommunityTopicsService) Delete(communityId int64, topicId int64) *CommunityTopicsDeleteCall {
+	c := &CommunityTopicsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.communityId = communityId
+	c.topicId = topicId
+	return c
+}
+
+func (c *CommunityTopicsDeleteCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}/topics/{topicId}")
+	urls = strings.Replace(urls, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
+	urls = strings.Replace(urls, "{topicId}", strconv.FormatInt(c.topicId, 10), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Moves a topic of the community to the trash folder.",
+	//   "httpMethod": "DELETE",
+	//   "id": "orkut.communityTopics.delete",
+	//   "parameterOrder": [
+	//     "communityId",
+	//     "topicId"
+	//   ],
+	//   "parameters": {
+	//     "communityId": {
+	//       "description": "The ID of the community whose topic will be moved to the trash folder.",
+	//       "format": "int32",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "integer"
+	//     },
+	//     "topicId": {
+	//       "description": "The ID of the topic to be moved to the trash folder.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "communities/{communityId}/topics/{topicId}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/orkut"
+	//   ]
+	// }
+
+}
+
+// method id "orkut.comments.list":
+
+type CommentsListCall struct {
+	s          *Service
+	activityId string
+	opt_       map[string]interface{}
+}
+
+// List: Retrieves a list of comments, possibly filtered.
+func (r *CommentsService) List(activityId string) *CommentsListCall {
+	c := &CommentsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.activityId = activityId
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A continuation
+// token that allows pagination.
+func (c *CommentsListCall) PageToken(pageToken string) *CommentsListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sort search results.
+func (c *CommentsListCall) OrderBy(orderBy string) *CommentsListCall {
+	c.opt_["orderBy"] = orderBy
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of activities to include in the response.
+func (c *CommentsListCall) MaxResults(maxResults int64) *CommentsListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// Hl sets the optional parameter "hl": Specifies the interface language
+// (host language) of your user interface.
+func (c *CommentsListCall) Hl(hl string) *CommentsListCall {
+	c.opt_["hl"] = hl
+	return c
+}
+
+func (c *CommentsListCall) Do() (*CommentList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["orderBy"]; ok {
+		params.Set("orderBy", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["hl"]; ok {
+		params.Set("hl", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "activities/{activityId}/comments")
+	urls = strings.Replace(urls, "{activityId}", cleanPathString(c.activityId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(CommentList)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a list of comments, possibly filtered.",
+	//   "httpMethod": "GET",
+	//   "id": "orkut.comments.list",
+	//   "parameterOrder": [
+	//     "activityId"
+	//   ],
+	//   "parameters": {
+	//     "activityId": {
+	//       "description": "The ID of the activity containing the comments.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "hl": {
+	//       "description": "Specifies the interface language (host language) of your user interface.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "description": "The maximum number of activities to include in the response.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "default": "DESCENDING_SORT",
+	//       "description": "Sort search results.",
+	//       "enum": [
+	//         "ascending",
+	//         "descending"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Use ascending sort order.",
+	//         "Use descending sort order."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageToken": {
+	//       "description": "A continuation token that allows pagination.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "activities/{activityId}/comments",
+	//   "response": {
+	//     "$ref": "CommentList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/orkut",
+	//     "https://www.googleapis.com/auth/orkut.readonly"
+	//   ]
+	// }
+
+}
+
 // method id "orkut.comments.insert":
 
 type CommentsInsertCall struct {
@@ -1738,139 +3050,6 @@ func (c *CommentsDeleteCall) Do() error {
 
 }
 
-// method id "orkut.comments.list":
-
-type CommentsListCall struct {
-	s          *Service
-	activityId string
-	opt_       map[string]interface{}
-}
-
-// List: Retrieves a list of comments, possibly filtered.
-func (r *CommentsService) List(activityId string) *CommentsListCall {
-	c := &CommentsListCall{s: r.s, opt_: make(map[string]interface{})}
-	c.activityId = activityId
-	return c
-}
-
-// OrderBy sets the optional parameter "orderBy": Sort search results.
-func (c *CommentsListCall) OrderBy(orderBy string) *CommentsListCall {
-	c.opt_["orderBy"] = orderBy
-	return c
-}
-
-// MaxResults sets the optional parameter "maxResults": The maximum
-// number of activities to include in the response.
-func (c *CommentsListCall) MaxResults(maxResults int64) *CommentsListCall {
-	c.opt_["maxResults"] = maxResults
-	return c
-}
-
-// Hl sets the optional parameter "hl": Specifies the interface language
-// (host language) of your user interface.
-func (c *CommentsListCall) Hl(hl string) *CommentsListCall {
-	c.opt_["hl"] = hl
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": A continuation
-// token that allows pagination.
-func (c *CommentsListCall) PageToken(pageToken string) *CommentsListCall {
-	c.opt_["pageToken"] = pageToken
-	return c
-}
-
-func (c *CommentsListCall) Do() (*CommentList, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	if v, ok := c.opt_["orderBy"]; ok {
-		params.Set("orderBy", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["hl"]; ok {
-		params.Set("hl", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "activities/{activityId}/comments")
-	urls = strings.Replace(urls, "{activityId}", cleanPathString(c.activityId), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(CommentList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Retrieves a list of comments, possibly filtered.",
-	//   "httpMethod": "GET",
-	//   "id": "orkut.comments.list",
-	//   "parameterOrder": [
-	//     "activityId"
-	//   ],
-	//   "parameters": {
-	//     "activityId": {
-	//       "description": "The ID of the activity containing the comments.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "hl": {
-	//       "description": "Specifies the interface language (host language) of your user interface.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "maxResults": {
-	//       "description": "The maximum number of activities to include in the response.",
-	//       "format": "uint32",
-	//       "location": "query",
-	//       "minimum": "1",
-	//       "type": "integer"
-	//     },
-	//     "orderBy": {
-	//       "default": "DESCENDING_SORT",
-	//       "description": "Sort search results.",
-	//       "enum": [
-	//         "ascending",
-	//         "descending"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Use ascending sort order.",
-	//         "Use descending sort order."
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageToken": {
-	//       "description": "A continuation token that allows pagination.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "activities/{activityId}/comments",
-	//   "response": {
-	//     "$ref": "CommentList"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/orkut",
-	//     "https://www.googleapis.com/auth/orkut.readonly"
-	//   ]
-	// }
-
-}
-
 // method id "orkut.counters.list":
 
 type CountersListCall struct {
@@ -1929,62 +3108,6 @@ func (c *CountersListCall) Do() (*Counters, error) {
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/orkut",
 	//     "https://www.googleapis.com/auth/orkut.readonly"
-	//   ]
-	// }
-
-}
-
-// method id "orkut.activities.delete":
-
-type ActivitiesDeleteCall struct {
-	s          *Service
-	activityId string
-	opt_       map[string]interface{}
-}
-
-// Delete: Deletes an existing activity, if the access controls allow
-// it.
-func (r *ActivitiesService) Delete(activityId string) *ActivitiesDeleteCall {
-	c := &ActivitiesDeleteCall{s: r.s, opt_: make(map[string]interface{})}
-	c.activityId = activityId
-	return c
-}
-
-func (c *ActivitiesDeleteCall) Do() error {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "activities/{activityId}")
-	urls = strings.Replace(urls, "{activityId}", cleanPathString(c.activityId), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("DELETE", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return err
-	}
-	return nil
-	// {
-	//   "description": "Deletes an existing activity, if the access controls allow it.",
-	//   "httpMethod": "DELETE",
-	//   "id": "orkut.activities.delete",
-	//   "parameterOrder": [
-	//     "activityId"
-	//   ],
-	//   "parameters": {
-	//     "activityId": {
-	//       "description": "ID of the activity to remove.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "activities/{activityId}",
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/orkut"
 	//   ]
 	// }
 
@@ -2121,6 +3244,140 @@ func (c *ActivitiesListCall) Do() (*ActivityList, error) {
 
 }
 
+// method id "orkut.activities.delete":
+
+type ActivitiesDeleteCall struct {
+	s          *Service
+	activityId string
+	opt_       map[string]interface{}
+}
+
+// Delete: Deletes an existing activity, if the access controls allow
+// it.
+func (r *ActivitiesService) Delete(activityId string) *ActivitiesDeleteCall {
+	c := &ActivitiesDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.activityId = activityId
+	return c
+}
+
+func (c *ActivitiesDeleteCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "activities/{activityId}")
+	urls = strings.Replace(urls, "{activityId}", cleanPathString(c.activityId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Deletes an existing activity, if the access controls allow it.",
+	//   "httpMethod": "DELETE",
+	//   "id": "orkut.activities.delete",
+	//   "parameterOrder": [
+	//     "activityId"
+	//   ],
+	//   "parameters": {
+	//     "activityId": {
+	//       "description": "ID of the activity to remove.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "activities/{activityId}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/orkut"
+	//   ]
+	// }
+
+}
+
+// method id "orkut.communityMessages.delete":
+
+type CommunityMessagesDeleteCall struct {
+	s           *Service
+	communityId int64
+	topicId     int64
+	messageId   int64
+	opt_        map[string]interface{}
+}
+
+// Delete: Moves a message of the community to the trash folder.
+func (r *CommunityMessagesService) Delete(communityId int64, topicId int64, messageId int64) *CommunityMessagesDeleteCall {
+	c := &CommunityMessagesDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.communityId = communityId
+	c.topicId = topicId
+	c.messageId = messageId
+	return c
+}
+
+func (c *CommunityMessagesDeleteCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}/topics/{topicId}/messages/{messageId}")
+	urls = strings.Replace(urls, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
+	urls = strings.Replace(urls, "{topicId}", strconv.FormatInt(c.topicId, 10), 1)
+	urls = strings.Replace(urls, "{messageId}", strconv.FormatInt(c.messageId, 10), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Moves a message of the community to the trash folder.",
+	//   "httpMethod": "DELETE",
+	//   "id": "orkut.communityMessages.delete",
+	//   "parameterOrder": [
+	//     "communityId",
+	//     "topicId",
+	//     "messageId"
+	//   ],
+	//   "parameters": {
+	//     "communityId": {
+	//       "description": "The ID of the community whose message will be moved to the trash folder.",
+	//       "format": "int32",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "integer"
+	//     },
+	//     "messageId": {
+	//       "description": "The ID of the message to be moved to the trash folder.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "topicId": {
+	//       "description": "The ID of the topic whose message will be moved to the trash folder.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "communities/{communityId}/topics/{topicId}/messages/{messageId}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/orkut"
+	//   ]
+	// }
+
+}
+
 // method id "orkut.communityMessages.list":
 
 type CommunityMessagesListCall struct {
@@ -2138,6 +3395,13 @@ func (r *CommunityMessagesService) List(communityId int64, topicId int64) *Commu
 	return c
 }
 
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of messages to include in the response.
+func (c *CommunityMessagesListCall) MaxResults(maxResults int64) *CommunityMessagesListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
 // Hl sets the optional parameter "hl": Specifies the interface language
 // (host language) of your user interface.
 func (c *CommunityMessagesListCall) Hl(hl string) *CommunityMessagesListCall {
@@ -2152,25 +3416,18 @@ func (c *CommunityMessagesListCall) PageToken(pageToken string) *CommunityMessag
 	return c
 }
 
-// MaxResults sets the optional parameter "maxResults": The maximum
-// number of messages to include in the response.
-func (c *CommunityMessagesListCall) MaxResults(maxResults int64) *CommunityMessagesListCall {
-	c.opt_["maxResults"] = maxResults
-	return c
-}
-
 func (c *CommunityMessagesListCall) Do() (*CommunityMessageList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["hl"]; ok {
 		params.Set("hl", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}/topics/{topicId}/messages")
 	urls = strings.Replace(urls, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
@@ -2322,84 +3579,6 @@ func (c *CommunityMessagesInsertCall) Do() (*CommunityMessage, error) {
 	//   "response": {
 	//     "$ref": "CommunityMessage"
 	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/orkut"
-	//   ]
-	// }
-
-}
-
-// method id "orkut.communityMessages.delete":
-
-type CommunityMessagesDeleteCall struct {
-	s           *Service
-	communityId int64
-	topicId     int64
-	messageId   int64
-	opt_        map[string]interface{}
-}
-
-// Delete: Moves a message of the community to the trash folder.
-func (r *CommunityMessagesService) Delete(communityId int64, topicId int64, messageId int64) *CommunityMessagesDeleteCall {
-	c := &CommunityMessagesDeleteCall{s: r.s, opt_: make(map[string]interface{})}
-	c.communityId = communityId
-	c.topicId = topicId
-	c.messageId = messageId
-	return c
-}
-
-func (c *CommunityMessagesDeleteCall) Do() error {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}/topics/{topicId}/messages/{messageId}")
-	urls = strings.Replace(urls, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
-	urls = strings.Replace(urls, "{topicId}", strconv.FormatInt(c.topicId, 10), 1)
-	urls = strings.Replace(urls, "{messageId}", strconv.FormatInt(c.messageId, 10), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("DELETE", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return err
-	}
-	return nil
-	// {
-	//   "description": "Moves a message of the community to the trash folder.",
-	//   "httpMethod": "DELETE",
-	//   "id": "orkut.communityMessages.delete",
-	//   "parameterOrder": [
-	//     "communityId",
-	//     "topicId",
-	//     "messageId"
-	//   ],
-	//   "parameters": {
-	//     "communityId": {
-	//       "description": "The ID of the community whose message will be moved to the trash folder.",
-	//       "format": "int32",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "integer"
-	//     },
-	//     "messageId": {
-	//       "description": "The ID of the message to be moved to the trash folder.",
-	//       "format": "int64",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "topicId": {
-	//       "description": "The ID of the topic whose message will be moved to the trash folder.",
-	//       "format": "int64",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "communities/{communityId}/topics/{topicId}/messages/{messageId}",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/orkut"
 	//   ]
@@ -2756,1185 +3935,6 @@ func (c *CommunityPollVotesInsertCall) Do() (*CommunityPollVote, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/orkut"
-	//   ]
-	// }
-
-}
-
-// method id "orkut.communityRelated.list":
-
-type CommunityRelatedListCall struct {
-	s           *Service
-	communityId int64
-	opt_        map[string]interface{}
-}
-
-// List: Retrieves the communities related to another one.
-func (r *CommunityRelatedService) List(communityId int64) *CommunityRelatedListCall {
-	c := &CommunityRelatedListCall{s: r.s, opt_: make(map[string]interface{})}
-	c.communityId = communityId
-	return c
-}
-
-// Hl sets the optional parameter "hl": Specifies the interface language
-// (host language) of your user interface.
-func (c *CommunityRelatedListCall) Hl(hl string) *CommunityRelatedListCall {
-	c.opt_["hl"] = hl
-	return c
-}
-
-func (c *CommunityRelatedListCall) Do() (*CommunityList, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	if v, ok := c.opt_["hl"]; ok {
-		params.Set("hl", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}/related")
-	urls = strings.Replace(urls, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(CommunityList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Retrieves the communities related to another one.",
-	//   "httpMethod": "GET",
-	//   "id": "orkut.communityRelated.list",
-	//   "parameterOrder": [
-	//     "communityId"
-	//   ],
-	//   "parameters": {
-	//     "communityId": {
-	//       "description": "The ID of the community whose related communities will be listed.",
-	//       "format": "int32",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "integer"
-	//     },
-	//     "hl": {
-	//       "description": "Specifies the interface language (host language) of your user interface.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "communities/{communityId}/related",
-	//   "response": {
-	//     "$ref": "CommunityList"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/orkut",
-	//     "https://www.googleapis.com/auth/orkut.readonly"
-	//   ]
-	// }
-
-}
-
-// method id "orkut.activityVisibility.patch":
-
-type ActivityVisibilityPatchCall struct {
-	s          *Service
-	activityId string
-	visibility *Visibility
-	opt_       map[string]interface{}
-}
-
-// Patch: Updates the visibility of an existing activity. This method
-// supports patch semantics.
-func (r *ActivityVisibilityService) Patch(activityId string, visibility *Visibility) *ActivityVisibilityPatchCall {
-	c := &ActivityVisibilityPatchCall{s: r.s, opt_: make(map[string]interface{})}
-	c.activityId = activityId
-	c.visibility = visibility
-	return c
-}
-
-func (c *ActivityVisibilityPatchCall) Do() (*Visibility, error) {
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.visibility)
-	if err != nil {
-		return nil, err
-	}
-	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "activities/{activityId}/visibility")
-	urls = strings.Replace(urls, "{activityId}", cleanPathString(c.activityId), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("PATCH", urls, body)
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(Visibility)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Updates the visibility of an existing activity. This method supports patch semantics.",
-	//   "httpMethod": "PATCH",
-	//   "id": "orkut.activityVisibility.patch",
-	//   "parameterOrder": [
-	//     "activityId"
-	//   ],
-	//   "parameters": {
-	//     "activityId": {
-	//       "description": "ID of the activity.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "activities/{activityId}/visibility",
-	//   "request": {
-	//     "$ref": "Visibility"
-	//   },
-	//   "response": {
-	//     "$ref": "Visibility"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/orkut"
-	//   ]
-	// }
-
-}
-
-// method id "orkut.activityVisibility.update":
-
-type ActivityVisibilityUpdateCall struct {
-	s          *Service
-	activityId string
-	visibility *Visibility
-	opt_       map[string]interface{}
-}
-
-// Update: Updates the visibility of an existing activity.
-func (r *ActivityVisibilityService) Update(activityId string, visibility *Visibility) *ActivityVisibilityUpdateCall {
-	c := &ActivityVisibilityUpdateCall{s: r.s, opt_: make(map[string]interface{})}
-	c.activityId = activityId
-	c.visibility = visibility
-	return c
-}
-
-func (c *ActivityVisibilityUpdateCall) Do() (*Visibility, error) {
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.visibility)
-	if err != nil {
-		return nil, err
-	}
-	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "activities/{activityId}/visibility")
-	urls = strings.Replace(urls, "{activityId}", cleanPathString(c.activityId), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("PUT", urls, body)
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(Visibility)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Updates the visibility of an existing activity.",
-	//   "httpMethod": "PUT",
-	//   "id": "orkut.activityVisibility.update",
-	//   "parameterOrder": [
-	//     "activityId"
-	//   ],
-	//   "parameters": {
-	//     "activityId": {
-	//       "description": "ID of the activity.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "activities/{activityId}/visibility",
-	//   "request": {
-	//     "$ref": "Visibility"
-	//   },
-	//   "response": {
-	//     "$ref": "Visibility"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/orkut"
-	//   ]
-	// }
-
-}
-
-// method id "orkut.activityVisibility.get":
-
-type ActivityVisibilityGetCall struct {
-	s          *Service
-	activityId string
-	opt_       map[string]interface{}
-}
-
-// Get: Gets the visibility of an existing activity.
-func (r *ActivityVisibilityService) Get(activityId string) *ActivityVisibilityGetCall {
-	c := &ActivityVisibilityGetCall{s: r.s, opt_: make(map[string]interface{})}
-	c.activityId = activityId
-	return c
-}
-
-func (c *ActivityVisibilityGetCall) Do() (*Visibility, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "activities/{activityId}/visibility")
-	urls = strings.Replace(urls, "{activityId}", cleanPathString(c.activityId), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(Visibility)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Gets the visibility of an existing activity.",
-	//   "httpMethod": "GET",
-	//   "id": "orkut.activityVisibility.get",
-	//   "parameterOrder": [
-	//     "activityId"
-	//   ],
-	//   "parameters": {
-	//     "activityId": {
-	//       "description": "ID of the activity to get the visibility.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "activities/{activityId}/visibility",
-	//   "response": {
-	//     "$ref": "Visibility"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/orkut",
-	//     "https://www.googleapis.com/auth/orkut.readonly"
-	//   ]
-	// }
-
-}
-
-// method id "orkut.scraps.insert":
-
-type ScrapsInsertCall struct {
-	s        *Service
-	activity *Activity
-	opt_     map[string]interface{}
-}
-
-// Insert: Creates a new scrap.
-func (r *ScrapsService) Insert(activity *Activity) *ScrapsInsertCall {
-	c := &ScrapsInsertCall{s: r.s, opt_: make(map[string]interface{})}
-	c.activity = activity
-	return c
-}
-
-func (c *ScrapsInsertCall) Do() (*Activity, error) {
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.activity)
-	if err != nil {
-		return nil, err
-	}
-	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "activities/scraps")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("POST", urls, body)
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(Activity)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Creates a new scrap.",
-	//   "httpMethod": "POST",
-	//   "id": "orkut.scraps.insert",
-	//   "path": "activities/scraps",
-	//   "request": {
-	//     "$ref": "Activity"
-	//   },
-	//   "response": {
-	//     "$ref": "Activity"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/orkut"
-	//   ]
-	// }
-
-}
-
-// method id "orkut.communityFollow.delete":
-
-type CommunityFollowDeleteCall struct {
-	s           *Service
-	communityId int64
-	userId      string
-	opt_        map[string]interface{}
-}
-
-// Delete: Removes a user from the followers of a community.
-func (r *CommunityFollowService) Delete(communityId int64, userId string) *CommunityFollowDeleteCall {
-	c := &CommunityFollowDeleteCall{s: r.s, opt_: make(map[string]interface{})}
-	c.communityId = communityId
-	c.userId = userId
-	return c
-}
-
-func (c *CommunityFollowDeleteCall) Do() error {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}/followers/{userId}")
-	urls = strings.Replace(urls, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
-	urls = strings.Replace(urls, "{userId}", cleanPathString(c.userId), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("DELETE", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return err
-	}
-	return nil
-	// {
-	//   "description": "Removes a user from the followers of a community.",
-	//   "httpMethod": "DELETE",
-	//   "id": "orkut.communityFollow.delete",
-	//   "parameterOrder": [
-	//     "communityId",
-	//     "userId"
-	//   ],
-	//   "parameters": {
-	//     "communityId": {
-	//       "description": "ID of the community.",
-	//       "format": "int32",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "integer"
-	//     },
-	//     "userId": {
-	//       "description": "ID of the user.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "communities/{communityId}/followers/{userId}",
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/orkut"
-	//   ]
-	// }
-
-}
-
-// method id "orkut.communityFollow.insert":
-
-type CommunityFollowInsertCall struct {
-	s           *Service
-	communityId int64
-	userId      string
-	opt_        map[string]interface{}
-}
-
-// Insert: Adds a user as a follower of a community.
-func (r *CommunityFollowService) Insert(communityId int64, userId string) *CommunityFollowInsertCall {
-	c := &CommunityFollowInsertCall{s: r.s, opt_: make(map[string]interface{})}
-	c.communityId = communityId
-	c.userId = userId
-	return c
-}
-
-func (c *CommunityFollowInsertCall) Do() (*CommunityMembers, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}/followers/{userId}")
-	urls = strings.Replace(urls, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
-	urls = strings.Replace(urls, "{userId}", cleanPathString(c.userId), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("POST", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(CommunityMembers)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Adds a user as a follower of a community.",
-	//   "httpMethod": "POST",
-	//   "id": "orkut.communityFollow.insert",
-	//   "parameterOrder": [
-	//     "communityId",
-	//     "userId"
-	//   ],
-	//   "parameters": {
-	//     "communityId": {
-	//       "description": "ID of the community.",
-	//       "format": "int32",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "integer"
-	//     },
-	//     "userId": {
-	//       "description": "ID of the user.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "communities/{communityId}/followers/{userId}",
-	//   "response": {
-	//     "$ref": "CommunityMembers"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/orkut"
-	//   ]
-	// }
-
-}
-
-// method id "orkut.communities.list":
-
-type CommunitiesListCall struct {
-	s      *Service
-	userId string
-	opt_   map[string]interface{}
-}
-
-// List: Retrieves the list of communities the current user is a member
-// of.
-func (r *CommunitiesService) List(userId string) *CommunitiesListCall {
-	c := &CommunitiesListCall{s: r.s, opt_: make(map[string]interface{})}
-	c.userId = userId
-	return c
-}
-
-// OrderBy sets the optional parameter "orderBy": How to order the
-// communities by.
-func (c *CommunitiesListCall) OrderBy(orderBy string) *CommunitiesListCall {
-	c.opt_["orderBy"] = orderBy
-	return c
-}
-
-// MaxResults sets the optional parameter "maxResults": The maximum
-// number of communities to include in the response.
-func (c *CommunitiesListCall) MaxResults(maxResults int64) *CommunitiesListCall {
-	c.opt_["maxResults"] = maxResults
-	return c
-}
-
-// Hl sets the optional parameter "hl": Specifies the interface language
-// (host language) of your user interface.
-func (c *CommunitiesListCall) Hl(hl string) *CommunitiesListCall {
-	c.opt_["hl"] = hl
-	return c
-}
-
-func (c *CommunitiesListCall) Do() (*CommunityList, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	if v, ok := c.opt_["orderBy"]; ok {
-		params.Set("orderBy", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["hl"]; ok {
-		params.Set("hl", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "people/{userId}/communities")
-	urls = strings.Replace(urls, "{userId}", cleanPathString(c.userId), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(CommunityList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Retrieves the list of communities the current user is a member of.",
-	//   "httpMethod": "GET",
-	//   "id": "orkut.communities.list",
-	//   "parameterOrder": [
-	//     "userId"
-	//   ],
-	//   "parameters": {
-	//     "hl": {
-	//       "description": "Specifies the interface language (host language) of your user interface.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "maxResults": {
-	//       "description": "The maximum number of communities to include in the response.",
-	//       "format": "uint32",
-	//       "location": "query",
-	//       "minimum": "1",
-	//       "type": "integer"
-	//     },
-	//     "orderBy": {
-	//       "description": "How to order the communities by.",
-	//       "enum": [
-	//         "id",
-	//         "ranked"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Returns the communities sorted by a fixed, natural order.",
-	//         "Returns the communities ranked accordingly to how they are displayed on the orkut web application."
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "userId": {
-	//       "description": "The ID of the user whose communities will be listed. Can be me to refer to caller.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "people/{userId}/communities",
-	//   "response": {
-	//     "$ref": "CommunityList"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/orkut",
-	//     "https://www.googleapis.com/auth/orkut.readonly"
-	//   ]
-	// }
-
-}
-
-// method id "orkut.communities.get":
-
-type CommunitiesGetCall struct {
-	s           *Service
-	communityId int64
-	opt_        map[string]interface{}
-}
-
-// Get: Retrieves the basic information (aka. profile) of a community.
-func (r *CommunitiesService) Get(communityId int64) *CommunitiesGetCall {
-	c := &CommunitiesGetCall{s: r.s, opt_: make(map[string]interface{})}
-	c.communityId = communityId
-	return c
-}
-
-// Hl sets the optional parameter "hl": Specifies the interface language
-// (host language) of your user interface.
-func (c *CommunitiesGetCall) Hl(hl string) *CommunitiesGetCall {
-	c.opt_["hl"] = hl
-	return c
-}
-
-func (c *CommunitiesGetCall) Do() (*Community, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	if v, ok := c.opt_["hl"]; ok {
-		params.Set("hl", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}")
-	urls = strings.Replace(urls, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(Community)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Retrieves the basic information (aka. profile) of a community.",
-	//   "httpMethod": "GET",
-	//   "id": "orkut.communities.get",
-	//   "parameterOrder": [
-	//     "communityId"
-	//   ],
-	//   "parameters": {
-	//     "communityId": {
-	//       "description": "The ID of the community to get.",
-	//       "format": "int32",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "integer"
-	//     },
-	//     "hl": {
-	//       "description": "Specifies the interface language (host language) of your user interface.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "communities/{communityId}",
-	//   "response": {
-	//     "$ref": "Community"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/orkut",
-	//     "https://www.googleapis.com/auth/orkut.readonly"
-	//   ]
-	// }
-
-}
-
-// method id "orkut.badges.get":
-
-type BadgesGetCall struct {
-	s       *Service
-	userId  string
-	badgeId int64
-	opt_    map[string]interface{}
-}
-
-// Get: Retrieves a badge from a user.
-func (r *BadgesService) Get(userId string, badgeId int64) *BadgesGetCall {
-	c := &BadgesGetCall{s: r.s, opt_: make(map[string]interface{})}
-	c.userId = userId
-	c.badgeId = badgeId
-	return c
-}
-
-func (c *BadgesGetCall) Do() (*Badge, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "people/{userId}/badges/{badgeId}")
-	urls = strings.Replace(urls, "{userId}", cleanPathString(c.userId), 1)
-	urls = strings.Replace(urls, "{badgeId}", strconv.FormatInt(c.badgeId, 10), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(Badge)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Retrieves a badge from a user.",
-	//   "httpMethod": "GET",
-	//   "id": "orkut.badges.get",
-	//   "parameterOrder": [
-	//     "userId",
-	//     "badgeId"
-	//   ],
-	//   "parameters": {
-	//     "badgeId": {
-	//       "description": "The ID of the badge that will be retrieved.",
-	//       "format": "int64",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "userId": {
-	//       "description": "The ID of the user whose badges will be listed. Can be me to refer to caller.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "people/{userId}/badges/{badgeId}",
-	//   "response": {
-	//     "$ref": "Badge"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/orkut",
-	//     "https://www.googleapis.com/auth/orkut.readonly"
-	//   ]
-	// }
-
-}
-
-// method id "orkut.badges.list":
-
-type BadgesListCall struct {
-	s      *Service
-	userId string
-	opt_   map[string]interface{}
-}
-
-// List: Retrieves the list of visible badges of a user.
-func (r *BadgesService) List(userId string) *BadgesListCall {
-	c := &BadgesListCall{s: r.s, opt_: make(map[string]interface{})}
-	c.userId = userId
-	return c
-}
-
-func (c *BadgesListCall) Do() (*BadgeList, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "people/{userId}/badges")
-	urls = strings.Replace(urls, "{userId}", cleanPathString(c.userId), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(BadgeList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Retrieves the list of visible badges of a user.",
-	//   "httpMethod": "GET",
-	//   "id": "orkut.badges.list",
-	//   "parameterOrder": [
-	//     "userId"
-	//   ],
-	//   "parameters": {
-	//     "userId": {
-	//       "description": "The id of the user whose badges will be listed. Can be me to refer to caller.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "people/{userId}/badges",
-	//   "response": {
-	//     "$ref": "BadgeList"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/orkut",
-	//     "https://www.googleapis.com/auth/orkut.readonly"
-	//   ]
-	// }
-
-}
-
-// method id "orkut.communityMembers.delete":
-
-type CommunityMembersDeleteCall struct {
-	s           *Service
-	communityId int64
-	userId      string
-	opt_        map[string]interface{}
-}
-
-// Delete: Makes the user leave a community.
-func (r *CommunityMembersService) Delete(communityId int64, userId string) *CommunityMembersDeleteCall {
-	c := &CommunityMembersDeleteCall{s: r.s, opt_: make(map[string]interface{})}
-	c.communityId = communityId
-	c.userId = userId
-	return c
-}
-
-func (c *CommunityMembersDeleteCall) Do() error {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}/members/{userId}")
-	urls = strings.Replace(urls, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
-	urls = strings.Replace(urls, "{userId}", cleanPathString(c.userId), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("DELETE", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return err
-	}
-	return nil
-	// {
-	//   "description": "Makes the user leave a community.",
-	//   "httpMethod": "DELETE",
-	//   "id": "orkut.communityMembers.delete",
-	//   "parameterOrder": [
-	//     "communityId",
-	//     "userId"
-	//   ],
-	//   "parameters": {
-	//     "communityId": {
-	//       "description": "ID of the community.",
-	//       "format": "int32",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "integer"
-	//     },
-	//     "userId": {
-	//       "description": "ID of the user.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "communities/{communityId}/members/{userId}",
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/orkut"
-	//   ]
-	// }
-
-}
-
-// method id "orkut.communityMembers.list":
-
-type CommunityMembersListCall struct {
-	s           *Service
-	communityId int64
-	opt_        map[string]interface{}
-}
-
-// List: Lists members of a community. Use the pagination tokens to
-// retrieve the full list; do not rely on the member count available in
-// the community profile information to know when to stop iterating, as
-// that count may be approximate.
-func (r *CommunityMembersService) List(communityId int64) *CommunityMembersListCall {
-	c := &CommunityMembersListCall{s: r.s, opt_: make(map[string]interface{})}
-	c.communityId = communityId
-	return c
-}
-
-// MaxResults sets the optional parameter "maxResults": The maximum
-// number of members to include in the response.
-func (c *CommunityMembersListCall) MaxResults(maxResults int64) *CommunityMembersListCall {
-	c.opt_["maxResults"] = maxResults
-	return c
-}
-
-// Hl sets the optional parameter "hl": Specifies the interface language
-// (host language) of your user interface.
-func (c *CommunityMembersListCall) Hl(hl string) *CommunityMembersListCall {
-	c.opt_["hl"] = hl
-	return c
-}
-
-// FriendsOnly sets the optional parameter "friendsOnly": Whether to
-// list only community members who are friends of the user.
-func (c *CommunityMembersListCall) FriendsOnly(friendsOnly bool) *CommunityMembersListCall {
-	c.opt_["friendsOnly"] = friendsOnly
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": A continuation
-// token that allows pagination.
-func (c *CommunityMembersListCall) PageToken(pageToken string) *CommunityMembersListCall {
-	c.opt_["pageToken"] = pageToken
-	return c
-}
-
-func (c *CommunityMembersListCall) Do() (*CommunityMembersList, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["hl"]; ok {
-		params.Set("hl", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["friendsOnly"]; ok {
-		params.Set("friendsOnly", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}/members")
-	urls = strings.Replace(urls, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(CommunityMembersList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Lists members of a community. Use the pagination tokens to retrieve the full list; do not rely on the member count available in the community profile information to know when to stop iterating, as that count may be approximate.",
-	//   "httpMethod": "GET",
-	//   "id": "orkut.communityMembers.list",
-	//   "parameterOrder": [
-	//     "communityId"
-	//   ],
-	//   "parameters": {
-	//     "communityId": {
-	//       "description": "The ID of the community whose members will be listed.",
-	//       "format": "int32",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "integer"
-	//     },
-	//     "friendsOnly": {
-	//       "description": "Whether to list only community members who are friends of the user.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "hl": {
-	//       "description": "Specifies the interface language (host language) of your user interface.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "maxResults": {
-	//       "description": "The maximum number of members to include in the response.",
-	//       "format": "uint32",
-	//       "location": "query",
-	//       "minimum": "1",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A continuation token that allows pagination.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "communities/{communityId}/members",
-	//   "response": {
-	//     "$ref": "CommunityMembersList"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/orkut",
-	//     "https://www.googleapis.com/auth/orkut.readonly"
-	//   ]
-	// }
-
-}
-
-// method id "orkut.communityMembers.insert":
-
-type CommunityMembersInsertCall struct {
-	s           *Service
-	communityId int64
-	userId      string
-	opt_        map[string]interface{}
-}
-
-// Insert: Makes the user join a community.
-func (r *CommunityMembersService) Insert(communityId int64, userId string) *CommunityMembersInsertCall {
-	c := &CommunityMembersInsertCall{s: r.s, opt_: make(map[string]interface{})}
-	c.communityId = communityId
-	c.userId = userId
-	return c
-}
-
-func (c *CommunityMembersInsertCall) Do() (*CommunityMembers, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}/members/{userId}")
-	urls = strings.Replace(urls, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
-	urls = strings.Replace(urls, "{userId}", cleanPathString(c.userId), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("POST", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(CommunityMembers)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Makes the user join a community.",
-	//   "httpMethod": "POST",
-	//   "id": "orkut.communityMembers.insert",
-	//   "parameterOrder": [
-	//     "communityId",
-	//     "userId"
-	//   ],
-	//   "parameters": {
-	//     "communityId": {
-	//       "description": "ID of the community.",
-	//       "format": "int32",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "integer"
-	//     },
-	//     "userId": {
-	//       "description": "ID of the user.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "communities/{communityId}/members/{userId}",
-	//   "response": {
-	//     "$ref": "CommunityMembers"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/orkut"
-	//   ]
-	// }
-
-}
-
-// method id "orkut.communityMembers.get":
-
-type CommunityMembersGetCall struct {
-	s           *Service
-	communityId int64
-	userId      string
-	opt_        map[string]interface{}
-}
-
-// Get: Retrieves the relationship between a user and a community.
-func (r *CommunityMembersService) Get(communityId int64, userId string) *CommunityMembersGetCall {
-	c := &CommunityMembersGetCall{s: r.s, opt_: make(map[string]interface{})}
-	c.communityId = communityId
-	c.userId = userId
-	return c
-}
-
-// Hl sets the optional parameter "hl": Specifies the interface language
-// (host language) of your user interface.
-func (c *CommunityMembersGetCall) Hl(hl string) *CommunityMembersGetCall {
-	c.opt_["hl"] = hl
-	return c
-}
-
-func (c *CommunityMembersGetCall) Do() (*CommunityMembers, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	if v, ok := c.opt_["hl"]; ok {
-		params.Set("hl", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}/members/{userId}")
-	urls = strings.Replace(urls, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
-	urls = strings.Replace(urls, "{userId}", cleanPathString(c.userId), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(CommunityMembers)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Retrieves the relationship between a user and a community.",
-	//   "httpMethod": "GET",
-	//   "id": "orkut.communityMembers.get",
-	//   "parameterOrder": [
-	//     "communityId",
-	//     "userId"
-	//   ],
-	//   "parameters": {
-	//     "communityId": {
-	//       "description": "ID of the community.",
-	//       "format": "int32",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "integer"
-	//     },
-	//     "hl": {
-	//       "description": "Specifies the interface language (host language) of your user interface.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "userId": {
-	//       "description": "ID of the user.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "communities/{communityId}/members/{userId}",
-	//   "response": {
-	//     "$ref": "CommunityMembers"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/orkut",
-	//     "https://www.googleapis.com/auth/orkut.readonly"
 	//   ]
 	// }
 

@@ -41,20 +41,24 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
+	s.Detections = &DetectionsService{s: s}
 	s.Languages = &LanguagesService{s: s}
 	s.Translations = &TranslationsService{s: s}
-	s.Detections = &DetectionsService{s: s}
 	return s, nil
 }
 
 type Service struct {
 	client *http.Client
 
+	Detections *DetectionsService
+
 	Languages *LanguagesService
 
 	Translations *TranslationsService
+}
 
-	Detections *DetectionsService
+type DetectionsService struct {
+	s *Service
 }
 
 type LanguagesService struct {
@@ -63,19 +67,6 @@ type LanguagesService struct {
 
 type TranslationsService struct {
 	s *Service
-}
-
-type DetectionsService struct {
-	s *Service
-}
-
-type LanguagesResource struct {
-	// Language: The language code.
-	Language string `json:"language,omitempty"`
-
-	// Name: The localized name of the language if target parameter is
-	// given.
-	Name string `json:"name,omitempty"`
 }
 
 type TranslationsListResponse struct {
@@ -117,6 +108,77 @@ type LanguagesListResponse struct {
 type DetectionsListResponse struct {
 	// Detections: A detections contains detection results of several text
 	Detections [][]*DetectionsResourceItem `json:"detections,omitempty"`
+}
+
+type LanguagesResource struct {
+	// Language: The language code.
+	Language string `json:"language,omitempty"`
+
+	// Name: The localized name of the language if target parameter is
+	// given.
+	Name string `json:"name,omitempty"`
+}
+
+// method id "language.detections.list":
+
+type DetectionsListCall struct {
+	s    *Service
+	q    []string
+	opt_ map[string]interface{}
+}
+
+// List: Detect the language of text.
+func (r *DetectionsService) List(q []string) *DetectionsListCall {
+	c := &DetectionsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.q = q
+	return c
+}
+
+func (c *DetectionsListCall) Do() (*DetectionsListResponse, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	for _, v := range c.q {
+		params.Add("q", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/language/translate/", "v2/detect")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(DetectionsListResponse)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Detect the language of text.",
+	//   "httpMethod": "GET",
+	//   "id": "language.detections.list",
+	//   "parameterOrder": [
+	//     "q"
+	//   ],
+	//   "parameters": {
+	//     "q": {
+	//       "description": "The text to detect",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/detect",
+	//   "response": {
+	//     "$ref": "DetectionsListResponse"
+	//   }
+	// }
+
 }
 
 // method id "language.languages.list":
@@ -301,68 +363,6 @@ func (c *TranslationsListCall) Do() (*TranslationsListResponse, error) {
 	//   "path": "v2",
 	//   "response": {
 	//     "$ref": "TranslationsListResponse"
-	//   }
-	// }
-
-}
-
-// method id "language.detections.list":
-
-type DetectionsListCall struct {
-	s    *Service
-	q    []string
-	opt_ map[string]interface{}
-}
-
-// List: Detect the language of text.
-func (r *DetectionsService) List(q []string) *DetectionsListCall {
-	c := &DetectionsListCall{s: r.s, opt_: make(map[string]interface{})}
-	c.q = q
-	return c
-}
-
-func (c *DetectionsListCall) Do() (*DetectionsListResponse, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	for _, v := range c.q {
-		params.Add("q", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/language/translate/", "v2/detect")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(DetectionsListResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Detect the language of text.",
-	//   "httpMethod": "GET",
-	//   "id": "language.detections.list",
-	//   "parameterOrder": [
-	//     "q"
-	//   ],
-	//   "parameters": {
-	//     "q": {
-	//       "description": "The text to detect",
-	//       "location": "query",
-	//       "repeated": true,
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/detect",
-	//   "response": {
-	//     "$ref": "DetectionsListResponse"
 	//   }
 	// }
 

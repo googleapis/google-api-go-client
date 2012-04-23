@@ -4,7 +4,7 @@
  "id": "bigquery:v2beta1",
  "name": "bigquery",
  "version": "v2beta1",
- "revision": "20120305",
+ "revision": "20120320",
  "title": "BigQuery API",
  "description": "A data platform for customers to create, manage, share and query data.",
  "icons": {
@@ -15,6 +15,9 @@
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/bigquery/v2beta1/",
  "basePath": "/bigquery/v2beta1/",
+ "rootUrl": "https://www.googleapis.com/",
+ "servicePath": "bigquery/v2beta1/",
+ "batchPath": "batch",
  "parameters": {
   "alt": {
    "type": "string",
@@ -987,30 +990,6 @@
   },
   "jobs": {
    "methods": {
-    "delete": {
-     "id": "bigquery.jobs.delete",
-     "path": "projects/{projectId}/jobs/{jobId}",
-     "httpMethod": "DELETE",
-     "parameters": {
-      "jobId": {
-       "type": "string",
-       "required": true,
-       "location": "path"
-      },
-      "projectId": {
-       "type": "string",
-       "required": true,
-       "location": "path"
-      }
-     },
-     "parameterOrder": [
-      "projectId",
-      "jobId"
-     ],
-     "scopes": [
-      "https://www.googleapis.com/auth/bigquery"
-     ]
-    },
     "get": {
      "id": "bigquery.jobs.get",
      "path": "projects/{projectId}/jobs/{jobId}",

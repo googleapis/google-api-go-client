@@ -4,7 +4,7 @@
  "id": "shopping:v1",
  "name": "shopping",
  "version": "v1",
- "revision": "20120327",
+ "revision": "20120413",
  "title": "Search API for Shopping",
  "description": "Lets you search over product data",
  "icons": {
@@ -15,6 +15,9 @@
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/shopping/search/v1/",
  "basePath": "/shopping/search/v1/",
+ "rootUrl": "https://www.googleapis.com/",
+ "servicePath": "shopping/search/v1/",
+ "batchPath": "batch",
  "parameters": {
   "alt": {
    "type": "string",
@@ -104,26 +107,7 @@
      "type": "array",
      "description": "Recommendations for product.",
      "items": {
-      "type": "object",
-      "properties": {
-       "recommendationList": {
-        "type": "array",
-        "description": "List of recommendations.",
-        "items": {
-         "type": "object",
-         "properties": {
-          "product": {
-           "$ref": "ShoppingModelProductJsonV1",
-           "description": "Recommended product."
-          }
-         }
-        }
-       },
-       "type": {
-        "type": "string",
-        "description": "Type of recommendation list (one of: all, purchaseToPurchase, visitToVisit, visitToPurchase, relatedItems)."
-       }
-      }
+      "$ref": "ShoppingModelRecommendationsJsonV1"
      }
     },
     "requestId": {
@@ -145,6 +129,13 @@
      "description": "List of categories.",
      "items": {
       "$ref": "ShoppingModelCategoryJsonV1"
+     }
+    },
+    "categoryRecommendations": {
+     "type": "array",
+     "description": "Recommendations for category.",
+     "items": {
+      "$ref": "ShoppingModelRecommendationsJsonV1"
      }
     },
     "currentItemCount": {
@@ -369,7 +360,7 @@
        },
        "name": {
         "type": "string",
-        "description": "Name of store."
+        "description": "Name of merchant."
        },
        "storeCode": {
         "type": "string",
@@ -378,6 +369,10 @@
        "storeId": {
         "type": "string",
         "description": "Id of store."
+       },
+       "storeName": {
+        "type": "string",
+        "description": "Name of store."
        },
        "telephone": {
         "type": "string",
@@ -783,6 +778,29 @@
      }
     }
    }
+  },
+  "ShoppingModelRecommendationsJsonV1": {
+   "id": "ShoppingModelRecommendationsJsonV1",
+   "type": "object",
+   "properties": {
+    "recommendationList": {
+     "type": "array",
+     "description": "List of recommendations.",
+     "items": {
+      "type": "object",
+      "properties": {
+       "product": {
+        "$ref": "ShoppingModelProductJsonV1",
+        "description": "Recommended product."
+       }
+      }
+     }
+    },
+    "type": {
+     "type": "string",
+     "description": "Type of recommendation list (for offer-based recommendations, one of: all, purchaseToPurchase, visitToVisit, visitToPurchase, relatedItems; for category-based recommendations, one of: all, categoryMostVisited, categoryBestSeller)."
+    }
+   }
   }
  },
  "resources": {
@@ -930,6 +948,26 @@
        "location": "query"
       },
       "categories.useGcsConfig": {
+       "type": "boolean",
+       "description": "This parameter is currently ignored",
+       "location": "query"
+      },
+      "categoryRecommendations.category": {
+       "type": "string",
+       "description": "Category for which to retrieve recommendations",
+       "location": "query"
+      },
+      "categoryRecommendations.enabled": {
+       "type": "boolean",
+       "description": "Whether to return category recommendation information",
+       "location": "query"
+      },
+      "categoryRecommendations.include": {
+       "type": "string",
+       "description": "Category recommendation specification",
+       "location": "query"
+      },
+      "categoryRecommendations.useGcsConfig": {
        "type": "boolean",
        "description": "This parameter is currently ignored",
        "location": "query"

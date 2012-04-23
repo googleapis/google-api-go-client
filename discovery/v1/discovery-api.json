@@ -14,6 +14,9 @@
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/discovery/v1/",
  "basePath": "/discovery/v1/",
+ "rootUrl": "https://www.googleapis.com/",
+ "servicePath": "discovery/v1/",
+ "batchPath": "batch",
  "parameters": {
   "alt": {
    "type": "string",
@@ -159,6 +162,19 @@
      "$ref": "JsonSchema",
      "description": "If this is a schema for an object, this property is the schema for any additional properties with dynamic keys on this object."
     },
+    "annotations": {
+     "type": "object",
+     "description": "Additional information about this property.",
+     "properties": {
+      "required": {
+       "type": "array",
+       "description": "A list of methods for which this property is required on requests.",
+       "items": {
+        "type": "string"
+       }
+      }
+     }
+    },
     "default": {
      "type": "string",
      "description": "The default value of this property (if one exists)."
@@ -263,11 +279,16 @@
     },
     "basePath": {
      "type": "string",
-     "description": "The base path for REST requests."
+     "description": "[DEPRECATED] The base path for REST requests."
     },
     "baseUrl": {
      "type": "string",
-     "description": "The base URL for REST requests."
+     "description": "[DEPRECATED] The base URL for REST requests."
+    },
+    "batchPath": {
+     "type": "string",
+     "description": "The path for REST batch requests.",
+     "default": "batch"
     },
     "description": {
      "type": "string",
@@ -356,6 +377,10 @@
      "type": "string",
      "description": "The version of this API."
     },
+    "rootUrl": {
+     "type": "string",
+     "description": "The root url under which all API services live."
+    },
     "schemas": {
      "type": "object",
      "description": "The schemas for this API.",
@@ -363,6 +388,10 @@
       "$ref": "JsonSchema",
       "description": "An individual schema description."
      }
+    },
+    "servicePath": {
+     "type": "string",
+     "description": "The base path for all REST requests."
     },
     "title": {
      "type": "string",

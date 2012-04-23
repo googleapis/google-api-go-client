@@ -55,22 +55,10 @@ type ActivitiesService struct {
 	s *Service
 }
 
-type ActivityId struct {
-	// UniqQualifier: Unique qualifier if multiple events have the same
-	// time.
-	UniqQualifier int64 `json:"uniqQualifier,omitempty,string"`
-
-	// ApplicationId: Application ID of the source application.
-	ApplicationId int64 `json:"applicationId,omitempty,string"`
-
-	// CustomerId: Obfuscated customer ID of the source customer.
-	CustomerId string `json:"customerId,omitempty"`
-
-	// Time: Time of occurrence of the activity.
-	Time string `json:"time,omitempty"`
-}
-
 type ActivityActor struct {
+	// Email: Email address of the user.
+	Email string `json:"email,omitempty"`
+
 	// Key: For OAuth 2LO API requests, consumer_key of the requestor.
 	Key string `json:"key,omitempty"`
 
@@ -80,9 +68,6 @@ type ActivityActor struct {
 	// ApplicationId: ID of application which interacted on behalf of the
 	// user.
 	ApplicationId int64 `json:"applicationId,omitempty,string"`
-
-	// Email: Email address of the user.
-	Email string `json:"email,omitempty"`
 }
 
 type Activities struct {
@@ -97,6 +82,9 @@ type Activities struct {
 }
 
 type Activity struct {
+	// Events: Activity events.
+	Events []*ActivityEvents `json:"events,omitempty"`
+
 	// OwnerDomain: Domain of source customer.
 	OwnerDomain string `json:"ownerDomain,omitempty"`
 
@@ -111,9 +99,6 @@ type Activity struct {
 
 	// IpAddress: IP Address of the user doing the action.
 	IpAddress string `json:"ipAddress,omitempty"`
-
-	// Events: Activity events.
-	Events []*ActivityEvents `json:"events,omitempty"`
 }
 
 type ActivityEvents struct {
@@ -135,6 +120,21 @@ type ActivityEventsParameters struct {
 	Name string `json:"name,omitempty"`
 }
 
+type ActivityId struct {
+	// CustomerId: Obfuscated customer ID of the source customer.
+	CustomerId string `json:"customerId,omitempty"`
+
+	// Time: Time of occurrence of the activity.
+	Time string `json:"time,omitempty"`
+
+	// UniqQualifier: Unique qualifier if multiple events have the same
+	// time.
+	UniqQualifier int64 `json:"uniqQualifier,omitempty,string"`
+
+	// ApplicationId: Application ID of the source application.
+	ApplicationId int64 `json:"applicationId,omitempty,string"`
+}
+
 // method id "audit.activities.list":
 
 type ActivitiesListCall struct {
@@ -150,6 +150,34 @@ func (r *ActivitiesService) List(customerId string, applicationId int64) *Activi
 	c := &ActivitiesListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.customerId = customerId
 	c.applicationId = applicationId
+	return c
+}
+
+// EventName sets the optional parameter "eventName": Name of the event
+// being queried.
+func (c *ActivitiesListCall) EventName(eventName string) *ActivitiesListCall {
+	c.opt_["eventName"] = eventName
+	return c
+}
+
+// Caller sets the optional parameter "caller": Type of the caller.
+func (c *ActivitiesListCall) Caller(caller string) *ActivitiesListCall {
+	c.opt_["caller"] = caller
+	return c
+}
+
+// ContinuationToken sets the optional parameter "continuationToken":
+// Next page URL.
+func (c *ActivitiesListCall) ContinuationToken(continuationToken string) *ActivitiesListCall {
+	c.opt_["continuationToken"] = continuationToken
+	return c
+}
+
+// Parameters sets the optional parameter "parameters": Event parameters
+// in the form [parameter1 name]:[parameter1 value],[parameter2
+// name]:[parameter2 value],...
+func (c *ActivitiesListCall) Parameters(parameters string) *ActivitiesListCall {
+	c.opt_["parameters"] = parameters
 	return c
 }
 
@@ -197,38 +225,22 @@ func (c *ActivitiesListCall) MaxResults(maxResults int64) *ActivitiesListCall {
 	return c
 }
 
-// EventName sets the optional parameter "eventName": Name of the event
-// being queried.
-func (c *ActivitiesListCall) EventName(eventName string) *ActivitiesListCall {
-	c.opt_["eventName"] = eventName
-	return c
-}
-
-// Caller sets the optional parameter "caller": Type of the caller.
-func (c *ActivitiesListCall) Caller(caller string) *ActivitiesListCall {
-	c.opt_["caller"] = caller
-	return c
-}
-
-// ContinuationToken sets the optional parameter "continuationToken":
-// Next page URL.
-func (c *ActivitiesListCall) ContinuationToken(continuationToken string) *ActivitiesListCall {
-	c.opt_["continuationToken"] = continuationToken
-	return c
-}
-
-// Parameters sets the optional parameter "parameters": Event parameters
-// in the form [parameter1 name]:[parameter1 value],[parameter2
-// name]:[parameter2 value],...
-func (c *ActivitiesListCall) Parameters(parameters string) *ActivitiesListCall {
-	c.opt_["parameters"] = parameters
-	return c
-}
-
 func (c *ActivitiesListCall) Do() (*Activities, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["eventName"]; ok {
+		params.Set("eventName", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["caller"]; ok {
+		params.Set("caller", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["continuationToken"]; ok {
+		params.Set("continuationToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["parameters"]; ok {
+		params.Set("parameters", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["endTime"]; ok {
 		params.Set("endTime", fmt.Sprintf("%v", v))
 	}
@@ -246,18 +258,6 @@ func (c *ActivitiesListCall) Do() (*Activities, error) {
 	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["eventName"]; ok {
-		params.Set("eventName", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["caller"]; ok {
-		params.Set("caller", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["continuationToken"]; ok {
-		params.Set("continuationToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["parameters"]; ok {
-		params.Set("parameters", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/apps/reporting/audit/v1/", "{customerId}/{applicationId}")
 	urls = strings.Replace(urls, "{customerId}", cleanPathString(c.customerId), 1)

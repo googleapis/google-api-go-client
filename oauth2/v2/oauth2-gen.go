@@ -54,6 +54,14 @@ type UserinfoService struct {
 }
 
 type Userinfo struct {
+	Id string `json:"id,omitempty"`
+
+	Verified_email bool `json:"verified_email,omitempty"`
+
+	Timezone string `json:"timezone,omitempty"`
+
+	Birthday string `json:"birthday,omitempty"`
+
 	Email string `json:"email,omitempty"`
 
 	Locale string `json:"locale,omitempty"`
@@ -69,21 +77,9 @@ type Userinfo struct {
 	Link string `json:"link,omitempty"`
 
 	Gender string `json:"gender,omitempty"`
-
-	Id string `json:"id,omitempty"`
-
-	Verified_email bool `json:"verified_email,omitempty"`
-
-	Timezone string `json:"timezone,omitempty"`
-
-	Birthday string `json:"birthday,omitempty"`
 }
 
 type Tokeninfo struct {
-	// Email: The email address of the user. Present only if the email scope
-	// is present in the request.
-	Email string `json:"email,omitempty"`
-
 	// Issued_to: To whom was the token issued to. In general the same as
 	// audience.
 	Issued_to string `json:"issued_to,omitempty"`
@@ -109,6 +105,209 @@ type Tokeninfo struct {
 	// Verified_email: Boolean flag which is true if the email address is
 	// verified. Present only if the email scope is present in the request.
 	Verified_email bool `json:"verified_email,omitempty"`
+
+	// Email: The email address of the user. Present only if the email scope
+	// is present in the request.
+	Email string `json:"email,omitempty"`
+}
+
+type Oauth2IssueTokenV2ResponseConsentScopes struct {
+	Description string `json:"description,omitempty"`
+
+	Detail string `json:"detail,omitempty"`
+}
+
+type Oauth2IssueTokenV2Response struct {
+	IdToken string `json:"idToken,omitempty"`
+
+	Token string `json:"token,omitempty"`
+
+	Consent *Oauth2IssueTokenV2ResponseConsent `json:"consent,omitempty"`
+
+	Code string `json:"code,omitempty"`
+
+	IssueAdvice string `json:"issueAdvice,omitempty"`
+}
+
+type Oauth2IssueTokenV2ResponseConsent struct {
+	OauthClient *Oauth2IssueTokenV2ResponseConsentOauthClient `json:"oauthClient,omitempty"`
+
+	Scopes []*Oauth2IssueTokenV2ResponseConsentScopes `json:"scopes,omitempty"`
+}
+
+type Oauth2IssueTokenV2ResponseConsentOauthClient struct {
+	IconUri string `json:"iconUri,omitempty"`
+
+	Name string `json:"name,omitempty"`
+
+	DeveloperEmail string `json:"developerEmail,omitempty"`
+}
+
+// method id "oauth2.issueTokenGet":
+
+type IssueTokenGetCall struct {
+	s             *Service
+	client_id     string
+	response_type string
+	scope         string
+	opt_          map[string]interface{}
+}
+
+// IssueTokenGet: 
+func (s *Service) IssueTokenGet(client_id string, response_type string, scope string) *IssueTokenGetCall {
+	c := &IssueTokenGetCall{s: s, opt_: make(map[string]interface{})}
+	c.client_id = client_id
+	c.response_type = response_type
+	c.scope = scope
+	return c
+}
+
+// App_id sets the optional parameter "app_id": 
+func (c *IssueTokenGetCall) App_id(app_id string) *IssueTokenGetCall {
+	c.opt_["app_id"] = app_id
+	return c
+}
+
+// Android_device_id sets the optional parameter "android_device_id": 
+func (c *IssueTokenGetCall) Android_device_id(android_device_id uint64) *IssueTokenGetCall {
+	c.opt_["android_device_id"] = android_device_id
+	return c
+}
+
+// Force sets the optional parameter "force": 
+func (c *IssueTokenGetCall) Force(force bool) *IssueTokenGetCall {
+	c.opt_["force"] = force
+	return c
+}
+
+// Origin sets the optional parameter "origin": 
+func (c *IssueTokenGetCall) Origin(origin string) *IssueTokenGetCall {
+	c.opt_["origin"] = origin
+	return c
+}
+
+// Hl sets the optional parameter "hl": 
+func (c *IssueTokenGetCall) Hl(hl string) *IssueTokenGetCall {
+	c.opt_["hl"] = hl
+	return c
+}
+
+// Audience sets the optional parameter "audience": 
+func (c *IssueTokenGetCall) Audience(audience string) *IssueTokenGetCall {
+	c.opt_["audience"] = audience
+	return c
+}
+
+// Alg sets the optional parameter "alg": 
+func (c *IssueTokenGetCall) Alg(alg string) *IssueTokenGetCall {
+	c.opt_["alg"] = alg
+	return c
+}
+
+func (c *IssueTokenGetCall) Do() (*Oauth2IssueTokenV2Response, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("scope", fmt.Sprintf("%v", c.scope))
+	params.Set("client_id", fmt.Sprintf("%v", c.client_id))
+	params.Set("response_type", fmt.Sprintf("%v", c.response_type))
+	if v, ok := c.opt_["app_id"]; ok {
+		params.Set("app_id", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["android_device_id"]; ok {
+		params.Set("android_device_id", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["force"]; ok {
+		params.Set("force", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["origin"]; ok {
+		params.Set("origin", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["hl"]; ok {
+		params.Set("hl", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["audience"]; ok {
+		params.Set("audience", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["alg"]; ok {
+		params.Set("alg", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/", "oauth2/v2/IssueToken")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Oauth2IssueTokenV2Response)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "httpMethod": "GET",
+	//   "id": "oauth2.issueTokenGet",
+	//   "parameterOrder": [
+	//     "client_id",
+	//     "response_type",
+	//     "scope"
+	//   ],
+	//   "parameters": {
+	//     "alg": {
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "android_device_id": {
+	//       "format": "uint64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "app_id": {
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "audience": {
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "client_id": {
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "force": {
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "hl": {
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "origin": {
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "response_type": {
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "scope": {
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "oauth2/v2/IssueToken",
+	//   "response": {
+	//     "$ref": "Oauth2IssueTokenV2Response"
+	//   }
+	// }
+
 }
 
 // method id "oauth2.tokeninfo":

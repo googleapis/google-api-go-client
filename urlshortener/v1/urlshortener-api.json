@@ -14,6 +14,9 @@
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/urlshortener/v1/",
  "basePath": "/urlshortener/v1/",
+ "rootUrl": "https://www.googleapis.com/",
+ "servicePath": "urlshortener/v1/",
+ "batchPath": "batch",
  "parameters": {
   "alt": {
    "type": "string",

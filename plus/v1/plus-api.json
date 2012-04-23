@@ -4,7 +4,7 @@
  "id": "plus:v1",
  "name": "plus",
  "version": "v1",
- "revision": "20120214",
+ "revision": "20120416",
  "title": "Google+ API",
  "description": "The Google+ API enables developers to build on top of the Google+ platform.",
  "icons": {
@@ -15,6 +15,9 @@
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/plus/v1/",
  "basePath": "/plus/v1/",
+ "rootUrl": "https://www.googleapis.com/",
+ "servicePath": "plus/v1/",
+ "batchPath": "batch",
  "parameters": {
   "alt": {
    "type": "string",

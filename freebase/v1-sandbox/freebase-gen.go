@@ -75,33 +75,6 @@ func (s *Service) Mqlread(query string) *MqlreadCall {
 	return c
 }
 
-// Cursor sets the optional parameter "cursor": The mql cursor.
-func (c *MqlreadCall) Cursor(cursor string) *MqlreadCall {
-	c.opt_["cursor"] = cursor
-	return c
-}
-
-// Lang sets the optional parameter "lang": The language of the results
-// - an id of a /type/lang object.
-func (c *MqlreadCall) Lang(lang string) *MqlreadCall {
-	c.opt_["lang"] = lang
-	return c
-}
-
-// Html_escape sets the optional parameter "html_escape": Whether or not
-// to escape entities.
-func (c *MqlreadCall) Html_escape(html_escape bool) *MqlreadCall {
-	c.opt_["html_escape"] = html_escape
-	return c
-}
-
-// As_of_time sets the optional parameter "as_of_time": Run the query as
-// it would've been run at the specified point in time.
-func (c *MqlreadCall) As_of_time(as_of_time string) *MqlreadCall {
-	c.opt_["as_of_time"] = as_of_time
-	return c
-}
-
 // Callback sets the optional parameter "callback": JS method name for
 // JSONP callbacks.
 func (c *MqlreadCall) Callback(callback string) *MqlreadCall {
@@ -136,23 +109,38 @@ func (c *MqlreadCall) Indent(indent int64) *MqlreadCall {
 	return c
 }
 
+// Cursor sets the optional parameter "cursor": The mql cursor.
+func (c *MqlreadCall) Cursor(cursor string) *MqlreadCall {
+	c.opt_["cursor"] = cursor
+	return c
+}
+
+// Lang sets the optional parameter "lang": The language of the results
+// - an id of a /type/lang object.
+func (c *MqlreadCall) Lang(lang string) *MqlreadCall {
+	c.opt_["lang"] = lang
+	return c
+}
+
+// Html_escape sets the optional parameter "html_escape": Whether or not
+// to escape entities.
+func (c *MqlreadCall) Html_escape(html_escape bool) *MqlreadCall {
+	c.opt_["html_escape"] = html_escape
+	return c
+}
+
+// As_of_time sets the optional parameter "as_of_time": Run the query as
+// it would've been run at the specified point in time.
+func (c *MqlreadCall) As_of_time(as_of_time string) *MqlreadCall {
+	c.opt_["as_of_time"] = as_of_time
+	return c
+}
+
 func (c *MqlreadCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("query", fmt.Sprintf("%v", c.query))
-	if v, ok := c.opt_["cursor"]; ok {
-		params.Set("cursor", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["lang"]; ok {
-		params.Set("lang", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["html_escape"]; ok {
-		params.Set("html_escape", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["as_of_time"]; ok {
-		params.Set("as_of_time", fmt.Sprintf("%v", v))
-	}
 	if v, ok := c.opt_["callback"]; ok {
 		params.Set("callback", fmt.Sprintf("%v", v))
 	}
@@ -167,6 +155,18 @@ func (c *MqlreadCall) Do() error {
 	}
 	if v, ok := c.opt_["indent"]; ok {
 		params.Set("indent", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["cursor"]; ok {
+		params.Set("cursor", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["lang"]; ok {
+		params.Set("lang", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["html_escape"]; ok {
+		params.Set("html_escape", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["as_of_time"]; ok {
+		params.Set("as_of_time", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/freebase/v1-sandbox/", "mqlread")
 	urls += "?" + params.Encode()
@@ -276,13 +276,6 @@ func (s *Service) Image(id []string) *ImageCall {
 	return c
 }
 
-// Maxheight sets the optional parameter "maxheight": Maximum height in
-// pixels for resulting image.
-func (c *ImageCall) Maxheight(maxheight int64) *ImageCall {
-	c.opt_["maxheight"] = maxheight
-	return c
-}
-
 // Pad sets the optional parameter "pad": A boolean specifying whether
 // the resulting image should be padded up to the requested dimensions.
 func (c *ImageCall) Pad(pad bool) *ImageCall {
@@ -312,13 +305,17 @@ func (c *ImageCall) Mode(mode string) *ImageCall {
 	return c
 }
 
+// Maxheight sets the optional parameter "maxheight": Maximum height in
+// pixels for resulting image.
+func (c *ImageCall) Maxheight(maxheight int64) *ImageCall {
+	c.opt_["maxheight"] = maxheight
+	return c
+}
+
 func (c *ImageCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	if v, ok := c.opt_["maxheight"]; ok {
-		params.Set("maxheight", fmt.Sprintf("%v", v))
-	}
 	if v, ok := c.opt_["pad"]; ok {
 		params.Set("pad", fmt.Sprintf("%v", v))
 	}
@@ -330,6 +327,9 @@ func (c *ImageCall) Do() error {
 	}
 	if v, ok := c.opt_["mode"]; ok {
 		params.Set("mode", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxheight"]; ok {
+		params.Set("maxheight", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/freebase/v1-sandbox/", "image{/id*}")
 	urls = strings.Replace(urls, "{id}", cleanPathString(c.id[0]), 1)
@@ -425,13 +425,6 @@ func (r *TextService) Get(id []string) *TextGetCall {
 	return c
 }
 
-// Format sets the optional parameter "format": Sanitizing
-// transformation.
-func (c *TextGetCall) Format(format string) *TextGetCall {
-	c.opt_["format"] = format
-	return c
-}
-
 // Maxlength sets the optional parameter "maxlength": The max number of
 // characters to return. Valid only for 'plain' format.
 func (c *TextGetCall) Maxlength(maxlength int64) *TextGetCall {
@@ -439,15 +432,22 @@ func (c *TextGetCall) Maxlength(maxlength int64) *TextGetCall {
 	return c
 }
 
+// Format sets the optional parameter "format": Sanitizing
+// transformation.
+func (c *TextGetCall) Format(format string) *TextGetCall {
+	c.opt_["format"] = format
+	return c
+}
+
 func (c *TextGetCall) Do() (*ContentserviceGet, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	if v, ok := c.opt_["format"]; ok {
-		params.Set("format", fmt.Sprintf("%v", v))
-	}
 	if v, ok := c.opt_["maxlength"]; ok {
 		params.Set("maxlength", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["format"]; ok {
+		params.Set("format", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/freebase/v1-sandbox/", "text{/id*}")
 	urls = strings.Replace(urls, "{id}", cleanPathString(c.id[0]), 1)

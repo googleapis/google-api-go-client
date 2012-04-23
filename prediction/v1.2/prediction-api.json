@@ -15,6 +15,9 @@
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/prediction/v1.2/",
  "basePath": "/prediction/v1.2/",
+ "rootUrl": "https://www.googleapis.com/",
+ "servicePath": "prediction/v1.2/",
+ "batchPath": "batch",
  "parameters": {
   "alt": {
    "type": "string",
@@ -63,6 +66,9 @@
  "auth": {
   "oauth2": {
    "scopes": {
+    "https://www.googleapis.com/auth/devstorage.read_only": {
+     "description": "View your data in Google Cloud Storage"
+    },
     "https://www.googleapis.com/auth/prediction": {
      "description": "Manage your data in the Google Prediction API"
     }
@@ -301,6 +307,7 @@
       "$ref": "Training"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/devstorage.read_only",
       "https://www.googleapis.com/auth/prediction"
      ]
     },

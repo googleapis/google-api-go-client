@@ -15,6 +15,9 @@
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/taskqueue/v1beta1/projects/",
  "basePath": "/taskqueue/v1beta1/projects/",
+ "rootUrl": "https://www.googleapis.com/",
+ "servicePath": "taskqueue/v1beta1/projects/",
+ "batchPath": "batch",
  "parameters": {
   "alt": {
    "type": "string",

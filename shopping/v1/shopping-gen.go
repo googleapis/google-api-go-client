@@ -61,270 +61,12 @@ type ProductsService struct {
 	s *Service
 }
 
-type Product struct {
-	// Product: Product.
-	Product *ShoppingModelProductJsonV1 `json:"product,omitempty"`
-
-	// Kind: The kind of item, always shopping#product.
-	Kind string `json:"kind,omitempty"`
-
-	// Id: Id of product.
-	Id string `json:"id,omitempty"`
-
-	// RequestId: Unique identifier for this request.
-	RequestId string `json:"requestId,omitempty"`
-
-	// Debug: Google internal.
-	Debug *ShoppingModelDebugJsonV1 `json:"debug,omitempty"`
-
-	// Recommendations: Recommendations for product.
-	Recommendations []*ProductRecommendations `json:"recommendations,omitempty"`
-
-	// Categories: List of categories for product.
-	Categories []*ShoppingModelCategoryJsonV1 `json:"categories,omitempty"`
-
-	// SelfLink: Self link of product.
-	SelfLink string `json:"selfLink,omitempty"`
-}
-
-type ShoppingModelDebugJsonV1 struct {
-	// FacetsResponse: Google internal.
-	FacetsResponse string `json:"facetsResponse,omitempty"`
-
-	// SearchResponse: Google internal.
-	SearchResponse string `json:"searchResponse,omitempty"`
-
-	// FacetsRequest: Google internal.
-	FacetsRequest string `json:"facetsRequest,omitempty"`
-
-	// BackendTimes: Google internal
-	BackendTimes []*ShoppingModelDebugJsonV1BackendTimes `json:"backendTimes,omitempty"`
-
-	// RdcResponse: Google internal.
-	RdcResponse string `json:"rdcResponse,omitempty"`
-
-	// ElapsedMillis: Google internal.
-	ElapsedMillis int64 `json:"elapsedMillis,omitempty,string"`
-
-	// SearchRequest: Google internal.
-	SearchRequest string `json:"searchRequest,omitempty"`
-}
-
-type ProductsPromotionsCustomFields struct {
-	// Value: Value of field.
-	Value string `json:"value,omitempty"`
-
-	// Name: Name of field.
-	Name string `json:"name,omitempty"`
-}
-
-type ShoppingModelProductJsonV1Author struct {
-	// Name: Name of product author.
-	Name string `json:"name,omitempty"`
-
-	// AccountId: Account id of product author.
-	AccountId uint64 `json:"accountId,omitempty,string"`
-}
-
-type ProductRecommendationsRecommendationList struct {
-	// Product: Recommended product.
-	Product *ShoppingModelProductJsonV1 `json:"product,omitempty"`
-}
-
-type ShoppingModelProductJsonV1ImagesThumbnails struct {
-	// Height: Height of thumbnail (omitted if not specified in the
-	// request).
-	Height int64 `json:"height,omitempty"`
-
-	// Width: Width of thumbnail (omitted if not specified in the request).
-	Width int64 `json:"width,omitempty"`
-
-	// Link: Link to thumbnail.
-	Link string `json:"link,omitempty"`
-
-	// Content: Content of thumbnail (only available for the first thumbnail
-	// of the top results if SAYT is enabled).
-	Content string `json:"content,omitempty"`
-}
-
-type ProductsFacets struct {
-	// Count: Number of products matching the query that have a value for
-	// the facet's property or attribute.
-	Count int64 `json:"count,omitempty"`
-
-	// Name: Name of the facet's attribute (omitted for property facets).
-	Name string `json:"name,omitempty"`
-
-	// DisplayName: Display name of facet.
-	DisplayName string `json:"displayName,omitempty"`
-
-	// Property: Property of facet (omitted for attribute facets).
-	Property string `json:"property,omitempty"`
-
-	// Unit: Unit of the facet's property or attribute (omitted if the
-	// facet's property or attribute has no unit).
-	Unit string `json:"unit,omitempty"`
-
-	// Buckets: List of Buckets within facet.
-	Buckets []*ProductsFacetsBuckets `json:"buckets,omitempty"`
-
-	// Type: Type of facet's attribute (omitted for property facets, one of:
-	// text, bool, int, float).
-	Type string `json:"type,omitempty"`
-}
-
-type ShoppingModelDebugJsonV1BackendTimes struct {
-	// Name: Google internal
-	Name string `json:"name,omitempty"`
-
-	// ServerMillis: Google internal
-	ServerMillis int64 `json:"serverMillis,omitempty,string"`
-
-	// ElapsedMillis: Google internal
-	ElapsedMillis int64 `json:"elapsedMillis,omitempty,string"`
-
-	// HostName: Google internal
-	HostName string `json:"hostName,omitempty"`
-}
-
-type ShoppingModelProductJsonV1Internal4 struct {
-	// Confidence: Google Internal.
-	Confidence float64 `json:"confidence,omitempty"`
-
-	// Node: Google Internal.
-	Node int64 `json:"node,omitempty"`
-}
-
-type Products struct {
-	// Id: Id of feed.
-	Id string `json:"id,omitempty"`
-
-	// RequestId: Unique identifier for this request.
-	RequestId string `json:"requestId,omitempty"`
-
-	// CurrentItemCount: Current item count.
-	CurrentItemCount int64 `json:"currentItemCount,omitempty"`
-
-	// Facets: List of facets.
-	Facets []*ProductsFacets `json:"facets,omitempty"`
-
-	// RelatedQueries: Related queries.
-	RelatedQueries []string `json:"relatedQueries,omitempty"`
-
-	// Debug: Google internal.
-	Debug *ShoppingModelDebugJsonV1 `json:"debug,omitempty"`
-
-	// Promotions: List of promotions.
-	Promotions []*ProductsPromotions `json:"promotions,omitempty"`
-
-	// Spelling: Spelling.
-	Spelling *ProductsSpelling `json:"spelling,omitempty"`
-
-	// Redirects: Redirects.
-	Redirects []string `json:"redirects,omitempty"`
-
-	// ItemsPerPage: Number of items per page of results.
-	ItemsPerPage int64 `json:"itemsPerPage,omitempty"`
-
-	// PreviousLink: Previous link of feed.
-	PreviousLink string `json:"previousLink,omitempty"`
-
-	// Categories: List of categories.
-	Categories []*ShoppingModelCategoryJsonV1 `json:"categories,omitempty"`
-
-	// StartIndex: 1-based index of the first item in the search results.
-	StartIndex int64 `json:"startIndex,omitempty"`
-
-	// SelfLink: Self link of feed.
-	SelfLink string `json:"selfLink,omitempty"`
-
-	// NextLink: Next link of feed.
-	NextLink string `json:"nextLink,omitempty"`
-
-	// Items: List of returned products.
-	Items []*Product `json:"items,omitempty"`
-
-	// TotalItems: Total number of search results.
-	TotalItems int64 `json:"totalItems,omitempty"`
-
-	// Etag: Etag of feed.
-	Etag string `json:"etag,omitempty"`
-
-	// Kind: The fixed string "shopping#products". The kind of feed
-	// returned.
-	Kind string `json:"kind,omitempty"`
-
-	// Stores: List of returned stores.
-	Stores []*ProductsStores `json:"stores,omitempty"`
-}
-
-type ShoppingModelProductJsonV1Images struct {
-	// Thumbnails: Thumbnails of product image.
-	Thumbnails []*ShoppingModelProductJsonV1ImagesThumbnails `json:"thumbnails,omitempty"`
-
-	// Link: Link to product image.
-	Link string `json:"link,omitempty"`
-}
-
-type ShoppingModelProductJsonV1Attributes struct {
-	// Unit: Unit of product attribute.
-	Unit string `json:"unit,omitempty"`
-
-	// Type: Type of product attribute (one of: text, bool, int, float,
-	// dateRange, url).
-	Type string `json:"type,omitempty"`
-
-	// Value: Value of product attribute.
-	Value interface{} `json:"value,omitempty"`
-
-	// Name: Name of product attribute.
-	Name string `json:"name,omitempty"`
-
-	// DisplayName: Display Name of prodct attribute.
-	DisplayName string `json:"displayName,omitempty"`
-}
-
 type ProductsSpelling struct {
 	// Suggestion: Suggestion for spelling.
 	Suggestion string `json:"suggestion,omitempty"`
 }
 
 type ShoppingModelProductJsonV1 struct {
-	// Condition: Condition of product (one of: new, refurbished, used).
-	Condition string `json:"condition,omitempty"`
-
-	// GoogleId: Google id of product.
-	GoogleId uint64 `json:"googleId,omitempty,string"`
-
-	// Country: ISO 3166 code of target country of product.
-	Country string `json:"country,omitempty"`
-
-	// Attributes: Attributes of product (available only with a cx source).
-	Attributes []*ShoppingModelProductJsonV1Attributes `json:"attributes,omitempty"`
-
-	// Link: Link to product.
-	Link string `json:"link,omitempty"`
-
-	// Variants: A list of variant offers associated with this product.
-	Variants []*ShoppingModelProductJsonV1Variants `json:"variants,omitempty"`
-
-	// Inventories: Inventories of product.
-	Inventories []*ShoppingModelProductJsonV1Inventories `json:"inventories,omitempty"`
-
-	// ProvidedId: Merchant-provided id of product (available only with a cx
-	// source).
-	ProvidedId string `json:"providedId,omitempty"`
-
-	// Title: Title of product.
-	Title string `json:"title,omitempty"`
-
-	// PlusOne: Code to add to the page to render the +1 content.
-	PlusOne string `json:"plusOne,omitempty"`
-
-	// TotalMatchingVariants: The number of variant offers returned that
-	// matched the query.
-	TotalMatchingVariants int64 `json:"totalMatchingVariants,omitempty"`
-
 	// Mpns: List of all the product's MPNs.
 	Mpns []string `json:"mpns,omitempty"`
 
@@ -396,18 +138,53 @@ type ShoppingModelProductJsonV1 struct {
 
 	// CreationTime: RFC 3339 formatted creation time and date of product.
 	CreationTime string `json:"creationTime,omitempty"`
+
+	// Condition: Condition of product (one of: new, refurbished, used).
+	Condition string `json:"condition,omitempty"`
+
+	// GoogleId: Google id of product.
+	GoogleId uint64 `json:"googleId,omitempty,string"`
+
+	// Country: ISO 3166 code of target country of product.
+	Country string `json:"country,omitempty"`
+
+	// Attributes: Attributes of product (available only with a cx source).
+	Attributes []*ShoppingModelProductJsonV1Attributes `json:"attributes,omitempty"`
+
+	// Link: Link to product.
+	Link string `json:"link,omitempty"`
+
+	// Variants: A list of variant offers associated with this product.
+	Variants []*ShoppingModelProductJsonV1Variants `json:"variants,omitempty"`
+
+	// Inventories: Inventories of product.
+	Inventories []*ShoppingModelProductJsonV1Inventories `json:"inventories,omitempty"`
+
+	// ProvidedId: Merchant-provided id of product (available only with a cx
+	// source).
+	ProvidedId string `json:"providedId,omitempty"`
+
+	// Title: Title of product.
+	Title string `json:"title,omitempty"`
+
+	// PlusOne: Code to add to the page to render the +1 content.
+	PlusOne string `json:"plusOne,omitempty"`
+
+	// TotalMatchingVariants: The number of variant offers returned that
+	// matched the query.
+	TotalMatchingVariants int64 `json:"totalMatchingVariants,omitempty"`
 }
 
-type ProductRecommendations struct {
-	// Type: Type of recommendation list (one of: all, purchaseToPurchase,
-	// visitToVisit, visitToPurchase, relatedItems).
-	Type string `json:"type,omitempty"`
-
-	// RecommendationList: List of recommendations.
-	RecommendationList []*ProductRecommendationsRecommendationList `json:"recommendationList,omitempty"`
+type ShoppingModelRecommendationsJsonV1RecommendationList struct {
+	// Product: Recommended product.
+	Product *ShoppingModelProductJsonV1 `json:"product,omitempty"`
 }
 
 type ProductsFacetsBuckets struct {
+	// Count: Number of products matching the query that have a value for
+	// the facet's property or attribute that matches the bucket.
+	Count int64 `json:"count,omitempty"`
+
 	// Value: Value of the bucket (omitted for range buckets).
 	Value interface{} `json:"value,omitempty"`
 
@@ -426,10 +203,6 @@ type ProductsFacetsBuckets struct {
 	// MaxExclusive: Whether the upper bound of the bucket is exclusive
 	// (omitted for value buckets or if the range has no upper bound).
 	MaxExclusive bool `json:"maxExclusive,omitempty"`
-
-	// Count: Number of products matching the query that have a value for
-	// the facet's property or attribute that matches the bucket.
-	Count int64 `json:"count,omitempty"`
 }
 
 type ShoppingModelProductJsonV1Variants struct {
@@ -438,28 +211,28 @@ type ShoppingModelProductJsonV1Variants struct {
 }
 
 type ShoppingModelCategoryJsonV1 struct {
-	// Url: URL of category.
-	Url string `json:"url,omitempty"`
-
-	// Id: Id of category.
-	Id string `json:"id,omitempty"`
-
 	// Parents: Ids of the parents of the category.
 	Parents []string `json:"parents,omitempty"`
 
 	// ShortName: Short name of category.
 	ShortName string `json:"shortName,omitempty"`
+
+	// Url: URL of category.
+	Url string `json:"url,omitempty"`
+
+	// Id: Id of category.
+	Id string `json:"id,omitempty"`
 }
 
 type ProductsStores struct {
-	// StoreId: Id of store.
-	StoreId string `json:"storeId,omitempty"`
-
 	// Address: Address of store.
 	Address string `json:"address,omitempty"`
 
 	// Telephone: Telephone number of store.
 	Telephone string `json:"telephone,omitempty"`
+
+	// StoreName: Name of store.
+	StoreName string `json:"storeName,omitempty"`
 
 	// Location: Location of store.
 	Location string `json:"location,omitempty"`
@@ -467,11 +240,27 @@ type ProductsStores struct {
 	// StoreCode: Merchant-supplied store code.
 	StoreCode string `json:"storeCode,omitempty"`
 
-	// Name: Name of store.
+	// Name: Name of merchant.
 	Name string `json:"name,omitempty"`
+
+	// StoreId: Id of store.
+	StoreId string `json:"storeId,omitempty"`
 }
 
 type ProductsPromotions struct {
+	// Link: Link to promotion without scheme. DEPRECATED. WILL BE REMOVED
+	// SOON. USE destLink.
+	Link string `json:"link,omitempty"`
+
+	// CustomFields: List of custom fields of promotion.
+	CustomFields []*ProductsPromotionsCustomFields `json:"customFields,omitempty"`
+
+	// ImageLink: Link to promotion image (omitted if type is not standard).
+	ImageLink string `json:"imageLink,omitempty"`
+
+	// CustomHtml: Custom HTML of promotion (omitted if type is not custom).
+	CustomHtml string `json:"customHtml,omitempty"`
+
 	// Type: Type of promotion (one of: standard, product, custom).
 	Type string `json:"type,omitempty"`
 
@@ -487,25 +276,9 @@ type ProductsPromotions struct {
 
 	// Product: Product of promotion (omitted if type is not product).
 	Product *ShoppingModelProductJsonV1 `json:"product,omitempty"`
-
-	// Link: Link to promotion without scheme. DEPRECATED. WILL BE REMOVED
-	// SOON. USE destLink.
-	Link string `json:"link,omitempty"`
-
-	// CustomFields: List of custom fields of promotion.
-	CustomFields []*ProductsPromotionsCustomFields `json:"customFields,omitempty"`
-
-	// ImageLink: Link to promotion image (omitted if type is not standard).
-	ImageLink string `json:"imageLink,omitempty"`
-
-	// CustomHtml: Custom HTML of promotion (omitted if type is not custom).
-	CustomHtml string `json:"customHtml,omitempty"`
 }
 
 type ShoppingModelProductJsonV1Inventories struct {
-	// DistanceUnit: Distance unit of product inventory.
-	DistanceUnit string `json:"distanceUnit,omitempty"`
-
 	// StoreId: Store ID of product inventory.
 	StoreId string `json:"storeId,omitempty"`
 
@@ -530,295 +303,241 @@ type ShoppingModelProductJsonV1Inventories struct {
 
 	// Shipping: Shipping cost of product inventory.
 	Shipping float64 `json:"shipping,omitempty"`
+
+	// DistanceUnit: Distance unit of product inventory.
+	DistanceUnit string `json:"distanceUnit,omitempty"`
 }
 
-// method id "shopping.products.get":
+type Product struct {
+	// Kind: The kind of item, always shopping#product.
+	Kind string `json:"kind,omitempty"`
 
-type ProductsGetCall struct {
-	s             *Service
-	source        string
-	accountId     int64
-	productIdType string
-	productId     string
-	opt_          map[string]interface{}
+	// Id: Id of product.
+	Id string `json:"id,omitempty"`
+
+	// RequestId: Unique identifier for this request.
+	RequestId string `json:"requestId,omitempty"`
+
+	// Debug: Google internal.
+	Debug *ShoppingModelDebugJsonV1 `json:"debug,omitempty"`
+
+	// Recommendations: Recommendations for product.
+	Recommendations []*ShoppingModelRecommendationsJsonV1 `json:"recommendations,omitempty"`
+
+	// Categories: List of categories for product.
+	Categories []*ShoppingModelCategoryJsonV1 `json:"categories,omitempty"`
+
+	// SelfLink: Self link of product.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// Product: Product.
+	Product *ShoppingModelProductJsonV1 `json:"product,omitempty"`
 }
 
-// Get: Returns a single product
-func (r *ProductsService) Get(source string, accountId int64, productIdType string, productId string) *ProductsGetCall {
-	c := &ProductsGetCall{s: r.s, opt_: make(map[string]interface{})}
-	c.source = source
-	c.accountId = accountId
-	c.productIdType = productIdType
-	c.productId = productId
-	return c
+type ShoppingModelDebugJsonV1 struct {
+	// ElapsedMillis: Google internal.
+	ElapsedMillis int64 `json:"elapsedMillis,omitempty,string"`
+
+	// SearchRequest: Google internal.
+	SearchRequest string `json:"searchRequest,omitempty"`
+
+	// FacetsResponse: Google internal.
+	FacetsResponse string `json:"facetsResponse,omitempty"`
+
+	// SearchResponse: Google internal.
+	SearchResponse string `json:"searchResponse,omitempty"`
+
+	// FacetsRequest: Google internal.
+	FacetsRequest string `json:"facetsRequest,omitempty"`
+
+	// BackendTimes: Google internal
+	BackendTimes []*ShoppingModelDebugJsonV1BackendTimes `json:"backendTimes,omitempty"`
+
+	// RdcResponse: Google internal.
+	RdcResponse string `json:"rdcResponse,omitempty"`
 }
 
-// RecommendationsUseGcsConfig sets the optional parameter
-// "recommendations.useGcsConfig": This parameter is currently ignored
-func (c *ProductsGetCall) RecommendationsUseGcsConfig(recommendationsUseGcsConfig bool) *ProductsGetCall {
-	c.opt_["recommendations.useGcsConfig"] = recommendationsUseGcsConfig
-	return c
+type ProductsPromotionsCustomFields struct {
+	// Value: Value of field.
+	Value string `json:"value,omitempty"`
+
+	// Name: Name of field.
+	Name string `json:"name,omitempty"`
 }
 
-// Thumbnails sets the optional parameter "thumbnails": Thumbnail
-// specification
-func (c *ProductsGetCall) Thumbnails(thumbnails string) *ProductsGetCall {
-	c.opt_["thumbnails"] = thumbnails
-	return c
+type ShoppingModelProductJsonV1Author struct {
+	// Name: Name of product author.
+	Name string `json:"name,omitempty"`
+
+	// AccountId: Account id of product author.
+	AccountId uint64 `json:"accountId,omitempty,string"`
 }
 
-// Taxonomy sets the optional parameter "taxonomy": Merchant taxonomy
-func (c *ProductsGetCall) Taxonomy(taxonomy string) *ProductsGetCall {
-	c.opt_["taxonomy"] = taxonomy
-	return c
+type ShoppingModelProductJsonV1ImagesThumbnails struct {
+	// Link: Link to thumbnail.
+	Link string `json:"link,omitempty"`
+
+	// Content: Content of thumbnail (only available for the first thumbnail
+	// of the top results if SAYT is enabled).
+	Content string `json:"content,omitempty"`
+
+	// Height: Height of thumbnail (omitted if not specified in the
+	// request).
+	Height int64 `json:"height,omitempty"`
+
+	// Width: Width of thumbnail (omitted if not specified in the request).
+	Width int64 `json:"width,omitempty"`
 }
 
-// CategoriesUseGcsConfig sets the optional parameter
-// "categories.useGcsConfig": This parameter is currently ignored
-func (c *ProductsGetCall) CategoriesUseGcsConfig(categoriesUseGcsConfig bool) *ProductsGetCall {
-	c.opt_["categories.useGcsConfig"] = categoriesUseGcsConfig
-	return c
+type ProductsFacets struct {
+	// DisplayName: Display name of facet.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Property: Property of facet (omitted for attribute facets).
+	Property string `json:"property,omitempty"`
+
+	// Unit: Unit of the facet's property or attribute (omitted if the
+	// facet's property or attribute has no unit).
+	Unit string `json:"unit,omitempty"`
+
+	// Buckets: List of Buckets within facet.
+	Buckets []*ProductsFacetsBuckets `json:"buckets,omitempty"`
+
+	// Type: Type of facet's attribute (omitted for property facets, one of:
+	// text, bool, int, float).
+	Type string `json:"type,omitempty"`
+
+	// Count: Number of products matching the query that have a value for
+	// the facet's property or attribute.
+	Count int64 `json:"count,omitempty"`
+
+	// Name: Name of the facet's attribute (omitted for property facets).
+	Name string `json:"name,omitempty"`
 }
 
-// Location sets the optional parameter "location": Location used to
-// determine tax and shipping
-func (c *ProductsGetCall) Location(location string) *ProductsGetCall {
-	c.opt_["location"] = location
-	return c
+type ShoppingModelRecommendationsJsonV1 struct {
+	// RecommendationList: List of recommendations.
+	RecommendationList []*ShoppingModelRecommendationsJsonV1RecommendationList `json:"recommendationList,omitempty"`
+
+	// Type: Type of recommendation list (for offer-based recommendations,
+	// one of: all, purchaseToPurchase, visitToVisit, visitToPurchase,
+	// relatedItems; for category-based recommendations, one of: all,
+	// categoryMostVisited, categoryBestSeller).
+	Type string `json:"type,omitempty"`
 }
 
-// RecommendationsEnabled sets the optional parameter
-// "recommendations.enabled": Whether to return recommendation
-// information
-func (c *ProductsGetCall) RecommendationsEnabled(recommendationsEnabled bool) *ProductsGetCall {
-	c.opt_["recommendations.enabled"] = recommendationsEnabled
-	return c
+type ShoppingModelDebugJsonV1BackendTimes struct {
+	// Name: Google internal
+	Name string `json:"name,omitempty"`
+
+	// ServerMillis: Google internal
+	ServerMillis int64 `json:"serverMillis,omitempty,string"`
+
+	// ElapsedMillis: Google internal
+	ElapsedMillis int64 `json:"elapsedMillis,omitempty,string"`
+
+	// HostName: Google internal
+	HostName string `json:"hostName,omitempty"`
 }
 
-// AttributeFilter sets the optional parameter "attributeFilter": Comma
-// separated list of attributes to return
-func (c *ProductsGetCall) AttributeFilter(attributeFilter string) *ProductsGetCall {
-	c.opt_["attributeFilter"] = attributeFilter
-	return c
+type ShoppingModelProductJsonV1Internal4 struct {
+	// Node: Google Internal.
+	Node int64 `json:"node,omitempty"`
+
+	// Confidence: Google Internal.
+	Confidence float64 `json:"confidence,omitempty"`
 }
 
-// CategoriesEnabled sets the optional parameter "categories.enabled":
-// Whether to return category information
-func (c *ProductsGetCall) CategoriesEnabled(categoriesEnabled bool) *ProductsGetCall {
-	c.opt_["categories.enabled"] = categoriesEnabled
-	return c
+type Products struct {
+	// Items: List of returned products.
+	Items []*Product `json:"items,omitempty"`
+
+	// TotalItems: Total number of search results.
+	TotalItems int64 `json:"totalItems,omitempty"`
+
+	// Etag: Etag of feed.
+	Etag string `json:"etag,omitempty"`
+
+	// Kind: The fixed string "shopping#products". The kind of feed
+	// returned.
+	Kind string `json:"kind,omitempty"`
+
+	// Stores: List of returned stores.
+	Stores []*ProductsStores `json:"stores,omitempty"`
+
+	// Id: Id of feed.
+	Id string `json:"id,omitempty"`
+
+	// RequestId: Unique identifier for this request.
+	RequestId string `json:"requestId,omitempty"`
+
+	// CurrentItemCount: Current item count.
+	CurrentItemCount int64 `json:"currentItemCount,omitempty"`
+
+	// Facets: List of facets.
+	Facets []*ProductsFacets `json:"facets,omitempty"`
+
+	// RelatedQueries: Related queries.
+	RelatedQueries []string `json:"relatedQueries,omitempty"`
+
+	// Debug: Google internal.
+	Debug *ShoppingModelDebugJsonV1 `json:"debug,omitempty"`
+
+	// Promotions: List of promotions.
+	Promotions []*ProductsPromotions `json:"promotions,omitempty"`
+
+	// Spelling: Spelling.
+	Spelling *ProductsSpelling `json:"spelling,omitempty"`
+
+	// Redirects: Redirects.
+	Redirects []string `json:"redirects,omitempty"`
+
+	// ItemsPerPage: Number of items per page of results.
+	ItemsPerPage int64 `json:"itemsPerPage,omitempty"`
+
+	// PreviousLink: Previous link of feed.
+	PreviousLink string `json:"previousLink,omitempty"`
+
+	// Categories: List of categories.
+	Categories []*ShoppingModelCategoryJsonV1 `json:"categories,omitempty"`
+
+	// CategoryRecommendations: Recommendations for category.
+	CategoryRecommendations []*ShoppingModelRecommendationsJsonV1 `json:"categoryRecommendations,omitempty"`
+
+	// StartIndex: 1-based index of the first item in the search results.
+	StartIndex int64 `json:"startIndex,omitempty"`
+
+	// SelfLink: Self link of feed.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// NextLink: Next link of feed.
+	NextLink string `json:"nextLink,omitempty"`
 }
 
-// RecommendationsInclude sets the optional parameter
-// "recommendations.include": Recommendation specification
-func (c *ProductsGetCall) RecommendationsInclude(recommendationsInclude string) *ProductsGetCall {
-	c.opt_["recommendations.include"] = recommendationsInclude
-	return c
+type ShoppingModelProductJsonV1Images struct {
+	// Thumbnails: Thumbnails of product image.
+	Thumbnails []*ShoppingModelProductJsonV1ImagesThumbnails `json:"thumbnails,omitempty"`
+
+	// Link: Link to product image.
+	Link string `json:"link,omitempty"`
 }
 
-// CategoriesInclude sets the optional parameter "categories.include":
-// Category specification
-func (c *ProductsGetCall) CategoriesInclude(categoriesInclude string) *ProductsGetCall {
-	c.opt_["categories.include"] = categoriesInclude
-	return c
-}
+type ShoppingModelProductJsonV1Attributes struct {
+	// Type: Type of product attribute (one of: text, bool, int, float,
+	// dateRange, url).
+	Type string `json:"type,omitempty"`
 
-// PlusOneUseGcsConfig sets the optional parameter
-// "plusOne.useGcsConfig": Whether to use +1 button styles configured in
-// the GCS account
-func (c *ProductsGetCall) PlusOneUseGcsConfig(plusOneUseGcsConfig bool) *ProductsGetCall {
-	c.opt_["plusOne.useGcsConfig"] = plusOneUseGcsConfig
-	return c
-}
+	// Value: Value of product attribute.
+	Value interface{} `json:"value,omitempty"`
 
-// PlusOneEnabled sets the optional parameter "plusOne.enabled": Whether
-// to return +1 button code
-func (c *ProductsGetCall) PlusOneEnabled(plusOneEnabled bool) *ProductsGetCall {
-	c.opt_["plusOne.enabled"] = plusOneEnabled
-	return c
-}
+	// Name: Name of product attribute.
+	Name string `json:"name,omitempty"`
 
-// PlusOneOptions sets the optional parameter "plusOne.options": +1
-// button rendering specification
-func (c *ProductsGetCall) PlusOneOptions(plusOneOptions string) *ProductsGetCall {
-	c.opt_["plusOne.options"] = plusOneOptions
-	return c
-}
+	// DisplayName: Display Name of prodct attribute.
+	DisplayName string `json:"displayName,omitempty"`
 
-func (c *ProductsGetCall) Do() (*Product, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	if v, ok := c.opt_["recommendations.useGcsConfig"]; ok {
-		params.Set("recommendations.useGcsConfig", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["thumbnails"]; ok {
-		params.Set("thumbnails", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["taxonomy"]; ok {
-		params.Set("taxonomy", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["categories.useGcsConfig"]; ok {
-		params.Set("categories.useGcsConfig", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["location"]; ok {
-		params.Set("location", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["recommendations.enabled"]; ok {
-		params.Set("recommendations.enabled", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["attributeFilter"]; ok {
-		params.Set("attributeFilter", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["categories.enabled"]; ok {
-		params.Set("categories.enabled", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["recommendations.include"]; ok {
-		params.Set("recommendations.include", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["categories.include"]; ok {
-		params.Set("categories.include", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["plusOne.useGcsConfig"]; ok {
-		params.Set("plusOne.useGcsConfig", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["plusOne.enabled"]; ok {
-		params.Set("plusOne.enabled", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["plusOne.options"]; ok {
-		params.Set("plusOne.options", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/shopping/search/v1/", "{source}/products/{accountId}/{productIdType}/{productId}")
-	urls = strings.Replace(urls, "{source}", cleanPathString(c.source), 1)
-	urls = strings.Replace(urls, "{accountId}", strconv.FormatInt(c.accountId, 10), 1)
-	urls = strings.Replace(urls, "{productIdType}", cleanPathString(c.productIdType), 1)
-	urls = strings.Replace(urls, "{productId}", cleanPathString(c.productId), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(Product)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Returns a single product",
-	//   "httpMethod": "GET",
-	//   "id": "shopping.products.get",
-	//   "parameterOrder": [
-	//     "source",
-	//     "accountId",
-	//     "productIdType",
-	//     "productId"
-	//   ],
-	//   "parameters": {
-	//     "accountId": {
-	//       "description": "Merchant center account id",
-	//       "format": "uint32",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "integer"
-	//     },
-	//     "attributeFilter": {
-	//       "description": "Comma separated list of attributes to return",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "categories.enabled": {
-	//       "description": "Whether to return category information",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "categories.include": {
-	//       "description": "Category specification",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "categories.useGcsConfig": {
-	//       "description": "This parameter is currently ignored",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "location": {
-	//       "description": "Location used to determine tax and shipping",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "plusOne.enabled": {
-	//       "description": "Whether to return +1 button code",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "plusOne.options": {
-	//       "description": "+1 button rendering specification",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "plusOne.useGcsConfig": {
-	//       "description": "Whether to use +1 button styles configured in the GCS account",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "productId": {
-	//       "description": "Id of product",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "productIdType": {
-	//       "description": "Type of productId",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "recommendations.enabled": {
-	//       "description": "Whether to return recommendation information",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "recommendations.include": {
-	//       "description": "Recommendation specification",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "recommendations.useGcsConfig": {
-	//       "description": "This parameter is currently ignored",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "source": {
-	//       "description": "Query source",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "taxonomy": {
-	//       "description": "Merchant taxonomy",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "thumbnails": {
-	//       "description": "Thumbnail specification",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "{source}/products/{accountId}/{productIdType}/{productId}",
-	//   "response": {
-	//     "$ref": "Product"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/shoppingapi"
-	//   ]
-	// }
-
+	// Unit: Unit of product attribute.
+	Unit string `json:"unit,omitempty"`
 }
 
 // method id "shopping.products.list":
@@ -833,6 +552,13 @@ type ProductsListCall struct {
 func (r *ProductsService) List(source string) *ProductsListCall {
 	c := &ProductsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.source = source
+	return c
+}
+
+// RelatedQueriesEnabled sets the optional parameter
+// "relatedQueries.enabled": Whether to return related queries
+func (c *ProductsListCall) RelatedQueriesEnabled(relatedQueriesEnabled bool) *ProductsListCall {
+	c.opt_["relatedQueries.enabled"] = relatedQueriesEnabled
 	return c
 }
 
@@ -892,6 +618,22 @@ func (c *ProductsListCall) RedirectsUseGcsConfig(redirectsUseGcsConfig bool) *Pr
 // button rendering specification
 func (c *ProductsListCall) PlusOneOptions(plusOneOptions string) *ProductsListCall {
 	c.opt_["plusOne.options"] = plusOneOptions
+	return c
+}
+
+// CategoryRecommendationsUseGcsConfig sets the optional parameter
+// "categoryRecommendations.useGcsConfig": This parameter is currently
+// ignored
+func (c *ProductsListCall) CategoryRecommendationsUseGcsConfig(categoryRecommendationsUseGcsConfig bool) *ProductsListCall {
+	c.opt_["categoryRecommendations.useGcsConfig"] = categoryRecommendationsUseGcsConfig
+	return c
+}
+
+// CategoryRecommendationsEnabled sets the optional parameter
+// "categoryRecommendations.enabled": Whether to return category
+// recommendation information
+func (c *ProductsListCall) CategoryRecommendationsEnabled(categoryRecommendationsEnabled bool) *ProductsListCall {
+	c.opt_["categoryRecommendations.enabled"] = categoryRecommendationsEnabled
 	return c
 }
 
@@ -1032,6 +774,14 @@ func (c *ProductsListCall) CategoriesEnabled(categoriesEnabled bool) *ProductsLi
 	return c
 }
 
+// CategoryRecommendationsCategory sets the optional parameter
+// "categoryRecommendations.category": Category for which to retrieve
+// recommendations
+func (c *ProductsListCall) CategoryRecommendationsCategory(categoryRecommendationsCategory string) *ProductsListCall {
+	c.opt_["categoryRecommendations.category"] = categoryRecommendationsCategory
+	return c
+}
+
 // Country sets the optional parameter "country": Country restriction
 // (ISO 3166)
 func (c *ProductsListCall) Country(country string) *ProductsListCall {
@@ -1049,6 +799,14 @@ func (c *ProductsListCall) FacetsEnabled(facetsEnabled bool) *ProductsListCall {
 // BoostBy sets the optional parameter "boostBy": Boosting specification
 func (c *ProductsListCall) BoostBy(boostBy string) *ProductsListCall {
 	c.opt_["boostBy"] = boostBy
+	return c
+}
+
+// CategoryRecommendationsInclude sets the optional parameter
+// "categoryRecommendations.include": Category recommendation
+// specification
+func (c *ProductsListCall) CategoryRecommendationsInclude(categoryRecommendationsInclude string) *ProductsListCall {
+	c.opt_["categoryRecommendations.include"] = categoryRecommendationsInclude
 	return c
 }
 
@@ -1087,17 +845,13 @@ func (c *ProductsListCall) SpellingUseGcsConfig(spellingUseGcsConfig bool) *Prod
 	return c
 }
 
-// RelatedQueriesEnabled sets the optional parameter
-// "relatedQueries.enabled": Whether to return related queries
-func (c *ProductsListCall) RelatedQueriesEnabled(relatedQueriesEnabled bool) *ProductsListCall {
-	c.opt_["relatedQueries.enabled"] = relatedQueriesEnabled
-	return c
-}
-
 func (c *ProductsListCall) Do() (*Products, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["relatedQueries.enabled"]; ok {
+		params.Set("relatedQueries.enabled", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["plusOne.enabled"]; ok {
 		params.Set("plusOne.enabled", fmt.Sprintf("%v", v))
 	}
@@ -1121,6 +875,12 @@ func (c *ProductsListCall) Do() (*Products, error) {
 	}
 	if v, ok := c.opt_["plusOne.options"]; ok {
 		params.Set("plusOne.options", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["categoryRecommendations.useGcsConfig"]; ok {
+		params.Set("categoryRecommendations.useGcsConfig", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["categoryRecommendations.enabled"]; ok {
+		params.Set("categoryRecommendations.enabled", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["redirects.enabled"]; ok {
 		params.Set("redirects.enabled", fmt.Sprintf("%v", v))
@@ -1182,6 +942,9 @@ func (c *ProductsListCall) Do() (*Products, error) {
 	if v, ok := c.opt_["categories.enabled"]; ok {
 		params.Set("categories.enabled", fmt.Sprintf("%v", v))
 	}
+	if v, ok := c.opt_["categoryRecommendations.category"]; ok {
+		params.Set("categoryRecommendations.category", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["country"]; ok {
 		params.Set("country", fmt.Sprintf("%v", v))
 	}
@@ -1190,6 +953,9 @@ func (c *ProductsListCall) Do() (*Products, error) {
 	}
 	if v, ok := c.opt_["boostBy"]; ok {
 		params.Set("boostBy", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["categoryRecommendations.include"]; ok {
+		params.Set("categoryRecommendations.include", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["spelling.enabled"]; ok {
 		params.Set("spelling.enabled", fmt.Sprintf("%v", v))
@@ -1205,9 +971,6 @@ func (c *ProductsListCall) Do() (*Products, error) {
 	}
 	if v, ok := c.opt_["spelling.useGcsConfig"]; ok {
 		params.Set("spelling.useGcsConfig", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["relatedQueries.enabled"]; ok {
-		params.Set("relatedQueries.enabled", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/shopping/search/v1/", "{source}/products")
 	urls = strings.Replace(urls, "{source}", cleanPathString(c.source), 1)
@@ -1260,6 +1023,26 @@ func (c *ProductsListCall) Do() (*Products, error) {
 	//       "type": "string"
 	//     },
 	//     "categories.useGcsConfig": {
+	//       "description": "This parameter is currently ignored",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "categoryRecommendations.category": {
+	//       "description": "Category for which to retrieve recommendations",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "categoryRecommendations.enabled": {
+	//       "description": "Whether to return category recommendation information",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "categoryRecommendations.include": {
+	//       "description": "Category recommendation specification",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "categoryRecommendations.useGcsConfig": {
 	//       "description": "This parameter is currently ignored",
 	//       "location": "query",
 	//       "type": "boolean"
@@ -1432,6 +1215,295 @@ func (c *ProductsListCall) Do() (*Products, error) {
 	//   "path": "{source}/products",
 	//   "response": {
 	//     "$ref": "Products"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/shoppingapi"
+	//   ]
+	// }
+
+}
+
+// method id "shopping.products.get":
+
+type ProductsGetCall struct {
+	s             *Service
+	source        string
+	accountId     int64
+	productIdType string
+	productId     string
+	opt_          map[string]interface{}
+}
+
+// Get: Returns a single product
+func (r *ProductsService) Get(source string, accountId int64, productIdType string, productId string) *ProductsGetCall {
+	c := &ProductsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.source = source
+	c.accountId = accountId
+	c.productIdType = productIdType
+	c.productId = productId
+	return c
+}
+
+// CategoriesUseGcsConfig sets the optional parameter
+// "categories.useGcsConfig": This parameter is currently ignored
+func (c *ProductsGetCall) CategoriesUseGcsConfig(categoriesUseGcsConfig bool) *ProductsGetCall {
+	c.opt_["categories.useGcsConfig"] = categoriesUseGcsConfig
+	return c
+}
+
+// Location sets the optional parameter "location": Location used to
+// determine tax and shipping
+func (c *ProductsGetCall) Location(location string) *ProductsGetCall {
+	c.opt_["location"] = location
+	return c
+}
+
+// RecommendationsEnabled sets the optional parameter
+// "recommendations.enabled": Whether to return recommendation
+// information
+func (c *ProductsGetCall) RecommendationsEnabled(recommendationsEnabled bool) *ProductsGetCall {
+	c.opt_["recommendations.enabled"] = recommendationsEnabled
+	return c
+}
+
+// AttributeFilter sets the optional parameter "attributeFilter": Comma
+// separated list of attributes to return
+func (c *ProductsGetCall) AttributeFilter(attributeFilter string) *ProductsGetCall {
+	c.opt_["attributeFilter"] = attributeFilter
+	return c
+}
+
+// CategoriesEnabled sets the optional parameter "categories.enabled":
+// Whether to return category information
+func (c *ProductsGetCall) CategoriesEnabled(categoriesEnabled bool) *ProductsGetCall {
+	c.opt_["categories.enabled"] = categoriesEnabled
+	return c
+}
+
+// RecommendationsInclude sets the optional parameter
+// "recommendations.include": Recommendation specification
+func (c *ProductsGetCall) RecommendationsInclude(recommendationsInclude string) *ProductsGetCall {
+	c.opt_["recommendations.include"] = recommendationsInclude
+	return c
+}
+
+// CategoriesInclude sets the optional parameter "categories.include":
+// Category specification
+func (c *ProductsGetCall) CategoriesInclude(categoriesInclude string) *ProductsGetCall {
+	c.opt_["categories.include"] = categoriesInclude
+	return c
+}
+
+// PlusOneUseGcsConfig sets the optional parameter
+// "plusOne.useGcsConfig": Whether to use +1 button styles configured in
+// the GCS account
+func (c *ProductsGetCall) PlusOneUseGcsConfig(plusOneUseGcsConfig bool) *ProductsGetCall {
+	c.opt_["plusOne.useGcsConfig"] = plusOneUseGcsConfig
+	return c
+}
+
+// PlusOneEnabled sets the optional parameter "plusOne.enabled": Whether
+// to return +1 button code
+func (c *ProductsGetCall) PlusOneEnabled(plusOneEnabled bool) *ProductsGetCall {
+	c.opt_["plusOne.enabled"] = plusOneEnabled
+	return c
+}
+
+// PlusOneOptions sets the optional parameter "plusOne.options": +1
+// button rendering specification
+func (c *ProductsGetCall) PlusOneOptions(plusOneOptions string) *ProductsGetCall {
+	c.opt_["plusOne.options"] = plusOneOptions
+	return c
+}
+
+// RecommendationsUseGcsConfig sets the optional parameter
+// "recommendations.useGcsConfig": This parameter is currently ignored
+func (c *ProductsGetCall) RecommendationsUseGcsConfig(recommendationsUseGcsConfig bool) *ProductsGetCall {
+	c.opt_["recommendations.useGcsConfig"] = recommendationsUseGcsConfig
+	return c
+}
+
+// Thumbnails sets the optional parameter "thumbnails": Thumbnail
+// specification
+func (c *ProductsGetCall) Thumbnails(thumbnails string) *ProductsGetCall {
+	c.opt_["thumbnails"] = thumbnails
+	return c
+}
+
+// Taxonomy sets the optional parameter "taxonomy": Merchant taxonomy
+func (c *ProductsGetCall) Taxonomy(taxonomy string) *ProductsGetCall {
+	c.opt_["taxonomy"] = taxonomy
+	return c
+}
+
+func (c *ProductsGetCall) Do() (*Product, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["categories.useGcsConfig"]; ok {
+		params.Set("categories.useGcsConfig", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["location"]; ok {
+		params.Set("location", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["recommendations.enabled"]; ok {
+		params.Set("recommendations.enabled", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["attributeFilter"]; ok {
+		params.Set("attributeFilter", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["categories.enabled"]; ok {
+		params.Set("categories.enabled", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["recommendations.include"]; ok {
+		params.Set("recommendations.include", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["categories.include"]; ok {
+		params.Set("categories.include", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["plusOne.useGcsConfig"]; ok {
+		params.Set("plusOne.useGcsConfig", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["plusOne.enabled"]; ok {
+		params.Set("plusOne.enabled", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["plusOne.options"]; ok {
+		params.Set("plusOne.options", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["recommendations.useGcsConfig"]; ok {
+		params.Set("recommendations.useGcsConfig", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["thumbnails"]; ok {
+		params.Set("thumbnails", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["taxonomy"]; ok {
+		params.Set("taxonomy", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/shopping/search/v1/", "{source}/products/{accountId}/{productIdType}/{productId}")
+	urls = strings.Replace(urls, "{source}", cleanPathString(c.source), 1)
+	urls = strings.Replace(urls, "{accountId}", strconv.FormatInt(c.accountId, 10), 1)
+	urls = strings.Replace(urls, "{productIdType}", cleanPathString(c.productIdType), 1)
+	urls = strings.Replace(urls, "{productId}", cleanPathString(c.productId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Product)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a single product",
+	//   "httpMethod": "GET",
+	//   "id": "shopping.products.get",
+	//   "parameterOrder": [
+	//     "source",
+	//     "accountId",
+	//     "productIdType",
+	//     "productId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Merchant center account id",
+	//       "format": "uint32",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "integer"
+	//     },
+	//     "attributeFilter": {
+	//       "description": "Comma separated list of attributes to return",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "categories.enabled": {
+	//       "description": "Whether to return category information",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "categories.include": {
+	//       "description": "Category specification",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "categories.useGcsConfig": {
+	//       "description": "This parameter is currently ignored",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "location": {
+	//       "description": "Location used to determine tax and shipping",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "plusOne.enabled": {
+	//       "description": "Whether to return +1 button code",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "plusOne.options": {
+	//       "description": "+1 button rendering specification",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "plusOne.useGcsConfig": {
+	//       "description": "Whether to use +1 button styles configured in the GCS account",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "productId": {
+	//       "description": "Id of product",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "productIdType": {
+	//       "description": "Type of productId",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "recommendations.enabled": {
+	//       "description": "Whether to return recommendation information",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "recommendations.include": {
+	//       "description": "Recommendation specification",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "recommendations.useGcsConfig": {
+	//       "description": "This parameter is currently ignored",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "source": {
+	//       "description": "Query source",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "taxonomy": {
+	//       "description": "Merchant taxonomy",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "thumbnails": {
+	//       "description": "Thumbnail specification",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{source}/products/{accountId}/{productIdType}/{productId}",
+	//   "response": {
+	//     "$ref": "Product"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/shoppingapi"

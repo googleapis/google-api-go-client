@@ -55,28 +55,67 @@ type PagespeedapiService struct {
 	s *Service
 }
 
+type ResultFormattedResults struct {
+	// Locale: The locale of the formattedResults, e.g. "en_US".
+	Locale string `json:"locale,omitempty"`
+
+	// RuleResults: Dictionary of formatted rule results, with one entry for
+	// each Page Speed rule instantiated and run by the server.
+	RuleResults *ResultFormattedResultsRuleResults `json:"ruleResults,omitempty"`
+}
+
+type Result struct {
+	// ResponseCode: Response code for the document. 200 indicates a normal
+	// page load. 4xx/5xx indicates an error.
+	ResponseCode int64 `json:"responseCode,omitempty"`
+
+	// Score: The Page Speed Score (0-100), which indicates how much faster
+	// a page could be. A high score indicates little room for improvement,
+	// while a lower score indicates more room for improvement.
+	Score int64 `json:"score,omitempty"`
+
+	// FormattedResults: Localized Page Speed results. Contains a
+	// ruleResults entry for each Page Speed rule instantiated and run by
+	// the server.
+	FormattedResults *ResultFormattedResults `json:"formattedResults,omitempty"`
+
+	// Version: The version of the Page Speed SDK used to generate these
+	// results.
+	Version *ResultVersion `json:"version,omitempty"`
+
+	// Kind: Kind of result.
+	Kind string `json:"kind,omitempty"`
+
+	// PageStats: Summary statistics for the page, such as number of
+	// JavaScript bytes, number of HTML bytes, etc.
+	PageStats *ResultPageStats `json:"pageStats,omitempty"`
+
+	// Id: Canonicalized and final URL for the document, after following
+	// page redirects (if any).
+	Id string `json:"id,omitempty"`
+
+	// Title: Title of the page, as displayed in the browser's title bar.
+	Title string `json:"title,omitempty"`
+
+	// InvalidRules: List of rules that were specified in the request, but
+	// which the server did not know how to instantiate.
+	InvalidRules []string `json:"invalidRules,omitempty"`
+}
+
+type ResultVersion struct {
+	// Minor: The minor version number of the Page Speed SDK used to
+	// generate these results.
+	Minor int64 `json:"minor,omitempty"`
+
+	// Major: The major version number of the Page Speed SDK used to
+	// generate these results.
+	Major int64 `json:"major,omitempty"`
+}
+
+type ResultFormattedResultsRuleResults struct {
+}
+
 type ResultPageStats struct {
-	// CssResponseBytes: Number of uncompressed response bytes for CSS
-	// resources on the page.
-	CssResponseBytes int64 `json:"cssResponseBytes,omitempty,string"`
-
-	// NumberJsResources: Number of JavaScript resources referenced by the
-	// page.
-	NumberJsResources int64 `json:"numberJsResources,omitempty"`
-
-	// JavascriptResponseBytes: Number of uncompressed response bytes for JS
-	// resources on the page.
-	JavascriptResponseBytes int64 `json:"javascriptResponseBytes,omitempty,string"`
-
-	// TotalRequestBytes: Total size of all request bytes sent by the page.
-	TotalRequestBytes int64 `json:"totalRequestBytes,omitempty,string"`
-
-	// NumberResources: Number of HTTP resources loaded by the page.
-	NumberResources int64 `json:"numberResources,omitempty"`
-
-	// NumberHosts: Number of unique hosts referenced by the page.
-	NumberHosts int64 `json:"numberHosts,omitempty"`
-
 	// ImageResponseBytes: Number of response bytes for image resources on
 	// the page.
 	ImageResponseBytes int64 `json:"imageResponseBytes,omitempty,string"`
@@ -104,66 +143,27 @@ type ResultPageStats struct {
 	// FlashResponseBytes: Number of response bytes for flash resources on
 	// the page.
 	FlashResponseBytes int64 `json:"flashResponseBytes,omitempty,string"`
-}
 
-type ResultFormattedResults struct {
-	// Locale: The locale of the formattedResults, e.g. "en_US".
-	Locale string `json:"locale,omitempty"`
+	// CssResponseBytes: Number of uncompressed response bytes for CSS
+	// resources on the page.
+	CssResponseBytes int64 `json:"cssResponseBytes,omitempty,string"`
 
-	// RuleResults: Dictionary of formatted rule results, with one entry for
-	// each Page Speed rule instantiated and run by the server.
-	RuleResults *ResultFormattedResultsRuleResults `json:"ruleResults,omitempty"`
-}
+	// NumberJsResources: Number of JavaScript resources referenced by the
+	// page.
+	NumberJsResources int64 `json:"numberJsResources,omitempty"`
 
-type Result struct {
-	// PageStats: Summary statistics for the page, such as number of
-	// JavaScript bytes, number of HTML bytes, etc.
-	PageStats *ResultPageStats `json:"pageStats,omitempty"`
+	// JavascriptResponseBytes: Number of uncompressed response bytes for JS
+	// resources on the page.
+	JavascriptResponseBytes int64 `json:"javascriptResponseBytes,omitempty,string"`
 
-	// Id: Canonicalized and final URL for the document, after following
-	// page redirects (if any).
-	Id string `json:"id,omitempty"`
+	// TotalRequestBytes: Total size of all request bytes sent by the page.
+	TotalRequestBytes int64 `json:"totalRequestBytes,omitempty,string"`
 
-	// Title: Title of the page, as displayed in the browser's title bar.
-	Title string `json:"title,omitempty"`
+	// NumberResources: Number of HTTP resources loaded by the page.
+	NumberResources int64 `json:"numberResources,omitempty"`
 
-	// InvalidRules: List of rules that were specified in the request, but
-	// which the server did not know how to instantiate.
-	InvalidRules []string `json:"invalidRules,omitempty"`
-
-	// ResponseCode: Response code for the document. 200 indicates a normal
-	// page load. 4xx/5xx indicates an error.
-	ResponseCode int64 `json:"responseCode,omitempty"`
-
-	// Score: The Page Speed Score (0-100), which indicates how much faster
-	// a page could be. A high score indicates little room for improvement,
-	// while a lower score indicates more room for improvement.
-	Score int64 `json:"score,omitempty"`
-
-	// FormattedResults: Localized Page Speed results. Contains a
-	// ruleResults entry for each Page Speed rule instantiated and run by
-	// the server.
-	FormattedResults *ResultFormattedResults `json:"formattedResults,omitempty"`
-
-	// Version: The version of the Page Speed SDK used to generate these
-	// results.
-	Version *ResultVersion `json:"version,omitempty"`
-
-	// Kind: Kind of result.
-	Kind string `json:"kind,omitempty"`
-}
-
-type ResultVersion struct {
-	// Minor: The minor version number of the Page Speed SDK used to
-	// generate these results.
-	Minor int64 `json:"minor,omitempty"`
-
-	// Major: The major version number of the Page Speed SDK used to
-	// generate these results.
-	Major int64 `json:"major,omitempty"`
-}
-
-type ResultFormattedResultsRuleResults struct {
+	// NumberHosts: Number of unique hosts referenced by the page.
+	NumberHosts int64 `json:"numberHosts,omitempty"`
 }
 
 // method id "pagespeedonline.pagespeedapi.runpagespeed":
@@ -183,13 +183,6 @@ func (r *PagespeedapiService) Runpagespeed(url string) *PagespeedapiRunpagespeed
 	return c
 }
 
-// Strategy sets the optional parameter "strategy": The analysis
-// strategy to use
-func (c *PagespeedapiRunpagespeedCall) Strategy(strategy string) *PagespeedapiRunpagespeedCall {
-	c.opt_["strategy"] = strategy
-	return c
-}
-
 // Rule sets the optional parameter "rule": A Page Speed rule to run; if
 // none are given, all rules are run
 func (c *PagespeedapiRunpagespeedCall) Rule(rule string) *PagespeedapiRunpagespeedCall {
@@ -204,19 +197,26 @@ func (c *PagespeedapiRunpagespeedCall) Locale(locale string) *PagespeedapiRunpag
 	return c
 }
 
+// Strategy sets the optional parameter "strategy": The analysis
+// strategy to use
+func (c *PagespeedapiRunpagespeedCall) Strategy(strategy string) *PagespeedapiRunpagespeedCall {
+	c.opt_["strategy"] = strategy
+	return c
+}
+
 func (c *PagespeedapiRunpagespeedCall) Do() (*Result, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("url", fmt.Sprintf("%v", c.url))
-	if v, ok := c.opt_["strategy"]; ok {
-		params.Set("strategy", fmt.Sprintf("%v", v))
-	}
 	if v, ok := c.opt_["rule"]; ok {
 		params.Set("rule", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["locale"]; ok {
 		params.Set("locale", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["strategy"]; ok {
+		params.Set("strategy", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/pagespeedonline/v1/", "runPagespeed")
 	urls += "?" + params.Encode()

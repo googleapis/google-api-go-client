@@ -4,7 +4,7 @@
  "id": "oauth2:v1",
  "name": "oauth2",
  "version": "v1",
- "revision": "20120227",
+ "revision": "20120320",
  "description": "OAuth2 API",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/search-16.gif",
@@ -13,6 +13,9 @@
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/",
  "basePath": "/",
+ "rootUrl": "https://www.googleapis.com/",
+ "servicePath": "/",
+ "batchPath": "batch",
  "parameters": {
   "alt": {
    "type": "string",
@@ -59,6 +62,54 @@
   }
  },
  "schemas": {
+  "Oauth2IssueTokenResponse": {
+   "id": "Oauth2IssueTokenResponse",
+   "type": "object",
+   "properties": {
+    "appId": {
+     "type": "string"
+    },
+    "code": {
+     "type": "string"
+    },
+    "consent": {
+     "type": "object",
+     "properties": {
+      "oauthClient": {
+       "type": "object",
+       "properties": {
+        "developerEmail": {
+         "type": "string"
+        },
+        "iconUri": {
+         "type": "string"
+        },
+        "name": {
+         "type": "string"
+        }
+       }
+      },
+      "scopes": {
+       "type": "array",
+       "items": {
+        "type": "object",
+        "properties": {
+         "description": {
+          "type": "string"
+         },
+         "detail": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    },
+    "issueAdvice": {
+     "type": "string"
+    }
+   }
+  },
   "Tokeninfo": {
    "id": "Tokeninfo",
    "type": "object",
@@ -142,6 +193,58 @@
   }
  },
  "methods": {
+  "issueToken": {
+   "id": "oauth2.issueToken",
+   "path": "oauth2/v1/IssueToken",
+   "httpMethod": "POST",
+   "parameters": {
+    "android_device_id": {
+     "type": "string",
+     "location": "query"
+    },
+    "client_id": {
+     "type": "string",
+     "location": "query"
+    },
+    "hl": {
+     "type": "string",
+     "location": "query"
+    },
+    "scope": {
+     "type": "string",
+     "location": "query"
+    }
+   },
+   "response": {
+    "$ref": "Oauth2IssueTokenResponse"
+   }
+  },
+  "issueTokenGet": {
+   "id": "oauth2.issueTokenGet",
+   "path": "oauth2/v1/IssueToken",
+   "httpMethod": "GET",
+   "parameters": {
+    "android_device_id": {
+     "type": "string",
+     "location": "query"
+    },
+    "client_id": {
+     "type": "string",
+     "location": "query"
+    },
+    "hl": {
+     "type": "string",
+     "location": "query"
+    },
+    "scope": {
+     "type": "string",
+     "location": "query"
+    }
+   },
+   "response": {
+    "$ref": "Oauth2IssueTokenResponse"
+   }
+  },
   "tokeninfo": {
    "id": "oauth2.tokeninfo",
    "path": "oauth2/v1/tokeninfo",

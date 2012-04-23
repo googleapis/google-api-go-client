@@ -36,29 +36,31 @@ const apiName = "adexchangebuyer"
 const apiVersion = "v1"
 const basePath = "https://www.googleapis.com/adexchangebuyer/v1/"
 
+// OAuth2 scopes used by this API.
+const (
+	// Manage your Ad Exchange buyer account configuration
+	AdexchangeBuyerScope = "https://www.googleapis.com/auth/adexchange.buyer"
+)
+
 func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
-	s.Accounts = &AccountsService{s: s}
 	s.DirectDeals = &DirectDealsService{s: s}
 	s.Creatives = &CreativesService{s: s}
+	s.Accounts = &AccountsService{s: s}
 	return s, nil
 }
 
 type Service struct {
 	client *http.Client
 
-	Accounts *AccountsService
-
 	DirectDeals *DirectDealsService
 
 	Creatives *CreativesService
-}
 
-type AccountsService struct {
-	s *Service
+	Accounts *AccountsService
 }
 
 type DirectDealsService struct {
@@ -69,28 +71,8 @@ type CreativesService struct {
 	s *Service
 }
 
-type Account struct {
-	// MaximumTotalQps: The sum of all bidderLocation.maximumQps values
-	// cannot exceed this. Please contact your technical account manager if
-	// you need to change this.
-	MaximumTotalQps int64 `json:"maximumTotalQps,omitempty"`
-
-	// BidderLocation: Your bidder locations that have distinct URLs.
-	BidderLocation []*AccountBidderLocation `json:"bidderLocation,omitempty"`
-
-	// CookieMatchingNid: The nid parameter value used in cookie match
-	// requests. Please contact your technical account manager if you need
-	// to change this.
-	CookieMatchingNid string `json:"cookieMatchingNid,omitempty"`
-
-	// Kind: Resource type.
-	Kind string `json:"kind,omitempty"`
-
-	// Id: Account id.
-	Id int64 `json:"id,omitempty"`
-
-	// CookieMatchingUrl: The base URL used in cookie match requests.
-	CookieMatchingUrl string `json:"cookieMatchingUrl,omitempty"`
+type AccountsService struct {
+	s *Service
 }
 
 type DirectDealsList struct {
@@ -221,252 +203,28 @@ type Creative struct {
 	VideoURL string `json:"videoURL,omitempty"`
 }
 
-// method id "adexchangebuyer.accounts.patch":
+type Account struct {
+	// CookieMatchingUrl: The base URL used in cookie match requests.
+	CookieMatchingUrl string `json:"cookieMatchingUrl,omitempty"`
 
-type AccountsPatchCall struct {
-	s       *Service
-	id      int64
-	account *Account
-	opt_    map[string]interface{}
-}
+	// MaximumTotalQps: The sum of all bidderLocation.maximumQps values
+	// cannot exceed this. Please contact your technical account manager if
+	// you need to change this.
+	MaximumTotalQps int64 `json:"maximumTotalQps,omitempty"`
 
-// Patch: Updates an existing account. This method supports patch
-// semantics.
-func (r *AccountsService) Patch(id int64, account *Account) *AccountsPatchCall {
-	c := &AccountsPatchCall{s: r.s, opt_: make(map[string]interface{})}
-	c.id = id
-	c.account = account
-	return c
-}
+	// BidderLocation: Your bidder locations that have distinct URLs.
+	BidderLocation []*AccountBidderLocation `json:"bidderLocation,omitempty"`
 
-func (c *AccountsPatchCall) Do() (*Account, error) {
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.account)
-	if err != nil {
-		return nil, err
-	}
-	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1/", "accounts/{id}")
-	urls = strings.Replace(urls, "{id}", strconv.FormatInt(c.id, 10), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("PATCH", urls, body)
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(Account)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Updates an existing account. This method supports patch semantics.",
-	//   "httpMethod": "PATCH",
-	//   "id": "adexchangebuyer.accounts.patch",
-	//   "parameterOrder": [
-	//     "id"
-	//   ],
-	//   "parameters": {
-	//     "id": {
-	//       "description": "The account id",
-	//       "format": "int32",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "integer"
-	//     }
-	//   },
-	//   "path": "accounts/{id}",
-	//   "request": {
-	//     "$ref": "Account"
-	//   },
-	//   "response": {
-	//     "$ref": "Account"
-	//   }
-	// }
+	// CookieMatchingNid: The nid parameter value used in cookie match
+	// requests. Please contact your technical account manager if you need
+	// to change this.
+	CookieMatchingNid string `json:"cookieMatchingNid,omitempty"`
 
-}
+	// Kind: Resource type.
+	Kind string `json:"kind,omitempty"`
 
-// method id "adexchangebuyer.accounts.list":
-
-type AccountsListCall struct {
-	s    *Service
-	opt_ map[string]interface{}
-}
-
-// List: Retrieves the authenticated user's list of accounts.
-func (r *AccountsService) List() *AccountsListCall {
-	c := &AccountsListCall{s: r.s, opt_: make(map[string]interface{})}
-	return c
-}
-
-func (c *AccountsListCall) Do() (*AccountsList, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1/", "accounts")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(AccountsList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Retrieves the authenticated user's list of accounts.",
-	//   "httpMethod": "GET",
-	//   "id": "adexchangebuyer.accounts.list",
-	//   "path": "accounts",
-	//   "response": {
-	//     "$ref": "AccountsList"
-	//   }
-	// }
-
-}
-
-// method id "adexchangebuyer.accounts.update":
-
-type AccountsUpdateCall struct {
-	s       *Service
-	id      int64
-	account *Account
-	opt_    map[string]interface{}
-}
-
-// Update: Updates an existing account.
-func (r *AccountsService) Update(id int64, account *Account) *AccountsUpdateCall {
-	c := &AccountsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
-	c.id = id
-	c.account = account
-	return c
-}
-
-func (c *AccountsUpdateCall) Do() (*Account, error) {
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.account)
-	if err != nil {
-		return nil, err
-	}
-	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1/", "accounts/{id}")
-	urls = strings.Replace(urls, "{id}", strconv.FormatInt(c.id, 10), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("PUT", urls, body)
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(Account)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Updates an existing account.",
-	//   "httpMethod": "PUT",
-	//   "id": "adexchangebuyer.accounts.update",
-	//   "parameterOrder": [
-	//     "id"
-	//   ],
-	//   "parameters": {
-	//     "id": {
-	//       "description": "The account id",
-	//       "format": "int32",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "integer"
-	//     }
-	//   },
-	//   "path": "accounts/{id}",
-	//   "request": {
-	//     "$ref": "Account"
-	//   },
-	//   "response": {
-	//     "$ref": "Account"
-	//   }
-	// }
-
-}
-
-// method id "adexchangebuyer.accounts.get":
-
-type AccountsGetCall struct {
-	s    *Service
-	id   int64
-	opt_ map[string]interface{}
-}
-
-// Get: Gets one account by ID.
-func (r *AccountsService) Get(id int64) *AccountsGetCall {
-	c := &AccountsGetCall{s: r.s, opt_: make(map[string]interface{})}
-	c.id = id
-	return c
-}
-
-func (c *AccountsGetCall) Do() (*Account, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1/", "accounts/{id}")
-	urls = strings.Replace(urls, "{id}", strconv.FormatInt(c.id, 10), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(Account)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Gets one account by ID.",
-	//   "httpMethod": "GET",
-	//   "id": "adexchangebuyer.accounts.get",
-	//   "parameterOrder": [
-	//     "id"
-	//   ],
-	//   "parameters": {
-	//     "id": {
-	//       "description": "The account id",
-	//       "format": "int32",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "integer"
-	//     }
-	//   },
-	//   "path": "accounts/{id}",
-	//   "response": {
-	//     "$ref": "Account"
-	//   }
-	// }
-
+	// Id: Account id.
+	Id int64 `json:"id,omitempty"`
 }
 
 // method id "adexchangebuyer.directDeals.list":
@@ -509,7 +267,10 @@ func (c *DirectDealsListCall) Do() (*DirectDealsList, error) {
 	//   "path": "directdeals",
 	//   "response": {
 	//     "$ref": "DirectDealsList"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
 	// }
 
 }
@@ -569,7 +330,10 @@ func (c *DirectDealsGetCall) Do() (*DirectDeal, error) {
 	//   "path": "directdeals/{id}",
 	//   "response": {
 	//     "$ref": "DirectDeal"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
 	// }
 
 }
@@ -625,7 +389,10 @@ func (c *CreativesInsertCall) Do() (*Creative, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "Creative"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
 	// }
 
 }
@@ -706,7 +473,270 @@ func (c *CreativesGetCall) Do() (*Creative, error) {
 	//   "path": "creatives/{accountId}/{buyerCreativeId}",
 	//   "response": {
 	//     "$ref": "Creative"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer.accounts.get":
+
+type AccountsGetCall struct {
+	s    *Service
+	id   int64
+	opt_ map[string]interface{}
+}
+
+// Get: Gets one account by ID.
+func (r *AccountsService) Get(id int64) *AccountsGetCall {
+	c := &AccountsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	return c
+}
+
+func (c *AccountsGetCall) Do() (*Account, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1/", "accounts/{id}")
+	urls = strings.Replace(urls, "{id}", strconv.FormatInt(c.id, 10), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Account)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets one account by ID.",
+	//   "httpMethod": "GET",
+	//   "id": "adexchangebuyer.accounts.get",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The account id",
+	//       "format": "int32",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "integer"
+	//     }
+	//   },
+	//   "path": "accounts/{id}",
+	//   "response": {
+	//     "$ref": "Account"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer.accounts.patch":
+
+type AccountsPatchCall struct {
+	s       *Service
+	id      int64
+	account *Account
+	opt_    map[string]interface{}
+}
+
+// Patch: Updates an existing account. This method supports patch
+// semantics.
+func (r *AccountsService) Patch(id int64, account *Account) *AccountsPatchCall {
+	c := &AccountsPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	c.account = account
+	return c
+}
+
+func (c *AccountsPatchCall) Do() (*Account, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.account)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1/", "accounts/{id}")
+	urls = strings.Replace(urls, "{id}", strconv.FormatInt(c.id, 10), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Account)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an existing account. This method supports patch semantics.",
+	//   "httpMethod": "PATCH",
+	//   "id": "adexchangebuyer.accounts.patch",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The account id",
+	//       "format": "int32",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "integer"
+	//     }
+	//   },
+	//   "path": "accounts/{id}",
+	//   "request": {
+	//     "$ref": "Account"
+	//   },
+	//   "response": {
+	//     "$ref": "Account"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer.accounts.list":
+
+type AccountsListCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// List: Retrieves the authenticated user's list of accounts.
+func (r *AccountsService) List() *AccountsListCall {
+	c := &AccountsListCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+func (c *AccountsListCall) Do() (*AccountsList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1/", "accounts")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(AccountsList)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the authenticated user's list of accounts.",
+	//   "httpMethod": "GET",
+	//   "id": "adexchangebuyer.accounts.list",
+	//   "path": "accounts",
+	//   "response": {
+	//     "$ref": "AccountsList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer.accounts.update":
+
+type AccountsUpdateCall struct {
+	s       *Service
+	id      int64
+	account *Account
+	opt_    map[string]interface{}
+}
+
+// Update: Updates an existing account.
+func (r *AccountsService) Update(id int64, account *Account) *AccountsUpdateCall {
+	c := &AccountsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	c.account = account
+	return c
+}
+
+func (c *AccountsUpdateCall) Do() (*Account, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.account)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1/", "accounts/{id}")
+	urls = strings.Replace(urls, "{id}", strconv.FormatInt(c.id, 10), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Account)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an existing account.",
+	//   "httpMethod": "PUT",
+	//   "id": "adexchangebuyer.accounts.update",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The account id",
+	//       "format": "int32",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "integer"
+	//     }
+	//   },
+	//   "path": "accounts/{id}",
+	//   "request": {
+	//     "$ref": "Account"
+	//   },
+	//   "response": {
+	//     "$ref": "Account"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
 	// }
 
 }

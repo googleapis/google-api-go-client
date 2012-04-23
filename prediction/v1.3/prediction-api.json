@@ -15,6 +15,9 @@
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/prediction/v1.3/",
  "basePath": "/prediction/v1.3/",
+ "rootUrl": "https://www.googleapis.com/",
+ "servicePath": "prediction/v1.3/",
+ "batchPath": "batch",
  "parameters": {
   "alt": {
    "type": "string",
@@ -63,6 +66,9 @@
  "auth": {
   "oauth2": {
    "scopes": {
+    "https://www.googleapis.com/auth/devstorage.read_only": {
+     "description": "View your data in Google Cloud Storage"
+    },
     "https://www.googleapis.com/auth/prediction": {
      "description": "Manage your data in the Google Prediction API"
     }
@@ -108,6 +114,7 @@
     },
     "outputMulti": {
      "type": "array",
+     "description": "A list of classes with their estimated probabilities [Categorical models only].",
      "items": {
       "type": "object",
       "properties": {
@@ -332,6 +339,7 @@
       "$ref": "Training"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/devstorage.read_only",
       "https://www.googleapis.com/auth/prediction"
      ]
     },

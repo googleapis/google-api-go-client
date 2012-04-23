@@ -40,6 +40,9 @@ const basePath = "https://www.googleapis.com/prediction/v1.5/"
 const (
 	// Manage your data in the Google Prediction API
 	PredictionScope = "https://www.googleapis.com/auth/prediction"
+
+	// View your data in Google Cloud Storage
+	DevstorageRead_onlyScope = "https://www.googleapis.com/auth/devstorage.read_only"
 )
 
 func New(client *http.Client) (*Service, error) {
@@ -87,11 +90,11 @@ type AnalyzeModelDescriptionConfusionMatrixRowTotals struct {
 }
 
 type Update struct {
-	// Label: The true class label of this instance
-	Label string `json:"label,omitempty"`
-
 	// CsvInstance: The input features for this instance
 	CsvInstance []interface{} `json:"csvInstance,omitempty"`
+
+	// Label: The true class label of this instance
+	Label string `json:"label,omitempty"`
 }
 
 type AnalyzeDataDescriptionFeatures struct {
@@ -132,14 +135,6 @@ type AnalyzeDataDescriptionFeaturesNumeric struct {
 }
 
 type TrainingModelInfo struct {
-	// NumberInstances: Number of valid data instances used in the trained
-	// model.
-	NumberInstances int64 `json:"numberInstances,omitempty,string"`
-
-	// MeanSquaredError: An estimated mean squared error. The can be used to
-	// measure the quality of the predicted model [Regression models only].
-	MeanSquaredError float64 `json:"meanSquaredError,omitempty"`
-
 	// ModelType: Type of predictive model (CLASSIFICATION or REGRESSION)
 	ModelType string `json:"modelType,omitempty"`
 
@@ -159,6 +154,14 @@ type TrainingModelInfo struct {
 	// input data is similar to your training data [Categorical models
 	// only].
 	ClassificationAccuracy float64 `json:"classificationAccuracy,omitempty"`
+
+	// NumberInstances: Number of valid data instances used in the trained
+	// model.
+	NumberInstances int64 `json:"numberInstances,omitempty,string"`
+
+	// MeanSquaredError: An estimated mean squared error. The can be used to
+	// measure the quality of the predicted model [Regression models only].
+	MeanSquaredError float64 `json:"meanSquaredError,omitempty"`
 }
 
 type AnalyzeDataDescription struct {
@@ -201,9 +204,6 @@ type InputInput struct {
 }
 
 type AnalyzeModelDescription struct {
-	// Modelinfo: Basic information about the model.
-	Modelinfo *Training `json:"modelinfo,omitempty"`
-
 	// ConfusionMatrixRowTotals: A list of the confusion matrix row totals
 	ConfusionMatrixRowTotals *AnalyzeModelDescriptionConfusionMatrixRowTotals `json:"confusionMatrixRowTotals,omitempty"`
 
@@ -215,18 +215,12 @@ type AnalyzeModelDescription struct {
 	// label. Will not output if more then 100 classes [Categorical models
 	// only].
 	ConfusionMatrix *AnalyzeModelDescriptionConfusionMatrix `json:"confusionMatrix,omitempty"`
+
+	// Modelinfo: Basic information about the model.
+	Modelinfo *Training `json:"modelinfo,omitempty"`
 }
 
 type Output struct {
-	// OutputValue: The estimated regression value [Regression models only].
-	OutputValue float64 `json:"outputValue,omitempty"`
-
-	// OutputLabel: The most likely class label [Categorical models only].
-	OutputLabel string `json:"outputLabel,omitempty"`
-
-	// Kind: What kind of resource this is.
-	Kind string `json:"kind,omitempty"`
-
 	// Id: The unique name for the predictive model.
 	Id string `json:"id,omitempty"`
 
@@ -236,6 +230,15 @@ type Output struct {
 
 	// SelfLink: A URL to re-request this resource.
 	SelfLink string `json:"selfLink,omitempty"`
+
+	// OutputValue: The estimated regression value [Regression models only].
+	OutputValue float64 `json:"outputValue,omitempty"`
+
+	// OutputLabel: The most likely class label [Categorical models only].
+	OutputLabel string `json:"outputLabel,omitempty"`
+
+	// Kind: What kind of resource this is.
+	Kind string `json:"kind,omitempty"`
 }
 
 type AnalyzeDataDescriptionFeaturesCategoricalValues struct {
@@ -277,23 +280,6 @@ type OutputOutputMulti struct {
 }
 
 type Training struct {
-	// Utility: A class weighting function, which allows the importance
-	// weights for class labels to be specified [Categorical models only].
-	Utility []*TrainingUtility `json:"utility,omitempty"`
-
-	// SelfLink: A URL to re-request this resource.
-	SelfLink string `json:"selfLink,omitempty"`
-
-	// StorageDataLocation: Google storage location of the training data
-	// file.
-	StorageDataLocation string `json:"storageDataLocation,omitempty"`
-
-	// ModelInfo: Model metadata.
-	ModelInfo *TrainingModelInfo `json:"modelInfo,omitempty"`
-
-	// Kind: What kind of resource this is.
-	Kind string `json:"kind,omitempty"`
-
 	// TrainingStatus: The current status of the training job. This can be
 	// one of following: RUNNING; DONE; ERROR; ERROR: TRAINING JOB NOT FOUND
 	TrainingStatus string `json:"trainingStatus,omitempty"`
@@ -314,6 +300,23 @@ type Training struct {
 	// StoragePMMLLocation: Google storage location of the preprocessing
 	// pmml file.
 	StoragePMMLLocation string `json:"storagePMMLLocation,omitempty"`
+
+	// Utility: A class weighting function, which allows the importance
+	// weights for class labels to be specified [Categorical models only].
+	Utility []*TrainingUtility `json:"utility,omitempty"`
+
+	// SelfLink: A URL to re-request this resource.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// StorageDataLocation: Google storage location of the training data
+	// file.
+	StorageDataLocation string `json:"storageDataLocation,omitempty"`
+
+	// ModelInfo: Model metadata.
+	ModelInfo *TrainingModelInfo `json:"modelInfo,omitempty"`
+
+	// Kind: What kind of resource this is.
+	Kind string `json:"kind,omitempty"`
 }
 
 type AnalyzeErrors struct {
@@ -418,12 +421,6 @@ func (r *TrainedmodelsService) List() *TrainedmodelsListCall {
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Pagination token
-func (c *TrainedmodelsListCall) PageToken(pageToken string) *TrainedmodelsListCall {
-	c.opt_["pageToken"] = pageToken
-	return c
-}
-
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to return
 func (c *TrainedmodelsListCall) MaxResults(maxResults int64) *TrainedmodelsListCall {
@@ -431,15 +428,21 @@ func (c *TrainedmodelsListCall) MaxResults(maxResults int64) *TrainedmodelsListC
 	return c
 }
 
+// PageToken sets the optional parameter "pageToken": Pagination token
+func (c *TrainedmodelsListCall) PageToken(pageToken string) *TrainedmodelsListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
 func (c *TrainedmodelsListCall) Do() (*List, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/prediction/v1.5/", "trainedmodels/list")
 	urls += "?" + params.Encode()
@@ -612,6 +615,7 @@ func (c *TrainedmodelsInsertCall) Do() (*Training, error) {
 	//     "$ref": "Training"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/devstorage.read_only",
 	//     "https://www.googleapis.com/auth/prediction"
 	//   ]
 	// }

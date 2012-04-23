@@ -4,7 +4,7 @@
  "id": "bigquery:v2",
  "name": "bigquery",
  "version": "v2",
- "revision": "20120305",
+ "revision": "20120320",
  "title": "BigQuery API",
  "description": "A data platform for customers to create, manage, share and query data.",
  "icons": {
@@ -18,6 +18,9 @@
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/bigquery/v2/",
  "basePath": "/bigquery/v2/",
+ "rootUrl": "https://www.googleapis.com/",
+ "servicePath": "bigquery/v2/",
+ "batchPath": "batch",
  "parameters": {
   "alt": {
    "type": "string",
@@ -200,11 +203,21 @@
    "properties": {
     "datasetId": {
      "type": "string",
-     "description": "[Required] A unique ID for this dataset, without the project name."
+     "description": "[Required] A unique ID for this dataset, without the project name.",
+     "annotations": {
+      "required": [
+       "bigquery.datasets.update"
+      ]
+     }
     },
     "projectId": {
      "type": "string",
-     "description": "[Optional] The ID of the container project."
+     "description": "[Optional] The ID of the container project.",
+     "annotations": {
+      "required": [
+       "bigquery.datasets.update"
+      ]
+     }
     }
    }
   },
@@ -545,11 +558,21 @@
    "properties": {
     "jobId": {
      "type": "string",
-     "description": "[Required] ID of the job."
+     "description": "[Required] ID of the job.",
+     "annotations": {
+      "required": [
+       "bigquery.jobs.getQueryResults"
+      ]
+     }
     },
     "projectId": {
      "type": "string",
-     "description": "[Required] Project ID being billed for the job."
+     "description": "[Required] Project ID being billed for the job.",
+     "annotations": {
+      "required": [
+       "bigquery.jobs.getQueryResults"
+      ]
+     }
     }
    }
   },
@@ -675,7 +698,12 @@
     },
     "query": {
      "type": "string",
-     "description": "[Required] A query string, following the BigQuery query syntax of the query to execute. Table names should be qualified by dataset name in the format projectId:datasetId.tableId unless you specify the defaultDataset value. If the table is in the same project as the job, you can omit the project ID. Example: SELECT f1 FROM myProjectId:myDatasetId.myTableId."
+     "description": "[Required] A query string, following the BigQuery query syntax of the query to execute. Table names should be qualified by dataset name in the format projectId:datasetId.tableId unless you specify the defaultDataset value. If the table is in the same project as the job, you can omit the project ID. Example: SELECT f1 FROM myProjectId:myDatasetId.myTableId.",
+     "annotations": {
+      "required": [
+       "bigquery.jobs.query"
+      ]
+     }
     },
     "timeoutMs": {
      "type": "integer",
@@ -886,15 +914,30 @@
    "properties": {
     "datasetId": {
      "type": "string",
-     "description": "[Required] ID of the dataset containing the table."
+     "description": "[Required] ID of the dataset containing the table.",
+     "annotations": {
+      "required": [
+       "bigquery.tables.update"
+      ]
+     }
     },
     "projectId": {
      "type": "string",
-     "description": "[Required] ID of the project billed for storage of the table."
+     "description": "[Required] ID of the project billed for storage of the table.",
+     "annotations": {
+      "required": [
+       "bigquery.tables.update"
+      ]
+     }
     },
     "tableId": {
      "type": "string",
-     "description": "[Required] ID of the table."
+     "description": "[Required] ID of the table.",
+     "annotations": {
+      "required": [
+       "bigquery.tables.update"
+      ]
+     }
     }
    }
   },
@@ -1126,33 +1169,6 @@
   },
   "jobs": {
    "methods": {
-    "delete": {
-     "id": "bigquery.jobs.delete",
-     "path": "projects/{projectId}/jobs/{jobId}",
-     "httpMethod": "DELETE",
-     "description": "Deletes a completed job specified by job ID.",
-     "parameters": {
-      "jobId": {
-       "type": "string",
-       "description": "Job ID of the job to delete",
-       "required": true,
-       "location": "path"
-      },
-      "projectId": {
-       "type": "string",
-       "description": "Project ID of the job to delete",
-       "required": true,
-       "location": "path"
-      }
-     },
-     "parameterOrder": [
-      "projectId",
-      "jobId"
-     ],
-     "scopes": [
-      "https://www.googleapis.com/auth/bigquery"
-     ]
-    },
     "get": {
      "id": "bigquery.jobs.get",
      "path": "projects/{projectId}/jobs/{jobId}",

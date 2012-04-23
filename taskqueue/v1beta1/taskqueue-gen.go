@@ -80,11 +80,6 @@ type Tasks2 struct {
 }
 
 type TaskQueueAcl struct {
-	// AdminEmails: Email addresses of users who are "admins" of the
-	// TaskQueue. This means they can control the queue, eg set ACLs for the
-	// queue.
-	AdminEmails []string `json:"adminEmails,omitempty"`
-
 	// ConsumerEmails: Email addresses of users who can "consume" tasks from
 	// the TaskQueue. This means they can Dequeue and Delete tasks from the
 	// queue.
@@ -93,24 +88,23 @@ type TaskQueueAcl struct {
 	// ProducerEmails: Email addresses of users who can "produce" tasks into
 	// the TaskQueue. This means they can Insert tasks into the queue.
 	ProducerEmails []string `json:"producerEmails,omitempty"`
+
+	// AdminEmails: Email addresses of users who are "admins" of the
+	// TaskQueue. This means they can control the queue, eg set ACLs for the
+	// queue.
+	AdminEmails []string `json:"adminEmails,omitempty"`
 }
 
 type Tasks struct {
-	// Kind: The kind of object returned, a list of tasks.
-	Kind string `json:"kind,omitempty"`
-
 	// Items: The actual list of tasks returned as a result of the lease
 	// operation.
 	Items []*Task `json:"items,omitempty"`
+
+	// Kind: The kind of object returned, a list of tasks.
+	Kind string `json:"kind,omitempty"`
 }
 
 type TaskQueue struct {
-	// Kind: The kind of REST object returned, in this case taskqueue.
-	Kind string `json:"kind,omitempty"`
-
-	// Id: Name of the taskqueue.
-	Id string `json:"id,omitempty"`
-
 	// MaxLeases: The number of times we should lease out tasks before
 	// giving up on them. If unset we lease them out forever until a worker
 	// deletes the task.
@@ -121,12 +115,15 @@ type TaskQueue struct {
 
 	// Acl: ACLs that are applicable to this TaskQueue object.
 	Acl *TaskQueueAcl `json:"acl,omitempty"`
+
+	// Kind: The kind of REST object returned, in this case taskqueue.
+	Kind string `json:"kind,omitempty"`
+
+	// Id: Name of the taskqueue.
+	Id string `json:"id,omitempty"`
 }
 
 type TaskQueueStats struct {
-	// TotalTasks: Number of tasks in the queue.
-	TotalTasks int64 `json:"totalTasks,omitempty"`
-
 	// OldestTask: The timestamp (in seconds since the epoch) of the oldest
 	// unfinished task.
 	OldestTask int64 `json:"oldestTask,omitempty,string"`
@@ -136,6 +133,9 @@ type TaskQueueStats struct {
 
 	// LeasedLastHour: Number of tasks leased in the last hour.
 	LeasedLastHour int64 `json:"leasedLastHour,omitempty,string"`
+
+	// TotalTasks: Number of tasks in the queue.
+	TotalTasks int64 `json:"totalTasks,omitempty"`
 }
 
 type Task struct {
@@ -160,162 +160,6 @@ type Task struct {
 	// lease will expire. This value is 0 if the task isnt currently leased
 	// out to a worker.
 	LeaseTimestamp int64 `json:"leaseTimestamp,omitempty,string"`
-}
-
-// method id "taskqueue.tasks.list":
-
-type TasksListCall struct {
-	s         *Service
-	project   string
-	taskqueue string
-	opt_      map[string]interface{}
-}
-
-// List: List Tasks in a TaskQueue
-func (r *TasksService) List(project string, taskqueue string) *TasksListCall {
-	c := &TasksListCall{s: r.s, opt_: make(map[string]interface{})}
-	c.project = project
-	c.taskqueue = taskqueue
-	return c
-}
-
-func (c *TasksListCall) Do() (*Tasks2, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/taskqueue/v1beta1/projects/", "{project}/taskqueues/{taskqueue}/tasks")
-	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
-	urls = strings.Replace(urls, "{taskqueue}", cleanPathString(c.taskqueue), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(Tasks2)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "List Tasks in a TaskQueue",
-	//   "httpMethod": "GET",
-	//   "id": "taskqueue.tasks.list",
-	//   "parameterOrder": [
-	//     "project",
-	//     "taskqueue"
-	//   ],
-	//   "parameters": {
-	//     "project": {
-	//       "description": "The project under which the queue lies.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "taskqueue": {
-	//       "description": "The id of the taskqueue to list tasks from.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "{project}/taskqueues/{taskqueue}/tasks",
-	//   "response": {
-	//     "$ref": "Tasks2"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/taskqueue",
-	//     "https://www.googleapis.com/auth/taskqueue.consumer"
-	//   ]
-	// }
-
-}
-
-// method id "taskqueue.tasks.get":
-
-type TasksGetCall struct {
-	s         *Service
-	project   string
-	taskqueue string
-	task      string
-	opt_      map[string]interface{}
-}
-
-// Get: Get a particular task from a TaskQueue.
-func (r *TasksService) Get(project string, taskqueue string, task string) *TasksGetCall {
-	c := &TasksGetCall{s: r.s, opt_: make(map[string]interface{})}
-	c.project = project
-	c.taskqueue = taskqueue
-	c.task = task
-	return c
-}
-
-func (c *TasksGetCall) Do() (*Task, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/taskqueue/v1beta1/projects/", "{project}/taskqueues/{taskqueue}/tasks/{task}")
-	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
-	urls = strings.Replace(urls, "{taskqueue}", cleanPathString(c.taskqueue), 1)
-	urls = strings.Replace(urls, "{task}", cleanPathString(c.task), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(Task)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Get a particular task from a TaskQueue.",
-	//   "httpMethod": "GET",
-	//   "id": "taskqueue.tasks.get",
-	//   "parameterOrder": [
-	//     "project",
-	//     "taskqueue",
-	//     "task"
-	//   ],
-	//   "parameters": {
-	//     "project": {
-	//       "description": "The project under which the queue lies.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "task": {
-	//       "description": "The task to get properties of.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "taskqueue": {
-	//       "description": "The taskqueue in which the task belongs.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "{project}/taskqueues/{taskqueue}/tasks/{task}",
-	//   "response": {
-	//     "$ref": "Task"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/taskqueue",
-	//     "https://www.googleapis.com/auth/taskqueue.consumer"
-	//   ]
-	// }
-
 }
 
 // method id "taskqueue.tasks.delete":
@@ -480,6 +324,162 @@ func (c *TasksLeaseCall) Do() (*Tasks, error) {
 	//   "path": "{project}/taskqueues/{taskqueue}/tasks/lease",
 	//   "response": {
 	//     "$ref": "Tasks"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/taskqueue",
+	//     "https://www.googleapis.com/auth/taskqueue.consumer"
+	//   ]
+	// }
+
+}
+
+// method id "taskqueue.tasks.list":
+
+type TasksListCall struct {
+	s         *Service
+	project   string
+	taskqueue string
+	opt_      map[string]interface{}
+}
+
+// List: List Tasks in a TaskQueue
+func (r *TasksService) List(project string, taskqueue string) *TasksListCall {
+	c := &TasksListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.taskqueue = taskqueue
+	return c
+}
+
+func (c *TasksListCall) Do() (*Tasks2, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/taskqueue/v1beta1/projects/", "{project}/taskqueues/{taskqueue}/tasks")
+	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
+	urls = strings.Replace(urls, "{taskqueue}", cleanPathString(c.taskqueue), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Tasks2)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List Tasks in a TaskQueue",
+	//   "httpMethod": "GET",
+	//   "id": "taskqueue.tasks.list",
+	//   "parameterOrder": [
+	//     "project",
+	//     "taskqueue"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "The project under which the queue lies.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "taskqueue": {
+	//       "description": "The id of the taskqueue to list tasks from.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/taskqueues/{taskqueue}/tasks",
+	//   "response": {
+	//     "$ref": "Tasks2"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/taskqueue",
+	//     "https://www.googleapis.com/auth/taskqueue.consumer"
+	//   ]
+	// }
+
+}
+
+// method id "taskqueue.tasks.get":
+
+type TasksGetCall struct {
+	s         *Service
+	project   string
+	taskqueue string
+	task      string
+	opt_      map[string]interface{}
+}
+
+// Get: Get a particular task from a TaskQueue.
+func (r *TasksService) Get(project string, taskqueue string, task string) *TasksGetCall {
+	c := &TasksGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.taskqueue = taskqueue
+	c.task = task
+	return c
+}
+
+func (c *TasksGetCall) Do() (*Task, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/taskqueue/v1beta1/projects/", "{project}/taskqueues/{taskqueue}/tasks/{task}")
+	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
+	urls = strings.Replace(urls, "{taskqueue}", cleanPathString(c.taskqueue), 1)
+	urls = strings.Replace(urls, "{task}", cleanPathString(c.task), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Task)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get a particular task from a TaskQueue.",
+	//   "httpMethod": "GET",
+	//   "id": "taskqueue.tasks.get",
+	//   "parameterOrder": [
+	//     "project",
+	//     "taskqueue",
+	//     "task"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "The project under which the queue lies.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "task": {
+	//       "description": "The task to get properties of.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "taskqueue": {
+	//       "description": "The taskqueue in which the task belongs.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/taskqueues/{taskqueue}/tasks/{task}",
+	//   "response": {
+	//     "$ref": "Task"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/taskqueue",

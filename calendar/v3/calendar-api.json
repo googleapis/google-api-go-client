@@ -4,7 +4,7 @@
  "id": "calendar:v3",
  "name": "calendar",
  "version": "v3",
- "revision": "20120227",
+ "revision": "20120416",
  "title": "Calendar API",
  "description": "Lets you manipulate events and other calendar data.",
  "icons": {
@@ -15,6 +15,9 @@
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/calendar/v3/",
  "basePath": "/calendar/v3/",
+ "rootUrl": "https://www.googleapis.com/",
+ "servicePath": "calendar/v3/",
+ "batchPath": "batch",
  "parameters": {
   "alt": {
    "type": "string",
@@ -109,7 +112,12 @@
     },
     "id": {
      "type": "string",
-     "description": "Identifier of the ACL rule."
+     "description": "Identifier of the ACL rule.",
+     "annotations": {
+      "required": [
+       "calendar.acl.update"
+      ]
+     }
     },
     "kind": {
      "type": "string",
@@ -118,7 +126,12 @@
     },
     "role": {
      "type": "string",
-     "description": "The role assigned to the scope. Possible values are:  \n- \"none\" - Provides no access. \n- \"freeBusyReader\" - Provides read access to free/busy information. \n- \"reader\" - Provides read access to the calendar. Private events will appear to users with reader access, but event details will be hidden. \n- \"writer\" - Provides read and write access to the calendar. Private events will appear to users with writer access, and event details will be visible. \n- \"owner\" - Provides ownership of the calendar. This role has all of the permissions of the writer role with the additional ability to see and manipulate ACLs."
+     "description": "The role assigned to the scope. Possible values are:  \n- \"none\" - Provides no access. \n- \"freeBusyReader\" - Provides read access to free/busy information. \n- \"reader\" - Provides read access to the calendar. Private events will appear to users with reader access, but event details will be hidden. \n- \"writer\" - Provides read and write access to the calendar. Private events will appear to users with writer access, and event details will be visible. \n- \"owner\" - Provides ownership of the calendar. This role has all of the permissions of the writer role with the additional ability to see and manipulate ACLs.",
+     "annotations": {
+      "required": [
+       "calendar.acl.insert"
+      ]
+     }
     },
     "scope": {
      "type": "object",
@@ -126,12 +139,22 @@
      "properties": {
       "type": {
        "type": "string",
-       "description": "The type of the scope. Possible values are:  \n- \"default\" - The public scope. This is the default value. \n- \"user\" - Limits the scope to a single user. \n- \"group\" - Limits the scope to a group. \n- \"domain\" - Limits the scope to a domain.  Note: The permissions granted to the \"default\", or public, scope apply to any user, authenticated or not."
+       "description": "The type of the scope. Possible values are:  \n- \"default\" - The public scope. This is the default value. \n- \"user\" - Limits the scope to a single user. \n- \"group\" - Limits the scope to a group. \n- \"domain\" - Limits the scope to a domain.  Note: The permissions granted to the \"default\", or public, scope apply to any user, authenticated or not.",
+       "annotations": {
+        "required": [
+         "calendar.acl.insert"
+        ]
+       }
       },
       "value": {
        "type": "string",
        "description": "The email address of a user or group, or the name of a domain, depending on the scope type. Omitted for type \"default\"."
       }
+     },
+     "annotations": {
+      "required": [
+       "calendar.acl.insert"
+      ]
      }
     }
    }
@@ -163,7 +186,12 @@
     },
     "summary": {
      "type": "string",
-     "description": "Title of the calendar."
+     "description": "Title of the calendar.",
+     "annotations": {
+      "required": [
+       "calendar.calendars.insert"
+      ]
+     }
     },
     "timeZone": {
      "type": "string",
@@ -230,7 +258,13 @@
     },
     "id": {
      "type": "string",
-     "description": "Identifier of the calendar."
+     "description": "Identifier of the calendar.",
+     "annotations": {
+      "required": [
+       "calendar.calendarList.insert",
+       "calendar.calendarList.update"
+      ]
+     }
     },
     "kind": {
      "type": "string",
@@ -367,7 +401,14 @@
     },
     "end": {
      "$ref": "EventDateTime",
-     "description": "The (exclusive) end time of the event. For a recurring event, this is the end time of the first instance."
+     "description": "The (exclusive) end time of the event. For a recurring event, this is the end time of the first instance.",
+     "annotations": {
+      "required": [
+       "calendar.events.import",
+       "calendar.events.insert",
+       "calendar.events.update"
+      ]
+     }
     },
     "etag": {
      "type": "string",
@@ -457,11 +498,21 @@
     },
     "iCalUID": {
      "type": "string",
-     "description": "Event ID in the iCalendar format."
+     "description": "Event ID in the iCalendar format.",
+     "annotations": {
+      "required": [
+       "calendar.events.import"
+      ]
+     }
     },
     "id": {
      "type": "string",
-     "description": "Identifier of the event."
+     "description": "Identifier of the event.",
+     "annotations": {
+      "required": [
+       "calendar.events.update"
+      ]
+     }
     },
     "kind": {
      "type": "string",
@@ -529,7 +580,14 @@
     },
     "start": {
      "$ref": "EventDateTime",
-     "description": "The (inclusive) start time of the event. For a recurring event, this is the start time of the first instance."
+     "description": "The (inclusive) start time of the event. For a recurring event, this is the start time of the first instance.",
+     "annotations": {
+      "required": [
+       "calendar.events.import",
+       "calendar.events.insert",
+       "calendar.events.update"
+      ]
+     }
     },
     "status": {
      "type": "string",
@@ -573,7 +631,14 @@
     },
     "email": {
      "type": "string",
-     "description": "The attendee's email address, if available. This field must be present when adding an attendee."
+     "description": "The attendee's email address, if available. This field must be present when adding an attendee.",
+     "annotations": {
+      "required": [
+       "calendar.events.import",
+       "calendar.events.insert",
+       "calendar.events.update"
+      ]
+     }
     },
     "optional": {
      "type": "boolean",
@@ -623,12 +688,30 @@
    "properties": {
     "method": {
      "type": "string",
-     "description": "The method used by this reminder. Possible values are:  \n- \"email\" - Reminders are sent via email. \n- \"sms\" - Reminders are sent via SMS. \n- \"popup\" - Reminders are sent via a UI popup."
+     "description": "The method used by this reminder. Possible values are:  \n- \"email\" - Reminders are sent via email. \n- \"sms\" - Reminders are sent via SMS. \n- \"popup\" - Reminders are sent via a UI popup.",
+     "annotations": {
+      "required": [
+       "calendar.calendarList.insert",
+       "calendar.calendarList.update",
+       "calendar.events.import",
+       "calendar.events.insert",
+       "calendar.events.update"
+      ]
+     }
     },
     "minutes": {
      "type": "integer",
      "description": "Number of minutes before the start of the event when the reminder should trigger.",
-     "format": "int32"
+     "format": "int32",
+     "annotations": {
+      "required": [
+       "calendar.calendarList.insert",
+       "calendar.calendarList.update",
+       "calendar.events.import",
+       "calendar.events.insert",
+       "calendar.events.update"
+      ]
+     }
     }
    }
   },
@@ -979,8 +1062,7 @@
       "$ref": "Acl"
      },
      "scopes": [
-      "https://www.googleapis.com/auth/calendar",
-      "https://www.googleapis.com/auth/calendar.readonly"
+      "https://www.googleapis.com/auth/calendar"
      ]
     },
     "patch": {

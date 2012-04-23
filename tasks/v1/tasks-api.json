@@ -15,6 +15,9 @@
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/tasks/v1/",
  "basePath": "/tasks/v1/",
+ "rootUrl": "https://www.googleapis.com/",
+ "servicePath": "tasks/v1/",
+ "batchPath": "batch",
  "parameters": {
   "alt": {
    "type": "string",

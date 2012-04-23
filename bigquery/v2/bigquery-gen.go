@@ -89,6 +89,175 @@ type ProjectsService struct {
 	s *Service
 }
 
+type JobConfigurationLoad struct {
+	// DestinationTable: [Required] Table being written to.
+	DestinationTable *TableReference `json:"destinationTable,omitempty"`
+
+	// CreateDisposition: [Optional] Whether to create the table if it
+	// doesn't already exist (CREATE_IF_NEEDED) or to require the table
+	// already exist (CREATE_NEVER). Default is CREATE_IF_NEEDED.
+	CreateDisposition string `json:"createDisposition,omitempty"`
+
+	// SkipLeadingRows: [Optional] Number of rows of initial data to skip in
+	// the data being imported.
+	SkipLeadingRows int64 `json:"skipLeadingRows,omitempty"`
+
+	// WriteDisposition: [Optional] Whether to overwrite an existing table
+	// (WRITE_TRUNCATE), append to an existing table (WRITE_APPEND), or
+	// require that the the table is empty (WRITE_EMPTY). Default is
+	// WRITE_APPEND.
+	WriteDisposition string `json:"writeDisposition,omitempty"`
+
+	// SourceUris: [Required] Source URIs describing Google Cloud Storage
+	// locations of data to load.
+	SourceUris []string `json:"sourceUris,omitempty"`
+
+	// FieldDelimiter: [Optional] Delimiter to use between fields in the
+	// import data. Default is ','
+	FieldDelimiter string `json:"fieldDelimiter,omitempty"`
+
+	// MaxBadRecords: [Optional] Maximum number of bad records that should
+	// be ignored before the entire job is aborted and no updates are
+	// performed.
+	MaxBadRecords int64 `json:"maxBadRecords,omitempty"`
+
+	// Encoding: [Optional] Character encoding of the input data. May be
+	// UTF-8 or ISO-8859-1. Default is UTF-8.
+	Encoding string `json:"encoding,omitempty"`
+
+	// Schema: [Optional] Schema of the table being written to.
+	Schema *TableSchema `json:"schema,omitempty"`
+}
+
+type TableListTables struct {
+	// TableReference: A reference uniquely identifying the table.
+	TableReference *TableReference `json:"tableReference,omitempty"`
+
+	// FriendlyName: The user-friendly name for this table.
+	FriendlyName string `json:"friendlyName,omitempty"`
+
+	// Kind: The resource type.
+	Kind string `json:"kind,omitempty"`
+
+	// Id: An opaque ID of the table
+	Id string `json:"id,omitempty"`
+}
+
+type DatasetListDatasets struct {
+	// Kind: The resource type.
+	Kind string `json:"kind,omitempty"`
+
+	// Id: The fully-qualified unique name of this dataset in the format
+	// projectId:datasetId.
+	Id string `json:"id,omitempty"`
+
+	// DatasetReference: Reference identifying dataset.
+	DatasetReference *DatasetReference `json:"datasetReference,omitempty"`
+
+	// FriendlyName: A descriptive name for this dataset, if one exists.
+	FriendlyName string `json:"friendlyName,omitempty"`
+}
+
+type TableList struct {
+	// Tables: Tables in the requested dataset.
+	Tables []*TableListTables `json:"tables,omitempty"`
+
+	// NextPageToken: A token to request the next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// TotalItems: The total number of tables in the dataset.
+	TotalItems int64 `json:"totalItems,omitempty"`
+
+	// Etag: A hash of this page of results.
+	Etag string `json:"etag,omitempty"`
+
+	// Kind: The type of list.
+	Kind string `json:"kind,omitempty"`
+}
+
+type JobReference struct {
+	// JobId: [Required] ID of the job.
+	JobId string `json:"jobId,omitempty"`
+
+	// ProjectId: [Required] Project ID being billed for the job.
+	ProjectId string `json:"projectId,omitempty"`
+}
+
+type QueryRequest struct {
+	// Query: [Required] A query string, following the BigQuery query syntax
+	// of the query to execute. Table names should be qualified by dataset
+	// name in the format projectId:datasetId.tableId unless you specify the
+	// defaultDataset value. If the table is in the same project as the job,
+	// you can omit the project ID. Example: SELECT f1 FROM
+	// myProjectId:myDatasetId.myTableId.
+	Query string `json:"query,omitempty"`
+
+	// DefaultDataset: [Optional] Specifies the default datasetId and
+	// projectId to assume for any unqualified table names in the query. If
+	// not set, all table names in the query string must be fully-qualified
+	// in the format projectId:datasetId.tableid.
+	DefaultDataset *DatasetReference `json:"defaultDataset,omitempty"`
+
+	// MaxResults: [Optional] The maximum number of results to return per
+	// page of results. If the response list exceeds the maximum response
+	// size for a single response, you will have to page through the
+	// results. Default is to return the maximum response size.
+	MaxResults int64 `json:"maxResults,omitempty"`
+
+	// TimeoutMs: [Optional] How long to wait for the query to complete, in
+	// milliseconds, before returning. Default is to return immediately. If
+	// the timeout passes before the job completes, the request will fail
+	// with a TIMEOUT error.
+	TimeoutMs int64 `json:"timeoutMs,omitempty"`
+
+	// Kind: The resource type of the request.
+	Kind string `json:"kind,omitempty"`
+}
+
+type TableDataList struct {
+	// Etag: A hash of this page of results.
+	Etag string `json:"etag,omitempty"`
+
+	// Kind: The resource type of the response.
+	Kind string `json:"kind,omitempty"`
+
+	// TotalRows: The total number of rows in the complete table.
+	TotalRows int64 `json:"totalRows,omitempty,string"`
+
+	// Rows: Rows of results.
+	Rows []*TableRow `json:"rows,omitempty"`
+}
+
+type JobConfigurationTableCopy struct {
+	// DestinationTable: [Required] The destination table
+	DestinationTable *TableReference `json:"destinationTable,omitempty"`
+
+	// SourceTable: [Required] Source table to copy.
+	SourceTable *TableReference `json:"sourceTable,omitempty"`
+
+	// CreateDisposition: [Optional] Whether or not to create a new table,
+	// if none exists.
+	CreateDisposition string `json:"createDisposition,omitempty"`
+
+	// WriteDisposition: [Optional] Whether or not to append or require the
+	// table to be empty.
+	WriteDisposition string `json:"writeDisposition,omitempty"`
+}
+
+type JobStatistics struct {
+	// TotalBytesProcessed: [Output-only] Total bytes processed for this
+	// job.
+	TotalBytesProcessed int64 `json:"totalBytesProcessed,omitempty,string"`
+
+	// EndTime: [Output-only] End time of this job, in milliseconds since
+	// the epoch.
+	EndTime int64 `json:"endTime,omitempty,string"`
+
+	// StartTime: [Output-only] Start time of this job, in milliseconds
+	// since the epoch.
+	StartTime int64 `json:"startTime,omitempty,string"`
+}
+
 type TableRow struct {
 	// F: Represents a single row in the result set, consisting of one or
 	// more fields.
@@ -96,6 +265,9 @@ type TableRow struct {
 }
 
 type ProjectListProjects struct {
+	// FriendlyName: A descriptive name for this project.
+	FriendlyName string `json:"friendlyName,omitempty"`
+
 	// Kind: The resource type.
 	Kind string `json:"kind,omitempty"`
 
@@ -104,9 +276,6 @@ type ProjectListProjects struct {
 
 	// ProjectReference: A unique reference to this project.
 	ProjectReference *ProjectReference `json:"projectReference,omitempty"`
-
-	// FriendlyName: A descriptive name for this project.
-	FriendlyName string `json:"friendlyName,omitempty"`
 }
 
 type DatasetAccess struct {
@@ -143,6 +312,9 @@ type DatasetAccess struct {
 }
 
 type JobConfiguration struct {
+	// Query: [Pick one] Configures a query job.
+	Query *JobConfigurationQuery `json:"query,omitempty"`
+
 	// Load: [Pick one] Configures a load job.
 	Load *JobConfigurationLoad `json:"load,omitempty"`
 
@@ -158,9 +330,6 @@ type JobConfiguration struct {
 	// Properties: [Optional] Properties providing extra details about how
 	// the job should be run. Not used for most jobs.
 	Properties *JobConfigurationProperties `json:"properties,omitempty"`
-
-	// Query: [Pick one] Configures a query job.
-	Query *JobConfigurationQuery `json:"query,omitempty"`
 }
 
 type JobConfigurationQuery struct {
@@ -229,15 +398,15 @@ type TableRowF struct {
 }
 
 type TableReference struct {
-	// TableId: [Required] ID of the table.
-	TableId string `json:"tableId,omitempty"`
-
 	// ProjectId: [Required] ID of the project billed for storage of the
 	// table.
 	ProjectId string `json:"projectId,omitempty"`
 
 	// DatasetId: [Required] ID of the dataset containing the table.
 	DatasetId string `json:"datasetId,omitempty"`
+
+	// TableId: [Required] ID of the table.
+	TableId string `json:"tableId,omitempty"`
 }
 
 type TableSchema struct {
@@ -252,12 +421,6 @@ type ProjectReference struct {
 }
 
 type JobList struct {
-	// NextPageToken: A token to request the next page of results.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// TotalItems: Total number of jobs in this collection.
-	TotalItems int64 `json:"totalItems,omitempty"`
-
 	// Etag: A hash of this page of results.
 	Etag string `json:"etag,omitempty"`
 
@@ -266,6 +429,12 @@ type JobList struct {
 
 	// Jobs: List of jobs that were requested.
 	Jobs []*JobListJobs `json:"jobs,omitempty"`
+
+	// NextPageToken: A token to request the next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// TotalItems: Total number of jobs in this collection.
+	TotalItems int64 `json:"totalItems,omitempty"`
 }
 
 type JobConfigurationLink struct {
@@ -281,23 +450,6 @@ type JobConfigurationLink struct {
 }
 
 type GetQueryResultsResponse struct {
-	// JobReference: Reference to the Helix Job that was created to run the
-	// query. This field will be present even if the original request timed
-	// out, in which case GetQueryResults can be used to read the results
-	// once the query has completed. Since this API only returns the first
-	// page of results, subsequent pages can be fetched via the same
-	// mechanism (GetQueryResults).
-	JobReference *JobReference `json:"jobReference,omitempty"`
-
-	// JobComplete: Whether the query has completed or not. If rows or
-	// totalRows are present, this will always be true. If this is false,
-	// totalRows will not be available.
-	JobComplete bool `json:"jobComplete,omitempty"`
-
-	// Schema: The schema of the results. Present only when the query
-	// completes successfully.
-	Schema *TableSchema `json:"schema,omitempty"`
-
 	// Etag: A hash of this response.
 	Etag string `json:"etag,omitempty"`
 
@@ -314,9 +466,29 @@ type GetQueryResultsResponse struct {
 	// call GetQueryResults and specify the jobReference returned above.
 	// Present only when the query completes successfully.
 	Rows []*TableRow `json:"rows,omitempty"`
+
+	// JobReference: Reference to the Helix Job that was created to run the
+	// query. This field will be present even if the original request timed
+	// out, in which case GetQueryResults can be used to read the results
+	// once the query has completed. Since this API only returns the first
+	// page of results, subsequent pages can be fetched via the same
+	// mechanism (GetQueryResults).
+	JobReference *JobReference `json:"jobReference,omitempty"`
+
+	// JobComplete: Whether the query has completed or not. If rows or
+	// totalRows are present, this will always be true. If this is false,
+	// totalRows will not be available.
+	JobComplete bool `json:"jobComplete,omitempty"`
+
+	// Schema: The schema of the results. Present only when the query
+	// completes successfully.
+	Schema *TableSchema `json:"schema,omitempty"`
 }
 
 type JobStatus struct {
+	// State: [Output-only] Running state of the job.
+	State string `json:"state,omitempty"`
+
 	// ErrorResult: [Output-only] Final error result of the job. If present,
 	// indicates that the job has completed and was unsuccessful.
 	ErrorResult *ErrorProto `json:"errorResult,omitempty"`
@@ -325,12 +497,30 @@ type JobStatus struct {
 	// the job. Errors here do not necessarily mean that the job has
 	// completed or was unsuccessful.
 	Errors []*ErrorProto `json:"errors,omitempty"`
-
-	// State: [Output-only] Running state of the job.
-	State string `json:"state,omitempty"`
 }
 
 type Dataset struct {
+	// DatasetReference: [Required] Reference identifying dataset.
+	DatasetReference *DatasetReference `json:"datasetReference,omitempty"`
+
+	// Description: [Optional] A user-friendly string description for the
+	// dataset. This might be shown in BigQuery UI for browsing the dataset.
+	Description string `json:"description,omitempty"`
+
+	// SelfLink: [Output-only] An URL that can be used to access this
+	// resource again. You can use this URL in Get or Update requests to
+	// this resource.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// FriendlyName: [Optional] A descriptive name for this dataset, which
+	// might be shown in any BigQuery user interfaces for browsing the
+	// dataset. Use datasetId for making API calls.
+	FriendlyName string `json:"friendlyName,omitempty"`
+
+	// CreationTime: [Output-only] The time when this dataset was created,
+	// in milliseconds since the epoch.
+	CreationTime int64 `json:"creationTime,omitempty,string"`
+
 	// Etag: [Output-only] A hash of this resource.
 	Etag string `json:"etag,omitempty"`
 
@@ -364,33 +554,9 @@ type Dataset struct {
 	// LastModifiedTime: [Output-only] The date when this dataset or any of
 	// its tables was last modified, in milliseconds since the epoch.
 	LastModifiedTime int64 `json:"lastModifiedTime,omitempty,string"`
-
-	// DatasetReference: [Required] Reference identifying dataset.
-	DatasetReference *DatasetReference `json:"datasetReference,omitempty"`
-
-	// Description: [Optional] A user-friendly string description for the
-	// dataset. This might be shown in BigQuery UI for browsing the dataset.
-	Description string `json:"description,omitempty"`
-
-	// SelfLink: [Output-only] An URL that can be used to access this
-	// resource again. You can use this URL in Get or Update requests to
-	// this resource.
-	SelfLink string `json:"selfLink,omitempty"`
-
-	// FriendlyName: [Optional] A descriptive name for this dataset, which
-	// might be shown in any BigQuery user interfaces for browsing the
-	// dataset. Use datasetId for making API calls.
-	FriendlyName string `json:"friendlyName,omitempty"`
-
-	// CreationTime: [Output-only] The time when this dataset was created,
-	// in milliseconds since the epoch.
-	CreationTime int64 `json:"creationTime,omitempty,string"`
 }
 
 type TableFieldSchema struct {
-	// Type: [Required] Data type of the field.
-	Type string `json:"type,omitempty"`
-
 	// Name: [Required] Name of the field.
 	Name string `json:"name,omitempty"`
 
@@ -400,28 +566,12 @@ type TableFieldSchema struct {
 
 	// Fields: [Optional] Describes nested fields when type is RECORD.
 	Fields []*TableFieldSchema `json:"fields,omitempty"`
+
+	// Type: [Required] Data type of the field.
+	Type string `json:"type,omitempty"`
 }
 
 type Table struct {
-	// NumBytes: [Output-only] The size of the table in bytes.
-	NumBytes int64 `json:"numBytes,omitempty,string"`
-
-	// Description: [Optional] A user-friendly description of this table.
-	Description string `json:"description,omitempty"`
-
-	// TableReference: [Required] Reference describing the ID of this table.
-	TableReference *TableReference `json:"tableReference,omitempty"`
-
-	// SelfLink: [Output-only] A URL that can be used to access this
-	// resource again.
-	SelfLink string `json:"selfLink,omitempty"`
-
-	// Schema: [Optional] Describes the schema of this table.
-	Schema *TableSchema `json:"schema,omitempty"`
-
-	// FriendlyName: [Optional] A descriptive name for this table.
-	FriendlyName string `json:"friendlyName,omitempty"`
-
 	// CreationTime: [Output-only] The time when this table was created, in
 	// milliseconds since the epoch.
 	CreationTime int64 `json:"creationTime,omitempty,string"`
@@ -441,9 +591,33 @@ type Table struct {
 	// LastModifiedTime: [Output-only] The time when this table was last
 	// modified, in milliseconds since the epoch.
 	LastModifiedTime int64 `json:"lastModifiedTime,omitempty,string"`
+
+	// NumBytes: [Output-only] The size of the table in bytes.
+	NumBytes int64 `json:"numBytes,omitempty,string"`
+
+	// Description: [Optional] A user-friendly description of this table.
+	Description string `json:"description,omitempty"`
+
+	// TableReference: [Required] Reference describing the ID of this table.
+	TableReference *TableReference `json:"tableReference,omitempty"`
+
+	// SelfLink: [Output-only] A URL that can be used to access this
+	// resource again.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// Schema: [Optional] Describes the schema of this table.
+	Schema *TableSchema `json:"schema,omitempty"`
+
+	// FriendlyName: [Optional] A descriptive name for this table.
+	FriendlyName string `json:"friendlyName,omitempty"`
 }
 
 type DatasetList struct {
+	// NextPageToken: A token to request the next page of results. Present
+	// only when there is more than one page of results.* See Paging Through
+	// Results in the developer's guide.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
 	// Etag: A hash of this page of results. See Paging Through Results in
 	// the developer's guide.
 	Etag string `json:"etag,omitempty"`
@@ -454,14 +628,15 @@ type DatasetList struct {
 	// Datasets: An array of one or more summarized dataset resources.
 	// Absent when there are no datasets in the specified project.
 	Datasets []*DatasetListDatasets `json:"datasets,omitempty"`
-
-	// NextPageToken: A token to request the next page of results. Present
-	// only when there is more than one page of results.* See Paging Through
-	// Results in the developer's guide.
-	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
 type Job struct {
+	// Etag: [Output-only] A hash of this resource.
+	Etag string `json:"etag,omitempty"`
+
+	// Kind: [Output-only] The type of the resource.
+	Kind string `json:"kind,omitempty"`
+
 	// Id: [Output-only] Opaque ID field of the job
 	Id string `json:"id,omitempty"`
 
@@ -483,18 +658,9 @@ type Job struct {
 	// SelfLink: [Output-only] A URL that can be used to access this
 	// resource again.
 	SelfLink string `json:"selfLink,omitempty"`
-
-	// Etag: [Output-only] A hash of this resource.
-	Etag string `json:"etag,omitempty"`
-
-	// Kind: [Output-only] The type of the resource.
-	Kind string `json:"kind,omitempty"`
 }
 
 type ProjectList struct {
-	// Projects: Projects to which you have at least READ access.
-	Projects []*ProjectListProjects `json:"projects,omitempty"`
-
 	// NextPageToken: A token to request the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
@@ -506,6 +672,9 @@ type ProjectList struct {
 
 	// Kind: The type of list.
 	Kind string `json:"kind,omitempty"`
+
+	// Projects: Projects to which you have at least READ access.
+	Projects []*ProjectListProjects `json:"projects,omitempty"`
 }
 
 type DatasetReference struct {
@@ -527,12 +696,6 @@ type JobConfigurationExtract struct {
 }
 
 type JobListJobs struct {
-	// Kind: The resource type.
-	Kind string `json:"kind,omitempty"`
-
-	// Id: Unique opaque ID of the job.
-	Id string `json:"id,omitempty"`
-
 	// Status: [Full-projection-only] Describes the state of the job.
 	Status *JobStatus `json:"status,omitempty"`
 
@@ -554,256 +717,28 @@ type JobListJobs struct {
 	// ErrorResult: A result object that will be present only if the job has
 	// failed.
 	ErrorResult *ErrorProto `json:"errorResult,omitempty"`
+
+	// Kind: The resource type.
+	Kind string `json:"kind,omitempty"`
+
+	// Id: Unique opaque ID of the job.
+	Id string `json:"id,omitempty"`
 }
 
 type ErrorProto struct {
-	// Reason: Specifies the error reason. For example, reason will be
-	// "required" or "invalid" if some field was missing or malformed.
-	Reason string `json:"reason,omitempty"`
-
-	// Location: Specifies where the error occurred, if present.
-	Location string `json:"location,omitempty"`
-
 	// DebugInfo: Debugging information for the service, if present. Should
 	// be ignored.
 	DebugInfo string `json:"debugInfo,omitempty"`
 
 	// Message: A human readable explanation of the error.
 	Message string `json:"message,omitempty"`
-}
 
-type JobConfigurationLoad struct {
-	// SkipLeadingRows: [Optional] Number of rows of initial data to skip in
-	// the data being imported.
-	SkipLeadingRows int64 `json:"skipLeadingRows,omitempty"`
+	// Reason: Specifies the error reason. For example, reason will be
+	// "required" or "invalid" if some field was missing or malformed.
+	Reason string `json:"reason,omitempty"`
 
-	// WriteDisposition: [Optional] Whether to overwrite an existing table
-	// (WRITE_TRUNCATE), append to an existing table (WRITE_APPEND), or
-	// require that the the table is empty (WRITE_EMPTY). Default is
-	// WRITE_APPEND.
-	WriteDisposition string `json:"writeDisposition,omitempty"`
-
-	// SourceUris: [Required] Source URIs describing Google Cloud Storage
-	// locations of data to load.
-	SourceUris []string `json:"sourceUris,omitempty"`
-
-	// FieldDelimiter: [Optional] Delimiter to use between fields in the
-	// import data. Default is ','
-	FieldDelimiter string `json:"fieldDelimiter,omitempty"`
-
-	// MaxBadRecords: [Optional] Maximum number of bad records that should
-	// be ignored before the entire job is aborted and no updates are
-	// performed.
-	MaxBadRecords int64 `json:"maxBadRecords,omitempty"`
-
-	// Encoding: [Optional] Character encoding of the input data. May be
-	// UTF-8 or ISO-8859-1. Default is UTF-8.
-	Encoding string `json:"encoding,omitempty"`
-
-	// Schema: [Optional] Schema of the table being written to.
-	Schema *TableSchema `json:"schema,omitempty"`
-
-	// DestinationTable: [Required] Table being written to.
-	DestinationTable *TableReference `json:"destinationTable,omitempty"`
-
-	// CreateDisposition: [Optional] Whether to create the table if it
-	// doesn't already exist (CREATE_IF_NEEDED) or to require the table
-	// already exist (CREATE_NEVER). Default is CREATE_IF_NEEDED.
-	CreateDisposition string `json:"createDisposition,omitempty"`
-}
-
-type TableListTables struct {
-	// TableReference: A reference uniquely identifying the table.
-	TableReference *TableReference `json:"tableReference,omitempty"`
-
-	// FriendlyName: The user-friendly name for this table.
-	FriendlyName string `json:"friendlyName,omitempty"`
-
-	// Kind: The resource type.
-	Kind string `json:"kind,omitempty"`
-
-	// Id: An opaque ID of the table
-	Id string `json:"id,omitempty"`
-}
-
-type DatasetListDatasets struct {
-	// FriendlyName: A descriptive name for this dataset, if one exists.
-	FriendlyName string `json:"friendlyName,omitempty"`
-
-	// Kind: The resource type.
-	Kind string `json:"kind,omitempty"`
-
-	// Id: The fully-qualified unique name of this dataset in the format
-	// projectId:datasetId.
-	Id string `json:"id,omitempty"`
-
-	// DatasetReference: Reference identifying dataset.
-	DatasetReference *DatasetReference `json:"datasetReference,omitempty"`
-}
-
-type TableList struct {
-	// NextPageToken: A token to request the next page of results.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// TotalItems: The total number of tables in the dataset.
-	TotalItems int64 `json:"totalItems,omitempty"`
-
-	// Etag: A hash of this page of results.
-	Etag string `json:"etag,omitempty"`
-
-	// Kind: The type of list.
-	Kind string `json:"kind,omitempty"`
-
-	// Tables: Tables in the requested dataset.
-	Tables []*TableListTables `json:"tables,omitempty"`
-}
-
-type JobReference struct {
-	// JobId: [Required] ID of the job.
-	JobId string `json:"jobId,omitempty"`
-
-	// ProjectId: [Required] Project ID being billed for the job.
-	ProjectId string `json:"projectId,omitempty"`
-}
-
-type QueryRequest struct {
-	// TimeoutMs: [Optional] How long to wait for the query to complete, in
-	// milliseconds, before returning. Default is to return immediately. If
-	// the timeout passes before the job completes, the request will fail
-	// with a TIMEOUT error.
-	TimeoutMs int64 `json:"timeoutMs,omitempty"`
-
-	// Kind: The resource type of the request.
-	Kind string `json:"kind,omitempty"`
-
-	// Query: [Required] A query string, following the BigQuery query syntax
-	// of the query to execute. Table names should be qualified by dataset
-	// name in the format projectId:datasetId.tableId unless you specify the
-	// defaultDataset value. If the table is in the same project as the job,
-	// you can omit the project ID. Example: SELECT f1 FROM
-	// myProjectId:myDatasetId.myTableId.
-	Query string `json:"query,omitempty"`
-
-	// DefaultDataset: [Optional] Specifies the default datasetId and
-	// projectId to assume for any unqualified table names in the query. If
-	// not set, all table names in the query string must be fully-qualified
-	// in the format projectId:datasetId.tableid.
-	DefaultDataset *DatasetReference `json:"defaultDataset,omitempty"`
-
-	// MaxResults: [Optional] The maximum number of results to return per
-	// page of results. If the response list exceeds the maximum response
-	// size for a single response, you will have to page through the
-	// results. Default is to return the maximum response size.
-	MaxResults int64 `json:"maxResults,omitempty"`
-}
-
-type TableDataList struct {
-	// Etag: A hash of this page of results.
-	Etag string `json:"etag,omitempty"`
-
-	// Kind: The resource type of the response.
-	Kind string `json:"kind,omitempty"`
-
-	// TotalRows: The total number of rows in the complete table.
-	TotalRows int64 `json:"totalRows,omitempty,string"`
-
-	// Rows: Rows of results.
-	Rows []*TableRow `json:"rows,omitempty"`
-}
-
-type JobConfigurationTableCopy struct {
-	// DestinationTable: [Required] The destination table
-	DestinationTable *TableReference `json:"destinationTable,omitempty"`
-
-	// SourceTable: [Required] Source table to copy.
-	SourceTable *TableReference `json:"sourceTable,omitempty"`
-
-	// CreateDisposition: [Optional] Whether or not to create a new table,
-	// if none exists.
-	CreateDisposition string `json:"createDisposition,omitempty"`
-
-	// WriteDisposition: [Optional] Whether or not to append or require the
-	// table to be empty.
-	WriteDisposition string `json:"writeDisposition,omitempty"`
-}
-
-type JobStatistics struct {
-	// EndTime: [Output-only] End time of this job, in milliseconds since
-	// the epoch.
-	EndTime int64 `json:"endTime,omitempty,string"`
-
-	// StartTime: [Output-only] Start time of this job, in milliseconds
-	// since the epoch.
-	StartTime int64 `json:"startTime,omitempty,string"`
-
-	// TotalBytesProcessed: [Output-only] Total bytes processed for this
-	// job.
-	TotalBytesProcessed int64 `json:"totalBytesProcessed,omitempty,string"`
-}
-
-// method id "bigquery.jobs.delete":
-
-type JobsDeleteCall struct {
-	s         *Service
-	projectId string
-	jobId     string
-	opt_      map[string]interface{}
-}
-
-// Delete: Deletes a completed job specified by job ID.
-func (r *JobsService) Delete(projectId string, jobId string) *JobsDeleteCall {
-	c := &JobsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
-	c.projectId = projectId
-	c.jobId = jobId
-	return c
-}
-
-func (c *JobsDeleteCall) Do() error {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2/", "projects/{projectId}/jobs/{jobId}")
-	urls = strings.Replace(urls, "{projectId}", cleanPathString(c.projectId), 1)
-	urls = strings.Replace(urls, "{jobId}", cleanPathString(c.jobId), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("DELETE", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return err
-	}
-	return nil
-	// {
-	//   "description": "Deletes a completed job specified by job ID.",
-	//   "httpMethod": "DELETE",
-	//   "id": "bigquery.jobs.delete",
-	//   "parameterOrder": [
-	//     "projectId",
-	//     "jobId"
-	//   ],
-	//   "parameters": {
-	//     "jobId": {
-	//       "description": "Job ID of the job to delete",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "projectId": {
-	//       "description": "Project ID of the job to delete",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "projects/{projectId}/jobs/{jobId}",
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery"
-	//   ]
-	// }
-
+	// Location: Specifies where the error occurred, if present.
+	Location string `json:"location,omitempty"`
 }
 
 // method id "bigquery.jobs.query":
@@ -896,20 +831,6 @@ func (r *JobsService) List(projectId string) *JobsListCall {
 	return c
 }
 
-// MaxResults sets the optional parameter "maxResults": Maximum number
-// of results to return
-func (c *JobsListCall) MaxResults(maxResults int64) *JobsListCall {
-	c.opt_["maxResults"] = maxResults
-	return c
-}
-
-// AllUsers sets the optional parameter "allUsers": Whether to display
-// jobs owned by all users in the project. Default false
-func (c *JobsListCall) AllUsers(allUsers bool) *JobsListCall {
-	c.opt_["allUsers"] = allUsers
-	return c
-}
-
 // PageToken sets the optional parameter "pageToken": Page token,
 // returned by a previous call, to request the next page of results
 func (c *JobsListCall) PageToken(pageToken string) *JobsListCall {
@@ -931,16 +852,24 @@ func (c *JobsListCall) Projection(projection string) *JobsListCall {
 	return c
 }
 
+// MaxResults sets the optional parameter "maxResults": Maximum number
+// of results to return
+func (c *JobsListCall) MaxResults(maxResults int64) *JobsListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// AllUsers sets the optional parameter "allUsers": Whether to display
+// jobs owned by all users in the project. Default false
+func (c *JobsListCall) AllUsers(allUsers bool) *JobsListCall {
+	c.opt_["allUsers"] = allUsers
+	return c
+}
+
 func (c *JobsListCall) Do() (*JobList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["allUsers"]; ok {
-		params.Set("allUsers", fmt.Sprintf("%v", v))
-	}
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
@@ -949,6 +878,12 @@ func (c *JobsListCall) Do() (*JobList, error) {
 	}
 	if v, ok := c.opt_["projection"]; ok {
 		params.Set("projection", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["allUsers"]; ok {
+		params.Set("allUsers", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2/", "projects/{projectId}/jobs")
 	urls = strings.Replace(urls, "{projectId}", cleanPathString(c.projectId), 1)
@@ -1155,6 +1090,13 @@ func (r *JobsService) GetQueryResults(projectId string, jobId string) *JobsGetQu
 	return c
 }
 
+// StartIndex sets the optional parameter "startIndex": Zero-based index
+// of the starting row
+func (c *JobsGetQueryResultsCall) StartIndex(startIndex uint64) *JobsGetQueryResultsCall {
+	c.opt_["startIndex"] = startIndex
+	return c
+}
+
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to read
 func (c *JobsGetQueryResultsCall) MaxResults(maxResults int64) *JobsGetQueryResultsCall {
@@ -1171,25 +1113,18 @@ func (c *JobsGetQueryResultsCall) TimeoutMs(timeoutMs int64) *JobsGetQueryResult
 	return c
 }
 
-// StartIndex sets the optional parameter "startIndex": Zero-based index
-// of the starting row
-func (c *JobsGetQueryResultsCall) StartIndex(startIndex uint64) *JobsGetQueryResultsCall {
-	c.opt_["startIndex"] = startIndex
-	return c
-}
-
 func (c *JobsGetQueryResultsCall) Do() (*GetQueryResultsResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["startIndex"]; ok {
+		params.Set("startIndex", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["timeoutMs"]; ok {
 		params.Set("timeoutMs", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["startIndex"]; ok {
-		params.Set("startIndex", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2/", "projects/{projectId}/queries/{jobId}")
 	urls = strings.Replace(urls, "{projectId}", cleanPathString(c.projectId), 1)
@@ -1325,162 +1260,6 @@ func (c *JobsGetCall) Do() (*Job, error) {
 	//   "response": {
 	//     "$ref": "Job"
 	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery"
-	//   ]
-	// }
-
-}
-
-// method id "bigquery.datasets.get":
-
-type DatasetsGetCall struct {
-	s         *Service
-	projectId string
-	datasetId string
-	opt_      map[string]interface{}
-}
-
-// Get: Returns the dataset specified by datasetID.
-func (r *DatasetsService) Get(projectId string, datasetId string) *DatasetsGetCall {
-	c := &DatasetsGetCall{s: r.s, opt_: make(map[string]interface{})}
-	c.projectId = projectId
-	c.datasetId = datasetId
-	return c
-}
-
-func (c *DatasetsGetCall) Do() (*Dataset, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2/", "projects/{projectId}/datasets/{datasetId}")
-	urls = strings.Replace(urls, "{projectId}", cleanPathString(c.projectId), 1)
-	urls = strings.Replace(urls, "{datasetId}", cleanPathString(c.datasetId), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(Dataset)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Returns the dataset specified by datasetID.",
-	//   "httpMethod": "GET",
-	//   "id": "bigquery.datasets.get",
-	//   "parameterOrder": [
-	//     "projectId",
-	//     "datasetId"
-	//   ],
-	//   "parameters": {
-	//     "datasetId": {
-	//       "description": "Dataset ID of the requested dataset",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "projectId": {
-	//       "description": "Project ID of the requested dataset",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "projects/{projectId}/datasets/{datasetId}",
-	//   "response": {
-	//     "$ref": "Dataset"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery"
-	//   ]
-	// }
-
-}
-
-// method id "bigquery.datasets.delete":
-
-type DatasetsDeleteCall struct {
-	s         *Service
-	projectId string
-	datasetId string
-	opt_      map[string]interface{}
-}
-
-// Delete: Deletes the dataset specified by datasetId value. Before you
-// can delete a dataset, you must delete all its tables, either manually
-// or by specifying deleteContents. Immediately after deletion, you can
-// create another dataset with the same name.
-func (r *DatasetsService) Delete(projectId string, datasetId string) *DatasetsDeleteCall {
-	c := &DatasetsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
-	c.projectId = projectId
-	c.datasetId = datasetId
-	return c
-}
-
-// DeleteContents sets the optional parameter "deleteContents": If True,
-// delete all the tables in the dataset. If False and the dataset
-// contains tables, the request will fail. Default is False
-func (c *DatasetsDeleteCall) DeleteContents(deleteContents bool) *DatasetsDeleteCall {
-	c.opt_["deleteContents"] = deleteContents
-	return c
-}
-
-func (c *DatasetsDeleteCall) Do() error {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	if v, ok := c.opt_["deleteContents"]; ok {
-		params.Set("deleteContents", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2/", "projects/{projectId}/datasets/{datasetId}")
-	urls = strings.Replace(urls, "{projectId}", cleanPathString(c.projectId), 1)
-	urls = strings.Replace(urls, "{datasetId}", cleanPathString(c.datasetId), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("DELETE", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return err
-	}
-	return nil
-	// {
-	//   "description": "Deletes the dataset specified by datasetId value. Before you can delete a dataset, you must delete all its tables, either manually or by specifying deleteContents. Immediately after deletion, you can create another dataset with the same name.",
-	//   "httpMethod": "DELETE",
-	//   "id": "bigquery.datasets.delete",
-	//   "parameterOrder": [
-	//     "projectId",
-	//     "datasetId"
-	//   ],
-	//   "parameters": {
-	//     "datasetId": {
-	//       "description": "Dataset ID of dataset being deleted",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "deleteContents": {
-	//       "description": "If True, delete all the tables in the dataset. If False and the dataset contains tables, the request will fail. Default is False",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "projectId": {
-	//       "description": "Project ID of the dataset being deleted",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "projects/{projectId}/datasets/{datasetId}",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/bigquery"
 	//   ]
@@ -1823,6 +1602,162 @@ func (c *DatasetsInsertCall) Do() (*Dataset, error) {
 	//   "response": {
 	//     "$ref": "Dataset"
 	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigquery"
+	//   ]
+	// }
+
+}
+
+// method id "bigquery.datasets.get":
+
+type DatasetsGetCall struct {
+	s         *Service
+	projectId string
+	datasetId string
+	opt_      map[string]interface{}
+}
+
+// Get: Returns the dataset specified by datasetID.
+func (r *DatasetsService) Get(projectId string, datasetId string) *DatasetsGetCall {
+	c := &DatasetsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.projectId = projectId
+	c.datasetId = datasetId
+	return c
+}
+
+func (c *DatasetsGetCall) Do() (*Dataset, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2/", "projects/{projectId}/datasets/{datasetId}")
+	urls = strings.Replace(urls, "{projectId}", cleanPathString(c.projectId), 1)
+	urls = strings.Replace(urls, "{datasetId}", cleanPathString(c.datasetId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Dataset)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the dataset specified by datasetID.",
+	//   "httpMethod": "GET",
+	//   "id": "bigquery.datasets.get",
+	//   "parameterOrder": [
+	//     "projectId",
+	//     "datasetId"
+	//   ],
+	//   "parameters": {
+	//     "datasetId": {
+	//       "description": "Dataset ID of the requested dataset",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "projectId": {
+	//       "description": "Project ID of the requested dataset",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "projects/{projectId}/datasets/{datasetId}",
+	//   "response": {
+	//     "$ref": "Dataset"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigquery"
+	//   ]
+	// }
+
+}
+
+// method id "bigquery.datasets.delete":
+
+type DatasetsDeleteCall struct {
+	s         *Service
+	projectId string
+	datasetId string
+	opt_      map[string]interface{}
+}
+
+// Delete: Deletes the dataset specified by datasetId value. Before you
+// can delete a dataset, you must delete all its tables, either manually
+// or by specifying deleteContents. Immediately after deletion, you can
+// create another dataset with the same name.
+func (r *DatasetsService) Delete(projectId string, datasetId string) *DatasetsDeleteCall {
+	c := &DatasetsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.projectId = projectId
+	c.datasetId = datasetId
+	return c
+}
+
+// DeleteContents sets the optional parameter "deleteContents": If True,
+// delete all the tables in the dataset. If False and the dataset
+// contains tables, the request will fail. Default is False
+func (c *DatasetsDeleteCall) DeleteContents(deleteContents bool) *DatasetsDeleteCall {
+	c.opt_["deleteContents"] = deleteContents
+	return c
+}
+
+func (c *DatasetsDeleteCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["deleteContents"]; ok {
+		params.Set("deleteContents", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2/", "projects/{projectId}/datasets/{datasetId}")
+	urls = strings.Replace(urls, "{projectId}", cleanPathString(c.projectId), 1)
+	urls = strings.Replace(urls, "{datasetId}", cleanPathString(c.datasetId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Deletes the dataset specified by datasetId value. Before you can delete a dataset, you must delete all its tables, either manually or by specifying deleteContents. Immediately after deletion, you can create another dataset with the same name.",
+	//   "httpMethod": "DELETE",
+	//   "id": "bigquery.datasets.delete",
+	//   "parameterOrder": [
+	//     "projectId",
+	//     "datasetId"
+	//   ],
+	//   "parameters": {
+	//     "datasetId": {
+	//       "description": "Dataset ID of dataset being deleted",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "deleteContents": {
+	//       "description": "If True, delete all the tables in the dataset. If False and the dataset contains tables, the request will fail. Default is False",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "projectId": {
+	//       "description": "Project ID of the dataset being deleted",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "projects/{projectId}/datasets/{datasetId}",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/bigquery"
 	//   ]

@@ -15,6 +15,9 @@
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/latitude/v1/",
  "basePath": "/latitude/v1/",
+ "rootUrl": "https://www.googleapis.com/",
+ "servicePath": "latitude/v1/",
+ "batchPath": "batch",
  "parameters": {
   "alt": {
    "type": "string",

@@ -55,82 +55,19 @@ type CseService struct {
 	s *Service
 }
 
-type PromotionBodyLines struct {
-	Link string `json:"link,omitempty"`
+type Result struct {
+	FileFormat string `json:"fileFormat,omitempty"`
 
-	Url string `json:"url,omitempty"`
+	CacheId string `json:"cacheId,omitempty"`
 
-	Title string `json:"title,omitempty"`
-}
+	FormattedUrl string `json:"formattedUrl,omitempty"`
 
-type Context struct {
-	Title string `json:"title,omitempty"`
-
-	Facets [][]*ContextFacetsItem `json:"facets,omitempty"`
-}
-
-type Promotion struct {
-	Link string `json:"link,omitempty"`
-
-	Title string `json:"title,omitempty"`
-
-	BodyLines []*PromotionBodyLines `json:"bodyLines,omitempty"`
+	HtmlFormattedUrl string `json:"htmlFormattedUrl,omitempty"`
 
 	DisplayLink string `json:"displayLink,omitempty"`
 
-	Image *PromotionImage `json:"image,omitempty"`
-}
+	Mime string `json:"mime,omitempty"`
 
-type ResultPagemap struct {
-}
-
-type ResultLabels struct {
-	Name string `json:"name,omitempty"`
-
-	DisplayName string `json:"displayName,omitempty"`
-}
-
-type PromotionImage struct {
-	Height int64 `json:"height,omitempty"`
-
-	Width int64 `json:"width,omitempty"`
-
-	Source string `json:"source,omitempty"`
-}
-
-type SearchSearchInformation struct {
-	TotalResults int64 `json:"totalResults,omitempty,string"`
-
-	FormattedTotalResults string `json:"formattedTotalResults,omitempty"`
-
-	FormattedSearchTime string `json:"formattedSearchTime,omitempty"`
-
-	SearchTime float64 `json:"searchTime,omitempty"`
-}
-
-type SearchSpelling struct {
-	HtmlCorrectedQuery string `json:"htmlCorrectedQuery,omitempty"`
-
-	CorrectedQuery string `json:"correctedQuery,omitempty"`
-}
-
-type ResultImage struct {
-	Height int64 `json:"height,omitempty"`
-
-	Width int64 `json:"width,omitempty"`
-
-	ContextLink string `json:"contextLink,omitempty"`
-
-	ByteSize int64 `json:"byteSize,omitempty"`
-
-	ThumbnailHeight int64 `json:"thumbnailHeight,omitempty"`
-
-	ThumbnailWidth int64 `json:"thumbnailWidth,omitempty"`
-
-	ThumbnailLink string `json:"thumbnailLink,omitempty"`
-}
-
-type Result struct {
 	Labels []*ResultLabels `json:"labels,omitempty"`
 
 	Image *ResultImage `json:"image,omitempty"`
@@ -148,27 +85,9 @@ type Result struct {
 	Title string `json:"title,omitempty"`
 
 	HtmlSnippet string `json:"htmlSnippet,omitempty"`
-
-	FileFormat string `json:"fileFormat,omitempty"`
-
-	CacheId string `json:"cacheId,omitempty"`
-
-	FormattedUrl string `json:"formattedUrl,omitempty"`
-
-	HtmlFormattedUrl string `json:"htmlFormattedUrl,omitempty"`
-
-	DisplayLink string `json:"displayLink,omitempty"`
-
-	Mime string `json:"mime,omitempty"`
 }
 
 type Search struct {
-	Queries *SearchQueries `json:"queries,omitempty"`
-
-	Promotions []*Promotion `json:"promotions,omitempty"`
-
-	Spelling *SearchSpelling `json:"spelling,omitempty"`
-
 	Items []*Result `json:"items,omitempty"`
 
 	Context *Context `json:"context,omitempty"`
@@ -178,28 +97,30 @@ type Search struct {
 	Url *SearchUrl `json:"url,omitempty"`
 
 	SearchInformation *SearchSearchInformation `json:"searchInformation,omitempty"`
+
+	Queries *SearchQueries `json:"queries,omitempty"`
+
+	Promotions []*Promotion `json:"promotions,omitempty"`
+
+	Spelling *SearchSpelling `json:"spelling,omitempty"`
 }
 
 type SearchQueries struct {
 }
 
 type ContextFacetsItem struct {
-	Label string `json:"label,omitempty"`
-
 	Anchor string `json:"anchor,omitempty"`
+
+	Label string `json:"label,omitempty"`
 }
 
 type SearchUrl struct {
-	Template string `json:"template,omitempty"`
-
 	Type string `json:"type,omitempty"`
+
+	Template string `json:"template,omitempty"`
 }
 
 type Query struct {
-	Sort string `json:"sort,omitempty"`
-
-	ExcludeTerms string `json:"excludeTerms,omitempty"`
-
 	Cx string `json:"cx,omitempty"`
 
 	Cr string `json:"cr,omitempty"`
@@ -269,6 +190,85 @@ type Query struct {
 	Gl string `json:"gl,omitempty"`
 
 	SearchTerms string `json:"searchTerms,omitempty"`
+
+	Sort string `json:"sort,omitempty"`
+
+	ExcludeTerms string `json:"excludeTerms,omitempty"`
+}
+
+type PromotionBodyLines struct {
+	Link string `json:"link,omitempty"`
+
+	Url string `json:"url,omitempty"`
+
+	Title string `json:"title,omitempty"`
+}
+
+type Context struct {
+	Title string `json:"title,omitempty"`
+
+	Facets [][]*ContextFacetsItem `json:"facets,omitempty"`
+}
+
+type Promotion struct {
+	BodyLines []*PromotionBodyLines `json:"bodyLines,omitempty"`
+
+	DisplayLink string `json:"displayLink,omitempty"`
+
+	Image *PromotionImage `json:"image,omitempty"`
+
+	Link string `json:"link,omitempty"`
+
+	Title string `json:"title,omitempty"`
+}
+
+type ResultPagemap struct {
+}
+
+type ResultLabels struct {
+	DisplayName string `json:"displayName,omitempty"`
+
+	Name string `json:"name,omitempty"`
+}
+
+type PromotionImage struct {
+	Height int64 `json:"height,omitempty"`
+
+	Width int64 `json:"width,omitempty"`
+
+	Source string `json:"source,omitempty"`
+}
+
+type SearchSearchInformation struct {
+	TotalResults int64 `json:"totalResults,omitempty,string"`
+
+	FormattedTotalResults string `json:"formattedTotalResults,omitempty"`
+
+	FormattedSearchTime string `json:"formattedSearchTime,omitempty"`
+
+	SearchTime float64 `json:"searchTime,omitempty"`
+}
+
+type SearchSpelling struct {
+	HtmlCorrectedQuery string `json:"htmlCorrectedQuery,omitempty"`
+
+	CorrectedQuery string `json:"correctedQuery,omitempty"`
+}
+
+type ResultImage struct {
+	ByteSize int64 `json:"byteSize,omitempty"`
+
+	ThumbnailHeight int64 `json:"thumbnailHeight,omitempty"`
+
+	ThumbnailWidth int64 `json:"thumbnailWidth,omitempty"`
+
+	ThumbnailLink string `json:"thumbnailLink,omitempty"`
+
+	Height int64 `json:"height,omitempty"`
+
+	Width int64 `json:"width,omitempty"`
+
+	ContextLink string `json:"contextLink,omitempty"`
 }
 
 // method id "search.cse.list":
@@ -284,6 +284,65 @@ type CseListCall struct {
 func (r *CseService) List(q string) *CseListCall {
 	c := &CseListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.q = q
+	return c
+}
+
+// Cref sets the optional parameter "cref": The URL of a linked custom
+// search engine
+func (c *CseListCall) Cref(cref string) *CseListCall {
+	c.opt_["cref"] = cref
+	return c
+}
+
+// LowRange sets the optional parameter "lowRange": Creates a range in
+// form as_nlo value..as_nhi value and attempts to append it to query
+func (c *CseListCall) LowRange(lowRange string) *CseListCall {
+	c.opt_["lowRange"] = lowRange
+	return c
+}
+
+// OrTerms sets the optional parameter "orTerms": Provides additional
+// search terms to check for in a document, where each document in the
+// search results must contain at least one of the additional search
+// terms
+func (c *CseListCall) OrTerms(orTerms string) *CseListCall {
+	c.opt_["orTerms"] = orTerms
+	return c
+}
+
+// SiteSearchFilter sets the optional parameter "siteSearchFilter":
+// Controls whether to include or exclude results from the site named in
+// the as_sitesearch parameter
+func (c *CseListCall) SiteSearchFilter(siteSearchFilter string) *CseListCall {
+	c.opt_["siteSearchFilter"] = siteSearchFilter
+	return c
+}
+
+// SearchType sets the optional parameter "searchType": Specifies the
+// search type: image.
+func (c *CseListCall) SearchType(searchType string) *CseListCall {
+	c.opt_["searchType"] = searchType
+	return c
+}
+
+// Gl sets the optional parameter "gl": Geolocation of end user.
+func (c *CseListCall) Gl(gl string) *CseListCall {
+	c.opt_["gl"] = gl
+	return c
+}
+
+// Sort sets the optional parameter "sort": The sort expression to apply
+// to the results
+func (c *CseListCall) Sort(sort string) *CseListCall {
+	c.opt_["sort"] = sort
+	return c
+}
+
+// ExcludeTerms sets the optional parameter "excludeTerms": Identifies a
+// word or phrase that should not appear in any documents in the search
+// results
+func (c *CseListCall) ExcludeTerms(excludeTerms string) *CseListCall {
+	c.opt_["excludeTerms"] = excludeTerms
 	return c
 }
 
@@ -452,70 +511,35 @@ func (c *CseListCall) Hl(hl string) *CseListCall {
 	return c
 }
 
-// Cref sets the optional parameter "cref": The URL of a linked custom
-// search engine
-func (c *CseListCall) Cref(cref string) *CseListCall {
-	c.opt_["cref"] = cref
-	return c
-}
-
-// LowRange sets the optional parameter "lowRange": Creates a range in
-// form as_nlo value..as_nhi value and attempts to append it to query
-func (c *CseListCall) LowRange(lowRange string) *CseListCall {
-	c.opt_["lowRange"] = lowRange
-	return c
-}
-
-// OrTerms sets the optional parameter "orTerms": Provides additional
-// search terms to check for in a document, where each document in the
-// search results must contain at least one of the additional search
-// terms
-func (c *CseListCall) OrTerms(orTerms string) *CseListCall {
-	c.opt_["orTerms"] = orTerms
-	return c
-}
-
-// SiteSearchFilter sets the optional parameter "siteSearchFilter":
-// Controls whether to include or exclude results from the site named in
-// the as_sitesearch parameter
-func (c *CseListCall) SiteSearchFilter(siteSearchFilter string) *CseListCall {
-	c.opt_["siteSearchFilter"] = siteSearchFilter
-	return c
-}
-
-// SearchType sets the optional parameter "searchType": Specifies the
-// search type: image.
-func (c *CseListCall) SearchType(searchType string) *CseListCall {
-	c.opt_["searchType"] = searchType
-	return c
-}
-
-// Gl sets the optional parameter "gl": Geolocation of end user.
-func (c *CseListCall) Gl(gl string) *CseListCall {
-	c.opt_["gl"] = gl
-	return c
-}
-
-// Sort sets the optional parameter "sort": The sort expression to apply
-// to the results
-func (c *CseListCall) Sort(sort string) *CseListCall {
-	c.opt_["sort"] = sort
-	return c
-}
-
-// ExcludeTerms sets the optional parameter "excludeTerms": Identifies a
-// word or phrase that should not appear in any documents in the search
-// results
-func (c *CseListCall) ExcludeTerms(excludeTerms string) *CseListCall {
-	c.opt_["excludeTerms"] = excludeTerms
-	return c
-}
-
 func (c *CseListCall) Do() (*Search, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("q", fmt.Sprintf("%v", c.q))
+	if v, ok := c.opt_["cref"]; ok {
+		params.Set("cref", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["lowRange"]; ok {
+		params.Set("lowRange", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["orTerms"]; ok {
+		params.Set("orTerms", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["siteSearchFilter"]; ok {
+		params.Set("siteSearchFilter", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["searchType"]; ok {
+		params.Set("searchType", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["gl"]; ok {
+		params.Set("gl", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["sort"]; ok {
+		params.Set("sort", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["excludeTerms"]; ok {
+		params.Set("excludeTerms", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["cx"]; ok {
 		params.Set("cx", fmt.Sprintf("%v", v))
 	}
@@ -584,30 +608,6 @@ func (c *CseListCall) Do() (*Search, error) {
 	}
 	if v, ok := c.opt_["hl"]; ok {
 		params.Set("hl", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["cref"]; ok {
-		params.Set("cref", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["lowRange"]; ok {
-		params.Set("lowRange", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["orTerms"]; ok {
-		params.Set("orTerms", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["siteSearchFilter"]; ok {
-		params.Set("siteSearchFilter", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["searchType"]; ok {
-		params.Set("searchType", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["gl"]; ok {
-		params.Set("gl", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["sort"]; ok {
-		params.Set("sort", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["excludeTerms"]; ok {
-		params.Set("excludeTerms", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/customsearch/", "v1")
 	urls += "?" + params.Encode()

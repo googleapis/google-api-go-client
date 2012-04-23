@@ -38,11 +38,11 @@ const basePath = "https://www.googleapis.com/siteVerification/v1/"
 
 // OAuth2 scopes used by this API.
 const (
-	// Manage your new site verifications with Google
-	SiteverificationVerify_onlyScope = "https://www.googleapis.com/auth/siteverification.verify_only"
-
 	// Manage the list of sites and domains you control
 	SiteverificationScope = "https://www.googleapis.com/auth/siteverification"
+
+	// Manage your new site verifications with Google
+	SiteverificationVerify_onlyScope = "https://www.googleapis.com/auth/siteverification.verify_only"
 )
 
 func New(client *http.Client) (*Service, error) {
@@ -65,10 +65,6 @@ type WebResourceService struct {
 }
 
 type SiteVerificationWebResourceGettokenResponse struct {
-	// Token: The verification token. The token must be placed appropriately
-	// in order for verification to succeed.
-	Token string `json:"token,omitempty"`
-
 	// Method: The verification method to use in conjunction with this
 	// token. For FILE, the token should be placed in the top-level
 	// directory of the site, stored inside a file of the same name. For
@@ -76,6 +72,10 @@ type SiteVerificationWebResourceGettokenResponse struct {
 	// that is loaded for the site. For DNS, the token should be placed in a
 	// TXT record of the domain.
 	Method string `json:"method,omitempty"`
+
+	// Token: The verification token. The token must be placed appropriately
+	// in order for verification to succeed.
+	Token string `json:"token,omitempty"`
 }
 
 type SiteVerificationWebResourceGettokenRequest struct {
@@ -105,13 +105,13 @@ type SiteVerificationWebResourceGettokenRequestSite struct {
 }
 
 type SiteVerificationWebResourceResourceSite struct {
+	// Type: The site type. Can be SITE or INET_DOMAIN (domain name).
+	Type string `json:"type,omitempty"`
+
 	// Identifier: The site identifier. If the type is set to SITE, the
 	// identifier is a URL. If the type is set to INET_DOMAIN, the site
 	// identifier is a domain name.
 	Identifier string `json:"identifier,omitempty"`
-
-	// Type: The site type. Can be SITE or INET_DOMAIN (domain name).
-	Type string `json:"type,omitempty"`
 }
 
 type SiteVerificationWebResourceResource struct {

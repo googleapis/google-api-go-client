@@ -68,281 +68,7 @@ type DataService struct {
 	s *Service
 }
 
-type Segment struct {
-	// SegmentId: Segment ID. Can be used with the 'segment' parameter in
-	// Data Feed.
-	SegmentId string `json:"segmentId,omitempty"`
-
-	// SelfLink: Link for this advanced segment.
-	SelfLink string `json:"selfLink,omitempty"`
-
-	// Name: Advanced segment name.
-	Name string `json:"name,omitempty"`
-
-	// Kind: Resource type for Analytics advanced segment.
-	Kind string `json:"kind,omitempty"`
-
-	// Updated: Time the advanced segment was last modified.
-	Updated string `json:"updated,omitempty"`
-
-	// Id: Advanced segment ID.
-	Id string `json:"id,omitempty"`
-
-	// Created: Time the advanced segment was created.
-	Created string `json:"created,omitempty"`
-
-	// Definition: Advanced segment definition.
-	Definition string `json:"definition,omitempty"`
-}
-
-type WebpropertyChildLink struct {
-	// Href: Link to the list of profiles for this web property.
-	Href string `json:"href,omitempty"`
-
-	// Type: Type of the parent link. Its value is "analytics#profiles".
-	Type string `json:"type,omitempty"`
-}
-
-type Goals struct {
-	// ItemsPerPage: The maximum number of resources the response can
-	// contain, regardless of the actual number of resources returned. Its
-	// value ranges from 1 to 10,000 with a value of 1000 by default, or
-	// otherwise specified by the max-results query parameter.
-	ItemsPerPage int64 `json:"itemsPerPage,omitempty"`
-
-	// PreviousLink: Link to previous page for this goal collection.
-	PreviousLink string `json:"previousLink,omitempty"`
-
-	// StartIndex: The starting index of the resources, which is 1 by
-	// default or otherwise specified by the start-index query parameter.
-	StartIndex int64 `json:"startIndex,omitempty"`
-
-	// NextLink: Link to next page for this goal collection.
-	NextLink string `json:"nextLink,omitempty"`
-
-	// TotalResults: The total number of results for the query, regardless
-	// of the number of resources in the result.
-	TotalResults int64 `json:"totalResults,omitempty"`
-
-	// Items: A list of goals.
-	Items []*Goal `json:"items,omitempty"`
-
-	// Username: Email ID of the authenticated user
-	Username string `json:"username,omitempty"`
-
-	// Kind: Collection type.
-	Kind string `json:"kind,omitempty"`
-}
-
-type GaDataTotalsForAllResults struct {
-}
-
-type Profiles struct {
-	// Items: A list of profiles.
-	Items []*Profile `json:"items,omitempty"`
-
-	// Username: Email ID of the authenticated user
-	Username string `json:"username,omitempty"`
-
-	// Kind: Collection type.
-	Kind string `json:"kind,omitempty"`
-
-	// ItemsPerPage: The maximum number of resources the response can
-	// contain, regardless of the actual number of resources returned. Its
-	// value ranges from 1 to 10,000 with a value of 1000 by default, or
-	// otherwise specified by the max-results query parameter.
-	ItemsPerPage int64 `json:"itemsPerPage,omitempty"`
-
-	// PreviousLink: Link to previous page for this profile collection.
-	PreviousLink string `json:"previousLink,omitempty"`
-
-	// StartIndex: The starting index of the resources, which is 1 by
-	// default or otherwise specified by the start-index query parameter.
-	StartIndex int64 `json:"startIndex,omitempty"`
-
-	// NextLink: Link to next page for this profile collection.
-	NextLink string `json:"nextLink,omitempty"`
-
-	// TotalResults: The total number of results for the query, regardless
-	// of the number of results in the response.
-	TotalResults int64 `json:"totalResults,omitempty"`
-}
-
-type GaData struct {
-	// Rows: Analytics data rows, where each row contains a list of
-	// dimension values followed by the metric values. The order of
-	// dimensions and metrics is same as specified in the request.
-	Rows [][]string `json:"rows,omitempty"`
-
-	// TotalsForAllResults: Total values for the requested metrics over all
-	// the results, not just the results returned in this response. The
-	// order of the metric totals is same as the metric order specified in
-	// the request.
-	TotalsForAllResults *GaDataTotalsForAllResults `json:"totalsForAllResults,omitempty"`
-
-	// Query: Analytics data request query parameters.
-	Query *GaDataQuery `json:"query,omitempty"`
-
-	// ProfileInfo: Information for the profile, for which the Analytics
-	// data was requested.
-	ProfileInfo *GaDataProfileInfo `json:"profileInfo,omitempty"`
-
-	// ItemsPerPage: The maximum number of rows the response can contain,
-	// regardless of the actual number of rows returned. Its value ranges
-	// from 1 to 10,000 with a value of 1000 by default, or otherwise
-	// specified by the max-results query parameter.
-	ItemsPerPage int64 `json:"itemsPerPage,omitempty"`
-
-	// PreviousLink: Link to previous page for this Analytics data query.
-	PreviousLink string `json:"previousLink,omitempty"`
-
-	// ContainsSampledData: Determines if Analytics data contains samples.
-	ContainsSampledData bool `json:"containsSampledData,omitempty"`
-
-	// SelfLink: Link to this page.
-	SelfLink string `json:"selfLink,omitempty"`
-
-	// NextLink: Link to next page for this Analytics data query.
-	NextLink string `json:"nextLink,omitempty"`
-
-	// TotalResults: The total number of rows for the query, regardless of
-	// the number of rows in the response.
-	TotalResults int64 `json:"totalResults,omitempty"`
-
-	// Kind: Resource type.
-	Kind string `json:"kind,omitempty"`
-
-	// ColumnHeaders: Column headers that list dimension names followed by
-	// the metric names. The order of dimensions and metrics is same as
-	// specified in the request.
-	ColumnHeaders []*GaDataColumnHeaders `json:"columnHeaders,omitempty"`
-
-	// Id: Unique ID for this data response.
-	Id string `json:"id,omitempty"`
-}
-
-type Profile struct {
-	// ChildLink: Child link for this profile. Points to the list of goals
-	// for this profile.
-	ChildLink *ProfileChildLink `json:"childLink,omitempty"`
-
-	// ExcludeQueryParameters: The query parameters that are excluded from
-	// this profile.
-	ExcludeQueryParameters string `json:"excludeQueryParameters,omitempty"`
-
-	// Timezone: Time zone for which this profile has been configured.
-	Timezone string `json:"timezone,omitempty"`
-
-	// DefaultPage: Default page for this profile.
-	DefaultPage string `json:"defaultPage,omitempty"`
-
-	// SelfLink: Link for this profile.
-	SelfLink string `json:"selfLink,omitempty"`
-
-	// Currency: The currency type associated with this profile.
-	Currency string `json:"currency,omitempty"`
-
-	// ParentLink: Parent link for this profile. Points to the web property
-	// to which this profile belongs.
-	ParentLink *ProfileParentLink `json:"parentLink,omitempty"`
-
-	// Name: Name of this profile.
-	Name string `json:"name,omitempty"`
-
-	// AccountId: Account ID to which this profile belongs.
-	AccountId string `json:"accountId,omitempty"`
-
-	// SiteSearchQueryParameters: The site search query parameters for this
-	// profile.
-	SiteSearchQueryParameters string `json:"siteSearchQueryParameters,omitempty"`
-
-	// Kind: Resource type for Analytics profile.
-	Kind string `json:"kind,omitempty"`
-
-	// Updated: Time this profile was last modified.
-	Updated string `json:"updated,omitempty"`
-
-	// WebPropertyId: Web property ID of the form UA-XXXXX-YY to which this
-	// profile belongs.
-	WebPropertyId string `json:"webPropertyId,omitempty"`
-
-	// SiteSearchCategoryParameters: Site search category parameters for
-	// this profile.
-	SiteSearchCategoryParameters string `json:"siteSearchCategoryParameters,omitempty"`
-
-	// Id: Profile ID.
-	Id string `json:"id,omitempty"`
-
-	// Created: Time this profile was created.
-	Created string `json:"created,omitempty"`
-
-	// InternalWebPropertyId: Internal ID for the web property to which this
-	// profile belongs.
-	InternalWebPropertyId string `json:"internalWebPropertyId,omitempty"`
-}
-
-type ProfileParentLink struct {
-	// Type: Value is "analytics#webproperty".
-	Type string `json:"type,omitempty"`
-
-	// Href: Link to the web property to which this profile belongs.
-	Href string `json:"href,omitempty"`
-}
-
-type GoalVisitNumPagesDetails struct {
-	// ComparisonValue: Value used for this comparison.
-	ComparisonValue int64 `json:"comparisonValue,omitempty,string"`
-
-	// ComparisonType: Type of comparison. Possible values are LESS_THAN,
-	// GREATER_THAN, or EQUAL.
-	ComparisonType string `json:"comparisonType,omitempty"`
-}
-
-type ProfileChildLink struct {
-	// Href: Link to the list of goals for this profile.
-	Href string `json:"href,omitempty"`
-
-	// Type: Value is "analytics#goals".
-	Type string `json:"type,omitempty"`
-}
-
-type GaDataQuery struct {
-	// Metrics: List of analytics metrics.
-	Metrics []string `json:"metrics,omitempty"`
-
-	// Filters: Comma-separated list of dimension or metric filters.
-	Filters string `json:"filters,omitempty"`
-
-	// EndDate: End date.
-	EndDate string `json:"end-date,omitempty"`
-
-	// Segment: Analytics advanced segment.
-	Segment string `json:"segment,omitempty"`
-
-	// StartDate: Start date.
-	StartDate string `json:"start-date,omitempty"`
-
-	// Sort: List of dimensions or metrics based on which Analytics data is
-	// sorted.
-	Sort []string `json:"sort,omitempty"`
-
-	// Dimensions: List of analytics dimensions.
-	Dimensions string `json:"dimensions,omitempty"`
-
-	// StartIndex: Start index.
-	StartIndex int64 `json:"start-index,omitempty"`
-
-	// Ids: Unique table ID.
-	Ids string `json:"ids,omitempty"`
-
-	// MaxResults: Maximum results per page.
-	MaxResults int64 `json:"max-results,omitempty"`
-}
-
 type GaDataProfileInfo struct {
-	// ProfileId: Profile ID.
-	ProfileId string `json:"profileId,omitempty"`
-
 	// AccountId: Account ID to which this profile belongs.
 	AccountId string `json:"accountId,omitempty"`
 
@@ -358,9 +84,23 @@ type GaDataProfileInfo struct {
 
 	// ProfileName: Profile name.
 	ProfileName string `json:"profileName,omitempty"`
+
+	// ProfileId: Profile ID.
+	ProfileId string `json:"profileId,omitempty"`
 }
 
 type Webproperty struct {
+	// ChildLink: Child link for this web property. Points to the list of
+	// profiles for this web property.
+	ChildLink *WebpropertyChildLink `json:"childLink,omitempty"`
+
+	// SelfLink: Link for this web property.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// ParentLink: Parent link for this web property. Points to the account
+	// to which this web property belongs.
+	ParentLink *WebpropertyParentLink `json:"parentLink,omitempty"`
+
 	// Name: Name of this web property.
 	Name string `json:"name,omitempty"`
 
@@ -384,17 +124,6 @@ type Webproperty struct {
 
 	// InternalWebPropertyId: Internal ID for this web property.
 	InternalWebPropertyId string `json:"internalWebPropertyId,omitempty"`
-
-	// ChildLink: Child link for this web property. Points to the list of
-	// profiles for this web property.
-	ChildLink *WebpropertyChildLink `json:"childLink,omitempty"`
-
-	// SelfLink: Link for this web property.
-	SelfLink string `json:"selfLink,omitempty"`
-
-	// ParentLink: Parent link for this web property. Points to the account
-	// to which this web property belongs.
-	ParentLink *WebpropertyParentLink `json:"parentLink,omitempty"`
 }
 
 type GoalUrlDestinationDetails struct {
@@ -418,15 +147,6 @@ type GoalUrlDestinationDetails struct {
 }
 
 type Accounts struct {
-	// Items: A list of accounts.
-	Items []*Account `json:"items,omitempty"`
-
-	// Username: Email ID of the authenticated user
-	Username string `json:"username,omitempty"`
-
-	// Kind: Collection type.
-	Kind string `json:"kind,omitempty"`
-
 	// ItemsPerPage: The maximum number of entries the response can contain,
 	// regardless of the actual number of entries returned. Its value ranges
 	// from 1 to 10,000 with a value of 1000 by default, or otherwise
@@ -446,29 +166,44 @@ type Accounts struct {
 	// TotalResults: The total number of results for the query, regardless
 	// of the number of results in the response.
 	TotalResults int64 `json:"totalResults,omitempty"`
+
+	// Items: A list of accounts.
+	Items []*Account `json:"items,omitempty"`
+
+	// Username: Email ID of the authenticated user
+	Username string `json:"username,omitempty"`
+
+	// Kind: Collection type.
+	Kind string `json:"kind,omitempty"`
 }
 
 type GoalEventDetails struct {
+	// EventConditions: List of event conditions.
+	EventConditions []*GoalEventDetailsEventConditions `json:"eventConditions,omitempty"`
+
 	// UseEventValue: Determines if the event value should be used as the
 	// value for this goal.
 	UseEventValue bool `json:"useEventValue,omitempty"`
-
-	// EventConditions: List of event conditions.
-	EventConditions []*GoalEventDetailsEventConditions `json:"eventConditions,omitempty"`
 }
 
 type GoalUrlDestinationDetailsSteps struct {
+	// Name: Step name.
+	Name string `json:"name,omitempty"`
+
 	// Url: URL for this step.
 	Url string `json:"url,omitempty"`
 
 	// Number: Step number.
 	Number int64 `json:"number,omitempty"`
-
-	// Name: Step name.
-	Name string `json:"name,omitempty"`
 }
 
 type Segments struct {
+	// ItemsPerPage: The maximum number of resources the response can
+	// contain, regardless of the actual number of resources returned. Its
+	// value ranges from 1 to 10,000 with a value of 1000 by default, or
+	// otherwise specified by the max-results query parameter.
+	ItemsPerPage int64 `json:"itemsPerPage,omitempty"`
+
 	// PreviousLink: Link to previous page for this advanced segment
 	// collection.
 	PreviousLink string `json:"previousLink,omitempty"`
@@ -492,12 +227,6 @@ type Segments struct {
 
 	// Kind: Collection type for advanced segments.
 	Kind string `json:"kind,omitempty"`
-
-	// ItemsPerPage: The maximum number of resources the response can
-	// contain, regardless of the actual number of resources returned. Its
-	// value ranges from 1 to 10,000 with a value of 1000 by default, or
-	// otherwise specified by the max-results query parameter.
-	ItemsPerPage int64 `json:"itemsPerPage,omitempty"`
 }
 
 type GaDataColumnHeaders struct {
@@ -514,6 +243,15 @@ type GaDataColumnHeaders struct {
 }
 
 type Webproperties struct {
+	// Items: A list of web properties.
+	Items []*Webproperty `json:"items,omitempty"`
+
+	// Username: Email ID of the authenticated user
+	Username string `json:"username,omitempty"`
+
+	// Kind: Collection type.
+	Kind string `json:"kind,omitempty"`
+
 	// ItemsPerPage: The maximum number of resources the response can
 	// contain, regardless of the actual number of resources returned. Its
 	// value ranges from 1 to 10,000 with a value of 1000 by default, or
@@ -533,15 +271,6 @@ type Webproperties struct {
 	// TotalResults: The total number of results for the query, regardless
 	// of the number of results in the response.
 	TotalResults int64 `json:"totalResults,omitempty"`
-
-	// Items: A list of web properties.
-	Items []*Webproperty `json:"items,omitempty"`
-
-	// Username: Email ID of the authenticated user
-	Username string `json:"username,omitempty"`
-
-	// Kind: Collection type.
-	Kind string `json:"kind,omitempty"`
 }
 
 type Goal struct {
@@ -645,11 +374,11 @@ type WebpropertyParentLink struct {
 }
 
 type GoalParentLink struct {
-	// Href: Link to the profile to which this goal belongs.
-	Href string `json:"href,omitempty"`
-
 	// Type: Value is "analytics#profile".
 	Type string `json:"type,omitempty"`
+
+	// Href: Link to the profile to which this goal belongs.
+	Href string `json:"href,omitempty"`
 }
 
 type AccountChildLink struct {
@@ -661,6 +390,10 @@ type AccountChildLink struct {
 }
 
 type Account struct {
+	// ChildLink: Child link for an account entry. Points to the list of web
+	// properties for this account.
+	ChildLink *AccountChildLink `json:"childLink,omitempty"`
+
 	// SelfLink: Link for this account.
 	SelfLink string `json:"selfLink,omitempty"`
 
@@ -678,10 +411,277 @@ type Account struct {
 
 	// Created: Time the account was created.
 	Created string `json:"created,omitempty"`
+}
 
-	// ChildLink: Child link for an account entry. Points to the list of web
-	// properties for this account.
-	ChildLink *AccountChildLink `json:"childLink,omitempty"`
+type Segment struct {
+	// Kind: Resource type for Analytics advanced segment.
+	Kind string `json:"kind,omitempty"`
+
+	// Updated: Time the advanced segment was last modified.
+	Updated string `json:"updated,omitempty"`
+
+	// Id: Advanced segment ID.
+	Id string `json:"id,omitempty"`
+
+	// Created: Time the advanced segment was created.
+	Created string `json:"created,omitempty"`
+
+	// Definition: Advanced segment definition.
+	Definition string `json:"definition,omitempty"`
+
+	// SegmentId: Segment ID. Can be used with the 'segment' parameter in
+	// Data Feed.
+	SegmentId string `json:"segmentId,omitempty"`
+
+	// SelfLink: Link for this advanced segment.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// Name: Advanced segment name.
+	Name string `json:"name,omitempty"`
+}
+
+type WebpropertyChildLink struct {
+	// Href: Link to the list of profiles for this web property.
+	Href string `json:"href,omitempty"`
+
+	// Type: Type of the parent link. Its value is "analytics#profiles".
+	Type string `json:"type,omitempty"`
+}
+
+type Goals struct {
+	// Items: A list of goals.
+	Items []*Goal `json:"items,omitempty"`
+
+	// Username: Email ID of the authenticated user
+	Username string `json:"username,omitempty"`
+
+	// Kind: Collection type.
+	Kind string `json:"kind,omitempty"`
+
+	// ItemsPerPage: The maximum number of resources the response can
+	// contain, regardless of the actual number of resources returned. Its
+	// value ranges from 1 to 10,000 with a value of 1000 by default, or
+	// otherwise specified by the max-results query parameter.
+	ItemsPerPage int64 `json:"itemsPerPage,omitempty"`
+
+	// PreviousLink: Link to previous page for this goal collection.
+	PreviousLink string `json:"previousLink,omitempty"`
+
+	// StartIndex: The starting index of the resources, which is 1 by
+	// default or otherwise specified by the start-index query parameter.
+	StartIndex int64 `json:"startIndex,omitempty"`
+
+	// NextLink: Link to next page for this goal collection.
+	NextLink string `json:"nextLink,omitempty"`
+
+	// TotalResults: The total number of results for the query, regardless
+	// of the number of resources in the result.
+	TotalResults int64 `json:"totalResults,omitempty"`
+}
+
+type GaDataTotalsForAllResults struct {
+}
+
+type Profiles struct {
+	// ItemsPerPage: The maximum number of resources the response can
+	// contain, regardless of the actual number of resources returned. Its
+	// value ranges from 1 to 10,000 with a value of 1000 by default, or
+	// otherwise specified by the max-results query parameter.
+	ItemsPerPage int64 `json:"itemsPerPage,omitempty"`
+
+	// PreviousLink: Link to previous page for this profile collection.
+	PreviousLink string `json:"previousLink,omitempty"`
+
+	// StartIndex: The starting index of the resources, which is 1 by
+	// default or otherwise specified by the start-index query parameter.
+	StartIndex int64 `json:"startIndex,omitempty"`
+
+	// NextLink: Link to next page for this profile collection.
+	NextLink string `json:"nextLink,omitempty"`
+
+	// TotalResults: The total number of results for the query, regardless
+	// of the number of results in the response.
+	TotalResults int64 `json:"totalResults,omitempty"`
+
+	// Items: A list of profiles.
+	Items []*Profile `json:"items,omitempty"`
+
+	// Username: Email ID of the authenticated user
+	Username string `json:"username,omitempty"`
+
+	// Kind: Collection type.
+	Kind string `json:"kind,omitempty"`
+}
+
+type GaData struct {
+	// TotalsForAllResults: Total values for the requested metrics over all
+	// the results, not just the results returned in this response. The
+	// order of the metric totals is same as the metric order specified in
+	// the request.
+	TotalsForAllResults *GaDataTotalsForAllResults `json:"totalsForAllResults,omitempty"`
+
+	// Query: Analytics data request query parameters.
+	Query *GaDataQuery `json:"query,omitempty"`
+
+	// ProfileInfo: Information for the profile, for which the Analytics
+	// data was requested.
+	ProfileInfo *GaDataProfileInfo `json:"profileInfo,omitempty"`
+
+	// ItemsPerPage: The maximum number of rows the response can contain,
+	// regardless of the actual number of rows returned. Its value ranges
+	// from 1 to 10,000 with a value of 1000 by default, or otherwise
+	// specified by the max-results query parameter.
+	ItemsPerPage int64 `json:"itemsPerPage,omitempty"`
+
+	// PreviousLink: Link to previous page for this Analytics data query.
+	PreviousLink string `json:"previousLink,omitempty"`
+
+	// ContainsSampledData: Determines if Analytics data contains samples.
+	ContainsSampledData bool `json:"containsSampledData,omitempty"`
+
+	// SelfLink: Link to this page.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// NextLink: Link to next page for this Analytics data query.
+	NextLink string `json:"nextLink,omitempty"`
+
+	// TotalResults: The total number of rows for the query, regardless of
+	// the number of rows in the response.
+	TotalResults int64 `json:"totalResults,omitempty"`
+
+	// Kind: Resource type.
+	Kind string `json:"kind,omitempty"`
+
+	// ColumnHeaders: Column headers that list dimension names followed by
+	// the metric names. The order of dimensions and metrics is same as
+	// specified in the request.
+	ColumnHeaders []*GaDataColumnHeaders `json:"columnHeaders,omitempty"`
+
+	// Id: Unique ID for this data response.
+	Id string `json:"id,omitempty"`
+
+	// Rows: Analytics data rows, where each row contains a list of
+	// dimension values followed by the metric values. The order of
+	// dimensions and metrics is same as specified in the request.
+	Rows [][]string `json:"rows,omitempty"`
+}
+
+type Profile struct {
+	// Name: Name of this profile.
+	Name string `json:"name,omitempty"`
+
+	// AccountId: Account ID to which this profile belongs.
+	AccountId string `json:"accountId,omitempty"`
+
+	// SiteSearchQueryParameters: The site search query parameters for this
+	// profile.
+	SiteSearchQueryParameters string `json:"siteSearchQueryParameters,omitempty"`
+
+	// Kind: Resource type for Analytics profile.
+	Kind string `json:"kind,omitempty"`
+
+	// Updated: Time this profile was last modified.
+	Updated string `json:"updated,omitempty"`
+
+	// WebPropertyId: Web property ID of the form UA-XXXXX-YY to which this
+	// profile belongs.
+	WebPropertyId string `json:"webPropertyId,omitempty"`
+
+	// SiteSearchCategoryParameters: Site search category parameters for
+	// this profile.
+	SiteSearchCategoryParameters string `json:"siteSearchCategoryParameters,omitempty"`
+
+	// Id: Profile ID.
+	Id string `json:"id,omitempty"`
+
+	// Created: Time this profile was created.
+	Created string `json:"created,omitempty"`
+
+	// InternalWebPropertyId: Internal ID for the web property to which this
+	// profile belongs.
+	InternalWebPropertyId string `json:"internalWebPropertyId,omitempty"`
+
+	// ChildLink: Child link for this profile. Points to the list of goals
+	// for this profile.
+	ChildLink *ProfileChildLink `json:"childLink,omitempty"`
+
+	// ExcludeQueryParameters: The query parameters that are excluded from
+	// this profile.
+	ExcludeQueryParameters string `json:"excludeQueryParameters,omitempty"`
+
+	// Timezone: Time zone for which this profile has been configured.
+	Timezone string `json:"timezone,omitempty"`
+
+	// DefaultPage: Default page for this profile.
+	DefaultPage string `json:"defaultPage,omitempty"`
+
+	// SelfLink: Link for this profile.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// Currency: The currency type associated with this profile.
+	Currency string `json:"currency,omitempty"`
+
+	// ParentLink: Parent link for this profile. Points to the web property
+	// to which this profile belongs.
+	ParentLink *ProfileParentLink `json:"parentLink,omitempty"`
+}
+
+type ProfileParentLink struct {
+	// Type: Value is "analytics#webproperty".
+	Type string `json:"type,omitempty"`
+
+	// Href: Link to the web property to which this profile belongs.
+	Href string `json:"href,omitempty"`
+}
+
+type GoalVisitNumPagesDetails struct {
+	// ComparisonValue: Value used for this comparison.
+	ComparisonValue int64 `json:"comparisonValue,omitempty,string"`
+
+	// ComparisonType: Type of comparison. Possible values are LESS_THAN,
+	// GREATER_THAN, or EQUAL.
+	ComparisonType string `json:"comparisonType,omitempty"`
+}
+
+type ProfileChildLink struct {
+	// Href: Link to the list of goals for this profile.
+	Href string `json:"href,omitempty"`
+
+	// Type: Value is "analytics#goals".
+	Type string `json:"type,omitempty"`
+}
+
+type GaDataQuery struct {
+	// Metrics: List of analytics metrics.
+	Metrics []string `json:"metrics,omitempty"`
+
+	// Filters: Comma-separated list of dimension or metric filters.
+	Filters string `json:"filters,omitempty"`
+
+	// EndDate: End date.
+	EndDate string `json:"end-date,omitempty"`
+
+	// Segment: Analytics advanced segment.
+	Segment string `json:"segment,omitempty"`
+
+	// StartDate: Start date.
+	StartDate string `json:"start-date,omitempty"`
+
+	// Sort: List of dimensions or metrics based on which Analytics data is
+	// sorted.
+	Sort []string `json:"sort,omitempty"`
+
+	// Dimensions: List of analytics dimensions.
+	Dimensions string `json:"dimensions,omitempty"`
+
+	// StartIndex: Start index.
+	StartIndex int64 `json:"start-index,omitempty"`
+
+	// Ids: Unique table ID.
+	Ids string `json:"ids,omitempty"`
+
+	// MaxResults: Maximum results per page.
+	MaxResults int64 `json:"max-results,omitempty"`
 }
 
 func cleanPathString(s string) string {

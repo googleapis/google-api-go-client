@@ -92,13 +92,6 @@ func (r *DataService) Get(ids string, startDate string, endDate string, metrics 
 	return c
 }
 
-// Segment sets the optional parameter "segment": An Analytics advanced
-// segment to be applied to the report data.
-func (c *DataGetCall) Segment(segment string) *DataGetCall {
-	c.opt_["segment"] = segment
-	return c
-}
-
 // Sort sets the optional parameter "sort": A comma-separated list of
 // dimensions or metrics that determine the sort order for the report
 // data.
@@ -137,17 +130,21 @@ func (c *DataGetCall) Filters(filters string) *DataGetCall {
 	return c
 }
 
+// Segment sets the optional parameter "segment": An Analytics advanced
+// segment to be applied to the report data.
+func (c *DataGetCall) Segment(segment string) *DataGetCall {
+	c.opt_["segment"] = segment
+	return c
+}
+
 func (c *DataGetCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	params.Set("start-date", fmt.Sprintf("%v", c.startDate))
 	params.Set("ids", fmt.Sprintf("%v", c.ids))
 	params.Set("metrics", fmt.Sprintf("%v", c.metrics))
 	params.Set("end-date", fmt.Sprintf("%v", c.endDate))
-	if v, ok := c.opt_["segment"]; ok {
-		params.Set("segment", fmt.Sprintf("%v", v))
-	}
+	params.Set("start-date", fmt.Sprintf("%v", c.startDate))
 	if v, ok := c.opt_["sort"]; ok {
 		params.Set("sort", fmt.Sprintf("%v", v))
 	}
@@ -162,6 +159,9 @@ func (c *DataGetCall) Do() error {
 	}
 	if v, ok := c.opt_["filters"]; ok {
 		params.Set("filters", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["segment"]; ok {
+		params.Set("segment", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v2.4/", "data")
 	urls += "?" + params.Encode()

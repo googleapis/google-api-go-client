@@ -127,68 +127,6 @@ type LocationFeed struct {
 	Kind string `json:"kind,omitempty"`
 }
 
-// method id "latitude.currentLocation.insert":
-
-type CurrentLocationInsertCall struct {
-	s                                   *Service
-	latitudecurrentlocationresourcejson *LatitudeCurrentlocationResourceJson
-	opt_                                map[string]interface{}
-}
-
-// Insert: Updates or creates the user's current location.
-func (r *CurrentLocationService) Insert(latitudecurrentlocationresourcejson *LatitudeCurrentlocationResourceJson) *CurrentLocationInsertCall {
-	c := &CurrentLocationInsertCall{s: r.s, opt_: make(map[string]interface{})}
-	c.latitudecurrentlocationresourcejson = latitudecurrentlocationresourcejson
-	return c
-}
-
-func (c *CurrentLocationInsertCall) Do() (*LatitudeCurrentlocationResourceJson, error) {
-	var body io.Reader = nil
-	body, err := googleapi.WithDataWrapper.JSONReader(c.latitudecurrentlocationresourcejson)
-	if err != nil {
-		return nil, err
-	}
-	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/latitude/v1/", "currentLocation")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("POST", urls, body)
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(LatitudeCurrentlocationResourceJson)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Updates or creates the user's current location.",
-	//   "httpMethod": "POST",
-	//   "id": "latitude.currentLocation.insert",
-	//   "path": "currentLocation",
-	//   "request": {
-	//     "$ref": "LatitudeCurrentlocationResourceJson"
-	//   },
-	//   "response": {
-	//     "$ref": "LatitudeCurrentlocationResourceJson"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/latitude.all.best",
-	//     "https://www.googleapis.com/auth/latitude.all.city",
-	//     "https://www.googleapis.com/auth/latitude.current.best",
-	//     "https://www.googleapis.com/auth/latitude.current.city"
-	//   ]
-	// }
-
-}
-
 // method id "latitude.currentLocation.get":
 
 type CurrentLocationGetCall struct {
@@ -301,6 +239,68 @@ func (c *CurrentLocationDeleteCall) Do() error {
 
 }
 
+// method id "latitude.currentLocation.insert":
+
+type CurrentLocationInsertCall struct {
+	s                                   *Service
+	latitudecurrentlocationresourcejson *LatitudeCurrentlocationResourceJson
+	opt_                                map[string]interface{}
+}
+
+// Insert: Updates or creates the user's current location.
+func (r *CurrentLocationService) Insert(latitudecurrentlocationresourcejson *LatitudeCurrentlocationResourceJson) *CurrentLocationInsertCall {
+	c := &CurrentLocationInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.latitudecurrentlocationresourcejson = latitudecurrentlocationresourcejson
+	return c
+}
+
+func (c *CurrentLocationInsertCall) Do() (*LatitudeCurrentlocationResourceJson, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithDataWrapper.JSONReader(c.latitudecurrentlocationresourcejson)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/latitude/v1/", "currentLocation")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(LatitudeCurrentlocationResourceJson)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates or creates the user's current location.",
+	//   "httpMethod": "POST",
+	//   "id": "latitude.currentLocation.insert",
+	//   "path": "currentLocation",
+	//   "request": {
+	//     "$ref": "LatitudeCurrentlocationResourceJson"
+	//   },
+	//   "response": {
+	//     "$ref": "LatitudeCurrentlocationResourceJson"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/latitude.all.best",
+	//     "https://www.googleapis.com/auth/latitude.all.city",
+	//     "https://www.googleapis.com/auth/latitude.current.best",
+	//     "https://www.googleapis.com/auth/latitude.current.city"
+	//   ]
+	// }
+
+}
+
 // method id "latitude.location.list":
 
 type LocationListCall struct {
@@ -311,6 +311,13 @@ type LocationListCall struct {
 // List: Lists the user's location history.
 func (r *LocationService) List() *LocationListCall {
 	c := &LocationListCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+// MinTime sets the optional parameter "min-time": Minimum timestamp of
+// locations to return (ms since epoch).
+func (c *LocationListCall) MinTime(minTime string) *LocationListCall {
+	c.opt_["min-time"] = minTime
 	return c
 }
 
@@ -335,17 +342,13 @@ func (c *LocationListCall) MaxTime(maxTime string) *LocationListCall {
 	return c
 }
 
-// MinTime sets the optional parameter "min-time": Minimum timestamp of
-// locations to return (ms since epoch).
-func (c *LocationListCall) MinTime(minTime string) *LocationListCall {
-	c.opt_["min-time"] = minTime
-	return c
-}
-
 func (c *LocationListCall) Do() (*LocationFeed, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["min-time"]; ok {
+		params.Set("min-time", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["max-results"]; ok {
 		params.Set("max-results", fmt.Sprintf("%v", v))
 	}
@@ -354,9 +357,6 @@ func (c *LocationListCall) Do() (*LocationFeed, error) {
 	}
 	if v, ok := c.opt_["max-time"]; ok {
 		params.Set("max-time", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["min-time"]; ok {
-		params.Set("min-time", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/latitude/v1/", "location")
 	urls += "?" + params.Encode()

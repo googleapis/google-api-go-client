@@ -38,6 +38,9 @@ const basePath = "https://www.googleapis.com/prediction/v1.3/"
 
 // OAuth2 scopes used by this API.
 const (
+	// View your data in Google Cloud Storage
+	DevstorageRead_onlyScope = "https://www.googleapis.com/auth/devstorage.read_only"
+
 	// Manage your data in the Google Prediction API
 	PredictionScope = "https://www.googleapis.com/auth/prediction"
 )
@@ -68,7 +71,49 @@ type TrainingService struct {
 	s *Service
 }
 
+type InputInput struct {
+	// CsvInstance: A list of input features, these can be strings or
+	// doubles.
+	CsvInstance []interface{} `json:"csvInstance,omitempty"`
+}
+
+type Output struct {
+	// OutputMulti: A list of classes with their estimated probabilities
+	// [Categorical models only].
+	OutputMulti []*OutputOutputMulti `json:"outputMulti,omitempty"`
+
+	// SelfLink: A URL to re-request this resource.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// OutputValue: The estimated regression value [Regression models only].
+	OutputValue float64 `json:"outputValue,omitempty"`
+
+	// OutputLabel: The most likely class [Categorical models only].
+	OutputLabel string `json:"outputLabel,omitempty"`
+
+	// Kind: What kind of resource this is.
+	Kind string `json:"kind,omitempty"`
+
+	// Id: The unique name for the predictive model.
+	Id string `json:"id,omitempty"`
+}
+
+type OutputOutputMulti struct {
+	// Score: The probability of the class.
+	Score float64 `json:"score,omitempty"`
+
+	// Label: The class label.
+	Label string `json:"label,omitempty"`
+}
+
 type Training struct {
+	// Utility: A class weighting function, which allows the importance
+	// weights for classes to be specified [Categorical models only].
+	Utility []*TrainingUtility `json:"utility,omitempty"`
+
+	// SelfLink: A URL to re-request this resource.
+	SelfLink string `json:"selfLink,omitempty"`
+
 	// ModelInfo: Model metadata.
 	ModelInfo *TrainingModelInfo `json:"modelInfo,omitempty"`
 
@@ -81,13 +126,6 @@ type Training struct {
 
 	// Id: The unique name for the predictive model.
 	Id string `json:"id,omitempty"`
-
-	// Utility: A class weighting function, which allows the importance
-	// weights for classes to be specified [Categorical models only].
-	Utility []*TrainingUtility `json:"utility,omitempty"`
-
-	// SelfLink: A URL to re-request this resource.
-	SelfLink string `json:"selfLink,omitempty"`
 }
 
 type Input struct {
@@ -110,6 +148,22 @@ type TrainingUtility struct {
 }
 
 type TrainingModelInfo struct {
+	// ClassWeightedAccuracy: Estimated accuracy of model taking utility
+	// weights into account [Categorical models only].
+	ClassWeightedAccuracy float64 `json:"classWeightedAccuracy,omitempty"`
+
+	// ClassificationAccuracy: A number between 0.0 and 1.0, where 1.0 is
+	// 100% accurate. This is an estimate, based on the amount and quality
+	// of the training data, of the estimated prediction accuracy. You can
+	// use this is a guide to decide whether the results are accurate enough
+	// for your needs. This estimate will be more reliable if your real
+	// input data is similar to your training data [Categorical models
+	// only].
+	ClassificationAccuracy float64 `json:"classificationAccuracy,omitempty"`
+
+	// ConfusionMatrixRowTotals: A list of the confusion matrix row totals
+	ConfusionMatrixRowTotals *TrainingModelInfoConfusionMatrixRowTotals `json:"confusionMatrixRowTotals,omitempty"`
+
 	// NumberInstances: Number of valid data instances used in the trained
 	// model.
 	NumberInstances int64 `json:"numberInstances,omitempty,string"`
@@ -133,58 +187,9 @@ type TrainingModelInfo struct {
 	// NumberClasses: Number of classes in the trained model [Categorical
 	// models only].
 	NumberClasses int64 `json:"numberClasses,omitempty,string"`
-
-	// ClassWeightedAccuracy: Estimated accuracy of model taking utility
-	// weights into account [Categorical models only].
-	ClassWeightedAccuracy float64 `json:"classWeightedAccuracy,omitempty"`
-
-	// ClassificationAccuracy: A number between 0.0 and 1.0, where 1.0 is
-	// 100% accurate. This is an estimate, based on the amount and quality
-	// of the training data, of the estimated prediction accuracy. You can
-	// use this is a guide to decide whether the results are accurate enough
-	// for your needs. This estimate will be more reliable if your real
-	// input data is similar to your training data [Categorical models
-	// only].
-	ClassificationAccuracy float64 `json:"classificationAccuracy,omitempty"`
-
-	// ConfusionMatrixRowTotals: A list of the confusion matrix row totals
-	ConfusionMatrixRowTotals *TrainingModelInfoConfusionMatrixRowTotals `json:"confusionMatrixRowTotals,omitempty"`
 }
 
 type TrainingModelInfoConfusionMatrixRowTotals struct {
-}
-
-type InputInput struct {
-	// CsvInstance: A list of input features, these can be strings or
-	// doubles.
-	CsvInstance []interface{} `json:"csvInstance,omitempty"`
-}
-
-type Output struct {
-	// OutputValue: The estimated regression value [Regression models only].
-	OutputValue float64 `json:"outputValue,omitempty"`
-
-	// OutputLabel: The most likely class [Categorical models only].
-	OutputLabel string `json:"outputLabel,omitempty"`
-
-	// Kind: What kind of resource this is.
-	Kind string `json:"kind,omitempty"`
-
-	// Id: The unique name for the predictive model.
-	Id string `json:"id,omitempty"`
-
-	OutputMulti []*OutputOutputMulti `json:"outputMulti,omitempty"`
-
-	// SelfLink: A URL to re-request this resource.
-	SelfLink string `json:"selfLink,omitempty"`
-}
-
-type OutputOutputMulti struct {
-	// Score: The probability of the class.
-	Score float64 `json:"score,omitempty"`
-
-	// Label: The class label.
-	Label string `json:"label,omitempty"`
 }
 
 // method id "prediction.hostedmodels.predict":
@@ -386,6 +391,7 @@ func (c *TrainingInsertCall) Do() (*Training, error) {
 	//     "$ref": "Training"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/devstorage.read_only",
 	//     "https://www.googleapis.com/auth/prediction"
 	//   ]
 	// }

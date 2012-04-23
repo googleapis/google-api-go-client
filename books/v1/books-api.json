@@ -4,7 +4,7 @@
  "id": "books:v1",
  "name": "books",
  "version": "v1",
- "revision": "20120131",
+ "revision": "20120329",
  "title": "Books API",
  "description": "Lets you search for books and manage your Google Books library.",
  "icons": {
@@ -15,6 +15,9 @@
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/books/v1/",
  "basePath": "/books/v1/",
+ "rootUrl": "https://www.googleapis.com/",
+ "servicePath": "books/v1/",
+ "batchPath": "batch",
  "parameters": {
   "alt": {
    "type": "string",
@@ -182,6 +185,51 @@
     }
    }
   },
+  "Annotationdata": {
+   "id": "Annotationdata",
+   "type": "object",
+   "properties": {
+    "annotationType": {
+     "type": "string",
+     "description": "The type of annotation this data is for."
+    },
+    "data": {
+     "type": "string",
+     "description": "JSON enoded data for this annotation data."
+    },
+    "encoded_data": {
+     "type": "string",
+     "description": "Base64 encoded data for this annotation data.",
+     "format": "byte"
+    },
+    "id": {
+     "type": "string",
+     "description": "Unique id for this annotation data."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Resource Type",
+     "default": "books#annotationdata"
+    },
+    "layerId": {
+     "type": "string",
+     "description": "The Layer id for this data. *"
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "URL for this resource. *"
+    },
+    "updated": {
+     "type": "string",
+     "description": "Timestamp for the last time this data was updated. (RFC 3339 UTC date-time format).",
+     "format": "date-time"
+    },
+    "volumeId": {
+     "type": "string",
+     "description": "The volume id for this data. *"
+    }
+   }
+  },
   "Annotations": {
    "id": "Annotations",
    "type": "object",
@@ -205,6 +253,29 @@
     "totalItems": {
      "type": "integer",
      "description": "Total number of annotations found. This may be greater than the number of notes returned in this response if results have been paginated.",
+     "format": "int32"
+    }
+   }
+  },
+  "Annotationsdata": {
+   "id": "Annotationsdata",
+   "type": "object",
+   "properties": {
+    "items": {
+     "type": "array",
+     "description": "A list of Annotation Data.",
+     "items": {
+      "$ref": "Annotationdata"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Resource type",
+     "default": "books#annotationsdata"
+    },
+    "totalItems": {
+     "type": "integer",
+     "description": "The total number of volume annotations found.",
      "format": "int32"
     }
    }
@@ -426,6 +497,82 @@
      "type": "string",
      "description": "Resource type.",
      "default": "books#downloadAccesses"
+    }
+   }
+  },
+  "Layersummaries": {
+   "id": "Layersummaries",
+   "type": "object",
+   "properties": {
+    "items": {
+     "type": "array",
+     "description": "A list of layer summary items.",
+     "items": {
+      "$ref": "Layersummary"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Resource type.",
+     "default": "books#layersummaries"
+    },
+    "totalItems": {
+     "type": "integer",
+     "description": "The total number of layer summaries found.",
+     "format": "int32"
+    }
+   }
+  },
+  "Layersummary": {
+   "id": "Layersummary",
+   "type": "object",
+   "properties": {
+    "annotationCount": {
+     "type": "integer",
+     "description": "The number of annotations for this layer.",
+     "format": "int32"
+    },
+    "annotationTypes": {
+     "type": "array",
+     "description": "The list of annotation types contained for this layer. *",
+     "items": {
+      "type": "string"
+     }
+    },
+    "annotationsDataLink": {
+     "type": "string",
+     "description": "Link to get data for this annotation."
+    },
+    "annotationsLink": {
+     "type": "string",
+     "description": "The link to get the annotations for this layer."
+    },
+    "dataCount": {
+     "type": "integer",
+     "description": "The number of data items for this layer.",
+     "format": "int32"
+    },
+    "id": {
+     "type": "string",
+     "description": "Unique id of this layer summary."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Resource Type",
+     "default": "books#layersummary"
+    },
+    "layerId": {
+     "type": "string",
+     "description": "The layer id for this summary."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "URL to this resource."
+    },
+    "updated": {
+     "type": "string",
+     "description": "Timestamp for the last time an item in this layer was updated. (RFC 3339 UTC date-time format).",
+     "format": "date-time"
     }
    }
   },
@@ -878,6 +1025,10 @@
        "description": "The number of review ratings for this volume.",
        "format": "int32"
       },
+      "showReviewsLink": {
+       "type": "string",
+       "description": "URL to show reviews for this volume"
+      },
       "subtitle": {
        "type": "string",
        "description": "Volume subtitle. (In LITE projection.)"
@@ -885,8 +1036,116 @@
       "title": {
        "type": "string",
        "description": "Volume title. (In LITE projection.)"
+      },
+      "writeReviewLink": {
+       "type": "string",
+       "description": "URL to write a review for this volume"
       }
      }
+    }
+   }
+  },
+  "Volumeannotation": {
+   "id": "Volumeannotation",
+   "type": "object",
+   "properties": {
+    "annotationDataLink": {
+     "type": "string",
+     "description": "Link to get data for this annotation."
+    },
+    "annotationType": {
+     "type": "string",
+     "description": "The type of annotation this is."
+    },
+    "contentRanges": {
+     "type": "object",
+     "description": "The content ranges to identify the selected text.",
+     "properties": {
+      "cfiRange": {
+       "$ref": "BooksAnnotationsRange",
+       "description": "Range in CFI format for this annotation for version above."
+      },
+      "contentVersion": {
+       "type": "string",
+       "description": "Content version applicable to ranges below."
+      },
+      "gbImageRange": {
+       "$ref": "BooksAnnotationsRange",
+       "description": "Range in GB image format for this annotation for version above."
+      },
+      "gbTextRange": {
+       "$ref": "BooksAnnotationsRange",
+       "description": "Range in GB text format for this annotation for version above."
+      }
+     }
+    },
+    "data": {
+     "type": "string",
+     "description": "Data for this annotation."
+    },
+    "deleted": {
+     "type": "boolean",
+     "description": "Indicates that this annotation is deleted."
+    },
+    "id": {
+     "type": "string",
+     "description": "Unique id of this volume annotation."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Resource Type",
+     "default": "books#volumeannotation"
+    },
+    "layerId": {
+     "type": "string",
+     "description": "The Layer this annotation is for."
+    },
+    "pageIds": {
+     "type": "array",
+     "description": "Pages the annotation spans.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "selectedText": {
+     "type": "string",
+     "description": "Excerpt from the volume."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "URL to this resource."
+    },
+    "updated": {
+     "type": "string",
+     "description": "Timestamp for the last time this anntoation was updated. (RFC 3339 UTC date-time format).",
+     "format": "date-time"
+    },
+    "volumeId": {
+     "type": "string",
+     "description": "The Volume this annotation is for."
+    }
+   }
+  },
+  "Volumeannotations": {
+   "id": "Volumeannotations",
+   "type": "object",
+   "properties": {
+    "items": {
+     "type": "array",
+     "description": "A list of volume annotations.",
+     "items": {
+      "$ref": "Volumeannotation"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Resource type",
+     "default": "books#volumeannotations"
+    },
+    "totalItems": {
+     "type": "integer",
+     "description": "The total number of volume annotations found.",
+     "format": "int32"
     }
    }
   },
@@ -930,7 +1189,7 @@
       },
       "shelf": {
        "type": "string",
-       "description": "Id of bookshelf to retrieve.",
+       "description": "ID of bookshelf to retrieve.",
        "required": true,
        "location": "path"
       },
@@ -941,7 +1200,7 @@
       },
       "userId": {
        "type": "string",
-       "description": "Id of user for whom to retrieve bookshelves.",
+       "description": "ID of user for whom to retrieve bookshelves.",
        "required": true,
        "location": "path"
       }
@@ -975,7 +1234,7 @@
       },
       "userId": {
        "type": "string",
-       "description": "Id of user for whom to retrieve bookshelves.",
+       "description": "ID of user for whom to retrieve bookshelves.",
        "required": true,
        "location": "path"
       }
@@ -1014,7 +1273,7 @@
         },
         "shelf": {
          "type": "string",
-         "description": "Id of bookshelf to retrieve volumes.",
+         "description": "ID of bookshelf to retrieve volumes.",
          "required": true,
          "location": "path"
         },
@@ -1037,7 +1296,7 @@
         },
         "userId": {
          "type": "string",
-         "description": "Id of user for whom to retrieve bookshelf volumes.",
+         "description": "ID of user for whom to retrieve bookshelf volumes.",
          "required": true,
          "location": "path"
         }
@@ -1048,6 +1307,227 @@
        ],
        "response": {
         "$ref": "Volumes"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/books"
+       ]
+      }
+     }
+    }
+   }
+  },
+  "layers": {
+   "methods": {
+    "get": {
+     "id": "books.layers.get",
+     "path": "volumes/layersummary/{summaryId}",
+     "httpMethod": "GET",
+     "description": "Gets the layer summary for a volume.",
+     "parameters": {
+      "country": {
+       "type": "string",
+       "description": "ISO-3166-1 code to override the IP-based location.",
+       "location": "query"
+      },
+      "source": {
+       "type": "string",
+       "description": "String to identify the originator of this request.",
+       "location": "query"
+      },
+      "summaryId": {
+       "type": "string",
+       "description": "The ID for the layer to get the summary for.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "summaryId"
+     ],
+     "response": {
+      "$ref": "Layersummary"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/books"
+     ]
+    },
+    "list": {
+     "id": "books.layers.list",
+     "path": "volumes/{volumeId}/layersummary",
+     "httpMethod": "GET",
+     "description": "List the layer summaries for a volume.",
+     "parameters": {
+      "contentVersion": {
+       "type": "string",
+       "description": "The content version for the requested volume.",
+       "location": "query"
+      },
+      "country": {
+       "type": "string",
+       "description": "ISO-3166-1 code to override the IP-based location.",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "Maximum number of results to return",
+       "format": "uint32",
+       "minimum": "0",
+       "maximum": "40",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "The value of the nextToken from the previous page.",
+       "location": "query"
+      },
+      "source": {
+       "type": "string",
+       "description": "String to identify the originator of this request.",
+       "location": "query"
+      },
+      "volumeId": {
+       "type": "string",
+       "description": "The volume to retrieve layers for.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "volumeId"
+     ],
+     "response": {
+      "$ref": "Layersummaries"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/books"
+     ]
+    }
+   },
+   "resources": {
+    "annotationData": {
+     "methods": {
+      "get": {
+       "id": "books.layers.annotationData.get",
+       "path": "volumes/{volumeId}/layers/{layerId}/data/{annotationDataId}",
+       "httpMethod": "GET",
+       "description": "Gets the annotation data.",
+       "parameters": {
+        "annotationDataId": {
+         "type": "string",
+         "description": "The ID of the annotation data to retrieve.",
+         "required": true,
+         "location": "path"
+        },
+        "country": {
+         "type": "string",
+         "description": "ISO-3166-1 code to override the IP-based location.",
+         "location": "query"
+        },
+        "layerId": {
+         "type": "string",
+         "description": "The ID for the layer to get the annotations.",
+         "required": true,
+         "location": "path"
+        },
+        "locale": {
+         "type": "string",
+         "description": "The locale information for the data. ISO-639-1 language and ISO-3166-1 country code. Ex: 'en_US'.",
+         "location": "query"
+        },
+        "source": {
+         "type": "string",
+         "description": "String to identify the originator of this request.",
+         "location": "query"
+        },
+        "volumeId": {
+         "type": "string",
+         "description": "The volume to retrieve annotations for.",
+         "required": true,
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "volumeId",
+        "layerId",
+        "annotationDataId"
+       ],
+       "response": {
+        "$ref": "Annotationdata"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/books"
+       ]
+      },
+      "list": {
+       "id": "books.layers.annotationData.list",
+       "path": "volumes/{volumeId}/layers/{layerId}/data",
+       "httpMethod": "GET",
+       "description": "Gets the annotation data for a volume and layer.",
+       "parameters": {
+        "contentVersion": {
+         "type": "string",
+         "description": "The content version for the requested volume.",
+         "required": true,
+         "location": "query"
+        },
+        "country": {
+         "type": "string",
+         "description": "ISO-3166-1 code to override the IP-based location.",
+         "location": "query"
+        },
+        "layerId": {
+         "type": "string",
+         "description": "The ID for the layer to get the annotation data.",
+         "required": true,
+         "location": "path"
+        },
+        "locale": {
+         "type": "string",
+         "description": "The locale information for the data. ISO-639-1 language and ISO-3166-1 country code. Ex: 'en_US'.",
+         "location": "query"
+        },
+        "maxResults": {
+         "type": "integer",
+         "description": "Maximum number of results to return",
+         "format": "uint32",
+         "minimum": "0",
+         "maximum": "40",
+         "location": "query"
+        },
+        "pageToken": {
+         "type": "string",
+         "description": "The value of the nextToken from the previous page.",
+         "location": "query"
+        },
+        "source": {
+         "type": "string",
+         "description": "String to identify the originator of this request.",
+         "location": "query"
+        },
+        "updatedMax": {
+         "type": "string",
+         "description": "RFC 3339 timestamp to restrict to items updated prior to this timestamp (exclusive).",
+         "location": "query"
+        },
+        "updatedMin": {
+         "type": "string",
+         "description": "RFC 3339 timestamp to restrict to items updated since this timestamp (inclusive).",
+         "location": "query"
+        },
+        "volumeId": {
+         "type": "string",
+         "description": "The volume to retrieve annotation data for.",
+         "required": true,
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "volumeId",
+        "layerId",
+        "contentVersion"
+       ],
+       "response": {
+        "$ref": "Annotationsdata"
        },
        "scopes": [
         "https://www.googleapis.com/auth/books"
@@ -1072,7 +1552,7 @@
       },
       "cpksver": {
        "type": "string",
-       "description": "The device/version identifier from which to release the restriction.",
+       "description": "The device/version ID from which to release the restriction.",
        "required": true,
        "location": "query"
       },
@@ -1118,7 +1598,7 @@
       },
       "cpksver": {
        "type": "string",
-       "description": "The device/version identifier from which to request the restrictions.",
+       "description": "The device/version ID from which to request the restrictions.",
        "required": true,
        "location": "query"
       },
@@ -1172,7 +1652,7 @@
       },
       "cpksver": {
        "type": "string",
-       "description": "The device/version identifier from which to release the restriction.",
+       "description": "The device/version ID from which to release the restriction.",
        "required": true,
        "location": "query"
       },
@@ -1231,7 +1711,7 @@
        "parameters": {
         "annotationId": {
          "type": "string",
-         "description": "The annotation identifier for the annotation to delete.",
+         "description": "The ID for the annotation to delete.",
          "required": true,
          "location": "path"
         },
@@ -1257,11 +1737,11 @@
        "id": "books.mylibrary.annotations.get",
        "path": "mylibrary/annotations/{annotationId}",
        "httpMethod": "GET",
-       "description": "Gets an annotation by its id.",
+       "description": "Gets an annotation by its ID.",
        "parameters": {
         "annotationId": {
          "type": "string",
-         "description": "The annotation identifier for the annotation to retrieve.",
+         "description": "The ID for the annotation to retrieve.",
          "required": true,
          "location": "path"
         },
@@ -1331,7 +1811,7 @@
         },
         "layerId": {
          "type": "string",
-         "description": "The layer id to limit annotation by.",
+         "description": "The layer ID to limit annotation by.",
          "location": "query"
         },
         "maxResults": {
@@ -1344,7 +1824,7 @@
         },
         "pageIds": {
          "type": "string",
-         "description": "The page id(s) for the volume that is being queried.",
+         "description": "The page ID(s) for the volume that is being queried.",
          "repeated": true,
          "location": "query"
         },
@@ -1394,7 +1874,7 @@
        "parameters": {
         "annotationId": {
          "type": "string",
-         "description": "The annotation identifier for the annotation to update.",
+         "description": "The ID for the annotation to update.",
          "required": true,
          "location": "path"
         },
@@ -1439,7 +1919,7 @@
         },
         "shelf": {
          "type": "string",
-         "description": "Id of bookshelf to which to add a volume.",
+         "description": "ID of bookshelf to which to add a volume.",
          "required": true,
          "location": "path"
         },
@@ -1450,7 +1930,7 @@
         },
         "volumeId": {
          "type": "string",
-         "description": "Id of volume to add.",
+         "description": "ID of volume to add.",
          "required": true,
          "location": "query"
         }
@@ -1476,7 +1956,7 @@
         },
         "shelf": {
          "type": "string",
-         "description": "Id of bookshelf from which to remove a volume.",
+         "description": "ID of bookshelf from which to remove a volume.",
          "required": true,
          "location": "path"
         },
@@ -1506,7 +1986,7 @@
         },
         "shelf": {
          "type": "string",
-         "description": "Id of bookshelf to retrieve.",
+         "description": "ID of bookshelf to retrieve.",
          "required": true,
          "location": "path"
         },
@@ -1563,7 +2043,7 @@
         },
         "shelf": {
          "type": "string",
-         "description": "Id of bookshelf with the volume.",
+         "description": "ID of bookshelf with the volume.",
          "required": true,
          "location": "path"
         },
@@ -1574,7 +2054,7 @@
         },
         "volumeId": {
          "type": "string",
-         "description": "Id of volume to move.",
+         "description": "ID of volume to move.",
          "required": true,
          "location": "query"
         },
@@ -1608,7 +2088,7 @@
         },
         "shelf": {
          "type": "string",
-         "description": "Id of bookshelf from which to remove a volume.",
+         "description": "ID of bookshelf from which to remove a volume.",
          "required": true,
          "location": "path"
         },
@@ -1619,7 +2099,7 @@
         },
         "volumeId": {
          "type": "string",
-         "description": "Id of volume to remove.",
+         "description": "ID of volume to remove.",
          "required": true,
          "location": "query"
         }
@@ -1674,7 +2154,7 @@
           },
           "shelf": {
            "type": "string",
-           "description": "The bookshelf id or name retrieve volumes for.",
+           "description": "The bookshelf ID or name retrieve volumes for.",
            "required": true,
            "location": "path"
           },
@@ -1735,7 +2215,7 @@
         },
         "volumeId": {
          "type": "string",
-         "description": "Id of volume for which to retrieve a reading position.",
+         "description": "ID of volume for which to retrieve a reading position.",
          "required": true,
          "location": "path"
         }
@@ -1806,7 +2286,7 @@
         },
         "volumeId": {
          "type": "string",
-         "description": "Id of volume for which to update the reading position.",
+         "description": "ID of volume for which to update the reading position.",
          "required": true,
          "location": "path"
         }
@@ -1821,6 +2301,142 @@
        ]
       }
      }
+    }
+   }
+  },
+  "volumeAnnotations": {
+   "methods": {
+    "get": {
+     "id": "books.volumeAnnotations.get",
+     "path": "volumes/{volumeId}/layers/{layerId}/annotations/{annotationId}",
+     "httpMethod": "GET",
+     "description": "Gets the volume annotation.",
+     "parameters": {
+      "annotationId": {
+       "type": "string",
+       "description": "The ID of the volume annotation to retrieve.",
+       "required": true,
+       "location": "path"
+      },
+      "country": {
+       "type": "string",
+       "description": "ISO-3166-1 code to override the IP-based location.",
+       "location": "query"
+      },
+      "layerId": {
+       "type": "string",
+       "description": "The ID for the layer to get the annotations.",
+       "required": true,
+       "location": "path"
+      },
+      "locale": {
+       "type": "string",
+       "description": "The locale information for the data. ISO-639-1 language and ISO-3166-1 country code. Ex: 'en_US'.",
+       "location": "query"
+      },
+      "source": {
+       "type": "string",
+       "description": "String to identify the originator of this request.",
+       "location": "query"
+      },
+      "volumeId": {
+       "type": "string",
+       "description": "The volume to retrieve annotations for.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "volumeId",
+      "layerId",
+      "annotationId"
+     ],
+     "response": {
+      "$ref": "Volumeannotation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/books"
+     ]
+    },
+    "list": {
+     "id": "books.volumeAnnotations.list",
+     "path": "volumes/{volumeId}/layers/{layerId}",
+     "httpMethod": "GET",
+     "description": "Gets the volume annotations for a volume and layer.",
+     "parameters": {
+      "contentVersion": {
+       "type": "string",
+       "description": "The content version for the requested volume.",
+       "required": true,
+       "location": "query"
+      },
+      "country": {
+       "type": "string",
+       "description": "ISO-3166-1 code to override the IP-based location.",
+       "location": "query"
+      },
+      "layerId": {
+       "type": "string",
+       "description": "The ID for the layer to get the annotations.",
+       "required": true,
+       "location": "path"
+      },
+      "locale": {
+       "type": "string",
+       "description": "The locale information for the data. ISO-639-1 language and ISO-3166-1 country code. Ex: 'en_US'.",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "Maximum number of results to return",
+       "format": "uint32",
+       "minimum": "0",
+       "maximum": "40",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "The value of the nextToken from the previous page.",
+       "location": "query"
+      },
+      "showDeleted": {
+       "type": "boolean",
+       "description": "Set to true to return deleted annotations. updatedMin must be in the request to use this. Defaults to false.",
+       "location": "query"
+      },
+      "source": {
+       "type": "string",
+       "description": "String to identify the originator of this request.",
+       "location": "query"
+      },
+      "updatedMax": {
+       "type": "string",
+       "description": "RFC 3339 timestamp to restrict to items updated prior to this timestamp (exclusive).",
+       "location": "query"
+      },
+      "updatedMin": {
+       "type": "string",
+       "description": "RFC 3339 timestamp to restrict to items updated since this timestamp (inclusive).",
+       "location": "query"
+      },
+      "volumeId": {
+       "type": "string",
+       "description": "The volume to retrieve annotations for.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "volumeId",
+      "layerId",
+      "contentVersion"
+     ],
+     "response": {
+      "$ref": "Volumeannotations"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/books"
+     ]
     }
    }
   },
@@ -1839,7 +2455,7 @@
       },
       "partner": {
        "type": "string",
-       "description": "Identifier of partner for whom to brand results.",
+       "description": "Brand results for partner ID.",
        "location": "query"
       },
       "projection": {
@@ -1862,7 +2478,7 @@
       },
       "volumeId": {
        "type": "string",
-       "description": "Id of volume to retrieve.",
+       "description": "ID of volume to retrieve.",
        "required": true,
        "location": "path"
       }
@@ -1959,7 +2575,7 @@
       },
       "partner": {
        "type": "string",
-       "description": "Identifier of partner for whom to restrict and brand results.",
+       "description": "Restrict and brand results for partner ID.",
        "location": "query"
       },
       "printType": {

@@ -15,6 +15,9 @@
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/customsearch/",
  "basePath": "/customsearch/",
+ "rootUrl": "https://www.googleapis.com/",
+ "servicePath": "customsearch/",
+ "batchPath": "batch",
  "parameters": {
   "alt": {
    "type": "string",

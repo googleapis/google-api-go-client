@@ -110,7 +110,7 @@ func main() {
 			} else {
 				args = append(args, "build")
 			}
-			args = append(args, "./" + api.SourceDir())
+			args = append(args, "./"+api.SourceDir())
 			out, err := exec.Command("go", args...).CombinedOutput()
 			if err != nil {
 				errors = append(errors, &compileError{api, string(out)})
@@ -304,7 +304,11 @@ func (a *API) GenerateCode() (outerr error) {
 		}
 
 		var clean bytes.Buffer
-		err = (&printer.Config{printer.TabIndent | printer.UseSpaces, 8}).Fprint(&clean, fset, ast)
+		config := &printer.Config{
+			Mode:     printer.TabIndent | printer.UseSpaces,
+			Tabwidth: 8,
+		}
+		err = config.Fprint(&clean, fset, ast)
 		if err != nil {
 			outerr = err
 			writeFile(genfilename, buf.Bytes())

@@ -38,9 +38,6 @@ const basePath = "https://www.googleapis.com/latitude/v1/"
 
 // OAuth2 scopes used by this API.
 const (
-	// Manage your city-level location
-	LatitudeCurrentCityScope = "https://www.googleapis.com/auth/latitude.current.city"
-
 	// Manage your best-available location
 	LatitudeCurrentBestScope = "https://www.googleapis.com/auth/latitude.current.best"
 
@@ -49,6 +46,9 @@ const (
 
 	// Manage your best-available location and location history
 	LatitudeAllBestScope = "https://www.googleapis.com/auth/latitude.all.best"
+
+	// Manage your city-level location
+	LatitudeCurrentCityScope = "https://www.googleapis.com/auth/latitude.current.city"
 )
 
 func New(client *http.Client) (*Service, error) {
@@ -82,31 +82,6 @@ type LatitudeCurrentlocationResourceJson struct {
 }
 
 type Location struct {
-	// Speed: Ground speed of the user at the time this location was
-	// recorded, in meters per second. Non-negative. Optional.
-	Speed interface{} `json:"speed,omitempty"`
-
-	// TimestampMs: Timestamp of the Location Resource, in milliseconds
-	// since the epoch (UTC). This is also the Location Resource's unique
-	// id.
-	TimestampMs interface{} `json:"timestampMs,omitempty"`
-
-	// AltitudeAccuracy: Accuracy of the altitude value, in meters.
-	// Optional.
-	AltitudeAccuracy interface{} `json:"altitudeAccuracy,omitempty"`
-
-	// Longitude: Longitude of the location, in decimal degrees.
-	Longitude interface{} `json:"longitude,omitempty"`
-
-	// Altitude: Altitude of the location, in meters. Optional.
-	Altitude interface{} `json:"altitude,omitempty"`
-
-	// Kind: Kind of this item.
-	Kind string `json:"kind,omitempty"`
-
-	// Latitude: Latitude of the location, in decimal degrees.
-	Latitude interface{} `json:"latitude,omitempty"`
-
 	// Accuracy: Accuracy of the latitude and longitude coordinates, in
 	// non-negative meters. Optional.
 	Accuracy interface{} `json:"accuracy,omitempty"`
@@ -116,9 +91,34 @@ type Location struct {
 	// locations. Optional.
 	ActivityId interface{} `json:"activityId,omitempty"`
 
+	// Altitude: Altitude of the location, in meters. Optional.
+	Altitude interface{} `json:"altitude,omitempty"`
+
+	// AltitudeAccuracy: Accuracy of the altitude value, in meters.
+	// Optional.
+	AltitudeAccuracy interface{} `json:"altitudeAccuracy,omitempty"`
+
 	// Heading: Direction of travel of the user when this location was
 	// recorded. In degrees, clockwise relative to true north. Optional.
 	Heading interface{} `json:"heading,omitempty"`
+
+	// Kind: Kind of this item.
+	Kind string `json:"kind,omitempty"`
+
+	// Latitude: Latitude of the location, in decimal degrees.
+	Latitude interface{} `json:"latitude,omitempty"`
+
+	// Longitude: Longitude of the location, in decimal degrees.
+	Longitude interface{} `json:"longitude,omitempty"`
+
+	// Speed: Ground speed of the user at the time this location was
+	// recorded, in meters per second. Non-negative. Optional.
+	Speed interface{} `json:"speed,omitempty"`
+
+	// TimestampMs: Timestamp of the Location Resource, in milliseconds
+	// since the epoch (UTC). This is also the Location Resource's unique
+	// id.
+	TimestampMs interface{} `json:"timestampMs,omitempty"`
 }
 
 type LocationFeed struct {

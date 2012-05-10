@@ -72,21 +72,19 @@ type TasksService struct {
 }
 
 type Task struct {
-	// Notes: Notes describing the task. Optional.
-	Notes string `json:"notes,omitempty"`
+	// Completed: Completion date of the task (as a RFC 3339 timestamp).
+	// This field is omitted if the task has not been completed.
+	Completed string `json:"completed,omitempty"`
 
-	// Etag: ETag of the resource.
-	Etag string `json:"etag,omitempty"`
-
-	// Kind: Type of the resource. This is always "tasks#task".
-	Kind string `json:"kind,omitempty"`
+	// Deleted: Flag indicating whether the task has been deleted. The
+	// default if False.
+	Deleted bool `json:"deleted,omitempty"`
 
 	// Due: Due date of the task (as a RFC 3339 timestamp). Optional.
 	Due string `json:"due,omitempty"`
 
-	// Updated: Last modification time of the task (as a RFC 3339
-	// timestamp).
-	Updated string `json:"updated,omitempty"`
+	// Etag: ETag of the resource.
+	Etag string `json:"etag,omitempty"`
 
 	// Hidden: Flag indicating whether the task is hidden. This is the case
 	// if the task had been marked completed when the task list was last
@@ -96,16 +94,19 @@ type Task struct {
 	// Id: Task identifier.
 	Id string `json:"id,omitempty"`
 
-	// Title: Title of the task.
-	Title string `json:"title,omitempty"`
+	// Kind: Type of the resource. This is always "tasks#task".
+	Kind string `json:"kind,omitempty"`
 
-	// Status: Status of the task. This is either "needsAction" or
-	// "completed".
-	Status string `json:"status,omitempty"`
+	// Links: Collection of links. This collection is read-only.
+	Links []*TaskLinks `json:"links,omitempty"`
 
-	// Deleted: Flag indicating whether the task has been deleted. The
-	// default if False.
-	Deleted bool `json:"deleted,omitempty"`
+	// Notes: Notes describing the task. Optional.
+	Notes string `json:"notes,omitempty"`
+
+	// Parent: Parent task identifier. This field is omitted if it is a
+	// top-level task. This field is read-only. Use the "move" method to
+	// move the task under a different parent or to the top level.
+	Parent string `json:"parent,omitempty"`
 
 	// Position: String indicating the position of the task among its
 	// sibling tasks under the same parent task or at the top level. If this
@@ -120,80 +121,79 @@ type Task struct {
 	// delete this task.
 	SelfLink string `json:"selfLink,omitempty"`
 
-	// Links: Collection of links. This collection is read-only.
-	Links []*TaskLinks `json:"links,omitempty"`
+	// Status: Status of the task. This is either "needsAction" or
+	// "completed".
+	Status string `json:"status,omitempty"`
 
-	// Parent: Parent task identifier. This field is omitted if it is a
-	// top-level task. This field is read-only. Use the "move" method to
-	// move the task under a different parent or to the top level.
-	Parent string `json:"parent,omitempty"`
+	// Title: Title of the task.
+	Title string `json:"title,omitempty"`
 
-	// Completed: Completion date of the task (as a RFC 3339 timestamp).
-	// This field is omitted if the task has not been completed.
-	Completed string `json:"completed,omitempty"`
+	// Updated: Last modification time of the task (as a RFC 3339
+	// timestamp).
+	Updated string `json:"updated,omitempty"`
 }
 
 type TaskLinks struct {
+	// Description: The description. In HTML speak: Everything between <a>
+	// and </a>.
+	Description string `json:"description,omitempty"`
+
 	// Link: The URL.
 	Link string `json:"link,omitempty"`
 
 	// Type: Type of the link, e.g. "email".
 	Type string `json:"type,omitempty"`
-
-	// Description: The description. In HTML speak: Everything between <a>
-	// and </a>.
-	Description string `json:"description,omitempty"`
 }
 
 type TaskList struct {
-	// SelfLink: URL pointing to this task list. Used to retrieve, update,
-	// or delete this task list.
-	SelfLink string `json:"selfLink,omitempty"`
-
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
-
-	// Kind: Type of the resource. This is always "tasks#taskList".
-	Kind string `json:"kind,omitempty"`
-
-	// Updated: Last modification time of the task list (as a RFC 3339
-	// timestamp).
-	Updated string `json:"updated,omitempty"`
 
 	// Id: Task list identifier.
 	Id string `json:"id,omitempty"`
 
+	// Kind: Type of the resource. This is always "tasks#taskList".
+	Kind string `json:"kind,omitempty"`
+
+	// SelfLink: URL pointing to this task list. Used to retrieve, update,
+	// or delete this task list.
+	SelfLink string `json:"selfLink,omitempty"`
+
 	// Title: Title of the task list.
 	Title string `json:"title,omitempty"`
+
+	// Updated: Last modification time of the task list (as a RFC 3339
+	// timestamp).
+	Updated string `json:"updated,omitempty"`
 }
 
 type TaskLists struct {
+	// Etag: ETag of the resource.
+	Etag string `json:"etag,omitempty"`
+
 	// Items: Collection of task lists.
 	Items []*TaskList `json:"items,omitempty"`
+
+	// Kind: Type of the resource. This is always "tasks#taskLists".
+	Kind string `json:"kind,omitempty"`
 
 	// NextPageToken: Token that can be used to request the next page of
 	// this result.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// Etag: ETag of the resource.
-	Etag string `json:"etag,omitempty"`
-
-	// Kind: Type of the resource. This is always "tasks#taskLists".
-	Kind string `json:"kind,omitempty"`
 }
 
 type Tasks struct {
-	// Items: Collection of tasks.
-	Items []*Task `json:"items,omitempty"`
-
-	// NextPageToken: Token used to access the next page of this result.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
 
+	// Items: Collection of tasks.
+	Items []*Task `json:"items,omitempty"`
+
 	// Kind: Type of the resource. This is always "tasks#tasks".
 	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: Token used to access the next page of this result.
+	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
 // method id "tasks.tasklists.delete":

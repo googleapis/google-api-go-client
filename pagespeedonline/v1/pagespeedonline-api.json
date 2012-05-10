@@ -13,7 +13,6 @@
  },
  "documentationLink": "https://code.google.com/apis/pagespeedonline/v1/getting_started.html",
  "protocol": "rest",
- "baseUrl": "https://www.googleapis.com/pagespeedonline/v1/",
  "basePath": "/pagespeedonline/v1/",
  "rootUrl": "https://www.googleapis.com/",
  "servicePath": "pagespeedonline/v1/",

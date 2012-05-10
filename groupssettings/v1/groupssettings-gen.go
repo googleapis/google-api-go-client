@@ -60,69 +60,24 @@ type GroupsService struct {
 }
 
 type Groups struct {
-	// ReplyTo: Whome should the default reply to a message go to. Possible
-	// values are: REPLY_TO_CUSTOM REPLY_TO_SENDER REPLY_TO_LIST
-	// REPLY_TO_OWNER REPLY_TO_IGNORE REPLY_TO_MANAGERS
-	ReplyTo string `json:"replyTo,omitempty"`
-
-	// MaxMessageBytes: Maximum message size allowed.
-	MaxMessageBytes int64 `json:"maxMessageBytes,omitempty"`
-
-	// CustomReplyTo: Default email to which reply to any message should go.
-	CustomReplyTo string `json:"customReplyTo,omitempty"`
-
-	// ArchiveOnly: If the group is archive only
-	ArchiveOnly string `json:"archiveOnly,omitempty"`
-
 	// AllowExternalMembers: Are external members allowed to join the group.
 	AllowExternalMembers string `json:"allowExternalMembers,omitempty"`
-
-	// Kind: The type of the resource.
-	Kind string `json:"kind,omitempty"`
-
-	// PrimaryLanguage: Primary language for the group.
-	PrimaryLanguage string `json:"primaryLanguage,omitempty"`
-
-	// WhoCanPostMessage: Permissions to post messages to the group.
-	// Possible values are: NONE_CAN_POST ALL_MANAGERS_CAN_POST
-	// ALL_MEMBERS_CAN_POST ALL_IN_DOMAIN_CAN_POST ANYONE_CAN_POST
-	WhoCanPostMessage string `json:"whoCanPostMessage,omitempty"`
-
-	// ShowInGroupDirectory: Is the group listed in groups directory
-	ShowInGroupDirectory string `json:"showInGroupDirectory,omitempty"`
-
-	// AllowWebPosting: If posting from web is allowed.
-	AllowWebPosting string `json:"allowWebPosting,omitempty"`
-
-	// MembersCanPostAsTheGroup: Can members post using the group email
-	// address.
-	MembersCanPostAsTheGroup string `json:"membersCanPostAsTheGroup,omitempty"`
-
-	// WhoCanViewGroup: Permissions to view group. Possbile values are:
-	// ANYONE_CAN_VIEW ALL_IN_DOMAIN_CAN_VIEW ALL_MEMBERS_CAN_VIEW
-	// ALL_MANAGERS_CAN_VIEW
-	WhoCanViewGroup string `json:"whoCanViewGroup,omitempty"`
 
 	// AllowGoogleCommunication: Is google allowed to contact admins.
 	AllowGoogleCommunication string `json:"allowGoogleCommunication,omitempty"`
 
-	// MessageModerationLevel: Moderation level for messages. Possible
-	// values are: MODERATE_ALL_MESSAGES MODERATE_NON_MEMBERS
-	// MODERATE_NEW_MEMBERS MODERATE_NONE
-	MessageModerationLevel string `json:"messageModerationLevel,omitempty"`
+	// AllowWebPosting: If posting from web is allowed.
+	AllowWebPosting string `json:"allowWebPosting,omitempty"`
 
-	// SendMessageDenyNotification: Should the member be notified if his
-	// message is denied by owner.
-	SendMessageDenyNotification string `json:"sendMessageDenyNotification,omitempty"`
+	// ArchiveOnly: If the group is archive only
+	ArchiveOnly string `json:"archiveOnly,omitempty"`
 
-	// WhoCanViewMembership: Permissions to view membership. Possbile values
-	// are: ALL_IN_DOMAIN_CAN_VIEW ALL_MEMBERS_CAN_VIEW
-	// ALL_MANAGERS_CAN_VIEW
-	WhoCanViewMembership string `json:"whoCanViewMembership,omitempty"`
+	// CustomReplyTo: Default email to which reply to any message should go.
+	CustomReplyTo string `json:"customReplyTo,omitempty"`
 
-	// WhoCanInvite: Permissions to invite members. Possbile values are:
-	// ALL_MEMBERS_CAN_INVITE ALL_MANAGERS_CAN_INVITE
-	WhoCanInvite string `json:"whoCanInvite,omitempty"`
+	// DefaultMessageDenyNotificationText: Default message deny notification
+	// message
+	DefaultMessageDenyNotificationText string `json:"defaultMessageDenyNotificationText,omitempty"`
 
 	// Description: Description of the group
 	Description string `json:"description,omitempty"`
@@ -130,24 +85,69 @@ type Groups struct {
 	// Email: Email id of the group
 	Email string `json:"email,omitempty"`
 
-	// DefaultMessageDenyNotificationText: Default message deny notification
-	// message
-	DefaultMessageDenyNotificationText string `json:"defaultMessageDenyNotificationText,omitempty"`
-
 	// IsArchived: If the contents of the group are archived.
 	IsArchived string `json:"isArchived,omitempty"`
+
+	// Kind: The type of the resource.
+	Kind string `json:"kind,omitempty"`
+
+	// MaxMessageBytes: Maximum message size allowed.
+	MaxMessageBytes int64 `json:"maxMessageBytes,omitempty"`
+
+	// MembersCanPostAsTheGroup: Can members post using the group email
+	// address.
+	MembersCanPostAsTheGroup string `json:"membersCanPostAsTheGroup,omitempty"`
 
 	// MessageDisplayFont: Default message display font. Possible values
 	// are: DEFAULT_FONT FIXED_WIDTH_FONT
 	MessageDisplayFont string `json:"messageDisplayFont,omitempty"`
+
+	// MessageModerationLevel: Moderation level for messages. Possible
+	// values are: MODERATE_ALL_MESSAGES MODERATE_NON_MEMBERS
+	// MODERATE_NEW_MEMBERS MODERATE_NONE
+	MessageModerationLevel string `json:"messageModerationLevel,omitempty"`
+
+	// Name: Name of the Group
+	Name string `json:"name,omitempty"`
+
+	// PrimaryLanguage: Primary language for the group.
+	PrimaryLanguage string `json:"primaryLanguage,omitempty"`
+
+	// ReplyTo: Whome should the default reply to a message go to. Possible
+	// values are: REPLY_TO_CUSTOM REPLY_TO_SENDER REPLY_TO_LIST
+	// REPLY_TO_OWNER REPLY_TO_IGNORE REPLY_TO_MANAGERS
+	ReplyTo string `json:"replyTo,omitempty"`
+
+	// SendMessageDenyNotification: Should the member be notified if his
+	// message is denied by owner.
+	SendMessageDenyNotification string `json:"sendMessageDenyNotification,omitempty"`
+
+	// ShowInGroupDirectory: Is the group listed in groups directory
+	ShowInGroupDirectory string `json:"showInGroupDirectory,omitempty"`
+
+	// WhoCanInvite: Permissions to invite members. Possbile values are:
+	// ALL_MEMBERS_CAN_INVITE ALL_MANAGERS_CAN_INVITE
+	WhoCanInvite string `json:"whoCanInvite,omitempty"`
 
 	// WhoCanJoin: Permissions to join the group. Possible values are:
 	// ANYONE_CAN_JOIN ALL_IN_DOMAIN_CAN_JOIN INVITED_CAN_JOIN
 	// CAN_REQUEST_TO_JOIN
 	WhoCanJoin string `json:"whoCanJoin,omitempty"`
 
-	// Name: Name of the Group
-	Name string `json:"name,omitempty"`
+	// WhoCanPostMessage: Permissions to post messages to the group.
+	// Possible values are: NONE_CAN_POST ALL_MANAGERS_CAN_POST
+	// ALL_MEMBERS_CAN_POST ALL_IN_DOMAIN_CAN_POST ANYONE_CAN_POST
+	WhoCanPostMessage string `json:"whoCanPostMessage,omitempty"`
+
+	// WhoCanViewGroup: Permissions to view group. Possbile values are:
+	// ANYONE_CAN_VIEW ALL_IN_DOMAIN_CAN_VIEW ALL_MEMBERS_CAN_VIEW
+	// ALL_MANAGERS_CAN_VIEW
+	WhoCanViewGroup string `json:"whoCanViewGroup,omitempty"`
+
+	// WhoCanViewMembership: Permissions to view membership. Possbile values
+	// are: ALL_IN_DOMAIN_CAN_VIEW ALL_MEMBERS_CAN_VIEW
+	// ALL_MANAGERS_CAN_VIEW
+	WhoCanViewMembership string `json:"whoCanViewMembership,omitempty"`
 }
 
 // method id "groupsSettings.groups.get":

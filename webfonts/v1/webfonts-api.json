@@ -13,7 +13,6 @@
  },
  "documentationLink": "http://code.google.com/apis/webfonts/docs/developer_api.html",
  "protocol": "rest",
- "baseUrl": "https://www.googleapis.com/webfonts/v1/",
  "basePath": "/webfonts/v1/",
  "rootUrl": "https://www.googleapis.com/",
  "servicePath": "webfonts/v1/",

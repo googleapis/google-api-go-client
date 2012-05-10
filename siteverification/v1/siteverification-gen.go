@@ -38,11 +38,11 @@ const basePath = "https://www.googleapis.com/siteVerification/v1/"
 
 // OAuth2 scopes used by this API.
 const (
-	// Manage the list of sites and domains you control
-	SiteverificationScope = "https://www.googleapis.com/auth/siteverification"
-
 	// Manage your new site verifications with Google
 	SiteverificationVerify_onlyScope = "https://www.googleapis.com/auth/siteverification.verify_only"
+
+	// Manage the list of sites and domains you control
+	SiteverificationScope = "https://www.googleapis.com/auth/siteverification"
 )
 
 func New(client *http.Client) (*Service, error) {
@@ -86,10 +86,6 @@ type SiteVerificationWebResourceGettokenRequestSite struct {
 }
 
 type SiteVerificationWebResourceGettokenResponse struct {
-	// Token: The verification token. The token must be placed appropriately
-	// in order for verification to succeed.
-	Token string `json:"token,omitempty"`
-
 	// Method: The verification method to use in conjunction with this
 	// token. For FILE, the token should be placed in the top-level
 	// directory of the site, stored inside a file of the same name. For
@@ -97,6 +93,10 @@ type SiteVerificationWebResourceGettokenResponse struct {
 	// that is loaded for the site. For DNS, the token should be placed in a
 	// TXT record of the domain.
 	Method string `json:"method,omitempty"`
+
+	// Token: The verification token. The token must be placed appropriately
+	// in order for verification to succeed.
+	Token string `json:"token,omitempty"`
 }
 
 type SiteVerificationWebResourceListResponse struct {
@@ -110,12 +110,12 @@ type SiteVerificationWebResourceResource struct {
 	// operations.
 	Id string `json:"id,omitempty"`
 
+	// Owners: The email addresses of all verified owners.
+	Owners []string `json:"owners,omitempty"`
+
 	// Site: The address and type of a site that is verified or will be
 	// verified.
 	Site *SiteVerificationWebResourceResourceSite `json:"site,omitempty"`
-
-	// Owners: The email addresses of all verified owners.
-	Owners []string `json:"owners,omitempty"`
 }
 
 type SiteVerificationWebResourceResourceSite struct {

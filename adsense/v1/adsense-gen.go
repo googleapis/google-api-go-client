@@ -96,31 +96,31 @@ type AdClient struct {
 	// Id: Unique identifier of this ad client.
 	Id string `json:"id,omitempty"`
 
-	// SupportsReporting: Whether this ad client supports being reported on.
-	SupportsReporting bool `json:"supportsReporting,omitempty"`
+	// Kind: Kind of resource this is, in this case adsense#adClient.
+	Kind string `json:"kind,omitempty"`
 
 	// ProductCode: This ad client's product code, which corresponds to the
 	// PRODUCT_CODE report dimension.
 	ProductCode string `json:"productCode,omitempty"`
 
-	// Kind: Kind of resource this is, in this case adsense#adClient.
-	Kind string `json:"kind,omitempty"`
+	// SupportsReporting: Whether this ad client supports being reported on.
+	SupportsReporting bool `json:"supportsReporting,omitempty"`
 }
 
 type AdClients struct {
+	// Etag: ETag of this response for caching purposes.
+	Etag string `json:"etag,omitempty"`
+
 	// Items: The ad clients returned in this list response.
 	Items []*AdClient `json:"items,omitempty"`
+
+	// Kind: Kind of list this is, in this case adsense#adClients.
+	Kind string `json:"kind,omitempty"`
 
 	// NextPageToken: Continuation token used to page through ad clients. To
 	// retrieve the next page of results, set the next request's "pageToken"
 	// value to this.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// Etag: ETag of this response for caching purposes.
-	Etag string `json:"etag,omitempty"`
-
-	// Kind: Kind of list this is, in this case adsense#adClients.
-	Kind string `json:"kind,omitempty"`
 }
 
 type AdUnit struct {
@@ -128,16 +128,16 @@ type AdUnit struct {
 	// clients.
 	Code string `json:"code,omitempty"`
 
-	// Name: Name of this ad unit.
-	Name string `json:"name,omitempty"`
-
-	// Kind: Kind of resource this is, in this case adsense#adUnit.
-	Kind string `json:"kind,omitempty"`
-
 	// Id: Unique identifier of this ad unit. This should be considered an
 	// opaque identifier; it is not safe to rely on it being in any
 	// particular format.
 	Id string `json:"id,omitempty"`
+
+	// Kind: Kind of resource this is, in this case adsense#adUnit.
+	Kind string `json:"kind,omitempty"`
+
+	// Name: Name of this ad unit.
+	Name string `json:"name,omitempty"`
 
 	// Status: Status of this ad unit. Possible values are:
 	// NEW: Indicates
@@ -154,19 +154,19 @@ type AdUnit struct {
 }
 
 type AdUnits struct {
+	// Etag: ETag of this response for caching purposes.
+	Etag string `json:"etag,omitempty"`
+
 	// Items: The ad units returned in this list response.
 	Items []*AdUnit `json:"items,omitempty"`
+
+	// Kind: Kind of list this is, in this case adsense#adUnits.
+	Kind string `json:"kind,omitempty"`
 
 	// NextPageToken: Continuation token used to page through ad units. To
 	// retrieve the next page of results, set the next request's "pageToken"
 	// value to this.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// Etag: ETag of this response for caching purposes.
-	Etag string `json:"etag,omitempty"`
-
-	// Kind: Kind of list this is, in this case adsense#adUnits.
-	Kind string `json:"kind,omitempty"`
 }
 
 type AdsenseReportsGenerateResponse struct {
@@ -175,6 +175,25 @@ type AdsenseReportsGenerateResponse struct {
 	// empty.
 	Averages []string `json:"averages,omitempty"`
 
+	// Headers: The header information of the columns requested in the
+	// report. This is a list of headers; one for each dimension in the
+	// request, followed by one for each metric in the request.
+	Headers []*AdsenseReportsGenerateResponseHeaders `json:"headers,omitempty"`
+
+	// Kind: Kind this is, in this case adsense#report.
+	Kind string `json:"kind,omitempty"`
+
+	// Rows: The output rows of the report. Each row is a list of cells; one
+	// for each dimension in the request, followed by one for each metric in
+	// the request. The dimension cells contain strings, and the metric
+	// cells contain numbers.
+	Rows [][]string `json:"rows,omitempty"`
+
+	// TotalMatchedRows: The total number of rows matched by the report
+	// request. Fewer rows may be returned in the response due to being
+	// limited by the row count requested or the report row limit.
+	TotalMatchedRows int64 `json:"totalMatchedRows,omitempty,string"`
+
 	// Totals: The totals of the report. This is the same length as any
 	// other row in the report; cells corresponding to dimension columns are
 	// empty.
@@ -182,38 +201,19 @@ type AdsenseReportsGenerateResponse struct {
 
 	// Warnings: Any warnings associated with generation of the report.
 	Warnings []string `json:"warnings,omitempty"`
-
-	// Kind: Kind this is, in this case adsense#report.
-	Kind string `json:"kind,omitempty"`
-
-	// TotalMatchedRows: The total number of rows matched by the report
-	// request. Fewer rows may be returned in the response due to being
-	// limited by the row count requested or the report row limit.
-	TotalMatchedRows int64 `json:"totalMatchedRows,omitempty,string"`
-
-	// Headers: The header information of the columns requested in the
-	// report. This is a list of headers; one for each dimension in the
-	// request, followed by one for each metric in the request.
-	Headers []*AdsenseReportsGenerateResponseHeaders `json:"headers,omitempty"`
-
-	// Rows: The output rows of the report. Each row is a list of cells; one
-	// for each dimension in the request, followed by one for each metric in
-	// the request. The dimension cells contain strings, and the metric
-	// cells contain numbers.
-	Rows [][]string `json:"rows,omitempty"`
 }
 
 type AdsenseReportsGenerateResponseHeaders struct {
+	// Currency: The currency of this column. Only present if the header
+	// type is METRIC_CURRENCY.
+	Currency string `json:"currency,omitempty"`
+
 	// Name: The name of the header.
 	Name string `json:"name,omitempty"`
 
 	// Type: The type of the header; one of DIMENSION, METRIC_TALLY,
 	// METRIC_RATIO, or METRIC_CURRENCY.
 	Type string `json:"type,omitempty"`
-
-	// Currency: The currency of this column. Only present if the header
-	// type is METRIC_CURRENCY.
-	Currency string `json:"currency,omitempty"`
 }
 
 type CustomChannel struct {
@@ -221,32 +221,32 @@ type CustomChannel struct {
 	// clients.
 	Code string `json:"code,omitempty"`
 
-	// Name: Name of this custom channel.
-	Name string `json:"name,omitempty"`
-
-	// Kind: Kind of resource this is, in this case adsense#customChannel.
-	Kind string `json:"kind,omitempty"`
-
 	// Id: Unique identifier of this custom channel. This should be
 	// considered an opaque identifier; it is not safe to rely on it being
 	// in any particular format.
 	Id string `json:"id,omitempty"`
+
+	// Kind: Kind of resource this is, in this case adsense#customChannel.
+	Kind string `json:"kind,omitempty"`
+
+	// Name: Name of this custom channel.
+	Name string `json:"name,omitempty"`
 }
 
 type CustomChannels struct {
+	// Etag: ETag of this response for caching purposes.
+	Etag string `json:"etag,omitempty"`
+
 	// Items: The custom channels returned in this list response.
 	Items []*CustomChannel `json:"items,omitempty"`
+
+	// Kind: Kind of list this is, in this case adsense#customChannels.
+	Kind string `json:"kind,omitempty"`
 
 	// NextPageToken: Continuation token used to page through custom
 	// channels. To retrieve the next page of results, set the next
 	// request's "pageToken" value to this.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// Etag: ETag of this response for caching purposes.
-	Etag string `json:"etag,omitempty"`
-
-	// Kind: Kind of list this is, in this case adsense#customChannels.
-	Kind string `json:"kind,omitempty"`
 }
 
 type UrlChannel struct {
@@ -255,28 +255,28 @@ type UrlChannel struct {
 	// particular format.
 	Id string `json:"id,omitempty"`
 
+	// Kind: Kind of resource this is, in this case adsense#urlChannel.
+	Kind string `json:"kind,omitempty"`
+
 	// UrlPattern: URL Pattern of this URL channel. Does not include
 	// "http://" or "https://". Example: www.example.com/home
 	UrlPattern string `json:"urlPattern,omitempty"`
-
-	// Kind: Kind of resource this is, in this case adsense#urlChannel.
-	Kind string `json:"kind,omitempty"`
 }
 
 type UrlChannels struct {
+	// Etag: ETag of this response for caching purposes.
+	Etag string `json:"etag,omitempty"`
+
 	// Items: The URL channels returned in this list response.
 	Items []*UrlChannel `json:"items,omitempty"`
+
+	// Kind: Kind of list this is, in this case adsense#urlChannels.
+	Kind string `json:"kind,omitempty"`
 
 	// NextPageToken: Continuation token used to page through URL channels.
 	// To retrieve the next page of results, set the next request's
 	// "pageToken" value to this.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// Etag: ETag of this response for caching purposes.
-	Etag string `json:"etag,omitempty"`
-
-	// Kind: Kind of list this is, in this case adsense#urlChannels.
-	Kind string `json:"kind,omitempty"`
 }
 
 // method id "adsense.adclients.list":

@@ -63,15 +63,60 @@ type FilesService struct {
 }
 
 type File struct {
+	// CreatedDate: Create time for this file (formatted ISO8601 timestamp).
+	CreatedDate string `json:"createdDate,omitempty"`
+
+	// Description: A short description of the file
+	Description string `json:"description,omitempty"`
+
+	// DownloadUrl: Short term download URL for the file. This will only be
+	// populated on files with content stored in Drive.
+	DownloadUrl string `json:"downloadUrl,omitempty"`
+
 	// Etag: ETag of the file.
 	Etag string `json:"etag,omitempty"`
 
-	// Kind: The type of file. This is always drive#file
-	Kind string `json:"kind,omitempty"`
+	// FileExtension: The file extension used when downloading this file.
+	// This field is read only. To set the extension, include it on title
+	// when creating the file. This will only be populated on files with
+	// content stored in Drive.
+	FileExtension string `json:"fileExtension,omitempty"`
+
+	// FileSize: The size of the file in bytes. This will only be populated
+	// on files with content stored in Drive.
+	FileSize int64 `json:"fileSize,omitempty,string"`
+
+	// Id: The id of the file.
+	Id string `json:"id,omitempty"`
 
 	// IndexableText: Indexable text attributes for the file (can only be
 	// written)
 	IndexableText *FileIndexableText `json:"indexableText,omitempty"`
+
+	// Kind: The type of file. This is always drive#file
+	Kind string `json:"kind,omitempty"`
+
+	// Labels: Labels for the file.
+	Labels *FileLabels `json:"labels,omitempty"`
+
+	// LastViewedDate: Last time this file was viewed by anyone (formatted
+	// RFC 3339 timestamp).
+	LastViewedDate string `json:"lastViewedDate,omitempty"`
+
+	// Md5Checksum: An MD5 checksum for the content of this file. This will
+	// only be populated on files with content stored in Drive.
+	Md5Checksum string `json:"md5Checksum,omitempty"`
+
+	// MimeType: The mimetype of the file
+	MimeType string `json:"mimeType,omitempty"`
+
+	// ModifiedByMeDate: Last time this file was modified by the user
+	// (formatted RFC 3339 timestamp).
+	ModifiedByMeDate string `json:"modifiedByMeDate,omitempty"`
+
+	// ModifiedDate: Last time this file was modified by anyone (formatted
+	// RFC 3339 timestamp).
+	ModifiedDate string `json:"modifiedDate,omitempty"`
 
 	// ParentsCollection: Collection of parent folders which contain this
 	// file.
@@ -80,60 +125,15 @@ type File struct {
 	// in the default root folder. On update, this field is ignored.
 	ParentsCollection []*FileParentsCollection `json:"parentsCollection,omitempty"`
 
-	// ModifiedByMeDate: Last time this file was modified by the user
-	// (formatted RFC 3339 timestamp).
-	ModifiedByMeDate string `json:"modifiedByMeDate,omitempty"`
-
-	// CreatedDate: Create time for this file (formatted ISO8601 timestamp).
-	CreatedDate string `json:"createdDate,omitempty"`
-
-	// Id: The id of the file.
-	Id string `json:"id,omitempty"`
-
-	// UserPermission: The permissions for the authenticated user on this
-	// file.
-	UserPermission *Permission `json:"userPermission,omitempty"`
+	// SelfLink: A link back to this file.
+	SelfLink string `json:"selfLink,omitempty"`
 
 	// Title: The title of this file.
 	Title string `json:"title,omitempty"`
 
-	// FileExtension: The file extension used when downloading this file.
-	// This field is read only. To set the extension, include it on title
-	// when creating the file. This will only be populated on files with
-	// content stored in Drive.
-	FileExtension string `json:"fileExtension,omitempty"`
-
-	// DownloadUrl: Short term download URL for the file. This will only be
-	// populated on files with content stored in Drive.
-	DownloadUrl string `json:"downloadUrl,omitempty"`
-
-	// Md5Checksum: An MD5 checksum for the content of this file. This will
-	// only be populated on files with content stored in Drive.
-	Md5Checksum string `json:"md5Checksum,omitempty"`
-
-	// FileSize: The size of the file in bytes. This will only be populated
-	// on files with content stored in Drive.
-	FileSize int64 `json:"fileSize,omitempty,string"`
-
-	// MimeType: The mimetype of the file
-	MimeType string `json:"mimeType,omitempty"`
-
-	// ModifiedDate: Last time this file was modified by anyone (formatted
-	// RFC 3339 timestamp).
-	ModifiedDate string `json:"modifiedDate,omitempty"`
-
-	// Description: A short description of the file
-	Description string `json:"description,omitempty"`
-
-	// LastViewedDate: Last time this file was viewed by anyone (formatted
-	// RFC 3339 timestamp).
-	LastViewedDate string `json:"lastViewedDate,omitempty"`
-
-	// Labels: Labels for the file.
-	Labels *FileLabels `json:"labels,omitempty"`
-
-	// SelfLink: A link back to this file.
-	SelfLink string `json:"selfLink,omitempty"`
+	// UserPermission: The permissions for the authenticated user on this
+	// file.
+	UserPermission *Permission `json:"userPermission,omitempty"`
 }
 
 type FileIndexableText struct {
@@ -142,40 +142,40 @@ type FileIndexableText struct {
 }
 
 type FileLabels struct {
-	// Trashed: Whether this file has been trashed.
-	Trashed bool `json:"trashed,omitempty"`
-
 	// Hidden: Whether this file is hidden from the user
 	Hidden bool `json:"hidden,omitempty"`
 
 	// Starred: Whether this file is starred by the user.
 	Starred bool `json:"starred,omitempty"`
+
+	// Trashed: Whether this file has been trashed.
+	Trashed bool `json:"trashed,omitempty"`
 }
 
 type FileParentsCollection struct {
-	// ParentLink: A link to get the metadata for this parent
-	ParentLink string `json:"parentLink,omitempty"`
-
 	// Id: The id of this parent
 	Id string `json:"id,omitempty"`
+
+	// ParentLink: A link to get the metadata for this parent
+	ParentLink string `json:"parentLink,omitempty"`
 }
 
 type Permission struct {
+	// AdditionalRoles: Any additional roles that this permission describes.
+	AdditionalRoles []string `json:"additionalRoles,omitempty"`
+
 	// Etag: An etag for this permission.
 	Etag string `json:"etag,omitempty"`
 
 	// Kind: The kind of this permission. This is always drive#permission
 	Kind string `json:"kind,omitempty"`
 
-	// Type: The type of permission (For example: user, group etc).
-	Type string `json:"type,omitempty"`
-
 	// Role: The role that this permission describes. (For example: reader,
 	// writer, owner)
 	Role string `json:"role,omitempty"`
 
-	// AdditionalRoles: Any additional roles that this permission describes.
-	AdditionalRoles []string `json:"additionalRoles,omitempty"`
+	// Type: The type of permission (For example: user, group etc).
+	Type string `json:"type,omitempty"`
 }
 
 // method id "drive.files.get":

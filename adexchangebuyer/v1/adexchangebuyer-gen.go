@@ -76,35 +76,35 @@ type DirectDealsService struct {
 }
 
 type Account struct {
+	// BidderLocation: Your bidder locations that have distinct URLs.
+	BidderLocation []*AccountBidderLocation `json:"bidderLocation,omitempty"`
+
 	// CookieMatchingNid: The nid parameter value used in cookie match
 	// requests. Please contact your technical account manager if you need
 	// to change this.
 	CookieMatchingNid string `json:"cookieMatchingNid,omitempty"`
 
-	// Kind: Resource type.
-	Kind string `json:"kind,omitempty"`
+	// CookieMatchingUrl: The base URL used in cookie match requests.
+	CookieMatchingUrl string `json:"cookieMatchingUrl,omitempty"`
 
 	// Id: Account id.
 	Id int64 `json:"id,omitempty"`
 
-	// CookieMatchingUrl: The base URL used in cookie match requests.
-	CookieMatchingUrl string `json:"cookieMatchingUrl,omitempty"`
+	// Kind: Resource type.
+	Kind string `json:"kind,omitempty"`
 
 	// MaximumTotalQps: The sum of all bidderLocation.maximumQps values
 	// cannot exceed this. Please contact your technical account manager if
 	// you need to change this.
 	MaximumTotalQps int64 `json:"maximumTotalQps,omitempty"`
-
-	// BidderLocation: Your bidder locations that have distinct URLs.
-	BidderLocation []*AccountBidderLocation `json:"bidderLocation,omitempty"`
 }
 
 type AccountBidderLocation struct {
-	// Url: The URL to which the Ad Exchange will send bid requests.
-	Url string `json:"url,omitempty"`
-
 	// MaximumQps: The maximum queries per second the Ad Exchange will send.
 	MaximumQps int64 `json:"maximumQps,omitempty"`
+
+	// Url: The URL to which the Ad Exchange will send bid requests.
+	Url string `json:"url,omitempty"`
 }
 
 type AccountsList struct {
@@ -116,41 +116,12 @@ type AccountsList struct {
 }
 
 type Creative struct {
-	// BuyerCreativeId: A buyer-specific id identifying the creative in this
-	// ad.
-	BuyerCreativeId string `json:"buyerCreativeId,omitempty"`
-
-	// Height: Ad height.
-	Height int64 `json:"height,omitempty"`
-
-	// Kind: Resource type.
-	Kind string `json:"kind,omitempty"`
-
-	// Width: Ad width.
-	Width int64 `json:"width,omitempty"`
-
 	// HTMLSnippet: The HTML snippet that displays the ad when inserted in
 	// the web page. If set, videoURL should not be set.
 	HTMLSnippet string `json:"HTMLSnippet,omitempty"`
 
-	// Status: Creative serving status. Read-only. This field should not be
-	// set in requests.
-	Status string `json:"status,omitempty"`
-
-	// VideoURL: The url to fetch a video ad. If set, HTMLSnippet should not
-	// be set.
-	VideoURL string `json:"videoURL,omitempty"`
-
-	// VendorType: All vendor types for the ads that may be shown from this
-	// snippet.
-	VendorType []int64 `json:"vendorType,omitempty"`
-
-	// ClickThroughUrl: The set of destination urls for the snippet.
-	ClickThroughUrl []string `json:"clickThroughUrl,omitempty"`
-
-	// ProductCategories: Detected product categories, if any. Read-only.
-	// This field should not be set in requests.
-	ProductCategories []int64 `json:"productCategories,omitempty"`
+	// AccountId: Account id.
+	AccountId int64 `json:"accountId,omitempty"`
 
 	// AdgroupId: The pretargeting adgroup id that this creative will be
 	// associated with.
@@ -160,6 +131,21 @@ type Creative struct {
 	// should not be set in requests.
 	AdvertiserId []int64 `json:"advertiserId,omitempty"`
 
+	// AdvertiserName: The name of the company being advertised in the
+	// creative.
+	AdvertiserName string `json:"advertiserName,omitempty"`
+
+	// Attribute: All attributes for the ads that may be shown from this
+	// snippet.
+	Attribute []int64 `json:"attribute,omitempty"`
+
+	// BuyerCreativeId: A buyer-specific id identifying the creative in this
+	// ad.
+	BuyerCreativeId string `json:"buyerCreativeId,omitempty"`
+
+	// ClickThroughUrl: The set of destination urls for the snippet.
+	ClickThroughUrl []string `json:"clickThroughUrl,omitempty"`
+
 	// DisapprovalReasons: The reason for disapproval, if any. Note that not
 	// all disapproval reasons may be categorized, so it is possible for the
 	// creative to have a status of DISAPPROVED with an empty list for
@@ -168,38 +154,42 @@ type Creative struct {
 	// requests.
 	DisapprovalReasons []string `json:"disapprovalReasons,omitempty"`
 
-	// Attribute: All attributes for the ads that may be shown from this
-	// snippet.
-	Attribute []int64 `json:"attribute,omitempty"`
+	// Height: Ad height.
+	Height int64 `json:"height,omitempty"`
+
+	// Kind: Resource type.
+	Kind string `json:"kind,omitempty"`
+
+	// ProductCategories: Detected product categories, if any. Read-only.
+	// This field should not be set in requests.
+	ProductCategories []int64 `json:"productCategories,omitempty"`
 
 	// SensitiveCategories: Detected sensitive categories, if any.
 	// Read-only. This field should not be set in requests.
 	SensitiveCategories []int64 `json:"sensitiveCategories,omitempty"`
 
-	// AdvertiserName: The name of the company being advertised in the
-	// creative.
-	AdvertiserName string `json:"advertiserName,omitempty"`
+	// Status: Creative serving status. Read-only. This field should not be
+	// set in requests.
+	Status string `json:"status,omitempty"`
 
-	// AccountId: Account id.
-	AccountId int64 `json:"accountId,omitempty"`
+	// VendorType: All vendor types for the ads that may be shown from this
+	// snippet.
+	VendorType []int64 `json:"vendorType,omitempty"`
+
+	// VideoURL: The url to fetch a video ad. If set, HTMLSnippet should not
+	// be set.
+	VideoURL string `json:"videoURL,omitempty"`
+
+	// Width: Ad width.
+	Width int64 `json:"width,omitempty"`
 }
 
 type DirectDeal struct {
 	// AccountId: The account id of the buyer this deal is for.
 	AccountId int64 `json:"accountId,omitempty"`
 
-	// Kind: Resource type.
-	Kind string `json:"kind,omitempty"`
-
 	// Advertiser: The name of the advertiser this deal is for.
 	Advertiser string `json:"advertiser,omitempty"`
-
-	// FixedCpm: The fixed price for this direct deal. In cpm micros of
-	// currency according to currency_code.
-	FixedCpm int64 `json:"fixedCpm,omitempty,string"`
-
-	// Id: Deal id.
-	Id int64 `json:"id,omitempty,string"`
 
 	// CurrencyCode: The currency code that applies to the fixed_cpm value.
 	// If not set then assumed to be USD.
@@ -209,6 +199,16 @@ type DirectDeal struct {
 	// then this deal is valid until manually disabled by the publisher. In
 	// seconds since the epoch.
 	EndTime int64 `json:"endTime,omitempty,string"`
+
+	// FixedCpm: The fixed price for this direct deal. In cpm micros of
+	// currency according to currency_code.
+	FixedCpm int64 `json:"fixedCpm,omitempty,string"`
+
+	// Id: Deal id.
+	Id int64 `json:"id,omitempty,string"`
+
+	// Kind: Resource type.
+	Kind string `json:"kind,omitempty"`
 
 	// SellerNetwork: The name of the publisher offering this direct deal.
 	SellerNetwork string `json:"sellerNetwork,omitempty"`
@@ -220,11 +220,11 @@ type DirectDeal struct {
 }
 
 type DirectDealsList struct {
-	// Kind: Resource type.
-	Kind string `json:"kind,omitempty"`
-
 	// DirectDeals: A list of direct deals relevant for your account.
 	DirectDeals []*DirectDeal `json:"directDeals,omitempty"`
+
+	// Kind: Resource type.
+	Kind string `json:"kind,omitempty"`
 }
 
 // method id "adexchangebuyer.accounts.get":

@@ -90,13 +90,13 @@ type TablesService struct {
 }
 
 type Bigqueryfield struct {
-	Mode string `json:"mode,omitempty"`
-
 	Fields []*Bigqueryfield `json:"fields,omitempty"`
 
-	Type string `json:"type,omitempty"`
+	Mode string `json:"mode,omitempty"`
 
 	Name string `json:"name,omitempty"`
+
+	Type string `json:"type,omitempty"`
 }
 
 type Bigqueryschema struct {
@@ -104,35 +104,6 @@ type Bigqueryschema struct {
 }
 
 type Dataset struct {
-	// Description: [Optional] An arbitrary string description for the
-	// dataset. This might be shown in BigQuery UI for browsing the dataset.
-	Description string `json:"description,omitempty"`
-
-	// SelfLink: [Output only] An URL that can be used to access this
-	// resource again. You can use this URL in Get or Update requests to
-	// this resource. Not used as an input to helix.
-	SelfLink string `json:"selfLink,omitempty"`
-
-	// FriendlyName: [Optional] A descriptive name for this dataset, which
-	// might be shown in any BigQuery user interfaces for browsing the
-	// dataset. Use datasetId for making API calls.
-	FriendlyName string `json:"friendlyName,omitempty"`
-
-	// CreationTime: [Output only] The date when this dataset was created,
-	// in milliseconds since the epoch.
-	CreationTime int64 `json:"creationTime,omitempty,string"`
-
-	// ProjectId: [Deprecated -- overlaps with datasetRef].
-	ProjectId string `json:"projectId,omitempty"`
-
-	// DatasetId: [Deprecated -- overlaps with datasetRef] A unique ID for
-	// this dataset. Must a string of 1-1024 characters satisfying the
-	// regular expression [A-Za-z0-9_].
-	DatasetId string `json:"datasetId,omitempty"`
-
-	// Kind: [Output only] The resource type.
-	Kind string `json:"kind,omitempty"`
-
 	// Access: [Optional] Describes users' rights on the dataset. You can
 	// assign the same role to multiple users, and assign multiple roles to
 	// the same user.
@@ -151,33 +122,50 @@ type Dataset struct {
 	// groupByEmail, domain, or allAuthenticatedUsers.
 	Access []*DatasetAccess `json:"access,omitempty"`
 
+	// CreationTime: [Output only] The date when this dataset was created,
+	// in milliseconds since the epoch.
+	CreationTime int64 `json:"creationTime,omitempty,string"`
+
+	// DatasetId: [Deprecated -- overlaps with datasetRef] A unique ID for
+	// this dataset. Must a string of 1-1024 characters satisfying the
+	// regular expression [A-Za-z0-9_].
+	DatasetId string `json:"datasetId,omitempty"`
+
+	// DatasetReference: [Required] Reference identifying dataset.
+	DatasetReference *Datasetreference `json:"datasetReference,omitempty"`
+
+	// Description: [Optional] An arbitrary string description for the
+	// dataset. This might be shown in BigQuery UI for browsing the dataset.
+	Description string `json:"description,omitempty"`
+
+	// FriendlyName: [Optional] A descriptive name for this dataset, which
+	// might be shown in any BigQuery user interfaces for browsing the
+	// dataset. Use datasetId for making API calls.
+	FriendlyName string `json:"friendlyName,omitempty"`
+
 	// Id: [Output only] The fully-qualified unique name of this dataset in
 	// the format projectId:datasetId. The dataset name without the project
 	// name is given in the datasetId field. When creating a new dataset,
 	// leave this field blank, and instead specify the datasetId field.
 	Id string `json:"id,omitempty"`
 
+	// Kind: [Output only] The resource type.
+	Kind string `json:"kind,omitempty"`
+
 	// LastModifiedTime: [Output only] The date when this dataset or any of
 	// its tables was last modified, in milliseconds since the epoch.
 	LastModifiedTime int64 `json:"lastModifiedTime,omitempty,string"`
 
-	// DatasetReference: [Required] Reference identifying dataset.
-	DatasetReference *Datasetreference `json:"datasetReference,omitempty"`
+	// ProjectId: [Deprecated -- overlaps with datasetRef].
+	ProjectId string `json:"projectId,omitempty"`
+
+	// SelfLink: [Output only] An URL that can be used to access this
+	// resource again. You can use this URL in Get or Update requests to
+	// this resource. Not used as an input to helix.
+	SelfLink string `json:"selfLink,omitempty"`
 }
 
 type DatasetAccess struct {
-	// GroupByEmail: [Pick one] A fully-qualified email address of a mailing
-	// list to grant access to. This must be either a Google Groups mailing
-	// list (ends in @googlegroups.com) or a group managed by an enterprise
-	// version of Google Groups.
-	GroupByEmail string `json:"groupByEmail,omitempty"`
-
-	// SpecialGroup: [Pick one] A special group to grant access to. The
-	// valid values are: projectOwners: Owners of the enclosing project.
-	// projectReaders: Readers of the enclosing project. projectWriters:
-	// Writers of the enclosing project.
-	SpecialGroup string `json:"specialGroup,omitempty"`
-
 	// AllAuthenticatedUsers: [Pick one] If True, any authenticated user is
 	// granted the assigned role.
 	AllAuthenticatedUsers string `json:"allAuthenticatedUsers,omitempty"`
@@ -187,9 +175,11 @@ type DatasetAccess struct {
 	// Example: "example.com".
 	Domain string `json:"domain,omitempty"`
 
-	// UserByEmail: [Pick one] A fully qualified email address of a user to
-	// grant access to. For example: fred@example.com.
-	UserByEmail string `json:"userByEmail,omitempty"`
+	// GroupByEmail: [Pick one] A fully-qualified email address of a mailing
+	// list to grant access to. This must be either a Google Groups mailing
+	// list (ends in @googlegroups.com) or a group managed by an enterprise
+	// version of Google Groups.
+	GroupByEmail string `json:"groupByEmail,omitempty"`
 
 	// Role: [Required] Describes the rights granted to the user specified
 	// by the other member of the access object. The following string values
@@ -199,6 +189,16 @@ type DatasetAccess struct {
 	// get(). OWNER - User can call any method. The dataset creator is
 	// granted this role by default.
 	Role string `json:"role,omitempty"`
+
+	// SpecialGroup: [Pick one] A special group to grant access to. The
+	// valid values are: projectOwners: Owners of the enclosing project.
+	// projectReaders: Readers of the enclosing project. projectWriters:
+	// Writers of the enclosing project.
+	SpecialGroup string `json:"specialGroup,omitempty"`
+
+	// UserByEmail: [Pick one] A fully qualified email address of a user to
+	// grant access to. For example: fred@example.com.
+	UserByEmail string `json:"userByEmail,omitempty"`
 }
 
 type DatasetList struct {
@@ -206,115 +206,115 @@ type DatasetList struct {
 	// Absent when there are no datasets in the specified project.
 	Datasets []*DatasetListDatasets `json:"datasets,omitempty"`
 
-	// NextPageToken: A token to request the next page of results. Present
-	// only when there is more than one page of results.* See Paging Through
-	// Results in the developer's guide.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Etag: A hash of this page of results. See Paging Through Results in
 	// the developer's guide.
 	Etag string `json:"etag,omitempty"`
 
 	// Kind: The resource type.
 	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: A token to request the next page of results. Present
+	// only when there is more than one page of results.* See Paging Through
+	// Results in the developer's guide.
+	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
 type DatasetListDatasets struct {
+	// DatasetId: [Deprecated] A unique ID for this dataset; this is the id
+	// values without the project name.
+	DatasetId string `json:"datasetId,omitempty"`
+
 	// DatasetReference: Reference identifying dataset.
 	DatasetReference *Datasetreference `json:"datasetReference,omitempty"`
 
 	// FriendlyName: A descriptive name for this dataset, if one exists.
 	FriendlyName string `json:"friendlyName,omitempty"`
 
-	// ProjectId: [Deprecated] The ID of the container project.
-	ProjectId string `json:"projectId,omitempty"`
-
-	// DatasetId: [Deprecated] A unique ID for this dataset; this is the id
-	// values without the project name.
-	DatasetId string `json:"datasetId,omitempty"`
-
 	// Id: The fully-qualified unique name of this dataset in the format
 	// projectId:datasetId.
 	Id string `json:"id,omitempty"`
+
+	// ProjectId: [Deprecated] The ID of the container project.
+	ProjectId string `json:"projectId,omitempty"`
 }
 
 type Datasetreference struct {
-	// ProjectId: [Optional] The ID of the container project.
-	ProjectId string `json:"projectId,omitempty"`
-
 	// DatasetId: [Required] A unique ID for this dataset, without the
 	// project name.
 	DatasetId string `json:"datasetId,omitempty"`
+
+	// ProjectId: [Optional] The ID of the container project.
+	ProjectId string `json:"projectId,omitempty"`
 }
 
 type ErrorProto struct {
-	Domain string `json:"domain,omitempty"`
+	Arguments []string `json:"arguments,omitempty"`
 
 	Code string `json:"code,omitempty"`
+
+	DebugInfo string `json:"debugInfo,omitempty"`
+
+	Domain string `json:"domain,omitempty"`
+
+	ErrorMessage string `json:"errorMessage,omitempty"`
 
 	Location string `json:"location,omitempty"`
 
 	LocationType string `json:"locationType,omitempty"`
-
-	DebugInfo string `json:"debugInfo,omitempty"`
-
-	Arguments []string `json:"arguments,omitempty"`
-
-	ErrorMessage string `json:"errorMessage,omitempty"`
 }
 
 type Job struct {
-	SelfLink string `json:"selfLink,omitempty"`
-
-	JobId string `json:"jobId,omitempty"`
-
-	ProjectId string `json:"projectId,omitempty"`
-
-	Kind string `json:"kind,omitempty"`
+	Configuration *Jobconfiguration `json:"configuration,omitempty"`
 
 	Id string `json:"id,omitempty"`
 
-	Status *Jobstatus `json:"status,omitempty"`
-
-	Configuration *Jobconfiguration `json:"configuration,omitempty"`
+	JobId string `json:"jobId,omitempty"`
 
 	JobReference *Jobreference `json:"jobReference,omitempty"`
 
+	Kind string `json:"kind,omitempty"`
+
+	ProjectId string `json:"projectId,omitempty"`
+
+	SelfLink string `json:"selfLink,omitempty"`
+
 	Statistics *Jobstatistics `json:"statistics,omitempty"`
+
+	Status *Jobstatus `json:"status,omitempty"`
 }
 
 type JobList struct {
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	TotalItems int64 `json:"totalItems,omitempty"`
-
 	Etag string `json:"etag,omitempty"`
+
+	Jobs []*JobListJobs `json:"jobs,omitempty"`
 
 	Kind string `json:"kind,omitempty"`
 
-	Jobs []*JobListJobs `json:"jobs,omitempty"`
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	TotalItems int64 `json:"totalItems,omitempty"`
 }
 
 type JobListJobs struct {
-	EndTime int64 `json:"endTime,omitempty,string"`
-
 	Configuration *Jobconfiguration `json:"configuration,omitempty"`
 
-	StartTime int64 `json:"startTime,omitempty,string"`
-
-	JobReference *Jobreference `json:"jobReference,omitempty"`
-
-	Statistics *Jobstatistics `json:"statistics,omitempty"`
-
-	State string `json:"state,omitempty"`
-
-	JobId string `json:"jobId,omitempty"`
+	EndTime int64 `json:"endTime,omitempty,string"`
 
 	ErrorResult *ErrorProto `json:"errorResult,omitempty"`
 
+	Id string `json:"id,omitempty"`
+
+	JobId string `json:"jobId,omitempty"`
+
+	JobReference *Jobreference `json:"jobReference,omitempty"`
+
 	ProjectId string `json:"projectId,omitempty"`
 
-	Id string `json:"id,omitempty"`
+	StartTime int64 `json:"startTime,omitempty,string"`
+
+	State string `json:"state,omitempty"`
+
+	Statistics *Jobstatistics `json:"statistics,omitempty"`
 
 	Status *Jobstatus `json:"status,omitempty"`
 }
@@ -326,17 +326,17 @@ type JobQueryRequest struct {
 	// in the format projectId:datasetId.tableid.
 	DefaultDataset *Datasetreference `json:"defaultDataset,omitempty"`
 
+	// DestinationTable: [Optional] Specifies the table the query results
+	// should be written to. The table will be created if it does not exist.
+	DestinationTable *Tablereference `json:"destinationTable,omitempty"`
+
+	Kind string `json:"kind,omitempty"`
+
 	// MaxResults: [Optional] The maximum number of results to return per
 	// page of results. If the response list exceeds the maximum response
 	// size for a single response, you will have to page through the
 	// results. Default is to return the maximum response size.
 	MaxResults int64 `json:"maxResults,omitempty"`
-
-	Kind string `json:"kind,omitempty"`
-
-	// DestinationTable: [Optional] Specifies the table the query results
-	// should be written to. The table will be created if it does not exist.
-	DestinationTable *Tablereference `json:"destinationTable,omitempty"`
 
 	// Query: [Required] A query string, following the BigQuery query syntax
 	// of the query to execute. Table names should be qualified by dataset
@@ -354,15 +354,15 @@ type JobStopResponse struct {
 }
 
 type Jobconfiguration struct {
-	Query *Jobconfigurationquery `json:"query,omitempty"`
-
-	Load *Jobconfigurationload `json:"load,omitempty"`
-
 	Extract *Jobconfigurationextract `json:"extract,omitempty"`
 
 	Link *Jobconfigurationlink `json:"link,omitempty"`
 
+	Load *Jobconfigurationload `json:"load,omitempty"`
+
 	Properties *Jobconfigurationproperties `json:"properties,omitempty"`
+
+	Query *Jobconfigurationquery `json:"query,omitempty"`
 }
 
 type Jobconfigurationextract struct {
@@ -372,42 +372,42 @@ type Jobconfigurationextract struct {
 }
 
 type Jobconfigurationlink struct {
-	DestinationTable *Tablereference `json:"destinationTable,omitempty"`
-
 	CreateDisposition string `json:"createDisposition,omitempty"`
+
+	DestinationTable *Tablereference `json:"destinationTable,omitempty"`
 
 	SourceUri []string `json:"sourceUri,omitempty"`
 }
 
 type Jobconfigurationload struct {
-	Schema *Bigqueryschema `json:"schema,omitempty"`
+	CreateDisposition string `json:"createDisposition,omitempty"`
 
 	DestinationTable *Tablereference `json:"destinationTable,omitempty"`
 
-	CreateDisposition string `json:"createDisposition,omitempty"`
+	FieldDelimiter string `json:"fieldDelimiter,omitempty"`
+
+	Schema *Bigqueryschema `json:"schema,omitempty"`
 
 	SkipLeadingRows int64 `json:"skipLeadingRows,omitempty"`
 
-	WriteDisposition string `json:"writeDisposition,omitempty"`
-
 	SourceUris []string `json:"sourceUris,omitempty"`
 
-	FieldDelimiter string `json:"fieldDelimiter,omitempty"`
+	WriteDisposition string `json:"writeDisposition,omitempty"`
 }
 
 type Jobconfigurationproperties struct {
 }
 
 type Jobconfigurationquery struct {
-	DestinationTable *Tablereference `json:"destinationTable,omitempty"`
-
 	CreateDisposition string `json:"createDisposition,omitempty"`
 
-	WriteDisposition string `json:"writeDisposition,omitempty"`
+	DefaultDataset *Datasetreference `json:"defaultDataset,omitempty"`
+
+	DestinationTable *Tablereference `json:"destinationTable,omitempty"`
 
 	Query string `json:"query,omitempty"`
 
-	DefaultDataset *Datasetreference `json:"defaultDataset,omitempty"`
+	WriteDisposition string `json:"writeDisposition,omitempty"`
 }
 
 type Jobreference struct {
@@ -423,23 +423,23 @@ type Jobstatistics struct {
 }
 
 type Jobstatus struct {
+	ErrorResult *ErrorProto `json:"errorResult,omitempty"`
+
 	Errors []*ErrorProto `json:"errors,omitempty"`
 
 	State string `json:"state,omitempty"`
-
-	ErrorResult *ErrorProto `json:"errorResult,omitempty"`
 }
 
 type ProjectList struct {
-	TotalItems int64 `json:"totalItems,omitempty"`
-
 	Etag string `json:"etag,omitempty"`
 
 	Kind string `json:"kind,omitempty"`
 
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
 	Projects []*ProjectListProjects `json:"projects,omitempty"`
 
-	NextPageToken string `json:"nextPageToken,omitempty"`
+	TotalItems int64 `json:"totalItems,omitempty"`
 }
 
 type ProjectListProjects struct {
@@ -455,15 +455,15 @@ type Projectreference struct {
 }
 
 type QueryResults struct {
-	Schema *Bigqueryschema `json:"schema,omitempty"`
+	Job *Job `json:"job,omitempty"`
 
 	Kind string `json:"kind,omitempty"`
 
-	TotalRows uint64 `json:"totalRows,omitempty,string"`
-
 	Rows []*QueryResultsRows `json:"rows,omitempty"`
 
-	Job *Job `json:"job,omitempty"`
+	Schema *Bigqueryschema `json:"schema,omitempty"`
+
+	TotalRows uint64 `json:"totalRows,omitempty,string"`
 }
 
 type QueryResultsRows struct {
@@ -475,37 +475,37 @@ type QueryResultsRowsF struct {
 }
 
 type Table struct {
-	Description string `json:"description,omitempty"`
-
-	TableReference *Tablereference `json:"tableReference,omitempty"`
-
-	SelfLink string `json:"selfLink,omitempty"`
-
-	Schema *Bigqueryschema `json:"schema,omitempty"`
-
-	FriendlyName string `json:"friendlyName,omitempty"`
-
 	CreationTime int64 `json:"creationTime,omitempty,string"`
-
-	ProjectId string `json:"projectId,omitempty"`
 
 	DatasetId string `json:"datasetId,omitempty"`
 
-	Kind string `json:"kind,omitempty"`
+	Description string `json:"description,omitempty"`
+
+	FriendlyName string `json:"friendlyName,omitempty"`
 
 	Id string `json:"id,omitempty"`
 
-	TableId string `json:"tableId,omitempty"`
+	Kind string `json:"kind,omitempty"`
 
 	LastModifiedTime int64 `json:"lastModifiedTime,omitempty,string"`
+
+	ProjectId string `json:"projectId,omitempty"`
+
+	Schema *Bigqueryschema `json:"schema,omitempty"`
+
+	SelfLink string `json:"selfLink,omitempty"`
+
+	TableId string `json:"tableId,omitempty"`
+
+	TableReference *Tablereference `json:"tableReference,omitempty"`
 }
 
 type TableDataList struct {
 	Kind string `json:"kind,omitempty"`
 
-	TotalRows int64 `json:"totalRows,omitempty,string"`
-
 	Rows []*TableDataListRows `json:"rows,omitempty"`
+
+	TotalRows int64 `json:"totalRows,omitempty,string"`
 }
 
 type TableDataListRows struct {
@@ -517,35 +517,35 @@ type TableDataListRowsF struct {
 }
 
 type TableList struct {
-	Tables []*TableListTables `json:"tables,omitempty"`
-
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	TotalItems int64 `json:"totalItems,omitempty"`
-
 	Etag string `json:"etag,omitempty"`
 
 	Kind string `json:"kind,omitempty"`
+
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	Tables []*TableListTables `json:"tables,omitempty"`
+
+	TotalItems int64 `json:"totalItems,omitempty"`
 }
 
 type TableListTables struct {
-	TableReference *Tablereference `json:"tableReference,omitempty"`
+	DatasetId string `json:"datasetId,omitempty"`
 
 	FriendlyName string `json:"friendlyName,omitempty"`
 
-	ProjectId string `json:"projectId,omitempty"`
-
-	DatasetId string `json:"datasetId,omitempty"`
-
 	Id string `json:"id,omitempty"`
 
+	ProjectId string `json:"projectId,omitempty"`
+
 	TableId string `json:"tableId,omitempty"`
+
+	TableReference *Tablereference `json:"tableReference,omitempty"`
 }
 
 type Tablereference struct {
-	ProjectId string `json:"projectId,omitempty"`
-
 	DatasetId string `json:"datasetId,omitempty"`
+
+	ProjectId string `json:"projectId,omitempty"`
 
 	TableId string `json:"tableId,omitempty"`
 }

@@ -56,15 +56,15 @@ type CseService struct {
 }
 
 type Context struct {
-	Title string `json:"title,omitempty"`
-
 	Facets [][]*ContextFacetsItem `json:"facets,omitempty"`
+
+	Title string `json:"title,omitempty"`
 }
 
 type ContextFacetsItem struct {
-	Label string `json:"label,omitempty"`
-
 	Anchor string `json:"anchor,omitempty"`
+
+	Label string `json:"label,omitempty"`
 }
 
 type Promotion struct {
@@ -82,187 +82,187 @@ type Promotion struct {
 type PromotionBodyLines struct {
 	Link string `json:"link,omitempty"`
 
-	Url string `json:"url,omitempty"`
-
 	Title string `json:"title,omitempty"`
+
+	Url string `json:"url,omitempty"`
 }
 
 type PromotionImage struct {
 	Height int64 `json:"height,omitempty"`
 
-	Width int64 `json:"width,omitempty"`
-
 	Source string `json:"source,omitempty"`
+
+	Width int64 `json:"width,omitempty"`
 }
 
 type Query struct {
-	Safe string `json:"safe,omitempty"`
-
-	StartPage int64 `json:"startPage,omitempty"`
-
-	InputEncoding string `json:"inputEncoding,omitempty"`
-
-	Hl string `json:"hl,omitempty"`
-
-	Cref string `json:"cref,omitempty"`
-
-	LowRange string `json:"lowRange,omitempty"`
-
-	OrTerms string `json:"orTerms,omitempty"`
-
-	GoogleHost string `json:"googleHost,omitempty"`
-
-	DisableCnTwTranslation string `json:"disableCnTwTranslation,omitempty"`
-
-	SiteSearchFilter string `json:"siteSearchFilter,omitempty"`
-
-	Title string `json:"title,omitempty"`
-
-	SearchType string `json:"searchType,omitempty"`
-
-	Gl string `json:"gl,omitempty"`
-
-	SearchTerms string `json:"searchTerms,omitempty"`
-
-	Sort string `json:"sort,omitempty"`
-
-	ExcludeTerms string `json:"excludeTerms,omitempty"`
-
-	Cx string `json:"cx,omitempty"`
+	Count int64 `json:"count,omitempty"`
 
 	Cr string `json:"cr,omitempty"`
 
-	ImgSize string `json:"imgSize,omitempty"`
+	Cref string `json:"cref,omitempty"`
 
-	RelatedSite string `json:"relatedSite,omitempty"`
+	Cx string `json:"cx,omitempty"`
 
-	ImgColorType string `json:"imgColorType,omitempty"`
+	DateRestrict string `json:"dateRestrict,omitempty"`
 
-	SiteSearch string `json:"siteSearch,omitempty"`
+	DisableCnTwTranslation string `json:"disableCnTwTranslation,omitempty"`
+
+	ExactTerms string `json:"exactTerms,omitempty"`
+
+	ExcludeTerms string `json:"excludeTerms,omitempty"`
+
+	FileType string `json:"fileType,omitempty"`
+
+	Filter string `json:"filter,omitempty"`
+
+	Gl string `json:"gl,omitempty"`
+
+	GoogleHost string `json:"googleHost,omitempty"`
 
 	HighRange string `json:"highRange,omitempty"`
 
-	Rights string `json:"rights,omitempty"`
+	Hl string `json:"hl,omitempty"`
+
+	Hq string `json:"hq,omitempty"`
+
+	ImgColorType string `json:"imgColorType,omitempty"`
 
 	ImgDominantColor string `json:"imgDominantColor,omitempty"`
 
-	Count int64 `json:"count,omitempty"`
+	ImgSize string `json:"imgSize,omitempty"`
 
-	StartIndex int64 `json:"startIndex,omitempty"`
+	ImgType string `json:"imgType,omitempty"`
 
-	FileType string `json:"fileType,omitempty"`
+	InputEncoding string `json:"inputEncoding,omitempty"`
 
 	Language string `json:"language,omitempty"`
 
 	LinkSite string `json:"linkSite,omitempty"`
 
-	TotalResults int64 `json:"totalResults,omitempty,string"`
+	LowRange string `json:"lowRange,omitempty"`
+
+	OrTerms string `json:"orTerms,omitempty"`
 
 	OutputEncoding string `json:"outputEncoding,omitempty"`
 
-	ImgType string `json:"imgType,omitempty"`
+	RelatedSite string `json:"relatedSite,omitempty"`
 
-	DateRestrict string `json:"dateRestrict,omitempty"`
+	Rights string `json:"rights,omitempty"`
 
-	Filter string `json:"filter,omitempty"`
+	Safe string `json:"safe,omitempty"`
 
-	Hq string `json:"hq,omitempty"`
+	SearchTerms string `json:"searchTerms,omitempty"`
 
-	ExactTerms string `json:"exactTerms,omitempty"`
-}
+	SearchType string `json:"searchType,omitempty"`
 
-type Result struct {
-	Pagemap *ResultPagemap `json:"pagemap,omitempty"`
+	SiteSearch string `json:"siteSearch,omitempty"`
 
-	Kind string `json:"kind,omitempty"`
+	SiteSearchFilter string `json:"siteSearchFilter,omitempty"`
 
-	Link string `json:"link,omitempty"`
+	Sort string `json:"sort,omitempty"`
 
-	HtmlTitle string `json:"htmlTitle,omitempty"`
+	StartIndex int64 `json:"startIndex,omitempty"`
+
+	StartPage int64 `json:"startPage,omitempty"`
 
 	Title string `json:"title,omitempty"`
 
-	HtmlSnippet string `json:"htmlSnippet,omitempty"`
+	TotalResults int64 `json:"totalResults,omitempty,string"`
+}
+
+type Result struct {
+	CacheId string `json:"cacheId,omitempty"`
+
+	DisplayLink string `json:"displayLink,omitempty"`
 
 	FileFormat string `json:"fileFormat,omitempty"`
-
-	CacheId string `json:"cacheId,omitempty"`
 
 	FormattedUrl string `json:"formattedUrl,omitempty"`
 
 	HtmlFormattedUrl string `json:"htmlFormattedUrl,omitempty"`
 
-	DisplayLink string `json:"displayLink,omitempty"`
+	HtmlSnippet string `json:"htmlSnippet,omitempty"`
 
-	Mime string `json:"mime,omitempty"`
-
-	Labels []*ResultLabels `json:"labels,omitempty"`
+	HtmlTitle string `json:"htmlTitle,omitempty"`
 
 	Image *ResultImage `json:"image,omitempty"`
 
+	Kind string `json:"kind,omitempty"`
+
+	Labels []*ResultLabels `json:"labels,omitempty"`
+
+	Link string `json:"link,omitempty"`
+
+	Mime string `json:"mime,omitempty"`
+
+	Pagemap *ResultPagemap `json:"pagemap,omitempty"`
+
 	Snippet string `json:"snippet,omitempty"`
+
+	Title string `json:"title,omitempty"`
 }
 
 type ResultImage struct {
-	ThumbnailWidth int64 `json:"thumbnailWidth,omitempty"`
-
-	ThumbnailLink string `json:"thumbnailLink,omitempty"`
-
-	Height int64 `json:"height,omitempty"`
-
-	Width int64 `json:"width,omitempty"`
+	ByteSize int64 `json:"byteSize,omitempty"`
 
 	ContextLink string `json:"contextLink,omitempty"`
 
-	ByteSize int64 `json:"byteSize,omitempty"`
+	Height int64 `json:"height,omitempty"`
 
 	ThumbnailHeight int64 `json:"thumbnailHeight,omitempty"`
+
+	ThumbnailLink string `json:"thumbnailLink,omitempty"`
+
+	ThumbnailWidth int64 `json:"thumbnailWidth,omitempty"`
+
+	Width int64 `json:"width,omitempty"`
 }
 
 type ResultLabels struct {
-	Name string `json:"name,omitempty"`
-
 	DisplayName string `json:"displayName,omitempty"`
+
+	Name string `json:"name,omitempty"`
 }
 
 type ResultPagemap struct {
 }
 
 type Search struct {
-	Url *SearchUrl `json:"url,omitempty"`
-
-	SearchInformation *SearchSearchInformation `json:"searchInformation,omitempty"`
-
-	Queries *SearchQueries `json:"queries,omitempty"`
-
-	Promotions []*Promotion `json:"promotions,omitempty"`
-
-	Spelling *SearchSpelling `json:"spelling,omitempty"`
+	Context *Context `json:"context,omitempty"`
 
 	Items []*Result `json:"items,omitempty"`
 
-	Context *Context `json:"context,omitempty"`
-
 	Kind string `json:"kind,omitempty"`
+
+	Promotions []*Promotion `json:"promotions,omitempty"`
+
+	Queries *SearchQueries `json:"queries,omitempty"`
+
+	SearchInformation *SearchSearchInformation `json:"searchInformation,omitempty"`
+
+	Spelling *SearchSpelling `json:"spelling,omitempty"`
+
+	Url *SearchUrl `json:"url,omitempty"`
 }
 
 type SearchQueries struct {
 }
 
 type SearchSearchInformation struct {
-	SearchTime float64 `json:"searchTime,omitempty"`
-
-	TotalResults int64 `json:"totalResults,omitempty,string"`
+	FormattedSearchTime string `json:"formattedSearchTime,omitempty"`
 
 	FormattedTotalResults string `json:"formattedTotalResults,omitempty"`
 
-	FormattedSearchTime string `json:"formattedSearchTime,omitempty"`
+	SearchTime float64 `json:"searchTime,omitempty"`
+
+	TotalResults int64 `json:"totalResults,omitempty,string"`
 }
 
 type SearchSpelling struct {
-	HtmlCorrectedQuery string `json:"htmlCorrectedQuery,omitempty"`
-
 	CorrectedQuery string `json:"correctedQuery,omitempty"`
+
+	HtmlCorrectedQuery string `json:"htmlCorrectedQuery,omitempty"`
 }
 
 type SearchUrl struct {

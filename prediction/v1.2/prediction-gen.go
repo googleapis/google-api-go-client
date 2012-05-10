@@ -38,11 +38,11 @@ const basePath = "https://www.googleapis.com/prediction/v1.2/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View your data in Google Cloud Storage
-	DevstorageRead_onlyScope = "https://www.googleapis.com/auth/devstorage.read_only"
-
 	// Manage your data in the Google Prediction API
 	PredictionScope = "https://www.googleapis.com/auth/prediction"
+
+	// View your data in Google Cloud Storage
+	DevstorageRead_onlyScope = "https://www.googleapis.com/auth/devstorage.read_only"
 )
 
 func New(client *http.Client) (*Service, error) {
@@ -80,35 +80,35 @@ type InputInput struct {
 }
 
 type Output struct {
-	SelfLink string `json:"selfLink,omitempty"`
+	Id string `json:"id,omitempty"`
 
-	OutputValue float64 `json:"outputValue,omitempty"`
+	Kind string `json:"kind,omitempty"`
 
 	OutputLabel string `json:"outputLabel,omitempty"`
 
-	Kind string `json:"kind,omitempty"`
-
-	Id string `json:"id,omitempty"`
-
 	OutputMulti []*OutputOutputMulti `json:"outputMulti,omitempty"`
+
+	OutputValue float64 `json:"outputValue,omitempty"`
+
+	SelfLink string `json:"selfLink,omitempty"`
 }
 
 type OutputOutputMulti struct {
-	Score float64 `json:"score,omitempty"`
-
 	Label string `json:"label,omitempty"`
+
+	Score float64 `json:"score,omitempty"`
 }
 
 type Training struct {
-	TrainingStatus string `json:"trainingStatus,omitempty"`
-
 	Id string `json:"id,omitempty"`
 
-	SelfLink string `json:"selfLink,omitempty"`
+	Kind string `json:"kind,omitempty"`
 
 	ModelInfo *TrainingModelInfo `json:"modelInfo,omitempty"`
 
-	Kind string `json:"kind,omitempty"`
+	SelfLink string `json:"selfLink,omitempty"`
+
+	TrainingStatus string `json:"trainingStatus,omitempty"`
 }
 
 type TrainingModelInfo struct {

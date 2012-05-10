@@ -72,23 +72,23 @@ type TrainedmodelsService struct {
 }
 
 type Analyze struct {
-	// SelfLink: A URL to re-request this resource.
-	SelfLink string `json:"selfLink,omitempty"`
-
-	// Kind: What kind of resource this is.
-	Kind string `json:"kind,omitempty"`
-
-	// Id: The unique name for the predictive model.
-	Id string `json:"id,omitempty"`
-
-	// ModelDescription: Description of the model.
-	ModelDescription *AnalyzeModelDescription `json:"modelDescription,omitempty"`
+	// DataDescription: Description of the data the model was trained on.
+	DataDescription *AnalyzeDataDescription `json:"dataDescription,omitempty"`
 
 	// Errors: List of errors with the data.
 	Errors []*AnalyzeErrors `json:"errors,omitempty"`
 
-	// DataDescription: Description of the data the model was trained on.
-	DataDescription *AnalyzeDataDescription `json:"dataDescription,omitempty"`
+	// Id: The unique name for the predictive model.
+	Id string `json:"id,omitempty"`
+
+	// Kind: What kind of resource this is.
+	Kind string `json:"kind,omitempty"`
+
+	// ModelDescription: Description of the model.
+	ModelDescription *AnalyzeModelDescription `json:"modelDescription,omitempty"`
+
+	// SelfLink: A URL to re-request this resource.
+	SelfLink string `json:"selfLink,omitempty"`
 }
 
 type AnalyzeDataDescription struct {
@@ -100,25 +100,25 @@ type AnalyzeDataDescription struct {
 }
 
 type AnalyzeDataDescriptionFeatures struct {
+	// Categorical: Description of the categorical values of this feature.
+	Categorical *AnalyzeDataDescriptionFeaturesCategorical `json:"categorical,omitempty"`
+
 	// Index: The feature index.
 	Index int64 `json:"index,omitempty,string"`
 
 	// Numeric: Description of the numeric values of this feature.
 	Numeric *AnalyzeDataDescriptionFeaturesNumeric `json:"numeric,omitempty"`
 
-	// Categorical: Description of the categorical values of this feature.
-	Categorical *AnalyzeDataDescriptionFeaturesCategorical `json:"categorical,omitempty"`
-
 	// Text: Description of multiple-word text values of this feature.
 	Text *AnalyzeDataDescriptionFeaturesText `json:"text,omitempty"`
 }
 
 type AnalyzeDataDescriptionFeaturesCategorical struct {
-	// Values: List of all the categories for this feature in the data set.
-	Values []*AnalyzeDataDescriptionFeaturesCategoricalValues `json:"values,omitempty"`
-
 	// Count: Number of categorical values for this feature in the data.
 	Count int64 `json:"count,omitempty,string"`
+
+	// Values: List of all the categories for this feature in the data set.
+	Values []*AnalyzeDataDescriptionFeaturesCategoricalValues `json:"values,omitempty"`
 }
 
 type AnalyzeDataDescriptionFeaturesCategoricalValues struct {
@@ -130,15 +130,15 @@ type AnalyzeDataDescriptionFeaturesCategoricalValues struct {
 }
 
 type AnalyzeDataDescriptionFeaturesNumeric struct {
+	// Count: Number of numeric values for this feature in the data set.
+	Count int64 `json:"count,omitempty,string"`
+
 	// Mean: Mean of the numeric values of this feature in the data set.
 	Mean float64 `json:"mean,omitempty"`
 
 	// Variance: Variance of the numeric values of this feature in the data
 	// set.
 	Variance float64 `json:"variance,omitempty"`
-
-	// Count: Number of numeric values for this feature in the data set.
-	Count int64 `json:"count,omitempty,string"`
 }
 
 type AnalyzeDataDescriptionFeaturesText struct {
@@ -147,11 +147,11 @@ type AnalyzeDataDescriptionFeaturesText struct {
 }
 
 type AnalyzeDataDescriptionOutputFeature struct {
-	// Text: Description of the output labels in the data set.
-	Text []*AnalyzeDataDescriptionOutputFeatureText `json:"text,omitempty"`
-
 	// Numeric: Description of the output values in the data set.
 	Numeric *AnalyzeDataDescriptionOutputFeatureNumeric `json:"numeric,omitempty"`
+
+	// Text: Description of the output labels in the data set.
+	Text []*AnalyzeDataDescriptionOutputFeatureText `json:"text,omitempty"`
 }
 
 type AnalyzeDataDescriptionOutputFeatureNumeric struct {
@@ -177,12 +177,6 @@ type AnalyzeErrors struct {
 }
 
 type AnalyzeModelDescription struct {
-	// Modelinfo: Basic information about the model.
-	Modelinfo *Training `json:"modelinfo,omitempty"`
-
-	// ConfusionMatrixRowTotals: A list of the confusion matrix row totals
-	ConfusionMatrixRowTotals *AnalyzeModelDescriptionConfusionMatrixRowTotals `json:"confusionMatrixRowTotals,omitempty"`
-
 	// ConfusionMatrix: An output confusion matrix. This shows an estimate
 	// for how this model will do in predictions. This is first indexed by
 	// the true class label. For each true class label, this provides a pair
@@ -191,6 +185,12 @@ type AnalyzeModelDescription struct {
 	// label. Will not output if more then 100 classes [Categorical models
 	// only].
 	ConfusionMatrix *AnalyzeModelDescriptionConfusionMatrix `json:"confusionMatrix,omitempty"`
+
+	// ConfusionMatrixRowTotals: A list of the confusion matrix row totals
+	ConfusionMatrixRowTotals *AnalyzeModelDescriptionConfusionMatrixRowTotals `json:"confusionMatrixRowTotals,omitempty"`
+
+	// Modelinfo: Basic information about the model.
+	Modelinfo *Training `json:"modelinfo,omitempty"`
 }
 
 type AnalyzeModelDescriptionConfusionMatrix struct {
@@ -211,80 +211,61 @@ type InputInput struct {
 }
 
 type List struct {
-	// SelfLink: A URL to re-request this resource.
-	SelfLink string `json:"selfLink,omitempty"`
-
 	// Items: List of models.
 	Items []*Training `json:"items,omitempty"`
+
+	// Kind: What kind of resource this is.
+	Kind string `json:"kind,omitempty"`
 
 	// NextPageToken: Pagination token to fetch the next page, if one
 	// exists.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// Kind: What kind of resource this is.
-	Kind string `json:"kind,omitempty"`
+	// SelfLink: A URL to re-request this resource.
+	SelfLink string `json:"selfLink,omitempty"`
 }
 
 type Output struct {
-	// OutputLabel: The most likely class label [Categorical models only].
-	OutputLabel string `json:"outputLabel,omitempty"`
+	// Id: The unique name for the predictive model.
+	Id string `json:"id,omitempty"`
 
 	// Kind: What kind of resource this is.
 	Kind string `json:"kind,omitempty"`
 
-	// Id: The unique name for the predictive model.
-	Id string `json:"id,omitempty"`
+	// OutputLabel: The most likely class label [Categorical models only].
+	OutputLabel string `json:"outputLabel,omitempty"`
 
 	// OutputMulti: A list of class labels with their estimated
 	// probabilities [Categorical models only].
 	OutputMulti []*OutputOutputMulti `json:"outputMulti,omitempty"`
 
-	// SelfLink: A URL to re-request this resource.
-	SelfLink string `json:"selfLink,omitempty"`
-
 	// OutputValue: The estimated regression value [Regression models only].
 	OutputValue float64 `json:"outputValue,omitempty"`
+
+	// SelfLink: A URL to re-request this resource.
+	SelfLink string `json:"selfLink,omitempty"`
 }
 
 type OutputOutputMulti struct {
-	// Score: The probability of the class label.
-	Score float64 `json:"score,omitempty"`
-
 	// Label: The class label.
 	Label string `json:"label,omitempty"`
+
+	// Score: The probability of the class label.
+	Score float64 `json:"score,omitempty"`
 }
 
 type Training struct {
-	// ModelInfo: Model metadata.
-	ModelInfo *TrainingModelInfo `json:"modelInfo,omitempty"`
-
-	// Kind: What kind of resource this is.
-	Kind string `json:"kind,omitempty"`
-
-	// TrainingStatus: The current status of the training job. This can be
-	// one of following: RUNNING; DONE; ERROR; ERROR: TRAINING JOB NOT FOUND
-	TrainingStatus string `json:"trainingStatus,omitempty"`
-
-	// TrainingComplete: Training completion time (as a RFC 3339 timestamp).
-	TrainingComplete string `json:"trainingComplete,omitempty"`
+	// Created: Insert time of the model (as a RFC 3339 timestamp).
+	Created string `json:"created,omitempty"`
 
 	// Id: The unique name for the predictive model.
 	Id string `json:"id,omitempty"`
 
-	// Created: Insert time of the model (as a RFC 3339 timestamp).
-	Created string `json:"created,omitempty"`
+	// Kind: What kind of resource this is.
+	Kind string `json:"kind,omitempty"`
 
-	// StoragePMMLModelLocation: Google storage location of the pmml model
-	// file.
-	StoragePMMLModelLocation string `json:"storagePMMLModelLocation,omitempty"`
-
-	// StoragePMMLLocation: Google storage location of the preprocessing
-	// pmml file.
-	StoragePMMLLocation string `json:"storagePMMLLocation,omitempty"`
-
-	// Utility: A class weighting function, which allows the importance
-	// weights for class labels to be specified [Categorical models only].
-	Utility []*TrainingUtility `json:"utility,omitempty"`
+	// ModelInfo: Model metadata.
+	ModelInfo *TrainingModelInfo `json:"modelInfo,omitempty"`
 
 	// SelfLink: A URL to re-request this resource.
 	SelfLink string `json:"selfLink,omitempty"`
@@ -292,20 +273,28 @@ type Training struct {
 	// StorageDataLocation: Google storage location of the training data
 	// file.
 	StorageDataLocation string `json:"storageDataLocation,omitempty"`
+
+	// StoragePMMLLocation: Google storage location of the preprocessing
+	// pmml file.
+	StoragePMMLLocation string `json:"storagePMMLLocation,omitempty"`
+
+	// StoragePMMLModelLocation: Google storage location of the pmml model
+	// file.
+	StoragePMMLModelLocation string `json:"storagePMMLModelLocation,omitempty"`
+
+	// TrainingComplete: Training completion time (as a RFC 3339 timestamp).
+	TrainingComplete string `json:"trainingComplete,omitempty"`
+
+	// TrainingStatus: The current status of the training job. This can be
+	// one of following: RUNNING; DONE; ERROR; ERROR: TRAINING JOB NOT FOUND
+	TrainingStatus string `json:"trainingStatus,omitempty"`
+
+	// Utility: A class weighting function, which allows the importance
+	// weights for class labels to be specified [Categorical models only].
+	Utility []*TrainingUtility `json:"utility,omitempty"`
 }
 
 type TrainingModelInfo struct {
-	// MeanSquaredError: An estimated mean squared error. The can be used to
-	// measure the quality of the predicted model [Regression models only].
-	MeanSquaredError float64 `json:"meanSquaredError,omitempty"`
-
-	// ModelType: Type of predictive model (CLASSIFICATION or REGRESSION)
-	ModelType string `json:"modelType,omitempty"`
-
-	// NumberLabels: Number of class labels in the trained model
-	// [Categorical models only].
-	NumberLabels int64 `json:"numberLabels,omitempty,string"`
-
 	// ClassWeightedAccuracy: Estimated accuracy of model taking utility
 	// weights into account [Categorical models only].
 	ClassWeightedAccuracy float64 `json:"classWeightedAccuracy,omitempty"`
@@ -319,20 +308,31 @@ type TrainingModelInfo struct {
 	// only].
 	ClassificationAccuracy float64 `json:"classificationAccuracy,omitempty"`
 
+	// MeanSquaredError: An estimated mean squared error. The can be used to
+	// measure the quality of the predicted model [Regression models only].
+	MeanSquaredError float64 `json:"meanSquaredError,omitempty"`
+
+	// ModelType: Type of predictive model (CLASSIFICATION or REGRESSION)
+	ModelType string `json:"modelType,omitempty"`
+
 	// NumberInstances: Number of valid data instances used in the trained
 	// model.
 	NumberInstances int64 `json:"numberInstances,omitempty,string"`
+
+	// NumberLabels: Number of class labels in the trained model
+	// [Categorical models only].
+	NumberLabels int64 `json:"numberLabels,omitempty,string"`
 }
 
 type TrainingUtility struct {
 }
 
 type Update struct {
-	// Label: The true class label of this instance
-	Label string `json:"label,omitempty"`
-
 	// CsvInstance: The input features for this instance
 	CsvInstance []interface{} `json:"csvInstance,omitempty"`
+
+	// Label: The true class label of this instance
+	Label string `json:"label,omitempty"`
 }
 
 // method id "prediction.hostedmodels.predict":

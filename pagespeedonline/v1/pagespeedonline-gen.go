@@ -56,6 +56,26 @@ type PagespeedapiService struct {
 }
 
 type Result struct {
+	// FormattedResults: Localized Page Speed results. Contains a
+	// ruleResults entry for each Page Speed rule instantiated and run by
+	// the server.
+	FormattedResults *ResultFormattedResults `json:"formattedResults,omitempty"`
+
+	// Id: Canonicalized and final URL for the document, after following
+	// page redirects (if any).
+	Id string `json:"id,omitempty"`
+
+	// InvalidRules: List of rules that were specified in the request, but
+	// which the server did not know how to instantiate.
+	InvalidRules []string `json:"invalidRules,omitempty"`
+
+	// Kind: Kind of result.
+	Kind string `json:"kind,omitempty"`
+
+	// PageStats: Summary statistics for the page, such as number of
+	// JavaScript bytes, number of HTML bytes, etc.
+	PageStats *ResultPageStats `json:"pageStats,omitempty"`
+
 	// ResponseCode: Response code for the document. 200 indicates a normal
 	// page load. 4xx/5xx indicates an error.
 	ResponseCode int64 `json:"responseCode,omitempty"`
@@ -65,32 +85,12 @@ type Result struct {
 	// while a lower score indicates more room for improvement.
 	Score int64 `json:"score,omitempty"`
 
-	// FormattedResults: Localized Page Speed results. Contains a
-	// ruleResults entry for each Page Speed rule instantiated and run by
-	// the server.
-	FormattedResults *ResultFormattedResults `json:"formattedResults,omitempty"`
+	// Title: Title of the page, as displayed in the browser's title bar.
+	Title string `json:"title,omitempty"`
 
 	// Version: The version of the Page Speed SDK used to generate these
 	// results.
 	Version *ResultVersion `json:"version,omitempty"`
-
-	// Kind: Kind of result.
-	Kind string `json:"kind,omitempty"`
-
-	// PageStats: Summary statistics for the page, such as number of
-	// JavaScript bytes, number of HTML bytes, etc.
-	PageStats *ResultPageStats `json:"pageStats,omitempty"`
-
-	// Id: Canonicalized and final URL for the document, after following
-	// page redirects (if any).
-	Id string `json:"id,omitempty"`
-
-	// Title: Title of the page, as displayed in the browser's title bar.
-	Title string `json:"title,omitempty"`
-
-	// InvalidRules: List of rules that were specified in the request, but
-	// which the server did not know how to instantiate.
-	InvalidRules []string `json:"invalidRules,omitempty"`
 }
 
 type ResultFormattedResults struct {
@@ -106,64 +106,64 @@ type ResultFormattedResultsRuleResults struct {
 }
 
 type ResultPageStats struct {
-	// NumberResources: Number of HTTP resources loaded by the page.
-	NumberResources int64 `json:"numberResources,omitempty"`
+	// CssResponseBytes: Number of uncompressed response bytes for CSS
+	// resources on the page.
+	CssResponseBytes int64 `json:"cssResponseBytes,omitempty,string"`
 
-	// NumberHosts: Number of unique hosts referenced by the page.
-	NumberHosts int64 `json:"numberHosts,omitempty"`
+	// FlashResponseBytes: Number of response bytes for flash resources on
+	// the page.
+	FlashResponseBytes int64 `json:"flashResponseBytes,omitempty,string"`
+
+	// HtmlResponseBytes: Number of uncompressed response bytes for the main
+	// HTML document and all iframes on the page.
+	HtmlResponseBytes int64 `json:"htmlResponseBytes,omitempty,string"`
 
 	// ImageResponseBytes: Number of response bytes for image resources on
 	// the page.
 	ImageResponseBytes int64 `json:"imageResponseBytes,omitempty,string"`
+
+	// JavascriptResponseBytes: Number of uncompressed response bytes for JS
+	// resources on the page.
+	JavascriptResponseBytes int64 `json:"javascriptResponseBytes,omitempty,string"`
+
+	// NumberCssResources: Number of CSS resources referenced by the page.
+	NumberCssResources int64 `json:"numberCssResources,omitempty"`
+
+	// NumberHosts: Number of unique hosts referenced by the page.
+	NumberHosts int64 `json:"numberHosts,omitempty"`
+
+	// NumberJsResources: Number of JavaScript resources referenced by the
+	// page.
+	NumberJsResources int64 `json:"numberJsResources,omitempty"`
+
+	// NumberResources: Number of HTTP resources loaded by the page.
+	NumberResources int64 `json:"numberResources,omitempty"`
+
+	// NumberStaticResources: Number of static (i.e. cacheable) resources on
+	// the page.
+	NumberStaticResources int64 `json:"numberStaticResources,omitempty"`
+
+	// OtherResponseBytes: Number of response bytes for other resources on
+	// the page.
+	OtherResponseBytes int64 `json:"otherResponseBytes,omitempty,string"`
 
 	// TextResponseBytes: Number of uncompressed response bytes for text
 	// resources not covered by other statistics (i.e non-HTML, non-script,
 	// non-CSS resources) on the page.
 	TextResponseBytes int64 `json:"textResponseBytes,omitempty,string"`
 
-	// OtherResponseBytes: Number of response bytes for other resources on
-	// the page.
-	OtherResponseBytes int64 `json:"otherResponseBytes,omitempty,string"`
-
-	// NumberStaticResources: Number of static (i.e. cacheable) resources on
-	// the page.
-	NumberStaticResources int64 `json:"numberStaticResources,omitempty"`
-
-	// NumberCssResources: Number of CSS resources referenced by the page.
-	NumberCssResources int64 `json:"numberCssResources,omitempty"`
-
-	// HtmlResponseBytes: Number of uncompressed response bytes for the main
-	// HTML document and all iframes on the page.
-	HtmlResponseBytes int64 `json:"htmlResponseBytes,omitempty,string"`
-
-	// FlashResponseBytes: Number of response bytes for flash resources on
-	// the page.
-	FlashResponseBytes int64 `json:"flashResponseBytes,omitempty,string"`
-
-	// CssResponseBytes: Number of uncompressed response bytes for CSS
-	// resources on the page.
-	CssResponseBytes int64 `json:"cssResponseBytes,omitempty,string"`
-
-	// NumberJsResources: Number of JavaScript resources referenced by the
-	// page.
-	NumberJsResources int64 `json:"numberJsResources,omitempty"`
-
-	// JavascriptResponseBytes: Number of uncompressed response bytes for JS
-	// resources on the page.
-	JavascriptResponseBytes int64 `json:"javascriptResponseBytes,omitempty,string"`
-
 	// TotalRequestBytes: Total size of all request bytes sent by the page.
 	TotalRequestBytes int64 `json:"totalRequestBytes,omitempty,string"`
 }
 
 type ResultVersion struct {
-	// Minor: The minor version number of the Page Speed SDK used to
-	// generate these results.
-	Minor int64 `json:"minor,omitempty"`
-
 	// Major: The major version number of the Page Speed SDK used to
 	// generate these results.
 	Major int64 `json:"major,omitempty"`
+
+	// Minor: The minor version number of the Page Speed SDK used to
+	// generate these results.
+	Minor int64 `json:"minor,omitempty"`
 }
 
 // method id "pagespeedonline.pagespeedapi.runpagespeed":

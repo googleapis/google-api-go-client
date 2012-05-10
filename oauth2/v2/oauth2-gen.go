@@ -54,9 +54,21 @@ type UserinfoService struct {
 }
 
 type Tokeninfo struct {
+	// Access_type: The access type granted with this toke. It can be
+	// offline or online.
+	Access_type string `json:"access_type,omitempty"`
+
+	// Audience: Who is the intended audience for this token. In general the
+	// same as issued_to.
+	Audience string `json:"audience,omitempty"`
+
 	// Email: The email address of the user. Present only if the email scope
 	// is present in the request.
 	Email string `json:"email,omitempty"`
+
+	// Expires_in: The expiry time of the token, as number of seconds left
+	// until expiry.
+	Expires_in int64 `json:"expires_in,omitempty"`
 
 	// Issued_to: To whom was the token issued to. In general the same as
 	// audience.
@@ -65,20 +77,8 @@ type Tokeninfo struct {
 	// Scope: The space separated list of scopes granted to this token.
 	Scope string `json:"scope,omitempty"`
 
-	// Audience: Who is the intended audience for this token. In general the
-	// same as issued_to.
-	Audience string `json:"audience,omitempty"`
-
-	// Expires_in: The expiry time of the token, as number of seconds left
-	// until expiry.
-	Expires_in int64 `json:"expires_in,omitempty"`
-
 	// User_id: The Gaia obfuscated user id.
 	User_id string `json:"user_id,omitempty"`
-
-	// Access_type: The access type granted with this toke. It can be
-	// offline or online.
-	Access_type string `json:"access_type,omitempty"`
 
 	// Verified_email: Boolean flag which is true if the email address is
 	// verified. Present only if the email scope is present in the request.
@@ -86,29 +86,29 @@ type Tokeninfo struct {
 }
 
 type Userinfo struct {
+	Birthday string `json:"birthday,omitempty"`
+
 	Email string `json:"email,omitempty"`
-
-	Locale string `json:"locale,omitempty"`
-
-	Given_name string `json:"given_name,omitempty"`
-
-	Picture string `json:"picture,omitempty"`
-
-	Name string `json:"name,omitempty"`
 
 	Family_name string `json:"family_name,omitempty"`
 
-	Link string `json:"link,omitempty"`
-
 	Gender string `json:"gender,omitempty"`
+
+	Given_name string `json:"given_name,omitempty"`
 
 	Id string `json:"id,omitempty"`
 
-	Verified_email bool `json:"verified_email,omitempty"`
+	Link string `json:"link,omitempty"`
+
+	Locale string `json:"locale,omitempty"`
+
+	Name string `json:"name,omitempty"`
+
+	Picture string `json:"picture,omitempty"`
 
 	Timezone string `json:"timezone,omitempty"`
 
-	Birthday string `json:"birthday,omitempty"`
+	Verified_email bool `json:"verified_email,omitempty"`
 }
 
 // method id "oauth2.tokeninfo":

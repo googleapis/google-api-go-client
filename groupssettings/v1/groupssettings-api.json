@@ -15,7 +15,6 @@
   "limited_availability"
  ],
  "protocol": "rest",
- "baseUrl": "https://www.googleapis.com/groups/v1/groups/",
  "basePath": "/groups/v1/groups/",
  "rootUrl": "https://www.googleapis.com/",
  "servicePath": "groups/v1/groups/",

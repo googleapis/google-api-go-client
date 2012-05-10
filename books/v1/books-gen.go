@@ -90,57 +90,63 @@ type VolumesService struct {
 }
 
 type Annotation struct {
+	// AfterSelectedText: Anchor text after excerpt.
+	AfterSelectedText string `json:"afterSelectedText,omitempty"`
+
+	// BeforeSelectedText: Anchor text before excerpt.
+	BeforeSelectedText string `json:"beforeSelectedText,omitempty"`
+
+	// ClientVersionRanges: Selection ranges sent from the client.
+	ClientVersionRanges *AnnotationClientVersionRanges `json:"clientVersionRanges,omitempty"`
+
+	// Created: Timestamp for the created time of this annotation.
+	Created string `json:"created,omitempty"`
+
+	// CurrentVersionRanges: Selection ranges for the most recent content
+	// version.
+	CurrentVersionRanges *AnnotationCurrentVersionRanges `json:"currentVersionRanges,omitempty"`
+
+	// Data: User-created data for this annotation.
+	Data string `json:"data,omitempty"`
+
+	// Deleted: Indicates that this annotation is deleted.
+	Deleted bool `json:"deleted,omitempty"`
+
+	// HighlightStyle: The highlight style for this annotation.
+	HighlightStyle string `json:"highlightStyle,omitempty"`
+
+	// Id: Id of this annotation, in the form of a GUID.
+	Id string `json:"id,omitempty"`
+
+	// Kind: Resource type.
+	Kind string `json:"kind,omitempty"`
+
 	// LayerId: The layer this annotation is for.
 	LayerId string `json:"layerId,omitempty"`
 
 	// PageIds: Pages that this annotation spans.
 	PageIds []string `json:"pageIds,omitempty"`
 
-	// BeforeSelectedText: Anchor text before excerpt.
-	BeforeSelectedText string `json:"beforeSelectedText,omitempty"`
-
-	// CurrentVersionRanges: Selection ranges for the most recent content
-	// version.
-	CurrentVersionRanges *AnnotationCurrentVersionRanges `json:"currentVersionRanges,omitempty"`
+	// SelectedText: Excerpt from the volume.
+	SelectedText string `json:"selectedText,omitempty"`
 
 	// SelfLink: URL to this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
-	// AfterSelectedText: Anchor text after excerpt.
-	AfterSelectedText string `json:"afterSelectedText,omitempty"`
-
-	// ClientVersionRanges: Selection ranges sent from the client.
-	ClientVersionRanges *AnnotationClientVersionRanges `json:"clientVersionRanges,omitempty"`
-
-	// VolumeId: The volume that this annotation belongs to.
-	VolumeId string `json:"volumeId,omitempty"`
-
-	// Kind: Resource type.
-	Kind string `json:"kind,omitempty"`
-
 	// Updated: Timestamp for the last time this annotation was modified.
 	Updated string `json:"updated,omitempty"`
 
-	// Data: User-created data for this annotation.
-	Data string `json:"data,omitempty"`
-
-	// Id: Id of this annotation, in the form of a GUID.
-	Id string `json:"id,omitempty"`
-
-	// Created: Timestamp for the created time of this annotation.
-	Created string `json:"created,omitempty"`
-
-	// HighlightStyle: The highlight style for this annotation.
-	HighlightStyle string `json:"highlightStyle,omitempty"`
-
-	// SelectedText: Excerpt from the volume.
-	SelectedText string `json:"selectedText,omitempty"`
-
-	// Deleted: Indicates that this annotation is deleted.
-	Deleted bool `json:"deleted,omitempty"`
+	// VolumeId: The volume that this annotation belongs to.
+	VolumeId string `json:"volumeId,omitempty"`
 }
 
 type AnnotationClientVersionRanges struct {
+	// CfiRange: Range in CFI format for this annotation sent by client.
+	CfiRange *BooksAnnotationsRange `json:"cfiRange,omitempty"`
+
+	// ContentVersion: Content version the client sent in.
+	ContentVersion string `json:"contentVersion,omitempty"`
+
 	// GbImageRange: Range in GB image format for this annotation sent by
 	// client.
 	GbImageRange *BooksAnnotationsRange `json:"gbImageRange,omitempty"`
@@ -148,63 +154,60 @@ type AnnotationClientVersionRanges struct {
 	// GbTextRange: Range in GB text format for this annotation sent by
 	// client.
 	GbTextRange *BooksAnnotationsRange `json:"gbTextRange,omitempty"`
-
-	// ContentVersion: Content version the client sent in.
-	ContentVersion string `json:"contentVersion,omitempty"`
-
-	// CfiRange: Range in CFI format for this annotation sent by client.
-	CfiRange *BooksAnnotationsRange `json:"cfiRange,omitempty"`
 }
 
 type AnnotationCurrentVersionRanges struct {
-	// GbTextRange: Range in GB text format for this annotation for version
-	// above.
-	GbTextRange *BooksAnnotationsRange `json:"gbTextRange,omitempty"`
+	// CfiRange: Range in CFI format for this annotation for version above.
+	CfiRange *BooksAnnotationsRange `json:"cfiRange,omitempty"`
 
 	// ContentVersion: Content version applicable to ranges below.
 	ContentVersion string `json:"contentVersion,omitempty"`
 
-	// CfiRange: Range in CFI format for this annotation for version above.
-	CfiRange *BooksAnnotationsRange `json:"cfiRange,omitempty"`
-
 	// GbImageRange: Range in GB image format for this annotation for
 	// version above.
 	GbImageRange *BooksAnnotationsRange `json:"gbImageRange,omitempty"`
+
+	// GbTextRange: Range in GB text format for this annotation for version
+	// above.
+	GbTextRange *BooksAnnotationsRange `json:"gbTextRange,omitempty"`
 }
 
 type Annotationdata struct {
-	// VolumeId: The volume id for this data. *
-	VolumeId string `json:"volumeId,omitempty"`
-
-	// Kind: Resource Type
-	Kind string `json:"kind,omitempty"`
-
-	// Encoded_data: Base64 encoded data for this annotation data.
-	Encoded_data string `json:"encoded_data,omitempty"`
-
-	// Updated: Timestamp for the last time this data was updated. (RFC 3339
-	// UTC date-time format).
-	Updated string `json:"updated,omitempty"`
+	// AnnotationType: The type of annotation this data is for.
+	AnnotationType string `json:"annotationType,omitempty"`
 
 	// Data: JSON encoded data for this annotation data.
 	Data *BooksLayerGeoData `json:"data,omitempty"`
 
+	// Encoded_data: Base64 encoded data for this annotation data.
+	Encoded_data string `json:"encoded_data,omitempty"`
+
 	// Id: Unique id for this annotation data.
 	Id string `json:"id,omitempty"`
 
-	// AnnotationType: The type of annotation this data is for.
-	AnnotationType string `json:"annotationType,omitempty"`
+	// Kind: Resource Type
+	Kind string `json:"kind,omitempty"`
 
 	// LayerId: The Layer id for this data. *
 	LayerId string `json:"layerId,omitempty"`
 
 	// SelfLink: URL for this resource. *
 	SelfLink string `json:"selfLink,omitempty"`
+
+	// Updated: Timestamp for the last time this data was updated. (RFC 3339
+	// UTC date-time format).
+	Updated string `json:"updated,omitempty"`
+
+	// VolumeId: The volume id for this data. *
+	VolumeId string `json:"volumeId,omitempty"`
 }
 
 type Annotations struct {
 	// Items: A list of annotations.
 	Items []*Annotation `json:"items,omitempty"`
+
+	// Kind: Resource type.
+	Kind string `json:"kind,omitempty"`
 
 	// NextPageToken: Token to pass in for pagination for the next page.
 	// This will not be present if this request does not have more results.
@@ -214,14 +217,14 @@ type Annotations struct {
 	// than the number of notes returned in this response if results have
 	// been paginated.
 	TotalItems int64 `json:"totalItems,omitempty"`
-
-	// Kind: Resource type.
-	Kind string `json:"kind,omitempty"`
 }
 
 type Annotationsdata struct {
 	// Items: A list of Annotation Data.
 	Items []*Annotationdata `json:"items,omitempty"`
+
+	// Kind: Resource type
+	Kind string `json:"kind,omitempty"`
 
 	// NextPageToken: Token to pass in for pagination for the next page.
 	// This will not be present if this request does not have more results.
@@ -229,20 +232,17 @@ type Annotationsdata struct {
 
 	// TotalItems: The total number of volume annotations found.
 	TotalItems int64 `json:"totalItems,omitempty"`
-
-	// Kind: Resource type
-	Kind string `json:"kind,omitempty"`
 }
 
 type BooksAnnotationsRange struct {
-	// StartOffset: The offset from the starting position.
-	StartOffset string `json:"startOffset,omitempty"`
+	// EndOffset: The offset from the ending position.
+	EndOffset string `json:"endOffset,omitempty"`
 
 	// EndPosition: The ending position for the range.
 	EndPosition string `json:"endPosition,omitempty"`
 
-	// EndOffset: The offset from the ending position.
-	EndOffset string `json:"endOffset,omitempty"`
+	// StartOffset: The offset from the starting position.
+	StartOffset string `json:"startOffset,omitempty"`
 
 	// StartPosition: The starting position for the range.
 	StartPosition string `json:"startPosition,omitempty"`
@@ -255,10 +255,6 @@ type BooksLayerGeoData struct {
 }
 
 type BooksLayerGeoDataCommon struct {
-	// SnippetUrl: The URL for information for this location. Ex: wikipedia
-	// link.
-	SnippetUrl string `json:"snippetUrl,omitempty"`
-
 	// Lang: The language of the information url and description.
 	Lang string `json:"lang,omitempty"`
 
@@ -267,24 +263,40 @@ type BooksLayerGeoDataCommon struct {
 
 	// Snippet: The description for this location.
 	Snippet string `json:"snippet,omitempty"`
+
+	// SnippetUrl: The URL for information for this location. Ex: wikipedia
+	// link.
+	SnippetUrl string `json:"snippetUrl,omitempty"`
 }
 
 type BooksLayerGeoDataGeo struct {
-	// CountryCode: The country code of the location.
-	CountryCode string `json:"countryCode,omitempty"`
-
 	// Boundary: The boundary of the location as a set of loops containing
 	// pairs of latitude, longitude coordinates.
 	Boundary [][]*BooksLayerGeoDataGeoBoundaryItem `json:"boundary,omitempty"`
 
+	// CachePolicy: The cache policy active for this data. EX: UNRESTRICTED,
+	// RESTRICTED, NEVER
+	CachePolicy string `json:"cachePolicy,omitempty"`
+
+	// CountryCode: The country code of the location.
+	CountryCode string `json:"countryCode,omitempty"`
+
+	// Latitude: The latitude of the location.
+	Latitude float64 `json:"latitude,omitempty"`
+
 	// Longitude: The longitude of the location.
 	Longitude float64 `json:"longitude,omitempty"`
+
+	// MapType: The type of map that should be used for this location. EX:
+	// HYBRID, ROADMAP, SATELLITE, TERRAIN
+	MapType string `json:"mapType,omitempty"`
 
 	// Resolution: The resolution of the location. Ex: POI_LEVEL
 	Resolution string `json:"resolution,omitempty"`
 
-	// Latitude: The latitude of the location.
-	Latitude float64 `json:"latitude,omitempty"`
+	// Viewport: The viewport for showing this location. This is a latitude,
+	// longitude rectangle.
+	Viewport *BooksLayerGeoDataGeoViewport `json:"viewport,omitempty"`
 
 	// Zoom: The Zoom level to use for the map. Zoom levels between 0 (the
 	// lowest zoom level, in which the entire world can be seen on one map)
@@ -292,18 +304,6 @@ type BooksLayerGeoDataGeo struct {
 	// https://developers.google.com/maps/documentation/staticmaps/#Zoomlevel
 	// s
 	Zoom int64 `json:"zoom,omitempty"`
-
-	// MapType: The type of map that should be used for this location. EX:
-	// HYBRID, ROADMAP, SATELLITE, TERRAIN
-	MapType string `json:"mapType,omitempty"`
-
-	// CachePolicy: The cache policy active for this data. EX: UNRESTRICTED,
-	// RESTRICTED, NEVER
-	CachePolicy string `json:"cachePolicy,omitempty"`
-
-	// Viewport: The viewport for showing this location. This is a latitude,
-	// longitude rectangle.
-	Viewport *BooksLayerGeoDataGeoViewport `json:"viewport,omitempty"`
 }
 
 type BooksLayerGeoDataGeoBoundaryItem struct {
@@ -313,46 +313,49 @@ type BooksLayerGeoDataGeoBoundaryItem struct {
 }
 
 type BooksLayerGeoDataGeoViewport struct {
-	Lo *BooksLayerGeoDataGeoViewportLo `json:"lo,omitempty"`
-
 	Hi *BooksLayerGeoDataGeoViewportHi `json:"hi,omitempty"`
+
+	Lo *BooksLayerGeoDataGeoViewportLo `json:"lo,omitempty"`
 }
 
 type BooksLayerGeoDataGeoViewportHi struct {
-	Longitude float64 `json:"longitude,omitempty"`
-
 	Latitude float64 `json:"latitude,omitempty"`
+
+	Longitude float64 `json:"longitude,omitempty"`
 }
 
 type BooksLayerGeoDataGeoViewportLo struct {
-	Longitude float64 `json:"longitude,omitempty"`
-
 	Latitude float64 `json:"latitude,omitempty"`
+
+	Longitude float64 `json:"longitude,omitempty"`
 }
 
 type Bookshelf struct {
-	// SelfLink: URL to this resource.
-	SelfLink string `json:"selfLink,omitempty"`
-
-	// Kind: Resource type for bookshelf metadata.
-	Kind string `json:"kind,omitempty"`
-
-	// Updated: Last modified time of this bookshelf (formatted UTC
-	// timestamp with millisecond resolution).
-	Updated string `json:"updated,omitempty"`
-
 	// Access: Whether this bookshelf is PUBLIC or PRIVATE.
 	Access string `json:"access,omitempty"`
-
-	// Id: Id of this bookshelf, only unique by user.
-	Id int64 `json:"id,omitempty"`
 
 	// Created: Created time for this bookshelf (formatted UTC timestamp
 	// with millisecond resolution).
 	Created string `json:"created,omitempty"`
 
+	// Description: Description of this bookshelf.
+	Description string `json:"description,omitempty"`
+
+	// Id: Id of this bookshelf, only unique by user.
+	Id int64 `json:"id,omitempty"`
+
+	// Kind: Resource type for bookshelf metadata.
+	Kind string `json:"kind,omitempty"`
+
+	// SelfLink: URL to this resource.
+	SelfLink string `json:"selfLink,omitempty"`
+
 	// Title: Title of this bookshelf.
 	Title string `json:"title,omitempty"`
+
+	// Updated: Last modified time of this bookshelf (formatted UTC
+	// timestamp with millisecond resolution).
+	Updated string `json:"updated,omitempty"`
 
 	// VolumeCount: Number of volumes in this bookshelf.
 	VolumeCount int64 `json:"volumeCount,omitempty"`
@@ -360,9 +363,6 @@ type Bookshelf struct {
 	// VolumesLastUpdated: Last time a volume was added or removed from this
 	// bookshelf (formatted UTC timestamp with millisecond resolution).
 	VolumesLastUpdated string `json:"volumesLastUpdated,omitempty"`
-
-	// Description: Description of this bookshelf.
-	Description string `json:"description,omitempty"`
 }
 
 type Bookshelves struct {
@@ -374,67 +374,61 @@ type Bookshelves struct {
 }
 
 type ConcurrentAccessRestriction struct {
-	// VolumeId: Identifies the volume for which this entry applies.
-	VolumeId string `json:"volumeId,omitempty"`
-
-	// Kind: Resource type.
-	Kind string `json:"kind,omitempty"`
-
-	// TimeWindowSeconds: Time in seconds for license auto-expiration.
-	TimeWindowSeconds int64 `json:"timeWindowSeconds,omitempty"`
-
-	// Source: Client app identifier for verification. Download access and
-	// client-validation only.
-	Source string `json:"source,omitempty"`
-
 	// DeviceAllowed: Whether access is granted for this (user, device,
 	// volume).
 	DeviceAllowed bool `json:"deviceAllowed,omitempty"`
 
-	// Nonce: Client nonce for verification. Download access and
-	// client-validation only.
-	Nonce string `json:"nonce,omitempty"`
-
-	// Message: Error/warning message.
-	Message string `json:"message,omitempty"`
-
-	// ReasonCode: Error/warning reason code.
-	ReasonCode string `json:"reasonCode,omitempty"`
+	// Kind: Resource type.
+	Kind string `json:"kind,omitempty"`
 
 	// MaxConcurrentDevices: The maximum number of concurrent access
 	// licenses for this volume.
 	MaxConcurrentDevices int64 `json:"maxConcurrentDevices,omitempty"`
 
-	// Signature: Response signature.
-	Signature string `json:"signature,omitempty"`
+	// Message: Error/warning message.
+	Message string `json:"message,omitempty"`
+
+	// Nonce: Client nonce for verification. Download access and
+	// client-validation only.
+	Nonce string `json:"nonce,omitempty"`
+
+	// ReasonCode: Error/warning reason code.
+	ReasonCode string `json:"reasonCode,omitempty"`
 
 	// Restricted: Whether this volume has any concurrent access
 	// restrictions.
 	Restricted bool `json:"restricted,omitempty"`
-}
 
-type DownloadAccessRestriction struct {
-	// JustAcquired: If deviceAllowed, whether access was just acquired with
-	// this request.
-	JustAcquired bool `json:"justAcquired,omitempty"`
-
-	// VolumeId: Identifies the volume for which this entry applies.
-	VolumeId string `json:"volumeId,omitempty"`
-
-	// Kind: Resource type.
-	Kind string `json:"kind,omitempty"`
+	// Signature: Response signature.
+	Signature string `json:"signature,omitempty"`
 
 	// Source: Client app identifier for verification. Download access and
 	// client-validation only.
 	Source string `json:"source,omitempty"`
 
+	// TimeWindowSeconds: Time in seconds for license auto-expiration.
+	TimeWindowSeconds int64 `json:"timeWindowSeconds,omitempty"`
+
+	// VolumeId: Identifies the volume for which this entry applies.
+	VolumeId string `json:"volumeId,omitempty"`
+}
+
+type DownloadAccessRestriction struct {
 	// DeviceAllowed: If restricted, whether access is granted for this
 	// (user, device, volume).
 	DeviceAllowed bool `json:"deviceAllowed,omitempty"`
 
-	// Nonce: Client nonce for verification. Download access and
-	// client-validation only.
-	Nonce string `json:"nonce,omitempty"`
+	// DownloadsAcquired: If restricted, the number of content download
+	// licenses already acquired (including the requesting client, if
+	// licensed).
+	DownloadsAcquired int64 `json:"downloadsAcquired,omitempty"`
+
+	// JustAcquired: If deviceAllowed, whether access was just acquired with
+	// this request.
+	JustAcquired bool `json:"justAcquired,omitempty"`
+
+	// Kind: Resource type.
+	Kind string `json:"kind,omitempty"`
 
 	// MaxDownloadDevices: If restricted, the maximum number of content
 	// download licenses for this volume.
@@ -443,21 +437,27 @@ type DownloadAccessRestriction struct {
 	// Message: Error/warning message.
 	Message string `json:"message,omitempty"`
 
+	// Nonce: Client nonce for verification. Download access and
+	// client-validation only.
+	Nonce string `json:"nonce,omitempty"`
+
 	// ReasonCode: Error/warning reason code. Additional codes may be added
 	// in the future. 0 OK 100 ACCESS_DENIED_PUBLISHER_LIMIT 101
 	// ACCESS_DENIED_LIMIT 200 WARNING_USED_LAST_ACCESS
 	ReasonCode string `json:"reasonCode,omitempty"`
 
-	// Signature: Response signature.
-	Signature string `json:"signature,omitempty"`
-
 	// Restricted: Whether this volume has any download access restrictions.
 	Restricted bool `json:"restricted,omitempty"`
 
-	// DownloadsAcquired: If restricted, the number of content download
-	// licenses already acquired (including the requesting client, if
-	// licensed).
-	DownloadsAcquired int64 `json:"downloadsAcquired,omitempty"`
+	// Signature: Response signature.
+	Signature string `json:"signature,omitempty"`
+
+	// Source: Client app identifier for verification. Download access and
+	// client-validation only.
+	Source string `json:"source,omitempty"`
+
+	// VolumeId: Identifies the volume for which this entry applies.
+	VolumeId string `json:"volumeId,omitempty"`
 }
 
 type DownloadAccesses struct {
@@ -472,19 +472,16 @@ type Layersummaries struct {
 	// Items: A list of layer summary items.
 	Items []*Layersummary `json:"items,omitempty"`
 
-	// TotalItems: The total number of layer summaries found.
-	TotalItems int64 `json:"totalItems,omitempty"`
-
 	// Kind: Resource type.
 	Kind string `json:"kind,omitempty"`
+
+	// TotalItems: The total number of layer summaries found.
+	TotalItems int64 `json:"totalItems,omitempty"`
 }
 
 type Layersummary struct {
-	// DataCount: The number of data items for this layer.
-	DataCount int64 `json:"dataCount,omitempty"`
-
-	// Id: Unique id of this layer summary.
-	Id string `json:"id,omitempty"`
+	// AnnotationCount: The number of annotations for this layer.
+	AnnotationCount int64 `json:"annotationCount,omitempty"`
 
 	// AnnotationTypes: The list of annotation types contained for this
 	// layer.
@@ -493,101 +490,104 @@ type Layersummary struct {
 	// AnnotationsDataLink: Link to get data for this annotation.
 	AnnotationsDataLink string `json:"annotationsDataLink,omitempty"`
 
-	// LayerId: The layer id for this summary.
-	LayerId string `json:"layerId,omitempty"`
-
 	// AnnotationsLink: The link to get the annotations for this layer.
 	AnnotationsLink string `json:"annotationsLink,omitempty"`
-
-	// SelfLink: URL to this resource.
-	SelfLink string `json:"selfLink,omitempty"`
-
-	// AnnotationCount: The number of annotations for this layer.
-	AnnotationCount int64 `json:"annotationCount,omitempty"`
-
-	// VolumeId: The volume id this resource is for.
-	VolumeId string `json:"volumeId,omitempty"`
 
 	// ContentVersion: The content version this resource is for.
 	ContentVersion string `json:"contentVersion,omitempty"`
 
+	// DataCount: The number of data items for this layer.
+	DataCount int64 `json:"dataCount,omitempty"`
+
+	// Id: Unique id of this layer summary.
+	Id string `json:"id,omitempty"`
+
 	// Kind: Resource Type
 	Kind string `json:"kind,omitempty"`
+
+	// LayerId: The layer id for this summary.
+	LayerId string `json:"layerId,omitempty"`
+
+	// SelfLink: URL to this resource.
+	SelfLink string `json:"selfLink,omitempty"`
 
 	// Updated: Timestamp for the last time an item in this layer was
 	// updated. (RFC 3339 UTC date-time format).
 	Updated string `json:"updated,omitempty"`
+
+	// VolumeId: The volume id this resource is for.
+	VolumeId string `json:"volumeId,omitempty"`
 }
 
 type ReadingPosition struct {
-	// PdfPosition: Position in a PDF file.
-	PdfPosition string `json:"pdfPosition,omitempty"`
-
 	// EpubCfiPosition: Position in an EPUB as a CFI.
 	EpubCfiPosition string `json:"epubCfiPosition,omitempty"`
+
+	// GbImagePosition: Position in a volume for image-based content.
+	GbImagePosition string `json:"gbImagePosition,omitempty"`
 
 	// GbTextPosition: Position in a volume for text-based content.
 	GbTextPosition string `json:"gbTextPosition,omitempty"`
 
-	// VolumeId: Volume id associated with this reading position.
-	VolumeId string `json:"volumeId,omitempty"`
-
 	// Kind: Resource type for a reading position.
 	Kind string `json:"kind,omitempty"`
+
+	// PdfPosition: Position in a PDF file.
+	PdfPosition string `json:"pdfPosition,omitempty"`
 
 	// Updated: Timestamp when this reading position was last updated
 	// (formatted UTC timestamp with millisecond resolution).
 	Updated string `json:"updated,omitempty"`
 
-	// GbImagePosition: Position in a volume for image-based content.
-	GbImagePosition string `json:"gbImagePosition,omitempty"`
+	// VolumeId: Volume id associated with this reading position.
+	VolumeId string `json:"volumeId,omitempty"`
 }
 
 type RequestAccess struct {
-	// Kind: Resource type.
-	Kind string `json:"kind,omitempty"`
-
 	// ConcurrentAccess: A concurrent access response.
 	ConcurrentAccess *ConcurrentAccessRestriction `json:"concurrentAccess,omitempty"`
 
 	// DownloadAccess: A download access response.
 	DownloadAccess *DownloadAccessRestriction `json:"downloadAccess,omitempty"`
+
+	// Kind: Resource type.
+	Kind string `json:"kind,omitempty"`
 }
 
 type Review struct {
-	// FullTextUrl: URL for the full review text, for reviews gathered from
-	// the web.
-	FullTextUrl string `json:"fullTextUrl,omitempty"`
-
 	// Author: Author of this review.
 	Author *ReviewAuthor `json:"author,omitempty"`
-
-	// VolumeId: Volume that this review is for.
-	VolumeId string `json:"volumeId,omitempty"`
-
-	// Kind: Resource type for a review.
-	Kind string `json:"kind,omitempty"`
 
 	// Content: Review text.
 	Content string `json:"content,omitempty"`
 
-	// Source: Information regarding the source of this review, when the
-	// review is not from a Google Books user.
-	Source *ReviewSource `json:"source,omitempty"`
-
 	// Date: Date of this review.
 	Date string `json:"date,omitempty"`
 
-	// Title: Title for this review.
-	Title string `json:"title,omitempty"`
+	// FullTextUrl: URL for the full review text, for reviews gathered from
+	// the web.
+	FullTextUrl string `json:"fullTextUrl,omitempty"`
+
+	// Kind: Resource type for a review.
+	Kind string `json:"kind,omitempty"`
 
 	// Rating: Star rating for this review. Possible values are ONE, TWO,
 	// THREE, FOUR, FIVE or NOT_RATED.
 	Rating string `json:"rating,omitempty"`
 
+	// Source: Information regarding the source of this review, when the
+	// review is not from a Google Books user.
+	Source *ReviewSource `json:"source,omitempty"`
+
+	// Title: Title for this review.
+	Title string `json:"title,omitempty"`
+
 	// Type: Source type for this review. Possible values are EDITORIAL,
 	// WEB_USER or GOOGLE_USER.
 	Type string `json:"type,omitempty"`
+
+	// VolumeId: Volume that this review is for.
+	VolumeId string `json:"volumeId,omitempty"`
 }
 
 type ReviewAuthor struct {
@@ -596,19 +596,31 @@ type ReviewAuthor struct {
 }
 
 type ReviewSource struct {
+	// Description: Name of the source.
+	Description string `json:"description,omitempty"`
+
 	// ExtraDescription: Extra text about the source of the review.
 	ExtraDescription string `json:"extraDescription,omitempty"`
 
 	// Url: URL of the source of the review.
 	Url string `json:"url,omitempty"`
-
-	// Description: Name of the source.
-	Description string `json:"description,omitempty"`
 }
 
 type Volume struct {
-	// SelfLink: URL to this resource. (In LITE projection.)
-	SelfLink string `json:"selfLink,omitempty"`
+	// AccessInfo: Any information about a volume related to reading or
+	// obtaining that volume text. This information can depend on country
+	// (books may be public domain in one country but not in another, e.g.).
+	AccessInfo *VolumeAccessInfo `json:"accessInfo,omitempty"`
+
+	// Etag: Opaque identifier for a specific version of a volume resource.
+	// (In LITE projection)
+	Etag string `json:"etag,omitempty"`
+
+	// Id: Unique identifier for a volume. (In LITE projection.)
+	Id string `json:"id,omitempty"`
+
+	// Kind: Resource type for a volume. (In LITE projection.)
+	Kind string `json:"kind,omitempty"`
 
 	// SaleInfo: Any information about a volume related to the eBookstore
 	// and/or purchaseability. This information can depend on the country
@@ -616,47 +628,53 @@ type Volume struct {
 	// certain countries).
 	SaleInfo *VolumeSaleInfo `json:"saleInfo,omitempty"`
 
-	// VolumeInfo: General volume information.
-	VolumeInfo *VolumeVolumeInfo `json:"volumeInfo,omitempty"`
+	// SearchInfo: Search result information related to this volume.
+	SearchInfo *VolumeSearchInfo `json:"searchInfo,omitempty"`
 
-	// Etag: Opaque identifier for a specific version of a volume resource.
-	// (In LITE projection)
-	Etag string `json:"etag,omitempty"`
-
-	// Kind: Resource type for a volume. (In LITE projection.)
-	Kind string `json:"kind,omitempty"`
+	// SelfLink: URL to this resource. (In LITE projection.)
+	SelfLink string `json:"selfLink,omitempty"`
 
 	// UserInfo: User specific information related to this volume. (e.g.
 	// page this user last read or whether they purchased this book)
 	UserInfo *VolumeUserInfo `json:"userInfo,omitempty"`
 
-	// Id: Unique identifier for a volume. (In LITE projection.)
-	Id string `json:"id,omitempty"`
-
-	// SearchInfo: Search result information related to this volume.
-	SearchInfo *VolumeSearchInfo `json:"searchInfo,omitempty"`
-
-	// AccessInfo: Any information about a volume related to reading or
-	// obtaining that volume text. This information can depend on country
-	// (books may be public domain in one country but not in another, e.g.).
-	AccessInfo *VolumeAccessInfo `json:"accessInfo,omitempty"`
+	// VolumeInfo: General volume information.
+	VolumeInfo *VolumeVolumeInfo `json:"volumeInfo,omitempty"`
 }
 
 type VolumeAccessInfo struct {
-	// Embeddable: Whether this volume can be embedded in a viewport using
-	// the Embedded Viewer API.
-	Embeddable bool `json:"embeddable,omitempty"`
-
-	// PublicDomain: Whether or not this book is public domain in the
-	// country listed above.
-	PublicDomain bool `json:"publicDomain,omitempty"`
+	// AccessViewStatus: Combines the access and viewability of this volume
+	// into a single status field for this user. Values can be
+	// FULL_PURCHASED, FULL_PUBLIC_DOMAIN, SAMPLE or NONE. (In LITE
+	// projection.)
+	AccessViewStatus string `json:"accessViewStatus,omitempty"`
 
 	// Country: The two-letter ISO_3166-1 country code for which this access
 	// information is valid. (In LITE projection.)
 	Country string `json:"country,omitempty"`
 
+	// DownloadAccess: Information about a volume's download license access
+	// restrictions.
+	DownloadAccess *DownloadAccessRestriction `json:"downloadAccess,omitempty"`
+
+	// Embeddable: Whether this volume can be embedded in a viewport using
+	// the Embedded Viewer API.
+	Embeddable bool `json:"embeddable,omitempty"`
+
+	// Epub: Information about epub content. (In LITE projection.)
+	Epub *VolumeAccessInfoEpub `json:"epub,omitempty"`
+
 	// Pdf: Information about pdf content. (In LITE projection.)
 	Pdf *VolumeAccessInfoPdf `json:"pdf,omitempty"`
+
+	// PublicDomain: Whether or not this book is public domain in the
+	// country listed above.
+	PublicDomain bool `json:"publicDomain,omitempty"`
+
+	// TextToSpeechPermission: Whether text-to-speech is permitted for this
+	// volume. Values can be ALLOWED, ALLOWED_FOR_ACCESSIBILITY, or
+	// NOT_ALLOWED.
+	TextToSpeechPermission string `json:"textToSpeechPermission,omitempty"`
 
 	// ViewOrderUrl: For ordered but not yet processed orders, we give a URL
 	// that can be used to go to the appropriate Google Wallet page.
@@ -673,33 +691,15 @@ type VolumeAccessInfo struct {
 	// WebReaderLink: URL to read this volume on the Google Books site. Link
 	// will not allow users to read non-viewable volumes.
 	WebReaderLink string `json:"webReaderLink,omitempty"`
-
-	// Epub: Information about epub content. (In LITE projection.)
-	Epub *VolumeAccessInfoEpub `json:"epub,omitempty"`
-
-	// TextToSpeechPermission: Whether text-to-speech is permitted for this
-	// volume. Values can be ALLOWED, ALLOWED_FOR_ACCESSIBILITY, or
-	// NOT_ALLOWED.
-	TextToSpeechPermission string `json:"textToSpeechPermission,omitempty"`
-
-	// DownloadAccess: Information about a volume's download license access
-	// restrictions.
-	DownloadAccess *DownloadAccessRestriction `json:"downloadAccess,omitempty"`
-
-	// AccessViewStatus: Combines the access and viewability of this volume
-	// into a single status field for this user. Values can be
-	// FULL_PURCHASED, FULL_PUBLIC_DOMAIN, SAMPLE or NONE. (In LITE
-	// projection.)
-	AccessViewStatus string `json:"accessViewStatus,omitempty"`
 }
 
 type VolumeAccessInfoEpub struct {
-	// DownloadLink: URL to download epub. (In LITE projection.)
-	DownloadLink string `json:"downloadLink,omitempty"`
-
 	// AcsTokenLink: URL to retrieve ACS token for epub download. (In LITE
 	// projection.)
 	AcsTokenLink string `json:"acsTokenLink,omitempty"`
+
+	// DownloadLink: URL to download epub. (In LITE projection.)
+	DownloadLink string `json:"downloadLink,omitempty"`
 
 	// IsAvailable: Is a flowing text epub available either as public domain
 	// or for purchase. (In LITE projection.)
@@ -707,12 +707,12 @@ type VolumeAccessInfoEpub struct {
 }
 
 type VolumeAccessInfoPdf struct {
-	// DownloadLink: URL to download pdf. (In LITE projection.)
-	DownloadLink string `json:"downloadLink,omitempty"`
-
 	// AcsTokenLink: URL to retrieve ACS token for pdf download. (In LITE
 	// projection.)
 	AcsTokenLink string `json:"acsTokenLink,omitempty"`
+
+	// DownloadLink: URL to download pdf. (In LITE projection.)
+	DownloadLink string `json:"downloadLink,omitempty"`
 
 	// IsAvailable: Is a scanned image pdf available either as public domain
 	// or for purchase. (In LITE projection.)
@@ -720,17 +720,13 @@ type VolumeAccessInfoPdf struct {
 }
 
 type VolumeSaleInfo struct {
-	// RetailPrice: The actual selling price of the book. This is the same
-	// as the suggested retail or list price unless there are offers or
-	// discounts on this volume. (In LITE projection.)
-	RetailPrice *VolumeSaleInfoRetailPrice `json:"retailPrice,omitempty"`
-
-	// OnSaleDate: The date on which this book is available for sale.
-	OnSaleDate string `json:"onSaleDate,omitempty"`
-
 	// BuyLink: URL to purchase this volume on the Google Books site. (In
 	// LITE projection)
 	BuyLink string `json:"buyLink,omitempty"`
+
+	// Country: The two-letter ISO_3166-1 country code for which this sale
+	// information is valid. (In LITE projection.)
+	Country string `json:"country,omitempty"`
 
 	// IsEbook: Whether or not this volume is an eBook (can be added to the
 	// My eBooks shelf).
@@ -739,9 +735,13 @@ type VolumeSaleInfo struct {
 	// ListPrice: Suggested retail price. (In LITE projection.)
 	ListPrice *VolumeSaleInfoListPrice `json:"listPrice,omitempty"`
 
-	// Country: The two-letter ISO_3166-1 country code for which this sale
-	// information is valid. (In LITE projection.)
-	Country string `json:"country,omitempty"`
+	// OnSaleDate: The date on which this book is available for sale.
+	OnSaleDate string `json:"onSaleDate,omitempty"`
+
+	// RetailPrice: The actual selling price of the book. This is the same
+	// as the suggested retail or list price unless there are offers or
+	// discounts on this volume. (In LITE projection.)
+	RetailPrice *VolumeSaleInfoRetailPrice `json:"retailPrice,omitempty"`
 
 	// Saleability: Whether or not this book is available for sale or
 	// offered for free in the Google eBookstore for the country listed
@@ -751,21 +751,21 @@ type VolumeSaleInfo struct {
 }
 
 type VolumeSaleInfoListPrice struct {
+	// Amount: Amount in the currency listed below. (In LITE projection.)
+	Amount float64 `json:"amount,omitempty"`
+
 	// CurrencyCode: An ISO 4217, three-letter currency code. (In LITE
 	// projection.)
 	CurrencyCode string `json:"currencyCode,omitempty"`
-
-	// Amount: Amount in the currency listed below. (In LITE projection.)
-	Amount float64 `json:"amount,omitempty"`
 }
 
 type VolumeSaleInfoRetailPrice struct {
+	// Amount: Amount in the currency listed below. (In LITE projection.)
+	Amount float64 `json:"amount,omitempty"`
+
 	// CurrencyCode: An ISO 4217, three-letter currency code. (In LITE
 	// projection.)
 	CurrencyCode string `json:"currencyCode,omitempty"`
-
-	// Amount: Amount in the currency listed below. (In LITE projection.)
-	Amount float64 `json:"amount,omitempty"`
 }
 
 type VolumeSearchInfo struct {
@@ -774,6 +774,9 @@ type VolumeSearchInfo struct {
 }
 
 type VolumeUserInfo struct {
+	// IsInMyBooks: Whether or not this volume is currently in "my books."
+	IsInMyBooks bool `json:"isInMyBooks,omitempty"`
+
 	// IsPreordered: Whether or not this volume was pre-ordered by the
 	// authenticated user making the request. (In LITE projection.)
 	IsPreordered bool `json:"isPreordered,omitempty"`
@@ -782,25 +785,44 @@ type VolumeUserInfo struct {
 	// authenticated user making the request. (In LITE projection.)
 	IsPurchased bool `json:"isPurchased,omitempty"`
 
-	// Updated: Timestamp when this volume was last modified by a user
-	// action, such as a reading position update, volume purchase or writing
-	// a review. (RFC 3339 UTC date-time format).
-	Updated string `json:"updated,omitempty"`
-
 	// ReadingPosition: The user's current reading position in the volume,
 	// if one is available. (In LITE projection.)
 	ReadingPosition *ReadingPosition `json:"readingPosition,omitempty"`
 
-	// IsInMyBooks: Whether or not this volume is currently in "my books."
-	IsInMyBooks bool `json:"isInMyBooks,omitempty"`
-
 	// Review: This user's review of this volume, if one exists.
 	Review *Review `json:"review,omitempty"`
+
+	// Updated: Timestamp when this volume was last modified by a user
+	// action, such as a reading position update, volume purchase or writing
+	// a review. (RFC 3339 UTC date-time format).
+	Updated string `json:"updated,omitempty"`
 }
 
 type VolumeVolumeInfo struct {
-	// Title: Volume title. (In LITE projection.)
-	Title string `json:"title,omitempty"`
+	// Authors: The names of the authors and/or editors for this volume. (In
+	// LITE projection)
+	Authors []string `json:"authors,omitempty"`
+
+	// AverageRating: The mean review rating for this volume. (min = 1.0,
+	// max = 5.0)
+	AverageRating float64 `json:"averageRating,omitempty"`
+
+	// CanonicalVolumeLink: Canonical URL for a volume. (In LITE
+	// projection.)
+	CanonicalVolumeLink string `json:"canonicalVolumeLink,omitempty"`
+
+	// Categories: A list of subject categories, such as "Fiction",
+	// "Suspense", etc.
+	Categories []string `json:"categories,omitempty"`
+
+	// ContentVersion: An identifier for the version of the volume content
+	// (text & images). (In LITE projection)
+	ContentVersion string `json:"contentVersion,omitempty"`
+
+	// Description: A synopsis of the volume. The text of the description is
+	// formatted in HTML and includes simple formatting elements, such as b,
+	// i, and br tags. (In LITE projection.)
+	Description string `json:"description,omitempty"`
 
 	// Dimensions: Physical dimensions of this volume.
 	Dimensions *VolumeVolumeInfoDimensions `json:"dimensions,omitempty"`
@@ -812,76 +834,54 @@ type VolumeVolumeInfo struct {
 	// IndustryIdentifiers: Industry standard identifiers for this volume.
 	IndustryIdentifiers []*VolumeVolumeInfoIndustryIdentifiers `json:"industryIdentifiers,omitempty"`
 
-	// RatingsCount: The number of review ratings for this volume.
-	RatingsCount int64 `json:"ratingsCount,omitempty"`
-
-	// CanonicalVolumeLink: Canonical URL for a volume. (In LITE
-	// projection.)
-	CanonicalVolumeLink string `json:"canonicalVolumeLink,omitempty"`
-
-	// Description: A synopsis of the volume. The text of the description is
-	// formatted in HTML and includes simple formatting elements, such as b,
-	// i, and br tags. (In LITE projection.)
-	Description string `json:"description,omitempty"`
-
-	// Categories: A list of subject categories, such as "Fiction",
-	// "Suspense", etc.
-	Categories []string `json:"categories,omitempty"`
-
 	// InfoLink: URL to view information about this volume on the Google
 	// Books site. (In LITE projection)
 	InfoLink string `json:"infoLink,omitempty"`
 
-	// Subtitle: Volume subtitle. (In LITE projection.)
-	Subtitle string `json:"subtitle,omitempty"`
-
 	// Language: Best language for this volume (based on content). It is the
 	// two-letter ISO 639-1 code such as 'fr', 'en', etc.
 	Language string `json:"language,omitempty"`
-
-	// AverageRating: The mean review rating for this volume. (min = 1.0,
-	// max = 5.0)
-	AverageRating float64 `json:"averageRating,omitempty"`
-
-	// Authors: The names of the authors and/or editors for this volume. (In
-	// LITE projection)
-	Authors []string `json:"authors,omitempty"`
-
-	// PreviewLink: URL to preview this volume on the Google Books site.
-	PreviewLink string `json:"previewLink,omitempty"`
-
-	// Publisher: Publisher of this volume. (In LITE projection.)
-	Publisher string `json:"publisher,omitempty"`
-
-	// PublishedDate: Date of publication. (In LITE projection.)
-	PublishedDate string `json:"publishedDate,omitempty"`
-
-	// ContentVersion: An identifier for the version of the volume content
-	// (text & images). (In LITE projection)
-	ContentVersion string `json:"contentVersion,omitempty"`
 
 	// MainCategory: The main category to which this volume belongs. It will
 	// be the category from the categories list returned below that has the
 	// highest weight.
 	MainCategory string `json:"mainCategory,omitempty"`
 
+	// PageCount: Total number of pages.
+	PageCount int64 `json:"pageCount,omitempty"`
+
+	// PreviewLink: URL to preview this volume on the Google Books site.
+	PreviewLink string `json:"previewLink,omitempty"`
+
 	// PrintType: Type of publication of this volume. Possible values are
 	// BOOK or MAGAZINE.
 	PrintType string `json:"printType,omitempty"`
 
-	// PageCount: Total number of pages.
-	PageCount int64 `json:"pageCount,omitempty"`
+	// PublishedDate: Date of publication. (In LITE projection.)
+	PublishedDate string `json:"publishedDate,omitempty"`
+
+	// Publisher: Publisher of this volume. (In LITE projection.)
+	Publisher string `json:"publisher,omitempty"`
+
+	// RatingsCount: The number of review ratings for this volume.
+	RatingsCount int64 `json:"ratingsCount,omitempty"`
+
+	// Subtitle: Volume subtitle. (In LITE projection.)
+	Subtitle string `json:"subtitle,omitempty"`
+
+	// Title: Volume title. (In LITE projection.)
+	Title string `json:"title,omitempty"`
 }
 
 type VolumeVolumeInfoDimensions struct {
 	// Height: Height or length of this volume (in cm).
 	Height string `json:"height,omitempty"`
 
-	// Width: Width of this volume (in cm).
-	Width string `json:"width,omitempty"`
-
 	// Thickness: Thickness of this volume (in cm).
 	Thickness string `json:"thickness,omitempty"`
+
+	// Width: Width of this volume (in cm).
+	Width string `json:"width,omitempty"`
 }
 
 type VolumeVolumeInfoImageLinks struct {
@@ -893,6 +893,10 @@ type VolumeVolumeInfoImageLinks struct {
 	// projection)
 	Large string `json:"large,omitempty"`
 
+	// Medium: Image link for medium size (width of ~575 pixels). (In LITE
+	// projection)
+	Medium string `json:"medium,omitempty"`
+
 	// Small: Image link for small size (width of ~300 pixels). (In LITE
 	// projection)
 	Small string `json:"small,omitempty"`
@@ -901,52 +905,44 @@ type VolumeVolumeInfoImageLinks struct {
 	// pixels). (In LITE projection)
 	SmallThumbnail string `json:"smallThumbnail,omitempty"`
 
-	// Medium: Image link for medium size (width of ~575 pixels). (In LITE
-	// projection)
-	Medium string `json:"medium,omitempty"`
-
 	// Thumbnail: Image link for thumbnail size (width of ~128 pixels). (In
 	// LITE projection)
 	Thumbnail string `json:"thumbnail,omitempty"`
 }
 
 type VolumeVolumeInfoIndustryIdentifiers struct {
+	// Identifier: Industry specific volume identifier.
+	Identifier string `json:"identifier,omitempty"`
+
 	// Type: Identifier type. Possible values are ISBN_10, ISBN_13, ISSN and
 	// OTHER.
 	Type string `json:"type,omitempty"`
-
-	// Identifier: Industry specific volume identifier.
-	Identifier string `json:"identifier,omitempty"`
 }
 
 type Volumeannotation struct {
-	// VolumeId: The Volume this annotation is for.
-	VolumeId string `json:"volumeId,omitempty"`
-
-	// Kind: Resource Type
-	Kind string `json:"kind,omitempty"`
-
-	// Updated: Timestamp for the last time this anntoation was updated.
-	// (RFC 3339 UTC date-time format).
-	Updated string `json:"updated,omitempty"`
-
 	// AnnotationDataId: The annotation data id for this volume annotation.
 	AnnotationDataId string `json:"annotationDataId,omitempty"`
+
+	// AnnotationDataLink: Link to get data for this annotation.
+	AnnotationDataLink string `json:"annotationDataLink,omitempty"`
+
+	// AnnotationType: The type of annotation this is.
+	AnnotationType string `json:"annotationType,omitempty"`
+
+	// ContentRanges: The content ranges to identify the selected text.
+	ContentRanges *VolumeannotationContentRanges `json:"contentRanges,omitempty"`
 
 	// Data: Data for this annotation.
 	Data string `json:"data,omitempty"`
 
-	// Id: Unique id of this volume annotation.
-	Id string `json:"id,omitempty"`
-
-	// SelectedText: Excerpt from the volume.
-	SelectedText string `json:"selectedText,omitempty"`
-
 	// Deleted: Indicates that this annotation is deleted.
 	Deleted bool `json:"deleted,omitempty"`
 
-	// AnnotationType: The type of annotation this is.
-	AnnotationType string `json:"annotationType,omitempty"`
+	// Id: Unique id of this volume annotation.
+	Id string `json:"id,omitempty"`
+
+	// Kind: Resource Type
+	Kind string `json:"kind,omitempty"`
 
 	// LayerId: The Layer this annotation is for.
 	LayerId string `json:"layerId,omitempty"`
@@ -954,35 +950,42 @@ type Volumeannotation struct {
 	// PageIds: Pages the annotation spans.
 	PageIds []string `json:"pageIds,omitempty"`
 
-	// ContentRanges: The content ranges to identify the selected text.
-	ContentRanges *VolumeannotationContentRanges `json:"contentRanges,omitempty"`
-
-	// AnnotationDataLink: Link to get data for this annotation.
-	AnnotationDataLink string `json:"annotationDataLink,omitempty"`
+	// SelectedText: Excerpt from the volume.
+	SelectedText string `json:"selectedText,omitempty"`
 
 	// SelfLink: URL to this resource.
 	SelfLink string `json:"selfLink,omitempty"`
+
+	// Updated: Timestamp for the last time this anntoation was updated.
+	// (RFC 3339 UTC date-time format).
+	Updated string `json:"updated,omitempty"`
+
+	// VolumeId: The Volume this annotation is for.
+	VolumeId string `json:"volumeId,omitempty"`
 }
 
 type VolumeannotationContentRanges struct {
-	// GbTextRange: Range in GB text format for this annotation for version
-	// above.
-	GbTextRange *BooksAnnotationsRange `json:"gbTextRange,omitempty"`
+	// CfiRange: Range in CFI format for this annotation for version above.
+	CfiRange *BooksAnnotationsRange `json:"cfiRange,omitempty"`
 
 	// ContentVersion: Content version applicable to ranges below.
 	ContentVersion string `json:"contentVersion,omitempty"`
 
-	// CfiRange: Range in CFI format for this annotation for version above.
-	CfiRange *BooksAnnotationsRange `json:"cfiRange,omitempty"`
-
 	// GbImageRange: Range in GB image format for this annotation for
 	// version above.
 	GbImageRange *BooksAnnotationsRange `json:"gbImageRange,omitempty"`
+
+	// GbTextRange: Range in GB text format for this annotation for version
+	// above.
+	GbTextRange *BooksAnnotationsRange `json:"gbTextRange,omitempty"`
 }
 
 type Volumeannotations struct {
 	// Items: A list of volume annotations.
 	Items []*Volumeannotation `json:"items,omitempty"`
+
+	// Kind: Resource type
+	Kind string `json:"kind,omitempty"`
 
 	// NextPageToken: Token to pass in for pagination for the next page.
 	// This will not be present if this request does not have more results.
@@ -990,22 +993,19 @@ type Volumeannotations struct {
 
 	// TotalItems: The total number of volume annotations found.
 	TotalItems int64 `json:"totalItems,omitempty"`
-
-	// Kind: Resource type
-	Kind string `json:"kind,omitempty"`
 }
 
 type Volumes struct {
-	// TotalItems: Total number of volumes found. This might be greater than
-	// the number of volumes returned in this response if results have been
-	// paginated.
-	TotalItems int64 `json:"totalItems,omitempty"`
+	// Items: A list of volumes.
+	Items []*Volume `json:"items,omitempty"`
 
 	// Kind: Resource type.
 	Kind string `json:"kind,omitempty"`
 
-	// Items: A list of volumes.
-	Items []*Volume `json:"items,omitempty"`
+	// TotalItems: Total number of volumes found. This might be greater than
+	// the number of volumes returned in this response if results have been
+	// paginated.
+	TotalItems int64 `json:"totalItems,omitempty"`
 }
 
 // method id "books.bookshelves.get":

@@ -75,15 +75,15 @@ type DetectionsListResponse struct {
 }
 
 type DetectionsResourceItem struct {
+	// Confidence: The confidence of the detection resul of this language.
+	Confidence float64 `json:"confidence,omitempty"`
+
 	// IsReliable: A boolean to indicate is the language detection result
 	// reliable.
 	IsReliable bool `json:"isReliable,omitempty"`
 
 	// Language: The language we detect
 	Language string `json:"language,omitempty"`
-
-	// Confidence: The confidence of the detection resul of this language.
-	Confidence float64 `json:"confidence,omitempty"`
 }
 
 type LanguagesListResponse struct {
@@ -111,12 +111,12 @@ type TranslationsListResponse struct {
 }
 
 type TranslationsResource struct {
-	// TranslatedText: The translation.
-	TranslatedText string `json:"translatedText,omitempty"`
-
 	// DetectedSourceLanguage: Detected source language if source parameter
 	// is unspecified.
 	DetectedSourceLanguage string `json:"detectedSourceLanguage,omitempty"`
+
+	// TranslatedText: The translation.
+	TranslatedText string `json:"translatedText,omitempty"`
 }
 
 // method id "language.detections.list":

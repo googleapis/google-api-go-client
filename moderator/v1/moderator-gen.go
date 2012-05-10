@@ -136,41 +136,41 @@ type ModeratorTopicsResourcePartial struct {
 }
 
 type ModeratorTopicsResourcePartialId struct {
-	TopicId int64 `json:"topicId,omitempty,string"`
-
 	SeriesId int64 `json:"seriesId,omitempty,string"`
+
+	TopicId int64 `json:"topicId,omitempty,string"`
 }
 
 type ModeratorVotesResourcePartial struct {
-	Vote string `json:"vote,omitempty"`
-
 	Flag string `json:"flag,omitempty"`
+
+	Vote string `json:"vote,omitempty"`
 }
 
 type Profile struct {
 	Attribution *ProfileAttribution `json:"attribution,omitempty"`
 
-	Kind string `json:"kind,omitempty"`
-
 	Id *ProfileId `json:"id,omitempty"`
+
+	Kind string `json:"kind,omitempty"`
 }
 
 type ProfileAttribution struct {
-	Location string `json:"location,omitempty"`
-
-	Geo *ProfileAttributionGeo `json:"geo,omitempty"`
+	AvatarUrl string `json:"avatarUrl,omitempty"`
 
 	DisplayName string `json:"displayName,omitempty"`
 
-	AvatarUrl string `json:"avatarUrl,omitempty"`
+	Geo *ProfileAttributionGeo `json:"geo,omitempty"`
+
+	Location string `json:"location,omitempty"`
 }
 
 type ProfileAttributionGeo struct {
+	Latitude float64 `json:"latitude,omitempty"`
+
 	Location string `json:"location,omitempty"`
 
 	Longitude float64 `json:"longitude,omitempty"`
-
-	Latitude float64 `json:"latitude,omitempty"`
 }
 
 type ProfileId struct {
@@ -178,9 +178,15 @@ type ProfileId struct {
 }
 
 type Series struct {
+	AnonymousSubmissionAllowed bool `json:"anonymousSubmissionAllowed,omitempty"`
+
+	Counters *SeriesCounters `json:"counters,omitempty"`
+
 	Description string `json:"description,omitempty"`
 
-	VideoSubmissionAllowed bool `json:"videoSubmissionAllowed,omitempty"`
+	Id *SeriesId `json:"id,omitempty"`
+
+	Kind string `json:"kind,omitempty"`
 
 	Name string `json:"name,omitempty"`
 
@@ -188,33 +194,27 @@ type Series struct {
 
 	Rules *SeriesRules `json:"rules,omitempty"`
 
-	UnauthVotingAllowed bool `json:"unauthVotingAllowed,omitempty"`
-
-	Kind string `json:"kind,omitempty"`
-
-	Id *SeriesId `json:"id,omitempty"`
-
 	UnauthSubmissionAllowed bool `json:"unauthSubmissionAllowed,omitempty"`
 
-	AnonymousSubmissionAllowed bool `json:"anonymousSubmissionAllowed,omitempty"`
+	UnauthVotingAllowed bool `json:"unauthVotingAllowed,omitempty"`
 
-	Counters *SeriesCounters `json:"counters,omitempty"`
+	VideoSubmissionAllowed bool `json:"videoSubmissionAllowed,omitempty"`
 }
 
 type SeriesCounters struct {
+	AnonymousSubmissions int64 `json:"anonymousSubmissions,omitempty"`
+
 	MinusVotes int64 `json:"minusVotes,omitempty"`
-
-	Users int64 `json:"users,omitempty"`
-
-	PlusVotes int64 `json:"plusVotes,omitempty"`
 
 	NoneVotes int64 `json:"noneVotes,omitempty"`
 
+	PlusVotes int64 `json:"plusVotes,omitempty"`
+
 	Submissions int64 `json:"submissions,omitempty"`
 
-	VideoSubmissions int64 `json:"videoSubmissions,omitempty"`
+	Users int64 `json:"users,omitempty"`
 
-	AnonymousSubmissions int64 `json:"anonymousSubmissions,omitempty"`
+	VideoSubmissions int64 `json:"videoSubmissions,omitempty"`
 }
 
 type SeriesId struct {
@@ -222,9 +222,9 @@ type SeriesId struct {
 }
 
 type SeriesRules struct {
-	Votes *SeriesRulesVotes `json:"votes,omitempty"`
-
 	Submissions *SeriesRulesSubmissions `json:"submissions,omitempty"`
+
+	Votes *SeriesRulesVotes `json:"votes,omitempty"`
 }
 
 type SeriesRulesSubmissions struct {
@@ -234,9 +234,9 @@ type SeriesRulesSubmissions struct {
 }
 
 type SeriesRulesVotes struct {
-	Open uint64 `json:"open,omitempty,string"`
-
 	Close uint64 `json:"close,omitempty,string"`
+
+	Open uint64 `json:"open,omitempty,string"`
 }
 
 type SeriesList struct {
@@ -246,55 +246,55 @@ type SeriesList struct {
 }
 
 type Submission struct {
+	AttachmentUrl string `json:"attachmentUrl,omitempty"`
+
+	Attribution *SubmissionAttribution `json:"attribution,omitempty"`
+
 	Author string `json:"author,omitempty"`
 
-	Topics []*ModeratorTopicsResourcePartial `json:"topics,omitempty"`
+	Counters *SubmissionCounters `json:"counters,omitempty"`
+
+	Created uint64 `json:"created,omitempty,string"`
+
+	Geo *SubmissionGeo `json:"geo,omitempty"`
+
+	Id *SubmissionId `json:"id,omitempty"`
+
+	Kind string `json:"kind,omitempty"`
 
 	ParentSubmissionId *SubmissionParentSubmissionId `json:"parentSubmissionId,omitempty"`
 
 	Text string `json:"text,omitempty"`
 
-	Attribution *SubmissionAttribution `json:"attribution,omitempty"`
-
-	AttachmentUrl string `json:"attachmentUrl,omitempty"`
-
-	Geo *SubmissionGeo `json:"geo,omitempty"`
-
-	Kind string `json:"kind,omitempty"`
-
-	Id *SubmissionId `json:"id,omitempty"`
-
-	Created uint64 `json:"created,omitempty,string"`
+	Topics []*ModeratorTopicsResourcePartial `json:"topics,omitempty"`
 
 	Translations []*SubmissionTranslations `json:"translations,omitempty"`
 
 	Vote *ModeratorVotesResourcePartial `json:"vote,omitempty"`
-
-	Counters *SubmissionCounters `json:"counters,omitempty"`
 }
 
 type SubmissionAttribution struct {
-	Location string `json:"location,omitempty"`
+	AvatarUrl string `json:"avatarUrl,omitempty"`
 
 	DisplayName string `json:"displayName,omitempty"`
 
-	AvatarUrl string `json:"avatarUrl,omitempty"`
+	Location string `json:"location,omitempty"`
 }
 
 type SubmissionCounters struct {
-	PlusVotes int64 `json:"plusVotes,omitempty"`
+	MinusVotes int64 `json:"minusVotes,omitempty"`
 
 	NoneVotes int64 `json:"noneVotes,omitempty"`
 
-	MinusVotes int64 `json:"minusVotes,omitempty"`
+	PlusVotes int64 `json:"plusVotes,omitempty"`
 }
 
 type SubmissionGeo struct {
+	Latitude float64 `json:"latitude,omitempty"`
+
 	Location string `json:"location,omitempty"`
 
 	Longitude float64 `json:"longitude,omitempty"`
-
-	Latitude float64 `json:"latitude,omitempty"`
 }
 
 type SubmissionId struct {
@@ -304,9 +304,9 @@ type SubmissionId struct {
 }
 
 type SubmissionParentSubmissionId struct {
-	SubmissionId int64 `json:"submissionId,omitempty,string"`
-
 	SeriesId int64 `json:"seriesId,omitempty,string"`
+
+	SubmissionId int64 `json:"submissionId,omitempty,string"`
 }
 
 type SubmissionTranslations struct {
@@ -322,19 +322,19 @@ type SubmissionList struct {
 }
 
 type Tag struct {
-	Text string `json:"text,omitempty"`
+	Id *TagId `json:"id,omitempty"`
 
 	Kind string `json:"kind,omitempty"`
 
-	Id *TagId `json:"id,omitempty"`
+	Text string `json:"text,omitempty"`
 }
 
 type TagId struct {
 	SeriesId int64 `json:"seriesId,omitempty,string"`
 
-	TagId string `json:"tagId,omitempty"`
-
 	SubmissionId int64 `json:"submissionId,omitempty,string"`
+
+	TagId string `json:"tagId,omitempty"`
 }
 
 type TagList struct {
@@ -348,29 +348,29 @@ type Topic struct {
 
 	Description string `json:"description,omitempty"`
 
-	Name string `json:"name,omitempty"`
-
-	Rules *TopicRules `json:"rules,omitempty"`
-
-	Kind string `json:"kind,omitempty"`
-
-	Presenter string `json:"presenter,omitempty"`
+	FeaturedSubmission *Submission `json:"featuredSubmission,omitempty"`
 
 	Id *TopicId `json:"id,omitempty"`
 
-	FeaturedSubmission *Submission `json:"featuredSubmission,omitempty"`
+	Kind string `json:"kind,omitempty"`
+
+	Name string `json:"name,omitempty"`
+
+	Presenter string `json:"presenter,omitempty"`
+
+	Rules *TopicRules `json:"rules,omitempty"`
 }
 
 type TopicCounters struct {
 	MinusVotes int64 `json:"minusVotes,omitempty"`
 
-	Users int64 `json:"users,omitempty"`
+	NoneVotes int64 `json:"noneVotes,omitempty"`
 
 	PlusVotes int64 `json:"plusVotes,omitempty"`
 
-	NoneVotes int64 `json:"noneVotes,omitempty"`
-
 	Submissions int64 `json:"submissions,omitempty"`
+
+	Users int64 `json:"users,omitempty"`
 
 	VideoSubmissions int64 `json:"videoSubmissions,omitempty"`
 }
@@ -406,13 +406,13 @@ type TopicList struct {
 }
 
 type Vote struct {
-	Id *VoteId `json:"id,omitempty"`
-
 	Flag string `json:"flag,omitempty"`
 
-	Vote string `json:"vote,omitempty"`
+	Id *VoteId `json:"id,omitempty"`
 
 	Kind string `json:"kind,omitempty"`
+
+	Vote string `json:"vote,omitempty"`
 }
 
 type VoteId struct {

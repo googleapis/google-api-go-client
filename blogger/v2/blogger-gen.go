@@ -90,58 +90,58 @@ type UsersService struct {
 }
 
 type Blog struct {
+	// Description: The description of this blog. This is displayed
+	// underneath the title.
+	Description string `json:"description,omitempty"`
+
+	// Id: The identifier for this resource.
+	Id int64 `json:"id,omitempty,string"`
+
+	// Kind: The kind of this entry. Always blogger#blog
+	Kind string `json:"kind,omitempty"`
+
+	// Locale: The locale this Blog is set to.
+	Locale *BlogLocale `json:"locale,omitempty"`
+
 	// Name: The name of this blog. This is displayed as the title.
 	Name string `json:"name,omitempty"`
 
-	// Published: RFC 3339 date-time when this blog was published.
-	Published string `json:"published,omitempty"`
+	// Pages: The container of pages in this blog.
+	Pages *BlogPages `json:"pages,omitempty"`
 
 	// Posts: The container of posts in this blog.
 	Posts *BlogPosts `json:"posts,omitempty"`
 
-	// Kind: The kind of this entry. Always blogger#blog
-	Kind string `json:"kind,omitempty"`
+	// Published: RFC 3339 date-time when this blog was published.
+	Published string `json:"published,omitempty"`
+
+	// SelfLink: The API REST URL to fetch this resource from.
+	SelfLink string `json:"selfLink,omitempty"`
 
 	// Updated: RFC 3339 date-time when this blog was last updated.
 	Updated string `json:"updated,omitempty"`
 
 	// Url: The URL where this blog is published.
 	Url string `json:"url,omitempty"`
-
-	// Id: The identifier for this resource.
-	Id int64 `json:"id,omitempty,string"`
-
-	// Pages: The container of pages in this blog.
-	Pages *BlogPages `json:"pages,omitempty"`
-
-	// Description: The description of this blog. This is displayed
-	// underneath the title.
-	Description string `json:"description,omitempty"`
-
-	// Locale: The locale this Blog is set to.
-	Locale *BlogLocale `json:"locale,omitempty"`
-
-	// SelfLink: The API REST URL to fetch this resource from.
-	SelfLink string `json:"selfLink,omitempty"`
 }
 
 type BlogLocale struct {
-	// Variant: The language variant this blog is authored in.
-	Variant string `json:"variant,omitempty"`
+	// Country: The country this blog's locale is set to.
+	Country string `json:"country,omitempty"`
 
 	// Language: The language this blog is authored in.
 	Language string `json:"language,omitempty"`
 
-	// Country: The country this blog's locale is set to.
-	Country string `json:"country,omitempty"`
+	// Variant: The language variant this blog is authored in.
+	Variant string `json:"variant,omitempty"`
 }
 
 type BlogPages struct {
-	// TotalItems: The count of pages in this blog.
-	TotalItems int64 `json:"totalItems,omitempty"`
-
 	// SelfLink: The URL of the container for pages in this blog.
 	SelfLink string `json:"selfLink,omitempty"`
+
+	// TotalItems: The count of pages in this blog.
+	TotalItems int64 `json:"totalItems,omitempty"`
 }
 
 type BlogPosts struct {
@@ -162,17 +162,11 @@ type BlogList struct {
 }
 
 type Comment struct {
-	// Published: RFC 3339 date-time when this comment was published.
-	Published string `json:"published,omitempty"`
+	// Author: The author of this Comment.
+	Author *CommentAuthor `json:"author,omitempty"`
 
-	// Post: Data about the post containing this comment.
-	Post *CommentPost `json:"post,omitempty"`
-
-	// Kind: The kind of this entry. Always blogger#comment
-	Kind string `json:"kind,omitempty"`
-
-	// Updated: RFC 3339 date-time when this comment was last updated.
-	Updated string `json:"updated,omitempty"`
+	// Blog: Data about the blog containing this comment.
+	Blog *CommentBlog `json:"blog,omitempty"`
 
 	// Content: The actual content of the comment. May include HTML markup.
 	Content string `json:"content,omitempty"`
@@ -180,31 +174,37 @@ type Comment struct {
 	// Id: The identifier for this resource.
 	Id int64 `json:"id,omitempty,string"`
 
-	// Blog: Data about the blog containing this comment.
-	Blog *CommentBlog `json:"blog,omitempty"`
-
 	// InReplyTo: Data about the comment this is in reply to.
 	InReplyTo *CommentInReplyTo `json:"inReplyTo,omitempty"`
 
-	// Author: The author of this Comment.
-	Author *CommentAuthor `json:"author,omitempty"`
+	// Kind: The kind of this entry. Always blogger#comment
+	Kind string `json:"kind,omitempty"`
+
+	// Post: Data about the post containing this comment.
+	Post *CommentPost `json:"post,omitempty"`
+
+	// Published: RFC 3339 date-time when this comment was published.
+	Published string `json:"published,omitempty"`
 
 	// SelfLink: The API REST URL to fetch this resource from.
 	SelfLink string `json:"selfLink,omitempty"`
+
+	// Updated: RFC 3339 date-time when this comment was last updated.
+	Updated string `json:"updated,omitempty"`
 }
 
 type CommentAuthor struct {
+	// DisplayName: The display name.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Id: The identifier of the Comment creator.
+	Id string `json:"id,omitempty"`
+
 	// Image: The comment creator's avatar.
 	Image *CommentAuthorImage `json:"image,omitempty"`
 
 	// Url: The URL of the Comment creator's Profile page.
 	Url string `json:"url,omitempty"`
-
-	// Id: The identifier of the Comment creator.
-	Id string `json:"id,omitempty"`
-
-	// DisplayName: The display name.
-	DisplayName string `json:"displayName,omitempty"`
 }
 
 type CommentAuthorImage struct {
@@ -228,66 +228,66 @@ type CommentPost struct {
 }
 
 type CommentList struct {
-	// PrevPageToken: Pagination token to fetch the previous page, if one
-	// exists.
-	PrevPageToken string `json:"prevPageToken,omitempty"`
-
 	// Items: The List of Comments for a Post.
 	Items []*Comment `json:"items,omitempty"`
+
+	// Kind: The kind of this entry. Always blogger#commentList
+	Kind string `json:"kind,omitempty"`
 
 	// NextPageToken: Pagination token to fetch the next page, if one
 	// exists.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// Kind: The kind of this entry. Always blogger#commentList
-	Kind string `json:"kind,omitempty"`
+	// PrevPageToken: Pagination token to fetch the previous page, if one
+	// exists.
+	PrevPageToken string `json:"prevPageToken,omitempty"`
 }
 
 type Page struct {
-	// Url: The URL that this Page is displayed at.
-	Url string `json:"url,omitempty"`
+	// Author: The author of this Page.
+	Author *PageAuthor `json:"author,omitempty"`
+
+	// Blog: Data about the blog containing this Page.
+	Blog *PageBlog `json:"blog,omitempty"`
+
+	// Content: The body content of this Page, in HTML.
+	Content string `json:"content,omitempty"`
 
 	// Id: The identifier for this resource.
 	Id int64 `json:"id,omitempty,string"`
+
+	// Kind: The kind of this entity. Always blogger#page
+	Kind string `json:"kind,omitempty"`
+
+	// Published: RFC 3339 date-time when this Page was published.
+	Published string `json:"published,omitempty"`
+
+	// SelfLink: The API REST URL to fetch this resource from.
+	SelfLink string `json:"selfLink,omitempty"`
 
 	// Title: The title of this entity. This is the name displayed in the
 	// Admin user interface.
 	Title string `json:"title,omitempty"`
 
-	// Blog: Data about the blog containing this Page.
-	Blog *PageBlog `json:"blog,omitempty"`
-
-	// Author: The author of this Page.
-	Author *PageAuthor `json:"author,omitempty"`
-
-	// SelfLink: The API REST URL to fetch this resource from.
-	SelfLink string `json:"selfLink,omitempty"`
-
-	// Published: RFC 3339 date-time when this Page was published.
-	Published string `json:"published,omitempty"`
-
-	// Kind: The kind of this entity. Always blogger#page
-	Kind string `json:"kind,omitempty"`
-
 	// Updated: RFC 3339 date-time when this Page was last updated.
 	Updated string `json:"updated,omitempty"`
 
-	// Content: The body content of this Page, in HTML.
-	Content string `json:"content,omitempty"`
+	// Url: The URL that this Page is displayed at.
+	Url string `json:"url,omitempty"`
 }
 
 type PageAuthor struct {
+	// DisplayName: The display name.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Id: The identifier of the Page creator.
+	Id string `json:"id,omitempty"`
+
 	// Image: The page author's avatar.
 	Image *PageAuthorImage `json:"image,omitempty"`
 
 	// Url: The URL of the Page creator's Profile page.
 	Url string `json:"url,omitempty"`
-
-	// Id: The identifier of the Page creator.
-	Id string `json:"id,omitempty"`
-
-	// DisplayName: The display name.
-	DisplayName string `json:"displayName,omitempty"`
 }
 
 type PageAuthorImage struct {
@@ -312,11 +312,20 @@ type Post struct {
 	// Author: The author of this Post.
 	Author *PostAuthor `json:"author,omitempty"`
 
+	// Blog: Data about the blog containing this Post.
+	Blog *PostBlog `json:"blog,omitempty"`
+
+	// Content: The content of the Post. May contain HTML markup.
+	Content string `json:"content,omitempty"`
+
+	// Id: The identifier of this Post.
+	Id int64 `json:"id,omitempty,string"`
+
+	// Kind: The kind of this entity. Always blogger#post
+	Kind string `json:"kind,omitempty"`
+
 	// Labels: The list of labels this Post was tagged with.
 	Labels []string `json:"labels,omitempty"`
-
-	// SelfLink: The API REST URL to fetch this resource from.
-	SelfLink string `json:"selfLink,omitempty"`
 
 	// Published: RFC 3339 date-time when this Post was published.
 	Published string `json:"published,omitempty"`
@@ -324,40 +333,31 @@ type Post struct {
 	// Replies: The container of comments on this Post.
 	Replies *PostReplies `json:"replies,omitempty"`
 
-	// Kind: The kind of this entity. Always blogger#post
-	Kind string `json:"kind,omitempty"`
-
-	// Updated: RFC 3339 date-time when this Post was last updated.
-	Updated string `json:"updated,omitempty"`
-
-	// Content: The content of the Post. May contain HTML markup.
-	Content string `json:"content,omitempty"`
-
-	// Url: The URL where this Post is displayed.
-	Url string `json:"url,omitempty"`
-
-	// Id: The identifier of this Post.
-	Id int64 `json:"id,omitempty,string"`
+	// SelfLink: The API REST URL to fetch this resource from.
+	SelfLink string `json:"selfLink,omitempty"`
 
 	// Title: The title of the Post.
 	Title string `json:"title,omitempty"`
 
-	// Blog: Data about the blog containing this Post.
-	Blog *PostBlog `json:"blog,omitempty"`
+	// Updated: RFC 3339 date-time when this Post was last updated.
+	Updated string `json:"updated,omitempty"`
+
+	// Url: The URL where this Post is displayed.
+	Url string `json:"url,omitempty"`
 }
 
 type PostAuthor struct {
+	// DisplayName: The display name.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Id: The identifier of the Post creator.
+	Id string `json:"id,omitempty"`
+
 	// Image: The Post author's avatar.
 	Image *PostAuthorImage `json:"image,omitempty"`
 
 	// Url: The URL of the Post creator's Profile page.
 	Url string `json:"url,omitempty"`
-
-	// Id: The identifier of the Post creator.
-	Id string `json:"id,omitempty"`
-
-	// DisplayName: The display name.
-	DisplayName string `json:"displayName,omitempty"`
 }
 
 type PostAuthorImage struct {
@@ -379,30 +379,27 @@ type PostReplies struct {
 }
 
 type PostList struct {
-	// PrevPageToken: Pagination token to fetch the previous page, if one
-	// exists.
-	PrevPageToken string `json:"prevPageToken,omitempty"`
-
 	// Items: The list of Posts for this Blog.
 	Items []*Post `json:"items,omitempty"`
+
+	// Kind: The kind of this entity. Always blogger#postList
+	Kind string `json:"kind,omitempty"`
 
 	// NextPageToken: Pagination token to fetch the next page, if one
 	// exists.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// Kind: The kind of this entity. Always blogger#postList
-	Kind string `json:"kind,omitempty"`
+	// PrevPageToken: Pagination token to fetch the previous page, if one
+	// exists.
+	PrevPageToken string `json:"prevPageToken,omitempty"`
 }
 
 type User struct {
-	// Kind: The kind of this entity. Always blogger#user
-	Kind string `json:"kind,omitempty"`
+	// About: Profile summary information.
+	About string `json:"about,omitempty"`
 
-	// Url: The user's profile page.
-	Url string `json:"url,omitempty"`
-
-	// Id: The identifier for this User.
-	Id string `json:"id,omitempty"`
+	// Blogs: The container of blogs for this user.
+	Blogs *UserBlogs `json:"blogs,omitempty"`
 
 	// Created: The timestamp of when this profile was created, in seconds
 	// since epoch.
@@ -411,17 +408,20 @@ type User struct {
 	// DisplayName: The display name.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Blogs: The container of blogs for this user.
-	Blogs *UserBlogs `json:"blogs,omitempty"`
+	// Id: The identifier for this User.
+	Id string `json:"id,omitempty"`
 
-	// About: Profile summary information.
-	About string `json:"about,omitempty"`
+	// Kind: The kind of this entity. Always blogger#user
+	Kind string `json:"kind,omitempty"`
 
 	// Locale: This user's locale
 	Locale *UserLocale `json:"locale,omitempty"`
 
 	// SelfLink: The API REST URL to fetch this resource from.
 	SelfLink string `json:"selfLink,omitempty"`
+
+	// Url: The user's profile page.
+	Url string `json:"url,omitempty"`
 }
 
 type UserBlogs struct {
@@ -430,11 +430,11 @@ type UserBlogs struct {
 }
 
 type UserLocale struct {
-	// Language: The user's language setting.
-	Language string `json:"language,omitempty"`
-
 	// Country: The user's country setting.
 	Country string `json:"country,omitempty"`
+
+	// Language: The user's language setting.
+	Language string `json:"language,omitempty"`
 
 	// Variant: The user's language variant setting.
 	Variant string `json:"variant,omitempty"`

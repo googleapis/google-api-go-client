@@ -606,8 +606,9 @@ func (s *Schema) properties() []*Property {
 		panic("called properties on non-object schema")
 	}
 	pl := []*Property{}
-	for name, im := range jobj(s.m, "properties") {
-		m := im.(map[string]interface{})
+	propMap := jobj(s.m, "properties")
+	for _, name := range sortedKeys(propMap) {
+		m := propMap[name].(map[string]interface{})
 		pl = append(pl, &Property{
 			s:       s,
 			m:       m,
@@ -1096,7 +1097,9 @@ func (p *Param) goCallFieldName() string {
 // APIMethods returns top-level ("API-level") methods. They don't have an associated resource.
 func (a *API) APIMethods() []*Method {
 	meths := []*Method{}
-	for name, mi := range jobj(a.m, "methods") {
+	methMap := jobj(a.m, "methods")
+	for _, name := range sortedKeys(methMap) {
+		mi := methMap[name]
 		meths = append(meths, &Method{
 			api:  a,
 			r:    nil, // to be explicit

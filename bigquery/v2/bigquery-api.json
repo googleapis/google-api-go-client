@@ -16,7 +16,6 @@
   "limited_availability"
  ],
  "protocol": "rest",
- "baseUrl": "https://www.googleapis.com/bigquery/v2/",
  "basePath": "/bigquery/v2/",
  "rootUrl": "https://www.googleapis.com/",
  "servicePath": "bigquery/v2/",

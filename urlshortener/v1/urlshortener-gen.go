@@ -66,6 +66,15 @@ type AnalyticsSnapshot struct {
 	// counts. Only present if this data is available.
 	Browsers []*StringCount `json:"browsers,omitempty"`
 
+	// Countries: Top countries (expressed as country codes), e.g. "US" or
+	// "DE"; sorted by (descending) click counts. Only present if this data
+	// is available.
+	Countries []*StringCount `json:"countries,omitempty"`
+
+	// LongUrlClicks: Number of clicks on all goo.gl short URLs pointing to
+	// this long URL.
+	LongUrlClicks int64 `json:"longUrlClicks,omitempty,string"`
+
 	// Platforms: Top platforms or OSes, e.g. "Windows"; sorted by
 	// (descending) click counts. Only present if this data is available.
 	Platforms []*StringCount `json:"platforms,omitempty"`
@@ -74,79 +83,73 @@ type AnalyticsSnapshot struct {
 	// (descending) click counts. Only present if this data is available.
 	Referrers []*StringCount `json:"referrers,omitempty"`
 
-	// LongUrlClicks: Number of clicks on all goo.gl short URLs pointing to
-	// this long URL.
-	LongUrlClicks int64 `json:"longUrlClicks,omitempty,string"`
-
 	// ShortUrlClicks: Number of clicks on this short URL.
 	ShortUrlClicks int64 `json:"shortUrlClicks,omitempty,string"`
-
-	// Countries: Top countries (expressed as country codes), e.g. "US" or
-	// "DE"; sorted by (descending) click counts. Only present if this data
-	// is available.
-	Countries []*StringCount `json:"countries,omitempty"`
 }
 
 type AnalyticsSummary struct {
+	// AllTime: Click analytics over all time.
+	AllTime *AnalyticsSnapshot `json:"allTime,omitempty"`
+
+	// Day: Click analytics over the last day.
+	Day *AnalyticsSnapshot `json:"day,omitempty"`
+
 	// Month: Click analytics over the last month.
 	Month *AnalyticsSnapshot `json:"month,omitempty"`
 
 	// TwoHours: Click analytics over the last two hours.
 	TwoHours *AnalyticsSnapshot `json:"twoHours,omitempty"`
 
-	// Day: Click analytics over the last day.
-	Day *AnalyticsSnapshot `json:"day,omitempty"`
-
 	// Week: Click analytics over the last week.
 	Week *AnalyticsSnapshot `json:"week,omitempty"`
-
-	// AllTime: Click analytics over all time.
-	AllTime *AnalyticsSnapshot `json:"allTime,omitempty"`
 }
 
 type StringCount struct {
-	// Id: Label assigned to this top entry, e.g. "US" or "Chrome".
-	Id string `json:"id,omitempty"`
-
 	// Count: Number of clicks for this top entry, e.g. for this particular
 	// country or browser.
 	Count int64 `json:"count,omitempty,string"`
+
+	// Id: Label assigned to this top entry, e.g. "US" or "Chrome".
+	Id string `json:"id,omitempty"`
 }
 
 type Url struct {
-	// Kind: The fixed string "urlshortener#url".
-	Kind string `json:"kind,omitempty"`
-
-	// Id: Short URL, e.g. "http://goo.gl/l6MS".
-	Id string `json:"id,omitempty"`
+	// Analytics: A summary of the click analytics for the short and long
+	// URL. Might not be present if not requested or currently unavailable.
+	Analytics *AnalyticsSummary `json:"analytics,omitempty"`
 
 	// Created: Time the short URL was created; ISO 8601 representation
 	// using the yyyy-MM-dd'T'HH:mm:ss.SSSZZ format, e.g.
 	// "2010-10-14T19:01:24.944+00:00".
 	Created string `json:"created,omitempty"`
 
-	// Status: Status of the target URL. Possible values: "OK", "MALWARE",
-	// "PHISHING", or "REMOVED". A URL might be marked "REMOVED" if it was
-	// flagged as spam, for example.
-	Status string `json:"status,omitempty"`
+	// Id: Short URL, e.g. "http://goo.gl/l6MS".
+	Id string `json:"id,omitempty"`
+
+	// Kind: The fixed string "urlshortener#url".
+	Kind string `json:"kind,omitempty"`
 
 	// LongUrl: Long URL, e.g. "http://www.google.com/". Might not be
 	// present if the status is "REMOVED".
 	LongUrl string `json:"longUrl,omitempty"`
 
-	// Analytics: A summary of the click analytics for the short and long
-	// URL. Might not be present if not requested or currently unavailable.
-	Analytics *AnalyticsSummary `json:"analytics,omitempty"`
+	// Status: Status of the target URL. Possible values: "OK", "MALWARE",
+	// "PHISHING", or "REMOVED". A URL might be marked "REMOVED" if it was
+	// flagged as spam, for example.
+	Status string `json:"status,omitempty"`
 }
 
 type UrlHistory struct {
+	// Items: A list of URL resources.
+	Items []*Url `json:"items,omitempty"`
+
 	// ItemsPerPage: Number of items returned with each full "page" of
 	// results. Note that the last page could have fewer items than the
 	// "itemsPerPage" value.
 	ItemsPerPage int64 `json:"itemsPerPage,omitempty"`
 
-	// Items: A list of URL resources.
-	Items []*Url `json:"items,omitempty"`
+	// Kind: The fixed string "urlshortener#urlHistory".
+	Kind string `json:"kind,omitempty"`
 
 	// NextPageToken: A token to provide to get the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
@@ -154,9 +157,6 @@ type UrlHistory struct {
 	// TotalItems: Total number of short URLs associated with this user (may
 	// be approximate).
 	TotalItems int64 `json:"totalItems,omitempty"`
-
-	// Kind: The fixed string "urlshortener#urlHistory".
-	Kind string `json:"kind,omitempty"`
 }
 
 // method id "urlshortener.url.get":

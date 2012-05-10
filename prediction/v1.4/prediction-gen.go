@@ -83,42 +83,46 @@ type InputInput struct {
 }
 
 type Output struct {
-	// OutputValue: The estimated regression value [Regression models only].
-	OutputValue float64 `json:"outputValue,omitempty"`
-
-	// OutputLabel: The most likely class label [Categorical models only].
-	OutputLabel string `json:"outputLabel,omitempty"`
+	// Id: The unique name for the predictive model.
+	Id string `json:"id,omitempty"`
 
 	// Kind: What kind of resource this is.
 	Kind string `json:"kind,omitempty"`
 
-	// Id: The unique name for the predictive model.
-	Id string `json:"id,omitempty"`
+	// OutputLabel: The most likely class label [Categorical models only].
+	OutputLabel string `json:"outputLabel,omitempty"`
 
 	// OutputMulti: A list of class labels with their estimated
 	// probabilities [Categorical models only].
 	OutputMulti []*OutputOutputMulti `json:"outputMulti,omitempty"`
+
+	// OutputValue: The estimated regression value [Regression models only].
+	OutputValue float64 `json:"outputValue,omitempty"`
 
 	// SelfLink: A URL to re-request this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
 type OutputOutputMulti struct {
-	// Score: The probability of the class label.
-	Score float64 `json:"score,omitempty"`
-
 	// Label: The class label.
 	Label string `json:"label,omitempty"`
+
+	// Score: The probability of the class label.
+	Score float64 `json:"score,omitempty"`
 }
 
 type Training struct {
-	// StoragePMMLLocation: Google storage location of the preprocessing
-	// pmml file.
-	StoragePMMLLocation string `json:"storagePMMLLocation,omitempty"`
+	// DataAnalysis: Data Analysis.
+	DataAnalysis *TrainingDataAnalysis `json:"dataAnalysis,omitempty"`
 
-	// Utility: A class weighting function, which allows the importance
-	// weights for class labels to be specified [Categorical models only].
-	Utility []*TrainingUtility `json:"utility,omitempty"`
+	// Id: The unique name for the predictive model.
+	Id string `json:"id,omitempty"`
+
+	// Kind: What kind of resource this is.
+	Kind string `json:"kind,omitempty"`
+
+	// ModelInfo: Model metadata.
+	ModelInfo *TrainingModelInfo `json:"modelInfo,omitempty"`
 
 	// SelfLink: A URL to re-request this resource.
 	SelfLink string `json:"selfLink,omitempty"`
@@ -127,25 +131,21 @@ type Training struct {
 	// file.
 	StorageDataLocation string `json:"storageDataLocation,omitempty"`
 
-	// DataAnalysis: Data Analysis.
-	DataAnalysis *TrainingDataAnalysis `json:"dataAnalysis,omitempty"`
+	// StoragePMMLLocation: Google storage location of the preprocessing
+	// pmml file.
+	StoragePMMLLocation string `json:"storagePMMLLocation,omitempty"`
 
-	// ModelInfo: Model metadata.
-	ModelInfo *TrainingModelInfo `json:"modelInfo,omitempty"`
-
-	// Kind: What kind of resource this is.
-	Kind string `json:"kind,omitempty"`
+	// StoragePMMLModelLocation: Google storage location of the pmml model
+	// file.
+	StoragePMMLModelLocation string `json:"storagePMMLModelLocation,omitempty"`
 
 	// TrainingStatus: The current status of the training job. This can be
 	// one of following: RUNNING; DONE; ERROR; ERROR: TRAINING JOB NOT FOUND
 	TrainingStatus string `json:"trainingStatus,omitempty"`
 
-	// Id: The unique name for the predictive model.
-	Id string `json:"id,omitempty"`
-
-	// StoragePMMLModelLocation: Google storage location of the pmml model
-	// file.
-	StoragePMMLModelLocation string `json:"storagePMMLModelLocation,omitempty"`
+	// Utility: A class weighting function, which allows the importance
+	// weights for class labels to be specified [Categorical models only].
+	Utility []*TrainingUtility `json:"utility,omitempty"`
 }
 
 type TrainingDataAnalysis struct {
@@ -153,33 +153,6 @@ type TrainingDataAnalysis struct {
 }
 
 type TrainingModelInfo struct {
-	// ConfusionMatrixRowTotals: A list of the confusion matrix row totals
-	ConfusionMatrixRowTotals *TrainingModelInfoConfusionMatrixRowTotals `json:"confusionMatrixRowTotals,omitempty"`
-
-	// NumberInstances: Number of valid data instances used in the trained
-	// model.
-	NumberInstances int64 `json:"numberInstances,omitempty,string"`
-
-	// ConfusionMatrix: An output confusion matrix. This shows an estimate
-	// for how this model will do in predictions. This is first indexed by
-	// the true class label. For each true class label, this provides a pair
-	// {predicted_label, count}, where count is the estimated number of
-	// times the model will predict the predicted label given the true
-	// label. Will not output if more then 100 classes [Categorical models
-	// only].
-	ConfusionMatrix *TrainingModelInfoConfusionMatrix `json:"confusionMatrix,omitempty"`
-
-	// MeanSquaredError: An estimated mean squared error. The can be used to
-	// measure the quality of the predicted model [Regression models only].
-	MeanSquaredError float64 `json:"meanSquaredError,omitempty"`
-
-	// ModelType: Type of predictive model (CLASSIFICATION or REGRESSION)
-	ModelType string `json:"modelType,omitempty"`
-
-	// NumberLabels: Number of class labels in the trained model
-	// [Categorical models only].
-	NumberLabels int64 `json:"numberLabels,omitempty,string"`
-
 	// ClassWeightedAccuracy: Estimated accuracy of model taking utility
 	// weights into account [Categorical models only].
 	ClassWeightedAccuracy float64 `json:"classWeightedAccuracy,omitempty"`
@@ -192,6 +165,33 @@ type TrainingModelInfo struct {
 	// input data is similar to your training data [Categorical models
 	// only].
 	ClassificationAccuracy float64 `json:"classificationAccuracy,omitempty"`
+
+	// ConfusionMatrix: An output confusion matrix. This shows an estimate
+	// for how this model will do in predictions. This is first indexed by
+	// the true class label. For each true class label, this provides a pair
+	// {predicted_label, count}, where count is the estimated number of
+	// times the model will predict the predicted label given the true
+	// label. Will not output if more then 100 classes [Categorical models
+	// only].
+	ConfusionMatrix *TrainingModelInfoConfusionMatrix `json:"confusionMatrix,omitempty"`
+
+	// ConfusionMatrixRowTotals: A list of the confusion matrix row totals
+	ConfusionMatrixRowTotals *TrainingModelInfoConfusionMatrixRowTotals `json:"confusionMatrixRowTotals,omitempty"`
+
+	// MeanSquaredError: An estimated mean squared error. The can be used to
+	// measure the quality of the predicted model [Regression models only].
+	MeanSquaredError float64 `json:"meanSquaredError,omitempty"`
+
+	// ModelType: Type of predictive model (CLASSIFICATION or REGRESSION)
+	ModelType string `json:"modelType,omitempty"`
+
+	// NumberInstances: Number of valid data instances used in the trained
+	// model.
+	NumberInstances int64 `json:"numberInstances,omitempty,string"`
+
+	// NumberLabels: Number of class labels in the trained model
+	// [Categorical models only].
+	NumberLabels int64 `json:"numberLabels,omitempty,string"`
 }
 
 type TrainingModelInfoConfusionMatrix struct {
@@ -204,11 +204,11 @@ type TrainingUtility struct {
 }
 
 type Update struct {
-	// Label: The true class label of this instance
-	Label string `json:"label,omitempty"`
-
 	// CsvInstance: The input features for this instance
 	CsvInstance []interface{} `json:"csvInstance,omitempty"`
+
+	// Label: The true class label of this instance
+	Label string `json:"label,omitempty"`
 }
 
 // method id "prediction.hostedmodels.predict":

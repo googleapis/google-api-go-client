@@ -38,11 +38,11 @@ const basePath = "https://www.googleapis.com/taskqueue/v1beta1/projects/"
 
 // OAuth2 scopes used by this API.
 const (
-	// Manage your Tasks and Taskqueues
-	TaskqueueScope = "https://www.googleapis.com/auth/taskqueue"
-
 	// Consume Tasks from your Taskqueues
 	TaskqueueConsumerScope = "https://www.googleapis.com/auth/taskqueue.consumer"
+
+	// Manage your Tasks and Taskqueues
+	TaskqueueScope = "https://www.googleapis.com/auth/taskqueue"
 )
 
 func New(client *http.Client) (*Service, error) {
@@ -72,35 +72,38 @@ type TasksService struct {
 }
 
 type Task struct {
-	// PayloadBase64: A bag of bytes which is the task payload. The payload
-	// on the JSON side is always Base64 encoded.
-	PayloadBase64 string `json:"payloadBase64,omitempty"`
-
-	// Kind: The kind of object returned, in this case set to task.
-	Kind string `json:"kind,omitempty"`
+	// EnqueueTimestamp: Time (in seconds since the epoch) at which the task
+	// was enqueued.
+	EnqueueTimestamp int64 `json:"enqueueTimestamp,omitempty,string"`
 
 	// Id: Name of the task.
 	Id string `json:"id,omitempty"`
+
+	// Kind: The kind of object returned, in this case set to task.
+	Kind string `json:"kind,omitempty"`
 
 	// LeaseTimestamp: Time (in seconds since the epoch) at which the task
 	// lease will expire. This value is 0 if the task isnt currently leased
 	// out to a worker.
 	LeaseTimestamp int64 `json:"leaseTimestamp,omitempty,string"`
 
-	// EnqueueTimestamp: Time (in seconds since the epoch) at which the task
-	// was enqueued.
-	EnqueueTimestamp int64 `json:"enqueueTimestamp,omitempty,string"`
+	// PayloadBase64: A bag of bytes which is the task payload. The payload
+	// on the JSON side is always Base64 encoded.
+	PayloadBase64 string `json:"payloadBase64,omitempty"`
 
 	// QueueName: Name of the queue that the task is in.
 	QueueName string `json:"queueName,omitempty"`
 }
 
 type TaskQueue struct {
-	// Kind: The kind of REST object returned, in this case taskqueue.
-	Kind string `json:"kind,omitempty"`
+	// Acl: ACLs that are applicable to this TaskQueue object.
+	Acl *TaskQueueAcl `json:"acl,omitempty"`
 
 	// Id: Name of the taskqueue.
 	Id string `json:"id,omitempty"`
+
+	// Kind: The kind of REST object returned, in this case taskqueue.
+	Kind string `json:"kind,omitempty"`
 
 	// MaxLeases: The number of times we should lease out tasks before
 	// giving up on them. If unset we lease them out forever until a worker
@@ -109,16 +112,9 @@ type TaskQueue struct {
 
 	// Stats: Statistics for the TaskQueue object in question.
 	Stats *TaskQueueStats `json:"stats,omitempty"`
-
-	// Acl: ACLs that are applicable to this TaskQueue object.
-	Acl *TaskQueueAcl `json:"acl,omitempty"`
 }
 
 type TaskQueueAcl struct {
-	// ProducerEmails: Email addresses of users who can "produce" tasks into
-	// the TaskQueue. This means they can Insert tasks into the queue.
-	ProducerEmails []string `json:"producerEmails,omitempty"`
-
 	// AdminEmails: Email addresses of users who are "admins" of the
 	// TaskQueue. This means they can control the queue, eg set ACLs for the
 	// queue.
@@ -128,21 +124,25 @@ type TaskQueueAcl struct {
 	// the TaskQueue. This means they can Dequeue and Delete tasks from the
 	// queue.
 	ConsumerEmails []string `json:"consumerEmails,omitempty"`
+
+	// ProducerEmails: Email addresses of users who can "produce" tasks into
+	// the TaskQueue. This means they can Insert tasks into the queue.
+	ProducerEmails []string `json:"producerEmails,omitempty"`
 }
 
 type TaskQueueStats struct {
-	// TotalTasks: Number of tasks in the queue.
-	TotalTasks int64 `json:"totalTasks,omitempty"`
+	// LeasedLastHour: Number of tasks leased in the last hour.
+	LeasedLastHour int64 `json:"leasedLastHour,omitempty,string"`
+
+	// LeasedLastMinute: Number of tasks leased in the last minute.
+	LeasedLastMinute int64 `json:"leasedLastMinute,omitempty,string"`
 
 	// OldestTask: The timestamp (in seconds since the epoch) of the oldest
 	// unfinished task.
 	OldestTask int64 `json:"oldestTask,omitempty,string"`
 
-	// LeasedLastMinute: Number of tasks leased in the last minute.
-	LeasedLastMinute int64 `json:"leasedLastMinute,omitempty,string"`
-
-	// LeasedLastHour: Number of tasks leased in the last hour.
-	LeasedLastHour int64 `json:"leasedLastHour,omitempty,string"`
+	// TotalTasks: Number of tasks in the queue.
+	TotalTasks int64 `json:"totalTasks,omitempty"`
 }
 
 type Tasks struct {

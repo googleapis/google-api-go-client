@@ -56,19 +56,28 @@ type ApisService struct {
 }
 
 type DirectoryList struct {
+	// DiscoveryVersion: Indicate the version of the Discovery API used to
+	// generate this doc.
+	DiscoveryVersion string `json:"discoveryVersion,omitempty"`
+
 	// Items: The individual directory entries. One entry per api/version
 	// pair.
 	Items []*DirectoryListItems `json:"items,omitempty"`
 
 	// Kind: The kind for this response.
 	Kind string `json:"kind,omitempty"`
-
-	// DiscoveryVersion: Indicate the version of the Discovery API used to
-	// generate this doc.
-	DiscoveryVersion string `json:"discoveryVersion,omitempty"`
 }
 
 type DirectoryListItems struct {
+	// Description: The description of this API.
+	Description string `json:"description,omitempty"`
+
+	// DiscoveryLink: A link to the discovery document.
+	DiscoveryLink string `json:"discoveryLink,omitempty"`
+
+	// DiscoveryRestUrl: The url for the discovery REST document.
+	DiscoveryRestUrl string `json:"discoveryRestUrl,omitempty"`
+
 	// DocumentationLink: A link to human readable documentation for the
 	// API.
 	DocumentationLink string `json:"documentationLink,omitempty"`
@@ -76,26 +85,11 @@ type DirectoryListItems struct {
 	// Icons: Links to 16x16 and 32x32 icons representing the API.
 	Icons *DirectoryListItemsIcons `json:"icons,omitempty"`
 
-	// Version: The version of the API.
-	Version string `json:"version,omitempty"`
-
-	// DiscoveryRestUrl: The url for the discovery REST document.
-	DiscoveryRestUrl string `json:"discoveryRestUrl,omitempty"`
-
-	// Kind: The kind for this response.
-	Kind string `json:"kind,omitempty"`
-
 	// Id: The id of this API.
 	Id string `json:"id,omitempty"`
 
-	// Title: The title of this API.
-	Title string `json:"title,omitempty"`
-
-	// DiscoveryLink: A link to the discovery document.
-	DiscoveryLink string `json:"discoveryLink,omitempty"`
-
-	// Description: The description of this API.
-	Description string `json:"description,omitempty"`
+	// Kind: The kind for this response.
+	Kind string `json:"kind,omitempty"`
 
 	// Labels: Labels for the status of this API, such as labs or
 	// deprecated.
@@ -106,6 +100,12 @@ type DirectoryListItems struct {
 
 	// Preferred: True if this version is the preferred version to use.
 	Preferred bool `json:"preferred,omitempty"`
+
+	// Title: The title of this API.
+	Title string `json:"title,omitempty"`
+
+	// Version: The version of the API.
+	Version string `json:"version,omitempty"`
 }
 
 type DirectoryListItemsIcons struct {
@@ -117,28 +117,46 @@ type DirectoryListItemsIcons struct {
 }
 
 type JsonSchema struct {
-	// EnumDescriptions: The descriptions for the enums. Each position maps
-	// to the corresponding value in the "enum" array.
-	EnumDescriptions []string `json:"enumDescriptions,omitempty"`
+	// Ref: A reference to another schema. The value of this property is the
+	// "id" of another schema.
+	Ref string `json:"$ref,omitempty"`
 
-	// Properties: If this is a schema for an object, list the schema for
-	// each property of this object.
-	Properties *JsonSchemaProperties `json:"properties,omitempty"`
+	// AdditionalProperties: If this is a schema for an object, this
+	// property is the schema for any additional properties with dynamic
+	// keys on this object.
+	AdditionalProperties *JsonSchema `json:"additionalProperties,omitempty"`
 
-	// Id: Unique identifier for this schema.
-	Id string `json:"id,omitempty"`
+	// Annotations: Additional information about this property.
+	Annotations *JsonSchemaAnnotations `json:"annotations,omitempty"`
 
 	// Default: The default value of this property (if one exists).
 	Default string `json:"default,omitempty"`
 
-	// Required: Whether the parameter is required.
-	Required bool `json:"required,omitempty"`
-
-	// Repeated: Whether this parameter may appear multiple times.
-	Repeated bool `json:"repeated,omitempty"`
+	// Description: A description of this object.
+	Description string `json:"description,omitempty"`
 
 	// Enum: Values this parameter may take (if it is an enum).
 	Enum []string `json:"enum,omitempty"`
+
+	// EnumDescriptions: The descriptions for the enums. Each position maps
+	// to the corresponding value in the "enum" array.
+	EnumDescriptions []string `json:"enumDescriptions,omitempty"`
+
+	// Format: An additional regular expression or key that helps constrain
+	// the value. For more details see:
+	// http://tools.ietf.org/html/draft-zyp-json-schema-03#section-5.23
+	Format string `json:"format,omitempty"`
+
+	// Id: Unique identifier for this schema.
+	Id string `json:"id,omitempty"`
+
+	// Items: If this is a schema for an array, this property is the schema
+	// for each element in the array.
+	Items *JsonSchema `json:"items,omitempty"`
+
+	// Location: Whether this parameter goes in the query or the path for
+	// REST requests.
+	Location string `json:"location,omitempty"`
 
 	// Maximum: The maximum value of this parameter.
 	Maximum string `json:"maximum,omitempty"`
@@ -146,40 +164,22 @@ type JsonSchema struct {
 	// Minimum: The minimum value of this parameter.
 	Minimum string `json:"minimum,omitempty"`
 
-	// Type: The value type for this schema. A list of values can be found
-	// here: http://tools.ietf.org/html/draft-zyp-json-schema-03#section-5.1
-	Type string `json:"type,omitempty"`
-
-	// Description: A description of this object.
-	Description string `json:"description,omitempty"`
-
-	// AdditionalProperties: If this is a schema for an object, this
-	// property is the schema for any additional properties with dynamic
-	// keys on this object.
-	AdditionalProperties *JsonSchema `json:"additionalProperties,omitempty"`
-
-	// Format: An additional regular expression or key that helps constrain
-	// the value. For more details see:
-	// http://tools.ietf.org/html/draft-zyp-json-schema-03#section-5.23
-	Format string `json:"format,omitempty"`
-
-	// Annotations: Additional information about this property.
-	Annotations *JsonSchemaAnnotations `json:"annotations,omitempty"`
-
-	// Location: Whether this parameter goes in the query or the path for
-	// REST requests.
-	Location string `json:"location,omitempty"`
-
 	// Pattern: The regular expression this parameter must conform to.
 	Pattern string `json:"pattern,omitempty"`
 
-	// Items: If this is a schema for an array, this property is the schema
-	// for each element in the array.
-	Items *JsonSchema `json:"items,omitempty"`
+	// Properties: If this is a schema for an object, list the schema for
+	// each property of this object.
+	Properties *JsonSchemaProperties `json:"properties,omitempty"`
 
-	// Ref: A reference to another schema. The value of this property is the
-	// "id" of another schema.
-	Ref string `json:"$ref,omitempty"`
+	// Repeated: Whether this parameter may appear multiple times.
+	Repeated bool `json:"repeated,omitempty"`
+
+	// Required: Whether the parameter is required.
+	Required bool `json:"required,omitempty"`
+
+	// Type: The value type for this schema. A list of values can be found
+	// here: http://tools.ietf.org/html/draft-zyp-json-schema-03#section-5.1
+	Type string `json:"type,omitempty"`
 }
 
 type JsonSchemaAnnotations struct {
@@ -192,77 +192,77 @@ type JsonSchemaProperties struct {
 }
 
 type RestDescription struct {
-	// ServicePath: The base path for all REST requests.
-	ServicePath string `json:"servicePath,omitempty"`
-
-	// Resources: The resources in this API.
-	Resources *RestDescriptionResources `json:"resources,omitempty"`
-
-	// BatchPath: The path for REST batch requests.
-	BatchPath string `json:"batchPath,omitempty"`
-
-	// Methods: API-level methods for this API.
-	Methods *RestDescriptionMethods `json:"methods,omitempty"`
-
-	// Description: The description of this API.
-	Description string `json:"description,omitempty"`
-
-	// RootUrl: The root url under which all API services live.
-	RootUrl string `json:"rootUrl,omitempty"`
-
-	// BaseUrl: [DEPRECATED] The base URL for REST requests.
-	BaseUrl string `json:"baseUrl,omitempty"`
-
-	// Protocol: The protocol described by this document.
-	Protocol string `json:"protocol,omitempty"`
-
-	// Labels: Labels for the status of this API, such as labs or
-	// deprecated.
-	Labels []string `json:"labels,omitempty"`
-
-	// Revision: The version of this API.
-	Revision string `json:"revision,omitempty"`
-
-	// Features: A list of supported features for this API.
-	Features []string `json:"features,omitempty"`
-
-	// Name: The name of this API.
-	Name string `json:"name,omitempty"`
-
-	// DocumentationLink: A link to human readable documentation for the
-	// API.
-	DocumentationLink string `json:"documentationLink,omitempty"`
-
-	// Icons: Links to 16x16 and 32x32 icons representing the API.
-	Icons *RestDescriptionIcons `json:"icons,omitempty"`
-
-	// Version: The version of this API.
-	Version string `json:"version,omitempty"`
-
-	// Kind: The kind for this response.
-	Kind string `json:"kind,omitempty"`
-
-	// Schemas: The schemas for this API.
-	Schemas *RestDescriptionSchemas `json:"schemas,omitempty"`
+	// Auth: Authentication information.
+	Auth *RestDescriptionAuth `json:"auth,omitempty"`
 
 	// BasePath: [DEPRECATED] The base path for REST requests.
 	BasePath string `json:"basePath,omitempty"`
 
-	// Auth: Authentication information.
-	Auth *RestDescriptionAuth `json:"auth,omitempty"`
+	// BaseUrl: [DEPRECATED] The base URL for REST requests.
+	BaseUrl string `json:"baseUrl,omitempty"`
+
+	// BatchPath: The path for REST batch requests.
+	BatchPath string `json:"batchPath,omitempty"`
+
+	// Description: The description of this API.
+	Description string `json:"description,omitempty"`
 
 	// DiscoveryVersion: Indicate the version of the Discovery API used to
 	// generate this doc.
 	DiscoveryVersion string `json:"discoveryVersion,omitempty"`
 
+	// DocumentationLink: A link to human readable documentation for the
+	// API.
+	DocumentationLink string `json:"documentationLink,omitempty"`
+
+	// Features: A list of supported features for this API.
+	Features []string `json:"features,omitempty"`
+
+	// Icons: Links to 16x16 and 32x32 icons representing the API.
+	Icons *RestDescriptionIcons `json:"icons,omitempty"`
+
 	// Id: The id of this API.
 	Id string `json:"id,omitempty"`
+
+	// Kind: The kind for this response.
+	Kind string `json:"kind,omitempty"`
+
+	// Labels: Labels for the status of this API, such as labs or
+	// deprecated.
+	Labels []string `json:"labels,omitempty"`
+
+	// Methods: API-level methods for this API.
+	Methods *RestDescriptionMethods `json:"methods,omitempty"`
+
+	// Name: The name of this API.
+	Name string `json:"name,omitempty"`
 
 	// Parameters: Common parameters that apply across all apis.
 	Parameters *RestDescriptionParameters `json:"parameters,omitempty"`
 
+	// Protocol: The protocol described by this document.
+	Protocol string `json:"protocol,omitempty"`
+
+	// Resources: The resources in this API.
+	Resources *RestDescriptionResources `json:"resources,omitempty"`
+
+	// Revision: The version of this API.
+	Revision string `json:"revision,omitempty"`
+
+	// RootUrl: The root url under which all API services live.
+	RootUrl string `json:"rootUrl,omitempty"`
+
+	// Schemas: The schemas for this API.
+	Schemas *RestDescriptionSchemas `json:"schemas,omitempty"`
+
+	// ServicePath: The base path for all REST requests.
+	ServicePath string `json:"servicePath,omitempty"`
+
 	// Title: The title of this API.
 	Title string `json:"title,omitempty"`
+
+	// Version: The version of this API.
+	Version string `json:"version,omitempty"`
 }
 
 type RestDescriptionAuth struct {
@@ -302,75 +302,75 @@ type RestMethod struct {
 	// Description: Description of this method.
 	Description string `json:"description,omitempty"`
 
-	// MediaUpload: Media upload parameters.
-	MediaUpload *RestMethodMediaUpload `json:"mediaUpload,omitempty"`
-
-	// Scopes: OAuth 2.0 scopes applicable to this method.
-	Scopes []interface{} `json:"scopes,omitempty"`
-
-	// Response: The schema for the response.
-	Response *RestMethodResponse `json:"response,omitempty"`
-
-	// Path: The URI path of this REST method. Should be used in conjunction
-	// with the basePath property at the api-level.
-	Path string `json:"path,omitempty"`
+	// HttpMethod: HTTP method used by this method.
+	HttpMethod string `json:"httpMethod,omitempty"`
 
 	// Id: A unique ID for this method. This property can be used to match
 	// methods between different versions of Discovery.
 	Id string `json:"id,omitempty"`
 
-	// Request: The schema for the request.
-	Request *RestMethodRequest `json:"request,omitempty"`
-
-	// Parameters: Details for all parameters in this method.
-	Parameters *RestMethodParameters `json:"parameters,omitempty"`
+	// MediaUpload: Media upload parameters.
+	MediaUpload *RestMethodMediaUpload `json:"mediaUpload,omitempty"`
 
 	// ParameterOrder: Ordered list of required parameters, serves as a hint
 	// to clients on how to structure their method signatures. The array is
 	// ordered such that the "most-significant" parameter appears first.
 	ParameterOrder []string `json:"parameterOrder,omitempty"`
 
-	// HttpMethod: HTTP method used by this method.
-	HttpMethod string `json:"httpMethod,omitempty"`
+	// Parameters: Details for all parameters in this method.
+	Parameters *RestMethodParameters `json:"parameters,omitempty"`
+
+	// Path: The URI path of this REST method. Should be used in conjunction
+	// with the basePath property at the api-level.
+	Path string `json:"path,omitempty"`
+
+	// Request: The schema for the request.
+	Request *RestMethodRequest `json:"request,omitempty"`
+
+	// Response: The schema for the response.
+	Response *RestMethodResponse `json:"response,omitempty"`
+
+	// Scopes: OAuth 2.0 scopes applicable to this method.
+	Scopes []interface{} `json:"scopes,omitempty"`
 }
 
 type RestMethodMediaUpload struct {
-	// Protocols: Supported upload protocols.
-	Protocols *RestMethodMediaUploadProtocols `json:"protocols,omitempty"`
+	// Accept: MIME Media Ranges for acceptable media uploads to this
+	// method.
+	Accept []string `json:"accept,omitempty"`
 
 	// MaxSize: Maximum size of a media upload, such as "1MB", "2GB" or
 	// "3TB".
 	MaxSize string `json:"maxSize,omitempty"`
 
-	// Accept: MIME Media Ranges for acceptable media uploads to this
-	// method.
-	Accept []string `json:"accept,omitempty"`
+	// Protocols: Supported upload protocols.
+	Protocols *RestMethodMediaUploadProtocols `json:"protocols,omitempty"`
 }
 
 type RestMethodMediaUploadProtocols struct {
-	// Simple: Supports uploading as a single HTTP request.
-	Simple *RestMethodMediaUploadProtocolsSimple `json:"simple,omitempty"`
-
 	// Resumable: Supports the Resumable Media Upload protocol.
 	Resumable *RestMethodMediaUploadProtocolsResumable `json:"resumable,omitempty"`
+
+	// Simple: Supports uploading as a single HTTP request.
+	Simple *RestMethodMediaUploadProtocolsSimple `json:"simple,omitempty"`
 }
 
 type RestMethodMediaUploadProtocolsResumable struct {
+	// Multipart: True if this endpoint supports uploading multipart media.
+	Multipart bool `json:"multipart,omitempty"`
+
 	// Path: The URI path to be used for upload. Should be used in
 	// conjunction with the basePath property at the api-level.
 	Path string `json:"path,omitempty"`
-
-	// Multipart: True if this endpoint supports uploading multipart media.
-	Multipart bool `json:"multipart,omitempty"`
 }
 
 type RestMethodMediaUploadProtocolsSimple struct {
+	// Multipart: True if this endpoint supports upload multipart media.
+	Multipart bool `json:"multipart,omitempty"`
+
 	// Path: The URI path to be used for upload. Should be used in
 	// conjunction with the basePath property at the api-level.
 	Path string `json:"path,omitempty"`
-
-	// Multipart: True if this endpoint supports upload multipart media.
-	Multipart bool `json:"multipart,omitempty"`
 }
 
 type RestMethodParameters struct {
@@ -387,11 +387,11 @@ type RestMethodResponse struct {
 }
 
 type RestResource struct {
-	// Resources: Sub-resources on this resource.
-	Resources *RestResourceResources `json:"resources,omitempty"`
-
 	// Methods: Methods on this resource.
 	Methods *RestResourceMethods `json:"methods,omitempty"`
+
+	// Resources: Sub-resources on this resource.
+	Resources *RestResourceResources `json:"resources,omitempty"`
 }
 
 type RestResourceMethods struct {

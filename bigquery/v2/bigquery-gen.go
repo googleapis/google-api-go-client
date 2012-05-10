@@ -90,16 +90,6 @@ type TablesService struct {
 }
 
 type Dataset struct {
-	// CreationTime: [Output-only] The time when this dataset was created,
-	// in milliseconds since the epoch.
-	CreationTime int64 `json:"creationTime,omitempty,string"`
-
-	// Etag: [Output-only] A hash of this resource.
-	Etag string `json:"etag,omitempty"`
-
-	// Kind: [Output-only] The resource type.
-	Kind string `json:"kind,omitempty"`
-
 	// Access: [Optional] Describes users' rights on the dataset. You can
 	// assign the same role to multiple users, and assign multiple roles to
 	// the same user.
@@ -118,15 +108,9 @@ type Dataset struct {
 	// groupByEmail, domain, or allAuthenticatedUsers.
 	Access []*DatasetAccess `json:"access,omitempty"`
 
-	// Id: [Output-only] The fully-qualified unique name of this dataset in
-	// the format projectId:datasetId. The dataset name without the project
-	// name is given in the datasetId field. When creating a new dataset,
-	// leave this field blank, and instead specify the datasetId field.
-	Id string `json:"id,omitempty"`
-
-	// LastModifiedTime: [Output-only] The date when this dataset or any of
-	// its tables was last modified, in milliseconds since the epoch.
-	LastModifiedTime int64 `json:"lastModifiedTime,omitempty,string"`
+	// CreationTime: [Output-only] The time when this dataset was created,
+	// in milliseconds since the epoch.
+	CreationTime int64 `json:"creationTime,omitempty,string"`
 
 	// DatasetReference: [Required] Reference identifying dataset.
 	DatasetReference *DatasetReference `json:"datasetReference,omitempty"`
@@ -135,21 +119,44 @@ type Dataset struct {
 	// dataset. This might be shown in BigQuery UI for browsing the dataset.
 	Description string `json:"description,omitempty"`
 
-	// SelfLink: [Output-only] An URL that can be used to access this
-	// resource again. You can use this URL in Get or Update requests to
-	// this resource.
-	SelfLink string `json:"selfLink,omitempty"`
+	// Etag: [Output-only] A hash of this resource.
+	Etag string `json:"etag,omitempty"`
 
 	// FriendlyName: [Optional] A descriptive name for this dataset, which
 	// might be shown in any BigQuery user interfaces for browsing the
 	// dataset. Use datasetId for making API calls.
 	FriendlyName string `json:"friendlyName,omitempty"`
+
+	// Id: [Output-only] The fully-qualified unique name of this dataset in
+	// the format projectId:datasetId. The dataset name without the project
+	// name is given in the datasetId field. When creating a new dataset,
+	// leave this field blank, and instead specify the datasetId field.
+	Id string `json:"id,omitempty"`
+
+	// Kind: [Output-only] The resource type.
+	Kind string `json:"kind,omitempty"`
+
+	// LastModifiedTime: [Output-only] The date when this dataset or any of
+	// its tables was last modified, in milliseconds since the epoch.
+	LastModifiedTime int64 `json:"lastModifiedTime,omitempty,string"`
+
+	// SelfLink: [Output-only] An URL that can be used to access this
+	// resource again. You can use this URL in Get or Update requests to
+	// this resource.
+	SelfLink string `json:"selfLink,omitempty"`
 }
 
 type DatasetAccess struct {
-	// UserByEmail: [Pick one] A fully qualified email address of a user to
-	// grant access to. For example: fred@example.com.
-	UserByEmail string `json:"userByEmail,omitempty"`
+	// Domain: [Pick one] A domain to grant access to. Any users signed in
+	// with the domain specified will be granted the specified access.
+	// Example: "example.com".
+	Domain string `json:"domain,omitempty"`
+
+	// GroupByEmail: [Pick one] A fully-qualified email address of a mailing
+	// list to grant access to. This must be either a Google Groups mailing
+	// list (ends in @googlegroups.com) or a group managed by an enterprise
+	// version of Google Groups.
+	GroupByEmail string `json:"groupByEmail,omitempty"`
 
 	// Role: [Required] Describes the rights granted to the user specified
 	// by the other member of the access object. The following string values
@@ -160,12 +167,6 @@ type DatasetAccess struct {
 	// granted this role by default.
 	Role string `json:"role,omitempty"`
 
-	// GroupByEmail: [Pick one] A fully-qualified email address of a mailing
-	// list to grant access to. This must be either a Google Groups mailing
-	// list (ends in @googlegroups.com) or a group managed by an enterprise
-	// version of Google Groups.
-	GroupByEmail string `json:"groupByEmail,omitempty"`
-
 	// SpecialGroup: [Pick one] A special group to grant access to. The
 	// valid values are: projectOwners: Owners of the enclosing project.
 	// projectReaders: Readers of the enclosing project. projectWriters:
@@ -173,17 +174,15 @@ type DatasetAccess struct {
 	// authenticated BigQuery users.
 	SpecialGroup string `json:"specialGroup,omitempty"`
 
-	// Domain: [Pick one] A domain to grant access to. Any users signed in
-	// with the domain specified will be granted the specified access.
-	// Example: "example.com".
-	Domain string `json:"domain,omitempty"`
+	// UserByEmail: [Pick one] A fully qualified email address of a user to
+	// grant access to. For example: fred@example.com.
+	UserByEmail string `json:"userByEmail,omitempty"`
 }
 
 type DatasetList struct {
-	// NextPageToken: A token to request the next page of results. Present
-	// only when there is more than one page of results.* See Paging Through
-	// Results in the developer's guide.
-	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Datasets: An array of one or more summarized dataset resources.
+	// Absent when there are no datasets in the specified project.
+	Datasets []*DatasetListDatasets `json:"datasets,omitempty"`
 
 	// Etag: A hash of this page of results. See Paging Through Results in
 	// the developer's guide.
@@ -192,33 +191,34 @@ type DatasetList struct {
 	// Kind: The type of list.
 	Kind string `json:"kind,omitempty"`
 
-	// Datasets: An array of one or more summarized dataset resources.
-	// Absent when there are no datasets in the specified project.
-	Datasets []*DatasetListDatasets `json:"datasets,omitempty"`
+	// NextPageToken: A token to request the next page of results. Present
+	// only when there is more than one page of results.* See Paging Through
+	// Results in the developer's guide.
+	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
 type DatasetListDatasets struct {
+	// DatasetReference: Reference identifying dataset.
+	DatasetReference *DatasetReference `json:"datasetReference,omitempty"`
+
 	// FriendlyName: A descriptive name for this dataset, if one exists.
 	FriendlyName string `json:"friendlyName,omitempty"`
-
-	// Kind: The resource type.
-	Kind string `json:"kind,omitempty"`
 
 	// Id: The fully-qualified unique name of this dataset in the format
 	// projectId:datasetId.
 	Id string `json:"id,omitempty"`
 
-	// DatasetReference: Reference identifying dataset.
-	DatasetReference *DatasetReference `json:"datasetReference,omitempty"`
+	// Kind: The resource type.
+	Kind string `json:"kind,omitempty"`
 }
 
 type DatasetReference struct {
-	// ProjectId: [Optional] The ID of the container project.
-	ProjectId string `json:"projectId,omitempty"`
-
 	// DatasetId: [Required] A unique ID for this dataset, without the
 	// project name.
 	DatasetId string `json:"datasetId,omitempty"`
+
+	// ProjectId: [Optional] The ID of the container project.
+	ProjectId string `json:"projectId,omitempty"`
 }
 
 type ErrorProto struct {
@@ -226,34 +226,25 @@ type ErrorProto struct {
 	// be ignored.
 	DebugInfo string `json:"debugInfo,omitempty"`
 
+	// Location: Specifies where the error occurred, if present.
+	Location string `json:"location,omitempty"`
+
 	// Message: A human readable explanation of the error.
 	Message string `json:"message,omitempty"`
 
 	// Reason: Specifies the error reason. For example, reason will be
 	// "required" or "invalid" if some field was missing or malformed.
 	Reason string `json:"reason,omitempty"`
-
-	// Location: Specifies where the error occurred, if present.
-	Location string `json:"location,omitempty"`
 }
 
 type GetQueryResultsResponse struct {
 	// Etag: A hash of this response.
 	Etag string `json:"etag,omitempty"`
 
-	// Kind: The resource type of the response.
-	Kind string `json:"kind,omitempty"`
-
-	// TotalRows: The total number of rows in the complete query result set,
-	// which can be more than the number of rows in this single page of
-	// results. Present only when the query completes successfully.
-	TotalRows uint64 `json:"totalRows,omitempty,string"`
-
-	// Rows: An object with as many results as can be contained within the
-	// maximum permitted reply size. To get any additional rows, you can
-	// call GetQueryResults and specify the jobReference returned above.
-	// Present only when the query completes successfully.
-	Rows []*TableRow `json:"rows,omitempty"`
+	// JobComplete: Whether the query has completed or not. If rows or
+	// totalRows are present, this will always be true. If this is false,
+	// totalRows will not be available.
+	JobComplete bool `json:"jobComplete,omitempty"`
 
 	// JobReference: Reference to the Helix Job that was created to run the
 	// query. This field will be present even if the original request timed
@@ -263,58 +254,67 @@ type GetQueryResultsResponse struct {
 	// mechanism (GetQueryResults).
 	JobReference *JobReference `json:"jobReference,omitempty"`
 
-	// JobComplete: Whether the query has completed or not. If rows or
-	// totalRows are present, this will always be true. If this is false,
-	// totalRows will not be available.
-	JobComplete bool `json:"jobComplete,omitempty"`
+	// Kind: The resource type of the response.
+	Kind string `json:"kind,omitempty"`
+
+	// Rows: An object with as many results as can be contained within the
+	// maximum permitted reply size. To get any additional rows, you can
+	// call GetQueryResults and specify the jobReference returned above.
+	// Present only when the query completes successfully.
+	Rows []*TableRow `json:"rows,omitempty"`
 
 	// Schema: The schema of the results. Present only when the query
 	// completes successfully.
 	Schema *TableSchema `json:"schema,omitempty"`
+
+	// TotalRows: The total number of rows in the complete query result set,
+	// which can be more than the number of rows in this single page of
+	// results. Present only when the query completes successfully.
+	TotalRows uint64 `json:"totalRows,omitempty,string"`
 }
 
 type Job struct {
+	// Configuration: [Required] Describes the job configuration.
+	Configuration *JobConfiguration `json:"configuration,omitempty"`
+
 	// Etag: [Output-only] A hash of this resource.
 	Etag string `json:"etag,omitempty"`
 
-	// Kind: [Output-only] The type of the resource.
-	Kind string `json:"kind,omitempty"`
-
 	// Id: [Output-only] Opaque ID field of the job
 	Id string `json:"id,omitempty"`
-
-	// Status: [Output-only] The status of this job. Examine this value when
-	// polling an asynchronous job to see if the job is complete.
-	Status *JobStatus `json:"status,omitempty"`
-
-	// Configuration: [Required] Describes the job configuration.
-	Configuration *JobConfiguration `json:"configuration,omitempty"`
 
 	// JobReference: [Optional] Reference describing the unique-per-user
 	// name of the job.
 	JobReference *JobReference `json:"jobReference,omitempty"`
 
-	// Statistics: [Output-only] Information about the job, including
-	// starting time and ending time of the job.
-	Statistics *JobStatistics `json:"statistics,omitempty"`
+	// Kind: [Output-only] The type of the resource.
+	Kind string `json:"kind,omitempty"`
 
 	// SelfLink: [Output-only] A URL that can be used to access this
 	// resource again.
 	SelfLink string `json:"selfLink,omitempty"`
+
+	// Statistics: [Output-only] Information about the job, including
+	// starting time and ending time of the job.
+	Statistics *JobStatistics `json:"statistics,omitempty"`
+
+	// Status: [Output-only] The status of this job. Examine this value when
+	// polling an asynchronous job to see if the job is complete.
+	Status *JobStatus `json:"status,omitempty"`
 }
 
 type JobConfiguration struct {
-	// Load: [Pick one] Configures a load job.
-	Load *JobConfigurationLoad `json:"load,omitempty"`
+	// Copy: [Pick one] Copies a table.
+	Copy *JobConfigurationTableCopy `json:"copy,omitempty"`
 
 	// Extract: [Pick one] Configures an extract job.
 	Extract *JobConfigurationExtract `json:"extract,omitempty"`
 
-	// Copy: [Pick one] Copies a table.
-	Copy *JobConfigurationTableCopy `json:"copy,omitempty"`
-
 	// Link: [Pick one] Configures a link job.
 	Link *JobConfigurationLink `json:"link,omitempty"`
+
+	// Load: [Pick one] Configures a load job.
+	Load *JobConfigurationLoad `json:"load,omitempty"`
 
 	// Properties: [Optional] Properties providing extra details about how
 	// the job should be run. Not used for most jobs.
@@ -325,17 +325,17 @@ type JobConfiguration struct {
 }
 
 type JobConfigurationExtract struct {
-	// PrintHeader: [Optional] Whether to print out a heder row in the
-	// results. Default is true.
-	PrintHeader bool `json:"printHeader,omitempty"`
+	// DestinationUri: [Required] The fully-qualified Google Cloud Storage
+	// URI where the extracted table should be written.
+	DestinationUri string `json:"destinationUri,omitempty"`
 
 	// FieldDelimiter: [Optional] Delimiter to use between fields in the
 	// exported data. Default is ','
 	FieldDelimiter string `json:"fieldDelimiter,omitempty"`
 
-	// DestinationUri: [Required] The fully-qualified Google Cloud Storage
-	// URI where the extracted table should be written.
-	DestinationUri string `json:"destinationUri,omitempty"`
+	// PrintHeader: [Optional] Whether to print out a heder row in the
+	// results. Default is true.
+	PrintHeader bool `json:"printHeader,omitempty"`
 
 	// SourceTable: [Required] A reference to the table being exported.
 	SourceTable *TableReference `json:"sourceTable,omitempty"`
@@ -346,44 +346,31 @@ type JobConfigurationLink struct {
 	// if none exists.
 	CreateDisposition string `json:"createDisposition,omitempty"`
 
+	// DestinationTable: [Required] The destination table of the link job.
+	DestinationTable *TableReference `json:"destinationTable,omitempty"`
+
+	// SourceUri: [Required] URI of source table to link.
+	SourceUri []string `json:"sourceUri,omitempty"`
+
 	// WriteDisposition: [Optional] Whether to overwrite an existing table
 	// (WRITE_TRUNCATE), append to an existing table (WRITE_APPEND), or
 	// require that the the table is empty (WRITE_EMPTY). Default is
 	// WRITE_APPEND.
 	WriteDisposition string `json:"writeDisposition,omitempty"`
-
-	// SourceUri: [Required] URI of source table to link.
-	SourceUri []string `json:"sourceUri,omitempty"`
-
-	// DestinationTable: [Required] The destination table of the link job.
-	DestinationTable *TableReference `json:"destinationTable,omitempty"`
 }
 
 type JobConfigurationLoad struct {
-	// Schema: [Optional] Schema of the table being written to.
-	Schema *TableSchema `json:"schema,omitempty"`
-
-	// DestinationTable: [Required] Table being written to.
-	DestinationTable *TableReference `json:"destinationTable,omitempty"`
-
 	// CreateDisposition: [Optional] Whether to create the table if it
 	// doesn't already exist (CREATE_IF_NEEDED) or to require the table
 	// already exist (CREATE_NEVER). Default is CREATE_IF_NEEDED.
 	CreateDisposition string `json:"createDisposition,omitempty"`
 
-	// SkipLeadingRows: [Optional] Number of rows of initial data to skip in
-	// the data being imported.
-	SkipLeadingRows int64 `json:"skipLeadingRows,omitempty"`
+	// DestinationTable: [Required] Table being written to.
+	DestinationTable *TableReference `json:"destinationTable,omitempty"`
 
-	// WriteDisposition: [Optional] Whether to overwrite an existing table
-	// (WRITE_TRUNCATE), append to an existing table (WRITE_APPEND), or
-	// require that the the table is empty (WRITE_EMPTY). Default is
-	// WRITE_APPEND.
-	WriteDisposition string `json:"writeDisposition,omitempty"`
-
-	// SourceUris: [Required] Source URIs describing Google Cloud Storage
-	// locations of data to load.
-	SourceUris []string `json:"sourceUris,omitempty"`
+	// Encoding: [Optional] Character encoding of the input data. May be
+	// UTF-8 or ISO-8859-1. Default is UTF-8.
+	Encoding string `json:"encoding,omitempty"`
 
 	// FieldDelimiter: [Optional] Delimiter to use between fields in the
 	// import data. Default is ','
@@ -394,17 +381,32 @@ type JobConfigurationLoad struct {
 	// performed.
 	MaxBadRecords int64 `json:"maxBadRecords,omitempty"`
 
-	// Encoding: [Optional] Character encoding of the input data. May be
-	// UTF-8 or ISO-8859-1. Default is UTF-8.
-	Encoding string `json:"encoding,omitempty"`
+	// Schema: [Optional] Schema of the table being written to.
+	Schema *TableSchema `json:"schema,omitempty"`
+
+	// SkipLeadingRows: [Optional] Number of rows of initial data to skip in
+	// the data being imported.
+	SkipLeadingRows int64 `json:"skipLeadingRows,omitempty"`
+
+	// SourceUris: [Required] Source URIs describing Google Cloud Storage
+	// locations of data to load.
+	SourceUris []string `json:"sourceUris,omitempty"`
+
+	// WriteDisposition: [Optional] Whether to overwrite an existing table
+	// (WRITE_TRUNCATE), append to an existing table (WRITE_APPEND), or
+	// require that the the table is empty (WRITE_EMPTY). Default is
+	// WRITE_APPEND.
+	WriteDisposition string `json:"writeDisposition,omitempty"`
 }
 
 type JobConfigurationProperties struct {
 }
 
 type JobConfigurationQuery struct {
-	// Query: [Required] BigQuery SQL query to execute.
-	Query string `json:"query,omitempty"`
+	// CreateDisposition: [Optional] Whether to create the table if it
+	// doesn't already exist (CREATE_IF_NEEDED) or to require the table
+	// already exist (CREATE_NEVER). Default is CREATE_IF_NEEDED.
+	CreateDisposition string `json:"createDisposition,omitempty"`
 
 	// DefaultDataset: [Optional] Specifies the default dataset to assume
 	// for unqualified table names in the query.
@@ -415,10 +417,8 @@ type JobConfigurationQuery struct {
 	// to store the results.
 	DestinationTable *TableReference `json:"destinationTable,omitempty"`
 
-	// CreateDisposition: [Optional] Whether to create the table if it
-	// doesn't already exist (CREATE_IF_NEEDED) or to require the table
-	// already exist (CREATE_NEVER). Default is CREATE_IF_NEEDED.
-	CreateDisposition string `json:"createDisposition,omitempty"`
+	// Query: [Required] BigQuery SQL query to execute.
+	Query string `json:"query,omitempty"`
 
 	// WriteDisposition: [Optional] Whether to overwrite an existing table
 	// (WRITE_TRUNCATE), append to an existing table (WRITE_APPEND), or
@@ -428,15 +428,15 @@ type JobConfigurationQuery struct {
 }
 
 type JobConfigurationTableCopy struct {
+	// CreateDisposition: [Optional] Whether or not to create a new table,
+	// if none exists.
+	CreateDisposition string `json:"createDisposition,omitempty"`
+
 	// DestinationTable: [Required] The destination table
 	DestinationTable *TableReference `json:"destinationTable,omitempty"`
 
 	// SourceTable: [Required] Source table to copy.
 	SourceTable *TableReference `json:"sourceTable,omitempty"`
-
-	// CreateDisposition: [Optional] Whether or not to create a new table,
-	// if none exists.
-	CreateDisposition string `json:"createDisposition,omitempty"`
 
 	// WriteDisposition: [Optional] Whether or not to append or require the
 	// table to be empty.
@@ -444,50 +444,50 @@ type JobConfigurationTableCopy struct {
 }
 
 type JobList struct {
+	// Etag: A hash of this page of results.
+	Etag string `json:"etag,omitempty"`
+
+	// Jobs: List of jobs that were requested.
+	Jobs []*JobListJobs `json:"jobs,omitempty"`
+
+	// Kind: The resource type of the response.
+	Kind string `json:"kind,omitempty"`
+
 	// NextPageToken: A token to request the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// TotalItems: Total number of jobs in this collection.
 	TotalItems int64 `json:"totalItems,omitempty"`
-
-	// Etag: A hash of this page of results.
-	Etag string `json:"etag,omitempty"`
-
-	// Kind: The resource type of the response.
-	Kind string `json:"kind,omitempty"`
-
-	// Jobs: List of jobs that were requested.
-	Jobs []*JobListJobs `json:"jobs,omitempty"`
 }
 
 type JobListJobs struct {
-	// Statistics: [Output-only] Information about the job, including
-	// starting time and ending time of the job.
-	Statistics *JobStatistics `json:"statistics,omitempty"`
-
-	// State: Running state of the job. When the state is DONE, errorResult
-	// can be checked to determine whether the job succeeded or failed.
-	State string `json:"state,omitempty"`
+	// Configuration: [Full-projection-only] Specifies the job
+	// configuration.
+	Configuration *JobConfiguration `json:"configuration,omitempty"`
 
 	// ErrorResult: A result object that will be present only if the job has
 	// failed.
 	ErrorResult *ErrorProto `json:"errorResult,omitempty"`
 
-	// Kind: The resource type.
-	Kind string `json:"kind,omitempty"`
-
 	// Id: Unique opaque ID of the job.
 	Id string `json:"id,omitempty"`
 
-	// Status: [Full-projection-only] Describes the state of the job.
-	Status *JobStatus `json:"status,omitempty"`
-
-	// Configuration: [Full-projection-only] Specifies the job
-	// configuration.
-	Configuration *JobConfiguration `json:"configuration,omitempty"`
-
 	// JobReference: Job reference uniquely identifying the job.
 	JobReference *JobReference `json:"jobReference,omitempty"`
+
+	// Kind: The resource type.
+	Kind string `json:"kind,omitempty"`
+
+	// State: Running state of the job. When the state is DONE, errorResult
+	// can be checked to determine whether the job succeeded or failed.
+	State string `json:"state,omitempty"`
+
+	// Statistics: [Output-only] Information about the job, including
+	// starting time and ending time of the job.
+	Statistics *JobStatistics `json:"statistics,omitempty"`
+
+	// Status: [Full-projection-only] Describes the state of the job.
+	Status *JobStatus `json:"status,omitempty"`
 }
 
 type JobReference struct {
@@ -499,10 +499,6 @@ type JobReference struct {
 }
 
 type JobStatistics struct {
-	// TotalBytesProcessed: [Output-only] Total bytes processed for this
-	// job.
-	TotalBytesProcessed int64 `json:"totalBytesProcessed,omitempty,string"`
-
 	// EndTime: [Output-only] End time of this job, in milliseconds since
 	// the epoch.
 	EndTime int64 `json:"endTime,omitempty,string"`
@@ -510,9 +506,17 @@ type JobStatistics struct {
 	// StartTime: [Output-only] Start time of this job, in milliseconds
 	// since the epoch.
 	StartTime int64 `json:"startTime,omitempty,string"`
+
+	// TotalBytesProcessed: [Output-only] Total bytes processed for this
+	// job.
+	TotalBytesProcessed int64 `json:"totalBytesProcessed,omitempty,string"`
 }
 
 type JobStatus struct {
+	// ErrorResult: [Output-only] Final error result of the job. If present,
+	// indicates that the job has completed and was unsuccessful.
+	ErrorResult *ErrorProto `json:"errorResult,omitempty"`
+
 	// Errors: [Output-only] All errors encountered during the running of
 	// the job. Errors here do not necessarily mean that the job has
 	// completed or was unsuccessful.
@@ -520,41 +524,37 @@ type JobStatus struct {
 
 	// State: [Output-only] Running state of the job.
 	State string `json:"state,omitempty"`
-
-	// ErrorResult: [Output-only] Final error result of the job. If present,
-	// indicates that the job has completed and was unsuccessful.
-	ErrorResult *ErrorProto `json:"errorResult,omitempty"`
 }
 
 type ProjectList struct {
-	// NextPageToken: A token to request the next page of results.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// TotalItems: The total number of projects in the list.
-	TotalItems int64 `json:"totalItems,omitempty"`
-
 	// Etag: A hash of the page of results
 	Etag string `json:"etag,omitempty"`
 
 	// Kind: The type of list.
 	Kind string `json:"kind,omitempty"`
 
+	// NextPageToken: A token to request the next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
 	// Projects: Projects to which you have at least READ access.
 	Projects []*ProjectListProjects `json:"projects,omitempty"`
+
+	// TotalItems: The total number of projects in the list.
+	TotalItems int64 `json:"totalItems,omitempty"`
 }
 
 type ProjectListProjects struct {
-	// Id: An opaque ID of this project.
-	Id string `json:"id,omitempty"`
-
-	// ProjectReference: A unique reference to this project.
-	ProjectReference *ProjectReference `json:"projectReference,omitempty"`
-
 	// FriendlyName: A descriptive name for this project.
 	FriendlyName string `json:"friendlyName,omitempty"`
 
+	// Id: An opaque ID of this project.
+	Id string `json:"id,omitempty"`
+
 	// Kind: The resource type.
 	Kind string `json:"kind,omitempty"`
+
+	// ProjectReference: A unique reference to this project.
+	ProjectReference *ProjectReference `json:"projectReference,omitempty"`
 }
 
 type ProjectReference struct {
@@ -564,6 +564,21 @@ type ProjectReference struct {
 }
 
 type QueryRequest struct {
+	// DefaultDataset: [Optional] Specifies the default datasetId and
+	// projectId to assume for any unqualified table names in the query. If
+	// not set, all table names in the query string must be fully-qualified
+	// in the format projectId:datasetId.tableid.
+	DefaultDataset *DatasetReference `json:"defaultDataset,omitempty"`
+
+	// Kind: The resource type of the request.
+	Kind string `json:"kind,omitempty"`
+
+	// MaxResults: [Optional] The maximum number of results to return per
+	// page of results. If the response list exceeds the maximum response
+	// size for a single response, you will have to page through the
+	// results. Default is to return the maximum response size.
+	MaxResults int64 `json:"maxResults,omitempty"`
+
 	// Query: [Required] A query string, following the BigQuery query syntax
 	// of the query to execute. Table names should be qualified by dataset
 	// name in the format projectId:datasetId.tableId unless you specify the
@@ -572,41 +587,18 @@ type QueryRequest struct {
 	// myProjectId:myDatasetId.myTableId.
 	Query string `json:"query,omitempty"`
 
-	// DefaultDataset: [Optional] Specifies the default datasetId and
-	// projectId to assume for any unqualified table names in the query. If
-	// not set, all table names in the query string must be fully-qualified
-	// in the format projectId:datasetId.tableid.
-	DefaultDataset *DatasetReference `json:"defaultDataset,omitempty"`
-
-	// MaxResults: [Optional] The maximum number of results to return per
-	// page of results. If the response list exceeds the maximum response
-	// size for a single response, you will have to page through the
-	// results. Default is to return the maximum response size.
-	MaxResults int64 `json:"maxResults,omitempty"`
-
 	// TimeoutMs: [Optional] How long to wait for the query to complete, in
 	// milliseconds, before returning. Default is to return immediately. If
 	// the timeout passes before the job completes, the request will fail
 	// with a TIMEOUT error.
 	TimeoutMs int64 `json:"timeoutMs,omitempty"`
-
-	// Kind: The resource type of the request.
-	Kind string `json:"kind,omitempty"`
 }
 
 type QueryResponse struct {
-	// Kind: The resource type.
-	Kind string `json:"kind,omitempty"`
-
-	// TotalRows: The total number of rows in the complete query result set,
-	// which can be more than the number of rows in this single page of
-	// results.
-	TotalRows uint64 `json:"totalRows,omitempty,string"`
-
-	// Rows: An object with as many results as can be contained within the
-	// maximum permitted reply size. To get any additional rows, you can
-	// call GetQueryResults and specify the jobReference returned above.
-	Rows []*TableRow `json:"rows,omitempty"`
+	// JobComplete: Whether the query has completed or not. If rows or
+	// totalRows are present, this will always be true. If this is false,
+	// totalRows will not be available.
+	JobComplete bool `json:"jobComplete,omitempty"`
 
 	// JobReference: Reference to the Job that was created to run the query.
 	// This field will be present even if the original request timed out, in
@@ -616,26 +608,34 @@ type QueryResponse struct {
 	// (GetQueryResults).
 	JobReference *JobReference `json:"jobReference,omitempty"`
 
-	// JobComplete: Whether the query has completed or not. If rows or
-	// totalRows are present, this will always be true. If this is false,
-	// totalRows will not be available.
-	JobComplete bool `json:"jobComplete,omitempty"`
+	// Kind: The resource type.
+	Kind string `json:"kind,omitempty"`
+
+	// Rows: An object with as many results as can be contained within the
+	// maximum permitted reply size. To get any additional rows, you can
+	// call GetQueryResults and specify the jobReference returned above.
+	Rows []*TableRow `json:"rows,omitempty"`
 
 	// Schema: The schema of the results. Present only when the query
 	// completes successfully.
 	Schema *TableSchema `json:"schema,omitempty"`
+
+	// TotalRows: The total number of rows in the complete query result set,
+	// which can be more than the number of rows in this single page of
+	// results.
+	TotalRows uint64 `json:"totalRows,omitempty,string"`
 }
 
 type Table struct {
-	// LastModifiedTime: [Output-only] The time when this table was last
-	// modified, in milliseconds since the epoch.
-	LastModifiedTime int64 `json:"lastModifiedTime,omitempty,string"`
-
-	// NumBytes: [Output-only] The size of the table in bytes.
-	NumBytes int64 `json:"numBytes,omitempty,string"`
+	// CreationTime: [Output-only] The time when this table was created, in
+	// milliseconds since the epoch.
+	CreationTime int64 `json:"creationTime,omitempty,string"`
 
 	// Description: [Optional] A user-friendly description of this table.
 	Description string `json:"description,omitempty"`
+
+	// Etag: [Output-only] A hash of this resource.
+	Etag string `json:"etag,omitempty"`
 
 	// ExpirationTime: [Optional] The time when this table expires, in
 	// milliseconds since the epoch. If not present, the table will persist
@@ -643,34 +643,34 @@ type Table struct {
 	// reclaimed.
 	ExpirationTime int64 `json:"expirationTime,omitempty,string"`
 
-	// TableReference: [Required] Reference describing the ID of this table.
-	TableReference *TableReference `json:"tableReference,omitempty"`
+	// FriendlyName: [Optional] A descriptive name for this table.
+	FriendlyName string `json:"friendlyName,omitempty"`
+
+	// Id: [Output-only] An opaque ID uniquely identifying the table.
+	Id string `json:"id,omitempty"`
+
+	// Kind: [Output-only] The type of the resource.
+	Kind string `json:"kind,omitempty"`
+
+	// LastModifiedTime: [Output-only] The time when this table was last
+	// modified, in milliseconds since the epoch.
+	LastModifiedTime int64 `json:"lastModifiedTime,omitempty,string"`
+
+	// NumBytes: [Output-only] The size of the table in bytes.
+	NumBytes int64 `json:"numBytes,omitempty,string"`
+
+	// NumRows: [Output-only] The number of rows of data in this table.
+	NumRows uint64 `json:"numRows,omitempty,string"`
+
+	// Schema: [Optional] Describes the schema of this table.
+	Schema *TableSchema `json:"schema,omitempty"`
 
 	// SelfLink: [Output-only] A URL that can be used to access this
 	// resource again.
 	SelfLink string `json:"selfLink,omitempty"`
 
-	// Schema: [Optional] Describes the schema of this table.
-	Schema *TableSchema `json:"schema,omitempty"`
-
-	// FriendlyName: [Optional] A descriptive name for this table.
-	FriendlyName string `json:"friendlyName,omitempty"`
-
-	// CreationTime: [Output-only] The time when this table was created, in
-	// milliseconds since the epoch.
-	CreationTime int64 `json:"creationTime,omitempty,string"`
-
-	// Etag: [Output-only] A hash of this resource.
-	Etag string `json:"etag,omitempty"`
-
-	// Kind: [Output-only] The type of the resource.
-	Kind string `json:"kind,omitempty"`
-
-	// NumRows: [Output-only] The number of rows of data in this table.
-	NumRows uint64 `json:"numRows,omitempty,string"`
-
-	// Id: [Output-only] An opaque ID uniquely identifying the table.
-	Id string `json:"id,omitempty"`
+	// TableReference: [Required] Reference describing the ID of this table.
+	TableReference *TableReference `json:"tableReference,omitempty"`
 }
 
 type TableDataList struct {
@@ -680,66 +680,66 @@ type TableDataList struct {
 	// Kind: The resource type of the response.
 	Kind string `json:"kind,omitempty"`
 
-	// TotalRows: The total number of rows in the complete table.
-	TotalRows int64 `json:"totalRows,omitempty,string"`
-
 	// Rows: Rows of results.
 	Rows []*TableRow `json:"rows,omitempty"`
+
+	// TotalRows: The total number of rows in the complete table.
+	TotalRows int64 `json:"totalRows,omitempty,string"`
 }
 
 type TableFieldSchema struct {
-	// Name: [Required] Name of the field.
-	Name string `json:"name,omitempty"`
+	// Fields: [Optional] Describes nested fields when type is RECORD.
+	Fields []*TableFieldSchema `json:"fields,omitempty"`
 
 	// Mode: [Optional] Mode of the field (whether or not it can be null.
 	// Default is NULLABLE.
 	Mode string `json:"mode,omitempty"`
 
-	// Fields: [Optional] Describes nested fields when type is RECORD.
-	Fields []*TableFieldSchema `json:"fields,omitempty"`
+	// Name: [Required] Name of the field.
+	Name string `json:"name,omitempty"`
 
 	// Type: [Required] Data type of the field.
 	Type string `json:"type,omitempty"`
 }
 
 type TableList struct {
-	// NextPageToken: A token to request the next page of results.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// TotalItems: The total number of tables in the dataset.
-	TotalItems int64 `json:"totalItems,omitempty"`
-
 	// Etag: A hash of this page of results.
 	Etag string `json:"etag,omitempty"`
 
 	// Kind: The type of list.
 	Kind string `json:"kind,omitempty"`
 
+	// NextPageToken: A token to request the next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
 	// Tables: Tables in the requested dataset.
 	Tables []*TableListTables `json:"tables,omitempty"`
+
+	// TotalItems: The total number of tables in the dataset.
+	TotalItems int64 `json:"totalItems,omitempty"`
 }
 
 type TableListTables struct {
-	// TableReference: A reference uniquely identifying the table.
-	TableReference *TableReference `json:"tableReference,omitempty"`
-
 	// FriendlyName: The user-friendly name for this table.
 	FriendlyName string `json:"friendlyName,omitempty"`
+
+	// Id: An opaque ID of the table
+	Id string `json:"id,omitempty"`
 
 	// Kind: The resource type.
 	Kind string `json:"kind,omitempty"`
 
-	// Id: An opaque ID of the table
-	Id string `json:"id,omitempty"`
+	// TableReference: A reference uniquely identifying the table.
+	TableReference *TableReference `json:"tableReference,omitempty"`
 }
 
 type TableReference struct {
+	// DatasetId: [Required] ID of the dataset containing the table.
+	DatasetId string `json:"datasetId,omitempty"`
+
 	// ProjectId: [Required] ID of the project billed for storage of the
 	// table.
 	ProjectId string `json:"projectId,omitempty"`
-
-	// DatasetId: [Required] ID of the dataset containing the table.
-	DatasetId string `json:"datasetId,omitempty"`
 
 	// TableId: [Required] ID of the table.
 	TableId string `json:"tableId,omitempty"`

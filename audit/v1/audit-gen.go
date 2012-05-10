@@ -56,25 +56,22 @@ type ActivitiesService struct {
 }
 
 type Activities struct {
-	// Next: Next page URL.
-	Next string `json:"next,omitempty"`
-
 	// Items: Each record in read response.
 	Items []*Activity `json:"items,omitempty"`
 
 	// Kind: Kind of list response this is.
 	Kind string `json:"kind,omitempty"`
+
+	// Next: Next page URL.
+	Next string `json:"next,omitempty"`
 }
 
 type Activity struct {
-	// OwnerDomain: Domain of source customer.
-	OwnerDomain string `json:"ownerDomain,omitempty"`
-
 	// Actor: User doing the action.
 	Actor *ActivityActor `json:"actor,omitempty"`
 
-	// Kind: Kind of resource this is.
-	Kind string `json:"kind,omitempty"`
+	// Events: Activity events.
+	Events []*ActivityEvents `json:"events,omitempty"`
 
 	// Id: Unique identifier for each activity record.
 	Id *ActivityId `json:"id,omitempty"`
@@ -82,45 +79,51 @@ type Activity struct {
 	// IpAddress: IP Address of the user doing the action.
 	IpAddress string `json:"ipAddress,omitempty"`
 
-	// Events: Activity events.
-	Events []*ActivityEvents `json:"events,omitempty"`
+	// Kind: Kind of resource this is.
+	Kind string `json:"kind,omitempty"`
+
+	// OwnerDomain: Domain of source customer.
+	OwnerDomain string `json:"ownerDomain,omitempty"`
 }
 
 type ActivityActor struct {
+	// ApplicationId: ID of application which interacted on behalf of the
+	// user.
+	ApplicationId int64 `json:"applicationId,omitempty,string"`
+
+	// CallerType: User or OAuth 2LO request.
+	CallerType string `json:"callerType,omitempty"`
+
 	// Email: Email address of the user.
 	Email string `json:"email,omitempty"`
 
 	// Key: For OAuth 2LO API requests, consumer_key of the requestor.
 	Key string `json:"key,omitempty"`
-
-	// CallerType: User or OAuth 2LO request.
-	CallerType string `json:"callerType,omitempty"`
-
-	// ApplicationId: ID of application which interacted on behalf of the
-	// user.
-	ApplicationId int64 `json:"applicationId,omitempty,string"`
 }
 
 type ActivityEvents struct {
-	// Parameters: Event parameters.
-	Parameters []*ActivityEventsParameters `json:"parameters,omitempty"`
-
 	// EventType: Type of event.
 	EventType string `json:"eventType,omitempty"`
 
 	// Name: Name of event.
 	Name string `json:"name,omitempty"`
+
+	// Parameters: Event parameters.
+	Parameters []*ActivityEventsParameters `json:"parameters,omitempty"`
 }
 
 type ActivityEventsParameters struct {
-	// Value: Value of the parameter.
-	Value string `json:"value,omitempty"`
-
 	// Name: Name of the parameter.
 	Name string `json:"name,omitempty"`
+
+	// Value: Value of the parameter.
+	Value string `json:"value,omitempty"`
 }
 
 type ActivityId struct {
+	// ApplicationId: Application ID of the source application.
+	ApplicationId int64 `json:"applicationId,omitempty,string"`
+
 	// CustomerId: Obfuscated customer ID of the source customer.
 	CustomerId string `json:"customerId,omitempty"`
 
@@ -130,9 +133,6 @@ type ActivityId struct {
 	// UniqQualifier: Unique qualifier if multiple events have the same
 	// time.
 	UniqQualifier int64 `json:"uniqQualifier,omitempty,string"`
-
-	// ApplicationId: Application ID of the source application.
-	ApplicationId int64 `json:"applicationId,omitempty,string"`
 }
 
 // method id "audit.activities.list":

@@ -38,11 +38,11 @@ const basePath = "https://www.googleapis.com/plus/v1/"
 
 // OAuth2 scopes used by this API.
 const (
-	// Know who you are on Google
-	PlusMeScope = "https://www.googleapis.com/auth/plus.me"
-
 	// View your email address
 	UserinfoEmailScope = "https://www.googleapis.com/auth/userinfo.email"
+
+	// Know who you are on Google
+	PlusMeScope = "https://www.googleapis.com/auth/plus.me"
 )
 
 func New(client *http.Client) (*Service, error) {
@@ -91,49 +91,71 @@ type Acl struct {
 }
 
 type Activity struct {
-	// Kind: Identifies this resource as an activity. Value:
-	// "plus#activity".
-	Kind string `json:"kind,omitempty"`
-
-	// CrosspostSource: If this activity is a crosspost from another system,
-	// this property specifies the ID of the original activity.
-	CrosspostSource string `json:"crosspostSource,omitempty"`
-
-	// Object: The object of this activity.
-	Object *ActivityObject `json:"object,omitempty"`
-
-	// Updated: The time at which this activity was last updated. Formatted
-	// as an RFC 3339 timestamp.
-	Updated string `json:"updated,omitempty"`
-
-	// Placeholder: True if this activity is a placeholder.
-	Placeholder bool `json:"placeholder,omitempty"`
-
-	// Url: The link to this activity.
-	Url string `json:"url,omitempty"`
-
 	// Access: Identifies who has access to see this activity.
 	Access *Acl `json:"access,omitempty"`
 
-	// Id: The ID of this activity.
-	Id string `json:"id,omitempty"`
+	// Actor: The person who performed this activity.
+	Actor *ActivityActor `json:"actor,omitempty"`
 
-	// Title: Title of this activity.
-	Title string `json:"title,omitempty"`
-
-	// PlaceName: Name of the place where this activity occurred.
-	PlaceName string `json:"placeName,omitempty"`
+	// Address: Street address where this activity occurred.
+	Address string `json:"address,omitempty"`
 
 	// Annotation: Additional content added by the person who shared this
 	// activity, applicable only when resharing an activity.
 	Annotation string `json:"annotation,omitempty"`
 
-	// Address: Street address where this activity occurred.
-	Address string `json:"address,omitempty"`
+	// CrosspostSource: If this activity is a crosspost from another system,
+	// this property specifies the ID of the original activity.
+	CrosspostSource string `json:"crosspostSource,omitempty"`
+
+	// Etag: ETag of this response for caching purposes.
+	Etag string `json:"etag,omitempty"`
+
+	// Geocode: Latitude and longitude where this activity occurred. Format
+	// is latitude followed by longitude, space separated.
+	Geocode string `json:"geocode,omitempty"`
+
+	// Id: The ID of this activity.
+	Id string `json:"id,omitempty"`
+
+	// Kind: Identifies this resource as an activity. Value:
+	// "plus#activity".
+	Kind string `json:"kind,omitempty"`
+
+	// Object: The object of this activity.
+	Object *ActivityObject `json:"object,omitempty"`
+
+	// PlaceId: ID of the place where this activity occurred.
+	PlaceId string `json:"placeId,omitempty"`
+
+	// PlaceName: Name of the place where this activity occurred.
+	PlaceName string `json:"placeName,omitempty"`
+
+	// Placeholder: True if this activity is a placeholder.
+	Placeholder bool `json:"placeholder,omitempty"`
 
 	// Provider: The service provider that initially published this
 	// activity.
 	Provider *ActivityProvider `json:"provider,omitempty"`
+
+	// Published: The time at which this activity was initially published.
+	// Formatted as an RFC 3339 timestamp.
+	Published string `json:"published,omitempty"`
+
+	// Radius: Radius, in meters, of the region where this activity
+	// occurred, centered at the latitude and longitude identified in
+	// geocode.
+	Radius string `json:"radius,omitempty"`
+
+	// Title: Title of this activity.
+	Title string `json:"title,omitempty"`
+
+	// Updated: The time at which this activity was last updated. Formatted
+	// as an RFC 3339 timestamp.
+	Updated string `json:"updated,omitempty"`
+
+	// Url: The link to this activity.
+	Url string `json:"url,omitempty"`
 
 	// Verb: This activity's verb, indicating what action was performed.
 	// Possible values are:  
@@ -142,31 +164,15 @@ type Activity struct {
 	// "checkin" - Check in to a location. 
 	// - "share" - Reshare an activity.
 	Verb string `json:"verb,omitempty"`
-
-	// Radius: Radius, in meters, of the region where this activity
-	// occurred, centered at the latitude and longitude identified in
-	// geocode.
-	Radius string `json:"radius,omitempty"`
-
-	// PlaceId: ID of the place where this activity occurred.
-	PlaceId string `json:"placeId,omitempty"`
-
-	// Actor: The person who performed this activity.
-	Actor *ActivityActor `json:"actor,omitempty"`
-
-	// Published: The time at which this activity was initially published.
-	// Formatted as an RFC 3339 timestamp.
-	Published string `json:"published,omitempty"`
-
-	// Geocode: Latitude and longitude where this activity occurred. Format
-	// is latitude followed by longitude, space separated.
-	Geocode string `json:"geocode,omitempty"`
-
-	// Etag: ETag of this response for caching purposes.
-	Etag string `json:"etag,omitempty"`
 }
 
 type ActivityActor struct {
+	// DisplayName: The name of the actor, suitable for display.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Id: The ID of the actor's person resource.
+	Id string `json:"id,omitempty"`
+
 	// Image: The image representation of the actor.
 	Image *ActivityActorImage `json:"image,omitempty"`
 
@@ -175,12 +181,6 @@ type ActivityActor struct {
 
 	// Url: The link to the actor's Google profile.
 	Url string `json:"url,omitempty"`
-
-	// Id: The ID of the actor's person resource.
-	Id string `json:"id,omitempty"`
-
-	// DisplayName: The name of the actor, suitable for display.
-	DisplayName string `json:"displayName,omitempty"`
 }
 
 type ActivityActorImage struct {
@@ -199,34 +199,13 @@ type ActivityActorName struct {
 }
 
 type ActivityObject struct {
-	// Resharers: People who reshared this activity.
-	Resharers *ActivityObjectResharers `json:"resharers,omitempty"`
-
-	// OriginalContent: The content (text) as provided by the author, stored
-	// without any HTML formatting. When updating an activity's content, use
-	// the value of originalContent as the starting point from which to make
-	// edits.
-	OriginalContent string `json:"originalContent,omitempty"`
-
-	// Attachments: The media objects attached to this activity.
-	Attachments []*ActivityObjectAttachments `json:"attachments,omitempty"`
-
-	// Plusoners: People who +1'd this activity.
-	Plusoners *ActivityObjectPlusoners `json:"plusoners,omitempty"`
-
 	// Actor: If this activity's object is itself another activity (for
 	// example, when a person reshares an activity), this property specifies
 	// the original activity's actor.
 	Actor *ActivityObjectActor `json:"actor,omitempty"`
 
-	// Replies: Comments in reply to this activity.
-	Replies *ActivityObjectReplies `json:"replies,omitempty"`
-
-	// ObjectType: The type of the object. Possible values are:  
-	// - "note" -
-	// Textual content. 
-	// - "activity" - A Google+ activity.
-	ObjectType string `json:"objectType,omitempty"`
+	// Attachments: The media objects attached to this activity.
+	Attachments []*ActivityObjectAttachments `json:"attachments,omitempty"`
 
 	// Content: The HTML-formatted content, suitable for display. When
 	// creating or updating an activity, this value must be supplied as
@@ -236,26 +215,47 @@ type ActivityObject struct {
 	// to this property.
 	Content string `json:"content,omitempty"`
 
-	// Url: The URL that points to the linked resource.
-	Url string `json:"url,omitempty"`
-
 	// Id: The ID of the object. When resharing an activity, this is the ID
 	// of the activity being reshared.
 	Id string `json:"id,omitempty"`
+
+	// ObjectType: The type of the object. Possible values are:  
+	// - "note" -
+	// Textual content. 
+	// - "activity" - A Google+ activity.
+	ObjectType string `json:"objectType,omitempty"`
+
+	// OriginalContent: The content (text) as provided by the author, stored
+	// without any HTML formatting. When updating an activity's content, use
+	// the value of originalContent as the starting point from which to make
+	// edits.
+	OriginalContent string `json:"originalContent,omitempty"`
+
+	// Plusoners: People who +1'd this activity.
+	Plusoners *ActivityObjectPlusoners `json:"plusoners,omitempty"`
+
+	// Replies: Comments in reply to this activity.
+	Replies *ActivityObjectReplies `json:"replies,omitempty"`
+
+	// Resharers: People who reshared this activity.
+	Resharers *ActivityObjectResharers `json:"resharers,omitempty"`
+
+	// Url: The URL that points to the linked resource.
+	Url string `json:"url,omitempty"`
 }
 
 type ActivityObjectActor struct {
+	// DisplayName: The original actor's name, suitable for display.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Id: ID of the original actor.
+	Id string `json:"id,omitempty"`
+
 	// Image: The image representation of the original actor.
 	Image *ActivityObjectActorImage `json:"image,omitempty"`
 
 	// Url: A link to the original actor's Google profile.
 	Url string `json:"url,omitempty"`
-
-	// Id: ID of the original actor.
-	Id string `json:"id,omitempty"`
-
-	// DisplayName: The original actor's name, suitable for display.
-	DisplayName string `json:"displayName,omitempty"`
 }
 
 type ActivityObjectActorImage struct {
@@ -264,18 +264,25 @@ type ActivityObjectActorImage struct {
 }
 
 type ActivityObjectAttachments struct {
-	// Id: The ID of the media object's resource.
-	Id string `json:"id,omitempty"`
+	// Content: If the attachment is an article, this property contains a
+	// snippet of text from the article.
+	Content string `json:"content,omitempty"`
 
 	// DisplayName: The title of the attachment (such as a photo caption or
 	// an article title).
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Image: The preview image for photos or videos.
-	Image *ActivityObjectAttachmentsImage `json:"image,omitempty"`
+	// Embed: If the attachment is a video, the embeddable link.
+	Embed *ActivityObjectAttachmentsEmbed `json:"embed,omitempty"`
 
 	// FullImage: The full image url for photo attachments.
 	FullImage *ActivityObjectAttachmentsFullImage `json:"fullImage,omitempty"`
+
+	// Id: The ID of the media object's resource.
+	Id string `json:"id,omitempty"`
+
+	// Image: The preview image for photos or videos.
+	Image *ActivityObjectAttachmentsImage `json:"image,omitempty"`
 
 	// ObjectType: The type of media object. Possible values are:  
 	// -
@@ -285,51 +292,44 @@ type ActivityObjectAttachments struct {
 	// specified by a link.
 	ObjectType string `json:"objectType,omitempty"`
 
-	// Content: If the attachment is an article, this property contains a
-	// snippet of text from the article.
-	Content string `json:"content,omitempty"`
-
-	// Embed: If the attachment is a video, the embeddable link.
-	Embed *ActivityObjectAttachmentsEmbed `json:"embed,omitempty"`
-
 	// Url: The link to the attachment, should be of type text/html.
 	Url string `json:"url,omitempty"`
 }
 
 type ActivityObjectAttachmentsEmbed struct {
-	// Url: URL of the link.
-	Url string `json:"url,omitempty"`
-
 	// Type: Media type of the link.
 	Type string `json:"type,omitempty"`
+
+	// Url: URL of the link.
+	Url string `json:"url,omitempty"`
 }
 
 type ActivityObjectAttachmentsFullImage struct {
-	// Type: Media type of the link.
-	Type string `json:"type,omitempty"`
-
 	// Height: The height, in pixels, of the linked resource.
 	Height int64 `json:"height,omitempty"`
 
-	// Width: The width, in pixels, of the linked resource.
-	Width int64 `json:"width,omitempty"`
+	// Type: Media type of the link.
+	Type string `json:"type,omitempty"`
 
 	// Url: URL of the link.
 	Url string `json:"url,omitempty"`
+
+	// Width: The width, in pixels, of the linked resource.
+	Width int64 `json:"width,omitempty"`
 }
 
 type ActivityObjectAttachmentsImage struct {
-	// Type: Media type of the link.
-	Type string `json:"type,omitempty"`
-
 	// Height: The height, in pixels, of the linked resource.
 	Height int64 `json:"height,omitempty"`
 
-	// Width: The width, in pixels, of the linked resource.
-	Width int64 `json:"width,omitempty"`
+	// Type: Media type of the link.
+	Type string `json:"type,omitempty"`
 
 	// Url: URL of the link.
 	Url string `json:"url,omitempty"`
+
+	// Width: The width, in pixels, of the linked resource.
+	Width int64 `json:"width,omitempty"`
 }
 
 type ActivityObjectPlusoners struct {
@@ -342,12 +342,12 @@ type ActivityObjectPlusoners struct {
 }
 
 type ActivityObjectReplies struct {
-	// TotalItems: Total number of comments on this activity.
-	TotalItems int64 `json:"totalItems,omitempty"`
-
 	// SelfLink: The URL for the collection of comments in reply to this
 	// activity.
 	SelfLink string `json:"selfLink,omitempty"`
+
+	// TotalItems: Total number of comments on this activity.
+	TotalItems int64 `json:"totalItems,omitempty"`
 }
 
 type ActivityObjectResharers struct {
@@ -364,51 +364,50 @@ type ActivityProvider struct {
 }
 
 type ActivityFeed struct {
-	// SelfLink: Link to this activity resource.
-	SelfLink string `json:"selfLink,omitempty"`
+	// Etag: ETag of this response for caching purposes.
+	Etag string `json:"etag,omitempty"`
 
-	// NextLink: Link to the next page of activities.
-	NextLink string `json:"nextLink,omitempty"`
+	// Id: The ID of this collection of activities.
+	Id string `json:"id,omitempty"`
 
 	// Items: The activities in this page of results.
 	Items []*Activity `json:"items,omitempty"`
+
+	// Kind: Identifies this resource as a collection of activities. Value:
+	// "plus#activityFeed".
+	Kind string `json:"kind,omitempty"`
+
+	// NextLink: Link to the next page of activities.
+	NextLink string `json:"nextLink,omitempty"`
 
 	// NextPageToken: The continuation token, used to page through large
 	// result sets. Provide this value in a subsequent request to return the
 	// next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// Etag: ETag of this response for caching purposes.
-	Etag string `json:"etag,omitempty"`
+	// SelfLink: Link to this activity resource.
+	SelfLink string `json:"selfLink,omitempty"`
 
-	// Kind: Identifies this resource as a collection of activities. Value:
-	// "plus#activityFeed".
-	Kind string `json:"kind,omitempty"`
+	// Title: The title of this collection of activities.
+	Title string `json:"title,omitempty"`
 
 	// Updated: The time at which this collection of activities was last
 	// updated. Formatted as an RFC 3339 timestamp.
 	Updated string `json:"updated,omitempty"`
-
-	// Id: The ID of this collection of activities.
-	Id string `json:"id,omitempty"`
-
-	// Title: The title of this collection of activities.
-	Title string `json:"title,omitempty"`
 }
 
 type Comment struct {
-	// SelfLink: Link to this comment resource.
-	SelfLink string `json:"selfLink,omitempty"`
-
 	// Actor: The person who posted this comment.
 	Actor *CommentActor `json:"actor,omitempty"`
 
-	// Published: The time at which this comment was initially published.
-	// Formatted as an RFC 3339 timestamp.
-	Published string `json:"published,omitempty"`
-
 	// Etag: ETag of this response for caching purposes.
 	Etag string `json:"etag,omitempty"`
+
+	// Id: The ID of this comment.
+	Id string `json:"id,omitempty"`
+
+	// InReplyTo: The activity this comment replied to.
+	InReplyTo []*CommentInReplyTo `json:"inReplyTo,omitempty"`
 
 	// Kind: Identifies this resource as a comment. Value: "plus#comment".
 	Kind string `json:"kind,omitempty"`
@@ -416,15 +415,16 @@ type Comment struct {
 	// Object: The object of this comment.
 	Object *CommentObject `json:"object,omitempty"`
 
+	// Published: The time at which this comment was initially published.
+	// Formatted as an RFC 3339 timestamp.
+	Published string `json:"published,omitempty"`
+
+	// SelfLink: Link to this comment resource.
+	SelfLink string `json:"selfLink,omitempty"`
+
 	// Updated: The time at which this comment was last updated. Formatted
 	// as an RFC 3339 timestamp.
 	Updated string `json:"updated,omitempty"`
-
-	// Id: The ID of this comment.
-	Id string `json:"id,omitempty"`
-
-	// InReplyTo: The activity this comment replied to.
-	InReplyTo []*CommentInReplyTo `json:"inReplyTo,omitempty"`
 
 	// Verb: This comment's verb, indicating what action was performed.
 	// Possible values are:  
@@ -433,17 +433,17 @@ type Comment struct {
 }
 
 type CommentActor struct {
+	// DisplayName: The name of this actor, suitable for display.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Id: The ID of the actor.
+	Id string `json:"id,omitempty"`
+
 	// Image: The image representation of this actor.
 	Image *CommentActorImage `json:"image,omitempty"`
 
 	// Url: A link to the person resource for this actor.
 	Url string `json:"url,omitempty"`
-
-	// Id: The ID of the actor.
-	Id string `json:"id,omitempty"`
-
-	// DisplayName: The name of this actor, suitable for display.
-	DisplayName string `json:"displayName,omitempty"`
 }
 
 type CommentActorImage struct {
@@ -454,84 +454,96 @@ type CommentActorImage struct {
 }
 
 type CommentInReplyTo struct {
-	// Url: The url of the activity.
-	Url string `json:"url,omitempty"`
-
 	// Id: The id of the activity.
 	Id string `json:"id,omitempty"`
+
+	// Url: The url of the activity.
+	Url string `json:"url,omitempty"`
 }
 
 type CommentObject struct {
+	// Content: The content of this comment.
+	Content string `json:"content,omitempty"`
+
 	// ObjectType: The object type of this comment. Possible values are:  
 	// -
 	// "comment" - A comment in reply to an activity.
 	ObjectType string `json:"objectType,omitempty"`
-
-	// Content: The content of this comment.
-	Content string `json:"content,omitempty"`
 }
 
 type CommentFeed struct {
-	// NextLink: Link to the next page of activities.
-	NextLink string `json:"nextLink,omitempty"`
+	// Etag: ETag of this response for caching purposes.
+	Etag string `json:"etag,omitempty"`
+
+	// Id: The ID of this collection of comments.
+	Id string `json:"id,omitempty"`
 
 	// Items: The comments in this page of results.
 	Items []*Comment `json:"items,omitempty"`
-
-	// NextPageToken: The continuation token, used to page through large
-	// result sets. Provide this value in a subsequent request to return the
-	// next page of results.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// Etag: ETag of this response for caching purposes.
-	Etag string `json:"etag,omitempty"`
 
 	// Kind: Identifies this resource as a collection of comments. Value:
 	// "plus#commentFeed".
 	Kind string `json:"kind,omitempty"`
 
-	// Updated: The time at which this collection of comments was last
-	// updated. Formatted as an RFC 3339 timestamp.
-	Updated string `json:"updated,omitempty"`
-
-	// Id: The ID of this collection of comments.
-	Id string `json:"id,omitempty"`
-
-	// Title: The title of this collection of comments.
-	Title string `json:"title,omitempty"`
-}
-
-type PeopleFeed struct {
-	// Items: The people in this page of results. Each item will include the
-	// id, displayName, image, and url for the person. To retrieve
-	// additional profile data, see the people.get method.
-	Items []*Person `json:"items,omitempty"`
+	// NextLink: Link to the next page of activities.
+	NextLink string `json:"nextLink,omitempty"`
 
 	// NextPageToken: The continuation token, used to page through large
 	// result sets. Provide this value in a subsequent request to return the
 	// next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
+	// Title: The title of this collection of comments.
+	Title string `json:"title,omitempty"`
+
+	// Updated: The time at which this collection of comments was last
+	// updated. Formatted as an RFC 3339 timestamp.
+	Updated string `json:"updated,omitempty"`
+}
+
+type PeopleFeed struct {
 	// Etag: ETag of this response for caching purposes.
 	Etag string `json:"etag,omitempty"`
+
+	// Items: The people in this page of results. Each item will include the
+	// id, displayName, image, and url for the person. To retrieve
+	// additional profile data, see the people.get method.
+	Items []*Person `json:"items,omitempty"`
 
 	// Kind: Identifies this resource as a collection of people. Value:
 	// "plus#peopleFeed".
 	Kind string `json:"kind,omitempty"`
 
-	// Title: The title of this collection of people.
-	Title string `json:"title,omitempty"`
+	// NextPageToken: The continuation token, used to page through large
+	// result sets. Provide this value in a subsequent request to return the
+	// next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// SelfLink: Link to this resource.
 	SelfLink string `json:"selfLink,omitempty"`
+
+	// Title: The title of this collection of people.
+	Title string `json:"title,omitempty"`
 }
 
 type Person struct {
+	// AboutMe: A short biography for this person.
+	AboutMe string `json:"aboutMe,omitempty"`
+
+	// Birthday: The person's date of birth, represented as YYYY-MM-DD.
+	Birthday string `json:"birthday,omitempty"`
+
+	// CurrentLocation: The current location for this person.
+	CurrentLocation string `json:"currentLocation,omitempty"`
+
+	// DisplayName: The name of this person, suitable for display.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Emails: A list of email addresses for this person.
+	Emails []*PersonEmails `json:"emails,omitempty"`
+
 	// Etag: ETag of this response for caching purposes.
 	Etag string `json:"etag,omitempty"`
-
-	// Kind: Identifies this resource as a person. Value: "plus#person".
-	Kind string `json:"kind,omitempty"`
 
 	// Gender: The person's gender. Possible values are:  
 	// - "male" - Male
@@ -540,31 +552,6 @@ type Person struct {
 	// - "other" - Other.
 	Gender string `json:"gender,omitempty"`
 
-	// ObjectType: Type of person within Google+. Possible values are:  
-	// -
-	// "person" - represents an actual person. 
-	// - "page" - represents a
-	// page.
-	ObjectType string `json:"objectType,omitempty"`
-
-	// Emails: A list of email addresses for this person.
-	Emails []*PersonEmails `json:"emails,omitempty"`
-
-	// Url: The URL of this person's profile.
-	Url string `json:"url,omitempty"`
-
-	// Id: The ID of this person.
-	Id string `json:"id,omitempty"`
-
-	// Nickname: The nickname of this person.
-	Nickname string `json:"nickname,omitempty"`
-
-	// DisplayName: The name of this person, suitable for display.
-	DisplayName string `json:"displayName,omitempty"`
-
-	// LanguagesSpoken: The languages spoken by this person.
-	LanguagesSpoken []string `json:"languagesSpoken,omitempty"`
-
 	// HasApp: If "true", indicates that the person has installed the app
 	// that is making the request and has chosen to expose this install
 	// state to the caller. A value of "false" indicates that the install
@@ -572,30 +559,38 @@ type Person struct {
 	// has chosen to keep this information private).
 	HasApp bool `json:"hasApp,omitempty"`
 
-	// Tagline: The brief description (tagline) of this person.
-	Tagline string `json:"tagline,omitempty"`
-
-	// Birthday: The person's date of birth, represented as YYYY-MM-DD.
-	Birthday string `json:"birthday,omitempty"`
-
-	// PlacesLived: A list of places where this person has lived.
-	PlacesLived []*PersonPlacesLived `json:"placesLived,omitempty"`
-
-	// CurrentLocation: The current location for this person.
-	CurrentLocation string `json:"currentLocation,omitempty"`
-
-	// Urls: A list of URLs for this person.
-	Urls []*PersonUrls `json:"urls,omitempty"`
+	// Id: The ID of this person.
+	Id string `json:"id,omitempty"`
 
 	// Image: The representation of the person's profile photo.
 	Image *PersonImage `json:"image,omitempty"`
 
-	// AboutMe: A short biography for this person.
-	AboutMe string `json:"aboutMe,omitempty"`
+	// Kind: Identifies this resource as a person. Value: "plus#person".
+	Kind string `json:"kind,omitempty"`
+
+	// LanguagesSpoken: The languages spoken by this person.
+	LanguagesSpoken []string `json:"languagesSpoken,omitempty"`
+
+	// Name: An object representation of the individual components of a
+	// person's name.
+	Name *PersonName `json:"name,omitempty"`
+
+	// Nickname: The nickname of this person.
+	Nickname string `json:"nickname,omitempty"`
+
+	// ObjectType: Type of person within Google+. Possible values are:  
+	// -
+	// "person" - represents an actual person. 
+	// - "page" - represents a
+	// page.
+	ObjectType string `json:"objectType,omitempty"`
 
 	// Organizations: A list of current or past organizations with which
 	// this person is associated.
 	Organizations []*PersonOrganizations `json:"organizations,omitempty"`
+
+	// PlacesLived: A list of places where this person has lived.
+	PlacesLived []*PersonPlacesLived `json:"placesLived,omitempty"`
 
 	// RelationshipStatus: The person's relationship status. Possible values
 	// are:  
@@ -616,12 +611,21 @@ type Person struct {
 	// "in_civil_union" - Person is in a civil union.
 	RelationshipStatus string `json:"relationshipStatus,omitempty"`
 
-	// Name: An object representation of the individual components of a
-	// person's name.
-	Name *PersonName `json:"name,omitempty"`
+	// Tagline: The brief description (tagline) of this person.
+	Tagline string `json:"tagline,omitempty"`
+
+	// Url: The URL of this person's profile.
+	Url string `json:"url,omitempty"`
+
+	// Urls: A list of URLs for this person.
+	Urls []*PersonUrls `json:"urls,omitempty"`
 }
 
 type PersonEmails struct {
+	// Primary: If "true", indicates this email address is the person's
+	// primary one.
+	Primary bool `json:"primary,omitempty"`
+
 	// Type: The type of address. Possible values are:  
 	// - "home" - Home
 	// email address. 
@@ -631,10 +635,6 @@ type PersonEmails struct {
 
 	// Value: The email address.
 	Value string `json:"value,omitempty"`
-
-	// Primary: If "true", indicates this email address is the person's
-	// primary one.
-	Primary bool `json:"primary,omitempty"`
 }
 
 type PersonImage struct {
@@ -645,47 +645,38 @@ type PersonImage struct {
 }
 
 type PersonName struct {
-	// HonorificPrefix: The honorific prefixes (such as "Dr." or "Mrs.") for
-	// this person.
-	HonorificPrefix string `json:"honorificPrefix,omitempty"`
+	// FamilyName: The family name (last name) of this person.
+	FamilyName string `json:"familyName,omitempty"`
 
 	// Formatted: The full name of this person, including middle names,
 	// suffixes, etc.
 	Formatted string `json:"formatted,omitempty"`
 
-	// FamilyName: The family name (last name) of this person.
-	FamilyName string `json:"familyName,omitempty"`
-
-	// MiddleName: The middle name of this person.
-	MiddleName string `json:"middleName,omitempty"`
-
 	// GivenName: The given name (first name) of this person.
 	GivenName string `json:"givenName,omitempty"`
+
+	// HonorificPrefix: The honorific prefixes (such as "Dr." or "Mrs.") for
+	// this person.
+	HonorificPrefix string `json:"honorificPrefix,omitempty"`
 
 	// HonorificSuffix: The honorific suffixes (such as "Jr.") for this
 	// person.
 	HonorificSuffix string `json:"honorificSuffix,omitempty"`
+
+	// MiddleName: The middle name of this person.
+	MiddleName string `json:"middleName,omitempty"`
 }
 
 type PersonOrganizations struct {
-	// Title: The person's job title or role within the organization.
-	Title string `json:"title,omitempty"`
-
-	// StartDate: The date the person joined this organization.
-	StartDate string `json:"startDate,omitempty"`
-
-	// EndDate: The date the person left this organization.
-	EndDate string `json:"endDate,omitempty"`
-
-	// Type: The type of organization. Possible values are:  
-	// - "work" -
-	// Work. 
-	// - "school" - School.
-	Type string `json:"type,omitempty"`
+	// Department: The department within the organization.
+	Department string `json:"department,omitempty"`
 
 	// Description: A short description of the person's role in this
 	// organization.
 	Description string `json:"description,omitempty"`
+
+	// EndDate: The date the person left this organization.
+	EndDate string `json:"endDate,omitempty"`
 
 	// Location: The location of this organization.
 	Location string `json:"location,omitempty"`
@@ -693,12 +684,21 @@ type PersonOrganizations struct {
 	// Name: The name of the organization.
 	Name string `json:"name,omitempty"`
 
-	// Department: The department within the organization.
-	Department string `json:"department,omitempty"`
-
 	// Primary: If "true", indicates this organization is the person's
 	// primary one (typically interpreted as current one).
 	Primary bool `json:"primary,omitempty"`
+
+	// StartDate: The date the person joined this organization.
+	StartDate string `json:"startDate,omitempty"`
+
+	// Title: The person's job title or role within the organization.
+	Title string `json:"title,omitempty"`
+
+	// Type: The type of organization. Possible values are:  
+	// - "work" -
+	// Work. 
+	// - "school" - School.
+	Type string `json:"type,omitempty"`
 }
 
 type PersonPlacesLived struct {
@@ -712,9 +712,6 @@ type PersonPlacesLived struct {
 }
 
 type PersonUrls struct {
-	// Value: The URL value.
-	Value string `json:"value,omitempty"`
-
 	// Primary: If "true", this URL is the person's primary URL.
 	Primary bool `json:"primary,omitempty"`
 
@@ -727,9 +724,17 @@ type PersonUrls struct {
 	// "profile" - URL for profile. 
 	// - "other" - Other.
 	Type string `json:"type,omitempty"`
+
+	// Value: The URL value.
+	Value string `json:"value,omitempty"`
 }
 
 type PlusAclentryResource struct {
+	// Id: The ID of the entry. For entries of type "person" or "circle",
+	// this is the ID of the resource. For other types, this property is not
+	// set.
+	Id string `json:"id,omitempty"`
+
 	// Type: The type of entry describing to whom access is granted.
 	// Possible values are:  
 	// - "person" - Access to an individual. 
@@ -742,11 +747,6 @@ type PlusAclentryResource struct {
 	// their circles. 
 	// - "public" - Access to anyone on the web.
 	Type string `json:"type,omitempty"`
-
-	// Id: The ID of the entry. For entries of type "person" or "circle",
-	// this is the ID of the resource. For other types, this property is not
-	// set.
-	Id string `json:"id,omitempty"`
 }
 
 // method id "plus.activities.get":

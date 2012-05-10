@@ -13,7 +13,6 @@
  },
  "documentationLink": "http://code.google.com/apis/latitude/v1/using_rest.html",
  "protocol": "rest",
- "baseUrl": "https://www.googleapis.com/latitude/v1/",
  "basePath": "/latitude/v1/",
  "rootUrl": "https://www.googleapis.com/",
  "servicePath": "latitude/v1/",

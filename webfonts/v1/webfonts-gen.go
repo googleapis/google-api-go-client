@@ -56,13 +56,13 @@ type WebfontsService struct {
 }
 
 type Webfont struct {
-	// Subsets: The scripts supported by the font.
-	Subsets interface{} `json:"subsets,omitempty"`
+	// Family: The name of the font.
+	Family interface{} `json:"family,omitempty"`
 
 	Kind string `json:"kind,omitempty"`
 
-	// Family: The name of the font.
-	Family interface{} `json:"family,omitempty"`
+	// Subsets: The scripts supported by the font.
+	Subsets interface{} `json:"subsets,omitempty"`
 
 	// Variants: The available variants for the font.
 	Variants interface{} `json:"variants,omitempty"`

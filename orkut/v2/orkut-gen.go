@@ -38,11 +38,11 @@ const basePath = "https://www.googleapis.com/orkut/v2/"
 
 // OAuth2 scopes used by this API.
 const (
-	// Manage your Orkut activity
-	OrkutScope = "https://www.googleapis.com/auth/orkut"
-
 	// View your Orkut data
 	OrkutReadonlyScope = "https://www.googleapis.com/auth/orkut.readonly"
+
+	// Manage your Orkut activity
+	OrkutScope = "https://www.googleapis.com/auth/orkut"
 )
 
 func New(client *http.Client) (*Service, error) {
@@ -170,6 +170,12 @@ type ScrapsService struct {
 }
 
 type Acl struct {
+	// Description: Human readable description of the access granted.
+	Description string `json:"description,omitempty"`
+
+	// Items: The list of ACL entries.
+	Items []*AclItems `json:"items,omitempty"`
+
 	// Kind: Identifies this resource as an access control list. Value:
 	// "orkut#acl"
 	Kind string `json:"kind,omitempty"`
@@ -177,41 +183,44 @@ type Acl struct {
 	// TotalParticipants: The total count of participants of the parent
 	// resource.
 	TotalParticipants int64 `json:"totalParticipants,omitempty"`
-
-	// Description: Human readable description of the access granted.
-	Description string `json:"description,omitempty"`
-
-	// Items: The list of ACL entries.
-	Items []*AclItems `json:"items,omitempty"`
 }
 
 type AclItems struct {
-	// Type: The type of entity to whom access is granted.
-	Type string `json:"type,omitempty"`
-
 	// Id: The ID of the entity. For entities of type "person" or "circle",
 	// this is the ID of the resource. For other types, this will be unset.
 	Id string `json:"id,omitempty"`
+
+	// Type: The type of entity to whom access is granted.
+	Type string `json:"type,omitempty"`
 }
 
 type Activity struct {
-	// Kind: The kind of activity. Always orkut#activity.
-	Kind string `json:"kind,omitempty"`
-
-	// Object: The activity's object.
-	Object *ActivityObject `json:"object,omitempty"`
-
-	// Updated: The time at which the activity was last updated.
-	Updated string `json:"updated,omitempty"`
-
 	// Access: Identifies who has access to see this activity.
 	Access *Acl `json:"access,omitempty"`
+
+	// Actor: The person who performed the activity.
+	Actor *OrkutAuthorResource `json:"actor,omitempty"`
 
 	// Id: The ID for the activity.
 	Id string `json:"id,omitempty"`
 
+	// Kind: The kind of activity. Always orkut#activity.
+	Kind string `json:"kind,omitempty"`
+
+	// Links: Links to resources related to this activity.
+	Links []*OrkutLinkResource `json:"links,omitempty"`
+
+	// Object: The activity's object.
+	Object *ActivityObject `json:"object,omitempty"`
+
+	// Published: The time at which the activity was initially published.
+	Published string `json:"published,omitempty"`
+
 	// Title: Title of the activity.
 	Title string `json:"title,omitempty"`
+
+	// Updated: The time at which the activity was last updated.
+	Updated string `json:"updated,omitempty"`
 
 	// Verb: This activity's verb, indicating what action was performed.
 	// Possible values are:  
@@ -225,35 +234,26 @@ type Activity struct {
 	// - birthday -
 	// User has a birthday.
 	Verb string `json:"verb,omitempty"`
-
-	// Links: Links to resources related to this activity.
-	Links []*OrkutLinkResource `json:"links,omitempty"`
-
-	// Actor: The person who performed the activity.
-	Actor *OrkutAuthorResource `json:"actor,omitempty"`
-
-	// Published: The time at which the activity was initially published.
-	Published string `json:"published,omitempty"`
 }
 
 type ActivityObject struct {
-	// Items: The list of additional items.
-	Items []*OrkutActivityobjectsResource `json:"items,omitempty"`
-
-	// Replies: Comments in reply to this activity.
-	Replies *ActivityObjectReplies `json:"replies,omitempty"`
-
-	// ObjectType: The type of the object affected by the activity. Clients
-	// can use this information to style the rendered activity object
-	// differently depending on the content.
-	ObjectType string `json:"objectType,omitempty"`
-
 	// Content: The HTML-formatted content, suitable for display. When
 	// updating an activity's content, post the changes to this property,
 	// using the value of originalContent as a starting point. If the update
 	// is successful, the server adds HTML formatting and responds with this
 	// formatted content.
 	Content string `json:"content,omitempty"`
+
+	// Items: The list of additional items.
+	Items []*OrkutActivityobjectsResource `json:"items,omitempty"`
+
+	// ObjectType: The type of the object affected by the activity. Clients
+	// can use this information to style the rendered activity object
+	// differently depending on the content.
+	ObjectType string `json:"objectType,omitempty"`
+
+	// Replies: Comments in reply to this activity.
+	Replies *ActivityObjectReplies `json:"replies,omitempty"`
 }
 
 type ActivityObjectReplies struct {
@@ -271,43 +271,43 @@ type ActivityList struct {
 	// Items: List of activities retrieved.
 	Items []*Activity `json:"items,omitempty"`
 
+	// Kind: Identifies this resource as a collection of activities. Value:
+	// "orkut#activityList"
+	Kind string `json:"kind,omitempty"`
+
 	// NextPageToken: The value of pageToken query parameter in
 	// activities.list request to get the next page, if there are more to
 	// retrieve.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// Kind: Identifies this resource as a collection of activities. Value:
-	// "orkut#activityList"
-	Kind string `json:"kind,omitempty"`
 }
 
 type Badge struct {
-	// SponsorLogo: The URL for the 32x32 badge sponsor logo.
-	SponsorLogo string `json:"sponsorLogo,omitempty"`
-
-	// Kind: Identifies this resource as a badge. Value: "orkut#badge"
-	Kind string `json:"kind,omitempty"`
-
-	// SponsorName: The name of the badge sponsor, suitable for display.
-	SponsorName string `json:"sponsorName,omitempty"`
-
-	// Id: The unique ID for the badge.
-	Id int64 `json:"id,omitempty,string"`
-
-	// Caption: The name of the badge, suitable for display.
-	Caption string `json:"caption,omitempty"`
-
-	// SponsorUrl: The URL for the badge sponsor.
-	SponsorUrl string `json:"sponsorUrl,omitempty"`
+	// BadgeLargeLogo: The URL for the 64x64 badge logo.
+	BadgeLargeLogo string `json:"badgeLargeLogo,omitempty"`
 
 	// BadgeSmallLogo: The URL for the 24x24 badge logo.
 	BadgeSmallLogo string `json:"badgeSmallLogo,omitempty"`
 
-	// BadgeLargeLogo: The URL for the 64x64 badge logo.
-	BadgeLargeLogo string `json:"badgeLargeLogo,omitempty"`
+	// Caption: The name of the badge, suitable for display.
+	Caption string `json:"caption,omitempty"`
 
 	// Description: The description for the badge, suitable for display.
 	Description string `json:"description,omitempty"`
+
+	// Id: The unique ID for the badge.
+	Id int64 `json:"id,omitempty,string"`
+
+	// Kind: Identifies this resource as a badge. Value: "orkut#badge"
+	Kind string `json:"kind,omitempty"`
+
+	// SponsorLogo: The URL for the 32x32 badge sponsor logo.
+	SponsorLogo string `json:"sponsorLogo,omitempty"`
+
+	// SponsorName: The name of the badge sponsor, suitable for display.
+	SponsorName string `json:"sponsorName,omitempty"`
+
+	// SponsorUrl: The URL for the badge sponsor.
+	SponsorUrl string `json:"sponsorUrl,omitempty"`
 }
 
 type BadgeList struct {
@@ -320,18 +320,8 @@ type BadgeList struct {
 }
 
 type Comment struct {
-	// Links: List of resources for the comment.
-	Links []*OrkutLinkResource `json:"links,omitempty"`
-
 	// Actor: The person who posted the comment.
 	Actor *OrkutAuthorResource `json:"actor,omitempty"`
-
-	// Published: The time the comment was initially published, in RFC 3339
-	// format.
-	Published string `json:"published,omitempty"`
-
-	// Kind: Identifies this resource as a comment. Value: "orkut#comment"
-	Kind string `json:"kind,omitempty"`
 
 	// Content: The content of the comment in text/html
 	Content string `json:"content,omitempty"`
@@ -342,48 +332,57 @@ type Comment struct {
 	// InReplyTo: Link to the original activity where this comment was
 	// posted.
 	InReplyTo *CommentInReplyTo `json:"inReplyTo,omitempty"`
+
+	// Kind: Identifies this resource as a comment. Value: "orkut#comment"
+	Kind string `json:"kind,omitempty"`
+
+	// Links: List of resources for the comment.
+	Links []*OrkutLinkResource `json:"links,omitempty"`
+
+	// Published: The time the comment was initially published, in RFC 3339
+	// format.
+	Published string `json:"published,omitempty"`
 }
 
 type CommentInReplyTo struct {
-	// Type: Type of the post on activity stream being commented. Always
-	// text/html.
-	Type string `json:"type,omitempty"`
-
 	// Href: Link to the post on activity stream being commented.
 	Href string `json:"href,omitempty"`
+
+	// Ref: Unique identifier of the post on activity stream being
+	// commented.
+	Ref string `json:"ref,omitempty"`
 
 	// Rel: Relationship between the comment and the post on activity stream
 	// being commented. Always inReplyTo.
 	Rel string `json:"rel,omitempty"`
 
-	// Ref: Unique identifier of the post on activity stream being
-	// commented.
-	Ref string `json:"ref,omitempty"`
+	// Type: Type of the post on activity stream being commented. Always
+	// text/html.
+	Type string `json:"type,omitempty"`
 }
 
 type CommentList struct {
+	// Items: List of comments retrieved.
+	Items []*Comment `json:"items,omitempty"`
+
 	// Kind: Identifies this resource as a collection of comments. Value:
 	// "orkut#commentList"
 	Kind string `json:"kind,omitempty"`
-
-	// PreviousPageToken: The value of pageToken query parameter in
-	// comments.list request to get the previous page, if there are more to
-	// retrieve.
-	PreviousPageToken string `json:"previousPageToken,omitempty"`
-
-	// Items: List of comments retrieved.
-	Items []*Comment `json:"items,omitempty"`
 
 	// NextPageToken: The value of pageToken query parameter in
 	// comments.list request to get the next page, if there are more to
 	// retrieve.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// PreviousPageToken: The value of pageToken query parameter in
+	// comments.list request to get the previous page, if there are more to
+	// retrieve.
+	PreviousPageToken string `json:"previousPageToken,omitempty"`
 }
 
 type Community struct {
-	// Member_count: The number of users who are part of the community. This
-	// number may be approximate, so do not rely on it for iteration.
-	Member_count int64 `json:"member_count,omitempty"`
+	// Category: The category of the community.
+	Category string `json:"category,omitempty"`
 
 	// Co_owners: The co-owners of the community.
 	Co_owners []*OrkutAuthorResource `json:"co_owners,omitempty"`
@@ -395,17 +394,25 @@ type Community struct {
 	// Description: The description of the community.
 	Description string `json:"description,omitempty"`
 
-	// Owner: The person who owns the community.
-	Owner *OrkutAuthorResource `json:"owner,omitempty"`
+	// Id: The id of the community.
+	Id int64 `json:"id,omitempty"`
+
+	// Kind: Identifies this resource as a community. Value:
+	// "orkut#community"
+	Kind string `json:"kind,omitempty"`
 
 	// Language: The official language of the community.
 	Language string `json:"language,omitempty"`
 
+	// Links: List of resources for the community.
+	Links []*OrkutLinkResource `json:"links,omitempty"`
+
 	// Location: The location of the community.
 	Location string `json:"location,omitempty"`
 
-	// Category: The category of the community.
-	Category string `json:"category,omitempty"`
+	// Member_count: The number of users who are part of the community. This
+	// number may be approximate, so do not rely on it for iteration.
+	Member_count int64 `json:"member_count,omitempty"`
 
 	// Moderators: The list of moderators of the community.
 	Moderators []*OrkutAuthorResource `json:"moderators,omitempty"`
@@ -413,60 +420,53 @@ type Community struct {
 	// Name: The name of the community.
 	Name string `json:"name,omitempty"`
 
-	// Links: List of resources for the community.
-	Links []*OrkutLinkResource `json:"links,omitempty"`
-
-	// Kind: Identifies this resource as a community. Value:
-	// "orkut#community"
-	Kind string `json:"kind,omitempty"`
+	// Owner: The person who owns the community.
+	Owner *OrkutAuthorResource `json:"owner,omitempty"`
 
 	// Photo_url: The photo of the community.
 	Photo_url string `json:"photo_url,omitempty"`
-
-	// Id: The id of the community.
-	Id int64 `json:"id,omitempty"`
 }
 
 type CommunityList struct {
+	// Items: List of communities retrieved.
+	Items []*Community `json:"items,omitempty"`
+
 	// Kind: Identifies this resource as a collection of communities. Value:
 	// "orkut#communityList"
 	Kind string `json:"kind,omitempty"`
-
-	// Items: List of communities retrieved.
-	Items []*Community `json:"items,omitempty"`
 }
 
 type CommunityMembers struct {
-	// Person: Description of the community member.
-	Person *OrkutActivitypersonResource `json:"person,omitempty"`
-
 	// CommunityMembershipStatus: Status and permissions of the user related
 	// to the community.
 	CommunityMembershipStatus *CommunityMembershipStatus `json:"communityMembershipStatus,omitempty"`
 
 	// Kind: Kind of this item. Always orkut#communityMembers.
 	Kind string `json:"kind,omitempty"`
+
+	// Person: Description of the community member.
+	Person *OrkutActivitypersonResource `json:"person,omitempty"`
 }
 
 type CommunityMembersList struct {
-	// LastPageToken: The value of pageToken query parameter in
-	// community_members.list request to get the last page.
-	LastPageToken string `json:"lastPageToken,omitempty"`
+	// FirstPageToken: The value of pageToken query parameter in
+	// community_members.list request to get the first page.
+	FirstPageToken string `json:"firstPageToken,omitempty"`
 
 	// Items: List of community members retrieved.
 	Items []*CommunityMembers `json:"items,omitempty"`
+
+	// Kind: Kind of this item. Always orkut#communityMembersList.
+	Kind string `json:"kind,omitempty"`
+
+	// LastPageToken: The value of pageToken query parameter in
+	// community_members.list request to get the last page.
+	LastPageToken string `json:"lastPageToken,omitempty"`
 
 	// NextPageToken: The value of pageToken query parameter in
 	// community_members.list request to get the next page, if there are
 	// more to retrieve.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// Kind: Kind of this item. Always orkut#communityMembersList.
-	Kind string `json:"kind,omitempty"`
-
-	// FirstPageToken: The value of pageToken query parameter in
-	// community_members.list request to get the first page.
-	FirstPageToken string `json:"firstPageToken,omitempty"`
 
 	// PrevPageToken: The value of pageToken query parameter in
 	// community_members.list request to get the previous page, if there are
@@ -475,36 +475,32 @@ type CommunityMembersList struct {
 }
 
 type CommunityMembershipStatus struct {
-	// CanCreateTopic: Whether the user can create a topic in this
-	// community.
-	CanCreateTopic bool `json:"canCreateTopic,omitempty"`
-
-	// IsCoOwner: Whether the session user is a community co-owner.
-	IsCoOwner bool `json:"isCoOwner,omitempty"`
-
-	// IsOwner: Whether the session user is the community owner.
-	IsOwner bool `json:"isOwner,omitempty"`
-
 	// CanCreatePoll: Whether the user can create a poll in this community.
 	CanCreatePoll bool `json:"canCreatePoll,omitempty"`
 
-	// Status: The status of the current link between the community and the
-	// user.
-	Status string `json:"status,omitempty"`
-
-	// IsRestoreAvailable: Whether the restore operation is available for
-	// the community.
-	IsRestoreAvailable bool `json:"isRestoreAvailable,omitempty"`
+	// CanCreateTopic: Whether the user can create a topic in this
+	// community.
+	CanCreateTopic bool `json:"canCreateTopic,omitempty"`
 
 	// CanShout: Whether the user can perform a shout operation in this
 	// community.
 	CanShout bool `json:"canShout,omitempty"`
 
-	// IsModerator: Whether the session user is a community moderator.
-	IsModerator bool `json:"isModerator,omitempty"`
+	// IsCoOwner: Whether the session user is a community co-owner.
+	IsCoOwner bool `json:"isCoOwner,omitempty"`
 
 	// IsFollowing: Whether the user is following this community.
 	IsFollowing bool `json:"isFollowing,omitempty"`
+
+	// IsModerator: Whether the session user is a community moderator.
+	IsModerator bool `json:"isModerator,omitempty"`
+
+	// IsOwner: Whether the session user is the community owner.
+	IsOwner bool `json:"isOwner,omitempty"`
+
+	// IsRestoreAvailable: Whether the restore operation is available for
+	// the community.
+	IsRestoreAvailable bool `json:"isRestoreAvailable,omitempty"`
 
 	// IsTakebackAvailable: Whether the take-back operation is available for
 	// the community.
@@ -512,140 +508,95 @@ type CommunityMembershipStatus struct {
 
 	// Kind: Kind of this item. Always orkut#communityMembershipStatus.
 	Kind string `json:"kind,omitempty"`
+
+	// Status: The status of the current link between the community and the
+	// user.
+	Status string `json:"status,omitempty"`
 }
 
 type CommunityMessage struct {
-	// Body: The body of the message.
-	Body string `json:"body,omitempty"`
-
-	// Subject: The subject of the message.
-	Subject string `json:"subject,omitempty"`
+	// AddedDate: The timestamp of the date when the message was added, in
+	// RFC 3339 format.
+	AddedDate string `json:"addedDate,omitempty"`
 
 	// Author: The creator of the message. If ommited, the message is
 	// annonimous.
 	Author *OrkutAuthorResource `json:"author,omitempty"`
 
-	// Links: List of resources for the community message.
-	Links []*OrkutLinkResource `json:"links,omitempty"`
+	// Body: The body of the message.
+	Body string `json:"body,omitempty"`
+
+	// Id: The ID of the message.
+	Id int64 `json:"id,omitempty,string"`
 
 	// IsSpam: Whether this post was marked as spam by the viewer, when
 	// he/she is not the community owner or one of its moderators.
 	IsSpam bool `json:"isSpam,omitempty"`
 
-	// AddedDate: The timestamp of the date when the message was added, in
-	// RFC 3339 format.
-	AddedDate string `json:"addedDate,omitempty"`
-
 	// Kind: Identifies this resource as a community message. Value:
 	// "orkut#communityMessage"
 	Kind string `json:"kind,omitempty"`
 
-	// Id: The ID of the message.
-	Id int64 `json:"id,omitempty,string"`
+	// Links: List of resources for the community message.
+	Links []*OrkutLinkResource `json:"links,omitempty"`
+
+	// Subject: The subject of the message.
+	Subject string `json:"subject,omitempty"`
 }
 
 type CommunityMessageList struct {
-	// PrevPageToken: The value of pageToken query parameter in
-	// community_messages.list request to get the previous page, if there
-	// are more to retrieve.
-	PrevPageToken string `json:"prevPageToken,omitempty"`
+	// FirstPageToken: The value of pageToken query parameter in
+	// community_messages.list request to get the first page.
+	FirstPageToken string `json:"firstPageToken,omitempty"`
+
+	// Items: List of messages retrieved.
+	Items []*CommunityMessage `json:"items,omitempty"`
+
+	// Kind: Identifies this resource as a collection of community messages.
+	// Value: "orkut#communityMessageList"
+	Kind string `json:"kind,omitempty"`
 
 	// LastPageToken: The value of pageToken query parameter in
 	// community_messages.list request to get the last page.
 	LastPageToken string `json:"lastPageToken,omitempty"`
-
-	// Items: List of messages retrieved.
-	Items []*CommunityMessage `json:"items,omitempty"`
 
 	// NextPageToken: The value of pageToken query parameter in
 	// community_messages.list request to get the next page, if there are
 	// more to retrieve.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// Kind: Identifies this resource as a collection of community messages.
-	// Value: "orkut#communityMessageList"
-	Kind string `json:"kind,omitempty"`
-
-	// FirstPageToken: The value of pageToken query parameter in
-	// community_messages.list request to get the first page.
-	FirstPageToken string `json:"firstPageToken,omitempty"`
+	// PrevPageToken: The value of pageToken query parameter in
+	// community_messages.list request to get the previous page, if there
+	// are more to retrieve.
+	PrevPageToken string `json:"prevPageToken,omitempty"`
 }
 
 type CommunityPoll struct {
-	// EndingTime: The ending date of this poll or empty if the poll doesn't
-	// have one.
-	EndingTime string `json:"endingTime,omitempty"`
-
-	// IsUsersVotePublic: If user has already voted, whether his vote is
-	// publicly visible.
-	IsUsersVotePublic bool `json:"isUsersVotePublic,omitempty"`
-
-	// Description: The poll description.
-	Description string `json:"description,omitempty"`
-
-	// IsRestricted: Whether this poll is restricted for members only. If a
-	// poll is open but the user can't vote on it, it's been restricted to
-	// members only. This information is important to tell this case apart
-	// from the one where the user can't vote simply because the poll is
-	// already closed.
-	IsRestricted bool `json:"isRestricted,omitempty"`
-
 	// Author: The person who created the poll.
 	Author *OrkutAuthorResource `json:"author,omitempty"`
 
 	// CommunityId: The ID of the community.
 	CommunityId int64 `json:"communityId,omitempty"`
 
-	// Image: The image representing the poll. Field is omitted if no image
-	// exists.
-	Image *CommunityPollImage `json:"image,omitempty"`
-
-	// IsMultipleAnswers: Whether this poll allows voting for more than one
-	// option.
-	IsMultipleAnswers bool `json:"isMultipleAnswers,omitempty"`
-
-	// Links: List of resources for the community poll.
-	Links []*OrkutLinkResource `json:"links,omitempty"`
-
 	// CreationTime: The date of creation of this poll
 	CreationTime string `json:"creationTime,omitempty"`
 
-	// IsSpam: Whether the user has marked this poll as spam. This only
-	// affects the poll for this user, not globally.
-	IsSpam bool `json:"isSpam,omitempty"`
+	// Description: The poll description.
+	Description string `json:"description,omitempty"`
 
-	// Question: The poll question.
-	Question string `json:"question,omitempty"`
-
-	// Kind: Identifies this resource as a community poll. Value:
-	// "orkut#communityPoll"
-	Kind string `json:"kind,omitempty"`
-
-	// VotedOptions: List of options the user has voted on, if there are
-	// any.
-	VotedOptions []int64 `json:"votedOptions,omitempty"`
-
-	// Options: List of options of this poll.
-	Options []*OrkutCommunitypolloptionResource `json:"options,omitempty"`
+	// EndingTime: The ending date of this poll or empty if the poll doesn't
+	// have one.
+	EndingTime string `json:"endingTime,omitempty"`
 
 	// HasVoted: Whether the user has voted on this poll.
 	HasVoted bool `json:"hasVoted,omitempty"`
 
-	// LastUpdate: The date of the last update of this poll.
-	LastUpdate string `json:"lastUpdate,omitempty"`
-
-	// IsOpenForVoting: Whether this poll is still opened for voting. A poll
-	// is open for voting if it is not closed, the user has not yet voted on
-	// it and the user has the permission to do so, which happens if he/she
-	// is either a community member or the poll is open for everybody.
-	IsOpenForVoting bool `json:"isOpenForVoting,omitempty"`
-
 	// Id: The poll ID.
 	Id string `json:"id,omitempty"`
 
-	// IsVotingAllowedForNonMembers: Whether non-members of the community
-	// can vote on the poll.
-	IsVotingAllowedForNonMembers bool `json:"isVotingAllowedForNonMembers,omitempty"`
+	// Image: The image representing the poll. Field is omitted if no image
+	// exists.
+	Image *CommunityPollImage `json:"image,omitempty"`
 
 	// IsClosed: Whether the poll is not expired if there is an expiration
 	// date. A poll is open (that is, not closed for voting) if it either is
@@ -654,8 +605,57 @@ type CommunityPoll struct {
 	// on it.
 	IsClosed bool `json:"isClosed,omitempty"`
 
+	// IsMultipleAnswers: Whether this poll allows voting for more than one
+	// option.
+	IsMultipleAnswers bool `json:"isMultipleAnswers,omitempty"`
+
+	// IsOpenForVoting: Whether this poll is still opened for voting. A poll
+	// is open for voting if it is not closed, the user has not yet voted on
+	// it and the user has the permission to do so, which happens if he/she
+	// is either a community member or the poll is open for everybody.
+	IsOpenForVoting bool `json:"isOpenForVoting,omitempty"`
+
+	// IsRestricted: Whether this poll is restricted for members only. If a
+	// poll is open but the user can't vote on it, it's been restricted to
+	// members only. This information is important to tell this case apart
+	// from the one where the user can't vote simply because the poll is
+	// already closed.
+	IsRestricted bool `json:"isRestricted,omitempty"`
+
+	// IsSpam: Whether the user has marked this poll as spam. This only
+	// affects the poll for this user, not globally.
+	IsSpam bool `json:"isSpam,omitempty"`
+
+	// IsUsersVotePublic: If user has already voted, whether his vote is
+	// publicly visible.
+	IsUsersVotePublic bool `json:"isUsersVotePublic,omitempty"`
+
+	// IsVotingAllowedForNonMembers: Whether non-members of the community
+	// can vote on the poll.
+	IsVotingAllowedForNonMembers bool `json:"isVotingAllowedForNonMembers,omitempty"`
+
+	// Kind: Identifies this resource as a community poll. Value:
+	// "orkut#communityPoll"
+	Kind string `json:"kind,omitempty"`
+
+	// LastUpdate: The date of the last update of this poll.
+	LastUpdate string `json:"lastUpdate,omitempty"`
+
+	// Links: List of resources for the community poll.
+	Links []*OrkutLinkResource `json:"links,omitempty"`
+
+	// Options: List of options of this poll.
+	Options []*OrkutCommunitypolloptionResource `json:"options,omitempty"`
+
+	// Question: The poll question.
+	Question string `json:"question,omitempty"`
+
 	// TotalNumberOfVotes: The total number of votes this poll has received.
 	TotalNumberOfVotes int64 `json:"totalNumberOfVotes,omitempty"`
+
+	// VotedOptions: List of options the user has voted on, if there are
+	// any.
+	VotedOptions []int64 `json:"votedOptions,omitempty"`
 }
 
 type CommunityPollImage struct {
@@ -664,146 +664,146 @@ type CommunityPollImage struct {
 }
 
 type CommunityPollComment struct {
-	// Kind: Identifies this resource as a community poll comment. Value:
-	// "orkut#communityPollComment"
-	Kind string `json:"kind,omitempty"`
-
-	// Id: The ID of the comment.
-	Id int64 `json:"id,omitempty"`
-
-	// Body: The body of the message.
-	Body string `json:"body,omitempty"`
+	// AddedDate: The date when the message was added, in RFC 3339 format.
+	AddedDate string `json:"addedDate,omitempty"`
 
 	// Author: The creator of the comment.
 	Author *OrkutAuthorResource `json:"author,omitempty"`
 
-	// AddedDate: The date when the message was added, in RFC 3339 format.
-	AddedDate string `json:"addedDate,omitempty"`
+	// Body: The body of the message.
+	Body string `json:"body,omitempty"`
+
+	// Id: The ID of the comment.
+	Id int64 `json:"id,omitempty"`
+
+	// Kind: Identifies this resource as a community poll comment. Value:
+	// "orkut#communityPollComment"
+	Kind string `json:"kind,omitempty"`
 }
 
 type CommunityPollCommentList struct {
-	// PrevPageToken: The value of pageToken query parameter in
-	// community_poll_comments.list request to get the previous page, if
-	// there are more to retrieve.
-	PrevPageToken string `json:"prevPageToken,omitempty"`
+	// FirstPageToken: The value of pageToken query parameter in
+	// community_poll_comments.list request to get the first page.
+	FirstPageToken string `json:"firstPageToken,omitempty"`
+
+	// Items: List of community poll comments retrieved.
+	Items []*CommunityPollComment `json:"items,omitempty"`
+
+	// Kind: Identifies this resource as a collection of community poll
+	// comments. Value: "orkut#CommunityPollCommentList"
+	Kind string `json:"kind,omitempty"`
 
 	// LastPageToken: The value of pageToken query parameter in
 	// community_poll_comments.list request to get the last page.
 	LastPageToken string `json:"lastPageToken,omitempty"`
-
-	// Items: List of community poll comments retrieved.
-	Items []*CommunityPollComment `json:"items,omitempty"`
 
 	// NextPageToken: The value of pageToken query parameter in
 	// community_poll_comments.list request to get the next page, if there
 	// are more to retrieve.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// Kind: Identifies this resource as a collection of community poll
-	// comments. Value: "orkut#CommunityPollCommentList"
-	Kind string `json:"kind,omitempty"`
-
-	// FirstPageToken: The value of pageToken query parameter in
-	// community_poll_comments.list request to get the first page.
-	FirstPageToken string `json:"firstPageToken,omitempty"`
+	// PrevPageToken: The value of pageToken query parameter in
+	// community_poll_comments.list request to get the previous page, if
+	// there are more to retrieve.
+	PrevPageToken string `json:"prevPageToken,omitempty"`
 }
 
 type CommunityPollList struct {
-	// Kind: Identifies this resource as a collection of community polls.
-	// Value: "orkut#communityPollList"
-	Kind string `json:"kind,omitempty"`
-
 	// FirstPageToken: The value of pageToken query parameter in
 	// community_polls.list request to get the first page.
 	FirstPageToken string `json:"firstPageToken,omitempty"`
 
-	// PrevPageToken: The value of pageToken query parameter in
-	// community_polls.list request to get the previous page, if there are
-	// more to retrieve.
-	PrevPageToken string `json:"prevPageToken,omitempty"`
+	// Items: List of community polls retrieved.
+	Items []*CommunityPoll `json:"items,omitempty"`
+
+	// Kind: Identifies this resource as a collection of community polls.
+	// Value: "orkut#communityPollList"
+	Kind string `json:"kind,omitempty"`
 
 	// LastPageToken: The value of pageToken query parameter in
 	// community_polls.list request to get the last page.
 	LastPageToken string `json:"lastPageToken,omitempty"`
 
-	// Items: List of community polls retrieved.
-	Items []*CommunityPoll `json:"items,omitempty"`
-
 	// NextPageToken: The value of pageToken query parameter in
 	// community_polls.list request to get the next page, if there are more
 	// to retrieve.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// PrevPageToken: The value of pageToken query parameter in
+	// community_polls.list request to get the previous page, if there are
+	// more to retrieve.
+	PrevPageToken string `json:"prevPageToken,omitempty"`
 }
 
 type CommunityPollVote struct {
 	// IsVotevisible: Whether this vote is visible to other users or not.
 	IsVotevisible bool `json:"isVotevisible,omitempty"`
 
-	// OptionIds: The ids of the voted options.
-	OptionIds []int64 `json:"optionIds,omitempty"`
-
 	// Kind: Identifies this resource as a community poll vote. Value:
 	// "orkut#communityPollVote"
 	Kind string `json:"kind,omitempty"`
+
+	// OptionIds: The ids of the voted options.
+	OptionIds []int64 `json:"optionIds,omitempty"`
 }
 
 type CommunityTopic struct {
+	// Author: The creator of the topic.
+	Author *OrkutAuthorResource `json:"author,omitempty"`
+
+	// Body: The body of the topic.
+	Body string `json:"body,omitempty"`
+
+	// Id: The ID of the topic.
+	Id int64 `json:"id,omitempty,string"`
+
+	// IsClosed: Whether the topic is closed for new messages.
+	IsClosed bool `json:"isClosed,omitempty"`
+
 	// Kind: Identifies this resource as a community topic. Value:
 	// "orkut#communityTopic"
 	Kind string `json:"kind,omitempty"`
+
+	// LastUpdate: The timestamp of the last update, in RFC 3339 format.
+	LastUpdate string `json:"lastUpdate,omitempty"`
 
 	// LatestMessageSnippet: Snippet of the last message posted on this
 	// topic.
 	LatestMessageSnippet string `json:"latestMessageSnippet,omitempty"`
 
-	// LastUpdate: The timestamp of the last update, in RFC 3339 format.
-	LastUpdate string `json:"lastUpdate,omitempty"`
-
-	// Id: The ID of the topic.
-	Id int64 `json:"id,omitempty,string"`
+	// Links: List of resources for the community.
+	Links []*OrkutLinkResource `json:"links,omitempty"`
 
 	// Messages: Most recent messages.
 	Messages []*CommunityMessage `json:"messages,omitempty"`
 
-	// Title: The title of the topic.
-	Title string `json:"title,omitempty"`
-
-	// IsClosed: Whether the topic is closed for new messages.
-	IsClosed bool `json:"isClosed,omitempty"`
-
 	// NumberOfReplies: The total number of replies this topic has received.
 	NumberOfReplies int64 `json:"numberOfReplies,omitempty"`
 
-	// Body: The body of the topic.
-	Body string `json:"body,omitempty"`
-
-	// Author: The creator of the topic.
-	Author *OrkutAuthorResource `json:"author,omitempty"`
-
-	// Links: List of resources for the community.
-	Links []*OrkutLinkResource `json:"links,omitempty"`
+	// Title: The title of the topic.
+	Title string `json:"title,omitempty"`
 }
 
 type CommunityTopicList struct {
-	// LastPageToken: The value of pageToken query parameter in
-	// community_topic.list request to get the last page.
-	LastPageToken string `json:"lastPageToken,omitempty"`
+	// FirstPageToken: The value of pageToken query parameter in
+	// community_topic.list request to get the first page.
+	FirstPageToken string `json:"firstPageToken,omitempty"`
 
 	// Items: List of topics retrieved.
 	Items []*CommunityTopic `json:"items,omitempty"`
-
-	// NextPageToken: The value of pageToken query parameter in
-	// community_topic.list request to get the next page, if there are more
-	// to retrieve.
-	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Kind: Identifies this resource as a collection of community topics.
 	// Value: "orkut#communityTopicList"
 	Kind string `json:"kind,omitempty"`
 
-	// FirstPageToken: The value of pageToken query parameter in
-	// community_topic.list request to get the first page.
-	FirstPageToken string `json:"firstPageToken,omitempty"`
+	// LastPageToken: The value of pageToken query parameter in
+	// community_topic.list request to get the last page.
+	LastPageToken string `json:"lastPageToken,omitempty"`
+
+	// NextPageToken: The value of pageToken query parameter in
+	// community_topic.list request to get the next page, if there are more
+	// to retrieve.
+	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// PrevPageToken: The value of pageToken query parameter in
 	// community_topic.list request to get the previous page, if there are
@@ -821,8 +821,9 @@ type Counters struct {
 }
 
 type OrkutActivityobjectsResource struct {
-	// ObjectType: The object type.
-	ObjectType string `json:"objectType,omitempty"`
+	// Community: The community which is related with this activity, e.g. a
+	// joined community.
+	Community *Community `json:"community,omitempty"`
 
 	// Content: The HTML-formatted content, suitable for display. When
 	// updating an activity's content, post the changes to this property,
@@ -831,18 +832,17 @@ type OrkutActivityobjectsResource struct {
 	// formatted content.
 	Content string `json:"content,omitempty"`
 
-	// Id: The ID for the object.
-	Id string `json:"id,omitempty"`
-
 	// DisplayName: The title of the object.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Community: The community which is related with this activity, e.g. a
-	// joined community.
-	Community *Community `json:"community,omitempty"`
+	// Id: The ID for the object.
+	Id string `json:"id,omitempty"`
 
 	// Links: Links to other resources related to this object.
 	Links []*OrkutLinkResource `json:"links,omitempty"`
+
+	// ObjectType: The object type.
+	ObjectType string `json:"objectType,omitempty"`
 
 	// Person: The person who is related with this activity, e.g. an Added
 	// User.
@@ -850,15 +850,15 @@ type OrkutActivityobjectsResource struct {
 }
 
 type OrkutActivitypersonResource struct {
-	// Url: The person's profile url. This is adapted from Google+ and was
-	// originaly introduced as extra OpenSocial convenience fields.
-	Url string `json:"url,omitempty"`
+	// Birthday: The person's date of birth, represented as YYYY-MM-DD.
+	Birthday string `json:"birthday,omitempty"`
+
+	// Gender: The person's gender. Values include "male", "female", and
+	// "other".
+	Gender string `json:"gender,omitempty"`
 
 	// Id: The person's opensocial ID.
 	Id string `json:"id,omitempty"`
-
-	// Birthday: The person's date of birth, represented as YYYY-MM-DD.
-	Birthday string `json:"birthday,omitempty"`
 
 	// Image: The person's profile photo. This is adapted from Google+ and
 	// was originaly introduced as extra OpenSocial convenience fields.
@@ -868,9 +868,9 @@ type OrkutActivitypersonResource struct {
 	// person's name.
 	Name *OrkutActivitypersonResourceName `json:"name,omitempty"`
 
-	// Gender: The person's gender. Values include "male", "female", and
-	// "other".
-	Gender string `json:"gender,omitempty"`
+	// Url: The person's profile url. This is adapted from Google+ and was
+	// originaly introduced as extra OpenSocial convenience fields.
+	Url string `json:"url,omitempty"`
 }
 
 type OrkutActivitypersonResourceImage struct {
@@ -879,27 +879,27 @@ type OrkutActivitypersonResourceImage struct {
 }
 
 type OrkutActivitypersonResourceName struct {
-	// GivenName: The given name (first name) of this person.
-	GivenName string `json:"givenName,omitempty"`
-
 	// FamilyName: The family name (last name) of this person.
 	FamilyName string `json:"familyName,omitempty"`
+
+	// GivenName: The given name (first name) of this person.
+	GivenName string `json:"givenName,omitempty"`
 }
 
 type OrkutAuthorResource struct {
-	// Url: The URL of the author who posted the comment [not yet
-	// implemented]
-	Url string `json:"url,omitempty"`
+	// DisplayName: The name of the author, suitable for display.
+	DisplayName string `json:"displayName,omitempty"`
 
 	// Id: Unique identifier of the person who posted the comment. This is
 	// the person's OpenSocial ID.
 	Id string `json:"id,omitempty"`
 
-	// DisplayName: The name of the author, suitable for display.
-	DisplayName string `json:"displayName,omitempty"`
-
 	// Image: Image data about the author.
 	Image *OrkutAuthorResourceImage `json:"image,omitempty"`
+
+	// Url: The URL of the author who posted the comment [not yet
+	// implemented]
+	Url string `json:"url,omitempty"`
 }
 
 type OrkutAuthorResourceImage struct {
@@ -908,18 +908,18 @@ type OrkutAuthorResourceImage struct {
 }
 
 type OrkutCommunitypolloptionResource struct {
-	// OptionId: The poll option ID
-	OptionId int64 `json:"optionId,omitempty"`
-
-	// NumberOfVotes: The total number of votes that this option received.
-	NumberOfVotes int64 `json:"numberOfVotes,omitempty"`
-
 	// Description: The option description.
 	Description string `json:"description,omitempty"`
 
 	// Image: Image data about the poll option. Field is omitted if no image
 	// exists.
 	Image *OrkutCommunitypolloptionResourceImage `json:"image,omitempty"`
+
+	// NumberOfVotes: The total number of votes that this option received.
+	NumberOfVotes int64 `json:"numberOfVotes,omitempty"`
+
+	// OptionId: The poll option ID
+	OptionId int64 `json:"optionId,omitempty"`
 }
 
 type OrkutCommunitypolloptionResourceImage struct {
@@ -928,6 +928,9 @@ type OrkutCommunitypolloptionResourceImage struct {
 }
 
 type OrkutCounterResource struct {
+	// Link: Link to the collection being counted.
+	Link *OrkutLinkResource `json:"link,omitempty"`
+
 	// Name: The name of the counted collection. Currently supported
 	// collections are:  
 	// - scraps - The scraps of the user. 
@@ -940,32 +943,29 @@ type OrkutCounterResource struct {
 
 	// Total: The number of resources on the counted collection.
 	Total int64 `json:"total,omitempty"`
-
-	// Link: Link to the collection being counted.
-	Link *OrkutLinkResource `json:"link,omitempty"`
 }
 
 type OrkutLinkResource struct {
-	// Type: Media type of the link.
-	Type string `json:"type,omitempty"`
-
 	// Href: URL of the link.
 	Href string `json:"href,omitempty"`
+
+	// Rel: Relation between the resource and the parent object.
+	Rel string `json:"rel,omitempty"`
 
 	// Title: Title of the link.
 	Title string `json:"title,omitempty"`
 
-	// Rel: Relation between the resource and the parent object.
-	Rel string `json:"rel,omitempty"`
+	// Type: Media type of the link.
+	Type string `json:"type,omitempty"`
 }
 
 type Visibility struct {
-	// Links: List of resources for the visibility item.
-	Links []*OrkutLinkResource `json:"links,omitempty"`
-
 	// Kind: Identifies this resource as a visibility item. Value:
 	// "orkut#visibility"
 	Kind string `json:"kind,omitempty"`
+
+	// Links: List of resources for the visibility item.
+	Links []*OrkutLinkResource `json:"links,omitempty"`
 
 	// Visibility: The visibility of the resource. Possible values are:  
 	// -

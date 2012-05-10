@@ -110,11 +110,11 @@ type Acl struct {
 	// Etag: ETag of the collection.
 	Etag string `json:"etag,omitempty"`
 
-	// Kind: Type of the collection ("calendar#acl").
-	Kind string `json:"kind,omitempty"`
-
 	// Items: List of rules on the access control list.
 	Items []*AclRule `json:"items,omitempty"`
+
+	// Kind: Type of the collection ("calendar#acl").
+	Kind string `json:"kind,omitempty"`
 
 	// NextPageToken: Token used to access the next page of this result.
 	// Omitted if no further results are available.
@@ -122,8 +122,14 @@ type Acl struct {
 }
 
 type AclRule struct {
-	// Scope: The scope of the rule.
-	Scope *AclRuleScope `json:"scope,omitempty"`
+	// Etag: ETag of the resource.
+	Etag string `json:"etag,omitempty"`
+
+	// Id: Identifier of the ACL rule.
+	Id string `json:"id,omitempty"`
+
+	// Kind: Type of the resource ("calendar#aclRule").
+	Kind string `json:"kind,omitempty"`
 
 	// Role: The role assigned to the scope. Possible values are:  
 	// - "none"
@@ -142,14 +148,8 @@ type AclRule struct {
 	// manipulate ACLs.
 	Role string `json:"role,omitempty"`
 
-	// Etag: ETag of the resource.
-	Etag string `json:"etag,omitempty"`
-
-	// Kind: Type of the resource ("calendar#aclRule").
-	Kind string `json:"kind,omitempty"`
-
-	// Id: Identifier of the ACL rule.
-	Id string `json:"id,omitempty"`
+	// Scope: The scope of the rule.
+	Scope *AclRuleScope `json:"scope,omitempty"`
 }
 
 type AclRuleScope struct {
@@ -171,77 +171,44 @@ type AclRuleScope struct {
 }
 
 type Calendar struct {
-	// Location: Geographic location of the calendar as free-form text.
-	// Optional.
-	Location string `json:"location,omitempty"`
-
-	// TimeZone: The time zone of the calendar. Optional.
-	TimeZone string `json:"timeZone,omitempty"`
+	// Description: Description of the calendar. Optional.
+	Description string `json:"description,omitempty"`
 
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
+
+	// Id: Identifier of the calendar.
+	Id string `json:"id,omitempty"`
 
 	// Kind: Type of the resource ("calendar#calendar").
 	Kind string `json:"kind,omitempty"`
 
-	// Id: Identifier of the calendar.
-	Id string `json:"id,omitempty"`
+	// Location: Geographic location of the calendar as free-form text.
+	// Optional.
+	Location string `json:"location,omitempty"`
 
 	// Summary: Title of the calendar.
 	Summary string `json:"summary,omitempty"`
 
-	// Description: Description of the calendar. Optional.
-	Description string `json:"description,omitempty"`
+	// TimeZone: The time zone of the calendar. Optional.
+	TimeZone string `json:"timeZone,omitempty"`
 }
 
 type CalendarList struct {
-	// Items: Calendars that are present on the user's calendar list.
-	Items []*CalendarListEntry `json:"items,omitempty"`
-
-	// NextPageToken: Token used to access the next page of this result.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Etag: ETag of the collection.
 	Etag string `json:"etag,omitempty"`
 
+	// Items: Calendars that are present on the user's calendar list.
+	Items []*CalendarListEntry `json:"items,omitempty"`
+
 	// Kind: Type of the collection ("calendar#calendarList").
 	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: Token used to access the next page of this result.
+	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
 type CalendarListEntry struct {
-	// DefaultReminders: The default reminders that the authenticated user
-	// has for this calendar.
-	DefaultReminders []*EventReminder `json:"defaultReminders,omitempty"`
-
-	// ColorId: The color of the calendar. This is an ID referring to an
-	// entry in the "calendar" section of the colors definition (see the
-	// "colors" endpoint). Optional.
-	ColorId string `json:"colorId,omitempty"`
-
-	// Location: Geographic location of the calendar as free-form text.
-	// Optional. Read-only.
-	Location string `json:"location,omitempty"`
-
-	// TimeZone: The time zone of the calendar. Optional. Read-only.
-	TimeZone string `json:"timeZone,omitempty"`
-
-	// Etag: ETag of the resource.
-	Etag string `json:"etag,omitempty"`
-
-	// Kind: Type of the resource ("calendar#calendarListEntry").
-	Kind string `json:"kind,omitempty"`
-
-	// Hidden: Whether the calendar has been hidden from the list. Optional.
-	// The default is False.
-	Hidden bool `json:"hidden,omitempty"`
-
-	// SummaryOverride: The summary that the authenticated user has set for
-	// this calendar. Optional.
-	SummaryOverride string `json:"summaryOverride,omitempty"`
-
-	// Id: Identifier of the calendar.
-	Id string `json:"id,omitempty"`
-
 	// AccessRole: The effective access role that the authenticated user has
 	// on the calendar. Read-only. Possible values are:  
 	// - "freeBusyReader"
@@ -258,15 +225,48 @@ type CalendarListEntry struct {
 	// additional ability to see and manipulate ACLs.
 	AccessRole string `json:"accessRole,omitempty"`
 
-	// Summary: Title of the calendar. Read-only.
-	Summary string `json:"summary,omitempty"`
+	// ColorId: The color of the calendar. This is an ID referring to an
+	// entry in the "calendar" section of the colors definition (see the
+	// "colors" endpoint). Optional.
+	ColorId string `json:"colorId,omitempty"`
+
+	// DefaultReminders: The default reminders that the authenticated user
+	// has for this calendar.
+	DefaultReminders []*EventReminder `json:"defaultReminders,omitempty"`
+
+	// Description: Description of the calendar. Optional. Read-only.
+	Description string `json:"description,omitempty"`
+
+	// Etag: ETag of the resource.
+	Etag string `json:"etag,omitempty"`
+
+	// Hidden: Whether the calendar has been hidden from the list. Optional.
+	// The default is False.
+	Hidden bool `json:"hidden,omitempty"`
+
+	// Id: Identifier of the calendar.
+	Id string `json:"id,omitempty"`
+
+	// Kind: Type of the resource ("calendar#calendarListEntry").
+	Kind string `json:"kind,omitempty"`
+
+	// Location: Geographic location of the calendar as free-form text.
+	// Optional. Read-only.
+	Location string `json:"location,omitempty"`
 
 	// Selected: Whether the calendar content shows up in the calendar UI.
 	// Optional. The default is False.
 	Selected bool `json:"selected,omitempty"`
 
-	// Description: Description of the calendar. Optional. Read-only.
-	Description string `json:"description,omitempty"`
+	// Summary: Title of the calendar. Read-only.
+	Summary string `json:"summary,omitempty"`
+
+	// SummaryOverride: The summary that the authenticated user has set for
+	// this calendar. Optional.
+	SummaryOverride string `json:"summaryOverride,omitempty"`
+
+	// TimeZone: The time zone of the calendar. Optional. Read-only.
+	TimeZone string `json:"timeZone,omitempty"`
 }
 
 type ColorDefinition struct {
@@ -280,13 +280,6 @@ type ColorDefinition struct {
 }
 
 type Colors struct {
-	// Kind: Type of the resource ("calendar#colors").
-	Kind string `json:"kind,omitempty"`
-
-	// Updated: Last modification time of the color palette (as a RFC 3339
-	// timestamp). Read-only.
-	Updated string `json:"updated,omitempty"`
-
 	// Calendar: Palette of calendar colors, mapping from the color ID to
 	// its definition. An 'calendarListEntry' resource refers to one of
 	// these color IDs in its 'color' field. Read-only.
@@ -296,6 +289,13 @@ type Colors struct {
 	// definition. An 'event' resource may refer to one of these color IDs
 	// in its 'color' field. Read-only.
 	Event *ColorsEvent `json:"event,omitempty"`
+
+	// Kind: Type of the resource ("calendar#colors").
+	Kind string `json:"kind,omitempty"`
+
+	// Updated: Last modification time of the color palette (as a RFC 3339
+	// timestamp). Read-only.
+	Updated string `json:"updated,omitempty"`
 }
 
 type ColorsCalendar struct {
@@ -324,49 +324,12 @@ type Error struct {
 }
 
 type Event struct {
-	// GuestsCanInviteOthers: Whether attendees other than the organizer can
-	// invite others to the event. Optional. The default is False.
-	GuestsCanInviteOthers bool `json:"guestsCanInviteOthers,omitempty"`
+	// AnyoneCanAddSelf: Whether anyone can invite themselves to the event.
+	// Optional. The default is False.
+	AnyoneCanAddSelf bool `json:"anyoneCanAddSelf,omitempty"`
 
-	// Creator: The creator of the event. Read-only.
-	Creator *EventCreator `json:"creator,omitempty"`
-
-	// Description: Description of the event. Optional.
-	Description string `json:"description,omitempty"`
-
-	// Reminders: Information about the event's reminders for the
-	// authenticated user.
-	Reminders *EventReminders `json:"reminders,omitempty"`
-
-	// ColorId: The color of the event. This is an ID referring to an entry
-	// in the "event" section of the colors definition (see the "colors"
-	// endpoint). Optional.
-	ColorId string `json:"colorId,omitempty"`
-
-	// Start: The (inclusive) start time of the event. For a recurring
-	// event, this is the start time of the first instance.
-	Start *EventDateTime `json:"start,omitempty"`
-
-	// Location: Geographic location of the event as free-form text.
-	// Optional.
-	Location string `json:"location,omitempty"`
-
-	// PrivateCopy: Whether this is a private event copy where changes are
-	// not shared with other copies on other calendars. Optional. Immutable.
-	PrivateCopy bool `json:"privateCopy,omitempty"`
-
-	// ExtendedProperties: Extended properties of the event.
-	ExtendedProperties *EventExtendedProperties `json:"extendedProperties,omitempty"`
-
-	// Etag: ETag of the resource.
-	Etag string `json:"etag,omitempty"`
-
-	// Kind: Type of the resource ("calendar#event").
-	Kind string `json:"kind,omitempty"`
-
-	// GuestsCanModify: Whether attendees other than the organizer can
-	// modify the event. Optional. The default is False.
-	GuestsCanModify bool `json:"guestsCanModify,omitempty"`
+	// Attendees: The attendees of the event.
+	Attendees []*EventAttendee `json:"attendees,omitempty"`
 
 	// AttendeesOmitted: Whether attendees have been omitted from the
 	// event's representation. When retrieving an event, this is due to a
@@ -374,6 +337,119 @@ type Event struct {
 	// updating an event, this can be used to only update the participant's
 	// response. Optional. The default is False.
 	AttendeesOmitted bool `json:"attendeesOmitted,omitempty"`
+
+	// ColorId: The color of the event. This is an ID referring to an entry
+	// in the "event" section of the colors definition (see the "colors"
+	// endpoint). Optional.
+	ColorId string `json:"colorId,omitempty"`
+
+	// Created: Creation time of the event (as a RFC 3339 timestamp).
+	// Read-only.
+	Created string `json:"created,omitempty"`
+
+	// Creator: The creator of the event. Read-only.
+	Creator *EventCreator `json:"creator,omitempty"`
+
+	// Description: Description of the event. Optional.
+	Description string `json:"description,omitempty"`
+
+	// End: The (exclusive) end time of the event. For a recurring event,
+	// this is the end time of the first instance.
+	End *EventDateTime `json:"end,omitempty"`
+
+	// Etag: ETag of the resource.
+	Etag string `json:"etag,omitempty"`
+
+	// ExtendedProperties: Extended properties of the event.
+	ExtendedProperties *EventExtendedProperties `json:"extendedProperties,omitempty"`
+
+	// Gadget: A gadget that extends this event.
+	Gadget *EventGadget `json:"gadget,omitempty"`
+
+	// GuestsCanInviteOthers: Whether attendees other than the organizer can
+	// invite others to the event. Optional. The default is False.
+	GuestsCanInviteOthers bool `json:"guestsCanInviteOthers,omitempty"`
+
+	// GuestsCanModify: Whether attendees other than the organizer can
+	// modify the event. Optional. The default is False.
+	GuestsCanModify bool `json:"guestsCanModify,omitempty"`
+
+	// GuestsCanSeeOtherGuests: Whether attendees other than the organizer
+	// can see who the event's attendees are. Optional. The default is
+	// False.
+	GuestsCanSeeOtherGuests bool `json:"guestsCanSeeOtherGuests,omitempty"`
+
+	// HtmlLink: An absolute link to this event in the Google Calendar Web
+	// UI. Read-only.
+	HtmlLink string `json:"htmlLink,omitempty"`
+
+	// ICalUID: Event ID in the iCalendar format.
+	ICalUID string `json:"iCalUID,omitempty"`
+
+	// Id: Identifier of the event.
+	Id string `json:"id,omitempty"`
+
+	// Kind: Type of the resource ("calendar#event").
+	Kind string `json:"kind,omitempty"`
+
+	// Location: Geographic location of the event as free-form text.
+	// Optional.
+	Location string `json:"location,omitempty"`
+
+	// Organizer: The organizer of the event. If the organizer is also an
+	// attendee, this is indicated with a separate entry in 'attendees' with
+	// the 'organizer' field set to True. To change the organizer, use the
+	// "move" operation. Read-only, except when importing an event.
+	Organizer *EventOrganizer `json:"organizer,omitempty"`
+
+	// OriginalStartTime: For an instance of a recurring event, this is the
+	// time at which this event would start according to the recurrence data
+	// in the recurring event identified by recurringEventId. Immutable.
+	OriginalStartTime *EventDateTime `json:"originalStartTime,omitempty"`
+
+	// PrivateCopy: Whether this is a private event copy where changes are
+	// not shared with other copies on other calendars. Optional. Immutable.
+	PrivateCopy bool `json:"privateCopy,omitempty"`
+
+	// Recurrence: List of RRULE, EXRULE, RDATE and EXDATE lines for a
+	// recurring event. This field is omitted for single events or instances
+	// of recurring events.
+	Recurrence []string `json:"recurrence,omitempty"`
+
+	// RecurringEventId: For an instance of a recurring event, this is the
+	// event ID of the recurring event itself. Immutable.
+	RecurringEventId string `json:"recurringEventId,omitempty"`
+
+	// Reminders: Information about the event's reminders for the
+	// authenticated user.
+	Reminders *EventReminders `json:"reminders,omitempty"`
+
+	// Sequence: Sequence number as per iCalendar.
+	Sequence int64 `json:"sequence,omitempty"`
+
+	// Start: The (inclusive) start time of the event. For a recurring
+	// event, this is the start time of the first instance.
+	Start *EventDateTime `json:"start,omitempty"`
+
+	// Status: Status of the event. Optional. Possible values are:  
+	// -
+	// "confirmed" - The event is confirmed. This is the default status. 
+	// -
+	// "tentative" - The event is tentatively confirmed. 
+	// - "cancelled" -
+	// The event is cancelled.
+	Status string `json:"status,omitempty"`
+
+	// Summary: Title of the event.
+	Summary string `json:"summary,omitempty"`
+
+	// Transparency: Whether the event blocks time on the calendar.
+	// Optional. Possible values are:  
+	// - "opaque" - The event blocks time
+	// on the calendar. This is the default value. 
+	// - "transparent" - The
+	// event does not block time on the calendar.
+	Transparency string `json:"transparency,omitempty"`
 
 	// Updated: Last modification time of the event (as a RFC 3339
 	// timestamp). Read-only.
@@ -391,90 +467,14 @@ type Event struct {
 	// - "confidential" - The event is private. This value
 	// is provided for compatibility reasons.
 	Visibility string `json:"visibility,omitempty"`
-
-	// Id: Identifier of the event.
-	Id string `json:"id,omitempty"`
-
-	// Created: Creation time of the event (as a RFC 3339 timestamp).
-	// Read-only.
-	Created string `json:"created,omitempty"`
-
-	// Sequence: Sequence number as per iCalendar.
-	Sequence int64 `json:"sequence,omitempty"`
-
-	// OriginalStartTime: For an instance of a recurring event, this is the
-	// time at which this event would start according to the recurrence data
-	// in the recurring event identified by recurringEventId. Immutable.
-	OriginalStartTime *EventDateTime `json:"originalStartTime,omitempty"`
-
-	// Status: Status of the event. Optional. Possible values are:  
-	// -
-	// "confirmed" - The event is confirmed. This is the default status. 
-	// -
-	// "tentative" - The event is tentatively confirmed. 
-	// - "cancelled" -
-	// The event is cancelled.
-	Status string `json:"status,omitempty"`
-
-	// Attendees: The attendees of the event.
-	Attendees []*EventAttendee `json:"attendees,omitempty"`
-
-	// Gadget: A gadget that extends this event.
-	Gadget *EventGadget `json:"gadget,omitempty"`
-
-	// HtmlLink: An absolute link to this event in the Google Calendar Web
-	// UI. Read-only.
-	HtmlLink string `json:"htmlLink,omitempty"`
-
-	// AnyoneCanAddSelf: Whether anyone can invite themselves to the event.
-	// Optional. The default is False.
-	AnyoneCanAddSelf bool `json:"anyoneCanAddSelf,omitempty"`
-
-	// End: The (exclusive) end time of the event. For a recurring event,
-	// this is the end time of the first instance.
-	End *EventDateTime `json:"end,omitempty"`
-
-	// RecurringEventId: For an instance of a recurring event, this is the
-	// event ID of the recurring event itself. Immutable.
-	RecurringEventId string `json:"recurringEventId,omitempty"`
-
-	// Transparency: Whether the event blocks time on the calendar.
-	// Optional. Possible values are:  
-	// - "opaque" - The event blocks time
-	// on the calendar. This is the default value. 
-	// - "transparent" - The
-	// event does not block time on the calendar.
-	Transparency string `json:"transparency,omitempty"`
-
-	// ICalUID: Event ID in the iCalendar format.
-	ICalUID string `json:"iCalUID,omitempty"`
-
-	// GuestsCanSeeOtherGuests: Whether attendees other than the organizer
-	// can see who the event's attendees are. Optional. The default is
-	// False.
-	GuestsCanSeeOtherGuests bool `json:"guestsCanSeeOtherGuests,omitempty"`
-
-	// Summary: Title of the event.
-	Summary string `json:"summary,omitempty"`
-
-	// Organizer: The organizer of the event. If the organizer is also an
-	// attendee, this is indicated with a separate entry in 'attendees' with
-	// the 'organizer' field set to True. To change the organizer, use the
-	// "move" operation. Read-only, except when importing an event.
-	Organizer *EventOrganizer `json:"organizer,omitempty"`
-
-	// Recurrence: List of RRULE, EXRULE, RDATE and EXDATE lines for a
-	// recurring event. This field is omitted for single events or instances
-	// of recurring events.
-	Recurrence []string `json:"recurrence,omitempty"`
 }
 
 type EventCreator struct {
-	// Email: The creator's email address, if available.
-	Email string `json:"email,omitempty"`
-
 	// DisplayName: The creator's name, if available.
 	DisplayName string `json:"displayName,omitempty"`
+
+	// Email: The creator's email address, if available.
+	Email string `json:"email,omitempty"`
 }
 
 type EventExtendedProperties struct {
@@ -494,15 +494,6 @@ type EventExtendedPropertiesShared struct {
 }
 
 type EventGadget struct {
-	// Height: The gadget's height in pixels. Optional.
-	Height int64 `json:"height,omitempty"`
-
-	// Width: The gadget's width in pixels. Optional.
-	Width int64 `json:"width,omitempty"`
-
-	// Link: The gadget's URL.
-	Link string `json:"link,omitempty"`
-
 	// Display: The gadget's display mode. Optional. Possible values are: 
 	// 
 	// - "icon" - The gadget displays next to the event's title in the
@@ -511,52 +502,76 @@ type EventGadget struct {
 	// clicked.
 	Display string `json:"display,omitempty"`
 
-	// Title: The gadget's title.
-	Title string `json:"title,omitempty"`
-
-	// Preferences: Preferences.
-	Preferences *EventGadgetPreferences `json:"preferences,omitempty"`
+	// Height: The gadget's height in pixels. Optional.
+	Height int64 `json:"height,omitempty"`
 
 	// IconLink: The gadget's icon URL.
 	IconLink string `json:"iconLink,omitempty"`
 
+	// Link: The gadget's URL.
+	Link string `json:"link,omitempty"`
+
+	// Preferences: Preferences.
+	Preferences *EventGadgetPreferences `json:"preferences,omitempty"`
+
+	// Title: The gadget's title.
+	Title string `json:"title,omitempty"`
+
 	// Type: The gadget's type.
 	Type string `json:"type,omitempty"`
+
+	// Width: The gadget's width in pixels. Optional.
+	Width int64 `json:"width,omitempty"`
 }
 
 type EventGadgetPreferences struct {
 }
 
 type EventOrganizer struct {
-	// Email: The organizer's email address, if available.
-	Email string `json:"email,omitempty"`
-
 	// DisplayName: The organizer's name, if available.
 	DisplayName string `json:"displayName,omitempty"`
+
+	// Email: The organizer's email address, if available.
+	Email string `json:"email,omitempty"`
 }
 
 type EventReminders struct {
-	// UseDefault: Whether the default reminders of the calendar apply to
-	// the event.
-	UseDefault bool `json:"useDefault,omitempty"`
-
 	// Overrides: If the event doesn't use the default reminders, this lists
 	// the reminders specific to the event, or, if not set, indicates that
 	// no reminders are set for this event.
 	Overrides []*EventReminder `json:"overrides,omitempty"`
+
+	// UseDefault: Whether the default reminders of the calendar apply to
+	// the event.
+	UseDefault bool `json:"useDefault,omitempty"`
 }
 
 type EventAttendee struct {
+	// AdditionalGuests: Number of additional guests. Optional. The default
+	// is 0.
+	AdditionalGuests int64 `json:"additionalGuests,omitempty"`
+
+	// Comment: The attendee's response comment. Optional.
+	Comment string `json:"comment,omitempty"`
+
+	// DisplayName: The attendee's name, if available. Optional.
+	DisplayName string `json:"displayName,omitempty"`
+
 	// Email: The attendee's email address, if available. This field must be
 	// present when adding an attendee.
 	Email string `json:"email,omitempty"`
 
+	// Optional: Whether this is an optional attendee. Optional. The default
+	// is False.
+	Optional bool `json:"optional,omitempty"`
+
+	// Organizer: Whether the attendee is the organizer of the event.
+	// Read-only. The default is False.
+	Organizer bool `json:"organizer,omitempty"`
+
 	// Resource: Whether the attendee is a resource. Read-only. The default
 	// is False.
 	Resource bool `json:"resource,omitempty"`
-
-	// Comment: The attendee's response comment. Optional.
-	Comment string `json:"comment,omitempty"`
 
 	// ResponseStatus: The attendee's response status. Possible values are: 
 	// 
@@ -569,27 +584,16 @@ type EventAttendee struct {
 	// - "accepted" - The attendee has accepted the invitation.
 	ResponseStatus string `json:"responseStatus,omitempty"`
 
-	// DisplayName: The attendee's name, if available. Optional.
-	DisplayName string `json:"displayName,omitempty"`
-
 	// Self: Whether this entry represents the calendar on which this copy
 	// of the event appears. Read-only. The default is False.
 	Self bool `json:"self,omitempty"`
-
-	// AdditionalGuests: Number of additional guests. Optional. The default
-	// is 0.
-	AdditionalGuests int64 `json:"additionalGuests,omitempty"`
-
-	// Organizer: Whether the attendee is the organizer of the event.
-	// Read-only. The default is False.
-	Organizer bool `json:"organizer,omitempty"`
-
-	// Optional: Whether this is an optional attendee. Optional. The default
-	// is False.
-	Optional bool `json:"optional,omitempty"`
 }
 
 type EventDateTime struct {
+	// Date: The date, in the format "yyyy-mm-dd", if this is an all-day
+	// event.
+	Date string `json:"date,omitempty"`
+
 	// DateTime: The time, as a combined date-time value (formatted
 	// according to RFC 3339). A time zone offset is required unless a time
 	// zone is explicitly specified in 'timeZone'.
@@ -599,17 +603,9 @@ type EventDateTime struct {
 	// (e.g. "Europe/Zurich"). Optional. The default is the time zone of the
 	// calendar.
 	TimeZone string `json:"timeZone,omitempty"`
-
-	// Date: The date, in the format "yyyy-mm-dd", if this is an all-day
-	// event.
-	Date string `json:"date,omitempty"`
 }
 
 type EventReminder struct {
-	// Minutes: Number of minutes before the start of the event when the
-	// reminder should trigger.
-	Minutes int64 `json:"minutes,omitempty"`
-
 	// Method: The method used by this reminder. Possible values are:  
 	// -
 	// "email" - Reminders are sent via email. 
@@ -617,6 +613,10 @@ type EventReminder struct {
 	// via SMS. 
 	// - "popup" - Reminders are sent via a UI popup.
 	Method string `json:"method,omitempty"`
+
+	// Minutes: Number of minutes before the start of the event when the
+	// reminder should trigger.
+	Minutes int64 `json:"minutes,omitempty"`
 }
 
 type Events struct {
@@ -638,33 +638,33 @@ type Events struct {
 	// ACLs.
 	AccessRole string `json:"accessRole,omitempty"`
 
-	// Summary: Title of the calendar. Read-only.
-	Summary string `json:"summary,omitempty"`
-
-	// Description: Description of the calendar. Read-only.
-	Description string `json:"description,omitempty"`
-
 	// DefaultReminders: The default reminders on the calendar for the
 	// authenticated user. These reminders apply to all events on this
 	// calendar that do not explicitly override them (i.e. do not have
 	// 'reminders.useDefault' set to 'true').
 	DefaultReminders []*EventReminder `json:"defaultReminders,omitempty"`
 
-	// TimeZone: The time zone of the calendar. Read-only.
-	TimeZone string `json:"timeZone,omitempty"`
+	// Description: Description of the calendar. Read-only.
+	Description string `json:"description,omitempty"`
+
+	// Etag: ETag of the collection.
+	Etag string `json:"etag,omitempty"`
 
 	// Items: List of events on the calendar.
 	Items []*Event `json:"items,omitempty"`
+
+	// Kind: Type of the collection ("calendar#events").
+	Kind string `json:"kind,omitempty"`
 
 	// NextPageToken: Token used to access the next page of this result.
 	// Omitted if no further results are available.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// Etag: ETag of the collection.
-	Etag string `json:"etag,omitempty"`
+	// Summary: Title of the calendar. Read-only.
+	Summary string `json:"summary,omitempty"`
 
-	// Kind: Type of the collection ("calendar#events").
-	Kind string `json:"kind,omitempty"`
+	// TimeZone: The time zone of the calendar. Read-only.
+	TimeZone string `json:"timeZone,omitempty"`
 
 	// Updated: Last modification time of the calendar (as a RFC 3339
 	// timestamp). Read-only.
@@ -689,27 +689,27 @@ type FreeBusyGroup struct {
 }
 
 type FreeBusyRequest struct {
-	// TimeMin: The start of the interval for the query.
-	TimeMin string `json:"timeMin,omitempty"`
-
 	// CalendarExpansionMax: Maximal number of calendars for which FreeBusy
 	// information is to be provided. Optional.
 	CalendarExpansionMax int64 `json:"calendarExpansionMax,omitempty"`
-
-	// TimeZone: Time zone used in the response. Optional. The default is
-	// UTC.
-	TimeZone string `json:"timeZone,omitempty"`
 
 	// GroupExpansionMax: Maximal number of calendar identifiers to be
 	// provided for a single group. Optional. An error will be returned for
 	// a group with more members than this value.
 	GroupExpansionMax int64 `json:"groupExpansionMax,omitempty"`
 
+	// Items: List of calendars and/or groups to query.
+	Items []*FreeBusyRequestItem `json:"items,omitempty"`
+
 	// TimeMax: The end of the interval for the query.
 	TimeMax string `json:"timeMax,omitempty"`
 
-	// Items: List of calendars and/or groups to query.
-	Items []*FreeBusyRequestItem `json:"items,omitempty"`
+	// TimeMin: The start of the interval for the query.
+	TimeMin string `json:"timeMin,omitempty"`
+
+	// TimeZone: Time zone used in the response. Optional. The default is
+	// UTC.
+	TimeZone string `json:"timeZone,omitempty"`
 }
 
 type FreeBusyRequestItem struct {
@@ -718,9 +718,6 @@ type FreeBusyRequestItem struct {
 }
 
 type FreeBusyResponse struct {
-	// TimeMax: The end of the interval.
-	TimeMax string `json:"timeMax,omitempty"`
-
 	// Calendars: List of free/busy information for calendars.
 	Calendars *FreeBusyResponseCalendars `json:"calendars,omitempty"`
 
@@ -729,6 +726,9 @@ type FreeBusyResponse struct {
 
 	// Kind: Type of the resource ("calendar#freeBusy").
 	Kind string `json:"kind,omitempty"`
+
+	// TimeMax: The end of the interval.
+	TimeMax string `json:"timeMax,omitempty"`
 
 	// TimeMin: The start of the interval.
 	TimeMin string `json:"timeMin,omitempty"`
@@ -744,11 +744,11 @@ type Setting struct {
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
 
-	// Kind: Type of the resource ("calendar#setting").
-	Kind string `json:"kind,omitempty"`
-
 	// Id: Name of the user setting.
 	Id string `json:"id,omitempty"`
+
+	// Kind: Type of the resource ("calendar#setting").
+	Kind string `json:"kind,omitempty"`
 
 	// Value: Value of the user setting. The format of the value depends on
 	// the ID of the setting.
@@ -756,11 +756,11 @@ type Setting struct {
 }
 
 type Settings struct {
-	// Items: List of user settings.
-	Items []*Setting `json:"items,omitempty"`
-
 	// Etag: Etag of the collection.
 	Etag string `json:"etag,omitempty"`
+
+	// Items: List of user settings.
+	Items []*Setting `json:"items,omitempty"`
 
 	// Kind: Type of the collection ("calendar#settings").
 	Kind string `json:"kind,omitempty"`

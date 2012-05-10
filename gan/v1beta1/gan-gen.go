@@ -77,63 +77,27 @@ type PublishersService struct {
 }
 
 type Advertiser struct {
-	// ProductFeedsEnabled: Allows advertisers to submit product listings to
-	// Google Product Search.
-	ProductFeedsEnabled bool `json:"productFeedsEnabled,omitempty"`
-
-	// ContactEmail: Email that this advertiser would like publishers to
-	// contact them with.
-	ContactEmail string `json:"contactEmail,omitempty"`
-
-	// SiteUrl: URL of the website this advertiser advertises from.
-	SiteUrl string `json:"siteUrl,omitempty"`
-
-	// PayoutRank: A rank based on commissions paid to publishers over the
-	// past 90 days. A number between 1 and 4 where 4 means the top quartile
-	// (most money paid) and 1 means the bottom quartile (least money paid).
-	PayoutRank string `json:"payoutRank,omitempty"`
-
-	// Description: Description of the website the advertiser advertises
-	// from.
-	Description string `json:"description,omitempty"`
-
-	// Item: The requested advertiser.
-	Item *Advertiser `json:"item,omitempty"`
-
 	// Category: Category that this advertiser belongs to. A valid list of
 	// categories can be found here:
 	// http://www.google.com/support/affiliatenetwork/advertiser/bin/answer.p
 	// y?hl=en&answer=107581
 	Category string `json:"category,omitempty"`
 
-	// ContactPhone: Phone that this advertiser would like publishers to
-	// contact them with.
-	ContactPhone string `json:"contactPhone,omitempty"`
-
-	// Name: The name of this advertiser.
-	Name string `json:"name,omitempty"`
-
-	// LogoUrl: URL to the logo this advertiser uses on the Google Affiliate
-	// Network.
-	LogoUrl string `json:"logoUrl,omitempty"`
-
 	// CommissionDuration: The longest possible length of a commission (how
 	// long the cookies on the customer's browser last before they expire).
 	CommissionDuration int64 `json:"commissionDuration,omitempty"`
 
-	// Kind: The kind for an advertiser.
-	Kind string `json:"kind,omitempty"`
+	// ContactEmail: Email that this advertiser would like publishers to
+	// contact them with.
+	ContactEmail string `json:"contactEmail,omitempty"`
 
-	// JoinDate: Date that this advertiser was approved as a Google
-	// Affiliate Network advertiser.
-	JoinDate string `json:"joinDate,omitempty"`
+	// ContactPhone: Phone that this advertiser would like publishers to
+	// contact them with.
+	ContactPhone string `json:"contactPhone,omitempty"`
 
-	// Id: The ID of this advertiser.
-	Id int64 `json:"id,omitempty,string"`
-
-	// Status: The status of the requesting publisher's relationship this
-	// advertiser.
-	Status string `json:"status,omitempty"`
+	// Description: Description of the website the advertiser advertises
+	// from.
+	Description string `json:"description,omitempty"`
 
 	// EpcNinetyDayAverage: The sum of fees paid to publishers divided by
 	// the total number of clicks over the past three months. Values are
@@ -144,37 +108,113 @@ type Advertiser struct {
 	// total number of clicks over the past seven days. Values are
 	// multiplied by 100 for display purposes.
 	EpcSevenDayAverage *Money `json:"epcSevenDayAverage,omitempty"`
+
+	// Id: The ID of this advertiser.
+	Id int64 `json:"id,omitempty,string"`
+
+	// Item: The requested advertiser.
+	Item *Advertiser `json:"item,omitempty"`
+
+	// JoinDate: Date that this advertiser was approved as a Google
+	// Affiliate Network advertiser.
+	JoinDate string `json:"joinDate,omitempty"`
+
+	// Kind: The kind for an advertiser.
+	Kind string `json:"kind,omitempty"`
+
+	// LogoUrl: URL to the logo this advertiser uses on the Google Affiliate
+	// Network.
+	LogoUrl string `json:"logoUrl,omitempty"`
+
+	// Name: The name of this advertiser.
+	Name string `json:"name,omitempty"`
+
+	// PayoutRank: A rank based on commissions paid to publishers over the
+	// past 90 days. A number between 1 and 4 where 4 means the top quartile
+	// (most money paid) and 1 means the bottom quartile (least money paid).
+	PayoutRank string `json:"payoutRank,omitempty"`
+
+	// ProductFeedsEnabled: Allows advertisers to submit product listings to
+	// Google Product Search.
+	ProductFeedsEnabled bool `json:"productFeedsEnabled,omitempty"`
+
+	// SiteUrl: URL of the website this advertiser advertises from.
+	SiteUrl string `json:"siteUrl,omitempty"`
+
+	// Status: The status of the requesting publisher's relationship this
+	// advertiser.
+	Status string `json:"status,omitempty"`
 }
 
 type Advertisers struct {
 	// Items: The advertiser list.
 	Items []*Advertiser `json:"items,omitempty"`
 
+	// Kind: The kind for a page of advertisers.
+	Kind string `json:"kind,omitempty"`
+
 	// NextPageToken: The 'pageToken' to pass to the next request to get the
 	// next page, if there are more to retrieve.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// Kind: The kind for a page of advertisers.
-	Kind string `json:"kind,omitempty"`
 }
 
 type CcOffer struct {
-	// RewardsExpire: Whether accumulated rewards ever expire.
-	RewardsExpire bool `json:"rewardsExpire,omitempty"`
+	// AdditionalCardBenefits: More marketing copy about the card's
+	// benefits. A summary field.
+	AdditionalCardBenefits []string `json:"additionalCardBenefits,omitempty"`
 
-	// BonusRewards: For cards with rewards programs, extra circumstances
-	// whereby additional rewards may be granted.
-	BonusRewards []*CcOfferBonusRewards `json:"bonusRewards,omitempty"`
+	// AdditionalCardHolderFee: Any extra fees levied on card holders.
+	AdditionalCardHolderFee string `json:"additionalCardHolderFee,omitempty"`
+
+	// AgeMinimum: The youngest a recipient of this card may be.
+	AgeMinimum float64 `json:"ageMinimum,omitempty"`
+
+	// AgeMinimumDetails: Text describing the details of the age minimum
+	// restriction.
+	AgeMinimumDetails string `json:"ageMinimumDetails,omitempty"`
+
+	// AnnualFee: The ongoing annual fee, in dollars.
+	AnnualFee float64 `json:"annualFee,omitempty"`
 
 	// AnnualFeeDisplay: Text describing the annual fee, including any
 	// difference for the first year. A summary field.
 	AnnualFeeDisplay string `json:"annualFeeDisplay,omitempty"`
 
-	// AgeMinimum: The youngest a recipient of this card may be.
-	AgeMinimum float64 `json:"ageMinimum,omitempty"`
+	// AnnualRewardMaximum: The largest number of units you may accumulate
+	// in a year.
+	AnnualRewardMaximum float64 `json:"annualRewardMaximum,omitempty"`
 
-	// StatementCopyFee: Fee for requesting a copy of your statement.
-	StatementCopyFee string `json:"statementCopyFee,omitempty"`
+	// ApprovedCategories: Possible categories for this card, eg "Low
+	// Interest" or "Good." A summary field.
+	ApprovedCategories []string `json:"approvedCategories,omitempty"`
+
+	// AprDisplay: Text describing the purchase APR. A summary field.
+	AprDisplay string `json:"aprDisplay,omitempty"`
+
+	// BalanceComputationMethod: Text describing how the balance is
+	// computed. A summary field.
+	BalanceComputationMethod string `json:"balanceComputationMethod,omitempty"`
+
+	// BalanceTransferTerms: Text describing the terms for balance
+	// transfers. A summary field.
+	BalanceTransferTerms string `json:"balanceTransferTerms,omitempty"`
+
+	// BonusRewards: For cards with rewards programs, extra circumstances
+	// whereby additional rewards may be granted.
+	BonusRewards []*CcOfferBonusRewards `json:"bonusRewards,omitempty"`
+
+	// CarRentalInsurance: If you get coverage when you use the card for the
+	// given activity, this field describes it.
+	CarRentalInsurance string `json:"carRentalInsurance,omitempty"`
+
+	// CardBenefits: A list of what the issuer thinks are the most important
+	// benefits of the card. Usually summarizes the rewards program, if
+	// there is one. A summary field.
+	CardBenefits []string `json:"cardBenefits,omitempty"`
+
+	// CardName: The issuer's name for the card, including any trademark or
+	// service mark designators. A summary field.
+	CardName string `json:"cardName,omitempty"`
 
 	// CardType: What kind of credit card this is, for example secured or
 	// unsecured.
@@ -184,71 +224,21 @@ type CcOffer struct {
 	// summary field.
 	CashAdvanceTerms string `json:"cashAdvanceTerms,omitempty"`
 
+	// CreditLimitMax: The high end for credit limits the issuer imposes on
+	// recipients of this card.
+	CreditLimitMax float64 `json:"creditLimitMax,omitempty"`
+
+	// CreditLimitMin: The low end for credit limits the issuer imposes on
+	// recipients of this card.
+	CreditLimitMin float64 `json:"creditLimitMin,omitempty"`
+
 	// CreditRatingDisplay: Text describing the credit ratings required for
 	// recipients of this card, for example "Excellent/Good." A summary
 	// field.
 	CreditRatingDisplay string `json:"creditRatingDisplay,omitempty"`
 
-	// CardBenefits: A list of what the issuer thinks are the most important
-	// benefits of the card. Usually summarizes the rewards program, if
-	// there is one. A summary field.
-	CardBenefits []string `json:"cardBenefits,omitempty"`
-
-	// FlightAccidentInsurance: If you get coverage when you use the card
-	// for the given activity, this field describes it.
-	FlightAccidentInsurance string `json:"flightAccidentInsurance,omitempty"`
-
-	// IssuerWebsite: The generic link to the issuer's site.
-	IssuerWebsite string `json:"issuerWebsite,omitempty"`
-
-	// VariableRatesLastUpdated: When variable rates were last updated.
-	VariableRatesLastUpdated string `json:"variableRatesLastUpdated,omitempty"`
-
-	// LuggageInsurance: If you get coverage when you use the card for the
-	// given activity, this field describes it.
-	LuggageInsurance string `json:"luggageInsurance,omitempty"`
-
-	// AnnualFee: The ongoing annual fee, in dollars.
-	AnnualFee float64 `json:"annualFee,omitempty"`
-
-	// IssuerId: The Google Affiliate Network ID of the advertiser making
-	// this offer.
-	IssuerId string `json:"issuerId,omitempty"`
-
-	// AnnualRewardMaximum: The largest number of units you may accumulate
-	// in a year.
-	AnnualRewardMaximum float64 `json:"annualRewardMaximum,omitempty"`
-
-	// TrackingUrl: The link to ping to register a click on this offer. A
-	// summary field.
-	TrackingUrl string `json:"trackingUrl,omitempty"`
-
-	// ReturnedPaymentFee: Text describing the fee for a payment that
-	// doesn't clear. A summary field.
-	ReturnedPaymentFee string `json:"returnedPaymentFee,omitempty"`
-
-	// PurchaseRateAdditionalDetails: Text describing any additional details
-	// for the purchase rate. A summary field.
-	PurchaseRateAdditionalDetails string `json:"purchaseRateAdditionalDetails,omitempty"`
-
-	// ProhibitedCategories: Categories in which the issuer does not wish
-	// the card to be displayed. A summary field.
-	ProhibitedCategories []string `json:"prohibitedCategories,omitempty"`
-
-	// OverLimitFee: Fee for exceeding the card's charge limit.
-	OverLimitFee string `json:"overLimitFee,omitempty"`
-
-	// ImageUrl: The link to the image of the card that is shown on Connect
-	// Commerce. A summary field.
-	ImageUrl string `json:"imageUrl,omitempty"`
-
-	// BalanceTransferTerms: Text describing the terms for balance
-	// transfers. A summary field.
-	BalanceTransferTerms string `json:"balanceTransferTerms,omitempty"`
-
-	// Network: Which network (eg Visa) the card belongs to. A summary
-	// field.
-	Network string `json:"network,omitempty"`
+	// DefaultFees: Fees for defaulting on your payments.
+	DefaultFees []*CcOfferDefaultFees `json:"defaultFees,omitempty"`
 
 	// Disclaimer: A notice that, if present, is referenced via an asterisk
 	// by many of the other summary fields. If this field is present, it
@@ -256,62 +246,41 @@ type CcOffer struct {
 	// displayed with the offer. A summary field.
 	Disclaimer string `json:"disclaimer,omitempty"`
 
-	// TravelInsurance: If you get coverage when you use the card for the
+	// EmergencyInsurance: If you get coverage when you use the card for the
 	// given activity, this field describes it.
-	TravelInsurance string `json:"travelInsurance,omitempty"`
-
-	// AprDisplay: Text describing the purchase APR. A summary field.
-	AprDisplay string `json:"aprDisplay,omitempty"`
-
-	// VariableRatesUpdateFrequency: How often variable rates are updated.
-	VariableRatesUpdateFrequency string `json:"variableRatesUpdateFrequency,omitempty"`
-
-	// CardName: The issuer's name for the card, including any trademark or
-	// service mark designators. A summary field.
-	CardName string `json:"cardName,omitempty"`
-
-	// ForeignCurrencyTransactionFee: Fee for each transaction involving a
-	// foreign currency.
-	ForeignCurrencyTransactionFee string `json:"foreignCurrencyTransactionFee,omitempty"`
+	EmergencyInsurance string `json:"emergencyInsurance,omitempty"`
 
 	// ExistingCustomerOnly: Whether this card is only available to existing
 	// customers of the issuer.
 	ExistingCustomerOnly bool `json:"existingCustomerOnly,omitempty"`
 
-	// EmergencyInsurance: If you get coverage when you use the card for the
+	// ExtendedWarranty: If you get coverage when you use the card for the
 	// given activity, this field describes it.
-	EmergencyInsurance string `json:"emergencyInsurance,omitempty"`
+	ExtendedWarranty string `json:"extendedWarranty,omitempty"`
 
-	// CreditLimitMax: The high end for credit limits the issuer imposes on
-	// recipients of this card.
-	CreditLimitMax float64 `json:"creditLimitMax,omitempty"`
+	// FirstYearAnnualFee: The annual fee for the first year, if different
+	// from the ongoing fee. Optional.
+	FirstYearAnnualFee float64 `json:"firstYearAnnualFee,omitempty"`
 
-	// AgeMinimumDetails: Text describing the details of the age minimum
-	// restriction.
-	AgeMinimumDetails string `json:"ageMinimumDetails,omitempty"`
+	// FlightAccidentInsurance: If you get coverage when you use the card
+	// for the given activity, this field describes it.
+	FlightAccidentInsurance string `json:"flightAccidentInsurance,omitempty"`
+
+	// ForeignCurrencyTransactionFee: Fee for each transaction involving a
+	// foreign currency.
+	ForeignCurrencyTransactionFee string `json:"foreignCurrencyTransactionFee,omitempty"`
+
+	// FraudLiability: If you get coverage when you use the card for the
+	// given activity, this field describes it.
+	FraudLiability string `json:"fraudLiability,omitempty"`
 
 	// GracePeriodDisplay: Text describing the grace period before finance
 	// charges apply. A summary field.
 	GracePeriodDisplay string `json:"gracePeriodDisplay,omitempty"`
 
-	// MinPurchaseRate: The lowest interest rate the issuer charges on this
-	// card. Expressed as an absolute number, not as a percentage.
-	MinPurchaseRate float64 `json:"minPurchaseRate,omitempty"`
-
-	// RewardPartner: The company that redeems the rewards, if different
-	// from the issuer.
-	RewardPartner string `json:"rewardPartner,omitempty"`
-
-	// MaxPurchaseRate: The highest interest rate the issuer charges on this
-	// card. Expressed as an absolute number, not as a percentage.
-	MaxPurchaseRate float64 `json:"maxPurchaseRate,omitempty"`
-
-	// ExtendedWarranty: If you get coverage when you use the card for the
-	// given activity, this field describes it.
-	ExtendedWarranty string `json:"extendedWarranty,omitempty"`
-
-	// OfferId: This offer's ID. A summary field.
-	OfferId string `json:"offerId,omitempty"`
+	// ImageUrl: The link to the image of the card that is shown on Connect
+	// Commerce. A summary field.
+	ImageUrl string `json:"imageUrl,omitempty"`
 
 	// InitialSetupAndProcessingFee: Fee for setting up the card.
 	InitialSetupAndProcessingFee string `json:"initialSetupAndProcessingFee,omitempty"`
@@ -320,121 +289,145 @@ type CcOffer struct {
 	// period balance transfers. A summary field.
 	IntroBalanceTransferTerms string `json:"introBalanceTransferTerms,omitempty"`
 
-	// PurchaseRateType: Fixed or variable.
-	PurchaseRateType string `json:"purchaseRateType,omitempty"`
-
-	// Issuer: Name of card issuer. A summary field.
-	Issuer string `json:"issuer,omitempty"`
-
-	// CarRentalInsurance: If you get coverage when you use the card for the
-	// given activity, this field describes it.
-	CarRentalInsurance string `json:"carRentalInsurance,omitempty"`
-
-	// AdditionalCardBenefits: More marketing copy about the card's
-	// benefits. A summary field.
-	AdditionalCardBenefits []string `json:"additionalCardBenefits,omitempty"`
-
-	// AdditionalCardHolderFee: Any extra fees levied on card holders.
-	AdditionalCardHolderFee string `json:"additionalCardHolderFee,omitempty"`
-
-	// RewardUnit: For cards with rewards programs, the unit of reward. For
-	// example, miles, cash back, points.
-	RewardUnit string `json:"rewardUnit,omitempty"`
-
-	// LandingPageUrl: The link to the issuer's page for this card. A
-	// summary field.
-	LandingPageUrl string `json:"landingPageUrl,omitempty"`
+	// IntroCashAdvanceTerms: Text describing the terms for introductory
+	// period cash advances. A summary field.
+	IntroCashAdvanceTerms string `json:"introCashAdvanceTerms,omitempty"`
 
 	// IntroPurchaseTerms: Text describing the terms for introductory period
 	// purchases. A summary field.
 	IntroPurchaseTerms string `json:"introPurchaseTerms,omitempty"`
 
-	// RewardsHaveBlackoutDates: For airline miles rewards, tells whether
-	// blackout dates apply to the miles.
-	RewardsHaveBlackoutDates bool `json:"rewardsHaveBlackoutDates,omitempty"`
+	// Issuer: Name of card issuer. A summary field.
+	Issuer string `json:"issuer,omitempty"`
 
-	// CreditLimitMin: The low end for credit limits the issuer imposes on
-	// recipients of this card.
-	CreditLimitMin float64 `json:"creditLimitMin,omitempty"`
+	// IssuerId: The Google Affiliate Network ID of the advertiser making
+	// this offer.
+	IssuerId string `json:"issuerId,omitempty"`
 
-	// FraudLiability: If you get coverage when you use the card for the
-	// given activity, this field describes it.
-	FraudLiability string `json:"fraudLiability,omitempty"`
-
-	// MinimumFinanceCharge: Text describing how much missing the grace
-	// period will cost.
-	MinimumFinanceCharge string `json:"minimumFinanceCharge,omitempty"`
-
-	// IntroCashAdvanceTerms: Text describing the terms for introductory
-	// period cash advances. A summary field.
-	IntroCashAdvanceTerms string `json:"introCashAdvanceTerms,omitempty"`
-
-	// DefaultFees: Fees for defaulting on your payments.
-	DefaultFees []*CcOfferDefaultFees `json:"defaultFees,omitempty"`
-
-	// Rewards: For cards with rewards programs, detailed rules about how
-	// the program works.
-	Rewards []*CcOfferRewards `json:"rewards,omitempty"`
-
-	// ApprovedCategories: Possible categories for this card, eg "Low
-	// Interest" or "Good." A summary field.
-	ApprovedCategories []string `json:"approvedCategories,omitempty"`
+	// IssuerWebsite: The generic link to the issuer's site.
+	IssuerWebsite string `json:"issuerWebsite,omitempty"`
 
 	// Kind: The kind for one credit card offer. A summary field.
 	Kind string `json:"kind,omitempty"`
+
+	// LandingPageUrl: The link to the issuer's page for this card. A
+	// summary field.
+	LandingPageUrl string `json:"landingPageUrl,omitempty"`
 
 	// LatePaymentFee: Text describing how much a late payment will cost, eg
 	// "up to $35." A summary field.
 	LatePaymentFee string `json:"latePaymentFee,omitempty"`
 
-	// FirstYearAnnualFee: The annual fee for the first year, if different
-	// from the ongoing fee. Optional.
-	FirstYearAnnualFee float64 `json:"firstYearAnnualFee,omitempty"`
+	// LuggageInsurance: If you get coverage when you use the card for the
+	// given activity, this field describes it.
+	LuggageInsurance string `json:"luggageInsurance,omitempty"`
 
-	// BalanceComputationMethod: Text describing how the balance is
-	// computed. A summary field.
-	BalanceComputationMethod string `json:"balanceComputationMethod,omitempty"`
+	// MaxPurchaseRate: The highest interest rate the issuer charges on this
+	// card. Expressed as an absolute number, not as a percentage.
+	MaxPurchaseRate float64 `json:"maxPurchaseRate,omitempty"`
+
+	// MinPurchaseRate: The lowest interest rate the issuer charges on this
+	// card. Expressed as an absolute number, not as a percentage.
+	MinPurchaseRate float64 `json:"minPurchaseRate,omitempty"`
+
+	// MinimumFinanceCharge: Text describing how much missing the grace
+	// period will cost.
+	MinimumFinanceCharge string `json:"minimumFinanceCharge,omitempty"`
+
+	// Network: Which network (eg Visa) the card belongs to. A summary
+	// field.
+	Network string `json:"network,omitempty"`
+
+	// OfferId: This offer's ID. A summary field.
+	OfferId string `json:"offerId,omitempty"`
 
 	// OffersImmediateCashReward: Whether a cash reward program lets you get
 	// cash back sooner than end of year or other longish period.
 	OffersImmediateCashReward bool `json:"offersImmediateCashReward,omitempty"`
+
+	// OverLimitFee: Fee for exceeding the card's charge limit.
+	OverLimitFee string `json:"overLimitFee,omitempty"`
+
+	// ProhibitedCategories: Categories in which the issuer does not wish
+	// the card to be displayed. A summary field.
+	ProhibitedCategories []string `json:"prohibitedCategories,omitempty"`
+
+	// PurchaseRateAdditionalDetails: Text describing any additional details
+	// for the purchase rate. A summary field.
+	PurchaseRateAdditionalDetails string `json:"purchaseRateAdditionalDetails,omitempty"`
+
+	// PurchaseRateType: Fixed or variable.
+	PurchaseRateType string `json:"purchaseRateType,omitempty"`
+
+	// ReturnedPaymentFee: Text describing the fee for a payment that
+	// doesn't clear. A summary field.
+	ReturnedPaymentFee string `json:"returnedPaymentFee,omitempty"`
+
+	// RewardPartner: The company that redeems the rewards, if different
+	// from the issuer.
+	RewardPartner string `json:"rewardPartner,omitempty"`
+
+	// RewardUnit: For cards with rewards programs, the unit of reward. For
+	// example, miles, cash back, points.
+	RewardUnit string `json:"rewardUnit,omitempty"`
+
+	// Rewards: For cards with rewards programs, detailed rules about how
+	// the program works.
+	Rewards []*CcOfferRewards `json:"rewards,omitempty"`
+
+	// RewardsExpire: Whether accumulated rewards ever expire.
+	RewardsExpire bool `json:"rewardsExpire,omitempty"`
+
+	// RewardsHaveBlackoutDates: For airline miles rewards, tells whether
+	// blackout dates apply to the miles.
+	RewardsHaveBlackoutDates bool `json:"rewardsHaveBlackoutDates,omitempty"`
+
+	// StatementCopyFee: Fee for requesting a copy of your statement.
+	StatementCopyFee string `json:"statementCopyFee,omitempty"`
+
+	// TrackingUrl: The link to ping to register a click on this offer. A
+	// summary field.
+	TrackingUrl string `json:"trackingUrl,omitempty"`
+
+	// TravelInsurance: If you get coverage when you use the card for the
+	// given activity, this field describes it.
+	TravelInsurance string `json:"travelInsurance,omitempty"`
+
+	// VariableRatesLastUpdated: When variable rates were last updated.
+	VariableRatesLastUpdated string `json:"variableRatesLastUpdated,omitempty"`
+
+	// VariableRatesUpdateFrequency: How often variable rates are updated.
+	VariableRatesUpdateFrequency string `json:"variableRatesUpdateFrequency,omitempty"`
 }
 
 type CcOfferBonusRewards struct {
+	// Amount: How many units of reward will be granted.
+	Amount float64 `json:"amount,omitempty"`
+
 	// Details: The circumstances under which this rule applies, for
 	// example, booking a flight via Orbitz.
 	Details string `json:"details,omitempty"`
-
-	// Amount: How many units of reward will be granted.
-	Amount float64 `json:"amount,omitempty"`
 }
 
 type CcOfferDefaultFees struct {
 	// Category: The type of charge, for example Purchases.
 	Category string `json:"category,omitempty"`
 
-	// MinRate: The lowest rate the issuer may charge for defaulting on debt
-	// in this category. Expressed as an absolute number, not as a
-	// percentage.
-	MinRate float64 `json:"minRate,omitempty"`
-
 	// MaxRate: The highest rate the issuer may charge for defaulting on
 	// debt in this category. Expressed as an absolute number, not as a
 	// percentage.
 	MaxRate float64 `json:"maxRate,omitempty"`
+
+	// MinRate: The lowest rate the issuer may charge for defaulting on debt
+	// in this category. Expressed as an absolute number, not as a
+	// percentage.
+	MinRate float64 `json:"minRate,omitempty"`
 
 	// RateType: Fixed or variable.
 	RateType string `json:"rateType,omitempty"`
 }
 
 type CcOfferRewards struct {
-	// MaxRewardTier: The maximum purchase amount in the given category for
-	// this rule to apply.
-	MaxRewardTier float64 `json:"maxRewardTier,omitempty"`
-
-	// ExpirationMonths: How long rewards granted by this rule last.
-	ExpirationMonths float64 `json:"expirationMonths,omitempty"`
-
 	// AdditionalDetails: Other limits, for example, if this rule only
 	// applies during an introductory period.
 	AdditionalDetails string `json:"additionalDetails,omitempty"`
@@ -444,6 +437,13 @@ type CcOfferRewards struct {
 
 	// Category: The kind of purchases covered by this rule.
 	Category string `json:"category,omitempty"`
+
+	// ExpirationMonths: How long rewards granted by this rule last.
+	ExpirationMonths float64 `json:"expirationMonths,omitempty"`
+
+	// MaxRewardTier: The maximum purchase amount in the given category for
+	// this rule to apply.
+	MaxRewardTier float64 `json:"maxRewardTier,omitempty"`
 
 	// MinRewardTier: The minimum purchase amount in the given category
 	// before this rule applies.
@@ -459,93 +459,77 @@ type CcOffers struct {
 }
 
 type Event struct {
-	// NetworkFee: Fee that the advertiser paid to the Google Affiliate
-	// Network.
-	NetworkFee *Money `json:"networkFee,omitempty"`
+	// AdvertiserId: The ID of advertiser for this event.
+	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
+
+	// AdvertiserName: The name of the advertiser for this event.
+	AdvertiserName string `json:"advertiserName,omitempty"`
+
+	// ChargeId: The charge ID for this event. Only returned for charge
+	// events.
+	ChargeId string `json:"chargeId,omitempty"`
 
 	// ChargeType: Charge type of the event
 	// (other|slotting_fee|monthly_minimum|tier_bonus|debit|credit). Only
 	// returned for charge events.
 	ChargeType string `json:"chargeType,omitempty"`
 
-	// Kind: The kind for one event.
-	Kind string `json:"kind,omitempty"`
-
-	// ChargeId: The charge ID for this event. Only returned for charge
-	// events.
-	ChargeId string `json:"chargeId,omitempty"`
-
-	// PublisherFee: Fee that the advertiser paid to the publisher.
-	PublisherFee *Money `json:"publisherFee,omitempty"`
-
 	// CommissionableSales: Amount of money exchanged during the
 	// transaction. Only returned for charge and conversion events.
 	CommissionableSales *Money `json:"commissionableSales,omitempty"`
 
-	// Products: Products associated with the event.
-	Products []*EventProducts `json:"products,omitempty"`
-
-	// Status: Status of the event (active|canceled). Only returned for
-	// charge and conversion events.
-	Status string `json:"status,omitempty"`
+	// Earnings: Earnings by the publisher.
+	Earnings *Money `json:"earnings,omitempty"`
 
 	// EventDate: The date-time this event was initiated as a RFC 3339
 	// date-time value.
 	EventDate string `json:"eventDate,omitempty"`
 
-	// ModifyDate: The date-time this event was last modified as a RFC 3339
-	// date-time value.
-	ModifyDate string `json:"modifyDate,omitempty"`
-
-	// Type: Type of the event (action|transaction|charge).
-	Type string `json:"type,omitempty"`
-
-	// PublisherId: The ID of the publisher for this event.
-	PublisherId int64 `json:"publisherId,omitempty,string"`
+	// Kind: The kind for one event.
+	Kind string `json:"kind,omitempty"`
 
 	// MemberId: The ID of the member attached to this event. Only returned
 	// for conversion events.
 	MemberId string `json:"memberId,omitempty"`
 
-	// AdvertiserId: The ID of advertiser for this event.
-	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
+	// ModifyDate: The date-time this event was last modified as a RFC 3339
+	// date-time value.
+	ModifyDate string `json:"modifyDate,omitempty"`
 
-	// PublisherName: The name of the publisher for this event.
-	PublisherName string `json:"publisherName,omitempty"`
-
-	// Earnings: Earnings by the publisher.
-	Earnings *Money `json:"earnings,omitempty"`
+	// NetworkFee: Fee that the advertiser paid to the Google Affiliate
+	// Network.
+	NetworkFee *Money `json:"networkFee,omitempty"`
 
 	// OrderId: The order ID for this event. Only returned for conversion
 	// events.
 	OrderId string `json:"orderId,omitempty"`
 
-	// AdvertiserName: The name of the advertiser for this event.
-	AdvertiserName string `json:"advertiserName,omitempty"`
+	// Products: Products associated with the event.
+	Products []*EventProducts `json:"products,omitempty"`
+
+	// PublisherFee: Fee that the advertiser paid to the publisher.
+	PublisherFee *Money `json:"publisherFee,omitempty"`
+
+	// PublisherId: The ID of the publisher for this event.
+	PublisherId int64 `json:"publisherId,omitempty,string"`
+
+	// PublisherName: The name of the publisher for this event.
+	PublisherName string `json:"publisherName,omitempty"`
+
+	// Status: Status of the event (active|canceled). Only returned for
+	// charge and conversion events.
+	Status string `json:"status,omitempty"`
+
+	// Type: Type of the event (action|transaction|charge).
+	Type string `json:"type,omitempty"`
 }
 
 type EventProducts struct {
-	// PublisherFee: Fee that the advertiser paid to the publisehr for this
-	// product.
-	PublisherFee *Money `json:"publisherFee,omitempty"`
-
 	// CategoryId: Id of the category this product belongs to.
 	CategoryId string `json:"categoryId,omitempty"`
 
 	// CategoryName: Name of the category this product belongs to.
 	CategoryName string `json:"categoryName,omitempty"`
-
-	// SkuName: Sku name of this product.
-	SkuName string `json:"skuName,omitempty"`
-
-	// UnitPrice: Price per unit of this product.
-	UnitPrice *Money `json:"unitPrice,omitempty"`
-
-	// Sku: Sku of this product.
-	Sku string `json:"sku,omitempty"`
-
-	// Quantity: Quantity of this product bought/exchanged.
-	Quantity int64 `json:"quantity,omitempty,string"`
 
 	// Earnings: Amount earned by the publisher on this product.
 	Earnings *Money `json:"earnings,omitempty"`
@@ -553,18 +537,34 @@ type EventProducts struct {
 	// NetworkFee: Fee that the advertiser paid to the Google Affiliate
 	// Network for this product.
 	NetworkFee *Money `json:"networkFee,omitempty"`
+
+	// PublisherFee: Fee that the advertiser paid to the publisehr for this
+	// product.
+	PublisherFee *Money `json:"publisherFee,omitempty"`
+
+	// Quantity: Quantity of this product bought/exchanged.
+	Quantity int64 `json:"quantity,omitempty,string"`
+
+	// Sku: Sku of this product.
+	Sku string `json:"sku,omitempty"`
+
+	// SkuName: Sku name of this product.
+	SkuName string `json:"skuName,omitempty"`
+
+	// UnitPrice: Price per unit of this product.
+	UnitPrice *Money `json:"unitPrice,omitempty"`
 }
 
 type Events struct {
 	// Items: The event list.
 	Items []*Event `json:"items,omitempty"`
 
+	// Kind: The kind for a page of events.
+	Kind string `json:"kind,omitempty"`
+
 	// NextPageToken: The 'pageToken' to pass to the next request to get the
 	// next page, if there are more to retrieve.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// Kind: The kind for a page of events.
-	Kind string `json:"kind,omitempty"`
 }
 
 type Money struct {
@@ -576,40 +576,11 @@ type Money struct {
 }
 
 type Publisher struct {
-	// PayoutRank: A rank based on commissions paid to this publisher over
-	// the past 90 days. A number between 1 and 4 where 4 means the top
-	// quartile (most money paid) and 1 means the bottom quartile (least
-	// money paid).
-	PayoutRank string `json:"payoutRank,omitempty"`
-
-	// Sites: Websites that this publisher uses to advertise.
-	Sites []string `json:"sites,omitempty"`
-
-	// Item: The requested publisher.
-	Item *Publisher `json:"item,omitempty"`
-
-	// Name: The name of this publisher.
-	Name string `json:"name,omitempty"`
-
-	// Kind: The kind for a publisher.
-	Kind string `json:"kind,omitempty"`
-
-	// JoinDate: Date that this publisher was approved as a Google Affiliate
-	// Network publisher.
-	JoinDate string `json:"joinDate,omitempty"`
-
 	// Classification: Classification that this publisher belongs to. See
 	// this link for all publisher classifications:
 	// http://www.google.com/support/affiliatenetwork/advertiser/bin/answer.p
 	// y?hl=en&answer=107625&ctx=cb&src=cb&cbid=-k5fihzthfaik&cbrank=4
 	Classification string `json:"classification,omitempty"`
-
-	// Id: The ID of this publisher.
-	Id int64 `json:"id,omitempty,string"`
-
-	// Status: The status of the requesting advertiser's relationship with
-	// this publisher.
-	Status string `json:"status,omitempty"`
 
 	// EpcNinetyDayAverage: The sum of fees paid to this publisher divided
 	// by the total number of clicks over the past three months. Values are
@@ -620,18 +591,47 @@ type Publisher struct {
 	// the total number of clicks over the past seven days. Values are
 	// multiplied by 100 for display purposes.
 	EpcSevenDayAverage *Money `json:"epcSevenDayAverage,omitempty"`
+
+	// Id: The ID of this publisher.
+	Id int64 `json:"id,omitempty,string"`
+
+	// Item: The requested publisher.
+	Item *Publisher `json:"item,omitempty"`
+
+	// JoinDate: Date that this publisher was approved as a Google Affiliate
+	// Network publisher.
+	JoinDate string `json:"joinDate,omitempty"`
+
+	// Kind: The kind for a publisher.
+	Kind string `json:"kind,omitempty"`
+
+	// Name: The name of this publisher.
+	Name string `json:"name,omitempty"`
+
+	// PayoutRank: A rank based on commissions paid to this publisher over
+	// the past 90 days. A number between 1 and 4 where 4 means the top
+	// quartile (most money paid) and 1 means the bottom quartile (least
+	// money paid).
+	PayoutRank string `json:"payoutRank,omitempty"`
+
+	// Sites: Websites that this publisher uses to advertise.
+	Sites []string `json:"sites,omitempty"`
+
+	// Status: The status of the requesting advertiser's relationship with
+	// this publisher.
+	Status string `json:"status,omitempty"`
 }
 
 type Publishers struct {
 	// Items: The entity list.
 	Items []*Publisher `json:"items,omitempty"`
 
+	// Kind: The kind for a page of entities.
+	Kind string `json:"kind,omitempty"`
+
 	// NextPageToken: The 'pageToken' to pass to the next request to get the
 	// next page, if there are more to retrieve.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// Kind: The kind for a page of entities.
-	Kind string `json:"kind,omitempty"`
 }
 
 // method id "gan.advertisers.get":

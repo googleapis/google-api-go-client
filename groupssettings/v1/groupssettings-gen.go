@@ -60,25 +60,6 @@ type GroupsService struct {
 }
 
 type Groups struct {
-	// DefaultMessageDenyNotificationText: Default message deny notification
-	// message
-	DefaultMessageDenyNotificationText string `json:"defaultMessageDenyNotificationText,omitempty"`
-
-	// IsArchived: If the contents of the group are archived.
-	IsArchived string `json:"isArchived,omitempty"`
-
-	// MessageDisplayFont: Default message display font. Possible values
-	// are: DEFAULT_FONT FIXED_WIDTH_FONT
-	MessageDisplayFont string `json:"messageDisplayFont,omitempty"`
-
-	// WhoCanJoin: Permissions to join the group. Possible values are:
-	// ANYONE_CAN_JOIN ALL_IN_DOMAIN_CAN_JOIN INVITED_CAN_JOIN
-	// CAN_REQUEST_TO_JOIN
-	WhoCanJoin string `json:"whoCanJoin,omitempty"`
-
-	// Name: Name of the Group
-	Name string `json:"name,omitempty"`
-
 	// ReplyTo: Whome should the default reply to a message go to. Possible
 	// values are: REPLY_TO_CUSTOM REPLY_TO_SENDER REPLY_TO_LIST
 	// REPLY_TO_OWNER REPLY_TO_IGNORE REPLY_TO_MANAGERS
@@ -148,6 +129,25 @@ type Groups struct {
 
 	// Email: Email id of the group
 	Email string `json:"email,omitempty"`
+
+	// DefaultMessageDenyNotificationText: Default message deny notification
+	// message
+	DefaultMessageDenyNotificationText string `json:"defaultMessageDenyNotificationText,omitempty"`
+
+	// IsArchived: If the contents of the group are archived.
+	IsArchived string `json:"isArchived,omitempty"`
+
+	// MessageDisplayFont: Default message display font. Possible values
+	// are: DEFAULT_FONT FIXED_WIDTH_FONT
+	MessageDisplayFont string `json:"messageDisplayFont,omitempty"`
+
+	// WhoCanJoin: Permissions to join the group. Possible values are:
+	// ANYONE_CAN_JOIN ALL_IN_DOMAIN_CAN_JOIN INVITED_CAN_JOIN
+	// CAN_REQUEST_TO_JOIN
+	WhoCanJoin string `json:"whoCanJoin,omitempty"`
+
+	// Name: Name of the Group
+	Name string `json:"name,omitempty"`
 }
 
 // method id "groupsSettings.groups.get":

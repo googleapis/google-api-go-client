@@ -112,6 +112,17 @@ type OutputOutputMulti struct {
 }
 
 type Training struct {
+	// StoragePMMLLocation: Google storage location of the preprocessing
+	// pmml file.
+	StoragePMMLLocation string `json:"storagePMMLLocation,omitempty"`
+
+	// Utility: A class weighting function, which allows the importance
+	// weights for class labels to be specified [Categorical models only].
+	Utility []*TrainingUtility `json:"utility,omitempty"`
+
+	// SelfLink: A URL to re-request this resource.
+	SelfLink string `json:"selfLink,omitempty"`
+
 	// StorageDataLocation: Google storage location of the training data
 	// file.
 	StorageDataLocation string `json:"storageDataLocation,omitempty"`
@@ -135,17 +146,6 @@ type Training struct {
 	// StoragePMMLModelLocation: Google storage location of the pmml model
 	// file.
 	StoragePMMLModelLocation string `json:"storagePMMLModelLocation,omitempty"`
-
-	// StoragePMMLLocation: Google storage location of the preprocessing
-	// pmml file.
-	StoragePMMLLocation string `json:"storagePMMLLocation,omitempty"`
-
-	// Utility: A class weighting function, which allows the importance
-	// weights for class labels to be specified [Categorical models only].
-	Utility []*TrainingUtility `json:"utility,omitempty"`
-
-	// SelfLink: A URL to re-request this resource.
-	SelfLink string `json:"selfLink,omitempty"`
 }
 
 type TrainingDataAnalysis struct {
@@ -153,15 +153,6 @@ type TrainingDataAnalysis struct {
 }
 
 type TrainingModelInfo struct {
-	// ClassificationAccuracy: A number between 0.0 and 1.0, where 1.0 is
-	// 100% accurate. This is an estimate, based on the amount and quality
-	// of the training data, of the estimated prediction accuracy. You can
-	// use this is a guide to decide whether the results are accurate enough
-	// for your needs. This estimate will be more reliable if your real
-	// input data is similar to your training data [Categorical models
-	// only].
-	ClassificationAccuracy float64 `json:"classificationAccuracy,omitempty"`
-
 	// ConfusionMatrixRowTotals: A list of the confusion matrix row totals
 	ConfusionMatrixRowTotals *TrainingModelInfoConfusionMatrixRowTotals `json:"confusionMatrixRowTotals,omitempty"`
 
@@ -192,6 +183,15 @@ type TrainingModelInfo struct {
 	// ClassWeightedAccuracy: Estimated accuracy of model taking utility
 	// weights into account [Categorical models only].
 	ClassWeightedAccuracy float64 `json:"classWeightedAccuracy,omitempty"`
+
+	// ClassificationAccuracy: A number between 0.0 and 1.0, where 1.0 is
+	// 100% accurate. This is an estimate, based on the amount and quality
+	// of the training data, of the estimated prediction accuracy. You can
+	// use this is a guide to decide whether the results are accurate enough
+	// for your needs. This estimate will be more reliable if your real
+	// input data is similar to your training data [Categorical models
+	// only].
+	ClassificationAccuracy float64 `json:"classificationAccuracy,omitempty"`
 }
 
 type TrainingModelInfoConfusionMatrix struct {

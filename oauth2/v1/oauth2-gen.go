@@ -54,6 +54,13 @@ type UserinfoService struct {
 }
 
 type Tokeninfo struct {
+	// User_id: The Gaia obfuscated user id.
+	User_id string `json:"user_id,omitempty"`
+
+	// Access_type: The access type granted with this toke. It can be
+	// offline or online.
+	Access_type string `json:"access_type,omitempty"`
+
 	// Verified_email: Boolean flag which is true if the email address is
 	// verified. Present only if the email scope is present in the request.
 	Verified_email bool `json:"verified_email,omitempty"`
@@ -76,13 +83,6 @@ type Tokeninfo struct {
 	// Expires_in: The expiry time of the token, as number of seconds left
 	// until expiry.
 	Expires_in int64 `json:"expires_in,omitempty"`
-
-	// User_id: The Gaia obfuscated user id.
-	User_id string `json:"user_id,omitempty"`
-
-	// Access_type: The access type granted with this toke. It can be
-	// offline or online.
-	Access_type string `json:"access_type,omitempty"`
 }
 
 type Userinfo struct {

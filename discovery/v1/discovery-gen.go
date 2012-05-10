@@ -69,6 +69,13 @@ type DirectoryList struct {
 }
 
 type DirectoryListItems struct {
+	// DocumentationLink: A link to human readable documentation for the
+	// API.
+	DocumentationLink string `json:"documentationLink,omitempty"`
+
+	// Icons: Links to 16x16 and 32x32 icons representing the API.
+	Icons *DirectoryListItemsIcons `json:"icons,omitempty"`
+
 	// Version: The version of the API.
 	Version string `json:"version,omitempty"`
 
@@ -99,13 +106,6 @@ type DirectoryListItems struct {
 
 	// Preferred: True if this version is the preferred version to use.
 	Preferred bool `json:"preferred,omitempty"`
-
-	// DocumentationLink: A link to human readable documentation for the
-	// API.
-	DocumentationLink string `json:"documentationLink,omitempty"`
-
-	// Icons: Links to 16x16 and 32x32 icons representing the API.
-	Icons *DirectoryListItemsIcons `json:"icons,omitempty"`
 }
 
 type DirectoryListItemsIcons struct {
@@ -117,14 +117,6 @@ type DirectoryListItemsIcons struct {
 }
 
 type JsonSchema struct {
-	// Items: If this is a schema for an array, this property is the schema
-	// for each element in the array.
-	Items *JsonSchema `json:"items,omitempty"`
-
-	// Ref: A reference to another schema. The value of this property is the
-	// "id" of another schema.
-	Ref string `json:"$ref,omitempty"`
-
 	// EnumDescriptions: The descriptions for the enums. Each position maps
 	// to the corresponding value in the "enum" array.
 	EnumDescriptions []string `json:"enumDescriptions,omitempty"`
@@ -180,6 +172,14 @@ type JsonSchema struct {
 
 	// Pattern: The regular expression this parameter must conform to.
 	Pattern string `json:"pattern,omitempty"`
+
+	// Items: If this is a schema for an array, this property is the schema
+	// for each element in the array.
+	Items *JsonSchema `json:"items,omitempty"`
+
+	// Ref: A reference to another schema. The value of this property is the
+	// "id" of another schema.
+	Ref string `json:"$ref,omitempty"`
 }
 
 type JsonSchemaAnnotations struct {
@@ -192,6 +192,21 @@ type JsonSchemaProperties struct {
 }
 
 type RestDescription struct {
+	// ServicePath: The base path for all REST requests.
+	ServicePath string `json:"servicePath,omitempty"`
+
+	// Resources: The resources in this API.
+	Resources *RestDescriptionResources `json:"resources,omitempty"`
+
+	// BatchPath: The path for REST batch requests.
+	BatchPath string `json:"batchPath,omitempty"`
+
+	// Methods: API-level methods for this API.
+	Methods *RestDescriptionMethods `json:"methods,omitempty"`
+
+	// Description: The description of this API.
+	Description string `json:"description,omitempty"`
+
 	// RootUrl: The root url under which all API services live.
 	RootUrl string `json:"rootUrl,omitempty"`
 
@@ -248,21 +263,6 @@ type RestDescription struct {
 
 	// Title: The title of this API.
 	Title string `json:"title,omitempty"`
-
-	// ServicePath: The base path for all REST requests.
-	ServicePath string `json:"servicePath,omitempty"`
-
-	// Resources: The resources in this API.
-	Resources *RestDescriptionResources `json:"resources,omitempty"`
-
-	// BatchPath: The path for REST batch requests.
-	BatchPath string `json:"batchPath,omitempty"`
-
-	// Methods: API-level methods for this API.
-	Methods *RestDescriptionMethods `json:"methods,omitempty"`
-
-	// Description: The description of this API.
-	Description string `json:"description,omitempty"`
 }
 
 type RestDescriptionAuth struct {
@@ -299,9 +299,6 @@ type RestDescriptionSchemas struct {
 }
 
 type RestMethod struct {
-	// HttpMethod: HTTP method used by this method.
-	HttpMethod string `json:"httpMethod,omitempty"`
-
 	// Description: Description of this method.
 	Description string `json:"description,omitempty"`
 
@@ -332,45 +329,48 @@ type RestMethod struct {
 	// to clients on how to structure their method signatures. The array is
 	// ordered such that the "most-significant" parameter appears first.
 	ParameterOrder []string `json:"parameterOrder,omitempty"`
+
+	// HttpMethod: HTTP method used by this method.
+	HttpMethod string `json:"httpMethod,omitempty"`
 }
 
 type RestMethodMediaUpload struct {
-	// Accept: MIME Media Ranges for acceptable media uploads to this
-	// method.
-	Accept []string `json:"accept,omitempty"`
-
 	// Protocols: Supported upload protocols.
 	Protocols *RestMethodMediaUploadProtocols `json:"protocols,omitempty"`
 
 	// MaxSize: Maximum size of a media upload, such as "1MB", "2GB" or
 	// "3TB".
 	MaxSize string `json:"maxSize,omitempty"`
+
+	// Accept: MIME Media Ranges for acceptable media uploads to this
+	// method.
+	Accept []string `json:"accept,omitempty"`
 }
 
 type RestMethodMediaUploadProtocols struct {
-	// Resumable: Supports the Resumable Media Upload protocol.
-	Resumable *RestMethodMediaUploadProtocolsResumable `json:"resumable,omitempty"`
-
 	// Simple: Supports uploading as a single HTTP request.
 	Simple *RestMethodMediaUploadProtocolsSimple `json:"simple,omitempty"`
+
+	// Resumable: Supports the Resumable Media Upload protocol.
+	Resumable *RestMethodMediaUploadProtocolsResumable `json:"resumable,omitempty"`
 }
 
 type RestMethodMediaUploadProtocolsResumable struct {
-	// Multipart: True if this endpoint supports uploading multipart media.
-	Multipart bool `json:"multipart,omitempty"`
-
 	// Path: The URI path to be used for upload. Should be used in
 	// conjunction with the basePath property at the api-level.
 	Path string `json:"path,omitempty"`
+
+	// Multipart: True if this endpoint supports uploading multipart media.
+	Multipart bool `json:"multipart,omitempty"`
 }
 
 type RestMethodMediaUploadProtocolsSimple struct {
-	// Multipart: True if this endpoint supports upload multipart media.
-	Multipart bool `json:"multipart,omitempty"`
-
 	// Path: The URI path to be used for upload. Should be used in
 	// conjunction with the basePath property at the api-level.
 	Path string `json:"path,omitempty"`
+
+	// Multipart: True if this endpoint supports upload multipart media.
+	Multipart bool `json:"multipart,omitempty"`
 }
 
 type RestMethodParameters struct {

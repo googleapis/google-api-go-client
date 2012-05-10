@@ -12,6 +12,7 @@
  },
  "documentationLink": "http://code.google.com/apis/urlshortener/v1/getting_started.html",
  "protocol": "rest",
+ "baseUrl": "https://www.googleapis.com/urlshortener/v1/",
  "basePath": "/urlshortener/v1/",
  "rootUrl": "https://www.googleapis.com/",
  "servicePath": "urlshortener/v1/",

@@ -65,24 +65,24 @@ type WebResourceService struct {
 }
 
 type SiteVerificationWebResourceGettokenRequest struct {
+	// Site: The site for which a verification token will be generated.
+	Site *SiteVerificationWebResourceGettokenRequestSite `json:"site,omitempty"`
+
 	// VerificationMethod: The verification method that will be used to
 	// verify this site. For sites, 'FILE' or 'META' methods may be used.
 	// For domains, only 'DNS' may be used.
 	VerificationMethod string `json:"verificationMethod,omitempty"`
-
-	// Site: The site for which a verification token will be generated.
-	Site *SiteVerificationWebResourceGettokenRequestSite `json:"site,omitempty"`
 }
 
 type SiteVerificationWebResourceGettokenRequestSite struct {
-	// Type: The type of resource to be verified. Can be SITE or INET_DOMAIN
-	// (domain name).
-	Type string `json:"type,omitempty"`
-
 	// Identifier: The site identifier. If the type is set to SITE, the
 	// identifier is a URL. If the type is set to INET_DOMAIN, the site
 	// identifier is a domain name.
 	Identifier string `json:"identifier,omitempty"`
+
+	// Type: The type of resource to be verified. Can be SITE or INET_DOMAIN
+	// (domain name).
+	Type string `json:"type,omitempty"`
 }
 
 type SiteVerificationWebResourceGettokenResponse struct {
@@ -119,13 +119,13 @@ type SiteVerificationWebResourceResource struct {
 }
 
 type SiteVerificationWebResourceResourceSite struct {
-	// Type: The site type. Can be SITE or INET_DOMAIN (domain name).
-	Type string `json:"type,omitempty"`
-
 	// Identifier: The site identifier. If the type is set to SITE, the
 	// identifier is a URL. If the type is set to INET_DOMAIN, the site
 	// identifier is a domain name.
 	Identifier string `json:"identifier,omitempty"`
+
+	// Type: The site type. Can be SITE or INET_DOMAIN (domain name).
+	Type string `json:"type,omitempty"`
 }
 
 // method id "siteVerification.webResource.delete":

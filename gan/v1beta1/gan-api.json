@@ -13,7 +13,6 @@
  },
  "documentationLink": "https://code.google.com/apis/gan/",
  "protocol": "rest",
- "baseUrl": "https://www.googleapis.com/gan/v1beta1/",
  "basePath": "/gan/v1beta1/",
  "rootUrl": "https://www.googleapis.com/",
  "servicePath": "gan/v1beta1/",

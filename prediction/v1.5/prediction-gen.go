@@ -38,11 +38,11 @@ const basePath = "https://www.googleapis.com/prediction/v1.5/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View your data in Google Cloud Storage
-	DevstorageRead_onlyScope = "https://www.googleapis.com/auth/devstorage.read_only"
-
 	// Manage your data in the Google Prediction API
 	PredictionScope = "https://www.googleapis.com/auth/prediction"
+
+	// View your data in Google Cloud Storage
+	DevstorageRead_onlyScope = "https://www.googleapis.com/auth/devstorage.read_only"
 )
 
 func New(client *http.Client) (*Service, error) {
@@ -130,15 +130,15 @@ type AnalyzeDataDescriptionFeaturesCategoricalValues struct {
 }
 
 type AnalyzeDataDescriptionFeaturesNumeric struct {
-	// Count: Number of numeric values for this feature in the data set.
-	Count int64 `json:"count,omitempty,string"`
-
 	// Mean: Mean of the numeric values of this feature in the data set.
 	Mean float64 `json:"mean,omitempty"`
 
 	// Variance: Variance of the numeric values of this feature in the data
 	// set.
 	Variance float64 `json:"variance,omitempty"`
+
+	// Count: Number of numeric values for this feature in the data set.
+	Count int64 `json:"count,omitempty,string"`
 }
 
 type AnalyzeDataDescriptionFeaturesText struct {
@@ -255,6 +255,16 @@ type OutputOutputMulti struct {
 }
 
 type Training struct {
+	// ModelInfo: Model metadata.
+	ModelInfo *TrainingModelInfo `json:"modelInfo,omitempty"`
+
+	// Kind: What kind of resource this is.
+	Kind string `json:"kind,omitempty"`
+
+	// TrainingStatus: The current status of the training job. This can be
+	// one of following: RUNNING; DONE; ERROR; ERROR: TRAINING JOB NOT FOUND
+	TrainingStatus string `json:"trainingStatus,omitempty"`
+
 	// TrainingComplete: Training completion time (as a RFC 3339 timestamp).
 	TrainingComplete string `json:"trainingComplete,omitempty"`
 
@@ -282,23 +292,9 @@ type Training struct {
 	// StorageDataLocation: Google storage location of the training data
 	// file.
 	StorageDataLocation string `json:"storageDataLocation,omitempty"`
-
-	// ModelInfo: Model metadata.
-	ModelInfo *TrainingModelInfo `json:"modelInfo,omitempty"`
-
-	// Kind: What kind of resource this is.
-	Kind string `json:"kind,omitempty"`
-
-	// TrainingStatus: The current status of the training job. This can be
-	// one of following: RUNNING; DONE; ERROR; ERROR: TRAINING JOB NOT FOUND
-	TrainingStatus string `json:"trainingStatus,omitempty"`
 }
 
 type TrainingModelInfo struct {
-	// NumberInstances: Number of valid data instances used in the trained
-	// model.
-	NumberInstances int64 `json:"numberInstances,omitempty,string"`
-
 	// MeanSquaredError: An estimated mean squared error. The can be used to
 	// measure the quality of the predicted model [Regression models only].
 	MeanSquaredError float64 `json:"meanSquaredError,omitempty"`
@@ -322,6 +318,10 @@ type TrainingModelInfo struct {
 	// input data is similar to your training data [Categorical models
 	// only].
 	ClassificationAccuracy float64 `json:"classificationAccuracy,omitempty"`
+
+	// NumberInstances: Number of valid data instances used in the trained
+	// model.
+	NumberInstances int64 `json:"numberInstances,omitempty,string"`
 }
 
 type TrainingUtility struct {

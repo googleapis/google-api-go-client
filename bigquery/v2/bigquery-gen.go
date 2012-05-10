@@ -48,10 +48,10 @@ func New(client *http.Client) (*Service, error) {
 	}
 	s := &Service{client: client}
 	s.Datasets = &DatasetsService{s: s}
-	s.Tables = &TablesService{s: s}
-	s.Tabledata = &TabledataService{s: s}
-	s.Projects = &ProjectsService{s: s}
 	s.Jobs = &JobsService{s: s}
+	s.Projects = &ProjectsService{s: s}
+	s.Tabledata = &TabledataService{s: s}
+	s.Tables = &TablesService{s: s}
 	return s, nil
 }
 
@@ -60,28 +60,16 @@ type Service struct {
 
 	Datasets *DatasetsService
 
-	Tables *TablesService
-
-	Tabledata *TabledataService
+	Jobs *JobsService
 
 	Projects *ProjectsService
 
-	Jobs *JobsService
+	Tabledata *TabledataService
+
+	Tables *TablesService
 }
 
 type DatasetsService struct {
-	s *Service
-}
-
-type TablesService struct {
-	s *Service
-}
-
-type TabledataService struct {
-	s *Service
-}
-
-type ProjectsService struct {
 	s *Service
 }
 
@@ -89,17 +77,19 @@ type JobsService struct {
 	s *Service
 }
 
+type ProjectsService struct {
+	s *Service
+}
+
+type TabledataService struct {
+	s *Service
+}
+
+type TablesService struct {
+	s *Service
+}
+
 type Dataset struct {
-	// SelfLink: [Output-only] An URL that can be used to access this
-	// resource again. You can use this URL in Get or Update requests to
-	// this resource.
-	SelfLink string `json:"selfLink,omitempty"`
-
-	// FriendlyName: [Optional] A descriptive name for this dataset, which
-	// might be shown in any BigQuery user interfaces for browsing the
-	// dataset. Use datasetId for making API calls.
-	FriendlyName string `json:"friendlyName,omitempty"`
-
 	// CreationTime: [Output-only] The time when this dataset was created,
 	// in milliseconds since the epoch.
 	CreationTime int64 `json:"creationTime,omitempty,string"`
@@ -144,6 +134,16 @@ type Dataset struct {
 	// Description: [Optional] A user-friendly string description for the
 	// dataset. This might be shown in BigQuery UI for browsing the dataset.
 	Description string `json:"description,omitempty"`
+
+	// SelfLink: [Output-only] An URL that can be used to access this
+	// resource again. You can use this URL in Get or Update requests to
+	// this resource.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// FriendlyName: [Optional] A descriptive name for this dataset, which
+	// might be shown in any BigQuery user interfaces for browsing the
+	// dataset. Use datasetId for making API calls.
+	FriendlyName string `json:"friendlyName,omitempty"`
 }
 
 type DatasetAccess struct {
@@ -180,13 +180,6 @@ type DatasetAccess struct {
 }
 
 type DatasetList struct {
-	// Kind: The type of list.
-	Kind string `json:"kind,omitempty"`
-
-	// Datasets: An array of one or more summarized dataset resources.
-	// Absent when there are no datasets in the specified project.
-	Datasets []*DatasetListDatasets `json:"datasets,omitempty"`
-
 	// NextPageToken: A token to request the next page of results. Present
 	// only when there is more than one page of results.* See Paging Through
 	// Results in the developer's guide.
@@ -195,12 +188,16 @@ type DatasetList struct {
 	// Etag: A hash of this page of results. See Paging Through Results in
 	// the developer's guide.
 	Etag string `json:"etag,omitempty"`
+
+	// Kind: The type of list.
+	Kind string `json:"kind,omitempty"`
+
+	// Datasets: An array of one or more summarized dataset resources.
+	// Absent when there are no datasets in the specified project.
+	Datasets []*DatasetListDatasets `json:"datasets,omitempty"`
 }
 
 type DatasetListDatasets struct {
-	// DatasetReference: Reference identifying dataset.
-	DatasetReference *DatasetReference `json:"datasetReference,omitempty"`
-
 	// FriendlyName: A descriptive name for this dataset, if one exists.
 	FriendlyName string `json:"friendlyName,omitempty"`
 
@@ -210,6 +207,9 @@ type DatasetListDatasets struct {
 	// Id: The fully-qualified unique name of this dataset in the format
 	// projectId:datasetId.
 	Id string `json:"id,omitempty"`
+
+	// DatasetReference: Reference identifying dataset.
+	DatasetReference *DatasetReference `json:"datasetReference,omitempty"`
 }
 
 type DatasetReference struct {
@@ -222,6 +222,10 @@ type DatasetReference struct {
 }
 
 type ErrorProto struct {
+	// DebugInfo: Debugging information for the service, if present. Should
+	// be ignored.
+	DebugInfo string `json:"debugInfo,omitempty"`
+
 	// Message: A human readable explanation of the error.
 	Message string `json:"message,omitempty"`
 
@@ -231,17 +235,9 @@ type ErrorProto struct {
 
 	// Location: Specifies where the error occurred, if present.
 	Location string `json:"location,omitempty"`
-
-	// DebugInfo: Debugging information for the service, if present. Should
-	// be ignored.
-	DebugInfo string `json:"debugInfo,omitempty"`
 }
 
 type GetQueryResultsResponse struct {
-	// Schema: The schema of the results. Present only when the query
-	// completes successfully.
-	Schema *TableSchema `json:"schema,omitempty"`
-
 	// Etag: A hash of this response.
 	Etag string `json:"etag,omitempty"`
 
@@ -271,9 +267,19 @@ type GetQueryResultsResponse struct {
 	// totalRows are present, this will always be true. If this is false,
 	// totalRows will not be available.
 	JobComplete bool `json:"jobComplete,omitempty"`
+
+	// Schema: The schema of the results. Present only when the query
+	// completes successfully.
+	Schema *TableSchema `json:"schema,omitempty"`
 }
 
 type Job struct {
+	// Etag: [Output-only] A hash of this resource.
+	Etag string `json:"etag,omitempty"`
+
+	// Kind: [Output-only] The type of the resource.
+	Kind string `json:"kind,omitempty"`
+
 	// Id: [Output-only] Opaque ID field of the job
 	Id string `json:"id,omitempty"`
 
@@ -295,18 +301,9 @@ type Job struct {
 	// SelfLink: [Output-only] A URL that can be used to access this
 	// resource again.
 	SelfLink string `json:"selfLink,omitempty"`
-
-	// Etag: [Output-only] A hash of this resource.
-	Etag string `json:"etag,omitempty"`
-
-	// Kind: [Output-only] The type of the resource.
-	Kind string `json:"kind,omitempty"`
 }
 
 type JobConfiguration struct {
-	// Query: [Pick one] Configures a query job.
-	Query *JobConfigurationQuery `json:"query,omitempty"`
-
 	// Load: [Pick one] Configures a load job.
 	Load *JobConfigurationLoad `json:"load,omitempty"`
 
@@ -322,6 +319,9 @@ type JobConfiguration struct {
 	// Properties: [Optional] Properties providing extra details about how
 	// the job should be run. Not used for most jobs.
 	Properties *JobConfigurationProperties `json:"properties,omitempty"`
+
+	// Query: [Pick one] Configures a query job.
+	Query *JobConfigurationQuery `json:"query,omitempty"`
 }
 
 type JobConfigurationExtract struct {
@@ -342,12 +342,6 @@ type JobConfigurationExtract struct {
 }
 
 type JobConfigurationLink struct {
-	// SourceUri: [Required] URI of source table to link.
-	SourceUri []string `json:"sourceUri,omitempty"`
-
-	// DestinationTable: [Required] The destination table of the link job.
-	DestinationTable *TableReference `json:"destinationTable,omitempty"`
-
 	// CreateDisposition: [Optional] Whether or not to create a new table,
 	// if none exists.
 	CreateDisposition string `json:"createDisposition,omitempty"`
@@ -357,22 +351,15 @@ type JobConfigurationLink struct {
 	// require that the the table is empty (WRITE_EMPTY). Default is
 	// WRITE_APPEND.
 	WriteDisposition string `json:"writeDisposition,omitempty"`
+
+	// SourceUri: [Required] URI of source table to link.
+	SourceUri []string `json:"sourceUri,omitempty"`
+
+	// DestinationTable: [Required] The destination table of the link job.
+	DestinationTable *TableReference `json:"destinationTable,omitempty"`
 }
 
 type JobConfigurationLoad struct {
-	// FieldDelimiter: [Optional] Delimiter to use between fields in the
-	// import data. Default is ','
-	FieldDelimiter string `json:"fieldDelimiter,omitempty"`
-
-	// MaxBadRecords: [Optional] Maximum number of bad records that should
-	// be ignored before the entire job is aborted and no updates are
-	// performed.
-	MaxBadRecords int64 `json:"maxBadRecords,omitempty"`
-
-	// Encoding: [Optional] Character encoding of the input data. May be
-	// UTF-8 or ISO-8859-1. Default is UTF-8.
-	Encoding string `json:"encoding,omitempty"`
-
 	// Schema: [Optional] Schema of the table being written to.
 	Schema *TableSchema `json:"schema,omitempty"`
 
@@ -397,12 +384,32 @@ type JobConfigurationLoad struct {
 	// SourceUris: [Required] Source URIs describing Google Cloud Storage
 	// locations of data to load.
 	SourceUris []string `json:"sourceUris,omitempty"`
+
+	// FieldDelimiter: [Optional] Delimiter to use between fields in the
+	// import data. Default is ','
+	FieldDelimiter string `json:"fieldDelimiter,omitempty"`
+
+	// MaxBadRecords: [Optional] Maximum number of bad records that should
+	// be ignored before the entire job is aborted and no updates are
+	// performed.
+	MaxBadRecords int64 `json:"maxBadRecords,omitempty"`
+
+	// Encoding: [Optional] Character encoding of the input data. May be
+	// UTF-8 or ISO-8859-1. Default is UTF-8.
+	Encoding string `json:"encoding,omitempty"`
 }
 
 type JobConfigurationProperties struct {
 }
 
 type JobConfigurationQuery struct {
+	// Query: [Required] BigQuery SQL query to execute.
+	Query string `json:"query,omitempty"`
+
+	// DefaultDataset: [Optional] Specifies the default dataset to assume
+	// for unqualified table names in the query.
+	DefaultDataset *DatasetReference `json:"defaultDataset,omitempty"`
+
 	// DestinationTable: [Optional] Describes the table where the query
 	// results should be stored. If not present, a new table will be created
 	// to store the results.
@@ -418,13 +425,6 @@ type JobConfigurationQuery struct {
 	// require that the the table is empty (WRITE_EMPTY). Default is
 	// WRITE_EMPTY.
 	WriteDisposition string `json:"writeDisposition,omitempty"`
-
-	// Query: [Required] BigQuery SQL query to execute.
-	Query string `json:"query,omitempty"`
-
-	// DefaultDataset: [Optional] Specifies the default dataset to assume
-	// for unqualified table names in the query.
-	DefaultDataset *DatasetReference `json:"defaultDataset,omitempty"`
 }
 
 type JobConfigurationTableCopy struct {
@@ -461,6 +461,14 @@ type JobList struct {
 }
 
 type JobListJobs struct {
+	// Statistics: [Output-only] Information about the job, including
+	// starting time and ending time of the job.
+	Statistics *JobStatistics `json:"statistics,omitempty"`
+
+	// State: Running state of the job. When the state is DONE, errorResult
+	// can be checked to determine whether the job succeeded or failed.
+	State string `json:"state,omitempty"`
+
 	// ErrorResult: A result object that will be present only if the job has
 	// failed.
 	ErrorResult *ErrorProto `json:"errorResult,omitempty"`
@@ -480,14 +488,6 @@ type JobListJobs struct {
 
 	// JobReference: Job reference uniquely identifying the job.
 	JobReference *JobReference `json:"jobReference,omitempty"`
-
-	// Statistics: [Output-only] Information about the job, including
-	// starting time and ending time of the job.
-	Statistics *JobStatistics `json:"statistics,omitempty"`
-
-	// State: Running state of the job. When the state is DONE, errorResult
-	// can be checked to determine whether the job succeeded or failed.
-	State string `json:"state,omitempty"`
 }
 
 type JobReference struct {
@@ -513,10 +513,6 @@ type JobStatistics struct {
 }
 
 type JobStatus struct {
-	// ErrorResult: [Output-only] Final error result of the job. If present,
-	// indicates that the job has completed and was unsuccessful.
-	ErrorResult *ErrorProto `json:"errorResult,omitempty"`
-
 	// Errors: [Output-only] All errors encountered during the running of
 	// the job. Errors here do not necessarily mean that the job has
 	// completed or was unsuccessful.
@@ -524,12 +520,13 @@ type JobStatus struct {
 
 	// State: [Output-only] Running state of the job.
 	State string `json:"state,omitempty"`
+
+	// ErrorResult: [Output-only] Final error result of the job. If present,
+	// indicates that the job has completed and was unsuccessful.
+	ErrorResult *ErrorProto `json:"errorResult,omitempty"`
 }
 
 type ProjectList struct {
-	// Projects: Projects to which you have at least READ access.
-	Projects []*ProjectListProjects `json:"projects,omitempty"`
-
 	// NextPageToken: A token to request the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
@@ -541,20 +538,23 @@ type ProjectList struct {
 
 	// Kind: The type of list.
 	Kind string `json:"kind,omitempty"`
+
+	// Projects: Projects to which you have at least READ access.
+	Projects []*ProjectListProjects `json:"projects,omitempty"`
 }
 
 type ProjectListProjects struct {
-	// FriendlyName: A descriptive name for this project.
-	FriendlyName string `json:"friendlyName,omitempty"`
-
-	// Kind: The resource type.
-	Kind string `json:"kind,omitempty"`
-
 	// Id: An opaque ID of this project.
 	Id string `json:"id,omitempty"`
 
 	// ProjectReference: A unique reference to this project.
 	ProjectReference *ProjectReference `json:"projectReference,omitempty"`
+
+	// FriendlyName: A descriptive name for this project.
+	FriendlyName string `json:"friendlyName,omitempty"`
+
+	// Kind: The resource type.
+	Kind string `json:"kind,omitempty"`
 }
 
 type ProjectReference struct {
@@ -564,6 +564,14 @@ type ProjectReference struct {
 }
 
 type QueryRequest struct {
+	// Query: [Required] A query string, following the BigQuery query syntax
+	// of the query to execute. Table names should be qualified by dataset
+	// name in the format projectId:datasetId.tableId unless you specify the
+	// defaultDataset value. If the table is in the same project as the job,
+	// you can omit the project ID. Example: SELECT f1 FROM
+	// myProjectId:myDatasetId.myTableId.
+	Query string `json:"query,omitempty"`
+
 	// DefaultDataset: [Optional] Specifies the default datasetId and
 	// projectId to assume for any unqualified table names in the query. If
 	// not set, all table names in the query string must be fully-qualified
@@ -584,26 +592,9 @@ type QueryRequest struct {
 
 	// Kind: The resource type of the request.
 	Kind string `json:"kind,omitempty"`
-
-	// Query: [Required] A query string, following the BigQuery query syntax
-	// of the query to execute. Table names should be qualified by dataset
-	// name in the format projectId:datasetId.tableId unless you specify the
-	// defaultDataset value. If the table is in the same project as the job,
-	// you can omit the project ID. Example: SELECT f1 FROM
-	// myProjectId:myDatasetId.myTableId.
-	Query string `json:"query,omitempty"`
 }
 
 type QueryResponse struct {
-	// JobComplete: Whether the query has completed or not. If rows or
-	// totalRows are present, this will always be true. If this is false,
-	// totalRows will not be available.
-	JobComplete bool `json:"jobComplete,omitempty"`
-
-	// Schema: The schema of the results. Present only when the query
-	// completes successfully.
-	Schema *TableSchema `json:"schema,omitempty"`
-
 	// Kind: The resource type.
 	Kind string `json:"kind,omitempty"`
 
@@ -624,9 +615,25 @@ type QueryResponse struct {
 	// results, subsequent pages can be fetched via the same mechanism
 	// (GetQueryResults).
 	JobReference *JobReference `json:"jobReference,omitempty"`
+
+	// JobComplete: Whether the query has completed or not. If rows or
+	// totalRows are present, this will always be true. If this is false,
+	// totalRows will not be available.
+	JobComplete bool `json:"jobComplete,omitempty"`
+
+	// Schema: The schema of the results. Present only when the query
+	// completes successfully.
+	Schema *TableSchema `json:"schema,omitempty"`
 }
 
 type Table struct {
+	// LastModifiedTime: [Output-only] The time when this table was last
+	// modified, in milliseconds since the epoch.
+	LastModifiedTime int64 `json:"lastModifiedTime,omitempty,string"`
+
+	// NumBytes: [Output-only] The size of the table in bytes.
+	NumBytes int64 `json:"numBytes,omitempty,string"`
+
 	// Description: [Optional] A user-friendly description of this table.
 	Description string `json:"description,omitempty"`
 
@@ -664,42 +671,35 @@ type Table struct {
 
 	// Id: [Output-only] An opaque ID uniquely identifying the table.
 	Id string `json:"id,omitempty"`
-
-	// LastModifiedTime: [Output-only] The time when this table was last
-	// modified, in milliseconds since the epoch.
-	LastModifiedTime int64 `json:"lastModifiedTime,omitempty,string"`
-
-	// NumBytes: [Output-only] The size of the table in bytes.
-	NumBytes int64 `json:"numBytes,omitempty,string"`
 }
 
 type TableDataList struct {
-	// TotalRows: The total number of rows in the complete table.
-	TotalRows int64 `json:"totalRows,omitempty,string"`
-
-	// Rows: Rows of results.
-	Rows []*TableRow `json:"rows,omitempty"`
-
 	// Etag: A hash of this page of results.
 	Etag string `json:"etag,omitempty"`
 
 	// Kind: The resource type of the response.
 	Kind string `json:"kind,omitempty"`
+
+	// TotalRows: The total number of rows in the complete table.
+	TotalRows int64 `json:"totalRows,omitempty,string"`
+
+	// Rows: Rows of results.
+	Rows []*TableRow `json:"rows,omitempty"`
 }
 
 type TableFieldSchema struct {
-	// Fields: [Optional] Describes nested fields when type is RECORD.
-	Fields []*TableFieldSchema `json:"fields,omitempty"`
-
-	// Type: [Required] Data type of the field.
-	Type string `json:"type,omitempty"`
-
 	// Name: [Required] Name of the field.
 	Name string `json:"name,omitempty"`
 
 	// Mode: [Optional] Mode of the field (whether or not it can be null.
 	// Default is NULLABLE.
 	Mode string `json:"mode,omitempty"`
+
+	// Fields: [Optional] Describes nested fields when type is RECORD.
+	Fields []*TableFieldSchema `json:"fields,omitempty"`
+
+	// Type: [Required] Data type of the field.
+	Type string `json:"type,omitempty"`
 }
 
 type TableList struct {
@@ -734,15 +734,15 @@ type TableListTables struct {
 }
 
 type TableReference struct {
-	// TableId: [Required] ID of the table.
-	TableId string `json:"tableId,omitempty"`
-
 	// ProjectId: [Required] ID of the project billed for storage of the
 	// table.
 	ProjectId string `json:"projectId,omitempty"`
 
 	// DatasetId: [Required] ID of the dataset containing the table.
 	DatasetId string `json:"datasetId,omitempty"`
+
+	// TableId: [Required] ID of the table.
+	TableId string `json:"tableId,omitempty"`
 }
 
 type TableRow struct {
@@ -1251,6 +1251,727 @@ func (c *DatasetsUpdateCall) Do() (*Dataset, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "Dataset"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigquery"
+	//   ]
+	// }
+
+}
+
+// method id "bigquery.jobs.get":
+
+type JobsGetCall struct {
+	s         *Service
+	projectId string
+	jobId     string
+	opt_      map[string]interface{}
+}
+
+// Get: Retrieves the specified job by ID.
+func (r *JobsService) Get(projectId string, jobId string) *JobsGetCall {
+	c := &JobsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.projectId = projectId
+	c.jobId = jobId
+	return c
+}
+
+func (c *JobsGetCall) Do() (*Job, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2/", "projects/{projectId}/jobs/{jobId}")
+	urls = strings.Replace(urls, "{projectId}", cleanPathString(c.projectId), 1)
+	urls = strings.Replace(urls, "{jobId}", cleanPathString(c.jobId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Job)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the specified job by ID.",
+	//   "httpMethod": "GET",
+	//   "id": "bigquery.jobs.get",
+	//   "parameterOrder": [
+	//     "projectId",
+	//     "jobId"
+	//   ],
+	//   "parameters": {
+	//     "jobId": {
+	//       "description": "Job ID of the requested job",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "projectId": {
+	//       "description": "Project ID of the requested job",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "projects/{projectId}/jobs/{jobId}",
+	//   "response": {
+	//     "$ref": "Job"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigquery"
+	//   ]
+	// }
+
+}
+
+// method id "bigquery.jobs.getQueryResults":
+
+type JobsGetQueryResultsCall struct {
+	s         *Service
+	projectId string
+	jobId     string
+	opt_      map[string]interface{}
+}
+
+// GetQueryResults: Retrieves the results of a query job.
+func (r *JobsService) GetQueryResults(projectId string, jobId string) *JobsGetQueryResultsCall {
+	c := &JobsGetQueryResultsCall{s: r.s, opt_: make(map[string]interface{})}
+	c.projectId = projectId
+	c.jobId = jobId
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum number
+// of results to read
+func (c *JobsGetQueryResultsCall) MaxResults(maxResults int64) *JobsGetQueryResultsCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// StartIndex sets the optional parameter "startIndex": Zero-based index
+// of the starting row
+func (c *JobsGetQueryResultsCall) StartIndex(startIndex uint64) *JobsGetQueryResultsCall {
+	c.opt_["startIndex"] = startIndex
+	return c
+}
+
+// TimeoutMs sets the optional parameter "timeoutMs": How long to wait
+// for the query to complete, in milliseconds, before returning. Default
+// is to return immediately. If the timeout passes before the job
+// completes, the request will fail with a TIMEOUT error
+func (c *JobsGetQueryResultsCall) TimeoutMs(timeoutMs int64) *JobsGetQueryResultsCall {
+	c.opt_["timeoutMs"] = timeoutMs
+	return c
+}
+
+func (c *JobsGetQueryResultsCall) Do() (*GetQueryResultsResponse, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["startIndex"]; ok {
+		params.Set("startIndex", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["timeoutMs"]; ok {
+		params.Set("timeoutMs", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2/", "projects/{projectId}/queries/{jobId}")
+	urls = strings.Replace(urls, "{projectId}", cleanPathString(c.projectId), 1)
+	urls = strings.Replace(urls, "{jobId}", cleanPathString(c.jobId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(GetQueryResultsResponse)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the results of a query job.",
+	//   "httpMethod": "GET",
+	//   "id": "bigquery.jobs.getQueryResults",
+	//   "parameterOrder": [
+	//     "projectId",
+	//     "jobId"
+	//   ],
+	//   "parameters": {
+	//     "jobId": {
+	//       "description": "Job ID of the query job",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "description": "Maximum number of results to read",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "projectId": {
+	//       "description": "Project ID of the query job",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "startIndex": {
+	//       "description": "Zero-based index of the starting row",
+	//       "format": "uint64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "timeoutMs": {
+	//       "description": "How long to wait for the query to complete, in milliseconds, before returning. Default is to return immediately. If the timeout passes before the job completes, the request will fail with a TIMEOUT error",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     }
+	//   },
+	//   "path": "projects/{projectId}/queries/{jobId}",
+	//   "response": {
+	//     "$ref": "GetQueryResultsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigquery"
+	//   ]
+	// }
+
+}
+
+// method id "bigquery.jobs.insert":
+
+type JobsInsertCall struct {
+	s         *Service
+	projectId string
+	job       *Job
+	opt_      map[string]interface{}
+	media_    io.Reader
+}
+
+// Insert: Starts a new asynchronous job.
+func (r *JobsService) Insert(projectId string, job *Job) *JobsInsertCall {
+	c := &JobsInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.projectId = projectId
+	c.job = job
+	return c
+}
+func (c *JobsInsertCall) Media(r io.Reader) *JobsInsertCall {
+	c.media_ = r
+	return c
+}
+
+func (c *JobsInsertCall) Do() (*Job, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.job)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2/", "projects/{projectId}/jobs")
+	if c.media_ != nil {
+		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
+	}
+	urls = strings.Replace(urls, "{projectId}", cleanPathString(c.projectId), 1)
+	urls += "?" + params.Encode()
+	contentLength_, hasMedia_ := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+	req, _ := http.NewRequest("POST", urls, body)
+	if hasMedia_ {
+		req.ContentLength = contentLength_
+	}
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Job)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Starts a new asynchronous job.",
+	//   "httpMethod": "POST",
+	//   "id": "bigquery.jobs.insert",
+	//   "mediaUpload": {
+	//     "accept": [
+	//       "application/octet-stream"
+	//     ],
+	//     "protocols": {
+	//       "resumable": {
+	//         "multipart": true,
+	//         "path": "/resumable/upload/bigquery/v2/projects/{projectId}/jobs"
+	//       },
+	//       "simple": {
+	//         "multipart": true,
+	//         "path": "/upload/bigquery/v2/projects/{projectId}/jobs"
+	//       }
+	//     }
+	//   },
+	//   "parameterOrder": [
+	//     "projectId"
+	//   ],
+	//   "parameters": {
+	//     "projectId": {
+	//       "description": "Project ID of the project that will be billed for the job",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "projects/{projectId}/jobs",
+	//   "request": {
+	//     "$ref": "Job"
+	//   },
+	//   "response": {
+	//     "$ref": "Job"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigquery"
+	//   ]
+	// }
+
+}
+
+// method id "bigquery.jobs.list":
+
+type JobsListCall struct {
+	s         *Service
+	projectId string
+	opt_      map[string]interface{}
+}
+
+// List: Lists all the Jobs in the specified project that were started
+// by the user.
+func (r *JobsService) List(projectId string) *JobsListCall {
+	c := &JobsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.projectId = projectId
+	return c
+}
+
+// AllUsers sets the optional parameter "allUsers": Whether to display
+// jobs owned by all users in the project. Default false
+func (c *JobsListCall) AllUsers(allUsers bool) *JobsListCall {
+	c.opt_["allUsers"] = allUsers
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum number
+// of results to return
+func (c *JobsListCall) MaxResults(maxResults int64) *JobsListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token,
+// returned by a previous call, to request the next page of results
+func (c *JobsListCall) PageToken(pageToken string) *JobsListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+// Projection sets the optional parameter "projection": Restrict
+// information returned to a set of selected fields
+func (c *JobsListCall) Projection(projection string) *JobsListCall {
+	c.opt_["projection"] = projection
+	return c
+}
+
+// StateFilter sets the optional parameter "stateFilter": Filter for job
+// state
+func (c *JobsListCall) StateFilter(stateFilter string) *JobsListCall {
+	c.opt_["stateFilter"] = stateFilter
+	return c
+}
+
+func (c *JobsListCall) Do() (*JobList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["allUsers"]; ok {
+		params.Set("allUsers", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["projection"]; ok {
+		params.Set("projection", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["stateFilter"]; ok {
+		params.Set("stateFilter", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2/", "projects/{projectId}/jobs")
+	urls = strings.Replace(urls, "{projectId}", cleanPathString(c.projectId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(JobList)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all the Jobs in the specified project that were started by the user.",
+	//   "httpMethod": "GET",
+	//   "id": "bigquery.jobs.list",
+	//   "parameterOrder": [
+	//     "projectId"
+	//   ],
+	//   "parameters": {
+	//     "allUsers": {
+	//       "description": "Whether to display jobs owned by all users in the project. Default false",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "maxResults": {
+	//       "description": "Maximum number of results to return",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Page token, returned by a previous call, to request the next page of results",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "projectId": {
+	//       "description": "Project ID of the jobs to list",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "projection": {
+	//       "description": "Restrict information returned to a set of selected fields",
+	//       "enum": [
+	//         "full",
+	//         "minimal"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Includes all job data",
+	//         "Does not include the job configuration"
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "stateFilter": {
+	//       "description": "Filter for job state",
+	//       "enum": [
+	//         "done",
+	//         "pending",
+	//         "running"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Finished jobs",
+	//         "Pending jobs",
+	//         "Running jobs"
+	//       ],
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "projects/{projectId}/jobs",
+	//   "response": {
+	//     "$ref": "JobList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigquery"
+	//   ]
+	// }
+
+}
+
+// method id "bigquery.jobs.query":
+
+type JobsQueryCall struct {
+	s            *Service
+	projectId    string
+	queryrequest *QueryRequest
+	opt_         map[string]interface{}
+}
+
+// Query: Runs a BigQuery SQL query synchronously and returns query
+// results if the query completes within a specified timeout.
+func (r *JobsService) Query(projectId string, queryrequest *QueryRequest) *JobsQueryCall {
+	c := &JobsQueryCall{s: r.s, opt_: make(map[string]interface{})}
+	c.projectId = projectId
+	c.queryrequest = queryrequest
+	return c
+}
+
+func (c *JobsQueryCall) Do() (*QueryResponse, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.queryrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2/", "projects/{projectId}/queries")
+	urls = strings.Replace(urls, "{projectId}", cleanPathString(c.projectId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(QueryResponse)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Runs a BigQuery SQL query synchronously and returns query results if the query completes within a specified timeout.",
+	//   "httpMethod": "POST",
+	//   "id": "bigquery.jobs.query",
+	//   "parameterOrder": [
+	//     "projectId"
+	//   ],
+	//   "parameters": {
+	//     "projectId": {
+	//       "description": "Project ID of the project billed for the query",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "projects/{projectId}/queries",
+	//   "request": {
+	//     "$ref": "QueryRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "QueryResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigquery"
+	//   ]
+	// }
+
+}
+
+// method id "bigquery.projects.list":
+
+type ProjectsListCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// List: Lists the projects to which you have at least read access.
+func (r *ProjectsService) List() *ProjectsListCall {
+	c := &ProjectsListCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum number
+// of results to return
+func (c *ProjectsListCall) MaxResults(maxResults int64) *ProjectsListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token,
+// returned by a previous call, to request the next page of results
+func (c *ProjectsListCall) PageToken(pageToken string) *ProjectsListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+func (c *ProjectsListCall) Do() (*ProjectList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2/", "projects")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(ProjectList)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the projects to which you have at least read access.",
+	//   "httpMethod": "GET",
+	//   "id": "bigquery.projects.list",
+	//   "parameters": {
+	//     "maxResults": {
+	//       "description": "Maximum number of results to return",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Page token, returned by a previous call, to request the next page of results",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "projects",
+	//   "response": {
+	//     "$ref": "ProjectList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigquery"
+	//   ]
+	// }
+
+}
+
+// method id "bigquery.tabledata.list":
+
+type TabledataListCall struct {
+	s         *Service
+	projectId string
+	datasetId string
+	tableId   string
+	opt_      map[string]interface{}
+}
+
+// List: Retrieves table data from a specified set of rows.
+func (r *TabledataService) List(projectId string, datasetId string, tableId string) *TabledataListCall {
+	c := &TabledataListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.projectId = projectId
+	c.datasetId = datasetId
+	c.tableId = tableId
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum number
+// of results to return
+func (c *TabledataListCall) MaxResults(maxResults int64) *TabledataListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// StartIndex sets the optional parameter "startIndex": Zero-based index
+// of the starting row to read
+func (c *TabledataListCall) StartIndex(startIndex uint64) *TabledataListCall {
+	c.opt_["startIndex"] = startIndex
+	return c
+}
+
+func (c *TabledataListCall) Do() (*TableDataList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["startIndex"]; ok {
+		params.Set("startIndex", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2/", "projects/{projectId}/datasets/{datasetId}/tables/{tableId}/data")
+	urls = strings.Replace(urls, "{projectId}", cleanPathString(c.projectId), 1)
+	urls = strings.Replace(urls, "{datasetId}", cleanPathString(c.datasetId), 1)
+	urls = strings.Replace(urls, "{tableId}", cleanPathString(c.tableId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(TableDataList)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves table data from a specified set of rows.",
+	//   "httpMethod": "GET",
+	//   "id": "bigquery.tabledata.list",
+	//   "parameterOrder": [
+	//     "projectId",
+	//     "datasetId",
+	//     "tableId"
+	//   ],
+	//   "parameters": {
+	//     "datasetId": {
+	//       "description": "Dataset ID of the table to read",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "description": "Maximum number of results to return",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "projectId": {
+	//       "description": "Project ID of the table to read",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "startIndex": {
+	//       "description": "Zero-based index of the starting row to read",
+	//       "format": "uint64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "tableId": {
+	//       "description": "Table ID of the table to read",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "projects/{projectId}/datasets/{datasetId}/tables/{tableId}/data",
+	//   "response": {
+	//     "$ref": "TableDataList"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/bigquery"
@@ -1785,727 +2506,6 @@ func (c *TablesUpdateCall) Do() (*Table, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "Table"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery"
-	//   ]
-	// }
-
-}
-
-// method id "bigquery.tabledata.list":
-
-type TabledataListCall struct {
-	s         *Service
-	projectId string
-	datasetId string
-	tableId   string
-	opt_      map[string]interface{}
-}
-
-// List: Retrieves table data from a specified set of rows.
-func (r *TabledataService) List(projectId string, datasetId string, tableId string) *TabledataListCall {
-	c := &TabledataListCall{s: r.s, opt_: make(map[string]interface{})}
-	c.projectId = projectId
-	c.datasetId = datasetId
-	c.tableId = tableId
-	return c
-}
-
-// MaxResults sets the optional parameter "maxResults": Maximum number
-// of results to return
-func (c *TabledataListCall) MaxResults(maxResults int64) *TabledataListCall {
-	c.opt_["maxResults"] = maxResults
-	return c
-}
-
-// StartIndex sets the optional parameter "startIndex": Zero-based index
-// of the starting row to read
-func (c *TabledataListCall) StartIndex(startIndex uint64) *TabledataListCall {
-	c.opt_["startIndex"] = startIndex
-	return c
-}
-
-func (c *TabledataListCall) Do() (*TableDataList, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["startIndex"]; ok {
-		params.Set("startIndex", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2/", "projects/{projectId}/datasets/{datasetId}/tables/{tableId}/data")
-	urls = strings.Replace(urls, "{projectId}", cleanPathString(c.projectId), 1)
-	urls = strings.Replace(urls, "{datasetId}", cleanPathString(c.datasetId), 1)
-	urls = strings.Replace(urls, "{tableId}", cleanPathString(c.tableId), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(TableDataList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Retrieves table data from a specified set of rows.",
-	//   "httpMethod": "GET",
-	//   "id": "bigquery.tabledata.list",
-	//   "parameterOrder": [
-	//     "projectId",
-	//     "datasetId",
-	//     "tableId"
-	//   ],
-	//   "parameters": {
-	//     "datasetId": {
-	//       "description": "Dataset ID of the table to read",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "maxResults": {
-	//       "description": "Maximum number of results to return",
-	//       "format": "uint32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "projectId": {
-	//       "description": "Project ID of the table to read",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "startIndex": {
-	//       "description": "Zero-based index of the starting row to read",
-	//       "format": "uint64",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "tableId": {
-	//       "description": "Table ID of the table to read",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "projects/{projectId}/datasets/{datasetId}/tables/{tableId}/data",
-	//   "response": {
-	//     "$ref": "TableDataList"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery"
-	//   ]
-	// }
-
-}
-
-// method id "bigquery.projects.list":
-
-type ProjectsListCall struct {
-	s    *Service
-	opt_ map[string]interface{}
-}
-
-// List: Lists the projects to which you have at least read access.
-func (r *ProjectsService) List() *ProjectsListCall {
-	c := &ProjectsListCall{s: r.s, opt_: make(map[string]interface{})}
-	return c
-}
-
-// MaxResults sets the optional parameter "maxResults": Maximum number
-// of results to return
-func (c *ProjectsListCall) MaxResults(maxResults int64) *ProjectsListCall {
-	c.opt_["maxResults"] = maxResults
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": Page token,
-// returned by a previous call, to request the next page of results
-func (c *ProjectsListCall) PageToken(pageToken string) *ProjectsListCall {
-	c.opt_["pageToken"] = pageToken
-	return c
-}
-
-func (c *ProjectsListCall) Do() (*ProjectList, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2/", "projects")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(ProjectList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Lists the projects to which you have at least read access.",
-	//   "httpMethod": "GET",
-	//   "id": "bigquery.projects.list",
-	//   "parameters": {
-	//     "maxResults": {
-	//       "description": "Maximum number of results to return",
-	//       "format": "uint32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Page token, returned by a previous call, to request the next page of results",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "projects",
-	//   "response": {
-	//     "$ref": "ProjectList"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery"
-	//   ]
-	// }
-
-}
-
-// method id "bigquery.jobs.get":
-
-type JobsGetCall struct {
-	s         *Service
-	projectId string
-	jobId     string
-	opt_      map[string]interface{}
-}
-
-// Get: Retrieves the specified job by ID.
-func (r *JobsService) Get(projectId string, jobId string) *JobsGetCall {
-	c := &JobsGetCall{s: r.s, opt_: make(map[string]interface{})}
-	c.projectId = projectId
-	c.jobId = jobId
-	return c
-}
-
-func (c *JobsGetCall) Do() (*Job, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2/", "projects/{projectId}/jobs/{jobId}")
-	urls = strings.Replace(urls, "{projectId}", cleanPathString(c.projectId), 1)
-	urls = strings.Replace(urls, "{jobId}", cleanPathString(c.jobId), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(Job)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Retrieves the specified job by ID.",
-	//   "httpMethod": "GET",
-	//   "id": "bigquery.jobs.get",
-	//   "parameterOrder": [
-	//     "projectId",
-	//     "jobId"
-	//   ],
-	//   "parameters": {
-	//     "jobId": {
-	//       "description": "Job ID of the requested job",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "projectId": {
-	//       "description": "Project ID of the requested job",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "projects/{projectId}/jobs/{jobId}",
-	//   "response": {
-	//     "$ref": "Job"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery"
-	//   ]
-	// }
-
-}
-
-// method id "bigquery.jobs.getQueryResults":
-
-type JobsGetQueryResultsCall struct {
-	s         *Service
-	projectId string
-	jobId     string
-	opt_      map[string]interface{}
-}
-
-// GetQueryResults: Retrieves the results of a query job.
-func (r *JobsService) GetQueryResults(projectId string, jobId string) *JobsGetQueryResultsCall {
-	c := &JobsGetQueryResultsCall{s: r.s, opt_: make(map[string]interface{})}
-	c.projectId = projectId
-	c.jobId = jobId
-	return c
-}
-
-// MaxResults sets the optional parameter "maxResults": Maximum number
-// of results to read
-func (c *JobsGetQueryResultsCall) MaxResults(maxResults int64) *JobsGetQueryResultsCall {
-	c.opt_["maxResults"] = maxResults
-	return c
-}
-
-// StartIndex sets the optional parameter "startIndex": Zero-based index
-// of the starting row
-func (c *JobsGetQueryResultsCall) StartIndex(startIndex uint64) *JobsGetQueryResultsCall {
-	c.opt_["startIndex"] = startIndex
-	return c
-}
-
-// TimeoutMs sets the optional parameter "timeoutMs": How long to wait
-// for the query to complete, in milliseconds, before returning. Default
-// is to return immediately. If the timeout passes before the job
-// completes, the request will fail with a TIMEOUT error
-func (c *JobsGetQueryResultsCall) TimeoutMs(timeoutMs int64) *JobsGetQueryResultsCall {
-	c.opt_["timeoutMs"] = timeoutMs
-	return c
-}
-
-func (c *JobsGetQueryResultsCall) Do() (*GetQueryResultsResponse, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["startIndex"]; ok {
-		params.Set("startIndex", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["timeoutMs"]; ok {
-		params.Set("timeoutMs", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2/", "projects/{projectId}/queries/{jobId}")
-	urls = strings.Replace(urls, "{projectId}", cleanPathString(c.projectId), 1)
-	urls = strings.Replace(urls, "{jobId}", cleanPathString(c.jobId), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(GetQueryResultsResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Retrieves the results of a query job.",
-	//   "httpMethod": "GET",
-	//   "id": "bigquery.jobs.getQueryResults",
-	//   "parameterOrder": [
-	//     "projectId",
-	//     "jobId"
-	//   ],
-	//   "parameters": {
-	//     "jobId": {
-	//       "description": "Job ID of the query job",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "maxResults": {
-	//       "description": "Maximum number of results to read",
-	//       "format": "uint32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "projectId": {
-	//       "description": "Project ID of the query job",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "startIndex": {
-	//       "description": "Zero-based index of the starting row",
-	//       "format": "uint64",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "timeoutMs": {
-	//       "description": "How long to wait for the query to complete, in milliseconds, before returning. Default is to return immediately. If the timeout passes before the job completes, the request will fail with a TIMEOUT error",
-	//       "format": "uint32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     }
-	//   },
-	//   "path": "projects/{projectId}/queries/{jobId}",
-	//   "response": {
-	//     "$ref": "GetQueryResultsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery"
-	//   ]
-	// }
-
-}
-
-// method id "bigquery.jobs.insert":
-
-type JobsInsertCall struct {
-	s         *Service
-	projectId string
-	job       *Job
-	opt_      map[string]interface{}
-	media_    io.Reader
-}
-
-// Insert: Starts a new asynchronous job.
-func (r *JobsService) Insert(projectId string, job *Job) *JobsInsertCall {
-	c := &JobsInsertCall{s: r.s, opt_: make(map[string]interface{})}
-	c.projectId = projectId
-	c.job = job
-	return c
-}
-func (c *JobsInsertCall) Media(r io.Reader) *JobsInsertCall {
-	c.media_ = r
-	return c
-}
-
-func (c *JobsInsertCall) Do() (*Job, error) {
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.job)
-	if err != nil {
-		return nil, err
-	}
-	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2/", "projects/{projectId}/jobs")
-	if c.media_ != nil {
-		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
-	}
-	urls = strings.Replace(urls, "{projectId}", cleanPathString(c.projectId), 1)
-	urls += "?" + params.Encode()
-	contentLength_, hasMedia_ := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
-	req, _ := http.NewRequest("POST", urls, body)
-	if hasMedia_ {
-		req.ContentLength = contentLength_
-	}
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(Job)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Starts a new asynchronous job.",
-	//   "httpMethod": "POST",
-	//   "id": "bigquery.jobs.insert",
-	//   "mediaUpload": {
-	//     "accept": [
-	//       "application/octet-stream"
-	//     ],
-	//     "protocols": {
-	//       "resumable": {
-	//         "multipart": true,
-	//         "path": "/resumable/upload/bigquery/v2/projects/{projectId}/jobs"
-	//       },
-	//       "simple": {
-	//         "multipart": true,
-	//         "path": "/upload/bigquery/v2/projects/{projectId}/jobs"
-	//       }
-	//     }
-	//   },
-	//   "parameterOrder": [
-	//     "projectId"
-	//   ],
-	//   "parameters": {
-	//     "projectId": {
-	//       "description": "Project ID of the project that will be billed for the job",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "projects/{projectId}/jobs",
-	//   "request": {
-	//     "$ref": "Job"
-	//   },
-	//   "response": {
-	//     "$ref": "Job"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery"
-	//   ]
-	// }
-
-}
-
-// method id "bigquery.jobs.list":
-
-type JobsListCall struct {
-	s         *Service
-	projectId string
-	opt_      map[string]interface{}
-}
-
-// List: Lists all the Jobs in the specified project that were started
-// by the user.
-func (r *JobsService) List(projectId string) *JobsListCall {
-	c := &JobsListCall{s: r.s, opt_: make(map[string]interface{})}
-	c.projectId = projectId
-	return c
-}
-
-// AllUsers sets the optional parameter "allUsers": Whether to display
-// jobs owned by all users in the project. Default false
-func (c *JobsListCall) AllUsers(allUsers bool) *JobsListCall {
-	c.opt_["allUsers"] = allUsers
-	return c
-}
-
-// MaxResults sets the optional parameter "maxResults": Maximum number
-// of results to return
-func (c *JobsListCall) MaxResults(maxResults int64) *JobsListCall {
-	c.opt_["maxResults"] = maxResults
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": Page token,
-// returned by a previous call, to request the next page of results
-func (c *JobsListCall) PageToken(pageToken string) *JobsListCall {
-	c.opt_["pageToken"] = pageToken
-	return c
-}
-
-// Projection sets the optional parameter "projection": Restrict
-// information returned to a set of selected fields
-func (c *JobsListCall) Projection(projection string) *JobsListCall {
-	c.opt_["projection"] = projection
-	return c
-}
-
-// StateFilter sets the optional parameter "stateFilter": Filter for job
-// state
-func (c *JobsListCall) StateFilter(stateFilter string) *JobsListCall {
-	c.opt_["stateFilter"] = stateFilter
-	return c
-}
-
-func (c *JobsListCall) Do() (*JobList, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	if v, ok := c.opt_["allUsers"]; ok {
-		params.Set("allUsers", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["projection"]; ok {
-		params.Set("projection", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["stateFilter"]; ok {
-		params.Set("stateFilter", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2/", "projects/{projectId}/jobs")
-	urls = strings.Replace(urls, "{projectId}", cleanPathString(c.projectId), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(JobList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Lists all the Jobs in the specified project that were started by the user.",
-	//   "httpMethod": "GET",
-	//   "id": "bigquery.jobs.list",
-	//   "parameterOrder": [
-	//     "projectId"
-	//   ],
-	//   "parameters": {
-	//     "allUsers": {
-	//       "description": "Whether to display jobs owned by all users in the project. Default false",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "maxResults": {
-	//       "description": "Maximum number of results to return",
-	//       "format": "uint32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Page token, returned by a previous call, to request the next page of results",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "projectId": {
-	//       "description": "Project ID of the jobs to list",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "projection": {
-	//       "description": "Restrict information returned to a set of selected fields",
-	//       "enum": [
-	//         "full",
-	//         "minimal"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Includes all job data",
-	//         "Does not include the job configuration"
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "stateFilter": {
-	//       "description": "Filter for job state",
-	//       "enum": [
-	//         "done",
-	//         "pending",
-	//         "running"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Finished jobs",
-	//         "Pending jobs",
-	//         "Running jobs"
-	//       ],
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "projects/{projectId}/jobs",
-	//   "response": {
-	//     "$ref": "JobList"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery"
-	//   ]
-	// }
-
-}
-
-// method id "bigquery.jobs.query":
-
-type JobsQueryCall struct {
-	s            *Service
-	projectId    string
-	queryrequest *QueryRequest
-	opt_         map[string]interface{}
-}
-
-// Query: Runs a BigQuery SQL query synchronously and returns query
-// results if the query completes within a specified timeout.
-func (r *JobsService) Query(projectId string, queryrequest *QueryRequest) *JobsQueryCall {
-	c := &JobsQueryCall{s: r.s, opt_: make(map[string]interface{})}
-	c.projectId = projectId
-	c.queryrequest = queryrequest
-	return c
-}
-
-func (c *JobsQueryCall) Do() (*QueryResponse, error) {
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.queryrequest)
-	if err != nil {
-		return nil, err
-	}
-	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2/", "projects/{projectId}/queries")
-	urls = strings.Replace(urls, "{projectId}", cleanPathString(c.projectId), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("POST", urls, body)
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(QueryResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Runs a BigQuery SQL query synchronously and returns query results if the query completes within a specified timeout.",
-	//   "httpMethod": "POST",
-	//   "id": "bigquery.jobs.query",
-	//   "parameterOrder": [
-	//     "projectId"
-	//   ],
-	//   "parameters": {
-	//     "projectId": {
-	//       "description": "Project ID of the project billed for the query",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "projects/{projectId}/queries",
-	//   "request": {
-	//     "$ref": "QueryRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "QueryResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/bigquery"

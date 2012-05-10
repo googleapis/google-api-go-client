@@ -1109,7 +1109,9 @@ func (a *API) APIMethods() []*Method {
 
 func (a *API) Resources() []*Resource {
 	res := []*Resource{}
-	for rname, rmi := range jobj(a.m, "resources") {
+	resMap := jobj(a.m, "resources")
+	for _, rname := range sortedKeys(resMap) {
+		rmi := resMap[rname]
 		rm := rmi.(map[string]interface{})
 		res = append(res, &Resource{a, rname, rm})
 	}

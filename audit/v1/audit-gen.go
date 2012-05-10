@@ -56,14 +56,14 @@ type ActivitiesService struct {
 }
 
 type Activities struct {
-	// Kind: Kind of list response this is.
-	Kind string `json:"kind,omitempty"`
-
 	// Next: Next page URL.
 	Next string `json:"next,omitempty"`
 
 	// Items: Each record in read response.
 	Items []*Activity `json:"items,omitempty"`
+
+	// Kind: Kind of list response this is.
+	Kind string `json:"kind,omitempty"`
 }
 
 type Activity struct {
@@ -102,14 +102,14 @@ type ActivityActor struct {
 }
 
 type ActivityEvents struct {
-	// Name: Name of event.
-	Name string `json:"name,omitempty"`
-
 	// Parameters: Event parameters.
 	Parameters []*ActivityEventsParameters `json:"parameters,omitempty"`
 
 	// EventType: Type of event.
 	EventType string `json:"eventType,omitempty"`
+
+	// Name: Name of event.
+	Name string `json:"name,omitempty"`
 }
 
 type ActivityEventsParameters struct {

@@ -72,22 +72,6 @@ type TasksService struct {
 }
 
 type Task struct {
-	// SelfLink: URL pointing to this task. Used to retrieve, update, or
-	// delete this task.
-	SelfLink string `json:"selfLink,omitempty"`
-
-	// Links: Collection of links. This collection is read-only.
-	Links []*TaskLinks `json:"links,omitempty"`
-
-	// Parent: Parent task identifier. This field is omitted if it is a
-	// top-level task. This field is read-only. Use the "move" method to
-	// move the task under a different parent or to the top level.
-	Parent string `json:"parent,omitempty"`
-
-	// Completed: Completion date of the task (as a RFC 3339 timestamp).
-	// This field is omitted if the task has not been completed.
-	Completed string `json:"completed,omitempty"`
-
 	// Notes: Notes describing the task. Optional.
 	Notes string `json:"notes,omitempty"`
 
@@ -131,24 +115,37 @@ type Task struct {
 	// field is read-only. Use the "move" method to move the task to another
 	// position.
 	Position string `json:"position,omitempty"`
+
+	// SelfLink: URL pointing to this task. Used to retrieve, update, or
+	// delete this task.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// Links: Collection of links. This collection is read-only.
+	Links []*TaskLinks `json:"links,omitempty"`
+
+	// Parent: Parent task identifier. This field is omitted if it is a
+	// top-level task. This field is read-only. Use the "move" method to
+	// move the task under a different parent or to the top level.
+	Parent string `json:"parent,omitempty"`
+
+	// Completed: Completion date of the task (as a RFC 3339 timestamp).
+	// This field is omitted if the task has not been completed.
+	Completed string `json:"completed,omitempty"`
 }
 
 type TaskLinks struct {
+	// Link: The URL.
+	Link string `json:"link,omitempty"`
+
 	// Type: Type of the link, e.g. "email".
 	Type string `json:"type,omitempty"`
 
 	// Description: The description. In HTML speak: Everything between <a>
 	// and </a>.
 	Description string `json:"description,omitempty"`
-
-	// Link: The URL.
-	Link string `json:"link,omitempty"`
 }
 
 type TaskList struct {
-	// Title: Title of the task list.
-	Title string `json:"title,omitempty"`
-
 	// SelfLink: URL pointing to this task list. Used to retrieve, update,
 	// or delete this task list.
 	SelfLink string `json:"selfLink,omitempty"`
@@ -165,6 +162,9 @@ type TaskList struct {
 
 	// Id: Task list identifier.
 	Id string `json:"id,omitempty"`
+
+	// Title: Title of the task list.
+	Title string `json:"title,omitempty"`
 }
 
 type TaskLists struct {

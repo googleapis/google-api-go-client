@@ -48,10 +48,10 @@ func New(client *http.Client) (*Service, error) {
 	}
 	s := &Service{client: client}
 	s.Datasets = &DatasetsService{s: s}
-	s.Tables = &TablesService{s: s}
-	s.Tabledata = &TabledataService{s: s}
-	s.Projects = &ProjectsService{s: s}
 	s.Jobs = &JobsService{s: s}
+	s.Projects = &ProjectsService{s: s}
+	s.Tabledata = &TabledataService{s: s}
+	s.Tables = &TablesService{s: s}
 	return s, nil
 }
 
@@ -60,28 +60,16 @@ type Service struct {
 
 	Datasets *DatasetsService
 
-	Tables *TablesService
-
-	Tabledata *TabledataService
+	Jobs *JobsService
 
 	Projects *ProjectsService
 
-	Jobs *JobsService
+	Tabledata *TabledataService
+
+	Tables *TablesService
 }
 
 type DatasetsService struct {
-	s *Service
-}
-
-type TablesService struct {
-	s *Service
-}
-
-type TabledataService struct {
-	s *Service
-}
-
-type ProjectsService struct {
 	s *Service
 }
 
@@ -89,14 +77,26 @@ type JobsService struct {
 	s *Service
 }
 
-type Bigqueryfield struct {
-	Name string `json:"name,omitempty"`
+type ProjectsService struct {
+	s *Service
+}
 
+type TabledataService struct {
+	s *Service
+}
+
+type TablesService struct {
+	s *Service
+}
+
+type Bigqueryfield struct {
 	Mode string `json:"mode,omitempty"`
 
 	Fields []*Bigqueryfield `json:"fields,omitempty"`
 
 	Type string `json:"type,omitempty"`
+
+	Name string `json:"name,omitempty"`
 }
 
 type Bigqueryschema struct {
@@ -104,6 +104,10 @@ type Bigqueryschema struct {
 }
 
 type Dataset struct {
+	// Description: [Optional] An arbitrary string description for the
+	// dataset. This might be shown in BigQuery UI for browsing the dataset.
+	Description string `json:"description,omitempty"`
+
 	// SelfLink: [Output only] An URL that can be used to access this
 	// resource again. You can use this URL in Get or Update requests to
 	// this resource. Not used as an input to helix.
@@ -159,10 +163,6 @@ type Dataset struct {
 
 	// DatasetReference: [Required] Reference identifying dataset.
 	DatasetReference *Datasetreference `json:"datasetReference,omitempty"`
-
-	// Description: [Optional] An arbitrary string description for the
-	// dataset. This might be shown in BigQuery UI for browsing the dataset.
-	Description string `json:"description,omitempty"`
 }
 
 type DatasetAccess struct {
@@ -202,13 +202,6 @@ type DatasetAccess struct {
 }
 
 type DatasetList struct {
-	// Etag: A hash of this page of results. See Paging Through Results in
-	// the developer's guide.
-	Etag string `json:"etag,omitempty"`
-
-	// Kind: The resource type.
-	Kind string `json:"kind,omitempty"`
-
 	// Datasets: An array of one or more summarized dataset resources.
 	// Absent when there are no datasets in the specified project.
 	Datasets []*DatasetListDatasets `json:"datasets,omitempty"`
@@ -217,13 +210,16 @@ type DatasetList struct {
 	// only when there is more than one page of results.* See Paging Through
 	// Results in the developer's guide.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Etag: A hash of this page of results. See Paging Through Results in
+	// the developer's guide.
+	Etag string `json:"etag,omitempty"`
+
+	// Kind: The resource type.
+	Kind string `json:"kind,omitempty"`
 }
 
 type DatasetListDatasets struct {
-	// Id: The fully-qualified unique name of this dataset in the format
-	// projectId:datasetId.
-	Id string `json:"id,omitempty"`
-
 	// DatasetReference: Reference identifying dataset.
 	DatasetReference *Datasetreference `json:"datasetReference,omitempty"`
 
@@ -236,6 +232,10 @@ type DatasetListDatasets struct {
 	// DatasetId: [Deprecated] A unique ID for this dataset; this is the id
 	// values without the project name.
 	DatasetId string `json:"datasetId,omitempty"`
+
+	// Id: The fully-qualified unique name of this dataset in the format
+	// projectId:datasetId.
+	Id string `json:"id,omitempty"`
 }
 
 type Datasetreference struct {
@@ -248,6 +248,8 @@ type Datasetreference struct {
 }
 
 type ErrorProto struct {
+	Domain string `json:"domain,omitempty"`
+
 	Code string `json:"code,omitempty"`
 
 	Location string `json:"location,omitempty"`
@@ -259,17 +261,9 @@ type ErrorProto struct {
 	Arguments []string `json:"arguments,omitempty"`
 
 	ErrorMessage string `json:"errorMessage,omitempty"`
-
-	Domain string `json:"domain,omitempty"`
 }
 
 type Job struct {
-	Configuration *Jobconfiguration `json:"configuration,omitempty"`
-
-	JobReference *Jobreference `json:"jobReference,omitempty"`
-
-	Statistics *Jobstatistics `json:"statistics,omitempty"`
-
 	SelfLink string `json:"selfLink,omitempty"`
 
 	JobId string `json:"jobId,omitempty"`
@@ -281,6 +275,12 @@ type Job struct {
 	Id string `json:"id,omitempty"`
 
 	Status *Jobstatus `json:"status,omitempty"`
+
+	Configuration *Jobconfiguration `json:"configuration,omitempty"`
+
+	JobReference *Jobreference `json:"jobReference,omitempty"`
+
+	Statistics *Jobstatistics `json:"statistics,omitempty"`
 }
 
 type JobList struct {
@@ -296,6 +296,14 @@ type JobList struct {
 }
 
 type JobListJobs struct {
+	EndTime int64 `json:"endTime,omitempty,string"`
+
+	Configuration *Jobconfiguration `json:"configuration,omitempty"`
+
+	StartTime int64 `json:"startTime,omitempty,string"`
+
+	JobReference *Jobreference `json:"jobReference,omitempty"`
+
 	Statistics *Jobstatistics `json:"statistics,omitempty"`
 
 	State string `json:"state,omitempty"`
@@ -309,14 +317,6 @@ type JobListJobs struct {
 	Id string `json:"id,omitempty"`
 
 	Status *Jobstatus `json:"status,omitempty"`
-
-	EndTime int64 `json:"endTime,omitempty,string"`
-
-	Configuration *Jobconfiguration `json:"configuration,omitempty"`
-
-	StartTime int64 `json:"startTime,omitempty,string"`
-
-	JobReference *Jobreference `json:"jobReference,omitempty"`
 }
 
 type JobQueryRequest struct {
@@ -366,20 +366,22 @@ type Jobconfiguration struct {
 }
 
 type Jobconfigurationextract struct {
-	SourceTable *Tablereference `json:"sourceTable,omitempty"`
-
 	DestinationUri string `json:"destinationUri,omitempty"`
+
+	SourceTable *Tablereference `json:"sourceTable,omitempty"`
 }
 
 type Jobconfigurationlink struct {
-	SourceUri []string `json:"sourceUri,omitempty"`
-
 	DestinationTable *Tablereference `json:"destinationTable,omitempty"`
 
 	CreateDisposition string `json:"createDisposition,omitempty"`
+
+	SourceUri []string `json:"sourceUri,omitempty"`
 }
 
 type Jobconfigurationload struct {
+	Schema *Bigqueryschema `json:"schema,omitempty"`
+
 	DestinationTable *Tablereference `json:"destinationTable,omitempty"`
 
 	CreateDisposition string `json:"createDisposition,omitempty"`
@@ -391,8 +393,6 @@ type Jobconfigurationload struct {
 	SourceUris []string `json:"sourceUris,omitempty"`
 
 	FieldDelimiter string `json:"fieldDelimiter,omitempty"`
-
-	Schema *Bigqueryschema `json:"schema,omitempty"`
 }
 
 type Jobconfigurationproperties struct {
@@ -423,23 +423,23 @@ type Jobstatistics struct {
 }
 
 type Jobstatus struct {
-	ErrorResult *ErrorProto `json:"errorResult,omitempty"`
-
 	Errors []*ErrorProto `json:"errors,omitempty"`
 
 	State string `json:"state,omitempty"`
+
+	ErrorResult *ErrorProto `json:"errorResult,omitempty"`
 }
 
 type ProjectList struct {
-	Projects []*ProjectListProjects `json:"projects,omitempty"`
-
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	TotalItems int64 `json:"totalItems,omitempty"`
 
 	Etag string `json:"etag,omitempty"`
 
 	Kind string `json:"kind,omitempty"`
+
+	Projects []*ProjectListProjects `json:"projects,omitempty"`
+
+	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
 type ProjectListProjects struct {
@@ -475,6 +475,12 @@ type QueryResultsRowsF struct {
 }
 
 type Table struct {
+	Description string `json:"description,omitempty"`
+
+	TableReference *Tablereference `json:"tableReference,omitempty"`
+
+	SelfLink string `json:"selfLink,omitempty"`
+
 	Schema *Bigqueryschema `json:"schema,omitempty"`
 
 	FriendlyName string `json:"friendlyName,omitempty"`
@@ -492,20 +498,14 @@ type Table struct {
 	TableId string `json:"tableId,omitempty"`
 
 	LastModifiedTime int64 `json:"lastModifiedTime,omitempty,string"`
-
-	Description string `json:"description,omitempty"`
-
-	TableReference *Tablereference `json:"tableReference,omitempty"`
-
-	SelfLink string `json:"selfLink,omitempty"`
 }
 
 type TableDataList struct {
+	Kind string `json:"kind,omitempty"`
+
 	TotalRows int64 `json:"totalRows,omitempty,string"`
 
 	Rows []*TableDataListRows `json:"rows,omitempty"`
-
-	Kind string `json:"kind,omitempty"`
 }
 
 type TableDataListRows struct {
@@ -517,22 +517,18 @@ type TableDataListRowsF struct {
 }
 
 type TableList struct {
-	Etag string `json:"etag,omitempty"`
-
-	Kind string `json:"kind,omitempty"`
-
 	Tables []*TableListTables `json:"tables,omitempty"`
 
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	TotalItems int64 `json:"totalItems,omitempty"`
+
+	Etag string `json:"etag,omitempty"`
+
+	Kind string `json:"kind,omitempty"`
 }
 
 type TableListTables struct {
-	Id string `json:"id,omitempty"`
-
-	TableId string `json:"tableId,omitempty"`
-
 	TableReference *Tablereference `json:"tableReference,omitempty"`
 
 	FriendlyName string `json:"friendlyName,omitempty"`
@@ -540,6 +536,10 @@ type TableListTables struct {
 	ProjectId string `json:"projectId,omitempty"`
 
 	DatasetId string `json:"datasetId,omitempty"`
+
+	Id string `json:"id,omitempty"`
+
+	TableId string `json:"tableId,omitempty"`
 }
 
 type Tablereference struct {
@@ -1050,6 +1050,665 @@ func (c *DatasetsUpdateCall) Do() (*Dataset, error) {
 
 }
 
+// method id "bigquery.jobs.get":
+
+type JobsGetCall struct {
+	s         *Service
+	projectId string
+	jobId     string
+	opt_      map[string]interface{}
+}
+
+// Get: 
+func (r *JobsService) Get(projectId string, jobId string) *JobsGetCall {
+	c := &JobsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.projectId = projectId
+	c.jobId = jobId
+	return c
+}
+
+func (c *JobsGetCall) Do() (*Job, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2beta1/", "projects/{projectId}/jobs/{jobId}")
+	urls = strings.Replace(urls, "{projectId}", cleanPathString(c.projectId), 1)
+	urls = strings.Replace(urls, "{jobId}", cleanPathString(c.jobId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Job)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "httpMethod": "GET",
+	//   "id": "bigquery.jobs.get",
+	//   "parameterOrder": [
+	//     "projectId",
+	//     "jobId"
+	//   ],
+	//   "parameters": {
+	//     "jobId": {
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "projectId": {
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "projects/{projectId}/jobs/{jobId}",
+	//   "response": {
+	//     "$ref": "Job"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigquery"
+	//   ]
+	// }
+
+}
+
+// method id "bigquery.jobs.insert":
+
+type JobsInsertCall struct {
+	s         *Service
+	projectId string
+	job       *Job
+	opt_      map[string]interface{}
+	media_    io.Reader
+}
+
+// Insert: 
+func (r *JobsService) Insert(projectId string, job *Job) *JobsInsertCall {
+	c := &JobsInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.projectId = projectId
+	c.job = job
+	return c
+}
+func (c *JobsInsertCall) Media(r io.Reader) *JobsInsertCall {
+	c.media_ = r
+	return c
+}
+
+func (c *JobsInsertCall) Do() (*Job, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.job)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2beta1/", "projects/{projectId}/jobs")
+	if c.media_ != nil {
+		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
+	}
+	urls = strings.Replace(urls, "{projectId}", cleanPathString(c.projectId), 1)
+	urls += "?" + params.Encode()
+	contentLength_, hasMedia_ := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+	req, _ := http.NewRequest("POST", urls, body)
+	if hasMedia_ {
+		req.ContentLength = contentLength_
+	}
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Job)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "httpMethod": "POST",
+	//   "id": "bigquery.jobs.insert",
+	//   "mediaUpload": {
+	//     "accept": [
+	//       "application/octet-stream"
+	//     ],
+	//     "protocols": {
+	//       "resumable": {
+	//         "multipart": true,
+	//         "path": "/resumable/upload/bigquery/v2beta1/projects/{projectId}/jobs"
+	//       },
+	//       "simple": {
+	//         "multipart": true,
+	//         "path": "/upload/bigquery/v2beta1/projects/{projectId}/jobs"
+	//       }
+	//     }
+	//   },
+	//   "parameterOrder": [
+	//     "projectId"
+	//   ],
+	//   "parameters": {
+	//     "projectId": {
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "projects/{projectId}/jobs",
+	//   "request": {
+	//     "$ref": "Job"
+	//   },
+	//   "response": {
+	//     "$ref": "Job"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigquery"
+	//   ]
+	// }
+
+}
+
+// method id "bigquery.jobs.list":
+
+type JobsListCall struct {
+	s         *Service
+	projectId string
+	opt_      map[string]interface{}
+}
+
+// List: 
+func (r *JobsService) List(projectId string) *JobsListCall {
+	c := &JobsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.projectId = projectId
+	return c
+}
+
+// AllUsers sets the optional parameter "allUsers": Whether to display
+// jobs owned by all users in the project
+func (c *JobsListCall) AllUsers(allUsers bool) *JobsListCall {
+	c.opt_["allUsers"] = allUsers
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": maximum number
+// of results to return
+func (c *JobsListCall) MaxResults(maxResults int64) *JobsListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": 
+func (c *JobsListCall) PageToken(pageToken string) *JobsListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+// Projection sets the optional parameter "projection": Restrict
+// information returned to a set of selected fields.
+func (c *JobsListCall) Projection(projection string) *JobsListCall {
+	c.opt_["projection"] = projection
+	return c
+}
+
+// StartIndex sets the optional parameter "startIndex": start index for
+// paginated results
+func (c *JobsListCall) StartIndex(startIndex int64) *JobsListCall {
+	c.opt_["startIndex"] = startIndex
+	return c
+}
+
+// StateFilter sets the optional parameter "stateFilter": filter for job
+// state
+func (c *JobsListCall) StateFilter(stateFilter string) *JobsListCall {
+	c.opt_["stateFilter"] = stateFilter
+	return c
+}
+
+func (c *JobsListCall) Do() (*JobList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["allUsers"]; ok {
+		params.Set("allUsers", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["projection"]; ok {
+		params.Set("projection", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["startIndex"]; ok {
+		params.Set("startIndex", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["stateFilter"]; ok {
+		params.Set("stateFilter", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2beta1/", "projects/{projectId}/jobs")
+	urls = strings.Replace(urls, "{projectId}", cleanPathString(c.projectId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(JobList)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "httpMethod": "GET",
+	//   "id": "bigquery.jobs.list",
+	//   "parameterOrder": [
+	//     "projectId"
+	//   ],
+	//   "parameters": {
+	//     "allUsers": {
+	//       "description": "Whether to display jobs owned by all users in the project",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "maxResults": {
+	//       "description": "maximum number of results to return",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "projectId": {
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "projection": {
+	//       "description": "Restrict information returned to a set of selected fields.",
+	//       "enum": [
+	//         "full",
+	//         "minimal"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Includes all job data.",
+	//         "Does not include the job configuration."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "startIndex": {
+	//       "description": "start index for paginated results",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "stateFilter": {
+	//       "description": "filter for job state",
+	//       "enum": [
+	//         "done",
+	//         "pending",
+	//         "running"
+	//       ],
+	//       "enumDescriptions": [
+	//         "finished jobs",
+	//         "pending jobs",
+	//         "running jobs"
+	//       ],
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "projects/{projectId}/jobs",
+	//   "response": {
+	//     "$ref": "JobList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigquery"
+	//   ]
+	// }
+
+}
+
+// method id "bigquery.jobs.query":
+
+type JobsQueryCall struct {
+	s               *Service
+	projectId       string
+	jobqueryrequest *JobQueryRequest
+	opt_            map[string]interface{}
+}
+
+// Query: 
+func (r *JobsService) Query(projectId string, jobqueryrequest *JobQueryRequest) *JobsQueryCall {
+	c := &JobsQueryCall{s: r.s, opt_: make(map[string]interface{})}
+	c.projectId = projectId
+	c.jobqueryrequest = jobqueryrequest
+	return c
+}
+
+func (c *JobsQueryCall) Do() (*QueryResults, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.jobqueryrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2beta1/", "projects/{projectId}/queries")
+	urls = strings.Replace(urls, "{projectId}", cleanPathString(c.projectId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(QueryResults)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "httpMethod": "POST",
+	//   "id": "bigquery.jobs.query",
+	//   "parameterOrder": [
+	//     "projectId"
+	//   ],
+	//   "parameters": {
+	//     "projectId": {
+	//       "description": "project name billed for the query",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "projects/{projectId}/queries",
+	//   "request": {
+	//     "$ref": "JobQueryRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "QueryResults"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigquery"
+	//   ]
+	// }
+
+}
+
+// method id "bigquery.jobs.stop":
+
+type JobsStopCall struct {
+	s         *Service
+	projectId string
+	jobId     string
+	opt_      map[string]interface{}
+}
+
+// Stop: 
+func (r *JobsService) Stop(projectId string, jobId string) *JobsStopCall {
+	c := &JobsStopCall{s: r.s, opt_: make(map[string]interface{})}
+	c.projectId = projectId
+	c.jobId = jobId
+	return c
+}
+
+func (c *JobsStopCall) Do() (*JobStopResponse, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2beta1/", "project/{projectId}/jobs/{jobId}/stop")
+	urls = strings.Replace(urls, "{projectId}", cleanPathString(c.projectId), 1)
+	urls = strings.Replace(urls, "{jobId}", cleanPathString(c.jobId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(JobStopResponse)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "httpMethod": "POST",
+	//   "id": "bigquery.jobs.stop",
+	//   "parameterOrder": [
+	//     "projectId",
+	//     "jobId"
+	//   ],
+	//   "parameters": {
+	//     "jobId": {
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "projectId": {
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "project/{projectId}/jobs/{jobId}/stop",
+	//   "response": {
+	//     "$ref": "JobStopResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigquery"
+	//   ]
+	// }
+
+}
+
+// method id "bigquery.projects.list":
+
+type ProjectsListCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// List: 
+func (r *ProjectsService) List() *ProjectsListCall {
+	c := &ProjectsListCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": 
+func (c *ProjectsListCall) MaxResults(maxResults int64) *ProjectsListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": 
+func (c *ProjectsListCall) PageToken(pageToken string) *ProjectsListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+func (c *ProjectsListCall) Do() (*ProjectList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2beta1/", "projects")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(ProjectList)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "httpMethod": "GET",
+	//   "id": "bigquery.projects.list",
+	//   "parameters": {
+	//     "maxResults": {
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "projects",
+	//   "response": {
+	//     "$ref": "ProjectList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigquery"
+	//   ]
+	// }
+
+}
+
+// method id "bigquery.tabledata.list":
+
+type TabledataListCall struct {
+	s         *Service
+	projectId string
+	datasetId string
+	tableId   string
+	opt_      map[string]interface{}
+}
+
+// List: 
+func (r *TabledataService) List(projectId string, datasetId string, tableId string) *TabledataListCall {
+	c := &TabledataListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.projectId = projectId
+	c.datasetId = datasetId
+	c.tableId = tableId
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": 
+func (c *TabledataListCall) MaxResults(maxResults int64) *TabledataListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// StartIndex sets the optional parameter "startIndex": 
+func (c *TabledataListCall) StartIndex(startIndex uint64) *TabledataListCall {
+	c.opt_["startIndex"] = startIndex
+	return c
+}
+
+func (c *TabledataListCall) Do() (*TableDataList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["startIndex"]; ok {
+		params.Set("startIndex", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2beta1/", "projects/{projectId}/datasets/{datasetId}/tables/{tableId}/data")
+	urls = strings.Replace(urls, "{projectId}", cleanPathString(c.projectId), 1)
+	urls = strings.Replace(urls, "{datasetId}", cleanPathString(c.datasetId), 1)
+	urls = strings.Replace(urls, "{tableId}", cleanPathString(c.tableId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(TableDataList)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "httpMethod": "GET",
+	//   "id": "bigquery.tabledata.list",
+	//   "parameterOrder": [
+	//     "projectId",
+	//     "datasetId",
+	//     "tableId"
+	//   ],
+	//   "parameters": {
+	//     "datasetId": {
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "projectId": {
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "startIndex": {
+	//       "format": "uint64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "tableId": {
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "projects/{projectId}/datasets/{datasetId}/tables/{tableId}/data",
+	//   "response": {
+	//     "$ref": "TableDataList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigquery"
+	//   ]
+	// }
+
+}
+
 // method id "bigquery.tables.delete":
 
 type TablesDeleteCall struct {
@@ -1545,665 +2204,6 @@ func (c *TablesUpdateCall) Do() (*Table, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "Table"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery"
-	//   ]
-	// }
-
-}
-
-// method id "bigquery.tabledata.list":
-
-type TabledataListCall struct {
-	s         *Service
-	projectId string
-	datasetId string
-	tableId   string
-	opt_      map[string]interface{}
-}
-
-// List: 
-func (r *TabledataService) List(projectId string, datasetId string, tableId string) *TabledataListCall {
-	c := &TabledataListCall{s: r.s, opt_: make(map[string]interface{})}
-	c.projectId = projectId
-	c.datasetId = datasetId
-	c.tableId = tableId
-	return c
-}
-
-// MaxResults sets the optional parameter "maxResults": 
-func (c *TabledataListCall) MaxResults(maxResults int64) *TabledataListCall {
-	c.opt_["maxResults"] = maxResults
-	return c
-}
-
-// StartIndex sets the optional parameter "startIndex": 
-func (c *TabledataListCall) StartIndex(startIndex uint64) *TabledataListCall {
-	c.opt_["startIndex"] = startIndex
-	return c
-}
-
-func (c *TabledataListCall) Do() (*TableDataList, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["startIndex"]; ok {
-		params.Set("startIndex", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2beta1/", "projects/{projectId}/datasets/{datasetId}/tables/{tableId}/data")
-	urls = strings.Replace(urls, "{projectId}", cleanPathString(c.projectId), 1)
-	urls = strings.Replace(urls, "{datasetId}", cleanPathString(c.datasetId), 1)
-	urls = strings.Replace(urls, "{tableId}", cleanPathString(c.tableId), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(TableDataList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "httpMethod": "GET",
-	//   "id": "bigquery.tabledata.list",
-	//   "parameterOrder": [
-	//     "projectId",
-	//     "datasetId",
-	//     "tableId"
-	//   ],
-	//   "parameters": {
-	//     "datasetId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "maxResults": {
-	//       "format": "uint32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "projectId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "startIndex": {
-	//       "format": "uint64",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "tableId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "projects/{projectId}/datasets/{datasetId}/tables/{tableId}/data",
-	//   "response": {
-	//     "$ref": "TableDataList"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery"
-	//   ]
-	// }
-
-}
-
-// method id "bigquery.projects.list":
-
-type ProjectsListCall struct {
-	s    *Service
-	opt_ map[string]interface{}
-}
-
-// List: 
-func (r *ProjectsService) List() *ProjectsListCall {
-	c := &ProjectsListCall{s: r.s, opt_: make(map[string]interface{})}
-	return c
-}
-
-// MaxResults sets the optional parameter "maxResults": 
-func (c *ProjectsListCall) MaxResults(maxResults int64) *ProjectsListCall {
-	c.opt_["maxResults"] = maxResults
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": 
-func (c *ProjectsListCall) PageToken(pageToken string) *ProjectsListCall {
-	c.opt_["pageToken"] = pageToken
-	return c
-}
-
-func (c *ProjectsListCall) Do() (*ProjectList, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2beta1/", "projects")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(ProjectList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "httpMethod": "GET",
-	//   "id": "bigquery.projects.list",
-	//   "parameters": {
-	//     "maxResults": {
-	//       "format": "uint32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "projects",
-	//   "response": {
-	//     "$ref": "ProjectList"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery"
-	//   ]
-	// }
-
-}
-
-// method id "bigquery.jobs.get":
-
-type JobsGetCall struct {
-	s         *Service
-	projectId string
-	jobId     string
-	opt_      map[string]interface{}
-}
-
-// Get: 
-func (r *JobsService) Get(projectId string, jobId string) *JobsGetCall {
-	c := &JobsGetCall{s: r.s, opt_: make(map[string]interface{})}
-	c.projectId = projectId
-	c.jobId = jobId
-	return c
-}
-
-func (c *JobsGetCall) Do() (*Job, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2beta1/", "projects/{projectId}/jobs/{jobId}")
-	urls = strings.Replace(urls, "{projectId}", cleanPathString(c.projectId), 1)
-	urls = strings.Replace(urls, "{jobId}", cleanPathString(c.jobId), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(Job)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "httpMethod": "GET",
-	//   "id": "bigquery.jobs.get",
-	//   "parameterOrder": [
-	//     "projectId",
-	//     "jobId"
-	//   ],
-	//   "parameters": {
-	//     "jobId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "projectId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "projects/{projectId}/jobs/{jobId}",
-	//   "response": {
-	//     "$ref": "Job"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery"
-	//   ]
-	// }
-
-}
-
-// method id "bigquery.jobs.insert":
-
-type JobsInsertCall struct {
-	s         *Service
-	projectId string
-	job       *Job
-	opt_      map[string]interface{}
-	media_    io.Reader
-}
-
-// Insert: 
-func (r *JobsService) Insert(projectId string, job *Job) *JobsInsertCall {
-	c := &JobsInsertCall{s: r.s, opt_: make(map[string]interface{})}
-	c.projectId = projectId
-	c.job = job
-	return c
-}
-func (c *JobsInsertCall) Media(r io.Reader) *JobsInsertCall {
-	c.media_ = r
-	return c
-}
-
-func (c *JobsInsertCall) Do() (*Job, error) {
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.job)
-	if err != nil {
-		return nil, err
-	}
-	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2beta1/", "projects/{projectId}/jobs")
-	if c.media_ != nil {
-		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
-	}
-	urls = strings.Replace(urls, "{projectId}", cleanPathString(c.projectId), 1)
-	urls += "?" + params.Encode()
-	contentLength_, hasMedia_ := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
-	req, _ := http.NewRequest("POST", urls, body)
-	if hasMedia_ {
-		req.ContentLength = contentLength_
-	}
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(Job)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "httpMethod": "POST",
-	//   "id": "bigquery.jobs.insert",
-	//   "mediaUpload": {
-	//     "accept": [
-	//       "application/octet-stream"
-	//     ],
-	//     "protocols": {
-	//       "resumable": {
-	//         "multipart": true,
-	//         "path": "/resumable/upload/bigquery/v2beta1/projects/{projectId}/jobs"
-	//       },
-	//       "simple": {
-	//         "multipart": true,
-	//         "path": "/upload/bigquery/v2beta1/projects/{projectId}/jobs"
-	//       }
-	//     }
-	//   },
-	//   "parameterOrder": [
-	//     "projectId"
-	//   ],
-	//   "parameters": {
-	//     "projectId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "projects/{projectId}/jobs",
-	//   "request": {
-	//     "$ref": "Job"
-	//   },
-	//   "response": {
-	//     "$ref": "Job"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery"
-	//   ]
-	// }
-
-}
-
-// method id "bigquery.jobs.list":
-
-type JobsListCall struct {
-	s         *Service
-	projectId string
-	opt_      map[string]interface{}
-}
-
-// List: 
-func (r *JobsService) List(projectId string) *JobsListCall {
-	c := &JobsListCall{s: r.s, opt_: make(map[string]interface{})}
-	c.projectId = projectId
-	return c
-}
-
-// AllUsers sets the optional parameter "allUsers": Whether to display
-// jobs owned by all users in the project
-func (c *JobsListCall) AllUsers(allUsers bool) *JobsListCall {
-	c.opt_["allUsers"] = allUsers
-	return c
-}
-
-// MaxResults sets the optional parameter "maxResults": maximum number
-// of results to return
-func (c *JobsListCall) MaxResults(maxResults int64) *JobsListCall {
-	c.opt_["maxResults"] = maxResults
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": 
-func (c *JobsListCall) PageToken(pageToken string) *JobsListCall {
-	c.opt_["pageToken"] = pageToken
-	return c
-}
-
-// Projection sets the optional parameter "projection": Restrict
-// information returned to a set of selected fields.
-func (c *JobsListCall) Projection(projection string) *JobsListCall {
-	c.opt_["projection"] = projection
-	return c
-}
-
-// StartIndex sets the optional parameter "startIndex": start index for
-// paginated results
-func (c *JobsListCall) StartIndex(startIndex int64) *JobsListCall {
-	c.opt_["startIndex"] = startIndex
-	return c
-}
-
-// StateFilter sets the optional parameter "stateFilter": filter for job
-// state
-func (c *JobsListCall) StateFilter(stateFilter string) *JobsListCall {
-	c.opt_["stateFilter"] = stateFilter
-	return c
-}
-
-func (c *JobsListCall) Do() (*JobList, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	if v, ok := c.opt_["allUsers"]; ok {
-		params.Set("allUsers", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["projection"]; ok {
-		params.Set("projection", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["startIndex"]; ok {
-		params.Set("startIndex", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["stateFilter"]; ok {
-		params.Set("stateFilter", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2beta1/", "projects/{projectId}/jobs")
-	urls = strings.Replace(urls, "{projectId}", cleanPathString(c.projectId), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(JobList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "httpMethod": "GET",
-	//   "id": "bigquery.jobs.list",
-	//   "parameterOrder": [
-	//     "projectId"
-	//   ],
-	//   "parameters": {
-	//     "allUsers": {
-	//       "description": "Whether to display jobs owned by all users in the project",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "maxResults": {
-	//       "description": "maximum number of results to return",
-	//       "format": "uint32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "projectId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "projection": {
-	//       "description": "Restrict information returned to a set of selected fields.",
-	//       "enum": [
-	//         "full",
-	//         "minimal"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Includes all job data.",
-	//         "Does not include the job configuration."
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "startIndex": {
-	//       "description": "start index for paginated results",
-	//       "format": "uint32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "stateFilter": {
-	//       "description": "filter for job state",
-	//       "enum": [
-	//         "done",
-	//         "pending",
-	//         "running"
-	//       ],
-	//       "enumDescriptions": [
-	//         "finished jobs",
-	//         "pending jobs",
-	//         "running jobs"
-	//       ],
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "projects/{projectId}/jobs",
-	//   "response": {
-	//     "$ref": "JobList"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery"
-	//   ]
-	// }
-
-}
-
-// method id "bigquery.jobs.query":
-
-type JobsQueryCall struct {
-	s               *Service
-	projectId       string
-	jobqueryrequest *JobQueryRequest
-	opt_            map[string]interface{}
-}
-
-// Query: 
-func (r *JobsService) Query(projectId string, jobqueryrequest *JobQueryRequest) *JobsQueryCall {
-	c := &JobsQueryCall{s: r.s, opt_: make(map[string]interface{})}
-	c.projectId = projectId
-	c.jobqueryrequest = jobqueryrequest
-	return c
-}
-
-func (c *JobsQueryCall) Do() (*QueryResults, error) {
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.jobqueryrequest)
-	if err != nil {
-		return nil, err
-	}
-	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2beta1/", "projects/{projectId}/queries")
-	urls = strings.Replace(urls, "{projectId}", cleanPathString(c.projectId), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("POST", urls, body)
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(QueryResults)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "httpMethod": "POST",
-	//   "id": "bigquery.jobs.query",
-	//   "parameterOrder": [
-	//     "projectId"
-	//   ],
-	//   "parameters": {
-	//     "projectId": {
-	//       "description": "project name billed for the query",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "projects/{projectId}/queries",
-	//   "request": {
-	//     "$ref": "JobQueryRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "QueryResults"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery"
-	//   ]
-	// }
-
-}
-
-// method id "bigquery.jobs.stop":
-
-type JobsStopCall struct {
-	s         *Service
-	projectId string
-	jobId     string
-	opt_      map[string]interface{}
-}
-
-// Stop: 
-func (r *JobsService) Stop(projectId string, jobId string) *JobsStopCall {
-	c := &JobsStopCall{s: r.s, opt_: make(map[string]interface{})}
-	c.projectId = projectId
-	c.jobId = jobId
-	return c
-}
-
-func (c *JobsStopCall) Do() (*JobStopResponse, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2beta1/", "project/{projectId}/jobs/{jobId}/stop")
-	urls = strings.Replace(urls, "{projectId}", cleanPathString(c.projectId), 1)
-	urls = strings.Replace(urls, "{jobId}", cleanPathString(c.jobId), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("POST", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(JobStopResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "httpMethod": "POST",
-	//   "id": "bigquery.jobs.stop",
-	//   "parameterOrder": [
-	//     "projectId",
-	//     "jobId"
-	//   ],
-	//   "parameters": {
-	//     "jobId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "projectId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "project/{projectId}/jobs/{jobId}/stop",
-	//   "response": {
-	//     "$ref": "JobStopResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/bigquery"

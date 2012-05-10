@@ -38,9 +38,6 @@ const basePath = "https://www.googleapis.com/latitude/v1/"
 
 // OAuth2 scopes used by this API.
 const (
-	// Manage your best-available location and location history
-	LatitudeAllBestScope = "https://www.googleapis.com/auth/latitude.all.best"
-
 	// Manage your city-level location
 	LatitudeCurrentCityScope = "https://www.googleapis.com/auth/latitude.current.city"
 
@@ -49,6 +46,9 @@ const (
 
 	// Manage your city-level location and location history
 	LatitudeAllCityScope = "https://www.googleapis.com/auth/latitude.all.city"
+
+	// Manage your best-available location and location history
+	LatitudeAllBestScope = "https://www.googleapis.com/auth/latitude.all.best"
 )
 
 func New(client *http.Client) (*Service, error) {
@@ -82,10 +82,6 @@ type LatitudeCurrentlocationResourceJson struct {
 }
 
 type Location struct {
-	// Heading: Direction of travel of the user when this location was
-	// recorded. In degrees, clockwise relative to true north. Optional.
-	Heading interface{} `json:"heading,omitempty"`
-
 	// Speed: Ground speed of the user at the time this location was
 	// recorded, in meters per second. Non-negative. Optional.
 	Speed interface{} `json:"speed,omitempty"`
@@ -119,6 +115,10 @@ type Location struct {
 	// check-in associated with this location. Available only for check-in
 	// locations. Optional.
 	ActivityId interface{} `json:"activityId,omitempty"`
+
+	// Heading: Direction of travel of the user when this location was
+	// recorded. In degrees, clockwise relative to true north. Optional.
+	Heading interface{} `json:"heading,omitempty"`
 }
 
 type LocationFeed struct {

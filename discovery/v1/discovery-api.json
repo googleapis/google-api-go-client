@@ -12,6 +12,7 @@
  },
  "documentationLink": "http://code.google.com/apis/discovery",
  "protocol": "rest",
+ "baseUrl": "https://www.googleapis.com/discovery/v1/",
  "basePath": "/discovery/v1/",
  "rootUrl": "https://www.googleapis.com/",
  "servicePath": "discovery/v1/",

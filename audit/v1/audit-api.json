@@ -13,6 +13,7 @@
  },
  "documentationLink": "http://code.google.com/googleapps/domain/audit_admin/v1/getting_started.html",
  "protocol": "rest",
+ "baseUrl": "https://www.googleapis.com/apps/reporting/audit/v1/",
  "basePath": "/apps/reporting/audit/v1/",
  "rootUrl": "https://www.googleapis.com/",
  "servicePath": "apps/reporting/audit/v1/",

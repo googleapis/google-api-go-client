@@ -13,7 +13,6 @@
  },
  "documentationLink": "http://code.google.com/apis/siteverification/",
  "protocol": "rest",
- "baseUrl": "https://www.googleapis.com/siteVerification/v1/",
  "basePath": "/siteVerification/v1/",
  "rootUrl": "https://www.googleapis.com/",
  "servicePath": "siteVerification/v1/",

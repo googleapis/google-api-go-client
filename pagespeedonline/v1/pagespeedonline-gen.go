@@ -106,17 +106,6 @@ type ResultFormattedResultsRuleResults struct {
 }
 
 type ResultPageStats struct {
-	// NumberJsResources: Number of JavaScript resources referenced by the
-	// page.
-	NumberJsResources int64 `json:"numberJsResources,omitempty"`
-
-	// JavascriptResponseBytes: Number of uncompressed response bytes for JS
-	// resources on the page.
-	JavascriptResponseBytes int64 `json:"javascriptResponseBytes,omitempty,string"`
-
-	// TotalRequestBytes: Total size of all request bytes sent by the page.
-	TotalRequestBytes int64 `json:"totalRequestBytes,omitempty,string"`
-
 	// NumberResources: Number of HTTP resources loaded by the page.
 	NumberResources int64 `json:"numberResources,omitempty"`
 
@@ -154,16 +143,27 @@ type ResultPageStats struct {
 	// CssResponseBytes: Number of uncompressed response bytes for CSS
 	// resources on the page.
 	CssResponseBytes int64 `json:"cssResponseBytes,omitempty,string"`
+
+	// NumberJsResources: Number of JavaScript resources referenced by the
+	// page.
+	NumberJsResources int64 `json:"numberJsResources,omitempty"`
+
+	// JavascriptResponseBytes: Number of uncompressed response bytes for JS
+	// resources on the page.
+	JavascriptResponseBytes int64 `json:"javascriptResponseBytes,omitempty,string"`
+
+	// TotalRequestBytes: Total size of all request bytes sent by the page.
+	TotalRequestBytes int64 `json:"totalRequestBytes,omitempty,string"`
 }
 
 type ResultVersion struct {
-	// Major: The major version number of the Page Speed SDK used to
-	// generate these results.
-	Major int64 `json:"major,omitempty"`
-
 	// Minor: The minor version number of the Page Speed SDK used to
 	// generate these results.
 	Minor int64 `json:"minor,omitempty"`
+
+	// Major: The major version number of the Page Speed SDK used to
+	// generate these results.
+	Major int64 `json:"major,omitempty"`
 }
 
 // method id "pagespeedonline.pagespeedapi.runpagespeed":

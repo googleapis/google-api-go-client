@@ -47,28 +47,34 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
-	s.Management = &ManagementService{s: s}
 	s.Data = &DataService{s: s}
+	s.Management = &ManagementService{s: s}
 	return s, nil
 }
 
 type Service struct {
 	client *http.Client
 
-	Management *ManagementService
-
 	Data *DataService
-}
 
-type ManagementService struct {
-	s *Service
+	Management *ManagementService
 }
 
 type DataService struct {
 	s *Service
 }
 
+type ManagementService struct {
+	s *Service
+}
+
 type Account struct {
+	// Kind: Resource type for Analytics account.
+	Kind string `json:"kind,omitempty"`
+
+	// Updated: Time the account was last modified.
+	Updated string `json:"updated,omitempty"`
+
 	// Id: Account ID.
 	Id string `json:"id,omitempty"`
 
@@ -84,12 +90,6 @@ type Account struct {
 
 	// Name: Account name.
 	Name string `json:"name,omitempty"`
-
-	// Kind: Resource type for Analytics account.
-	Kind string `json:"kind,omitempty"`
-
-	// Updated: Time the account was last modified.
-	Updated string `json:"updated,omitempty"`
 }
 
 type AccountChildLink struct {
@@ -101,6 +101,15 @@ type AccountChildLink struct {
 }
 
 type Accounts struct {
+	// Items: A list of accounts.
+	Items []*Account `json:"items,omitempty"`
+
+	// Username: Email ID of the authenticated user
+	Username string `json:"username,omitempty"`
+
+	// Kind: Collection type.
+	Kind string `json:"kind,omitempty"`
+
 	// ItemsPerPage: The maximum number of entries the response can contain,
 	// regardless of the actual number of entries returned. Its value ranges
 	// from 1 to 10,000 with a value of 1000 by default, or otherwise
@@ -120,36 +129,9 @@ type Accounts struct {
 	// TotalResults: The total number of results for the query, regardless
 	// of the number of results in the response.
 	TotalResults int64 `json:"totalResults,omitempty"`
-
-	// Items: A list of accounts.
-	Items []*Account `json:"items,omitempty"`
-
-	// Username: Email ID of the authenticated user
-	Username string `json:"username,omitempty"`
-
-	// Kind: Collection type.
-	Kind string `json:"kind,omitempty"`
 }
 
 type GaData struct {
-	// NextLink: Link to next page for this Analytics data query.
-	NextLink string `json:"nextLink,omitempty"`
-
-	// TotalResults: The total number of rows for the query, regardless of
-	// the number of rows in the response.
-	TotalResults int64 `json:"totalResults,omitempty"`
-
-	// Kind: Resource type.
-	Kind string `json:"kind,omitempty"`
-
-	// ColumnHeaders: Column headers that list dimension names followed by
-	// the metric names. The order of dimensions and metrics is same as
-	// specified in the request.
-	ColumnHeaders []*GaDataColumnHeaders `json:"columnHeaders,omitempty"`
-
-	// Id: Unique ID for this data response.
-	Id string `json:"id,omitempty"`
-
 	// Rows: Analytics data rows, where each row contains a list of
 	// dimension values followed by the metric values. The order of
 	// dimensions and metrics is same as specified in the request.
@@ -182,6 +164,24 @@ type GaData struct {
 
 	// SelfLink: Link to this page.
 	SelfLink string `json:"selfLink,omitempty"`
+
+	// NextLink: Link to next page for this Analytics data query.
+	NextLink string `json:"nextLink,omitempty"`
+
+	// TotalResults: The total number of rows for the query, regardless of
+	// the number of rows in the response.
+	TotalResults int64 `json:"totalResults,omitempty"`
+
+	// Kind: Resource type.
+	Kind string `json:"kind,omitempty"`
+
+	// ColumnHeaders: Column headers that list dimension names followed by
+	// the metric names. The order of dimensions and metrics is same as
+	// specified in the request.
+	ColumnHeaders []*GaDataColumnHeaders `json:"columnHeaders,omitempty"`
+
+	// Id: Unique ID for this data response.
+	Id string `json:"id,omitempty"`
 }
 
 type GaDataColumnHeaders struct {
@@ -198,6 +198,9 @@ type GaDataColumnHeaders struct {
 }
 
 type GaDataProfileInfo struct {
+	// AccountId: Account ID to which this profile belongs.
+	AccountId string `json:"accountId,omitempty"`
+
 	// WebPropertyId: Web Property ID to which this profile belongs.
 	WebPropertyId string `json:"webPropertyId,omitempty"`
 
@@ -213,12 +216,15 @@ type GaDataProfileInfo struct {
 
 	// ProfileId: Profile ID.
 	ProfileId string `json:"profileId,omitempty"`
-
-	// AccountId: Account ID to which this profile belongs.
-	AccountId string `json:"accountId,omitempty"`
 }
 
 type GaDataQuery struct {
+	// Segment: Analytics advanced segment.
+	Segment string `json:"segment,omitempty"`
+
+	// StartDate: Start date.
+	StartDate string `json:"start-date,omitempty"`
+
 	// Sort: List of dimensions or metrics based on which Analytics data is
 	// sorted.
 	Sort []string `json:"sort,omitempty"`
@@ -243,12 +249,6 @@ type GaDataQuery struct {
 
 	// EndDate: End date.
 	EndDate string `json:"end-date,omitempty"`
-
-	// Segment: Analytics advanced segment.
-	Segment string `json:"segment,omitempty"`
-
-	// StartDate: Start date.
-	StartDate string `json:"start-date,omitempty"`
 }
 
 type GaDataTotalsForAllResults struct {
@@ -318,12 +318,12 @@ type Goal struct {
 }
 
 type GoalEventDetails struct {
-	// EventConditions: List of event conditions.
-	EventConditions []*GoalEventDetailsEventConditions `json:"eventConditions,omitempty"`
-
 	// UseEventValue: Determines if the event value should be used as the
 	// value for this goal.
 	UseEventValue bool `json:"useEventValue,omitempty"`
+
+	// EventConditions: List of event conditions.
+	EventConditions []*GoalEventDetailsEventConditions `json:"eventConditions,omitempty"`
 }
 
 type GoalEventDetailsEventConditions struct {
@@ -355,14 +355,6 @@ type GoalParentLink struct {
 }
 
 type GoalUrlDestinationDetails struct {
-	// CaseSensitive: Determines if the goal URL must exactly match the
-	// capitalization of visited URLs.
-	CaseSensitive bool `json:"caseSensitive,omitempty"`
-
-	// FirstStepRequired: Determines if the first step in this goal is
-	// required.
-	FirstStepRequired bool `json:"firstStepRequired,omitempty"`
-
 	// Steps: List of steps configured for this goal funnel.
 	Steps []*GoalUrlDestinationDetailsSteps `json:"steps,omitempty"`
 
@@ -372,6 +364,14 @@ type GoalUrlDestinationDetails struct {
 	// MatchType: Match type for the goal URL. Possible values are HEAD,
 	// EXACT, or REGEX.
 	MatchType string `json:"matchType,omitempty"`
+
+	// CaseSensitive: Determines if the goal URL must exactly match the
+	// capitalization of visited URLs.
+	CaseSensitive bool `json:"caseSensitive,omitempty"`
+
+	// FirstStepRequired: Determines if the first step in this goal is
+	// required.
+	FirstStepRequired bool `json:"firstStepRequired,omitempty"`
 }
 
 type GoalUrlDestinationDetailsSteps struct {
@@ -435,23 +435,6 @@ type Goals struct {
 }
 
 type Profile struct {
-	// Kind: Resource type for Analytics profile.
-	Kind string `json:"kind,omitempty"`
-
-	// Updated: Time this profile was last modified.
-	Updated string `json:"updated,omitempty"`
-
-	// WebPropertyId: Web property ID of the form UA-XXXXX-YY to which this
-	// profile belongs.
-	WebPropertyId string `json:"webPropertyId,omitempty"`
-
-	// SiteSearchCategoryParameters: Site search category parameters for
-	// this profile.
-	SiteSearchCategoryParameters string `json:"siteSearchCategoryParameters,omitempty"`
-
-	// Id: Profile ID.
-	Id string `json:"id,omitempty"`
-
 	// Created: Time this profile was created.
 	Created string `json:"created,omitempty"`
 
@@ -492,6 +475,23 @@ type Profile struct {
 	// SiteSearchQueryParameters: The site search query parameters for this
 	// profile.
 	SiteSearchQueryParameters string `json:"siteSearchQueryParameters,omitempty"`
+
+	// Kind: Resource type for Analytics profile.
+	Kind string `json:"kind,omitempty"`
+
+	// Updated: Time this profile was last modified.
+	Updated string `json:"updated,omitempty"`
+
+	// WebPropertyId: Web property ID of the form UA-XXXXX-YY to which this
+	// profile belongs.
+	WebPropertyId string `json:"webPropertyId,omitempty"`
+
+	// SiteSearchCategoryParameters: Site search category parameters for
+	// this profile.
+	SiteSearchCategoryParameters string `json:"siteSearchCategoryParameters,omitempty"`
+
+	// Id: Profile ID.
+	Id string `json:"id,omitempty"`
 }
 
 type ProfileChildLink struct {
@@ -511,6 +511,15 @@ type ProfileParentLink struct {
 }
 
 type Profiles struct {
+	// Items: A list of profiles.
+	Items []*Profile `json:"items,omitempty"`
+
+	// Username: Email ID of the authenticated user
+	Username string `json:"username,omitempty"`
+
+	// Kind: Collection type.
+	Kind string `json:"kind,omitempty"`
+
 	// ItemsPerPage: The maximum number of resources the response can
 	// contain, regardless of the actual number of resources returned. Its
 	// value ranges from 1 to 10,000 with a value of 1000 by default, or
@@ -530,15 +539,6 @@ type Profiles struct {
 	// TotalResults: The total number of results for the query, regardless
 	// of the number of results in the response.
 	TotalResults int64 `json:"totalResults,omitempty"`
-
-	// Items: A list of profiles.
-	Items []*Profile `json:"items,omitempty"`
-
-	// Username: Email ID of the authenticated user
-	Username string `json:"username,omitempty"`
-
-	// Kind: Collection type.
-	Kind string `json:"kind,omitempty"`
 }
 
 type Segment struct {
@@ -569,6 +569,19 @@ type Segment struct {
 }
 
 type Segments struct {
+	// Kind: Collection type for advanced segments.
+	Kind string `json:"kind,omitempty"`
+
+	// ItemsPerPage: The maximum number of resources the response can
+	// contain, regardless of the actual number of resources returned. Its
+	// value ranges from 1 to 10,000 with a value of 1000 by default, or
+	// otherwise specified by the max-results query parameter.
+	ItemsPerPage int64 `json:"itemsPerPage,omitempty"`
+
+	// PreviousLink: Link to previous page for this advanced segment
+	// collection.
+	PreviousLink string `json:"previousLink,omitempty"`
+
 	// StartIndex: The starting index of the resources, which is 1 by
 	// default or otherwise specified by the start-index query parameter.
 	StartIndex int64 `json:"startIndex,omitempty"`
@@ -585,19 +598,6 @@ type Segments struct {
 
 	// Username: Email ID of the authenticated user
 	Username string `json:"username,omitempty"`
-
-	// Kind: Collection type for advanced segments.
-	Kind string `json:"kind,omitempty"`
-
-	// ItemsPerPage: The maximum number of resources the response can
-	// contain, regardless of the actual number of resources returned. Its
-	// value ranges from 1 to 10,000 with a value of 1000 by default, or
-	// otherwise specified by the max-results query parameter.
-	ItemsPerPage int64 `json:"itemsPerPage,omitempty"`
-
-	// PreviousLink: Link to previous page for this advanced segment
-	// collection.
-	PreviousLink string `json:"previousLink,omitempty"`
 }
 
 type Webproperties struct {
@@ -632,6 +632,13 @@ type Webproperties struct {
 }
 
 type Webproperty struct {
+	// SelfLink: Link for this web property.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// ParentLink: Parent link for this web property. Points to the account
+	// to which this web property belongs.
+	ParentLink *WebpropertyParentLink `json:"parentLink,omitempty"`
+
 	// Name: Name of this web property.
 	Name string `json:"name,omitempty"`
 
@@ -659,13 +666,6 @@ type Webproperty struct {
 	// ChildLink: Child link for this web property. Points to the list of
 	// profiles for this web property.
 	ChildLink *WebpropertyChildLink `json:"childLink,omitempty"`
-
-	// SelfLink: Link for this web property.
-	SelfLink string `json:"selfLink,omitempty"`
-
-	// ParentLink: Parent link for this web property. Points to the account
-	// to which this web property belongs.
-	ParentLink *WebpropertyParentLink `json:"parentLink,omitempty"`
 }
 
 type WebpropertyChildLink struct {
@@ -677,11 +677,11 @@ type WebpropertyChildLink struct {
 }
 
 type WebpropertyParentLink struct {
-	// Type: Type of the parent link. Its value is "analytics#account".
-	Type string `json:"type,omitempty"`
-
 	// Href: Link to the account for this web property.
 	Href string `json:"href,omitempty"`
+
+	// Type: Type of the parent link. Its value is "analytics#account".
+	Type string `json:"type,omitempty"`
 }
 
 func cleanPathString(s string) string {

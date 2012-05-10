@@ -48,8 +48,8 @@ func New(client *http.Client) (*Service, error) {
 	}
 	s := &Service{client: client}
 	s.Accounts = &AccountsService{s: s}
-	s.DirectDeals = &DirectDealsService{s: s}
 	s.Creatives = &CreativesService{s: s}
+	s.DirectDeals = &DirectDealsService{s: s}
 	return s, nil
 }
 
@@ -58,16 +58,12 @@ type Service struct {
 
 	Accounts *AccountsService
 
-	DirectDeals *DirectDealsService
-
 	Creatives *CreativesService
+
+	DirectDeals *DirectDealsService
 }
 
 type AccountsService struct {
-	s *Service
-}
-
-type DirectDealsService struct {
 	s *Service
 }
 
@@ -75,10 +71,11 @@ type CreativesService struct {
 	s *Service
 }
 
-type Account struct {
-	// BidderLocation: Your bidder locations that have distinct URLs.
-	BidderLocation []*AccountBidderLocation `json:"bidderLocation,omitempty"`
+type DirectDealsService struct {
+	s *Service
+}
 
+type Account struct {
 	// CookieMatchingNid: The nid parameter value used in cookie match
 	// requests. Please contact your technical account manager if you need
 	// to change this.
@@ -97,6 +94,9 @@ type Account struct {
 	// cannot exceed this. Please contact your technical account manager if
 	// you need to change this.
 	MaximumTotalQps int64 `json:"maximumTotalQps,omitempty"`
+
+	// BidderLocation: Your bidder locations that have distinct URLs.
+	BidderLocation []*AccountBidderLocation `json:"bidderLocation,omitempty"`
 }
 
 type AccountBidderLocation struct {
@@ -116,6 +116,23 @@ type AccountsList struct {
 }
 
 type Creative struct {
+	// BuyerCreativeId: A buyer-specific id identifying the creative in this
+	// ad.
+	BuyerCreativeId string `json:"buyerCreativeId,omitempty"`
+
+	// Height: Ad height.
+	Height int64 `json:"height,omitempty"`
+
+	// Kind: Resource type.
+	Kind string `json:"kind,omitempty"`
+
+	// Width: Ad width.
+	Width int64 `json:"width,omitempty"`
+
+	// HTMLSnippet: The HTML snippet that displays the ad when inserted in
+	// the web page. If set, videoURL should not be set.
+	HTMLSnippet string `json:"HTMLSnippet,omitempty"`
+
 	// Status: Creative serving status. Read-only. This field should not be
 	// set in requests.
 	Status string `json:"status,omitempty"`
@@ -165,26 +182,12 @@ type Creative struct {
 
 	// AccountId: Account id.
 	AccountId int64 `json:"accountId,omitempty"`
-
-	// BuyerCreativeId: A buyer-specific id identifying the creative in this
-	// ad.
-	BuyerCreativeId string `json:"buyerCreativeId,omitempty"`
-
-	// Height: Ad height.
-	Height int64 `json:"height,omitempty"`
-
-	// Kind: Resource type.
-	Kind string `json:"kind,omitempty"`
-
-	// Width: Ad width.
-	Width int64 `json:"width,omitempty"`
-
-	// HTMLSnippet: The HTML snippet that displays the ad when inserted in
-	// the web page. If set, videoURL should not be set.
-	HTMLSnippet string `json:"HTMLSnippet,omitempty"`
 }
 
 type DirectDeal struct {
+	// AccountId: The account id of the buyer this deal is for.
+	AccountId int64 `json:"accountId,omitempty"`
+
 	// Kind: Resource type.
 	Kind string `json:"kind,omitempty"`
 
@@ -214,9 +217,6 @@ type DirectDeal struct {
 	// then this deal is active immediately upon creation. In seconds since
 	// the epoch.
 	StartTime int64 `json:"startTime,omitempty,string"`
-
-	// AccountId: The account id of the buyer this deal is for.
-	AccountId int64 `json:"accountId,omitempty"`
 }
 
 type DirectDealsList struct {
@@ -487,117 +487,6 @@ func (c *AccountsUpdateCall) Do() (*Account, error) {
 
 }
 
-// method id "adexchangebuyer.directDeals.get":
-
-type DirectDealsGetCall struct {
-	s    *Service
-	id   int64
-	opt_ map[string]interface{}
-}
-
-// Get: Gets one direct deal by ID.
-func (r *DirectDealsService) Get(id int64) *DirectDealsGetCall {
-	c := &DirectDealsGetCall{s: r.s, opt_: make(map[string]interface{})}
-	c.id = id
-	return c
-}
-
-func (c *DirectDealsGetCall) Do() (*DirectDeal, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1/", "directdeals/{id}")
-	urls = strings.Replace(urls, "{id}", strconv.FormatInt(c.id, 10), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(DirectDeal)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Gets one direct deal by ID.",
-	//   "httpMethod": "GET",
-	//   "id": "adexchangebuyer.directDeals.get",
-	//   "parameterOrder": [
-	//     "id"
-	//   ],
-	//   "parameters": {
-	//     "id": {
-	//       "description": "The direct deal id",
-	//       "format": "int64",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "directdeals/{id}",
-	//   "response": {
-	//     "$ref": "DirectDeal"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/adexchange.buyer"
-	//   ]
-	// }
-
-}
-
-// method id "adexchangebuyer.directDeals.list":
-
-type DirectDealsListCall struct {
-	s    *Service
-	opt_ map[string]interface{}
-}
-
-// List: Retrieves the authenticated user's list of direct deals.
-func (r *DirectDealsService) List() *DirectDealsListCall {
-	c := &DirectDealsListCall{s: r.s, opt_: make(map[string]interface{})}
-	return c
-}
-
-func (c *DirectDealsListCall) Do() (*DirectDealsList, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1/", "directdeals")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(DirectDealsList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Retrieves the authenticated user's list of direct deals.",
-	//   "httpMethod": "GET",
-	//   "id": "adexchangebuyer.directDeals.list",
-	//   "path": "directdeals",
-	//   "response": {
-	//     "$ref": "DirectDealsList"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/adexchange.buyer"
-	//   ]
-	// }
-
-}
-
 // method id "adexchangebuyer.creatives.get":
 
 type CreativesGetCall struct {
@@ -733,6 +622,117 @@ func (c *CreativesInsertCall) Do() (*Creative, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "Creative"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer.directDeals.get":
+
+type DirectDealsGetCall struct {
+	s    *Service
+	id   int64
+	opt_ map[string]interface{}
+}
+
+// Get: Gets one direct deal by ID.
+func (r *DirectDealsService) Get(id int64) *DirectDealsGetCall {
+	c := &DirectDealsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	return c
+}
+
+func (c *DirectDealsGetCall) Do() (*DirectDeal, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1/", "directdeals/{id}")
+	urls = strings.Replace(urls, "{id}", strconv.FormatInt(c.id, 10), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(DirectDeal)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets one direct deal by ID.",
+	//   "httpMethod": "GET",
+	//   "id": "adexchangebuyer.directDeals.get",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The direct deal id",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "directdeals/{id}",
+	//   "response": {
+	//     "$ref": "DirectDeal"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer.directDeals.list":
+
+type DirectDealsListCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// List: Retrieves the authenticated user's list of direct deals.
+func (r *DirectDealsService) List() *DirectDealsListCall {
+	c := &DirectDealsListCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+func (c *DirectDealsListCall) Do() (*DirectDealsList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1/", "directdeals")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(DirectDealsList)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the authenticated user's list of direct deals.",
+	//   "httpMethod": "GET",
+	//   "id": "adexchangebuyer.directDeals.list",
+	//   "path": "directdeals",
+	//   "response": {
+	//     "$ref": "DirectDealsList"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/adexchange.buyer"

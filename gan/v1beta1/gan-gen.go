@@ -41,26 +41,26 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
-	s.Events = &EventsService{s: s}
-	s.CcOffers = &CcOffersService{s: s}
-	s.Publishers = &PublishersService{s: s}
 	s.Advertisers = &AdvertisersService{s: s}
+	s.CcOffers = &CcOffersService{s: s}
+	s.Events = &EventsService{s: s}
+	s.Publishers = &PublishersService{s: s}
 	return s, nil
 }
 
 type Service struct {
 	client *http.Client
 
-	Events *EventsService
+	Advertisers *AdvertisersService
 
 	CcOffers *CcOffersService
 
-	Publishers *PublishersService
+	Events *EventsService
 
-	Advertisers *AdvertisersService
+	Publishers *PublishersService
 }
 
-type EventsService struct {
+type AdvertisersService struct {
 	s *Service
 }
 
@@ -68,32 +68,15 @@ type CcOffersService struct {
 	s *Service
 }
 
+type EventsService struct {
+	s *Service
+}
+
 type PublishersService struct {
 	s *Service
 }
 
-type AdvertisersService struct {
-	s *Service
-}
-
 type Advertiser struct {
-	// Id: The ID of this advertiser.
-	Id int64 `json:"id,omitempty,string"`
-
-	// Status: The status of the requesting publisher's relationship this
-	// advertiser.
-	Status string `json:"status,omitempty"`
-
-	// EpcNinetyDayAverage: The sum of fees paid to publishers divided by
-	// the total number of clicks over the past three months. Values are
-	// multiplied by 100 for display purposes.
-	EpcNinetyDayAverage *Money `json:"epcNinetyDayAverage,omitempty"`
-
-	// EpcSevenDayAverage: The sum of fees paid to publishers divided by the
-	// total number of clicks over the past seven days. Values are
-	// multiplied by 100 for display purposes.
-	EpcSevenDayAverage *Money `json:"epcSevenDayAverage,omitempty"`
-
 	// ProductFeedsEnabled: Allows advertisers to submit product listings to
 	// Google Product Search.
 	ProductFeedsEnabled bool `json:"productFeedsEnabled,omitempty"`
@@ -144,6 +127,23 @@ type Advertiser struct {
 	// JoinDate: Date that this advertiser was approved as a Google
 	// Affiliate Network advertiser.
 	JoinDate string `json:"joinDate,omitempty"`
+
+	// Id: The ID of this advertiser.
+	Id int64 `json:"id,omitempty,string"`
+
+	// Status: The status of the requesting publisher's relationship this
+	// advertiser.
+	Status string `json:"status,omitempty"`
+
+	// EpcNinetyDayAverage: The sum of fees paid to publishers divided by
+	// the total number of clicks over the past three months. Values are
+	// multiplied by 100 for display purposes.
+	EpcNinetyDayAverage *Money `json:"epcNinetyDayAverage,omitempty"`
+
+	// EpcSevenDayAverage: The sum of fees paid to publishers divided by the
+	// total number of clicks over the past seven days. Values are
+	// multiplied by 100 for display purposes.
+	EpcSevenDayAverage *Money `json:"epcSevenDayAverage,omitempty"`
 }
 
 type Advertisers struct {
@@ -159,6 +159,74 @@ type Advertisers struct {
 }
 
 type CcOffer struct {
+	// RewardsExpire: Whether accumulated rewards ever expire.
+	RewardsExpire bool `json:"rewardsExpire,omitempty"`
+
+	// BonusRewards: For cards with rewards programs, extra circumstances
+	// whereby additional rewards may be granted.
+	BonusRewards []*CcOfferBonusRewards `json:"bonusRewards,omitempty"`
+
+	// AnnualFeeDisplay: Text describing the annual fee, including any
+	// difference for the first year. A summary field.
+	AnnualFeeDisplay string `json:"annualFeeDisplay,omitempty"`
+
+	// AgeMinimum: The youngest a recipient of this card may be.
+	AgeMinimum float64 `json:"ageMinimum,omitempty"`
+
+	// StatementCopyFee: Fee for requesting a copy of your statement.
+	StatementCopyFee string `json:"statementCopyFee,omitempty"`
+
+	// CardType: What kind of credit card this is, for example secured or
+	// unsecured.
+	CardType string `json:"cardType,omitempty"`
+
+	// CashAdvanceTerms: Text describing the terms for cash advances. A
+	// summary field.
+	CashAdvanceTerms string `json:"cashAdvanceTerms,omitempty"`
+
+	// CreditRatingDisplay: Text describing the credit ratings required for
+	// recipients of this card, for example "Excellent/Good." A summary
+	// field.
+	CreditRatingDisplay string `json:"creditRatingDisplay,omitempty"`
+
+	// CardBenefits: A list of what the issuer thinks are the most important
+	// benefits of the card. Usually summarizes the rewards program, if
+	// there is one. A summary field.
+	CardBenefits []string `json:"cardBenefits,omitempty"`
+
+	// FlightAccidentInsurance: If you get coverage when you use the card
+	// for the given activity, this field describes it.
+	FlightAccidentInsurance string `json:"flightAccidentInsurance,omitempty"`
+
+	// IssuerWebsite: The generic link to the issuer's site.
+	IssuerWebsite string `json:"issuerWebsite,omitempty"`
+
+	// VariableRatesLastUpdated: When variable rates were last updated.
+	VariableRatesLastUpdated string `json:"variableRatesLastUpdated,omitempty"`
+
+	// LuggageInsurance: If you get coverage when you use the card for the
+	// given activity, this field describes it.
+	LuggageInsurance string `json:"luggageInsurance,omitempty"`
+
+	// AnnualFee: The ongoing annual fee, in dollars.
+	AnnualFee float64 `json:"annualFee,omitempty"`
+
+	// IssuerId: The Google Affiliate Network ID of the advertiser making
+	// this offer.
+	IssuerId string `json:"issuerId,omitempty"`
+
+	// AnnualRewardMaximum: The largest number of units you may accumulate
+	// in a year.
+	AnnualRewardMaximum float64 `json:"annualRewardMaximum,omitempty"`
+
+	// TrackingUrl: The link to ping to register a click on this offer. A
+	// summary field.
+	TrackingUrl string `json:"trackingUrl,omitempty"`
+
+	// ReturnedPaymentFee: Text describing the fee for a payment that
+	// doesn't clear. A summary field.
+	ReturnedPaymentFee string `json:"returnedPaymentFee,omitempty"`
+
 	// PurchaseRateAdditionalDetails: Text describing any additional details
 	// for the purchase rate. A summary field.
 	PurchaseRateAdditionalDetails string `json:"purchaseRateAdditionalDetails,omitempty"`
@@ -330,74 +398,6 @@ type CcOffer struct {
 	// OffersImmediateCashReward: Whether a cash reward program lets you get
 	// cash back sooner than end of year or other longish period.
 	OffersImmediateCashReward bool `json:"offersImmediateCashReward,omitempty"`
-
-	// RewardsExpire: Whether accumulated rewards ever expire.
-	RewardsExpire bool `json:"rewardsExpire,omitempty"`
-
-	// BonusRewards: For cards with rewards programs, extra circumstances
-	// whereby additional rewards may be granted.
-	BonusRewards []*CcOfferBonusRewards `json:"bonusRewards,omitempty"`
-
-	// AnnualFeeDisplay: Text describing the annual fee, including any
-	// difference for the first year. A summary field.
-	AnnualFeeDisplay string `json:"annualFeeDisplay,omitempty"`
-
-	// AgeMinimum: The youngest a recipient of this card may be.
-	AgeMinimum float64 `json:"ageMinimum,omitempty"`
-
-	// StatementCopyFee: Fee for requesting a copy of your statement.
-	StatementCopyFee string `json:"statementCopyFee,omitempty"`
-
-	// CardType: What kind of credit card this is, for example secured or
-	// unsecured.
-	CardType string `json:"cardType,omitempty"`
-
-	// CashAdvanceTerms: Text describing the terms for cash advances. A
-	// summary field.
-	CashAdvanceTerms string `json:"cashAdvanceTerms,omitempty"`
-
-	// CreditRatingDisplay: Text describing the credit ratings required for
-	// recipients of this card, for example "Excellent/Good." A summary
-	// field.
-	CreditRatingDisplay string `json:"creditRatingDisplay,omitempty"`
-
-	// CardBenefits: A list of what the issuer thinks are the most important
-	// benefits of the card. Usually summarizes the rewards program, if
-	// there is one. A summary field.
-	CardBenefits []string `json:"cardBenefits,omitempty"`
-
-	// FlightAccidentInsurance: If you get coverage when you use the card
-	// for the given activity, this field describes it.
-	FlightAccidentInsurance string `json:"flightAccidentInsurance,omitempty"`
-
-	// IssuerWebsite: The generic link to the issuer's site.
-	IssuerWebsite string `json:"issuerWebsite,omitempty"`
-
-	// VariableRatesLastUpdated: When variable rates were last updated.
-	VariableRatesLastUpdated string `json:"variableRatesLastUpdated,omitempty"`
-
-	// LuggageInsurance: If you get coverage when you use the card for the
-	// given activity, this field describes it.
-	LuggageInsurance string `json:"luggageInsurance,omitempty"`
-
-	// AnnualFee: The ongoing annual fee, in dollars.
-	AnnualFee float64 `json:"annualFee,omitempty"`
-
-	// IssuerId: The Google Affiliate Network ID of the advertiser making
-	// this offer.
-	IssuerId string `json:"issuerId,omitempty"`
-
-	// AnnualRewardMaximum: The largest number of units you may accumulate
-	// in a year.
-	AnnualRewardMaximum float64 `json:"annualRewardMaximum,omitempty"`
-
-	// TrackingUrl: The link to ping to register a click on this offer. A
-	// summary field.
-	TrackingUrl string `json:"trackingUrl,omitempty"`
-
-	// ReturnedPaymentFee: Text describing the fee for a payment that
-	// doesn't clear. A summary field.
-	ReturnedPaymentFee string `json:"returnedPaymentFee,omitempty"`
 }
 
 type CcOfferBonusRewards struct {
@@ -410,14 +410,6 @@ type CcOfferBonusRewards struct {
 }
 
 type CcOfferDefaultFees struct {
-	// MaxRate: The highest rate the issuer may charge for defaulting on
-	// debt in this category. Expressed as an absolute number, not as a
-	// percentage.
-	MaxRate float64 `json:"maxRate,omitempty"`
-
-	// RateType: Fixed or variable.
-	RateType string `json:"rateType,omitempty"`
-
 	// Category: The type of charge, for example Purchases.
 	Category string `json:"category,omitempty"`
 
@@ -425,9 +417,24 @@ type CcOfferDefaultFees struct {
 	// in this category. Expressed as an absolute number, not as a
 	// percentage.
 	MinRate float64 `json:"minRate,omitempty"`
+
+	// MaxRate: The highest rate the issuer may charge for defaulting on
+	// debt in this category. Expressed as an absolute number, not as a
+	// percentage.
+	MaxRate float64 `json:"maxRate,omitempty"`
+
+	// RateType: Fixed or variable.
+	RateType string `json:"rateType,omitempty"`
 }
 
 type CcOfferRewards struct {
+	// MaxRewardTier: The maximum purchase amount in the given category for
+	// this rule to apply.
+	MaxRewardTier float64 `json:"maxRewardTier,omitempty"`
+
+	// ExpirationMonths: How long rewards granted by this rule last.
+	ExpirationMonths float64 `json:"expirationMonths,omitempty"`
+
 	// AdditionalDetails: Other limits, for example, if this rule only
 	// applies during an introductory period.
 	AdditionalDetails string `json:"additionalDetails,omitempty"`
@@ -441,54 +448,17 @@ type CcOfferRewards struct {
 	// MinRewardTier: The minimum purchase amount in the given category
 	// before this rule applies.
 	MinRewardTier float64 `json:"minRewardTier,omitempty"`
-
-	// MaxRewardTier: The maximum purchase amount in the given category for
-	// this rule to apply.
-	MaxRewardTier float64 `json:"maxRewardTier,omitempty"`
-
-	// ExpirationMonths: How long rewards granted by this rule last.
-	ExpirationMonths float64 `json:"expirationMonths,omitempty"`
 }
 
 type CcOffers struct {
-	// Kind: The kind for a page of credit card offers.
-	Kind string `json:"kind,omitempty"`
-
 	// Items: The credit card offers.
 	Items []*CcOffer `json:"items,omitempty"`
+
+	// Kind: The kind for a page of credit card offers.
+	Kind string `json:"kind,omitempty"`
 }
 
 type Event struct {
-	// ModifyDate: The date-time this event was last modified as a RFC 3339
-	// date-time value.
-	ModifyDate string `json:"modifyDate,omitempty"`
-
-	// Type: Type of the event (action|transaction|charge).
-	Type string `json:"type,omitempty"`
-
-	// PublisherId: The ID of the publisher for this event.
-	PublisherId int64 `json:"publisherId,omitempty,string"`
-
-	// MemberId: The ID of the member attached to this event. Only returned
-	// for conversion events.
-	MemberId string `json:"memberId,omitempty"`
-
-	// AdvertiserId: The ID of advertiser for this event.
-	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
-
-	// PublisherName: The name of the publisher for this event.
-	PublisherName string `json:"publisherName,omitempty"`
-
-	// Earnings: Earnings by the publisher.
-	Earnings *Money `json:"earnings,omitempty"`
-
-	// OrderId: The order ID for this event. Only returned for conversion
-	// events.
-	OrderId string `json:"orderId,omitempty"`
-
-	// AdvertiserName: The name of the advertiser for this event.
-	AdvertiserName string `json:"advertiserName,omitempty"`
-
 	// NetworkFee: Fee that the advertiser paid to the Google Affiliate
 	// Network.
 	NetworkFee *Money `json:"networkFee,omitempty"`
@@ -522,6 +492,36 @@ type Event struct {
 	// EventDate: The date-time this event was initiated as a RFC 3339
 	// date-time value.
 	EventDate string `json:"eventDate,omitempty"`
+
+	// ModifyDate: The date-time this event was last modified as a RFC 3339
+	// date-time value.
+	ModifyDate string `json:"modifyDate,omitempty"`
+
+	// Type: Type of the event (action|transaction|charge).
+	Type string `json:"type,omitempty"`
+
+	// PublisherId: The ID of the publisher for this event.
+	PublisherId int64 `json:"publisherId,omitempty,string"`
+
+	// MemberId: The ID of the member attached to this event. Only returned
+	// for conversion events.
+	MemberId string `json:"memberId,omitempty"`
+
+	// AdvertiserId: The ID of advertiser for this event.
+	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
+
+	// PublisherName: The name of the publisher for this event.
+	PublisherName string `json:"publisherName,omitempty"`
+
+	// Earnings: Earnings by the publisher.
+	Earnings *Money `json:"earnings,omitempty"`
+
+	// OrderId: The order ID for this event. Only returned for conversion
+	// events.
+	OrderId string `json:"orderId,omitempty"`
+
+	// AdvertiserName: The name of the advertiser for this event.
+	AdvertiserName string `json:"advertiserName,omitempty"`
 }
 
 type EventProducts struct {
@@ -568,11 +568,11 @@ type Events struct {
 }
 
 type Money struct {
-	// CurrencyCode: The 3-letter code of the currency in question.
-	CurrencyCode string `json:"currencyCode,omitempty"`
-
 	// Amount: The amount of money.
 	Amount float64 `json:"amount,omitempty"`
+
+	// CurrencyCode: The 3-letter code of the currency in question.
+	CurrencyCode string `json:"currencyCode,omitempty"`
 }
 
 type Publisher struct {
@@ -632,6 +632,416 @@ type Publishers struct {
 
 	// Kind: The kind for a page of entities.
 	Kind string `json:"kind,omitempty"`
+}
+
+// method id "gan.advertisers.get":
+
+type AdvertisersGetCall struct {
+	s      *Service
+	role   string
+	roleId string
+	opt_   map[string]interface{}
+}
+
+// Get: Retrieves data about a single advertiser if that the requesting
+// advertiser/publisher has access to it. Only publishers can lookup
+// advertisers. Advertisers can request information about themselves by
+// omitting the advertiserId query parameter.
+func (r *AdvertisersService) Get(role string, roleId string) *AdvertisersGetCall {
+	c := &AdvertisersGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.role = role
+	c.roleId = roleId
+	return c
+}
+
+// AdvertiserId sets the optional parameter "advertiserId": The ID of
+// the advertiser to look up.
+func (c *AdvertisersGetCall) AdvertiserId(advertiserId string) *AdvertisersGetCall {
+	c.opt_["advertiserId"] = advertiserId
+	return c
+}
+
+func (c *AdvertisersGetCall) Do() (*Advertiser, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["advertiserId"]; ok {
+		params.Set("advertiserId", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/gan/v1beta1/", "{role}/{roleId}/advertiser")
+	urls = strings.Replace(urls, "{role}", cleanPathString(c.role), 1)
+	urls = strings.Replace(urls, "{roleId}", cleanPathString(c.roleId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Advertiser)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves data about a single advertiser if that the requesting advertiser/publisher has access to it. Only publishers can lookup advertisers. Advertisers can request information about themselves by omitting the advertiserId query parameter.",
+	//   "httpMethod": "GET",
+	//   "id": "gan.advertisers.get",
+	//   "parameterOrder": [
+	//     "role",
+	//     "roleId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "The ID of the advertiser to look up. Optional.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "role": {
+	//       "description": "The role of the requester. Valid values: 'advertisers' or 'publishers'.",
+	//       "enum": [
+	//         "advertisers",
+	//         "publishers"
+	//       ],
+	//       "enumDescriptions": [
+	//         "The requester is requesting as an advertiser.",
+	//         "The requester is requesting as a publisher."
+	//       ],
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "roleId": {
+	//       "description": "The ID of the requesting advertiser or publisher.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{role}/{roleId}/advertiser",
+	//   "response": {
+	//     "$ref": "Advertiser"
+	//   }
+	// }
+
+}
+
+// method id "gan.advertisers.list":
+
+type AdvertisersListCall struct {
+	s      *Service
+	role   string
+	roleId string
+	opt_   map[string]interface{}
+}
+
+// List: Retrieves data about all advertisers that the requesting
+// advertiser/publisher has access to.
+func (r *AdvertisersService) List(role string, roleId string) *AdvertisersListCall {
+	c := &AdvertisersListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.role = role
+	c.roleId = roleId
+	return c
+}
+
+// AdvertiserCategory sets the optional parameter "advertiserCategory":
+// Caret(^) delimted list of advertiser categories. Valid categories are
+// defined here:
+// http://www.google.com/support/affiliatenetwork/advertiser/bin/answer.p
+// y?hl=en&answer=107581. Filters out all advertisers not in one of the
+// given advertiser categories.
+func (c *AdvertisersListCall) AdvertiserCategory(advertiserCategory string) *AdvertisersListCall {
+	c.opt_["advertiserCategory"] = advertiserCategory
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Max number of
+// items to return in this page.  Defaults to 20.
+func (c *AdvertisersListCall) MaxResults(maxResults int64) *AdvertisersListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// MinNinetyDayEpc sets the optional parameter "minNinetyDayEpc":
+// Filters out all advertisers that have a ninety day EPC average lower
+// than the given value (inclusive). Min value: 0.0.
+func (c *AdvertisersListCall) MinNinetyDayEpc(minNinetyDayEpc float64) *AdvertisersListCall {
+	c.opt_["minNinetyDayEpc"] = minNinetyDayEpc
+	return c
+}
+
+// MinPayoutRank sets the optional parameter "minPayoutRank": A value
+// between 1 and 4, where 1 represents the quartile of advertisers with
+// the lowest ranks and 4 represents the quartile of advertisers with
+// the highest ranks. Filters out all advertisers with a lower rank than
+// the given quartile. For example if a 2 was given only advertisers
+// with a payout rank of 25 or higher would be included.
+func (c *AdvertisersListCall) MinPayoutRank(minPayoutRank int64) *AdvertisersListCall {
+	c.opt_["minPayoutRank"] = minPayoutRank
+	return c
+}
+
+// MinSevenDayEpc sets the optional parameter "minSevenDayEpc": Filters
+// out all advertisers that have a seven day EPC average lower than the
+// given value (inclusive). Min value: 0.0.
+func (c *AdvertisersListCall) MinSevenDayEpc(minSevenDayEpc float64) *AdvertisersListCall {
+	c.opt_["minSevenDayEpc"] = minSevenDayEpc
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value of
+// 'nextPageToken' from the previous page.
+func (c *AdvertisersListCall) PageToken(pageToken string) *AdvertisersListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+// RelationshipStatus sets the optional parameter "relationshipStatus":
+// Filters out all advertisers for which do not have the given
+// relationship status with the requesting publisher.
+func (c *AdvertisersListCall) RelationshipStatus(relationshipStatus string) *AdvertisersListCall {
+	c.opt_["relationshipStatus"] = relationshipStatus
+	return c
+}
+
+func (c *AdvertisersListCall) Do() (*Advertisers, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["advertiserCategory"]; ok {
+		params.Set("advertiserCategory", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["minNinetyDayEpc"]; ok {
+		params.Set("minNinetyDayEpc", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["minPayoutRank"]; ok {
+		params.Set("minPayoutRank", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["minSevenDayEpc"]; ok {
+		params.Set("minSevenDayEpc", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["relationshipStatus"]; ok {
+		params.Set("relationshipStatus", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/gan/v1beta1/", "{role}/{roleId}/advertisers")
+	urls = strings.Replace(urls, "{role}", cleanPathString(c.role), 1)
+	urls = strings.Replace(urls, "{roleId}", cleanPathString(c.roleId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Advertisers)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves data about all advertisers that the requesting advertiser/publisher has access to.",
+	//   "httpMethod": "GET",
+	//   "id": "gan.advertisers.list",
+	//   "parameterOrder": [
+	//     "role",
+	//     "roleId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserCategory": {
+	//       "description": "Caret(^) delimted list of advertiser categories. Valid categories are defined here: http://www.google.com/support/affiliatenetwork/advertiser/bin/answer.py?hl=en&answer=107581. Filters out all advertisers not in one of the given advertiser categories. Optional.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "description": "Max number of items to return in this page. Optional. Defaults to 20.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "100",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "minNinetyDayEpc": {
+	//       "description": "Filters out all advertisers that have a ninety day EPC average lower than the given value (inclusive). Min value: 0.0. Optional.",
+	//       "format": "double",
+	//       "location": "query",
+	//       "type": "number"
+	//     },
+	//     "minPayoutRank": {
+	//       "description": "A value between 1 and 4, where 1 represents the quartile of advertisers with the lowest ranks and 4 represents the quartile of advertisers with the highest ranks. Filters out all advertisers with a lower rank than the given quartile. For example if a 2 was given only advertisers with a payout rank of 25 or higher would be included. Optional.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "maximum": "4",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     },
+	//     "minSevenDayEpc": {
+	//       "description": "Filters out all advertisers that have a seven day EPC average lower than the given value (inclusive). Min value: 0.0. Optional.",
+	//       "format": "double",
+	//       "location": "query",
+	//       "type": "number"
+	//     },
+	//     "pageToken": {
+	//       "description": "The value of 'nextPageToken' from the previous page. Optional.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "relationshipStatus": {
+	//       "description": "Filters out all advertisers for which do not have the given relationship status with the requesting publisher.",
+	//       "enum": [
+	//         "approved",
+	//         "available",
+	//         "deactivated",
+	//         "declined",
+	//         "pending"
+	//       ],
+	//       "enumDescriptions": [
+	//         "An advertiser that has approved your application.",
+	//         "An advertiser program that's accepting new publishers.",
+	//         "Deactivated means either the advertiser has removed you from their program, or it could also mean that you chose to remove yourself from the advertiser's program.",
+	//         "An advertiser that did not approve your application.",
+	//         "An advertiser program that you've already applied to, but they haven't yet decided to approve or decline your application."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "role": {
+	//       "description": "The role of the requester. Valid values: 'advertisers' or 'publishers'.",
+	//       "enum": [
+	//         "advertisers",
+	//         "publishers"
+	//       ],
+	//       "enumDescriptions": [
+	//         "The requester is requesting as an advertiser.",
+	//         "The requester is requesting as a publisher."
+	//       ],
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "roleId": {
+	//       "description": "The ID of the requesting advertiser or publisher.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{role}/{roleId}/advertisers",
+	//   "response": {
+	//     "$ref": "Advertisers"
+	//   }
+	// }
+
+}
+
+// method id "gan.ccOffers.list":
+
+type CcOffersListCall struct {
+	s         *Service
+	publisher string
+	opt_      map[string]interface{}
+}
+
+// List: Retrieves credit card offers for the given publisher.
+func (r *CcOffersService) List(publisher string) *CcOffersListCall {
+	c := &CcOffersListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.publisher = publisher
+	return c
+}
+
+// Advertiser sets the optional parameter "advertiser": The advertiser
+// ID of a card issuer whose offers to include. Optional, may be
+// repeated.
+func (c *CcOffersListCall) Advertiser(advertiser string) *CcOffersListCall {
+	c.opt_["advertiser"] = advertiser
+	return c
+}
+
+// Projection sets the optional parameter "projection": The set of
+// fields to return.
+func (c *CcOffersListCall) Projection(projection string) *CcOffersListCall {
+	c.opt_["projection"] = projection
+	return c
+}
+
+func (c *CcOffersListCall) Do() (*CcOffers, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["advertiser"]; ok {
+		params.Set("advertiser", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["projection"]; ok {
+		params.Set("projection", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/gan/v1beta1/", "publishers/{publisher}/ccOffers")
+	urls = strings.Replace(urls, "{publisher}", cleanPathString(c.publisher), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(CcOffers)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves credit card offers for the given publisher.",
+	//   "httpMethod": "GET",
+	//   "id": "gan.ccOffers.list",
+	//   "parameterOrder": [
+	//     "publisher"
+	//   ],
+	//   "parameters": {
+	//     "advertiser": {
+	//       "description": "The advertiser ID of a card issuer whose offers to include. Optional, may be repeated.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "projection": {
+	//       "description": "The set of fields to return.",
+	//       "enum": [
+	//         "full",
+	//         "summary"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Include all offer fields",
+	//         "Include only the basic fields needed to display an offer. This is the default."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "publisher": {
+	//       "description": "The ID of the publisher in question.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "publishers/{publisher}/ccOffers",
+	//   "response": {
+	//     "$ref": "CcOffers"
+	//   }
+	// }
+
 }
 
 // method id "gan.events.list":
@@ -1007,105 +1417,6 @@ func (c *EventsListCall) Do() (*Events, error) {
 
 }
 
-// method id "gan.ccOffers.list":
-
-type CcOffersListCall struct {
-	s         *Service
-	publisher string
-	opt_      map[string]interface{}
-}
-
-// List: Retrieves credit card offers for the given publisher.
-func (r *CcOffersService) List(publisher string) *CcOffersListCall {
-	c := &CcOffersListCall{s: r.s, opt_: make(map[string]interface{})}
-	c.publisher = publisher
-	return c
-}
-
-// Advertiser sets the optional parameter "advertiser": The advertiser
-// ID of a card issuer whose offers to include. Optional, may be
-// repeated.
-func (c *CcOffersListCall) Advertiser(advertiser string) *CcOffersListCall {
-	c.opt_["advertiser"] = advertiser
-	return c
-}
-
-// Projection sets the optional parameter "projection": The set of
-// fields to return.
-func (c *CcOffersListCall) Projection(projection string) *CcOffersListCall {
-	c.opt_["projection"] = projection
-	return c
-}
-
-func (c *CcOffersListCall) Do() (*CcOffers, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	if v, ok := c.opt_["advertiser"]; ok {
-		params.Set("advertiser", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["projection"]; ok {
-		params.Set("projection", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/gan/v1beta1/", "publishers/{publisher}/ccOffers")
-	urls = strings.Replace(urls, "{publisher}", cleanPathString(c.publisher), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(CcOffers)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Retrieves credit card offers for the given publisher.",
-	//   "httpMethod": "GET",
-	//   "id": "gan.ccOffers.list",
-	//   "parameterOrder": [
-	//     "publisher"
-	//   ],
-	//   "parameters": {
-	//     "advertiser": {
-	//       "description": "The advertiser ID of a card issuer whose offers to include. Optional, may be repeated.",
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     },
-	//     "projection": {
-	//       "description": "The set of fields to return.",
-	//       "enum": [
-	//         "full",
-	//         "summary"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Include all offer fields",
-	//         "Include only the basic fields needed to display an offer. This is the default."
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "publisher": {
-	//       "description": "The ID of the publisher in question.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "publishers/{publisher}/ccOffers",
-	//   "response": {
-	//     "$ref": "CcOffers"
-	//   }
-	// }
-
-}
-
 // method id "gan.publishers.get":
 
 type PublishersGetCall struct {
@@ -1412,317 +1723,6 @@ func (c *PublishersListCall) Do() (*Publishers, error) {
 	//   "path": "{role}/{roleId}/publishers",
 	//   "response": {
 	//     "$ref": "Publishers"
-	//   }
-	// }
-
-}
-
-// method id "gan.advertisers.get":
-
-type AdvertisersGetCall struct {
-	s      *Service
-	role   string
-	roleId string
-	opt_   map[string]interface{}
-}
-
-// Get: Retrieves data about a single advertiser if that the requesting
-// advertiser/publisher has access to it. Only publishers can lookup
-// advertisers. Advertisers can request information about themselves by
-// omitting the advertiserId query parameter.
-func (r *AdvertisersService) Get(role string, roleId string) *AdvertisersGetCall {
-	c := &AdvertisersGetCall{s: r.s, opt_: make(map[string]interface{})}
-	c.role = role
-	c.roleId = roleId
-	return c
-}
-
-// AdvertiserId sets the optional parameter "advertiserId": The ID of
-// the advertiser to look up.
-func (c *AdvertisersGetCall) AdvertiserId(advertiserId string) *AdvertisersGetCall {
-	c.opt_["advertiserId"] = advertiserId
-	return c
-}
-
-func (c *AdvertisersGetCall) Do() (*Advertiser, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	if v, ok := c.opt_["advertiserId"]; ok {
-		params.Set("advertiserId", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/gan/v1beta1/", "{role}/{roleId}/advertiser")
-	urls = strings.Replace(urls, "{role}", cleanPathString(c.role), 1)
-	urls = strings.Replace(urls, "{roleId}", cleanPathString(c.roleId), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(Advertiser)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Retrieves data about a single advertiser if that the requesting advertiser/publisher has access to it. Only publishers can lookup advertisers. Advertisers can request information about themselves by omitting the advertiserId query parameter.",
-	//   "httpMethod": "GET",
-	//   "id": "gan.advertisers.get",
-	//   "parameterOrder": [
-	//     "role",
-	//     "roleId"
-	//   ],
-	//   "parameters": {
-	//     "advertiserId": {
-	//       "description": "The ID of the advertiser to look up. Optional.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "role": {
-	//       "description": "The role of the requester. Valid values: 'advertisers' or 'publishers'.",
-	//       "enum": [
-	//         "advertisers",
-	//         "publishers"
-	//       ],
-	//       "enumDescriptions": [
-	//         "The requester is requesting as an advertiser.",
-	//         "The requester is requesting as a publisher."
-	//       ],
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "roleId": {
-	//       "description": "The ID of the requesting advertiser or publisher.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "{role}/{roleId}/advertiser",
-	//   "response": {
-	//     "$ref": "Advertiser"
-	//   }
-	// }
-
-}
-
-// method id "gan.advertisers.list":
-
-type AdvertisersListCall struct {
-	s      *Service
-	role   string
-	roleId string
-	opt_   map[string]interface{}
-}
-
-// List: Retrieves data about all advertisers that the requesting
-// advertiser/publisher has access to.
-func (r *AdvertisersService) List(role string, roleId string) *AdvertisersListCall {
-	c := &AdvertisersListCall{s: r.s, opt_: make(map[string]interface{})}
-	c.role = role
-	c.roleId = roleId
-	return c
-}
-
-// AdvertiserCategory sets the optional parameter "advertiserCategory":
-// Caret(^) delimted list of advertiser categories. Valid categories are
-// defined here:
-// http://www.google.com/support/affiliatenetwork/advertiser/bin/answer.p
-// y?hl=en&answer=107581. Filters out all advertisers not in one of the
-// given advertiser categories.
-func (c *AdvertisersListCall) AdvertiserCategory(advertiserCategory string) *AdvertisersListCall {
-	c.opt_["advertiserCategory"] = advertiserCategory
-	return c
-}
-
-// MaxResults sets the optional parameter "maxResults": Max number of
-// items to return in this page.  Defaults to 20.
-func (c *AdvertisersListCall) MaxResults(maxResults int64) *AdvertisersListCall {
-	c.opt_["maxResults"] = maxResults
-	return c
-}
-
-// MinNinetyDayEpc sets the optional parameter "minNinetyDayEpc":
-// Filters out all advertisers that have a ninety day EPC average lower
-// than the given value (inclusive). Min value: 0.0.
-func (c *AdvertisersListCall) MinNinetyDayEpc(minNinetyDayEpc float64) *AdvertisersListCall {
-	c.opt_["minNinetyDayEpc"] = minNinetyDayEpc
-	return c
-}
-
-// MinPayoutRank sets the optional parameter "minPayoutRank": A value
-// between 1 and 4, where 1 represents the quartile of advertisers with
-// the lowest ranks and 4 represents the quartile of advertisers with
-// the highest ranks. Filters out all advertisers with a lower rank than
-// the given quartile. For example if a 2 was given only advertisers
-// with a payout rank of 25 or higher would be included.
-func (c *AdvertisersListCall) MinPayoutRank(minPayoutRank int64) *AdvertisersListCall {
-	c.opt_["minPayoutRank"] = minPayoutRank
-	return c
-}
-
-// MinSevenDayEpc sets the optional parameter "minSevenDayEpc": Filters
-// out all advertisers that have a seven day EPC average lower than the
-// given value (inclusive). Min value: 0.0.
-func (c *AdvertisersListCall) MinSevenDayEpc(minSevenDayEpc float64) *AdvertisersListCall {
-	c.opt_["minSevenDayEpc"] = minSevenDayEpc
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": The value of
-// 'nextPageToken' from the previous page.
-func (c *AdvertisersListCall) PageToken(pageToken string) *AdvertisersListCall {
-	c.opt_["pageToken"] = pageToken
-	return c
-}
-
-// RelationshipStatus sets the optional parameter "relationshipStatus":
-// Filters out all advertisers for which do not have the given
-// relationship status with the requesting publisher.
-func (c *AdvertisersListCall) RelationshipStatus(relationshipStatus string) *AdvertisersListCall {
-	c.opt_["relationshipStatus"] = relationshipStatus
-	return c
-}
-
-func (c *AdvertisersListCall) Do() (*Advertisers, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	if v, ok := c.opt_["advertiserCategory"]; ok {
-		params.Set("advertiserCategory", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["minNinetyDayEpc"]; ok {
-		params.Set("minNinetyDayEpc", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["minPayoutRank"]; ok {
-		params.Set("minPayoutRank", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["minSevenDayEpc"]; ok {
-		params.Set("minSevenDayEpc", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["relationshipStatus"]; ok {
-		params.Set("relationshipStatus", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/gan/v1beta1/", "{role}/{roleId}/advertisers")
-	urls = strings.Replace(urls, "{role}", cleanPathString(c.role), 1)
-	urls = strings.Replace(urls, "{roleId}", cleanPathString(c.roleId), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(Advertisers)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Retrieves data about all advertisers that the requesting advertiser/publisher has access to.",
-	//   "httpMethod": "GET",
-	//   "id": "gan.advertisers.list",
-	//   "parameterOrder": [
-	//     "role",
-	//     "roleId"
-	//   ],
-	//   "parameters": {
-	//     "advertiserCategory": {
-	//       "description": "Caret(^) delimted list of advertiser categories. Valid categories are defined here: http://www.google.com/support/affiliatenetwork/advertiser/bin/answer.py?hl=en&answer=107581. Filters out all advertisers not in one of the given advertiser categories. Optional.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "maxResults": {
-	//       "description": "Max number of items to return in this page. Optional. Defaults to 20.",
-	//       "format": "uint32",
-	//       "location": "query",
-	//       "maximum": "100",
-	//       "minimum": "0",
-	//       "type": "integer"
-	//     },
-	//     "minNinetyDayEpc": {
-	//       "description": "Filters out all advertisers that have a ninety day EPC average lower than the given value (inclusive). Min value: 0.0. Optional.",
-	//       "format": "double",
-	//       "location": "query",
-	//       "type": "number"
-	//     },
-	//     "minPayoutRank": {
-	//       "description": "A value between 1 and 4, where 1 represents the quartile of advertisers with the lowest ranks and 4 represents the quartile of advertisers with the highest ranks. Filters out all advertisers with a lower rank than the given quartile. For example if a 2 was given only advertisers with a payout rank of 25 or higher would be included. Optional.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "maximum": "4",
-	//       "minimum": "1",
-	//       "type": "integer"
-	//     },
-	//     "minSevenDayEpc": {
-	//       "description": "Filters out all advertisers that have a seven day EPC average lower than the given value (inclusive). Min value: 0.0. Optional.",
-	//       "format": "double",
-	//       "location": "query",
-	//       "type": "number"
-	//     },
-	//     "pageToken": {
-	//       "description": "The value of 'nextPageToken' from the previous page. Optional.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "relationshipStatus": {
-	//       "description": "Filters out all advertisers for which do not have the given relationship status with the requesting publisher.",
-	//       "enum": [
-	//         "approved",
-	//         "available",
-	//         "deactivated",
-	//         "declined",
-	//         "pending"
-	//       ],
-	//       "enumDescriptions": [
-	//         "An advertiser that has approved your application.",
-	//         "An advertiser program that's accepting new publishers.",
-	//         "Deactivated means either the advertiser has removed you from their program, or it could also mean that you chose to remove yourself from the advertiser's program.",
-	//         "An advertiser that did not approve your application.",
-	//         "An advertiser program that you've already applied to, but they haven't yet decided to approve or decline your application."
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "role": {
-	//       "description": "The role of the requester. Valid values: 'advertisers' or 'publishers'.",
-	//       "enum": [
-	//         "advertisers",
-	//         "publishers"
-	//       ],
-	//       "enumDescriptions": [
-	//         "The requester is requesting as an advertiser.",
-	//         "The requester is requesting as a publisher."
-	//       ],
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "roleId": {
-	//       "description": "The ID of the requesting advertiser or publisher.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "{role}/{roleId}/advertisers",
-	//   "response": {
-	//     "$ref": "Advertisers"
 	//   }
 	// }
 

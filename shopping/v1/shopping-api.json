@@ -13,7 +13,6 @@
  },
  "documentationLink": "http://code.google.com/apis/shopping/search/v1/getting_started.html",
  "protocol": "rest",
- "baseUrl": "https://www.googleapis.com/shopping/search/v1/",
  "basePath": "/shopping/search/v1/",
  "rootUrl": "https://www.googleapis.com/",
  "servicePath": "shopping/search/v1/",

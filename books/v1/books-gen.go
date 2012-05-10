@@ -47,33 +47,33 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
-	s.Layers = &LayersService{s: s}
-	s.Volumes = &VolumesService{s: s}
-	s.Myconfig = &MyconfigService{s: s}
 	s.Bookshelves = &BookshelvesService{s: s}
+	s.Layers = &LayersService{s: s}
+	s.Myconfig = &MyconfigService{s: s}
 	s.Mylibrary = &MylibraryService{s: s}
+	s.Volumes = &VolumesService{s: s}
 	return s, nil
 }
 
 type Service struct {
 	client *http.Client
 
-	Layers *LayersService
+	Bookshelves *BookshelvesService
 
-	Volumes *VolumesService
+	Layers *LayersService
 
 	Myconfig *MyconfigService
 
-	Bookshelves *BookshelvesService
-
 	Mylibrary *MylibraryService
+
+	Volumes *VolumesService
 }
 
-type LayersService struct {
+type BookshelvesService struct {
 	s *Service
 }
 
-type VolumesService struct {
+type LayersService struct {
 	s *Service
 }
 
@@ -81,15 +81,24 @@ type MyconfigService struct {
 	s *Service
 }
 
-type BookshelvesService struct {
-	s *Service
-}
-
 type MylibraryService struct {
 	s *Service
 }
 
+type VolumesService struct {
+	s *Service
+}
+
 type Annotation struct {
+	// LayerId: The layer this annotation is for.
+	LayerId string `json:"layerId,omitempty"`
+
+	// PageIds: Pages that this annotation spans.
+	PageIds []string `json:"pageIds,omitempty"`
+
+	// BeforeSelectedText: Anchor text before excerpt.
+	BeforeSelectedText string `json:"beforeSelectedText,omitempty"`
+
 	// CurrentVersionRanges: Selection ranges for the most recent content
 	// version.
 	CurrentVersionRanges *AnnotationCurrentVersionRanges `json:"currentVersionRanges,omitempty"`
@@ -129,18 +138,13 @@ type Annotation struct {
 
 	// Deleted: Indicates that this annotation is deleted.
 	Deleted bool `json:"deleted,omitempty"`
-
-	// LayerId: The layer this annotation is for.
-	LayerId string `json:"layerId,omitempty"`
-
-	// PageIds: Pages that this annotation spans.
-	PageIds []string `json:"pageIds,omitempty"`
-
-	// BeforeSelectedText: Anchor text before excerpt.
-	BeforeSelectedText string `json:"beforeSelectedText,omitempty"`
 }
 
 type AnnotationClientVersionRanges struct {
+	// GbImageRange: Range in GB image format for this annotation sent by
+	// client.
+	GbImageRange *BooksAnnotationsRange `json:"gbImageRange,omitempty"`
+
 	// GbTextRange: Range in GB text format for this annotation sent by
 	// client.
 	GbTextRange *BooksAnnotationsRange `json:"gbTextRange,omitempty"`
@@ -150,10 +154,6 @@ type AnnotationClientVersionRanges struct {
 
 	// CfiRange: Range in CFI format for this annotation sent by client.
 	CfiRange *BooksAnnotationsRange `json:"cfiRange,omitempty"`
-
-	// GbImageRange: Range in GB image format for this annotation sent by
-	// client.
-	GbImageRange *BooksAnnotationsRange `json:"gbImageRange,omitempty"`
 }
 
 type AnnotationCurrentVersionRanges struct {
@@ -173,6 +173,9 @@ type AnnotationCurrentVersionRanges struct {
 }
 
 type Annotationdata struct {
+	// VolumeId: The volume id for this data. *
+	VolumeId string `json:"volumeId,omitempty"`
+
 	// Kind: Resource Type
 	Kind string `json:"kind,omitempty"`
 
@@ -197,9 +200,6 @@ type Annotationdata struct {
 
 	// SelfLink: URL for this resource. *
 	SelfLink string `json:"selfLink,omitempty"`
-
-	// VolumeId: The volume id for this data. *
-	VolumeId string `json:"volumeId,omitempty"`
 }
 
 type Annotations struct {
@@ -249,12 +249,16 @@ type BooksAnnotationsRange struct {
 }
 
 type BooksLayerGeoData struct {
-	Geo *BooksLayerGeoDataGeo `json:"geo,omitempty"`
-
 	Common *BooksLayerGeoDataCommon `json:"common,omitempty"`
+
+	Geo *BooksLayerGeoDataGeo `json:"geo,omitempty"`
 }
 
 type BooksLayerGeoDataCommon struct {
+	// SnippetUrl: The URL for information for this location. Ex: wikipedia
+	// link.
+	SnippetUrl string `json:"snippetUrl,omitempty"`
+
 	// Lang: The language of the information url and description.
 	Lang string `json:"lang,omitempty"`
 
@@ -263,13 +267,12 @@ type BooksLayerGeoDataCommon struct {
 
 	// Snippet: The description for this location.
 	Snippet string `json:"snippet,omitempty"`
-
-	// SnippetUrl: The URL for information for this location. Ex: wikipedia
-	// link.
-	SnippetUrl string `json:"snippetUrl,omitempty"`
 }
 
 type BooksLayerGeoDataGeo struct {
+	// CountryCode: The country code of the location.
+	CountryCode string `json:"countryCode,omitempty"`
+
 	// Boundary: The boundary of the location as a set of loops containing
 	// pairs of latitude, longitude coordinates.
 	Boundary [][]*BooksLayerGeoDataGeoBoundaryItem `json:"boundary,omitempty"`
@@ -301,15 +304,12 @@ type BooksLayerGeoDataGeo struct {
 	// Viewport: The viewport for showing this location. This is a latitude,
 	// longitude rectangle.
 	Viewport *BooksLayerGeoDataGeoViewport `json:"viewport,omitempty"`
-
-	// CountryCode: The country code of the location.
-	CountryCode string `json:"countryCode,omitempty"`
 }
 
 type BooksLayerGeoDataGeoBoundaryItem struct {
-	Longitude int64 `json:"longitude,omitempty"`
-
 	Latitude int64 `json:"latitude,omitempty"`
+
+	Longitude int64 `json:"longitude,omitempty"`
 }
 
 type BooksLayerGeoDataGeoViewport struct {
@@ -325,22 +325,12 @@ type BooksLayerGeoDataGeoViewportHi struct {
 }
 
 type BooksLayerGeoDataGeoViewportLo struct {
-	Latitude float64 `json:"latitude,omitempty"`
-
 	Longitude float64 `json:"longitude,omitempty"`
+
+	Latitude float64 `json:"latitude,omitempty"`
 }
 
 type Bookshelf struct {
-	// VolumeCount: Number of volumes in this bookshelf.
-	VolumeCount int64 `json:"volumeCount,omitempty"`
-
-	// VolumesLastUpdated: Last time a volume was added or removed from this
-	// bookshelf (formatted UTC timestamp with millisecond resolution).
-	VolumesLastUpdated string `json:"volumesLastUpdated,omitempty"`
-
-	// Description: Description of this bookshelf.
-	Description string `json:"description,omitempty"`
-
 	// SelfLink: URL to this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
@@ -363,14 +353,24 @@ type Bookshelf struct {
 
 	// Title: Title of this bookshelf.
 	Title string `json:"title,omitempty"`
+
+	// VolumeCount: Number of volumes in this bookshelf.
+	VolumeCount int64 `json:"volumeCount,omitempty"`
+
+	// VolumesLastUpdated: Last time a volume was added or removed from this
+	// bookshelf (formatted UTC timestamp with millisecond resolution).
+	VolumesLastUpdated string `json:"volumesLastUpdated,omitempty"`
+
+	// Description: Description of this bookshelf.
+	Description string `json:"description,omitempty"`
 }
 
 type Bookshelves struct {
-	// Kind: Resource type.
-	Kind string `json:"kind,omitempty"`
-
 	// Items: A list of bookshelves.
 	Items []*Bookshelf `json:"items,omitempty"`
+
+	// Kind: Resource type.
+	Kind string `json:"kind,omitempty"`
 }
 
 type ConcurrentAccessRestriction struct {
@@ -480,6 +480,19 @@ type Layersummaries struct {
 }
 
 type Layersummary struct {
+	// DataCount: The number of data items for this layer.
+	DataCount int64 `json:"dataCount,omitempty"`
+
+	// Id: Unique id of this layer summary.
+	Id string `json:"id,omitempty"`
+
+	// AnnotationTypes: The list of annotation types contained for this
+	// layer.
+	AnnotationTypes []string `json:"annotationTypes,omitempty"`
+
+	// AnnotationsDataLink: Link to get data for this annotation.
+	AnnotationsDataLink string `json:"annotationsDataLink,omitempty"`
+
 	// LayerId: The layer id for this summary.
 	LayerId string `json:"layerId,omitempty"`
 
@@ -504,22 +517,12 @@ type Layersummary struct {
 	// Updated: Timestamp for the last time an item in this layer was
 	// updated. (RFC 3339 UTC date-time format).
 	Updated string `json:"updated,omitempty"`
-
-	// DataCount: The number of data items for this layer.
-	DataCount int64 `json:"dataCount,omitempty"`
-
-	// Id: Unique id of this layer summary.
-	Id string `json:"id,omitempty"`
-
-	// AnnotationTypes: The list of annotation types contained for this
-	// layer.
-	AnnotationTypes []string `json:"annotationTypes,omitempty"`
-
-	// AnnotationsDataLink: Link to get data for this annotation.
-	AnnotationsDataLink string `json:"annotationsDataLink,omitempty"`
 }
 
 type ReadingPosition struct {
+	// PdfPosition: Position in a PDF file.
+	PdfPosition string `json:"pdfPosition,omitempty"`
+
 	// EpubCfiPosition: Position in an EPUB as a CFI.
 	EpubCfiPosition string `json:"epubCfiPosition,omitempty"`
 
@@ -538,34 +541,20 @@ type ReadingPosition struct {
 
 	// GbImagePosition: Position in a volume for image-based content.
 	GbImagePosition string `json:"gbImagePosition,omitempty"`
-
-	// PdfPosition: Position in a PDF file.
-	PdfPosition string `json:"pdfPosition,omitempty"`
 }
 
 type RequestAccess struct {
-	// DownloadAccess: A download access response.
-	DownloadAccess *DownloadAccessRestriction `json:"downloadAccess,omitempty"`
-
 	// Kind: Resource type.
 	Kind string `json:"kind,omitempty"`
 
 	// ConcurrentAccess: A concurrent access response.
 	ConcurrentAccess *ConcurrentAccessRestriction `json:"concurrentAccess,omitempty"`
+
+	// DownloadAccess: A download access response.
+	DownloadAccess *DownloadAccessRestriction `json:"downloadAccess,omitempty"`
 }
 
 type Review struct {
-	// Title: Title for this review.
-	Title string `json:"title,omitempty"`
-
-	// Rating: Star rating for this review. Possible values are ONE, TWO,
-	// THREE, FOUR, FIVE or NOT_RATED.
-	Rating string `json:"rating,omitempty"`
-
-	// Type: Source type for this review. Possible values are EDITORIAL,
-	// WEB_USER or GOOGLE_USER.
-	Type string `json:"type,omitempty"`
-
 	// FullTextUrl: URL for the full review text, for reviews gathered from
 	// the web.
 	FullTextUrl string `json:"fullTextUrl,omitempty"`
@@ -588,6 +577,17 @@ type Review struct {
 
 	// Date: Date of this review.
 	Date string `json:"date,omitempty"`
+
+	// Title: Title for this review.
+	Title string `json:"title,omitempty"`
+
+	// Rating: Star rating for this review. Possible values are ONE, TWO,
+	// THREE, FOUR, FIVE or NOT_RATED.
+	Rating string `json:"rating,omitempty"`
+
+	// Type: Source type for this review. Possible values are EDITORIAL,
+	// WEB_USER or GOOGLE_USER.
+	Type string `json:"type,omitempty"`
 }
 
 type ReviewAuthor struct {
@@ -596,14 +596,14 @@ type ReviewAuthor struct {
 }
 
 type ReviewSource struct {
-	// Description: Name of the source.
-	Description string `json:"description,omitempty"`
-
 	// ExtraDescription: Extra text about the source of the review.
 	ExtraDescription string `json:"extraDescription,omitempty"`
 
 	// Url: URL of the source of the review.
 	Url string `json:"url,omitempty"`
+
+	// Description: Name of the source.
+	Description string `json:"description,omitempty"`
 }
 
 type Volume struct {
@@ -643,6 +643,10 @@ type Volume struct {
 }
 
 type VolumeAccessInfo struct {
+	// Embeddable: Whether this volume can be embedded in a viewport using
+	// the Embedded Viewer API.
+	Embeddable bool `json:"embeddable,omitempty"`
+
 	// PublicDomain: Whether or not this book is public domain in the
 	// country listed above.
 	PublicDomain bool `json:"publicDomain,omitempty"`
@@ -687,13 +691,12 @@ type VolumeAccessInfo struct {
 	// FULL_PURCHASED, FULL_PUBLIC_DOMAIN, SAMPLE or NONE. (In LITE
 	// projection.)
 	AccessViewStatus string `json:"accessViewStatus,omitempty"`
-
-	// Embeddable: Whether this volume can be embedded in a viewport using
-	// the Embedded Viewer API.
-	Embeddable bool `json:"embeddable,omitempty"`
 }
 
 type VolumeAccessInfoEpub struct {
+	// DownloadLink: URL to download epub. (In LITE projection.)
+	DownloadLink string `json:"downloadLink,omitempty"`
+
 	// AcsTokenLink: URL to retrieve ACS token for epub download. (In LITE
 	// projection.)
 	AcsTokenLink string `json:"acsTokenLink,omitempty"`
@@ -701,12 +704,12 @@ type VolumeAccessInfoEpub struct {
 	// IsAvailable: Is a flowing text epub available either as public domain
 	// or for purchase. (In LITE projection.)
 	IsAvailable bool `json:"isAvailable,omitempty"`
-
-	// DownloadLink: URL to download epub. (In LITE projection.)
-	DownloadLink string `json:"downloadLink,omitempty"`
 }
 
 type VolumeAccessInfoPdf struct {
+	// DownloadLink: URL to download pdf. (In LITE projection.)
+	DownloadLink string `json:"downloadLink,omitempty"`
+
 	// AcsTokenLink: URL to retrieve ACS token for pdf download. (In LITE
 	// projection.)
 	AcsTokenLink string `json:"acsTokenLink,omitempty"`
@@ -714,25 +717,9 @@ type VolumeAccessInfoPdf struct {
 	// IsAvailable: Is a scanned image pdf available either as public domain
 	// or for purchase. (In LITE projection.)
 	IsAvailable bool `json:"isAvailable,omitempty"`
-
-	// DownloadLink: URL to download pdf. (In LITE projection.)
-	DownloadLink string `json:"downloadLink,omitempty"`
 }
 
 type VolumeSaleInfo struct {
-	// ListPrice: Suggested retail price. (In LITE projection.)
-	ListPrice *VolumeSaleInfoListPrice `json:"listPrice,omitempty"`
-
-	// Country: The two-letter ISO_3166-1 country code for which this sale
-	// information is valid. (In LITE projection.)
-	Country string `json:"country,omitempty"`
-
-	// Saleability: Whether or not this book is available for sale or
-	// offered for free in the Google eBookstore for the country listed
-	// above. Possible values are FOR_SALE, FREE, NOT_FOR_SALE, or
-	// FOR_PREORDER.
-	Saleability string `json:"saleability,omitempty"`
-
 	// RetailPrice: The actual selling price of the book. This is the same
 	// as the suggested retail or list price unless there are offers or
 	// discounts on this volume. (In LITE projection.)
@@ -748,6 +735,19 @@ type VolumeSaleInfo struct {
 	// IsEbook: Whether or not this volume is an eBook (can be added to the
 	// My eBooks shelf).
 	IsEbook bool `json:"isEbook,omitempty"`
+
+	// ListPrice: Suggested retail price. (In LITE projection.)
+	ListPrice *VolumeSaleInfoListPrice `json:"listPrice,omitempty"`
+
+	// Country: The two-letter ISO_3166-1 country code for which this sale
+	// information is valid. (In LITE projection.)
+	Country string `json:"country,omitempty"`
+
+	// Saleability: Whether or not this book is available for sale or
+	// offered for free in the Google eBookstore for the country listed
+	// above. Possible values are FOR_SALE, FREE, NOT_FOR_SALE, or
+	// FOR_PREORDER.
+	Saleability string `json:"saleability,omitempty"`
 }
 
 type VolumeSaleInfoListPrice struct {
@@ -774,12 +774,6 @@ type VolumeSearchInfo struct {
 }
 
 type VolumeUserInfo struct {
-	// IsInMyBooks: Whether or not this volume is currently in "my books."
-	IsInMyBooks bool `json:"isInMyBooks,omitempty"`
-
-	// Review: This user's review of this volume, if one exists.
-	Review *Review `json:"review,omitempty"`
-
 	// IsPreordered: Whether or not this volume was pre-ordered by the
 	// authenticated user making the request. (In LITE projection.)
 	IsPreordered bool `json:"isPreordered,omitempty"`
@@ -796,9 +790,40 @@ type VolumeUserInfo struct {
 	// ReadingPosition: The user's current reading position in the volume,
 	// if one is available. (In LITE projection.)
 	ReadingPosition *ReadingPosition `json:"readingPosition,omitempty"`
+
+	// IsInMyBooks: Whether or not this volume is currently in "my books."
+	IsInMyBooks bool `json:"isInMyBooks,omitempty"`
+
+	// Review: This user's review of this volume, if one exists.
+	Review *Review `json:"review,omitempty"`
 }
 
 type VolumeVolumeInfo struct {
+	// Title: Volume title. (In LITE projection.)
+	Title string `json:"title,omitempty"`
+
+	// Dimensions: Physical dimensions of this volume.
+	Dimensions *VolumeVolumeInfoDimensions `json:"dimensions,omitempty"`
+
+	// ImageLinks: A list of image links for all the sizes that are
+	// available. (In LITE projection.)
+	ImageLinks *VolumeVolumeInfoImageLinks `json:"imageLinks,omitempty"`
+
+	// IndustryIdentifiers: Industry standard identifiers for this volume.
+	IndustryIdentifiers []*VolumeVolumeInfoIndustryIdentifiers `json:"industryIdentifiers,omitempty"`
+
+	// RatingsCount: The number of review ratings for this volume.
+	RatingsCount int64 `json:"ratingsCount,omitempty"`
+
+	// CanonicalVolumeLink: Canonical URL for a volume. (In LITE
+	// projection.)
+	CanonicalVolumeLink string `json:"canonicalVolumeLink,omitempty"`
+
+	// Description: A synopsis of the volume. The text of the description is
+	// formatted in HTML and includes simple formatting elements, such as b,
+	// i, and br tags. (In LITE projection.)
+	Description string `json:"description,omitempty"`
+
 	// Categories: A list of subject categories, such as "Fiction",
 	// "Suspense", etc.
 	Categories []string `json:"categories,omitempty"`
@@ -846,31 +871,6 @@ type VolumeVolumeInfo struct {
 
 	// PageCount: Total number of pages.
 	PageCount int64 `json:"pageCount,omitempty"`
-
-	// Title: Volume title. (In LITE projection.)
-	Title string `json:"title,omitempty"`
-
-	// Dimensions: Physical dimensions of this volume.
-	Dimensions *VolumeVolumeInfoDimensions `json:"dimensions,omitempty"`
-
-	// ImageLinks: A list of image links for all the sizes that are
-	// available. (In LITE projection.)
-	ImageLinks *VolumeVolumeInfoImageLinks `json:"imageLinks,omitempty"`
-
-	// IndustryIdentifiers: Industry standard identifiers for this volume.
-	IndustryIdentifiers []*VolumeVolumeInfoIndustryIdentifiers `json:"industryIdentifiers,omitempty"`
-
-	// RatingsCount: The number of review ratings for this volume.
-	RatingsCount int64 `json:"ratingsCount,omitempty"`
-
-	// CanonicalVolumeLink: Canonical URL for a volume. (In LITE
-	// projection.)
-	CanonicalVolumeLink string `json:"canonicalVolumeLink,omitempty"`
-
-	// Description: A synopsis of the volume. The text of the description is
-	// formatted in HTML and includes simple formatting elements, such as b,
-	// i, and br tags. (In LITE projection.)
-	Description string `json:"description,omitempty"`
 }
 
 type VolumeVolumeInfoDimensions struct {
@@ -885,6 +885,14 @@ type VolumeVolumeInfoDimensions struct {
 }
 
 type VolumeVolumeInfoImageLinks struct {
+	// ExtraLarge: Image link for extra large size (width of ~1280 pixels).
+	// (In LITE projection)
+	ExtraLarge string `json:"extraLarge,omitempty"`
+
+	// Large: Image link for large size (width of ~800 pixels). (In LITE
+	// projection)
+	Large string `json:"large,omitempty"`
+
 	// Small: Image link for small size (width of ~300 pixels). (In LITE
 	// projection)
 	Small string `json:"small,omitempty"`
@@ -900,26 +908,21 @@ type VolumeVolumeInfoImageLinks struct {
 	// Thumbnail: Image link for thumbnail size (width of ~128 pixels). (In
 	// LITE projection)
 	Thumbnail string `json:"thumbnail,omitempty"`
-
-	// ExtraLarge: Image link for extra large size (width of ~1280 pixels).
-	// (In LITE projection)
-	ExtraLarge string `json:"extraLarge,omitempty"`
-
-	// Large: Image link for large size (width of ~800 pixels). (In LITE
-	// projection)
-	Large string `json:"large,omitempty"`
 }
 
 type VolumeVolumeInfoIndustryIdentifiers struct {
-	// Identifier: Industry specific volume identifier.
-	Identifier string `json:"identifier,omitempty"`
-
 	// Type: Identifier type. Possible values are ISBN_10, ISBN_13, ISSN and
 	// OTHER.
 	Type string `json:"type,omitempty"`
+
+	// Identifier: Industry specific volume identifier.
+	Identifier string `json:"identifier,omitempty"`
 }
 
 type Volumeannotation struct {
+	// VolumeId: The Volume this annotation is for.
+	VolumeId string `json:"volumeId,omitempty"`
+
 	// Kind: Resource Type
 	Kind string `json:"kind,omitempty"`
 
@@ -959,31 +962,25 @@ type Volumeannotation struct {
 
 	// SelfLink: URL to this resource.
 	SelfLink string `json:"selfLink,omitempty"`
-
-	// VolumeId: The Volume this annotation is for.
-	VolumeId string `json:"volumeId,omitempty"`
 }
 
 type VolumeannotationContentRanges struct {
-	// CfiRange: Range in CFI format for this annotation for version above.
-	CfiRange *BooksAnnotationsRange `json:"cfiRange,omitempty"`
-
-	// GbImageRange: Range in GB image format for this annotation for
-	// version above.
-	GbImageRange *BooksAnnotationsRange `json:"gbImageRange,omitempty"`
-
 	// GbTextRange: Range in GB text format for this annotation for version
 	// above.
 	GbTextRange *BooksAnnotationsRange `json:"gbTextRange,omitempty"`
 
 	// ContentVersion: Content version applicable to ranges below.
 	ContentVersion string `json:"contentVersion,omitempty"`
+
+	// CfiRange: Range in CFI format for this annotation for version above.
+	CfiRange *BooksAnnotationsRange `json:"cfiRange,omitempty"`
+
+	// GbImageRange: Range in GB image format for this annotation for
+	// version above.
+	GbImageRange *BooksAnnotationsRange `json:"gbImageRange,omitempty"`
 }
 
 type Volumeannotations struct {
-	// Kind: Resource type
-	Kind string `json:"kind,omitempty"`
-
 	// Items: A list of volume annotations.
 	Items []*Volumeannotation `json:"items,omitempty"`
 
@@ -993,12 +990,12 @@ type Volumeannotations struct {
 
 	// TotalItems: The total number of volume annotations found.
 	TotalItems int64 `json:"totalItems,omitempty"`
+
+	// Kind: Resource type
+	Kind string `json:"kind,omitempty"`
 }
 
 type Volumes struct {
-	// Items: A list of volumes.
-	Items []*Volume `json:"items,omitempty"`
-
 	// TotalItems: Total number of volumes found. This might be greater than
 	// the number of volumes returned in this response if results have been
 	// paginated.
@@ -1006,6 +1003,174 @@ type Volumes struct {
 
 	// Kind: Resource type.
 	Kind string `json:"kind,omitempty"`
+
+	// Items: A list of volumes.
+	Items []*Volume `json:"items,omitempty"`
+}
+
+// method id "books.bookshelves.get":
+
+type BookshelvesGetCall struct {
+	s      *Service
+	userId string
+	shelf  string
+	opt_   map[string]interface{}
+}
+
+// Get: Retrieves metadata for a specific bookshelf for the specified
+// user.
+func (r *BookshelvesService) Get(userId string, shelf string) *BookshelvesGetCall {
+	c := &BookshelvesGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.userId = userId
+	c.shelf = shelf
+	return c
+}
+
+// Source sets the optional parameter "source": String to identify the
+// originator of this request.
+func (c *BookshelvesGetCall) Source(source string) *BookshelvesGetCall {
+	c.opt_["source"] = source
+	return c
+}
+
+func (c *BookshelvesGetCall) Do() (*Bookshelf, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "users/{userId}/bookshelves/{shelf}")
+	urls = strings.Replace(urls, "{userId}", cleanPathString(c.userId), 1)
+	urls = strings.Replace(urls, "{shelf}", cleanPathString(c.shelf), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Bookshelf)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves metadata for a specific bookshelf for the specified user.",
+	//   "httpMethod": "GET",
+	//   "id": "books.bookshelves.get",
+	//   "parameterOrder": [
+	//     "userId",
+	//     "shelf"
+	//   ],
+	//   "parameters": {
+	//     "shelf": {
+	//       "description": "ID of bookshelf to retrieve.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "source": {
+	//       "description": "String to identify the originator of this request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "userId": {
+	//       "description": "ID of user for whom to retrieve bookshelves.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "users/{userId}/bookshelves/{shelf}",
+	//   "response": {
+	//     "$ref": "Bookshelf"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/books"
+	//   ]
+	// }
+
+}
+
+// method id "books.bookshelves.list":
+
+type BookshelvesListCall struct {
+	s      *Service
+	userId string
+	opt_   map[string]interface{}
+}
+
+// List: Retrieves a list of public bookshelves for the specified user.
+func (r *BookshelvesService) List(userId string) *BookshelvesListCall {
+	c := &BookshelvesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.userId = userId
+	return c
+}
+
+// Source sets the optional parameter "source": String to identify the
+// originator of this request.
+func (c *BookshelvesListCall) Source(source string) *BookshelvesListCall {
+	c.opt_["source"] = source
+	return c
+}
+
+func (c *BookshelvesListCall) Do() (*Bookshelves, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "users/{userId}/bookshelves")
+	urls = strings.Replace(urls, "{userId}", cleanPathString(c.userId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Bookshelves)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a list of public bookshelves for the specified user.",
+	//   "httpMethod": "GET",
+	//   "id": "books.bookshelves.list",
+	//   "parameterOrder": [
+	//     "userId"
+	//   ],
+	//   "parameters": {
+	//     "source": {
+	//       "description": "String to identify the originator of this request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "userId": {
+	//       "description": "ID of user for whom to retrieve bookshelves.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "users/{userId}/bookshelves",
+	//   "response": {
+	//     "$ref": "Bookshelves"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/books"
+	//   ]
+	// }
+
 }
 
 // method id "books.layers.get":
@@ -1227,6 +1392,347 @@ func (c *LayersListCall) Do() (*Layersummaries, error) {
 	//   "path": "volumes/{volumeId}/layersummary",
 	//   "response": {
 	//     "$ref": "Layersummaries"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/books"
+	//   ]
+	// }
+
+}
+
+// method id "books.myconfig.releaseDownloadAccess":
+
+type MyconfigReleaseDownloadAccessCall struct {
+	s         *Service
+	volumeIds []string
+	cpksver   string
+	opt_      map[string]interface{}
+}
+
+// ReleaseDownloadAccess: Release downloaded content access restriction.
+func (r *MyconfigService) ReleaseDownloadAccess(volumeIds []string, cpksver string) *MyconfigReleaseDownloadAccessCall {
+	c := &MyconfigReleaseDownloadAccessCall{s: r.s, opt_: make(map[string]interface{})}
+	c.volumeIds = volumeIds
+	c.cpksver = cpksver
+	return c
+}
+
+// Locale sets the optional parameter "locale": ISO-639-1, ISO-3166-1
+// codes for message localization, i.e. en_US.
+func (c *MyconfigReleaseDownloadAccessCall) Locale(locale string) *MyconfigReleaseDownloadAccessCall {
+	c.opt_["locale"] = locale
+	return c
+}
+
+// Source sets the optional parameter "source": String to identify the
+// originator of this request.
+func (c *MyconfigReleaseDownloadAccessCall) Source(source string) *MyconfigReleaseDownloadAccessCall {
+	c.opt_["source"] = source
+	return c
+}
+
+func (c *MyconfigReleaseDownloadAccessCall) Do() (*DownloadAccesses, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("cpksver", fmt.Sprintf("%v", c.cpksver))
+	for _, v := range c.volumeIds {
+		params.Add("volumeIds", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["locale"]; ok {
+		params.Set("locale", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "myconfig/releaseDownloadAccess")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(DownloadAccesses)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Release downloaded content access restriction.",
+	//   "httpMethod": "POST",
+	//   "id": "books.myconfig.releaseDownloadAccess",
+	//   "parameterOrder": [
+	//     "volumeIds",
+	//     "cpksver"
+	//   ],
+	//   "parameters": {
+	//     "cpksver": {
+	//       "description": "The device/version ID from which to release the restriction.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "locale": {
+	//       "description": "ISO-639-1, ISO-3166-1 codes for message localization, i.e. en_US.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "source": {
+	//       "description": "String to identify the originator of this request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "volumeIds": {
+	//       "description": "The volume(s) to release restrictions for.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "myconfig/releaseDownloadAccess",
+	//   "response": {
+	//     "$ref": "DownloadAccesses"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/books"
+	//   ]
+	// }
+
+}
+
+// method id "books.myconfig.requestAccess":
+
+type MyconfigRequestAccessCall struct {
+	s        *Service
+	source   string
+	volumeId string
+	nonce    string
+	cpksver  string
+	opt_     map[string]interface{}
+}
+
+// RequestAccess: Request concurrent and download access restrictions.
+func (r *MyconfigService) RequestAccess(source string, volumeId string, nonce string, cpksver string) *MyconfigRequestAccessCall {
+	c := &MyconfigRequestAccessCall{s: r.s, opt_: make(map[string]interface{})}
+	c.source = source
+	c.volumeId = volumeId
+	c.nonce = nonce
+	c.cpksver = cpksver
+	return c
+}
+
+// Locale sets the optional parameter "locale": ISO-639-1, ISO-3166-1
+// codes for message localization, i.e. en_US.
+func (c *MyconfigRequestAccessCall) Locale(locale string) *MyconfigRequestAccessCall {
+	c.opt_["locale"] = locale
+	return c
+}
+
+func (c *MyconfigRequestAccessCall) Do() (*RequestAccess, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("cpksver", fmt.Sprintf("%v", c.cpksver))
+	params.Set("nonce", fmt.Sprintf("%v", c.nonce))
+	params.Set("source", fmt.Sprintf("%v", c.source))
+	params.Set("volumeId", fmt.Sprintf("%v", c.volumeId))
+	if v, ok := c.opt_["locale"]; ok {
+		params.Set("locale", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "myconfig/requestAccess")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(RequestAccess)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Request concurrent and download access restrictions.",
+	//   "httpMethod": "POST",
+	//   "id": "books.myconfig.requestAccess",
+	//   "parameterOrder": [
+	//     "source",
+	//     "volumeId",
+	//     "nonce",
+	//     "cpksver"
+	//   ],
+	//   "parameters": {
+	//     "cpksver": {
+	//       "description": "The device/version ID from which to request the restrictions.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "locale": {
+	//       "description": "ISO-639-1, ISO-3166-1 codes for message localization, i.e. en_US.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "nonce": {
+	//       "description": "The client nonce value.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "source": {
+	//       "description": "String to identify the originator of this request.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "volumeId": {
+	//       "description": "The volume to request concurrent/download restrictions for.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "myconfig/requestAccess",
+	//   "response": {
+	//     "$ref": "RequestAccess"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/books"
+	//   ]
+	// }
+
+}
+
+// method id "books.myconfig.syncVolumeLicenses":
+
+type MyconfigSyncVolumeLicensesCall struct {
+	s       *Service
+	source  string
+	nonce   string
+	cpksver string
+	opt_    map[string]interface{}
+}
+
+// SyncVolumeLicenses: Request downloaded content access for specified
+// volumes on the My eBooks shelf.
+func (r *MyconfigService) SyncVolumeLicenses(source string, nonce string, cpksver string) *MyconfigSyncVolumeLicensesCall {
+	c := &MyconfigSyncVolumeLicensesCall{s: r.s, opt_: make(map[string]interface{})}
+	c.source = source
+	c.nonce = nonce
+	c.cpksver = cpksver
+	return c
+}
+
+// Locale sets the optional parameter "locale": ISO-639-1, ISO-3166-1
+// codes for message localization, i.e. en_US.
+func (c *MyconfigSyncVolumeLicensesCall) Locale(locale string) *MyconfigSyncVolumeLicensesCall {
+	c.opt_["locale"] = locale
+	return c
+}
+
+// ShowPreorders sets the optional parameter "showPreorders": Set to
+// true to show pre-ordered books. Defaults to false.
+func (c *MyconfigSyncVolumeLicensesCall) ShowPreorders(showPreorders bool) *MyconfigSyncVolumeLicensesCall {
+	c.opt_["showPreorders"] = showPreorders
+	return c
+}
+
+// VolumeIds sets the optional parameter "volumeIds": The volume(s) to
+// request download restrictions for.
+func (c *MyconfigSyncVolumeLicensesCall) VolumeIds(volumeIds string) *MyconfigSyncVolumeLicensesCall {
+	c.opt_["volumeIds"] = volumeIds
+	return c
+}
+
+func (c *MyconfigSyncVolumeLicensesCall) Do() (*Volumes, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("cpksver", fmt.Sprintf("%v", c.cpksver))
+	params.Set("nonce", fmt.Sprintf("%v", c.nonce))
+	params.Set("source", fmt.Sprintf("%v", c.source))
+	if v, ok := c.opt_["locale"]; ok {
+		params.Set("locale", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["showPreorders"]; ok {
+		params.Set("showPreorders", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["volumeIds"]; ok {
+		params.Set("volumeIds", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "myconfig/syncVolumeLicenses")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Volumes)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Request downloaded content access for specified volumes on the My eBooks shelf.",
+	//   "httpMethod": "POST",
+	//   "id": "books.myconfig.syncVolumeLicenses",
+	//   "parameterOrder": [
+	//     "source",
+	//     "nonce",
+	//     "cpksver"
+	//   ],
+	//   "parameters": {
+	//     "cpksver": {
+	//       "description": "The device/version ID from which to release the restriction.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "locale": {
+	//       "description": "ISO-639-1, ISO-3166-1 codes for message localization, i.e. en_US.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "nonce": {
+	//       "description": "The client nonce value.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "showPreorders": {
+	//       "description": "Set to true to show pre-ordered books. Defaults to false.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "source": {
+	//       "description": "String to identify the originator of this request.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "volumeIds": {
+	//       "description": "The volume(s) to request download restrictions for.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "myconfig/syncVolumeLicenses",
+	//   "response": {
+	//     "$ref": "Volumes"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/books"
@@ -1656,512 +2162,6 @@ func (c *VolumesListCall) Do() (*Volumes, error) {
 	//   "path": "volumes",
 	//   "response": {
 	//     "$ref": "Volumes"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/books"
-	//   ]
-	// }
-
-}
-
-// method id "books.myconfig.releaseDownloadAccess":
-
-type MyconfigReleaseDownloadAccessCall struct {
-	s         *Service
-	volumeIds []string
-	cpksver   string
-	opt_      map[string]interface{}
-}
-
-// ReleaseDownloadAccess: Release downloaded content access restriction.
-func (r *MyconfigService) ReleaseDownloadAccess(volumeIds []string, cpksver string) *MyconfigReleaseDownloadAccessCall {
-	c := &MyconfigReleaseDownloadAccessCall{s: r.s, opt_: make(map[string]interface{})}
-	c.volumeIds = volumeIds
-	c.cpksver = cpksver
-	return c
-}
-
-// Locale sets the optional parameter "locale": ISO-639-1, ISO-3166-1
-// codes for message localization, i.e. en_US.
-func (c *MyconfigReleaseDownloadAccessCall) Locale(locale string) *MyconfigReleaseDownloadAccessCall {
-	c.opt_["locale"] = locale
-	return c
-}
-
-// Source sets the optional parameter "source": String to identify the
-// originator of this request.
-func (c *MyconfigReleaseDownloadAccessCall) Source(source string) *MyconfigReleaseDownloadAccessCall {
-	c.opt_["source"] = source
-	return c
-}
-
-func (c *MyconfigReleaseDownloadAccessCall) Do() (*DownloadAccesses, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	params.Set("cpksver", fmt.Sprintf("%v", c.cpksver))
-	for _, v := range c.volumeIds {
-		params.Add("volumeIds", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["locale"]; ok {
-		params.Set("locale", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["source"]; ok {
-		params.Set("source", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "myconfig/releaseDownloadAccess")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("POST", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(DownloadAccesses)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Release downloaded content access restriction.",
-	//   "httpMethod": "POST",
-	//   "id": "books.myconfig.releaseDownloadAccess",
-	//   "parameterOrder": [
-	//     "volumeIds",
-	//     "cpksver"
-	//   ],
-	//   "parameters": {
-	//     "cpksver": {
-	//       "description": "The device/version ID from which to release the restriction.",
-	//       "location": "query",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "locale": {
-	//       "description": "ISO-639-1, ISO-3166-1 codes for message localization, i.e. en_US.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "source": {
-	//       "description": "String to identify the originator of this request.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "volumeIds": {
-	//       "description": "The volume(s) to release restrictions for.",
-	//       "location": "query",
-	//       "repeated": true,
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "myconfig/releaseDownloadAccess",
-	//   "response": {
-	//     "$ref": "DownloadAccesses"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/books"
-	//   ]
-	// }
-
-}
-
-// method id "books.myconfig.requestAccess":
-
-type MyconfigRequestAccessCall struct {
-	s        *Service
-	source   string
-	volumeId string
-	nonce    string
-	cpksver  string
-	opt_     map[string]interface{}
-}
-
-// RequestAccess: Request concurrent and download access restrictions.
-func (r *MyconfigService) RequestAccess(source string, volumeId string, nonce string, cpksver string) *MyconfigRequestAccessCall {
-	c := &MyconfigRequestAccessCall{s: r.s, opt_: make(map[string]interface{})}
-	c.source = source
-	c.volumeId = volumeId
-	c.nonce = nonce
-	c.cpksver = cpksver
-	return c
-}
-
-// Locale sets the optional parameter "locale": ISO-639-1, ISO-3166-1
-// codes for message localization, i.e. en_US.
-func (c *MyconfigRequestAccessCall) Locale(locale string) *MyconfigRequestAccessCall {
-	c.opt_["locale"] = locale
-	return c
-}
-
-func (c *MyconfigRequestAccessCall) Do() (*RequestAccess, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	params.Set("cpksver", fmt.Sprintf("%v", c.cpksver))
-	params.Set("nonce", fmt.Sprintf("%v", c.nonce))
-	params.Set("source", fmt.Sprintf("%v", c.source))
-	params.Set("volumeId", fmt.Sprintf("%v", c.volumeId))
-	if v, ok := c.opt_["locale"]; ok {
-		params.Set("locale", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "myconfig/requestAccess")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("POST", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(RequestAccess)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Request concurrent and download access restrictions.",
-	//   "httpMethod": "POST",
-	//   "id": "books.myconfig.requestAccess",
-	//   "parameterOrder": [
-	//     "source",
-	//     "volumeId",
-	//     "nonce",
-	//     "cpksver"
-	//   ],
-	//   "parameters": {
-	//     "cpksver": {
-	//       "description": "The device/version ID from which to request the restrictions.",
-	//       "location": "query",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "locale": {
-	//       "description": "ISO-639-1, ISO-3166-1 codes for message localization, i.e. en_US.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "nonce": {
-	//       "description": "The client nonce value.",
-	//       "location": "query",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "source": {
-	//       "description": "String to identify the originator of this request.",
-	//       "location": "query",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "volumeId": {
-	//       "description": "The volume to request concurrent/download restrictions for.",
-	//       "location": "query",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "myconfig/requestAccess",
-	//   "response": {
-	//     "$ref": "RequestAccess"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/books"
-	//   ]
-	// }
-
-}
-
-// method id "books.myconfig.syncVolumeLicenses":
-
-type MyconfigSyncVolumeLicensesCall struct {
-	s       *Service
-	source  string
-	nonce   string
-	cpksver string
-	opt_    map[string]interface{}
-}
-
-// SyncVolumeLicenses: Request downloaded content access for specified
-// volumes on the My eBooks shelf.
-func (r *MyconfigService) SyncVolumeLicenses(source string, nonce string, cpksver string) *MyconfigSyncVolumeLicensesCall {
-	c := &MyconfigSyncVolumeLicensesCall{s: r.s, opt_: make(map[string]interface{})}
-	c.source = source
-	c.nonce = nonce
-	c.cpksver = cpksver
-	return c
-}
-
-// Locale sets the optional parameter "locale": ISO-639-1, ISO-3166-1
-// codes for message localization, i.e. en_US.
-func (c *MyconfigSyncVolumeLicensesCall) Locale(locale string) *MyconfigSyncVolumeLicensesCall {
-	c.opt_["locale"] = locale
-	return c
-}
-
-// ShowPreorders sets the optional parameter "showPreorders": Set to
-// true to show pre-ordered books. Defaults to false.
-func (c *MyconfigSyncVolumeLicensesCall) ShowPreorders(showPreorders bool) *MyconfigSyncVolumeLicensesCall {
-	c.opt_["showPreorders"] = showPreorders
-	return c
-}
-
-// VolumeIds sets the optional parameter "volumeIds": The volume(s) to
-// request download restrictions for.
-func (c *MyconfigSyncVolumeLicensesCall) VolumeIds(volumeIds string) *MyconfigSyncVolumeLicensesCall {
-	c.opt_["volumeIds"] = volumeIds
-	return c
-}
-
-func (c *MyconfigSyncVolumeLicensesCall) Do() (*Volumes, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	params.Set("cpksver", fmt.Sprintf("%v", c.cpksver))
-	params.Set("nonce", fmt.Sprintf("%v", c.nonce))
-	params.Set("source", fmt.Sprintf("%v", c.source))
-	if v, ok := c.opt_["locale"]; ok {
-		params.Set("locale", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["showPreorders"]; ok {
-		params.Set("showPreorders", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["volumeIds"]; ok {
-		params.Set("volumeIds", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "myconfig/syncVolumeLicenses")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("POST", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(Volumes)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Request downloaded content access for specified volumes on the My eBooks shelf.",
-	//   "httpMethod": "POST",
-	//   "id": "books.myconfig.syncVolumeLicenses",
-	//   "parameterOrder": [
-	//     "source",
-	//     "nonce",
-	//     "cpksver"
-	//   ],
-	//   "parameters": {
-	//     "cpksver": {
-	//       "description": "The device/version ID from which to release the restriction.",
-	//       "location": "query",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "locale": {
-	//       "description": "ISO-639-1, ISO-3166-1 codes for message localization, i.e. en_US.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "nonce": {
-	//       "description": "The client nonce value.",
-	//       "location": "query",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "showPreorders": {
-	//       "description": "Set to true to show pre-ordered books. Defaults to false.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "source": {
-	//       "description": "String to identify the originator of this request.",
-	//       "location": "query",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "volumeIds": {
-	//       "description": "The volume(s) to request download restrictions for.",
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "myconfig/syncVolumeLicenses",
-	//   "response": {
-	//     "$ref": "Volumes"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/books"
-	//   ]
-	// }
-
-}
-
-// method id "books.bookshelves.get":
-
-type BookshelvesGetCall struct {
-	s      *Service
-	userId string
-	shelf  string
-	opt_   map[string]interface{}
-}
-
-// Get: Retrieves metadata for a specific bookshelf for the specified
-// user.
-func (r *BookshelvesService) Get(userId string, shelf string) *BookshelvesGetCall {
-	c := &BookshelvesGetCall{s: r.s, opt_: make(map[string]interface{})}
-	c.userId = userId
-	c.shelf = shelf
-	return c
-}
-
-// Source sets the optional parameter "source": String to identify the
-// originator of this request.
-func (c *BookshelvesGetCall) Source(source string) *BookshelvesGetCall {
-	c.opt_["source"] = source
-	return c
-}
-
-func (c *BookshelvesGetCall) Do() (*Bookshelf, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	if v, ok := c.opt_["source"]; ok {
-		params.Set("source", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "users/{userId}/bookshelves/{shelf}")
-	urls = strings.Replace(urls, "{userId}", cleanPathString(c.userId), 1)
-	urls = strings.Replace(urls, "{shelf}", cleanPathString(c.shelf), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(Bookshelf)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Retrieves metadata for a specific bookshelf for the specified user.",
-	//   "httpMethod": "GET",
-	//   "id": "books.bookshelves.get",
-	//   "parameterOrder": [
-	//     "userId",
-	//     "shelf"
-	//   ],
-	//   "parameters": {
-	//     "shelf": {
-	//       "description": "ID of bookshelf to retrieve.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "source": {
-	//       "description": "String to identify the originator of this request.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "userId": {
-	//       "description": "ID of user for whom to retrieve bookshelves.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "users/{userId}/bookshelves/{shelf}",
-	//   "response": {
-	//     "$ref": "Bookshelf"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/books"
-	//   ]
-	// }
-
-}
-
-// method id "books.bookshelves.list":
-
-type BookshelvesListCall struct {
-	s      *Service
-	userId string
-	opt_   map[string]interface{}
-}
-
-// List: Retrieves a list of public bookshelves for the specified user.
-func (r *BookshelvesService) List(userId string) *BookshelvesListCall {
-	c := &BookshelvesListCall{s: r.s, opt_: make(map[string]interface{})}
-	c.userId = userId
-	return c
-}
-
-// Source sets the optional parameter "source": String to identify the
-// originator of this request.
-func (c *BookshelvesListCall) Source(source string) *BookshelvesListCall {
-	c.opt_["source"] = source
-	return c
-}
-
-func (c *BookshelvesListCall) Do() (*Bookshelves, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	if v, ok := c.opt_["source"]; ok {
-		params.Set("source", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "users/{userId}/bookshelves")
-	urls = strings.Replace(urls, "{userId}", cleanPathString(c.userId), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(Bookshelves)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Retrieves a list of public bookshelves for the specified user.",
-	//   "httpMethod": "GET",
-	//   "id": "books.bookshelves.list",
-	//   "parameterOrder": [
-	//     "userId"
-	//   ],
-	//   "parameters": {
-	//     "source": {
-	//       "description": "String to identify the originator of this request.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "userId": {
-	//       "description": "ID of user for whom to retrieve bookshelves.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "users/{userId}/bookshelves",
-	//   "response": {
-	//     "$ref": "Bookshelves"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/books"

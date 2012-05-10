@@ -62,8 +62,6 @@ type ProductsService struct {
 }
 
 type Product struct {
-	Debug *ShoppingModelDebugJsonV1 `json:"debug,omitempty"`
-
 	// Recommendations: Recommendations for product.
 	Recommendations []*ShoppingModelRecommendationsJsonV1 `json:"recommendations,omitempty"`
 
@@ -83,18 +81,11 @@ type Product struct {
 
 	// RequestId: Unique identifier for this request.
 	RequestId string `json:"requestId,omitempty"`
+
+	Debug *ShoppingModelDebugJsonV1 `json:"debug,omitempty"`
 }
 
 type Products struct {
-	// Debug: Google internal.
-	Debug *ShoppingModelDebugJsonV1 `json:"debug,omitempty"`
-
-	// Promotions: List of promotions.
-	Promotions []*ProductsPromotions `json:"promotions,omitempty"`
-
-	// Spelling: Spelling.
-	Spelling *ProductsSpelling `json:"spelling,omitempty"`
-
 	// Redirects: Redirects.
 	Redirects []string `json:"redirects,omitempty"`
 
@@ -149,9 +140,28 @@ type Products struct {
 
 	// RelatedQueries: Related queries.
 	RelatedQueries []string `json:"relatedQueries,omitempty"`
+
+	// Debug: Google internal.
+	Debug *ShoppingModelDebugJsonV1 `json:"debug,omitempty"`
+
+	// Promotions: List of promotions.
+	Promotions []*ProductsPromotions `json:"promotions,omitempty"`
+
+	// Spelling: Spelling.
+	Spelling *ProductsSpelling `json:"spelling,omitempty"`
 }
 
 type ProductsFacets struct {
+	// DisplayName: Display name of facet.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Property: Property of facet (omitted for attribute facets).
+	Property string `json:"property,omitempty"`
+
+	// Unit: Unit of the facet's property or attribute (omitted if the
+	// facet's property or attribute has no unit).
+	Unit string `json:"unit,omitempty"`
+
 	// Buckets: List of Buckets within facet.
 	Buckets []*ProductsFacetsBuckets `json:"buckets,omitempty"`
 
@@ -165,19 +175,17 @@ type ProductsFacets struct {
 
 	// Name: Name of the facet's attribute (omitted for property facets).
 	Name string `json:"name,omitempty"`
-
-	// DisplayName: Display name of facet.
-	DisplayName string `json:"displayName,omitempty"`
-
-	// Property: Property of facet (omitted for attribute facets).
-	Property string `json:"property,omitempty"`
-
-	// Unit: Unit of the facet's property or attribute (omitted if the
-	// facet's property or attribute has no unit).
-	Unit string `json:"unit,omitempty"`
 }
 
 type ProductsFacetsBuckets struct {
+	// Min: Lower bound of the bucket (omitted for value buckets or if the
+	// range has no lower bound).
+	Min interface{} `json:"min,omitempty"`
+
+	// MinExclusive: Whether the lower bound of the bucket is exclusive
+	// (omitted for value buckets or if the range has no lower bound).
+	MinExclusive bool `json:"minExclusive,omitempty"`
+
 	// Max: Upper bound of the bucket (omitted for value buckets or if the
 	// range has no upper bound).
 	Max interface{} `json:"max,omitempty"`
@@ -192,14 +200,6 @@ type ProductsFacetsBuckets struct {
 
 	// Value: Value of the bucket (omitted for range buckets).
 	Value interface{} `json:"value,omitempty"`
-
-	// Min: Lower bound of the bucket (omitted for value buckets or if the
-	// range has no lower bound).
-	Min interface{} `json:"min,omitempty"`
-
-	// MinExclusive: Whether the lower bound of the bucket is exclusive
-	// (omitted for value buckets or if the range has no lower bound).
-	MinExclusive bool `json:"minExclusive,omitempty"`
 }
 
 type ProductsPromotions struct {
@@ -247,9 +247,6 @@ type ProductsSpelling struct {
 }
 
 type ProductsStores struct {
-	// StoreId: Id of store.
-	StoreId string `json:"storeId,omitempty"`
-
 	// Address: Address of store.
 	Address string `json:"address,omitempty"`
 
@@ -267,6 +264,9 @@ type ProductsStores struct {
 
 	// Name: Name of merchant.
 	Name string `json:"name,omitempty"`
+
+	// StoreId: Id of store.
+	StoreId string `json:"storeId,omitempty"`
 }
 
 type ShoppingModelCategoryJsonV1 struct {
@@ -284,15 +284,6 @@ type ShoppingModelCategoryJsonV1 struct {
 }
 
 type ShoppingModelDebugJsonV1 struct {
-	// FacetsResponse: Google internal.
-	FacetsResponse string `json:"facetsResponse,omitempty"`
-
-	// SearchResponse: Google internal.
-	SearchResponse string `json:"searchResponse,omitempty"`
-
-	// FacetsRequest: Google internal.
-	FacetsRequest string `json:"facetsRequest,omitempty"`
-
 	// BackendTimes: Google internal
 	BackendTimes []*ShoppingModelDebugJsonV1BackendTimes `json:"backendTimes,omitempty"`
 
@@ -304,9 +295,21 @@ type ShoppingModelDebugJsonV1 struct {
 
 	// SearchRequest: Google internal.
 	SearchRequest string `json:"searchRequest,omitempty"`
+
+	// FacetsResponse: Google internal.
+	FacetsResponse string `json:"facetsResponse,omitempty"`
+
+	// SearchResponse: Google internal.
+	SearchResponse string `json:"searchResponse,omitempty"`
+
+	// FacetsRequest: Google internal.
+	FacetsRequest string `json:"facetsRequest,omitempty"`
 }
 
 type ShoppingModelDebugJsonV1BackendTimes struct {
+	// ServerMillis: Google internal
+	ServerMillis int64 `json:"serverMillis,omitempty,string"`
+
 	// ElapsedMillis: Google internal
 	ElapsedMillis int64 `json:"elapsedMillis,omitempty,string"`
 
@@ -315,65 +318,9 @@ type ShoppingModelDebugJsonV1BackendTimes struct {
 
 	// Name: Google internal
 	Name string `json:"name,omitempty"`
-
-	// ServerMillis: Google internal
-	ServerMillis int64 `json:"serverMillis,omitempty,string"`
 }
 
 type ShoppingModelProductJsonV1 struct {
-	// Attributes: Attributes of product (available only with a cx source).
-	Attributes []*ShoppingModelProductJsonV1Attributes `json:"attributes,omitempty"`
-
-	// Link: Link to product.
-	Link string `json:"link,omitempty"`
-
-	// Variants: A list of variant offers associated with this product.
-	Variants []*ShoppingModelProductJsonV1Variants `json:"variants,omitempty"`
-
-	// Inventories: Inventories of product.
-	Inventories []*ShoppingModelProductJsonV1Inventories `json:"inventories,omitempty"`
-
-	// ProvidedId: Merchant-provided id of product (available only with a cx
-	// source).
-	ProvidedId string `json:"providedId,omitempty"`
-
-	// Title: Title of product.
-	Title string `json:"title,omitempty"`
-
-	// PlusOne: Code to add to the page to render the +1 content.
-	PlusOne string `json:"plusOne,omitempty"`
-
-	// TotalMatchingVariants: The number of variant offers returned that
-	// matched the query.
-	TotalMatchingVariants int64 `json:"totalMatchingVariants,omitempty"`
-
-	// Mpns: List of all the product's MPNs.
-	Mpns []string `json:"mpns,omitempty"`
-
-	// Internal1: Google Internal.
-	Internal1 []string `json:"internal1,omitempty"`
-
-	// Internal3: Google Internal.
-	Internal3 string `json:"internal3,omitempty"`
-
-	// Internal4: Google Internal.
-	Internal4 []*ShoppingModelProductJsonV1Internal4 `json:"internal4,omitempty"`
-
-	// Internal6: Google Internal.
-	Internal6 string `json:"internal6,omitempty"`
-
-	// Internal7: Google Internal.
-	Internal7 bool `json:"internal7,omitempty"`
-
-	// Internal8: Google Internal.
-	Internal8 []string `json:"internal8,omitempty"`
-
-	// Images: Images of product.
-	Images []*ShoppingModelProductJsonV1Images `json:"images,omitempty"`
-
-	// Brand: Brand of product.
-	Brand string `json:"brand,omitempty"`
-
 	// Description: Description of product.
 	Description string `json:"description,omitempty"`
 
@@ -427,15 +374,62 @@ type ShoppingModelProductJsonV1 struct {
 
 	// Country: ISO 3166 code of target country of product.
 	Country string `json:"country,omitempty"`
+
+	// Attributes: Attributes of product (available only with a cx source).
+	Attributes []*ShoppingModelProductJsonV1Attributes `json:"attributes,omitempty"`
+
+	// Link: Link to product.
+	Link string `json:"link,omitempty"`
+
+	// Variants: A list of variant offers associated with this product.
+	Variants []*ShoppingModelProductJsonV1Variants `json:"variants,omitempty"`
+
+	// Inventories: Inventories of product.
+	Inventories []*ShoppingModelProductJsonV1Inventories `json:"inventories,omitempty"`
+
+	// ProvidedId: Merchant-provided id of product (available only with a cx
+	// source).
+	ProvidedId string `json:"providedId,omitempty"`
+
+	// Title: Title of product.
+	Title string `json:"title,omitempty"`
+
+	// PlusOne: Code to add to the page to render the +1 content.
+	PlusOne string `json:"plusOne,omitempty"`
+
+	// TotalMatchingVariants: The number of variant offers returned that
+	// matched the query.
+	TotalMatchingVariants int64 `json:"totalMatchingVariants,omitempty"`
+
+	// Mpns: List of all the product's MPNs.
+	Mpns []string `json:"mpns,omitempty"`
+
+	// Internal1: Google Internal.
+	Internal1 []string `json:"internal1,omitempty"`
+
+	// Internal3: Google Internal.
+	Internal3 string `json:"internal3,omitempty"`
+
+	// Internal4: Google Internal.
+	Internal4 []*ShoppingModelProductJsonV1Internal4 `json:"internal4,omitempty"`
+
+	// Internal6: Google Internal.
+	Internal6 string `json:"internal6,omitempty"`
+
+	// Internal7: Google Internal.
+	Internal7 bool `json:"internal7,omitempty"`
+
+	// Internal8: Google Internal.
+	Internal8 []string `json:"internal8,omitempty"`
+
+	// Images: Images of product.
+	Images []*ShoppingModelProductJsonV1Images `json:"images,omitempty"`
+
+	// Brand: Brand of product.
+	Brand string `json:"brand,omitempty"`
 }
 
 type ShoppingModelProductJsonV1Attributes struct {
-	// Name: Name of product attribute.
-	Name string `json:"name,omitempty"`
-
-	// DisplayName: Display Name of prodct attribute.
-	DisplayName string `json:"displayName,omitempty"`
-
 	// Unit: Unit of product attribute.
 	Unit string `json:"unit,omitempty"`
 
@@ -445,6 +439,12 @@ type ShoppingModelProductJsonV1Attributes struct {
 
 	// Value: Value of product attribute.
 	Value interface{} `json:"value,omitempty"`
+
+	// Name: Name of product attribute.
+	Name string `json:"name,omitempty"`
+
+	// DisplayName: Display Name of prodct attribute.
+	DisplayName string `json:"displayName,omitempty"`
 }
 
 type ShoppingModelProductJsonV1Author struct {
@@ -456,27 +456,27 @@ type ShoppingModelProductJsonV1Author struct {
 }
 
 type ShoppingModelProductJsonV1Images struct {
-	// Link: Link to product image.
-	Link string `json:"link,omitempty"`
-
 	// Thumbnails: Thumbnails of product image.
 	Thumbnails []*ShoppingModelProductJsonV1ImagesThumbnails `json:"thumbnails,omitempty"`
+
+	// Link: Link to product image.
+	Link string `json:"link,omitempty"`
 }
 
 type ShoppingModelProductJsonV1ImagesThumbnails struct {
-	// Height: Height of thumbnail (omitted if not specified in the
-	// request).
-	Height int64 `json:"height,omitempty"`
-
-	// Width: Width of thumbnail (omitted if not specified in the request).
-	Width int64 `json:"width,omitempty"`
-
 	// Link: Link to thumbnail.
 	Link string `json:"link,omitempty"`
 
 	// Content: Content of thumbnail (only available for the first thumbnail
 	// of the top results if SAYT is enabled).
 	Content string `json:"content,omitempty"`
+
+	// Height: Height of thumbnail (omitted if not specified in the
+	// request).
+	Height int64 `json:"height,omitempty"`
+
+	// Width: Width of thumbnail (omitted if not specified in the request).
+	Width int64 `json:"width,omitempty"`
 }
 
 type ShoppingModelProductJsonV1Internal4 struct {
@@ -488,6 +488,10 @@ type ShoppingModelProductJsonV1Internal4 struct {
 }
 
 type ShoppingModelProductJsonV1Inventories struct {
+	// Currency: Currency of product inventory (an ISO 4217 alphabetic
+	// code).
+	Currency string `json:"currency,omitempty"`
+
 	// Distance: Distance of product inventory.
 	Distance float64 `json:"distance,omitempty"`
 
@@ -511,10 +515,6 @@ type ShoppingModelProductJsonV1Inventories struct {
 
 	// Tax: Tax of product inventory.
 	Tax float64 `json:"tax,omitempty"`
-
-	// Currency: Currency of product inventory (an ISO 4217 alphabetic
-	// code).
-	Currency string `json:"currency,omitempty"`
 }
 
 type ShoppingModelProductJsonV1Variants struct {
@@ -523,14 +523,14 @@ type ShoppingModelProductJsonV1Variants struct {
 }
 
 type ShoppingModelRecommendationsJsonV1 struct {
+	// RecommendationList: List of recommendations.
+	RecommendationList []*ShoppingModelRecommendationsJsonV1RecommendationList `json:"recommendationList,omitempty"`
+
 	// Type: Type of recommendation list (for offer-based recommendations,
 	// one of: all, purchaseToPurchase, visitToVisit, visitToPurchase,
 	// relatedItems; for category-based recommendations, one of: all,
 	// categoryMostVisited, categoryBestSeller).
 	Type string `json:"type,omitempty"`
-
-	// RecommendationList: List of recommendations.
-	RecommendationList []*ShoppingModelRecommendationsJsonV1RecommendationList `json:"recommendationList,omitempty"`
 }
 
 type ShoppingModelRecommendationsJsonV1RecommendationList struct {

@@ -72,13 +72,6 @@ type TasksService struct {
 }
 
 type Task struct {
-	// EnqueueTimestamp: Time (in seconds since the epoch) at which the task
-	// was enqueued.
-	EnqueueTimestamp int64 `json:"enqueueTimestamp,omitempty,string"`
-
-	// QueueName: Name of the queue that the task is in.
-	QueueName string `json:"queueName,omitempty"`
-
 	// PayloadBase64: A bag of bytes which is the task payload. The payload
 	// on the JSON side is always Base64 encoded.
 	PayloadBase64 string `json:"payloadBase64,omitempty"`
@@ -93,15 +86,16 @@ type Task struct {
 	// lease will expire. This value is 0 if the task isnt currently leased
 	// out to a worker.
 	LeaseTimestamp int64 `json:"leaseTimestamp,omitempty,string"`
+
+	// EnqueueTimestamp: Time (in seconds since the epoch) at which the task
+	// was enqueued.
+	EnqueueTimestamp int64 `json:"enqueueTimestamp,omitempty,string"`
+
+	// QueueName: Name of the queue that the task is in.
+	QueueName string `json:"queueName,omitempty"`
 }
 
 type TaskQueue struct {
-	// Stats: Statistics for the TaskQueue object in question.
-	Stats *TaskQueueStats `json:"stats,omitempty"`
-
-	// Acl: ACLs that are applicable to this TaskQueue object.
-	Acl *TaskQueueAcl `json:"acl,omitempty"`
-
 	// Kind: The kind of REST object returned, in this case taskqueue.
 	Kind string `json:"kind,omitempty"`
 
@@ -112,6 +106,12 @@ type TaskQueue struct {
 	// giving up on them. If unset we lease them out forever until a worker
 	// deletes the task.
 	MaxLeases int64 `json:"maxLeases,omitempty"`
+
+	// Stats: Statistics for the TaskQueue object in question.
+	Stats *TaskQueueStats `json:"stats,omitempty"`
+
+	// Acl: ACLs that are applicable to this TaskQueue object.
+	Acl *TaskQueueAcl `json:"acl,omitempty"`
 }
 
 type TaskQueueAcl struct {
@@ -131,35 +131,35 @@ type TaskQueueAcl struct {
 }
 
 type TaskQueueStats struct {
-	// LeasedLastMinute: Number of tasks leased in the last minute.
-	LeasedLastMinute int64 `json:"leasedLastMinute,omitempty,string"`
-
-	// LeasedLastHour: Number of tasks leased in the last hour.
-	LeasedLastHour int64 `json:"leasedLastHour,omitempty,string"`
-
 	// TotalTasks: Number of tasks in the queue.
 	TotalTasks int64 `json:"totalTasks,omitempty"`
 
 	// OldestTask: The timestamp (in seconds since the epoch) of the oldest
 	// unfinished task.
 	OldestTask int64 `json:"oldestTask,omitempty,string"`
+
+	// LeasedLastMinute: Number of tasks leased in the last minute.
+	LeasedLastMinute int64 `json:"leasedLastMinute,omitempty,string"`
+
+	// LeasedLastHour: Number of tasks leased in the last hour.
+	LeasedLastHour int64 `json:"leasedLastHour,omitempty,string"`
 }
 
 type Tasks struct {
-	// Kind: The kind of object returned, a list of tasks.
-	Kind string `json:"kind,omitempty"`
-
 	// Items: The actual list of tasks returned as a result of the lease
 	// operation.
 	Items []*Task `json:"items,omitempty"`
+
+	// Kind: The kind of object returned, a list of tasks.
+	Kind string `json:"kind,omitempty"`
 }
 
 type Tasks2 struct {
-	// Kind: The kind of object returned, a list of tasks.
-	Kind string `json:"kind,omitempty"`
-
 	// Items: The actual list of tasks currently active in the TaskQueue.
 	Items []*Task `json:"items,omitempty"`
+
+	// Kind: The kind of object returned, a list of tasks.
+	Kind string `json:"kind,omitempty"`
 }
 
 // method id "taskqueue.taskqueues.get":

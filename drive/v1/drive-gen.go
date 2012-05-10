@@ -63,30 +63,6 @@ type FilesService struct {
 }
 
 type File struct {
-	// FileSize: The size of the file in bytes. This will only be populated
-	// on files with content stored in Drive.
-	FileSize int64 `json:"fileSize,omitempty,string"`
-
-	// MimeType: The mimetype of the file
-	MimeType string `json:"mimeType,omitempty"`
-
-	// ModifiedDate: Last time this file was modified by anyone (formatted
-	// RFC 3339 timestamp).
-	ModifiedDate string `json:"modifiedDate,omitempty"`
-
-	// Description: A short description of the file
-	Description string `json:"description,omitempty"`
-
-	// LastViewedDate: Last time this file was viewed by anyone (formatted
-	// RFC 3339 timestamp).
-	LastViewedDate string `json:"lastViewedDate,omitempty"`
-
-	// Labels: Labels for the file.
-	Labels *FileLabels `json:"labels,omitempty"`
-
-	// SelfLink: A link back to this file.
-	SelfLink string `json:"selfLink,omitempty"`
-
 	// Etag: ETag of the file.
 	Etag string `json:"etag,omitempty"`
 
@@ -134,6 +110,30 @@ type File struct {
 	// Md5Checksum: An MD5 checksum for the content of this file. This will
 	// only be populated on files with content stored in Drive.
 	Md5Checksum string `json:"md5Checksum,omitempty"`
+
+	// FileSize: The size of the file in bytes. This will only be populated
+	// on files with content stored in Drive.
+	FileSize int64 `json:"fileSize,omitempty,string"`
+
+	// MimeType: The mimetype of the file
+	MimeType string `json:"mimeType,omitempty"`
+
+	// ModifiedDate: Last time this file was modified by anyone (formatted
+	// RFC 3339 timestamp).
+	ModifiedDate string `json:"modifiedDate,omitempty"`
+
+	// Description: A short description of the file
+	Description string `json:"description,omitempty"`
+
+	// LastViewedDate: Last time this file was viewed by anyone (formatted
+	// RFC 3339 timestamp).
+	LastViewedDate string `json:"lastViewedDate,omitempty"`
+
+	// Labels: Labels for the file.
+	Labels *FileLabels `json:"labels,omitempty"`
+
+	// SelfLink: A link back to this file.
+	SelfLink string `json:"selfLink,omitempty"`
 }
 
 type FileIndexableText struct {
@@ -142,14 +142,14 @@ type FileIndexableText struct {
 }
 
 type FileLabels struct {
-	// Starred: Whether this file is starred by the user.
-	Starred bool `json:"starred,omitempty"`
-
 	// Trashed: Whether this file has been trashed.
 	Trashed bool `json:"trashed,omitempty"`
 
 	// Hidden: Whether this file is hidden from the user
 	Hidden bool `json:"hidden,omitempty"`
+
+	// Starred: Whether this file is starred by the user.
+	Starred bool `json:"starred,omitempty"`
 }
 
 type FileParentsCollection struct {
@@ -161,6 +161,12 @@ type FileParentsCollection struct {
 }
 
 type Permission struct {
+	// Etag: An etag for this permission.
+	Etag string `json:"etag,omitempty"`
+
+	// Kind: The kind of this permission. This is always drive#permission
+	Kind string `json:"kind,omitempty"`
+
 	// Type: The type of permission (For example: user, group etc).
 	Type string `json:"type,omitempty"`
 
@@ -170,12 +176,6 @@ type Permission struct {
 
 	// AdditionalRoles: Any additional roles that this permission describes.
 	AdditionalRoles []string `json:"additionalRoles,omitempty"`
-
-	// Etag: An etag for this permission.
-	Etag string `json:"etag,omitempty"`
-
-	// Kind: The kind of this permission. This is always drive#permission
-	Kind string `json:"kind,omitempty"`
 }
 
 // method id "drive.files.get":

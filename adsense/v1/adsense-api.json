@@ -13,7 +13,6 @@
  },
  "documentationLink": "https://code.google.com/apis/adsense/management/",
  "protocol": "rest",
- "baseUrl": "https://www.googleapis.com/adsense/v1/",
  "basePath": "/adsense/v1/",
  "rootUrl": "https://www.googleapis.com/",
  "servicePath": "adsense/v1/",

@@ -13,7 +13,6 @@
  },
  "documentationLink": "https://developers.google.com/drive/",
  "protocol": "rest",
- "baseUrl": "https://www.googleapis.com/drive/v1/",
  "basePath": "/drive/v1/",
  "rootUrl": "https://www.googleapis.com/",
  "servicePath": "drive/v1/",

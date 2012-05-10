@@ -80,8 +80,6 @@ type InputInput struct {
 }
 
 type Output struct {
-	OutputMulti []*OutputOutputMulti `json:"outputMulti,omitempty"`
-
 	SelfLink string `json:"selfLink,omitempty"`
 
 	OutputValue float64 `json:"outputValue,omitempty"`
@@ -91,6 +89,8 @@ type Output struct {
 	Kind string `json:"kind,omitempty"`
 
 	Id string `json:"id,omitempty"`
+
+	OutputMulti []*OutputOutputMulti `json:"outputMulti,omitempty"`
 }
 
 type OutputOutputMulti struct {
@@ -100,15 +100,15 @@ type OutputOutputMulti struct {
 }
 
 type Training struct {
+	TrainingStatus string `json:"trainingStatus,omitempty"`
+
+	Id string `json:"id,omitempty"`
+
 	SelfLink string `json:"selfLink,omitempty"`
 
 	ModelInfo *TrainingModelInfo `json:"modelInfo,omitempty"`
 
 	Kind string `json:"kind,omitempty"`
-
-	TrainingStatus string `json:"trainingStatus,omitempty"`
-
-	Id string `json:"id,omitempty"`
 }
 
 type TrainingModelInfo struct {

@@ -38,11 +38,11 @@ const basePath = "https://www.googleapis.com/analytics/v2.4/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View your Google Analytics data
-	AnalyticsReadonlyScope = "https://www.googleapis.com/auth/analytics.readonly"
-
 	// View and manage your Google Analytics data
 	AnalyticsScope = "https://www.googleapis.com/auth/analytics"
+
+	// View your Google Analytics data
+	AnalyticsReadonlyScope = "https://www.googleapis.com/auth/analytics.readonly"
 )
 
 func New(client *http.Client) (*Service, error) {
@@ -50,24 +50,24 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
-	s.Management = &ManagementService{s: s}
 	s.Data = &DataService{s: s}
+	s.Management = &ManagementService{s: s}
 	return s, nil
 }
 
 type Service struct {
 	client *http.Client
 
-	Management *ManagementService
-
 	Data *DataService
-}
 
-type ManagementService struct {
-	s *Service
+	Management *ManagementService
 }
 
 type DataService struct {
+	s *Service
+}
+
+type ManagementService struct {
 	s *Service
 }
 

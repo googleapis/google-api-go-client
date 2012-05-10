@@ -68,8 +68,6 @@ type ContextFacetsItem struct {
 }
 
 type Promotion struct {
-	Title string `json:"title,omitempty"`
-
 	BodyLines []*PromotionBodyLines `json:"bodyLines,omitempty"`
 
 	DisplayLink string `json:"displayLink,omitempty"`
@@ -77,6 +75,8 @@ type Promotion struct {
 	Image *PromotionImage `json:"image,omitempty"`
 
 	Link string `json:"link,omitempty"`
+
+	Title string `json:"title,omitempty"`
 }
 
 type PromotionBodyLines struct {
@@ -96,32 +96,6 @@ type PromotionImage struct {
 }
 
 type Query struct {
-	ImgDominantColor string `json:"imgDominantColor,omitempty"`
-
-	Count int64 `json:"count,omitempty"`
-
-	StartIndex int64 `json:"startIndex,omitempty"`
-
-	FileType string `json:"fileType,omitempty"`
-
-	Language string `json:"language,omitempty"`
-
-	LinkSite string `json:"linkSite,omitempty"`
-
-	TotalResults int64 `json:"totalResults,omitempty,string"`
-
-	OutputEncoding string `json:"outputEncoding,omitempty"`
-
-	ImgType string `json:"imgType,omitempty"`
-
-	DateRestrict string `json:"dateRestrict,omitempty"`
-
-	Filter string `json:"filter,omitempty"`
-
-	Hq string `json:"hq,omitempty"`
-
-	ExactTerms string `json:"exactTerms,omitempty"`
-
 	Safe string `json:"safe,omitempty"`
 
 	StartPage int64 `json:"startPage,omitempty"`
@@ -169,9 +143,47 @@ type Query struct {
 	HighRange string `json:"highRange,omitempty"`
 
 	Rights string `json:"rights,omitempty"`
+
+	ImgDominantColor string `json:"imgDominantColor,omitempty"`
+
+	Count int64 `json:"count,omitempty"`
+
+	StartIndex int64 `json:"startIndex,omitempty"`
+
+	FileType string `json:"fileType,omitempty"`
+
+	Language string `json:"language,omitempty"`
+
+	LinkSite string `json:"linkSite,omitempty"`
+
+	TotalResults int64 `json:"totalResults,omitempty,string"`
+
+	OutputEncoding string `json:"outputEncoding,omitempty"`
+
+	ImgType string `json:"imgType,omitempty"`
+
+	DateRestrict string `json:"dateRestrict,omitempty"`
+
+	Filter string `json:"filter,omitempty"`
+
+	Hq string `json:"hq,omitempty"`
+
+	ExactTerms string `json:"exactTerms,omitempty"`
 }
 
 type Result struct {
+	Pagemap *ResultPagemap `json:"pagemap,omitempty"`
+
+	Kind string `json:"kind,omitempty"`
+
+	Link string `json:"link,omitempty"`
+
+	HtmlTitle string `json:"htmlTitle,omitempty"`
+
+	Title string `json:"title,omitempty"`
+
+	HtmlSnippet string `json:"htmlSnippet,omitempty"`
+
 	FileFormat string `json:"fileFormat,omitempty"`
 
 	CacheId string `json:"cacheId,omitempty"`
@@ -189,23 +201,9 @@ type Result struct {
 	Image *ResultImage `json:"image,omitempty"`
 
 	Snippet string `json:"snippet,omitempty"`
-
-	Pagemap *ResultPagemap `json:"pagemap,omitempty"`
-
-	Kind string `json:"kind,omitempty"`
-
-	Link string `json:"link,omitempty"`
-
-	HtmlTitle string `json:"htmlTitle,omitempty"`
-
-	Title string `json:"title,omitempty"`
-
-	HtmlSnippet string `json:"htmlSnippet,omitempty"`
 }
 
 type ResultImage struct {
-	ThumbnailHeight int64 `json:"thumbnailHeight,omitempty"`
-
 	ThumbnailWidth int64 `json:"thumbnailWidth,omitempty"`
 
 	ThumbnailLink string `json:"thumbnailLink,omitempty"`
@@ -217,12 +215,14 @@ type ResultImage struct {
 	ContextLink string `json:"contextLink,omitempty"`
 
 	ByteSize int64 `json:"byteSize,omitempty"`
+
+	ThumbnailHeight int64 `json:"thumbnailHeight,omitempty"`
 }
 
 type ResultLabels struct {
-	DisplayName string `json:"displayName,omitempty"`
-
 	Name string `json:"name,omitempty"`
+
+	DisplayName string `json:"displayName,omitempty"`
 }
 
 type ResultPagemap struct {
@@ -250,13 +250,13 @@ type SearchQueries struct {
 }
 
 type SearchSearchInformation struct {
+	SearchTime float64 `json:"searchTime,omitempty"`
+
 	TotalResults int64 `json:"totalResults,omitempty,string"`
 
 	FormattedTotalResults string `json:"formattedTotalResults,omitempty"`
 
 	FormattedSearchTime string `json:"formattedSearchTime,omitempty"`
-
-	SearchTime float64 `json:"searchTime,omitempty"`
 }
 
 type SearchSpelling struct {

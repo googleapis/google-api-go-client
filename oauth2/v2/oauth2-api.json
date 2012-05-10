@@ -11,6 +11,7 @@
   "x32": "http://www.google.com/images/icons/product/search-32.gif"
  },
  "protocol": "rest",
+ "baseUrl": "https://www.googleapis.com/",
  "basePath": "/",
  "rootUrl": "https://www.googleapis.com/",
  "servicePath": "/",

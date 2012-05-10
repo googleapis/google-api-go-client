@@ -13,6 +13,7 @@
  },
  "documentationLink": "https://developers.google.com/ad-exchange/buyer-rest",
  "protocol": "rest",
+ "baseUrl": "https://www.googleapis.com/adexchangebuyer/v1/",
  "basePath": "/adexchangebuyer/v1/",
  "rootUrl": "https://www.googleapis.com/",
  "servicePath": "adexchangebuyer/v1/",

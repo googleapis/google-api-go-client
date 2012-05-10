@@ -38,11 +38,11 @@ const basePath = "https://www.googleapis.com/orkut/v2/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View your Orkut data
-	OrkutReadonlyScope = "https://www.googleapis.com/auth/orkut.readonly"
-
 	// Manage your Orkut activity
 	OrkutScope = "https://www.googleapis.com/auth/orkut"
+
+	// View your Orkut data
+	OrkutReadonlyScope = "https://www.googleapis.com/auth/orkut.readonly"
 )
 
 func New(client *http.Client) (*Service, error) {

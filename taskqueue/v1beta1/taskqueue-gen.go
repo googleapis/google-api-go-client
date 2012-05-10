@@ -38,11 +38,11 @@ const basePath = "https://www.googleapis.com/taskqueue/v1beta1/projects/"
 
 // OAuth2 scopes used by this API.
 const (
-	// Consume Tasks from your Taskqueues
-	TaskqueueConsumerScope = "https://www.googleapis.com/auth/taskqueue.consumer"
-
 	// Manage your Tasks and Taskqueues
 	TaskqueueScope = "https://www.googleapis.com/auth/taskqueue"
+
+	// Consume Tasks from your Taskqueues
+	TaskqueueConsumerScope = "https://www.googleapis.com/auth/taskqueue.consumer"
 )
 
 func New(client *http.Client) (*Service, error) {

@@ -38,14 +38,14 @@ const basePath = "https://www.googleapis.com/latitude/v1/"
 
 // OAuth2 scopes used by this API.
 const (
-	// Manage your best-available location
-	LatitudeCurrentBestScope = "https://www.googleapis.com/auth/latitude.current.best"
+	// Manage your best-available location and location history
+	LatitudeAllBestScope = "https://www.googleapis.com/auth/latitude.all.best"
 
 	// Manage your city-level location and location history
 	LatitudeAllCityScope = "https://www.googleapis.com/auth/latitude.all.city"
 
-	// Manage your best-available location and location history
-	LatitudeAllBestScope = "https://www.googleapis.com/auth/latitude.all.best"
+	// Manage your best-available location
+	LatitudeCurrentBestScope = "https://www.googleapis.com/auth/latitude.current.best"
 
 	// Manage your city-level location
 	LatitudeCurrentCityScope = "https://www.googleapis.com/auth/latitude.current.city"

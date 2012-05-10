@@ -38,11 +38,11 @@ const basePath = "https://www.googleapis.com/prediction/v1.2/"
 
 // OAuth2 scopes used by this API.
 const (
-	// Manage your data in the Google Prediction API
-	PredictionScope = "https://www.googleapis.com/auth/prediction"
-
 	// View your data in Google Cloud Storage
 	DevstorageRead_onlyScope = "https://www.googleapis.com/auth/devstorage.read_only"
+
+	// Manage your data in the Google Prediction API
+	PredictionScope = "https://www.googleapis.com/auth/prediction"
 )
 
 func New(client *http.Client) (*Service, error) {

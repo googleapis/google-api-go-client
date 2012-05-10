@@ -13,6 +13,7 @@
  },
  "documentationLink": "http://code.google.com/apis/analytics",
  "protocol": "rest",
+ "baseUrl": "https://www.googleapis.com/analytics/v3/",
  "basePath": "/analytics/v3/",
  "rootUrl": "https://www.googleapis.com/",
  "servicePath": "analytics/v3/",

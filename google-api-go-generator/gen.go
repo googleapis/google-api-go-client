@@ -429,16 +429,17 @@ func (a *API) generateScopeConstants() {
 	a.p("// OAuth2 scopes used by this API.\n")
 	a.p("const (\n")
 	n := 0
-	for scope, mi := range scopes {
+	for _, scopeName := range sortedKeys(scopes) {
+		mi := scopes[scopeName]
 		if n > 0 {
 			a.p("\n")
 		}
 		n++
-		ident := scopeIdentifierFromURL(scope)
+		ident := scopeIdentifierFromURL(scopeName)
 		if des := jstr(mi.(map[string]interface{}), "description"); des != "" {
 			a.p("%s", asComment("\t", des))
 		}
-		a.p("\t%s = %q\n", ident, scope)
+		a.p("\t%s = %q\n", ident, scopeName)
 	}
 	a.p(")\n\n")
 }

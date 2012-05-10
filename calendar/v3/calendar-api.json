@@ -13,6 +13,7 @@
  },
  "documentationLink": "http://code.google.com/apis/calendar/v3/using.html",
  "protocol": "rest",
+ "baseUrl": "https://www.googleapis.com/calendar/v3/",
  "basePath": "/calendar/v3/",
  "rootUrl": "https://www.googleapis.com/",
  "servicePath": "calendar/v3/",

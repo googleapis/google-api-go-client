@@ -13,6 +13,7 @@
  },
  "documentationLink": "http://code.google.com/apis/orkut/v2/reference.html",
  "protocol": "rest",
+ "baseUrl": "https://www.googleapis.com/orkut/v2/",
  "basePath": "/orkut/v2/",
  "rootUrl": "https://www.googleapis.com/",
  "servicePath": "orkut/v2/",

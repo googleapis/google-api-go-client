@@ -13,6 +13,7 @@
  },
  "documentationLink": "https://code.google.com/apis/bigquery/docs/v2/",
  "protocol": "rest",
+ "baseUrl": "https://www.googleapis.com/bigquery/v2beta1/",
  "basePath": "/bigquery/v2beta1/",
  "rootUrl": "https://www.googleapis.com/",
  "servicePath": "bigquery/v2beta1/",

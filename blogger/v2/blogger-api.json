@@ -16,6 +16,7 @@
   "limited_availability"
  ],
  "protocol": "rest",
+ "baseUrl": "https://www.googleapis.com/blogger/v2/",
  "basePath": "/blogger/v2/",
  "rootUrl": "https://www.googleapis.com/",
  "servicePath": "blogger/v2/",

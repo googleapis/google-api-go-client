@@ -38,11 +38,11 @@ const basePath = "https://www.googleapis.com/plus/v1/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View your email address
-	UserinfoEmailScope = "https://www.googleapis.com/auth/userinfo.email"
-
 	// Know who you are on Google
 	PlusMeScope = "https://www.googleapis.com/auth/plus.me"
+
+	// View your email address
+	UserinfoEmailScope = "https://www.googleapis.com/auth/userinfo.email"
 )
 
 func New(client *http.Client) (*Service, error) {

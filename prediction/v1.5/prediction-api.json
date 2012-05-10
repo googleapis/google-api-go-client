@@ -13,6 +13,7 @@
  },
  "documentationLink": "http://code.google.com/apis/predict/docs/developer-guide.html",
  "protocol": "rest",
+ "baseUrl": "https://www.googleapis.com/prediction/v1.5/",
  "basePath": "/prediction/v1.5/",
  "rootUrl": "https://www.googleapis.com/",
  "servicePath": "prediction/v1.5/",

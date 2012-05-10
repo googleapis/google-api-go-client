@@ -13,6 +13,7 @@
  },
  "documentationLink": "http://code.google.com/apis/moderator/v1/using_rest.html",
  "protocol": "rest",
+ "baseUrl": "https://www.googleapis.com/moderator/v1/",
  "basePath": "/moderator/v1/",
  "rootUrl": "https://www.googleapis.com/",
  "servicePath": "moderator/v1/",

@@ -13,6 +13,7 @@
  },
  "documentationLink": "https://code.google.com/apis/books/docs/v1/getting_started.html",
  "protocol": "rest",
+ "baseUrl": "https://www.googleapis.com/books/v1/",
  "basePath": "/books/v1/",
  "rootUrl": "https://www.googleapis.com/",
  "servicePath": "books/v1/",

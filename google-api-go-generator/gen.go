@@ -1020,6 +1020,7 @@ func (meth *Method) generateCode() {
 		//pn("urls = googleapi.ResolveRelative(%q, %q)", a.apiBaseURL(), meth.mediaPath())
 		// Further hack.  Discovery doc is wrong?
 		pn("urls = strings.Replace(urls, %q, %q, 1)", "https://www.googleapis.com/", "https://www.googleapis.com/upload/")
+		pn(`params.Set("uploadType", "multipart")`)
 		pn("}")
 	}
 	for _, arg := range args.forLocation("path") {

@@ -313,6 +313,7 @@ func (c *FilesInsertCall) Do() (*File, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v1/", "files")
 	if c.media_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
+		params.Set("uploadType", "multipart")
 	}
 	urls += "?" + params.Encode()
 	contentLength_, hasMedia_ := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
@@ -564,6 +565,7 @@ func (c *FilesUpdateCall) Do() (*File, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v1/", "files/{id}")
 	if c.media_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
+		params.Set("uploadType", "multipart")
 	}
 	urls = strings.Replace(urls, "{id}", cleanPathString(c.id), 1)
 	urls += "?" + params.Encode()

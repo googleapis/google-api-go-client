@@ -1153,6 +1153,7 @@ func (c *JobsInsertCall) Do() (*Job, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2beta1/", "projects/{projectId}/jobs")
 	if c.media_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
+		params.Set("uploadType", "multipart")
 	}
 	urls = strings.Replace(urls, "{projectId}", cleanPathString(c.projectId), 1)
 	urls += "?" + params.Encode()

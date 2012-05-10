@@ -4,7 +4,7 @@
  "id": "shopping:v1",
  "name": "shopping",
  "version": "v1",
- "revision": "20120413",
+ "revision": "20120503",
  "title": "Search API for Shopping",
  "description": "Lets you search over product data",
  "icons": {
@@ -87,8 +87,7 @@
      }
     },
     "debug": {
-     "$ref": "ShoppingModelDebugJsonV1",
-     "description": "Google internal."
+     "$ref": "ShoppingModelDebugJsonV1"
     },
     "id": {
      "type": "string",
@@ -100,8 +99,7 @@
      "default": "shopping#product"
     },
     "product": {
-     "$ref": "ShoppingModelProductJsonV1",
-     "description": "Product."
+     "$ref": "ShoppingModelProductJsonV1"
     },
     "recommendations": {
      "type": "array",
@@ -975,6 +973,11 @@
       "channels": {
        "type": "string",
        "description": "Channels specification",
+       "location": "query"
+      },
+      "clickTracking": {
+       "type": "boolean",
+       "description": "Whether to add a click tracking parameter to offer URLs",
        "location": "query"
       },
       "country": {

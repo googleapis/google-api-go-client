@@ -4,7 +4,7 @@
  "id": "bigquery:v2beta1",
  "name": "bigquery",
  "version": "v2beta1",
- "revision": "20120320",
+ "revision": "20120507",
  "title": "BigQuery API",
  "description": "A data platform for customers to create, manage, share and query data.",
  "icons": {
@@ -13,7 +13,6 @@
  },
  "documentationLink": "https://code.google.com/apis/bigquery/docs/v2/",
  "protocol": "rest",
- "baseUrl": "https://www.googleapis.com/bigquery/v2beta1/",
  "basePath": "/bigquery/v2beta1/",
  "rootUrl": "https://www.googleapis.com/",
  "servicePath": "bigquery/v2beta1/",
@@ -463,7 +462,10 @@
      "$ref": "Tablereference"
     },
     "sourceUri": {
-     "type": "string"
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
     }
    }
   },

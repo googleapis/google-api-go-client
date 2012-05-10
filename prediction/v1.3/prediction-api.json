@@ -4,7 +4,7 @@
  "id": "prediction:v1.3",
  "name": "prediction",
  "version": "v1.3",
- "revision": "20120320",
+ "revision": "20120423",
  "title": "Prediction API",
  "description": "Lets you access a cloud hosted machine learning service that makes it easy to build smart apps",
  "icons": {
@@ -13,7 +13,6 @@
  },
  "documentationLink": "http://code.google.com/apis/predict/docs/developer-guide.html",
  "protocol": "rest",
- "baseUrl": "https://www.googleapis.com/prediction/v1.3/",
  "basePath": "/prediction/v1.3/",
  "rootUrl": "https://www.googleapis.com/",
  "servicePath": "prediction/v1.3/",

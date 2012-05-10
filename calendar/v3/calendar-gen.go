@@ -106,33 +106,6 @@ type CalendarsService struct {
 	s *Service
 }
 
-type FreeBusyRequest struct {
-	// CalendarExpansionMax: Maximal number of calendars for which FreeBusy
-	// information is to be provided. Optional.
-	CalendarExpansionMax int64 `json:"calendarExpansionMax,omitempty"`
-
-	// TimeZone: Time zone used in the response. Optional. The default is
-	// UTC.
-	TimeZone string `json:"timeZone,omitempty"`
-
-	// GroupExpansionMax: Maximal number of calendar identifiers to be
-	// provided for a single group. Optional. An error will be returned for
-	// a group with more members than this value.
-	GroupExpansionMax int64 `json:"groupExpansionMax,omitempty"`
-
-	// TimeMax: The end of the interval for the query.
-	TimeMax string `json:"timeMax,omitempty"`
-
-	// Items: List of calendars and/or groups to query.
-	Items []*FreeBusyRequestItem `json:"items,omitempty"`
-
-	// TimeMin: The start of the interval for the query.
-	TimeMin string `json:"timeMin,omitempty"`
-}
-
-type FreeBusyResponseCalendars struct {
-}
-
 type Acl struct {
 	// Items: List of rules on the access control list.
 	Items []*AclRule `json:"items,omitempty"`
@@ -148,140 +121,7 @@ type Acl struct {
 	Kind string `json:"kind,omitempty"`
 }
 
-type EventGadget struct {
-	// IconLink: The gadget's icon URL.
-	IconLink string `json:"iconLink,omitempty"`
-
-	// Type: The gadget's type.
-	Type string `json:"type,omitempty"`
-
-	// Height: The gadget's height in pixels. Optional.
-	Height int64 `json:"height,omitempty"`
-
-	// Width: The gadget's width in pixels. Optional.
-	Width int64 `json:"width,omitempty"`
-
-	// Link: The gadget's URL.
-	Link string `json:"link,omitempty"`
-
-	// Display: The gadget's display mode. Optional. Possible values are: 
-	// 
-	// - "icon" - The gadget displays next to the event's title in the
-	// calendar view. 
-	// - "chip" - The gadget displays when the event is
-	// clicked.
-	Display string `json:"display,omitempty"`
-
-	// Title: The gadget's title.
-	Title string `json:"title,omitempty"`
-
-	// Preferences: Preferences.
-	Preferences *EventGadgetPreferences `json:"preferences,omitempty"`
-}
-
-type FreeBusyGroup struct {
-	// Calendars: List of calendars' identifiers within a group.
-	Calendars []string `json:"calendars,omitempty"`
-
-	// Errors: Optional error(s) (if computation for the group failed).
-	Errors []*Error `json:"errors,omitempty"`
-}
-
-type ColorsCalendar struct {
-}
-
-type EventGadgetPreferences struct {
-}
-
-type Colors struct {
-	// Kind: Type of the resource ("calendar#colors").
-	Kind string `json:"kind,omitempty"`
-
-	// Updated: Last modification time of the color palette (as a RFC 3339
-	// timestamp). Read-only.
-	Updated string `json:"updated,omitempty"`
-
-	// Calendar: Palette of calendar colors, mapping from the color ID to
-	// its definition. An 'calendarListEntry' resource refers to one of
-	// these color IDs in its 'color' field. Read-only.
-	Calendar *ColorsCalendar `json:"calendar,omitempty"`
-
-	// Event: Palette of event colors, mapping from the color ID to its
-	// definition. An 'event' resource may refer to one of these color IDs
-	// in its 'color' field. Read-only.
-	Event *ColorsEvent `json:"event,omitempty"`
-}
-
-type FreeBusyResponse struct {
-	// TimeMax: The end of the interval.
-	TimeMax string `json:"timeMax,omitempty"`
-
-	// Calendars: List of free/busy information for calendars.
-	Calendars *FreeBusyResponseCalendars `json:"calendars,omitempty"`
-
-	// Groups: Expansion of groups.
-	Groups *FreeBusyResponseGroups `json:"groups,omitempty"`
-
-	// Kind: Type of the resource ("calendar#freeBusy").
-	Kind string `json:"kind,omitempty"`
-
-	// TimeMin: The start of the interval.
-	TimeMin string `json:"timeMin,omitempty"`
-}
-
-type EventExtendedPropertiesShared struct {
-}
-
-type CalendarList struct {
-	// Items: Calendars that are present on the user's calendar list.
-	Items []*CalendarListEntry `json:"items,omitempty"`
-
-	// NextPageToken: Token used to access the next page of this result.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// Etag: ETag of the collection.
-	Etag string `json:"etag,omitempty"`
-
-	// Kind: Type of the collection ("calendar#calendarList").
-	Kind string `json:"kind,omitempty"`
-}
-
-type EventDateTime struct {
-	// DateTime: The time, as a combined date-time value (formatted
-	// according to RFC 3339). A time zone offset is required unless a time
-	// zone is explicitly specified in 'timeZone'.
-	DateTime string `json:"dateTime,omitempty"`
-
-	// TimeZone: The name of the time zone in which the time is specified
-	// (e.g. "Europe/Zurich"). Optional. The default is the time zone of the
-	// calendar.
-	TimeZone string `json:"timeZone,omitempty"`
-
-	// Date: The date, in the format "yyyy-mm-dd", if this is an all-day
-	// event.
-	Date string `json:"date,omitempty"`
-}
-
-type EventExtendedProperties struct {
-	// Shared: Properties that are shared between copies of the event on
-	// other attendees' calendars.
-	Shared *EventExtendedPropertiesShared `json:"shared,omitempty"`
-
-	// Private: Properties that are private to the copy of the event that
-	// appears on this calendar.
-	Private *EventExtendedPropertiesPrivate `json:"private,omitempty"`
-}
-
 type AclRule struct {
-	// Etag: ETag of the resource.
-	Etag string `json:"etag,omitempty"`
-
-	// Kind: Type of the resource ("calendar#aclRule").
-	Kind string `json:"kind,omitempty"`
-
-	// Id: Identifier of the ACL rule.
-	Id string `json:"id,omitempty"`
-
 	// Scope: The scope of the rule.
 	Scope *AclRuleScope `json:"scope,omitempty"`
 
@@ -301,98 +141,42 @@ type AclRule struct {
 	// permissions of the writer role with the additional ability to see and
 	// manipulate ACLs.
 	Role string `json:"role,omitempty"`
-}
 
-type EventCreator struct {
-	// DisplayName: The creator's name, if available.
-	DisplayName string `json:"displayName,omitempty"`
+	// Etag: ETag of the resource.
+	Etag string `json:"etag,omitempty"`
 
-	// Email: The creator's email address, if available.
-	Email string `json:"email,omitempty"`
-}
+	// Kind: Type of the resource ("calendar#aclRule").
+	Kind string `json:"kind,omitempty"`
 
-type EventAttendee struct {
-	// DisplayName: The attendee's name, if available. Optional.
-	DisplayName string `json:"displayName,omitempty"`
-
-	// Self: Whether this entry represents the calendar on which this copy
-	// of the event appears. Read-only. The default is False.
-	Self bool `json:"self,omitempty"`
-
-	// AdditionalGuests: Number of additional guests. Optional. The default
-	// is 0.
-	AdditionalGuests int64 `json:"additionalGuests,omitempty"`
-
-	// Organizer: Whether the attendee is the organizer of the event.
-	// Read-only. The default is False.
-	Organizer bool `json:"organizer,omitempty"`
-
-	// Optional: Whether this is an optional attendee. Optional. The default
-	// is False.
-	Optional bool `json:"optional,omitempty"`
-
-	// Email: The attendee's email address, if available. This field must be
-	// present when adding an attendee.
-	Email string `json:"email,omitempty"`
-
-	// Resource: Whether the attendee is a resource. Read-only. The default
-	// is False.
-	Resource bool `json:"resource,omitempty"`
-
-	// Comment: The attendee's response comment. Optional.
-	Comment string `json:"comment,omitempty"`
-
-	// ResponseStatus: The attendee's response status. Possible values are: 
-	// 
-	// - "needsAction" - The attendee has not responded to the invitation.
-	// 
-	// - "declined" - The attendee has declined the invitation. 
-	// -
-	// "tentative" - The attendee has tentatively accepted the invitation.
-	// 
-	// - "accepted" - The attendee has accepted the invitation.
-	ResponseStatus string `json:"responseStatus,omitempty"`
-}
-
-type EventReminders struct {
-	// UseDefault: Whether the default reminders of the calendar apply to
-	// the event.
-	UseDefault bool `json:"useDefault,omitempty"`
-
-	// Overrides: If the event doesn't use the default reminders, this lists
-	// the reminders specific to the event, or, if not set, indicates that
-	// no reminders are set for this event.
-	Overrides []*EventReminder `json:"overrides,omitempty"`
-}
-
-type ColorDefinition struct {
-	// Foreground: The foreground color that can be used to write on top of
-	// a background with 'background' color.
-	Foreground string `json:"foreground,omitempty"`
-
-	// Background: The background color associated with this color
-	// definition.
-	Background string `json:"background,omitempty"`
-}
-
-type FreeBusyResponseGroups struct {
-}
-
-type FreeBusyCalendar struct {
-	// Errors: Optional error(s) (if computation for the calendar failed).
-	Errors []*Error `json:"errors,omitempty"`
-
-	// Busy: List of time ranges during which this calendar should be
-	// regarded as busy.
-	Busy []*TimePeriod `json:"busy,omitempty"`
-}
-
-type FreeBusyRequestItem struct {
-	// Id: The identifier of a calendar or a group.
+	// Id: Identifier of the ACL rule.
 	Id string `json:"id,omitempty"`
 }
 
+type AclRuleScope struct {
+	// Type: The type of the scope. Possible values are:  
+	// - "default" - The
+	// public scope. This is the default value. 
+	// - "user" - Limits the scope
+	// to a single user. 
+	// - "group" - Limits the scope to a group. 
+	// -
+	// "domain" - Limits the scope to a domain.  Note: The permissions
+	// granted to the "default", or public, scope apply to any user,
+	// authenticated or not.
+	Type string `json:"type,omitempty"`
+
+	// Value: The email address of a user or group, or the name of a domain,
+	// depending on the scope type. Omitted for type "default".
+	Value string `json:"value,omitempty"`
+}
+
 type Calendar struct {
+	// Kind: Type of the resource ("calendar#calendar").
+	Kind string `json:"kind,omitempty"`
+
+	// Id: Identifier of the calendar.
+	Id string `json:"id,omitempty"`
+
 	// Summary: Title of the calendar.
 	Summary string `json:"summary,omitempty"`
 
@@ -408,59 +192,33 @@ type Calendar struct {
 
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
-
-	// Kind: Type of the resource ("calendar#calendar").
-	Kind string `json:"kind,omitempty"`
-
-	// Id: Identifier of the calendar.
-	Id string `json:"id,omitempty"`
 }
 
-type Setting struct {
-	// Value: Value of the user setting. The format of the value depends on
-	// the ID of the setting.
-	Value string `json:"value,omitempty"`
+type CalendarList struct {
+	// Items: Calendars that are present on the user's calendar list.
+	Items []*CalendarListEntry `json:"items,omitempty"`
 
-	// Etag: ETag of the resource.
+	// NextPageToken: Token used to access the next page of this result.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Etag: ETag of the collection.
 	Etag string `json:"etag,omitempty"`
 
-	// Kind: Type of the resource ("calendar#setting").
+	// Kind: Type of the collection ("calendar#calendarList").
 	Kind string `json:"kind,omitempty"`
-
-	// Id: Name of the user setting.
-	Id string `json:"id,omitempty"`
-}
-
-type Settings struct {
-	// Items: List of user settings.
-	Items []*Setting `json:"items,omitempty"`
-
-	// Etag: Etag of the collection.
-	Etag string `json:"etag,omitempty"`
-
-	// Kind: Type of the collection ("calendar#settings").
-	Kind string `json:"kind,omitempty"`
-}
-
-type AclRuleScope struct {
-	// Value: The email address of a user or group, or the name of a domain,
-	// depending on the scope type. Omitted for type "default".
-	Value string `json:"value,omitempty"`
-
-	// Type: The type of the scope. Possible values are:  
-	// - "default" - The
-	// public scope. This is the default value. 
-	// - "user" - Limits the scope
-	// to a single user. 
-	// - "group" - Limits the scope to a group. 
-	// -
-	// "domain" - Limits the scope to a domain.  Note: The permissions
-	// granted to the "default", or public, scope apply to any user,
-	// authenticated or not.
-	Type string `json:"type,omitempty"`
 }
 
 type CalendarListEntry struct {
+	// Summary: Title of the calendar. Read-only.
+	Summary string `json:"summary,omitempty"`
+
+	// Selected: Whether the calendar content shows up in the calendar UI.
+	// Optional. The default is False.
+	Selected bool `json:"selected,omitempty"`
+
+	// Description: Description of the calendar. Optional. Read-only.
+	Description string `json:"description,omitempty"`
+
 	// DefaultReminders: The default reminders that the authenticated user
 	// has for this calendar.
 	DefaultReminders []*EventReminder `json:"defaultReminders,omitempty"`
@@ -509,55 +267,93 @@ type CalendarListEntry struct {
 	// This role has all of the permissions of the writer role with the
 	// additional ability to see and manipulate ACLs.
 	AccessRole string `json:"accessRole,omitempty"`
-
-	// Summary: Title of the calendar. Read-only.
-	Summary string `json:"summary,omitempty"`
-
-	// Selected: Whether the calendar content shows up in the calendar UI.
-	// Optional. The default is False.
-	Selected bool `json:"selected,omitempty"`
-
-	// Description: Description of the calendar. Optional. Read-only.
-	Description string `json:"description,omitempty"`
 }
 
-type EventExtendedPropertiesPrivate struct {
+type ColorDefinition struct {
+	// Background: The background color associated with this color
+	// definition.
+	Background string `json:"background,omitempty"`
+
+	// Foreground: The foreground color that can be used to write on top of
+	// a background with 'background' color.
+	Foreground string `json:"foreground,omitempty"`
 }
 
-type EventOrganizer struct {
-	// DisplayName: The organizer's name, if available.
-	DisplayName string `json:"displayName,omitempty"`
+type Colors struct {
+	// Calendar: Palette of calendar colors, mapping from the color ID to
+	// its definition. An 'calendarListEntry' resource refers to one of
+	// these color IDs in its 'color' field. Read-only.
+	Calendar *ColorsCalendar `json:"calendar,omitempty"`
 
-	// Email: The organizer's email address, if available.
-	Email string `json:"email,omitempty"`
+	// Event: Palette of event colors, mapping from the color ID to its
+	// definition. An 'event' resource may refer to one of these color IDs
+	// in its 'color' field. Read-only.
+	Event *ColorsEvent `json:"event,omitempty"`
+
+	// Kind: Type of the resource ("calendar#colors").
+	Kind string `json:"kind,omitempty"`
+
+	// Updated: Last modification time of the color palette (as a RFC 3339
+	// timestamp). Read-only.
+	Updated string `json:"updated,omitempty"`
 }
 
-type EventReminder struct {
-	// Minutes: Number of minutes before the start of the event when the
-	// reminder should trigger.
-	Minutes int64 `json:"minutes,omitempty"`
-
-	// Method: The method used by this reminder. Possible values are:  
-	// -
-	// "email" - Reminders are sent via email. 
-	// - "sms" - Reminders are sent
-	// via SMS. 
-	// - "popup" - Reminders are sent via a UI popup.
-	Method string `json:"method,omitempty"`
-}
-
-type TimePeriod struct {
-	// Start: The (inclusive) start of the time period.
-	Start string `json:"start,omitempty"`
-
-	// End: The (exclusive) end of the time period.
-	End string `json:"end,omitempty"`
+type ColorsCalendar struct {
 }
 
 type ColorsEvent struct {
 }
 
+type Error struct {
+	// Domain: Domain, or broad category, of the error.
+	Domain string `json:"domain,omitempty"`
+
+	// Reason: Specific reason for the error. Some of the possible values
+	// are:  
+	// - "groupTooBig" - The group of users requested is too large
+	// for a single query. 
+	// - "tooManyCalendarsRequested" - The number of
+	// calendars requested is too large for a single query. 
+	// - "notFound" -
+	// The requested resource was not found. 
+	// - "internalError" - The API
+	// service has encountered an internal error.  Additional error types
+	// may be added in the future, so clients should gracefully handle
+	// additional error statuses not included in this list.
+	Reason string `json:"reason,omitempty"`
+}
+
 type Event struct {
+	// ColorId: The color of the event. This is an ID referring to an entry
+	// in the "event" section of the colors definition (see the "colors"
+	// endpoint). Optional.
+	ColorId string `json:"colorId,omitempty"`
+
+	// Start: The (inclusive) start time of the event. For a recurring
+	// event, this is the start time of the first instance.
+	Start *EventDateTime `json:"start,omitempty"`
+
+	// Location: Geographic location of the event as free-form text.
+	// Optional.
+	Location string `json:"location,omitempty"`
+
+	// PrivateCopy: Whether this is a private event copy where changes are
+	// not shared with other copies on other calendars. Optional. Immutable.
+	PrivateCopy bool `json:"privateCopy,omitempty"`
+
+	// ExtendedProperties: Extended properties of the event.
+	ExtendedProperties *EventExtendedProperties `json:"extendedProperties,omitempty"`
+
+	// Etag: ETag of the resource.
+	Etag string `json:"etag,omitempty"`
+
+	// Kind: Type of the resource ("calendar#event").
+	Kind string `json:"kind,omitempty"`
+
+	// GuestsCanModify: Whether attendees other than the organizer can
+	// modify the event. Optional. The default is False.
+	GuestsCanModify bool `json:"guestsCanModify,omitempty"`
+
 	// AttendeesOmitted: Whether attendees have been omitted from the
 	// event's representation. When retrieving an event, this is due to a
 	// restriction specified by the 'maxAttendee' query parameter. When
@@ -671,54 +467,159 @@ type Event struct {
 	// Reminders: Information about the event's reminders for the
 	// authenticated user.
 	Reminders *EventReminders `json:"reminders,omitempty"`
+}
 
-	// ColorId: The color of the event. This is an ID referring to an entry
-	// in the "event" section of the colors definition (see the "colors"
-	// endpoint). Optional.
-	ColorId string `json:"colorId,omitempty"`
+type EventCreator struct {
+	// DisplayName: The creator's name, if available.
+	DisplayName string `json:"displayName,omitempty"`
 
-	// Start: The (inclusive) start time of the event. For a recurring
-	// event, this is the start time of the first instance.
-	Start *EventDateTime `json:"start,omitempty"`
+	// Email: The creator's email address, if available.
+	Email string `json:"email,omitempty"`
+}
 
-	// Location: Geographic location of the event as free-form text.
-	// Optional.
-	Location string `json:"location,omitempty"`
+type EventExtendedProperties struct {
+	// Private: Properties that are private to the copy of the event that
+	// appears on this calendar.
+	Private *EventExtendedPropertiesPrivate `json:"private,omitempty"`
 
-	// PrivateCopy: Whether this is a private event copy where changes are
-	// not shared with other copies on other calendars. Optional. Immutable.
-	PrivateCopy bool `json:"privateCopy,omitempty"`
+	// Shared: Properties that are shared between copies of the event on
+	// other attendees' calendars.
+	Shared *EventExtendedPropertiesShared `json:"shared,omitempty"`
+}
 
-	// ExtendedProperties: Extended properties of the event.
-	ExtendedProperties *EventExtendedProperties `json:"extendedProperties,omitempty"`
+type EventExtendedPropertiesPrivate struct {
+}
 
-	// Etag: ETag of the resource.
-	Etag string `json:"etag,omitempty"`
+type EventExtendedPropertiesShared struct {
+}
 
-	// Kind: Type of the resource ("calendar#event").
-	Kind string `json:"kind,omitempty"`
+type EventGadget struct {
+	// Height: The gadget's height in pixels. Optional.
+	Height int64 `json:"height,omitempty"`
 
-	// GuestsCanModify: Whether attendees other than the organizer can
-	// modify the event. Optional. The default is False.
-	GuestsCanModify bool `json:"guestsCanModify,omitempty"`
+	// Width: The gadget's width in pixels. Optional.
+	Width int64 `json:"width,omitempty"`
+
+	// Link: The gadget's URL.
+	Link string `json:"link,omitempty"`
+
+	// Display: The gadget's display mode. Optional. Possible values are: 
+	// 
+	// - "icon" - The gadget displays next to the event's title in the
+	// calendar view. 
+	// - "chip" - The gadget displays when the event is
+	// clicked.
+	Display string `json:"display,omitempty"`
+
+	// Title: The gadget's title.
+	Title string `json:"title,omitempty"`
+
+	// Preferences: Preferences.
+	Preferences *EventGadgetPreferences `json:"preferences,omitempty"`
+
+	// IconLink: The gadget's icon URL.
+	IconLink string `json:"iconLink,omitempty"`
+
+	// Type: The gadget's type.
+	Type string `json:"type,omitempty"`
+}
+
+type EventGadgetPreferences struct {
+}
+
+type EventOrganizer struct {
+	// Email: The organizer's email address, if available.
+	Email string `json:"email,omitempty"`
+
+	// DisplayName: The organizer's name, if available.
+	DisplayName string `json:"displayName,omitempty"`
+}
+
+type EventReminders struct {
+	// Overrides: If the event doesn't use the default reminders, this lists
+	// the reminders specific to the event, or, if not set, indicates that
+	// no reminders are set for this event.
+	Overrides []*EventReminder `json:"overrides,omitempty"`
+
+	// UseDefault: Whether the default reminders of the calendar apply to
+	// the event.
+	UseDefault bool `json:"useDefault,omitempty"`
+}
+
+type EventAttendee struct {
+	// ResponseStatus: The attendee's response status. Possible values are: 
+	// 
+	// - "needsAction" - The attendee has not responded to the invitation.
+	// 
+	// - "declined" - The attendee has declined the invitation. 
+	// -
+	// "tentative" - The attendee has tentatively accepted the invitation.
+	// 
+	// - "accepted" - The attendee has accepted the invitation.
+	ResponseStatus string `json:"responseStatus,omitempty"`
+
+	// DisplayName: The attendee's name, if available. Optional.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Self: Whether this entry represents the calendar on which this copy
+	// of the event appears. Read-only. The default is False.
+	Self bool `json:"self,omitempty"`
+
+	// AdditionalGuests: Number of additional guests. Optional. The default
+	// is 0.
+	AdditionalGuests int64 `json:"additionalGuests,omitempty"`
+
+	// Organizer: Whether the attendee is the organizer of the event.
+	// Read-only. The default is False.
+	Organizer bool `json:"organizer,omitempty"`
+
+	// Optional: Whether this is an optional attendee. Optional. The default
+	// is False.
+	Optional bool `json:"optional,omitempty"`
+
+	// Email: The attendee's email address, if available. This field must be
+	// present when adding an attendee.
+	Email string `json:"email,omitempty"`
+
+	// Resource: Whether the attendee is a resource. Read-only. The default
+	// is False.
+	Resource bool `json:"resource,omitempty"`
+
+	// Comment: The attendee's response comment. Optional.
+	Comment string `json:"comment,omitempty"`
+}
+
+type EventDateTime struct {
+	// DateTime: The time, as a combined date-time value (formatted
+	// according to RFC 3339). A time zone offset is required unless a time
+	// zone is explicitly specified in 'timeZone'.
+	DateTime string `json:"dateTime,omitempty"`
+
+	// TimeZone: The name of the time zone in which the time is specified
+	// (e.g. "Europe/Zurich"). Optional. The default is the time zone of the
+	// calendar.
+	TimeZone string `json:"timeZone,omitempty"`
+
+	// Date: The date, in the format "yyyy-mm-dd", if this is an all-day
+	// event.
+	Date string `json:"date,omitempty"`
+}
+
+type EventReminder struct {
+	// Method: The method used by this reminder. Possible values are:  
+	// -
+	// "email" - Reminders are sent via email. 
+	// - "sms" - Reminders are sent
+	// via SMS. 
+	// - "popup" - Reminders are sent via a UI popup.
+	Method string `json:"method,omitempty"`
+
+	// Minutes: Number of minutes before the start of the event when the
+	// reminder should trigger.
+	Minutes int64 `json:"minutes,omitempty"`
 }
 
 type Events struct {
-	// Summary: Title of the calendar. Read-only.
-	Summary string `json:"summary,omitempty"`
-
-	// Description: Description of the calendar. Read-only.
-	Description string `json:"description,omitempty"`
-
-	// DefaultReminders: The default reminders on the calendar for the
-	// authenticated user. These reminders apply to all events on this
-	// calendar that do not explicitly override them (i.e. do not have
-	// 'reminders.useDefault' set to 'true').
-	DefaultReminders []*EventReminder `json:"defaultReminders,omitempty"`
-
-	// TimeZone: The time zone of the calendar. Read-only.
-	TimeZone string `json:"timeZone,omitempty"`
-
 	// Items: List of events on the calendar.
 	Items []*Event `json:"items,omitempty"`
 
@@ -753,61 +654,153 @@ type Events struct {
 	// the writer role with the additional ability to see and manipulate
 	// ACLs.
 	AccessRole string `json:"accessRole,omitempty"`
+
+	// Summary: Title of the calendar. Read-only.
+	Summary string `json:"summary,omitempty"`
+
+	// Description: Description of the calendar. Read-only.
+	Description string `json:"description,omitempty"`
+
+	// DefaultReminders: The default reminders on the calendar for the
+	// authenticated user. These reminders apply to all events on this
+	// calendar that do not explicitly override them (i.e. do not have
+	// 'reminders.useDefault' set to 'true').
+	DefaultReminders []*EventReminder `json:"defaultReminders,omitempty"`
+
+	// TimeZone: The time zone of the calendar. Read-only.
+	TimeZone string `json:"timeZone,omitempty"`
 }
 
-type Error struct {
-	// Reason: Specific reason for the error. Some of the possible values
-	// are:  
-	// - "groupTooBig" - The group of users requested is too large
-	// for a single query. 
-	// - "tooManyCalendarsRequested" - The number of
-	// calendars requested is too large for a single query. 
-	// - "notFound" -
-	// The requested resource was not found. 
-	// - "internalError" - The API
-	// service has encountered an internal error.  Additional error types
-	// may be added in the future, so clients should gracefully handle
-	// additional error statuses not included in this list.
-	Reason string `json:"reason,omitempty"`
+type FreeBusyCalendar struct {
+	// Busy: List of time ranges during which this calendar should be
+	// regarded as busy.
+	Busy []*TimePeriod `json:"busy,omitempty"`
 
-	// Domain: Domain, or broad category, of the error.
-	Domain string `json:"domain,omitempty"`
+	// Errors: Optional error(s) (if computation for the calendar failed).
+	Errors []*Error `json:"errors,omitempty"`
 }
 
-// method id "calendar.events.patch":
+type FreeBusyGroup struct {
+	// Errors: Optional error(s) (if computation for the group failed).
+	Errors []*Error `json:"errors,omitempty"`
 
-type EventsPatchCall struct {
+	// Calendars: List of calendars' identifiers within a group.
+	Calendars []string `json:"calendars,omitempty"`
+}
+
+type FreeBusyRequest struct {
+	// CalendarExpansionMax: Maximal number of calendars for which FreeBusy
+	// information is to be provided. Optional.
+	CalendarExpansionMax int64 `json:"calendarExpansionMax,omitempty"`
+
+	// TimeZone: Time zone used in the response. Optional. The default is
+	// UTC.
+	TimeZone string `json:"timeZone,omitempty"`
+
+	// GroupExpansionMax: Maximal number of calendar identifiers to be
+	// provided for a single group. Optional. An error will be returned for
+	// a group with more members than this value.
+	GroupExpansionMax int64 `json:"groupExpansionMax,omitempty"`
+
+	// TimeMax: The end of the interval for the query.
+	TimeMax string `json:"timeMax,omitempty"`
+
+	// Items: List of calendars and/or groups to query.
+	Items []*FreeBusyRequestItem `json:"items,omitempty"`
+
+	// TimeMin: The start of the interval for the query.
+	TimeMin string `json:"timeMin,omitempty"`
+}
+
+type FreeBusyRequestItem struct {
+	// Id: The identifier of a calendar or a group.
+	Id string `json:"id,omitempty"`
+}
+
+type FreeBusyResponse struct {
+	// TimeMax: The end of the interval.
+	TimeMax string `json:"timeMax,omitempty"`
+
+	// Calendars: List of free/busy information for calendars.
+	Calendars *FreeBusyResponseCalendars `json:"calendars,omitempty"`
+
+	// Groups: Expansion of groups.
+	Groups *FreeBusyResponseGroups `json:"groups,omitempty"`
+
+	// Kind: Type of the resource ("calendar#freeBusy").
+	Kind string `json:"kind,omitempty"`
+
+	// TimeMin: The start of the interval.
+	TimeMin string `json:"timeMin,omitempty"`
+}
+
+type FreeBusyResponseCalendars struct {
+}
+
+type FreeBusyResponseGroups struct {
+}
+
+type Setting struct {
+	// Value: Value of the user setting. The format of the value depends on
+	// the ID of the setting.
+	Value string `json:"value,omitempty"`
+
+	// Etag: ETag of the resource.
+	Etag string `json:"etag,omitempty"`
+
+	// Kind: Type of the resource ("calendar#setting").
+	Kind string `json:"kind,omitempty"`
+
+	// Id: Name of the user setting.
+	Id string `json:"id,omitempty"`
+}
+
+type Settings struct {
+	// Items: List of user settings.
+	Items []*Setting `json:"items,omitempty"`
+
+	// Etag: Etag of the collection.
+	Etag string `json:"etag,omitempty"`
+
+	// Kind: Type of the collection ("calendar#settings").
+	Kind string `json:"kind,omitempty"`
+}
+
+type TimePeriod struct {
+	// Start: The (inclusive) start of the time period.
+	Start string `json:"start,omitempty"`
+
+	// End: The (exclusive) end of the time period.
+	End string `json:"end,omitempty"`
+}
+
+// method id "calendar.events.delete":
+
+type EventsDeleteCall struct {
 	s          *Service
 	calendarId string
 	eventId    string
-	event      *Event
 	opt_       map[string]interface{}
 }
 
-// Patch: Updates an event. This method supports patch semantics.
-func (r *EventsService) Patch(calendarId string, eventId string, event *Event) *EventsPatchCall {
-	c := &EventsPatchCall{s: r.s, opt_: make(map[string]interface{})}
+// Delete: Deletes an event.
+func (r *EventsService) Delete(calendarId string, eventId string) *EventsDeleteCall {
+	c := &EventsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.calendarId = calendarId
 	c.eventId = eventId
-	c.event = event
 	return c
 }
 
 // SendNotifications sets the optional parameter "sendNotifications":
-// Whether to send notifications about the event update (e.g. attendee's
-// responses, title changes, etc.).  The default is False.
-func (c *EventsPatchCall) SendNotifications(sendNotifications bool) *EventsPatchCall {
+// Whether to send notifications about the deletion of the event.  The
+// default is False.
+func (c *EventsDeleteCall) SendNotifications(sendNotifications bool) *EventsDeleteCall {
 	c.opt_["sendNotifications"] = sendNotifications
 	return c
 }
 
-func (c *EventsPatchCall) Do() (*Event, error) {
+func (c *EventsDeleteCall) Do() error {
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.event)
-	if err != nil {
-		return nil, err
-	}
-	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
 	if v, ok := c.opt_["sendNotifications"]; ok {
@@ -817,25 +810,20 @@ func (c *EventsPatchCall) Do() (*Event, error) {
 	urls = strings.Replace(urls, "{calendarId}", cleanPathString(c.calendarId), 1)
 	urls = strings.Replace(urls, "{eventId}", cleanPathString(c.eventId), 1)
 	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("PATCH", urls, body)
-	req.Header.Set("Content-Type", ctype)
+	req, _ := http.NewRequest("DELETE", urls, body)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return err
 	}
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return err
 	}
-	ret := new(Event)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	return nil
 	// {
-	//   "description": "Updates an event. This method supports patch semantics.",
-	//   "httpMethod": "PATCH",
-	//   "id": "calendar.events.patch",
+	//   "description": "Deletes an event.",
+	//   "httpMethod": "DELETE",
+	//   "id": "calendar.events.delete",
 	//   "parameterOrder": [
 	//     "calendarId",
 	//     "eventId"
@@ -854,12 +842,186 @@ func (c *EventsPatchCall) Do() (*Event, error) {
 	//       "type": "string"
 	//     },
 	//     "sendNotifications": {
-	//       "description": "Whether to send notifications about the event update (e.g. attendee's responses, title changes, etc.). Optional. The default is False.",
+	//       "description": "Whether to send notifications about the deletion of the event. Optional. The default is False.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
 	//   },
 	//   "path": "calendars/{calendarId}/events/{eventId}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/calendar"
+	//   ]
+	// }
+
+}
+
+// method id "calendar.events.get":
+
+type EventsGetCall struct {
+	s          *Service
+	calendarId string
+	eventId    string
+	opt_       map[string]interface{}
+}
+
+// Get: Returns an event.
+func (r *EventsService) Get(calendarId string, eventId string) *EventsGetCall {
+	c := &EventsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.calendarId = calendarId
+	c.eventId = eventId
+	return c
+}
+
+// MaxAttendees sets the optional parameter "maxAttendees": The maximum
+// number of attendees to include in the response. If there are more
+// than the specified number of attendees, only the participant is
+// returned.
+func (c *EventsGetCall) MaxAttendees(maxAttendees int64) *EventsGetCall {
+	c.opt_["maxAttendees"] = maxAttendees
+	return c
+}
+
+// TimeZone sets the optional parameter "timeZone": Time zone used in
+// the response.  The default is the time zone of the calendar.
+func (c *EventsGetCall) TimeZone(timeZone string) *EventsGetCall {
+	c.opt_["timeZone"] = timeZone
+	return c
+}
+
+func (c *EventsGetCall) Do() (*Event, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["maxAttendees"]; ok {
+		params.Set("maxAttendees", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["timeZone"]; ok {
+		params.Set("timeZone", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "calendars/{calendarId}/events/{eventId}")
+	urls = strings.Replace(urls, "{calendarId}", cleanPathString(c.calendarId), 1)
+	urls = strings.Replace(urls, "{eventId}", cleanPathString(c.eventId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Event)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns an event.",
+	//   "httpMethod": "GET",
+	//   "id": "calendar.events.get",
+	//   "parameterOrder": [
+	//     "calendarId",
+	//     "eventId"
+	//   ],
+	//   "parameters": {
+	//     "calendarId": {
+	//       "description": "Calendar identifier.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "eventId": {
+	//       "description": "Event identifier.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "maxAttendees": {
+	//       "description": "The maximum number of attendees to include in the response. If there are more than the specified number of attendees, only the participant is returned. Optional.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     },
+	//     "timeZone": {
+	//       "description": "Time zone used in the response. Optional. The default is the time zone of the calendar.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "calendars/{calendarId}/events/{eventId}",
+	//   "response": {
+	//     "$ref": "Event"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/calendar",
+	//     "https://www.googleapis.com/auth/calendar.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "calendar.events.import":
+
+type EventsImportCall struct {
+	s          *Service
+	calendarId string
+	event      *Event
+	opt_       map[string]interface{}
+}
+
+// Import: Imports an event.
+func (r *EventsService) Import(calendarId string, event *Event) *EventsImportCall {
+	c := &EventsImportCall{s: r.s, opt_: make(map[string]interface{})}
+	c.calendarId = calendarId
+	c.event = event
+	return c
+}
+
+func (c *EventsImportCall) Do() (*Event, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.event)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "calendars/{calendarId}/events/import")
+	urls = strings.Replace(urls, "{calendarId}", cleanPathString(c.calendarId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Event)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Imports an event.",
+	//   "httpMethod": "POST",
+	//   "id": "calendar.events.import",
+	//   "parameterOrder": [
+	//     "calendarId"
+	//   ],
+	//   "parameters": {
+	//     "calendarId": {
+	//       "description": "Calendar identifier.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "calendars/{calendarId}/events/import",
 	//   "request": {
 	//     "$ref": "Event"
 	//   },
@@ -868,6 +1030,265 @@ func (c *EventsPatchCall) Do() (*Event, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/calendar"
+	//   ]
+	// }
+
+}
+
+// method id "calendar.events.insert":
+
+type EventsInsertCall struct {
+	s          *Service
+	calendarId string
+	event      *Event
+	opt_       map[string]interface{}
+}
+
+// Insert: Creates an event.
+func (r *EventsService) Insert(calendarId string, event *Event) *EventsInsertCall {
+	c := &EventsInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.calendarId = calendarId
+	c.event = event
+	return c
+}
+
+// SendNotifications sets the optional parameter "sendNotifications":
+// Whether to send notifications about the creation of the new event. 
+// The default is False.
+func (c *EventsInsertCall) SendNotifications(sendNotifications bool) *EventsInsertCall {
+	c.opt_["sendNotifications"] = sendNotifications
+	return c
+}
+
+func (c *EventsInsertCall) Do() (*Event, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.event)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["sendNotifications"]; ok {
+		params.Set("sendNotifications", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "calendars/{calendarId}/events")
+	urls = strings.Replace(urls, "{calendarId}", cleanPathString(c.calendarId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Event)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates an event.",
+	//   "httpMethod": "POST",
+	//   "id": "calendar.events.insert",
+	//   "parameterOrder": [
+	//     "calendarId"
+	//   ],
+	//   "parameters": {
+	//     "calendarId": {
+	//       "description": "Calendar identifier.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "sendNotifications": {
+	//       "description": "Whether to send notifications about the creation of the new event. Optional. The default is False.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "calendars/{calendarId}/events",
+	//   "request": {
+	//     "$ref": "Event"
+	//   },
+	//   "response": {
+	//     "$ref": "Event"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/calendar"
+	//   ]
+	// }
+
+}
+
+// method id "calendar.events.instances":
+
+type EventsInstancesCall struct {
+	s          *Service
+	calendarId string
+	eventId    string
+	opt_       map[string]interface{}
+}
+
+// Instances: Returns instances of the specified recurring event.
+func (r *EventsService) Instances(calendarId string, eventId string) *EventsInstancesCall {
+	c := &EventsInstancesCall{s: r.s, opt_: make(map[string]interface{})}
+	c.calendarId = calendarId
+	c.eventId = eventId
+	return c
+}
+
+// MaxAttendees sets the optional parameter "maxAttendees": The maximum
+// number of attendees to include in the response. If there are more
+// than the specified number of attendees, only the participant is
+// returned.
+func (c *EventsInstancesCall) MaxAttendees(maxAttendees int64) *EventsInstancesCall {
+	c.opt_["maxAttendees"] = maxAttendees
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum number
+// of events returned on one result page.
+func (c *EventsInstancesCall) MaxResults(maxResults int64) *EventsInstancesCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// OriginalStart sets the optional parameter "originalStart": The
+// original start time of the instance in the result.
+func (c *EventsInstancesCall) OriginalStart(originalStart string) *EventsInstancesCall {
+	c.opt_["originalStart"] = originalStart
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Token specifying
+// which result page to return.
+func (c *EventsInstancesCall) PageToken(pageToken string) *EventsInstancesCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+// ShowDeleted sets the optional parameter "showDeleted": Whether to
+// include deleted events (with 'eventStatus' equals 'cancelled') in the
+// result.  The default is False.
+func (c *EventsInstancesCall) ShowDeleted(showDeleted bool) *EventsInstancesCall {
+	c.opt_["showDeleted"] = showDeleted
+	return c
+}
+
+// TimeZone sets the optional parameter "timeZone": Time zone used in
+// the response.  The default is the time zone of the calendar.
+func (c *EventsInstancesCall) TimeZone(timeZone string) *EventsInstancesCall {
+	c.opt_["timeZone"] = timeZone
+	return c
+}
+
+func (c *EventsInstancesCall) Do() (*Events, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["maxAttendees"]; ok {
+		params.Set("maxAttendees", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["originalStart"]; ok {
+		params.Set("originalStart", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["showDeleted"]; ok {
+		params.Set("showDeleted", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["timeZone"]; ok {
+		params.Set("timeZone", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "calendars/{calendarId}/events/{eventId}/instances")
+	urls = strings.Replace(urls, "{calendarId}", cleanPathString(c.calendarId), 1)
+	urls = strings.Replace(urls, "{eventId}", cleanPathString(c.eventId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Events)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns instances of the specified recurring event.",
+	//   "httpMethod": "GET",
+	//   "id": "calendar.events.instances",
+	//   "parameterOrder": [
+	//     "calendarId",
+	//     "eventId"
+	//   ],
+	//   "parameters": {
+	//     "calendarId": {
+	//       "description": "Calendar identifier.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "eventId": {
+	//       "description": "Recurring event identifier.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "maxAttendees": {
+	//       "description": "The maximum number of attendees to include in the response. If there are more than the specified number of attendees, only the participant is returned. Optional.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     },
+	//     "maxResults": {
+	//       "description": "Maximum number of events returned on one result page. Optional.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     },
+	//     "originalStart": {
+	//       "description": "The original start time of the instance in the result. Optional.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageToken": {
+	//       "description": "Token specifying which result page to return. Optional.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "showDeleted": {
+	//       "description": "Whether to include deleted events (with 'eventStatus' equals 'cancelled') in the result. Optional. The default is False.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "timeZone": {
+	//       "description": "Time zone used in the response. Optional. The default is the time zone of the calendar.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "calendars/{calendarId}/events/{eventId}/instances",
+	//   "response": {
+	//     "$ref": "Events"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/calendar",
+	//     "https://www.googleapis.com/auth/calendar.readonly"
 	//   ]
 	// }
 
@@ -888,96 +1309,10 @@ func (r *EventsService) List(calendarId string) *EventsListCall {
 	return c
 }
 
-// TimeMin sets the optional parameter "timeMin": Lower bound
-// (inclusive) for an event's end time to filter by.  The default is not
-// to filter by end time.
-func (c *EventsListCall) TimeMin(timeMin string) *EventsListCall {
-	c.opt_["timeMin"] = timeMin
-	return c
-}
-
-// SingleEvents sets the optional parameter "singleEvents": Whether to
-// expand recurring events into instances and only return single one-off
-// events and instances of recurring events, but not the underlying
-// recurring events themselves.  The default is False.
-func (c *EventsListCall) SingleEvents(singleEvents bool) *EventsListCall {
-	c.opt_["singleEvents"] = singleEvents
-	return c
-}
-
 // ICalUID sets the optional parameter "iCalUID": Specifies iCalendar
 // UID (iCalUID) of events to be included in the response.
 func (c *EventsListCall) ICalUID(iCalUID string) *EventsListCall {
 	c.opt_["iCalUID"] = iCalUID
-	return c
-}
-
-// UpdatedMin sets the optional parameter "updatedMin": Lower bound for
-// an event's last modification time (as a RFC 3339 timestamp) to filter
-// by.  The default is not to filter by last modification time.
-func (c *EventsListCall) UpdatedMin(updatedMin string) *EventsListCall {
-	c.opt_["updatedMin"] = updatedMin
-	return c
-}
-
-// ShowDeleted sets the optional parameter "showDeleted": Whether to
-// include deleted events (with 'eventStatus' equals 'cancelled') in the
-// result.  The default is False.
-func (c *EventsListCall) ShowDeleted(showDeleted bool) *EventsListCall {
-	c.opt_["showDeleted"] = showDeleted
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": Token specifying
-// which result page to return.
-func (c *EventsListCall) PageToken(pageToken string) *EventsListCall {
-	c.opt_["pageToken"] = pageToken
-	return c
-}
-
-// OrderBy sets the optional parameter "orderBy": The order of the
-// events returned in the result.  The default is an unspecified, stable
-// order.
-func (c *EventsListCall) OrderBy(orderBy string) *EventsListCall {
-	c.opt_["orderBy"] = orderBy
-	return c
-}
-
-// Q sets the optional parameter "q": Free text search terms to find
-// events that match these terms in any field, except for extended
-// properties.
-func (c *EventsListCall) Q(q string) *EventsListCall {
-	c.opt_["q"] = q
-	return c
-}
-
-// MaxResults sets the optional parameter "maxResults": Maximum number
-// of events returned on one result page.
-func (c *EventsListCall) MaxResults(maxResults int64) *EventsListCall {
-	c.opt_["maxResults"] = maxResults
-	return c
-}
-
-// TimeZone sets the optional parameter "timeZone": Time zone used in
-// the response.  The default is the time zone of the calendar.
-func (c *EventsListCall) TimeZone(timeZone string) *EventsListCall {
-	c.opt_["timeZone"] = timeZone
-	return c
-}
-
-// TimeMax sets the optional parameter "timeMax": Upper bound
-// (exclusive) for an event's start time to filter by.  The default is
-// not to filter by start time.
-func (c *EventsListCall) TimeMax(timeMax string) *EventsListCall {
-	c.opt_["timeMax"] = timeMax
-	return c
-}
-
-// ShowHiddenInvitations sets the optional parameter
-// "showHiddenInvitations": Whether to include hidden invitations in the
-// result.  The default is False.
-func (c *EventsListCall) ShowHiddenInvitations(showHiddenInvitations bool) *EventsListCall {
-	c.opt_["showHiddenInvitations"] = showHiddenInvitations
 	return c
 }
 
@@ -990,48 +1325,134 @@ func (c *EventsListCall) MaxAttendees(maxAttendees int64) *EventsListCall {
 	return c
 }
 
+// MaxResults sets the optional parameter "maxResults": Maximum number
+// of events returned on one result page.
+func (c *EventsListCall) MaxResults(maxResults int64) *EventsListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": The order of the
+// events returned in the result.  The default is an unspecified, stable
+// order.
+func (c *EventsListCall) OrderBy(orderBy string) *EventsListCall {
+	c.opt_["orderBy"] = orderBy
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Token specifying
+// which result page to return.
+func (c *EventsListCall) PageToken(pageToken string) *EventsListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+// Q sets the optional parameter "q": Free text search terms to find
+// events that match these terms in any field, except for extended
+// properties.
+func (c *EventsListCall) Q(q string) *EventsListCall {
+	c.opt_["q"] = q
+	return c
+}
+
+// ShowDeleted sets the optional parameter "showDeleted": Whether to
+// include deleted events (with 'eventStatus' equals 'cancelled') in the
+// result.  The default is False.
+func (c *EventsListCall) ShowDeleted(showDeleted bool) *EventsListCall {
+	c.opt_["showDeleted"] = showDeleted
+	return c
+}
+
+// ShowHiddenInvitations sets the optional parameter
+// "showHiddenInvitations": Whether to include hidden invitations in the
+// result.  The default is False.
+func (c *EventsListCall) ShowHiddenInvitations(showHiddenInvitations bool) *EventsListCall {
+	c.opt_["showHiddenInvitations"] = showHiddenInvitations
+	return c
+}
+
+// SingleEvents sets the optional parameter "singleEvents": Whether to
+// expand recurring events into instances and only return single one-off
+// events and instances of recurring events, but not the underlying
+// recurring events themselves.  The default is False.
+func (c *EventsListCall) SingleEvents(singleEvents bool) *EventsListCall {
+	c.opt_["singleEvents"] = singleEvents
+	return c
+}
+
+// TimeMax sets the optional parameter "timeMax": Upper bound
+// (exclusive) for an event's start time to filter by.  The default is
+// not to filter by start time.
+func (c *EventsListCall) TimeMax(timeMax string) *EventsListCall {
+	c.opt_["timeMax"] = timeMax
+	return c
+}
+
+// TimeMin sets the optional parameter "timeMin": Lower bound
+// (inclusive) for an event's end time to filter by.  The default is not
+// to filter by end time.
+func (c *EventsListCall) TimeMin(timeMin string) *EventsListCall {
+	c.opt_["timeMin"] = timeMin
+	return c
+}
+
+// TimeZone sets the optional parameter "timeZone": Time zone used in
+// the response.  The default is the time zone of the calendar.
+func (c *EventsListCall) TimeZone(timeZone string) *EventsListCall {
+	c.opt_["timeZone"] = timeZone
+	return c
+}
+
+// UpdatedMin sets the optional parameter "updatedMin": Lower bound for
+// an event's last modification time (as a RFC 3339 timestamp) to filter
+// by.  The default is not to filter by last modification time.
+func (c *EventsListCall) UpdatedMin(updatedMin string) *EventsListCall {
+	c.opt_["updatedMin"] = updatedMin
+	return c
+}
+
 func (c *EventsListCall) Do() (*Events, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	if v, ok := c.opt_["timeMin"]; ok {
-		params.Set("timeMin", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["singleEvents"]; ok {
-		params.Set("singleEvents", fmt.Sprintf("%v", v))
-	}
 	if v, ok := c.opt_["iCalUID"]; ok {
 		params.Set("iCalUID", fmt.Sprintf("%v", v))
 	}
-	if v, ok := c.opt_["updatedMin"]; ok {
-		params.Set("updatedMin", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["showDeleted"]; ok {
-		params.Set("showDeleted", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["orderBy"]; ok {
-		params.Set("orderBy", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["q"]; ok {
-		params.Set("q", fmt.Sprintf("%v", v))
+	if v, ok := c.opt_["maxAttendees"]; ok {
+		params.Set("maxAttendees", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
-	if v, ok := c.opt_["timeZone"]; ok {
-		params.Set("timeZone", fmt.Sprintf("%v", v))
+	if v, ok := c.opt_["orderBy"]; ok {
+		params.Set("orderBy", fmt.Sprintf("%v", v))
 	}
-	if v, ok := c.opt_["timeMax"]; ok {
-		params.Set("timeMax", fmt.Sprintf("%v", v))
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["q"]; ok {
+		params.Set("q", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["showDeleted"]; ok {
+		params.Set("showDeleted", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["showHiddenInvitations"]; ok {
 		params.Set("showHiddenInvitations", fmt.Sprintf("%v", v))
 	}
-	if v, ok := c.opt_["maxAttendees"]; ok {
-		params.Set("maxAttendees", fmt.Sprintf("%v", v))
+	if v, ok := c.opt_["singleEvents"]; ok {
+		params.Set("singleEvents", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["timeMax"]; ok {
+		params.Set("timeMax", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["timeMin"]; ok {
+		params.Set("timeMin", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["timeZone"]; ok {
+		params.Set("timeZone", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["updatedMin"]; ok {
+		params.Set("updatedMin", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "calendars/{calendarId}/events")
 	urls = strings.Replace(urls, "{calendarId}", cleanPathString(c.calendarId), 1)
@@ -1154,625 +1575,6 @@ func (c *EventsListCall) Do() (*Events, error) {
 
 }
 
-// method id "calendar.events.update":
-
-type EventsUpdateCall struct {
-	s          *Service
-	calendarId string
-	eventId    string
-	event      *Event
-	opt_       map[string]interface{}
-}
-
-// Update: Updates an event.
-func (r *EventsService) Update(calendarId string, eventId string, event *Event) *EventsUpdateCall {
-	c := &EventsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
-	c.calendarId = calendarId
-	c.eventId = eventId
-	c.event = event
-	return c
-}
-
-// SendNotifications sets the optional parameter "sendNotifications":
-// Whether to send notifications about the event update (e.g. attendee's
-// responses, title changes, etc.).  The default is False.
-func (c *EventsUpdateCall) SendNotifications(sendNotifications bool) *EventsUpdateCall {
-	c.opt_["sendNotifications"] = sendNotifications
-	return c
-}
-
-func (c *EventsUpdateCall) Do() (*Event, error) {
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.event)
-	if err != nil {
-		return nil, err
-	}
-	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", "json")
-	if v, ok := c.opt_["sendNotifications"]; ok {
-		params.Set("sendNotifications", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "calendars/{calendarId}/events/{eventId}")
-	urls = strings.Replace(urls, "{calendarId}", cleanPathString(c.calendarId), 1)
-	urls = strings.Replace(urls, "{eventId}", cleanPathString(c.eventId), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("PUT", urls, body)
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(Event)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Updates an event.",
-	//   "httpMethod": "PUT",
-	//   "id": "calendar.events.update",
-	//   "parameterOrder": [
-	//     "calendarId",
-	//     "eventId"
-	//   ],
-	//   "parameters": {
-	//     "calendarId": {
-	//       "description": "Calendar identifier.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "eventId": {
-	//       "description": "Event identifier.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "sendNotifications": {
-	//       "description": "Whether to send notifications about the event update (e.g. attendee's responses, title changes, etc.). Optional. The default is False.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     }
-	//   },
-	//   "path": "calendars/{calendarId}/events/{eventId}",
-	//   "request": {
-	//     "$ref": "Event"
-	//   },
-	//   "response": {
-	//     "$ref": "Event"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/calendar"
-	//   ]
-	// }
-
-}
-
-// method id "calendar.events.insert":
-
-type EventsInsertCall struct {
-	s          *Service
-	calendarId string
-	event      *Event
-	opt_       map[string]interface{}
-}
-
-// Insert: Creates an event.
-func (r *EventsService) Insert(calendarId string, event *Event) *EventsInsertCall {
-	c := &EventsInsertCall{s: r.s, opt_: make(map[string]interface{})}
-	c.calendarId = calendarId
-	c.event = event
-	return c
-}
-
-// SendNotifications sets the optional parameter "sendNotifications":
-// Whether to send notifications about the creation of the new event. 
-// The default is False.
-func (c *EventsInsertCall) SendNotifications(sendNotifications bool) *EventsInsertCall {
-	c.opt_["sendNotifications"] = sendNotifications
-	return c
-}
-
-func (c *EventsInsertCall) Do() (*Event, error) {
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.event)
-	if err != nil {
-		return nil, err
-	}
-	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", "json")
-	if v, ok := c.opt_["sendNotifications"]; ok {
-		params.Set("sendNotifications", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "calendars/{calendarId}/events")
-	urls = strings.Replace(urls, "{calendarId}", cleanPathString(c.calendarId), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("POST", urls, body)
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(Event)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Creates an event.",
-	//   "httpMethod": "POST",
-	//   "id": "calendar.events.insert",
-	//   "parameterOrder": [
-	//     "calendarId"
-	//   ],
-	//   "parameters": {
-	//     "calendarId": {
-	//       "description": "Calendar identifier.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "sendNotifications": {
-	//       "description": "Whether to send notifications about the creation of the new event. Optional. The default is False.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     }
-	//   },
-	//   "path": "calendars/{calendarId}/events",
-	//   "request": {
-	//     "$ref": "Event"
-	//   },
-	//   "response": {
-	//     "$ref": "Event"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/calendar"
-	//   ]
-	// }
-
-}
-
-// method id "calendar.events.import":
-
-type EventsImportCall struct {
-	s          *Service
-	calendarId string
-	event      *Event
-	opt_       map[string]interface{}
-}
-
-// Import: Imports an event.
-func (r *EventsService) Import(calendarId string, event *Event) *EventsImportCall {
-	c := &EventsImportCall{s: r.s, opt_: make(map[string]interface{})}
-	c.calendarId = calendarId
-	c.event = event
-	return c
-}
-
-func (c *EventsImportCall) Do() (*Event, error) {
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.event)
-	if err != nil {
-		return nil, err
-	}
-	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "calendars/{calendarId}/events/import")
-	urls = strings.Replace(urls, "{calendarId}", cleanPathString(c.calendarId), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("POST", urls, body)
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(Event)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Imports an event.",
-	//   "httpMethod": "POST",
-	//   "id": "calendar.events.import",
-	//   "parameterOrder": [
-	//     "calendarId"
-	//   ],
-	//   "parameters": {
-	//     "calendarId": {
-	//       "description": "Calendar identifier.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "calendars/{calendarId}/events/import",
-	//   "request": {
-	//     "$ref": "Event"
-	//   },
-	//   "response": {
-	//     "$ref": "Event"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/calendar"
-	//   ]
-	// }
-
-}
-
-// method id "calendar.events.get":
-
-type EventsGetCall struct {
-	s          *Service
-	calendarId string
-	eventId    string
-	opt_       map[string]interface{}
-}
-
-// Get: Returns an event.
-func (r *EventsService) Get(calendarId string, eventId string) *EventsGetCall {
-	c := &EventsGetCall{s: r.s, opt_: make(map[string]interface{})}
-	c.calendarId = calendarId
-	c.eventId = eventId
-	return c
-}
-
-// TimeZone sets the optional parameter "timeZone": Time zone used in
-// the response.  The default is the time zone of the calendar.
-func (c *EventsGetCall) TimeZone(timeZone string) *EventsGetCall {
-	c.opt_["timeZone"] = timeZone
-	return c
-}
-
-// MaxAttendees sets the optional parameter "maxAttendees": The maximum
-// number of attendees to include in the response. If there are more
-// than the specified number of attendees, only the participant is
-// returned.
-func (c *EventsGetCall) MaxAttendees(maxAttendees int64) *EventsGetCall {
-	c.opt_["maxAttendees"] = maxAttendees
-	return c
-}
-
-func (c *EventsGetCall) Do() (*Event, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	if v, ok := c.opt_["timeZone"]; ok {
-		params.Set("timeZone", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["maxAttendees"]; ok {
-		params.Set("maxAttendees", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "calendars/{calendarId}/events/{eventId}")
-	urls = strings.Replace(urls, "{calendarId}", cleanPathString(c.calendarId), 1)
-	urls = strings.Replace(urls, "{eventId}", cleanPathString(c.eventId), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(Event)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Returns an event.",
-	//   "httpMethod": "GET",
-	//   "id": "calendar.events.get",
-	//   "parameterOrder": [
-	//     "calendarId",
-	//     "eventId"
-	//   ],
-	//   "parameters": {
-	//     "calendarId": {
-	//       "description": "Calendar identifier.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "eventId": {
-	//       "description": "Event identifier.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "maxAttendees": {
-	//       "description": "The maximum number of attendees to include in the response. If there are more than the specified number of attendees, only the participant is returned. Optional.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "minimum": "1",
-	//       "type": "integer"
-	//     },
-	//     "timeZone": {
-	//       "description": "Time zone used in the response. Optional. The default is the time zone of the calendar.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "calendars/{calendarId}/events/{eventId}",
-	//   "response": {
-	//     "$ref": "Event"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/calendar",
-	//     "https://www.googleapis.com/auth/calendar.readonly"
-	//   ]
-	// }
-
-}
-
-// method id "calendar.events.instances":
-
-type EventsInstancesCall struct {
-	s          *Service
-	calendarId string
-	eventId    string
-	opt_       map[string]interface{}
-}
-
-// Instances: Returns instances of the specified recurring event.
-func (r *EventsService) Instances(calendarId string, eventId string) *EventsInstancesCall {
-	c := &EventsInstancesCall{s: r.s, opt_: make(map[string]interface{})}
-	c.calendarId = calendarId
-	c.eventId = eventId
-	return c
-}
-
-// ShowDeleted sets the optional parameter "showDeleted": Whether to
-// include deleted events (with 'eventStatus' equals 'cancelled') in the
-// result.  The default is False.
-func (c *EventsInstancesCall) ShowDeleted(showDeleted bool) *EventsInstancesCall {
-	c.opt_["showDeleted"] = showDeleted
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": Token specifying
-// which result page to return.
-func (c *EventsInstancesCall) PageToken(pageToken string) *EventsInstancesCall {
-	c.opt_["pageToken"] = pageToken
-	return c
-}
-
-// MaxResults sets the optional parameter "maxResults": Maximum number
-// of events returned on one result page.
-func (c *EventsInstancesCall) MaxResults(maxResults int64) *EventsInstancesCall {
-	c.opt_["maxResults"] = maxResults
-	return c
-}
-
-// TimeZone sets the optional parameter "timeZone": Time zone used in
-// the response.  The default is the time zone of the calendar.
-func (c *EventsInstancesCall) TimeZone(timeZone string) *EventsInstancesCall {
-	c.opt_["timeZone"] = timeZone
-	return c
-}
-
-// OriginalStart sets the optional parameter "originalStart": The
-// original start time of the instance in the result.
-func (c *EventsInstancesCall) OriginalStart(originalStart string) *EventsInstancesCall {
-	c.opt_["originalStart"] = originalStart
-	return c
-}
-
-// MaxAttendees sets the optional parameter "maxAttendees": The maximum
-// number of attendees to include in the response. If there are more
-// than the specified number of attendees, only the participant is
-// returned.
-func (c *EventsInstancesCall) MaxAttendees(maxAttendees int64) *EventsInstancesCall {
-	c.opt_["maxAttendees"] = maxAttendees
-	return c
-}
-
-func (c *EventsInstancesCall) Do() (*Events, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	if v, ok := c.opt_["showDeleted"]; ok {
-		params.Set("showDeleted", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["timeZone"]; ok {
-		params.Set("timeZone", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["originalStart"]; ok {
-		params.Set("originalStart", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["maxAttendees"]; ok {
-		params.Set("maxAttendees", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "calendars/{calendarId}/events/{eventId}/instances")
-	urls = strings.Replace(urls, "{calendarId}", cleanPathString(c.calendarId), 1)
-	urls = strings.Replace(urls, "{eventId}", cleanPathString(c.eventId), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(Events)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Returns instances of the specified recurring event.",
-	//   "httpMethod": "GET",
-	//   "id": "calendar.events.instances",
-	//   "parameterOrder": [
-	//     "calendarId",
-	//     "eventId"
-	//   ],
-	//   "parameters": {
-	//     "calendarId": {
-	//       "description": "Calendar identifier.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "eventId": {
-	//       "description": "Recurring event identifier.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "maxAttendees": {
-	//       "description": "The maximum number of attendees to include in the response. If there are more than the specified number of attendees, only the participant is returned. Optional.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "minimum": "1",
-	//       "type": "integer"
-	//     },
-	//     "maxResults": {
-	//       "description": "Maximum number of events returned on one result page. Optional.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "minimum": "1",
-	//       "type": "integer"
-	//     },
-	//     "originalStart": {
-	//       "description": "The original start time of the instance in the result. Optional.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageToken": {
-	//       "description": "Token specifying which result page to return. Optional.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "showDeleted": {
-	//       "description": "Whether to include deleted events (with 'eventStatus' equals 'cancelled') in the result. Optional. The default is False.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "timeZone": {
-	//       "description": "Time zone used in the response. Optional. The default is the time zone of the calendar.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "calendars/{calendarId}/events/{eventId}/instances",
-	//   "response": {
-	//     "$ref": "Events"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/calendar",
-	//     "https://www.googleapis.com/auth/calendar.readonly"
-	//   ]
-	// }
-
-}
-
-// method id "calendar.events.delete":
-
-type EventsDeleteCall struct {
-	s          *Service
-	calendarId string
-	eventId    string
-	opt_       map[string]interface{}
-}
-
-// Delete: Deletes an event.
-func (r *EventsService) Delete(calendarId string, eventId string) *EventsDeleteCall {
-	c := &EventsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
-	c.calendarId = calendarId
-	c.eventId = eventId
-	return c
-}
-
-// SendNotifications sets the optional parameter "sendNotifications":
-// Whether to send notifications about the deletion of the event.  The
-// default is False.
-func (c *EventsDeleteCall) SendNotifications(sendNotifications bool) *EventsDeleteCall {
-	c.opt_["sendNotifications"] = sendNotifications
-	return c
-}
-
-func (c *EventsDeleteCall) Do() error {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	if v, ok := c.opt_["sendNotifications"]; ok {
-		params.Set("sendNotifications", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "calendars/{calendarId}/events/{eventId}")
-	urls = strings.Replace(urls, "{calendarId}", cleanPathString(c.calendarId), 1)
-	urls = strings.Replace(urls, "{eventId}", cleanPathString(c.eventId), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("DELETE", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return err
-	}
-	return nil
-	// {
-	//   "description": "Deletes an event.",
-	//   "httpMethod": "DELETE",
-	//   "id": "calendar.events.delete",
-	//   "parameterOrder": [
-	//     "calendarId",
-	//     "eventId"
-	//   ],
-	//   "parameters": {
-	//     "calendarId": {
-	//       "description": "Calendar identifier.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "eventId": {
-	//       "description": "Event identifier.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "sendNotifications": {
-	//       "description": "Whether to send notifications about the deletion of the event. Optional. The default is False.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     }
-	//   },
-	//   "path": "calendars/{calendarId}/events/{eventId}",
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/calendar"
-	//   ]
-	// }
-
-}
-
 // method id "calendar.events.move":
 
 type EventsMoveCall struct {
@@ -1872,6 +1674,105 @@ func (c *EventsMoveCall) Do() (*Event, error) {
 
 }
 
+// method id "calendar.events.patch":
+
+type EventsPatchCall struct {
+	s          *Service
+	calendarId string
+	eventId    string
+	event      *Event
+	opt_       map[string]interface{}
+}
+
+// Patch: Updates an event. This method supports patch semantics.
+func (r *EventsService) Patch(calendarId string, eventId string, event *Event) *EventsPatchCall {
+	c := &EventsPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.calendarId = calendarId
+	c.eventId = eventId
+	c.event = event
+	return c
+}
+
+// SendNotifications sets the optional parameter "sendNotifications":
+// Whether to send notifications about the event update (e.g. attendee's
+// responses, title changes, etc.).  The default is False.
+func (c *EventsPatchCall) SendNotifications(sendNotifications bool) *EventsPatchCall {
+	c.opt_["sendNotifications"] = sendNotifications
+	return c
+}
+
+func (c *EventsPatchCall) Do() (*Event, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.event)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["sendNotifications"]; ok {
+		params.Set("sendNotifications", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "calendars/{calendarId}/events/{eventId}")
+	urls = strings.Replace(urls, "{calendarId}", cleanPathString(c.calendarId), 1)
+	urls = strings.Replace(urls, "{eventId}", cleanPathString(c.eventId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Event)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an event. This method supports patch semantics.",
+	//   "httpMethod": "PATCH",
+	//   "id": "calendar.events.patch",
+	//   "parameterOrder": [
+	//     "calendarId",
+	//     "eventId"
+	//   ],
+	//   "parameters": {
+	//     "calendarId": {
+	//       "description": "Calendar identifier.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "eventId": {
+	//       "description": "Event identifier.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "sendNotifications": {
+	//       "description": "Whether to send notifications about the event update (e.g. attendee's responses, title changes, etc.). Optional. The default is False.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "calendars/{calendarId}/events/{eventId}",
+	//   "request": {
+	//     "$ref": "Event"
+	//   },
+	//   "response": {
+	//     "$ref": "Event"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/calendar"
+	//   ]
+	// }
+
+}
+
 // method id "calendar.events.quickAdd":
 
 type EventsQuickAddCall struct {
@@ -1960,6 +1861,160 @@ func (c *EventsQuickAddCall) Do() (*Event, error) {
 
 }
 
+// method id "calendar.events.update":
+
+type EventsUpdateCall struct {
+	s          *Service
+	calendarId string
+	eventId    string
+	event      *Event
+	opt_       map[string]interface{}
+}
+
+// Update: Updates an event.
+func (r *EventsService) Update(calendarId string, eventId string, event *Event) *EventsUpdateCall {
+	c := &EventsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.calendarId = calendarId
+	c.eventId = eventId
+	c.event = event
+	return c
+}
+
+// SendNotifications sets the optional parameter "sendNotifications":
+// Whether to send notifications about the event update (e.g. attendee's
+// responses, title changes, etc.).  The default is False.
+func (c *EventsUpdateCall) SendNotifications(sendNotifications bool) *EventsUpdateCall {
+	c.opt_["sendNotifications"] = sendNotifications
+	return c
+}
+
+func (c *EventsUpdateCall) Do() (*Event, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.event)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["sendNotifications"]; ok {
+		params.Set("sendNotifications", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "calendars/{calendarId}/events/{eventId}")
+	urls = strings.Replace(urls, "{calendarId}", cleanPathString(c.calendarId), 1)
+	urls = strings.Replace(urls, "{eventId}", cleanPathString(c.eventId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Event)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an event.",
+	//   "httpMethod": "PUT",
+	//   "id": "calendar.events.update",
+	//   "parameterOrder": [
+	//     "calendarId",
+	//     "eventId"
+	//   ],
+	//   "parameters": {
+	//     "calendarId": {
+	//       "description": "Calendar identifier.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "eventId": {
+	//       "description": "Event identifier.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "sendNotifications": {
+	//       "description": "Whether to send notifications about the event update (e.g. attendee's responses, title changes, etc.). Optional. The default is False.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "calendars/{calendarId}/events/{eventId}",
+	//   "request": {
+	//     "$ref": "Event"
+	//   },
+	//   "response": {
+	//     "$ref": "Event"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/calendar"
+	//   ]
+	// }
+
+}
+
+// method id "calendar.calendarList.delete":
+
+type CalendarListDeleteCall struct {
+	s          *Service
+	calendarId string
+	opt_       map[string]interface{}
+}
+
+// Delete: Deletes an entry on the user's calendar list.
+func (r *CalendarListService) Delete(calendarId string) *CalendarListDeleteCall {
+	c := &CalendarListDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.calendarId = calendarId
+	return c
+}
+
+func (c *CalendarListDeleteCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "users/me/calendarList/{calendarId}")
+	urls = strings.Replace(urls, "{calendarId}", cleanPathString(c.calendarId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Deletes an entry on the user's calendar list.",
+	//   "httpMethod": "DELETE",
+	//   "id": "calendar.calendarList.delete",
+	//   "parameterOrder": [
+	//     "calendarId"
+	//   ],
+	//   "parameters": {
+	//     "calendarId": {
+	//       "description": "Calendar identifier.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "users/me/calendarList/{calendarId}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/calendar"
+	//   ]
+	// }
+
+}
+
 // method id "calendar.calendarList.get":
 
 type CalendarListGetCall struct {
@@ -2023,56 +2078,186 @@ func (c *CalendarListGetCall) Do() (*CalendarListEntry, error) {
 
 }
 
-// method id "calendar.calendarList.delete":
+// method id "calendar.calendarList.insert":
 
-type CalendarListDeleteCall struct {
-	s          *Service
-	calendarId string
-	opt_       map[string]interface{}
+type CalendarListInsertCall struct {
+	s                 *Service
+	calendarlistentry *CalendarListEntry
+	opt_              map[string]interface{}
 }
 
-// Delete: Deletes an entry on the user's calendar list.
-func (r *CalendarListService) Delete(calendarId string) *CalendarListDeleteCall {
-	c := &CalendarListDeleteCall{s: r.s, opt_: make(map[string]interface{})}
-	c.calendarId = calendarId
+// Insert: Adds an entry to the user's calendar list.
+func (r *CalendarListService) Insert(calendarlistentry *CalendarListEntry) *CalendarListInsertCall {
+	c := &CalendarListInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.calendarlistentry = calendarlistentry
 	return c
 }
 
-func (c *CalendarListDeleteCall) Do() error {
+func (c *CalendarListInsertCall) Do() (*CalendarListEntry, error) {
 	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.calendarlistentry)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "users/me/calendarList/{calendarId}")
-	urls = strings.Replace(urls, "{calendarId}", cleanPathString(c.calendarId), 1)
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "users/me/calendarList")
 	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("DELETE", urls, body)
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return nil, err
 	}
-	return nil
+	ret := new(CalendarListEntry)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
 	// {
-	//   "description": "Deletes an entry on the user's calendar list.",
-	//   "httpMethod": "DELETE",
-	//   "id": "calendar.calendarList.delete",
-	//   "parameterOrder": [
-	//     "calendarId"
-	//   ],
-	//   "parameters": {
-	//     "calendarId": {
-	//       "description": "Calendar identifier.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
+	//   "description": "Adds an entry to the user's calendar list.",
+	//   "httpMethod": "POST",
+	//   "id": "calendar.calendarList.insert",
+	//   "path": "users/me/calendarList",
+	//   "request": {
+	//     "$ref": "CalendarListEntry"
 	//   },
-	//   "path": "users/me/calendarList/{calendarId}",
+	//   "response": {
+	//     "$ref": "CalendarListEntry"
+	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/calendar"
+	//   ]
+	// }
+
+}
+
+// method id "calendar.calendarList.list":
+
+type CalendarListListCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// List: Returns entries on the user's calendar list.
+func (r *CalendarListService) List() *CalendarListListCall {
+	c := &CalendarListListCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum number
+// of entries returned on one result page.
+func (c *CalendarListListCall) MaxResults(maxResults int64) *CalendarListListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// MinAccessRole sets the optional parameter "minAccessRole": The
+// minimum access role for the user in the returned entires.  The
+// default is no restriction.
+func (c *CalendarListListCall) MinAccessRole(minAccessRole string) *CalendarListListCall {
+	c.opt_["minAccessRole"] = minAccessRole
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Token specifying
+// which result page to return.
+func (c *CalendarListListCall) PageToken(pageToken string) *CalendarListListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+// ShowHidden sets the optional parameter "showHidden": Whether to show
+// hidden entries.  The default is False.
+func (c *CalendarListListCall) ShowHidden(showHidden bool) *CalendarListListCall {
+	c.opt_["showHidden"] = showHidden
+	return c
+}
+
+func (c *CalendarListListCall) Do() (*CalendarList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["minAccessRole"]; ok {
+		params.Set("minAccessRole", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["showHidden"]; ok {
+		params.Set("showHidden", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "users/me/calendarList")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(CalendarList)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns entries on the user's calendar list.",
+	//   "httpMethod": "GET",
+	//   "id": "calendar.calendarList.list",
+	//   "parameters": {
+	//     "maxResults": {
+	//       "description": "Maximum number of entries returned on one result page. Optional.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     },
+	//     "minAccessRole": {
+	//       "description": "The minimum access role for the user in the returned entires. Optional. The default is no restriction.",
+	//       "enum": [
+	//         "freeBusyReader",
+	//         "owner",
+	//         "reader",
+	//         "writer"
+	//       ],
+	//       "enumDescriptions": [
+	//         "The user can read free/busy information.",
+	//         "The user can read and modify events and access control lists.",
+	//         "The user can read events that are not private.",
+	//         "The user can read and modify events."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageToken": {
+	//       "description": "Token specifying which result page to return. Optional.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "showHidden": {
+	//       "description": "Whether to show hidden entries. Optional. The default is False.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "users/me/calendarList",
+	//   "response": {
+	//     "$ref": "CalendarList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/calendar",
+	//     "https://www.googleapis.com/auth/calendar.readonly"
 	//   ]
 	// }
 
@@ -2152,132 +2337,6 @@ func (c *CalendarListPatchCall) Do() (*CalendarListEntry, error) {
 
 }
 
-// method id "calendar.calendarList.list":
-
-type CalendarListListCall struct {
-	s    *Service
-	opt_ map[string]interface{}
-}
-
-// List: Returns entries on the user's calendar list.
-func (r *CalendarListService) List() *CalendarListListCall {
-	c := &CalendarListListCall{s: r.s, opt_: make(map[string]interface{})}
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": Token specifying
-// which result page to return.
-func (c *CalendarListListCall) PageToken(pageToken string) *CalendarListListCall {
-	c.opt_["pageToken"] = pageToken
-	return c
-}
-
-// MinAccessRole sets the optional parameter "minAccessRole": The
-// minimum access role for the user in the returned entires.  The
-// default is no restriction.
-func (c *CalendarListListCall) MinAccessRole(minAccessRole string) *CalendarListListCall {
-	c.opt_["minAccessRole"] = minAccessRole
-	return c
-}
-
-// MaxResults sets the optional parameter "maxResults": Maximum number
-// of entries returned on one result page.
-func (c *CalendarListListCall) MaxResults(maxResults int64) *CalendarListListCall {
-	c.opt_["maxResults"] = maxResults
-	return c
-}
-
-// ShowHidden sets the optional parameter "showHidden": Whether to show
-// hidden entries.  The default is False.
-func (c *CalendarListListCall) ShowHidden(showHidden bool) *CalendarListListCall {
-	c.opt_["showHidden"] = showHidden
-	return c
-}
-
-func (c *CalendarListListCall) Do() (*CalendarList, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["minAccessRole"]; ok {
-		params.Set("minAccessRole", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["showHidden"]; ok {
-		params.Set("showHidden", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "users/me/calendarList")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(CalendarList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Returns entries on the user's calendar list.",
-	//   "httpMethod": "GET",
-	//   "id": "calendar.calendarList.list",
-	//   "parameters": {
-	//     "maxResults": {
-	//       "description": "Maximum number of entries returned on one result page. Optional.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "minimum": "1",
-	//       "type": "integer"
-	//     },
-	//     "minAccessRole": {
-	//       "description": "The minimum access role for the user in the returned entires. Optional. The default is no restriction.",
-	//       "enum": [
-	//         "freeBusyReader",
-	//         "owner",
-	//         "reader",
-	//         "writer"
-	//       ],
-	//       "enumDescriptions": [
-	//         "The user can read free/busy information.",
-	//         "The user can read and modify events and access control lists.",
-	//         "The user can read events that are not private.",
-	//         "The user can read and modify events."
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageToken": {
-	//       "description": "Token specifying which result page to return. Optional.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "showHidden": {
-	//       "description": "Whether to show hidden entries. Optional. The default is False.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     }
-	//   },
-	//   "path": "users/me/calendarList",
-	//   "response": {
-	//     "$ref": "CalendarList"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/calendar",
-	//     "https://www.googleapis.com/auth/calendar.readonly"
-	//   ]
-	// }
-
-}
-
 // method id "calendar.calendarList.update":
 
 type CalendarListUpdateCall struct {
@@ -2338,65 +2397,6 @@ func (c *CalendarListUpdateCall) Do() (*CalendarListEntry, error) {
 	//     }
 	//   },
 	//   "path": "users/me/calendarList/{calendarId}",
-	//   "request": {
-	//     "$ref": "CalendarListEntry"
-	//   },
-	//   "response": {
-	//     "$ref": "CalendarListEntry"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/calendar"
-	//   ]
-	// }
-
-}
-
-// method id "calendar.calendarList.insert":
-
-type CalendarListInsertCall struct {
-	s                 *Service
-	calendarlistentry *CalendarListEntry
-	opt_              map[string]interface{}
-}
-
-// Insert: Adds an entry to the user's calendar list.
-func (r *CalendarListService) Insert(calendarlistentry *CalendarListEntry) *CalendarListInsertCall {
-	c := &CalendarListInsertCall{s: r.s, opt_: make(map[string]interface{})}
-	c.calendarlistentry = calendarlistentry
-	return c
-}
-
-func (c *CalendarListInsertCall) Do() (*CalendarListEntry, error) {
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.calendarlistentry)
-	if err != nil {
-		return nil, err
-	}
-	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "users/me/calendarList")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("POST", urls, body)
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(CalendarListEntry)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Adds an entry to the user's calendar list.",
-	//   "httpMethod": "POST",
-	//   "id": "calendar.calendarList.insert",
-	//   "path": "users/me/calendarList",
 	//   "request": {
 	//     "$ref": "CalendarListEntry"
 	//   },
@@ -2519,6 +2519,279 @@ func (c *ColorsGetCall) Do() (*Colors, error) {
 
 }
 
+// method id "calendar.acl.delete":
+
+type AclDeleteCall struct {
+	s          *Service
+	calendarId string
+	ruleId     string
+	opt_       map[string]interface{}
+}
+
+// Delete: Deletes an access control rule.
+func (r *AclService) Delete(calendarId string, ruleId string) *AclDeleteCall {
+	c := &AclDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.calendarId = calendarId
+	c.ruleId = ruleId
+	return c
+}
+
+func (c *AclDeleteCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "calendars/{calendarId}/acl/{ruleId}")
+	urls = strings.Replace(urls, "{calendarId}", cleanPathString(c.calendarId), 1)
+	urls = strings.Replace(urls, "{ruleId}", cleanPathString(c.ruleId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Deletes an access control rule.",
+	//   "httpMethod": "DELETE",
+	//   "id": "calendar.acl.delete",
+	//   "parameterOrder": [
+	//     "calendarId",
+	//     "ruleId"
+	//   ],
+	//   "parameters": {
+	//     "calendarId": {
+	//       "description": "Calendar identifier.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "ruleId": {
+	//       "description": "ACL rule identifier.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "calendars/{calendarId}/acl/{ruleId}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/calendar"
+	//   ]
+	// }
+
+}
+
+// method id "calendar.acl.get":
+
+type AclGetCall struct {
+	s          *Service
+	calendarId string
+	ruleId     string
+	opt_       map[string]interface{}
+}
+
+// Get: Returns an access control rule.
+func (r *AclService) Get(calendarId string, ruleId string) *AclGetCall {
+	c := &AclGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.calendarId = calendarId
+	c.ruleId = ruleId
+	return c
+}
+
+func (c *AclGetCall) Do() (*AclRule, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "calendars/{calendarId}/acl/{ruleId}")
+	urls = strings.Replace(urls, "{calendarId}", cleanPathString(c.calendarId), 1)
+	urls = strings.Replace(urls, "{ruleId}", cleanPathString(c.ruleId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(AclRule)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns an access control rule.",
+	//   "httpMethod": "GET",
+	//   "id": "calendar.acl.get",
+	//   "parameterOrder": [
+	//     "calendarId",
+	//     "ruleId"
+	//   ],
+	//   "parameters": {
+	//     "calendarId": {
+	//       "description": "Calendar identifier.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "ruleId": {
+	//       "description": "ACL rule identifier.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "calendars/{calendarId}/acl/{ruleId}",
+	//   "response": {
+	//     "$ref": "AclRule"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/calendar",
+	//     "https://www.googleapis.com/auth/calendar.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "calendar.acl.insert":
+
+type AclInsertCall struct {
+	s          *Service
+	calendarId string
+	aclrule    *AclRule
+	opt_       map[string]interface{}
+}
+
+// Insert: Creates an access control rule.
+func (r *AclService) Insert(calendarId string, aclrule *AclRule) *AclInsertCall {
+	c := &AclInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.calendarId = calendarId
+	c.aclrule = aclrule
+	return c
+}
+
+func (c *AclInsertCall) Do() (*AclRule, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.aclrule)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "calendars/{calendarId}/acl")
+	urls = strings.Replace(urls, "{calendarId}", cleanPathString(c.calendarId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(AclRule)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates an access control rule.",
+	//   "httpMethod": "POST",
+	//   "id": "calendar.acl.insert",
+	//   "parameterOrder": [
+	//     "calendarId"
+	//   ],
+	//   "parameters": {
+	//     "calendarId": {
+	//       "description": "Calendar identifier.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "calendars/{calendarId}/acl",
+	//   "request": {
+	//     "$ref": "AclRule"
+	//   },
+	//   "response": {
+	//     "$ref": "AclRule"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/calendar"
+	//   ]
+	// }
+
+}
+
+// method id "calendar.acl.list":
+
+type AclListCall struct {
+	s          *Service
+	calendarId string
+	opt_       map[string]interface{}
+}
+
+// List: Returns the rules in the access control list for the calendar.
+func (r *AclService) List(calendarId string) *AclListCall {
+	c := &AclListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.calendarId = calendarId
+	return c
+}
+
+func (c *AclListCall) Do() (*Acl, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "calendars/{calendarId}/acl")
+	urls = strings.Replace(urls, "{calendarId}", cleanPathString(c.calendarId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Acl)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the rules in the access control list for the calendar.",
+	//   "httpMethod": "GET",
+	//   "id": "calendar.acl.list",
+	//   "parameterOrder": [
+	//     "calendarId"
+	//   ],
+	//   "parameters": {
+	//     "calendarId": {
+	//       "description": "Calendar identifier.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "calendars/{calendarId}/acl",
+	//   "response": {
+	//     "$ref": "Acl"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/calendar"
+	//   ]
+	// }
+
+}
+
 // method id "calendar.acl.patch":
 
 type AclPatchCall struct {
@@ -2595,68 +2868,6 @@ func (c *AclPatchCall) Do() (*AclRule, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "AclRule"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/calendar"
-	//   ]
-	// }
-
-}
-
-// method id "calendar.acl.list":
-
-type AclListCall struct {
-	s          *Service
-	calendarId string
-	opt_       map[string]interface{}
-}
-
-// List: Returns the rules in the access control list for the calendar.
-func (r *AclService) List(calendarId string) *AclListCall {
-	c := &AclListCall{s: r.s, opt_: make(map[string]interface{})}
-	c.calendarId = calendarId
-	return c
-}
-
-func (c *AclListCall) Do() (*Acl, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "calendars/{calendarId}/acl")
-	urls = strings.Replace(urls, "{calendarId}", cleanPathString(c.calendarId), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(Acl)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Returns the rules in the access control list for the calendar.",
-	//   "httpMethod": "GET",
-	//   "id": "calendar.acl.list",
-	//   "parameterOrder": [
-	//     "calendarId"
-	//   ],
-	//   "parameters": {
-	//     "calendarId": {
-	//       "description": "Calendar identifier.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "calendars/{calendarId}/acl",
-	//   "response": {
-	//     "$ref": "Acl"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/calendar"
@@ -2748,266 +2959,6 @@ func (c *AclUpdateCall) Do() (*AclRule, error) {
 
 }
 
-// method id "calendar.acl.insert":
-
-type AclInsertCall struct {
-	s          *Service
-	calendarId string
-	aclrule    *AclRule
-	opt_       map[string]interface{}
-}
-
-// Insert: Creates an access control rule.
-func (r *AclService) Insert(calendarId string, aclrule *AclRule) *AclInsertCall {
-	c := &AclInsertCall{s: r.s, opt_: make(map[string]interface{})}
-	c.calendarId = calendarId
-	c.aclrule = aclrule
-	return c
-}
-
-func (c *AclInsertCall) Do() (*AclRule, error) {
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.aclrule)
-	if err != nil {
-		return nil, err
-	}
-	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "calendars/{calendarId}/acl")
-	urls = strings.Replace(urls, "{calendarId}", cleanPathString(c.calendarId), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("POST", urls, body)
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(AclRule)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Creates an access control rule.",
-	//   "httpMethod": "POST",
-	//   "id": "calendar.acl.insert",
-	//   "parameterOrder": [
-	//     "calendarId"
-	//   ],
-	//   "parameters": {
-	//     "calendarId": {
-	//       "description": "Calendar identifier.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "calendars/{calendarId}/acl",
-	//   "request": {
-	//     "$ref": "AclRule"
-	//   },
-	//   "response": {
-	//     "$ref": "AclRule"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/calendar"
-	//   ]
-	// }
-
-}
-
-// method id "calendar.acl.get":
-
-type AclGetCall struct {
-	s          *Service
-	calendarId string
-	ruleId     string
-	opt_       map[string]interface{}
-}
-
-// Get: Returns an access control rule.
-func (r *AclService) Get(calendarId string, ruleId string) *AclGetCall {
-	c := &AclGetCall{s: r.s, opt_: make(map[string]interface{})}
-	c.calendarId = calendarId
-	c.ruleId = ruleId
-	return c
-}
-
-func (c *AclGetCall) Do() (*AclRule, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "calendars/{calendarId}/acl/{ruleId}")
-	urls = strings.Replace(urls, "{calendarId}", cleanPathString(c.calendarId), 1)
-	urls = strings.Replace(urls, "{ruleId}", cleanPathString(c.ruleId), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(AclRule)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Returns an access control rule.",
-	//   "httpMethod": "GET",
-	//   "id": "calendar.acl.get",
-	//   "parameterOrder": [
-	//     "calendarId",
-	//     "ruleId"
-	//   ],
-	//   "parameters": {
-	//     "calendarId": {
-	//       "description": "Calendar identifier.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "ruleId": {
-	//       "description": "ACL rule identifier.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "calendars/{calendarId}/acl/{ruleId}",
-	//   "response": {
-	//     "$ref": "AclRule"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/calendar",
-	//     "https://www.googleapis.com/auth/calendar.readonly"
-	//   ]
-	// }
-
-}
-
-// method id "calendar.acl.delete":
-
-type AclDeleteCall struct {
-	s          *Service
-	calendarId string
-	ruleId     string
-	opt_       map[string]interface{}
-}
-
-// Delete: Deletes an access control rule.
-func (r *AclService) Delete(calendarId string, ruleId string) *AclDeleteCall {
-	c := &AclDeleteCall{s: r.s, opt_: make(map[string]interface{})}
-	c.calendarId = calendarId
-	c.ruleId = ruleId
-	return c
-}
-
-func (c *AclDeleteCall) Do() error {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "calendars/{calendarId}/acl/{ruleId}")
-	urls = strings.Replace(urls, "{calendarId}", cleanPathString(c.calendarId), 1)
-	urls = strings.Replace(urls, "{ruleId}", cleanPathString(c.ruleId), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("DELETE", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return err
-	}
-	return nil
-	// {
-	//   "description": "Deletes an access control rule.",
-	//   "httpMethod": "DELETE",
-	//   "id": "calendar.acl.delete",
-	//   "parameterOrder": [
-	//     "calendarId",
-	//     "ruleId"
-	//   ],
-	//   "parameters": {
-	//     "calendarId": {
-	//       "description": "Calendar identifier.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "ruleId": {
-	//       "description": "ACL rule identifier.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "calendars/{calendarId}/acl/{ruleId}",
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/calendar"
-	//   ]
-	// }
-
-}
-
-// method id "calendar.settings.list":
-
-type SettingsListCall struct {
-	s    *Service
-	opt_ map[string]interface{}
-}
-
-// List: Returns all user settings for the authenticated user.
-func (r *SettingsService) List() *SettingsListCall {
-	c := &SettingsListCall{s: r.s, opt_: make(map[string]interface{})}
-	return c
-}
-
-func (c *SettingsListCall) Do() (*Settings, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "users/me/settings")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(Settings)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Returns all user settings for the authenticated user.",
-	//   "httpMethod": "GET",
-	//   "id": "calendar.settings.list",
-	//   "path": "users/me/settings",
-	//   "response": {
-	//     "$ref": "Settings"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/calendar",
-	//     "https://www.googleapis.com/auth/calendar.readonly"
-	//   ]
-	// }
-
-}
-
 // method id "calendar.settings.get":
 
 type SettingsGetCall struct {
@@ -3066,6 +3017,167 @@ func (c *SettingsGetCall) Do() (*Setting, error) {
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/calendar",
 	//     "https://www.googleapis.com/auth/calendar.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "calendar.settings.list":
+
+type SettingsListCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// List: Returns all user settings for the authenticated user.
+func (r *SettingsService) List() *SettingsListCall {
+	c := &SettingsListCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+func (c *SettingsListCall) Do() (*Settings, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "users/me/settings")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Settings)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns all user settings for the authenticated user.",
+	//   "httpMethod": "GET",
+	//   "id": "calendar.settings.list",
+	//   "path": "users/me/settings",
+	//   "response": {
+	//     "$ref": "Settings"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/calendar",
+	//     "https://www.googleapis.com/auth/calendar.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "calendar.calendars.clear":
+
+type CalendarsClearCall struct {
+	s          *Service
+	calendarId string
+	opt_       map[string]interface{}
+}
+
+// Clear: Clears a primary calendar. This operation deletes all data
+// associated with the primary calendar of an account and cannot be
+// undone.
+func (r *CalendarsService) Clear(calendarId string) *CalendarsClearCall {
+	c := &CalendarsClearCall{s: r.s, opt_: make(map[string]interface{})}
+	c.calendarId = calendarId
+	return c
+}
+
+func (c *CalendarsClearCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "calendars/{calendarId}/clear")
+	urls = strings.Replace(urls, "{calendarId}", cleanPathString(c.calendarId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Clears a primary calendar. This operation deletes all data associated with the primary calendar of an account and cannot be undone.",
+	//   "httpMethod": "POST",
+	//   "id": "calendar.calendars.clear",
+	//   "parameterOrder": [
+	//     "calendarId"
+	//   ],
+	//   "parameters": {
+	//     "calendarId": {
+	//       "description": "Calendar identifier.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "calendars/{calendarId}/clear",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/calendar"
+	//   ]
+	// }
+
+}
+
+// method id "calendar.calendars.delete":
+
+type CalendarsDeleteCall struct {
+	s          *Service
+	calendarId string
+	opt_       map[string]interface{}
+}
+
+// Delete: Deletes a secondary calendar.
+func (r *CalendarsService) Delete(calendarId string) *CalendarsDeleteCall {
+	c := &CalendarsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.calendarId = calendarId
+	return c
+}
+
+func (c *CalendarsDeleteCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "calendars/{calendarId}")
+	urls = strings.Replace(urls, "{calendarId}", cleanPathString(c.calendarId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Deletes a secondary calendar.",
+	//   "httpMethod": "DELETE",
+	//   "id": "calendar.calendars.delete",
+	//   "parameterOrder": [
+	//     "calendarId"
+	//   ],
+	//   "parameters": {
+	//     "calendarId": {
+	//       "description": "Calendar identifier.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "calendars/{calendarId}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/calendar"
 	//   ]
 	// }
 
@@ -3134,111 +3246,58 @@ func (c *CalendarsGetCall) Do() (*Calendar, error) {
 
 }
 
-// method id "calendar.calendars.delete":
+// method id "calendar.calendars.insert":
 
-type CalendarsDeleteCall struct {
-	s          *Service
-	calendarId string
-	opt_       map[string]interface{}
+type CalendarsInsertCall struct {
+	s        *Service
+	calendar *Calendar
+	opt_     map[string]interface{}
 }
 
-// Delete: Deletes a secondary calendar.
-func (r *CalendarsService) Delete(calendarId string) *CalendarsDeleteCall {
-	c := &CalendarsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
-	c.calendarId = calendarId
+// Insert: Creates a secondary calendar.
+func (r *CalendarsService) Insert(calendar *Calendar) *CalendarsInsertCall {
+	c := &CalendarsInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.calendar = calendar
 	return c
 }
 
-func (c *CalendarsDeleteCall) Do() error {
+func (c *CalendarsInsertCall) Do() (*Calendar, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "calendars/{calendarId}")
-	urls = strings.Replace(urls, "{calendarId}", cleanPathString(c.calendarId), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("DELETE", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.calendar)
 	if err != nil {
-		return err
+		return nil, err
 	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return err
-	}
-	return nil
-	// {
-	//   "description": "Deletes a secondary calendar.",
-	//   "httpMethod": "DELETE",
-	//   "id": "calendar.calendars.delete",
-	//   "parameterOrder": [
-	//     "calendarId"
-	//   ],
-	//   "parameters": {
-	//     "calendarId": {
-	//       "description": "Calendar identifier.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "calendars/{calendarId}",
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/calendar"
-	//   ]
-	// }
-
-}
-
-// method id "calendar.calendars.clear":
-
-type CalendarsClearCall struct {
-	s          *Service
-	calendarId string
-	opt_       map[string]interface{}
-}
-
-// Clear: Clears a primary calendar. This operation deletes all data
-// associated with the primary calendar of an account and cannot be
-// undone.
-func (r *CalendarsService) Clear(calendarId string) *CalendarsClearCall {
-	c := &CalendarsClearCall{s: r.s, opt_: make(map[string]interface{})}
-	c.calendarId = calendarId
-	return c
-}
-
-func (c *CalendarsClearCall) Do() error {
-	var body io.Reader = nil
+	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "calendars/{calendarId}/clear")
-	urls = strings.Replace(urls, "{calendarId}", cleanPathString(c.calendarId), 1)
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "calendars")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
+	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return nil, err
 	}
-	return nil
+	ret := new(Calendar)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
 	// {
-	//   "description": "Clears a primary calendar. This operation deletes all data associated with the primary calendar of an account and cannot be undone.",
+	//   "description": "Creates a secondary calendar.",
 	//   "httpMethod": "POST",
-	//   "id": "calendar.calendars.clear",
-	//   "parameterOrder": [
-	//     "calendarId"
-	//   ],
-	//   "parameters": {
-	//     "calendarId": {
-	//       "description": "Calendar identifier.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
+	//   "id": "calendar.calendars.insert",
+	//   "path": "calendars",
+	//   "request": {
+	//     "$ref": "Calendar"
 	//   },
-	//   "path": "calendars/{calendarId}/clear",
+	//   "response": {
+	//     "$ref": "Calendar"
+	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/calendar"
 	//   ]
@@ -3380,65 +3439,6 @@ func (c *CalendarsUpdateCall) Do() (*Calendar, error) {
 	//     }
 	//   },
 	//   "path": "calendars/{calendarId}",
-	//   "request": {
-	//     "$ref": "Calendar"
-	//   },
-	//   "response": {
-	//     "$ref": "Calendar"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/calendar"
-	//   ]
-	// }
-
-}
-
-// method id "calendar.calendars.insert":
-
-type CalendarsInsertCall struct {
-	s        *Service
-	calendar *Calendar
-	opt_     map[string]interface{}
-}
-
-// Insert: Creates a secondary calendar.
-func (r *CalendarsService) Insert(calendar *Calendar) *CalendarsInsertCall {
-	c := &CalendarsInsertCall{s: r.s, opt_: make(map[string]interface{})}
-	c.calendar = calendar
-	return c
-}
-
-func (c *CalendarsInsertCall) Do() (*Calendar, error) {
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.calendar)
-	if err != nil {
-		return nil, err
-	}
-	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "calendars")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("POST", urls, body)
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(Calendar)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Creates a secondary calendar.",
-	//   "httpMethod": "POST",
-	//   "id": "calendar.calendars.insert",
-	//   "path": "calendars",
 	//   "request": {
 	//     "$ref": "Calendar"
 	//   },

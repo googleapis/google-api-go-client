@@ -69,31 +69,21 @@ type TranslationsService struct {
 	s *Service
 }
 
-type TranslationsListResponse struct {
-	// Translations: Translations contains list of translation results of
-	// given text
-	Translations []*TranslationsResource `json:"translations,omitempty"`
+type DetectionsListResponse struct {
+	// Detections: A detections contains detection results of several text
+	Detections [][]*DetectionsResourceItem `json:"detections,omitempty"`
 }
 
 type DetectionsResourceItem struct {
+	// Confidence: The confidence of the detection resul of this language.
+	Confidence float64 `json:"confidence,omitempty"`
+
 	// IsReliable: A boolean to indicate is the language detection result
 	// reliable.
 	IsReliable bool `json:"isReliable,omitempty"`
 
 	// Language: The language we detect
 	Language string `json:"language,omitempty"`
-
-	// Confidence: The confidence of the detection resul of this language.
-	Confidence float64 `json:"confidence,omitempty"`
-}
-
-type TranslationsResource struct {
-	// TranslatedText: The translation.
-	TranslatedText string `json:"translatedText,omitempty"`
-
-	// DetectedSourceLanguage: Detected source language if source parameter
-	// is unspecified.
-	DetectedSourceLanguage string `json:"detectedSourceLanguage,omitempty"`
 }
 
 type LanguagesListResponse struct {
@@ -105,18 +95,28 @@ type LanguagesListResponse struct {
 	Languages []*LanguagesResource `json:"languages,omitempty"`
 }
 
-type DetectionsListResponse struct {
-	// Detections: A detections contains detection results of several text
-	Detections [][]*DetectionsResourceItem `json:"detections,omitempty"`
-}
-
 type LanguagesResource struct {
-	// Language: The language code.
-	Language string `json:"language,omitempty"`
-
 	// Name: The localized name of the language if target parameter is
 	// given.
 	Name string `json:"name,omitempty"`
+
+	// Language: The language code.
+	Language string `json:"language,omitempty"`
+}
+
+type TranslationsListResponse struct {
+	// Translations: Translations contains list of translation results of
+	// given text
+	Translations []*TranslationsResource `json:"translations,omitempty"`
+}
+
+type TranslationsResource struct {
+	// TranslatedText: The translation.
+	TranslatedText string `json:"translatedText,omitempty"`
+
+	// DetectedSourceLanguage: Detected source language if source parameter
+	// is unspecified.
+	DetectedSourceLanguage string `json:"detectedSourceLanguage,omitempty"`
 }
 
 // method id "language.detections.list":
@@ -260,16 +260,16 @@ func (r *TranslationsService) List(q []string, target string) *TranslationsListC
 	return c
 }
 
-// Format sets the optional parameter "format": The format of the text
-func (c *TranslationsListCall) Format(format string) *TranslationsListCall {
-	c.opt_["format"] = format
-	return c
-}
-
 // Cid sets the optional parameter "cid": The customization id for
 // translate
 func (c *TranslationsListCall) Cid(cid string) *TranslationsListCall {
 	c.opt_["cid"] = cid
+	return c
+}
+
+// Format sets the optional parameter "format": The format of the text
+func (c *TranslationsListCall) Format(format string) *TranslationsListCall {
+	c.opt_["format"] = format
 	return c
 }
 
@@ -288,11 +288,11 @@ func (c *TranslationsListCall) Do() (*TranslationsListResponse, error) {
 	for _, v := range c.q {
 		params.Add("q", fmt.Sprintf("%v", v))
 	}
-	if v, ok := c.opt_["format"]; ok {
-		params.Set("format", fmt.Sprintf("%v", v))
-	}
 	if v, ok := c.opt_["cid"]; ok {
 		params.Set("cid", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["format"]; ok {
+		params.Set("format", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))

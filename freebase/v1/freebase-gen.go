@@ -60,155 +60,6 @@ type ContentserviceGet struct {
 	Result string `json:"result,omitempty"`
 }
 
-// method id "freebase.image":
-
-type ImageCall struct {
-	s    *Service
-	id   []string
-	opt_ map[string]interface{}
-}
-
-// Image: Returns the scaled/cropped image attached to a freebase node.
-func (s *Service) Image(id []string) *ImageCall {
-	c := &ImageCall{s: s, opt_: make(map[string]interface{})}
-	c.id = id
-	return c
-}
-
-// Maxheight sets the optional parameter "maxheight": Maximum height in
-// pixels for resulting image.
-func (c *ImageCall) Maxheight(maxheight int64) *ImageCall {
-	c.opt_["maxheight"] = maxheight
-	return c
-}
-
-// Pad sets the optional parameter "pad": A boolean specifying whether
-// the resulting image should be padded up to the requested dimensions.
-func (c *ImageCall) Pad(pad bool) *ImageCall {
-	c.opt_["pad"] = pad
-	return c
-}
-
-// Fallbackid sets the optional parameter "fallbackid": Use the image
-// associated with this secondary id if no image is associated with the
-// primary id.
-func (c *ImageCall) Fallbackid(fallbackid string) *ImageCall {
-	c.opt_["fallbackid"] = fallbackid
-	return c
-}
-
-// Maxwidth sets the optional parameter "maxwidth": Maximum width in
-// pixels for resulting image.
-func (c *ImageCall) Maxwidth(maxwidth int64) *ImageCall {
-	c.opt_["maxwidth"] = maxwidth
-	return c
-}
-
-// Mode sets the optional parameter "mode": Method used to scale or crop
-// image.
-func (c *ImageCall) Mode(mode string) *ImageCall {
-	c.opt_["mode"] = mode
-	return c
-}
-
-func (c *ImageCall) Do() error {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	if v, ok := c.opt_["maxheight"]; ok {
-		params.Set("maxheight", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pad"]; ok {
-		params.Set("pad", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fallbackid"]; ok {
-		params.Set("fallbackid", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["maxwidth"]; ok {
-		params.Set("maxwidth", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["mode"]; ok {
-		params.Set("mode", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/freebase/v1/", "image{/id*}")
-	urls = strings.Replace(urls, "{id}", cleanPathString(c.id[0]), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return err
-	}
-	return nil
-	// {
-	//   "description": "Returns the scaled/cropped image attached to a freebase node.",
-	//   "httpMethod": "GET",
-	//   "id": "freebase.image",
-	//   "parameterOrder": [
-	//     "id"
-	//   ],
-	//   "parameters": {
-	//     "fallbackid": {
-	//       "default": "/freebase/no_image_png",
-	//       "description": "Use the image associated with this secondary id if no image is associated with the primary id.",
-	//       "location": "query",
-	//       "pattern": "/[^.]*$",
-	//       "type": "string"
-	//     },
-	//     "id": {
-	//       "description": "Freebase entity or content id, mid, or guid.",
-	//       "location": "path",
-	//       "repeated": true,
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "maxheight": {
-	//       "description": "Maximum height in pixels for resulting image.",
-	//       "format": "uint32",
-	//       "location": "query",
-	//       "maximum": "4096",
-	//       "type": "integer"
-	//     },
-	//     "maxwidth": {
-	//       "description": "Maximum width in pixels for resulting image.",
-	//       "format": "uint32",
-	//       "location": "query",
-	//       "maximum": "4096",
-	//       "type": "integer"
-	//     },
-	//     "mode": {
-	//       "default": "fit",
-	//       "description": "Method used to scale or crop image.",
-	//       "enum": [
-	//         "fill",
-	//         "fillcrop",
-	//         "fillcropmid",
-	//         "fit"
-	//       ],
-	//       "enumDescriptions": [
-	//         "TODO(bendrees)",
-	//         "TODO(bendrees)",
-	//         "TODO(bendrees)",
-	//         "TODO(bendrees)"
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pad": {
-	//       "default": "false",
-	//       "description": "A boolean specifying whether the resulting image should be padded up to the requested dimensions.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     }
-	//   },
-	//   "path": "image{/id*}"
-	// }
-
-}
-
 // method id "freebase.mqlread":
 
 type MqlreadCall struct {
@@ -221,26 +72,6 @@ type MqlreadCall struct {
 func (s *Service) Mqlread(query string) *MqlreadCall {
 	c := &MqlreadCall{s: s, opt_: make(map[string]interface{})}
 	c.query = query
-	return c
-}
-
-// Cursor sets the optional parameter "cursor": The mql cursor.
-func (c *MqlreadCall) Cursor(cursor string) *MqlreadCall {
-	c.opt_["cursor"] = cursor
-	return c
-}
-
-// Lang sets the optional parameter "lang": The language of the results
-// - an id of a /type/lang object.
-func (c *MqlreadCall) Lang(lang string) *MqlreadCall {
-	c.opt_["lang"] = lang
-	return c
-}
-
-// Html_escape sets the optional parameter "html_escape": Whether or not
-// to escape entities.
-func (c *MqlreadCall) Html_escape(html_escape bool) *MqlreadCall {
-	c.opt_["html_escape"] = html_escape
 	return c
 }
 
@@ -258,6 +89,18 @@ func (c *MqlreadCall) Callback(callback string) *MqlreadCall {
 	return c
 }
 
+// Cost sets the optional parameter "cost": Show the costs or not.
+func (c *MqlreadCall) Cost(cost bool) *MqlreadCall {
+	c.opt_["cost"] = cost
+	return c
+}
+
+// Cursor sets the optional parameter "cursor": The mql cursor.
+func (c *MqlreadCall) Cursor(cursor string) *MqlreadCall {
+	c.opt_["cursor"] = cursor
+	return c
+}
+
 // Dateline sets the optional parameter "dateline": The dateline that
 // you get in a mqlwrite response to ensure consistent results.
 func (c *MqlreadCall) Dateline(dateline string) *MqlreadCall {
@@ -265,16 +108,10 @@ func (c *MqlreadCall) Dateline(dateline string) *MqlreadCall {
 	return c
 }
 
-// Cost sets the optional parameter "cost": Show the costs or not.
-func (c *MqlreadCall) Cost(cost bool) *MqlreadCall {
-	c.opt_["cost"] = cost
-	return c
-}
-
-// Uniqueness_failure sets the optional parameter "uniqueness_failure":
-// How MQL responds to uniqueness failures.
-func (c *MqlreadCall) Uniqueness_failure(uniqueness_failure string) *MqlreadCall {
-	c.opt_["uniqueness_failure"] = uniqueness_failure
+// Html_escape sets the optional parameter "html_escape": Whether or not
+// to escape entities.
+func (c *MqlreadCall) Html_escape(html_escape bool) *MqlreadCall {
+	c.opt_["html_escape"] = html_escape
 	return c
 }
 
@@ -285,37 +122,51 @@ func (c *MqlreadCall) Indent(indent int64) *MqlreadCall {
 	return c
 }
 
+// Lang sets the optional parameter "lang": The language of the results
+// - an id of a /type/lang object.
+func (c *MqlreadCall) Lang(lang string) *MqlreadCall {
+	c.opt_["lang"] = lang
+	return c
+}
+
+// Uniqueness_failure sets the optional parameter "uniqueness_failure":
+// How MQL responds to uniqueness failures.
+func (c *MqlreadCall) Uniqueness_failure(uniqueness_failure string) *MqlreadCall {
+	c.opt_["uniqueness_failure"] = uniqueness_failure
+	return c
+}
+
 func (c *MqlreadCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("query", fmt.Sprintf("%v", c.query))
-	if v, ok := c.opt_["cursor"]; ok {
-		params.Set("cursor", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["lang"]; ok {
-		params.Set("lang", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["html_escape"]; ok {
-		params.Set("html_escape", fmt.Sprintf("%v", v))
-	}
 	if v, ok := c.opt_["as_of_time"]; ok {
 		params.Set("as_of_time", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["callback"]; ok {
 		params.Set("callback", fmt.Sprintf("%v", v))
 	}
-	if v, ok := c.opt_["dateline"]; ok {
-		params.Set("dateline", fmt.Sprintf("%v", v))
-	}
 	if v, ok := c.opt_["cost"]; ok {
 		params.Set("cost", fmt.Sprintf("%v", v))
 	}
-	if v, ok := c.opt_["uniqueness_failure"]; ok {
-		params.Set("uniqueness_failure", fmt.Sprintf("%v", v))
+	if v, ok := c.opt_["cursor"]; ok {
+		params.Set("cursor", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["dateline"]; ok {
+		params.Set("dateline", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["html_escape"]; ok {
+		params.Set("html_escape", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["indent"]; ok {
 		params.Set("indent", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["lang"]; ok {
+		params.Set("lang", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["uniqueness_failure"]; ok {
+		params.Set("uniqueness_failure", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/freebase/v1/", "mqlread")
 	urls += "?" + params.Encode()
@@ -406,6 +257,155 @@ func (c *MqlreadCall) Do() error {
 	//     }
 	//   },
 	//   "path": "mqlread"
+	// }
+
+}
+
+// method id "freebase.image":
+
+type ImageCall struct {
+	s    *Service
+	id   []string
+	opt_ map[string]interface{}
+}
+
+// Image: Returns the scaled/cropped image attached to a freebase node.
+func (s *Service) Image(id []string) *ImageCall {
+	c := &ImageCall{s: s, opt_: make(map[string]interface{})}
+	c.id = id
+	return c
+}
+
+// Fallbackid sets the optional parameter "fallbackid": Use the image
+// associated with this secondary id if no image is associated with the
+// primary id.
+func (c *ImageCall) Fallbackid(fallbackid string) *ImageCall {
+	c.opt_["fallbackid"] = fallbackid
+	return c
+}
+
+// Maxheight sets the optional parameter "maxheight": Maximum height in
+// pixels for resulting image.
+func (c *ImageCall) Maxheight(maxheight int64) *ImageCall {
+	c.opt_["maxheight"] = maxheight
+	return c
+}
+
+// Maxwidth sets the optional parameter "maxwidth": Maximum width in
+// pixels for resulting image.
+func (c *ImageCall) Maxwidth(maxwidth int64) *ImageCall {
+	c.opt_["maxwidth"] = maxwidth
+	return c
+}
+
+// Mode sets the optional parameter "mode": Method used to scale or crop
+// image.
+func (c *ImageCall) Mode(mode string) *ImageCall {
+	c.opt_["mode"] = mode
+	return c
+}
+
+// Pad sets the optional parameter "pad": A boolean specifying whether
+// the resulting image should be padded up to the requested dimensions.
+func (c *ImageCall) Pad(pad bool) *ImageCall {
+	c.opt_["pad"] = pad
+	return c
+}
+
+func (c *ImageCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fallbackid"]; ok {
+		params.Set("fallbackid", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxheight"]; ok {
+		params.Set("maxheight", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxwidth"]; ok {
+		params.Set("maxwidth", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["mode"]; ok {
+		params.Set("mode", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pad"]; ok {
+		params.Set("pad", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/freebase/v1/", "image{/id*}")
+	urls = strings.Replace(urls, "{id}", cleanPathString(c.id[0]), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Returns the scaled/cropped image attached to a freebase node.",
+	//   "httpMethod": "GET",
+	//   "id": "freebase.image",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "fallbackid": {
+	//       "default": "/freebase/no_image_png",
+	//       "description": "Use the image associated with this secondary id if no image is associated with the primary id.",
+	//       "location": "query",
+	//       "pattern": "/[^.]*$",
+	//       "type": "string"
+	//     },
+	//     "id": {
+	//       "description": "Freebase entity or content id, mid, or guid.",
+	//       "location": "path",
+	//       "repeated": true,
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "maxheight": {
+	//       "description": "Maximum height in pixels for resulting image.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "4096",
+	//       "type": "integer"
+	//     },
+	//     "maxwidth": {
+	//       "description": "Maximum width in pixels for resulting image.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "4096",
+	//       "type": "integer"
+	//     },
+	//     "mode": {
+	//       "default": "fit",
+	//       "description": "Method used to scale or crop image.",
+	//       "enum": [
+	//         "fill",
+	//         "fillcrop",
+	//         "fillcropmid",
+	//         "fit"
+	//       ],
+	//       "enumDescriptions": [
+	//         "TODO(bendrees)",
+	//         "TODO(bendrees)",
+	//         "TODO(bendrees)",
+	//         "TODO(bendrees)"
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pad": {
+	//       "default": "false",
+	//       "description": "A boolean specifying whether the resulting image should be padded up to the requested dimensions.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "image{/id*}"
 	// }
 
 }

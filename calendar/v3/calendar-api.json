@@ -4,7 +4,7 @@
  "id": "calendar:v3",
  "name": "calendar",
  "version": "v3",
- "revision": "20120416",
+ "revision": "20120423",
  "title": "Calendar API",
  "description": "Lets you manipulate events and other calendar data.",
  "icons": {
@@ -13,7 +13,6 @@
  },
  "documentationLink": "http://code.google.com/apis/calendar/v3/using.html",
  "protocol": "rest",
- "baseUrl": "https://www.googleapis.com/calendar/v3/",
  "basePath": "/calendar/v3/",
  "rootUrl": "https://www.googleapis.com/",
  "servicePath": "calendar/v3/",
@@ -112,12 +111,7 @@
     },
     "id": {
      "type": "string",
-     "description": "Identifier of the ACL rule.",
-     "annotations": {
-      "required": [
-       "calendar.acl.update"
-      ]
-     }
+     "description": "Identifier of the ACL rule."
     },
     "kind": {
      "type": "string",
@@ -261,8 +255,7 @@
      "description": "Identifier of the calendar.",
      "annotations": {
       "required": [
-       "calendar.calendarList.insert",
-       "calendar.calendarList.update"
+       "calendar.calendarList.insert"
       ]
      }
     },
@@ -507,12 +500,7 @@
     },
     "id": {
      "type": "string",
-     "description": "Identifier of the event.",
-     "annotations": {
-      "required": [
-       "calendar.events.update"
-      ]
-     }
+     "description": "Identifier of the event."
     },
     "kind": {
      "type": "string",

@@ -4,7 +4,7 @@
  "id": "prediction:v1.2",
  "name": "prediction",
  "version": "v1.2",
- "revision": "20120320",
+ "revision": "20120423",
  "title": "Prediction API",
  "description": "Lets you access a cloud hosted machine learning service that makes it easy to build smart apps",
  "icons": {

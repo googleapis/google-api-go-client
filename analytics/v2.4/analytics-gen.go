@@ -92,19 +92,40 @@ func (r *DataService) Get(ids string, startDate string, endDate string, metrics 
 	return c
 }
 
-// Sort sets the optional parameter "sort": A comma-separated list of
-// dimensions or metrics that determine the sort order for the report
-// data.
-func (c *DataGetCall) Sort(sort string) *DataGetCall {
-	c.opt_["sort"] = sort
-	return c
-}
-
 // Dimensions sets the optional parameter "dimensions": A
 // comma-separated list of Analytics dimensions. E.g.,
 // 'ga:browser,ga:city'.
 func (c *DataGetCall) Dimensions(dimensions string) *DataGetCall {
 	c.opt_["dimensions"] = dimensions
+	return c
+}
+
+// Filters sets the optional parameter "filters": A comma-separated list
+// of dimension or metric filters to be applied to the report data.
+func (c *DataGetCall) Filters(filters string) *DataGetCall {
+	c.opt_["filters"] = filters
+	return c
+}
+
+// MaxResults sets the optional parameter "max-results": The maximum
+// number of entries to include in this feed.
+func (c *DataGetCall) MaxResults(maxResults int64) *DataGetCall {
+	c.opt_["max-results"] = maxResults
+	return c
+}
+
+// Segment sets the optional parameter "segment": An Analytics advanced
+// segment to be applied to the report data.
+func (c *DataGetCall) Segment(segment string) *DataGetCall {
+	c.opt_["segment"] = segment
+	return c
+}
+
+// Sort sets the optional parameter "sort": A comma-separated list of
+// dimensions or metrics that determine the sort order for the report
+// data.
+func (c *DataGetCall) Sort(sort string) *DataGetCall {
+	c.opt_["sort"] = sort
 	return c
 }
 
@@ -116,52 +137,31 @@ func (c *DataGetCall) StartIndex(startIndex int64) *DataGetCall {
 	return c
 }
 
-// MaxResults sets the optional parameter "max-results": The maximum
-// number of entries to include in this feed.
-func (c *DataGetCall) MaxResults(maxResults int64) *DataGetCall {
-	c.opt_["max-results"] = maxResults
-	return c
-}
-
-// Filters sets the optional parameter "filters": A comma-separated list
-// of dimension or metric filters to be applied to the report data.
-func (c *DataGetCall) Filters(filters string) *DataGetCall {
-	c.opt_["filters"] = filters
-	return c
-}
-
-// Segment sets the optional parameter "segment": An Analytics advanced
-// segment to be applied to the report data.
-func (c *DataGetCall) Segment(segment string) *DataGetCall {
-	c.opt_["segment"] = segment
-	return c
-}
-
 func (c *DataGetCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	params.Set("end-date", fmt.Sprintf("%v", c.endDate))
 	params.Set("ids", fmt.Sprintf("%v", c.ids))
 	params.Set("metrics", fmt.Sprintf("%v", c.metrics))
-	params.Set("end-date", fmt.Sprintf("%v", c.endDate))
 	params.Set("start-date", fmt.Sprintf("%v", c.startDate))
-	if v, ok := c.opt_["sort"]; ok {
-		params.Set("sort", fmt.Sprintf("%v", v))
-	}
 	if v, ok := c.opt_["dimensions"]; ok {
 		params.Set("dimensions", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["start-index"]; ok {
-		params.Set("start-index", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["max-results"]; ok {
-		params.Set("max-results", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["filters"]; ok {
 		params.Set("filters", fmt.Sprintf("%v", v))
 	}
+	if v, ok := c.opt_["max-results"]; ok {
+		params.Set("max-results", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["segment"]; ok {
 		params.Set("segment", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["sort"]; ok {
+		params.Set("sort", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["start-index"]; ok {
+		params.Set("start-index", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v2.4/", "data")
 	urls += "?" + params.Encode()

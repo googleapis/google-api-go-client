@@ -4,7 +4,7 @@
  "id": "drive:v1",
  "name": "drive",
  "version": "v1",
- "revision": "20120322",
+ "revision": "20120424",
  "title": "Drive API",
  "description": "The API to interact with Drive",
  "icons": {
@@ -88,7 +88,7 @@
     },
     "downloadUrl": {
      "type": "string",
-     "description": "Short term download URL for the file This will only be populated on files with content stored in Drive."
+     "description": "Short term download URL for the file. This will only be populated on files with content stored in Drive."
     },
     "etag": {
      "type": "string",

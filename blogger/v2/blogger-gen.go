@@ -89,12 +89,108 @@ type PagesService struct {
 	s *Service
 }
 
+type Blog struct {
+	// Id: The identifier for this resource.
+	Id int64 `json:"id,omitempty,string"`
+
+	// Pages: The container of pages in this blog.
+	Pages *BlogPages `json:"pages,omitempty"`
+
+	// Description: The description of this blog. This is displayed
+	// underneath the title.
+	Description string `json:"description,omitempty"`
+
+	// Locale: The locale this Blog is set to.
+	Locale *BlogLocale `json:"locale,omitempty"`
+
+	// SelfLink: The API REST URL to fetch this resource from.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// Name: The name of this blog. This is displayed as the title.
+	Name string `json:"name,omitempty"`
+
+	// Published: RFC 3339 date-time when this blog was published.
+	Published string `json:"published,omitempty"`
+
+	// Posts: The container of posts in this blog.
+	Posts *BlogPosts `json:"posts,omitempty"`
+
+	// Kind: The kind of this entry. Always blogger#blog
+	Kind string `json:"kind,omitempty"`
+
+	// Updated: RFC 3339 date-time when this blog was last updated.
+	Updated string `json:"updated,omitempty"`
+
+	// Url: The URL where this blog is published.
+	Url string `json:"url,omitempty"`
+}
+
+type BlogLocale struct {
+	// Language: The language this blog is authored in.
+	Language string `json:"language,omitempty"`
+
+	// Country: The country this blog's locale is set to.
+	Country string `json:"country,omitempty"`
+
+	// Variant: The language variant this blog is authored in.
+	Variant string `json:"variant,omitempty"`
+}
+
+type BlogPages struct {
+	// SelfLink: The URL of the container for pages in this blog.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// TotalItems: The count of pages in this blog.
+	TotalItems int64 `json:"totalItems,omitempty"`
+}
+
 type BlogPosts struct {
 	// SelfLink: The URL of the container for posts in this blog.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// TotalItems: The count of posts in this blog.
 	TotalItems int64 `json:"totalItems,omitempty"`
+}
+
+type BlogList struct {
+	// Items: The list of Blogs this user has Authorship or Admin rights
+	// over.
+	Items []*Blog `json:"items,omitempty"`
+
+	// Kind: The kind of this entity. Always blogger#blogList
+	Kind string `json:"kind,omitempty"`
+}
+
+type Comment struct {
+	// Published: RFC 3339 date-time when this comment was published.
+	Published string `json:"published,omitempty"`
+
+	// Post: Data about the post containing this comment.
+	Post *CommentPost `json:"post,omitempty"`
+
+	// Kind: The kind of this entry. Always blogger#comment
+	Kind string `json:"kind,omitempty"`
+
+	// Updated: RFC 3339 date-time when this comment was last updated.
+	Updated string `json:"updated,omitempty"`
+
+	// Content: The actual content of the comment. May include HTML markup.
+	Content string `json:"content,omitempty"`
+
+	// Id: The identifier for this resource.
+	Id int64 `json:"id,omitempty,string"`
+
+	// Blog: Data about the blog containing this comment.
+	Blog *CommentBlog `json:"blog,omitempty"`
+
+	// InReplyTo: Data about the comment this is in reply to.
+	InReplyTo *CommentInReplyTo `json:"inReplyTo,omitempty"`
+
+	// Author: The author of this Comment.
+	Author *CommentAuthor `json:"author,omitempty"`
+
+	// SelfLink: The API REST URL to fetch this resource from.
+	SelfLink string `json:"selfLink,omitempty"`
 }
 
 type CommentAuthor struct {
@@ -111,54 +207,14 @@ type CommentAuthor struct {
 	DisplayName string `json:"displayName,omitempty"`
 }
 
-type BlogList struct {
-	// Items: The list of Blogs this user has Authorship or Admin rights
-	// over.
-	Items []*Blog `json:"items,omitempty"`
-
-	// Kind: The kind of this entity. Always blogger#blogList
-	Kind string `json:"kind,omitempty"`
-}
-
-type UserLocale struct {
-	// Language: The user's language setting.
-	Language string `json:"language,omitempty"`
-
-	// Country: The user's country setting.
-	Country string `json:"country,omitempty"`
-
-	// Variant: The user's language variant setting.
-	Variant string `json:"variant,omitempty"`
-}
-
-type User struct {
-	// Locale: This user's locale
-	Locale *UserLocale `json:"locale,omitempty"`
-
-	// SelfLink: The API REST URL to fetch this resource from.
-	SelfLink string `json:"selfLink,omitempty"`
-
-	// Kind: The kind of this entity. Always blogger#user
-	Kind string `json:"kind,omitempty"`
-
-	// Url: The user's profile page.
+type CommentAuthorImage struct {
+	// Url: The comment creator's avatar URL.
 	Url string `json:"url,omitempty"`
+}
 
-	// Id: The identifier for this User.
-	Id string `json:"id,omitempty"`
-
-	// Created: The timestamp of when this profile was created, in seconds
-	// since epoch.
-	Created string `json:"created,omitempty"`
-
-	// DisplayName: The display name.
-	DisplayName string `json:"displayName,omitempty"`
-
-	// Blogs: The container of blogs for this user.
-	Blogs *UserBlogs `json:"blogs,omitempty"`
-
-	// About: Profile summary information.
-	About string `json:"about,omitempty"`
+type CommentBlog struct {
+	// Id: The identifier of the blog containing this comment.
+	Id int64 `json:"id,omitempty,string"`
 }
 
 type CommentInReplyTo struct {
@@ -166,7 +222,31 @@ type CommentInReplyTo struct {
 	Id int64 `json:"id,omitempty,string"`
 }
 
+type CommentPost struct {
+	// Id: The identifier of the post containing this comment.
+	Id int64 `json:"id,omitempty,string"`
+}
+
+type CommentList struct {
+	// Kind: The kind of this entry. Always blogger#commentList
+	Kind string `json:"kind,omitempty"`
+
+	// PrevPageToken: Pagination token to fetch the previous page, if one
+	// exists.
+	PrevPageToken string `json:"prevPageToken,omitempty"`
+
+	// Items: The List of Comments for a Post.
+	Items []*Comment `json:"items,omitempty"`
+
+	// NextPageToken: Pagination token to fetch the next page, if one
+	// exists.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+}
+
 type Page struct {
+	// Published: RFC 3339 date-time when this Page was published.
+	Published string `json:"published,omitempty"`
+
 	// Kind: The kind of this entity. Always blogger#page
 	Kind string `json:"kind,omitempty"`
 
@@ -194,94 +274,44 @@ type Page struct {
 
 	// SelfLink: The API REST URL to fetch this resource from.
 	SelfLink string `json:"selfLink,omitempty"`
-
-	// Published: RFC 3339 date-time when this Page was published.
-	Published string `json:"published,omitempty"`
 }
 
-type CommentBlog struct {
-	// Id: The identifier of the blog containing this comment.
-	Id int64 `json:"id,omitempty,string"`
-}
+type PageAuthor struct {
+	// Image: The page author's avatar.
+	Image *PageAuthorImage `json:"image,omitempty"`
 
-type PageList struct {
-	// Items: The list of Pages for a Blog.
-	Items []*Page `json:"items,omitempty"`
-
-	// Kind: The kind of this entity. Always blogger#pageList
-	Kind string `json:"kind,omitempty"`
-}
-
-type PostAuthor struct {
-	// Url: The URL of the Post creator's Profile page.
+	// Url: The URL of the Page creator's Profile page.
 	Url string `json:"url,omitempty"`
 
-	// Id: The identifier of the Post creator.
+	// Id: The identifier of the Page creator.
 	Id string `json:"id,omitempty"`
 
 	// DisplayName: The display name.
 	DisplayName string `json:"displayName,omitempty"`
-
-	// Image: The Post author's avatar.
-	Image *PostAuthorImage `json:"image,omitempty"`
 }
 
-type CommentPost struct {
-	// Id: The identifier of the post containing this comment.
+type PageAuthorImage struct {
+	// Url: The page author's avatar URL.
+	Url string `json:"url,omitempty"`
+}
+
+type PageBlog struct {
+	// Id: The identifier of the blog containing this page.
 	Id int64 `json:"id,omitempty,string"`
 }
 
-type BlogPages struct {
-	// SelfLink: The URL of the container for pages in this blog.
-	SelfLink string `json:"selfLink,omitempty"`
-
-	// TotalItems: The count of pages in this blog.
-	TotalItems int64 `json:"totalItems,omitempty"`
-}
-
-type PostBlog struct {
-	// Id: The identifier of the Blog that contains this Post.
-	Id int64 `json:"id,omitempty,string"`
-}
-
-type UserBlogs struct {
-	// SelfLink: The URL of the Blogs for this user.
-	SelfLink string `json:"selfLink,omitempty"`
-}
-
-type Comment struct {
-	// InReplyTo: Data about the comment this is in reply to.
-	InReplyTo *CommentInReplyTo `json:"inReplyTo,omitempty"`
-
-	// Author: The author of this Comment.
-	Author *CommentAuthor `json:"author,omitempty"`
-
-	// SelfLink: The API REST URL to fetch this resource from.
-	SelfLink string `json:"selfLink,omitempty"`
-
-	// Published: RFC 3339 date-time when this comment was published.
-	Published string `json:"published,omitempty"`
-
-	// Post: Data about the post containing this comment.
-	Post *CommentPost `json:"post,omitempty"`
-
-	// Kind: The kind of this entry. Always blogger#comment
+type PageList struct {
+	// Kind: The kind of this entity. Always blogger#pageList
 	Kind string `json:"kind,omitempty"`
 
-	// Updated: RFC 3339 date-time when this comment was last updated.
-	Updated string `json:"updated,omitempty"`
-
-	// Content: The actual content of the comment. May include HTML markup.
-	Content string `json:"content,omitempty"`
-
-	// Id: The identifier for this resource.
-	Id int64 `json:"id,omitempty,string"`
-
-	// Blog: Data about the blog containing this comment.
-	Blog *CommentBlog `json:"blog,omitempty"`
+	// Items: The list of Pages for a Blog.
+	Items []*Page `json:"items,omitempty"`
 }
 
 type Post struct {
+	// Published: RFC 3339 date-time when this Post was published.
+	Published string `json:"published,omitempty"`
+
 	// Replies: The container of comments on this Post.
 	Replies *PostReplies `json:"replies,omitempty"`
 
@@ -314,9 +344,20 @@ type Post struct {
 
 	// SelfLink: The API REST URL to fetch this resource from.
 	SelfLink string `json:"selfLink,omitempty"`
+}
 
-	// Published: RFC 3339 date-time when this Post was published.
-	Published string `json:"published,omitempty"`
+type PostAuthor struct {
+	// Image: The Post author's avatar.
+	Image *PostAuthorImage `json:"image,omitempty"`
+
+	// Url: The URL of the Post creator's Profile page.
+	Url string `json:"url,omitempty"`
+
+	// Id: The identifier of the Post creator.
+	Id string `json:"id,omitempty"`
+
+	// DisplayName: The display name.
+	DisplayName string `json:"displayName,omitempty"`
 }
 
 type PostAuthorImage struct {
@@ -324,80 +365,17 @@ type PostAuthorImage struct {
 	Url string `json:"url,omitempty"`
 }
 
-type BlogLocale struct {
-	// Country: The country this blog's locale is set to.
-	Country string `json:"country,omitempty"`
-
-	// Variant: The language variant this blog is authored in.
-	Variant string `json:"variant,omitempty"`
-
-	// Language: The language this blog is authored in.
-	Language string `json:"language,omitempty"`
-}
-
-type CommentList struct {
-	// Items: The List of Comments for a Post.
-	Items []*Comment `json:"items,omitempty"`
-
-	// NextPageToken: Pagination token to fetch the next page, if one
-	// exists.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// Kind: The kind of this entry. Always blogger#commentList
-	Kind string `json:"kind,omitempty"`
-
-	// PrevPageToken: Pagination token to fetch the previous page, if one
-	// exists.
-	PrevPageToken string `json:"prevPageToken,omitempty"`
+type PostBlog struct {
+	// Id: The identifier of the Blog that contains this Post.
+	Id int64 `json:"id,omitempty,string"`
 }
 
 type PostReplies struct {
-	// TotalItems: The count of comments on this post.
-	TotalItems int64 `json:"totalItems,omitempty,string"`
-
 	// SelfLink: The URL of the comments on this post.
 	SelfLink string `json:"selfLink,omitempty"`
-}
 
-type Blog struct {
-	// Name: The name of this blog. This is displayed as the title.
-	Name string `json:"name,omitempty"`
-
-	// Published: RFC 3339 date-time when this blog was published.
-	Published string `json:"published,omitempty"`
-
-	// Posts: The container of posts in this blog.
-	Posts *BlogPosts `json:"posts,omitempty"`
-
-	// Kind: The kind of this entry. Always blogger#blog
-	Kind string `json:"kind,omitempty"`
-
-	// Updated: RFC 3339 date-time when this blog was last updated.
-	Updated string `json:"updated,omitempty"`
-
-	// Url: The URL where this blog is published.
-	Url string `json:"url,omitempty"`
-
-	// Id: The identifier for this resource.
-	Id int64 `json:"id,omitempty,string"`
-
-	// Pages: The container of pages in this blog.
-	Pages *BlogPages `json:"pages,omitempty"`
-
-	// Description: The description of this blog. This is displayed
-	// underneath the title.
-	Description string `json:"description,omitempty"`
-
-	// Locale: The locale this Blog is set to.
-	Locale *BlogLocale `json:"locale,omitempty"`
-
-	// SelfLink: The API REST URL to fetch this resource from.
-	SelfLink string `json:"selfLink,omitempty"`
-}
-
-type PageBlog struct {
-	// Id: The identifier of the blog containing this page.
-	Id int64 `json:"id,omitempty,string"`
+	// TotalItems: The count of comments on this post.
+	TotalItems int64 `json:"totalItems,omitempty,string"`
 }
 
 type PostList struct {
@@ -416,28 +394,50 @@ type PostList struct {
 	PrevPageToken string `json:"prevPageToken,omitempty"`
 }
 
-type PageAuthor struct {
-	// Url: The URL of the Page creator's Profile page.
+type User struct {
+	// Locale: This user's locale
+	Locale *UserLocale `json:"locale,omitempty"`
+
+	// SelfLink: The API REST URL to fetch this resource from.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// Kind: The kind of this entity. Always blogger#user
+	Kind string `json:"kind,omitempty"`
+
+	// Url: The user's profile page.
 	Url string `json:"url,omitempty"`
 
-	// Id: The identifier of the Page creator.
+	// Id: The identifier for this User.
 	Id string `json:"id,omitempty"`
+
+	// Created: The timestamp of when this profile was created, in seconds
+	// since epoch.
+	Created string `json:"created,omitempty"`
 
 	// DisplayName: The display name.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Image: The page author's avatar.
-	Image *PageAuthorImage `json:"image,omitempty"`
+	// Blogs: The container of blogs for this user.
+	Blogs *UserBlogs `json:"blogs,omitempty"`
+
+	// About: Profile summary information.
+	About string `json:"about,omitempty"`
 }
 
-type CommentAuthorImage struct {
-	// Url: The comment creator's avatar URL.
-	Url string `json:"url,omitempty"`
+type UserBlogs struct {
+	// SelfLink: The URL of the Blogs for this user.
+	SelfLink string `json:"selfLink,omitempty"`
 }
 
-type PageAuthorImage struct {
-	// Url: The page author's avatar URL.
-	Url string `json:"url,omitempty"`
+type UserLocale struct {
+	// Language: The user's language setting.
+	Language string `json:"language,omitempty"`
+
+	// Country: The user's country setting.
+	Country string `json:"country,omitempty"`
+
+	// Variant: The user's language variant setting.
+	Variant string `json:"variant,omitempty"`
 }
 
 // method id "blogger.users.get":
@@ -494,129 +494,6 @@ func (c *UsersGetCall) Do() (*User, error) {
 	//   "path": "users/{userId}",
 	//   "response": {
 	//     "$ref": "User"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/blogger"
-	//   ]
-	// }
-
-}
-
-// method id "blogger.posts.list":
-
-type PostsListCall struct {
-	s      *Service
-	blogId string
-	opt_   map[string]interface{}
-}
-
-// List: Retrieves a list of posts, possibly filtered.
-func (r *PostsService) List(blogId string) *PostsListCall {
-	c := &PostsListCall{s: r.s, opt_: make(map[string]interface{})}
-	c.blogId = blogId
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": Continuation token
-// if the request is paged.
-func (c *PostsListCall) PageToken(pageToken string) *PostsListCall {
-	c.opt_["pageToken"] = pageToken
-	return c
-}
-
-// MaxResults sets the optional parameter "maxResults": Maximum number
-// of posts to fetch.
-func (c *PostsListCall) MaxResults(maxResults int64) *PostsListCall {
-	c.opt_["maxResults"] = maxResults
-	return c
-}
-
-// FetchBodies sets the optional parameter "fetchBodies": Whether the
-// body content of posts is included.
-func (c *PostsListCall) FetchBodies(fetchBodies bool) *PostsListCall {
-	c.opt_["fetchBodies"] = fetchBodies
-	return c
-}
-
-// StartDate sets the optional parameter "startDate": Earliest post date
-// to fetch.
-func (c *PostsListCall) StartDate(startDate string) *PostsListCall {
-	c.opt_["startDate"] = startDate
-	return c
-}
-
-func (c *PostsListCall) Do() (*PostList, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fetchBodies"]; ok {
-		params.Set("fetchBodies", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["startDate"]; ok {
-		params.Set("startDate", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/blogger/v2/", "blogs/{blogId}/posts")
-	urls = strings.Replace(urls, "{blogId}", cleanPathString(c.blogId), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(PostList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Retrieves a list of posts, possibly filtered.",
-	//   "httpMethod": "GET",
-	//   "id": "blogger.posts.list",
-	//   "parameterOrder": [
-	//     "blogId"
-	//   ],
-	//   "parameters": {
-	//     "blogId": {
-	//       "description": "ID of the blog to fetch posts from.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "fetchBodies": {
-	//       "description": "Whether the body content of posts is included.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "maxResults": {
-	//       "description": "Maximum number of posts to fetch.",
-	//       "format": "uint32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Continuation token if the request is paged.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "startDate": {
-	//       "description": "Earliest post date to fetch.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "blogs/{blogId}/posts",
-	//   "response": {
-	//     "$ref": "PostList"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/blogger"
@@ -697,6 +574,129 @@ func (c *PostsGetCall) Do() (*Post, error) {
 
 }
 
+// method id "blogger.posts.list":
+
+type PostsListCall struct {
+	s      *Service
+	blogId string
+	opt_   map[string]interface{}
+}
+
+// List: Retrieves a list of posts, possibly filtered.
+func (r *PostsService) List(blogId string) *PostsListCall {
+	c := &PostsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.blogId = blogId
+	return c
+}
+
+// FetchBodies sets the optional parameter "fetchBodies": Whether the
+// body content of posts is included.
+func (c *PostsListCall) FetchBodies(fetchBodies bool) *PostsListCall {
+	c.opt_["fetchBodies"] = fetchBodies
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum number
+// of posts to fetch.
+func (c *PostsListCall) MaxResults(maxResults int64) *PostsListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Continuation token
+// if the request is paged.
+func (c *PostsListCall) PageToken(pageToken string) *PostsListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+// StartDate sets the optional parameter "startDate": Earliest post date
+// to fetch.
+func (c *PostsListCall) StartDate(startDate string) *PostsListCall {
+	c.opt_["startDate"] = startDate
+	return c
+}
+
+func (c *PostsListCall) Do() (*PostList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fetchBodies"]; ok {
+		params.Set("fetchBodies", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["startDate"]; ok {
+		params.Set("startDate", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/blogger/v2/", "blogs/{blogId}/posts")
+	urls = strings.Replace(urls, "{blogId}", cleanPathString(c.blogId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(PostList)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a list of posts, possibly filtered.",
+	//   "httpMethod": "GET",
+	//   "id": "blogger.posts.list",
+	//   "parameterOrder": [
+	//     "blogId"
+	//   ],
+	//   "parameters": {
+	//     "blogId": {
+	//       "description": "ID of the blog to fetch posts from.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "fetchBodies": {
+	//       "description": "Whether the body content of posts is included.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "maxResults": {
+	//       "description": "Maximum number of posts to fetch.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Continuation token if the request is paged.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "startDate": {
+	//       "description": "Earliest post date to fetch.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "blogs/{blogId}/posts",
+	//   "response": {
+	//     "$ref": "PostList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/blogger"
+	//   ]
+	// }
+
+}
+
 // method id "blogger.blogs.get":
 
 type BlogsGetCall struct {
@@ -751,139 +751,6 @@ func (c *BlogsGetCall) Do() (*Blog, error) {
 	//   "path": "blogs/{blogId}",
 	//   "response": {
 	//     "$ref": "Blog"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/blogger"
-	//   ]
-	// }
-
-}
-
-// method id "blogger.comments.list":
-
-type CommentsListCall struct {
-	s      *Service
-	blogId string
-	postId string
-	opt_   map[string]interface{}
-}
-
-// List: Retrieves the comments for a blog, possibly filtered.
-func (r *CommentsService) List(blogId string, postId string) *CommentsListCall {
-	c := &CommentsListCall{s: r.s, opt_: make(map[string]interface{})}
-	c.blogId = blogId
-	c.postId = postId
-	return c
-}
-
-// MaxResults sets the optional parameter "maxResults": Maximum number
-// of comments to include in the result.
-func (c *CommentsListCall) MaxResults(maxResults int64) *CommentsListCall {
-	c.opt_["maxResults"] = maxResults
-	return c
-}
-
-// FetchBodies sets the optional parameter "fetchBodies": Whether the
-// body content of the comments is included.
-func (c *CommentsListCall) FetchBodies(fetchBodies bool) *CommentsListCall {
-	c.opt_["fetchBodies"] = fetchBodies
-	return c
-}
-
-// StartDate sets the optional parameter "startDate": Earliest date of
-// comment to fetch.
-func (c *CommentsListCall) StartDate(startDate string) *CommentsListCall {
-	c.opt_["startDate"] = startDate
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": Continuation token
-// if request is paged.
-func (c *CommentsListCall) PageToken(pageToken string) *CommentsListCall {
-	c.opt_["pageToken"] = pageToken
-	return c
-}
-
-func (c *CommentsListCall) Do() (*CommentList, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fetchBodies"]; ok {
-		params.Set("fetchBodies", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["startDate"]; ok {
-		params.Set("startDate", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/blogger/v2/", "blogs/{blogId}/posts/{postId}/comments")
-	urls = strings.Replace(urls, "{blogId}", cleanPathString(c.blogId), 1)
-	urls = strings.Replace(urls, "{postId}", cleanPathString(c.postId), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(CommentList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Retrieves the comments for a blog, possibly filtered.",
-	//   "httpMethod": "GET",
-	//   "id": "blogger.comments.list",
-	//   "parameterOrder": [
-	//     "blogId",
-	//     "postId"
-	//   ],
-	//   "parameters": {
-	//     "blogId": {
-	//       "description": "ID of the blog to fetch comments from.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "fetchBodies": {
-	//       "description": "Whether the body content of the comments is included.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "maxResults": {
-	//       "description": "Maximum number of comments to include in the result.",
-	//       "format": "uint32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Continuation token if request is paged.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "postId": {
-	//       "description": "ID of the post to fetch posts from.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "startDate": {
-	//       "description": "Earliest date of comment to fetch.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "blogs/{blogId}/posts/{postId}/comments",
-	//   "response": {
-	//     "$ref": "CommentList"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/blogger"
@@ -974,37 +841,70 @@ func (c *CommentsGetCall) Do() (*Comment, error) {
 
 }
 
-// method id "blogger.pages.list":
+// method id "blogger.comments.list":
 
-type PagesListCall struct {
+type CommentsListCall struct {
 	s      *Service
 	blogId string
+	postId string
 	opt_   map[string]interface{}
 }
 
-// List: Retrieves pages for a blog, possibly filtered.
-func (r *PagesService) List(blogId string) *PagesListCall {
-	c := &PagesListCall{s: r.s, opt_: make(map[string]interface{})}
+// List: Retrieves the comments for a blog, possibly filtered.
+func (r *CommentsService) List(blogId string, postId string) *CommentsListCall {
+	c := &CommentsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.blogId = blogId
+	c.postId = postId
 	return c
 }
 
-// FetchBodies sets the optional parameter "fetchBodies": Whether to
-// retrieve the Page bodies.
-func (c *PagesListCall) FetchBodies(fetchBodies bool) *PagesListCall {
+// FetchBodies sets the optional parameter "fetchBodies": Whether the
+// body content of the comments is included.
+func (c *CommentsListCall) FetchBodies(fetchBodies bool) *CommentsListCall {
 	c.opt_["fetchBodies"] = fetchBodies
 	return c
 }
 
-func (c *PagesListCall) Do() (*PageList, error) {
+// MaxResults sets the optional parameter "maxResults": Maximum number
+// of comments to include in the result.
+func (c *CommentsListCall) MaxResults(maxResults int64) *CommentsListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Continuation token
+// if request is paged.
+func (c *CommentsListCall) PageToken(pageToken string) *CommentsListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+// StartDate sets the optional parameter "startDate": Earliest date of
+// comment to fetch.
+func (c *CommentsListCall) StartDate(startDate string) *CommentsListCall {
+	c.opt_["startDate"] = startDate
+	return c
+}
+
+func (c *CommentsListCall) Do() (*CommentList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	if v, ok := c.opt_["fetchBodies"]; ok {
 		params.Set("fetchBodies", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/blogger/v2/", "blogs/{blogId}/pages")
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["startDate"]; ok {
+		params.Set("startDate", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/blogger/v2/", "blogs/{blogId}/posts/{postId}/comments")
 	urls = strings.Replace(urls, "{blogId}", cleanPathString(c.blogId), 1)
+	urls = strings.Replace(urls, "{postId}", cleanPathString(c.postId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
@@ -1015,34 +915,57 @@ func (c *PagesListCall) Do() (*PageList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(PageList)
+	ret := new(CommentList)
 	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves pages for a blog, possibly filtered.",
+	//   "description": "Retrieves the comments for a blog, possibly filtered.",
 	//   "httpMethod": "GET",
-	//   "id": "blogger.pages.list",
+	//   "id": "blogger.comments.list",
 	//   "parameterOrder": [
-	//     "blogId"
+	//     "blogId",
+	//     "postId"
 	//   ],
 	//   "parameters": {
 	//     "blogId": {
-	//       "description": "ID of the blog to fetch pages from.",
+	//       "description": "ID of the blog to fetch comments from.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "fetchBodies": {
-	//       "description": "Whether to retrieve the Page bodies.",
+	//       "description": "Whether the body content of the comments is included.",
 	//       "location": "query",
 	//       "type": "boolean"
+	//     },
+	//     "maxResults": {
+	//       "description": "Maximum number of comments to include in the result.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Continuation token if request is paged.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "postId": {
+	//       "description": "ID of the post to fetch posts from.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "startDate": {
+	//       "description": "Earliest date of comment to fetch.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "blogs/{blogId}/pages",
+	//   "path": "blogs/{blogId}/posts/{postId}/comments",
 	//   "response": {
-	//     "$ref": "PageList"
+	//     "$ref": "CommentList"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/blogger"
@@ -1115,6 +1038,83 @@ func (c *PagesGetCall) Do() (*Page, error) {
 	//   "path": "blogs/{blogId}/pages/{pageId}",
 	//   "response": {
 	//     "$ref": "Page"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/blogger"
+	//   ]
+	// }
+
+}
+
+// method id "blogger.pages.list":
+
+type PagesListCall struct {
+	s      *Service
+	blogId string
+	opt_   map[string]interface{}
+}
+
+// List: Retrieves pages for a blog, possibly filtered.
+func (r *PagesService) List(blogId string) *PagesListCall {
+	c := &PagesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.blogId = blogId
+	return c
+}
+
+// FetchBodies sets the optional parameter "fetchBodies": Whether to
+// retrieve the Page bodies.
+func (c *PagesListCall) FetchBodies(fetchBodies bool) *PagesListCall {
+	c.opt_["fetchBodies"] = fetchBodies
+	return c
+}
+
+func (c *PagesListCall) Do() (*PageList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fetchBodies"]; ok {
+		params.Set("fetchBodies", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/blogger/v2/", "blogs/{blogId}/pages")
+	urls = strings.Replace(urls, "{blogId}", cleanPathString(c.blogId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(PageList)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves pages for a blog, possibly filtered.",
+	//   "httpMethod": "GET",
+	//   "id": "blogger.pages.list",
+	//   "parameterOrder": [
+	//     "blogId"
+	//   ],
+	//   "parameters": {
+	//     "blogId": {
+	//       "description": "ID of the blog to fetch pages from.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "fetchBodies": {
+	//       "description": "Whether to retrieve the Page bodies.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "blogs/{blogId}/pages",
+	//   "response": {
+	//     "$ref": "PageList"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/blogger"

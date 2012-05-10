@@ -13,7 +13,6 @@
  },
  "documentationLink": "http://wiki.freebase.com/wiki/API",
  "protocol": "rest",
- "baseUrl": "https://www.googleapis.com/freebase/v1/",
  "basePath": "/freebase/v1/",
  "rootUrl": "https://www.googleapis.com/",
  "servicePath": "freebase/v1/",

@@ -13,7 +13,6 @@
  },
  "documentationLink": "http://code.google.com/apis/tasks/v1/using.html",
  "protocol": "rest",
- "baseUrl": "https://www.googleapis.com/tasks/v1/",
  "basePath": "/tasks/v1/",
  "rootUrl": "https://www.googleapis.com/",
  "servicePath": "tasks/v1/",

@@ -38,17 +38,17 @@ const basePath = "https://www.googleapis.com/latitude/v1/"
 
 // OAuth2 scopes used by this API.
 const (
-	// Manage your best-available location
-	LatitudeCurrentBestScope = "https://www.googleapis.com/auth/latitude.current.best"
-
-	// Manage your city-level location and location history
-	LatitudeAllCityScope = "https://www.googleapis.com/auth/latitude.all.city"
-
 	// Manage your best-available location and location history
 	LatitudeAllBestScope = "https://www.googleapis.com/auth/latitude.all.best"
 
 	// Manage your city-level location
 	LatitudeCurrentCityScope = "https://www.googleapis.com/auth/latitude.current.city"
+
+	// Manage your best-available location
+	LatitudeCurrentBestScope = "https://www.googleapis.com/auth/latitude.current.best"
+
+	// Manage your city-level location and location history
+	LatitudeAllCityScope = "https://www.googleapis.com/auth/latitude.all.city"
 )
 
 func New(client *http.Client) (*Service, error) {
@@ -75,6 +75,10 @@ type CurrentLocationService struct {
 
 type LocationService struct {
 	s *Service
+}
+
+type LatitudeCurrentlocationResourceJson struct {
+	Location
 }
 
 type Location struct {
@@ -117,14 +121,54 @@ type Location struct {
 	ActivityId interface{} `json:"activityId,omitempty"`
 }
 
-type LatitudeCurrentlocationResourceJson struct {
-	Location
-}
-
 type LocationFeed struct {
 	Items []*Location `json:"items,omitempty"`
 
 	Kind string `json:"kind,omitempty"`
+}
+
+// method id "latitude.currentLocation.delete":
+
+type CurrentLocationDeleteCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// Delete: Deletes the authenticated user's current location.
+func (r *CurrentLocationService) Delete() *CurrentLocationDeleteCall {
+	c := &CurrentLocationDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+func (c *CurrentLocationDeleteCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/latitude/v1/", "currentLocation")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Deletes the authenticated user's current location.",
+	//   "httpMethod": "DELETE",
+	//   "id": "latitude.currentLocation.delete",
+	//   "path": "currentLocation",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/latitude.all.best",
+	//     "https://www.googleapis.com/auth/latitude.all.city",
+	//     "https://www.googleapis.com/auth/latitude.current.best",
+	//     "https://www.googleapis.com/auth/latitude.current.city"
+	//   ]
+	// }
+
 }
 
 // method id "latitude.currentLocation.get":
@@ -185,50 +229,6 @@ func (c *CurrentLocationGetCall) Do() (*LatitudeCurrentlocationResourceJson, err
 	//   "response": {
 	//     "$ref": "LatitudeCurrentlocationResourceJson"
 	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/latitude.all.best",
-	//     "https://www.googleapis.com/auth/latitude.all.city",
-	//     "https://www.googleapis.com/auth/latitude.current.best",
-	//     "https://www.googleapis.com/auth/latitude.current.city"
-	//   ]
-	// }
-
-}
-
-// method id "latitude.currentLocation.delete":
-
-type CurrentLocationDeleteCall struct {
-	s    *Service
-	opt_ map[string]interface{}
-}
-
-// Delete: Deletes the authenticated user's current location.
-func (r *CurrentLocationService) Delete() *CurrentLocationDeleteCall {
-	c := &CurrentLocationDeleteCall{s: r.s, opt_: make(map[string]interface{})}
-	return c
-}
-
-func (c *CurrentLocationDeleteCall) Do() error {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/latitude/v1/", "currentLocation")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("DELETE", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return err
-	}
-	return nil
-	// {
-	//   "description": "Deletes the authenticated user's current location.",
-	//   "httpMethod": "DELETE",
-	//   "id": "latitude.currentLocation.delete",
-	//   "path": "currentLocation",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/latitude.all.best",
 	//     "https://www.googleapis.com/auth/latitude.all.city",
@@ -301,169 +301,54 @@ func (c *CurrentLocationInsertCall) Do() (*LatitudeCurrentlocationResourceJson, 
 
 }
 
-// method id "latitude.location.list":
+// method id "latitude.location.delete":
 
-type LocationListCall struct {
-	s    *Service
-	opt_ map[string]interface{}
+type LocationDeleteCall struct {
+	s          *Service
+	locationId string
+	opt_       map[string]interface{}
 }
 
-// List: Lists the user's location history.
-func (r *LocationService) List() *LocationListCall {
-	c := &LocationListCall{s: r.s, opt_: make(map[string]interface{})}
+// Delete: Deletes a location from the user's location history.
+func (r *LocationService) Delete(locationId string) *LocationDeleteCall {
+	c := &LocationDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.locationId = locationId
 	return c
 }
 
-// MinTime sets the optional parameter "min-time": Minimum timestamp of
-// locations to return (ms since epoch).
-func (c *LocationListCall) MinTime(minTime string) *LocationListCall {
-	c.opt_["min-time"] = minTime
-	return c
-}
-
-// MaxResults sets the optional parameter "max-results": Maximum number
-// of locations to return.
-func (c *LocationListCall) MaxResults(maxResults string) *LocationListCall {
-	c.opt_["max-results"] = maxResults
-	return c
-}
-
-// Granularity sets the optional parameter "granularity": Granularity of
-// the requested locations.
-func (c *LocationListCall) Granularity(granularity string) *LocationListCall {
-	c.opt_["granularity"] = granularity
-	return c
-}
-
-// MaxTime sets the optional parameter "max-time": Maximum timestamp of
-// locations to return (ms since epoch).
-func (c *LocationListCall) MaxTime(maxTime string) *LocationListCall {
-	c.opt_["max-time"] = maxTime
-	return c
-}
-
-func (c *LocationListCall) Do() (*LocationFeed, error) {
+func (c *LocationDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	if v, ok := c.opt_["min-time"]; ok {
-		params.Set("min-time", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["max-results"]; ok {
-		params.Set("max-results", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["granularity"]; ok {
-		params.Set("granularity", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["max-time"]; ok {
-		params.Set("max-time", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/latitude/v1/", "location")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/latitude/v1/", "location/{locationId}")
+	urls = strings.Replace(urls, "{locationId}", cleanPathString(c.locationId), 1)
 	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
+	req, _ := http.NewRequest("DELETE", urls, body)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return err
 	}
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return err
 	}
-	ret := new(LocationFeed)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	return nil
 	// {
-	//   "description": "Lists the user's location history.",
-	//   "httpMethod": "GET",
-	//   "id": "latitude.location.list",
+	//   "description": "Deletes a location from the user's location history.",
+	//   "httpMethod": "DELETE",
+	//   "id": "latitude.location.delete",
+	//   "parameterOrder": [
+	//     "locationId"
+	//   ],
 	//   "parameters": {
-	//     "granularity": {
-	//       "description": "Granularity of the requested locations.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "max-results": {
-	//       "description": "Maximum number of locations to return.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "max-time": {
-	//       "description": "Maximum timestamp of locations to return (ms since epoch).",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "min-time": {
-	//       "description": "Minimum timestamp of locations to return (ms since epoch).",
-	//       "location": "query",
+	//     "locationId": {
+	//       "description": "Timestamp of the location to delete (ms since epoch).",
+	//       "location": "path",
+	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "location",
-	//   "response": {
-	//     "$ref": "LocationFeed"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/latitude.all.best",
-	//     "https://www.googleapis.com/auth/latitude.all.city"
-	//   ]
-	// }
-
-}
-
-// method id "latitude.location.insert":
-
-type LocationInsertCall struct {
-	s        *Service
-	location *Location
-	opt_     map[string]interface{}
-}
-
-// Insert: Inserts or updates a location in the user's location history.
-func (r *LocationService) Insert(location *Location) *LocationInsertCall {
-	c := &LocationInsertCall{s: r.s, opt_: make(map[string]interface{})}
-	c.location = location
-	return c
-}
-
-func (c *LocationInsertCall) Do() (*Location, error) {
-	var body io.Reader = nil
-	body, err := googleapi.WithDataWrapper.JSONReader(c.location)
-	if err != nil {
-		return nil, err
-	}
-	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/latitude/v1/", "location")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("POST", urls, body)
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(Location)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Inserts or updates a location in the user's location history.",
-	//   "httpMethod": "POST",
-	//   "id": "latitude.location.insert",
-	//   "path": "location",
-	//   "request": {
-	//     "$ref": "Location"
-	//   },
-	//   "response": {
-	//     "$ref": "Location"
-	//   },
+	//   "path": "location/{locationId}",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/latitude.all.best",
 	//     "https://www.googleapis.com/auth/latitude.all.city"
@@ -550,54 +435,169 @@ func (c *LocationGetCall) Do() (*Location, error) {
 
 }
 
-// method id "latitude.location.delete":
+// method id "latitude.location.insert":
 
-type LocationDeleteCall struct {
-	s          *Service
-	locationId string
-	opt_       map[string]interface{}
+type LocationInsertCall struct {
+	s        *Service
+	location *Location
+	opt_     map[string]interface{}
 }
 
-// Delete: Deletes a location from the user's location history.
-func (r *LocationService) Delete(locationId string) *LocationDeleteCall {
-	c := &LocationDeleteCall{s: r.s, opt_: make(map[string]interface{})}
-	c.locationId = locationId
+// Insert: Inserts or updates a location in the user's location history.
+func (r *LocationService) Insert(location *Location) *LocationInsertCall {
+	c := &LocationInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.location = location
 	return c
 }
 
-func (c *LocationDeleteCall) Do() error {
+func (c *LocationInsertCall) Do() (*Location, error) {
 	var body io.Reader = nil
+	body, err := googleapi.WithDataWrapper.JSONReader(c.location)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/latitude/v1/", "location/{locationId}")
-	urls = strings.Replace(urls, "{locationId}", cleanPathString(c.locationId), 1)
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/latitude/v1/", "location")
 	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("DELETE", urls, body)
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return nil, err
 	}
-	return nil
+	ret := new(Location)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
 	// {
-	//   "description": "Deletes a location from the user's location history.",
-	//   "httpMethod": "DELETE",
-	//   "id": "latitude.location.delete",
-	//   "parameterOrder": [
-	//     "locationId"
-	//   ],
+	//   "description": "Inserts or updates a location in the user's location history.",
+	//   "httpMethod": "POST",
+	//   "id": "latitude.location.insert",
+	//   "path": "location",
+	//   "request": {
+	//     "$ref": "Location"
+	//   },
+	//   "response": {
+	//     "$ref": "Location"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/latitude.all.best",
+	//     "https://www.googleapis.com/auth/latitude.all.city"
+	//   ]
+	// }
+
+}
+
+// method id "latitude.location.list":
+
+type LocationListCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// List: Lists the user's location history.
+func (r *LocationService) List() *LocationListCall {
+	c := &LocationListCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+// Granularity sets the optional parameter "granularity": Granularity of
+// the requested locations.
+func (c *LocationListCall) Granularity(granularity string) *LocationListCall {
+	c.opt_["granularity"] = granularity
+	return c
+}
+
+// MaxResults sets the optional parameter "max-results": Maximum number
+// of locations to return.
+func (c *LocationListCall) MaxResults(maxResults string) *LocationListCall {
+	c.opt_["max-results"] = maxResults
+	return c
+}
+
+// MaxTime sets the optional parameter "max-time": Maximum timestamp of
+// locations to return (ms since epoch).
+func (c *LocationListCall) MaxTime(maxTime string) *LocationListCall {
+	c.opt_["max-time"] = maxTime
+	return c
+}
+
+// MinTime sets the optional parameter "min-time": Minimum timestamp of
+// locations to return (ms since epoch).
+func (c *LocationListCall) MinTime(minTime string) *LocationListCall {
+	c.opt_["min-time"] = minTime
+	return c
+}
+
+func (c *LocationListCall) Do() (*LocationFeed, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["granularity"]; ok {
+		params.Set("granularity", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["max-results"]; ok {
+		params.Set("max-results", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["max-time"]; ok {
+		params.Set("max-time", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["min-time"]; ok {
+		params.Set("min-time", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/latitude/v1/", "location")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(LocationFeed)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the user's location history.",
+	//   "httpMethod": "GET",
+	//   "id": "latitude.location.list",
 	//   "parameters": {
-	//     "locationId": {
-	//       "description": "Timestamp of the location to delete (ms since epoch).",
-	//       "location": "path",
-	//       "required": true,
+	//     "granularity": {
+	//       "description": "Granularity of the requested locations.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "max-results": {
+	//       "description": "Maximum number of locations to return.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "max-time": {
+	//       "description": "Maximum timestamp of locations to return (ms since epoch).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "min-time": {
+	//       "description": "Minimum timestamp of locations to return (ms since epoch).",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "location/{locationId}",
+	//   "path": "location",
+	//   "response": {
+	//     "$ref": "LocationFeed"
+	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/latitude.all.best",
 	//     "https://www.googleapis.com/auth/latitude.all.city"

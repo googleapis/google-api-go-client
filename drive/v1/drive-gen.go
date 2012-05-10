@@ -62,49 +62,31 @@ type FilesService struct {
 	s *Service
 }
 
-type Permission struct {
-	// Role: The role that this permission describes. (For example: reader,
-	// writer, owner)
-	Role string `json:"role,omitempty"`
-
-	// AdditionalRoles: Any additional roles that this permission describes.
-	AdditionalRoles []string `json:"additionalRoles,omitempty"`
-
-	// Etag: An etag for this permission.
-	Etag string `json:"etag,omitempty"`
-
-	// Kind: The kind of this permission. This is always drive#permission
-	Kind string `json:"kind,omitempty"`
-
-	// Type: The type of permission (For example: user, group etc).
-	Type string `json:"type,omitempty"`
-}
-
-type FileParentsCollection struct {
-	// ParentLink: A link to get the metadata for this parent
-	ParentLink string `json:"parentLink,omitempty"`
-
-	// Id: The id of this parent
-	Id string `json:"id,omitempty"`
-}
-
-type FileLabels struct {
-	// Trashed: Whether this file has been trashed.
-	Trashed bool `json:"trashed,omitempty"`
-
-	// Hidden: Whether this file is hidden from the user
-	Hidden bool `json:"hidden,omitempty"`
-
-	// Starred: Whether this file is starred by the user.
-	Starred bool `json:"starred,omitempty"`
-}
-
-type FileIndexableText struct {
-	// Text: The text to be indexed for this file
-	Text string `json:"text,omitempty"`
-}
-
 type File struct {
+	// FileSize: The size of the file in bytes. This will only be populated
+	// on files with content stored in Drive.
+	FileSize int64 `json:"fileSize,omitempty,string"`
+
+	// MimeType: The mimetype of the file
+	MimeType string `json:"mimeType,omitempty"`
+
+	// ModifiedDate: Last time this file was modified by anyone (formatted
+	// RFC 3339 timestamp).
+	ModifiedDate string `json:"modifiedDate,omitempty"`
+
+	// Description: A short description of the file
+	Description string `json:"description,omitempty"`
+
+	// LastViewedDate: Last time this file was viewed by anyone (formatted
+	// RFC 3339 timestamp).
+	LastViewedDate string `json:"lastViewedDate,omitempty"`
+
+	// Labels: Labels for the file.
+	Labels *FileLabels `json:"labels,omitempty"`
+
+	// SelfLink: A link back to this file.
+	SelfLink string `json:"selfLink,omitempty"`
+
 	// Etag: ETag of the file.
 	Etag string `json:"etag,omitempty"`
 
@@ -145,106 +127,101 @@ type File struct {
 	// content stored in Drive.
 	FileExtension string `json:"fileExtension,omitempty"`
 
-	// DownloadUrl: Short term download URL for the file This will only be
+	// DownloadUrl: Short term download URL for the file. This will only be
 	// populated on files with content stored in Drive.
 	DownloadUrl string `json:"downloadUrl,omitempty"`
 
 	// Md5Checksum: An MD5 checksum for the content of this file. This will
 	// only be populated on files with content stored in Drive.
 	Md5Checksum string `json:"md5Checksum,omitempty"`
-
-	// FileSize: The size of the file in bytes. This will only be populated
-	// on files with content stored in Drive.
-	FileSize int64 `json:"fileSize,omitempty,string"`
-
-	// MimeType: The mimetype of the file
-	MimeType string `json:"mimeType,omitempty"`
-
-	// ModifiedDate: Last time this file was modified by anyone (formatted
-	// RFC 3339 timestamp).
-	ModifiedDate string `json:"modifiedDate,omitempty"`
-
-	// Description: A short description of the file
-	Description string `json:"description,omitempty"`
-
-	// LastViewedDate: Last time this file was viewed by anyone (formatted
-	// RFC 3339 timestamp).
-	LastViewedDate string `json:"lastViewedDate,omitempty"`
-
-	// Labels: Labels for the file.
-	Labels *FileLabels `json:"labels,omitempty"`
-
-	// SelfLink: A link back to this file.
-	SelfLink string `json:"selfLink,omitempty"`
 }
 
-// method id "drive.files.patch":
+type FileIndexableText struct {
+	// Text: The text to be indexed for this file
+	Text string `json:"text,omitempty"`
+}
 
-type FilesPatchCall struct {
+type FileLabels struct {
+	// Starred: Whether this file is starred by the user.
+	Starred bool `json:"starred,omitempty"`
+
+	// Trashed: Whether this file has been trashed.
+	Trashed bool `json:"trashed,omitempty"`
+
+	// Hidden: Whether this file is hidden from the user
+	Hidden bool `json:"hidden,omitempty"`
+}
+
+type FileParentsCollection struct {
+	// ParentLink: A link to get the metadata for this parent
+	ParentLink string `json:"parentLink,omitempty"`
+
+	// Id: The id of this parent
+	Id string `json:"id,omitempty"`
+}
+
+type Permission struct {
+	// Type: The type of permission (For example: user, group etc).
+	Type string `json:"type,omitempty"`
+
+	// Role: The role that this permission describes. (For example: reader,
+	// writer, owner)
+	Role string `json:"role,omitempty"`
+
+	// AdditionalRoles: Any additional roles that this permission describes.
+	AdditionalRoles []string `json:"additionalRoles,omitempty"`
+
+	// Etag: An etag for this permission.
+	Etag string `json:"etag,omitempty"`
+
+	// Kind: The kind of this permission. This is always drive#permission
+	Kind string `json:"kind,omitempty"`
+}
+
+// method id "drive.files.get":
+
+type FilesGetCall struct {
 	s    *Service
 	id   string
-	file *File
 	opt_ map[string]interface{}
 }
 
-// Patch: Updates file metadata and/or content. This method supports
-// patch semantics.
-func (r *FilesService) Patch(id string, file *File) *FilesPatchCall {
-	c := &FilesPatchCall{s: r.s, opt_: make(map[string]interface{})}
+// Get: Gets a file's metadata by id.
+func (r *FilesService) Get(id string) *FilesGetCall {
+	c := &FilesGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.id = id
-	c.file = file
 	return c
 }
 
-// UpdateModifiedDate sets the optional parameter "updateModifiedDate":
-// Controls updating the modified date of the file. If true, the
-// modified date will be updated to the current time, regardless of
-// whether other changes are being made. If false, the modified date
-// will only be updated to the current time if other changes are also
-// being made (changing the title, for example).
-func (c *FilesPatchCall) UpdateModifiedDate(updateModifiedDate bool) *FilesPatchCall {
-	c.opt_["updateModifiedDate"] = updateModifiedDate
+// Projection sets the optional parameter "projection": Restrict
+// information returned for simplicity and optimization.
+func (c *FilesGetCall) Projection(projection string) *FilesGetCall {
+	c.opt_["projection"] = projection
 	return c
 }
 
 // UpdateViewedDate sets the optional parameter "updateViewedDate":
-// Whether to update the view date after successfully updating the file.
-func (c *FilesPatchCall) UpdateViewedDate(updateViewedDate bool) *FilesPatchCall {
+// Whether to update the view date after successfully retrieving the
+// file.
+func (c *FilesGetCall) UpdateViewedDate(updateViewedDate bool) *FilesGetCall {
 	c.opt_["updateViewedDate"] = updateViewedDate
 	return c
 }
 
-// NewRevision sets the optional parameter "newRevision": Whether a blob
-// upload should create a new revision. If not set or false, the blob
-// data in the current head revision will be replaced.
-func (c *FilesPatchCall) NewRevision(newRevision bool) *FilesPatchCall {
-	c.opt_["newRevision"] = newRevision
-	return c
-}
-
-func (c *FilesPatchCall) Do() (*File, error) {
+func (c *FilesGetCall) Do() (*File, error) {
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.file)
-	if err != nil {
-		return nil, err
-	}
-	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	if v, ok := c.opt_["updateModifiedDate"]; ok {
-		params.Set("updateModifiedDate", fmt.Sprintf("%v", v))
+	if v, ok := c.opt_["projection"]; ok {
+		params.Set("projection", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["updateViewedDate"]; ok {
 		params.Set("updateViewedDate", fmt.Sprintf("%v", v))
 	}
-	if v, ok := c.opt_["newRevision"]; ok {
-		params.Set("newRevision", fmt.Sprintf("%v", v))
-	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v1/", "files/{id}")
 	urls = strings.Replace(urls, "{id}", cleanPathString(c.id), 1)
 	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("PATCH", urls, body)
-	req.Header.Set("Content-Type", ctype)
+	req, _ := http.NewRequest("GET", urls, body)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -259,9 +236,9 @@ func (c *FilesPatchCall) Do() (*File, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates file metadata and/or content. This method supports patch semantics.",
-	//   "httpMethod": "PATCH",
-	//   "id": "drive.files.patch",
+	//   "description": "Gets a file's metadata by id.",
+	//   "httpMethod": "GET",
+	//   "id": "drive.files.get",
 	//   "parameterOrder": [
 	//     "id"
 	//   ],
@@ -272,183 +249,27 @@ func (c *FilesPatchCall) Do() (*File, error) {
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "newRevision": {
-	//       "default": "true",
-	//       "description": "Whether a blob upload should create a new revision. If not set or false, the blob data in the current head revision will be replaced.",
+	//     "projection": {
+	//       "description": "Restrict information returned for simplicity and optimization.",
+	//       "enum": [
+	//         "BASIC",
+	//         "FULL"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Includes only the basic metadata fields",
+	//         "Includes all metadata fields"
+	//       ],
 	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "updateModifiedDate": {
-	//       "default": "false",
-	//       "description": "Controls updating the modified date of the file. If true, the modified date will be updated to the current time, regardless of whether other changes are being made. If false, the modified date will only be updated to the current time if other changes are also being made (changing the title, for example).",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "updateViewedDate": {
-	//       "default": "true",
-	//       "description": "Whether to update the view date after successfully updating the file.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     }
-	//   },
-	//   "path": "files/{id}",
-	//   "request": {
-	//     "$ref": "File"
-	//   },
-	//   "response": {
-	//     "$ref": "File"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/drive.file"
-	//   ]
-	// }
-
-}
-
-// method id "drive.files.update":
-
-type FilesUpdateCall struct {
-	s      *Service
-	id     string
-	file   *File
-	opt_   map[string]interface{}
-	media_ io.Reader
-}
-
-// Update: Updates file metadata and/or content
-func (r *FilesService) Update(id string, file *File) *FilesUpdateCall {
-	c := &FilesUpdateCall{s: r.s, opt_: make(map[string]interface{})}
-	c.id = id
-	c.file = file
-	return c
-}
-
-// UpdateModifiedDate sets the optional parameter "updateModifiedDate":
-// Controls updating the modified date of the file. If true, the
-// modified date will be updated to the current time, regardless of
-// whether other changes are being made. If false, the modified date
-// will only be updated to the current time if other changes are also
-// being made (changing the title, for example).
-func (c *FilesUpdateCall) UpdateModifiedDate(updateModifiedDate bool) *FilesUpdateCall {
-	c.opt_["updateModifiedDate"] = updateModifiedDate
-	return c
-}
-
-// UpdateViewedDate sets the optional parameter "updateViewedDate":
-// Whether to update the view date after successfully updating the file.
-func (c *FilesUpdateCall) UpdateViewedDate(updateViewedDate bool) *FilesUpdateCall {
-	c.opt_["updateViewedDate"] = updateViewedDate
-	return c
-}
-
-// NewRevision sets the optional parameter "newRevision": Whether a blob
-// upload should create a new revision. If not set or false, the blob
-// data in the current head revision will be replaced.
-func (c *FilesUpdateCall) NewRevision(newRevision bool) *FilesUpdateCall {
-	c.opt_["newRevision"] = newRevision
-	return c
-}
-func (c *FilesUpdateCall) Media(r io.Reader) *FilesUpdateCall {
-	c.media_ = r
-	return c
-}
-
-func (c *FilesUpdateCall) Do() (*File, error) {
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.file)
-	if err != nil {
-		return nil, err
-	}
-	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", "json")
-	if v, ok := c.opt_["updateModifiedDate"]; ok {
-		params.Set("updateModifiedDate", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["updateViewedDate"]; ok {
-		params.Set("updateViewedDate", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["newRevision"]; ok {
-		params.Set("newRevision", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v1/", "files/{id}")
-	if c.media_ != nil {
-		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
-	}
-	urls = strings.Replace(urls, "{id}", cleanPathString(c.id), 1)
-	urls += "?" + params.Encode()
-	contentLength_, hasMedia_ := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
-	req, _ := http.NewRequest("PUT", urls, body)
-	if hasMedia_ {
-		req.ContentLength = contentLength_
-	}
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(File)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Updates file metadata and/or content",
-	//   "httpMethod": "PUT",
-	//   "id": "drive.files.update",
-	//   "mediaUpload": {
-	//     "accept": [
-	//       "*/*"
-	//     ],
-	//     "maxSize": "10GB",
-	//     "protocols": {
-	//       "resumable": {
-	//         "multipart": true,
-	//         "path": "/resumable/upload/drive/v1/files/{id}"
-	//       },
-	//       "simple": {
-	//         "multipart": true,
-	//         "path": "/upload/drive/v1/files/{id}"
-	//       }
-	//     }
-	//   },
-	//   "parameterOrder": [
-	//     "id"
-	//   ],
-	//   "parameters": {
-	//     "id": {
-	//       "description": "The id for the file in question.",
-	//       "location": "path",
-	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "newRevision": {
-	//       "default": "true",
-	//       "description": "Whether a blob upload should create a new revision. If not set or false, the blob data in the current head revision will be replaced.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "updateModifiedDate": {
-	//       "default": "false",
-	//       "description": "Controls updating the modified date of the file. If true, the modified date will be updated to the current time, regardless of whether other changes are being made. If false, the modified date will only be updated to the current time if other changes are also being made (changing the title, for example).",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
 	//     "updateViewedDate": {
 	//       "default": "true",
-	//       "description": "Whether to update the view date after successfully updating the file.",
+	//       "description": "Whether to update the view date after successfully retrieving the file.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
 	//   },
 	//   "path": "files/{id}",
-	//   "request": {
-	//     "$ref": "File"
-	//   },
 	//   "response": {
 	//     "$ref": "File"
 	//   },
@@ -547,42 +368,64 @@ func (c *FilesInsertCall) Do() (*File, error) {
 
 }
 
-// method id "drive.files.get":
+// method id "drive.files.patch":
 
-type FilesGetCall struct {
+type FilesPatchCall struct {
 	s    *Service
 	id   string
+	file *File
 	opt_ map[string]interface{}
 }
 
-// Get: Gets a file's metadata by id.
-func (r *FilesService) Get(id string) *FilesGetCall {
-	c := &FilesGetCall{s: r.s, opt_: make(map[string]interface{})}
+// Patch: Updates file metadata and/or content. This method supports
+// patch semantics.
+func (r *FilesService) Patch(id string, file *File) *FilesPatchCall {
+	c := &FilesPatchCall{s: r.s, opt_: make(map[string]interface{})}
 	c.id = id
+	c.file = file
 	return c
 }
 
-// Projection sets the optional parameter "projection": Restrict
-// information returned for simplicity and optimization.
-func (c *FilesGetCall) Projection(projection string) *FilesGetCall {
-	c.opt_["projection"] = projection
+// NewRevision sets the optional parameter "newRevision": Whether a blob
+// upload should create a new revision. If not set or false, the blob
+// data in the current head revision will be replaced.
+func (c *FilesPatchCall) NewRevision(newRevision bool) *FilesPatchCall {
+	c.opt_["newRevision"] = newRevision
+	return c
+}
+
+// UpdateModifiedDate sets the optional parameter "updateModifiedDate":
+// Controls updating the modified date of the file. If true, the
+// modified date will be updated to the current time, regardless of
+// whether other changes are being made. If false, the modified date
+// will only be updated to the current time if other changes are also
+// being made (changing the title, for example).
+func (c *FilesPatchCall) UpdateModifiedDate(updateModifiedDate bool) *FilesPatchCall {
+	c.opt_["updateModifiedDate"] = updateModifiedDate
 	return c
 }
 
 // UpdateViewedDate sets the optional parameter "updateViewedDate":
-// Whether to update the view date after successfully retrieving the
-// file.
-func (c *FilesGetCall) UpdateViewedDate(updateViewedDate bool) *FilesGetCall {
+// Whether to update the view date after successfully updating the file.
+func (c *FilesPatchCall) UpdateViewedDate(updateViewedDate bool) *FilesPatchCall {
 	c.opt_["updateViewedDate"] = updateViewedDate
 	return c
 }
 
-func (c *FilesGetCall) Do() (*File, error) {
+func (c *FilesPatchCall) Do() (*File, error) {
 	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.file)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	if v, ok := c.opt_["projection"]; ok {
-		params.Set("projection", fmt.Sprintf("%v", v))
+	if v, ok := c.opt_["newRevision"]; ok {
+		params.Set("newRevision", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["updateModifiedDate"]; ok {
+		params.Set("updateModifiedDate", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["updateViewedDate"]; ok {
 		params.Set("updateViewedDate", fmt.Sprintf("%v", v))
@@ -590,7 +433,8 @@ func (c *FilesGetCall) Do() (*File, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v1/", "files/{id}")
 	urls = strings.Replace(urls, "{id}", cleanPathString(c.id), 1)
 	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
+	req, _ := http.NewRequest("PATCH", urls, body)
+	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -605,9 +449,9 @@ func (c *FilesGetCall) Do() (*File, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a file's metadata by id.",
-	//   "httpMethod": "GET",
-	//   "id": "drive.files.get",
+	//   "description": "Updates file metadata and/or content. This method supports patch semantics.",
+	//   "httpMethod": "PATCH",
+	//   "id": "drive.files.patch",
 	//   "parameterOrder": [
 	//     "id"
 	//   ],
@@ -618,27 +462,183 @@ func (c *FilesGetCall) Do() (*File, error) {
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "projection": {
-	//       "description": "Restrict information returned for simplicity and optimization.",
-	//       "enum": [
-	//         "BASIC",
-	//         "FULL"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Includes only the basic metadata fields",
-	//         "Includes all metadata fields"
-	//       ],
+	//     "newRevision": {
+	//       "default": "true",
+	//       "description": "Whether a blob upload should create a new revision. If not set or false, the blob data in the current head revision will be replaced.",
 	//       "location": "query",
-	//       "type": "string"
+	//       "type": "boolean"
+	//     },
+	//     "updateModifiedDate": {
+	//       "default": "false",
+	//       "description": "Controls updating the modified date of the file. If true, the modified date will be updated to the current time, regardless of whether other changes are being made. If false, the modified date will only be updated to the current time if other changes are also being made (changing the title, for example).",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     },
 	//     "updateViewedDate": {
 	//       "default": "true",
-	//       "description": "Whether to update the view date after successfully retrieving the file.",
+	//       "description": "Whether to update the view date after successfully updating the file.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
 	//   },
 	//   "path": "files/{id}",
+	//   "request": {
+	//     "$ref": "File"
+	//   },
+	//   "response": {
+	//     "$ref": "File"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive.file"
+	//   ]
+	// }
+
+}
+
+// method id "drive.files.update":
+
+type FilesUpdateCall struct {
+	s      *Service
+	id     string
+	file   *File
+	opt_   map[string]interface{}
+	media_ io.Reader
+}
+
+// Update: Updates file metadata and/or content
+func (r *FilesService) Update(id string, file *File) *FilesUpdateCall {
+	c := &FilesUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	c.file = file
+	return c
+}
+
+// NewRevision sets the optional parameter "newRevision": Whether a blob
+// upload should create a new revision. If not set or false, the blob
+// data in the current head revision will be replaced.
+func (c *FilesUpdateCall) NewRevision(newRevision bool) *FilesUpdateCall {
+	c.opt_["newRevision"] = newRevision
+	return c
+}
+
+// UpdateModifiedDate sets the optional parameter "updateModifiedDate":
+// Controls updating the modified date of the file. If true, the
+// modified date will be updated to the current time, regardless of
+// whether other changes are being made. If false, the modified date
+// will only be updated to the current time if other changes are also
+// being made (changing the title, for example).
+func (c *FilesUpdateCall) UpdateModifiedDate(updateModifiedDate bool) *FilesUpdateCall {
+	c.opt_["updateModifiedDate"] = updateModifiedDate
+	return c
+}
+
+// UpdateViewedDate sets the optional parameter "updateViewedDate":
+// Whether to update the view date after successfully updating the file.
+func (c *FilesUpdateCall) UpdateViewedDate(updateViewedDate bool) *FilesUpdateCall {
+	c.opt_["updateViewedDate"] = updateViewedDate
+	return c
+}
+func (c *FilesUpdateCall) Media(r io.Reader) *FilesUpdateCall {
+	c.media_ = r
+	return c
+}
+
+func (c *FilesUpdateCall) Do() (*File, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.file)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["newRevision"]; ok {
+		params.Set("newRevision", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["updateModifiedDate"]; ok {
+		params.Set("updateModifiedDate", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["updateViewedDate"]; ok {
+		params.Set("updateViewedDate", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v1/", "files/{id}")
+	if c.media_ != nil {
+		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
+	}
+	urls = strings.Replace(urls, "{id}", cleanPathString(c.id), 1)
+	urls += "?" + params.Encode()
+	contentLength_, hasMedia_ := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+	req, _ := http.NewRequest("PUT", urls, body)
+	if hasMedia_ {
+		req.ContentLength = contentLength_
+	}
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(File)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates file metadata and/or content",
+	//   "httpMethod": "PUT",
+	//   "id": "drive.files.update",
+	//   "mediaUpload": {
+	//     "accept": [
+	//       "*/*"
+	//     ],
+	//     "maxSize": "10GB",
+	//     "protocols": {
+	//       "resumable": {
+	//         "multipart": true,
+	//         "path": "/resumable/upload/drive/v1/files/{id}"
+	//       },
+	//       "simple": {
+	//         "multipart": true,
+	//         "path": "/upload/drive/v1/files/{id}"
+	//       }
+	//     }
+	//   },
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The id for the file in question.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "newRevision": {
+	//       "default": "true",
+	//       "description": "Whether a blob upload should create a new revision. If not set or false, the blob data in the current head revision will be replaced.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "updateModifiedDate": {
+	//       "default": "false",
+	//       "description": "Controls updating the modified date of the file. If true, the modified date will be updated to the current time, regardless of whether other changes are being made. If false, the modified date will only be updated to the current time if other changes are also being made (changing the title, for example).",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "updateViewedDate": {
+	//       "default": "true",
+	//       "description": "Whether to update the view date after successfully updating the file.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "files/{id}",
+	//   "request": {
+	//     "$ref": "File"
+	//   },
 	//   "response": {
 	//     "$ref": "File"
 	//   },

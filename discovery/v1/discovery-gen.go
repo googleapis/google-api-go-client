@@ -55,23 +55,20 @@ type ApisService struct {
 	s *Service
 }
 
-type RestDescriptionResources struct {
-}
+type DirectoryList struct {
+	// Items: The individual directory entries. One entry per api/version
+	// pair.
+	Items []*DirectoryListItems `json:"items,omitempty"`
 
-type RestResourceResources struct {
+	// Kind: The kind for this response.
+	Kind string `json:"kind,omitempty"`
+
+	// DiscoveryVersion: Indicate the version of the Discovery API used to
+	// generate this doc.
+	DiscoveryVersion string `json:"discoveryVersion,omitempty"`
 }
 
 type DirectoryListItems struct {
-	// Preferred: True if this version is the preferred version to use.
-	Preferred bool `json:"preferred,omitempty"`
-
-	// DocumentationLink: A link to human readable documentation for the
-	// API.
-	DocumentationLink string `json:"documentationLink,omitempty"`
-
-	// Icons: Links to 16x16 and 32x32 icons representing the API.
-	Icons *DirectoryListItemsIcons `json:"icons,omitempty"`
-
 	// Version: The version of the API.
 	Version string `json:"version,omitempty"`
 
@@ -99,36 +96,16 @@ type DirectoryListItems struct {
 
 	// Name: The name of the API.
 	Name string `json:"name,omitempty"`
-}
 
-type RestMethodMediaUploadProtocols struct {
-	// Resumable: Supports the Resumable Media Upload protocol.
-	Resumable *RestMethodMediaUploadProtocolsResumable `json:"resumable,omitempty"`
+	// Preferred: True if this version is the preferred version to use.
+	Preferred bool `json:"preferred,omitempty"`
 
-	// Simple: Supports uploading as a single HTTP request.
-	Simple *RestMethodMediaUploadProtocolsSimple `json:"simple,omitempty"`
-}
+	// DocumentationLink: A link to human readable documentation for the
+	// API.
+	DocumentationLink string `json:"documentationLink,omitempty"`
 
-type RestMethodParameters struct {
-}
-
-type RestDescriptionParameters struct {
-}
-
-type DirectoryList struct {
-	// Kind: The kind for this response.
-	Kind string `json:"kind,omitempty"`
-
-	// DiscoveryVersion: Indicate the version of the Discovery API used to
-	// generate this doc.
-	DiscoveryVersion string `json:"discoveryVersion,omitempty"`
-
-	// Items: The individual directory entries. One entry per api/version
-	// pair.
-	Items []*DirectoryListItems `json:"items,omitempty"`
-}
-
-type RestResourceMethods struct {
+	// Icons: Links to 16x16 and 32x32 icons representing the API.
+	Icons *DirectoryListItemsIcons `json:"icons,omitempty"`
 }
 
 type DirectoryListItemsIcons struct {
@@ -139,36 +116,15 @@ type DirectoryListItemsIcons struct {
 	X32 string `json:"x32,omitempty"`
 }
 
-type RestMethodMediaUploadProtocolsSimple struct {
-	// Multipart: True if this endpoint supports upload multipart media.
-	Multipart bool `json:"multipart,omitempty"`
-
-	// Path: The URI path to be used for upload. Should be used in
-	// conjunction with the basePath property at the api-level.
-	Path string `json:"path,omitempty"`
-}
-
-type JsonSchemaAnnotations struct {
-	// Required: A list of methods for which this property is required on
-	// requests.
-	Required []string `json:"required,omitempty"`
-}
-
-type RestMethodResponse struct {
-	// Ref: Schema ID for the response schema.
-	Ref string `json:"$ref,omitempty"`
-}
-
-type RestMethodMediaUploadProtocolsResumable struct {
-	// Path: The URI path to be used for upload. Should be used in
-	// conjunction with the basePath property at the api-level.
-	Path string `json:"path,omitempty"`
-
-	// Multipart: True if this endpoint supports uploading multipart media.
-	Multipart bool `json:"multipart,omitempty"`
-}
-
 type JsonSchema struct {
+	// Items: If this is a schema for an array, this property is the schema
+	// for each element in the array.
+	Items *JsonSchema `json:"items,omitempty"`
+
+	// Ref: A reference to another schema. The value of this property is the
+	// "id" of another schema.
+	Ref string `json:"$ref,omitempty"`
+
 	// EnumDescriptions: The descriptions for the enums. Each position maps
 	// to the corresponding value in the "enum" array.
 	EnumDescriptions []string `json:"enumDescriptions,omitempty"`
@@ -224,53 +180,18 @@ type JsonSchema struct {
 
 	// Pattern: The regular expression this parameter must conform to.
 	Pattern string `json:"pattern,omitempty"`
-
-	// Items: If this is a schema for an array, this property is the schema
-	// for each element in the array.
-	Items *JsonSchema `json:"items,omitempty"`
-
-	// Ref: A reference to another schema. The value of this property is the
-	// "id" of another schema.
-	Ref string `json:"$ref,omitempty"`
 }
 
-type RestDescriptionIcons struct {
-	// X32: The url of the 32x32 icon.
-	X32 string `json:"x32,omitempty"`
-
-	// X16: The url of the 16x16 icon.
-	X16 string `json:"x16,omitempty"`
+type JsonSchemaAnnotations struct {
+	// Required: A list of methods for which this property is required on
+	// requests.
+	Required []string `json:"required,omitempty"`
 }
 
-type RestMethodMediaUpload struct {
-	// Protocols: Supported upload protocols.
-	Protocols *RestMethodMediaUploadProtocols `json:"protocols,omitempty"`
-
-	// MaxSize: Maximum size of a media upload, such as "1MB", "2GB" or
-	// "3TB".
-	MaxSize string `json:"maxSize,omitempty"`
-
-	// Accept: MIME Media Ranges for acceptable media uploads to this
-	// method.
-	Accept []string `json:"accept,omitempty"`
+type JsonSchemaProperties struct {
 }
 
 type RestDescription struct {
-	// ServicePath: The base path for all REST requests.
-	ServicePath string `json:"servicePath,omitempty"`
-
-	// Resources: The resources in this API.
-	Resources *RestDescriptionResources `json:"resources,omitempty"`
-
-	// BatchPath: The path for REST batch requests.
-	BatchPath string `json:"batchPath,omitempty"`
-
-	// Methods: API-level methods for this API.
-	Methods *RestDescriptionMethods `json:"methods,omitempty"`
-
-	// Description: The description of this API.
-	Description string `json:"description,omitempty"`
-
 	// RootUrl: The root url under which all API services live.
 	RootUrl string `json:"rootUrl,omitempty"`
 
@@ -327,22 +248,54 @@ type RestDescription struct {
 
 	// Title: The title of this API.
 	Title string `json:"title,omitempty"`
+
+	// ServicePath: The base path for all REST requests.
+	ServicePath string `json:"servicePath,omitempty"`
+
+	// Resources: The resources in this API.
+	Resources *RestDescriptionResources `json:"resources,omitempty"`
+
+	// BatchPath: The path for REST batch requests.
+	BatchPath string `json:"batchPath,omitempty"`
+
+	// Methods: API-level methods for this API.
+	Methods *RestDescriptionMethods `json:"methods,omitempty"`
+
+	// Description: The description of this API.
+	Description string `json:"description,omitempty"`
+}
+
+type RestDescriptionAuth struct {
+	// Oauth2: OAuth 2.0 authentication information.
+	Oauth2 *RestDescriptionAuthOauth2 `json:"oauth2,omitempty"`
+}
+
+type RestDescriptionAuthOauth2 struct {
+	// Scopes: Available OAuth 2.0 scopes.
+	Scopes *RestDescriptionAuthOauth2Scopes `json:"scopes,omitempty"`
+}
+
+type RestDescriptionAuthOauth2Scopes struct {
+}
+
+type RestDescriptionIcons struct {
+	// X16: The url of the 16x16 icon.
+	X16 string `json:"x16,omitempty"`
+
+	// X32: The url of the 32x32 icon.
+	X32 string `json:"x32,omitempty"`
 }
 
 type RestDescriptionMethods struct {
 }
 
-type RestMethodRequest struct {
-	// Ref: Schema ID for the request schema.
-	Ref string `json:"$ref,omitempty"`
+type RestDescriptionParameters struct {
 }
 
-type RestResource struct {
-	// Resources: Sub-resources on this resource.
-	Resources *RestResourceResources `json:"resources,omitempty"`
+type RestDescriptionResources struct {
+}
 
-	// Methods: Methods on this resource.
-	Methods *RestResourceMethods `json:"methods,omitempty"`
+type RestDescriptionSchemas struct {
 }
 
 type RestMethod struct {
@@ -381,126 +334,70 @@ type RestMethod struct {
 	ParameterOrder []string `json:"parameterOrder,omitempty"`
 }
 
-type RestDescriptionAuthOauth2 struct {
-	// Scopes: Available OAuth 2.0 scopes.
-	Scopes *RestDescriptionAuthOauth2Scopes `json:"scopes,omitempty"`
+type RestMethodMediaUpload struct {
+	// Accept: MIME Media Ranges for acceptable media uploads to this
+	// method.
+	Accept []string `json:"accept,omitempty"`
+
+	// Protocols: Supported upload protocols.
+	Protocols *RestMethodMediaUploadProtocols `json:"protocols,omitempty"`
+
+	// MaxSize: Maximum size of a media upload, such as "1MB", "2GB" or
+	// "3TB".
+	MaxSize string `json:"maxSize,omitempty"`
 }
 
-type RestDescriptionAuth struct {
-	// Oauth2: OAuth 2.0 authentication information.
-	Oauth2 *RestDescriptionAuthOauth2 `json:"oauth2,omitempty"`
+type RestMethodMediaUploadProtocols struct {
+	// Resumable: Supports the Resumable Media Upload protocol.
+	Resumable *RestMethodMediaUploadProtocolsResumable `json:"resumable,omitempty"`
+
+	// Simple: Supports uploading as a single HTTP request.
+	Simple *RestMethodMediaUploadProtocolsSimple `json:"simple,omitempty"`
 }
 
-type RestDescriptionSchemas struct {
+type RestMethodMediaUploadProtocolsResumable struct {
+	// Multipart: True if this endpoint supports uploading multipart media.
+	Multipart bool `json:"multipart,omitempty"`
+
+	// Path: The URI path to be used for upload. Should be used in
+	// conjunction with the basePath property at the api-level.
+	Path string `json:"path,omitempty"`
 }
 
-type JsonSchemaProperties struct {
+type RestMethodMediaUploadProtocolsSimple struct {
+	// Multipart: True if this endpoint supports upload multipart media.
+	Multipart bool `json:"multipart,omitempty"`
+
+	// Path: The URI path to be used for upload. Should be used in
+	// conjunction with the basePath property at the api-level.
+	Path string `json:"path,omitempty"`
 }
 
-type RestDescriptionAuthOauth2Scopes struct {
+type RestMethodParameters struct {
 }
 
-// method id "discovery.apis.list":
-
-type ApisListCall struct {
-	s    *Service
-	opt_ map[string]interface{}
+type RestMethodRequest struct {
+	// Ref: Schema ID for the request schema.
+	Ref string `json:"$ref,omitempty"`
 }
 
-// List: Retrieve the list of APIs supported at this endpoint.
-func (r *ApisService) List() *ApisListCall {
-	c := &ApisListCall{s: r.s, opt_: make(map[string]interface{})}
-	return c
+type RestMethodResponse struct {
+	// Ref: Schema ID for the response schema.
+	Ref string `json:"$ref,omitempty"`
 }
 
-// Name sets the optional parameter "name": Only include APIs with the
-// given name.
-func (c *ApisListCall) Name(name string) *ApisListCall {
-	c.opt_["name"] = name
-	return c
+type RestResource struct {
+	// Resources: Sub-resources on this resource.
+	Resources *RestResourceResources `json:"resources,omitempty"`
+
+	// Methods: Methods on this resource.
+	Methods *RestResourceMethods `json:"methods,omitempty"`
 }
 
-// Preferred sets the optional parameter "preferred": Return only the
-// preferred version of an API.
-func (c *ApisListCall) Preferred(preferred bool) *ApisListCall {
-	c.opt_["preferred"] = preferred
-	return c
+type RestResourceMethods struct {
 }
 
-// Label sets the optional parameter "label": Only include APIs with a
-// matching label, such as 'graduated' or 'labs'.
-func (c *ApisListCall) Label(label string) *ApisListCall {
-	c.opt_["label"] = label
-	return c
-}
-
-func (c *ApisListCall) Do() (*DirectoryList, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	if v, ok := c.opt_["name"]; ok {
-		params.Set("name", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["preferred"]; ok {
-		params.Set("preferred", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["label"]; ok {
-		params.Set("label", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/discovery/v1/", "apis")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(DirectoryList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Retrieve the list of APIs supported at this endpoint.",
-	//   "httpMethod": "GET",
-	//   "id": "discovery.apis.list",
-	//   "parameters": {
-	//     "label": {
-	//       "description": "Only include APIs with a matching label, such as 'graduated' or 'labs'.",
-	//       "enum": [
-	//         "deprecated",
-	//         "graduated",
-	//         "labs"
-	//       ],
-	//       "enumDescriptions": [
-	//         "APIs that have been deprecated.",
-	//         "Supported APIs that have graduated from labs.",
-	//         "APIs that are experimental"
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "name": {
-	//       "description": "Only include APIs with the given name.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "preferred": {
-	//       "default": "false",
-	//       "description": "Return only the preferred version of an API.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     }
-	//   },
-	//   "path": "apis",
-	//   "response": {
-	//     "$ref": "DirectoryList"
-	//   }
-	// }
-
+type RestResourceResources struct {
 }
 
 // method id "discovery.apis.getRest":
@@ -567,6 +464,109 @@ func (c *ApisGetRestCall) Do() (*RestDescription, error) {
 	//   "path": "apis/{api}/{version}/rest",
 	//   "response": {
 	//     "$ref": "RestDescription"
+	//   }
+	// }
+
+}
+
+// method id "discovery.apis.list":
+
+type ApisListCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// List: Retrieve the list of APIs supported at this endpoint.
+func (r *ApisService) List() *ApisListCall {
+	c := &ApisListCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+// Label sets the optional parameter "label": Only include APIs with a
+// matching label, such as 'graduated' or 'labs'.
+func (c *ApisListCall) Label(label string) *ApisListCall {
+	c.opt_["label"] = label
+	return c
+}
+
+// Name sets the optional parameter "name": Only include APIs with the
+// given name.
+func (c *ApisListCall) Name(name string) *ApisListCall {
+	c.opt_["name"] = name
+	return c
+}
+
+// Preferred sets the optional parameter "preferred": Return only the
+// preferred version of an API.
+func (c *ApisListCall) Preferred(preferred bool) *ApisListCall {
+	c.opt_["preferred"] = preferred
+	return c
+}
+
+func (c *ApisListCall) Do() (*DirectoryList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["label"]; ok {
+		params.Set("label", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["name"]; ok {
+		params.Set("name", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["preferred"]; ok {
+		params.Set("preferred", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/discovery/v1/", "apis")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(DirectoryList)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieve the list of APIs supported at this endpoint.",
+	//   "httpMethod": "GET",
+	//   "id": "discovery.apis.list",
+	//   "parameters": {
+	//     "label": {
+	//       "description": "Only include APIs with a matching label, such as 'graduated' or 'labs'.",
+	//       "enum": [
+	//         "deprecated",
+	//         "graduated",
+	//         "labs"
+	//       ],
+	//       "enumDescriptions": [
+	//         "APIs that have been deprecated.",
+	//         "Supported APIs that have graduated from labs.",
+	//         "APIs that are experimental"
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "Only include APIs with the given name.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "preferred": {
+	//       "default": "false",
+	//       "description": "Return only the preferred version of an API.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "apis",
+	//   "response": {
+	//     "$ref": "DirectoryList"
 	//   }
 	// }
 

@@ -71,6 +71,10 @@ type TrainingService struct {
 	s *Service
 }
 
+type Input struct {
+	Input *InputInput `json:"input,omitempty"`
+}
+
 type InputInput struct {
 	CsvInstance []interface{} `json:"csvInstance,omitempty"`
 }
@@ -96,8 +100,6 @@ type OutputOutputMulti struct {
 }
 
 type Training struct {
-	Id string `json:"id,omitempty"`
-
 	SelfLink string `json:"selfLink,omitempty"`
 
 	ModelInfo *TrainingModelInfo `json:"modelInfo,omitempty"`
@@ -105,10 +107,16 @@ type Training struct {
 	Kind string `json:"kind,omitempty"`
 
 	TrainingStatus string `json:"trainingStatus,omitempty"`
+
+	Id string `json:"id,omitempty"`
 }
 
-type Input struct {
-	Input *InputInput `json:"input,omitempty"`
+type TrainingModelInfo struct {
+	ClassificationAccuracy float64 `json:"classificationAccuracy,omitempty"`
+
+	MeanSquaredError float64 `json:"meanSquaredError,omitempty"`
+
+	ModelType string `json:"modelType,omitempty"`
 }
 
 type Update struct {
@@ -117,14 +125,6 @@ type Update struct {
 
 	// CsvInstance: The input features for this instance
 	CsvInstance []interface{} `json:"csvInstance,omitempty"`
-}
-
-type TrainingModelInfo struct {
-	MeanSquaredError float64 `json:"meanSquaredError,omitempty"`
-
-	ModelType string `json:"modelType,omitempty"`
-
-	ClassificationAccuracy float64 `json:"classificationAccuracy,omitempty"`
 }
 
 // method id "prediction.predict":
@@ -273,37 +273,84 @@ func (c *HostedmodelsPredictCall) Do() (*Output, error) {
 
 }
 
-// method id "prediction.training.update":
+// method id "prediction.training.delete":
 
-type TrainingUpdateCall struct {
-	s      *Service
-	data   string
-	update *Update
-	opt_   map[string]interface{}
+type TrainingDeleteCall struct {
+	s    *Service
+	data string
+	opt_ map[string]interface{}
 }
 
-// Update: Add new data to a trained model
-func (r *TrainingService) Update(data string, update *Update) *TrainingUpdateCall {
-	c := &TrainingUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+// Delete: Delete a trained model
+func (r *TrainingService) Delete(data string) *TrainingDeleteCall {
+	c := &TrainingDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.data = data
-	c.update = update
 	return c
 }
 
-func (c *TrainingUpdateCall) Do() (*Training, error) {
+func (c *TrainingDeleteCall) Do() error {
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.update)
-	if err != nil {
-		return nil, err
-	}
-	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/prediction/v1.2/", "training/{data}")
 	urls = strings.Replace(urls, "{data}", cleanPathString(c.data), 1)
 	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("PUT", urls, body)
-	req.Header.Set("Content-Type", ctype)
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Delete a trained model",
+	//   "httpMethod": "DELETE",
+	//   "id": "prediction.training.delete",
+	//   "parameterOrder": [
+	//     "data"
+	//   ],
+	//   "parameters": {
+	//     "data": {
+	//       "description": "mybucket/mydata resource in Google Storage",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "training/{data}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/prediction"
+	//   ]
+	// }
+
+}
+
+// method id "prediction.training.get":
+
+type TrainingGetCall struct {
+	s    *Service
+	data string
+	opt_ map[string]interface{}
+}
+
+// Get: Check training status of your model
+func (r *TrainingService) Get(data string) *TrainingGetCall {
+	c := &TrainingGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.data = data
+	return c
+}
+
+func (c *TrainingGetCall) Do() (*Training, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/prediction/v1.2/", "training/{data}")
+	urls = strings.Replace(urls, "{data}", cleanPathString(c.data), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -318,9 +365,9 @@ func (c *TrainingUpdateCall) Do() (*Training, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Add new data to a trained model",
-	//   "httpMethod": "PUT",
-	//   "id": "prediction.training.update",
+	//   "description": "Check training status of your model",
+	//   "httpMethod": "GET",
+	//   "id": "prediction.training.get",
 	//   "parameterOrder": [
 	//     "data"
 	//   ],
@@ -333,9 +380,6 @@ func (c *TrainingUpdateCall) Do() (*Training, error) {
 	//     }
 	//   },
 	//   "path": "training/{data}",
-	//   "request": {
-	//     "$ref": "Update"
-	//   },
 	//   "response": {
 	//     "$ref": "Training"
 	//   },
@@ -423,29 +467,37 @@ func (c *TrainingInsertCall) Do() (*Training, error) {
 
 }
 
-// method id "prediction.training.get":
+// method id "prediction.training.update":
 
-type TrainingGetCall struct {
-	s    *Service
-	data string
-	opt_ map[string]interface{}
+type TrainingUpdateCall struct {
+	s      *Service
+	data   string
+	update *Update
+	opt_   map[string]interface{}
 }
 
-// Get: Check training status of your model
-func (r *TrainingService) Get(data string) *TrainingGetCall {
-	c := &TrainingGetCall{s: r.s, opt_: make(map[string]interface{})}
+// Update: Add new data to a trained model
+func (r *TrainingService) Update(data string, update *Update) *TrainingUpdateCall {
+	c := &TrainingUpdateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.data = data
+	c.update = update
 	return c
 }
 
-func (c *TrainingGetCall) Do() (*Training, error) {
+func (c *TrainingUpdateCall) Do() (*Training, error) {
 	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.update)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/prediction/v1.2/", "training/{data}")
 	urls = strings.Replace(urls, "{data}", cleanPathString(c.data), 1)
 	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
+	req, _ := http.NewRequest("PUT", urls, body)
+	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -460,9 +512,9 @@ func (c *TrainingGetCall) Do() (*Training, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Check training status of your model",
-	//   "httpMethod": "GET",
-	//   "id": "prediction.training.get",
+	//   "description": "Add new data to a trained model",
+	//   "httpMethod": "PUT",
+	//   "id": "prediction.training.update",
 	//   "parameterOrder": [
 	//     "data"
 	//   ],
@@ -475,64 +527,12 @@ func (c *TrainingGetCall) Do() (*Training, error) {
 	//     }
 	//   },
 	//   "path": "training/{data}",
+	//   "request": {
+	//     "$ref": "Update"
+	//   },
 	//   "response": {
 	//     "$ref": "Training"
 	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/prediction"
-	//   ]
-	// }
-
-}
-
-// method id "prediction.training.delete":
-
-type TrainingDeleteCall struct {
-	s    *Service
-	data string
-	opt_ map[string]interface{}
-}
-
-// Delete: Delete a trained model
-func (r *TrainingService) Delete(data string) *TrainingDeleteCall {
-	c := &TrainingDeleteCall{s: r.s, opt_: make(map[string]interface{})}
-	c.data = data
-	return c
-}
-
-func (c *TrainingDeleteCall) Do() error {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/prediction/v1.2/", "training/{data}")
-	urls = strings.Replace(urls, "{data}", cleanPathString(c.data), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("DELETE", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return err
-	}
-	return nil
-	// {
-	//   "description": "Delete a trained model",
-	//   "httpMethod": "DELETE",
-	//   "id": "prediction.training.delete",
-	//   "parameterOrder": [
-	//     "data"
-	//   ],
-	//   "parameters": {
-	//     "data": {
-	//       "description": "mybucket/mydata resource in Google Storage",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "training/{data}",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/prediction"
 	//   ]

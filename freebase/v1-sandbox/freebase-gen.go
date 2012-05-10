@@ -75,10 +75,29 @@ func (s *Service) Mqlread(query string) *MqlreadCall {
 	return c
 }
 
+// As_of_time sets the optional parameter "as_of_time": Run the query as
+// it would've been run at the specified point in time.
+func (c *MqlreadCall) As_of_time(as_of_time string) *MqlreadCall {
+	c.opt_["as_of_time"] = as_of_time
+	return c
+}
+
 // Callback sets the optional parameter "callback": JS method name for
 // JSONP callbacks.
 func (c *MqlreadCall) Callback(callback string) *MqlreadCall {
 	c.opt_["callback"] = callback
+	return c
+}
+
+// Cost sets the optional parameter "cost": Show the costs or not.
+func (c *MqlreadCall) Cost(cost bool) *MqlreadCall {
+	c.opt_["cost"] = cost
+	return c
+}
+
+// Cursor sets the optional parameter "cursor": The mql cursor.
+func (c *MqlreadCall) Cursor(cursor string) *MqlreadCall {
+	c.opt_["cursor"] = cursor
 	return c
 }
 
@@ -89,16 +108,10 @@ func (c *MqlreadCall) Dateline(dateline string) *MqlreadCall {
 	return c
 }
 
-// Cost sets the optional parameter "cost": Show the costs or not.
-func (c *MqlreadCall) Cost(cost bool) *MqlreadCall {
-	c.opt_["cost"] = cost
-	return c
-}
-
-// Uniqueness_failure sets the optional parameter "uniqueness_failure":
-// How MQL responds to uniqueness failures.
-func (c *MqlreadCall) Uniqueness_failure(uniqueness_failure string) *MqlreadCall {
-	c.opt_["uniqueness_failure"] = uniqueness_failure
+// Html_escape sets the optional parameter "html_escape": Whether or not
+// to escape entities.
+func (c *MqlreadCall) Html_escape(html_escape bool) *MqlreadCall {
+	c.opt_["html_escape"] = html_escape
 	return c
 }
 
@@ -109,12 +122,6 @@ func (c *MqlreadCall) Indent(indent int64) *MqlreadCall {
 	return c
 }
 
-// Cursor sets the optional parameter "cursor": The mql cursor.
-func (c *MqlreadCall) Cursor(cursor string) *MqlreadCall {
-	c.opt_["cursor"] = cursor
-	return c
-}
-
 // Lang sets the optional parameter "lang": The language of the results
 // - an id of a /type/lang object.
 func (c *MqlreadCall) Lang(lang string) *MqlreadCall {
@@ -122,17 +129,10 @@ func (c *MqlreadCall) Lang(lang string) *MqlreadCall {
 	return c
 }
 
-// Html_escape sets the optional parameter "html_escape": Whether or not
-// to escape entities.
-func (c *MqlreadCall) Html_escape(html_escape bool) *MqlreadCall {
-	c.opt_["html_escape"] = html_escape
-	return c
-}
-
-// As_of_time sets the optional parameter "as_of_time": Run the query as
-// it would've been run at the specified point in time.
-func (c *MqlreadCall) As_of_time(as_of_time string) *MqlreadCall {
-	c.opt_["as_of_time"] = as_of_time
+// Uniqueness_failure sets the optional parameter "uniqueness_failure":
+// How MQL responds to uniqueness failures.
+func (c *MqlreadCall) Uniqueness_failure(uniqueness_failure string) *MqlreadCall {
+	c.opt_["uniqueness_failure"] = uniqueness_failure
 	return c
 }
 
@@ -141,32 +141,32 @@ func (c *MqlreadCall) Do() error {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("query", fmt.Sprintf("%v", c.query))
+	if v, ok := c.opt_["as_of_time"]; ok {
+		params.Set("as_of_time", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["callback"]; ok {
 		params.Set("callback", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["dateline"]; ok {
-		params.Set("dateline", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["cost"]; ok {
 		params.Set("cost", fmt.Sprintf("%v", v))
 	}
-	if v, ok := c.opt_["uniqueness_failure"]; ok {
-		params.Set("uniqueness_failure", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["indent"]; ok {
-		params.Set("indent", fmt.Sprintf("%v", v))
-	}
 	if v, ok := c.opt_["cursor"]; ok {
 		params.Set("cursor", fmt.Sprintf("%v", v))
 	}
-	if v, ok := c.opt_["lang"]; ok {
-		params.Set("lang", fmt.Sprintf("%v", v))
+	if v, ok := c.opt_["dateline"]; ok {
+		params.Set("dateline", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["html_escape"]; ok {
 		params.Set("html_escape", fmt.Sprintf("%v", v))
 	}
-	if v, ok := c.opt_["as_of_time"]; ok {
-		params.Set("as_of_time", fmt.Sprintf("%v", v))
+	if v, ok := c.opt_["indent"]; ok {
+		params.Set("indent", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["lang"]; ok {
+		params.Set("lang", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["uniqueness_failure"]; ok {
+		params.Set("uniqueness_failure", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/freebase/v1-sandbox/", "mqlread")
 	urls += "?" + params.Encode()
@@ -276,18 +276,18 @@ func (s *Service) Image(id []string) *ImageCall {
 	return c
 }
 
-// Pad sets the optional parameter "pad": A boolean specifying whether
-// the resulting image should be padded up to the requested dimensions.
-func (c *ImageCall) Pad(pad bool) *ImageCall {
-	c.opt_["pad"] = pad
-	return c
-}
-
 // Fallbackid sets the optional parameter "fallbackid": Use the image
 // associated with this secondary id if no image is associated with the
 // primary id.
 func (c *ImageCall) Fallbackid(fallbackid string) *ImageCall {
 	c.opt_["fallbackid"] = fallbackid
+	return c
+}
+
+// Maxheight sets the optional parameter "maxheight": Maximum height in
+// pixels for resulting image.
+func (c *ImageCall) Maxheight(maxheight int64) *ImageCall {
+	c.opt_["maxheight"] = maxheight
 	return c
 }
 
@@ -305,10 +305,10 @@ func (c *ImageCall) Mode(mode string) *ImageCall {
 	return c
 }
 
-// Maxheight sets the optional parameter "maxheight": Maximum height in
-// pixels for resulting image.
-func (c *ImageCall) Maxheight(maxheight int64) *ImageCall {
-	c.opt_["maxheight"] = maxheight
+// Pad sets the optional parameter "pad": A boolean specifying whether
+// the resulting image should be padded up to the requested dimensions.
+func (c *ImageCall) Pad(pad bool) *ImageCall {
+	c.opt_["pad"] = pad
 	return c
 }
 
@@ -316,11 +316,11 @@ func (c *ImageCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	if v, ok := c.opt_["pad"]; ok {
-		params.Set("pad", fmt.Sprintf("%v", v))
-	}
 	if v, ok := c.opt_["fallbackid"]; ok {
 		params.Set("fallbackid", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxheight"]; ok {
+		params.Set("maxheight", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["maxwidth"]; ok {
 		params.Set("maxwidth", fmt.Sprintf("%v", v))
@@ -328,8 +328,8 @@ func (c *ImageCall) Do() error {
 	if v, ok := c.opt_["mode"]; ok {
 		params.Set("mode", fmt.Sprintf("%v", v))
 	}
-	if v, ok := c.opt_["maxheight"]; ok {
-		params.Set("maxheight", fmt.Sprintf("%v", v))
+	if v, ok := c.opt_["pad"]; ok {
+		params.Set("pad", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/freebase/v1-sandbox/", "image{/id*}")
 	urls = strings.Replace(urls, "{id}", cleanPathString(c.id[0]), 1)
@@ -425,13 +425,6 @@ func (r *TextService) Get(id []string) *TextGetCall {
 	return c
 }
 
-// Maxlength sets the optional parameter "maxlength": The max number of
-// characters to return. Valid only for 'plain' format.
-func (c *TextGetCall) Maxlength(maxlength int64) *TextGetCall {
-	c.opt_["maxlength"] = maxlength
-	return c
-}
-
 // Format sets the optional parameter "format": Sanitizing
 // transformation.
 func (c *TextGetCall) Format(format string) *TextGetCall {
@@ -439,15 +432,22 @@ func (c *TextGetCall) Format(format string) *TextGetCall {
 	return c
 }
 
+// Maxlength sets the optional parameter "maxlength": The max number of
+// characters to return. Valid only for 'plain' format.
+func (c *TextGetCall) Maxlength(maxlength int64) *TextGetCall {
+	c.opt_["maxlength"] = maxlength
+	return c
+}
+
 func (c *TextGetCall) Do() (*ContentserviceGet, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	if v, ok := c.opt_["maxlength"]; ok {
-		params.Set("maxlength", fmt.Sprintf("%v", v))
-	}
 	if v, ok := c.opt_["format"]; ok {
 		params.Set("format", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxlength"]; ok {
+		params.Set("maxlength", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/freebase/v1-sandbox/", "text{/id*}")
 	urls = strings.Replace(urls, "{id}", cleanPathString(c.id[0]), 1)

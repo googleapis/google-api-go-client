@@ -4,7 +4,7 @@
  "id": "bigquery:v2",
  "name": "bigquery",
  "version": "v2",
- "revision": "20120320",
+ "revision": "20120507",
  "title": "BigQuery API",
  "description": "A data platform for customers to create, manage, share and query data.",
  "icons": {
@@ -16,7 +16,6 @@
   "limited_availability"
  ],
  "protocol": "rest",
- "baseUrl": "https://www.googleapis.com/bigquery/v2/",
  "basePath": "/bigquery/v2/",
  "rootUrl": "https://www.googleapis.com/",
  "servicePath": "bigquery/v2/",
@@ -359,6 +358,14 @@
      "type": "string",
      "description": "[Required] The fully-qualified Google Cloud Storage URI where the extracted table should be written."
     },
+    "fieldDelimiter": {
+     "type": "string",
+     "description": "[Optional] Delimiter to use between fields in the exported data. Default is ','"
+    },
+    "printHeader": {
+     "type": "boolean",
+     "description": "[Optional] Whether to print out a heder row in the results. Default is true."
+    },
     "sourceTable": {
      "$ref": "TableReference",
      "description": "[Required] A reference to the table being exported."
@@ -378,8 +385,15 @@
      "description": "[Required] The destination table of the link job."
     },
     "sourceUri": {
+     "type": "array",
+     "description": "[Required] URI of source table to link.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "writeDisposition": {
      "type": "string",
-     "description": "[Required] URI of source table to link."
+     "description": "[Optional] Whether to overwrite an existing table (WRITE_TRUNCATE), append to an existing table (WRITE_APPEND), or require that the the table is empty (WRITE_EMPTY). Default is WRITE_APPEND."
     }
    }
   },
@@ -763,6 +777,11 @@
     "etag": {
      "type": "string",
      "description": "[Output-only] A hash of this resource."
+    },
+    "expirationTime": {
+     "type": "string",
+     "description": "[Optional] The time when this table expires, in milliseconds since the epoch. If not present, the table will persist indefinitely. Expired tables will be deleted and their storage reclaimed.",
+     "format": "int64"
     },
     "friendlyName": {
      "type": "string",

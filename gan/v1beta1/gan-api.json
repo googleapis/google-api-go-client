@@ -4,7 +4,7 @@
  "id": "gan:v1beta1",
  "name": "gan",
  "version": "v1beta1",
- "revision": "20120312",
+ "revision": "20120424",
  "title": "Google Affiliate Network API",
  "description": "Lets you have programmatic access to your Google Affiliate Network data",
  "icons": {
@@ -114,7 +114,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "The kind for an advertiser. The kind for one entity.",
+     "description": "The kind for an advertiser.",
      "default": "gan#advertiser"
     },
     "logoUrl": {
@@ -214,6 +214,10 @@
     "aprDisplay": {
      "type": "string",
      "description": "Text describing the purchase APR. A summary field."
+    },
+    "balanceComputationMethod": {
+     "type": "string",
+     "description": "Text describing how the balance is computed. A summary field."
     },
     "balanceTransferTerms": {
      "type": "string",
@@ -726,7 +730,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "The kind for a publisher. The kind for one publisher.",
+     "description": "The kind for a publisher.",
      "default": "gan#publisher"
     },
     "name": {

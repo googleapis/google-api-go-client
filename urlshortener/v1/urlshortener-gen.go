@@ -104,36 +104,26 @@ type AnalyticsSummary struct {
 	Month *AnalyticsSnapshot `json:"month,omitempty"`
 }
 
-type UrlHistory struct {
-	// ItemsPerPage: Number of items returned with each full "page" of
-	// results. Note that the last page could have fewer items than the
-	// "itemsPerPage" value.
-	ItemsPerPage int64 `json:"itemsPerPage,omitempty"`
-
-	// Items: A list of URL resources.
-	Items []*Url `json:"items,omitempty"`
-
-	// NextPageToken: A token to provide to get the next page of results.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// TotalItems: Total number of short URLs associated with this user (may
-	// be approximate).
-	TotalItems int64 `json:"totalItems,omitempty"`
-
-	// Kind: The fixed string "urlshortener#urlHistory".
-	Kind string `json:"kind,omitempty"`
-}
-
 type StringCount struct {
-	// Id: Label assigned to this top entry, e.g. "US" or "Chrome".
-	Id string `json:"id,omitempty"`
-
 	// Count: Number of clicks for this top entry, e.g. for this particular
 	// country or browser.
 	Count int64 `json:"count,omitempty,string"`
+
+	// Id: Label assigned to this top entry, e.g. "US" or "Chrome".
+	Id string `json:"id,omitempty"`
 }
 
 type Url struct {
+	// Created: Time the short URL was created; ISO 8601 representation
+	// using the yyyy-MM-dd'T'HH:mm:ss.SSSZZ format, e.g.
+	// "2010-10-14T19:01:24.944+00:00".
+	Created string `json:"created,omitempty"`
+
+	// Status: Status of the target URL. Possible values: "OK", "MALWARE",
+	// "PHISHING", or "REMOVED". A URL might be marked "REMOVED" if it was
+	// flagged as spam, for example.
+	Status string `json:"status,omitempty"`
+
 	// LongUrl: Long URL, e.g. "http://www.google.com/". Might not be
 	// present if the status is "REMOVED".
 	LongUrl string `json:"longUrl,omitempty"`
@@ -147,16 +137,169 @@ type Url struct {
 
 	// Id: Short URL, e.g. "http://goo.gl/l6MS".
 	Id string `json:"id,omitempty"`
+}
 
-	// Created: Time the short URL was created; ISO 8601 representation
-	// using the yyyy-MM-dd'T'HH:mm:ss.SSSZZ format, e.g.
-	// "2010-10-14T19:01:24.944+00:00".
-	Created string `json:"created,omitempty"`
+type UrlHistory struct {
+	// Items: A list of URL resources.
+	Items []*Url `json:"items,omitempty"`
 
-	// Status: Status of the target URL. Possible values: "OK", "MALWARE",
-	// "PHISHING", or "REMOVED". A URL might be marked "REMOVED" if it was
-	// flagged as spam, for example.
-	Status string `json:"status,omitempty"`
+	// NextPageToken: A token to provide to get the next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// TotalItems: Total number of short URLs associated with this user (may
+	// be approximate).
+	TotalItems int64 `json:"totalItems,omitempty"`
+
+	// Kind: The fixed string "urlshortener#urlHistory".
+	Kind string `json:"kind,omitempty"`
+
+	// ItemsPerPage: Number of items returned with each full "page" of
+	// results. Note that the last page could have fewer items than the
+	// "itemsPerPage" value.
+	ItemsPerPage int64 `json:"itemsPerPage,omitempty"`
+}
+
+// method id "urlshortener.url.get":
+
+type UrlGetCall struct {
+	s        *Service
+	shortUrl string
+	opt_     map[string]interface{}
+}
+
+// Get: Expands a short URL or gets creation time and analytics.
+func (r *UrlService) Get(shortUrl string) *UrlGetCall {
+	c := &UrlGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.shortUrl = shortUrl
+	return c
+}
+
+// Projection sets the optional parameter "projection": Additional
+// information to return.
+func (c *UrlGetCall) Projection(projection string) *UrlGetCall {
+	c.opt_["projection"] = projection
+	return c
+}
+
+func (c *UrlGetCall) Do() (*Url, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("shortUrl", fmt.Sprintf("%v", c.shortUrl))
+	if v, ok := c.opt_["projection"]; ok {
+		params.Set("projection", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/urlshortener/v1/", "url")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Url)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Expands a short URL or gets creation time and analytics.",
+	//   "httpMethod": "GET",
+	//   "id": "urlshortener.url.get",
+	//   "parameterOrder": [
+	//     "shortUrl"
+	//   ],
+	//   "parameters": {
+	//     "projection": {
+	//       "description": "Additional information to return.",
+	//       "enum": [
+	//         "ANALYTICS_CLICKS",
+	//         "ANALYTICS_TOP_STRINGS",
+	//         "FULL"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Returns only click counts.",
+	//         "Returns only top string counts.",
+	//         "Returns the creation timestamp and all available analytics."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "shortUrl": {
+	//       "description": "The short URL, including the protocol.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "url",
+	//   "response": {
+	//     "$ref": "Url"
+	//   }
+	// }
+
+}
+
+// method id "urlshortener.url.insert":
+
+type UrlInsertCall struct {
+	s    *Service
+	url  *Url
+	opt_ map[string]interface{}
+}
+
+// Insert: Creates a new short URL.
+func (r *UrlService) Insert(url *Url) *UrlInsertCall {
+	c := &UrlInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.url = url
+	return c
+}
+
+func (c *UrlInsertCall) Do() (*Url, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.url)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/urlshortener/v1/", "url")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Url)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new short URL.",
+	//   "httpMethod": "POST",
+	//   "id": "urlshortener.url.insert",
+	//   "path": "url",
+	//   "request": {
+	//     "$ref": "Url"
+	//   },
+	//   "response": {
+	//     "$ref": "Url"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/urlshortener"
+	//   ]
+	// }
+
 }
 
 // method id "urlshortener.url.list":
@@ -243,149 +386,6 @@ func (c *UrlListCall) Do() (*UrlHistory, error) {
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/urlshortener"
 	//   ]
-	// }
-
-}
-
-// method id "urlshortener.url.insert":
-
-type UrlInsertCall struct {
-	s    *Service
-	url  *Url
-	opt_ map[string]interface{}
-}
-
-// Insert: Creates a new short URL.
-func (r *UrlService) Insert(url *Url) *UrlInsertCall {
-	c := &UrlInsertCall{s: r.s, opt_: make(map[string]interface{})}
-	c.url = url
-	return c
-}
-
-func (c *UrlInsertCall) Do() (*Url, error) {
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.url)
-	if err != nil {
-		return nil, err
-	}
-	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/urlshortener/v1/", "url")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("POST", urls, body)
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(Url)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Creates a new short URL.",
-	//   "httpMethod": "POST",
-	//   "id": "urlshortener.url.insert",
-	//   "path": "url",
-	//   "request": {
-	//     "$ref": "Url"
-	//   },
-	//   "response": {
-	//     "$ref": "Url"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/urlshortener"
-	//   ]
-	// }
-
-}
-
-// method id "urlshortener.url.get":
-
-type UrlGetCall struct {
-	s        *Service
-	shortUrl string
-	opt_     map[string]interface{}
-}
-
-// Get: Expands a short URL or gets creation time and analytics.
-func (r *UrlService) Get(shortUrl string) *UrlGetCall {
-	c := &UrlGetCall{s: r.s, opt_: make(map[string]interface{})}
-	c.shortUrl = shortUrl
-	return c
-}
-
-// Projection sets the optional parameter "projection": Additional
-// information to return.
-func (c *UrlGetCall) Projection(projection string) *UrlGetCall {
-	c.opt_["projection"] = projection
-	return c
-}
-
-func (c *UrlGetCall) Do() (*Url, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	params.Set("shortUrl", fmt.Sprintf("%v", c.shortUrl))
-	if v, ok := c.opt_["projection"]; ok {
-		params.Set("projection", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/urlshortener/v1/", "url")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(Url)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Expands a short URL or gets creation time and analytics.",
-	//   "httpMethod": "GET",
-	//   "id": "urlshortener.url.get",
-	//   "parameterOrder": [
-	//     "shortUrl"
-	//   ],
-	//   "parameters": {
-	//     "projection": {
-	//       "description": "Additional information to return.",
-	//       "enum": [
-	//         "ANALYTICS_CLICKS",
-	//         "ANALYTICS_TOP_STRINGS",
-	//         "FULL"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Returns only click counts.",
-	//         "Returns only top string counts.",
-	//         "Returns the creation timestamp and all available analytics."
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "shortUrl": {
-	//       "description": "The short URL, including the protocol.",
-	//       "location": "query",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "url",
-	//   "response": {
-	//     "$ref": "Url"
-	//   }
 	// }
 
 }

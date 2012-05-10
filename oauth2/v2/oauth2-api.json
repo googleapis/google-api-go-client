@@ -4,14 +4,13 @@
  "id": "oauth2:v2",
  "name": "oauth2",
  "version": "v2",
- "revision": "20120320",
+ "revision": "20120423",
  "description": "OAuth2 API",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/search-16.gif",
   "x32": "http://www.google.com/images/icons/product/search-32.gif"
  },
  "protocol": "rest",
- "baseUrl": "https://www.googleapis.com/",
  "basePath": "/",
  "rootUrl": "https://www.googleapis.com/",
  "servicePath": "/",
@@ -62,57 +61,6 @@
   }
  },
  "schemas": {
-  "Oauth2IssueTokenV2Response": {
-   "id": "Oauth2IssueTokenV2Response",
-   "type": "object",
-   "properties": {
-    "code": {
-     "type": "string"
-    },
-    "consent": {
-     "type": "object",
-     "properties": {
-      "oauthClient": {
-       "type": "object",
-       "properties": {
-        "developerEmail": {
-         "type": "string"
-        },
-        "iconUri": {
-         "type": "string"
-        },
-        "name": {
-         "type": "string"
-        }
-       }
-      },
-      "scopes": {
-       "type": "array",
-       "items": {
-        "type": "object",
-        "properties": {
-         "description": {
-          "type": "string"
-         },
-         "detail": {
-          "type": "string"
-         }
-        }
-       }
-      }
-     }
-    },
-    "idToken": {
-     "type": "string"
-    },
-    "issueAdvice": {
-     "type": "string"
-    },
-    "token": {
-     "type": "string"
-    }
-   }
-  },
   "Tokeninfo": {
    "id": "Tokeninfo",
    "type": "object",
@@ -196,65 +144,6 @@
   }
  },
  "methods": {
-  "issueTokenGet": {
-   "id": "oauth2.issueTokenGet",
-   "path": "oauth2/v2/IssueToken",
-   "httpMethod": "GET",
-   "parameters": {
-    "alg": {
-     "type": "string",
-     "location": "query"
-    },
-    "android_device_id": {
-     "type": "string",
-     "format": "uint64",
-     "location": "query"
-    },
-    "app_id": {
-     "type": "string",
-     "location": "query"
-    },
-    "audience": {
-     "type": "string",
-     "location": "query"
-    },
-    "client_id": {
-     "type": "string",
-     "required": true,
-     "location": "query"
-    },
-    "force": {
-     "type": "boolean",
-     "location": "query"
-    },
-    "hl": {
-     "type": "string",
-     "location": "query"
-    },
-    "origin": {
-     "type": "string",
-     "location": "query"
-    },
-    "response_type": {
-     "type": "string",
-     "required": true,
-     "location": "query"
-    },
-    "scope": {
-     "type": "string",
-     "required": true,
-     "location": "query"
-    }
-   },
-   "parameterOrder": [
-    "client_id",
-    "response_type",
-    "scope"
-   ],
-   "response": {
-    "$ref": "Oauth2IssueTokenV2Response"
-   }
-  },
   "tokeninfo": {
    "id": "oauth2.tokeninfo",
    "path": "oauth2/v2/tokeninfo",

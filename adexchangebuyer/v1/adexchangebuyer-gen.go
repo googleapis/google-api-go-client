@@ -47,20 +47,24 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
+	s.Accounts = &AccountsService{s: s}
 	s.DirectDeals = &DirectDealsService{s: s}
 	s.Creatives = &CreativesService{s: s}
-	s.Accounts = &AccountsService{s: s}
 	return s, nil
 }
 
 type Service struct {
 	client *http.Client
 
+	Accounts *AccountsService
+
 	DirectDeals *DirectDealsService
 
 	Creatives *CreativesService
+}
 
-	Accounts *AccountsService
+type AccountsService struct {
+	s *Service
 }
 
 type DirectDealsService struct {
@@ -71,51 +75,28 @@ type CreativesService struct {
 	s *Service
 }
 
-type AccountsService struct {
-	s *Service
-}
+type Account struct {
+	// BidderLocation: Your bidder locations that have distinct URLs.
+	BidderLocation []*AccountBidderLocation `json:"bidderLocation,omitempty"`
 
-type DirectDealsList struct {
-	// Kind: Resource type.
-	Kind string `json:"kind,omitempty"`
-
-	// DirectDeals: A list of direct deals relevant for your account.
-	DirectDeals []*DirectDeal `json:"directDeals,omitempty"`
-}
-
-type DirectDeal struct {
-	// AccountId: The account id of the buyer this deal is for.
-	AccountId int64 `json:"accountId,omitempty"`
+	// CookieMatchingNid: The nid parameter value used in cookie match
+	// requests. Please contact your technical account manager if you need
+	// to change this.
+	CookieMatchingNid string `json:"cookieMatchingNid,omitempty"`
 
 	// Kind: Resource type.
 	Kind string `json:"kind,omitempty"`
 
-	// Advertiser: The name of the advertiser this deal is for.
-	Advertiser string `json:"advertiser,omitempty"`
+	// Id: Account id.
+	Id int64 `json:"id,omitempty"`
 
-	// FixedCpm: The fixed price for this direct deal. In cpm micros of
-	// currency according to currency_code.
-	FixedCpm int64 `json:"fixedCpm,omitempty,string"`
+	// CookieMatchingUrl: The base URL used in cookie match requests.
+	CookieMatchingUrl string `json:"cookieMatchingUrl,omitempty"`
 
-	// Id: Deal id.
-	Id int64 `json:"id,omitempty,string"`
-
-	// CurrencyCode: The currency code that applies to the fixed_cpm value.
-	// If not set then assumed to be USD.
-	CurrencyCode string `json:"currencyCode,omitempty"`
-
-	// EndTime: End time for when this deal stops being active. If not set
-	// then this deal is valid until manually disabled by the publisher. In
-	// seconds since the epoch.
-	EndTime int64 `json:"endTime,omitempty,string"`
-
-	// SellerNetwork: The name of the publisher offering this direct deal.
-	SellerNetwork string `json:"sellerNetwork,omitempty"`
-
-	// StartTime: Start time for when this deal becomes active. If not set
-	// then this deal is active immediately upon creation. In seconds since
-	// the epoch.
-	StartTime int64 `json:"startTime,omitempty,string"`
+	// MaximumTotalQps: The sum of all bidderLocation.maximumQps values
+	// cannot exceed this. Please contact your technical account manager if
+	// you need to change this.
+	MaximumTotalQps int64 `json:"maximumTotalQps,omitempty"`
 }
 
 type AccountBidderLocation struct {
@@ -135,6 +116,14 @@ type AccountsList struct {
 }
 
 type Creative struct {
+	// Status: Creative serving status. Read-only. This field should not be
+	// set in requests.
+	Status string `json:"status,omitempty"`
+
+	// VideoURL: The url to fetch a video ad. If set, HTMLSnippet should not
+	// be set.
+	VideoURL string `json:"videoURL,omitempty"`
+
 	// VendorType: All vendor types for the ads that may be shown from this
 	// snippet.
 	VendorType []int64 `json:"vendorType,omitempty"`
@@ -193,58 +182,72 @@ type Creative struct {
 	// HTMLSnippet: The HTML snippet that displays the ad when inserted in
 	// the web page. If set, videoURL should not be set.
 	HTMLSnippet string `json:"HTMLSnippet,omitempty"`
-
-	// Status: Creative serving status. Read-only. This field should not be
-	// set in requests.
-	Status string `json:"status,omitempty"`
-
-	// VideoURL: The url to fetch a video ad. If set, HTMLSnippet should not
-	// be set.
-	VideoURL string `json:"videoURL,omitempty"`
 }
 
-type Account struct {
-	// CookieMatchingUrl: The base URL used in cookie match requests.
-	CookieMatchingUrl string `json:"cookieMatchingUrl,omitempty"`
-
-	// MaximumTotalQps: The sum of all bidderLocation.maximumQps values
-	// cannot exceed this. Please contact your technical account manager if
-	// you need to change this.
-	MaximumTotalQps int64 `json:"maximumTotalQps,omitempty"`
-
-	// BidderLocation: Your bidder locations that have distinct URLs.
-	BidderLocation []*AccountBidderLocation `json:"bidderLocation,omitempty"`
-
-	// CookieMatchingNid: The nid parameter value used in cookie match
-	// requests. Please contact your technical account manager if you need
-	// to change this.
-	CookieMatchingNid string `json:"cookieMatchingNid,omitempty"`
-
+type DirectDeal struct {
 	// Kind: Resource type.
 	Kind string `json:"kind,omitempty"`
 
-	// Id: Account id.
-	Id int64 `json:"id,omitempty"`
+	// Advertiser: The name of the advertiser this deal is for.
+	Advertiser string `json:"advertiser,omitempty"`
+
+	// FixedCpm: The fixed price for this direct deal. In cpm micros of
+	// currency according to currency_code.
+	FixedCpm int64 `json:"fixedCpm,omitempty,string"`
+
+	// Id: Deal id.
+	Id int64 `json:"id,omitempty,string"`
+
+	// CurrencyCode: The currency code that applies to the fixed_cpm value.
+	// If not set then assumed to be USD.
+	CurrencyCode string `json:"currencyCode,omitempty"`
+
+	// EndTime: End time for when this deal stops being active. If not set
+	// then this deal is valid until manually disabled by the publisher. In
+	// seconds since the epoch.
+	EndTime int64 `json:"endTime,omitempty,string"`
+
+	// SellerNetwork: The name of the publisher offering this direct deal.
+	SellerNetwork string `json:"sellerNetwork,omitempty"`
+
+	// StartTime: Start time for when this deal becomes active. If not set
+	// then this deal is active immediately upon creation. In seconds since
+	// the epoch.
+	StartTime int64 `json:"startTime,omitempty,string"`
+
+	// AccountId: The account id of the buyer this deal is for.
+	AccountId int64 `json:"accountId,omitempty"`
 }
 
-// method id "adexchangebuyer.directDeals.list":
+type DirectDealsList struct {
+	// Kind: Resource type.
+	Kind string `json:"kind,omitempty"`
 
-type DirectDealsListCall struct {
+	// DirectDeals: A list of direct deals relevant for your account.
+	DirectDeals []*DirectDeal `json:"directDeals,omitempty"`
+}
+
+// method id "adexchangebuyer.accounts.get":
+
+type AccountsGetCall struct {
 	s    *Service
+	id   int64
 	opt_ map[string]interface{}
 }
 
-// List: Retrieves the authenticated user's list of direct deals.
-func (r *DirectDealsService) List() *DirectDealsListCall {
-	c := &DirectDealsListCall{s: r.s, opt_: make(map[string]interface{})}
+// Get: Gets one account by ID.
+func (r *AccountsService) Get(id int64) *AccountsGetCall {
+	c := &AccountsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
 	return c
 }
 
-func (c *DirectDealsListCall) Do() (*DirectDealsList, error) {
+func (c *AccountsGetCall) Do() (*Account, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1/", "directdeals")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1/", "accounts/{id}")
+	urls = strings.Replace(urls, "{id}", strconv.FormatInt(c.id, 10), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
@@ -255,18 +258,227 @@ func (c *DirectDealsListCall) Do() (*DirectDealsList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(DirectDealsList)
+	ret := new(Account)
 	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves the authenticated user's list of direct deals.",
+	//   "description": "Gets one account by ID.",
 	//   "httpMethod": "GET",
-	//   "id": "adexchangebuyer.directDeals.list",
-	//   "path": "directdeals",
+	//   "id": "adexchangebuyer.accounts.get",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The account id",
+	//       "format": "int32",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "integer"
+	//     }
+	//   },
+	//   "path": "accounts/{id}",
 	//   "response": {
-	//     "$ref": "DirectDealsList"
+	//     "$ref": "Account"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer.accounts.list":
+
+type AccountsListCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// List: Retrieves the authenticated user's list of accounts.
+func (r *AccountsService) List() *AccountsListCall {
+	c := &AccountsListCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+func (c *AccountsListCall) Do() (*AccountsList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1/", "accounts")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(AccountsList)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the authenticated user's list of accounts.",
+	//   "httpMethod": "GET",
+	//   "id": "adexchangebuyer.accounts.list",
+	//   "path": "accounts",
+	//   "response": {
+	//     "$ref": "AccountsList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer.accounts.patch":
+
+type AccountsPatchCall struct {
+	s       *Service
+	id      int64
+	account *Account
+	opt_    map[string]interface{}
+}
+
+// Patch: Updates an existing account. This method supports patch
+// semantics.
+func (r *AccountsService) Patch(id int64, account *Account) *AccountsPatchCall {
+	c := &AccountsPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	c.account = account
+	return c
+}
+
+func (c *AccountsPatchCall) Do() (*Account, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.account)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1/", "accounts/{id}")
+	urls = strings.Replace(urls, "{id}", strconv.FormatInt(c.id, 10), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Account)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an existing account. This method supports patch semantics.",
+	//   "httpMethod": "PATCH",
+	//   "id": "adexchangebuyer.accounts.patch",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The account id",
+	//       "format": "int32",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "integer"
+	//     }
+	//   },
+	//   "path": "accounts/{id}",
+	//   "request": {
+	//     "$ref": "Account"
+	//   },
+	//   "response": {
+	//     "$ref": "Account"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer.accounts.update":
+
+type AccountsUpdateCall struct {
+	s       *Service
+	id      int64
+	account *Account
+	opt_    map[string]interface{}
+}
+
+// Update: Updates an existing account.
+func (r *AccountsService) Update(id int64, account *Account) *AccountsUpdateCall {
+	c := &AccountsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	c.account = account
+	return c
+}
+
+func (c *AccountsUpdateCall) Do() (*Account, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.account)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1/", "accounts/{id}")
+	urls = strings.Replace(urls, "{id}", strconv.FormatInt(c.id, 10), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Account)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an existing account.",
+	//   "httpMethod": "PUT",
+	//   "id": "adexchangebuyer.accounts.update",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The account id",
+	//       "format": "int32",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "integer"
+	//     }
+	//   },
+	//   "path": "accounts/{id}",
+	//   "request": {
+	//     "$ref": "Account"
+	//   },
+	//   "response": {
+	//     "$ref": "Account"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/adexchange.buyer"
@@ -338,34 +550,26 @@ func (c *DirectDealsGetCall) Do() (*DirectDeal, error) {
 
 }
 
-// method id "adexchangebuyer.creatives.insert":
+// method id "adexchangebuyer.directDeals.list":
 
-type CreativesInsertCall struct {
-	s        *Service
-	creative *Creative
-	opt_     map[string]interface{}
+type DirectDealsListCall struct {
+	s    *Service
+	opt_ map[string]interface{}
 }
 
-// Insert: Submit a new creative.
-func (r *CreativesService) Insert(creative *Creative) *CreativesInsertCall {
-	c := &CreativesInsertCall{s: r.s, opt_: make(map[string]interface{})}
-	c.creative = creative
+// List: Retrieves the authenticated user's list of direct deals.
+func (r *DirectDealsService) List() *DirectDealsListCall {
+	c := &DirectDealsListCall{s: r.s, opt_: make(map[string]interface{})}
 	return c
 }
 
-func (c *CreativesInsertCall) Do() (*Creative, error) {
+func (c *DirectDealsListCall) Do() (*DirectDealsList, error) {
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.creative)
-	if err != nil {
-		return nil, err
-	}
-	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1/", "creatives")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1/", "directdeals")
 	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("POST", urls, body)
-	req.Header.Set("Content-Type", ctype)
+	req, _ := http.NewRequest("GET", urls, body)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -374,21 +578,18 @@ func (c *CreativesInsertCall) Do() (*Creative, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Creative)
+	ret := new(DirectDealsList)
 	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Submit a new creative.",
-	//   "httpMethod": "POST",
-	//   "id": "adexchangebuyer.creatives.insert",
-	//   "path": "creatives",
-	//   "request": {
-	//     "$ref": "Creative"
-	//   },
+	//   "description": "Retrieves the authenticated user's list of direct deals.",
+	//   "httpMethod": "GET",
+	//   "id": "adexchangebuyer.directDeals.list",
+	//   "path": "directdeals",
 	//   "response": {
-	//     "$ref": "Creative"
+	//     "$ref": "DirectDealsList"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/adexchange.buyer"
@@ -481,100 +682,33 @@ func (c *CreativesGetCall) Do() (*Creative, error) {
 
 }
 
-// method id "adexchangebuyer.accounts.get":
+// method id "adexchangebuyer.creatives.insert":
 
-type AccountsGetCall struct {
-	s    *Service
-	id   int64
-	opt_ map[string]interface{}
+type CreativesInsertCall struct {
+	s        *Service
+	creative *Creative
+	opt_     map[string]interface{}
 }
 
-// Get: Gets one account by ID.
-func (r *AccountsService) Get(id int64) *AccountsGetCall {
-	c := &AccountsGetCall{s: r.s, opt_: make(map[string]interface{})}
-	c.id = id
+// Insert: Submit a new creative.
+func (r *CreativesService) Insert(creative *Creative) *CreativesInsertCall {
+	c := &CreativesInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.creative = creative
 	return c
 }
 
-func (c *AccountsGetCall) Do() (*Account, error) {
+func (c *CreativesInsertCall) Do() (*Creative, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1/", "accounts/{id}")
-	urls = strings.Replace(urls, "{id}", strconv.FormatInt(c.id, 10), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(Account)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Gets one account by ID.",
-	//   "httpMethod": "GET",
-	//   "id": "adexchangebuyer.accounts.get",
-	//   "parameterOrder": [
-	//     "id"
-	//   ],
-	//   "parameters": {
-	//     "id": {
-	//       "description": "The account id",
-	//       "format": "int32",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "integer"
-	//     }
-	//   },
-	//   "path": "accounts/{id}",
-	//   "response": {
-	//     "$ref": "Account"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/adexchange.buyer"
-	//   ]
-	// }
-
-}
-
-// method id "adexchangebuyer.accounts.patch":
-
-type AccountsPatchCall struct {
-	s       *Service
-	id      int64
-	account *Account
-	opt_    map[string]interface{}
-}
-
-// Patch: Updates an existing account. This method supports patch
-// semantics.
-func (r *AccountsService) Patch(id int64, account *Account) *AccountsPatchCall {
-	c := &AccountsPatchCall{s: r.s, opt_: make(map[string]interface{})}
-	c.id = id
-	c.account = account
-	return c
-}
-
-func (c *AccountsPatchCall) Do() (*Account, error) {
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.account)
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.creative)
 	if err != nil {
 		return nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1/", "accounts/{id}")
-	urls = strings.Replace(urls, "{id}", strconv.FormatInt(c.id, 10), 1)
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1/", "creatives")
 	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("PATCH", urls, body)
+	req, _ := http.NewRequest("POST", urls, body)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -584,155 +718,21 @@ func (c *AccountsPatchCall) Do() (*Account, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Account)
+	ret := new(Creative)
 	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an existing account. This method supports patch semantics.",
-	//   "httpMethod": "PATCH",
-	//   "id": "adexchangebuyer.accounts.patch",
-	//   "parameterOrder": [
-	//     "id"
-	//   ],
-	//   "parameters": {
-	//     "id": {
-	//       "description": "The account id",
-	//       "format": "int32",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "integer"
-	//     }
-	//   },
-	//   "path": "accounts/{id}",
+	//   "description": "Submit a new creative.",
+	//   "httpMethod": "POST",
+	//   "id": "adexchangebuyer.creatives.insert",
+	//   "path": "creatives",
 	//   "request": {
-	//     "$ref": "Account"
+	//     "$ref": "Creative"
 	//   },
 	//   "response": {
-	//     "$ref": "Account"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/adexchange.buyer"
-	//   ]
-	// }
-
-}
-
-// method id "adexchangebuyer.accounts.list":
-
-type AccountsListCall struct {
-	s    *Service
-	opt_ map[string]interface{}
-}
-
-// List: Retrieves the authenticated user's list of accounts.
-func (r *AccountsService) List() *AccountsListCall {
-	c := &AccountsListCall{s: r.s, opt_: make(map[string]interface{})}
-	return c
-}
-
-func (c *AccountsListCall) Do() (*AccountsList, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1/", "accounts")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(AccountsList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Retrieves the authenticated user's list of accounts.",
-	//   "httpMethod": "GET",
-	//   "id": "adexchangebuyer.accounts.list",
-	//   "path": "accounts",
-	//   "response": {
-	//     "$ref": "AccountsList"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/adexchange.buyer"
-	//   ]
-	// }
-
-}
-
-// method id "adexchangebuyer.accounts.update":
-
-type AccountsUpdateCall struct {
-	s       *Service
-	id      int64
-	account *Account
-	opt_    map[string]interface{}
-}
-
-// Update: Updates an existing account.
-func (r *AccountsService) Update(id int64, account *Account) *AccountsUpdateCall {
-	c := &AccountsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
-	c.id = id
-	c.account = account
-	return c
-}
-
-func (c *AccountsUpdateCall) Do() (*Account, error) {
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.account)
-	if err != nil {
-		return nil, err
-	}
-	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1/", "accounts/{id}")
-	urls = strings.Replace(urls, "{id}", strconv.FormatInt(c.id, 10), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("PUT", urls, body)
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(Account)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Updates an existing account.",
-	//   "httpMethod": "PUT",
-	//   "id": "adexchangebuyer.accounts.update",
-	//   "parameterOrder": [
-	//     "id"
-	//   ],
-	//   "parameters": {
-	//     "id": {
-	//       "description": "The account id",
-	//       "format": "int32",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "integer"
-	//     }
-	//   },
-	//   "path": "accounts/{id}",
-	//   "request": {
-	//     "$ref": "Account"
-	//   },
-	//   "response": {
-	//     "$ref": "Account"
+	//     "$ref": "Creative"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/adexchange.buyer"

@@ -78,113 +78,19 @@ type ActivitiesService struct {
 	s *Service
 }
 
-type ActivityObjectActorImage struct {
-	// Url: A URL that points to a thumbnail photo of the original actor.
-	Url string `json:"url,omitempty"`
-}
-
-type ActivityObjectAttachments struct {
-	// DisplayName: The title of the attachment (such as a photo caption or
-	// an article title).
-	DisplayName string `json:"displayName,omitempty"`
-
-	// Image: The preview image for photos or videos.
-	Image *ActivityObjectAttachmentsImage `json:"image,omitempty"`
-
-	// FullImage: The full image url for photo attachments.
-	FullImage *ActivityObjectAttachmentsFullImage `json:"fullImage,omitempty"`
-
-	// ObjectType: The type of media object. Possible values are:  
-	// -
-	// "photo" - A photo. 
-	// - "video" - A video. 
-	// - "article" - An article,
-	// specified by a link.
-	ObjectType string `json:"objectType,omitempty"`
-
-	// Content: If the attachment is an article, this property contains a
-	// snippet of text from the article.
-	Content string `json:"content,omitempty"`
-
-	// Embed: If the attachment is a video, the embeddable link.
-	Embed *ActivityObjectAttachmentsEmbed `json:"embed,omitempty"`
-
-	// Url: The link to the attachment, should be of type text/html.
-	Url string `json:"url,omitempty"`
-
-	// Id: The ID of the media object's resource.
-	Id string `json:"id,omitempty"`
-}
-
-type ActivityActorImage struct {
-	// Url: The URL of the actor's profile photo. To re-size the image and
-	// crop it to a square, append the query string ?sz=x, where x is the
-	// dimension in pixels of each side.
-	Url string `json:"url,omitempty"`
-}
-
-type PlusAclentryResource struct {
-	// Id: The ID of the entry. For entries of type "person" or "circle",
-	// this is the ID of the resource. For other types, this property is not
-	// set.
-	Id string `json:"id,omitempty"`
-
-	// Type: The type of entry describing to whom access is granted.
-	// Possible values are:  
-	// - "person" - Access to an individual. 
-	// -
-	// "circle" - Access to members of a circle. 
-	// - "myCircles" - Access to
-	// members of all the person's circles. 
-	// - "extendedCircles" - Access to
-	// members of everyone in a person's circles, plus all of the people in
-	// their circles. 
-	// - "public" - Access to anyone on the web.
-	Type string `json:"type,omitempty"`
-}
-
-type CommentFeed struct {
-	// Title: The title of this collection of comments.
-	Title string `json:"title,omitempty"`
-
-	// NextLink: Link to the next page of activities.
-	NextLink string `json:"nextLink,omitempty"`
-
-	// Items: The comments in this page of results.
-	Items []*Comment `json:"items,omitempty"`
-
-	// NextPageToken: The continuation token, used to page through large
-	// result sets. Provide this value in a subsequent request to return the
-	// next page of results.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// Etag: ETag of this response for caching purposes.
-	Etag string `json:"etag,omitempty"`
-
-	// Kind: Identifies this resource as a collection of comments. Value:
-	// "plus#commentFeed".
+type Acl struct {
+	// Kind: Identifies this resource as a collection of access controls.
+	// Value: "plus#acl".
 	Kind string `json:"kind,omitempty"`
 
-	// Updated: The time at which this collection of comments was last
-	// updated. Formatted as an RFC 3339 timestamp.
-	Updated string `json:"updated,omitempty"`
+	// Description: Description of the access granted, suitable for display.
+	Description string `json:"description,omitempty"`
 
-	// Id: The ID of this collection of comments.
-	Id string `json:"id,omitempty"`
-}
-
-type CommentActorImage struct {
-	// Url: The URL of the actor's profile photo. To re-size the image and
-	// crop it to a square, append the query string ?sz=x, where x is the
-	// dimension in pixels of each side.
-	Url string `json:"url,omitempty"`
+	// Items: The list of access entries.
+	Items []*PlusAclentryResource `json:"items,omitempty"`
 }
 
 type Activity struct {
-	// Geocode: Latitude and longitude where this activity occurred. Format
-	// is latitude followed by longitude, space separated.
-	Geocode string `json:"geocode,omitempty"`
-
 	// Etag: ETag of this response for caching purposes.
 	Etag string `json:"etag,omitempty"`
 
@@ -254,49 +160,45 @@ type Activity struct {
 	// Published: The time at which this activity was initially published.
 	// Formatted as an RFC 3339 timestamp.
 	Published string `json:"published,omitempty"`
+
+	// Geocode: Latitude and longitude where this activity occurred. Format
+	// is latitude followed by longitude, space separated.
+	Geocode string `json:"geocode,omitempty"`
 }
 
-type Acl struct {
-	// Description: Description of the access granted, suitable for display.
-	Description string `json:"description,omitempty"`
+type ActivityActor struct {
+	// Url: The link to the actor's Google profile.
+	Url string `json:"url,omitempty"`
 
-	// Items: The list of access entries.
-	Items []*PlusAclentryResource `json:"items,omitempty"`
+	// Id: The ID of the actor's person resource.
+	Id string `json:"id,omitempty"`
 
-	// Kind: Identifies this resource as a collection of access controls.
-	// Value: "plus#acl".
-	Kind string `json:"kind,omitempty"`
+	// DisplayName: The name of the actor, suitable for display.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Image: The image representation of the actor.
+	Image *ActivityActorImage `json:"image,omitempty"`
+
+	// Name: An object representation of the individual components of name.
+	Name *ActivityActorName `json:"name,omitempty"`
 }
 
-type PeopleFeed struct {
-	// SelfLink: Link to this resource.
-	SelfLink string `json:"selfLink,omitempty"`
+type ActivityActorImage struct {
+	// Url: The URL of the actor's profile photo. To re-size the image and
+	// crop it to a square, append the query string ?sz=x, where x is the
+	// dimension in pixels of each side.
+	Url string `json:"url,omitempty"`
+}
 
-	// Items: The people in this page of results. Each item will include the
-	// id, displayName, image, and url for the person. To retrieve
-	// additional profile data, see the people.get method.
-	Items []*Person `json:"items,omitempty"`
+type ActivityActorName struct {
+	// GivenName: The given name (first name) of the actor.
+	GivenName string `json:"givenName,omitempty"`
 
-	// NextPageToken: The continuation token, used to page through large
-	// result sets. Provide this value in a subsequent request to return the
-	// next page of results.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// Etag: ETag of this response for caching purposes.
-	Etag string `json:"etag,omitempty"`
-
-	// Kind: Identifies this resource as a collection of people. Value:
-	// "plus#peopleFeed".
-	Kind string `json:"kind,omitempty"`
-
-	// Title: The title of this collection of people.
-	Title string `json:"title,omitempty"`
+	// FamilyName: The family name (last name) of the actor.
+	FamilyName string `json:"familyName,omitempty"`
 }
 
 type ActivityObject struct {
-	// Resharers: People who reshared this activity.
-	Resharers *ActivityObjectResharers `json:"resharers,omitempty"`
-
 	// OriginalContent: The content (text) as provided by the author, stored
 	// without any HTML formatting. When updating an activity's content, use
 	// the value of originalContent as the starting point from which to make
@@ -337,45 +239,69 @@ type ActivityObject struct {
 	// Id: The ID of the object. When resharing an activity, this is the ID
 	// of the activity being reshared.
 	Id string `json:"id,omitempty"`
+
+	// Resharers: People who reshared this activity.
+	Resharers *ActivityObjectResharers `json:"resharers,omitempty"`
 }
 
-type PersonEmails struct {
-	// Type: The type of address. Possible values are:  
-	// - "home" - Home
-	// email address. 
-	// - "work" - Work email address. 
-	// - "other" - Other.
-	Type string `json:"type,omitempty"`
+type ActivityObjectActor struct {
+	// Url: A link to the original actor's Google profile.
+	Url string `json:"url,omitempty"`
 
-	// Value: The email address.
-	Value string `json:"value,omitempty"`
+	// Id: ID of the original actor.
+	Id string `json:"id,omitempty"`
 
-	// Primary: If "true", indicates this email address is the person's
-	// primary one.
-	Primary bool `json:"primary,omitempty"`
+	// DisplayName: The original actor's name, suitable for display.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Image: The image representation of the original actor.
+	Image *ActivityObjectActorImage `json:"image,omitempty"`
 }
 
-type PersonUrls struct {
-	// Type: The type of URL. Possible values are:  
-	// - "home" - URL for
-	// home. 
-	// - "work" - URL for work. 
-	// - "blog" - URL for blog. 
+type ActivityObjectActorImage struct {
+	// Url: A URL that points to a thumbnail photo of the original actor.
+	Url string `json:"url,omitempty"`
+}
+
+type ActivityObjectAttachments struct {
+	// ObjectType: The type of media object. Possible values are:  
 	// -
-	// "profile" - URL for profile. 
-	// - "other" - Other.
-	Type string `json:"type,omitempty"`
+	// "photo" - A photo. 
+	// - "video" - A video. 
+	// - "article" - An article,
+	// specified by a link.
+	ObjectType string `json:"objectType,omitempty"`
 
-	// Value: The URL value.
-	Value string `json:"value,omitempty"`
+	// Content: If the attachment is an article, this property contains a
+	// snippet of text from the article.
+	Content string `json:"content,omitempty"`
 
-	// Primary: If "true", this URL is the person's primary URL.
-	Primary bool `json:"primary,omitempty"`
+	// Embed: If the attachment is a video, the embeddable link.
+	Embed *ActivityObjectAttachmentsEmbed `json:"embed,omitempty"`
+
+	// Url: The link to the attachment, should be of type text/html.
+	Url string `json:"url,omitempty"`
+
+	// Id: The ID of the media object's resource.
+	Id string `json:"id,omitempty"`
+
+	// DisplayName: The title of the attachment (such as a photo caption or
+	// an article title).
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Image: The preview image for photos or videos.
+	Image *ActivityObjectAttachmentsImage `json:"image,omitempty"`
+
+	// FullImage: The full image url for photo attachments.
+	FullImage *ActivityObjectAttachmentsFullImage `json:"fullImage,omitempty"`
 }
 
-type ActivityProvider struct {
-	// Title: Name of the service provider.
-	Title string `json:"title,omitempty"`
+type ActivityObjectAttachmentsEmbed struct {
+	// Type: Media type of the link.
+	Type string `json:"type,omitempty"`
+
+	// Url: URL of the link.
+	Url string `json:"url,omitempty"`
 }
 
 type ActivityObjectAttachmentsFullImage struct {
@@ -393,9 +319,6 @@ type ActivityObjectAttachmentsFullImage struct {
 }
 
 type ActivityObjectAttachmentsImage struct {
-	// Type: Media type of the link.
-	Type string `json:"type,omitempty"`
-
 	// Height: The height, in pixels, of the linked resource.
 	Height int64 `json:"height,omitempty"`
 
@@ -404,6 +327,138 @@ type ActivityObjectAttachmentsImage struct {
 
 	// Url: URL of the link.
 	Url string `json:"url,omitempty"`
+
+	// Type: Media type of the link.
+	Type string `json:"type,omitempty"`
+}
+
+type ActivityObjectPlusoners struct {
+	// SelfLink: The URL for the collection of people who +1'd this
+	// activity.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// TotalItems: Total number of people who +1'd this activity.
+	TotalItems int64 `json:"totalItems,omitempty"`
+}
+
+type ActivityObjectReplies struct {
+	// TotalItems: Total number of comments on this activity.
+	TotalItems int64 `json:"totalItems,omitempty"`
+
+	// SelfLink: The URL for the collection of comments in reply to this
+	// activity.
+	SelfLink string `json:"selfLink,omitempty"`
+}
+
+type ActivityObjectResharers struct {
+	// SelfLink: The URL for the collection of resharers.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// TotalItems: Total number of people who reshared this activity.
+	TotalItems int64 `json:"totalItems,omitempty"`
+}
+
+type ActivityProvider struct {
+	// Title: Name of the service provider.
+	Title string `json:"title,omitempty"`
+}
+
+type ActivityFeed struct {
+	// Items: The activities in this page of results.
+	Items []*Activity `json:"items,omitempty"`
+
+	// NextPageToken: The continuation token, used to page through large
+	// result sets. Provide this value in a subsequent request to return the
+	// next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Etag: ETag of this response for caching purposes.
+	Etag string `json:"etag,omitempty"`
+
+	// Kind: Identifies this resource as a collection of activities. Value:
+	// "plus#activityFeed".
+	Kind string `json:"kind,omitempty"`
+
+	// Updated: The time at which this collection of activities was last
+	// updated. Formatted as an RFC 3339 timestamp.
+	Updated string `json:"updated,omitempty"`
+
+	// Id: The ID of this collection of activities.
+	Id string `json:"id,omitempty"`
+
+	// Title: The title of this collection of activities.
+	Title string `json:"title,omitempty"`
+
+	// SelfLink: Link to this activity resource.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// NextLink: Link to the next page of activities.
+	NextLink string `json:"nextLink,omitempty"`
+}
+
+type Comment struct {
+	// InReplyTo: The activity this comment replied to.
+	InReplyTo []*CommentInReplyTo `json:"inReplyTo,omitempty"`
+
+	// Verb: This comment's verb, indicating what action was performed.
+	// Possible values are:  
+	// - "post" - Publish content to the stream.
+	Verb string `json:"verb,omitempty"`
+
+	// SelfLink: Link to this comment resource.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// Actor: The person who posted this comment.
+	Actor *CommentActor `json:"actor,omitempty"`
+
+	// Published: The time at which this comment was initially published.
+	// Formatted as an RFC 3339 timestamp.
+	Published string `json:"published,omitempty"`
+
+	// Etag: ETag of this response for caching purposes.
+	Etag string `json:"etag,omitempty"`
+
+	// Kind: Identifies this resource as a comment. Value: "plus#comment".
+	Kind string `json:"kind,omitempty"`
+
+	// Object: The object of this comment.
+	Object *CommentObject `json:"object,omitempty"`
+
+	// Updated: The time at which this comment was last updated. Formatted
+	// as an RFC 3339 timestamp.
+	Updated string `json:"updated,omitempty"`
+
+	// Id: The ID of this comment.
+	Id string `json:"id,omitempty"`
+}
+
+type CommentActor struct {
+	// Url: A link to the person resource for this actor.
+	Url string `json:"url,omitempty"`
+
+	// Id: The ID of the actor.
+	Id string `json:"id,omitempty"`
+
+	// DisplayName: The name of this actor, suitable for display.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Image: The image representation of this actor.
+	Image *CommentActorImage `json:"image,omitempty"`
+}
+
+type CommentActorImage struct {
+	// Url: The URL of the actor's profile photo. To re-size the image and
+	// crop it to a square, append the query string ?sz=x, where x is the
+	// dimension in pixels of each side.
+	Url string `json:"url,omitempty"`
+}
+
+type CommentInReplyTo struct {
+	// Url: The url of the activity.
+	Url string `json:"url,omitempty"`
+
+	// Id: The id of the activity.
+	Id string `json:"id,omitempty"`
 }
 
 type CommentObject struct {
@@ -416,71 +471,82 @@ type CommentObject struct {
 	Content string `json:"content,omitempty"`
 }
 
-type ActivityObjectReplies struct {
-	// TotalItems: Total number of comments on this activity.
-	TotalItems int64 `json:"totalItems,omitempty"`
+type CommentFeed struct {
+	// NextLink: Link to the next page of activities.
+	NextLink string `json:"nextLink,omitempty"`
 
-	// SelfLink: The URL for the collection of comments in reply to this
-	// activity.
+	// Items: The comments in this page of results.
+	Items []*Comment `json:"items,omitempty"`
+
+	// NextPageToken: The continuation token, used to page through large
+	// result sets. Provide this value in a subsequent request to return the
+	// next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Etag: ETag of this response for caching purposes.
+	Etag string `json:"etag,omitempty"`
+
+	// Kind: Identifies this resource as a collection of comments. Value:
+	// "plus#commentFeed".
+	Kind string `json:"kind,omitempty"`
+
+	// Updated: The time at which this collection of comments was last
+	// updated. Formatted as an RFC 3339 timestamp.
+	Updated string `json:"updated,omitempty"`
+
+	// Id: The ID of this collection of comments.
+	Id string `json:"id,omitempty"`
+
+	// Title: The title of this collection of comments.
+	Title string `json:"title,omitempty"`
+}
+
+type PeopleFeed struct {
+	// SelfLink: Link to this resource.
 	SelfLink string `json:"selfLink,omitempty"`
-}
 
-type ActivityObjectActor struct {
-	// Image: The image representation of the original actor.
-	Image *ActivityObjectActorImage `json:"image,omitempty"`
+	// Items: The people in this page of results. Each item will include the
+	// id, displayName, image, and url for the person. To retrieve
+	// additional profile data, see the people.get method.
+	Items []*Person `json:"items,omitempty"`
 
-	// Url: A link to the original actor's Google profile.
-	Url string `json:"url,omitempty"`
+	// NextPageToken: The continuation token, used to page through large
+	// result sets. Provide this value in a subsequent request to return the
+	// next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// Id: ID of the original actor.
-	Id string `json:"id,omitempty"`
+	// Etag: ETag of this response for caching purposes.
+	Etag string `json:"etag,omitempty"`
 
-	// DisplayName: The original actor's name, suitable for display.
-	DisplayName string `json:"displayName,omitempty"`
-}
+	// Kind: Identifies this resource as a collection of people. Value:
+	// "plus#peopleFeed".
+	Kind string `json:"kind,omitempty"`
 
-type PersonName struct {
-	// HonorificPrefix: The honorific prefixes (such as "Dr." or "Mrs.") for
-	// this person.
-	HonorificPrefix string `json:"honorificPrefix,omitempty"`
-
-	// Formatted: The full name of this person, including middle names,
-	// suffixes, etc.
-	Formatted string `json:"formatted,omitempty"`
-
-	// FamilyName: The family name (last name) of this person.
-	FamilyName string `json:"familyName,omitempty"`
-
-	// MiddleName: The middle name of this person.
-	MiddleName string `json:"middleName,omitempty"`
-
-	// GivenName: The given name (first name) of this person.
-	GivenName string `json:"givenName,omitempty"`
-
-	// HonorificSuffix: The honorific suffixes (such as "Jr.") for this
-	// person.
-	HonorificSuffix string `json:"honorificSuffix,omitempty"`
-}
-
-type CommentInReplyTo struct {
-	// Url: The url of the activity.
-	Url string `json:"url,omitempty"`
-
-	// Id: The id of the activity.
-	Id string `json:"id,omitempty"`
-}
-
-type PersonPlacesLived struct {
-	// Value: A place where this person has lived. For example: "Seattle,
-	// WA", "Near Toronto".
-	Value string `json:"value,omitempty"`
-
-	// Primary: If "true", this place of residence is this person's primary
-	// residence.
-	Primary bool `json:"primary,omitempty"`
+	// Title: The title of this collection of people.
+	Title string `json:"title,omitempty"`
 }
 
 type Person struct {
+	// Etag: ETag of this response for caching purposes.
+	Etag string `json:"etag,omitempty"`
+
+	// Kind: Identifies this resource as a person. Value: "plus#person".
+	Kind string `json:"kind,omitempty"`
+
+	// Gender: The person's gender. Possible values are:  
+	// - "male" - Male
+	// gender. 
+	// - "female" - Female gender. 
+	// - "other" - Other.
+	Gender string `json:"gender,omitempty"`
+
+	// ObjectType: Type of person within Google+. Possible values are:  
+	// -
+	// "person" - represents an actual person. 
+	// - "page" - represents a
+	// page.
+	ObjectType string `json:"objectType,omitempty"`
+
 	// Emails: A list of email addresses for this person.
 	Emails []*PersonEmails `json:"emails,omitempty"`
 
@@ -553,142 +619,22 @@ type Person struct {
 	// Name: An object representation of the individual components of a
 	// person's name.
 	Name *PersonName `json:"name,omitempty"`
-
-	// Etag: ETag of this response for caching purposes.
-	Etag string `json:"etag,omitempty"`
-
-	// Kind: Identifies this resource as a person. Value: "plus#person".
-	Kind string `json:"kind,omitempty"`
-
-	// Gender: The person's gender. Possible values are:  
-	// - "male" - Male
-	// gender. 
-	// - "female" - Female gender. 
-	// - "other" - Other.
-	Gender string `json:"gender,omitempty"`
-
-	// ObjectType: Type of person within Google+. Possible values are:  
-	// -
-	// "person" - represents an actual person. 
-	// - "page" - represents a
-	// page.
-	ObjectType string `json:"objectType,omitempty"`
 }
 
-type ActivityObjectAttachmentsEmbed struct {
-	// Type: Media type of the link.
+type PersonEmails struct {
+	// Primary: If "true", indicates this email address is the person's
+	// primary one.
+	Primary bool `json:"primary,omitempty"`
+
+	// Type: The type of address. Possible values are:  
+	// - "home" - Home
+	// email address. 
+	// - "work" - Work email address. 
+	// - "other" - Other.
 	Type string `json:"type,omitempty"`
 
-	// Url: URL of the link.
-	Url string `json:"url,omitempty"`
-}
-
-type ActivityActor struct {
-	// Image: The image representation of the actor.
-	Image *ActivityActorImage `json:"image,omitempty"`
-
-	// Name: An object representation of the individual components of name.
-	Name *ActivityActorName `json:"name,omitempty"`
-
-	// Url: The link to the actor's Google profile.
-	Url string `json:"url,omitempty"`
-
-	// Id: The ID of the actor's person resource.
-	Id string `json:"id,omitempty"`
-
-	// DisplayName: The name of the actor, suitable for display.
-	DisplayName string `json:"displayName,omitempty"`
-}
-
-type ActivityFeed struct {
-	// SelfLink: Link to this activity resource.
-	SelfLink string `json:"selfLink,omitempty"`
-
-	// NextLink: Link to the next page of activities.
-	NextLink string `json:"nextLink,omitempty"`
-
-	// Items: The activities in this page of results.
-	Items []*Activity `json:"items,omitempty"`
-
-	// NextPageToken: The continuation token, used to page through large
-	// result sets. Provide this value in a subsequent request to return the
-	// next page of results.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// Etag: ETag of this response for caching purposes.
-	Etag string `json:"etag,omitempty"`
-
-	// Kind: Identifies this resource as a collection of activities. Value:
-	// "plus#activityFeed".
-	Kind string `json:"kind,omitempty"`
-
-	// Updated: The time at which this collection of activities was last
-	// updated. Formatted as an RFC 3339 timestamp.
-	Updated string `json:"updated,omitempty"`
-
-	// Id: The ID of this collection of activities.
-	Id string `json:"id,omitempty"`
-
-	// Title: The title of this collection of activities.
-	Title string `json:"title,omitempty"`
-}
-
-type CommentActor struct {
-	// Url: A link to the person resource for this actor.
-	Url string `json:"url,omitempty"`
-
-	// Id: The ID of the actor.
-	Id string `json:"id,omitempty"`
-
-	// DisplayName: The name of this actor, suitable for display.
-	DisplayName string `json:"displayName,omitempty"`
-
-	// Image: The image representation of this actor.
-	Image *CommentActorImage `json:"image,omitempty"`
-}
-
-type ActivityObjectResharers struct {
-	// TotalItems: Total number of people who reshared this activity.
-	TotalItems int64 `json:"totalItems,omitempty"`
-
-	// SelfLink: The URL for the collection of resharers.
-	SelfLink string `json:"selfLink,omitempty"`
-}
-
-type Comment struct {
-	// Verb: This comment's verb, indicating what action was performed.
-	// Possible values are:  
-	// - "post" - Publish content to the stream.
-	Verb string `json:"verb,omitempty"`
-
-	// SelfLink: Link to this comment resource.
-	SelfLink string `json:"selfLink,omitempty"`
-
-	// Actor: The person who posted this comment.
-	Actor *CommentActor `json:"actor,omitempty"`
-
-	// Published: The time at which this comment was initially published.
-	// Formatted as an RFC 3339 timestamp.
-	Published string `json:"published,omitempty"`
-
-	// Etag: ETag of this response for caching purposes.
-	Etag string `json:"etag,omitempty"`
-
-	// Kind: Identifies this resource as a comment. Value: "plus#comment".
-	Kind string `json:"kind,omitempty"`
-
-	// Object: The object of this comment.
-	Object *CommentObject `json:"object,omitempty"`
-
-	// Updated: The time at which this comment was last updated. Formatted
-	// as an RFC 3339 timestamp.
-	Updated string `json:"updated,omitempty"`
-
-	// Id: The ID of this comment.
-	Id string `json:"id,omitempty"`
-
-	// InReplyTo: The activity this comment replied to.
-	InReplyTo []*CommentInReplyTo `json:"inReplyTo,omitempty"`
+	// Value: The email address.
+	Value string `json:"value,omitempty"`
 }
 
 type PersonImage struct {
@@ -698,7 +644,43 @@ type PersonImage struct {
 	Url string `json:"url,omitempty"`
 }
 
+type PersonName struct {
+	// GivenName: The given name (first name) of this person.
+	GivenName string `json:"givenName,omitempty"`
+
+	// HonorificSuffix: The honorific suffixes (such as "Jr.") for this
+	// person.
+	HonorificSuffix string `json:"honorificSuffix,omitempty"`
+
+	// HonorificPrefix: The honorific prefixes (such as "Dr." or "Mrs.") for
+	// this person.
+	HonorificPrefix string `json:"honorificPrefix,omitempty"`
+
+	// Formatted: The full name of this person, including middle names,
+	// suffixes, etc.
+	Formatted string `json:"formatted,omitempty"`
+
+	// FamilyName: The family name (last name) of this person.
+	FamilyName string `json:"familyName,omitempty"`
+
+	// MiddleName: The middle name of this person.
+	MiddleName string `json:"middleName,omitempty"`
+}
+
 type PersonOrganizations struct {
+	// Department: The department within the organization.
+	Department string `json:"department,omitempty"`
+
+	// Primary: If "true", indicates this organization is the person's
+	// primary one (typically interpreted as current one).
+	Primary bool `json:"primary,omitempty"`
+
+	// Title: The person's job title or role within the organization.
+	Title string `json:"title,omitempty"`
+
+	// StartDate: The date the person joined this organization.
+	StartDate string `json:"startDate,omitempty"`
+
 	// EndDate: The date the person left this organization.
 	EndDate string `json:"endDate,omitempty"`
 
@@ -717,36 +699,116 @@ type PersonOrganizations struct {
 
 	// Name: The name of the organization.
 	Name string `json:"name,omitempty"`
+}
 
-	// Department: The department within the organization.
-	Department string `json:"department,omitempty"`
+type PersonPlacesLived struct {
+	// Value: A place where this person has lived. For example: "Seattle,
+	// WA", "Near Toronto".
+	Value string `json:"value,omitempty"`
 
-	// Primary: If "true", indicates this organization is the person's
-	// primary one (typically interpreted as current one).
+	// Primary: If "true", this place of residence is this person's primary
+	// residence.
 	Primary bool `json:"primary,omitempty"`
-
-	// Title: The person's job title or role within the organization.
-	Title string `json:"title,omitempty"`
-
-	// StartDate: The date the person joined this organization.
-	StartDate string `json:"startDate,omitempty"`
 }
 
-type ActivityActorName struct {
-	// GivenName: The given name (first name) of the actor.
-	GivenName string `json:"givenName,omitempty"`
+type PersonUrls struct {
+	// Type: The type of URL. Possible values are:  
+	// - "home" - URL for
+	// home. 
+	// - "work" - URL for work. 
+	// - "blog" - URL for blog. 
+	// -
+	// "profile" - URL for profile. 
+	// - "other" - Other.
+	Type string `json:"type,omitempty"`
 
-	// FamilyName: The family name (last name) of the actor.
-	FamilyName string `json:"familyName,omitempty"`
+	// Value: The URL value.
+	Value string `json:"value,omitempty"`
+
+	// Primary: If "true", this URL is the person's primary URL.
+	Primary bool `json:"primary,omitempty"`
 }
 
-type ActivityObjectPlusoners struct {
-	// SelfLink: The URL for the collection of people who +1'd this
-	// activity.
-	SelfLink string `json:"selfLink,omitempty"`
+type PlusAclentryResource struct {
+	// Type: The type of entry describing to whom access is granted.
+	// Possible values are:  
+	// - "person" - Access to an individual. 
+	// -
+	// "circle" - Access to members of a circle. 
+	// - "myCircles" - Access to
+	// members of all the person's circles. 
+	// - "extendedCircles" - Access to
+	// members of everyone in a person's circles, plus all of the people in
+	// their circles. 
+	// - "public" - Access to anyone on the web.
+	Type string `json:"type,omitempty"`
 
-	// TotalItems: Total number of people who +1'd this activity.
-	TotalItems int64 `json:"totalItems,omitempty"`
+	// Id: The ID of the entry. For entries of type "person" or "circle",
+	// this is the ID of the resource. For other types, this property is not
+	// set.
+	Id string `json:"id,omitempty"`
+}
+
+// method id "plus.comments.get":
+
+type CommentsGetCall struct {
+	s         *Service
+	commentId string
+	opt_      map[string]interface{}
+}
+
+// Get: Get a comment.
+func (r *CommentsService) Get(commentId string) *CommentsGetCall {
+	c := &CommentsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.commentId = commentId
+	return c
+}
+
+func (c *CommentsGetCall) Do() (*Comment, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/plus/v1/", "comments/{commentId}")
+	urls = strings.Replace(urls, "{commentId}", cleanPathString(c.commentId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Comment)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get a comment.",
+	//   "httpMethod": "GET",
+	//   "id": "plus.comments.get",
+	//   "parameterOrder": [
+	//     "commentId"
+	//   ],
+	//   "parameters": {
+	//     "commentId": {
+	//       "description": "The ID of the comment to get.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "comments/{commentId}",
+	//   "response": {
+	//     "$ref": "Comment"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/plus.me"
+	//   ]
+	// }
+
 }
 
 // method id "plus.comments.list":
@@ -764,19 +826,10 @@ func (r *CommentsService) List(activityId string) *CommentsListCall {
 	return c
 }
 
-// SortOrder sets the optional parameter "sortOrder": The order in which
-// to sort the list of comments.
-func (c *CommentsListCall) SortOrder(sortOrder string) *CommentsListCall {
-	c.opt_["sortOrder"] = sortOrder
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": The continuation
-// token, used to page through large result sets. To get the next page
-// of results, set this parameter to the value of "nextPageToken" from
-// the previous response.
-func (c *CommentsListCall) PageToken(pageToken string) *CommentsListCall {
-	c.opt_["pageToken"] = pageToken
+// Alt sets the optional parameter "alt": Specifies an alternative
+// representation type.
+func (c *CommentsListCall) Alt(alt string) *CommentsListCall {
+	c.opt_["alt"] = alt
 	return c
 }
 
@@ -789,10 +842,19 @@ func (c *CommentsListCall) MaxResults(maxResults int64) *CommentsListCall {
 	return c
 }
 
-// Alt sets the optional parameter "alt": Specifies an alternative
-// representation type.
-func (c *CommentsListCall) Alt(alt string) *CommentsListCall {
-	c.opt_["alt"] = alt
+// PageToken sets the optional parameter "pageToken": The continuation
+// token, used to page through large result sets. To get the next page
+// of results, set this parameter to the value of "nextPageToken" from
+// the previous response.
+func (c *CommentsListCall) PageToken(pageToken string) *CommentsListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+// SortOrder sets the optional parameter "sortOrder": The order in which
+// to sort the list of comments.
+func (c *CommentsListCall) SortOrder(sortOrder string) *CommentsListCall {
+	c.opt_["sortOrder"] = sortOrder
 	return c
 }
 
@@ -800,17 +862,17 @@ func (c *CommentsListCall) Do() (*CommentFeed, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	if v, ok := c.opt_["sortOrder"]; ok {
-		params.Set("sortOrder", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
+	if v, ok := c.opt_["alt"]; ok {
+		params.Set("alt", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
-	if v, ok := c.opt_["alt"]; ok {
-		params.Set("alt", fmt.Sprintf("%v", v))
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["sortOrder"]; ok {
+		params.Set("sortOrder", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/plus/v1/", "activities/{activityId}/comments")
 	urls = strings.Replace(urls, "{activityId}", cleanPathString(c.activityId), 1)
@@ -895,27 +957,27 @@ func (c *CommentsListCall) Do() (*CommentFeed, error) {
 
 }
 
-// method id "plus.comments.get":
+// method id "plus.people.get":
 
-type CommentsGetCall struct {
-	s         *Service
-	commentId string
-	opt_      map[string]interface{}
+type PeopleGetCall struct {
+	s      *Service
+	userId string
+	opt_   map[string]interface{}
 }
 
-// Get: Get a comment.
-func (r *CommentsService) Get(commentId string) *CommentsGetCall {
-	c := &CommentsGetCall{s: r.s, opt_: make(map[string]interface{})}
-	c.commentId = commentId
+// Get: Get a person's profile.
+func (r *PeopleService) Get(userId string) *PeopleGetCall {
+	c := &PeopleGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.userId = userId
 	return c
 }
 
-func (c *CommentsGetCall) Do() (*Comment, error) {
+func (c *PeopleGetCall) Do() (*Person, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/plus/v1/", "comments/{commentId}")
-	urls = strings.Replace(urls, "{commentId}", cleanPathString(c.commentId), 1)
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/plus/v1/", "people/{userId}")
+	urls = strings.Replace(urls, "{userId}", cleanPathString(c.userId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
@@ -926,32 +988,34 @@ func (c *CommentsGetCall) Do() (*Comment, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Comment)
+	ret := new(Person)
 	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Get a comment.",
+	//   "description": "Get a person's profile.",
 	//   "httpMethod": "GET",
-	//   "id": "plus.comments.get",
+	//   "id": "plus.people.get",
 	//   "parameterOrder": [
-	//     "commentId"
+	//     "userId"
 	//   ],
 	//   "parameters": {
-	//     "commentId": {
-	//       "description": "The ID of the comment to get.",
+	//     "userId": {
+	//       "description": "The ID of the person to get the profile for. The special value \"me\" can be used to indicate the authenticated user.",
 	//       "location": "path",
+	//       "pattern": "me|[0-9]+",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "comments/{commentId}",
+	//   "path": "people/{userId}",
 	//   "response": {
-	//     "$ref": "Comment"
+	//     "$ref": "Person"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/plus.me"
+	//     "https://www.googleapis.com/auth/plus.me",
+	//     "https://www.googleapis.com/auth/userinfo.email"
 	//   ]
 	// }
 
@@ -1091,15 +1155,6 @@ func (r *PeopleService) Search(query string) *PeopleSearchCall {
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The continuation
-// token, used to page through large result sets. To get the next page
-// of results, set this parameter to the value of "nextPageToken" from
-// the previous response. This token may be of any length.
-func (c *PeopleSearchCall) PageToken(pageToken string) *PeopleSearchCall {
-	c.opt_["pageToken"] = pageToken
-	return c
-}
-
 // Language sets the optional parameter "language": Specify the
 // preferred language to search with. See search language codes for
 // available values.
@@ -1117,19 +1172,28 @@ func (c *PeopleSearchCall) MaxResults(maxResults int64) *PeopleSearchCall {
 	return c
 }
 
+// PageToken sets the optional parameter "pageToken": The continuation
+// token, used to page through large result sets. To get the next page
+// of results, set this parameter to the value of "nextPageToken" from
+// the previous response. This token may be of any length.
+func (c *PeopleSearchCall) PageToken(pageToken string) *PeopleSearchCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
 func (c *PeopleSearchCall) Do() (*PeopleFeed, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("query", fmt.Sprintf("%v", c.query))
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
 	if v, ok := c.opt_["language"]; ok {
 		params.Set("language", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/plus/v1/", "people")
 	urls += "?" + params.Encode()
@@ -1193,27 +1257,37 @@ func (c *PeopleSearchCall) Do() (*PeopleFeed, error) {
 
 }
 
-// method id "plus.people.get":
+// method id "plus.activities.get":
 
-type PeopleGetCall struct {
-	s      *Service
-	userId string
-	opt_   map[string]interface{}
+type ActivitiesGetCall struct {
+	s          *Service
+	activityId string
+	opt_       map[string]interface{}
 }
 
-// Get: Get a person's profile.
-func (r *PeopleService) Get(userId string) *PeopleGetCall {
-	c := &PeopleGetCall{s: r.s, opt_: make(map[string]interface{})}
-	c.userId = userId
+// Get: Get an activity.
+func (r *ActivitiesService) Get(activityId string) *ActivitiesGetCall {
+	c := &ActivitiesGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.activityId = activityId
 	return c
 }
 
-func (c *PeopleGetCall) Do() (*Person, error) {
+// Alt sets the optional parameter "alt": Specifies an alternative
+// representation type.
+func (c *ActivitiesGetCall) Alt(alt string) *ActivitiesGetCall {
+	c.opt_["alt"] = alt
+	return c
+}
+
+func (c *ActivitiesGetCall) Do() (*Activity, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/plus/v1/", "people/{userId}")
-	urls = strings.Replace(urls, "{userId}", cleanPathString(c.userId), 1)
+	if v, ok := c.opt_["alt"]; ok {
+		params.Set("alt", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/plus/v1/", "activities/{activityId}")
+	urls = strings.Replace(urls, "{activityId}", cleanPathString(c.activityId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
@@ -1224,172 +1298,41 @@ func (c *PeopleGetCall) Do() (*Person, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Person)
+	ret := new(Activity)
 	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Get a person's profile.",
+	//   "description": "Get an activity.",
 	//   "httpMethod": "GET",
-	//   "id": "plus.people.get",
+	//   "id": "plus.activities.get",
 	//   "parameterOrder": [
-	//     "userId"
+	//     "activityId"
 	//   ],
 	//   "parameters": {
-	//     "userId": {
-	//       "description": "The ID of the person to get the profile for. The special value \"me\" can be used to indicate the authenticated user.",
+	//     "activityId": {
+	//       "description": "The ID of the activity to get.",
 	//       "location": "path",
-	//       "pattern": "me|[0-9]+",
 	//       "required": true,
 	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "people/{userId}",
-	//   "response": {
-	//     "$ref": "Person"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/plus.me",
-	//     "https://www.googleapis.com/auth/userinfo.email"
-	//   ]
-	// }
-
-}
-
-// method id "plus.activities.search":
-
-type ActivitiesSearchCall struct {
-	s     *Service
-	query string
-	opt_  map[string]interface{}
-}
-
-// Search: Search public activities.
-func (r *ActivitiesService) Search(query string) *ActivitiesSearchCall {
-	c := &ActivitiesSearchCall{s: r.s, opt_: make(map[string]interface{})}
-	c.query = query
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": The continuation
-// token, used to page through large result sets. To get the next page
-// of results, set this parameter to the value of "nextPageToken" from
-// the previous response. This token may be of any length.
-func (c *ActivitiesSearchCall) PageToken(pageToken string) *ActivitiesSearchCall {
-	c.opt_["pageToken"] = pageToken
-	return c
-}
-
-// OrderBy sets the optional parameter "orderBy": Specifies how to order
-// search results.
-func (c *ActivitiesSearchCall) OrderBy(orderBy string) *ActivitiesSearchCall {
-	c.opt_["orderBy"] = orderBy
-	return c
-}
-
-// Language sets the optional parameter "language": Specify the
-// preferred language to search with. See search language codes for
-// available values.
-func (c *ActivitiesSearchCall) Language(language string) *ActivitiesSearchCall {
-	c.opt_["language"] = language
-	return c
-}
-
-// MaxResults sets the optional parameter "maxResults": The maximum
-// number of activities to include in the response, used for paging. For
-// any response, the actual number returned may be less than the
-// specified maxResults.
-func (c *ActivitiesSearchCall) MaxResults(maxResults int64) *ActivitiesSearchCall {
-	c.opt_["maxResults"] = maxResults
-	return c
-}
-
-func (c *ActivitiesSearchCall) Do() (*ActivityFeed, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	params.Set("query", fmt.Sprintf("%v", c.query))
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["orderBy"]; ok {
-		params.Set("orderBy", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["language"]; ok {
-		params.Set("language", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/plus/v1/", "activities")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(ActivityFeed)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Search public activities.",
-	//   "httpMethod": "GET",
-	//   "id": "plus.activities.search",
-	//   "parameterOrder": [
-	//     "query"
-	//   ],
-	//   "parameters": {
-	//     "language": {
-	//       "default": "",
-	//       "description": "Specify the preferred language to search with. See search language codes for available values.",
-	//       "location": "query",
-	//       "type": "string"
 	//     },
-	//     "maxResults": {
-	//       "default": "10",
-	//       "description": "The maximum number of activities to include in the response, used for paging. For any response, the actual number returned may be less than the specified maxResults.",
-	//       "format": "uint32",
-	//       "location": "query",
-	//       "maximum": "20",
-	//       "minimum": "1",
-	//       "type": "integer"
-	//     },
-	//     "orderBy": {
-	//       "default": "recent",
-	//       "description": "Specifies how to order search results.",
+	//     "alt": {
+	//       "default": "json",
+	//       "description": "Specifies an alternative representation type.",
 	//       "enum": [
-	//         "best",
-	//         "recent"
+	//         "json"
 	//       ],
 	//       "enumDescriptions": [
-	//         "Sort activities by relevance to the user, most relevant first.",
-	//         "Sort activities by published date, most recent first."
+	//         "Use JSON format"
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
-	//     },
-	//     "pageToken": {
-	//       "description": "The continuation token, used to page through large result sets. To get the next page of results, set this parameter to the value of \"nextPageToken\" from the previous response. This token may be of any length.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "query": {
-	//       "description": "Full-text search query string.",
-	//       "location": "query",
-	//       "required": true,
-	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "activities",
+	//   "path": "activities/{activityId}",
 	//   "response": {
-	//     "$ref": "ActivityFeed"
+	//     "$ref": "Activity"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/plus.me"
@@ -1416,12 +1359,10 @@ func (r *ActivitiesService) List(userId string, collection string) *ActivitiesLi
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The continuation
-// token, used to page through large result sets. To get the next page
-// of results, set this parameter to the value of "nextPageToken" from
-// the previous response.
-func (c *ActivitiesListCall) PageToken(pageToken string) *ActivitiesListCall {
-	c.opt_["pageToken"] = pageToken
+// Alt sets the optional parameter "alt": Specifies an alternative
+// representation type.
+func (c *ActivitiesListCall) Alt(alt string) *ActivitiesListCall {
+	c.opt_["alt"] = alt
 	return c
 }
 
@@ -1434,10 +1375,12 @@ func (c *ActivitiesListCall) MaxResults(maxResults int64) *ActivitiesListCall {
 	return c
 }
 
-// Alt sets the optional parameter "alt": Specifies an alternative
-// representation type.
-func (c *ActivitiesListCall) Alt(alt string) *ActivitiesListCall {
-	c.opt_["alt"] = alt
+// PageToken sets the optional parameter "pageToken": The continuation
+// token, used to page through large result sets. To get the next page
+// of results, set this parameter to the value of "nextPageToken" from
+// the previous response.
+func (c *ActivitiesListCall) PageToken(pageToken string) *ActivitiesListCall {
+	c.opt_["pageToken"] = pageToken
 	return c
 }
 
@@ -1445,14 +1388,14 @@ func (c *ActivitiesListCall) Do() (*ActivityFeed, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
+	if v, ok := c.opt_["alt"]; ok {
+		params.Set("alt", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
-	if v, ok := c.opt_["alt"]; ok {
-		params.Set("alt", fmt.Sprintf("%v", v))
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/plus/v1/", "people/{userId}/activities/{collection}")
 	urls = strings.Replace(urls, "{userId}", cleanPathString(c.userId), 1)
@@ -1538,37 +1481,72 @@ func (c *ActivitiesListCall) Do() (*ActivityFeed, error) {
 
 }
 
-// method id "plus.activities.get":
+// method id "plus.activities.search":
 
-type ActivitiesGetCall struct {
-	s          *Service
-	activityId string
-	opt_       map[string]interface{}
+type ActivitiesSearchCall struct {
+	s     *Service
+	query string
+	opt_  map[string]interface{}
 }
 
-// Get: Get an activity.
-func (r *ActivitiesService) Get(activityId string) *ActivitiesGetCall {
-	c := &ActivitiesGetCall{s: r.s, opt_: make(map[string]interface{})}
-	c.activityId = activityId
+// Search: Search public activities.
+func (r *ActivitiesService) Search(query string) *ActivitiesSearchCall {
+	c := &ActivitiesSearchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.query = query
 	return c
 }
 
-// Alt sets the optional parameter "alt": Specifies an alternative
-// representation type.
-func (c *ActivitiesGetCall) Alt(alt string) *ActivitiesGetCall {
-	c.opt_["alt"] = alt
+// Language sets the optional parameter "language": Specify the
+// preferred language to search with. See search language codes for
+// available values.
+func (c *ActivitiesSearchCall) Language(language string) *ActivitiesSearchCall {
+	c.opt_["language"] = language
 	return c
 }
 
-func (c *ActivitiesGetCall) Do() (*Activity, error) {
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of activities to include in the response, used for paging. For
+// any response, the actual number returned may be less than the
+// specified maxResults.
+func (c *ActivitiesSearchCall) MaxResults(maxResults int64) *ActivitiesSearchCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Specifies how to order
+// search results.
+func (c *ActivitiesSearchCall) OrderBy(orderBy string) *ActivitiesSearchCall {
+	c.opt_["orderBy"] = orderBy
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The continuation
+// token, used to page through large result sets. To get the next page
+// of results, set this parameter to the value of "nextPageToken" from
+// the previous response. This token may be of any length.
+func (c *ActivitiesSearchCall) PageToken(pageToken string) *ActivitiesSearchCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+func (c *ActivitiesSearchCall) Do() (*ActivityFeed, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	if v, ok := c.opt_["alt"]; ok {
-		params.Set("alt", fmt.Sprintf("%v", v))
+	params.Set("query", fmt.Sprintf("%v", c.query))
+	if v, ok := c.opt_["language"]; ok {
+		params.Set("language", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/plus/v1/", "activities/{activityId}")
-	urls = strings.Replace(urls, "{activityId}", cleanPathString(c.activityId), 1)
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["orderBy"]; ok {
+		params.Set("orderBy", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/plus/v1/", "activities")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
@@ -1579,41 +1557,63 @@ func (c *ActivitiesGetCall) Do() (*Activity, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Activity)
+	ret := new(ActivityFeed)
 	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Get an activity.",
+	//   "description": "Search public activities.",
 	//   "httpMethod": "GET",
-	//   "id": "plus.activities.get",
+	//   "id": "plus.activities.search",
 	//   "parameterOrder": [
-	//     "activityId"
+	//     "query"
 	//   ],
 	//   "parameters": {
-	//     "activityId": {
-	//       "description": "The ID of the activity to get.",
-	//       "location": "path",
-	//       "required": true,
+	//     "language": {
+	//       "default": "",
+	//       "description": "Specify the preferred language to search with. See search language codes for available values.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
-	//     "alt": {
-	//       "default": "json",
-	//       "description": "Specifies an alternative representation type.",
+	//     "maxResults": {
+	//       "default": "10",
+	//       "description": "The maximum number of activities to include in the response, used for paging. For any response, the actual number returned may be less than the specified maxResults.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "20",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "default": "recent",
+	//       "description": "Specifies how to order search results.",
 	//       "enum": [
-	//         "json"
+	//         "best",
+	//         "recent"
 	//       ],
 	//       "enumDescriptions": [
-	//         "Use JSON format"
+	//         "Sort activities by relevance to the user, most relevant first.",
+	//         "Sort activities by published date, most recent first."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
+	//     },
+	//     "pageToken": {
+	//       "description": "The continuation token, used to page through large result sets. To get the next page of results, set this parameter to the value of \"nextPageToken\" from the previous response. This token may be of any length.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "query": {
+	//       "description": "Full-text search query string.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "activities/{activityId}",
+	//   "path": "activities",
 	//   "response": {
-	//     "$ref": "Activity"
+	//     "$ref": "ActivityFeed"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/plus.me"

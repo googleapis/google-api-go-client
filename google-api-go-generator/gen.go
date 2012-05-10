@@ -20,6 +20,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"sort"
 	"strings"
 	"unicode"
 )
@@ -55,6 +56,14 @@ type API struct {
 
 	p  func(format string, args ...interface{}) // print raw
 	pn func(format string, args ...interface{}) // print with indent and newline
+}
+
+func (a *API) sortedSchemaNames() (names []string) {
+	for name := range a.schemas {
+		names = append(names, name)
+	}
+	sort.Strings(names)
+	return
 }
 
 type AllAPIs struct {
@@ -385,8 +394,8 @@ func (a *API) GenerateCode() (outerr error) {
 
 	a.PopulateSchemas()
 
-	for _, s := range a.schemas {
-		s.writeSchemaCode()
+	for _, name := range a.sortedSchemaNames() {
+		a.schemas[name].writeSchemaCode()
 	}
 
 	for _, meth := range a.APIMethods() {
@@ -801,7 +810,10 @@ func (r *Resource) GoType() string {
 
 func (r *Resource) Methods() []*Method {
 	ms := []*Method{}
-	for mname, mi := range jobj(r.m, "methods") {
+
+	methMap := jobj(r.m, "methods")
+	for _, mname := range sortedKeys(methMap) {
+		mi := methMap[mname]
 		ms = append(ms, &Method{
 			api:  r.api,
 			r:    r,
@@ -835,7 +847,9 @@ func (m *Method) mediaPath() string {
 
 func (m *Method) Params() []*Param {
 	if m.params == nil {
-		for name, mi := range jobj(m.m, "parameters") {
+		paramMap := jobj(m.m, "parameters")
+		for _, name := range sortedKeys(paramMap) {
+			mi := paramMap[name]
 			pm := mi.(map[string]interface{})
 			m.params = append(m.params, &Param{
 				name:   name,
@@ -1380,6 +1394,14 @@ func jstr(m map[string]interface{}, key string) string {
 		return s
 	}
 	return ""
+}
+
+func sortedKeys(m map[string]interface{}) (keys []string) {
+	for key := range m {
+		keys = append(keys, key)
+	}
+	sort.Strings(keys)
+	return
 }
 
 func jobj(m map[string]interface{}, key string) map[string]interface{} {

@@ -180,8 +180,14 @@ func ConditionallyIncludeMedia(media io.Reader, bodyp *io.Reader, ctypep *string
 	// Get the media type and size. The type check might return a
 	// different reader instance, so do the size check first,
 	// which looks at the specific type of the io.Reader.
+	var mediaType string
+	if typer, ok := media.(ContentTyper); ok {
+		mediaType = typer.ContentType()
+	}
 	media, mediaSize := getReaderSize(media)
-	media, mediaType := getMediaType(media)
+	if mediaType == "" {
+		media, mediaType = getMediaType(media)
+	}
 	body, bodyType := *bodyp, *ctypep
 	body, bodySize := getReaderSize(body)
 

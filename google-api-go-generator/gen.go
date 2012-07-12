@@ -145,6 +145,10 @@ func (a *API) want() bool {
 		// R.I.P.
 		return false
 	}
+	if strings.Contains(a.ID, "fusiontables") {
+		// TODO(bradfitz): broken codegen.
+		return false
+	}
 	return *apiToGenerate == "*" || *apiToGenerate == a.ID
 }
 
@@ -1208,6 +1212,8 @@ func (a *argument) cleanExpr(prefix string) string {
 		return "cleanPathString(" + prefix + a.goname + ")"
 	case "integer", "int64":
 		return "strconv.FormatInt(" + prefix + a.goname + ", 10)"
+	case "uint64":
+		return "strconv.FormatUint(" + prefix + a.goname + ", 10)"
 	}
 	log.Panicf("unknown type: apitype=%q, gotype=%q", a.apitype, a.gotype)
 	return ""

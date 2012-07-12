@@ -517,6 +517,18 @@
      "items": {
       "type": "any"
      }
+    },
+    "supportsMediaDownload": {
+     "type": "boolean",
+     "description": "Whether this method supports media downloads."
+    },
+    "supportsMediaUpload": {
+     "type": "boolean",
+     "description": "Whether this method supports media uploads."
+    },
+    "supportsSubscription": {
+     "type": "boolean",
+     "description": "Whether this method supports subscriptions."
     }
    }
   },

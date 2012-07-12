@@ -11,15 +11,15 @@ package customsearch
 
 import (
 	"bytes"
-	"fmt"
-	"net/http"
-	"io"
+	"code.google.com/p/google-api-go-client/googleapi"
 	"encoding/json"
 	"errors"
-	"strings"
-	"strconv"
+	"fmt"
+	"io"
+	"net/http"
 	"net/url"
-	"code.google.com/p/google-api-go-client/googleapi"
+	"strconv"
+	"strings"
 )
 
 var _ = bytes.NewBuffer
@@ -72,6 +72,8 @@ type Promotion struct {
 
 	DisplayLink string `json:"displayLink,omitempty"`
 
+	HtmlTitle string `json:"htmlTitle,omitempty"`
+
 	Image *PromotionImage `json:"image,omitempty"`
 
 	Link string `json:"link,omitempty"`
@@ -80,6 +82,8 @@ type Promotion struct {
 }
 
 type PromotionBodyLines struct {
+	HtmlTitle string `json:"htmlTitle,omitempty"`
+
 	Link string `json:"link,omitempty"`
 
 	Title string `json:"title,omitempty"`

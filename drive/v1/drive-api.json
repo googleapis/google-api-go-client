@@ -4,9 +4,9 @@
  "id": "drive:v1",
  "name": "drive",
  "version": "v1",
- "revision": "20120424",
+ "revision": "20120516",
  "title": "Drive API",
- "description": "The API to interact with Drive",
+ "description": "The API to interact with Drive.",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/search-16.gif",
   "x32": "http://www.google.com/images/icons/product/search-32.gif"
@@ -76,6 +76,7 @@
   "File": {
    "id": "File",
    "type": "object",
+   "description": "The metadata for a file.",
    "properties": {
     "createdDate": {
      "type": "string",
@@ -142,7 +143,7 @@
     },
     "lastViewedDate": {
      "type": "string",
-     "description": "Last time this file was viewed by anyone (formatted RFC 3339 timestamp).",
+     "description": "Last time this file was viewed by the user (formatted RFC 3339 timestamp).",
      "format": "date-time"
     },
     "md5Checksum": {
@@ -197,6 +198,7 @@
   "Permission": {
    "id": "Permission",
    "type": "object",
+   "description": "A single permission for a file.",
    "properties": {
     "additionalRoles": {
      "type": "array",
@@ -284,6 +286,7 @@
      "scopes": [
       "https://www.googleapis.com/auth/drive.file"
      ],
+     "supportsMediaUpload": true,
      "mediaUpload": {
       "accept": [
        "*/*"
@@ -388,6 +391,7 @@
      "scopes": [
       "https://www.googleapis.com/auth/drive.file"
      ],
+     "supportsMediaUpload": true,
      "mediaUpload": {
       "accept": [
        "*/*"

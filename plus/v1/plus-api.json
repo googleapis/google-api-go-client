@@ -4,14 +4,14 @@
  "id": "plus:v1",
  "name": "plus",
  "version": "v1",
- "revision": "20120419",
+ "revision": "20120630",
  "title": "Google+ API",
  "description": "The Google+ API enables developers to build on top of the Google+ platform.",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/gplus-16.png",
   "x32": "http://www.google.com/images/icons/product/gplus-32.png"
  },
- "documentationLink": "http://developers.google.com/+/api/",
+ "documentationLink": "https://developers.google.com/+/api/",
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/plus/v1/",
  "basePath": "/plus/v1/",
@@ -374,10 +374,6 @@
     "placeName": {
      "type": "string",
      "description": "Name of the place where this activity occurred."
-    },
-    "placeholder": {
-     "type": "boolean",
-     "description": "True if this activity is a placeholder."
     },
     "provider": {
      "type": "object",
@@ -764,11 +760,11 @@
       "properties": {
        "department": {
         "type": "string",
-        "description": "The department within the organization."
+        "description": "The department within the organization. Deprecated."
        },
        "description": {
         "type": "string",
-        "description": "A short description of the person's role in this organization."
+        "description": "A short description of the person's role in this organization. Deprecated."
        },
        "endDate": {
         "type": "string",
@@ -776,7 +772,7 @@
        },
        "location": {
         "type": "string",
-        "description": "The location of this organization."
+        "description": "The location of this organization. Deprecated."
        },
        "name": {
         "type": "string",
@@ -1225,7 +1221,7 @@
       },
       "query": {
        "type": "string",
-       "description": "Full-text search query string.",
+       "description": "Specify a query string for full text search of public text in all profiles.",
        "required": true,
        "location": "query"
       }

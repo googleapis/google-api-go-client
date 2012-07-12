@@ -4,7 +4,7 @@
  "id": "analytics:v2.4",
  "name": "analytics",
  "version": "v2.4",
- "revision": "20120320",
+ "revision": "20120607",
  "title": "Google Analytics API",
  "description": "View and manage your Google Analytics data",
  "icons": {

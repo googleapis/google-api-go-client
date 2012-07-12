@@ -4,7 +4,7 @@
  "id": "adsense:v1.1",
  "name": "adsense",
  "version": "v1.1",
- "revision": "20120430",
+ "revision": "20120630",
  "title": "AdSense Management API",
  "description": "Gives AdSense publishers access to their inventory and the ability to generate reports",
  "icons": {
@@ -912,7 +912,8 @@
        "scopes": [
         "https://www.googleapis.com/auth/adsense",
         "https://www.googleapis.com/auth/adsense.readonly"
-       ]
+       ],
+       "supportsMediaDownload": true
       }
      }
     },
@@ -1347,7 +1348,8 @@
      "scopes": [
       "https://www.googleapis.com/auth/adsense",
       "https://www.googleapis.com/auth/adsense.readonly"
-     ]
+     ],
+     "supportsMediaDownload": true
     }
    }
   },

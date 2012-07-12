@@ -1,6 +1,6 @@
 // Package plus provides access to the Google+ API.
 //
-// See http://developers.google.com/+/api/
+// See https://developers.google.com/+/api/
 //
 // Usage example:
 //
@@ -11,15 +11,15 @@ package plus
 
 import (
 	"bytes"
-	"fmt"
-	"net/http"
-	"io"
+	"code.google.com/p/google-api-go-client/googleapi"
 	"encoding/json"
 	"errors"
-	"strings"
-	"strconv"
+	"fmt"
+	"io"
+	"net/http"
 	"net/url"
-	"code.google.com/p/google-api-go-client/googleapi"
+	"strconv"
+	"strings"
 )
 
 var _ = bytes.NewBuffer
@@ -130,9 +130,6 @@ type Activity struct {
 
 	// PlaceName: Name of the place where this activity occurred.
 	PlaceName string `json:"placeName,omitempty"`
-
-	// Placeholder: True if this activity is a placeholder.
-	Placeholder bool `json:"placeholder,omitempty"`
 
 	// Provider: The service provider that initially published this
 	// activity.
@@ -668,17 +665,17 @@ type PersonName struct {
 }
 
 type PersonOrganizations struct {
-	// Department: The department within the organization.
+	// Department: The department within the organization. Deprecated.
 	Department string `json:"department,omitempty"`
 
 	// Description: A short description of the person's role in this
-	// organization.
+	// organization. Deprecated.
 	Description string `json:"description,omitempty"`
 
 	// EndDate: The date the person left this organization.
 	EndDate string `json:"endDate,omitempty"`
 
-	// Location: The location of this organization.
+	// Location: The location of this organization. Deprecated.
 	Location string `json:"location,omitempty"`
 
 	// Name: The name of the organization.
@@ -1605,7 +1602,7 @@ func (c *PeopleSearchCall) Do() (*PeopleFeed, error) {
 	//       "type": "string"
 	//     },
 	//     "query": {
-	//       "description": "Full-text search query string.",
+	//       "description": "Specify a query string for full text search of public text in all profiles.",
 	//       "location": "query",
 	//       "required": true,
 	//       "type": "string"

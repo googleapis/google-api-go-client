@@ -11,15 +11,15 @@ package adsense
 
 import (
 	"bytes"
-	"fmt"
-	"net/http"
-	"io"
+	"code.google.com/p/google-api-go-client/googleapi"
 	"encoding/json"
 	"errors"
-	"strings"
-	"strconv"
+	"fmt"
+	"io"
+	"net/http"
 	"net/url"
-	"code.google.com/p/google-api-go-client/googleapi"
+	"strconv"
+	"strings"
 )
 
 var _ = bytes.NewBuffer
@@ -1177,7 +1177,8 @@ func (c *ReportsGenerateCall) Do() (*AdsenseReportsGenerateResponse, error) {
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/adsense",
 	//     "https://www.googleapis.com/auth/adsense.readonly"
-	//   ]
+	//   ],
+	//   "supportsMediaDownload": true
 	// }
 
 }

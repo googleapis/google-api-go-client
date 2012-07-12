@@ -4,7 +4,7 @@
  "id": "drive:v2",
  "name": "drive",
  "version": "v2",
- "revision": "20120501",
+ "revision": "20120516",
  "title": "Drive API",
  "description": "The API to interact with Drive.",
  "icons": {
@@ -648,7 +648,7 @@
     },
     "parents": {
      "type": "array",
-     "description": "Collection of parent folders which contain this file.\nOn insert, setting this field will put the file in all of the provided folders. If no folders are provided, the file will be placed in the default root folder. On update, this field is ignored.",
+     "description": "Collection of parent folders which contain this file.\nSetting this field will put the file in all of the provided folders. On insert, if no folders are provided, the file will be placed in the default root folder.",
      "items": {
       "$ref": "ParentReference"
      }
@@ -1275,6 +1275,12 @@
       "ocrLanguage": {
        "type": "string",
        "description": "If ocr is true, hints at the language to use. Valid values are ISO 639-1 codes.",
+       "location": "query"
+      },
+      "pinned": {
+       "type": "boolean",
+       "description": "Whether to pin the head revision of the new copy.",
+       "default": "false",
        "location": "query"
       },
       "sourceLanguage": {

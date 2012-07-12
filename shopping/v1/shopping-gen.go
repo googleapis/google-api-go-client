@@ -1,4 +1,4 @@
-// Package shopping provides access to the Search API for Shopping.
+// Package shopping provides access to the Search API For Shopping.
 //
 // See http://code.google.com/apis/shopping/search/v1/getting_started.html
 //
@@ -11,15 +11,15 @@ package shopping
 
 import (
 	"bytes"
-	"fmt"
-	"net/http"
-	"io"
+	"code.google.com/p/google-api-go-client/googleapi"
 	"encoding/json"
 	"errors"
-	"strings"
-	"strconv"
+	"fmt"
+	"io"
+	"net/http"
 	"net/url"
-	"code.google.com/p/google-api-go-client/googleapi"
+	"strconv"
+	"strings"
 )
 
 var _ = bytes.NewBuffer
@@ -65,6 +65,7 @@ type Product struct {
 	// Categories: List of categories for product.
 	Categories []*ShoppingModelCategoryJsonV1 `json:"categories,omitempty"`
 
+	// Debug: Google internal.
 	Debug *ShoppingModelDebugJsonV1 `json:"debug,omitempty"`
 
 	// Id: Id of product.
@@ -73,6 +74,7 @@ type Product struct {
 	// Kind: The kind of item, always shopping#product.
 	Kind string `json:"kind,omitempty"`
 
+	// Product: Product.
 	Product *ShoppingModelProductJsonV1 `json:"product,omitempty"`
 
 	// Recommendations: Recommendations for product.
@@ -81,7 +83,8 @@ type Product struct {
 	// RequestId: Unique identifier for this request.
 	RequestId string `json:"requestId,omitempty"`
 
-	// SelfLink: Self link of product.
+	// SelfLink: Self link of product when generated for a search request.
+	// Self link of product when generated for a lookup request.
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
@@ -218,10 +221,6 @@ type ProductsPromotions struct {
 
 	// ImageLink: Link to promotion image (omitted if type is not standard).
 	ImageLink string `json:"imageLink,omitempty"`
-
-	// Link: Link to promotion without scheme. DEPRECATED. WILL BE REMOVED
-	// SOON. USE destLink.
-	Link string `json:"link,omitempty"`
 
 	// Name: Name of promotion (omitted if type is not standard).
 	Name string `json:"name,omitempty"`
@@ -418,6 +417,9 @@ type ShoppingModelProductJsonV1 struct {
 	// for the variant offers (if any) attached to a product offer.
 	QueryMatched bool `json:"queryMatched,omitempty"`
 
+	// Score: Google Internal
+	Score float64 `json:"score,omitempty"`
+
 	// Title: Title of product.
 	Title string `json:"title,omitempty"`
 
@@ -458,6 +460,8 @@ type ShoppingModelProductJsonV1Author struct {
 type ShoppingModelProductJsonV1Images struct {
 	// Link: Link to product image.
 	Link string `json:"link,omitempty"`
+
+	Status string `json:"status,omitempty"`
 
 	// Thumbnails: Thumbnails of product image.
 	Thumbnails []*ShoppingModelProductJsonV1ImagesThumbnails `json:"thumbnails,omitempty"`
@@ -504,8 +508,27 @@ type ShoppingModelProductJsonV1Inventories struct {
 	// DistanceUnit: Distance unit of product inventory.
 	DistanceUnit string `json:"distanceUnit,omitempty"`
 
+	// InstallmentMonths: Number of months for installment price.
+	InstallmentMonths int64 `json:"installmentMonths,omitempty"`
+
+	// InstallmentPrice: Installment price of product inventory.
+	InstallmentPrice float64 `json:"installmentPrice,omitempty"`
+
+	// OriginalPrice: Original price of product inventory. Only returned for
+	// products that are on sale.
+	OriginalPrice float64 `json:"originalPrice,omitempty"`
+
 	// Price: Price of product inventory.
 	Price float64 `json:"price,omitempty"`
+
+	// SaleEndDate: Sale end date.
+	SaleEndDate string `json:"saleEndDate,omitempty"`
+
+	// SalePrice: Sale price of product inventory.
+	SalePrice float64 `json:"salePrice,omitempty"`
+
+	// SaleStartDate: Sale start date.
+	SaleStartDate string `json:"saleStartDate,omitempty"`
 
 	// Shipping: Shipping cost of product inventory.
 	Shipping float64 `json:"shipping,omitempty"`
@@ -601,10 +624,10 @@ func (c *ProductsGetCall) PlusOneEnabled(plusOneEnabled bool) *ProductsGetCall {
 	return c
 }
 
-// PlusOneOptions sets the optional parameter "plusOne.options": +1
-// button rendering specification
-func (c *ProductsGetCall) PlusOneOptions(plusOneOptions string) *ProductsGetCall {
-	c.opt_["plusOne.options"] = plusOneOptions
+// PlusOneStyles sets the optional parameter "plusOne.styles": +1 button
+// rendering styles
+func (c *ProductsGetCall) PlusOneStyles(plusOneStyles string) *ProductsGetCall {
+	c.opt_["plusOne.styles"] = plusOneStyles
 	return c
 }
 
@@ -673,8 +696,8 @@ func (c *ProductsGetCall) Do() (*Product, error) {
 	if v, ok := c.opt_["plusOne.enabled"]; ok {
 		params.Set("plusOne.enabled", fmt.Sprintf("%v", v))
 	}
-	if v, ok := c.opt_["plusOne.options"]; ok {
-		params.Set("plusOne.options", fmt.Sprintf("%v", v))
+	if v, ok := c.opt_["plusOne.styles"]; ok {
+		params.Set("plusOne.styles", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["plusOne.useGcsConfig"]; ok {
 		params.Set("plusOne.useGcsConfig", fmt.Sprintf("%v", v))
@@ -762,8 +785,8 @@ func (c *ProductsGetCall) Do() (*Product, error) {
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
-	//     "plusOne.options": {
-	//       "description": "+1 button rendering specification",
+	//     "plusOne.styles": {
+	//       "description": "+1 button rendering styles",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1013,10 +1036,10 @@ func (c *ProductsListCall) PlusOneEnabled(plusOneEnabled bool) *ProductsListCall
 	return c
 }
 
-// PlusOneOptions sets the optional parameter "plusOne.options": +1
-// button rendering specification
-func (c *ProductsListCall) PlusOneOptions(plusOneOptions string) *ProductsListCall {
-	c.opt_["plusOne.options"] = plusOneOptions
+// PlusOneStyles sets the optional parameter "plusOne.styles": +1 button
+// rendering styles
+func (c *ProductsListCall) PlusOneStyles(plusOneStyles string) *ProductsListCall {
+	c.opt_["plusOne.styles"] = plusOneStyles
 	return c
 }
 
@@ -1215,8 +1238,8 @@ func (c *ProductsListCall) Do() (*Products, error) {
 	if v, ok := c.opt_["plusOne.enabled"]; ok {
 		params.Set("plusOne.enabled", fmt.Sprintf("%v", v))
 	}
-	if v, ok := c.opt_["plusOne.options"]; ok {
-		params.Set("plusOne.options", fmt.Sprintf("%v", v))
+	if v, ok := c.opt_["plusOne.styles"]; ok {
+		params.Set("plusOne.styles", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["plusOne.useGcsConfig"]; ok {
 		params.Set("plusOne.useGcsConfig", fmt.Sprintf("%v", v))
@@ -1416,8 +1439,8 @@ func (c *ProductsListCall) Do() (*Products, error) {
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
-	//     "plusOne.options": {
-	//       "description": "+1 button rendering specification",
+	//     "plusOne.styles": {
+	//       "description": "+1 button rendering styles",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

@@ -4,9 +4,9 @@
  "id": "shopping:v1",
  "name": "shopping",
  "version": "v1",
- "revision": "20120503",
- "title": "Search API for Shopping",
- "description": "Lets you search over product data",
+ "revision": "20120628",
+ "title": "Search API For Shopping",
+ "description": "Lets you search over product data.",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/search-16.gif",
   "x32": "http://www.google.com/images/icons/product/search-32.gif"
@@ -87,7 +87,8 @@
      }
     },
     "debug": {
-     "$ref": "ShoppingModelDebugJsonV1"
+     "$ref": "ShoppingModelDebugJsonV1",
+     "description": "Google internal."
     },
     "id": {
      "type": "string",
@@ -99,7 +100,8 @@
      "default": "shopping#product"
     },
     "product": {
-     "$ref": "ShoppingModelProductJsonV1"
+     "$ref": "ShoppingModelProductJsonV1",
+     "description": "Product."
     },
     "recommendations": {
      "type": "array",
@@ -114,7 +116,7 @@
     },
     "selfLink": {
      "type": "string",
-     "description": "Self link of product."
+     "description": "Self link of product when generated for a search request. Self link of product when generated for a lookup request."
     }
    }
   },
@@ -285,10 +287,6 @@
        "imageLink": {
         "type": "string",
         "description": "Link to promotion image (omitted if type is not standard)."
-       },
-       "link": {
-        "type": "string",
-        "description": "Link to promotion without scheme. DEPRECATED. WILL BE REMOVED SOON. USE destLink."
        },
        "name": {
         "type": "string",
@@ -571,6 +569,9 @@
         "type": "string",
         "description": "Link to product image."
        },
+       "status": {
+        "type": "string"
+       },
        "thumbnails": {
         "type": "array",
         "description": "Thumbnails of product image.",
@@ -699,10 +700,40 @@
         "type": "string",
         "description": "Distance unit of product inventory."
        },
+       "installmentMonths": {
+        "type": "integer",
+        "description": "Number of months for installment price.",
+        "format": "int32"
+       },
+       "installmentPrice": {
+        "type": "number",
+        "description": "Installment price of product inventory.",
+        "format": "float"
+       },
+       "originalPrice": {
+        "type": "number",
+        "description": "Original price of product inventory. Only returned for products that are on sale.",
+        "format": "float"
+       },
        "price": {
         "type": "number",
         "description": "Price of product inventory.",
         "format": "float"
+       },
+       "saleEndDate": {
+        "type": "string",
+        "description": "Sale end date.",
+        "format": "date-time"
+       },
+       "salePrice": {
+        "type": "number",
+        "description": "Sale price of product inventory.",
+        "format": "float"
+       },
+       "saleStartDate": {
+        "type": "string",
+        "description": "Sale start date.",
+        "format": "date-time"
        },
        "shipping": {
         "type": "number",
@@ -752,6 +783,11 @@
     "queryMatched": {
      "type": "boolean",
      "description": "Whether this product matched the user query. Only set for the variant offers (if any) attached to a product offer."
+    },
+    "score": {
+     "type": "number",
+     "description": "Google Internal",
+     "format": "float"
     },
     "title": {
      "type": "string",
@@ -847,9 +883,9 @@
        "description": "Whether to return +1 button code",
        "location": "query"
       },
-      "plusOne.options": {
+      "plusOne.styles": {
        "type": "string",
-       "description": "+1 button rendering specification",
+       "description": "+1 button rendering styles",
        "location": "query"
       },
       "plusOne.useGcsConfig": {
@@ -1042,9 +1078,9 @@
        "description": "Whether to return +1 button code",
        "location": "query"
       },
-      "plusOne.options": {
+      "plusOne.styles": {
        "type": "string",
-       "description": "+1 button rendering specification",
+       "description": "+1 button rendering styles",
        "location": "query"
       },
       "plusOne.useGcsConfig": {

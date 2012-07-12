@@ -11,15 +11,15 @@ package adexchangebuyer
 
 import (
 	"bytes"
-	"fmt"
-	"net/http"
-	"io"
+	"code.google.com/p/google-api-go-client/googleapi"
 	"encoding/json"
 	"errors"
-	"strings"
-	"strconv"
+	"fmt"
+	"io"
+	"net/http"
 	"net/url"
-	"code.google.com/p/google-api-go-client/googleapi"
+	"strconv"
+	"strings"
 )
 
 var _ = bytes.NewBuffer
@@ -182,6 +182,14 @@ type Creative struct {
 
 	// Width: Ad width.
 	Width int64 `json:"width,omitempty"`
+}
+
+type CreativesList struct {
+	// Items: A list of creatives.
+	Items []*Creative `json:"items,omitempty"`
+
+	// Kind: Resource type.
+	Kind string `json:"kind,omitempty"`
 }
 
 type DirectDeal struct {
@@ -622,6 +630,92 @@ func (c *CreativesInsertCall) Do() (*Creative, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "Creative"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer.creatives.list":
+
+type CreativesListCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// List: Retrieves a list of the authenticated user's active creatives.
+func (r *CreativesService) List() *CreativesListCall {
+	c := &CreativesListCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum number
+// of entries returned on one result page. If not set, the default is
+// 100.
+func (c *CreativesListCall) MaxResults(maxResults int64) *CreativesListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A continuation
+// token, used to page through ad clients. To retrieve the next page,
+// set this parameter to the value of "nextPageToken" from the previous
+// response.
+func (c *CreativesListCall) PageToken(pageToken string) *CreativesListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+func (c *CreativesListCall) Do() (*CreativesList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1/", "creatives")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(CreativesList)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a list of the authenticated user's active creatives.",
+	//   "httpMethod": "GET",
+	//   "id": "adexchangebuyer.creatives.list",
+	//   "parameters": {
+	//     "maxResults": {
+	//       "description": "Maximum number of entries returned on one result page. If not set, the default is 100. Optional.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "1000",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A continuation token, used to page through ad clients. To retrieve the next page, set this parameter to the value of \"nextPageToken\" from the previous response. Optional.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "creatives",
+	//   "response": {
+	//     "$ref": "CreativesList"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/adexchange.buyer"

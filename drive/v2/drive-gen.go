@@ -465,11 +465,11 @@ type File struct {
 	// OwnerNames: Name(s) of the owner(s) of this file.
 	OwnerNames []string `json:"ownerNames,omitempty"`
 
-	// Parents: Collection of parent folders which contain this file.
-	// On
-	// insert, setting this field will put the file in all of the provided
-	// folders. If no folders are provided, the file will be placed in the
-	// default root folder. On update, this field is ignored.
+	// Parents: Collection of parent folders which contain this
+	// file.
+	// Setting this field will put the file in all of the provided
+	// folders. On insert, if no folders are provided, the file will be
+	// placed in the default root folder.
 	Parents []*ParentReference `json:"parents,omitempty"`
 
 	// PermissionsLink: A link to the permissions collection.
@@ -1437,6 +1437,13 @@ func (c *FilesCopyCall) OcrLanguage(ocrLanguage string) *FilesCopyCall {
 	return c
 }
 
+// Pinned sets the optional parameter "pinned": Whether to pin the head
+// revision of the new copy.
+func (c *FilesCopyCall) Pinned(pinned bool) *FilesCopyCall {
+	c.opt_["pinned"] = pinned
+	return c
+}
+
 // SourceLanguage sets the optional parameter "sourceLanguage": The
 // language of the original file to be translated.
 func (c *FilesCopyCall) SourceLanguage(sourceLanguage string) *FilesCopyCall {
@@ -1483,6 +1490,9 @@ func (c *FilesCopyCall) Do() (*File, error) {
 	}
 	if v, ok := c.opt_["ocrLanguage"]; ok {
 		params.Set("ocrLanguage", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pinned"]; ok {
+		params.Set("pinned", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["sourceLanguage"]; ok {
 		params.Set("sourceLanguage", fmt.Sprintf("%v", v))
@@ -1544,6 +1554,12 @@ func (c *FilesCopyCall) Do() (*File, error) {
 	//       "description": "If ocr is true, hints at the language to use. Valid values are ISO 639-1 codes.",
 	//       "location": "query",
 	//       "type": "string"
+	//     },
+	//     "pinned": {
+	//       "default": "false",
+	//       "description": "Whether to pin the head revision of the new copy.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     },
 	//     "sourceLanguage": {
 	//       "description": "The language of the original file to be translated.",

@@ -1,6 +1,6 @@
 // Package latitude provides access to the Google Latitude API.
 //
-// See http://code.google.com/apis/latitude/v1/using_rest.html
+// See https://developers.google.com/latitude/v1/using
 //
 // Usage example:
 //
@@ -11,15 +11,15 @@ package latitude
 
 import (
 	"bytes"
-	"fmt"
-	"net/http"
-	"io"
+	"code.google.com/p/google-api-go-client/googleapi"
 	"encoding/json"
 	"errors"
-	"strings"
-	"strconv"
+	"fmt"
+	"io"
+	"net/http"
 	"net/url"
-	"code.google.com/p/google-api-go-client/googleapi"
+	"strconv"
+	"strings"
 )
 
 var _ = bytes.NewBuffer
@@ -220,7 +220,16 @@ func (c *CurrentLocationGetCall) Do() (*LatitudeCurrentlocationResourceJson, err
 	//   "id": "latitude.currentLocation.get",
 	//   "parameters": {
 	//     "granularity": {
+	//       "default": "city",
 	//       "description": "Granularity of the requested location.",
+	//       "enum": [
+	//         "best",
+	//         "city"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Request best available granularity.",
+	//         "Request city-level granularty."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -412,7 +421,16 @@ func (c *LocationGetCall) Do() (*Location, error) {
 	//   ],
 	//   "parameters": {
 	//     "granularity": {
+	//       "default": "city",
 	//       "description": "Granularity of the location to return.",
+	//       "enum": [
+	//         "best",
+	//         "city"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Request best available granularity.",
+	//         "Request city-level granularty."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -574,7 +592,16 @@ func (c *LocationListCall) Do() (*LocationFeed, error) {
 	//   "id": "latitude.location.list",
 	//   "parameters": {
 	//     "granularity": {
+	//       "default": "city",
 	//       "description": "Granularity of the requested locations.",
+	//       "enum": [
+	//         "best",
+	//         "city"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Request best available granularity.",
+	//         "Request city-level granularty."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },

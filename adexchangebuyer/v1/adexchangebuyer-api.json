@@ -4,7 +4,7 @@
  "id": "adexchangebuyer:v1",
  "name": "adexchangebuyer",
  "version": "v1",
- "revision": "20120227",
+ "revision": "20120508",
  "title": "Ad Exchange Buyer API",
  "description": "Lets you manage your Ad Exchange Buyer account",
  "icons": {
@@ -149,12 +149,22 @@
     "accountId": {
      "type": "integer",
      "description": "Account id.",
-     "format": "int32"
+     "format": "int32",
+     "annotations": {
+      "required": [
+       "adexchangebuyer.creatives.insert"
+      ]
+     }
     },
     "adgroupId": {
      "type": "string",
      "description": "The pretargeting adgroup id that this creative will be associated with.",
-     "format": "int64"
+     "format": "int64",
+     "annotations": {
+      "required": [
+       "adexchangebuyer.creatives.insert"
+      ]
+     }
     },
     "advertiserId": {
      "type": "array",
@@ -166,7 +176,12 @@
     },
     "advertiserName": {
      "type": "string",
-     "description": "The name of the company being advertised in the creative."
+     "description": "The name of the company being advertised in the creative.",
+     "annotations": {
+      "required": [
+       "adexchangebuyer.creatives.insert"
+      ]
+     }
     },
     "attribute": {
      "type": "array",
@@ -178,13 +193,23 @@
     },
     "buyerCreativeId": {
      "type": "string",
-     "description": "A buyer-specific id identifying the creative in this ad."
+     "description": "A buyer-specific id identifying the creative in this ad.",
+     "annotations": {
+      "required": [
+       "adexchangebuyer.creatives.insert"
+      ]
+     }
     },
     "clickThroughUrl": {
      "type": "array",
      "description": "The set of destination urls for the snippet.",
      "items": {
       "type": "string"
+     },
+     "annotations": {
+      "required": [
+       "adexchangebuyer.creatives.insert"
+      ]
      }
     },
     "disapprovalReasons": {
@@ -197,7 +222,12 @@
     "height": {
      "type": "integer",
      "description": "Ad height.",
-     "format": "int32"
+     "format": "int32",
+     "annotations": {
+      "required": [
+       "adexchangebuyer.creatives.insert"
+      ]
+     }
     },
     "kind": {
      "type": "string",
@@ -239,7 +269,30 @@
     "width": {
      "type": "integer",
      "description": "Ad width.",
-     "format": "int32"
+     "format": "int32",
+     "annotations": {
+      "required": [
+       "adexchangebuyer.creatives.insert"
+      ]
+     }
+    }
+   }
+  },
+  "CreativesList": {
+   "id": "CreativesList",
+   "type": "object",
+   "properties": {
+    "items": {
+     "type": "array",
+     "description": "A list of creatives.",
+     "items": {
+      "$ref": "Creative"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Resource type.",
+     "default": "adexchangebuyer#creativesList"
     }
    }
   },
@@ -456,6 +509,33 @@
      },
      "response": {
       "$ref": "Creative"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/adexchange.buyer"
+     ]
+    },
+    "list": {
+     "id": "adexchangebuyer.creatives.list",
+     "path": "creatives",
+     "httpMethod": "GET",
+     "description": "Retrieves a list of the authenticated user's active creatives.",
+     "parameters": {
+      "maxResults": {
+       "type": "integer",
+       "description": "Maximum number of entries returned on one result page. If not set, the default is 100. Optional.",
+       "format": "uint32",
+       "minimum": "1",
+       "maximum": "1000",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "A continuation token, used to page through ad clients. To retrieve the next page, set this parameter to the value of \"nextPageToken\" from the previous response. Optional.",
+       "location": "query"
+      }
+     },
+     "response": {
+      "$ref": "CreativesList"
      },
      "scopes": [
       "https://www.googleapis.com/auth/adexchange.buyer"

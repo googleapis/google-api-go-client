@@ -4,7 +4,7 @@
  "id": "bigquery:v2",
  "name": "bigquery",
  "version": "v2",
- "revision": "20120507",
+ "revision": "20120626",
  "title": "BigQuery API",
  "description": "A data platform for customers to create, manage, share and query data.",
  "icons": {
@@ -257,7 +257,7 @@
     },
     "jobReference": {
      "$ref": "JobReference",
-     "description": "Reference to the Helix Job that was created to run the query. This field will be present even if the original request timed out, in which case GetQueryResults can be used to read the results once the query has completed. Since this API only returns the first page of results, subsequent pages can be fetched via the same mechanism (GetQueryResults)."
+     "description": "Reference to the BigQuery Job that was created to run the query. This field will be present even if the original request timed out, in which case GetQueryResults can be used to read the results once the query has completed. Since this API only returns the first page of results, subsequent pages can be fetched via the same mechanism (GetQueryResults)."
     },
     "kind": {
      "type": "string",
@@ -427,6 +427,14 @@
      "$ref": "TableSchema",
      "description": "[Optional] Schema of the table being written to."
     },
+    "schemaInline": {
+     "type": "string",
+     "description": "[Experimental] Inline schema. For CSV schemas, specify as \"Field1:Type1[,Field2:Type2]*\". For example, \"foo:STRING, bar:INTEGER, baz:FLOAT\""
+    },
+    "schemaInlineFormat": {
+     "type": "string",
+     "description": "[Experimental] Format of inlineSchema field."
+    },
     "skipLeadingRows": {
      "type": "integer",
      "description": "[Optional] Number of rows of initial data to skip in the data being imported.",
@@ -468,6 +476,10 @@
     "destinationTable": {
      "$ref": "TableReference",
      "description": "[Optional] Describes the table where the query results should be stored. If not present, a new table will be created to store the results."
+    },
+    "priority": {
+     "type": "string",
+     "description": "[Experimental] Specifies a priority for the query. Default is INTERACTIVE. Alternative is BATCH, which may be subject to looser quota restrictions."
     },
     "query": {
      "type": "string",
@@ -838,6 +850,10 @@
      "type": "string",
      "description": "The resource type of the response.",
      "default": "bigquery#tableDataList"
+    },
+    "pageToken": {
+     "type": "string",
+     "description": "A token used for paging results. Providing this token instead of the startRow parameter can help you retrieve stable results when an underlying table is changing."
     },
     "rows": {
      "type": "array",
@@ -1292,6 +1308,7 @@
      "scopes": [
       "https://www.googleapis.com/auth/bigquery"
      ],
+     "supportsMediaUpload": true,
      "mediaUpload": {
       "accept": [
        "application/octet-stream"
@@ -1451,6 +1468,11 @@
        "type": "integer",
        "description": "Maximum number of results to return",
        "format": "uint32",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Page token, returned by a previous call, identifying the result set",
        "location": "query"
       },
       "projectId": {

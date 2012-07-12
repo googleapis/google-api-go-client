@@ -11,15 +11,15 @@ package drive
 
 import (
 	"bytes"
-	"fmt"
-	"net/http"
-	"io"
+	"code.google.com/p/google-api-go-client/googleapi"
 	"encoding/json"
 	"errors"
-	"strings"
-	"strconv"
+	"fmt"
+	"io"
+	"net/http"
 	"net/url"
-	"code.google.com/p/google-api-go-client/googleapi"
+	"strconv"
+	"strings"
 )
 
 var _ = bytes.NewBuffer
@@ -99,7 +99,7 @@ type File struct {
 	// Labels: Labels for the file.
 	Labels *FileLabels `json:"labels,omitempty"`
 
-	// LastViewedDate: Last time this file was viewed by anyone (formatted
+	// LastViewedDate: Last time this file was viewed by the user (formatted
 	// RFC 3339 timestamp).
 	LastViewedDate string `json:"lastViewedDate,omitempty"`
 
@@ -364,7 +364,8 @@ func (c *FilesInsertCall) Do() (*File, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive.file"
-	//   ]
+	//   ],
+	//   "supportsMediaUpload": true
 	// }
 
 }
@@ -646,7 +647,8 @@ func (c *FilesUpdateCall) Do() (*File, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive.file"
-	//   ]
+	//   ],
+	//   "supportsMediaUpload": true
 	// }
 
 }

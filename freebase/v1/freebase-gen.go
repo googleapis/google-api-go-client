@@ -11,15 +11,15 @@ package freebase
 
 import (
 	"bytes"
-	"fmt"
-	"net/http"
-	"io"
+	"code.google.com/p/google-api-go-client/googleapi"
 	"encoding/json"
 	"errors"
-	"strings"
-	"strconv"
+	"fmt"
+	"io"
+	"net/http"
 	"net/url"
-	"code.google.com/p/google-api-go-client/googleapi"
+	"strconv"
+	"strings"
 )
 
 var _ = bytes.NewBuffer
@@ -189,10 +189,10 @@ func (c *ImageCall) Do() error {
 	//         "fit"
 	//       ],
 	//       "enumDescriptions": [
-	//         "TODO(bendrees)",
-	//         "TODO(bendrees)",
-	//         "TODO(bendrees)",
-	//         "TODO(bendrees)"
+	//         "Fill rectangle completely with image, relax constraint on one dimension if necessary.",
+	//         "Fill rectangle with image, crop image to maintain rectangle dimensions.",
+	//         "Fill rectangle with image, center horizontally, crop left and right.",
+	//         "Fit image inside rectangle, leave empty space in one dimension if necessary."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -204,7 +204,8 @@ func (c *ImageCall) Do() error {
 	//       "type": "boolean"
 	//     }
 	//   },
-	//   "path": "image{/id*}"
+	//   "path": "image{/id*}",
+	//   "supportsMediaDownload": true
 	// }
 
 }
@@ -405,7 +406,8 @@ func (c *MqlreadCall) Do() error {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "mqlread"
+	//   "path": "mqlread",
+	//   "supportsMediaDownload": true
 	// }
 
 }

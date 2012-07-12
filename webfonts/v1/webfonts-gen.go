@@ -11,15 +11,15 @@ package webfonts
 
 import (
 	"bytes"
-	"fmt"
-	"net/http"
-	"io"
+	"code.google.com/p/google-api-go-client/googleapi"
 	"encoding/json"
 	"errors"
-	"strings"
-	"strconv"
+	"fmt"
+	"io"
+	"net/http"
 	"net/url"
-	"code.google.com/p/google-api-go-client/googleapi"
+	"strconv"
+	"strings"
 )
 
 var _ = bytes.NewBuffer
@@ -59,6 +59,7 @@ type Webfont struct {
 	// Family: The name of the font.
 	Family interface{} `json:"family,omitempty"`
 
+	// Kind: This kind represents a webfont object in the webfonts service.
 	Kind string `json:"kind,omitempty"`
 
 	// Subsets: The scripts supported by the font.
@@ -72,7 +73,8 @@ type WebfontList struct {
 	// Items: The list of fonts currently served by the Google Fonts API.
 	Items []*Webfont `json:"items,omitempty"`
 
-	// Kind: The object kind.
+	// Kind: This kind represents a list of webfont objects in the webfonts
+	// service.
 	Kind string `json:"kind,omitempty"`
 }
 

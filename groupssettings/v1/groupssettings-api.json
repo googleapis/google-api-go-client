@@ -4,7 +4,7 @@
  "id": "groupssettings:v1",
  "name": "groupssettings",
  "version": "v1",
- "revision": "20120417",
+ "revision": "20120516",
  "title": "Groups Settings API",
  "description": "Lets you manage permission levels and related settings of a group",
  "icons": {

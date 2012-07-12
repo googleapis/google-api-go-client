@@ -11,15 +11,15 @@ package bigquery
 
 import (
 	"bytes"
-	"fmt"
-	"net/http"
-	"io"
+	"code.google.com/p/google-api-go-client/googleapi"
 	"encoding/json"
 	"errors"
-	"strings"
-	"strconv"
+	"fmt"
+	"io"
+	"net/http"
 	"net/url"
-	"code.google.com/p/google-api-go-client/googleapi"
+	"strconv"
+	"strings"
 )
 
 var _ = bytes.NewBuffer
@@ -246,11 +246,11 @@ type GetQueryResultsResponse struct {
 	// totalRows will not be available.
 	JobComplete bool `json:"jobComplete,omitempty"`
 
-	// JobReference: Reference to the Helix Job that was created to run the
-	// query. This field will be present even if the original request timed
-	// out, in which case GetQueryResults can be used to read the results
-	// once the query has completed. Since this API only returns the first
-	// page of results, subsequent pages can be fetched via the same
+	// JobReference: Reference to the BigQuery Job that was created to run
+	// the query. This field will be present even if the original request
+	// timed out, in which case GetQueryResults can be used to read the
+	// results once the query has completed. Since this API only returns the
+	// first page of results, subsequent pages can be fetched via the same
 	// mechanism (GetQueryResults).
 	JobReference *JobReference `json:"jobReference,omitempty"`
 
@@ -384,6 +384,14 @@ type JobConfigurationLoad struct {
 	// Schema: [Optional] Schema of the table being written to.
 	Schema *TableSchema `json:"schema,omitempty"`
 
+	// SchemaInline: [Experimental] Inline schema. For CSV schemas, specify
+	// as "Field1:Type1[,Field2:Type2]*". For example, "foo:STRING,
+	// bar:INTEGER, baz:FLOAT"
+	SchemaInline string `json:"schemaInline,omitempty"`
+
+	// SchemaInlineFormat: [Experimental] Format of inlineSchema field.
+	SchemaInlineFormat string `json:"schemaInlineFormat,omitempty"`
+
 	// SkipLeadingRows: [Optional] Number of rows of initial data to skip in
 	// the data being imported.
 	SkipLeadingRows int64 `json:"skipLeadingRows,omitempty"`
@@ -416,6 +424,11 @@ type JobConfigurationQuery struct {
 	// results should be stored. If not present, a new table will be created
 	// to store the results.
 	DestinationTable *TableReference `json:"destinationTable,omitempty"`
+
+	// Priority: [Experimental] Specifies a priority for the query. Default
+	// is INTERACTIVE. Alternative is BATCH, which may be subject to looser
+	// quota restrictions.
+	Priority string `json:"priority,omitempty"`
 
 	// Query: [Required] BigQuery SQL query to execute.
 	Query string `json:"query,omitempty"`
@@ -679,6 +692,11 @@ type TableDataList struct {
 
 	// Kind: The resource type of the response.
 	Kind string `json:"kind,omitempty"`
+
+	// PageToken: A token used for paging results. Providing this token
+	// instead of the startRow parameter can help you retrieve stable
+	// results when an underlying table is changing.
+	PageToken string `json:"pageToken,omitempty"`
 
 	// Rows: Rows of results.
 	Rows []*TableRow `json:"rows,omitempty"`
@@ -1549,7 +1567,8 @@ func (c *JobsInsertCall) Do() (*Job, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/bigquery"
-	//   ]
+	//   ],
+	//   "supportsMediaUpload": true
 	// }
 
 }
@@ -1893,6 +1912,13 @@ func (c *TabledataListCall) MaxResults(maxResults int64) *TabledataListCall {
 	return c
 }
 
+// PageToken sets the optional parameter "pageToken": Page token,
+// returned by a previous call, identifying the result set
+func (c *TabledataListCall) PageToken(pageToken string) *TabledataListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
 // StartIndex sets the optional parameter "startIndex": Zero-based index
 // of the starting row to read
 func (c *TabledataListCall) StartIndex(startIndex uint64) *TabledataListCall {
@@ -1906,6 +1932,9 @@ func (c *TabledataListCall) Do() (*TableDataList, error) {
 	params.Set("alt", "json")
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["startIndex"]; ok {
 		params.Set("startIndex", fmt.Sprintf("%v", v))
@@ -1950,6 +1979,11 @@ func (c *TabledataListCall) Do() (*TableDataList, error) {
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Page token, returned by a previous call, identifying the result set",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "projectId": {
 	//       "description": "Project ID of the table to read",

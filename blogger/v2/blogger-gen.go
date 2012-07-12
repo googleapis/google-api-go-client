@@ -1,6 +1,6 @@
 // Package blogger provides access to the Blogger API.
 //
-// See https://code.google.com/apis/blogger/docs/2.0/json/getting_started.html
+// See https://developers.google.com/blogger/docs/2.0/json/getting_started
 //
 // Usage example:
 //
@@ -11,15 +11,15 @@ package blogger
 
 import (
 	"bytes"
-	"fmt"
-	"net/http"
-	"io"
+	"code.google.com/p/google-api-go-client/googleapi"
 	"encoding/json"
 	"errors"
-	"strings"
-	"strconv"
+	"fmt"
+	"io"
+	"net/http"
 	"net/url"
-	"code.google.com/p/google-api-go-client/googleapi"
+	"strconv"
+	"strings"
 )
 
 var _ = bytes.NewBuffer
@@ -623,7 +623,7 @@ func (c *CommentsListCall) PageToken(pageToken string) *CommentsListCall {
 }
 
 // StartDate sets the optional parameter "startDate": Earliest date of
-// comment to fetch.
+// comment to fetch, a date-time with RFC 3339 formatting.
 func (c *CommentsListCall) StartDate(startDate string) *CommentsListCall {
 	c.opt_["startDate"] = startDate
 	return c
@@ -701,7 +701,8 @@ func (c *CommentsListCall) Do() (*CommentList, error) {
 	//       "type": "string"
 	//     },
 	//     "startDate": {
-	//       "description": "Earliest date of comment to fetch.",
+	//       "description": "Earliest date of comment to fetch, a date-time with RFC 3339 formatting.",
+	//       "format": "date-time",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -975,7 +976,7 @@ func (c *PostsListCall) PageToken(pageToken string) *PostsListCall {
 }
 
 // StartDate sets the optional parameter "startDate": Earliest post date
-// to fetch.
+// to fetch, a date-time with RFC 3339 formatting.
 func (c *PostsListCall) StartDate(startDate string) *PostsListCall {
 	c.opt_["startDate"] = startDate
 	return c
@@ -1045,7 +1046,8 @@ func (c *PostsListCall) Do() (*PostList, error) {
 	//       "type": "string"
 	//     },
 	//     "startDate": {
-	//       "description": "Earliest post date to fetch.",
+	//       "description": "Earliest post date to fetch, a date-time with RFC 3339 formatting.",
+	//       "format": "date-time",
 	//       "location": "query",
 	//       "type": "string"
 	//     }

@@ -4,7 +4,7 @@
  "id": "books:v1",
  "name": "books",
  "version": "v1",
- "revision": "20120426",
+ "revision": "20120614",
  "title": "Books API",
  "description": "Lets you search for books and manage your Google Books library.",
  "icons": {
@@ -356,8 +356,7 @@
       },
       "cachePolicy": {
        "type": "string",
-       "description": "The cache policy active for this data. EX: UNRESTRICTED, RESTRICTED, NEVER",
-       "default": "UNRESTRICTED"
+       "description": "The cache policy active for this data. EX: UNRESTRICTED, RESTRICTED, NEVER"
       },
       "countryCode": {
        "type": "string",
@@ -1564,6 +1563,13 @@
          "description": "The locale information for the data. ISO-639-1 language and ISO-3166-1 country code. Ex: 'en_US'.",
          "location": "query"
         },
+        "scale": {
+         "type": "integer",
+         "description": "The requested scale for the image.",
+         "format": "int32",
+         "minimum": "0",
+         "location": "query"
+        },
         "source": {
          "type": "string",
          "description": "String to identify the originator of this request.",
@@ -1641,6 +1647,13 @@
         "pageToken": {
          "type": "string",
          "description": "The value of the nextToken from the previous page.",
+         "location": "query"
+        },
+        "scale": {
+         "type": "integer",
+         "description": "The requested scale for the image.",
+         "format": "int32",
+         "minimum": "0",
          "location": "query"
         },
         "source": {
@@ -2714,6 +2727,98 @@
      "scopes": [
       "https://www.googleapis.com/auth/books"
      ]
+    }
+   },
+   "resources": {
+    "associated": {
+     "methods": {
+      "list": {
+       "id": "books.volumes.associated.list",
+       "path": "volumes/{volumeId}/associated",
+       "httpMethod": "GET",
+       "description": "Return a list of associated books.",
+       "parameters": {
+        "association": {
+         "type": "string",
+         "description": "Association type.",
+         "enum": [
+          "complementary"
+         ],
+         "enumDescriptions": [
+          "Books that are complementary for additional reading."
+         ],
+         "location": "query"
+        },
+        "filter": {
+         "type": "string",
+         "description": "Filter search results.",
+         "enum": [
+          "ebooks",
+          "free-ebooks",
+          "full",
+          "paid-ebooks",
+          "partial"
+         ],
+         "enumDescriptions": [
+          "All Google eBooks.",
+          "Google eBook with full volume text viewability.",
+          "Public can view entire volume text.",
+          "Google eBook with a price.",
+          "Public able to see parts of text."
+         ],
+         "location": "query"
+        },
+        "maxResults": {
+         "type": "integer",
+         "description": "Maximum number of results to return.",
+         "format": "uint32",
+         "minimum": "0",
+         "maximum": "40",
+         "location": "query"
+        },
+        "projection": {
+         "type": "string",
+         "description": "Restrict information returned to a set of selected fields.",
+         "enum": [
+          "full",
+          "lite"
+         ],
+         "enumDescriptions": [
+          "Includes all volume data.",
+          "Includes a subset of fields in volumeInfo and accessInfo."
+         ],
+         "location": "query"
+        },
+        "source": {
+         "type": "string",
+         "description": "String to identify the originator of this request.",
+         "location": "query"
+        },
+        "startIndex": {
+         "type": "integer",
+         "description": "Index of the first result to return (starts at 0)",
+         "format": "uint32",
+         "minimum": "0",
+         "location": "query"
+        },
+        "volumeId": {
+         "type": "string",
+         "description": "ID of the source volume.",
+         "required": true,
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "volumeId"
+       ],
+       "response": {
+        "$ref": "Volumes"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/books"
+       ]
+      }
+     }
     }
    }
   }

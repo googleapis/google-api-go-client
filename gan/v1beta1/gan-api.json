@@ -4,9 +4,9 @@
  "id": "gan:v1beta1",
  "name": "gan",
  "version": "v1beta1",
- "revision": "20120424",
+ "revision": "20120501",
  "title": "Google Affiliate Network API",
- "description": "Lets you have programmatic access to your Google Affiliate Network data",
+ "description": "Lets you have programmatic access to your Google Affiliate Network data.",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/affiliatenetwork-16.png",
   "x32": "http://www.google.com/images/icons/product/affiliatenetwork-32.png"
@@ -63,12 +63,28 @@
    "location": "query"
   }
  },
+ "auth": {
+  "oauth2": {
+   "scopes": {
+    "https://www.googleapis.com/auth/gan": {
+     "description": "Manage your GAN data"
+    },
+    "https://www.googleapis.com/auth/gan.readonly": {
+     "description": "View your GAN data"
+    }
+   }
+  }
+ },
  "schemas": {
   "Advertiser": {
    "id": "Advertiser",
    "type": "object",
    "description": "An AdvertiserResource.",
    "properties": {
+    "allowPublisherCreatedLinks": {
+     "type": "boolean",
+     "description": "True if the advertiser allows publisher created links, otherwise false."
+    },
     "category": {
      "type": "string",
      "description": "Category that this advertiser belongs to. A valid list of categories can be found here: http://www.google.com/support/affiliatenetwork/advertiser/bin/answer.py?hl=en&answer=107581"
@@ -681,6 +697,105 @@
     }
    }
   },
+  "Link": {
+   "id": "Link",
+   "type": "object",
+   "description": "A LinkResource.",
+   "properties": {
+    "advertiserId": {
+     "type": "string",
+     "description": "The advertiser id for the advertiser who owns this link.",
+     "format": "int64"
+    },
+    "authorship": {
+     "type": "string",
+     "description": "Authorship"
+    },
+    "availability": {
+     "type": "string",
+     "description": "Availability."
+    },
+    "createDate": {
+     "type": "string",
+     "description": "Date that this link was created.",
+     "format": "date-time"
+    },
+    "creativeType": {
+     "type": "string",
+     "description": "Creative Type."
+    },
+    "description": {
+     "type": "string",
+     "description": "Description."
+    },
+    "destinationUrl": {
+     "type": "string",
+     "description": "The destination URL for the link."
+    },
+    "duration": {
+     "type": "string",
+     "description": "Duration"
+    },
+    "endDate": {
+     "type": "string",
+     "description": "Date that this link becomes inactive.",
+     "format": "date-time"
+    },
+    "id": {
+     "type": "string",
+     "description": "The ID of this link.",
+     "format": "int64"
+    },
+    "imageAltText": {
+     "type": "string",
+     "description": "image alt text."
+    },
+    "isActive": {
+     "type": "boolean",
+     "description": "Flag for if this link is active."
+    },
+    "kind": {
+     "type": "string",
+     "description": "The kind for one entity.",
+     "default": "gan#link"
+    },
+    "name": {
+     "type": "string",
+     "description": "The logical name for this link."
+    },
+    "promotionType": {
+     "type": "string",
+     "description": "Promotion Type"
+    },
+    "startDate": {
+     "type": "string",
+     "description": "Date that this link becomes active.",
+     "format": "date-time"
+    }
+   }
+  },
+  "Links": {
+   "id": "Links",
+   "type": "object",
+   "properties": {
+    "items": {
+     "type": "array",
+     "description": "The links.",
+     "items": {
+      "$ref": "Link"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "The kind for a page of links.",
+     "default": "gan#links"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "The next page token."
+    }
+   }
+  },
   "Money": {
    "id": "Money",
    "type": "object",
@@ -818,7 +933,11 @@
      ],
      "response": {
       "$ref": "Advertiser"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/gan",
+      "https://www.googleapis.com/auth/gan.readonly"
+     ]
     },
     "list": {
      "id": "gan.advertisers.list",
@@ -910,7 +1029,11 @@
      ],
      "response": {
       "$ref": "Advertisers"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/gan",
+      "https://www.googleapis.com/auth/gan.readonly"
+     ]
     }
    }
   },
@@ -936,8 +1059,8 @@
         "summary"
        ],
        "enumDescriptions": [
-        "Include all offer fields",
-        "Include only the basic fields needed to display an offer. This is the default."
+        "Include all offer fields. This is the default.",
+        "Include only the basic fields needed to display an offer."
        ],
        "location": "query"
       },
@@ -953,7 +1076,11 @@
      ],
      "response": {
       "$ref": "CcOffers"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/gan",
+      "https://www.googleapis.com/auth/gan.readonly"
+     ]
     }
    }
   },
@@ -1109,7 +1236,341 @@
      ],
      "response": {
       "$ref": "Events"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/gan",
+      "https://www.googleapis.com/auth/gan.readonly"
+     ]
+    }
+   }
+  },
+  "links": {
+   "methods": {
+    "get": {
+     "id": "gan.links.get",
+     "path": "{role}/{roleId}/link/{linkId}",
+     "httpMethod": "GET",
+     "description": "Retrieves data about a single link if the requesting advertiser/publisher has access to it. Advertisers can look up their own links. Publishers can look up visible links or links belonging to advertisers they are in a relationship with.",
+     "parameters": {
+      "linkId": {
+       "type": "string",
+       "description": "The ID of the link to look up.",
+       "required": true,
+       "format": "int64",
+       "location": "path"
+      },
+      "role": {
+       "type": "string",
+       "description": "The role of the requester. Valid values: 'advertisers' or 'publishers'.",
+       "required": true,
+       "enum": [
+        "advertisers",
+        "publishers"
+       ],
+       "enumDescriptions": [
+        "The requester is requesting as an advertiser.",
+        "The requester is requesting as a publisher."
+       ],
+       "location": "path"
+      },
+      "roleId": {
+       "type": "string",
+       "description": "The ID of the requesting advertiser or publisher.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "role",
+      "roleId",
+      "linkId"
+     ],
+     "response": {
+      "$ref": "Link"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/gan",
+      "https://www.googleapis.com/auth/gan.readonly"
+     ]
+    },
+    "insert": {
+     "id": "gan.links.insert",
+     "path": "{role}/{roleId}/link",
+     "httpMethod": "POST",
+     "description": "Inserts a new link.",
+     "parameters": {
+      "role": {
+       "type": "string",
+       "description": "The role of the requester. Valid values: 'advertisers' or 'publishers'.",
+       "required": true,
+       "enum": [
+        "advertisers",
+        "publishers"
+       ],
+       "enumDescriptions": [
+        "The requester is requesting as an advertiser.",
+        "The requester is requesting as a publisher."
+       ],
+       "location": "path"
+      },
+      "roleId": {
+       "type": "string",
+       "description": "The ID of the requesting advertiser or publisher.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "role",
+      "roleId"
+     ],
+     "request": {
+      "$ref": "Link"
+     },
+     "response": {
+      "$ref": "Link"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/gan"
+     ]
+    },
+    "list": {
+     "id": "gan.links.list",
+     "path": "{role}/{roleId}/links",
+     "httpMethod": "GET",
+     "description": "Retrieves all links that match the query parameters.",
+     "parameters": {
+      "advertiserCategory": {
+       "type": "string",
+       "description": "The advertiser's primary vertical.",
+       "enum": [
+        "apparel_accessories",
+        "appliances_electronics",
+        "auto_dealer",
+        "automotive",
+        "babies_kids",
+        "blogs_personal_sites",
+        "books_magazines",
+        "computers",
+        "dating",
+        "department_stores",
+        "education",
+        "employment",
+        "financial_credit_cards",
+        "financial_other",
+        "flowers_gifts",
+        "grocery",
+        "health_beauty",
+        "home_garden",
+        "hosting_domain",
+        "internet_providers",
+        "legal",
+        "media_entertainment",
+        "medical",
+        "movies_games",
+        "music",
+        "nonprofit",
+        "office_supplies",
+        "online_games",
+        "outdoor",
+        "pets",
+        "real_estate",
+        "restaurants",
+        "sport_fitness",
+        "telecom",
+        "ticketing",
+        "toys_hobbies",
+        "travel",
+        "utilities",
+        "wholesale_relationship",
+        "wine_spirits"
+       ],
+       "enumDescriptions": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+       ],
+       "repeated": true,
+       "location": "query"
+      },
+      "advertiserId": {
+       "type": "string",
+       "description": "Limits the resulting links to the ones belonging to the listed advertisers.",
+       "format": "int64",
+       "repeated": true,
+       "location": "query"
+      },
+      "assetSize": {
+       "type": "string",
+       "description": "The size of the given asset.",
+       "repeated": true,
+       "location": "query"
+      },
+      "authorship": {
+       "type": "string",
+       "description": "The role of the author of the link.",
+       "enum": [
+        "advertiser",
+        "publisher"
+       ],
+       "enumDescriptions": [
+        "",
+        ""
+       ],
+       "location": "query"
+      },
+      "linkType": {
+       "type": "string",
+       "description": "The type of the link.",
+       "enum": [
+        "banner",
+        "text"
+       ],
+       "enumDescriptions": [
+        "",
+        ""
+       ],
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "Max number of items to return in this page. Optional. Defaults to 20.",
+       "format": "uint32",
+       "minimum": "0",
+       "maximum": "100",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "The value of 'nextPageToken' from the previous page. Optional.",
+       "location": "query"
+      },
+      "promotionType": {
+       "type": "string",
+       "description": "The promotion type.",
+       "enum": [
+        "buy_get",
+        "coupon",
+        "free_gift",
+        "free_gift_wrap",
+        "free_shipping",
+        "none",
+        "ongoing",
+        "percent_off",
+        "price_cut",
+        "product_promotion",
+        "sale",
+        "sweepstakes"
+       ],
+       "enumDescriptions": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+       ],
+       "repeated": true,
+       "location": "query"
+      },
+      "relationshipStatus": {
+       "type": "string",
+       "description": "The status of the relationship.",
+       "enum": [
+        "approved",
+        "available"
+       ],
+       "enumDescriptions": [
+        "",
+        ""
+       ],
+       "location": "query"
+      },
+      "role": {
+       "type": "string",
+       "description": "The role of the requester. Valid values: 'advertisers' or 'publishers'.",
+       "required": true,
+       "enum": [
+        "advertisers",
+        "publishers"
+       ],
+       "enumDescriptions": [
+        "The requester is requesting as an advertiser.",
+        "The requester is requesting as a publisher."
+       ],
+       "location": "path"
+      },
+      "roleId": {
+       "type": "string",
+       "description": "The ID of the requesting advertiser or publisher.",
+       "required": true,
+       "location": "path"
+      },
+      "startDateMax": {
+       "type": "string",
+       "description": "The end of the start date range.",
+       "location": "query"
+      },
+      "startDateMin": {
+       "type": "string",
+       "description": "The beginning of the start date range.",
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "role",
+      "roleId"
+     ],
+     "response": {
+      "$ref": "Links"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/gan",
+      "https://www.googleapis.com/auth/gan.readonly"
+     ]
     }
    }
   },
@@ -1153,7 +1614,11 @@
      ],
      "response": {
       "$ref": "Publisher"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/gan",
+      "https://www.googleapis.com/auth/gan.readonly"
+     ]
     },
     "list": {
      "id": "gan.publishers.list",
@@ -1245,7 +1710,11 @@
      ],
      "response": {
       "$ref": "Publishers"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/gan",
+      "https://www.googleapis.com/auth/gan.readonly"
+     ]
     }
    }
   }

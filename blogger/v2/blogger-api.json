@@ -4,14 +4,14 @@
  "id": "blogger:v2",
  "name": "blogger",
  "version": "v2",
- "revision": "20111216",
+ "revision": "20120508",
  "title": "Blogger API",
  "description": "API for access to the data within Blogger.",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/blogger-16.png",
   "x32": "http://www.google.com/images/icons/product/blogger-32.png"
  },
- "documentationLink": "https://code.google.com/apis/blogger/docs/2.0/json/getting_started.html",
+ "documentationLink": "https://developers.google.com/blogger/docs/2.0/json/getting_started",
  "labels": [
   "limited_availability"
  ],
@@ -701,7 +701,8 @@
       },
       "startDate": {
        "type": "string",
-       "description": "Earliest date of comment to fetch.",
+       "description": "Earliest date of comment to fetch, a date-time with RFC 3339 formatting.",
+       "format": "date-time",
        "location": "query"
       }
      },
@@ -842,7 +843,8 @@
       },
       "startDate": {
        "type": "string",
-       "description": "Earliest post date to fetch.",
+       "description": "Earliest post date to fetch, a date-time with RFC 3339 formatting.",
+       "format": "date-time",
        "location": "query"
       }
      },

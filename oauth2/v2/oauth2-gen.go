@@ -9,15 +9,15 @@ package oauth2
 
 import (
 	"bytes"
-	"fmt"
-	"net/http"
-	"io"
+	"code.google.com/p/google-api-go-client/googleapi"
 	"encoding/json"
 	"errors"
-	"strings"
-	"strconv"
+	"fmt"
+	"io"
+	"net/http"
 	"net/url"
-	"code.google.com/p/google-api-go-client/googleapi"
+	"strconv"
+	"strings"
 )
 
 var _ = bytes.NewBuffer
@@ -33,6 +33,15 @@ const apiId = "oauth2:v2"
 const apiName = "oauth2"
 const apiVersion = "v2"
 const basePath = "https://www.googleapis.com/"
+
+// OAuth2 scopes used by this API.
+const (
+	// View your email address
+	UserinfoEmailScope = "https://www.googleapis.com/auth/userinfo.email"
+
+	// View basic information about your account
+	UserinfoProfileScope = "https://www.googleapis.com/auth/userinfo.profile"
+)
 
 func New(client *http.Client) (*Service, error) {
 	if client == nil {
@@ -54,7 +63,7 @@ type UserinfoService struct {
 }
 
 type Tokeninfo struct {
-	// Access_type: The access type granted with this toke. It can be
+	// Access_type: The access type granted with this token. It can be
 	// offline or online.
 	Access_type string `json:"access_type,omitempty"`
 
@@ -86,28 +95,41 @@ type Tokeninfo struct {
 }
 
 type Userinfo struct {
+	// Birthday: The user's birthday. The year is not present.
 	Birthday string `json:"birthday,omitempty"`
 
+	// Email: The user's email address.
 	Email string `json:"email,omitempty"`
 
+	// Family_name: The user's last name.
 	Family_name string `json:"family_name,omitempty"`
 
+	// Gender: The user's gender.
 	Gender string `json:"gender,omitempty"`
 
+	// Given_name: The user's first name.
 	Given_name string `json:"given_name,omitempty"`
 
+	// Id: The focus obfuscated gaia id of the user.
 	Id string `json:"id,omitempty"`
 
+	// Link: URL of the profile page.
 	Link string `json:"link,omitempty"`
 
+	// Locale: The user's default locale.
 	Locale string `json:"locale,omitempty"`
 
+	// Name: The user's full name.
 	Name string `json:"name,omitempty"`
 
+	// Picture: URL of the user's picture image.
 	Picture string `json:"picture,omitempty"`
 
+	// Timezone: The user's default timezone.
 	Timezone string `json:"timezone,omitempty"`
 
+	// Verified_email: Boolean flag which is true if the email address is
+	// verified.
 	Verified_email bool `json:"verified_email,omitempty"`
 }
 
@@ -222,7 +244,11 @@ func (c *UserinfoGetCall) Do() (*Userinfo, error) {
 	//   "path": "oauth2/v2/userinfo",
 	//   "response": {
 	//     "$ref": "Userinfo"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/userinfo.email",
+	//     "https://www.googleapis.com/auth/userinfo.profile"
+	//   ]
 	// }
 
 }

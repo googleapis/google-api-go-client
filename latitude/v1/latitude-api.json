@@ -4,14 +4,14 @@
  "id": "latitude:v1",
  "name": "latitude",
  "version": "v1",
- "revision": "19700115",
+ "revision": "20120710",
  "title": "Google Latitude API",
  "description": "Lets you read and update your current location and work with your location history",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/search-16.gif",
   "x32": "http://www.google.com/images/icons/product/search-32.gif"
  },
- "documentationLink": "http://code.google.com/apis/latitude/v1/using_rest.html",
+ "documentationLink": "https://developers.google.com/latitude/v1/using",
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/latitude/v1/",
  "basePath": "/latitude/v1/",
@@ -179,6 +179,15 @@
       "granularity": {
        "type": "string",
        "description": "Granularity of the requested location.",
+       "default": "city",
+       "enum": [
+        "best",
+        "city"
+       ],
+       "enumDescriptions": [
+        "Request best available granularity.",
+        "Request city-level granularty."
+       ],
        "location": "query"
       }
      },
@@ -244,6 +253,15 @@
       "granularity": {
        "type": "string",
        "description": "Granularity of the location to return.",
+       "default": "city",
+       "enum": [
+        "best",
+        "city"
+       ],
+       "enumDescriptions": [
+        "Request best available granularity.",
+        "Request city-level granularty."
+       ],
        "location": "query"
       },
       "locationId": {
@@ -289,6 +307,15 @@
       "granularity": {
        "type": "string",
        "description": "Granularity of the requested locations.",
+       "default": "city",
+       "enum": [
+        "best",
+        "city"
+       ],
+       "enumDescriptions": [
+        "Request best available granularity.",
+        "Request city-level granularty."
+       ],
        "location": "query"
       },
       "max-results": {

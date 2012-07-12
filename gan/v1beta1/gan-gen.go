@@ -11,15 +11,15 @@ package gan
 
 import (
 	"bytes"
-	"fmt"
-	"net/http"
-	"io"
+	"code.google.com/p/google-api-go-client/googleapi"
 	"encoding/json"
 	"errors"
-	"strings"
-	"strconv"
+	"fmt"
+	"io"
+	"net/http"
 	"net/url"
-	"code.google.com/p/google-api-go-client/googleapi"
+	"strconv"
+	"strings"
 )
 
 var _ = bytes.NewBuffer
@@ -36,6 +36,15 @@ const apiName = "gan"
 const apiVersion = "v1beta1"
 const basePath = "https://www.googleapis.com/gan/v1beta1/"
 
+// OAuth2 scopes used by this API.
+const (
+	// Manage your GAN data
+	GanScope = "https://www.googleapis.com/auth/gan"
+
+	// View your GAN data
+	GanReadonlyScope = "https://www.googleapis.com/auth/gan.readonly"
+)
+
 func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
@@ -44,6 +53,7 @@ func New(client *http.Client) (*Service, error) {
 	s.Advertisers = &AdvertisersService{s: s}
 	s.CcOffers = &CcOffersService{s: s}
 	s.Events = &EventsService{s: s}
+	s.Links = &LinksService{s: s}
 	s.Publishers = &PublishersService{s: s}
 	return s, nil
 }
@@ -56,6 +66,8 @@ type Service struct {
 	CcOffers *CcOffersService
 
 	Events *EventsService
+
+	Links *LinksService
 
 	Publishers *PublishersService
 }
@@ -72,11 +84,19 @@ type EventsService struct {
 	s *Service
 }
 
+type LinksService struct {
+	s *Service
+}
+
 type PublishersService struct {
 	s *Service
 }
 
 type Advertiser struct {
+	// AllowPublisherCreatedLinks: True if the advertiser allows publisher
+	// created links, otherwise false.
+	AllowPublisherCreatedLinks bool `json:"allowPublisherCreatedLinks,omitempty"`
+
 	// Category: Category that this advertiser belongs to. A valid list of
 	// categories can be found here:
 	// http://www.google.com/support/affiliatenetwork/advertiser/bin/answer.p
@@ -567,6 +587,68 @@ type Events struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+type Link struct {
+	// AdvertiserId: The advertiser id for the advertiser who owns this
+	// link.
+	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
+
+	// Authorship: Authorship
+	Authorship string `json:"authorship,omitempty"`
+
+	// Availability: Availability.
+	Availability string `json:"availability,omitempty"`
+
+	// CreateDate: Date that this link was created.
+	CreateDate string `json:"createDate,omitempty"`
+
+	// CreativeType: Creative Type.
+	CreativeType string `json:"creativeType,omitempty"`
+
+	// Description: Description.
+	Description string `json:"description,omitempty"`
+
+	// DestinationUrl: The destination URL for the link.
+	DestinationUrl string `json:"destinationUrl,omitempty"`
+
+	// Duration: Duration
+	Duration string `json:"duration,omitempty"`
+
+	// EndDate: Date that this link becomes inactive.
+	EndDate string `json:"endDate,omitempty"`
+
+	// Id: The ID of this link.
+	Id int64 `json:"id,omitempty,string"`
+
+	// ImageAltText: image alt text.
+	ImageAltText string `json:"imageAltText,omitempty"`
+
+	// IsActive: Flag for if this link is active.
+	IsActive bool `json:"isActive,omitempty"`
+
+	// Kind: The kind for one entity.
+	Kind string `json:"kind,omitempty"`
+
+	// Name: The logical name for this link.
+	Name string `json:"name,omitempty"`
+
+	// PromotionType: Promotion Type
+	PromotionType string `json:"promotionType,omitempty"`
+
+	// StartDate: Date that this link becomes active.
+	StartDate string `json:"startDate,omitempty"`
+}
+
+type Links struct {
+	// Items: The links.
+	Items []*Link `json:"items,omitempty"`
+
+	// Kind: The kind for a page of links.
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: The next page token.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+}
+
 type Money struct {
 	// Amount: The amount of money.
 	Amount float64 `json:"amount,omitempty"`
@@ -724,7 +806,11 @@ func (c *AdvertisersGetCall) Do() (*Advertiser, error) {
 	//   "path": "{role}/{roleId}/advertiser",
 	//   "response": {
 	//     "$ref": "Advertiser"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/gan",
+	//     "https://www.googleapis.com/auth/gan.readonly"
+	//   ]
 	// }
 
 }
@@ -940,7 +1026,11 @@ func (c *AdvertisersListCall) Do() (*Advertisers, error) {
 	//   "path": "{role}/{roleId}/advertisers",
 	//   "response": {
 	//     "$ref": "Advertisers"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/gan",
+	//     "https://www.googleapis.com/auth/gan.readonly"
+	//   ]
 	// }
 
 }
@@ -1023,8 +1113,8 @@ func (c *CcOffersListCall) Do() (*CcOffers, error) {
 	//         "summary"
 	//       ],
 	//       "enumDescriptions": [
-	//         "Include all offer fields",
-	//         "Include only the basic fields needed to display an offer. This is the default."
+	//         "Include all offer fields. This is the default.",
+	//         "Include only the basic fields needed to display an offer."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -1039,7 +1129,11 @@ func (c *CcOffersListCall) Do() (*CcOffers, error) {
 	//   "path": "publishers/{publisher}/ccOffers",
 	//   "response": {
 	//     "$ref": "CcOffers"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/gan",
+	//     "https://www.googleapis.com/auth/gan.readonly"
+	//   ]
 	// }
 
 }
@@ -1412,7 +1506,587 @@ func (c *EventsListCall) Do() (*Events, error) {
 	//   "path": "{role}/{roleId}/events",
 	//   "response": {
 	//     "$ref": "Events"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/gan",
+	//     "https://www.googleapis.com/auth/gan.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "gan.links.get":
+
+type LinksGetCall struct {
+	s      *Service
+	role   string
+	roleId string
+	linkId int64
+	opt_   map[string]interface{}
+}
+
+// Get: Retrieves data about a single link if the requesting
+// advertiser/publisher has access to it. Advertisers can look up their
+// own links. Publishers can look up visible links or links belonging to
+// advertisers they are in a relationship with.
+func (r *LinksService) Get(role string, roleId string, linkId int64) *LinksGetCall {
+	c := &LinksGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.role = role
+	c.roleId = roleId
+	c.linkId = linkId
+	return c
+}
+
+func (c *LinksGetCall) Do() (*Link, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/gan/v1beta1/", "{role}/{roleId}/link/{linkId}")
+	urls = strings.Replace(urls, "{role}", cleanPathString(c.role), 1)
+	urls = strings.Replace(urls, "{roleId}", cleanPathString(c.roleId), 1)
+	urls = strings.Replace(urls, "{linkId}", strconv.FormatInt(c.linkId, 10), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Link)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves data about a single link if the requesting advertiser/publisher has access to it. Advertisers can look up their own links. Publishers can look up visible links or links belonging to advertisers they are in a relationship with.",
+	//   "httpMethod": "GET",
+	//   "id": "gan.links.get",
+	//   "parameterOrder": [
+	//     "role",
+	//     "roleId",
+	//     "linkId"
+	//   ],
+	//   "parameters": {
+	//     "linkId": {
+	//       "description": "The ID of the link to look up.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "role": {
+	//       "description": "The role of the requester. Valid values: 'advertisers' or 'publishers'.",
+	//       "enum": [
+	//         "advertisers",
+	//         "publishers"
+	//       ],
+	//       "enumDescriptions": [
+	//         "The requester is requesting as an advertiser.",
+	//         "The requester is requesting as a publisher."
+	//       ],
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "roleId": {
+	//       "description": "The ID of the requesting advertiser or publisher.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{role}/{roleId}/link/{linkId}",
+	//   "response": {
+	//     "$ref": "Link"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/gan",
+	//     "https://www.googleapis.com/auth/gan.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "gan.links.insert":
+
+type LinksInsertCall struct {
+	s      *Service
+	role   string
+	roleId string
+	link   *Link
+	opt_   map[string]interface{}
+}
+
+// Insert: Inserts a new link.
+func (r *LinksService) Insert(role string, roleId string, link *Link) *LinksInsertCall {
+	c := &LinksInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.role = role
+	c.roleId = roleId
+	c.link = link
+	return c
+}
+
+func (c *LinksInsertCall) Do() (*Link, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.link)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/gan/v1beta1/", "{role}/{roleId}/link")
+	urls = strings.Replace(urls, "{role}", cleanPathString(c.role), 1)
+	urls = strings.Replace(urls, "{roleId}", cleanPathString(c.roleId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Link)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Inserts a new link.",
+	//   "httpMethod": "POST",
+	//   "id": "gan.links.insert",
+	//   "parameterOrder": [
+	//     "role",
+	//     "roleId"
+	//   ],
+	//   "parameters": {
+	//     "role": {
+	//       "description": "The role of the requester. Valid values: 'advertisers' or 'publishers'.",
+	//       "enum": [
+	//         "advertisers",
+	//         "publishers"
+	//       ],
+	//       "enumDescriptions": [
+	//         "The requester is requesting as an advertiser.",
+	//         "The requester is requesting as a publisher."
+	//       ],
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "roleId": {
+	//       "description": "The ID of the requesting advertiser or publisher.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{role}/{roleId}/link",
+	//   "request": {
+	//     "$ref": "Link"
+	//   },
+	//   "response": {
+	//     "$ref": "Link"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/gan"
+	//   ]
+	// }
+
+}
+
+// method id "gan.links.list":
+
+type LinksListCall struct {
+	s      *Service
+	role   string
+	roleId string
+	opt_   map[string]interface{}
+}
+
+// List: Retrieves all links that match the query parameters.
+func (r *LinksService) List(role string, roleId string) *LinksListCall {
+	c := &LinksListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.role = role
+	c.roleId = roleId
+	return c
+}
+
+// AdvertiserCategory sets the optional parameter "advertiserCategory":
+// The advertiser's primary vertical.
+func (c *LinksListCall) AdvertiserCategory(advertiserCategory string) *LinksListCall {
+	c.opt_["advertiserCategory"] = advertiserCategory
+	return c
+}
+
+// AdvertiserId sets the optional parameter "advertiserId": Limits the
+// resulting links to the ones belonging to the listed advertisers.
+func (c *LinksListCall) AdvertiserId(advertiserId int64) *LinksListCall {
+	c.opt_["advertiserId"] = advertiserId
+	return c
+}
+
+// AssetSize sets the optional parameter "assetSize": The size of the
+// given asset.
+func (c *LinksListCall) AssetSize(assetSize string) *LinksListCall {
+	c.opt_["assetSize"] = assetSize
+	return c
+}
+
+// Authorship sets the optional parameter "authorship": The role of the
+// author of the link.
+func (c *LinksListCall) Authorship(authorship string) *LinksListCall {
+	c.opt_["authorship"] = authorship
+	return c
+}
+
+// LinkType sets the optional parameter "linkType": The type of the
+// link.
+func (c *LinksListCall) LinkType(linkType string) *LinksListCall {
+	c.opt_["linkType"] = linkType
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Max number of
+// items to return in this page.  Defaults to 20.
+func (c *LinksListCall) MaxResults(maxResults int64) *LinksListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value of
+// 'nextPageToken' from the previous page.
+func (c *LinksListCall) PageToken(pageToken string) *LinksListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+// PromotionType sets the optional parameter "promotionType": The
+// promotion type.
+func (c *LinksListCall) PromotionType(promotionType string) *LinksListCall {
+	c.opt_["promotionType"] = promotionType
+	return c
+}
+
+// RelationshipStatus sets the optional parameter "relationshipStatus":
+// The status of the relationship.
+func (c *LinksListCall) RelationshipStatus(relationshipStatus string) *LinksListCall {
+	c.opt_["relationshipStatus"] = relationshipStatus
+	return c
+}
+
+// StartDateMax sets the optional parameter "startDateMax": The end of
+// the start date range.
+func (c *LinksListCall) StartDateMax(startDateMax string) *LinksListCall {
+	c.opt_["startDateMax"] = startDateMax
+	return c
+}
+
+// StartDateMin sets the optional parameter "startDateMin": The
+// beginning of the start date range.
+func (c *LinksListCall) StartDateMin(startDateMin string) *LinksListCall {
+	c.opt_["startDateMin"] = startDateMin
+	return c
+}
+
+func (c *LinksListCall) Do() (*Links, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["advertiserCategory"]; ok {
+		params.Set("advertiserCategory", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["advertiserId"]; ok {
+		params.Set("advertiserId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["assetSize"]; ok {
+		params.Set("assetSize", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["authorship"]; ok {
+		params.Set("authorship", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["linkType"]; ok {
+		params.Set("linkType", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["promotionType"]; ok {
+		params.Set("promotionType", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["relationshipStatus"]; ok {
+		params.Set("relationshipStatus", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["startDateMax"]; ok {
+		params.Set("startDateMax", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["startDateMin"]; ok {
+		params.Set("startDateMin", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/gan/v1beta1/", "{role}/{roleId}/links")
+	urls = strings.Replace(urls, "{role}", cleanPathString(c.role), 1)
+	urls = strings.Replace(urls, "{roleId}", cleanPathString(c.roleId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Links)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves all links that match the query parameters.",
+	//   "httpMethod": "GET",
+	//   "id": "gan.links.list",
+	//   "parameterOrder": [
+	//     "role",
+	//     "roleId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserCategory": {
+	//       "description": "The advertiser's primary vertical.",
+	//       "enum": [
+	//         "apparel_accessories",
+	//         "appliances_electronics",
+	//         "auto_dealer",
+	//         "automotive",
+	//         "babies_kids",
+	//         "blogs_personal_sites",
+	//         "books_magazines",
+	//         "computers",
+	//         "dating",
+	//         "department_stores",
+	//         "education",
+	//         "employment",
+	//         "financial_credit_cards",
+	//         "financial_other",
+	//         "flowers_gifts",
+	//         "grocery",
+	//         "health_beauty",
+	//         "home_garden",
+	//         "hosting_domain",
+	//         "internet_providers",
+	//         "legal",
+	//         "media_entertainment",
+	//         "medical",
+	//         "movies_games",
+	//         "music",
+	//         "nonprofit",
+	//         "office_supplies",
+	//         "online_games",
+	//         "outdoor",
+	//         "pets",
+	//         "real_estate",
+	//         "restaurants",
+	//         "sport_fitness",
+	//         "telecom",
+	//         "ticketing",
+	//         "toys_hobbies",
+	//         "travel",
+	//         "utilities",
+	//         "wholesale_relationship",
+	//         "wine_spirits"
+	//       ],
+	//       "enumDescriptions": [
+	//         "",
+	//         "",
+	//         "",
+	//         "",
+	//         "",
+	//         "",
+	//         "",
+	//         "",
+	//         "",
+	//         "",
+	//         "",
+	//         "",
+	//         "",
+	//         "",
+	//         "",
+	//         "",
+	//         "",
+	//         "",
+	//         "",
+	//         "",
+	//         "",
+	//         "",
+	//         "",
+	//         "",
+	//         "",
+	//         "",
+	//         "",
+	//         "",
+	//         "",
+	//         "",
+	//         "",
+	//         "",
+	//         "",
+	//         "",
+	//         "",
+	//         "",
+	//         "",
+	//         "",
+	//         "",
+	//         ""
+	//       ],
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "advertiserId": {
+	//       "description": "Limits the resulting links to the ones belonging to the listed advertisers.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "assetSize": {
+	//       "description": "The size of the given asset.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "authorship": {
+	//       "description": "The role of the author of the link.",
+	//       "enum": [
+	//         "advertiser",
+	//         "publisher"
+	//       ],
+	//       "enumDescriptions": [
+	//         "",
+	//         ""
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "linkType": {
+	//       "description": "The type of the link.",
+	//       "enum": [
+	//         "banner",
+	//         "text"
+	//       ],
+	//       "enumDescriptions": [
+	//         "",
+	//         ""
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "description": "Max number of items to return in this page. Optional. Defaults to 20.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "100",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The value of 'nextPageToken' from the previous page. Optional.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "promotionType": {
+	//       "description": "The promotion type.",
+	//       "enum": [
+	//         "buy_get",
+	//         "coupon",
+	//         "free_gift",
+	//         "free_gift_wrap",
+	//         "free_shipping",
+	//         "none",
+	//         "ongoing",
+	//         "percent_off",
+	//         "price_cut",
+	//         "product_promotion",
+	//         "sale",
+	//         "sweepstakes"
+	//       ],
+	//       "enumDescriptions": [
+	//         "",
+	//         "",
+	//         "",
+	//         "",
+	//         "",
+	//         "",
+	//         "",
+	//         "",
+	//         "",
+	//         "",
+	//         "",
+	//         ""
+	//       ],
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "relationshipStatus": {
+	//       "description": "The status of the relationship.",
+	//       "enum": [
+	//         "approved",
+	//         "available"
+	//       ],
+	//       "enumDescriptions": [
+	//         "",
+	//         ""
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "role": {
+	//       "description": "The role of the requester. Valid values: 'advertisers' or 'publishers'.",
+	//       "enum": [
+	//         "advertisers",
+	//         "publishers"
+	//       ],
+	//       "enumDescriptions": [
+	//         "The requester is requesting as an advertiser.",
+	//         "The requester is requesting as a publisher."
+	//       ],
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "roleId": {
+	//       "description": "The ID of the requesting advertiser or publisher.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "startDateMax": {
+	//       "description": "The end of the start date range.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "startDateMin": {
+	//       "description": "The beginning of the start date range.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{role}/{roleId}/links",
+	//   "response": {
+	//     "$ref": "Links"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/gan",
+	//     "https://www.googleapis.com/auth/gan.readonly"
+	//   ]
 	// }
 
 }
@@ -1507,7 +2181,11 @@ func (c *PublishersGetCall) Do() (*Publisher, error) {
 	//   "path": "{role}/{roleId}/publisher",
 	//   "response": {
 	//     "$ref": "Publisher"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/gan",
+	//     "https://www.googleapis.com/auth/gan.readonly"
+	//   ]
 	// }
 
 }
@@ -1723,7 +2401,11 @@ func (c *PublishersListCall) Do() (*Publishers, error) {
 	//   "path": "{role}/{roleId}/publishers",
 	//   "response": {
 	//     "$ref": "Publishers"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/gan",
+	//     "https://www.googleapis.com/auth/gan.readonly"
+	//   ]
 	// }
 
 }

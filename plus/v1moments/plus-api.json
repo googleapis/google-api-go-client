@@ -1,0 +1,416 @@
+{
+ "kind": "discovery#restDescription",
+ "discoveryVersion": "v1",
+ "id": "plus:v1moments",
+ "name": "plus",
+ "version": "v1moments",
+ "revision": "20120630",
+ "title": "Google+ API",
+ "description": "The Google+ API enables developers to build on top of the Google+ platform.",
+ "icons": {
+  "x16": "http://www.google.com/images/icons/product/gplus-16.png",
+  "x32": "http://www.google.com/images/icons/product/gplus-32.png"
+ },
+ "documentationLink": "https://developers.google.com/+/history/",
+ "labels": [
+  "limited_availability"
+ ],
+ "protocol": "rest",
+ "baseUrl": "https://www.googleapis.com/plus/v1moments/people/",
+ "basePath": "/plus/v1moments/people/",
+ "rootUrl": "https://www.googleapis.com/",
+ "servicePath": "plus/v1moments/people/",
+ "batchPath": "batch",
+ "parameters": {
+  "alt": {
+   "type": "string",
+   "description": "Data format for the response.",
+   "default": "json",
+   "enum": [
+    "json"
+   ],
+   "enumDescriptions": [
+    "Responses with Content-Type of application/json"
+   ],
+   "location": "query"
+  },
+  "fields": {
+   "type": "string",
+   "description": "Selector specifying which fields to include in a partial response.",
+   "location": "query"
+  },
+  "key": {
+   "type": "string",
+   "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
+   "location": "query"
+  },
+  "oauth_token": {
+   "type": "string",
+   "description": "OAuth 2.0 token for the current user.",
+   "location": "query"
+  },
+  "prettyPrint": {
+   "type": "boolean",
+   "description": "Returns response with indentations and line breaks.",
+   "default": "true",
+   "location": "query"
+  },
+  "quotaUser": {
+   "type": "string",
+   "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.",
+   "location": "query"
+  },
+  "userIp": {
+   "type": "string",
+   "description": "IP address of the site where the request originates. Use this if you want to enforce per-user limits.",
+   "location": "query"
+  }
+ },
+ "auth": {
+  "oauth2": {
+   "scopes": {
+    "https://www.googleapis.com/auth/plus.moments.write": {
+     "description": "View and manage user activity information in Google+"
+    }
+   }
+  }
+ },
+ "schemas": {
+  "ItemScope": {
+   "id": "ItemScope",
+   "type": "object",
+   "properties": {
+    "about": {
+     "$ref": "ItemScope",
+     "description": "The subject matter of the content."
+    },
+    "additionalName": {
+     "type": "array",
+     "description": "An additional name for a Person, can be used for a middle name.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "address": {
+     "$ref": "ItemScope",
+     "description": "Postal address."
+    },
+    "addressCountry": {
+     "type": "string",
+     "description": "Address country."
+    },
+    "addressLocality": {
+     "type": "string",
+     "description": "Address locality."
+    },
+    "addressRegion": {
+     "type": "string",
+     "description": "Address region."
+    },
+    "associated_media": {
+     "type": "array",
+     "description": "The encoding.",
+     "items": {
+      "$ref": "ItemScope"
+     }
+    },
+    "attendeeCount": {
+     "type": "integer",
+     "description": "Number of attendees.",
+     "format": "int32"
+    },
+    "attendees": {
+     "type": "array",
+     "description": "A person attending the event.",
+     "items": {
+      "$ref": "ItemScope"
+     }
+    },
+    "audio": {
+     "$ref": "ItemScope",
+     "description": "From http://schema.org/MusicRecording, the audio file."
+    },
+    "author": {
+     "type": "array",
+     "description": "The person who created this scope.",
+     "items": {
+      "$ref": "ItemScope"
+     }
+    },
+    "bestRating": {
+     "type": "string",
+     "description": "Best possible rating value."
+    },
+    "birthDate": {
+     "type": "string",
+     "description": "Date of birth."
+    },
+    "byArtist": {
+     "$ref": "ItemScope",
+     "description": "From http://schema.org/MusicRecording, the artist that performed this recording."
+    },
+    "caption": {
+     "type": "string",
+     "description": "The caption for this object."
+    },
+    "contentSize": {
+     "type": "string",
+     "description": "File size in (mega/kilo) bytes."
+    },
+    "contentUrl": {
+     "type": "string",
+     "description": "Actual bytes of the media object, for example the image file or video file."
+    },
+    "contributor": {
+     "type": "array",
+     "description": "The list of contributors for this scope.",
+     "items": {
+      "$ref": "ItemScope"
+     }
+    },
+    "dateCreated": {
+     "type": "string",
+     "description": "The date this scope was created."
+    },
+    "dateModified": {
+     "type": "string",
+     "description": "The date this scope was last modified."
+    },
+    "datePublished": {
+     "type": "string",
+     "description": "The initial date this scope was published."
+    },
+    "description": {
+     "type": "string",
+     "description": "The string describing the content of this scope."
+    },
+    "duration": {
+     "type": "string",
+     "description": "The duration of the item (movie, audio recording, event, etc.) in ISO 8601 date format."
+    },
+    "embedUrl": {
+     "type": "string",
+     "description": "A URL pointing to a player for a specific video. In general, this is the information in the src element of an embed tag and should not be the same as the content of the loc tag."
+    },
+    "endDate": {
+     "type": "string",
+     "description": "The end date and time of the event (in ISO 8601 date format)."
+    },
+    "familyName": {
+     "type": "string",
+     "description": "Family name. In the U.S., the last name of an Person. This can be used along with givenName instead of the Name property."
+    },
+    "gender": {
+     "type": "string",
+     "description": "Gender of the person."
+    },
+    "geo": {
+     "$ref": "ItemScope",
+     "description": "Geo coordinates."
+    },
+    "givenName": {
+     "type": "string",
+     "description": "Given name. In the U.S., the first name of a Person. This can be used along with familyName instead of the Name property."
+    },
+    "height": {
+     "type": "string",
+     "description": "The height of the media object."
+    },
+    "id": {
+     "type": "string",
+     "description": "The id for this item scope."
+    },
+    "image": {
+     "type": "string",
+     "description": "A url to the image for this scope."
+    },
+    "inAlbum": {
+     "$ref": "ItemScope",
+     "description": "From http://schema.org/MusicRecording, which album a song is in."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies this resource as an itemScope.",
+     "default": "plus#itemScope"
+    },
+    "latitude": {
+     "type": "number",
+     "description": "Latitude.",
+     "format": "double"
+    },
+    "location": {
+     "$ref": "ItemScope",
+     "description": "The location of the event or organization."
+    },
+    "longitude": {
+     "type": "number",
+     "description": "Longitude.",
+     "format": "double"
+    },
+    "name": {
+     "type": "string",
+     "description": "The name of this scope."
+    },
+    "partOfTVSeries": {
+     "$ref": "ItemScope",
+     "description": "Property of http://schema.org/TVEpisode indicating which series the episode belongs to."
+    },
+    "performers": {
+     "type": "array",
+     "description": "The main performer or performers of the event—for example, a presenter, musician, or actor.",
+     "items": {
+      "$ref": "ItemScope"
+     }
+    },
+    "playerType": {
+     "type": "string",
+     "description": "Player type required—for example, Flash or Silverlight."
+    },
+    "postOfficeBoxNumber": {
+     "type": "string",
+     "description": "Post office box number."
+    },
+    "postalCode": {
+     "type": "string",
+     "description": "Postal code."
+    },
+    "ratingValue": {
+     "type": "string",
+     "description": "Rating value."
+    },
+    "reviewRating": {
+     "type": "any"
+    },
+    "startDate": {
+     "type": "string",
+     "description": "The start date and time of the event (in ISO 8601 date format)."
+    },
+    "streetAddress": {
+     "type": "string",
+     "description": "Street address."
+    },
+    "text": {
+     "type": "string",
+     "description": "Comment text, review text, etc."
+    },
+    "thumbnail": {
+     "$ref": "ItemScope",
+     "description": "Thumbnail image for an image or video."
+    },
+    "thumbnailUrl": {
+     "type": "string",
+     "description": "A url to a thumbnail image for this scope."
+    },
+    "tickerSymbol": {
+     "type": "string",
+     "description": "The exchange traded instrument associated with a Corporation object. The tickerSymbol is expressed as an exchange and an instrument name separated by a space character. For the exchange component of the tickerSymbol attribute, we reccommend using the controlled vocaulary of Market Identifier Codes (MIC) specified in ISO15022."
+    },
+    "type": {
+     "type": "string",
+     "description": "The item type."
+    },
+    "url": {
+     "type": "string",
+     "description": "A url for this scope."
+    },
+    "width": {
+     "type": "string",
+     "description": "The width of the media object."
+    },
+    "worstRating": {
+     "type": "string",
+     "description": "Worst possible rating value."
+    }
+   }
+  },
+  "Moment": {
+   "id": "Moment",
+   "type": "object",
+   "properties": {
+    "kind": {
+     "type": "string",
+     "description": "Identifies this resource as a moment.",
+     "default": "plus#moment"
+    },
+    "result": {
+     "$ref": "ItemScope",
+     "description": "The object generated by performing the action on the item"
+    },
+    "startDate": {
+     "type": "string",
+     "description": "Timestamp of the action (when it occured) in RFC3339 format.",
+     "format": "date-time"
+    },
+    "target": {
+     "$ref": "ItemScope",
+     "description": "The object on which the action was performed"
+    },
+    "type": {
+     "type": "string",
+     "description": "The schema.org activity type"
+    },
+    "verb": {
+     "type": "object",
+     "description": "The action the user performed",
+     "properties": {
+      "url": {
+       "type": "string",
+       "description": "Url name of the verb"
+      }
+     }
+    }
+   }
+  }
+ },
+ "resources": {
+  "moments": {
+   "methods": {
+    "insert": {
+     "id": "plus.moments.insert",
+     "path": "{userId}/moments/{collection}",
+     "httpMethod": "POST",
+     "description": "Record a user activity (e.g Bill watched a video on Youtube)",
+     "parameters": {
+      "collection": {
+       "type": "string",
+       "description": "The collection to which to write moments.",
+       "required": true,
+       "enum": [
+        "vault"
+       ],
+       "enumDescriptions": [
+        "The default collection for writing new moments."
+       ],
+       "location": "path"
+      },
+      "debug": {
+       "type": "boolean",
+       "description": "Return the moment as written. Should be used only for debugging.",
+       "location": "query"
+      },
+      "userId": {
+       "type": "string",
+       "description": "The ID of the user to get activities for. The special value \"me\" can be used to indicate the authenticated user.",
+       "required": true,
+       "pattern": "me",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "userId",
+      "collection"
+     ],
+     "request": {
+      "$ref": "Moment"
+     },
+     "response": {
+      "$ref": "Moment"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/plus.moments.write"
+     ]
+    }
+   }
+  }
+ }
+}

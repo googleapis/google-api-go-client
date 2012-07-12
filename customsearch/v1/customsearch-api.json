@@ -4,7 +4,7 @@
  "id": "customsearch:v1",
  "name": "customsearch",
  "version": "v1",
- "revision": "20120214",
+ "revision": "20120511",
  "title": "CustomSearch API",
  "description": "Lets you search over a website or collection of websites",
  "icons": {
@@ -101,6 +101,9 @@
      "items": {
       "type": "object",
       "properties": {
+       "htmlTitle": {
+        "type": "string"
+       },
        "link": {
         "type": "string"
        },
@@ -114,6 +117,9 @@
      }
     },
     "displayLink": {
+     "type": "string"
+    },
+    "htmlTitle": {
      "type": "string"
     },
     "image": {

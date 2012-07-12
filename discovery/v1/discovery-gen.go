@@ -11,15 +11,15 @@ package discovery
 
 import (
 	"bytes"
-	"fmt"
-	"net/http"
-	"io"
+	"code.google.com/p/google-api-go-client/googleapi"
 	"encoding/json"
 	"errors"
-	"strings"
-	"strconv"
+	"fmt"
+	"io"
+	"net/http"
 	"net/url"
-	"code.google.com/p/google-api-go-client/googleapi"
+	"strconv"
+	"strings"
 )
 
 var _ = bytes.NewBuffer
@@ -332,6 +332,15 @@ type RestMethod struct {
 
 	// Scopes: OAuth 2.0 scopes applicable to this method.
 	Scopes []interface{} `json:"scopes,omitempty"`
+
+	// SupportsMediaDownload: Whether this method supports media downloads.
+	SupportsMediaDownload bool `json:"supportsMediaDownload,omitempty"`
+
+	// SupportsMediaUpload: Whether this method supports media uploads.
+	SupportsMediaUpload bool `json:"supportsMediaUpload,omitempty"`
+
+	// SupportsSubscription: Whether this method supports subscriptions.
+	SupportsSubscription bool `json:"supportsSubscription,omitempty"`
 }
 
 type RestMethodMediaUpload struct {

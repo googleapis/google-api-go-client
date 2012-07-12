@@ -4,7 +4,7 @@
  "id": "webfonts:v1",
  "name": "webfonts",
  "version": "v1",
- "revision": "20111110",
+ "revision": "20120614",
  "title": "Google Web Fonts Developer API",
  "description": "The Google Web Fonts Developer API.",
  "icons": {
@@ -74,6 +74,7 @@
     },
     "kind": {
      "type": "string",
+     "description": "This kind represents a webfont object in the webfonts service.",
      "default": "webfonts#webfont"
     },
     "subsets": {
@@ -99,7 +100,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "The object kind.",
+     "description": "This kind represents a list of webfont objects in the webfonts service.",
      "default": "webfonts#webfontList"
     }
    }

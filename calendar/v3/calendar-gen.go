@@ -11,15 +11,15 @@ package calendar
 
 import (
 	"bytes"
-	"fmt"
-	"net/http"
-	"io"
+	"code.google.com/p/google-api-go-client/googleapi"
 	"encoding/json"
 	"errors"
-	"strings"
-	"strconv"
+	"fmt"
+	"io"
+	"net/http"
 	"net/url"
-	"code.google.com/p/google-api-go-client/googleapi"
+	"strconv"
+	"strings"
 )
 
 var _ = bytes.NewBuffer
@@ -357,6 +357,8 @@ type Event struct {
 	// this is the end time of the first instance.
 	End *EventDateTime `json:"end,omitempty"`
 
+	EndTimeUnspecified bool `json:"endTimeUnspecified,omitempty"`
+
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
 
@@ -395,6 +397,11 @@ type Event struct {
 	// Location: Geographic location of the event as free-form text.
 	// Optional.
 	Location string `json:"location,omitempty"`
+
+	// Locked: Whether this is a locked event copy where no changes can be
+	// made to the main event fields "summary", "description", "location",
+	// "start", "end" or "recurrence". The default is False. Read-Only.
+	Locked bool `json:"locked,omitempty"`
 
 	// Organizer: The organizer of the event. If the organizer is also an
 	// attendee, this is indicated with a separate entry in 'attendees' with
@@ -475,6 +482,13 @@ type EventCreator struct {
 
 	// Email: The creator's email address, if available.
 	Email string `json:"email,omitempty"`
+
+	// Id: The creator's Profile ID, if available.
+	Id string `json:"id,omitempty"`
+
+	// Self: Whether the creator corresponds to the calendar on which this
+	// copy of the event appears. Read-only. The default is False.
+	Self bool `json:"self,omitempty"`
 }
 
 type EventExtendedProperties struct {
@@ -533,6 +547,13 @@ type EventOrganizer struct {
 
 	// Email: The organizer's email address, if available.
 	Email string `json:"email,omitempty"`
+
+	// Id: The organizer's Profile ID, if available.
+	Id string `json:"id,omitempty"`
+
+	// Self: Whether the organizer corresponds to the calendar on which this
+	// copy of the event appears. Read-only. The default is False.
+	Self bool `json:"self,omitempty"`
 }
 
 type EventReminders struct {
@@ -560,6 +581,9 @@ type EventAttendee struct {
 	// Email: The attendee's email address, if available. This field must be
 	// present when adding an attendee.
 	Email string `json:"email,omitempty"`
+
+	// Id: The attendee's Profile ID, if available.
+	Id string `json:"id,omitempty"`
 
 	// Optional: Whether this is an optional attendee. Optional. The default
 	// is False.
@@ -2192,6 +2216,18 @@ func (r *EventsService) Get(calendarId string, eventId string) *EventsGetCall {
 	return c
 }
 
+// AlwaysIncludeEmail sets the optional parameter "alwaysIncludeEmail":
+// Whether to always include a value in the "email" field for the
+// organizer, creator and attendees, even if no real email is available
+// (i.e. a generated, non-working value will be provided). The use of
+// this option is discouraged and should only be used by clients which
+// cannot handle the absence of an email address value in the mentioned
+// places.  The default is False.
+func (c *EventsGetCall) AlwaysIncludeEmail(alwaysIncludeEmail bool) *EventsGetCall {
+	c.opt_["alwaysIncludeEmail"] = alwaysIncludeEmail
+	return c
+}
+
 // MaxAttendees sets the optional parameter "maxAttendees": The maximum
 // number of attendees to include in the response. If there are more
 // than the specified number of attendees, only the participant is
@@ -2212,6 +2248,9 @@ func (c *EventsGetCall) Do() (*Event, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["alwaysIncludeEmail"]; ok {
+		params.Set("alwaysIncludeEmail", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["maxAttendees"]; ok {
 		params.Set("maxAttendees", fmt.Sprintf("%v", v))
 	}
@@ -2245,6 +2284,11 @@ func (c *EventsGetCall) Do() (*Event, error) {
 	//     "eventId"
 	//   ],
 	//   "parameters": {
+	//     "alwaysIncludeEmail": {
+	//       "description": "Whether to always include a value in the \"email\" field for the organizer, creator and attendees, even if no real email is available (i.e. a generated, non-working value will be provided). The use of this option is discouraged and should only be used by clients which cannot handle the absence of an email address value in the mentioned places. Optional. The default is False.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "calendarId": {
 	//       "description": "Calendar identifier.",
 	//       "location": "path",
@@ -2461,6 +2505,18 @@ func (r *EventsService) Instances(calendarId string, eventId string) *EventsInst
 	return c
 }
 
+// AlwaysIncludeEmail sets the optional parameter "alwaysIncludeEmail":
+// Whether to always include a value in the "email" field for the
+// organizer, creator and attendees, even if no real email is available
+// (i.e. a generated, non-working value will be provided). The use of
+// this option is discouraged and should only be used by clients which
+// cannot handle the absence of an email address value in the mentioned
+// places.  The default is False.
+func (c *EventsInstancesCall) AlwaysIncludeEmail(alwaysIncludeEmail bool) *EventsInstancesCall {
+	c.opt_["alwaysIncludeEmail"] = alwaysIncludeEmail
+	return c
+}
+
 // MaxAttendees sets the optional parameter "maxAttendees": The maximum
 // number of attendees to include in the response. If there are more
 // than the specified number of attendees, only the participant is
@@ -2510,6 +2566,9 @@ func (c *EventsInstancesCall) Do() (*Events, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["alwaysIncludeEmail"]; ok {
+		params.Set("alwaysIncludeEmail", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["maxAttendees"]; ok {
 		params.Set("maxAttendees", fmt.Sprintf("%v", v))
 	}
@@ -2555,6 +2614,11 @@ func (c *EventsInstancesCall) Do() (*Events, error) {
 	//     "eventId"
 	//   ],
 	//   "parameters": {
+	//     "alwaysIncludeEmail": {
+	//       "description": "Whether to always include a value in the \"email\" field for the organizer, creator and attendees, even if no real email is available (i.e. a generated, non-working value will be provided). The use of this option is discouraged and should only be used by clients which cannot handle the absence of an email address value in the mentioned places. Optional. The default is False.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "calendarId": {
 	//       "description": "Calendar identifier.",
 	//       "location": "path",
@@ -2626,6 +2690,18 @@ type EventsListCall struct {
 func (r *EventsService) List(calendarId string) *EventsListCall {
 	c := &EventsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.calendarId = calendarId
+	return c
+}
+
+// AlwaysIncludeEmail sets the optional parameter "alwaysIncludeEmail":
+// Whether to always include a value in the "email" field for the
+// organizer, creator and attendees, even if no real email is available
+// (i.e. a generated, non-working value will be provided). The use of
+// this option is discouraged and should only be used by clients which
+// cannot handle the absence of an email address value in the mentioned
+// places.  The default is False.
+func (c *EventsListCall) AlwaysIncludeEmail(alwaysIncludeEmail bool) *EventsListCall {
+	c.opt_["alwaysIncludeEmail"] = alwaysIncludeEmail
 	return c
 }
 
@@ -2735,6 +2811,9 @@ func (c *EventsListCall) Do() (*Events, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["alwaysIncludeEmail"]; ok {
+		params.Set("alwaysIncludeEmail", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["iCalUID"]; ok {
 		params.Set("iCalUID", fmt.Sprintf("%v", v))
 	}
@@ -2799,6 +2878,11 @@ func (c *EventsListCall) Do() (*Events, error) {
 	//     "calendarId"
 	//   ],
 	//   "parameters": {
+	//     "alwaysIncludeEmail": {
+	//       "description": "Whether to always include a value in the \"email\" field for the organizer, creator and attendees, even if no real email is available (i.e. a generated, non-working value will be provided). The use of this option is discouraged and should only be used by clients which cannot handle the absence of an email address value in the mentioned places. Optional. The default is False.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "calendarId": {
 	//       "description": "Calendar identifier.",
 	//       "location": "path",
@@ -2864,11 +2948,13 @@ func (c *EventsListCall) Do() (*Events, error) {
 	//     },
 	//     "timeMax": {
 	//       "description": "Upper bound (exclusive) for an event's start time to filter by. Optional. The default is not to filter by start time.",
+	//       "format": "date-time",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "timeMin": {
 	//       "description": "Lower bound (inclusive) for an event's end time to filter by. Optional. The default is not to filter by end time.",
+	//       "format": "date-time",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2879,6 +2965,7 @@ func (c *EventsListCall) Do() (*Events, error) {
 	//     },
 	//     "updatedMin": {
 	//       "description": "Lower bound for an event's last modification time (as a RFC 3339 timestamp) to filter by. Optional. The default is not to filter by last modification time.",
+	//       "format": "date-time",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -3013,6 +3100,18 @@ func (r *EventsService) Patch(calendarId string, eventId string, event *Event) *
 	return c
 }
 
+// AlwaysIncludeEmail sets the optional parameter "alwaysIncludeEmail":
+// Whether to always include a value in the "email" field for the
+// organizer, creator and attendees, even if no real email is available
+// (i.e. a generated, non-working value will be provided). The use of
+// this option is discouraged and should only be used by clients which
+// cannot handle the absence of an email address value in the mentioned
+// places.  The default is False.
+func (c *EventsPatchCall) AlwaysIncludeEmail(alwaysIncludeEmail bool) *EventsPatchCall {
+	c.opt_["alwaysIncludeEmail"] = alwaysIncludeEmail
+	return c
+}
+
 // SendNotifications sets the optional parameter "sendNotifications":
 // Whether to send notifications about the event update (e.g. attendee's
 // responses, title changes, etc.).  The default is False.
@@ -3030,6 +3129,9 @@ func (c *EventsPatchCall) Do() (*Event, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["alwaysIncludeEmail"]; ok {
+		params.Set("alwaysIncludeEmail", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["sendNotifications"]; ok {
 		params.Set("sendNotifications", fmt.Sprintf("%v", v))
 	}
@@ -3061,6 +3163,11 @@ func (c *EventsPatchCall) Do() (*Event, error) {
 	//     "eventId"
 	//   ],
 	//   "parameters": {
+	//     "alwaysIncludeEmail": {
+	//       "description": "Whether to always include a value in the \"email\" field for the organizer, creator and attendees, even if no real email is available (i.e. a generated, non-working value will be provided). The use of this option is discouraged and should only be used by clients which cannot handle the absence of an email address value in the mentioned places. Optional. The default is False.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "calendarId": {
 	//       "description": "Calendar identifier.",
 	//       "location": "path",
@@ -3200,6 +3307,18 @@ func (r *EventsService) Update(calendarId string, eventId string, event *Event) 
 	return c
 }
 
+// AlwaysIncludeEmail sets the optional parameter "alwaysIncludeEmail":
+// Whether to always include a value in the "email" field for the
+// organizer, creator and attendees, even if no real email is available
+// (i.e. a generated, non-working value will be provided). The use of
+// this option is discouraged and should only be used by clients which
+// cannot handle the absence of an email address value in the mentioned
+// places.  The default is False.
+func (c *EventsUpdateCall) AlwaysIncludeEmail(alwaysIncludeEmail bool) *EventsUpdateCall {
+	c.opt_["alwaysIncludeEmail"] = alwaysIncludeEmail
+	return c
+}
+
 // SendNotifications sets the optional parameter "sendNotifications":
 // Whether to send notifications about the event update (e.g. attendee's
 // responses, title changes, etc.).  The default is False.
@@ -3217,6 +3336,9 @@ func (c *EventsUpdateCall) Do() (*Event, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["alwaysIncludeEmail"]; ok {
+		params.Set("alwaysIncludeEmail", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["sendNotifications"]; ok {
 		params.Set("sendNotifications", fmt.Sprintf("%v", v))
 	}
@@ -3248,6 +3370,11 @@ func (c *EventsUpdateCall) Do() (*Event, error) {
 	//     "eventId"
 	//   ],
 	//   "parameters": {
+	//     "alwaysIncludeEmail": {
+	//       "description": "Whether to always include a value in the \"email\" field for the organizer, creator and attendees, even if no real email is available (i.e. a generated, non-working value will be provided). The use of this option is discouraged and should only be used by clients which cannot handle the absence of an email address value in the mentioned places. Optional. The default is False.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "calendarId": {
 	//       "description": "Calendar identifier.",
 	//       "location": "path",

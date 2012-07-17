@@ -412,7 +412,7 @@ func (a *API) GenerateCode() (outerr error) {
 		}
 	}
 
-	pn("\nfunc cleanPathString(s string) string { return strings.Map(func(r rune) rune { if r >= 0x30 && r <= 0x7a { return r }; return -1 }, s) }")
+	pn("\nfunc cleanPathString(s string) string { return strings.Map(func(r rune) rune { if r >= 0x2d && r <= 0x7a { return r }; return -1 }, s) }")
 	return nil
 }
 

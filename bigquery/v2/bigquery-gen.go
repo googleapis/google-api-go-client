@@ -373,13 +373,19 @@ type JobConfigurationLoad struct {
 	Encoding string `json:"encoding,omitempty"`
 
 	// FieldDelimiter: [Optional] Delimiter to use between fields in the
-	// import data. Default is ','
+	// import data. Default is ','. Note that delimiters are applied to the
+	// raw, binary data before the encoding is applied.
 	FieldDelimiter string `json:"fieldDelimiter,omitempty"`
 
 	// MaxBadRecords: [Optional] Maximum number of bad records that should
 	// be ignored before the entire job is aborted and no updates are
 	// performed.
 	MaxBadRecords int64 `json:"maxBadRecords,omitempty"`
+
+	// Quote: [Optional] Quote character to use. Default is '"'. Note that
+	// quoting is done on the raw, binary data before the encoding is
+	// applied.
+	Quote string `json:"quote,omitempty"`
 
 	// Schema: [Optional] Schema of the table being written to.
 	Schema *TableSchema `json:"schema,omitempty"`
@@ -2551,7 +2557,7 @@ func (c *TablesUpdateCall) Do() (*Table, error) {
 
 func cleanPathString(s string) string {
 	return strings.Map(func(r rune) rune {
-		if r >= 0x30 && r <= 0x7a {
+		if r >= 0x2d && r <= 0x7a {
 			return r
 		}
 		return -1

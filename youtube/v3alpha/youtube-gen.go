@@ -36,6 +36,12 @@ const apiName = "youtube"
 const apiVersion = "v3alpha"
 const basePath = "https://www.googleapis.com/youtube/v3alpha/"
 
+// OAuth2 scopes used by this API.
+const (
+	// Manage your Youtube account
+	YoutubeScope = "https://www.googleapis.com/auth/youtube"
+)
+
 func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
@@ -533,7 +539,10 @@ func (c *ChannelsListCall) Do() (*ChannelListResponse, error) {
 	//   "path": "channels",
 	//   "response": {
 	//     "$ref": "ChannelListResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/youtube"
+	//   ]
 	// }
 
 }
@@ -657,7 +666,10 @@ func (c *PlaylistitemsListCall) Do() (*PlaylistItemListResponse, error) {
 	//   "path": "playlistitems",
 	//   "response": {
 	//     "$ref": "PlaylistItemListResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/youtube"
+	//   ]
 	// }
 
 }
@@ -726,7 +738,10 @@ func (c *PlaylistsListCall) Do() (*PlaylistListResponse, error) {
 	//   "path": "playlists",
 	//   "response": {
 	//     "$ref": "PlaylistListResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/youtube"
+	//   ]
 	// }
 
 }
@@ -877,7 +892,10 @@ func (c *SearchListCall) Do() (*SearchListResponse, error) {
 	//   "path": "search",
 	//   "response": {
 	//     "$ref": "SearchListResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/youtube"
+	//   ]
 	// }
 
 }
@@ -946,14 +964,17 @@ func (c *VideosListCall) Do() (*VideoListResponse, error) {
 	//   "path": "videos",
 	//   "response": {
 	//     "$ref": "VideoListResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/youtube"
+	//   ]
 	// }
 
 }
 
 func cleanPathString(s string) string {
 	return strings.Map(func(r rune) rune {
-		if r >= 0x30 && r <= 0x7a {
+		if r >= 0x2d && r <= 0x7a {
 			return r
 		}
 		return -1

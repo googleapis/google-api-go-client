@@ -1852,7 +1852,7 @@ func (c *UsersGetCall) Do() (*User, error) {
 
 func cleanPathString(s string) string {
 	return strings.Map(func(r rune) rune {
-		if r >= 0x30 && r <= 0x7a {
+		if r >= 0x2d && r <= 0x7a {
 			return r
 		}
 		return -1

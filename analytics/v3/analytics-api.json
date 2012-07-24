@@ -4,7 +4,7 @@
  "id": "analytics:v3",
  "name": "analytics",
  "version": "v3",
- "revision": "20120607",
+ "revision": "20120712",
  "title": "Google Analytics API",
  "description": "View and manage your Google Analytics data",
  "icons": {
@@ -76,6 +76,7 @@
   "Account": {
    "id": "Account",
    "type": "object",
+   "description": "JSON template for Analytics account entry.",
    "properties": {
     "childLink": {
      "type": "object",
@@ -124,6 +125,7 @@
   "Accounts": {
    "id": "Accounts",
    "type": "object",
+   "description": "An account collection provides a list of Analytics accounts to which a user has access. The account collection is the entry point to all management information. Each resource in the collection corresponds to a single Analytics account.",
    "properties": {
     "items": {
      "type": "array",
@@ -169,6 +171,7 @@
   "GaData": {
    "id": "GaData",
    "type": "object",
+   "description": "Analytics data for a given profile.",
    "properties": {
     "columnHeaders": {
      "type": "array",
@@ -333,6 +336,7 @@
   "Goal": {
    "id": "Goal",
    "type": "object",
+   "description": "JSON template for Analytics goal resource.",
    "properties": {
     "accountId": {
      "type": "string",
@@ -524,6 +528,7 @@
   "Goals": {
    "id": "Goals",
    "type": "object",
+   "description": "A goal collection lists Analytics goals to which the user has access. Each profile can have a set of goals. Each resource in the Goal collection corresponds to a single Analytics goal.",
    "properties": {
     "items": {
      "type": "array",
@@ -566,9 +571,199 @@
     }
    }
   },
+  "McfData": {
+   "id": "McfData",
+   "type": "object",
+   "description": "Multi-Channel Funnels data for a given profile.",
+   "properties": {
+    "columnHeaders": {
+     "type": "array",
+     "description": "Column headers that list dimension names followed by the metric names. The order of dimensions and metrics is same as specified in the request.",
+     "items": {
+      "type": "object",
+      "properties": {
+       "columnType": {
+        "type": "string",
+        "description": "Column Type. Either DIMENSION or METRIC."
+       },
+       "dataType": {
+        "type": "string",
+        "description": "Data type. Dimension and metric values data types such as INTEGER, DOUBLE, CURRENCY, MCF_SEQUENCE etc."
+       },
+       "name": {
+        "type": "string",
+        "description": "Column name."
+       }
+      }
+     }
+    },
+    "containsSampledData": {
+     "type": "boolean",
+     "description": "Determines if the Analytics data contains sampled data."
+    },
+    "id": {
+     "type": "string",
+     "description": "Unique ID for this data response."
+    },
+    "itemsPerPage": {
+     "type": "integer",
+     "description": "The maximum number of rows the response can contain, regardless of the actual number of rows returned. Its value ranges from 1 to 10,000 with a value of 1000 by default, or otherwise specified by the max-results query parameter.",
+     "format": "int32"
+    },
+    "kind": {
+     "type": "string",
+     "description": "Resource type.",
+     "default": "analytics#mcfData"
+    },
+    "nextLink": {
+     "type": "string",
+     "description": "Link to next page for this Analytics data query."
+    },
+    "previousLink": {
+     "type": "string",
+     "description": "Link to previous page for this Analytics data query."
+    },
+    "profileInfo": {
+     "type": "object",
+     "description": "Information for the profile, for which the Analytics data was requested.",
+     "properties": {
+      "accountId": {
+       "type": "string",
+       "description": "Account ID to which this profile belongs."
+      },
+      "internalWebPropertyId": {
+       "type": "string",
+       "description": "Internal ID for the web property to which this profile belongs."
+      },
+      "profileId": {
+       "type": "string",
+       "description": "Profile ID."
+      },
+      "profileName": {
+       "type": "string",
+       "description": "Profile name."
+      },
+      "tableId": {
+       "type": "string",
+       "description": "Table ID for profile."
+      },
+      "webPropertyId": {
+       "type": "string",
+       "description": "Web Property ID to which this profile belongs."
+      }
+     }
+    },
+    "query": {
+     "type": "object",
+     "description": "Analytics data request query parameters.",
+     "properties": {
+      "dimensions": {
+       "type": "string",
+       "description": "List of analytics dimensions."
+      },
+      "end-date": {
+       "type": "string",
+       "description": "End date."
+      },
+      "filters": {
+       "type": "string",
+       "description": "Comma-separated list of dimension or metric filters."
+      },
+      "ids": {
+       "type": "string",
+       "description": "Unique table ID."
+      },
+      "max-results": {
+       "type": "integer",
+       "description": "Maximum results per page.",
+       "format": "int32"
+      },
+      "metrics": {
+       "type": "array",
+       "description": "List of analytics metrics.",
+       "items": {
+        "type": "string"
+       }
+      },
+      "segment": {
+       "type": "string",
+       "description": "Analytics advanced segment."
+      },
+      "sort": {
+       "type": "array",
+       "description": "List of dimensions or metrics based on which Analytics data is sorted.",
+       "items": {
+        "type": "string"
+       }
+      },
+      "start-date": {
+       "type": "string",
+       "description": "Start date."
+      },
+      "start-index": {
+       "type": "integer",
+       "description": "Start index.",
+       "format": "int32"
+      }
+     }
+    },
+    "rows": {
+     "type": "array",
+     "description": "Analytics data rows, where each row contains a list of dimension values followed by the metric values. The order of dimensions and metrics is same as specified in the request.",
+     "items": {
+      "type": "array",
+      "items": {
+       "type": "object",
+       "description": "A union object representing a dimension or metric value. Only one of \"primitiveValue\" or \"conversionPathValue\" attribute will be populated.",
+       "properties": {
+        "conversionPathValue": {
+         "type": "array",
+         "description": "A conversion path dimension value, containing a list of interactions with their attributes.",
+         "items": {
+          "type": "object",
+          "properties": {
+           "interactionType": {
+            "type": "string",
+            "description": "Type of an interaction on conversion path. Such as CLICK, IMPRESSION etc."
+           },
+           "nodeValue": {
+            "type": "string",
+            "description": "Node value of an interaction on conversion path. Such as source, medium etc."
+           }
+          }
+         }
+        },
+        "primitiveValue": {
+         "type": "string",
+         "description": "A primitive metric value. A primitive dimension value."
+        }
+       }
+      }
+     }
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "Link to this page."
+    },
+    "totalResults": {
+     "type": "integer",
+     "description": "The total number of rows for the query, regardless of the number of rows in the response.",
+     "format": "int32"
+    },
+    "totalsForAllResults": {
+     "type": "object",
+     "description": "Total values for the requested metrics over all the results, not just the results returned in this response. The order of the metric totals is same as the metric order specified in the request.",
+     "additionalProperties": {
+      "type": "string",
+      "description": "Key-value pair for the total value of a metric. Key is the metric name and the value is the total value for that metric."
+     }
+    }
+   }
+  },
   "Profile": {
    "id": "Profile",
    "type": "object",
+   "description": "JSON template for an Analytics profile.",
    "properties": {
     "accountId": {
      "type": "string",
@@ -668,6 +863,7 @@
   "Profiles": {
    "id": "Profiles",
    "type": "object",
+   "description": "A profile collection lists Analytics profiles to which the user has access. Each resource in the collection corresponds to a single Analytics profile.",
    "properties": {
     "items": {
      "type": "array",
@@ -713,6 +909,7 @@
   "Segment": {
    "id": "Segment",
    "type": "object",
+   "description": "JSON template for an Analytics advanced segment.",
    "properties": {
     "created": {
      "type": "string",
@@ -754,6 +951,7 @@
   "Segments": {
    "id": "Segments",
    "type": "object",
+   "description": "An advanced segment collection lists Analytics advanced segments that the user has access to. Each resource in the collection corresponds to a single Analytics advanced segment.",
    "properties": {
     "items": {
      "type": "array",
@@ -799,6 +997,7 @@
   "Webproperties": {
    "id": "Webproperties",
    "type": "object",
+   "description": "A web property collection lists Analytics web properties to which the user has access. Each resource in the collection corresponds to a single Analytics web property.",
    "properties": {
     "items": {
      "type": "array",
@@ -844,6 +1043,7 @@
   "Webproperty": {
    "id": "Webproperty",
    "type": "object",
+   "description": "JSON template for an Analytics web property.",
    "properties": {
     "accountId": {
      "type": "string",
@@ -1001,6 +1201,89 @@
        ],
        "response": {
         "$ref": "GaData"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics.readonly"
+       ]
+      }
+     }
+    },
+    "mcf": {
+     "methods": {
+      "get": {
+       "id": "analytics.data.mcf.get",
+       "path": "data/mcf",
+       "httpMethod": "GET",
+       "description": "Returns Analytics Multi-Channel Funnels data for a profile.",
+       "parameters": {
+        "dimensions": {
+         "type": "string",
+         "description": "A comma-separated list of Multi-Channel Funnels dimensions. E.g., 'mcf:source,mcf:medium'.",
+         "pattern": "(mcf:.+)?",
+         "location": "query"
+        },
+        "end-date": {
+         "type": "string",
+         "description": "End date for fetching Analytics data. All requests should specify an end date formatted as YYYY-MM-DD.",
+         "required": true,
+         "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2}",
+         "location": "query"
+        },
+        "filters": {
+         "type": "string",
+         "description": "A comma-separated list of dimension or metric filters to be applied to the Analytics data.",
+         "pattern": "mcf:.+",
+         "location": "query"
+        },
+        "ids": {
+         "type": "string",
+         "description": "Unique table ID for retrieving Analytics data. Table ID is of the form ga:XXXX, where XXXX is the Analytics profile ID.",
+         "required": true,
+         "pattern": "ga:[0-9]+",
+         "location": "query"
+        },
+        "max-results": {
+         "type": "integer",
+         "description": "The maximum number of entries to include in this feed.",
+         "format": "int32",
+         "location": "query"
+        },
+        "metrics": {
+         "type": "string",
+         "description": "A comma-separated list of Multi-Channel Funnels metrics. E.g., 'mcf:totalConversions,mcf:totalConversionValue'. At least one metric must be specified.",
+         "required": true,
+         "pattern": "mcf:.+",
+         "location": "query"
+        },
+        "sort": {
+         "type": "string",
+         "description": "A comma-separated list of dimensions or metrics that determine the sort order for the Analytics data.",
+         "pattern": "(-)?mcf:.+",
+         "location": "query"
+        },
+        "start-date": {
+         "type": "string",
+         "description": "Start date for fetching Analytics data. All requests should specify a start date formatted as YYYY-MM-DD.",
+         "required": true,
+         "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2}",
+         "location": "query"
+        },
+        "start-index": {
+         "type": "integer",
+         "description": "An index of the first entity to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.",
+         "format": "int32",
+         "minimum": "1",
+         "location": "query"
+        }
+       },
+       "parameterOrder": [
+        "ids",
+        "start-date",
+        "end-date",
+        "metrics"
+       ],
+       "response": {
+        "$ref": "McfData"
        },
        "scopes": [
         "https://www.googleapis.com/auth/analytics.readonly"

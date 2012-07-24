@@ -4,7 +4,7 @@
  "id": "shopping:v1",
  "name": "shopping",
  "version": "v1",
- "revision": "20120628",
+ "revision": "20120717",
  "title": "Search API For Shopping",
  "description": "Lets you search over product data.",
  "icons": {

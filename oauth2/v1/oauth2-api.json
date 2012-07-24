@@ -4,7 +4,7 @@
  "id": "oauth2:v1",
  "name": "oauth2",
  "version": "v1",
- "revision": "20120614",
+ "revision": "20120712",
  "description": "OAuth2 API",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/search-16.gif",

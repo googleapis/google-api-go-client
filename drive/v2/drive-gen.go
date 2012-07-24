@@ -41,7 +41,7 @@ const (
 	// View and manage the files and documents in your Google Drive
 	DriveScope = "https://www.googleapis.com/auth/drive"
 
-	// New service: https://www.googleapis.com/auth/drive.apps.readonly
+	// View your Google Drive apps
 	DriveAppsReadonlyScope = "https://www.googleapis.com/auth/drive.apps.readonly"
 
 	// View and manage Google Drive files that you have opened or created
@@ -3931,7 +3931,7 @@ func (c *RevisionsUpdateCall) Do() (*Revision, error) {
 
 func cleanPathString(s string) string {
 	return strings.Map(func(r rune) rune {
-		if r >= 0x30 && r <= 0x7a {
+		if r >= 0x2d && r <= 0x7a {
 			return r
 		}
 		return -1

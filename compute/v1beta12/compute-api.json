@@ -4,7 +4,7 @@
  "id": "compute:v1beta12",
  "name": "compute",
  "version": "v1beta12",
- "revision": "20120630",
+ "revision": "20120712",
  "title": "Compute Engine API",
  "description": "API for the Google Compute Engine service.",
  "icons": {

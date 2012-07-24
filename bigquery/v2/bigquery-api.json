@@ -4,7 +4,7 @@
  "id": "bigquery:v2",
  "name": "bigquery",
  "version": "v2",
- "revision": "20120626",
+ "revision": "20120717",
  "title": "BigQuery API",
  "description": "A data platform for customers to create, manage, share and query data.",
  "icons": {
@@ -416,12 +416,16 @@
     },
     "fieldDelimiter": {
      "type": "string",
-     "description": "[Optional] Delimiter to use between fields in the import data. Default is ','"
+     "description": "[Optional] Delimiter to use between fields in the import data. Default is ','. Note that delimiters are applied to the raw, binary data before the encoding is applied."
     },
     "maxBadRecords": {
      "type": "integer",
      "description": "[Optional] Maximum number of bad records that should be ignored before the entire job is aborted and no updates are performed.",
      "format": "int32"
+    },
+    "quote": {
+     "type": "string",
+     "description": "[Optional] Quote character to use. Default is '\"'. Note that quoting is done on the raw, binary data before the encoding is applied."
     },
     "schema": {
      "$ref": "TableSchema",

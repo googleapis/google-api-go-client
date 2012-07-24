@@ -70,7 +70,7 @@
      "description": "View and manage the files and documents in your Google Drive"
     },
     "https://www.googleapis.com/auth/drive.apps.readonly": {
-     "description": "New service: https://www.googleapis.com/auth/drive.apps.readonly"
+     "description": "View your Google Drive apps"
     },
     "https://www.googleapis.com/auth/drive.file": {
      "description": "View and manage Google Drive files that you have opened or created with this app"

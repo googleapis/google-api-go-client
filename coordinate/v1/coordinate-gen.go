@@ -36,6 +36,15 @@ const apiName = "coordinate"
 const apiVersion = "v1"
 const basePath = "https://www.googleapis.com/coordinate/v1/teams/"
 
+// OAuth2 scopes used by this API.
+const (
+	// View and manage your Google Maps Coordinate jobs
+	CoordinateScope = "https://www.googleapis.com/auth/coordinate"
+
+	// View your Google Coordinate jobs
+	CoordinateReadonlyScope = "https://www.googleapis.com/auth/coordinate.readonly"
+)
+
 func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
@@ -198,7 +207,11 @@ func (c *JobsGetCall) Do() (*Job, error) {
 	//   "path": "{teamId}/jobs/{jobId}",
 	//   "response": {
 	//     "$ref": "Job"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/coordinate",
+	//     "https://www.googleapis.com/auth/coordinate.readonly"
+	//   ]
 	// }
 
 }
@@ -371,7 +384,10 @@ func (c *JobsInsertCall) Do() (*Job, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "Job"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/coordinate"
+	//   ]
 	// }
 
 }
@@ -477,7 +493,11 @@ func (c *JobsListCall) Do() (*JobListResponse, error) {
 	//   "path": "{teamId}/jobs",
 	//   "response": {
 	//     "$ref": "JobListResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/coordinate",
+	//     "https://www.googleapis.com/auth/coordinate.readonly"
+	//   ]
 	// }
 
 }
@@ -708,7 +728,10 @@ func (c *JobsPatchCall) Do() (*Job, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "Job"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/coordinate"
+	//   ]
 	// }
 
 }
@@ -939,14 +962,17 @@ func (c *JobsUpdateCall) Do() (*Job, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "Job"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/coordinate"
+	//   ]
 	// }
 
 }
 
 func cleanPathString(s string) string {
 	return strings.Map(func(r rune) rune {
-		if r >= 0x30 && r <= 0x7a {
+		if r >= 0x2d && r <= 0x7a {
 			return r
 		}
 		return -1

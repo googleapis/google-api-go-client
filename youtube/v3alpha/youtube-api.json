@@ -66,6 +66,15 @@
    "location": "query"
   }
  },
+ "auth": {
+  "oauth2": {
+   "scopes": {
+    "https://www.googleapis.com/auth/youtube": {
+     "description": "Manage your Youtube account"
+    }
+   }
+  }
+ },
  "schemas": {
   "Channel": {
    "id": "Channel",
@@ -700,7 +709,10 @@
      ],
      "response": {
       "$ref": "ChannelListResponse"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/youtube"
+     ]
     }
    }
   },
@@ -749,7 +761,10 @@
      ],
      "response": {
       "$ref": "PlaylistItemListResponse"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/youtube"
+     ]
     }
    }
   },
@@ -780,7 +795,10 @@
      ],
      "response": {
       "$ref": "PlaylistListResponse"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/youtube"
+     ]
     }
    }
   },
@@ -852,7 +870,10 @@
      },
      "response": {
       "$ref": "SearchListResponse"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/youtube"
+     ]
     }
    }
   },
@@ -883,7 +904,10 @@
      ],
      "response": {
       "$ref": "VideoListResponse"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/youtube"
+     ]
     }
    }
   }

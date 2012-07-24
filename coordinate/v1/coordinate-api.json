@@ -63,6 +63,18 @@
    "location": "query"
   }
  },
+ "auth": {
+  "oauth2": {
+   "scopes": {
+    "https://www.googleapis.com/auth/coordinate": {
+     "description": "View and manage your Google Maps Coordinate jobs"
+    },
+    "https://www.googleapis.com/auth/coordinate.readonly": {
+     "description": "View your Google Coordinate jobs"
+    }
+   }
+  }
+ },
  "schemas": {
   "Job": {
    "id": "Job",
@@ -238,7 +250,11 @@
      ],
      "response": {
       "$ref": "Job"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/coordinate",
+      "https://www.googleapis.com/auth/coordinate.readonly"
+     ]
     },
     "insert": {
      "id": "coordinate.jobs.insert",
@@ -311,7 +327,10 @@
      },
      "response": {
       "$ref": "Job"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/coordinate"
+     ]
     },
     "list": {
      "id": "coordinate.jobs.list",
@@ -348,7 +367,11 @@
      ],
      "response": {
       "$ref": "JobListResponse"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/coordinate",
+      "https://www.googleapis.com/auth/coordinate.readonly"
+     ]
     },
     "patch": {
      "id": "coordinate.jobs.patch",
@@ -440,7 +463,10 @@
      },
      "response": {
       "$ref": "Job"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/coordinate"
+     ]
     },
     "update": {
      "id": "coordinate.jobs.update",
@@ -532,7 +558,10 @@
      },
      "response": {
       "$ref": "Job"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/coordinate"
+     ]
     }
    }
   }

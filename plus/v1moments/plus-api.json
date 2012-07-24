@@ -4,7 +4,7 @@
  "id": "plus:v1moments",
  "name": "plus",
  "version": "v1moments",
- "revision": "20120630",
+ "revision": "20120717",
  "title": "Google+ API",
  "description": "The Google+ API enables developers to build on top of the Google+ platform.",
  "icons": {
@@ -70,7 +70,7 @@
   "oauth2": {
    "scopes": {
     "https://www.googleapis.com/auth/plus.moments.write": {
-     "description": "View and manage user activity information in Google+"
+     "description": "Send your activity to your private Google+ history"
     }
    }
   }
@@ -257,14 +257,14 @@
     },
     "performers": {
      "type": "array",
-     "description": "The main performer or performers of the event—for example, a presenter, musician, or actor.",
+     "description": "The main performer or performers of the event-for example, a presenter, musician, or actor.",
      "items": {
       "$ref": "ItemScope"
      }
     },
     "playerType": {
      "type": "string",
-     "description": "Player type required—for example, Flash or Silverlight."
+     "description": "Player type required-for example, Flash or Silverlight."
     },
     "postOfficeBoxNumber": {
      "type": "string",
@@ -279,7 +279,8 @@
      "description": "Rating value."
     },
     "reviewRating": {
-     "type": "any"
+     "$ref": "ItemScope",
+     "description": "Review rating."
     },
     "startDate": {
      "type": "string",

@@ -350,8 +350,18 @@ func (a *API) GenerateCode() (outerr error) {
 	p("package %s\n", pkg)
 	p("\n")
 	p("import (\n")
-	for _, pkg := range []string{"bytes", "fmt", "net/http", "io", "encoding/json", "errors", "strings", "strconv", "net/url",
-		"code.google.com/p/google-api-go-client/googleapi"} {
+	for _, pkg := range []string{
+		"bytes",
+		"code.google.com/p/google-api-go-client/googleapi",
+		"encoding/json",
+		"errors",
+		"fmt",
+		"io",
+		"net/http",
+		"net/url",
+		"strconv",
+		"strings",
+	} {
 		p("\t%q\n", pkg)
 	}
 	p(")\n\n")

@@ -11,15 +11,15 @@ package analytics
 
 import (
 	"bytes"
-	"fmt"
-	"net/http"
-	"io"
+	"code.google.com/p/google-api-go-client/googleapi"
 	"encoding/json"
 	"errors"
-	"strings"
-	"strconv"
+	"fmt"
+	"io"
+	"net/http"
 	"net/url"
-	"code.google.com/p/google-api-go-client/googleapi"
+	"strconv"
+	"strings"
 )
 
 var _ = bytes.NewBuffer
@@ -434,6 +434,149 @@ type Goals struct {
 	Username string `json:"username,omitempty"`
 }
 
+type McfData struct {
+	// ColumnHeaders: Column headers that list dimension names followed by
+	// the metric names. The order of dimensions and metrics is same as
+	// specified in the request.
+	ColumnHeaders []*McfDataColumnHeaders `json:"columnHeaders,omitempty"`
+
+	// ContainsSampledData: Determines if the Analytics data contains
+	// sampled data.
+	ContainsSampledData bool `json:"containsSampledData,omitempty"`
+
+	// Id: Unique ID for this data response.
+	Id string `json:"id,omitempty"`
+
+	// ItemsPerPage: The maximum number of rows the response can contain,
+	// regardless of the actual number of rows returned. Its value ranges
+	// from 1 to 10,000 with a value of 1000 by default, or otherwise
+	// specified by the max-results query parameter.
+	ItemsPerPage int64 `json:"itemsPerPage,omitempty"`
+
+	// Kind: Resource type.
+	Kind string `json:"kind,omitempty"`
+
+	// NextLink: Link to next page for this Analytics data query.
+	NextLink string `json:"nextLink,omitempty"`
+
+	// PreviousLink: Link to previous page for this Analytics data query.
+	PreviousLink string `json:"previousLink,omitempty"`
+
+	// ProfileInfo: Information for the profile, for which the Analytics
+	// data was requested.
+	ProfileInfo *McfDataProfileInfo `json:"profileInfo,omitempty"`
+
+	// Query: Analytics data request query parameters.
+	Query *McfDataQuery `json:"query,omitempty"`
+
+	// Rows: Analytics data rows, where each row contains a list of
+	// dimension values followed by the metric values. The order of
+	// dimensions and metrics is same as specified in the request.
+	Rows [][]*McfDataRowsItem `json:"rows,omitempty"`
+
+	// SelfLink: Link to this page.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// TotalResults: The total number of rows for the query, regardless of
+	// the number of rows in the response.
+	TotalResults int64 `json:"totalResults,omitempty"`
+
+	// TotalsForAllResults: Total values for the requested metrics over all
+	// the results, not just the results returned in this response. The
+	// order of the metric totals is same as the metric order specified in
+	// the request.
+	TotalsForAllResults *McfDataTotalsForAllResults `json:"totalsForAllResults,omitempty"`
+}
+
+type McfDataColumnHeaders struct {
+	// ColumnType: Column Type. Either DIMENSION or METRIC.
+	ColumnType string `json:"columnType,omitempty"`
+
+	// DataType: Data type. Dimension and metric values data types such as
+	// INTEGER, DOUBLE, CURRENCY, MCF_SEQUENCE etc.
+	DataType string `json:"dataType,omitempty"`
+
+	// Name: Column name.
+	Name string `json:"name,omitempty"`
+}
+
+type McfDataProfileInfo struct {
+	// AccountId: Account ID to which this profile belongs.
+	AccountId string `json:"accountId,omitempty"`
+
+	// InternalWebPropertyId: Internal ID for the web property to which this
+	// profile belongs.
+	InternalWebPropertyId string `json:"internalWebPropertyId,omitempty"`
+
+	// ProfileId: Profile ID.
+	ProfileId string `json:"profileId,omitempty"`
+
+	// ProfileName: Profile name.
+	ProfileName string `json:"profileName,omitempty"`
+
+	// TableId: Table ID for profile.
+	TableId string `json:"tableId,omitempty"`
+
+	// WebPropertyId: Web Property ID to which this profile belongs.
+	WebPropertyId string `json:"webPropertyId,omitempty"`
+}
+
+type McfDataQuery struct {
+	// Dimensions: List of analytics dimensions.
+	Dimensions string `json:"dimensions,omitempty"`
+
+	// EndDate: End date.
+	EndDate string `json:"end-date,omitempty"`
+
+	// Filters: Comma-separated list of dimension or metric filters.
+	Filters string `json:"filters,omitempty"`
+
+	// Ids: Unique table ID.
+	Ids string `json:"ids,omitempty"`
+
+	// MaxResults: Maximum results per page.
+	MaxResults int64 `json:"max-results,omitempty"`
+
+	// Metrics: List of analytics metrics.
+	Metrics []string `json:"metrics,omitempty"`
+
+	// Segment: Analytics advanced segment.
+	Segment string `json:"segment,omitempty"`
+
+	// Sort: List of dimensions or metrics based on which Analytics data is
+	// sorted.
+	Sort []string `json:"sort,omitempty"`
+
+	// StartDate: Start date.
+	StartDate string `json:"start-date,omitempty"`
+
+	// StartIndex: Start index.
+	StartIndex int64 `json:"start-index,omitempty"`
+}
+
+type McfDataRowsItem struct {
+	// ConversionPathValue: A conversion path dimension value, containing a
+	// list of interactions with their attributes.
+	ConversionPathValue []*McfDataRowsItemConversionPathValue `json:"conversionPathValue,omitempty"`
+
+	// PrimitiveValue: A primitive metric value. A primitive dimension
+	// value.
+	PrimitiveValue string `json:"primitiveValue,omitempty"`
+}
+
+type McfDataRowsItemConversionPathValue struct {
+	// InteractionType: Type of an interaction on conversion path. Such as
+	// CLICK, IMPRESSION etc.
+	InteractionType string `json:"interactionType,omitempty"`
+
+	// NodeValue: Node value of an interaction on conversion path. Such as
+	// source, medium etc.
+	NodeValue string `json:"nodeValue,omitempty"`
+}
+
+type McfDataTotalsForAllResults struct {
+}
+
 type Profile struct {
 	// AccountId: Account ID to which this profile belongs.
 	AccountId string `json:"accountId,omitempty"`
@@ -686,7 +829,7 @@ type WebpropertyParentLink struct {
 
 func cleanPathString(s string) string {
 	return strings.Map(func(r rune) rune {
-		if r >= 0x30 && r <= 0x7a {
+		if r >= 0x2d && r <= 0x7a {
 			return r
 		}
 		return -1

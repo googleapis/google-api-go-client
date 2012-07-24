@@ -38,7 +38,7 @@ const basePath = "https://www.googleapis.com/plus/v1moments/people/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage user activity information in Google+
+	// Send your activity to your private Google+ history
 	PlusMomentsWriteScope = "https://www.googleapis.com/auth/plus.moments.write"
 )
 
@@ -190,11 +190,11 @@ type ItemScope struct {
 	// which series the episode belongs to.
 	PartOfTVSeries *ItemScope `json:"partOfTVSeries,omitempty"`
 
-	// Performers: The main performer or performers of the event—for
+	// Performers: The main performer or performers of the event-for
 	// example, a presenter, musician, or actor.
 	Performers []*ItemScope `json:"performers,omitempty"`
 
-	// PlayerType: Player type required—for example, Flash or Silverlight.
+	// PlayerType: Player type required-for example, Flash or Silverlight.
 	PlayerType string `json:"playerType,omitempty"`
 
 	// PostOfficeBoxNumber: Post office box number.
@@ -206,7 +206,8 @@ type ItemScope struct {
 	// RatingValue: Rating value.
 	RatingValue string `json:"ratingValue,omitempty"`
 
-	ReviewRating interface{} `json:"reviewRating,omitempty"`
+	// ReviewRating: Review rating.
+	ReviewRating *ItemScope `json:"reviewRating,omitempty"`
 
 	// StartDate: The start date and time of the event (in ISO 8601 date
 	// format).
@@ -378,7 +379,7 @@ func (c *MomentsInsertCall) Do() (*Moment, error) {
 
 func cleanPathString(s string) string {
 	return strings.Map(func(r rune) rune {
-		if r >= 0x30 && r <= 0x7a {
+		if r >= 0x2d && r <= 0x7a {
 			return r
 		}
 		return -1

@@ -36,6 +36,12 @@ const apiName = "youtubeAnalytics"
 const apiVersion = "v1beta1"
 const basePath = "https://www.googleapis.com/youtube/analytics/v1beta1/"
 
+// OAuth2 scopes used by this API.
+const (
+	// View YouTube Analytics reports for your YouTube content
+	YtAnalyticsReadonlyScope = "https://www.googleapis.com/auth/yt-analytics.readonly"
+)
+
 func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
@@ -261,14 +267,17 @@ func (c *ReportsQueryCall) Do() (*ResultTable, error) {
 	//   "path": "reports",
 	//   "response": {
 	//     "$ref": "ResultTable"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/yt-analytics.readonly"
+	//   ]
 	// }
 
 }
 
 func cleanPathString(s string) string {
 	return strings.Map(func(r rune) rune {
-		if r >= 0x30 && r <= 0x7a {
+		if r >= 0x2d && r <= 0x7a {
 			return r
 		}
 		return -1

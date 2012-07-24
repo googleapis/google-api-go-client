@@ -68,6 +68,15 @@
    "location": "query"
   }
  },
+ "auth": {
+  "oauth2": {
+   "scopes": {
+    "https://www.googleapis.com/auth/yt-analytics.readonly": {
+     "description": "View YouTube Analytics reports for your YouTube content"
+    }
+   }
+  }
+ },
  "schemas": {
   "ResultTable": {
    "id": "ResultTable",
@@ -190,7 +199,10 @@
      ],
      "response": {
       "$ref": "ResultTable"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/yt-analytics.readonly"
+     ]
     }
    }
   }

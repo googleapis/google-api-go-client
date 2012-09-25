@@ -1,6 +1,6 @@
 // Package shopping provides access to the Search API For Shopping.
 //
-// See http://code.google.com/apis/shopping/search/v1/getting_started.html
+// See https://developers.google.com/shopping-search/v1/getting_started
 //
 // Usage example:
 //
@@ -297,6 +297,12 @@ type ShoppingModelDebugJsonV1 struct {
 
 	// RdcResponse: Google internal.
 	RdcResponse string `json:"rdcResponse,omitempty"`
+
+	// RecommendedItemsRequest: Google internal.
+	RecommendedItemsRequest string `json:"recommendedItemsRequest,omitempty"`
+
+	// RecommendedItemsResponse: Google internal.
+	RecommendedItemsResponse string `json:"recommendedItemsResponse,omitempty"`
 
 	// SearchRequest: Google internal.
 	SearchRequest string `json:"searchRequest,omitempty"`

@@ -4,14 +4,14 @@
  "id": "analytics:v2.4",
  "name": "analytics",
  "version": "v2.4",
- "revision": "20120712",
+ "revision": "20120831",
  "title": "Google Analytics API",
  "description": "View and manage your Google Analytics data",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/analytics-16.png",
   "x32": "http://www.google.com/images/icons/product/analytics-32.png"
  },
- "documentationLink": "http://code.google.com/apis/analytics",
+ "documentationLink": "https://developers.google.com/analytics/",
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/analytics/v2.4/",
  "basePath": "/analytics/v2.4/",

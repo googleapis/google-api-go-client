@@ -1,6 +1,6 @@
 // Package pagespeedonline provides access to the Page Speed Online API.
 //
-// See https://code.google.com/apis/pagespeedonline/v1/getting_started.html
+// See https://developers.google.com/speed/docs/insights/v1/getting_started
 //
 // Usage example:
 //

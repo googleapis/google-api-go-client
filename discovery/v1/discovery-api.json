@@ -10,7 +10,7 @@
   "x16": "http://www.google.com/images/icons/feature/filing_cabinet_search-g16.png",
   "x32": "http://www.google.com/images/icons/feature/filing_cabinet_search-g32.png"
  },
- "documentationLink": "http://code.google.com/apis/discovery",
+ "documentationLink": "https://developers.google.com/discovery/",
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/discovery/v1/",
  "basePath": "/discovery/v1/",
@@ -223,7 +223,7 @@
     },
     "pattern": {
      "type": "string",
-     "description": "The regular expression this parameter must conform to."
+     "description": "The regular expression this parameter must conform to. Uses Java 6 regex format: http://docs.oracle.com/javase/6/docs/api/java/util/regex/Pattern.html"
     },
     "properties": {
      "type": "object",
@@ -289,6 +289,10 @@
      "type": "string",
      "description": "The path for REST batch requests.",
      "default": "batch"
+    },
+    "canonicalName": {
+     "type": "string",
+     "description": "Indicates how the API name should be capitalized and split into various parts. Useful for generating pretty class names."
     },
     "description": {
      "type": "string",

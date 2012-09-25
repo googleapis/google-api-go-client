@@ -4,7 +4,7 @@
  "id": "plus:v1",
  "name": "plus",
  "version": "v1",
- "revision": "20120712",
+ "revision": "20120806",
  "title": "Google+ API",
  "description": "The Google+ API enables developers to build on top of the Google+ platform.",
  "icons": {
@@ -878,18 +878,6 @@
        "description": "The ID of the activity to get.",
        "required": true,
        "location": "path"
-      },
-      "alt": {
-       "type": "string",
-       "description": "Specifies an alternative representation type.",
-       "default": "json",
-       "enum": [
-        "json"
-       ],
-       "enumDescriptions": [
-        "Use JSON format"
-       ],
-       "location": "query"
       }
      },
      "parameterOrder": [
@@ -908,18 +896,6 @@
      "httpMethod": "GET",
      "description": "List all of the activities in the specified collection for a particular user.",
      "parameters": {
-      "alt": {
-       "type": "string",
-       "description": "Specifies an alternative representation type.",
-       "default": "json",
-       "enum": [
-        "json"
-       ],
-       "enumDescriptions": [
-        "Use JSON format"
-       ],
-       "location": "query"
-      },
       "collection": {
        "type": "string",
        "description": "The collection of activities to list.",
@@ -1060,18 +1036,6 @@
        "description": "The ID of the activity to get comments for.",
        "required": true,
        "location": "path"
-      },
-      "alt": {
-       "type": "string",
-       "description": "Specifies an alternative representation type.",
-       "default": "json",
-       "enum": [
-        "json"
-       ],
-       "enumDescriptions": [
-        "Use JSON format"
-       ],
-       "location": "query"
       },
       "maxResults": {
        "type": "integer",

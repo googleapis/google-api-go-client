@@ -4,14 +4,14 @@
  "id": "prediction:v1.4",
  "name": "prediction",
  "version": "v1.4",
- "revision": "20120614",
+ "revision": "20120724",
  "title": "Prediction API",
  "description": "Lets you access a cloud hosted machine learning service that makes it easy to build smart apps",
  "icons": {
   "x16": "http://www.google.com/images/icons/feature/predictionapi-16.png",
   "x32": "http://www.google.com/images/icons/feature/predictionapi-32.png"
  },
- "documentationLink": "http://code.google.com/apis/predict/docs/developer-guide.html",
+ "documentationLink": "https://developers.google.com/prediction/docs/developer-guide",
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/prediction/v1.4/",
  "basePath": "/prediction/v1.4/",

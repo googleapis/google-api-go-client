@@ -75,13 +75,24 @@ type Tokeninfo struct {
 	// is present in the request.
 	Email string `json:"email,omitempty"`
 
+	Email_verified bool `json:"email_verified,omitempty"`
+
 	// Expires_in: The expiry time of the token, as number of seconds left
 	// until expiry.
 	Expires_in int64 `json:"expires_in,omitempty"`
 
+	// Issued_at: The issue time of the token, as number of seconds.
+	Issued_at int64 `json:"issued_at,omitempty"`
+
 	// Issued_to: To whom was the token issued to. In general the same as
 	// audience.
 	Issued_to string `json:"issued_to,omitempty"`
+
+	// Issuer: Who issued the token.
+	Issuer string `json:"issuer,omitempty"`
+
+	// Nonce: Nonce of the id token.
+	Nonce string `json:"nonce,omitempty"`
 
 	// Scope: The space separated list of scopes granted to this token.
 	Scope string `json:"scope,omitempty"`
@@ -89,8 +100,6 @@ type Tokeninfo struct {
 	// User_id: The Gaia obfuscated user id.
 	User_id string `json:"user_id,omitempty"`
 
-	// Verified_email: Boolean flag which is true if the email address is
-	// verified. Present only if the email scope is present in the request.
 	Verified_email bool `json:"verified_email,omitempty"`
 }
 

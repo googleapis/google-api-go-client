@@ -115,6 +115,9 @@ type Advertiser struct {
 	// contact them with.
 	ContactPhone string `json:"contactPhone,omitempty"`
 
+	// DefaultLinkId: The default link id for this advertiser.
+	DefaultLinkId int64 `json:"defaultLinkId,omitempty,string"`
+
 	// Description: Description of the website the advertiser advertises
 	// from.
 	Description string `json:"description,omitempty"`
@@ -598,11 +601,11 @@ type Link struct {
 	// Availability: Availability.
 	Availability string `json:"availability,omitempty"`
 
+	// ClickTrackingUrl: Tracking url for clicks.
+	ClickTrackingUrl string `json:"clickTrackingUrl,omitempty"`
+
 	// CreateDate: Date that this link was created.
 	CreateDate string `json:"createDate,omitempty"`
-
-	// CreativeType: Creative Type.
-	CreativeType string `json:"creativeType,omitempty"`
 
 	// Description: Description.
 	Description string `json:"description,omitempty"`
@@ -622,11 +625,17 @@ type Link struct {
 	// ImageAltText: image alt text.
 	ImageAltText string `json:"imageAltText,omitempty"`
 
+	// ImpressionTrackingUrl: Tracking url for impressions.
+	ImpressionTrackingUrl string `json:"impressionTrackingUrl,omitempty"`
+
 	// IsActive: Flag for if this link is active.
 	IsActive bool `json:"isActive,omitempty"`
 
 	// Kind: The kind for one entity.
 	Kind string `json:"kind,omitempty"`
+
+	// LinkType: The link type.
+	LinkType string `json:"linkType,omitempty"`
 
 	// Name: The logical name for this link.
 	Name string `json:"name,omitempty"`

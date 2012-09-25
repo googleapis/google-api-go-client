@@ -4,12 +4,12 @@
  "id": "drive:v2",
  "name": "drive",
  "version": "v2",
- "revision": "20120516",
+ "revision": "20120723",
  "title": "Drive API",
  "description": "The API to interact with Drive.",
  "icons": {
-  "x16": "http://www.google.com/images/icons/product/search-16.gif",
-  "x32": "http://www.google.com/images/icons/product/search-32.gif"
+  "x16": "https://ssl.gstatic.com/docs/doclist/images/drive_icon_16.png",
+  "x32": "https://ssl.gstatic.com/docs/doclist/images/drive_icon_32.png"
  },
  "documentationLink": "https://developers.google.com/drive/",
  "protocol": "rest",
@@ -92,33 +92,33 @@
    "properties": {
     "additionalRoleInfo": {
      "type": "array",
-     "description": "Additional ACL role info.",
+     "description": "Information about supported additional roles per file type. The most specific type takes precedence.",
      "items": {
       "type": "object",
       "properties": {
        "roleSets": {
         "type": "array",
-        "description": "The role sets for this role info item.",
+        "description": "The supported additional roles per primary role.",
         "items": {
          "type": "object",
          "properties": {
           "additionalRoles": {
            "type": "array",
-           "description": "The list of additional roles for this role set.",
+           "description": "The supported additional roles with the primary role.",
            "items": {
             "type": "string"
            }
           },
           "primaryRole": {
            "type": "string",
-           "description": "The primary role for this role set."
+           "description": "A primary permission role."
           }
          }
         }
        },
        "type": {
         "type": "string",
-        "description": "The content type for this ACL role info item."
+        "description": "The content type that this additional role info applies to."
        }
       }
      }
@@ -205,7 +205,7 @@
     },
     "maxUploadSizes": {
      "type": "array",
-     "description": "List of max upload sizes for each file type.",
+     "description": "List of max upload sizes for each file type. The most specific type takes precedence.",
      "items": {
       "type": "object",
       "properties": {
@@ -309,7 +309,7 @@
     },
     "objectType": {
      "type": "string",
-     "description": "The name of the type of object this app creates."
+     "description": "The type of object this app creates (e.g. Chart). If empty, the app name should be used instead."
     },
     "primaryFileExtensions": {
      "type": "array",
@@ -350,6 +350,10 @@
     "supportsImport": {
      "type": "boolean",
      "description": "Whether this app supports importing Google Docs."
+    },
+    "useByDefault": {
+     "type": "boolean",
+     "description": "Whether the app is selected as the default handler for the types it supports."
     }
    }
   },
@@ -400,7 +404,7 @@
     "id": {
      "type": "string",
      "description": "The ID of the change.",
-     "format": "uint64"
+     "format": "int64"
     },
     "kind": {
      "type": "string",
@@ -437,7 +441,7 @@
     "largestChangeId": {
      "type": "string",
      "description": "The current largest change ID.",
-     "format": "uint64"
+     "format": "int64"
     },
     "nextLink": {
      "type": "string",
@@ -499,7 +503,12 @@
     },
     "id": {
      "type": "string",
-     "description": "The ID of the child."
+     "description": "The ID of the child.",
+     "annotations": {
+      "required": [
+       "drive.children.insert"
+      ]
+     }
     },
     "kind": {
      "type": "string",
@@ -519,7 +528,7 @@
    "properties": {
     "alternateLink": {
      "type": "string",
-     "description": "A link for opening the file in a browser."
+     "description": "A link for opening the file in using a relevant Google editor or viewer."
     },
     "createdDate": {
      "type": "string",
@@ -546,6 +555,10 @@
      "type": "string",
      "description": "ETag of the file."
     },
+    "explicitlyTrashed": {
+     "type": "boolean",
+     "description": "Whether this file has been explicitly trashed, as opposed to recursively trashed. This will only be populated if the file is trashed."
+    },
     "exportLinks": {
      "type": "object",
      "description": "Links for exporting Google Docs to specific formats.",
@@ -556,7 +569,7 @@
     },
     "fileExtension": {
      "type": "string",
-     "description": "The file extension used when downloading this file. This field is read only. To set the extension, include it on title when creating the file. This will only be populated on files with content stored in Drive."
+     "description": "The file extension used when downloading this file. This field is set from the title when inserting or uploading new content. This will only be populated on files with content stored in Drive."
     },
     "fileSize": {
      "type": "string",
@@ -566,6 +579,48 @@
     "id": {
      "type": "string",
      "description": "The id of the file."
+    },
+    "imageMediaMetadata": {
+     "type": "object",
+     "description": "Metadata about image media. This will only be present for image types, and its contents will depend on what can be parsed from the image content.",
+     "properties": {
+      "height": {
+       "type": "integer",
+       "description": "The height of the image in pixels.",
+       "format": "int32"
+      },
+      "location": {
+       "type": "object",
+       "description": "Geographic location information stored in the image.",
+       "properties": {
+        "altitude": {
+         "type": "number",
+         "description": "The altitude stored in the image.",
+         "format": "double"
+        },
+        "latitude": {
+         "type": "number",
+         "description": "The latitude stored in the image.",
+         "format": "double"
+        },
+        "longitude": {
+         "type": "number",
+         "description": "The longitude stored in the image.",
+         "format": "double"
+        }
+       }
+      },
+      "rotation": {
+       "type": "integer",
+       "description": "The rotation in clockwise degrees from the image's original orientation.",
+       "format": "int32"
+      },
+      "width": {
+       "type": "integer",
+       "description": "The width of the image in pixels.",
+       "format": "int32"
+      }
+     }
     },
     "indexableText": {
      "type": "object",
@@ -623,21 +678,21 @@
     },
     "mimeType": {
      "type": "string",
-     "description": "The MIME type of the file."
+     "description": "The MIME type of the file. This is only mutable on update when uploading new content. This field can be left blank, and the mimetype will be determined from the uploaded content's MIME type."
     },
     "modifiedByMeDate": {
      "type": "string",
-     "description": "Last time this file was modified by the user (formatted RFC 3339 timestamp).",
+     "description": "Last time this file was modified by the user (formatted RFC 3339 timestamp). Note that setting modifiedDate will also update the modifiedByMe date for the user which set the date.",
      "format": "date-time"
     },
     "modifiedDate": {
      "type": "string",
-     "description": "Last time this file was modified by anyone (formatted RFC 3339 timestamp).",
+     "description": "Last time this file was modified by anyone (formatted RFC 3339 timestamp). This is only mutable on update when the setModifiedDate parameter is set.",
      "format": "date-time"
     },
     "originalFilename": {
      "type": "string",
-     "description": "The filename when uploading this file. This will only be populated on files with content stored in Drive."
+     "description": "The original filename if the file was uploaded manually, or the original title if the file was inserted through the API. Note that renames of the title will not change the original filename. This will only be populated on files with content stored in Drive."
     },
     "ownerNames": {
      "type": "array",
@@ -652,10 +707,6 @@
      "items": {
       "$ref": "ParentReference"
      }
-    },
-    "permissionsLink": {
-     "type": "string",
-     "description": "A link to the permissions collection."
     },
     "quotaBytesUsed": {
      "type": "string",
@@ -682,6 +733,10 @@
     "userPermission": {
      "$ref": "Permission",
      "description": "The permissions for the authenticated user on this file."
+    },
+    "webContentLink": {
+     "type": "string",
+     "description": "A link for downloading the content of the file in a browser using cookie based authentication. In cases where the content is shared publicly, the content can be downloaded without any credentials."
     },
     "writersCanShare": {
      "type": "boolean",
@@ -758,7 +813,12 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "The ID of the parent."
+     "description": "The ID of the parent.",
+     "annotations": {
+      "required": [
+       "drive.parents.insert"
+      ]
+     }
     },
     "isRoot": {
      "type": "boolean",
@@ -818,7 +878,12 @@
     },
     "role": {
      "type": "string",
-     "description": "The primary role for this user. Allowed values are:  \n- owner \n- reader \n- writer"
+     "description": "The primary role for this user. Allowed values are:  \n- owner \n- reader \n- writer",
+     "annotations": {
+      "required": [
+       "drive.permissions.insert"
+      ]
+     }
     },
     "selfLink": {
      "type": "string",
@@ -826,11 +891,21 @@
     },
     "type": {
      "type": "string",
-     "description": "The account type. Allowed values are:  \n- user \n- group \n- domain \n- anyone"
+     "description": "The account type. Allowed values are:  \n- user \n- group \n- domain \n- anyone",
+     "annotations": {
+      "required": [
+       "drive.permissions.insert"
+      ]
+     }
     },
     "value": {
      "type": "string",
-     "description": "The email address or domain name for the entity. This is not populated in responses."
+     "description": "The email address or domain name for the entity. This is not populated in responses.",
+     "annotations": {
+      "required": [
+       "drive.permissions.insert"
+      ]
+     }
     },
     "withLink": {
      "type": "boolean",
@@ -923,15 +998,15 @@
     },
     "pinned": {
      "type": "boolean",
-     "description": "Whether this revision is pinned to prevent automatic purging. This will only be populated on files with content stored in Drive."
+     "description": "Whether this revision is pinned to prevent automatic purging. This will only be populated and can only be modified on files with content stored in Drive which are not Google Docs. Revisions can also be pinned when they are created through the drive.files.insert/update/copy by using the pinned query parameter."
     },
     "publishAuto": {
      "type": "boolean",
-     "description": "Whether subsequent revisions will be automatically republished."
+     "description": "Whether subsequent revisions will be automatically republished. This is only populated and can only be modified for Google Docs."
     },
     "published": {
      "type": "boolean",
-     "description": "Whether this revision is published. This is only populated for Google Docs."
+     "description": "Whether this revision is published. This is only populated and can only be modified for Google Docs."
     },
     "publishedLink": {
      "type": "string",
@@ -939,7 +1014,7 @@
     },
     "publishedOutsideDomain": {
      "type": "boolean",
-     "description": "Whether this revision is published outside the domain."
+     "description": "Whether this revision is published outside the domain. This is only populated and can only be modified for Google Docs."
     },
     "selfLink": {
      "type": "string",
@@ -994,13 +1069,13 @@
        "type": "string",
        "description": "Maximum number of remaining change IDs to count",
        "default": "1",
-       "format": "uint64",
+       "format": "int64",
        "location": "query"
       },
       "startChangeId": {
        "type": "string",
        "description": "Change ID to start counting from when calculating number of remaining change IDs",
-       "format": "uint64",
+       "format": "int64",
        "location": "query"
       }
      },
@@ -1018,6 +1093,29 @@
   },
   "apps": {
    "methods": {
+    "get": {
+     "id": "drive.apps.get",
+     "path": "apps/{appId}",
+     "httpMethod": "GET",
+     "description": "Gets a specific app.",
+     "parameters": {
+      "appId": {
+       "type": "string",
+       "description": "The ID of the app.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "appId"
+     ],
+     "response": {
+      "$ref": "App"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/drive.apps.readonly"
+     ]
+    },
     "list": {
      "id": "drive.apps.list",
      "path": "apps",
@@ -1094,7 +1192,7 @@
       "startChangeId": {
        "type": "string",
        "description": "Change ID to start listing changes from.",
-       "format": "uint64",
+       "format": "int64",
        "location": "query"
       }
      },
@@ -1353,14 +1451,14 @@
       },
       "projection": {
        "type": "string",
-       "description": "Restrict information returned for simplicity and optimization.",
+       "description": "This parameter is deprecated and has no function.",
        "enum": [
         "BASIC",
         "FULL"
        ],
        "enumDescriptions": [
-        "Includes only the basic metadata fields",
-        "Includes all metadata fields"
+        "Deprecated",
+        "Deprecated"
        ],
        "location": "query"
       },
@@ -1483,14 +1581,14 @@
       },
       "projection": {
        "type": "string",
-       "description": "Restrict information returned for simplicity and optimization.",
+       "description": "This parameter is deprecated and has no function.",
        "enum": [
         "BASIC",
         "FULL"
        ],
        "enumDescriptions": [
-        "Includes only the basic metadata fields",
-        "Includes all metadata fields"
+        "Deprecated",
+        "Deprecated"
        ],
        "location": "query"
       },

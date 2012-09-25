@@ -4,7 +4,6 @@
  "id": "oauth2:v2",
  "name": "oauth2",
  "version": "v2",
- "revision": "20120712",
  "description": "OAuth2 API",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/search-16.gif",
@@ -14,7 +13,7 @@
  "baseUrl": "https://www.googleapis.com/",
  "basePath": "/",
  "rootUrl": "https://www.googleapis.com/",
- "servicePath": "/",
+ "servicePath": "",
  "batchPath": "batch",
  "parameters": {
   "alt": {

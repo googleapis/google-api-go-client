@@ -4,14 +4,14 @@
  "id": "shopping:v1",
  "name": "shopping",
  "version": "v1",
- "revision": "20120717",
+ "revision": "20120904",
  "title": "Search API For Shopping",
  "description": "Lets you search over product data.",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/search-16.gif",
   "x32": "http://www.google.com/images/icons/product/search-32.gif"
  },
- "documentationLink": "http://code.google.com/apis/shopping/search/v1/getting_started.html",
+ "documentationLink": "https://developers.google.com/shopping-search/v1/getting_started",
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/shopping/search/v1/",
  "basePath": "/shopping/search/v1/",
@@ -454,6 +454,14 @@
      "description": "Google internal."
     },
     "rdcResponse": {
+     "type": "string",
+     "description": "Google internal."
+    },
+    "recommendedItemsRequest": {
+     "type": "string",
+     "description": "Google internal."
+    },
+    "recommendedItemsResponse": {
      "type": "string",
      "description": "Google internal."
     },

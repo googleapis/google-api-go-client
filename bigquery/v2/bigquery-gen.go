@@ -1,6 +1,6 @@
 // Package bigquery provides access to the BigQuery API.
 //
-// See https://code.google.com/apis/bigquery/docs/v2/
+// See https://developers.google.com/bigquery/docs/overview
 //
 // Usage example:
 //
@@ -40,6 +40,15 @@ const basePath = "https://www.googleapis.com/bigquery/v2/"
 const (
 	// View and manage your data in Google BigQuery
 	BigqueryScope = "https://www.googleapis.com/auth/bigquery"
+
+	// Manage your data and permissions in Google Cloud Storage
+	DevstorageFull_controlScope = "https://www.googleapis.com/auth/devstorage.full_control"
+
+	// View your data in Google Cloud Storage
+	DevstorageRead_onlyScope = "https://www.googleapis.com/auth/devstorage.read_only"
+
+	// Manage your data in Google Cloud Storage
+	DevstorageRead_writeScope = "https://www.googleapis.com/auth/devstorage.read_write"
 )
 
 func New(client *http.Client) (*Service, error) {
@@ -325,6 +334,13 @@ type JobConfiguration struct {
 }
 
 type JobConfigurationExtract struct {
+	// DestinationFormat: [Experimental] Optional and defaults to CSV.
+	// Format with which files should be exported. To export to CSV, specify
+	// "CSV". Tables with nested or repeated fields cannot be exported as
+	// CSV. To export to newline-delimited JSON, specify
+	// "NEWLINE_DELIMITED_JSON".
+	DestinationFormat string `json:"destinationFormat,omitempty"`
+
 	// DestinationUri: [Required] The fully-qualified Google Cloud Storage
 	// URI where the extracted table should be written.
 	DestinationUri string `json:"destinationUri,omitempty"`
@@ -360,6 +376,10 @@ type JobConfigurationLink struct {
 }
 
 type JobConfigurationLoad struct {
+	// AllowQuotedNewlines: [Experimental] Whether to allow quoted newlines
+	// in the source CSV data.
+	AllowQuotedNewlines bool `json:"allowQuotedNewlines,omitempty"`
+
 	// CreateDisposition: [Optional] Whether to create the table if it
 	// doesn't already exist (CREATE_IF_NEEDED) or to require the table
 	// already exist (CREATE_NEVER). Default is CREATE_IF_NEEDED.
@@ -402,6 +422,12 @@ type JobConfigurationLoad struct {
 	// the data being imported.
 	SkipLeadingRows int64 `json:"skipLeadingRows,omitempty"`
 
+	// SourceFormat: [Experimental] Optional and defaults to CSV. Format of
+	// source files. For CSV uploads, specify "CSV". For imports of
+	// datastore backups, specify "DATASTORE_BACKUP". For imports of
+	// newline-delimited JSON, specify "NEWLINE_DELIMITED_JSON".
+	SourceFormat string `json:"sourceFormat,omitempty"`
+
 	// SourceUris: [Required] Source URIs describing Google Cloud Storage
 	// locations of data to load.
 	SourceUris []string `json:"sourceUris,omitempty"`
@@ -431,9 +457,8 @@ type JobConfigurationQuery struct {
 	// to store the results.
 	DestinationTable *TableReference `json:"destinationTable,omitempty"`
 
-	// Priority: [Experimental] Specifies a priority for the query. Default
-	// is INTERACTIVE. Alternative is BATCH, which may be subject to looser
-	// quota restrictions.
+	// Priority: [Optional] Specifies a priority for the query. Default is
+	// INTERACTIVE. Alternative is BATCH.
 	Priority string `json:"priority,omitempty"`
 
 	// Query: [Required] BigQuery SQL query to execute.
@@ -588,6 +613,11 @@ type QueryRequest struct {
 	// not set, all table names in the query string must be fully-qualified
 	// in the format projectId:datasetId.tableid.
 	DefaultDataset *DatasetReference `json:"defaultDataset,omitempty"`
+
+	// DryRun: [Optional] If set, don't actually run the query. A valid
+	// query will return an empty response, while an invalid query will
+	// return the same error it would if it wasn't a dry run.
+	DryRun bool `json:"dryRun,omitempty"`
 
 	// Kind: The resource type of the request.
 	Kind string `json:"kind,omitempty"`
@@ -1572,7 +1602,10 @@ func (c *JobsInsertCall) Do() (*Job, error) {
 	//     "$ref": "Job"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery"
+	//     "https://www.googleapis.com/auth/bigquery",
+	//     "https://www.googleapis.com/auth/devstorage.full_control",
+	//     "https://www.googleapis.com/auth/devstorage.read_only",
+	//     "https://www.googleapis.com/auth/devstorage.read_write"
 	//   ],
 	//   "supportsMediaUpload": true
 	// }

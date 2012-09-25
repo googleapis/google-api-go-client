@@ -4,7 +4,7 @@
 //
 // Usage example:
 //
-//   import "code.google.com/p/google-api-go-client/youtubeanalytics/v1beta1"
+//   import "code.google.com/p/google-api-go-client/youtubeanalytics/v1"
 //   ...
 //   youtubeanalyticsService, err := youtubeanalytics.New(oauthHttpClient)
 package youtubeanalytics
@@ -31,10 +31,10 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 
-const apiId = "youtubeAnalytics:v1beta1"
+const apiId = "youtubeAnalytics:v1"
 const apiName = "youtubeAnalytics"
-const apiVersion = "v1beta1"
-const basePath = "https://www.googleapis.com/youtube/analytics/v1beta1/"
+const apiVersion = "v1"
+const basePath = "https://www.googleapis.com/youtube/analytics/v1/"
 
 // OAuth2 scopes used by this API.
 const (
@@ -177,7 +177,7 @@ func (c *ReportsQueryCall) Do() (*ResultTable, error) {
 	if v, ok := c.opt_["start-index"]; ok {
 		params.Set("start-index", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/analytics/v1beta1/", "reports")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/analytics/v1/", "reports")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")

@@ -3,8 +3,9 @@
  "discoveryVersion": "v1",
  "id": "youtube:v3alpha",
  "name": "youtube",
+ "canonicalName": "YouTube",
  "version": "v3alpha",
- "revision": "20120626",
+ "revision": "20120827",
  "title": "YouTube API",
  "description": "Programmatic access to YouTube features.",
  "icons": {
@@ -70,7 +71,16 @@
   "oauth2": {
    "scopes": {
     "https://www.googleapis.com/auth/youtube": {
-     "description": "Manage your Youtube account"
+     "description": "Manage your YouTube account"
+    },
+    "https://www.googleapis.com/auth/youtube.readonly": {
+     "description": "View your YouTube account"
+    },
+    "https://www.googleapis.com/auth/youtube.upload": {
+     "description": "Manage your YouTube videos"
+    },
+    "https://www.googleapis.com/auth/youtubepartner": {
+     "description": "View and manage your assets and associated content on YouTube"
     }
    }
   }
@@ -132,7 +142,8 @@
      "type": "object",
      "description": "Map of channels matching the request criteria, keyed by channel id.",
      "additionalProperties": {
-      "$ref": "Channel"
+      "$ref": "Channel",
+      "description": "An entry in the \"channels\" map: the key is the channel id, the value is the channel resource."
      }
     },
     "etag": {
@@ -247,6 +258,10 @@
    "type": "object",
    "description": "JSON template for a YouTube Playlist item.",
    "properties": {
+    "contentDetails": {
+     "$ref": "PlaylistItemContentDetails",
+     "description": "Content details about the playlist item: start and end clipping time."
+    },
     "etag": {
      "type": "string",
      "description": "The eTag of the playlist item."
@@ -263,6 +278,29 @@
     "snippet": {
      "$ref": "PlaylistItemSnippet",
      "description": "Basic details about the playlist item: title, description, thumbnails."
+    }
+   }
+  },
+  "PlaylistItemContentDetails": {
+   "id": "PlaylistItemContentDetails",
+   "type": "object",
+   "description": "JSON template for the content details part of a playlist item.",
+   "properties": {
+    "endAt": {
+     "type": "string",
+     "description": "The time video playback ends."
+    },
+    "note": {
+     "type": "string",
+     "description": "The user-generated note for this item."
+    },
+    "startAt": {
+     "type": "string",
+     "description": "The time video playback begins."
+    },
+    "videoId": {
+     "type": "string",
+     "description": "ID of the video."
     }
    }
   },
@@ -284,7 +322,8 @@
      "type": "object",
      "description": "Map of playlist items matching the request criteria, keyed by id.",
      "additionalProperties": {
-      "$ref": "PlaylistItem"
+      "$ref": "PlaylistItem",
+      "description": "An entry in the \"playlistItems\" map: the key is the video id, the value is the playlist item resource."
      }
     }
    }
@@ -344,7 +383,8 @@
      "type": "object",
      "description": "Map of playlists matching the request criteria, keyed by id.",
      "additionalProperties": {
-      "$ref": "Playlist"
+      "$ref": "Playlist",
+      "description": "An entry in the \"playlists\" map: the key is the playlist id, the value is the playlist resource."
      }
     }
    }
@@ -540,8 +580,7 @@
     },
     "duration": {
      "type": "string",
-     "description": "Duration of the video.",
-     "format": "uint64"
+     "description": "Duration of the video."
     }
    }
   },
@@ -563,7 +602,8 @@
      "type": "object",
      "description": "Map of videos matching the request criteria, keyed by video id.",
      "additionalProperties": {
-      "$ref": "Video"
+      "$ref": "Video",
+      "description": "An entry in the \"videos\" map: the key is the video id, the value is the video resource."
      }
     }
    }
@@ -687,6 +727,11 @@
      "httpMethod": "GET",
      "description": "Browse the YouTube channel collection. Either the 'id' or 'mine' parameter must be set.",
      "parameters": {
+      "contentOwnerId": {
+       "type": "string",
+       "description": "The authenticated user acts on behalf of this content owner.",
+       "location": "query"
+      },
       "id": {
        "type": "string",
        "description": "YouTube IDs of the channels to be returned.",
@@ -711,19 +756,26 @@
       "$ref": "ChannelListResponse"
      },
      "scopes": [
-      "https://www.googleapis.com/auth/youtube"
+      "https://www.googleapis.com/auth/youtube",
+      "https://www.googleapis.com/auth/youtube.readonly",
+      "https://www.googleapis.com/auth/youtubepartner"
      ]
     }
    }
   },
-  "playlistitems": {
+  "playlistItems": {
    "methods": {
     "list": {
-     "id": "youtube.playlistitems.list",
-     "path": "playlistitems",
+     "id": "youtube.playlistItems.list",
+     "path": "playlistItems",
      "httpMethod": "GET",
      "description": "Browse the YouTube playlist collection.",
      "parameters": {
+      "contentOwnerId": {
+       "type": "string",
+       "description": "The authenticated user acts on behalf of this content owner.",
+       "location": "query"
+      },
       "id": {
        "type": "string",
        "description": "YouTube IDs of the playlists to be returned.",
@@ -732,7 +784,7 @@
       "maxResults": {
        "type": "integer",
        "description": "Maximum number of results to return",
-       "default": "50",
+       "default": "5",
        "format": "uint32",
        "minimum": "0",
        "location": "query"
@@ -763,7 +815,9 @@
       "$ref": "PlaylistItemListResponse"
      },
      "scopes": [
-      "https://www.googleapis.com/auth/youtube"
+      "https://www.googleapis.com/auth/youtube",
+      "https://www.googleapis.com/auth/youtube.readonly",
+      "https://www.googleapis.com/auth/youtubepartner"
      ]
     }
    }
@@ -776,10 +830,27 @@
      "httpMethod": "GET",
      "description": "Browse the YouTube playlist collection.",
      "parameters": {
+      "contentOwnerId": {
+       "type": "string",
+       "description": "The authenticated user acts on behalf of this content owner.",
+       "location": "query"
+      },
       "id": {
        "type": "string",
-       "description": "YouTube IDs of the playlists to be returned.",
-       "required": true,
+       "description": "Comma-separated YouTube IDs of the playlists to be returned.",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "Maximum number of results to return",
+       "default": "5",
+       "format": "uint32",
+       "minimum": "0",
+       "location": "query"
+      },
+      "mine": {
+       "type": "string",
+       "description": "Flag indicating only return the playlists of the authenticated user.",
        "location": "query"
       },
       "part": {
@@ -787,17 +858,25 @@
        "description": "Parts of the playlist resource to be returned.",
        "required": true,
        "location": "query"
+      },
+      "startIndex": {
+       "type": "integer",
+       "description": "Index of the first element to return (starts at 0)",
+       "format": "uint32",
+       "minimum": "0",
+       "location": "query"
       }
      },
      "parameterOrder": [
-      "id",
       "part"
      ],
      "response": {
       "$ref": "PlaylistListResponse"
      },
      "scopes": [
-      "https://www.googleapis.com/auth/youtube"
+      "https://www.googleapis.com/auth/youtube",
+      "https://www.googleapis.com/auth/youtube.readonly",
+      "https://www.googleapis.com/auth/youtubepartner"
      ]
     }
    }
@@ -813,7 +892,7 @@
       "maxResults": {
        "type": "integer",
        "description": "Maximum number of search results to return per page.",
-       "default": "25",
+       "default": "5",
        "format": "uint32",
        "minimum": "0",
        "maximum": "50",
@@ -822,7 +901,7 @@
       "order": {
        "type": "string",
        "description": "Sort order.",
-       "default": "SEARCH_SORT_RELEVANCE",
+       "default": "relevance",
        "enum": [
         "date",
         "rating",
@@ -837,14 +916,30 @@
        ],
        "location": "query"
       },
+      "published": {
+       "type": "string",
+       "description": "Only search for resources uploaded at a specific pediod",
+       "enum": [
+        "any",
+        "thisWeek",
+        "today"
+       ],
+       "enumDescriptions": [
+        "No filter on the release date",
+        "Videos uploaded this month",
+        "Videos uploaded today"
+       ],
+       "location": "query"
+      },
       "q": {
        "type": "string",
        "description": "Query to search in Youtube.",
+       "required": true,
        "location": "query"
       },
       "startIndex": {
        "type": "integer",
-       "description": "Index of the first search result to return.",
+       "description": "Index of the first element to return (starts at 0)",
        "default": "0",
        "format": "uint32",
        "minimum": "0",
@@ -866,25 +961,146 @@
        ],
        "repeated": true,
        "location": "query"
+      },
+      "videoCaption": {
+       "type": "string",
+       "description": "Add a filter on the the presence of captions on the videos.",
+       "enum": [
+        "any",
+        "closedCaption",
+        "none"
+       ],
+       "enumDescriptions": [
+        "No filter on the captions.",
+        "Videos with closed captions.",
+        "Videos without captions."
+       ],
+       "location": "query"
+      },
+      "videoDefinition": {
+       "type": "string",
+       "description": "Add a filter for the definition of the videos.",
+       "enum": [
+        "any",
+        "high",
+        "standard"
+       ],
+       "enumDescriptions": [
+        "No filter on the definition.",
+        "Videos in high definition.",
+        "Videos in standard definition."
+       ],
+       "location": "query"
+      },
+      "videoDimension": {
+       "type": "string",
+       "description": "Add a filter for the number of dimensions in the videos.",
+       "enum": [
+        "2d",
+        "3d",
+        "any"
+       ],
+       "enumDescriptions": [
+        "Videos in two dimensions.",
+        "Videos in three dimensions.",
+        "No filter on the dimension."
+       ],
+       "location": "query"
+      },
+      "videoDuration": {
+       "type": "string",
+       "description": "Add a filter on the duration of the videos.",
+       "enum": [
+        "any",
+        "long",
+        "medium",
+        "short"
+       ],
+       "enumDescriptions": [
+        "No filter on the duration.",
+        "Videos with a duration longer than 20 minutes.",
+        "Videos with a duration between 4 and 20 minutes.",
+        "Videos with a duration under 4 minutes."
+       ],
+       "location": "query"
+      },
+      "videoLicense": {
+       "type": "string",
+       "description": "Add a filter on the licensing of the videos.",
+       "enum": [
+        "any",
+        "creativeCommon",
+        "youtube"
+       ],
+       "enumDescriptions": [
+        "No filter on the license.",
+        "Videos under the Creative Common license.",
+        "Videos under the YouTube license."
+       ],
+       "location": "query"
       }
      },
+     "parameterOrder": [
+      "q"
+     ],
      "response": {
       "$ref": "SearchListResponse"
      },
      "scopes": [
-      "https://www.googleapis.com/auth/youtube"
+      "https://www.googleapis.com/auth/youtube",
+      "https://www.googleapis.com/auth/youtube.readonly",
+      "https://www.googleapis.com/auth/youtubepartner"
      ]
     }
    }
   },
   "videos": {
    "methods": {
+    "insert": {
+     "id": "youtube.videos.insert",
+     "path": "videos",
+     "httpMethod": "POST",
+     "description": "Upload a video to YouTube.",
+     "request": {
+      "$ref": "Video"
+     },
+     "response": {
+      "$ref": "Video"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/youtube",
+      "https://www.googleapis.com/auth/youtube.upload"
+     ],
+     "supportsMediaUpload": true,
+     "mediaUpload": {
+      "accept": [
+       "application/octet-stream",
+       "video/*"
+      ],
+      "maxSize": "64GB",
+      "protocols": {
+       "simple": {
+        "multipart": true,
+        "path": "/upload/youtube/v3alpha/videos"
+       },
+       "resumable": {
+        "multipart": true,
+        "path": "/resumable/upload/youtube/v3alpha/videos"
+       }
+      }
+     }
+    },
     "list": {
      "id": "youtube.videos.list",
      "path": "videos",
      "httpMethod": "GET",
      "description": "Browse the YouTube video collection.",
      "parameters": {
+      "contentOwnerId": {
+       "type": "string",
+       "description": "The authenticated user acts on behalf of this content owner.",
+       "location": "query"
+      },
       "id": {
        "type": "string",
        "description": "YouTube IDs of the videos to be returned.",
@@ -906,7 +1122,9 @@
       "$ref": "VideoListResponse"
      },
      "scopes": [
-      "https://www.googleapis.com/auth/youtube"
+      "https://www.googleapis.com/auth/youtube",
+      "https://www.googleapis.com/auth/youtube.readonly",
+      "https://www.googleapis.com/auth/youtubepartner"
      ]
     }
    }

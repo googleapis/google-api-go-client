@@ -193,8 +193,8 @@ func (r *FilesService) Get(id string) *FilesGetCall {
 	return c
 }
 
-// Projection sets the optional parameter "projection": Restrict
-// information returned for simplicity and optimization.
+// Projection sets the optional parameter "projection": This parameter
+// is deprecated and has no function.
 func (c *FilesGetCall) Projection(projection string) *FilesGetCall {
 	c.opt_["projection"] = projection
 	return c
@@ -250,14 +250,14 @@ func (c *FilesGetCall) Do() (*File, error) {
 	//       "type": "string"
 	//     },
 	//     "projection": {
-	//       "description": "Restrict information returned for simplicity and optimization.",
+	//       "description": "This parameter is deprecated and has no function.",
 	//       "enum": [
 	//         "BASIC",
 	//         "FULL"
 	//       ],
 	//       "enumDescriptions": [
-	//         "Includes only the basic metadata fields",
-	//         "Includes all metadata fields"
+	//         "Deprecated",
+	//         "Deprecated"
 	//       ],
 	//       "location": "query",
 	//       "type": "string"

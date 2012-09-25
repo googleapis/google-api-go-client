@@ -1,6 +1,6 @@
 // Package books provides access to the Books API.
 //
-// See https://code.google.com/apis/books/docs/v1/getting_started.html
+// See https://developers.google.com/books/docs/v1/getting_started
 //
 // Usage example:
 //
@@ -176,8 +176,7 @@ type Annotationdata struct {
 	// AnnotationType: The type of annotation this data is for.
 	AnnotationType string `json:"annotationType,omitempty"`
 
-	// Data: JSON encoded data for this annotation data.
-	Data *BooksLayerGeoData `json:"data,omitempty"`
+	Data interface{} `json:"data,omitempty"`
 
 	// Encoded_data: Base64 encoded data for this annotation data.
 	Encoded_data string `json:"encoded_data,omitempty"`
@@ -248,6 +247,133 @@ type BooksAnnotationsRange struct {
 	StartPosition string `json:"startPosition,omitempty"`
 }
 
+type BooksLayerDictData struct {
+	Common *BooksLayerDictDataCommon `json:"common,omitempty"`
+
+	Dict *BooksLayerDictDataDict `json:"dict,omitempty"`
+}
+
+type BooksLayerDictDataCommon struct {
+	// Title: The display title and localized canonical name to use when
+	// searching for this entity on Google search.
+	Title string `json:"title,omitempty"`
+}
+
+type BooksLayerDictDataDict struct {
+	// Source: The source, url and attribution for this dictionary data.
+	Source *BooksLayerDictDataDictSource `json:"source,omitempty"`
+
+	Words []*BooksLayerDictDataDictWords `json:"words,omitempty"`
+}
+
+type BooksLayerDictDataDictSource struct {
+	Attribution string `json:"attribution,omitempty"`
+
+	Url string `json:"url,omitempty"`
+}
+
+type BooksLayerDictDataDictWords struct {
+	Derivatives []*BooksLayerDictDataDictWordsDerivatives `json:"derivatives,omitempty"`
+
+	Examples []*BooksLayerDictDataDictWordsExamples `json:"examples,omitempty"`
+
+	Senses []*BooksLayerDictDataDictWordsSenses `json:"senses,omitempty"`
+
+	// Source: The words with different meanings but not related words, e.g.
+	// "go" (game) and "go" (verb).
+	Source *BooksLayerDictDataDictWordsSource `json:"source,omitempty"`
+}
+
+type BooksLayerDictDataDictWordsDerivatives struct {
+	Source *BooksLayerDictDataDictWordsDerivativesSource `json:"source,omitempty"`
+
+	Text string `json:"text,omitempty"`
+}
+
+type BooksLayerDictDataDictWordsDerivativesSource struct {
+	Attribution string `json:"attribution,omitempty"`
+
+	Url string `json:"url,omitempty"`
+}
+
+type BooksLayerDictDataDictWordsExamples struct {
+	Source *BooksLayerDictDataDictWordsExamplesSource `json:"source,omitempty"`
+
+	Text string `json:"text,omitempty"`
+}
+
+type BooksLayerDictDataDictWordsExamplesSource struct {
+	Attribution string `json:"attribution,omitempty"`
+
+	Url string `json:"url,omitempty"`
+}
+
+type BooksLayerDictDataDictWordsSenses struct {
+	Conjugations []*BooksLayerDictDataDictWordsSensesConjugations `json:"conjugations,omitempty"`
+
+	Definitions []*BooksLayerDictDataDictWordsSensesDefinitions `json:"definitions,omitempty"`
+
+	PartOfSpeech string `json:"partOfSpeech,omitempty"`
+
+	Pronunciation string `json:"pronunciation,omitempty"`
+
+	PronunciationUrl string `json:"pronunciationUrl,omitempty"`
+
+	Source *BooksLayerDictDataDictWordsSensesSource `json:"source,omitempty"`
+
+	Syllabification string `json:"syllabification,omitempty"`
+
+	Synonyms []*BooksLayerDictDataDictWordsSensesSynonyms `json:"synonyms,omitempty"`
+}
+
+type BooksLayerDictDataDictWordsSensesConjugations struct {
+	Type string `json:"type,omitempty"`
+
+	Value string `json:"value,omitempty"`
+}
+
+type BooksLayerDictDataDictWordsSensesDefinitions struct {
+	Definition string `json:"definition,omitempty"`
+
+	Examples []*BooksLayerDictDataDictWordsSensesDefinitionsExamples `json:"examples,omitempty"`
+}
+
+type BooksLayerDictDataDictWordsSensesDefinitionsExamples struct {
+	Source *BooksLayerDictDataDictWordsSensesDefinitionsExamplesSource `json:"source,omitempty"`
+
+	Text string `json:"text,omitempty"`
+}
+
+type BooksLayerDictDataDictWordsSensesDefinitionsExamplesSource struct {
+	Attribution string `json:"attribution,omitempty"`
+
+	Url string `json:"url,omitempty"`
+}
+
+type BooksLayerDictDataDictWordsSensesSource struct {
+	Attribution string `json:"attribution,omitempty"`
+
+	Url string `json:"url,omitempty"`
+}
+
+type BooksLayerDictDataDictWordsSensesSynonyms struct {
+	Source *BooksLayerDictDataDictWordsSensesSynonymsSource `json:"source,omitempty"`
+
+	Text string `json:"text,omitempty"`
+}
+
+type BooksLayerDictDataDictWordsSensesSynonymsSource struct {
+	Attribution string `json:"attribution,omitempty"`
+
+	Url string `json:"url,omitempty"`
+}
+
+type BooksLayerDictDataDictWordsSource struct {
+	Attribution string `json:"attribution,omitempty"`
+
+	Url string `json:"url,omitempty"`
+}
+
 type BooksLayerGeoData struct {
 	Common *BooksLayerGeoDataCommon `json:"common,omitempty"`
 
@@ -267,6 +393,10 @@ type BooksLayerGeoDataCommon struct {
 	// SnippetUrl: The URL for information for this location. Ex: wikipedia
 	// link.
 	SnippetUrl string `json:"snippetUrl,omitempty"`
+
+	// Title: The display title and localized canonical name to use when
+	// searching for this entity on Google search.
+	Title string `json:"title,omitempty"`
 }
 
 type BooksLayerGeoDataGeo struct {
@@ -290,9 +420,6 @@ type BooksLayerGeoDataGeo struct {
 	// MapType: The type of map that should be used for this location. EX:
 	// HYBRID, ROADMAP, SATELLITE, TERRAIN
 	MapType string `json:"mapType,omitempty"`
-
-	// Resolution: The resolution of the location. Ex: POI_LEVEL
-	Resolution string `json:"resolution,omitempty"`
 
 	// Viewport: The viewport for showing this location. This is a latitude,
 	// longitude rectangle.

@@ -50,6 +50,7 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
+	s.CustomFieldDef = &CustomFieldDefService{s: s}
 	s.Jobs = &JobsService{s: s}
 	return s, nil
 }
@@ -57,11 +58,65 @@ func New(client *http.Client) (*Service, error) {
 type Service struct {
 	client *http.Client
 
+	CustomFieldDef *CustomFieldDefService
+
 	Jobs *JobsService
+}
+
+type CustomFieldDefService struct {
+	s *Service
 }
 
 type JobsService struct {
 	s *Service
+}
+
+type CustomField struct {
+	// CustomFieldId: Custom field id.
+	CustomFieldId int64 `json:"customFieldId,omitempty,string"`
+
+	// Kind: Identifies this object as a custom field.
+	Kind string `json:"kind,omitempty"`
+
+	// Value: Custom field value.
+	Value string `json:"value,omitempty"`
+}
+
+type CustomFieldDef struct {
+	// Enabled: Whether the field is enabled.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// Id: Custom field id.
+	Id int64 `json:"id,omitempty,string"`
+
+	// Kind: Identifies this object as a custom field definition.
+	Kind string `json:"kind,omitempty"`
+
+	// Name: Custom field name.
+	Name string `json:"name,omitempty"`
+
+	// RequiredForCheckout: Whether the field is required for checkout.
+	RequiredForCheckout bool `json:"requiredForCheckout,omitempty"`
+
+	// Type: Custom field type.
+	Type string `json:"type,omitempty"`
+}
+
+type CustomFieldDefListResponse struct {
+	// Items: Collection of custom field definitions in a team.
+	Items []*CustomFieldDef `json:"items,omitempty"`
+
+	// Kind: Identifies this object as a collection of custom field
+	// definitions in a team.
+	Kind string `json:"kind,omitempty"`
+}
+
+type CustomFields struct {
+	// CustomField: Collection of custom fields.
+	CustomField []*CustomField `json:"customField,omitempty"`
+
+	// Kind: Identifies this object as a collection of custom fields.
+	Kind string `json:"kind,omitempty"`
 }
 
 type Job struct {
@@ -106,6 +161,9 @@ type JobState struct {
 	// Assignee: Email address of the assignee.
 	Assignee string `json:"assignee,omitempty"`
 
+	// CustomFields: Custom fields.
+	CustomFields *CustomFields `json:"customFields,omitempty"`
+
 	// CustomerName: Customer name.
 	CustomerName string `json:"customerName,omitempty"`
 
@@ -140,6 +198,69 @@ type Location struct {
 
 	// Lng: Longitude.
 	Lng float64 `json:"lng,omitempty"`
+}
+
+// method id "coordinate.customFieldDef.list":
+
+type CustomFieldDefListCall struct {
+	s      *Service
+	teamId string
+	opt_   map[string]interface{}
+}
+
+// List: Retrieves a list of custom field definitions for a team.
+func (r *CustomFieldDefService) List(teamId string) *CustomFieldDefListCall {
+	c := &CustomFieldDefListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.teamId = teamId
+	return c
+}
+
+func (c *CustomFieldDefListCall) Do() (*CustomFieldDefListResponse, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/coordinate/v1/teams/", "{teamId}/custom_fields")
+	urls = strings.Replace(urls, "{teamId}", cleanPathString(c.teamId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(CustomFieldDefListResponse)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a list of custom field definitions for a team.",
+	//   "httpMethod": "GET",
+	//   "id": "coordinate.customFieldDef.list",
+	//   "parameterOrder": [
+	//     "teamId"
+	//   ],
+	//   "parameters": {
+	//     "teamId": {
+	//       "description": "Team ID",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{teamId}/custom_fields",
+	//   "response": {
+	//     "$ref": "CustomFieldDefListResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/coordinate",
+	//     "https://www.googleapis.com/auth/coordinate.readonly"
+	//   ]
+	// }
+
 }
 
 // method id "coordinate.jobs.get":
@@ -243,9 +364,17 @@ func (r *JobsService) Insert(teamId string, address string, lat float64, lng flo
 }
 
 // Assignee sets the optional parameter "assignee": Assignee email
-// address
+// address, or empty string to unassign.
 func (c *JobsInsertCall) Assignee(assignee string) *JobsInsertCall {
 	c.opt_["assignee"] = assignee
+	return c
+}
+
+// CustomField sets the optional parameter "customField": Map from
+// custom field id (from /team//custom_fields) to the field value. For
+// example '123=Alice'
+func (c *JobsInsertCall) CustomField(customField string) *JobsInsertCall {
+	c.opt_["customField"] = customField
 	return c
 }
 
@@ -285,6 +414,9 @@ func (c *JobsInsertCall) Do() (*Job, error) {
 	params.Set("title", fmt.Sprintf("%v", c.title))
 	if v, ok := c.opt_["assignee"]; ok {
 		params.Set("assignee", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["customField"]; ok {
+		params.Set("customField", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["customerName"]; ok {
 		params.Set("customerName", fmt.Sprintf("%v", v))
@@ -332,8 +464,14 @@ func (c *JobsInsertCall) Do() (*Job, error) {
 	//       "type": "string"
 	//     },
 	//     "assignee": {
-	//       "description": "Assignee email address",
+	//       "description": "Assignee email address, or empty string to unassign.",
 	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "customField": {
+	//       "description": "Map from custom field id (from /team//custom_fields) to the field value. For example '123=Alice'",
+	//       "location": "query",
+	//       "repeated": true,
 	//       "type": "string"
 	//     },
 	//     "customerName": {
@@ -530,9 +668,17 @@ func (c *JobsPatchCall) Address(address string) *JobsPatchCall {
 }
 
 // Assignee sets the optional parameter "assignee": Assignee email
-// address
+// address, or empty string to unassign.
 func (c *JobsPatchCall) Assignee(assignee string) *JobsPatchCall {
 	c.opt_["assignee"] = assignee
+	return c
+}
+
+// CustomField sets the optional parameter "customField": Map from
+// custom field id (from /team//custom_fields) to the field value. For
+// example '123=Alice'
+func (c *JobsPatchCall) CustomField(customField string) *JobsPatchCall {
+	c.opt_["customField"] = customField
 	return c
 }
 
@@ -598,6 +744,9 @@ func (c *JobsPatchCall) Do() (*Job, error) {
 	if v, ok := c.opt_["assignee"]; ok {
 		params.Set("assignee", fmt.Sprintf("%v", v))
 	}
+	if v, ok := c.opt_["customField"]; ok {
+		params.Set("customField", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["customerName"]; ok {
 		params.Set("customerName", fmt.Sprintf("%v", v))
 	}
@@ -653,8 +802,14 @@ func (c *JobsPatchCall) Do() (*Job, error) {
 	//       "type": "string"
 	//     },
 	//     "assignee": {
-	//       "description": "Assignee email address",
+	//       "description": "Assignee email address, or empty string to unassign.",
 	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "customField": {
+	//       "description": "Map from custom field id (from /team//custom_fields) to the field value. For example '123=Alice'",
+	//       "location": "query",
+	//       "repeated": true,
 	//       "type": "string"
 	//     },
 	//     "customerName": {
@@ -764,9 +919,17 @@ func (c *JobsUpdateCall) Address(address string) *JobsUpdateCall {
 }
 
 // Assignee sets the optional parameter "assignee": Assignee email
-// address
+// address, or empty string to unassign.
 func (c *JobsUpdateCall) Assignee(assignee string) *JobsUpdateCall {
 	c.opt_["assignee"] = assignee
+	return c
+}
+
+// CustomField sets the optional parameter "customField": Map from
+// custom field id (from /team//custom_fields) to the field value. For
+// example '123=Alice'
+func (c *JobsUpdateCall) CustomField(customField string) *JobsUpdateCall {
+	c.opt_["customField"] = customField
 	return c
 }
 
@@ -832,6 +995,9 @@ func (c *JobsUpdateCall) Do() (*Job, error) {
 	if v, ok := c.opt_["assignee"]; ok {
 		params.Set("assignee", fmt.Sprintf("%v", v))
 	}
+	if v, ok := c.opt_["customField"]; ok {
+		params.Set("customField", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["customerName"]; ok {
 		params.Set("customerName", fmt.Sprintf("%v", v))
 	}
@@ -887,8 +1053,14 @@ func (c *JobsUpdateCall) Do() (*Job, error) {
 	//       "type": "string"
 	//     },
 	//     "assignee": {
-	//       "description": "Assignee email address",
+	//       "description": "Assignee email address, or empty string to unassign.",
 	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "customField": {
+	//       "description": "Map from custom field id (from /team//custom_fields) to the field value. For example '123=Alice'",
+	//       "location": "query",
+	//       "repeated": true,
 	//       "type": "string"
 	//     },
 	//     "customerName": {

@@ -1,9 +1,9 @@
 {
  "kind": "discovery#restDescription",
  "discoveryVersion": "v1",
- "id": "adexchangebuyer:v1",
+ "id": "adexchangebuyer:v1.1",
  "name": "adexchangebuyer",
- "version": "v1",
+ "version": "v1.1",
  "revision": "20120718",
  "title": "Ad Exchange Buyer API",
  "description": "Lets you manage your Ad Exchange Buyer account.",
@@ -13,10 +13,10 @@
  },
  "documentationLink": "https://developers.google.com/ad-exchange/buyer-rest",
  "protocol": "rest",
- "baseUrl": "https://www.googleapis.com/adexchangebuyer/v1/",
- "basePath": "/adexchangebuyer/v1/",
+ "baseUrl": "https://www.googleapis.com/adexchangebuyer/v1.1/",
+ "basePath": "/adexchangebuyer/v1.1/",
  "rootUrl": "https://www.googleapis.com/",
- "servicePath": "adexchangebuyer/v1/",
+ "servicePath": "adexchangebuyer/v1.1/",
  "batchPath": "batch",
  "parameters": {
   "alt": {
@@ -89,6 +89,10 @@
         "description": "The maximum queries per second the Ad Exchange will send.",
         "format": "int32"
        },
+       "region": {
+        "type": "string",
+        "description": "The geographical region the Ad Exchange should send requests from. Only used by some quota systems, but always setting the value is recommended. Allowed values:  \n- ASIA \n- EUROPE \n- US_EAST \n- US_WEST"
+       },
        "url": {
         "type": "string",
         "description": "The URL to which the Ad Exchange will send bid requests."
@@ -153,16 +157,6 @@
      "type": "integer",
      "description": "Account id.",
      "format": "int32",
-     "annotations": {
-      "required": [
-       "adexchangebuyer.creatives.insert"
-      ]
-     }
-    },
-    "adgroupId": {
-     "type": "string",
-     "description": "The pretargeting adgroup id that this creative will be associated with.",
-     "format": "int64",
      "annotations": {
       "required": [
        "adexchangebuyer.creatives.insert"
@@ -483,13 +477,6 @@
        "format": "int32",
        "location": "path"
       },
-      "adgroupId": {
-       "type": "string",
-       "description": "The adgroup this creative belongs to.",
-       "required": true,
-       "format": "int64",
-       "location": "query"
-      },
       "buyerCreativeId": {
        "type": "string",
        "description": "The buyer-specific id for this creative.",
@@ -499,8 +486,7 @@
      },
      "parameterOrder": [
       "accountId",
-      "buyerCreativeId",
-      "adgroupId"
+      "buyerCreativeId"
      ],
      "response": {
       "$ref": "Creative"
@@ -541,6 +527,21 @@
       "pageToken": {
        "type": "string",
        "description": "A continuation token, used to page through ad clients. To retrieve the next page, set this parameter to the value of \"nextPageToken\" from the previous response. Optional.",
+       "location": "query"
+      },
+      "statusFilter": {
+       "type": "string",
+       "description": "When specified, only creatives having the given status are returned.",
+       "enum": [
+        "approved",
+        "disapproved",
+        "not_checked"
+       ],
+       "enumDescriptions": [
+        "Creatives which have been approved.",
+        "Creatives which have been disapproved.",
+        "Creatives whose status is not yet checked."
+       ],
        "location": "query"
       }
      },

@@ -1,6 +1,6 @@
 // Package calendar provides access to the Calendar API.
 //
-// See http://code.google.com/apis/calendar/v3/using.html
+// See https://developers.google.com/google-apps/calendar/firstapp
 //
 // Usage example:
 //
@@ -225,6 +225,11 @@ type CalendarListEntry struct {
 	// additional ability to see and manipulate ACLs.
 	AccessRole string `json:"accessRole,omitempty"`
 
+	// BackgroundColor: The main color of the calendar in the format
+	// '#0088aa'. This property supersedes the index-based colorId property.
+	// Optional.
+	BackgroundColor string `json:"backgroundColor,omitempty"`
+
 	// ColorId: The color of the calendar. This is an ID referring to an
 	// entry in the "calendar" section of the colors definition (see the
 	// "colors" endpoint). Optional.
@@ -239,6 +244,11 @@ type CalendarListEntry struct {
 
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
+
+	// ForegroundColor: The foreground color of the calendar in the format
+	// '#ffffff'. This property supersedes the index-based colorId property.
+	// Optional.
+	ForegroundColor string `json:"foregroundColor,omitempty"`
 
 	// Hidden: Whether the calendar has been hidden from the list. Optional.
 	// The default is False.
@@ -331,9 +341,9 @@ type Event struct {
 	// Attendees: The attendees of the event.
 	Attendees []*EventAttendee `json:"attendees,omitempty"`
 
-	// AttendeesOmitted: Whether attendees have been omitted from the
-	// event's representation. When retrieving an event, this is due to a
-	// restriction specified by the 'maxAttendee' query parameter. When
+	// AttendeesOmitted: Whether attendees may have been omitted from the
+	// event's representation. When retrieving an event, this may be due to
+	// a restriction specified by the 'maxAttendee' query parameter. When
 	// updating an event, this can be used to only update the participant's
 	// response. Optional. The default is False.
 	AttendeesOmitted bool `json:"attendeesOmitted,omitempty"`
@@ -357,6 +367,9 @@ type Event struct {
 	// this is the end time of the first instance.
 	End *EventDateTime `json:"end,omitempty"`
 
+	// EndTimeUnspecified: Whether the end time is actually unspecified. An
+	// end time is still provided for compatibility reasons, even if this
+	// attribute is set to True. The default is False.
 	EndTimeUnspecified bool `json:"endTimeUnspecified,omitempty"`
 
 	// Etag: ETag of the resource.
@@ -380,6 +393,10 @@ type Event struct {
 	// can see who the event's attendees are. Optional. The default is
 	// False.
 	GuestsCanSeeOtherGuests bool `json:"guestsCanSeeOtherGuests,omitempty"`
+
+	// HangoutLink: An absolute link to the Google+ hangout associated with
+	// this event. Read-only.
+	HangoutLink string `json:"hangoutLink,omitempty"`
 
 	// HtmlLink: An absolute link to this event in the Google Calendar Web
 	// UI. Read-only.
@@ -1371,6 +1388,16 @@ func (r *CalendarListService) Insert(calendarlistentry *CalendarListEntry) *Cale
 	return c
 }
 
+// ColorRgbFormat sets the optional parameter "colorRgbFormat": Whether
+// to use the 'frontendColor' and 'backgroundColor' fields to write the
+// calendar colors (RGB). If this feature is used, the index-based
+// 'color' field will be set to the best matching option automatically. 
+// The default is False.
+func (c *CalendarListInsertCall) ColorRgbFormat(colorRgbFormat bool) *CalendarListInsertCall {
+	c.opt_["colorRgbFormat"] = colorRgbFormat
+	return c
+}
+
 func (c *CalendarListInsertCall) Do() (*CalendarListEntry, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.calendarlistentry)
@@ -1380,6 +1407,9 @@ func (c *CalendarListInsertCall) Do() (*CalendarListEntry, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["colorRgbFormat"]; ok {
+		params.Set("colorRgbFormat", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "users/me/calendarList")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -1401,6 +1431,13 @@ func (c *CalendarListInsertCall) Do() (*CalendarListEntry, error) {
 	//   "description": "Adds an entry to the user's calendar list.",
 	//   "httpMethod": "POST",
 	//   "id": "calendar.calendarList.insert",
+	//   "parameters": {
+	//     "colorRgbFormat": {
+	//       "description": "Whether to use the 'frontendColor' and 'backgroundColor' fields to write the calendar colors (RGB). If this feature is used, the index-based 'color' field will be set to the best matching option automatically. Optional. The default is False.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
 	//   "path": "users/me/calendarList",
 	//   "request": {
 	//     "$ref": "CalendarListEntry"
@@ -1559,6 +1596,16 @@ func (r *CalendarListService) Patch(calendarId string, calendarlistentry *Calend
 	return c
 }
 
+// ColorRgbFormat sets the optional parameter "colorRgbFormat": Whether
+// to use the 'frontendColor' and 'backgroundColor' fields to write the
+// calendar colors (RGB). If this feature is used, the index-based
+// 'color' field will be set to the best matching option automatically. 
+// The default is False.
+func (c *CalendarListPatchCall) ColorRgbFormat(colorRgbFormat bool) *CalendarListPatchCall {
+	c.opt_["colorRgbFormat"] = colorRgbFormat
+	return c
+}
+
 func (c *CalendarListPatchCall) Do() (*CalendarListEntry, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.calendarlistentry)
@@ -1568,6 +1615,9 @@ func (c *CalendarListPatchCall) Do() (*CalendarListEntry, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["colorRgbFormat"]; ok {
+		params.Set("colorRgbFormat", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "users/me/calendarList/{calendarId}")
 	urls = strings.Replace(urls, "{calendarId}", cleanPathString(c.calendarId), 1)
 	urls += "?" + params.Encode()
@@ -1599,6 +1649,11 @@ func (c *CalendarListPatchCall) Do() (*CalendarListEntry, error) {
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "colorRgbFormat": {
+	//       "description": "Whether to use the 'frontendColor' and 'backgroundColor' fields to write the calendar colors (RGB). If this feature is used, the index-based 'color' field will be set to the best matching option automatically. Optional. The default is False.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     }
 	//   },
 	//   "path": "users/me/calendarList/{calendarId}",
@@ -1632,6 +1687,16 @@ func (r *CalendarListService) Update(calendarId string, calendarlistentry *Calen
 	return c
 }
 
+// ColorRgbFormat sets the optional parameter "colorRgbFormat": Whether
+// to use the 'frontendColor' and 'backgroundColor' fields to write the
+// calendar colors (RGB). If this feature is used, the index-based
+// 'color' field will be set to the best matching option automatically. 
+// The default is False.
+func (c *CalendarListUpdateCall) ColorRgbFormat(colorRgbFormat bool) *CalendarListUpdateCall {
+	c.opt_["colorRgbFormat"] = colorRgbFormat
+	return c
+}
+
 func (c *CalendarListUpdateCall) Do() (*CalendarListEntry, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.calendarlistentry)
@@ -1641,6 +1706,9 @@ func (c *CalendarListUpdateCall) Do() (*CalendarListEntry, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["colorRgbFormat"]; ok {
+		params.Set("colorRgbFormat", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "users/me/calendarList/{calendarId}")
 	urls = strings.Replace(urls, "{calendarId}", cleanPathString(c.calendarId), 1)
 	urls += "?" + params.Encode()
@@ -1672,6 +1740,11 @@ func (c *CalendarListUpdateCall) Do() (*CalendarListEntry, error) {
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "colorRgbFormat": {
+	//       "description": "Whether to use the 'frontendColor' and 'backgroundColor' fields to write the calendar colors (RGB). If this feature is used, the index-based 'color' field will be set to the best matching option automatically. Optional. The default is False.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     }
 	//   },
 	//   "path": "users/me/calendarList/{calendarId}",
@@ -2752,8 +2825,9 @@ func (c *EventsListCall) Q(q string) *EventsListCall {
 }
 
 // ShowDeleted sets the optional parameter "showDeleted": Whether to
-// include deleted events (with 'eventStatus' equals 'cancelled') in the
-// result.  The default is False.
+// include deleted single events (with 'status' equals 'cancelled') in
+// the result. Cancelled instances of recurring events will still be
+// included if 'singleEvents' is False.  The default is False.
 func (c *EventsListCall) ShowDeleted(showDeleted bool) *EventsListCall {
 	c.opt_["showDeleted"] = showDeleted
 	return c
@@ -2932,7 +3006,7 @@ func (c *EventsListCall) Do() (*Events, error) {
 	//       "type": "string"
 	//     },
 	//     "showDeleted": {
-	//       "description": "Whether to include deleted events (with 'eventStatus' equals 'cancelled') in the result. Optional. The default is False.",
+	//       "description": "Whether to include deleted single events (with 'status' equals 'cancelled') in the result. Cancelled instances of recurring events will still be included if 'singleEvents' is False. Optional. The default is False.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },

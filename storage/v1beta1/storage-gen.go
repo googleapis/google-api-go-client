@@ -1,6 +1,6 @@
 // Package storage provides access to the Cloud Storage API.
 //
-// See https://code.google.com/apis/storage/docs/developer-guide.html
+// See https://developers.google.com/storage/docs/json_api/
 //
 // Usage example:
 //
@@ -220,6 +220,9 @@ type Object struct {
 
 	// ContentEncoding: Content-Encoding of the object data.
 	ContentEncoding string `json:"contentEncoding,omitempty"`
+
+	// ContentLanguage: Content-Language of the object data.
+	ContentLanguage string `json:"contentLanguage,omitempty"`
 
 	// Id: The ID of the object.
 	Id string `json:"id,omitempty"`

@@ -38,8 +38,17 @@ const basePath = "https://www.googleapis.com/youtube/v3alpha/"
 
 // OAuth2 scopes used by this API.
 const (
-	// Manage your Youtube account
+	// Manage your YouTube account
 	YoutubeScope = "https://www.googleapis.com/auth/youtube"
+
+	// View your YouTube account
+	YoutubeReadonlyScope = "https://www.googleapis.com/auth/youtube.readonly"
+
+	// Manage your YouTube videos
+	YoutubeUploadScope = "https://www.googleapis.com/auth/youtube.upload"
+
+	// View and manage your assets and associated content on YouTube
+	YoutubepartnerScope = "https://www.googleapis.com/auth/youtubepartner"
 )
 
 func New(client *http.Client) (*Service, error) {
@@ -48,7 +57,7 @@ func New(client *http.Client) (*Service, error) {
 	}
 	s := &Service{client: client}
 	s.Channels = &ChannelsService{s: s}
-	s.Playlistitems = &PlaylistitemsService{s: s}
+	s.PlaylistItems = &PlaylistItemsService{s: s}
 	s.Playlists = &PlaylistsService{s: s}
 	s.Search = &SearchService{s: s}
 	s.Videos = &VideosService{s: s}
@@ -60,7 +69,7 @@ type Service struct {
 
 	Channels *ChannelsService
 
-	Playlistitems *PlaylistitemsService
+	PlaylistItems *PlaylistItemsService
 
 	Playlists *PlaylistsService
 
@@ -73,7 +82,7 @@ type ChannelsService struct {
 	s *Service
 }
 
-type PlaylistitemsService struct {
+type PlaylistItemsService struct {
 	s *Service
 }
 
@@ -191,6 +200,10 @@ type Playlist struct {
 }
 
 type PlaylistItem struct {
+	// ContentDetails: Content details about the playlist item: start and
+	// end clipping time.
+	ContentDetails *PlaylistItemContentDetails `json:"contentDetails,omitempty"`
+
 	// Etag: The eTag of the playlist item.
 	Etag string `json:"etag,omitempty"`
 
@@ -203,6 +216,20 @@ type PlaylistItem struct {
 	// Snippet: Basic details about the playlist item: title, description,
 	// thumbnails.
 	Snippet *PlaylistItemSnippet `json:"snippet,omitempty"`
+}
+
+type PlaylistItemContentDetails struct {
+	// EndAt: The time video playback ends.
+	EndAt string `json:"endAt,omitempty"`
+
+	// Note: The user-generated note for this item.
+	Note string `json:"note,omitempty"`
+
+	// StartAt: The time video playback begins.
+	StartAt string `json:"startAt,omitempty"`
+
+	// VideoId: ID of the video.
+	VideoId string `json:"videoId,omitempty"`
 }
 
 type PlaylistItemListResponse struct {
@@ -371,7 +398,7 @@ type VideoContentDetails struct {
 	AspectRatio string `json:"aspectRatio,omitempty"`
 
 	// Duration: Duration of the video.
-	Duration uint64 `json:"duration,omitempty,string"`
+	Duration string `json:"duration,omitempty"`
 }
 
 type VideoListResponse struct {
@@ -470,6 +497,13 @@ func (r *ChannelsService) List(part string) *ChannelsListCall {
 	return c
 }
 
+// ContentOwnerId sets the optional parameter "contentOwnerId": The
+// authenticated user acts on behalf of this content owner.
+func (c *ChannelsListCall) ContentOwnerId(contentOwnerId string) *ChannelsListCall {
+	c.opt_["contentOwnerId"] = contentOwnerId
+	return c
+}
+
 // Id sets the optional parameter "id": YouTube IDs of the channels to
 // be returned.
 func (c *ChannelsListCall) Id(id string) *ChannelsListCall {
@@ -489,6 +523,9 @@ func (c *ChannelsListCall) Do() (*ChannelListResponse, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("part", fmt.Sprintf("%v", c.part))
+	if v, ok := c.opt_["contentOwnerId"]; ok {
+		params.Set("contentOwnerId", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["id"]; ok {
 		params.Set("id", fmt.Sprintf("%v", v))
 	}
@@ -519,6 +556,11 @@ func (c *ChannelsListCall) Do() (*ChannelListResponse, error) {
 	//     "part"
 	//   ],
 	//   "parameters": {
+	//     "contentOwnerId": {
+	//       "description": "The authenticated user acts on behalf of this content owner.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "id": {
 	//       "description": "YouTube IDs of the channels to be returned.",
 	//       "location": "query",
@@ -541,60 +583,72 @@ func (c *ChannelsListCall) Do() (*ChannelListResponse, error) {
 	//     "$ref": "ChannelListResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/youtube"
+	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.readonly",
+	//     "https://www.googleapis.com/auth/youtubepartner"
 	//   ]
 	// }
 
 }
 
-// method id "youtube.playlistitems.list":
+// method id "youtube.playlistItems.list":
 
-type PlaylistitemsListCall struct {
+type PlaylistItemsListCall struct {
 	s    *Service
 	part string
 	opt_ map[string]interface{}
 }
 
 // List: Browse the YouTube playlist collection.
-func (r *PlaylistitemsService) List(part string) *PlaylistitemsListCall {
-	c := &PlaylistitemsListCall{s: r.s, opt_: make(map[string]interface{})}
+func (r *PlaylistItemsService) List(part string) *PlaylistItemsListCall {
+	c := &PlaylistItemsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.part = part
+	return c
+}
+
+// ContentOwnerId sets the optional parameter "contentOwnerId": The
+// authenticated user acts on behalf of this content owner.
+func (c *PlaylistItemsListCall) ContentOwnerId(contentOwnerId string) *PlaylistItemsListCall {
+	c.opt_["contentOwnerId"] = contentOwnerId
 	return c
 }
 
 // Id sets the optional parameter "id": YouTube IDs of the playlists to
 // be returned.
-func (c *PlaylistitemsListCall) Id(id string) *PlaylistitemsListCall {
+func (c *PlaylistItemsListCall) Id(id string) *PlaylistItemsListCall {
 	c.opt_["id"] = id
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to return
-func (c *PlaylistitemsListCall) MaxResults(maxResults int64) *PlaylistitemsListCall {
+func (c *PlaylistItemsListCall) MaxResults(maxResults int64) *PlaylistItemsListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PlaylistId sets the optional parameter "playlistId": Retrieves
 // playlist items from the given playlist id.
-func (c *PlaylistitemsListCall) PlaylistId(playlistId string) *PlaylistitemsListCall {
+func (c *PlaylistItemsListCall) PlaylistId(playlistId string) *PlaylistItemsListCall {
 	c.opt_["playlistId"] = playlistId
 	return c
 }
 
 // StartIndex sets the optional parameter "startIndex": Index of the
 // first element to return (starts at 0)
-func (c *PlaylistitemsListCall) StartIndex(startIndex int64) *PlaylistitemsListCall {
+func (c *PlaylistItemsListCall) StartIndex(startIndex int64) *PlaylistItemsListCall {
 	c.opt_["startIndex"] = startIndex
 	return c
 }
 
-func (c *PlaylistitemsListCall) Do() (*PlaylistItemListResponse, error) {
+func (c *PlaylistItemsListCall) Do() (*PlaylistItemListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("part", fmt.Sprintf("%v", c.part))
+	if v, ok := c.opt_["contentOwnerId"]; ok {
+		params.Set("contentOwnerId", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["id"]; ok {
 		params.Set("id", fmt.Sprintf("%v", v))
 	}
@@ -607,7 +661,7 @@ func (c *PlaylistitemsListCall) Do() (*PlaylistItemListResponse, error) {
 	if v, ok := c.opt_["startIndex"]; ok {
 		params.Set("startIndex", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3alpha/", "playlistitems")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3alpha/", "playlistItems")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
@@ -626,18 +680,23 @@ func (c *PlaylistitemsListCall) Do() (*PlaylistItemListResponse, error) {
 	// {
 	//   "description": "Browse the YouTube playlist collection.",
 	//   "httpMethod": "GET",
-	//   "id": "youtube.playlistitems.list",
+	//   "id": "youtube.playlistItems.list",
 	//   "parameterOrder": [
 	//     "part"
 	//   ],
 	//   "parameters": {
+	//     "contentOwnerId": {
+	//       "description": "The authenticated user acts on behalf of this content owner.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "id": {
 	//       "description": "YouTube IDs of the playlists to be returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "default": "50",
+	//       "default": "5",
 	//       "description": "Maximum number of results to return",
 	//       "format": "uint32",
 	//       "location": "query",
@@ -663,12 +722,14 @@ func (c *PlaylistitemsListCall) Do() (*PlaylistItemListResponse, error) {
 	//       "type": "integer"
 	//     }
 	//   },
-	//   "path": "playlistitems",
+	//   "path": "playlistItems",
 	//   "response": {
 	//     "$ref": "PlaylistItemListResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/youtube"
+	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.readonly",
+	//     "https://www.googleapis.com/auth/youtubepartner"
 	//   ]
 	// }
 
@@ -678,16 +739,49 @@ func (c *PlaylistitemsListCall) Do() (*PlaylistItemListResponse, error) {
 
 type PlaylistsListCall struct {
 	s    *Service
-	id   string
 	part string
 	opt_ map[string]interface{}
 }
 
 // List: Browse the YouTube playlist collection.
-func (r *PlaylistsService) List(id string, part string) *PlaylistsListCall {
+func (r *PlaylistsService) List(part string) *PlaylistsListCall {
 	c := &PlaylistsListCall{s: r.s, opt_: make(map[string]interface{})}
-	c.id = id
 	c.part = part
+	return c
+}
+
+// ContentOwnerId sets the optional parameter "contentOwnerId": The
+// authenticated user acts on behalf of this content owner.
+func (c *PlaylistsListCall) ContentOwnerId(contentOwnerId string) *PlaylistsListCall {
+	c.opt_["contentOwnerId"] = contentOwnerId
+	return c
+}
+
+// Id sets the optional parameter "id": Comma-separated YouTube IDs of
+// the playlists to be returned.
+func (c *PlaylistsListCall) Id(id string) *PlaylistsListCall {
+	c.opt_["id"] = id
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum number
+// of results to return
+func (c *PlaylistsListCall) MaxResults(maxResults int64) *PlaylistsListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// Mine sets the optional parameter "mine": Flag indicating only return
+// the playlists of the authenticated user.
+func (c *PlaylistsListCall) Mine(mine string) *PlaylistsListCall {
+	c.opt_["mine"] = mine
+	return c
+}
+
+// StartIndex sets the optional parameter "startIndex": Index of the
+// first element to return (starts at 0)
+func (c *PlaylistsListCall) StartIndex(startIndex int64) *PlaylistsListCall {
+	c.opt_["startIndex"] = startIndex
 	return c
 }
 
@@ -695,8 +789,22 @@ func (c *PlaylistsListCall) Do() (*PlaylistListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	params.Set("id", fmt.Sprintf("%v", c.id))
 	params.Set("part", fmt.Sprintf("%v", c.part))
+	if v, ok := c.opt_["contentOwnerId"]; ok {
+		params.Set("contentOwnerId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["id"]; ok {
+		params.Set("id", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["mine"]; ok {
+		params.Set("mine", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["startIndex"]; ok {
+		params.Set("startIndex", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3alpha/", "playlists")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -718,14 +826,30 @@ func (c *PlaylistsListCall) Do() (*PlaylistListResponse, error) {
 	//   "httpMethod": "GET",
 	//   "id": "youtube.playlists.list",
 	//   "parameterOrder": [
-	//     "id",
 	//     "part"
 	//   ],
 	//   "parameters": {
-	//     "id": {
-	//       "description": "YouTube IDs of the playlists to be returned.",
+	//     "contentOwnerId": {
+	//       "description": "The authenticated user acts on behalf of this content owner.",
 	//       "location": "query",
-	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "id": {
+	//       "description": "Comma-separated YouTube IDs of the playlists to be returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "5",
+	//       "description": "Maximum number of results to return",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "mine": {
+	//       "description": "Flag indicating only return the playlists of the authenticated user.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "part": {
@@ -733,6 +857,13 @@ func (c *PlaylistsListCall) Do() (*PlaylistListResponse, error) {
 	//       "location": "query",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "startIndex": {
+	//       "description": "Index of the first element to return (starts at 0)",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "minimum": "0",
+	//       "type": "integer"
 	//     }
 	//   },
 	//   "path": "playlists",
@@ -740,7 +871,9 @@ func (c *PlaylistsListCall) Do() (*PlaylistListResponse, error) {
 	//     "$ref": "PlaylistListResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/youtube"
+	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.readonly",
+	//     "https://www.googleapis.com/auth/youtubepartner"
 	//   ]
 	// }
 
@@ -750,12 +883,14 @@ func (c *PlaylistsListCall) Do() (*PlaylistListResponse, error) {
 
 type SearchListCall struct {
 	s    *Service
+	q    string
 	opt_ map[string]interface{}
 }
 
 // List: Universal search for youtube.
-func (r *SearchService) List() *SearchListCall {
+func (r *SearchService) List(q string) *SearchListCall {
 	c := &SearchListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.q = q
 	return c
 }
 
@@ -772,14 +907,15 @@ func (c *SearchListCall) Order(order string) *SearchListCall {
 	return c
 }
 
-// Q sets the optional parameter "q": Query to search in Youtube.
-func (c *SearchListCall) Q(q string) *SearchListCall {
-	c.opt_["q"] = q
+// Published sets the optional parameter "published": Only search for
+// resources uploaded at a specific pediod
+func (c *SearchListCall) Published(published string) *SearchListCall {
+	c.opt_["published"] = published
 	return c
 }
 
 // StartIndex sets the optional parameter "startIndex": Index of the
-// first search result to return.
+// first element to return (starts at 0)
 func (c *SearchListCall) StartIndex(startIndex int64) *SearchListCall {
 	c.opt_["startIndex"] = startIndex
 	return c
@@ -791,24 +927,75 @@ func (c *SearchListCall) Type(type_ string) *SearchListCall {
 	return c
 }
 
+// VideoCaption sets the optional parameter "videoCaption": Add a filter
+// on the the presence of captions on the videos.
+func (c *SearchListCall) VideoCaption(videoCaption string) *SearchListCall {
+	c.opt_["videoCaption"] = videoCaption
+	return c
+}
+
+// VideoDefinition sets the optional parameter "videoDefinition": Add a
+// filter for the definition of the videos.
+func (c *SearchListCall) VideoDefinition(videoDefinition string) *SearchListCall {
+	c.opt_["videoDefinition"] = videoDefinition
+	return c
+}
+
+// VideoDimension sets the optional parameter "videoDimension": Add a
+// filter for the number of dimensions in the videos.
+func (c *SearchListCall) VideoDimension(videoDimension string) *SearchListCall {
+	c.opt_["videoDimension"] = videoDimension
+	return c
+}
+
+// VideoDuration sets the optional parameter "videoDuration": Add a
+// filter on the duration of the videos.
+func (c *SearchListCall) VideoDuration(videoDuration string) *SearchListCall {
+	c.opt_["videoDuration"] = videoDuration
+	return c
+}
+
+// VideoLicense sets the optional parameter "videoLicense": Add a filter
+// on the licensing of the videos.
+func (c *SearchListCall) VideoLicense(videoLicense string) *SearchListCall {
+	c.opt_["videoLicense"] = videoLicense
+	return c
+}
+
 func (c *SearchListCall) Do() (*SearchListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	params.Set("q", fmt.Sprintf("%v", c.q))
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["order"]; ok {
 		params.Set("order", fmt.Sprintf("%v", v))
 	}
-	if v, ok := c.opt_["q"]; ok {
-		params.Set("q", fmt.Sprintf("%v", v))
+	if v, ok := c.opt_["published"]; ok {
+		params.Set("published", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["startIndex"]; ok {
 		params.Set("startIndex", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["type"]; ok {
 		params.Set("type", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["videoCaption"]; ok {
+		params.Set("videoCaption", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["videoDefinition"]; ok {
+		params.Set("videoDefinition", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["videoDimension"]; ok {
+		params.Set("videoDimension", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["videoDuration"]; ok {
+		params.Set("videoDuration", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["videoLicense"]; ok {
+		params.Set("videoLicense", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3alpha/", "search")
 	urls += "?" + params.Encode()
@@ -830,9 +1017,12 @@ func (c *SearchListCall) Do() (*SearchListResponse, error) {
 	//   "description": "Universal search for youtube.",
 	//   "httpMethod": "GET",
 	//   "id": "youtube.search.list",
+	//   "parameterOrder": [
+	//     "q"
+	//   ],
 	//   "parameters": {
 	//     "maxResults": {
-	//       "default": "25",
+	//       "default": "5",
 	//       "description": "Maximum number of search results to return per page.",
 	//       "format": "uint32",
 	//       "location": "query",
@@ -841,7 +1031,7 @@ func (c *SearchListCall) Do() (*SearchListResponse, error) {
 	//       "type": "integer"
 	//     },
 	//     "order": {
-	//       "default": "SEARCH_SORT_RELEVANCE",
+	//       "default": "relevance",
 	//       "description": "Sort order.",
 	//       "enum": [
 	//         "date",
@@ -858,14 +1048,30 @@ func (c *SearchListCall) Do() (*SearchListResponse, error) {
 	//       "location": "query",
 	//       "type": "string"
 	//     },
+	//     "published": {
+	//       "description": "Only search for resources uploaded at a specific pediod",
+	//       "enum": [
+	//         "any",
+	//         "thisWeek",
+	//         "today"
+	//       ],
+	//       "enumDescriptions": [
+	//         "No filter on the release date",
+	//         "Videos uploaded this month",
+	//         "Videos uploaded today"
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "q": {
 	//       "description": "Query to search in Youtube.",
 	//       "location": "query",
+	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "startIndex": {
 	//       "default": "0",
-	//       "description": "Index of the first search result to return.",
+	//       "description": "Index of the first element to return (starts at 0)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "1000",
@@ -887,6 +1093,83 @@ func (c *SearchListCall) Do() (*SearchListResponse, error) {
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
+	//     },
+	//     "videoCaption": {
+	//       "description": "Add a filter on the the presence of captions on the videos.",
+	//       "enum": [
+	//         "any",
+	//         "closedCaption",
+	//         "none"
+	//       ],
+	//       "enumDescriptions": [
+	//         "No filter on the captions.",
+	//         "Videos with closed captions.",
+	//         "Videos without captions."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "videoDefinition": {
+	//       "description": "Add a filter for the definition of the videos.",
+	//       "enum": [
+	//         "any",
+	//         "high",
+	//         "standard"
+	//       ],
+	//       "enumDescriptions": [
+	//         "No filter on the definition.",
+	//         "Videos in high definition.",
+	//         "Videos in standard definition."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "videoDimension": {
+	//       "description": "Add a filter for the number of dimensions in the videos.",
+	//       "enum": [
+	//         "2d",
+	//         "3d",
+	//         "any"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Videos in two dimensions.",
+	//         "Videos in three dimensions.",
+	//         "No filter on the dimension."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "videoDuration": {
+	//       "description": "Add a filter on the duration of the videos.",
+	//       "enum": [
+	//         "any",
+	//         "long",
+	//         "medium",
+	//         "short"
+	//       ],
+	//       "enumDescriptions": [
+	//         "No filter on the duration.",
+	//         "Videos with a duration longer than 20 minutes.",
+	//         "Videos with a duration between 4 and 20 minutes.",
+	//         "Videos with a duration under 4 minutes."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "videoLicense": {
+	//       "description": "Add a filter on the licensing of the videos.",
+	//       "enum": [
+	//         "any",
+	//         "creativeCommon",
+	//         "youtube"
+	//       ],
+	//       "enumDescriptions": [
+	//         "No filter on the license.",
+	//         "Videos under the Creative Common license.",
+	//         "Videos under the YouTube license."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "search",
@@ -894,8 +1177,101 @@ func (c *SearchListCall) Do() (*SearchListResponse, error) {
 	//     "$ref": "SearchListResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/youtube"
+	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.readonly",
+	//     "https://www.googleapis.com/auth/youtubepartner"
 	//   ]
+	// }
+
+}
+
+// method id "youtube.videos.insert":
+
+type VideosInsertCall struct {
+	s      *Service
+	video  *Video
+	opt_   map[string]interface{}
+	media_ io.Reader
+}
+
+// Insert: Upload a video to YouTube.
+func (r *VideosService) Insert(video *Video) *VideosInsertCall {
+	c := &VideosInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.video = video
+	return c
+}
+func (c *VideosInsertCall) Media(r io.Reader) *VideosInsertCall {
+	c.media_ = r
+	return c
+}
+
+func (c *VideosInsertCall) Do() (*Video, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.video)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3alpha/", "videos")
+	if c.media_ != nil {
+		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
+		params.Set("uploadType", "multipart")
+	}
+	urls += "?" + params.Encode()
+	contentLength_, hasMedia_ := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+	req, _ := http.NewRequest("POST", urls, body)
+	if hasMedia_ {
+		req.ContentLength = contentLength_
+	}
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Video)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Upload a video to YouTube.",
+	//   "httpMethod": "POST",
+	//   "id": "youtube.videos.insert",
+	//   "mediaUpload": {
+	//     "accept": [
+	//       "application/octet-stream",
+	//       "video/*"
+	//     ],
+	//     "maxSize": "64GB",
+	//     "protocols": {
+	//       "resumable": {
+	//         "multipart": true,
+	//         "path": "/resumable/upload/youtube/v3alpha/videos"
+	//       },
+	//       "simple": {
+	//         "multipart": true,
+	//         "path": "/upload/youtube/v3alpha/videos"
+	//       }
+	//     }
+	//   },
+	//   "path": "videos",
+	//   "request": {
+	//     "$ref": "Video"
+	//   },
+	//   "response": {
+	//     "$ref": "Video"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.upload"
+	//   ],
+	//   "supportsMediaUpload": true
 	// }
 
 }
@@ -917,12 +1293,22 @@ func (r *VideosService) List(id string, part string) *VideosListCall {
 	return c
 }
 
+// ContentOwnerId sets the optional parameter "contentOwnerId": The
+// authenticated user acts on behalf of this content owner.
+func (c *VideosListCall) ContentOwnerId(contentOwnerId string) *VideosListCall {
+	c.opt_["contentOwnerId"] = contentOwnerId
+	return c
+}
+
 func (c *VideosListCall) Do() (*VideoListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("id", fmt.Sprintf("%v", c.id))
 	params.Set("part", fmt.Sprintf("%v", c.part))
+	if v, ok := c.opt_["contentOwnerId"]; ok {
+		params.Set("contentOwnerId", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3alpha/", "videos")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -948,6 +1334,11 @@ func (c *VideosListCall) Do() (*VideoListResponse, error) {
 	//     "part"
 	//   ],
 	//   "parameters": {
+	//     "contentOwnerId": {
+	//       "description": "The authenticated user acts on behalf of this content owner.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "id": {
 	//       "description": "YouTube IDs of the videos to be returned.",
 	//       "location": "query",
@@ -966,7 +1357,9 @@ func (c *VideosListCall) Do() (*VideoListResponse, error) {
 	//     "$ref": "VideoListResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/youtube"
+	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.readonly",
+	//     "https://www.googleapis.com/auth/youtubepartner"
 	//   ]
 	// }
 

@@ -4,14 +4,14 @@
  "id": "books:v1",
  "name": "books",
  "version": "v1",
- "revision": "20120614",
+ "revision": "20120822",
  "title": "Books API",
  "description": "Lets you search for books and manage your Google Books library.",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/ebooks-16.png",
   "x32": "http://www.google.com/images/icons/product/ebooks-32.png"
  },
- "documentationLink": "https://code.google.com/apis/books/docs/v1/getting_started.html",
+ "documentationLink": "https://developers.google.com/books/docs/v1/getting_started",
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/books/v1/",
  "basePath": "/books/v1/",
@@ -194,8 +194,7 @@
      "description": "The type of annotation this data is for."
     },
     "data": {
-     "$ref": "BooksLayerGeoData",
-     "description": "JSON encoded data for this annotation data."
+     "type": "any"
     },
     "encoded_data": {
      "type": "string",
@@ -306,6 +305,202 @@
     }
    }
   },
+  "BooksLayerDictData": {
+   "id": "BooksLayerDictData",
+   "type": "object",
+   "properties": {
+    "common": {
+     "type": "object",
+     "properties": {
+      "title": {
+       "type": "string",
+       "description": "The display title and localized canonical name to use when searching for this entity on Google search."
+      }
+     }
+    },
+    "dict": {
+     "type": "object",
+     "properties": {
+      "source": {
+       "type": "object",
+       "description": "The source, url and attribution for this dictionary data.",
+       "properties": {
+        "attribution": {
+         "type": "string"
+        },
+        "url": {
+         "type": "string"
+        }
+       }
+      },
+      "words": {
+       "type": "array",
+       "items": {
+        "type": "object",
+        "properties": {
+         "derivatives": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "source": {
+             "type": "object",
+             "properties": {
+              "attribution": {
+               "type": "string"
+              },
+              "url": {
+               "type": "string"
+              }
+             }
+            },
+            "text": {
+             "type": "string"
+            }
+           }
+          }
+         },
+         "examples": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "source": {
+             "type": "object",
+             "properties": {
+              "attribution": {
+               "type": "string"
+              },
+              "url": {
+               "type": "string"
+              }
+             }
+            },
+            "text": {
+             "type": "string"
+            }
+           }
+          }
+         },
+         "senses": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "conjugations": {
+             "type": "array",
+             "items": {
+              "type": "object",
+              "properties": {
+               "type": {
+                "type": "string"
+               },
+               "value": {
+                "type": "string"
+               }
+              }
+             }
+            },
+            "definitions": {
+             "type": "array",
+             "items": {
+              "type": "object",
+              "properties": {
+               "definition": {
+                "type": "string"
+               },
+               "examples": {
+                "type": "array",
+                "items": {
+                 "type": "object",
+                 "properties": {
+                  "source": {
+                   "type": "object",
+                   "properties": {
+                    "attribution": {
+                     "type": "string"
+                    },
+                    "url": {
+                     "type": "string"
+                    }
+                   }
+                  },
+                  "text": {
+                   "type": "string"
+                  }
+                 }
+                }
+               }
+              }
+             }
+            },
+            "partOfSpeech": {
+             "type": "string"
+            },
+            "pronunciation": {
+             "type": "string"
+            },
+            "pronunciationUrl": {
+             "type": "string"
+            },
+            "source": {
+             "type": "object",
+             "properties": {
+              "attribution": {
+               "type": "string"
+              },
+              "url": {
+               "type": "string"
+              }
+             }
+            },
+            "syllabification": {
+             "type": "string"
+            },
+            "synonyms": {
+             "type": "array",
+             "items": {
+              "type": "object",
+              "properties": {
+               "source": {
+                "type": "object",
+                "properties": {
+                 "attribution": {
+                  "type": "string"
+                 },
+                 "url": {
+                  "type": "string"
+                 }
+                }
+               },
+               "text": {
+                "type": "string"
+               }
+              }
+             }
+            }
+           }
+          }
+         },
+         "source": {
+          "type": "object",
+          "description": "The words with different meanings but not related words, e.g. \"go\" (game) and \"go\" (verb).",
+          "properties": {
+           "attribution": {
+            "type": "string"
+           },
+           "url": {
+            "type": "string"
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   }
+  },
   "BooksLayerGeoData": {
    "id": "BooksLayerGeoData",
    "type": "object",
@@ -328,6 +523,10 @@
       "snippetUrl": {
        "type": "string",
        "description": "The URL for information for this location. Ex: wikipedia link."
+      },
+      "title": {
+       "type": "string",
+       "description": "The display title and localized canonical name to use when searching for this entity on Google search."
       }
      }
     },
@@ -375,10 +574,6 @@
       "mapType": {
        "type": "string",
        "description": "The type of map that should be used for this location. EX: HYBRID, ROADMAP, SATELLITE, TERRAIN"
-      },
-      "resolution": {
-       "type": "string",
-       "description": "The resolution of the location. Ex: POI_LEVEL"
       },
       "viewport": {
        "type": "object",
@@ -2742,63 +2937,23 @@
          "type": "string",
          "description": "Association type.",
          "enum": [
-          "complementary"
+          "end-of-sample",
+          "end-of-volume"
          ],
          "enumDescriptions": [
-          "Books that are complementary for additional reading."
+          "Recommendations for display end-of-sample.",
+          "Recommendations for display end-of-volume."
          ],
          "location": "query"
         },
-        "filter": {
+        "locale": {
          "type": "string",
-         "description": "Filter search results.",
-         "enum": [
-          "ebooks",
-          "free-ebooks",
-          "full",
-          "paid-ebooks",
-          "partial"
-         ],
-         "enumDescriptions": [
-          "All Google eBooks.",
-          "Google eBook with full volume text viewability.",
-          "Public can view entire volume text.",
-          "Google eBook with a price.",
-          "Public able to see parts of text."
-         ],
-         "location": "query"
-        },
-        "maxResults": {
-         "type": "integer",
-         "description": "Maximum number of results to return.",
-         "format": "uint32",
-         "minimum": "0",
-         "maximum": "40",
-         "location": "query"
-        },
-        "projection": {
-         "type": "string",
-         "description": "Restrict information returned to a set of selected fields.",
-         "enum": [
-          "full",
-          "lite"
-         ],
-         "enumDescriptions": [
-          "Includes all volume data.",
-          "Includes a subset of fields in volumeInfo and accessInfo."
-         ],
+         "description": "ISO-639-1 language and ISO-3166-1 country code. Ex: 'en_US'. Used for generating recommendations.",
          "location": "query"
         },
         "source": {
          "type": "string",
          "description": "String to identify the originator of this request.",
-         "location": "query"
-        },
-        "startIndex": {
-         "type": "integer",
-         "description": "Index of the first result to return (starts at 0)",
-         "format": "uint32",
-         "minimum": "0",
          "location": "query"
         },
         "volumeId": {

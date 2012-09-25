@@ -4,7 +4,7 @@
  "id": "customsearch:v1",
  "name": "customsearch",
  "version": "v1",
- "revision": "20120511",
+ "revision": "20120718",
  "title": "CustomSearch API",
  "description": "Lets you search over a website or collection of websites",
  "icons": {

@@ -4,7 +4,6 @@
  "id": "oauth2:v1",
  "name": "oauth2",
  "version": "v1",
- "revision": "20120712",
  "description": "OAuth2 API",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/search-16.gif",
@@ -14,7 +13,7 @@
  "baseUrl": "https://www.googleapis.com/",
  "basePath": "/",
  "rootUrl": "https://www.googleapis.com/",
- "servicePath": "/",
+ "servicePath": "",
  "batchPath": "batch",
  "parameters": {
   "alt": {
@@ -90,14 +89,30 @@
      "type": "string",
      "description": "The email address of the user. Present only if the email scope is present in the request."
     },
+    "email_verified": {
+     "type": "boolean"
+    },
     "expires_in": {
      "type": "integer",
      "description": "The expiry time of the token, as number of seconds left until expiry.",
      "format": "int32"
     },
+    "issued_at": {
+     "type": "integer",
+     "description": "The issue time of the token, as number of seconds.",
+     "format": "int32"
+    },
     "issued_to": {
      "type": "string",
      "description": "To whom was the token issued to. In general the same as audience."
+    },
+    "issuer": {
+     "type": "string",
+     "description": "Who issued the token."
+    },
+    "nonce": {
+     "type": "string",
+     "description": "Nonce of the id token."
     },
     "scope": {
      "type": "string",
@@ -108,8 +123,7 @@
      "description": "The Gaia obfuscated user id."
     },
     "verified_email": {
-     "type": "boolean",
-     "description": "Boolean flag which is true if the email address is verified. Present only if the email scope is present in the request."
+     "type": "boolean"
     }
    }
   },

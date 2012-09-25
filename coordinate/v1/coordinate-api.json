@@ -4,7 +4,7 @@
  "id": "coordinate:v1",
  "name": "coordinate",
  "version": "v1",
- "revision": "20120622",
+ "revision": "20120912",
  "title": "Google Maps Coordinate API",
  "description": "Lets you view and manage jobs in a Coordinate team.",
  "icons": {
@@ -76,6 +76,98 @@
   }
  },
  "schemas": {
+  "CustomField": {
+   "id": "CustomField",
+   "type": "object",
+   "description": "Custom field.",
+   "properties": {
+    "customFieldId": {
+     "type": "string",
+     "description": "Custom field id.",
+     "format": "int64"
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies this object as a custom field.",
+     "default": "coordinate#customField"
+    },
+    "value": {
+     "type": "string",
+     "description": "Custom field value."
+    }
+   }
+  },
+  "CustomFieldDef": {
+   "id": "CustomFieldDef",
+   "type": "object",
+   "description": "Custom field definition.",
+   "properties": {
+    "enabled": {
+     "type": "boolean",
+     "description": "Whether the field is enabled."
+    },
+    "id": {
+     "type": "string",
+     "description": "Custom field id.",
+     "format": "int64"
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies this object as a custom field definition.",
+     "default": "coordinate#customFieldDef"
+    },
+    "name": {
+     "type": "string",
+     "description": "Custom field name."
+    },
+    "requiredForCheckout": {
+     "type": "boolean",
+     "description": "Whether the field is required for checkout."
+    },
+    "type": {
+     "type": "string",
+     "description": "Custom field type."
+    }
+   }
+  },
+  "CustomFieldDefListResponse": {
+   "id": "CustomFieldDefListResponse",
+   "type": "object",
+   "description": "Collection of custom field definitions for a team.",
+   "properties": {
+    "items": {
+     "type": "array",
+     "description": "Collection of custom field definitions in a team.",
+     "items": {
+      "$ref": "CustomFieldDef"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies this object as a collection of custom field definitions in a team.",
+     "default": "coordinate#customFieldDefList"
+    }
+   }
+  },
+  "CustomFields": {
+   "id": "CustomFields",
+   "type": "object",
+   "description": "Collection of custom fields.",
+   "properties": {
+    "customField": {
+     "type": "array",
+     "description": "Collection of custom fields.",
+     "items": {
+      "$ref": "CustomField"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies this object as a collection of custom fields.",
+     "default": "coordinate#customFields"
+    }
+   }
+  },
   "Job": {
    "id": "Job",
    "type": "object",
@@ -157,6 +249,10 @@
      "type": "string",
      "description": "Email address of the assignee."
     },
+    "customFields": {
+     "$ref": "CustomFields",
+     "description": "Custom fields."
+    },
     "customerName": {
      "type": "string",
      "description": "Customer name."
@@ -222,6 +318,34 @@
   }
  },
  "resources": {
+  "customFieldDef": {
+   "methods": {
+    "list": {
+     "id": "coordinate.customFieldDef.list",
+     "path": "{teamId}/custom_fields",
+     "httpMethod": "GET",
+     "description": "Retrieves a list of custom field definitions for a team.",
+     "parameters": {
+      "teamId": {
+       "type": "string",
+       "description": "Team ID",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "teamId"
+     ],
+     "response": {
+      "$ref": "CustomFieldDefListResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/coordinate",
+      "https://www.googleapis.com/auth/coordinate.readonly"
+     ]
+    }
+   }
+  },
   "jobs": {
    "methods": {
     "get": {
@@ -270,7 +394,13 @@
       },
       "assignee": {
        "type": "string",
-       "description": "Assignee email address",
+       "description": "Assignee email address, or empty string to unassign.",
+       "location": "query"
+      },
+      "customField": {
+       "type": "string",
+       "description": "Map from custom field id (from /team//custom_fields) to the field value. For example '123=Alice'",
+       "repeated": true,
        "location": "query"
       },
       "customerName": {
@@ -386,7 +516,13 @@
       },
       "assignee": {
        "type": "string",
-       "description": "Assignee email address",
+       "description": "Assignee email address, or empty string to unassign.",
+       "location": "query"
+      },
+      "customField": {
+       "type": "string",
+       "description": "Map from custom field id (from /team//custom_fields) to the field value. For example '123=Alice'",
+       "repeated": true,
        "location": "query"
       },
       "customerName": {
@@ -481,7 +617,13 @@
       },
       "assignee": {
        "type": "string",
-       "description": "Assignee email address",
+       "description": "Assignee email address, or empty string to unassign.",
+       "location": "query"
+      },
+      "customField": {
+       "type": "string",
+       "description": "Map from custom field id (from /team//custom_fields) to the field value. For example '123=Alice'",
+       "repeated": true,
        "location": "query"
       },
       "customerName": {

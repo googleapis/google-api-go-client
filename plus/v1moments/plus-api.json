@@ -4,7 +4,7 @@
  "id": "plus:v1moments",
  "name": "plus",
  "version": "v1moments",
- "revision": "20120717",
+ "revision": "20120806",
  "title": "Google+ API",
  "description": "The Google+ API enables developers to build on top of the Google+ platform.",
  "icons": {
@@ -69,6 +69,9 @@
  "auth": {
   "oauth2": {
    "scopes": {
+    "https://www.googleapis.com/auth/plus.me": {
+     "description": "Know who you are on Google"
+    },
     "https://www.googleapis.com/auth/plus.moments.write": {
      "description": "Send your activity to your private Google+ history"
     }
@@ -312,7 +315,7 @@
     },
     "url": {
      "type": "string",
-     "description": "A url for this scope."
+     "description": "A URL for the item upon which the action was performed."
     },
     "width": {
      "type": "string",
@@ -328,6 +331,10 @@
    "id": "Moment",
    "type": "object",
    "properties": {
+    "id": {
+     "type": "string",
+     "description": "The frame ID."
+    },
     "kind": {
      "type": "string",
      "description": "Identifies this resource as a moment.",
@@ -339,25 +346,25 @@
     },
     "startDate": {
      "type": "string",
-     "description": "Timestamp of the action (when it occured) in RFC3339 format.",
+     "description": "Time stamp of when the action occurred in RFC3339 format.",
      "format": "date-time"
     },
     "target": {
      "$ref": "ItemScope",
-     "description": "The object on which the action was performed"
+     "description": "The object on which the action was performed.",
+     "annotations": {
+      "required": [
+       "plus.moments.insert"
+      ]
+     }
     },
     "type": {
      "type": "string",
-     "description": "The schema.org activity type"
-    },
-    "verb": {
-     "type": "object",
-     "description": "The action the user performed",
-     "properties": {
-      "url": {
-       "type": "string",
-       "description": "Url name of the verb"
-      }
+     "description": "The schema.org activity type.",
+     "annotations": {
+      "required": [
+       "plus.moments.insert"
+      ]
      }
     }
    }
@@ -391,9 +398,8 @@
       },
       "userId": {
        "type": "string",
-       "description": "The ID of the user to get activities for. The special value \"me\" can be used to indicate the authenticated user.",
+       "description": "The ID of the user to record activities for. The only valid values are \"me\" and the ID of the authenticated user.",
        "required": true,
-       "pattern": "me",
        "location": "path"
       }
      },
@@ -408,6 +414,7 @@
       "$ref": "Moment"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/plus.me",
       "https://www.googleapis.com/auth/plus.moments.write"
      ]
     }

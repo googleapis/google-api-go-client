@@ -4,12 +4,12 @@
  "id": "drive:v1",
  "name": "drive",
  "version": "v1",
- "revision": "20120516",
+ "revision": "20120723",
  "title": "Drive API",
  "description": "The API to interact with Drive.",
  "icons": {
-  "x16": "http://www.google.com/images/icons/product/search-16.gif",
-  "x32": "http://www.google.com/images/icons/product/search-32.gif"
+  "x16": "https://ssl.gstatic.com/docs/doclist/images/drive_icon_16.png",
+  "x32": "https://ssl.gstatic.com/docs/doclist/images/drive_icon_32.png"
  },
  "documentationLink": "https://developers.google.com/drive/",
  "protocol": "rest",
@@ -244,14 +244,14 @@
       },
       "projection": {
        "type": "string",
-       "description": "Restrict information returned for simplicity and optimization.",
+       "description": "This parameter is deprecated and has no function.",
        "enum": [
         "BASIC",
         "FULL"
        ],
        "enumDescriptions": [
-        "Includes only the basic metadata fields",
-        "Includes all metadata fields"
+        "Deprecated",
+        "Deprecated"
        ],
        "location": "query"
       },

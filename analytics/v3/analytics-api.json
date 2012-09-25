@@ -4,14 +4,14 @@
  "id": "analytics:v3",
  "name": "analytics",
  "version": "v3",
- "revision": "20120712",
+ "revision": "20120831",
  "title": "Google Analytics API",
  "description": "View and manage your Google Analytics data",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/analytics-16.png",
   "x32": "http://www.google.com/images/icons/product/analytics-32.png"
  },
- "documentationLink": "http://code.google.com/apis/analytics",
+ "documentationLink": "https://developers.google.com/analytics/",
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/analytics/v3/",
  "basePath": "/analytics/v3/",
@@ -66,6 +66,9 @@
  "auth": {
   "oauth2": {
    "scopes": {
+    "https://www.googleapis.com/auth/analytics": {
+     "description": "View and manage your Google Analytics data"
+    },
     "https://www.googleapis.com/auth/analytics.readonly": {
      "description": "View your Google Analytics data"
     }
@@ -136,7 +139,7 @@
     },
     "itemsPerPage": {
      "type": "integer",
-     "description": "The maximum number of entries the response can contain, regardless of the actual number of entries returned. Its value ranges from 1 to 10,000 with a value of 1000 by default, or otherwise specified by the max-results query parameter.",
+     "description": "The maximum number of entries the response can contain, regardless of the actual number of entries returned. Its value ranges from 1 to 1000 with a value of 1000 by default, or otherwise specified by the max-results query parameter.",
      "format": "int32"
     },
     "kind": {
@@ -539,7 +542,7 @@
     },
     "itemsPerPage": {
      "type": "integer",
-     "description": "The maximum number of resources the response can contain, regardless of the actual number of resources returned. Its value ranges from 1 to 10,000 with a value of 1000 by default, or otherwise specified by the max-results query parameter.",
+     "description": "The maximum number of resources the response can contain, regardless of the actual number of resources returned. Its value ranges from 1 to 1000 with a value of 1000 by default, or otherwise specified by the max-results query parameter.",
      "format": "int32"
     },
     "kind": {
@@ -797,6 +800,10 @@
      "type": "string",
      "description": "Default page for this profile."
     },
+    "eCommerceTracking": {
+     "type": "boolean",
+     "description": "E-commerce tracking parameter for this profile."
+    },
     "excludeQueryParameters": {
      "type": "string",
      "description": "The query parameters that are excluded from this profile."
@@ -857,6 +864,10 @@
     "webPropertyId": {
      "type": "string",
      "description": "Web property ID of the form UA-XXXXX-YY to which this profile belongs."
+    },
+    "websiteUrl": {
+     "type": "string",
+     "description": "Website URL for this profile."
     }
    }
   },
@@ -874,7 +885,7 @@
     },
     "itemsPerPage": {
      "type": "integer",
-     "description": "The maximum number of resources the response can contain, regardless of the actual number of resources returned. Its value ranges from 1 to 10,000 with a value of 1000 by default, or otherwise specified by the max-results query parameter.",
+     "description": "The maximum number of resources the response can contain, regardless of the actual number of resources returned. Its value ranges from 1 to 1000 with a value of 1000 by default, or otherwise specified by the max-results query parameter.",
      "format": "int32"
     },
     "kind": {
@@ -962,7 +973,7 @@
     },
     "itemsPerPage": {
      "type": "integer",
-     "description": "The maximum number of resources the response can contain, regardless of the actual number of resources returned. Its value ranges from 1 to 10,000 with a value of 1000 by default, or otherwise specified by the max-results query parameter.",
+     "description": "The maximum number of resources the response can contain, regardless of the actual number of resources returned. Its value ranges from 1 to 1000 with a value of 1000 by default, or otherwise specified by the max-results query parameter.",
      "format": "int32"
     },
     "kind": {
@@ -1008,7 +1019,7 @@
     },
     "itemsPerPage": {
      "type": "integer",
-     "description": "The maximum number of resources the response can contain, regardless of the actual number of resources returned. Its value ranges from 1 to 10,000 with a value of 1000 by default, or otherwise specified by the max-results query parameter.",
+     "description": "The maximum number of resources the response can contain, regardless of the actual number of resources returned. Its value ranges from 1 to 1000 with a value of 1000 by default, or otherwise specified by the max-results query parameter.",
      "format": "int32"
     },
     "kind": {
@@ -1203,6 +1214,7 @@
         "$ref": "GaData"
        },
        "scopes": [
+        "https://www.googleapis.com/auth/analytics",
         "https://www.googleapis.com/auth/analytics.readonly"
        ]
       }
@@ -1286,6 +1298,7 @@
         "$ref": "McfData"
        },
        "scopes": [
+        "https://www.googleapis.com/auth/analytics",
         "https://www.googleapis.com/auth/analytics.readonly"
        ]
       }
@@ -1321,6 +1334,7 @@
         "$ref": "Accounts"
        },
        "scopes": [
+        "https://www.googleapis.com/auth/analytics",
         "https://www.googleapis.com/auth/analytics.readonly"
        ]
       }
@@ -1375,6 +1389,7 @@
         "$ref": "Goals"
        },
        "scopes": [
+        "https://www.googleapis.com/auth/analytics",
         "https://www.googleapis.com/auth/analytics.readonly"
        ]
       }
@@ -1422,6 +1437,7 @@
         "$ref": "Profiles"
        },
        "scopes": [
+        "https://www.googleapis.com/auth/analytics",
         "https://www.googleapis.com/auth/analytics.readonly"
        ]
       }
@@ -1453,6 +1469,7 @@
         "$ref": "Segments"
        },
        "scopes": [
+        "https://www.googleapis.com/auth/analytics",
         "https://www.googleapis.com/auth/analytics.readonly"
        ]
       }
@@ -1493,6 +1510,7 @@
         "$ref": "Webproperties"
        },
        "scopes": [
+        "https://www.googleapis.com/auth/analytics",
         "https://www.googleapis.com/auth/analytics.readonly"
        ]
       }

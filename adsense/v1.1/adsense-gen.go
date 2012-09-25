@@ -1,6 +1,6 @@
 // Package adsense provides access to the AdSense Management API.
 //
-// See https://code.google.com/apis/adsense/management/
+// See https://developers.google.com/adsense/management/
 //
 // Usage example:
 //

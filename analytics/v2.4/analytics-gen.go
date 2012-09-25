@@ -1,6 +1,6 @@
 // Package analytics provides access to the Google Analytics API.
 //
-// See http://code.google.com/apis/analytics
+// See https://developers.google.com/analytics/
 //
 // Usage example:
 //

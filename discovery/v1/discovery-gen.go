@@ -1,6 +1,6 @@
 // Package discovery provides access to the APIs Discovery Service.
 //
-// See http://code.google.com/apis/discovery
+// See https://developers.google.com/discovery/
 //
 // Usage example:
 //
@@ -164,7 +164,9 @@ type JsonSchema struct {
 	// Minimum: The minimum value of this parameter.
 	Minimum string `json:"minimum,omitempty"`
 
-	// Pattern: The regular expression this parameter must conform to.
+	// Pattern: The regular expression this parameter must conform to. Uses
+	// Java 6 regex format:
+	// http://docs.oracle.com/javase/6/docs/api/java/util/regex/Pattern.html
 	Pattern string `json:"pattern,omitempty"`
 
 	// Properties: If this is a schema for an object, list the schema for
@@ -203,6 +205,10 @@ type RestDescription struct {
 
 	// BatchPath: The path for REST batch requests.
 	BatchPath string `json:"batchPath,omitempty"`
+
+	// CanonicalName: Indicates how the API name should be capitalized and
+	// split into various parts. Useful for generating pretty class names.
+	CanonicalName string `json:"canonicalName,omitempty"`
 
 	// Description: The description of this API.
 	Description string `json:"description,omitempty"`

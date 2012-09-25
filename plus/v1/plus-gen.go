@@ -761,20 +761,10 @@ func (r *ActivitiesService) Get(activityId string) *ActivitiesGetCall {
 	return c
 }
 
-// Alt sets the optional parameter "alt": Specifies an alternative
-// representation type.
-func (c *ActivitiesGetCall) Alt(alt string) *ActivitiesGetCall {
-	c.opt_["alt"] = alt
-	return c
-}
-
 func (c *ActivitiesGetCall) Do() (*Activity, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	if v, ok := c.opt_["alt"]; ok {
-		params.Set("alt", fmt.Sprintf("%v", v))
-	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/plus/v1/", "activities/{activityId}")
 	urls = strings.Replace(urls, "{activityId}", cleanPathString(c.activityId), 1)
 	urls += "?" + params.Encode()
@@ -804,18 +794,6 @@ func (c *ActivitiesGetCall) Do() (*Activity, error) {
 	//       "description": "The ID of the activity to get.",
 	//       "location": "path",
 	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "alt": {
-	//       "default": "json",
-	//       "description": "Specifies an alternative representation type.",
-	//       "enum": [
-	//         "json"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Use JSON format"
-	//       ],
-	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -848,13 +826,6 @@ func (r *ActivitiesService) List(userId string, collection string) *ActivitiesLi
 	return c
 }
 
-// Alt sets the optional parameter "alt": Specifies an alternative
-// representation type.
-func (c *ActivitiesListCall) Alt(alt string) *ActivitiesListCall {
-	c.opt_["alt"] = alt
-	return c
-}
-
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of activities to include in the response, used for paging. For
 // any response, the actual number returned may be less than the
@@ -877,9 +848,6 @@ func (c *ActivitiesListCall) Do() (*ActivityFeed, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	if v, ok := c.opt_["alt"]; ok {
-		params.Set("alt", fmt.Sprintf("%v", v))
-	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
@@ -913,18 +881,6 @@ func (c *ActivitiesListCall) Do() (*ActivityFeed, error) {
 	//     "collection"
 	//   ],
 	//   "parameters": {
-	//     "alt": {
-	//       "default": "json",
-	//       "description": "Specifies an alternative representation type.",
-	//       "enum": [
-	//         "json"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Use JSON format"
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "collection": {
 	//       "description": "The collection of activities to list.",
 	//       "enum": [
@@ -1188,13 +1144,6 @@ func (r *CommentsService) List(activityId string) *CommentsListCall {
 	return c
 }
 
-// Alt sets the optional parameter "alt": Specifies an alternative
-// representation type.
-func (c *CommentsListCall) Alt(alt string) *CommentsListCall {
-	c.opt_["alt"] = alt
-	return c
-}
-
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of comments to include in the response, used for paging. For
 // any response, the actual number returned may be less than the
@@ -1224,9 +1173,6 @@ func (c *CommentsListCall) Do() (*CommentFeed, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	if v, ok := c.opt_["alt"]; ok {
-		params.Set("alt", fmt.Sprintf("%v", v))
-	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
@@ -1265,18 +1211,6 @@ func (c *CommentsListCall) Do() (*CommentFeed, error) {
 	//       "description": "The ID of the activity to get comments for.",
 	//       "location": "path",
 	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "alt": {
-	//       "default": "json",
-	//       "description": "Specifies an alternative representation type.",
-	//       "enum": [
-	//         "json"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Use JSON format"
-	//       ],
-	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {

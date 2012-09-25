@@ -4,14 +4,14 @@
  "id": "adsense:v1.1",
  "name": "adsense",
  "version": "v1.1",
- "revision": "20120717",
+ "revision": "20120831",
  "title": "AdSense Management API",
  "description": "Gives AdSense publishers access to their inventory and the ability to generate reports",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/adsense-16.png",
   "x32": "http://www.google.com/images/icons/product/adsense-32.png"
  },
- "documentationLink": "https://code.google.com/apis/adsense/management/",
+ "documentationLink": "https://developers.google.com/adsense/management/",
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/adsense/v1.1/",
  "basePath": "/adsense/v1.1/",

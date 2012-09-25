@@ -1,6 +1,6 @@
 // Package prediction provides access to the Prediction API.
 //
-// See http://code.google.com/apis/predict/docs/developer-guide.html
+// See https://developers.google.com/prediction/docs/developer-guide
 //
 // Usage example:
 //
@@ -266,6 +266,9 @@ type Training struct {
 
 	// ModelInfo: Model metadata.
 	ModelInfo *TrainingModelInfo `json:"modelInfo,omitempty"`
+
+	// ModelType: Type of predictive model (classification or regression)
+	ModelType string `json:"modelType,omitempty"`
 
 	// SelfLink: A URL to re-request this resource.
 	SelfLink string `json:"selfLink,omitempty"`

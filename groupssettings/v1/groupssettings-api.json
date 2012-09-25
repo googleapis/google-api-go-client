@@ -4,13 +4,14 @@
  "id": "groupssettings:v1",
  "name": "groupssettings",
  "version": "v1",
- "revision": "20120516",
+ "revision": "20120831",
  "title": "Groups Settings API",
- "description": "Lets you manage permission levels and related settings of a group",
+ "description": "Lets you manage permission levels and related settings of a group.",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/search-16.gif",
   "x32": "http://www.google.com/images/icons/product/search-32.gif"
  },
+ "documentationLink": "https://developers.google.com/google-apps/groups-settings/get_started",
  "labels": [
   "limited_availability"
  ],
@@ -80,7 +81,7 @@
   "Groups": {
    "id": "Groups",
    "type": "object",
-   "description": "Groups resource",
+   "description": "JSON template for Group resource",
    "properties": {
     "allowExternalMembers": {
      "type": "string",
@@ -113,6 +114,10 @@
     "email": {
      "type": "string",
      "description": "Email id of the group"
+    },
+    "includeInGlobalAddressList": {
+     "type": "string",
+     "description": "If this groups should be included in global address list or not."
     },
     "isArchived": {
      "type": "string",
@@ -159,6 +164,10 @@
     "showInGroupDirectory": {
      "type": "string",
      "description": "Is the group listed in groups directory"
+    },
+    "spamModerationLevel": {
+     "type": "string",
+     "description": "Moderation level for messages detected as spam. Possible values are: ALLOW MODERATE SILENTLY_MODERATE REJECT"
     },
     "whoCanInvite": {
      "type": "string",

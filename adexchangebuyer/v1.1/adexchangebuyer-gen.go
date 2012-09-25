@@ -4,7 +4,7 @@
 //
 // Usage example:
 //
-//   import "code.google.com/p/google-api-go-client/adexchangebuyer/v1"
+//   import "code.google.com/p/google-api-go-client/adexchangebuyer/v1.1"
 //   ...
 //   adexchangebuyerService, err := adexchangebuyer.New(oauthHttpClient)
 package adexchangebuyer
@@ -31,10 +31,10 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 
-const apiId = "adexchangebuyer:v1"
+const apiId = "adexchangebuyer:v1.1"
 const apiName = "adexchangebuyer"
-const apiVersion = "v1"
-const basePath = "https://www.googleapis.com/adexchangebuyer/v1/"
+const apiVersion = "v1.1"
+const basePath = "https://www.googleapis.com/adexchangebuyer/v1.1/"
 
 // OAuth2 scopes used by this API.
 const (
@@ -103,6 +103,16 @@ type AccountBidderLocation struct {
 	// MaximumQps: The maximum queries per second the Ad Exchange will send.
 	MaximumQps int64 `json:"maximumQps,omitempty"`
 
+	// Region: The geographical region the Ad Exchange should send requests
+	// from. Only used by some quota systems, but always setting the value
+	// is recommended. Allowed values:  
+	// - ASIA 
+	// - EUROPE 
+	// - US_EAST 
+	// -
+	// US_WEST
+	Region string `json:"region,omitempty"`
+
 	// Url: The URL to which the Ad Exchange will send bid requests.
 	Url string `json:"url,omitempty"`
 }
@@ -122,10 +132,6 @@ type Creative struct {
 
 	// AccountId: Account id.
 	AccountId int64 `json:"accountId,omitempty"`
-
-	// AdgroupId: The pretargeting adgroup id that this creative will be
-	// associated with.
-	AdgroupId int64 `json:"adgroupId,omitempty,string"`
 
 	// AdvertiserId: Detected advertiser id, if any. Read-only. This field
 	// should not be set in requests.
@@ -259,7 +265,7 @@ func (c *AccountsGetCall) Do() (*Account, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1/", "accounts/{id}")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1.1/", "accounts/{id}")
 	urls = strings.Replace(urls, "{id}", strconv.FormatInt(c.id, 10), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -320,7 +326,7 @@ func (c *AccountsListCall) Do() (*AccountsList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1/", "accounts")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1.1/", "accounts")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
@@ -378,7 +384,7 @@ func (c *AccountsPatchCall) Do() (*Account, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1/", "accounts/{id}")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1.1/", "accounts/{id}")
 	urls = strings.Replace(urls, "{id}", strconv.FormatInt(c.id, 10), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
@@ -452,7 +458,7 @@ func (c *AccountsUpdateCall) Do() (*Account, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1/", "accounts/{id}")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1.1/", "accounts/{id}")
 	urls = strings.Replace(urls, "{id}", strconv.FormatInt(c.id, 10), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
@@ -506,16 +512,14 @@ type CreativesGetCall struct {
 	s               *Service
 	accountId       int64
 	buyerCreativeId string
-	adgroupId       int64
 	opt_            map[string]interface{}
 }
 
 // Get: Gets the status for a single creative.
-func (r *CreativesService) Get(accountId int64, buyerCreativeId string, adgroupId int64) *CreativesGetCall {
+func (r *CreativesService) Get(accountId int64, buyerCreativeId string) *CreativesGetCall {
 	c := &CreativesGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.accountId = accountId
 	c.buyerCreativeId = buyerCreativeId
-	c.adgroupId = adgroupId
 	return c
 }
 
@@ -523,8 +527,7 @@ func (c *CreativesGetCall) Do() (*Creative, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	params.Set("adgroupId", fmt.Sprintf("%v", c.adgroupId))
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1/", "creatives/{accountId}/{buyerCreativeId}")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1.1/", "creatives/{accountId}/{buyerCreativeId}")
 	urls = strings.Replace(urls, "{accountId}", strconv.FormatInt(c.accountId, 10), 1)
 	urls = strings.Replace(urls, "{buyerCreativeId}", cleanPathString(c.buyerCreativeId), 1)
 	urls += "?" + params.Encode()
@@ -548,8 +551,7 @@ func (c *CreativesGetCall) Do() (*Creative, error) {
 	//   "id": "adexchangebuyer.creatives.get",
 	//   "parameterOrder": [
 	//     "accountId",
-	//     "buyerCreativeId",
-	//     "adgroupId"
+	//     "buyerCreativeId"
 	//   ],
 	//   "parameters": {
 	//     "accountId": {
@@ -558,13 +560,6 @@ func (c *CreativesGetCall) Do() (*Creative, error) {
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "integer"
-	//     },
-	//     "adgroupId": {
-	//       "description": "The adgroup this creative belongs to.",
-	//       "format": "int64",
-	//       "location": "query",
-	//       "required": true,
-	//       "type": "string"
 	//     },
 	//     "buyerCreativeId": {
 	//       "description": "The buyer-specific id for this creative.",
@@ -608,7 +603,7 @@ func (c *CreativesInsertCall) Do() (*Creative, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1/", "creatives")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1.1/", "creatives")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.Header.Set("Content-Type", ctype)
@@ -673,6 +668,13 @@ func (c *CreativesListCall) PageToken(pageToken string) *CreativesListCall {
 	return c
 }
 
+// StatusFilter sets the optional parameter "statusFilter": When
+// specified, only creatives having the given status are returned.
+func (c *CreativesListCall) StatusFilter(statusFilter string) *CreativesListCall {
+	c.opt_["statusFilter"] = statusFilter
+	return c
+}
+
 func (c *CreativesListCall) Do() (*CreativesList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -683,7 +685,10 @@ func (c *CreativesListCall) Do() (*CreativesList, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1/", "creatives")
+	if v, ok := c.opt_["statusFilter"]; ok {
+		params.Set("statusFilter", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1.1/", "creatives")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
@@ -714,6 +719,21 @@ func (c *CreativesListCall) Do() (*CreativesList, error) {
 	//     },
 	//     "pageToken": {
 	//       "description": "A continuation token, used to page through ad clients. To retrieve the next page, set this parameter to the value of \"nextPageToken\" from the previous response. Optional.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "statusFilter": {
+	//       "description": "When specified, only creatives having the given status are returned.",
+	//       "enum": [
+	//         "approved",
+	//         "disapproved",
+	//         "not_checked"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Creatives which have been approved.",
+	//         "Creatives which have been disapproved.",
+	//         "Creatives whose status is not yet checked."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -748,7 +768,7 @@ func (c *DirectDealsGetCall) Do() (*DirectDeal, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1/", "directdeals/{id}")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1.1/", "directdeals/{id}")
 	urls = strings.Replace(urls, "{id}", strconv.FormatInt(c.id, 10), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -809,7 +829,7 @@ func (c *DirectDealsListCall) Do() (*DirectDealsList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1/", "directdeals")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1.1/", "directdeals")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")

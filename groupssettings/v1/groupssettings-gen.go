@@ -1,5 +1,7 @@
 // Package groupssettings provides access to the Groups Settings API.
 //
+// See https://developers.google.com/google-apps/groups-settings/get_started
+//
 // Usage example:
 //
 //   import "code.google.com/p/google-api-go-client/groupssettings/v1"
@@ -85,6 +87,10 @@ type Groups struct {
 	// Email: Email id of the group
 	Email string `json:"email,omitempty"`
 
+	// IncludeInGlobalAddressList: If this groups should be included in
+	// global address list or not.
+	IncludeInGlobalAddressList string `json:"includeInGlobalAddressList,omitempty"`
+
 	// IsArchived: If the contents of the group are archived.
 	IsArchived string `json:"isArchived,omitempty"`
 
@@ -124,6 +130,10 @@ type Groups struct {
 
 	// ShowInGroupDirectory: Is the group listed in groups directory
 	ShowInGroupDirectory string `json:"showInGroupDirectory,omitempty"`
+
+	// SpamModerationLevel: Moderation level for messages detected as spam.
+	// Possible values are: ALLOW MODERATE SILENTLY_MODERATE REJECT
+	SpamModerationLevel string `json:"spamModerationLevel,omitempty"`
 
 	// WhoCanInvite: Permissions to invite members. Possbile values are:
 	// ALL_MEMBERS_CAN_INVITE ALL_MANAGERS_CAN_INVITE

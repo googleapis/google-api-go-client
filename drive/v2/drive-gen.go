@@ -124,7 +124,8 @@ type RevisionsService struct {
 }
 
 type About struct {
-	// AdditionalRoleInfo: Additional ACL role info.
+	// AdditionalRoleInfo: Information about supported additional roles per
+	// file type. The most specific type takes precedence.
 	AdditionalRoleInfo []*AboutAdditionalRoleInfo `json:"additionalRoleInfo,omitempty"`
 
 	// DomainSharingPolicy: The domain sharing policy for the current user.
@@ -152,7 +153,8 @@ type About struct {
 	// LargestChangeId: The largest change id.
 	LargestChangeId int64 `json:"largestChangeId,omitempty,string"`
 
-	// MaxUploadSizes: List of max upload sizes for each file type.
+	// MaxUploadSizes: List of max upload sizes for each file type. The most
+	// specific type takes precedence.
 	MaxUploadSizes []*AboutMaxUploadSizes `json:"maxUploadSizes,omitempty"`
 
 	// Name: The name of the current user.
@@ -183,18 +185,19 @@ type About struct {
 }
 
 type AboutAdditionalRoleInfo struct {
-	// RoleSets: The role sets for this role info item.
+	// RoleSets: The supported additional roles per primary role.
 	RoleSets []*AboutAdditionalRoleInfoRoleSets `json:"roleSets,omitempty"`
 
-	// Type: The content type for this ACL role info item.
+	// Type: The content type that this additional role info applies to.
 	Type string `json:"type,omitempty"`
 }
 
 type AboutAdditionalRoleInfoRoleSets struct {
-	// AdditionalRoles: The list of additional roles for this role set.
+	// AdditionalRoles: The supported additional roles with the primary
+	// role.
 	AdditionalRoles []string `json:"additionalRoles,omitempty"`
 
-	// PrimaryRole: The primary role for this role set.
+	// PrimaryRole: A primary permission role.
 	PrimaryRole string `json:"primaryRole,omitempty"`
 }
 
@@ -251,7 +254,8 @@ type App struct {
 	// Name: The name of the app.
 	Name string `json:"name,omitempty"`
 
-	// ObjectType: The name of the type of object this app creates.
+	// ObjectType: The type of object this app creates (e.g. Chart). If
+	// empty, the app name should be used instead.
 	ObjectType string `json:"objectType,omitempty"`
 
 	// PrimaryFileExtensions: The list of primary file extensions.
@@ -274,6 +278,10 @@ type App struct {
 
 	// SupportsImport: Whether this app supports importing Google Docs.
 	SupportsImport bool `json:"supportsImport,omitempty"`
+
+	// UseByDefault: Whether the app is selected as the default handler for
+	// the types it supports.
+	UseByDefault bool `json:"useByDefault,omitempty"`
 }
 
 type AppIcons struct {
@@ -320,7 +328,7 @@ type Change struct {
 	FileId string `json:"fileId,omitempty"`
 
 	// Id: The ID of the change.
-	Id uint64 `json:"id,omitempty,string"`
+	Id int64 `json:"id,omitempty,string"`
 
 	// Kind: This is always drive#change.
 	Kind string `json:"kind,omitempty"`
@@ -340,7 +348,7 @@ type ChangeList struct {
 	Kind string `json:"kind,omitempty"`
 
 	// LargestChangeId: The current largest change ID.
-	LargestChangeId uint64 `json:"largestChangeId,omitempty,string"`
+	LargestChangeId int64 `json:"largestChangeId,omitempty,string"`
 
 	// NextLink: A link to the next page of changes.
 	NextLink string `json:"nextLink,omitempty"`
@@ -387,7 +395,8 @@ type ChildReference struct {
 }
 
 type File struct {
-	// AlternateLink: A link for opening the file in a browser.
+	// AlternateLink: A link for opening the file in using a relevant Google
+	// editor or viewer.
 	AlternateLink string `json:"alternateLink,omitempty"`
 
 	// CreatedDate: Create time for this file (formatted ISO8601 timestamp).
@@ -409,13 +418,18 @@ type File struct {
 	// Etag: ETag of the file.
 	Etag string `json:"etag,omitempty"`
 
+	// ExplicitlyTrashed: Whether this file has been explicitly trashed, as
+	// opposed to recursively trashed. This will only be populated if the
+	// file is trashed.
+	ExplicitlyTrashed bool `json:"explicitlyTrashed,omitempty"`
+
 	// ExportLinks: Links for exporting Google Docs to specific formats.
 	ExportLinks *FileExportLinks `json:"exportLinks,omitempty"`
 
 	// FileExtension: The file extension used when downloading this file.
-	// This field is read only. To set the extension, include it on title
-	// when creating the file. This will only be populated on files with
-	// content stored in Drive.
+	// This field is set from the title when inserting or uploading new
+	// content. This will only be populated on files with content stored in
+	// Drive.
 	FileExtension string `json:"fileExtension,omitempty"`
 
 	// FileSize: The size of the file in bytes. This will only be populated
@@ -424,6 +438,11 @@ type File struct {
 
 	// Id: The id of the file.
 	Id string `json:"id,omitempty"`
+
+	// ImageMediaMetadata: Metadata about image media. This will only be
+	// present for image types, and its contents will depend on what can be
+	// parsed from the image content.
+	ImageMediaMetadata *FileImageMediaMetadata `json:"imageMediaMetadata,omitempty"`
 
 	// IndexableText: Indexable text attributes for the file (can only be
 	// written)
@@ -447,19 +466,26 @@ type File struct {
 	// only be populated on files with content stored in Drive.
 	Md5Checksum string `json:"md5Checksum,omitempty"`
 
-	// MimeType: The MIME type of the file.
+	// MimeType: The MIME type of the file. This is only mutable on update
+	// when uploading new content. This field can be left blank, and the
+	// mimetype will be determined from the uploaded content's MIME type.
 	MimeType string `json:"mimeType,omitempty"`
 
 	// ModifiedByMeDate: Last time this file was modified by the user
-	// (formatted RFC 3339 timestamp).
+	// (formatted RFC 3339 timestamp). Note that setting modifiedDate will
+	// also update the modifiedByMe date for the user which set the date.
 	ModifiedByMeDate string `json:"modifiedByMeDate,omitempty"`
 
 	// ModifiedDate: Last time this file was modified by anyone (formatted
-	// RFC 3339 timestamp).
+	// RFC 3339 timestamp). This is only mutable on update when the
+	// setModifiedDate parameter is set.
 	ModifiedDate string `json:"modifiedDate,omitempty"`
 
-	// OriginalFilename: The filename when uploading this file. This will
-	// only be populated on files with content stored in Drive.
+	// OriginalFilename: The original filename if the file was uploaded
+	// manually, or the original title if the file was inserted through the
+	// API. Note that renames of the title will not change the original
+	// filename. This will only be populated on files with content stored in
+	// Drive.
 	OriginalFilename string `json:"originalFilename,omitempty"`
 
 	// OwnerNames: Name(s) of the owner(s) of this file.
@@ -471,9 +497,6 @@ type File struct {
 	// folders. On insert, if no folders are provided, the file will be
 	// placed in the default root folder.
 	Parents []*ParentReference `json:"parents,omitempty"`
-
-	// PermissionsLink: A link to the permissions collection.
-	PermissionsLink string `json:"permissionsLink,omitempty"`
 
 	// QuotaBytesUsed: The number of quota bytes used by this file.
 	QuotaBytesUsed int64 `json:"quotaBytesUsed,omitempty,string"`
@@ -495,12 +518,44 @@ type File struct {
 	// file.
 	UserPermission *Permission `json:"userPermission,omitempty"`
 
+	// WebContentLink: A link for downloading the content of the file in a
+	// browser using cookie based authentication. In cases where the content
+	// is shared publicly, the content can be downloaded without any
+	// credentials.
+	WebContentLink string `json:"webContentLink,omitempty"`
+
 	// WritersCanShare: Whether writers can share the document with other
 	// users.
 	WritersCanShare bool `json:"writersCanShare,omitempty"`
 }
 
 type FileExportLinks struct {
+}
+
+type FileImageMediaMetadata struct {
+	// Height: The height of the image in pixels.
+	Height int64 `json:"height,omitempty"`
+
+	// Location: Geographic location information stored in the image.
+	Location *FileImageMediaMetadataLocation `json:"location,omitempty"`
+
+	// Rotation: The rotation in clockwise degrees from the image's original
+	// orientation.
+	Rotation int64 `json:"rotation,omitempty"`
+
+	// Width: The width of the image in pixels.
+	Width int64 `json:"width,omitempty"`
+}
+
+type FileImageMediaMetadataLocation struct {
+	// Altitude: The altitude stored in the image.
+	Altitude float64 `json:"altitude,omitempty"`
+
+	// Latitude: The latitude stored in the image.
+	Latitude float64 `json:"latitude,omitempty"`
+
+	// Longitude: The longitude stored in the image.
+	Longitude float64 `json:"longitude,omitempty"`
 }
 
 type FileIndexableText struct {
@@ -680,22 +735,27 @@ type Revision struct {
 	OriginalFilename string `json:"originalFilename,omitempty"`
 
 	// Pinned: Whether this revision is pinned to prevent automatic purging.
-	// This will only be populated on files with content stored in Drive.
+	// This will only be populated and can only be modified on files with
+	// content stored in Drive which are not Google Docs. Revisions can also
+	// be pinned when they are created through the
+	// drive.files.insert/update/copy by using the pinned query parameter.
 	Pinned bool `json:"pinned,omitempty"`
 
 	// PublishAuto: Whether subsequent revisions will be automatically
-	// republished.
+	// republished. This is only populated and can only be modified for
+	// Google Docs.
 	PublishAuto bool `json:"publishAuto,omitempty"`
 
 	// Published: Whether this revision is published. This is only populated
-	// for Google Docs.
+	// and can only be modified for Google Docs.
 	Published bool `json:"published,omitempty"`
 
 	// PublishedLink: A link to the published revision.
 	PublishedLink string `json:"publishedLink,omitempty"`
 
 	// PublishedOutsideDomain: Whether this revision is published outside
-	// the domain.
+	// the domain. This is only populated and can only be modified for
+	// Google Docs.
 	PublishedOutsideDomain bool `json:"publishedOutsideDomain,omitempty"`
 
 	// SelfLink: A link back to this revision.
@@ -743,7 +803,7 @@ func (c *AboutGetCall) IncludeSubscribed(includeSubscribed bool) *AboutGetCall {
 
 // MaxChangeIdCount sets the optional parameter "maxChangeIdCount":
 // Maximum number of remaining change IDs to count
-func (c *AboutGetCall) MaxChangeIdCount(maxChangeIdCount uint64) *AboutGetCall {
+func (c *AboutGetCall) MaxChangeIdCount(maxChangeIdCount int64) *AboutGetCall {
 	c.opt_["maxChangeIdCount"] = maxChangeIdCount
 	return c
 }
@@ -751,7 +811,7 @@ func (c *AboutGetCall) MaxChangeIdCount(maxChangeIdCount uint64) *AboutGetCall {
 // StartChangeId sets the optional parameter "startChangeId": Change ID
 // to start counting from when calculating number of remaining change
 // IDs
-func (c *AboutGetCall) StartChangeId(startChangeId uint64) *AboutGetCall {
+func (c *AboutGetCall) StartChangeId(startChangeId int64) *AboutGetCall {
 	c.opt_["startChangeId"] = startChangeId
 	return c
 }
@@ -799,13 +859,13 @@ func (c *AboutGetCall) Do() (*About, error) {
 	//     "maxChangeIdCount": {
 	//       "default": "1",
 	//       "description": "Maximum number of remaining change IDs to count",
-	//       "format": "uint64",
+	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "startChangeId": {
 	//       "description": "Change ID to start counting from when calculating number of remaining change IDs",
-	//       "format": "uint64",
+	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -819,6 +879,68 @@ func (c *AboutGetCall) Do() (*About, error) {
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "drive.apps.get":
+
+type AppsGetCall struct {
+	s     *Service
+	appId string
+	opt_  map[string]interface{}
+}
+
+// Get: Gets a specific app.
+func (r *AppsService) Get(appId string) *AppsGetCall {
+	c := &AppsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.appId = appId
+	return c
+}
+
+func (c *AppsGetCall) Do() (*App, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "apps/{appId}")
+	urls = strings.Replace(urls, "{appId}", cleanPathString(c.appId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(App)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a specific app.",
+	//   "httpMethod": "GET",
+	//   "id": "drive.apps.get",
+	//   "parameterOrder": [
+	//     "appId"
+	//   ],
+	//   "parameters": {
+	//     "appId": {
+	//       "description": "The ID of the app.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "apps/{appId}",
+	//   "response": {
+	//     "$ref": "App"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive.apps.readonly"
 	//   ]
 	// }
 
@@ -980,7 +1102,7 @@ func (c *ChangesListCall) PageToken(pageToken string) *ChangesListCall {
 
 // StartChangeId sets the optional parameter "startChangeId": Change ID
 // to start listing changes from.
-func (c *ChangesListCall) StartChangeId(startChangeId uint64) *ChangesListCall {
+func (c *ChangesListCall) StartChangeId(startChangeId int64) *ChangesListCall {
 	c.opt_["startChangeId"] = startChangeId
 	return c
 }
@@ -1052,7 +1174,7 @@ func (c *ChangesListCall) Do() (*ChangeList, error) {
 	//     },
 	//     "startChangeId": {
 	//       "description": "Change ID to start listing changes from.",
-	//       "format": "uint64",
+	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -1668,8 +1790,8 @@ func (r *FilesService) Get(fileId string) *FilesGetCall {
 	return c
 }
 
-// Projection sets the optional parameter "projection": Restrict
-// information returned for simplicity and optimization.
+// Projection sets the optional parameter "projection": This parameter
+// is deprecated and has no function.
 func (c *FilesGetCall) Projection(projection string) *FilesGetCall {
 	c.opt_["projection"] = projection
 	return c
@@ -1725,14 +1847,14 @@ func (c *FilesGetCall) Do() (*File, error) {
 	//       "type": "string"
 	//     },
 	//     "projection": {
-	//       "description": "Restrict information returned for simplicity and optimization.",
+	//       "description": "This parameter is deprecated and has no function.",
 	//       "enum": [
 	//         "BASIC",
 	//         "FULL"
 	//       ],
 	//       "enumDescriptions": [
-	//         "Includes only the basic metadata fields",
-	//         "Includes all metadata fields"
+	//         "Deprecated",
+	//         "Deprecated"
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -2001,8 +2123,8 @@ func (c *FilesListCall) PageToken(pageToken string) *FilesListCall {
 	return c
 }
 
-// Projection sets the optional parameter "projection": Restrict
-// information returned for simplicity and optimization.
+// Projection sets the optional parameter "projection": This parameter
+// is deprecated and has no function.
 func (c *FilesListCall) Projection(projection string) *FilesListCall {
 	c.opt_["projection"] = projection
 	return c
@@ -2065,14 +2187,14 @@ func (c *FilesListCall) Do() (*FileList, error) {
 	//       "type": "string"
 	//     },
 	//     "projection": {
-	//       "description": "Restrict information returned for simplicity and optimization.",
+	//       "description": "This parameter is deprecated and has no function.",
 	//       "enum": [
 	//         "BASIC",
 	//         "FULL"
 	//       ],
 	//       "enumDescriptions": [
-	//         "Includes only the basic metadata fields",
-	//         "Includes all metadata fields"
+	//         "Deprecated",
+	//         "Deprecated"
 	//       ],
 	//       "location": "query",
 	//       "type": "string"

@@ -1,6 +1,6 @@
 // Package prediction provides access to the Prediction API.
 //
-// See http://code.google.com/apis/predict/docs/developer-guide.html
+// See https://developers.google.com/prediction/docs/developer-guide
 //
 // Usage example:
 //

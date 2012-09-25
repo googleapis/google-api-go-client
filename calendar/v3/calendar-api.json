@@ -4,14 +4,14 @@
  "id": "calendar:v3",
  "name": "calendar",
  "version": "v3",
- "revision": "20120423",
+ "revision": "20120821",
  "title": "Calendar API",
  "description": "Lets you manipulate events and other calendar data.",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/calendar-16.png",
   "x32": "http://www.google.com/images/icons/product/calendar-32.png"
  },
- "documentationLink": "http://code.google.com/apis/calendar/v3/using.html",
+ "documentationLink": "https://developers.google.com/google-apps/calendar/firstapp",
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/calendar/v3/",
  "basePath": "/calendar/v3/",
@@ -228,6 +228,10 @@
      "type": "string",
      "description": "The effective access role that the authenticated user has on the calendar. Read-only. Possible values are:  \n- \"freeBusyReader\" - Provides read access to free/busy information. \n- \"reader\" - Provides read access to the calendar. Private events will appear to users with reader access, but event details will be hidden. \n- \"writer\" - Provides read and write access to the calendar. Private events will appear to users with writer access, and event details will be visible. \n- \"owner\" - Provides ownership of the calendar. This role has all of the permissions of the writer role with the additional ability to see and manipulate ACLs."
     },
+    "backgroundColor": {
+     "type": "string",
+     "description": "The main color of the calendar in the format '#0088aa'. This property supersedes the index-based colorId property. Optional."
+    },
     "colorId": {
      "type": "string",
      "description": "The color of the calendar. This is an ID referring to an entry in the \"calendar\" section of the colors definition (see the \"colors\" endpoint). Optional."
@@ -246,6 +250,10 @@
     "etag": {
      "type": "string",
      "description": "ETag of the resource."
+    },
+    "foregroundColor": {
+     "type": "string",
+     "description": "The foreground color of the calendar in the format '#ffffff'. This property supersedes the index-based colorId property. Optional."
     },
     "hidden": {
      "type": "boolean",
@@ -364,7 +372,7 @@
     },
     "attendeesOmitted": {
      "type": "boolean",
-     "description": "Whether attendees have been omitted from the event's representation. When retrieving an event, this is due to a restriction specified by the 'maxAttendee' query parameter. When updating an event, this can be used to only update the participant's response. Optional. The default is False."
+     "description": "Whether attendees may have been omitted from the event's representation. When retrieving an event, this may be due to a restriction specified by the 'maxAttendee' query parameter. When updating an event, this can be used to only update the participant's response. Optional. The default is False."
     },
     "colorId": {
      "type": "string",
@@ -413,7 +421,8 @@
      }
     },
     "endTimeUnspecified": {
-     "type": "boolean"
+     "type": "boolean",
+     "description": "Whether the end time is actually unspecified. An end time is still provided for compatibility reasons, even if this attribute is set to True. The default is False."
     },
     "etag": {
      "type": "string",
@@ -496,6 +505,10 @@
     "guestsCanSeeOtherGuests": {
      "type": "boolean",
      "description": "Whether attendees other than the organizer can see who the event's attendees are. Optional. The default is False."
+    },
+    "hangoutLink": {
+     "type": "string",
+     "description": "An absolute link to the Google+ hangout associated with this event. Read-only."
     },
     "htmlLink": {
      "type": "string",
@@ -1200,6 +1213,13 @@
      "path": "users/me/calendarList",
      "httpMethod": "POST",
      "description": "Adds an entry to the user's calendar list.",
+     "parameters": {
+      "colorRgbFormat": {
+       "type": "boolean",
+       "description": "Whether to use the 'frontendColor' and 'backgroundColor' fields to write the calendar colors (RGB). If this feature is used, the index-based 'color' field will be set to the best matching option automatically. Optional. The default is False.",
+       "location": "query"
+      }
+     },
      "request": {
       "$ref": "CalendarListEntry"
      },
@@ -1270,6 +1290,11 @@
        "description": "Calendar identifier.",
        "required": true,
        "location": "path"
+      },
+      "colorRgbFormat": {
+       "type": "boolean",
+       "description": "Whether to use the 'frontendColor' and 'backgroundColor' fields to write the calendar colors (RGB). If this feature is used, the index-based 'color' field will be set to the best matching option automatically. Optional. The default is False.",
+       "location": "query"
       }
      },
      "parameterOrder": [
@@ -1296,6 +1321,11 @@
        "description": "Calendar identifier.",
        "required": true,
        "location": "path"
+      },
+      "colorRgbFormat": {
+       "type": "boolean",
+       "description": "Whether to use the 'frontendColor' and 'backgroundColor' fields to write the calendar colors (RGB). If this feature is used, the index-based 'color' field will be set to the best matching option automatically. Optional. The default is False.",
+       "location": "query"
       }
      },
      "parameterOrder": [
@@ -1735,7 +1765,7 @@
       },
       "showDeleted": {
        "type": "boolean",
-       "description": "Whether to include deleted events (with 'eventStatus' equals 'cancelled') in the result. Optional. The default is False.",
+       "description": "Whether to include deleted single events (with 'status' equals 'cancelled') in the result. Cancelled instances of recurring events will still be included if 'singleEvents' is False. Optional. The default is False.",
        "location": "query"
       },
       "showHiddenInvitations": {

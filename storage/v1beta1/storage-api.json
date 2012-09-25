@@ -4,14 +4,14 @@
  "id": "storage:v1beta1",
  "name": "storage",
  "version": "v1beta1",
- "revision": "20120626",
+ "revision": "20120806",
  "title": "Cloud Storage API",
  "description": "Lets you store and retrieve potentially-large, immutable data objects.",
  "icons": {
   "x16": "https://www.google.com/images/icons/product/cloud_storage-16.png",
   "x32": "https://www.google.com/images/icons/product/cloud_storage-32.png"
  },
- "documentationLink": "https://code.google.com/apis/storage/docs/developer-guide.html",
+ "documentationLink": "https://developers.google.com/storage/docs/json_api/",
  "labels": [
   "limited_availability"
  ],
@@ -301,6 +301,10 @@
     "contentEncoding": {
      "type": "string",
      "description": "Content-Encoding of the object data."
+    },
+    "contentLanguage": {
+     "type": "string",
+     "description": "Content-Language of the object data."
     },
     "id": {
      "type": "string",

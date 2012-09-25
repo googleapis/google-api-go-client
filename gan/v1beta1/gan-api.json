@@ -4,7 +4,7 @@
  "id": "gan:v1beta1",
  "name": "gan",
  "version": "v1beta1",
- "revision": "20120501",
+ "revision": "20120727",
  "title": "Google Affiliate Network API",
  "description": "Lets you have programmatic access to your Google Affiliate Network data.",
  "icons": {
@@ -101,6 +101,11 @@
     "contactPhone": {
      "type": "string",
      "description": "Phone that this advertiser would like publishers to contact them with."
+    },
+    "defaultLinkId": {
+     "type": "string",
+     "description": "The default link id for this advertiser.",
+     "format": "int64"
     },
     "description": {
      "type": "string",
@@ -715,14 +720,14 @@
      "type": "string",
      "description": "Availability."
     },
+    "clickTrackingUrl": {
+     "type": "string",
+     "description": "Tracking url for clicks."
+    },
     "createDate": {
      "type": "string",
      "description": "Date that this link was created.",
      "format": "date-time"
-    },
-    "creativeType": {
-     "type": "string",
-     "description": "Creative Type."
     },
     "description": {
      "type": "string",
@@ -750,6 +755,10 @@
      "type": "string",
      "description": "image alt text."
     },
+    "impressionTrackingUrl": {
+     "type": "string",
+     "description": "Tracking url for impressions."
+    },
     "isActive": {
      "type": "boolean",
      "description": "Flag for if this link is active."
@@ -758,6 +767,10 @@
      "type": "string",
      "description": "The kind for one entity.",
      "default": "gan#link"
+    },
+    "linkType": {
+     "type": "string",
+     "description": "The link type."
     },
     "name": {
      "type": "string",

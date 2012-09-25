@@ -1,6 +1,6 @@
 // Package analytics provides access to the Google Analytics API.
 //
-// See http://code.google.com/apis/analytics
+// See https://developers.google.com/analytics/
 //
 // Usage example:
 //
@@ -38,6 +38,9 @@ const basePath = "https://www.googleapis.com/analytics/v3/"
 
 // OAuth2 scopes used by this API.
 const (
+	// View and manage your Google Analytics data
+	AnalyticsScope = "https://www.googleapis.com/auth/analytics"
+
 	// View your Google Analytics data
 	AnalyticsReadonlyScope = "https://www.googleapis.com/auth/analytics.readonly"
 )
@@ -106,7 +109,7 @@ type Accounts struct {
 
 	// ItemsPerPage: The maximum number of entries the response can contain,
 	// regardless of the actual number of entries returned. Its value ranges
-	// from 1 to 10,000 with a value of 1000 by default, or otherwise
+	// from 1 to 1000 with a value of 1000 by default, or otherwise
 	// specified by the max-results query parameter.
 	ItemsPerPage int64 `json:"itemsPerPage,omitempty"`
 
@@ -409,7 +412,7 @@ type Goals struct {
 
 	// ItemsPerPage: The maximum number of resources the response can
 	// contain, regardless of the actual number of resources returned. Its
-	// value ranges from 1 to 10,000 with a value of 1000 by default, or
+	// value ranges from 1 to 1000 with a value of 1000 by default, or
 	// otherwise specified by the max-results query parameter.
 	ItemsPerPage int64 `json:"itemsPerPage,omitempty"`
 
@@ -594,6 +597,9 @@ type Profile struct {
 	// DefaultPage: Default page for this profile.
 	DefaultPage string `json:"defaultPage,omitempty"`
 
+	// ECommerceTracking: E-commerce tracking parameter for this profile.
+	ECommerceTracking bool `json:"eCommerceTracking,omitempty"`
+
 	// ExcludeQueryParameters: The query parameters that are excluded from
 	// this profile.
 	ExcludeQueryParameters string `json:"excludeQueryParameters,omitempty"`
@@ -635,6 +641,9 @@ type Profile struct {
 	// WebPropertyId: Web property ID of the form UA-XXXXX-YY to which this
 	// profile belongs.
 	WebPropertyId string `json:"webPropertyId,omitempty"`
+
+	// WebsiteUrl: Website URL for this profile.
+	WebsiteUrl string `json:"websiteUrl,omitempty"`
 }
 
 type ProfileChildLink struct {
@@ -659,7 +668,7 @@ type Profiles struct {
 
 	// ItemsPerPage: The maximum number of resources the response can
 	// contain, regardless of the actual number of resources returned. Its
-	// value ranges from 1 to 10,000 with a value of 1000 by default, or
+	// value ranges from 1 to 1000 with a value of 1000 by default, or
 	// otherwise specified by the max-results query parameter.
 	ItemsPerPage int64 `json:"itemsPerPage,omitempty"`
 
@@ -717,7 +726,7 @@ type Segments struct {
 
 	// ItemsPerPage: The maximum number of resources the response can
 	// contain, regardless of the actual number of resources returned. Its
-	// value ranges from 1 to 10,000 with a value of 1000 by default, or
+	// value ranges from 1 to 1000 with a value of 1000 by default, or
 	// otherwise specified by the max-results query parameter.
 	ItemsPerPage int64 `json:"itemsPerPage,omitempty"`
 
@@ -749,7 +758,7 @@ type Webproperties struct {
 
 	// ItemsPerPage: The maximum number of resources the response can
 	// contain, regardless of the actual number of resources returned. Its
-	// value ranges from 1 to 10,000 with a value of 1000 by default, or
+	// value ranges from 1 to 1000 with a value of 1000 by default, or
 	// otherwise specified by the max-results query parameter.
 	ItemsPerPage int64 `json:"itemsPerPage,omitempty"`
 

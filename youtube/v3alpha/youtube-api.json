@@ -5,7 +5,7 @@
  "name": "youtube",
  "canonicalName": "YouTube",
  "version": "v3alpha",
- "revision": "20120827",
+ "revision": "20120831",
  "title": "YouTube API",
  "description": "Programmatic access to YouTube features.",
  "icons": {
@@ -86,6 +86,200 @@
   }
  },
  "schemas": {
+  "Activity": {
+   "id": "Activity",
+   "type": "object",
+   "description": "JSON template for a YouTube activity.",
+   "properties": {
+    "contentDetails": {
+     "$ref": "ActivityContentDetails",
+     "description": "Type specific information about the activity."
+    },
+    "etag": {
+     "type": "string",
+     "description": "The eTag of the activity."
+    },
+    "id": {
+     "type": "string",
+     "description": "The unique ID of the activity."
+    },
+    "snippet": {
+     "$ref": "ActivitySnippet",
+     "description": "Basic details about the activity: title, description, thumbnails."
+    }
+   }
+  },
+  "ActivityContentDetails": {
+   "id": "ActivityContentDetails",
+   "type": "object",
+   "description": "JSON template for the contentDetails part of a activity.",
+   "properties": {
+    "bulletinPosted": {
+     "type": "object",
+     "description": "Only present if the type is \"bulletinPosted\".",
+     "properties": {
+      "bulletinText": {
+       "type": "string",
+       "description": "Text if the posted bulletin."
+      },
+      "playlistId": {
+       "type": "string",
+       "description": "ID of the playlist this bulletin is about."
+      },
+      "videoId": {
+       "type": "string",
+       "description": "ID of the video this bulletin is about."
+      }
+     }
+    },
+    "subscriptionAdded": {
+     "type": "object",
+     "description": "Only present if the type is \"subscriptionAdded\".",
+     "properties": {
+      "channelId": {
+       "type": "string",
+       "description": "ID of the channel subscribed to."
+      }
+     }
+    },
+    "videoAddedToPlaylist": {
+     "type": "object",
+     "description": "Only present if the type is \"videoAddedToPlaylist\".",
+     "properties": {
+      "playlistId": {
+       "type": "string",
+       "description": "ID of the playlist the video was added to."
+      },
+      "videoId": {
+       "type": "string",
+       "description": "ID of the video added to the playlist."
+      }
+     }
+    },
+    "videoCommented": {
+     "type": "object",
+     "description": "Only present if the type is \"videoCommented\".",
+     "properties": {
+      "videoId": {
+       "type": "string",
+       "description": "ID of the commented video."
+      }
+     }
+    },
+    "videoFavorited": {
+     "type": "object",
+     "description": "Only present if the type is \"videoFavorited\".",
+     "properties": {
+      "videoId": {
+       "type": "string",
+       "description": "ID of the favorited video."
+      }
+     }
+    },
+    "videoRated": {
+     "type": "object",
+     "description": "Only present if the type is \"videoRated\".",
+     "properties": {
+      "videoId": {
+       "type": "string",
+       "description": "ID of the rated video."
+      }
+     }
+    },
+    "videoRecommended": {
+     "type": "object",
+     "description": "Only set if the type is \"videoRecommended\".",
+     "properties": {
+      "recommendationReason": {
+       "type": "string",
+       "description": "Reason for which the video was recommended."
+      },
+      "seedVideoId": {
+       "type": "string",
+       "description": "ID of the video that caused this recommendation."
+      },
+      "videoId": {
+       "type": "string",
+       "description": "ID of the recommended video."
+      }
+     }
+    },
+    "videoUploaded": {
+     "type": "object",
+     "description": "Only present if the type is \"videoUploaded\".",
+     "properties": {
+      "videoId": {
+       "type": "string",
+       "description": "ID of the uploaded video."
+      }
+     }
+    }
+   }
+  },
+  "ActivityListResponse": {
+   "id": "ActivityListResponse",
+   "type": "object",
+   "description": "JSON template for a ActivityService.List() response.",
+   "properties": {
+    "activities": {
+     "type": "object",
+     "description": "Map of activities matching the request criteria, keyed by activity id.",
+     "additionalProperties": {
+      "$ref": "Activity",
+      "description": "An entry in the \"activities\" map: the key is the activity id, the value is the activity resource."
+     }
+    },
+    "etag": {
+     "type": "string",
+     "description": "The eTag of the response."
+    },
+    "kind": {
+     "type": "string",
+     "description": "The type of this API response.",
+     "default": "youtube#activityListResponse"
+    }
+   }
+  },
+  "ActivitySnippet": {
+   "id": "ActivitySnippet",
+   "type": "object",
+   "description": "JSON template for the snippet part of a activity.",
+   "properties": {
+    "channelId": {
+     "type": "string",
+     "description": "Channel responsible for this activity."
+    },
+    "description": {
+     "type": "string",
+     "description": "Description of the main resource."
+    },
+    "groupId": {
+     "type": "string",
+     "description": "Id of the group that this activity is part of."
+    },
+    "publishedAt": {
+     "type": "string",
+     "description": "Time when this activity was created.",
+     "format": "date-time"
+    },
+    "thumbnails": {
+     "type": "object",
+     "description": "Thumbnails of the main resource.",
+     "additionalProperties": {
+      "$ref": "Thumbnail",
+      "description": "The name of the thumbnail."
+     }
+    },
+    "title": {
+     "type": "string",
+     "description": "Title of the main resource."
+    },
+    "type": {
+     "type": "string",
+     "description": "Category of the activity activity."
+    }
+   }
+  },
   "Channel": {
    "id": "Channel",
    "type": "object",
@@ -115,6 +309,10 @@
     "statistics": {
      "$ref": "ChannelStatistics",
      "description": "Statistics about the channel: number of subscribers, views, and comments."
+    },
+    "topicDetails": {
+     "$ref": "ChannelTopicDetails",
+     "description": "Information about channel topics"
     }
    }
   },
@@ -204,6 +402,20 @@
      "type": "string",
      "description": "Number of times the channel has been viewed.",
      "format": "uint64"
+    }
+   }
+  },
+  "ChannelTopicDetails": {
+   "id": "ChannelTopicDetails",
+   "type": "object",
+   "description": "JSON template for the topic details part of a channel.",
+   "properties": {
+    "topics": {
+     "type": "array",
+     "description": "List of topic ids for this channel *",
+     "items": {
+      "type": "string"
+     }
     }
    }
   },
@@ -467,6 +679,10 @@
      "items": {
       "$ref": "SearchResult"
      }
+    },
+    "tokenPagination": {
+     "$ref": "TokenPagination",
+     "description": "Pagination information for the next and previous page."
     }
    }
   },
@@ -526,6 +742,21 @@
     "url": {
      "type": "string",
      "description": "The URL for the thumbnail."
+    }
+   }
+  },
+  "TokenPagination": {
+   "id": "TokenPagination",
+   "type": "object",
+   "description": "JSON template for token pagination.",
+   "properties": {
+    "nextPageToken": {
+     "type": "string",
+     "description": "Token to the next page."
+    },
+    "previousPageToken": {
+     "type": "string",
+     "description": "Token to the previous page."
     }
    }
   },
@@ -719,6 +950,49 @@
   }
  },
  "resources": {
+  "activities": {
+   "methods": {
+    "list": {
+     "id": "youtube.activities.list",
+     "path": "activities",
+     "httpMethod": "GET",
+     "description": "Browse the YouTube channel activity collection.",
+     "parameters": {
+      "home": {
+       "type": "string",
+       "description": "Flag indicating to return user's homepage feed.",
+       "required": true,
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "Maximum number of results to return",
+       "default": "5",
+       "format": "uint32",
+       "minimum": "0",
+       "location": "query"
+      },
+      "startIndex": {
+       "type": "integer",
+       "description": "Index of the first element to return (starts at 0)",
+       "format": "uint32",
+       "minimum": "0",
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "home"
+     ],
+     "response": {
+      "$ref": "ActivityListResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/youtube",
+      "https://www.googleapis.com/auth/youtube.readonly"
+     ]
+    }
+   }
+  },
   "channels": {
    "methods": {
     "list": {
@@ -727,6 +1001,11 @@
      "httpMethod": "GET",
      "description": "Browse the YouTube channel collection. Either the 'id' or 'mine' parameter must be set.",
      "parameters": {
+      "categoryId": {
+       "type": "string",
+       "description": "Fiter to retrieve the channels within the given category ID.",
+       "location": "query"
+      },
       "contentOwnerId": {
        "type": "string",
        "description": "The authenticated user acts on behalf of this content owner.",
@@ -737,15 +1016,35 @@
        "description": "YouTube IDs of the channels to be returned.",
        "location": "query"
       },
+      "maxResults": {
+       "type": "integer",
+       "description": "Maximum number of results to return",
+       "default": "5",
+       "format": "uint32",
+       "minimum": "0",
+       "location": "query"
+      },
       "mine": {
        "type": "string",
-       "description": "Flag indicating only return the channel ids of the authenticated user.",
+       "description": "Filter to only channels owned by authenticated user.",
+       "location": "query"
+      },
+      "mySubscribers": {
+       "type": "string",
+       "description": "Filter to channels that subscribed to the channel of the authenticated user.",
        "location": "query"
       },
       "part": {
        "type": "string",
        "description": "Parts of the channel resource to be returned.",
        "required": true,
+       "location": "query"
+      },
+      "startIndex": {
+       "type": "integer",
+       "description": "Index of the first element to return (starts at 0)",
+       "format": "uint32",
+       "minimum": "0",
        "location": "query"
       }
      },
@@ -765,6 +1064,43 @@
   },
   "playlistItems": {
    "methods": {
+    "delete": {
+     "id": "youtube.playlistItems.delete",
+     "path": "playlistItems",
+     "httpMethod": "DELETE",
+     "description": "Deletes playlist items by IDs.",
+     "parameters": {
+      "id": {
+       "type": "string",
+       "description": "YouTube IDs of the playlist items to be deleted.",
+       "required": true,
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "id"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/youtube",
+      "https://www.googleapis.com/auth/youtubepartner"
+     ]
+    },
+    "insert": {
+     "id": "youtube.playlistItems.insert",
+     "path": "playlistItems",
+     "httpMethod": "POST",
+     "description": "Insert a resource into a playlist.",
+     "request": {
+      "$ref": "PlaylistItem"
+     },
+     "response": {
+      "$ref": "PlaylistItem"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/youtube",
+      "https://www.googleapis.com/auth/youtubepartner"
+     ]
+    },
     "list": {
      "id": "youtube.playlistItems.list",
      "path": "playlistItems",
@@ -778,7 +1114,7 @@
       },
       "id": {
        "type": "string",
-       "description": "YouTube IDs of the playlists to be returned.",
+       "description": "YouTube IDs of the playlist items to be returned.",
        "location": "query"
       },
       "maxResults": {
@@ -819,11 +1155,48 @@
       "https://www.googleapis.com/auth/youtube.readonly",
       "https://www.googleapis.com/auth/youtubepartner"
      ]
+    },
+    "update": {
+     "id": "youtube.playlistItems.update",
+     "path": "playlistItems",
+     "httpMethod": "PUT",
+     "description": "Update a playlist item.",
+     "request": {
+      "$ref": "PlaylistItem"
+     },
+     "response": {
+      "$ref": "PlaylistItem"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/youtube",
+      "https://www.googleapis.com/auth/youtubepartner"
+     ]
     }
    }
   },
   "playlists": {
    "methods": {
+    "delete": {
+     "id": "youtube.playlists.delete",
+     "path": "playlists",
+     "httpMethod": "DELETE",
+     "description": "Deletes playlists by IDs.",
+     "parameters": {
+      "id": {
+       "type": "string",
+       "description": "YouTube IDs of the playlists to be deleted.",
+       "required": true,
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "id"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/youtube",
+      "https://www.googleapis.com/auth/youtubepartner"
+     ]
+    },
     "list": {
      "id": "youtube.playlists.list",
      "path": "playlists",
@@ -1056,6 +1429,32 @@
   },
   "videos": {
    "methods": {
+    "delete": {
+     "id": "youtube.videos.delete",
+     "path": "videos",
+     "httpMethod": "DELETE",
+     "description": "Delete a YouTube video.",
+     "parameters": {
+      "contentOwnerId": {
+       "type": "string",
+       "description": "The authenticated user acts on behalf of this content owner.",
+       "location": "query"
+      },
+      "id": {
+       "type": "string",
+       "description": "YouTube ID of the video to be deleted.",
+       "required": true,
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "id"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/youtube",
+      "https://www.googleapis.com/auth/youtubepartner"
+     ]
+    },
     "insert": {
      "id": "youtube.videos.insert",
      "path": "videos",

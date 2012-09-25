@@ -4,7 +4,7 @@
  "id": "dfareporting:v1",
  "name": "dfareporting",
  "version": "v1",
- "revision": "20120519",
+ "revision": "20120831",
  "title": "DFA Reporting API",
  "description": "Lets you create, run and download reports.",
  "icons": {

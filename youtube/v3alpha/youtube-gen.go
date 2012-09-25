@@ -56,6 +56,7 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
+	s.Activities = &ActivitiesService{s: s}
 	s.Channels = &ChannelsService{s: s}
 	s.PlaylistItems = &PlaylistItemsService{s: s}
 	s.Playlists = &PlaylistsService{s: s}
@@ -67,6 +68,8 @@ func New(client *http.Client) (*Service, error) {
 type Service struct {
 	client *http.Client
 
+	Activities *ActivitiesService
+
 	Channels *ChannelsService
 
 	PlaylistItems *PlaylistItemsService
@@ -76,6 +79,10 @@ type Service struct {
 	Search *SearchService
 
 	Videos *VideosService
+}
+
+type ActivitiesService struct {
+	s *Service
 }
 
 type ChannelsService struct {
@@ -96,6 +103,144 @@ type SearchService struct {
 
 type VideosService struct {
 	s *Service
+}
+
+type Activity struct {
+	// ContentDetails: Type specific information about the activity.
+	ContentDetails *ActivityContentDetails `json:"contentDetails,omitempty"`
+
+	// Etag: The eTag of the activity.
+	Etag string `json:"etag,omitempty"`
+
+	// Id: The unique ID of the activity.
+	Id string `json:"id,omitempty"`
+
+	// Snippet: Basic details about the activity: title, description,
+	// thumbnails.
+	Snippet *ActivitySnippet `json:"snippet,omitempty"`
+}
+
+type ActivityContentDetails struct {
+	// BulletinPosted: Only present if the type is "bulletinPosted".
+	BulletinPosted *ActivityContentDetailsBulletinPosted `json:"bulletinPosted,omitempty"`
+
+	// SubscriptionAdded: Only present if the type is "subscriptionAdded".
+	SubscriptionAdded *ActivityContentDetailsSubscriptionAdded `json:"subscriptionAdded,omitempty"`
+
+	// VideoAddedToPlaylist: Only present if the type is
+	// "videoAddedToPlaylist".
+	VideoAddedToPlaylist *ActivityContentDetailsVideoAddedToPlaylist `json:"videoAddedToPlaylist,omitempty"`
+
+	// VideoCommented: Only present if the type is "videoCommented".
+	VideoCommented *ActivityContentDetailsVideoCommented `json:"videoCommented,omitempty"`
+
+	// VideoFavorited: Only present if the type is "videoFavorited".
+	VideoFavorited *ActivityContentDetailsVideoFavorited `json:"videoFavorited,omitempty"`
+
+	// VideoRated: Only present if the type is "videoRated".
+	VideoRated *ActivityContentDetailsVideoRated `json:"videoRated,omitempty"`
+
+	// VideoRecommended: Only set if the type is "videoRecommended".
+	VideoRecommended *ActivityContentDetailsVideoRecommended `json:"videoRecommended,omitempty"`
+
+	// VideoUploaded: Only present if the type is "videoUploaded".
+	VideoUploaded *ActivityContentDetailsVideoUploaded `json:"videoUploaded,omitempty"`
+}
+
+type ActivityContentDetailsBulletinPosted struct {
+	// BulletinText: Text if the posted bulletin.
+	BulletinText string `json:"bulletinText,omitempty"`
+
+	// PlaylistId: ID of the playlist this bulletin is about.
+	PlaylistId string `json:"playlistId,omitempty"`
+
+	// VideoId: ID of the video this bulletin is about.
+	VideoId string `json:"videoId,omitempty"`
+}
+
+type ActivityContentDetailsSubscriptionAdded struct {
+	// ChannelId: ID of the channel subscribed to.
+	ChannelId string `json:"channelId,omitempty"`
+}
+
+type ActivityContentDetailsVideoAddedToPlaylist struct {
+	// PlaylistId: ID of the playlist the video was added to.
+	PlaylistId string `json:"playlistId,omitempty"`
+
+	// VideoId: ID of the video added to the playlist.
+	VideoId string `json:"videoId,omitempty"`
+}
+
+type ActivityContentDetailsVideoCommented struct {
+	// VideoId: ID of the commented video.
+	VideoId string `json:"videoId,omitempty"`
+}
+
+type ActivityContentDetailsVideoFavorited struct {
+	// VideoId: ID of the favorited video.
+	VideoId string `json:"videoId,omitempty"`
+}
+
+type ActivityContentDetailsVideoRated struct {
+	// VideoId: ID of the rated video.
+	VideoId string `json:"videoId,omitempty"`
+}
+
+type ActivityContentDetailsVideoRecommended struct {
+	// RecommendationReason: Reason for which the video was recommended.
+	RecommendationReason string `json:"recommendationReason,omitempty"`
+
+	// SeedVideoId: ID of the video that caused this recommendation.
+	SeedVideoId string `json:"seedVideoId,omitempty"`
+
+	// VideoId: ID of the recommended video.
+	VideoId string `json:"videoId,omitempty"`
+}
+
+type ActivityContentDetailsVideoUploaded struct {
+	// VideoId: ID of the uploaded video.
+	VideoId string `json:"videoId,omitempty"`
+}
+
+type ActivityListResponse struct {
+	// Activities: Map of activities matching the request criteria, keyed by
+	// activity id.
+	Activities *ActivityListResponseActivities `json:"activities,omitempty"`
+
+	// Etag: The eTag of the response.
+	Etag string `json:"etag,omitempty"`
+
+	// Kind: The type of this API response.
+	Kind string `json:"kind,omitempty"`
+}
+
+type ActivityListResponseActivities struct {
+}
+
+type ActivitySnippet struct {
+	// ChannelId: Channel responsible for this activity.
+	ChannelId string `json:"channelId,omitempty"`
+
+	// Description: Description of the main resource.
+	Description string `json:"description,omitempty"`
+
+	// GroupId: Id of the group that this activity is part of.
+	GroupId string `json:"groupId,omitempty"`
+
+	// PublishedAt: Time when this activity was created.
+	PublishedAt string `json:"publishedAt,omitempty"`
+
+	// Thumbnails: Thumbnails of the main resource.
+	Thumbnails *ActivitySnippetThumbnails `json:"thumbnails,omitempty"`
+
+	// Title: Title of the main resource.
+	Title string `json:"title,omitempty"`
+
+	// Type: Category of the activity activity.
+	Type string `json:"type,omitempty"`
+}
+
+type ActivitySnippetThumbnails struct {
 }
 
 type Channel struct {
@@ -119,6 +264,9 @@ type Channel struct {
 	// Statistics: Statistics about the channel: number of subscribers,
 	// views, and comments.
 	Statistics *ChannelStatistics `json:"statistics,omitempty"`
+
+	// TopicDetails: Information about channel topics
+	TopicDetails *ChannelTopicDetails `json:"topicDetails,omitempty"`
 }
 
 type ChannelContentDetails struct {
@@ -171,6 +319,11 @@ type ChannelStatistics struct {
 
 	// ViewCount: Number of times the channel has been viewed.
 	ViewCount uint64 `json:"viewCount,omitempty,string"`
+}
+
+type ChannelTopicDetails struct {
+	// Topics: List of topic ids for this channel *
+	Topics []string `json:"topics,omitempty"`
 }
 
 type PageInfo struct {
@@ -330,6 +483,10 @@ type SearchListResponse struct {
 
 	// SearchResults: List of results matching the request criteria.
 	SearchResults []*SearchResult `json:"searchResults,omitempty"`
+
+	// TokenPagination: Pagination information for the next and previous
+	// page.
+	TokenPagination *TokenPagination `json:"tokenPagination,omitempty"`
 }
 
 type SearchResult struct {
@@ -364,6 +521,14 @@ type SearchResultSnippet struct {
 type Thumbnail struct {
 	// Url: The URL for the thumbnail.
 	Url string `json:"url,omitempty"`
+}
+
+type TokenPagination struct {
+	// NextPageToken: Token to the next page.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// PreviousPageToken: Token to the previous page.
+	PreviousPageToken string `json:"previousPageToken,omitempty"`
 }
 
 type Video struct {
@@ -481,6 +646,104 @@ type VideoStatus struct {
 	UploadStatus string `json:"uploadStatus,omitempty"`
 }
 
+// method id "youtube.activities.list":
+
+type ActivitiesListCall struct {
+	s    *Service
+	home string
+	opt_ map[string]interface{}
+}
+
+// List: Browse the YouTube channel activity collection.
+func (r *ActivitiesService) List(home string) *ActivitiesListCall {
+	c := &ActivitiesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.home = home
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum number
+// of results to return
+func (c *ActivitiesListCall) MaxResults(maxResults int64) *ActivitiesListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// StartIndex sets the optional parameter "startIndex": Index of the
+// first element to return (starts at 0)
+func (c *ActivitiesListCall) StartIndex(startIndex int64) *ActivitiesListCall {
+	c.opt_["startIndex"] = startIndex
+	return c
+}
+
+func (c *ActivitiesListCall) Do() (*ActivityListResponse, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("home", fmt.Sprintf("%v", c.home))
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["startIndex"]; ok {
+		params.Set("startIndex", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3alpha/", "activities")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(ActivityListResponse)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Browse the YouTube channel activity collection.",
+	//   "httpMethod": "GET",
+	//   "id": "youtube.activities.list",
+	//   "parameterOrder": [
+	//     "home"
+	//   ],
+	//   "parameters": {
+	//     "home": {
+	//       "description": "Flag indicating to return user's homepage feed.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "5",
+	//       "description": "Maximum number of results to return",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "startIndex": {
+	//       "description": "Index of the first element to return (starts at 0)",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     }
+	//   },
+	//   "path": "activities",
+	//   "response": {
+	//     "$ref": "ActivityListResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.readonly"
+	//   ]
+	// }
+
+}
+
 // method id "youtube.channels.list":
 
 type ChannelsListCall struct {
@@ -494,6 +757,13 @@ type ChannelsListCall struct {
 func (r *ChannelsService) List(part string) *ChannelsListCall {
 	c := &ChannelsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.part = part
+	return c
+}
+
+// CategoryId sets the optional parameter "categoryId": Fiter to
+// retrieve the channels within the given category ID.
+func (c *ChannelsListCall) CategoryId(categoryId string) *ChannelsListCall {
+	c.opt_["categoryId"] = categoryId
 	return c
 }
 
@@ -511,10 +781,31 @@ func (c *ChannelsListCall) Id(id string) *ChannelsListCall {
 	return c
 }
 
-// Mine sets the optional parameter "mine": Flag indicating only return
-// the channel ids of the authenticated user.
+// MaxResults sets the optional parameter "maxResults": Maximum number
+// of results to return
+func (c *ChannelsListCall) MaxResults(maxResults int64) *ChannelsListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// Mine sets the optional parameter "mine": Filter to only channels
+// owned by authenticated user.
 func (c *ChannelsListCall) Mine(mine string) *ChannelsListCall {
 	c.opt_["mine"] = mine
+	return c
+}
+
+// MySubscribers sets the optional parameter "mySubscribers": Filter to
+// channels that subscribed to the channel of the authenticated user.
+func (c *ChannelsListCall) MySubscribers(mySubscribers string) *ChannelsListCall {
+	c.opt_["mySubscribers"] = mySubscribers
+	return c
+}
+
+// StartIndex sets the optional parameter "startIndex": Index of the
+// first element to return (starts at 0)
+func (c *ChannelsListCall) StartIndex(startIndex int64) *ChannelsListCall {
+	c.opt_["startIndex"] = startIndex
 	return c
 }
 
@@ -523,14 +814,26 @@ func (c *ChannelsListCall) Do() (*ChannelListResponse, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("part", fmt.Sprintf("%v", c.part))
+	if v, ok := c.opt_["categoryId"]; ok {
+		params.Set("categoryId", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["contentOwnerId"]; ok {
 		params.Set("contentOwnerId", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["id"]; ok {
 		params.Set("id", fmt.Sprintf("%v", v))
 	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["mine"]; ok {
 		params.Set("mine", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["mySubscribers"]; ok {
+		params.Set("mySubscribers", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["startIndex"]; ok {
+		params.Set("startIndex", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3alpha/", "channels")
 	urls += "?" + params.Encode()
@@ -556,6 +859,11 @@ func (c *ChannelsListCall) Do() (*ChannelListResponse, error) {
 	//     "part"
 	//   ],
 	//   "parameters": {
+	//     "categoryId": {
+	//       "description": "Fiter to retrieve the channels within the given category ID.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "contentOwnerId": {
 	//       "description": "The authenticated user acts on behalf of this content owner.",
 	//       "location": "query",
@@ -566,8 +874,21 @@ func (c *ChannelsListCall) Do() (*ChannelListResponse, error) {
 	//       "location": "query",
 	//       "type": "string"
 	//     },
+	//     "maxResults": {
+	//       "default": "5",
+	//       "description": "Maximum number of results to return",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
 	//     "mine": {
-	//       "description": "Flag indicating only return the channel ids of the authenticated user.",
+	//       "description": "Filter to only channels owned by authenticated user.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "mySubscribers": {
+	//       "description": "Filter to channels that subscribed to the channel of the authenticated user.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -576,6 +897,13 @@ func (c *ChannelsListCall) Do() (*ChannelListResponse, error) {
 	//       "location": "query",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "startIndex": {
+	//       "description": "Index of the first element to return (starts at 0)",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "minimum": "0",
+	//       "type": "integer"
 	//     }
 	//   },
 	//   "path": "channels",
@@ -585,6 +913,122 @@ func (c *ChannelsListCall) Do() (*ChannelListResponse, error) {
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/youtube",
 	//     "https://www.googleapis.com/auth/youtube.readonly",
+	//     "https://www.googleapis.com/auth/youtubepartner"
+	//   ]
+	// }
+
+}
+
+// method id "youtube.playlistItems.delete":
+
+type PlaylistItemsDeleteCall struct {
+	s    *Service
+	id   string
+	opt_ map[string]interface{}
+}
+
+// Delete: Deletes playlist items by IDs.
+func (r *PlaylistItemsService) Delete(id string) *PlaylistItemsDeleteCall {
+	c := &PlaylistItemsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	return c
+}
+
+func (c *PlaylistItemsDeleteCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("id", fmt.Sprintf("%v", c.id))
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3alpha/", "playlistItems")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Deletes playlist items by IDs.",
+	//   "httpMethod": "DELETE",
+	//   "id": "youtube.playlistItems.delete",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "YouTube IDs of the playlist items to be deleted.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "playlistItems",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtubepartner"
+	//   ]
+	// }
+
+}
+
+// method id "youtube.playlistItems.insert":
+
+type PlaylistItemsInsertCall struct {
+	s            *Service
+	playlistitem *PlaylistItem
+	opt_         map[string]interface{}
+}
+
+// Insert: Insert a resource into a playlist.
+func (r *PlaylistItemsService) Insert(playlistitem *PlaylistItem) *PlaylistItemsInsertCall {
+	c := &PlaylistItemsInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.playlistitem = playlistitem
+	return c
+}
+
+func (c *PlaylistItemsInsertCall) Do() (*PlaylistItem, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.playlistitem)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3alpha/", "playlistItems")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(PlaylistItem)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Insert a resource into a playlist.",
+	//   "httpMethod": "POST",
+	//   "id": "youtube.playlistItems.insert",
+	//   "path": "playlistItems",
+	//   "request": {
+	//     "$ref": "PlaylistItem"
+	//   },
+	//   "response": {
+	//     "$ref": "PlaylistItem"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/youtube",
 	//     "https://www.googleapis.com/auth/youtubepartner"
 	//   ]
 	// }
@@ -613,8 +1057,8 @@ func (c *PlaylistItemsListCall) ContentOwnerId(contentOwnerId string) *PlaylistI
 	return c
 }
 
-// Id sets the optional parameter "id": YouTube IDs of the playlists to
-// be returned.
+// Id sets the optional parameter "id": YouTube IDs of the playlist
+// items to be returned.
 func (c *PlaylistItemsListCall) Id(id string) *PlaylistItemsListCall {
 	c.opt_["id"] = id
 	return c
@@ -691,7 +1135,7 @@ func (c *PlaylistItemsListCall) Do() (*PlaylistItemListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "id": {
-	//       "description": "YouTube IDs of the playlists to be returned.",
+	//       "description": "YouTube IDs of the playlist items to be returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -729,6 +1173,122 @@ func (c *PlaylistItemsListCall) Do() (*PlaylistItemListResponse, error) {
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/youtube",
 	//     "https://www.googleapis.com/auth/youtube.readonly",
+	//     "https://www.googleapis.com/auth/youtubepartner"
+	//   ]
+	// }
+
+}
+
+// method id "youtube.playlistItems.update":
+
+type PlaylistItemsUpdateCall struct {
+	s            *Service
+	playlistitem *PlaylistItem
+	opt_         map[string]interface{}
+}
+
+// Update: Update a playlist item.
+func (r *PlaylistItemsService) Update(playlistitem *PlaylistItem) *PlaylistItemsUpdateCall {
+	c := &PlaylistItemsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.playlistitem = playlistitem
+	return c
+}
+
+func (c *PlaylistItemsUpdateCall) Do() (*PlaylistItem, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.playlistitem)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3alpha/", "playlistItems")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(PlaylistItem)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Update a playlist item.",
+	//   "httpMethod": "PUT",
+	//   "id": "youtube.playlistItems.update",
+	//   "path": "playlistItems",
+	//   "request": {
+	//     "$ref": "PlaylistItem"
+	//   },
+	//   "response": {
+	//     "$ref": "PlaylistItem"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtubepartner"
+	//   ]
+	// }
+
+}
+
+// method id "youtube.playlists.delete":
+
+type PlaylistsDeleteCall struct {
+	s    *Service
+	id   string
+	opt_ map[string]interface{}
+}
+
+// Delete: Deletes playlists by IDs.
+func (r *PlaylistsService) Delete(id string) *PlaylistsDeleteCall {
+	c := &PlaylistsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	return c
+}
+
+func (c *PlaylistsDeleteCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("id", fmt.Sprintf("%v", c.id))
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3alpha/", "playlists")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Deletes playlists by IDs.",
+	//   "httpMethod": "DELETE",
+	//   "id": "youtube.playlists.delete",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "YouTube IDs of the playlists to be deleted.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "playlists",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/youtube",
 	//     "https://www.googleapis.com/auth/youtubepartner"
 	//   ]
 	// }
@@ -1179,6 +1739,77 @@ func (c *SearchListCall) Do() (*SearchListResponse, error) {
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/youtube",
 	//     "https://www.googleapis.com/auth/youtube.readonly",
+	//     "https://www.googleapis.com/auth/youtubepartner"
+	//   ]
+	// }
+
+}
+
+// method id "youtube.videos.delete":
+
+type VideosDeleteCall struct {
+	s    *Service
+	id   string
+	opt_ map[string]interface{}
+}
+
+// Delete: Delete a YouTube video.
+func (r *VideosService) Delete(id string) *VideosDeleteCall {
+	c := &VideosDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	return c
+}
+
+// ContentOwnerId sets the optional parameter "contentOwnerId": The
+// authenticated user acts on behalf of this content owner.
+func (c *VideosDeleteCall) ContentOwnerId(contentOwnerId string) *VideosDeleteCall {
+	c.opt_["contentOwnerId"] = contentOwnerId
+	return c
+}
+
+func (c *VideosDeleteCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("id", fmt.Sprintf("%v", c.id))
+	if v, ok := c.opt_["contentOwnerId"]; ok {
+		params.Set("contentOwnerId", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3alpha/", "videos")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Delete a YouTube video.",
+	//   "httpMethod": "DELETE",
+	//   "id": "youtube.videos.delete",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "contentOwnerId": {
+	//       "description": "The authenticated user acts on behalf of this content owner.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "id": {
+	//       "description": "YouTube ID of the video to be deleted.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "videos",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/youtube",
 	//     "https://www.googleapis.com/auth/youtubepartner"
 	//   ]
 	// }

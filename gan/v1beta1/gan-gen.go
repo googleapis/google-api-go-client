@@ -1,6 +1,6 @@
 // Package gan provides access to the Google Affiliate Network API.
 //
-// See https://code.google.com/apis/gan/
+// See https://developers.google.com/affiliate-network/
 //
 // Usage example:
 //
@@ -160,6 +160,9 @@ type Advertiser struct {
 	// ProductFeedsEnabled: Allows advertisers to submit product listings to
 	// Google Product Search.
 	ProductFeedsEnabled bool `json:"productFeedsEnabled,omitempty"`
+
+	// RedirectDomains: List of redirect URLs for this advertiser
+	RedirectDomains []string `json:"redirectDomains,omitempty"`
 
 	// SiteUrl: URL of the website this advertiser advertises from.
 	SiteUrl string `json:"siteUrl,omitempty"`

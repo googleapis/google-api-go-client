@@ -4,7 +4,7 @@
  "id": "drive:v2",
  "name": "drive",
  "version": "v2",
- "revision": "20120723",
+ "revision": "20120904",
  "title": "Drive API",
  "description": "The API to interact with Drive.",
  "icons": {
@@ -1366,7 +1366,7 @@
       },
       "ocr": {
        "type": "boolean",
-       "description": "Whether to attempt OCR on .jpg, .png, or .gif uploads.",
+       "description": "Whether to attempt OCR on .jpg, .png, .gif, or .pdf uploads.",
        "default": "false",
        "location": "query"
       },
@@ -1496,7 +1496,7 @@
       },
       "ocr": {
        "type": "boolean",
-       "description": "Whether to attempt OCR on .jpg, .png, or .gif uploads.",
+       "description": "Whether to attempt OCR on .jpg, .png, .gif, or .pdf uploads.",
        "default": "false",
        "location": "query"
       },
@@ -1634,7 +1634,7 @@
       },
       "ocr": {
        "type": "boolean",
-       "description": "Whether to attempt OCR on .jpg, .png, or .gif uploads.",
+       "description": "Whether to attempt OCR on .jpg, .png, .gif, or .pdf uploads.",
        "default": "false",
        "location": "query"
       },
@@ -1794,7 +1794,7 @@
       },
       "ocr": {
        "type": "boolean",
-       "description": "Whether to attempt OCR on .jpg, .png, or .gif uploads.",
+       "description": "Whether to attempt OCR on .jpg, .png, .gif, or .pdf uploads.",
        "default": "false",
        "location": "query"
       },

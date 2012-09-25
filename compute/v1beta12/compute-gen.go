@@ -230,7 +230,7 @@ type Disk struct {
 	// snapshot.
 	SourceSnapshotId string `json:"sourceSnapshotId,omitempty"`
 
-	// Status: The status of disk creation.
+	// Status: The status of disk creation (output only).
 	Status string `json:"status,omitempty"`
 
 	// Zone: URL for the zone where the persistent disk resides; provided by
@@ -250,7 +250,8 @@ type DiskList struct {
 	// Kind: Type of resource.
 	Kind string `json:"kind,omitempty"`
 
-	// NextPageToken: A token used to continue a truncated list request.
+	// NextPageToken: A token used to continue a truncated list request
+	// (output only).
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// SelfLink: Server defined URL for this resource (output only).
@@ -325,7 +326,8 @@ type FirewallAllowed struct {
 }
 
 type FirewallList struct {
-	// Id: Unique identifier for the resource; defined by the server.
+	// Id: Unique identifier for the resource; defined by the server (output
+	// only).
 	Id string `json:"id,omitempty"`
 
 	// Items: The firewall resources.
@@ -334,10 +336,11 @@ type FirewallList struct {
 	// Kind: Type of resource.
 	Kind string `json:"kind,omitempty"`
 
-	// NextPageToken: A token used to continue a truncated list request.
+	// NextPageToken: A token used to continue a truncated list request
+	// (output only).
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: Server defined URL for this resource.
+	// SelfLink: Server defined URL for this resource (output only).
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
@@ -413,7 +416,8 @@ type ImageList struct {
 	// Kind: Type of resource.
 	Kind string `json:"kind,omitempty"`
 
-	// NextPageToken: A token used to continue a truncated list request.
+	// NextPageToken: A token used to continue a truncated list request
+	// (output only).
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// SelfLink: Server defined URL for this resource (output only).
@@ -506,7 +510,8 @@ type InstanceList struct {
 	// Kind: Type of resource.
 	Kind string `json:"kind,omitempty"`
 
-	// NextPageToken: A token used to continue a truncated list request.
+	// NextPageToken: A token used to continue a truncated list request
+	// (output only).
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// SelfLink: Server defined URL for this resource (output only).
@@ -546,7 +551,8 @@ type KernelList struct {
 	// Kind: Type of resource.
 	Kind string `json:"kind,omitempty"`
 
-	// NextPageToken: A token used to continue a truncated list request.
+	// NextPageToken: A token used to continue a truncated list request
+	// (output only).
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// SelfLink: Server defined URL for this resource (output only).
@@ -572,7 +578,7 @@ type MachineType struct {
 	GuestCpus int64 `json:"guestCpus,omitempty"`
 
 	// HostCpus: Count of physical CPUs reserved on the virtual machine
-	// host.
+	// host. Deprecated.
 	HostCpus int64 `json:"hostCpus,omitempty"`
 
 	// Id: Unique identifier for the resource; defined by the server (output
@@ -618,7 +624,8 @@ type MachineTypeList struct {
 	// Kind: Type of resource.
 	Kind string `json:"kind,omitempty"`
 
-	// NextPageToken: A token used to continue a truncated list request.
+	// NextPageToken: A token used to continue a truncated list request
+	// (output only).
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// SelfLink: Server defined URL for this resource (output only).
@@ -638,8 +645,7 @@ type MetadataItems struct {
 	// Key: Key for the metadata entry. Keys must conform to the following
 	// regexp: [a-zA-Z0-9-_]+, and be less than 128 bytes in length. This is
 	// reflected as part of a URL in the metadata server. Additionally, to
-	// avoid ambiguity, keys must not conflict with any other metadata keys
-	// for the project.
+	// avoid ambiguity, keys must be unique.
 	Key string `json:"key,omitempty"`
 
 	// Value: Value for the metadata entry. These are free-form strings, and
@@ -722,7 +728,8 @@ type NetworkList struct {
 	// Kind: Type of resource.
 	Kind string `json:"kind,omitempty"`
 
-	// NextPageToken: A token used to continue a truncated list request.
+	// NextPageToken: A token used to continue a truncated list request
+	// (output only).
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// SelfLink: Server defined URL for this resource (output only).
@@ -837,7 +844,8 @@ type OperationList struct {
 	// Kind: Type of resource.
 	Kind string `json:"kind,omitempty"`
 
-	// NextPageToken: A token used to continue a truncated list request.
+	// NextPageToken: A token used to continue a truncated list request
+	// (output only).
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// SelfLink: Server defined URL for this resource (output only).
@@ -955,7 +963,8 @@ type SnapshotList struct {
 	// Kind: Type of resource.
 	Kind string `json:"kind,omitempty"`
 
-	// NextPageToken: A token used to continue a truncated list request.
+	// NextPageToken: A token used to continue a truncated list request
+	// (output only).
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// SelfLink: Server defined URL for this resource (output only).
@@ -1021,7 +1030,8 @@ type ZoneList struct {
 	// Kind: Type of resource.
 	Kind string `json:"kind,omitempty"`
 
-	// NextPageToken: A token used to continue a truncated list request.
+	// NextPageToken: A token used to continue a truncated list request
+	// (output only).
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// SelfLink: Server defined URL for this resource (output only).
@@ -1079,12 +1089,14 @@ func (c *DisksDeleteCall) Do() (*Operation, error) {
 	//     "disk": {
 	//       "description": "Name of the persistent disk resource to delete.",
 	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "project": {
 	//       "description": "Name of the project scoping this request.",
 	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -1151,12 +1163,14 @@ func (c *DisksGetCall) Do() (*Disk, error) {
 	//     "disk": {
 	//       "description": "Name of the persistent disk resource to return.",
 	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "project": {
 	//       "description": "Name of the project scoping this request.",
 	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -1228,6 +1242,7 @@ func (c *DisksInsertCall) Do() (*Operation, error) {
 	//     "project": {
 	//       "description": "Name of the project scoping this request.",
 	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -1328,9 +1343,12 @@ func (c *DisksListCall) Do() (*DiskList, error) {
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
+	//       "default": "100",
 	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
+	//       "maximum": "100",
+	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
@@ -1341,6 +1359,7 @@ func (c *DisksListCall) Do() (*DiskList, error) {
 	//     "project": {
 	//       "description": "Name of the project scoping this request.",
 	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -1407,12 +1426,14 @@ func (c *FirewallsDeleteCall) Do() (*Operation, error) {
 	//     "firewall": {
 	//       "description": "Name of the firewall resource to delete.",
 	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "project": {
 	//       "description": "Name of the project scoping this request.",
 	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -1479,12 +1500,14 @@ func (c *FirewallsGetCall) Do() (*Firewall, error) {
 	//     "firewall": {
 	//       "description": "Name of the firewall resource to return.",
 	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "project": {
 	//       "description": "Name of the project scoping this request.",
 	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -1556,6 +1579,7 @@ func (c *FirewallsInsertCall) Do() (*Operation, error) {
 	//     "project": {
 	//       "description": "Name of the project scoping this request.",
 	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -1656,9 +1680,12 @@ func (c *FirewallsListCall) Do() (*FirewallList, error) {
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
+	//       "default": "100",
 	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
+	//       "maximum": "100",
+	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
@@ -1669,6 +1696,7 @@ func (c *FirewallsListCall) Do() (*FirewallList, error) {
 	//     "project": {
 	//       "description": "Name of the project scoping this request.",
 	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -1744,12 +1772,14 @@ func (c *FirewallsPatchCall) Do() (*Operation, error) {
 	//     "firewall": {
 	//       "description": "Name of the firewall resource to update.",
 	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "project": {
 	//       "description": "Name of the project scoping this request.",
 	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -1828,12 +1858,14 @@ func (c *FirewallsUpdateCall) Do() (*Operation, error) {
 	//     "firewall": {
 	//       "description": "Name of the firewall resource to update.",
 	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "project": {
 	//       "description": "Name of the project scoping this request.",
 	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -1903,12 +1935,14 @@ func (c *ImagesDeleteCall) Do() (*Operation, error) {
 	//     "image": {
 	//       "description": "Name of the image resource to delete.",
 	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "project": {
 	//       "description": "Name of the project scoping this request.",
 	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -1975,12 +2009,14 @@ func (c *ImagesGetCall) Do() (*Image, error) {
 	//     "image": {
 	//       "description": "Name of the image resource to return.",
 	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "project": {
 	//       "description": "Name of the project scoping this request.",
 	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -2052,6 +2088,7 @@ func (c *ImagesInsertCall) Do() (*Operation, error) {
 	//     "project": {
 	//       "description": "Name of the project scoping this request.",
 	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -2153,9 +2190,12 @@ func (c *ImagesListCall) Do() (*ImageList, error) {
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
+	//       "default": "100",
 	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
+	//       "maximum": "100",
+	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
@@ -2166,6 +2206,7 @@ func (c *ImagesListCall) Do() (*ImageList, error) {
 	//     "project": {
 	//       "description": "Name of the project scoping this request.",
 	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -2245,6 +2286,7 @@ func (c *InstancesAddAccessConfigCall) Do() (*Operation, error) {
 	//     "instance": {
 	//       "description": "Instance name.",
 	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
 	//       "type": "string"
 	//     },
@@ -2257,6 +2299,7 @@ func (c *InstancesAddAccessConfigCall) Do() (*Operation, error) {
 	//     "project": {
 	//       "description": "Project name.",
 	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -2326,12 +2369,14 @@ func (c *InstancesDeleteCall) Do() (*Operation, error) {
 	//     "instance": {
 	//       "description": "Name of the instance resource to delete.",
 	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "project": {
 	//       "description": "Name of the project scoping this request.",
 	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -2413,6 +2458,7 @@ func (c *InstancesDeleteAccessConfigCall) Do() (*Operation, error) {
 	//     "instance": {
 	//       "description": "Instance name.",
 	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
 	//       "type": "string"
 	//     },
@@ -2425,6 +2471,7 @@ func (c *InstancesDeleteAccessConfigCall) Do() (*Operation, error) {
 	//     "project": {
 	//       "description": "Project name.",
 	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -2491,12 +2538,14 @@ func (c *InstancesGetCall) Do() (*Instance, error) {
 	//     "instance": {
 	//       "description": "Name of the instance resource to return.",
 	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "project": {
 	//       "description": "Name of the project scoping this request.",
 	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -2568,6 +2617,7 @@ func (c *InstancesInsertCall) Do() (*Operation, error) {
 	//     "project": {
 	//       "description": "Name of the project scoping this request.",
 	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -2668,9 +2718,12 @@ func (c *InstancesListCall) Do() (*InstanceList, error) {
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
+	//       "default": "100",
 	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
+	//       "maximum": "100",
+	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
@@ -2681,6 +2734,7 @@ func (c *InstancesListCall) Do() (*InstanceList, error) {
 	//     "project": {
 	//       "description": "Name of the project scoping this request.",
 	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -2747,12 +2801,14 @@ func (c *KernelsGetCall) Do() (*Kernel, error) {
 	//     "kernel": {
 	//       "description": "Name of the kernel resource to return.",
 	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "project": {
 	//       "description": "Name of the project scoping this request.",
 	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -2850,9 +2906,12 @@ func (c *KernelsListCall) Do() (*KernelList, error) {
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
+	//       "default": "100",
 	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
+	//       "maximum": "100",
+	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
@@ -2863,6 +2922,7 @@ func (c *KernelsListCall) Do() (*KernelList, error) {
 	//     "project": {
 	//       "description": "Name of the project scoping this request.",
 	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -2929,12 +2989,14 @@ func (c *MachineTypesGetCall) Do() (*MachineType, error) {
 	//     "machineType": {
 	//       "description": "Name of the machine type resource to return.",
 	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "project": {
 	//       "description": "Name of the project scoping this request.",
 	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -3032,9 +3094,12 @@ func (c *MachineTypesListCall) Do() (*MachineTypeList, error) {
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
+	//       "default": "100",
 	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
+	//       "maximum": "100",
+	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
@@ -3045,6 +3110,7 @@ func (c *MachineTypesListCall) Do() (*MachineTypeList, error) {
 	//     "project": {
 	//       "description": "Name of the project scoping this request.",
 	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -3111,12 +3177,14 @@ func (c *NetworksDeleteCall) Do() (*Operation, error) {
 	//     "network": {
 	//       "description": "Name of the network resource to delete.",
 	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "project": {
 	//       "description": "Name of the project scoping this request.",
 	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -3183,12 +3251,14 @@ func (c *NetworksGetCall) Do() (*Network, error) {
 	//     "network": {
 	//       "description": "Name of the network resource to return.",
 	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "project": {
 	//       "description": "Name of the project scoping this request.",
 	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -3260,6 +3330,7 @@ func (c *NetworksInsertCall) Do() (*Operation, error) {
 	//     "project": {
 	//       "description": "Name of the project scoping this request.",
 	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -3360,9 +3431,12 @@ func (c *NetworksListCall) Do() (*NetworkList, error) {
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
+	//       "default": "100",
 	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
+	//       "maximum": "100",
+	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
@@ -3373,6 +3447,7 @@ func (c *NetworksListCall) Do() (*NetworkList, error) {
 	//     "project": {
 	//       "description": "Name of the project scoping this request.",
 	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -3435,12 +3510,14 @@ func (c *OperationsDeleteCall) Do() error {
 	//     "operation": {
 	//       "description": "Name of the operation resource to delete.",
 	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "project": {
 	//       "description": "Name of the project scoping this request.",
 	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -3504,12 +3581,14 @@ func (c *OperationsGetCall) Do() (*Operation, error) {
 	//     "operation": {
 	//       "description": "Name of the operation resource to return.",
 	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "project": {
 	//       "description": "Name of the project scoping this request.",
 	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -3607,9 +3686,12 @@ func (c *OperationsListCall) Do() (*OperationList, error) {
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
+	//       "default": "100",
 	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
+	//       "maximum": "100",
+	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
@@ -3620,6 +3702,7 @@ func (c *OperationsListCall) Do() (*OperationList, error) {
 	//     "project": {
 	//       "description": "Name of the project scoping this request.",
 	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -3682,6 +3765,7 @@ func (c *ProjectsGetCall) Do() (*Project, error) {
 	//     "project": {
 	//       "description": "Name of the project resource to retrieve.",
 	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -3749,6 +3833,7 @@ func (c *ProjectsSetCommonInstanceMetadataCall) Do() error {
 	//     "project": {
 	//       "description": "Name of the project scoping this request.",
 	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -3815,12 +3900,14 @@ func (c *SnapshotsDeleteCall) Do() (*Operation, error) {
 	//     "project": {
 	//       "description": "Name of the project scoping this request.",
 	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "snapshot": {
 	//       "description": "Name of the persistent disk snapshot resource to delete.",
 	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -3887,12 +3974,14 @@ func (c *SnapshotsGetCall) Do() (*Snapshot, error) {
 	//     "project": {
 	//       "description": "Name of the project scoping this request.",
 	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "snapshot": {
 	//       "description": "Name of the persistent disk snapshot resource to return.",
 	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -3964,6 +4053,7 @@ func (c *SnapshotsInsertCall) Do() (*Operation, error) {
 	//     "project": {
 	//       "description": "Name of the project scoping this request.",
 	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -4064,9 +4154,12 @@ func (c *SnapshotsListCall) Do() (*SnapshotList, error) {
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
+	//       "default": "100",
 	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
+	//       "maximum": "100",
+	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
@@ -4077,6 +4170,7 @@ func (c *SnapshotsListCall) Do() (*SnapshotList, error) {
 	//     "project": {
 	//       "description": "Name of the project scoping this request.",
 	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -4143,12 +4237,14 @@ func (c *ZonesGetCall) Do() (*Zone, error) {
 	//     "project": {
 	//       "description": "Name of the project scoping this request.",
 	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "zone": {
 	//       "description": "Name of the zone resource to return.",
 	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -4246,9 +4342,12 @@ func (c *ZonesListCall) Do() (*ZoneList, error) {
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
+	//       "default": "100",
 	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
+	//       "maximum": "100",
+	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
@@ -4259,6 +4358,7 @@ func (c *ZonesListCall) Do() (*ZoneList, error) {
 	//     "project": {
 	//       "description": "Name of the project scoping this request.",
 	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
 	//     }

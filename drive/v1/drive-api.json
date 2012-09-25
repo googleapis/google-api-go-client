@@ -4,7 +4,7 @@
  "id": "drive:v1",
  "name": "drive",
  "version": "v1",
- "revision": "20120723",
+ "revision": "20120904",
  "title": "Drive API",
  "description": "The API to interact with Drive.",
  "icons": {

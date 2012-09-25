@@ -1546,7 +1546,7 @@ func (c *FilesCopyCall) Convert(convert bool) *FilesCopyCall {
 }
 
 // Ocr sets the optional parameter "ocr": Whether to attempt OCR on
-// .jpg, .png, or .gif uploads.
+// .jpg, .png, .gif, or .pdf uploads.
 func (c *FilesCopyCall) Ocr(ocr bool) *FilesCopyCall {
 	c.opt_["ocr"] = ocr
 	return c
@@ -1668,7 +1668,7 @@ func (c *FilesCopyCall) Do() (*File, error) {
 	//     },
 	//     "ocr": {
 	//       "default": "false",
-	//       "description": "Whether to attempt OCR on .jpg, .png, or .gif uploads.",
+	//       "description": "Whether to attempt OCR on .jpg, .png, .gif, or .pdf uploads.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -1904,7 +1904,7 @@ func (c *FilesInsertCall) Convert(convert bool) *FilesInsertCall {
 }
 
 // Ocr sets the optional parameter "ocr": Whether to attempt OCR on
-// .jpg, .png, or .gif uploads.
+// .jpg, .png, .gif, or .pdf uploads.
 func (c *FilesInsertCall) Ocr(ocr bool) *FilesInsertCall {
 	c.opt_["ocr"] = ocr
 	return c
@@ -2044,7 +2044,7 @@ func (c *FilesInsertCall) Do() (*File, error) {
 	//     },
 	//     "ocr": {
 	//       "default": "false",
-	//       "description": "Whether to attempt OCR on .jpg, .png, or .gif uploads.",
+	//       "description": "Whether to attempt OCR on .jpg, .png, .gif, or .pdf uploads.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -2253,7 +2253,7 @@ func (c *FilesPatchCall) NewRevision(newRevision bool) *FilesPatchCall {
 }
 
 // Ocr sets the optional parameter "ocr": Whether to attempt OCR on
-// .jpg, .png, or .gif uploads.
+// .jpg, .png, .gif, or .pdf uploads.
 func (c *FilesPatchCall) Ocr(ocr bool) *FilesPatchCall {
 	c.opt_["ocr"] = ocr
 	return c
@@ -2404,7 +2404,7 @@ func (c *FilesPatchCall) Do() (*File, error) {
 	//     },
 	//     "ocr": {
 	//       "default": "false",
-	//       "description": "Whether to attempt OCR on .jpg, .png, or .gif uploads.",
+	//       "description": "Whether to attempt OCR on .jpg, .png, .gif, or .pdf uploads.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -2690,7 +2690,7 @@ func (c *FilesUpdateCall) NewRevision(newRevision bool) *FilesUpdateCall {
 }
 
 // Ocr sets the optional parameter "ocr": Whether to attempt OCR on
-// .jpg, .png, or .gif uploads.
+// .jpg, .png, .gif, or .pdf uploads.
 func (c *FilesUpdateCall) Ocr(ocr bool) *FilesUpdateCall {
 	c.opt_["ocr"] = ocr
 	return c
@@ -2869,7 +2869,7 @@ func (c *FilesUpdateCall) Do() (*File, error) {
 	//     },
 	//     "ocr": {
 	//       "default": "false",
-	//       "description": "Whether to attempt OCR on .jpg, .png, or .gif uploads.",
+	//       "description": "Whether to attempt OCR on .jpg, .png, .gif, or .pdf uploads.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },

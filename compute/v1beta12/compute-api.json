@@ -4,7 +4,7 @@
  "id": "compute:v1beta12",
  "name": "compute",
  "version": "v1beta12",
- "revision": "20120712",
+ "revision": "20120831",
  "title": "Compute Engine API",
  "description": "API for the Google Compute Engine service.",
  "icons": {
@@ -101,7 +101,8 @@
     },
     "type": {
      "type": "string",
-     "description": "Type of configuration. Must be set to \"ONE_TO_ONE_NAT\". This configures port-for-port NAT to the internet."
+     "description": "Type of configuration. Must be set to \"ONE_TO_ONE_NAT\". This configures port-for-port NAT to the internet.",
+     "default": "ONE_TO_ONE_NAT"
     }
    }
   },
@@ -171,6 +172,7 @@
     "name": {
      "type": "string",
      "description": "Name of the resource; provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035.",
+     "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
      "annotations": {
       "required": [
        "compute.disks.insert"
@@ -205,7 +207,7 @@
     },
     "status": {
      "type": "string",
-     "description": "The status of disk creation."
+     "description": "The status of disk creation (output only)."
     },
     "zone": {
      "type": "string",
@@ -240,7 +242,7 @@
     },
     "nextPageToken": {
      "type": "string",
-     "description": "A token used to continue a truncated list request."
+     "description": "A token used to continue a truncated list request (output only)."
     },
     "selfLink": {
      "type": "string",
@@ -293,6 +295,7 @@
     "name": {
      "type": "string",
      "description": "Name of the resource; provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035.",
+     "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
      "annotations": {
       "required": [
        "compute.firewalls.insert",
@@ -318,21 +321,24 @@
      "type": "array",
      "description": "A list of IP address blocks expressed in CIDR format which this rule applies to. One or both of sourceRanges and sourceTags may be set; an inbound connection is allowed if either the range or the tag of the source matches.",
      "items": {
-      "type": "string"
+      "type": "string",
+      "pattern": "[0-9]{1,3}(?:\\.[0-9]{1,3}){3}/[0-9]{1,2}"
      }
     },
     "sourceTags": {
      "type": "array",
      "description": "A list of instance tags which this rule applies to. One or both of sourceRanges and sourceTags may be set; an inbound connection is allowed if either the range or the tag of the source matches.",
      "items": {
-      "type": "string"
+      "type": "string",
+      "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?"
      }
     },
     "targetTags": {
      "type": "array",
      "description": "A list of instance tags indicating sets of instances located on network which may make network connections as specified in allowed. If no targetTags are specified, the firewall rule applies to all instances on the specified network.",
      "items": {
-      "type": "string"
+      "type": "string",
+      "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?"
      }
     }
    }
@@ -343,7 +349,7 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "Unique identifier for the resource; defined by the server."
+     "description": "Unique identifier for the resource; defined by the server (output only)."
     },
     "items": {
      "type": "array",
@@ -359,11 +365,11 @@
     },
     "nextPageToken": {
      "type": "string",
-     "description": "A token used to continue a truncated list request."
+     "description": "A token used to continue a truncated list request (output only)."
     },
     "selfLink": {
      "type": "string",
-     "description": "Server defined URL for this resource."
+     "description": "Server defined URL for this resource (output only)."
     }
    }
   },
@@ -407,6 +413,7 @@
     "name": {
      "type": "string",
      "description": "Name of the resource; provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035.",
+     "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
      "annotations": {
       "required": [
        "compute.images.insert"
@@ -424,6 +431,7 @@
       "containerType": {
        "type": "string",
        "description": "The format used to encode and transmit the block device. Should be TAR. This is just a container and transmission format and not a runtime format. Provided by the client when the disk image is created.",
+       "default": "TAR",
        "annotations": {
         "required": [
          "compute.images.insert"
@@ -432,7 +440,8 @@
       },
       "sha1Checksum": {
        "type": "string",
-       "description": "An optional SHA1 checksum of the disk image before unpackaging; provided by the client when the disk image is created."
+       "description": "An optional SHA1 checksum of the disk image before unpackaging; provided by the client when the disk image is created.",
+       "pattern": "[a-f0-9]{40}"
       },
       "source": {
        "type": "string",
@@ -452,6 +461,7 @@
     "sourceType": {
      "type": "string",
      "description": "Must be \"RAW\"; provided by the client when the disk image is created.",
+     "default": "RAW",
      "annotations": {
       "required": [
        "compute.images.insert"
@@ -482,7 +492,7 @@
     },
     "nextPageToken": {
      "type": "string",
-     "description": "A token used to continue a truncated list request."
+     "description": "A token used to continue a truncated list request (output only)."
     },
     "selfLink": {
      "type": "string",
@@ -544,6 +554,7 @@
     "name": {
      "type": "string",
      "description": "Name of the resource; provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035.",
+     "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
      "annotations": {
       "required": [
        "compute.instances.insert"
@@ -580,7 +591,8 @@
      "type": "array",
      "description": "An optional set of tags applied to this instance. Used to identify valid sources or targets for network firewalls. Provided by the client when the instance is created. Each tag must be 1-63 characters long, and comply with RFC1035.",
      "items": {
-      "type": "string"
+      "type": "string",
+      "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?"
      }
     },
     "zone": {
@@ -616,7 +628,7 @@
     },
     "nextPageToken": {
      "type": "string",
-     "description": "A token used to continue a truncated list request."
+     "description": "A token used to continue a truncated list request (output only)."
     },
     "selfLink": {
      "type": "string",
@@ -648,7 +660,8 @@
     },
     "name": {
      "type": "string",
-     "description": "Name of the resource."
+     "description": "Name of the resource.",
+     "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?"
     },
     "selfLink": {
      "type": "string",
@@ -678,7 +691,7 @@
     },
     "nextPageToken": {
      "type": "string",
-     "description": "A token used to continue a truncated list request."
+     "description": "A token used to continue a truncated list request (output only)."
     },
     "selfLink": {
      "type": "string",
@@ -726,7 +739,7 @@
     },
     "hostCpus": {
      "type": "integer",
-     "description": "Count of physical CPUs reserved on the virtual machine host.",
+     "description": "Count of physical CPUs reserved on the virtual machine host. Deprecated.",
      "format": "int32"
     },
     "id": {
@@ -761,7 +774,8 @@
     },
     "name": {
      "type": "string",
-     "description": "Name of the resource."
+     "description": "Name of the resource.",
+     "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?"
     },
     "selfLink": {
      "type": "string",
@@ -791,7 +805,7 @@
     },
     "nextPageToken": {
      "type": "string",
-     "description": "A token used to continue a truncated list request."
+     "description": "A token used to continue a truncated list request (output only)."
     },
     "selfLink": {
      "type": "string",
@@ -811,7 +825,8 @@
       "properties": {
        "key": {
         "type": "string",
-        "description": "Key for the metadata entry. Keys must conform to the following regexp: [a-zA-Z0-9-_]+, and be less than 128 bytes in length. This is reflected as part of a URL in the metadata server. Additionally, to avoid ambiguity, keys must not conflict with any other metadata keys for the project.",
+        "description": "Key for the metadata entry. Keys must conform to the following regexp: [a-zA-Z0-9-_]+, and be less than 128 bytes in length. This is reflected as part of a URL in the metadata server. Additionally, to avoid ambiguity, keys must be unique.",
+        "pattern": "[a-zA-Z0-9-_]{1,128}",
         "annotations": {
          "required": [
           "compute.instances.insert",
@@ -846,6 +861,7 @@
     "IPv4Range": {
      "type": "string",
      "description": "Required; The range of internal addresses that are legal on this network. This range is a CIDR specification, for example: 192.168.0.0/16. Provided by the client when the network is created.",
+     "pattern": "[0-9]{1,3}(?:\\.[0-9]{1,3}){3}/[0-9]{1,2}",
      "annotations": {
       "required": [
        "compute.networks.insert"
@@ -862,7 +878,8 @@
     },
     "gatewayIPv4": {
      "type": "string",
-     "description": "An optional address that is used for default routing to other networks. This must be within the range specified by IPv4Range, and is typically the first usable address in that range. If not specified, the default value is the first usable address in IPv4Range."
+     "description": "An optional address that is used for default routing to other networks. This must be within the range specified by IPv4Range, and is typically the first usable address in that range. If not specified, the default value is the first usable address in IPv4Range.",
+     "pattern": "[0-9]{1,3}(?:\\.[0-9]{1,3}){3}"
     },
     "id": {
      "type": "string",
@@ -877,6 +894,7 @@
     "name": {
      "type": "string",
      "description": "Name of the resource; provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035.",
+     "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
      "annotations": {
       "required": [
        "compute.networks.insert"
@@ -946,7 +964,7 @@
     },
     "nextPageToken": {
      "type": "string",
-     "description": "A token used to continue a truncated list request."
+     "description": "A token used to continue a truncated list request (output only)."
     },
     "selfLink": {
      "type": "string",
@@ -1086,7 +1104,7 @@
     },
     "nextPageToken": {
      "type": "string",
-     "description": "A token used to continue a truncated list request."
+     "description": "A token used to continue a truncated list request (output only)."
     },
     "selfLink": {
      "type": "string",
@@ -1212,6 +1230,7 @@
     "name": {
      "type": "string",
      "description": "Name of the resource; provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035.",
+     "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
      "annotations": {
       "required": [
        "compute.snapshots.insert"
@@ -1258,7 +1277,7 @@
     },
     "nextPageToken": {
      "type": "string",
-     "description": "A token used to continue a truncated list request."
+     "description": "A token used to continue a truncated list request (output only)."
     },
     "selfLink": {
      "type": "string",
@@ -1356,7 +1375,7 @@
     },
     "nextPageToken": {
      "type": "string",
-     "description": "A token used to continue a truncated list request."
+     "description": "A token used to continue a truncated list request (output only)."
     },
     "selfLink": {
      "type": "string",
@@ -1378,12 +1397,14 @@
        "type": "string",
        "description": "Name of the persistent disk resource to delete.",
        "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
        "location": "path"
       },
       "project": {
        "type": "string",
        "description": "Name of the project scoping this request.",
        "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       }
      },
@@ -1408,12 +1429,14 @@
        "type": "string",
        "description": "Name of the persistent disk resource to return.",
        "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
        "location": "path"
       },
       "project": {
        "type": "string",
        "description": "Name of the project scoping this request.",
        "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       }
      },
@@ -1438,6 +1461,7 @@
        "type": "string",
        "description": "Name of the project scoping this request.",
        "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       }
      },
@@ -1468,7 +1492,10 @@
       "maxResults": {
        "type": "integer",
        "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+       "default": "100",
        "format": "uint32",
+       "minimum": "0",
+       "maximum": "100",
        "location": "query"
       },
       "pageToken": {
@@ -1480,6 +1507,7 @@
        "type": "string",
        "description": "Name of the project scoping this request.",
        "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       }
      },
@@ -1507,12 +1535,14 @@
        "type": "string",
        "description": "Name of the firewall resource to delete.",
        "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
        "location": "path"
       },
       "project": {
        "type": "string",
        "description": "Name of the project scoping this request.",
        "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       }
      },
@@ -1537,12 +1567,14 @@
        "type": "string",
        "description": "Name of the firewall resource to return.",
        "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
        "location": "path"
       },
       "project": {
        "type": "string",
        "description": "Name of the project scoping this request.",
        "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       }
      },
@@ -1567,6 +1599,7 @@
        "type": "string",
        "description": "Name of the project scoping this request.",
        "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       }
      },
@@ -1597,7 +1630,10 @@
       "maxResults": {
        "type": "integer",
        "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+       "default": "100",
        "format": "uint32",
+       "minimum": "0",
+       "maximum": "100",
        "location": "query"
       },
       "pageToken": {
@@ -1609,6 +1645,7 @@
        "type": "string",
        "description": "Name of the project scoping this request.",
        "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       }
      },
@@ -1632,12 +1669,14 @@
        "type": "string",
        "description": "Name of the firewall resource to update.",
        "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
        "location": "path"
       },
       "project": {
        "type": "string",
        "description": "Name of the project scoping this request.",
        "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       }
      },
@@ -1665,12 +1704,14 @@
        "type": "string",
        "description": "Name of the firewall resource to update.",
        "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
        "location": "path"
       },
       "project": {
        "type": "string",
        "description": "Name of the project scoping this request.",
        "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       }
      },
@@ -1702,12 +1743,14 @@
        "type": "string",
        "description": "Name of the image resource to delete.",
        "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
        "location": "path"
       },
       "project": {
        "type": "string",
        "description": "Name of the project scoping this request.",
        "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       }
      },
@@ -1732,12 +1775,14 @@
        "type": "string",
        "description": "Name of the image resource to return.",
        "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
        "location": "path"
       },
       "project": {
        "type": "string",
        "description": "Name of the project scoping this request.",
        "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       }
      },
@@ -1762,6 +1807,7 @@
        "type": "string",
        "description": "Name of the project scoping this request.",
        "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       }
      },
@@ -1793,7 +1839,10 @@
       "maxResults": {
        "type": "integer",
        "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+       "default": "100",
        "format": "uint32",
+       "minimum": "0",
+       "maximum": "100",
        "location": "query"
       },
       "pageToken": {
@@ -1805,6 +1854,7 @@
        "type": "string",
        "description": "Name of the project scoping this request.",
        "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       }
      },
@@ -1832,6 +1882,7 @@
        "type": "string",
        "description": "Instance name.",
        "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
        "location": "path"
       },
       "network_interface": {
@@ -1844,6 +1895,7 @@
        "type": "string",
        "description": "Project name.",
        "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       }
      },
@@ -1872,12 +1924,14 @@
        "type": "string",
        "description": "Name of the instance resource to delete.",
        "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
        "location": "path"
       },
       "project": {
        "type": "string",
        "description": "Name of the project scoping this request.",
        "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       }
      },
@@ -1908,6 +1962,7 @@
        "type": "string",
        "description": "Instance name.",
        "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
        "location": "path"
       },
       "network_interface": {
@@ -1920,6 +1975,7 @@
        "type": "string",
        "description": "Project name.",
        "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       }
      },
@@ -1946,12 +2002,14 @@
        "type": "string",
        "description": "Name of the instance resource to return.",
        "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
        "location": "path"
       },
       "project": {
        "type": "string",
        "description": "Name of the project scoping this request.",
        "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       }
      },
@@ -1976,6 +2034,7 @@
        "type": "string",
        "description": "Name of the project scoping this request.",
        "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       }
      },
@@ -2006,7 +2065,10 @@
       "maxResults": {
        "type": "integer",
        "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+       "default": "100",
        "format": "uint32",
+       "minimum": "0",
+       "maximum": "100",
        "location": "query"
       },
       "pageToken": {
@@ -2018,6 +2080,7 @@
        "type": "string",
        "description": "Name of the project scoping this request.",
        "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       }
      },
@@ -2045,12 +2108,14 @@
        "type": "string",
        "description": "Name of the kernel resource to return.",
        "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
        "location": "path"
       },
       "project": {
        "type": "string",
        "description": "Name of the project scoping this request.",
        "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       }
      },
@@ -2079,7 +2144,10 @@
       "maxResults": {
        "type": "integer",
        "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+       "default": "100",
        "format": "uint32",
+       "minimum": "0",
+       "maximum": "100",
        "location": "query"
       },
       "pageToken": {
@@ -2091,6 +2159,7 @@
        "type": "string",
        "description": "Name of the project scoping this request.",
        "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       }
      },
@@ -2118,12 +2187,14 @@
        "type": "string",
        "description": "Name of the machine type resource to return.",
        "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
        "location": "path"
       },
       "project": {
        "type": "string",
        "description": "Name of the project scoping this request.",
        "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       }
      },
@@ -2152,7 +2223,10 @@
       "maxResults": {
        "type": "integer",
        "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+       "default": "100",
        "format": "uint32",
+       "minimum": "0",
+       "maximum": "100",
        "location": "query"
       },
       "pageToken": {
@@ -2164,6 +2238,7 @@
        "type": "string",
        "description": "Name of the project scoping this request.",
        "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       }
      },
@@ -2191,12 +2266,14 @@
        "type": "string",
        "description": "Name of the network resource to delete.",
        "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
        "location": "path"
       },
       "project": {
        "type": "string",
        "description": "Name of the project scoping this request.",
        "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       }
      },
@@ -2221,12 +2298,14 @@
        "type": "string",
        "description": "Name of the network resource to return.",
        "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
        "location": "path"
       },
       "project": {
        "type": "string",
        "description": "Name of the project scoping this request.",
        "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       }
      },
@@ -2251,6 +2330,7 @@
        "type": "string",
        "description": "Name of the project scoping this request.",
        "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       }
      },
@@ -2281,7 +2361,10 @@
       "maxResults": {
        "type": "integer",
        "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+       "default": "100",
        "format": "uint32",
+       "minimum": "0",
+       "maximum": "100",
        "location": "query"
       },
       "pageToken": {
@@ -2293,6 +2376,7 @@
        "type": "string",
        "description": "Name of the project scoping this request.",
        "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       }
      },
@@ -2320,12 +2404,14 @@
        "type": "string",
        "description": "Name of the operation resource to delete.",
        "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
        "location": "path"
       },
       "project": {
        "type": "string",
        "description": "Name of the project scoping this request.",
        "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       }
      },
@@ -2347,12 +2433,14 @@
        "type": "string",
        "description": "Name of the operation resource to return.",
        "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
        "location": "path"
       },
       "project": {
        "type": "string",
        "description": "Name of the project scoping this request.",
        "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       }
      },
@@ -2381,7 +2469,10 @@
       "maxResults": {
        "type": "integer",
        "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+       "default": "100",
        "format": "uint32",
+       "minimum": "0",
+       "maximum": "100",
        "location": "query"
       },
       "pageToken": {
@@ -2393,6 +2484,7 @@
        "type": "string",
        "description": "Name of the project scoping this request.",
        "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       }
      },
@@ -2420,6 +2512,7 @@
        "type": "string",
        "description": "Name of the project resource to retrieve.",
        "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       }
      },
@@ -2443,6 +2536,7 @@
        "type": "string",
        "description": "Name of the project scoping this request.",
        "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       }
      },
@@ -2470,12 +2564,14 @@
        "type": "string",
        "description": "Name of the project scoping this request.",
        "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       },
       "snapshot": {
        "type": "string",
        "description": "Name of the persistent disk snapshot resource to delete.",
        "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
        "location": "path"
       }
      },
@@ -2500,12 +2596,14 @@
        "type": "string",
        "description": "Name of the project scoping this request.",
        "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       },
       "snapshot": {
        "type": "string",
        "description": "Name of the persistent disk snapshot resource to return.",
        "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
        "location": "path"
       }
      },
@@ -2530,6 +2628,7 @@
        "type": "string",
        "description": "Name of the project scoping this request.",
        "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       }
      },
@@ -2560,7 +2659,10 @@
       "maxResults": {
        "type": "integer",
        "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+       "default": "100",
        "format": "uint32",
+       "minimum": "0",
+       "maximum": "100",
        "location": "query"
       },
       "pageToken": {
@@ -2572,6 +2674,7 @@
        "type": "string",
        "description": "Name of the project scoping this request.",
        "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       }
      },
@@ -2599,12 +2702,14 @@
        "type": "string",
        "description": "Name of the project scoping this request.",
        "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       },
       "zone": {
        "type": "string",
        "description": "Name of the zone resource to return.",
        "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
        "location": "path"
       }
      },
@@ -2633,7 +2738,10 @@
       "maxResults": {
        "type": "integer",
        "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+       "default": "100",
        "format": "uint32",
+       "minimum": "0",
+       "maximum": "100",
        "location": "query"
       },
       "pageToken": {
@@ -2645,6 +2753,7 @@
        "type": "string",
        "description": "Name of the project scoping this request.",
        "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       }
      },

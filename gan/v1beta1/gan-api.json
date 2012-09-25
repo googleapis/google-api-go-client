@@ -4,14 +4,14 @@
  "id": "gan:v1beta1",
  "name": "gan",
  "version": "v1beta1",
- "revision": "20120727",
+ "revision": "20120904",
  "title": "Google Affiliate Network API",
  "description": "Lets you have programmatic access to your Google Affiliate Network data.",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/affiliatenetwork-16.png",
   "x32": "http://www.google.com/images/icons/product/affiliatenetwork-32.png"
  },
- "documentationLink": "https://code.google.com/apis/gan/",
+ "documentationLink": "https://developers.google.com/affiliate-network/",
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/gan/v1beta1/",
  "basePath": "/gan/v1beta1/",
@@ -153,6 +153,13 @@
     "productFeedsEnabled": {
      "type": "boolean",
      "description": "Allows advertisers to submit product listings to Google Product Search."
+    },
+    "redirectDomains": {
+     "type": "array",
+     "description": "List of redirect URLs for this advertiser",
+     "items": {
+      "type": "string"
+     }
     },
     "siteUrl": {
      "type": "string",

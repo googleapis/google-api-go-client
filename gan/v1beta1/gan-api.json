@@ -1,10 +1,11 @@
 {
  "kind": "discovery#restDescription",
+ "etag": "\"oZqOFf-aKzMvpID-BwBAFJLe7Pk/qgkbld3g8jzLHwCePodQw6uaV44\"",
  "discoveryVersion": "v1",
  "id": "gan:v1beta1",
  "name": "gan",
  "version": "v1beta1",
- "revision": "20120904",
+ "revision": "20121013",
  "title": "Google Affiliate Network API",
  "description": "Lets you have programmatic access to your Google Affiliate Network data.",
  "icons": {
@@ -113,11 +114,11 @@
     },
     "epcNinetyDayAverage": {
      "$ref": "Money",
-     "description": "The sum of fees paid to publishers divided by the total number of clicks over the past three months. Values are multiplied by 100 for display purposes."
+     "description": "The sum of fees paid to publishers divided by the total number of clicks over the past three months. This value should be multiplied by 100 at the time of display."
     },
     "epcSevenDayAverage": {
      "$ref": "Money",
-     "description": "The sum of fees paid to publishers divided by the total number of clicks over the past seven days. Values are multiplied by 100 for display purposes."
+     "description": "The sum of fees paid to publishers divided by the total number of clicks over the past seven days. This value should be multiplied by 100 at the time of display."
     },
     "id": {
      "type": "string",
@@ -141,6 +142,14 @@
     "logoUrl": {
      "type": "string",
      "description": "URL to the logo this advertiser uses on the Google Affiliate Network."
+    },
+    "merchantCenterIds": {
+     "type": "array",
+     "description": "List of merchant center ids for this advertiser",
+     "items": {
+      "type": "string",
+      "format": "int64"
+     }
     },
     "name": {
      "type": "string",
@@ -753,6 +762,14 @@
      "description": "Date that this link becomes inactive.",
      "format": "date-time"
     },
+    "epcNinetyDayAverage": {
+     "$ref": "Money",
+     "description": "The sum of fees paid to publishers divided by the total number of clicks over the past three months on this link. This value should be multiplied by 100 at the time of display."
+    },
+    "epcSevenDayAverage": {
+     "$ref": "Money",
+     "description": "The sum of fees paid to publishers divided by the total number of clicks over the past seven days on this link. This value should be multiplied by 100 at the time of display."
+    },
     "id": {
      "type": "string",
      "description": "The ID of this link.",
@@ -786,6 +803,48 @@
     "promotionType": {
      "type": "string",
      "description": "Promotion Type"
+    },
+    "specialOffers": {
+     "type": "object",
+     "description": "Special offers on the link.",
+     "properties": {
+      "freeGift": {
+       "type": "boolean",
+       "description": "Whether there is a free gift"
+      },
+      "freeShipping": {
+       "type": "boolean",
+       "description": "Whether there is free shipping"
+      },
+      "freeShippingMin": {
+       "$ref": "Money",
+       "description": "Minimum purchase amount for free shipping promotion"
+      },
+      "percentOff": {
+       "type": "number",
+       "description": "Percent off on the purchase",
+       "format": "double"
+      },
+      "percentOffMin": {
+       "$ref": "Money",
+       "description": "Minimum purchase amount for percent off promotion"
+      },
+      "priceCut": {
+       "$ref": "Money",
+       "description": "Price cut on the purchase"
+      },
+      "priceCutMin": {
+       "$ref": "Money",
+       "description": "Minimum purchase amount for price cut promotion"
+      },
+      "promotionCodes": {
+       "type": "array",
+       "description": "List of promotion code associated with the link",
+       "items": {
+        "type": "string"
+       }
+      }
+     }
     },
     "startDate": {
      "type": "string",
@@ -1360,96 +1419,6 @@
      "httpMethod": "GET",
      "description": "Retrieves all links that match the query parameters.",
      "parameters": {
-      "advertiserCategory": {
-       "type": "string",
-       "description": "The advertiser's primary vertical.",
-       "enum": [
-        "apparel_accessories",
-        "appliances_electronics",
-        "auto_dealer",
-        "automotive",
-        "babies_kids",
-        "blogs_personal_sites",
-        "books_magazines",
-        "computers",
-        "dating",
-        "department_stores",
-        "education",
-        "employment",
-        "financial_credit_cards",
-        "financial_other",
-        "flowers_gifts",
-        "grocery",
-        "health_beauty",
-        "home_garden",
-        "hosting_domain",
-        "internet_providers",
-        "legal",
-        "media_entertainment",
-        "medical",
-        "movies_games",
-        "music",
-        "nonprofit",
-        "office_supplies",
-        "online_games",
-        "outdoor",
-        "pets",
-        "real_estate",
-        "restaurants",
-        "sport_fitness",
-        "telecom",
-        "ticketing",
-        "toys_hobbies",
-        "travel",
-        "utilities",
-        "wholesale_relationship",
-        "wine_spirits"
-       ],
-       "enumDescriptions": [
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""
-       ],
-       "repeated": true,
-       "location": "query"
-      },
       "advertiserId": {
        "type": "string",
        "description": "Limits the resulting links to the ones belonging to the listed advertisers.",
@@ -1474,6 +1443,16 @@
         "",
         ""
        ],
+       "location": "query"
+      },
+      "createDateMax": {
+       "type": "string",
+       "description": "The end of the create date range.",
+       "location": "query"
+      },
+      "createDateMin": {
+       "type": "string",
+       "description": "The beginning of the create date range.",
        "location": "query"
       },
       "linkType": {
@@ -1506,27 +1485,13 @@
        "type": "string",
        "description": "The promotion type.",
        "enum": [
-        "buy_get",
         "coupon",
         "free_gift",
-        "free_gift_wrap",
         "free_shipping",
-        "none",
-        "ongoing",
         "percent_off",
-        "price_cut",
-        "product_promotion",
-        "sale",
-        "sweepstakes"
+        "price_cut"
        ],
        "enumDescriptions": [
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
         "",
         "",
         "",
@@ -1568,6 +1533,11 @@
        "description": "The ID of the requesting advertiser or publisher.",
        "required": true,
        "location": "path"
+      },
+      "searchText": {
+       "type": "string",
+       "description": "Field for full text search across title and merchandising text, supports link id search.",
+       "location": "query"
       },
       "startDateMax": {
        "type": "string",

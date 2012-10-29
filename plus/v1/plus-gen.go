@@ -40,9 +40,6 @@ const basePath = "https://www.googleapis.com/plus/v1/"
 const (
 	// Know who you are on Google
 	PlusMeScope = "https://www.googleapis.com/auth/plus.me"
-
-	// View your email address
-	UserinfoEmailScope = "https://www.googleapis.com/auth/userinfo.email"
 )
 
 func New(client *http.Client) (*Service, error) {
@@ -158,8 +155,7 @@ type Activity struct {
 	// Possible values are:  
 	// - "post" - Publish content to the stream. 
 	// -
-	// "checkin" - Check in to a location. 
-	// - "share" - Reshare an activity.
+	// "share" - Reshare an activity.
 	Verb string `json:"verb,omitempty"`
 }
 
@@ -204,12 +200,7 @@ type ActivityObject struct {
 	// Attachments: The media objects attached to this activity.
 	Attachments []*ActivityObjectAttachments `json:"attachments,omitempty"`
 
-	// Content: The HTML-formatted content, suitable for display. When
-	// creating or updating an activity, this value must be supplied as
-	// plain text in the request. If successful, the response will contain
-	// the HTML-formatted content. When updating an activity, use
-	// originalContent as the starting value, then assign the updated text
-	// to this property.
+	// Content: The HTML-formatted content, suitable for display.
 	Content string `json:"content,omitempty"`
 
 	// Id: The ID of the object. When resharing an activity, this is the ID
@@ -223,9 +214,8 @@ type ActivityObject struct {
 	ObjectType string `json:"objectType,omitempty"`
 
 	// OriginalContent: The content (text) as provided by the author, stored
-	// without any HTML formatting. When updating an activity's content, use
-	// the value of originalContent as the starting point from which to make
-	// edits.
+	// without any HTML formatting. When creating or updating an activity,
+	// this value must be supplied as plain text in the request.
 	OriginalContent string `json:"originalContent,omitempty"`
 
 	// Plusoners: People who +1'd this activity.
@@ -262,7 +252,8 @@ type ActivityObjectActorImage struct {
 
 type ActivityObjectAttachments struct {
 	// Content: If the attachment is an article, this property contains a
-	// snippet of text from the article.
+	// snippet of text from the article. It may also include descriptions
+	// for other types.
 	Content string `json:"content,omitempty"`
 
 	// DisplayName: The title of the attachment (such as a photo caption or
@@ -272,10 +263,10 @@ type ActivityObjectAttachments struct {
 	// Embed: If the attachment is a video, the embeddable link.
 	Embed *ActivityObjectAttachmentsEmbed `json:"embed,omitempty"`
 
-	// FullImage: The full image url for photo attachments.
+	// FullImage: The full image URL for photo attachments.
 	FullImage *ActivityObjectAttachmentsFullImage `json:"fullImage,omitempty"`
 
-	// Id: The ID of the media object's resource.
+	// Id: The ID of the attachment.
 	Id string `json:"id,omitempty"`
 
 	// Image: The preview image for photos or videos.
@@ -284,10 +275,15 @@ type ActivityObjectAttachments struct {
 	// ObjectType: The type of media object. Possible values are:  
 	// -
 	// "photo" - A photo. 
-	// - "video" - A video. 
-	// - "article" - An article,
-	// specified by a link.
+	// - "album" - A photo album. 
+	// - "video" - A video.
+	// 
+	// - "article" - An article, specified by a link.
 	ObjectType string `json:"objectType,omitempty"`
+
+	// Thumbnails: If the attachment is an album, potential additional
+	// thumbnails from the album.
+	Thumbnails []*ActivityObjectAttachmentsThumbnails `json:"thumbnails,omitempty"`
 
 	// Url: The link to the attachment, should be of type text/html.
 	Url string `json:"url,omitempty"`
@@ -308,7 +304,7 @@ type ActivityObjectAttachmentsFullImage struct {
 	// Type: Media type of the link.
 	Type string `json:"type,omitempty"`
 
-	// Url: URL of the link.
+	// Url: URL to the image.
 	Url string `json:"url,omitempty"`
 
 	// Width: The width, in pixels, of the linked resource.
@@ -322,7 +318,32 @@ type ActivityObjectAttachmentsImage struct {
 	// Type: Media type of the link.
 	Type string `json:"type,omitempty"`
 
-	// Url: URL of the link.
+	// Url: Image url.
+	Url string `json:"url,omitempty"`
+
+	// Width: The width, in pixels, of the linked resource.
+	Width int64 `json:"width,omitempty"`
+}
+
+type ActivityObjectAttachmentsThumbnails struct {
+	// Description: Potential name of the thumbnail.
+	Description string `json:"description,omitempty"`
+
+	// Image: Image resource.
+	Image *ActivityObjectAttachmentsThumbnailsImage `json:"image,omitempty"`
+
+	// Url: URL to the webpage containing the image.
+	Url string `json:"url,omitempty"`
+}
+
+type ActivityObjectAttachmentsThumbnailsImage struct {
+	// Height: The height, in pixels, of the linked resource.
+	Height int64 `json:"height,omitempty"`
+
+	// Type: Media type of the link.
+	Type string `json:"type,omitempty"`
+
+	// Url: Image url.
 	Url string `json:"url,omitempty"`
 
 	// Width: The width, in pixels, of the linked resource.
@@ -377,9 +398,9 @@ type ActivityFeed struct {
 	// NextLink: Link to the next page of activities.
 	NextLink string `json:"nextLink,omitempty"`
 
-	// NextPageToken: The continuation token, used to page through large
-	// result sets. Provide this value in a subsequent request to return the
-	// next page of results.
+	// NextPageToken: The continuation token, which is used to page through
+	// large result sets. Provide this value in a subsequent request to
+	// return the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// SelfLink: Link to this activity resource.
@@ -411,6 +432,9 @@ type Comment struct {
 
 	// Object: The object of this comment.
 	Object *CommentObject `json:"object,omitempty"`
+
+	// Plusoners: People who +1'd this comment.
+	Plusoners *CommentPlusoners `json:"plusoners,omitempty"`
 
 	// Published: The time at which this comment was initially published.
 	// Formatted as an RFC 3339 timestamp.
@@ -451,21 +475,31 @@ type CommentActorImage struct {
 }
 
 type CommentInReplyTo struct {
-	// Id: The id of the activity.
+	// Id: The ID of the activity.
 	Id string `json:"id,omitempty"`
 
-	// Url: The url of the activity.
+	// Url: The URL of the activity.
 	Url string `json:"url,omitempty"`
 }
 
 type CommentObject struct {
-	// Content: The content of this comment.
+	// Content: The HTML-formatted content, suitable for display.
 	Content string `json:"content,omitempty"`
 
 	// ObjectType: The object type of this comment. Possible values are:  
 	// -
 	// "comment" - A comment in reply to an activity.
 	ObjectType string `json:"objectType,omitempty"`
+
+	// OriginalContent: The content (text) as provided by the author, stored
+	// without any HTML formatting. When creating or updating a comment,
+	// this value must be supplied as plain text in the request.
+	OriginalContent string `json:"originalContent,omitempty"`
+}
+
+type CommentPlusoners struct {
+	// TotalItems: Total number of people who +1'd this comment.
+	TotalItems int64 `json:"totalItems,omitempty"`
 }
 
 type CommentFeed struct {
@@ -485,9 +519,9 @@ type CommentFeed struct {
 	// NextLink: Link to the next page of activities.
 	NextLink string `json:"nextLink,omitempty"`
 
-	// NextPageToken: The continuation token, used to page through large
-	// result sets. Provide this value in a subsequent request to return the
-	// next page of results.
+	// NextPageToken: The continuation token, which is used to page through
+	// large result sets. Provide this value in a subsequent request to
+	// return the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Title: The title of this collection of comments.
@@ -502,18 +536,18 @@ type PeopleFeed struct {
 	// Etag: ETag of this response for caching purposes.
 	Etag string `json:"etag,omitempty"`
 
-	// Items: The people in this page of results. Each item will include the
-	// id, displayName, image, and url for the person. To retrieve
-	// additional profile data, see the people.get method.
+	// Items: The people in this page of results. Each item includes the id,
+	// displayName, image, and url for the person. To retrieve additional
+	// profile data, see the people.get method.
 	Items []*Person `json:"items,omitempty"`
 
 	// Kind: Identifies this resource as a collection of people. Value:
 	// "plus#peopleFeed".
 	Kind string `json:"kind,omitempty"`
 
-	// NextPageToken: The continuation token, used to page through large
-	// result sets. Provide this value in a subsequent request to return the
-	// next page of results.
+	// NextPageToken: The continuation token, which is used to page through
+	// large result sets. Provide this value in a subsequent request to
+	// return the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// SelfLink: Link to this resource.
@@ -521,6 +555,11 @@ type PeopleFeed struct {
 
 	// Title: The title of this collection of people.
 	Title string `json:"title,omitempty"`
+
+	// TotalItems: The total number of people available in this list. The
+	// number of people in a response may be smaller due to paging. This may
+	// not be set for all collections.
+	TotalItems int64 `json:"totalItems,omitempty"`
 }
 
 type Person struct {
@@ -562,11 +601,11 @@ type Person struct {
 	// Image: The representation of the person's profile photo.
 	Image *PersonImage `json:"image,omitempty"`
 
+	// IsPlusUser: Whether this user has signed up for G+.
+	IsPlusUser bool `json:"isPlusUser,omitempty"`
+
 	// Kind: Identifies this resource as a person. Value: "plus#person".
 	Kind string `json:"kind,omitempty"`
-
-	// LanguagesSpoken: The languages spoken by this person.
-	LanguagesSpoken []string `json:"languagesSpoken,omitempty"`
 
 	// Name: An object representation of the individual components of a
 	// person's name.
@@ -727,6 +766,9 @@ type PersonUrls struct {
 }
 
 type PlusAclentryResource struct {
+	// DisplayName: A descriptive name for this entry. Suitable for display.
+	DisplayName string `json:"displayName,omitempty"`
+
 	// Id: The ID of the entry. For entries of type "person" or "circle",
 	// this is the ID of the resource. For other types, this property is not
 	// set.
@@ -827,18 +869,18 @@ func (r *ActivitiesService) List(userId string, collection string) *ActivitiesLi
 }
 
 // MaxResults sets the optional parameter "maxResults": The maximum
-// number of activities to include in the response, used for paging. For
-// any response, the actual number returned may be less than the
-// specified maxResults.
+// number of activities to include in the response, which is used for
+// paging. For any response, the actual number returned might be less
+// than the specified maxResults.
 func (c *ActivitiesListCall) MaxResults(maxResults int64) *ActivitiesListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": The continuation
-// token, used to page through large result sets. To get the next page
-// of results, set this parameter to the value of "nextPageToken" from
-// the previous response.
+// token, which is used to page through large result sets. To get the
+// next page of results, set this parameter to the value of
+// "nextPageToken" from the previous response.
 func (c *ActivitiesListCall) PageToken(pageToken string) *ActivitiesListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -895,7 +937,7 @@ func (c *ActivitiesListCall) Do() (*ActivityFeed, error) {
 	//     },
 	//     "maxResults": {
 	//       "default": "20",
-	//       "description": "The maximum number of activities to include in the response, used for paging. For any response, the actual number returned may be less than the specified maxResults.",
+	//       "description": "The maximum number of activities to include in the response, which is used for paging. For any response, the actual number returned might be less than the specified maxResults.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "100",
@@ -903,14 +945,13 @@ func (c *ActivitiesListCall) Do() (*ActivityFeed, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The continuation token, used to page through large result sets. To get the next page of results, set this parameter to the value of \"nextPageToken\" from the previous response.",
+	//       "description": "The continuation token, which is used to page through large result sets. To get the next page of results, set this parameter to the value of \"nextPageToken\" from the previous response.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "userId": {
 	//       "description": "The ID of the user to get activities for. The special value \"me\" can be used to indicate the authenticated user.",
 	//       "location": "path",
-	//       "pattern": "me|[0-9]+",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -950,9 +991,9 @@ func (c *ActivitiesSearchCall) Language(language string) *ActivitiesSearchCall {
 }
 
 // MaxResults sets the optional parameter "maxResults": The maximum
-// number of activities to include in the response, used for paging. For
-// any response, the actual number returned may be less than the
-// specified maxResults.
+// number of activities to include in the response, which is used for
+// paging. For any response, the actual number returned might be less
+// than the specified maxResults.
 func (c *ActivitiesSearchCall) MaxResults(maxResults int64) *ActivitiesSearchCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -966,9 +1007,10 @@ func (c *ActivitiesSearchCall) OrderBy(orderBy string) *ActivitiesSearchCall {
 }
 
 // PageToken sets the optional parameter "pageToken": The continuation
-// token, used to page through large result sets. To get the next page
-// of results, set this parameter to the value of "nextPageToken" from
-// the previous response. This token may be of any length.
+// token, which is used to page through large result sets. To get the
+// next page of results, set this parameter to the value of
+// "nextPageToken" from the previous response. This token can be of any
+// length.
 func (c *ActivitiesSearchCall) PageToken(pageToken string) *ActivitiesSearchCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -1023,7 +1065,7 @@ func (c *ActivitiesSearchCall) Do() (*ActivityFeed, error) {
 	//     },
 	//     "maxResults": {
 	//       "default": "10",
-	//       "description": "The maximum number of activities to include in the response, used for paging. For any response, the actual number returned may be less than the specified maxResults.",
+	//       "description": "The maximum number of activities to include in the response, which is used for paging. For any response, the actual number returned might be less than the specified maxResults.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "20",
@@ -1045,7 +1087,7 @@ func (c *ActivitiesSearchCall) Do() (*ActivityFeed, error) {
 	//       "type": "string"
 	//     },
 	//     "pageToken": {
-	//       "description": "The continuation token, used to page through large result sets. To get the next page of results, set this parameter to the value of \"nextPageToken\" from the previous response. This token may be of any length.",
+	//       "description": "The continuation token, which is used to page through large result sets. To get the next page of results, set this parameter to the value of \"nextPageToken\" from the previous response. This token can be of any length.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1145,18 +1187,18 @@ func (r *CommentsService) List(activityId string) *CommentsListCall {
 }
 
 // MaxResults sets the optional parameter "maxResults": The maximum
-// number of comments to include in the response, used for paging. For
-// any response, the actual number returned may be less than the
-// specified maxResults.
+// number of comments to include in the response, which is used for
+// paging. For any response, the actual number returned might be less
+// than the specified maxResults.
 func (c *CommentsListCall) MaxResults(maxResults int64) *CommentsListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": The continuation
-// token, used to page through large result sets. To get the next page
-// of results, set this parameter to the value of "nextPageToken" from
-// the previous response.
+// token, which is used to page through large result sets. To get the
+// next page of results, set this parameter to the value of
+// "nextPageToken" from the previous response.
 func (c *CommentsListCall) PageToken(pageToken string) *CommentsListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -1215,15 +1257,15 @@ func (c *CommentsListCall) Do() (*CommentFeed, error) {
 	//     },
 	//     "maxResults": {
 	//       "default": "20",
-	//       "description": "The maximum number of comments to include in the response, used for paging. For any response, the actual number returned may be less than the specified maxResults.",
+	//       "description": "The maximum number of comments to include in the response, which is used for paging. For any response, the actual number returned might be less than the specified maxResults.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "100",
+	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The continuation token, used to page through large result sets. To get the next page of results, set this parameter to the value of \"nextPageToken\" from the previous response.",
+	//       "description": "The continuation token, which is used to page through large result sets. To get the next page of results, set this parameter to the value of \"nextPageToken\" from the previous response.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1300,7 +1342,6 @@ func (c *PeopleGetCall) Do() (*Person, error) {
 	//     "userId": {
 	//       "description": "The ID of the person to get the profile for. The special value \"me\" can be used to indicate the authenticated user.",
 	//       "location": "path",
-	//       "pattern": "me|[0-9]+",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -1310,8 +1351,7 @@ func (c *PeopleGetCall) Do() (*Person, error) {
 	//     "$ref": "Person"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/plus.me",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
 
@@ -1336,18 +1376,18 @@ func (r *PeopleService) ListByActivity(activityId string, collection string) *Pe
 }
 
 // MaxResults sets the optional parameter "maxResults": The maximum
-// number of people to include in the response, used for paging. For any
-// response, the actual number returned may be less than the specified
-// maxResults.
+// number of people to include in the response, which is used for
+// paging. For any response, the actual number returned might be less
+// than the specified maxResults.
 func (c *PeopleListByActivityCall) MaxResults(maxResults int64) *PeopleListByActivityCall {
 	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": The continuation
-// token, used to page through large result sets. To get the next page
-// of results, set this parameter to the value of "nextPageToken" from
-// the previous response.
+// token, which is used to page through large result sets. To get the
+// next page of results, set this parameter to the value of
+// "nextPageToken" from the previous response.
 func (c *PeopleListByActivityCall) PageToken(pageToken string) *PeopleListByActivityCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -1412,7 +1452,7 @@ func (c *PeopleListByActivityCall) Do() (*PeopleFeed, error) {
 	//     },
 	//     "maxResults": {
 	//       "default": "20",
-	//       "description": "The maximum number of people to include in the response, used for paging. For any response, the actual number returned may be less than the specified maxResults.",
+	//       "description": "The maximum number of people to include in the response, which is used for paging. For any response, the actual number returned might be less than the specified maxResults.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "100",
@@ -1420,7 +1460,7 @@ func (c *PeopleListByActivityCall) Do() (*PeopleFeed, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The continuation token, used to page through large result sets. To get the next page of results, set this parameter to the value of \"nextPageToken\" from the previous response.",
+	//       "description": "The continuation token, which is used to page through large result sets. To get the next page of results, set this parameter to the value of \"nextPageToken\" from the previous response.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -1460,18 +1500,19 @@ func (c *PeopleSearchCall) Language(language string) *PeopleSearchCall {
 }
 
 // MaxResults sets the optional parameter "maxResults": The maximum
-// number of people to include in the response, used for paging. For any
-// response, the actual number returned may be less than the specified
-// maxResults.
+// number of people to include in the response, which is used for
+// paging. For any response, the actual number returned might be less
+// than the specified maxResults.
 func (c *PeopleSearchCall) MaxResults(maxResults int64) *PeopleSearchCall {
 	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": The continuation
-// token, used to page through large result sets. To get the next page
-// of results, set this parameter to the value of "nextPageToken" from
-// the previous response. This token may be of any length.
+// token, which is used to page through large result sets. To get the
+// next page of results, set this parameter to the value of
+// "nextPageToken" from the previous response. This token can be of any
+// length.
 func (c *PeopleSearchCall) PageToken(pageToken string) *PeopleSearchCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -1523,7 +1564,7 @@ func (c *PeopleSearchCall) Do() (*PeopleFeed, error) {
 	//     },
 	//     "maxResults": {
 	//       "default": "10",
-	//       "description": "The maximum number of people to include in the response, used for paging. For any response, the actual number returned may be less than the specified maxResults.",
+	//       "description": "The maximum number of people to include in the response, which is used for paging. For any response, the actual number returned might be less than the specified maxResults.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "20",
@@ -1531,7 +1572,7 @@ func (c *PeopleSearchCall) Do() (*PeopleFeed, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The continuation token, used to page through large result sets. To get the next page of results, set this parameter to the value of \"nextPageToken\" from the previous response. This token may be of any length.",
+	//       "description": "The continuation token, which is used to page through large result sets. To get the next page of results, set this parameter to the value of \"nextPageToken\" from the previous response. This token can be of any length.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

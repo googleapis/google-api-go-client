@@ -1,10 +1,11 @@
 {
  "kind": "discovery#restDescription",
+ "etag": "\"oZqOFf-aKzMvpID-BwBAFJLe7Pk/Vs95H8U0NOHeh2UcF2XpiEnUkzU\"",
  "discoveryVersion": "v1",
  "id": "coordinate:v1",
  "name": "coordinate",
  "version": "v1",
- "revision": "20120912",
+ "revision": "20121016",
  "title": "Google Maps Coordinate API",
  "description": "Lets you view and manage jobs in a Coordinate team.",
  "icons": {

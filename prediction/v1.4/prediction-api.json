@@ -1,10 +1,11 @@
 {
  "kind": "discovery#restDescription",
+ "etag": "\"oZqOFf-aKzMvpID-BwBAFJLe7Pk/3Lt1gv97JIR_T-2DMRrKcwyzqQc\"",
  "discoveryVersion": "v1",
  "id": "prediction:v1.4",
  "name": "prediction",
  "version": "v1.4",
- "revision": "20120724",
+ "revision": "20120712",
  "title": "Prediction API",
  "description": "Lets you access a cloud hosted machine learning service that makes it easy to build smart apps",
  "icons": {
@@ -267,7 +268,11 @@
     },
     "label": {
      "type": "string",
-     "description": "The true class label of this instance"
+     "description": "The class label of this instance"
+    },
+    "output": {
+     "type": "string",
+     "description": "The generic output value - could be regression value or class label"
     }
    }
   }

@@ -250,7 +250,7 @@ type ItemScope struct {
 }
 
 type Moment struct {
-	// Id: The frame ID.
+	// Id: The moment ID.
 	Id string `json:"id,omitempty"`
 
 	// Kind: Identifies this resource as a moment.

@@ -1,5 +1,6 @@
 {
  "kind": "discovery#restDescription",
+ "etag": "\"oZqOFf-aKzMvpID-BwBAFJLe7Pk/E-ZPOcla7VqHv_wAssbrz6vzdz4\"",
  "discoveryVersion": "v1",
  "id": "shopping:v1",
  "name": "shopping",
@@ -116,7 +117,7 @@
     },
     "selfLink": {
      "type": "string",
-     "description": "Self link of product when generated for a search request. Self link of product when generated for a lookup request."
+     "description": "Self link of product when generated for a lookup request. Self link of product when generated for a search request."
     }
    }
   },

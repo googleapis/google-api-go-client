@@ -1,24 +1,24 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"oZqOFf-aKzMvpID-BwBAFJLe7Pk/4NN4icpEU6LLFo9Tx3WifevTXkA\"",
+ "etag": "\"oZqOFf-aKzMvpID-BwBAFJLe7Pk/KrEzSvmCF2Y9IMlrqz2P5bmM5kU\"",
  "discoveryVersion": "v1",
- "id": "adsense:v1",
- "name": "adsense",
- "canonicalName": "AdSense",
+ "id": "adexchangeseller:v1",
+ "name": "adexchangeseller",
+ "canonicalName": "Ad Exchange Seller",
  "version": "v1",
  "revision": "20121016",
- "title": "AdSense Management API",
- "description": "Gives AdSense publishers access to their inventory and the ability to generate reports",
+ "title": "Ad Exchange Seller API",
+ "description": "Gives Ad Exchange seller users access to their inventory and the ability to generate reports",
  "icons": {
-  "x16": "http://www.google.com/images/icons/product/adsense-16.png",
-  "x32": "http://www.google.com/images/icons/product/adsense-32.png"
+  "x16": "http://www.google.com/images/icons/product/doubleclick-16.gif",
+  "x32": "http://www.google.com/images/icons/product/doubleclick-32.gif"
  },
  "documentationLink": "https://developers.google.com/adsense/management/",
  "protocol": "rest",
- "baseUrl": "https://www.googleapis.com/adsense/v1/",
- "basePath": "/adsense/v1/",
+ "baseUrl": "https://www.googleapis.com/adexchangeseller/v1/",
+ "basePath": "/adexchangeseller/v1/",
  "rootUrl": "https://www.googleapis.com/",
- "servicePath": "adsense/v1/",
+ "servicePath": "adexchangeseller/v1/",
  "batchPath": "batch",
  "parameters": {
   "alt": {
@@ -67,31 +67,23 @@
    "location": "query"
   }
  },
- "auth": {
-  "oauth2": {
-   "scopes": {
-    "https://www.googleapis.com/auth/adsense": {
-     "description": "View and manage your AdSense data"
-    },
-    "https://www.googleapis.com/auth/adsense.readonly": {
-     "description": "View your AdSense data"
-    }
-   }
-  }
- },
  "schemas": {
   "AdClient": {
    "id": "AdClient",
    "type": "object",
    "properties": {
+    "arcOptIn": {
+     "type": "boolean",
+     "description": "Whether this ad client is opted in to ARC."
+    },
     "id": {
      "type": "string",
      "description": "Unique identifier of this ad client."
     },
     "kind": {
      "type": "string",
-     "description": "Kind of resource this is, in this case adsense#adClient.",
-     "default": "adsense#adClient"
+     "description": "Kind of resource this is, in this case adexchangeseller#adClient.",
+     "default": "adexchangeseller#adClient"
     },
     "productCode": {
      "type": "string",
@@ -120,8 +112,8 @@
     },
     "kind": {
      "type": "string",
-     "description": "Kind of list this is, in this case adsense#adClients.",
-     "default": "adsense#adClients"
+     "description": "Kind of list this is, in this case adexchangeseller#adClients.",
+     "default": "adexchangeseller#adClients"
     },
     "nextPageToken": {
      "type": "string",
@@ -143,8 +135,8 @@
     },
     "kind": {
      "type": "string",
-     "description": "Kind of resource this is, in this case adsense#adUnit.",
-     "default": "adsense#adUnit"
+     "description": "Kind of resource this is, in this case adexchangeseller#adUnit.",
+     "default": "adexchangeseller#adUnit"
     },
     "name": {
      "type": "string",
@@ -173,8 +165,8 @@
     },
     "kind": {
      "type": "string",
-     "description": "Kind of list this is, in this case adsense#adUnits.",
-     "default": "adsense#adUnits"
+     "description": "Kind of list this is, in this case adexchangeseller#adUnits.",
+     "default": "adexchangeseller#adUnits"
     },
     "nextPageToken": {
      "type": "string",
@@ -182,8 +174,79 @@
     }
    }
   },
-  "AdsenseReportsGenerateResponse": {
-   "id": "AdsenseReportsGenerateResponse",
+  "CustomChannel": {
+   "id": "CustomChannel",
+   "type": "object",
+   "properties": {
+    "code": {
+     "type": "string",
+     "description": "Code of this custom channel, not necessarily unique across ad clients."
+    },
+    "id": {
+     "type": "string",
+     "description": "Unique identifier of this custom channel. This should be considered an opaque identifier; it is not safe to rely on it being in any particular format."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Kind of resource this is, in this case adexchangeseller#customChannel.",
+     "default": "adexchangeseller#customChannel"
+    },
+    "name": {
+     "type": "string",
+     "description": "Name of this custom channel."
+    },
+    "targetingInfo": {
+     "type": "object",
+     "description": "The targeting information of this custom channel, if activated.",
+     "properties": {
+      "adsAppearOn": {
+       "type": "string",
+       "description": "The name used to describe this channel externally."
+      },
+      "description": {
+       "type": "string",
+       "description": "The external description of the channel."
+      },
+      "location": {
+       "type": "string",
+       "description": "The locations in which ads appear. (Only valid for content and mobile content ads). Acceptable values for content ads are: TOP_LEFT, TOP_CENTER, TOP_RIGHT, MIDDLE_LEFT, MIDDLE_CENTER, MIDDLE_RIGHT, BOTTOM_LEFT, BOTTOM_CENTER, BOTTOM_RIGHT, MULTIPLE_LOCATIONS. Acceptable values for mobile content ads are: TOP, MIDDLE, BOTTOM, MULTIPLE_LOCATIONS."
+      },
+      "siteLanguage": {
+       "type": "string",
+       "description": "The language of the sites ads will be displayed on."
+      }
+     }
+    }
+   }
+  },
+  "CustomChannels": {
+   "id": "CustomChannels",
+   "type": "object",
+   "properties": {
+    "etag": {
+     "type": "string",
+     "description": "ETag of this response for caching purposes."
+    },
+    "items": {
+     "type": "array",
+     "description": "The custom channels returned in this list response.",
+     "items": {
+      "$ref": "CustomChannel"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Kind of list this is, in this case adexchangeseller#customChannels.",
+     "default": "adexchangeseller#customChannels"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "Continuation token used to page through custom channels. To retrieve the next page of results, set the next request's \"pageToken\" value to this."
+    }
+   }
+  },
+  "Report": {
+   "id": "Report",
    "type": "object",
    "properties": {
     "averages": {
@@ -216,8 +279,8 @@
     },
     "kind": {
      "type": "string",
-     "description": "Kind this is, in this case adsense#report.",
-     "default": "adsense#report"
+     "description": "Kind this is, in this case adexchangeseller#report.",
+     "default": "adexchangeseller#report"
     },
     "rows": {
      "type": "array",
@@ -250,31 +313,27 @@
     }
    }
   },
-  "CustomChannel": {
-   "id": "CustomChannel",
+  "SavedReport": {
+   "id": "SavedReport",
    "type": "object",
    "properties": {
-    "code": {
-     "type": "string",
-     "description": "Code of this custom channel, not necessarily unique across ad clients."
-    },
     "id": {
      "type": "string",
-     "description": "Unique identifier of this custom channel. This should be considered an opaque identifier; it is not safe to rely on it being in any particular format."
+     "description": "Unique identifier of this saved report."
     },
     "kind": {
      "type": "string",
-     "description": "Kind of resource this is, in this case adsense#customChannel.",
-     "default": "adsense#customChannel"
+     "description": "Kind of resource this is, in this case adexchangeseller#savedReport.",
+     "default": "adexchangeseller#savedReport"
     },
     "name": {
      "type": "string",
-     "description": "Name of this custom channel."
+     "description": "This saved report's name."
     }
    }
   },
-  "CustomChannels": {
-   "id": "CustomChannels",
+  "SavedReports": {
+   "id": "SavedReports",
    "type": "object",
    "properties": {
     "etag": {
@@ -283,19 +342,19 @@
     },
     "items": {
      "type": "array",
-     "description": "The custom channels returned in this list response.",
+     "description": "The saved reports returned in this list response.",
      "items": {
-      "$ref": "CustomChannel"
+      "$ref": "SavedReport"
      }
     },
     "kind": {
      "type": "string",
-     "description": "Kind of list this is, in this case adsense#customChannels.",
-     "default": "adsense#customChannels"
+     "description": "Kind of list this is, in this case adexchangeseller#savedReports.",
+     "default": "adexchangeseller#savedReports"
     },
     "nextPageToken": {
      "type": "string",
-     "description": "Continuation token used to page through custom channels. To retrieve the next page of results, set the next request's \"pageToken\" value to this."
+     "description": "Continuation token used to page through saved reports. To retrieve the next page of results, set the next request's \"pageToken\" value to this."
     }
    }
   },
@@ -309,8 +368,8 @@
     },
     "kind": {
      "type": "string",
-     "description": "Kind of resource this is, in this case adsense#urlChannel.",
-     "default": "adsense#urlChannel"
+     "description": "Kind of resource this is, in this case adexchangeseller#urlChannel.",
+     "default": "adexchangeseller#urlChannel"
     },
     "urlPattern": {
      "type": "string",
@@ -335,8 +394,8 @@
     },
     "kind": {
      "type": "string",
-     "description": "Kind of list this is, in this case adsense#urlChannels.",
-     "default": "adsense#urlChannels"
+     "description": "Kind of list this is, in this case adexchangeseller#urlChannels.",
+     "default": "adexchangeseller#urlChannels"
     },
     "nextPageToken": {
      "type": "string",
@@ -349,15 +408,15 @@
   "adclients": {
    "methods": {
     "list": {
-     "id": "adsense.adclients.list",
+     "id": "adexchangeseller.adclients.list",
      "path": "adclients",
      "httpMethod": "GET",
-     "description": "List all ad clients in this AdSense account.",
+     "description": "List all ad clients in this Ad Exchange account.",
      "parameters": {
       "maxResults": {
        "type": "integer",
        "description": "The maximum number of ad clients to include in the response, used for paging.",
-       "format": "int32",
+       "format": "uint32",
        "minimum": "0",
        "maximum": "10000",
        "location": "query"
@@ -370,21 +429,44 @@
      },
      "response": {
       "$ref": "AdClients"
-     },
-     "scopes": [
-      "https://www.googleapis.com/auth/adsense",
-      "https://www.googleapis.com/auth/adsense.readonly"
-     ]
+     }
     }
    }
   },
   "adunits": {
    "methods": {
+    "get": {
+     "id": "adexchangeseller.adunits.get",
+     "path": "adclients/{adClientId}/adunits/{adUnitId}",
+     "httpMethod": "GET",
+     "description": "Gets the specified ad unit in the specified ad client.",
+     "parameters": {
+      "adClientId": {
+       "type": "string",
+       "description": "Ad client for which to get the ad unit.",
+       "required": true,
+       "location": "path"
+      },
+      "adUnitId": {
+       "type": "string",
+       "description": "Ad unit to retrieve.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "adClientId",
+      "adUnitId"
+     ],
+     "response": {
+      "$ref": "AdUnit"
+     }
+    },
     "list": {
-     "id": "adsense.adunits.list",
+     "id": "adexchangeseller.adunits.list",
      "path": "adclients/{adClientId}/adunits",
      "httpMethod": "GET",
-     "description": "List all ad units in the specified ad client for this AdSense account.",
+     "description": "List all ad units in the specified ad client for this Ad Exchange account.",
      "parameters": {
       "adClientId": {
        "type": "string",
@@ -400,7 +482,7 @@
       "maxResults": {
        "type": "integer",
        "description": "The maximum number of ad units to include in the response, used for paging.",
-       "format": "int32",
+       "format": "uint32",
        "minimum": "0",
        "maximum": "10000",
        "location": "query"
@@ -416,21 +498,90 @@
      ],
      "response": {
       "$ref": "AdUnits"
-     },
-     "scopes": [
-      "https://www.googleapis.com/auth/adsense",
-      "https://www.googleapis.com/auth/adsense.readonly"
-     ]
+     }
+    }
+   },
+   "resources": {
+    "customchannels": {
+     "methods": {
+      "list": {
+       "id": "adexchangeseller.adunits.customchannels.list",
+       "path": "adclients/{adClientId}/adunits/{adUnitId}/customchannels",
+       "httpMethod": "GET",
+       "description": "List all custom channels which the specified ad unit belongs to.",
+       "parameters": {
+        "adClientId": {
+         "type": "string",
+         "description": "Ad client which contains the ad unit.",
+         "required": true,
+         "location": "path"
+        },
+        "adUnitId": {
+         "type": "string",
+         "description": "Ad unit for which to list custom channels.",
+         "required": true,
+         "location": "path"
+        },
+        "maxResults": {
+         "type": "integer",
+         "description": "The maximum number of custom channels to include in the response, used for paging.",
+         "format": "uint32",
+         "minimum": "0",
+         "maximum": "10000",
+         "location": "query"
+        },
+        "pageToken": {
+         "type": "string",
+         "description": "A continuation token, used to page through custom channels. To retrieve the next page, set this parameter to the value of \"nextPageToken\" from the previous response.",
+         "location": "query"
+        }
+       },
+       "parameterOrder": [
+        "adClientId",
+        "adUnitId"
+       ],
+       "response": {
+        "$ref": "CustomChannels"
+       }
+      }
+     }
     }
    }
   },
   "customchannels": {
    "methods": {
+    "get": {
+     "id": "adexchangeseller.customchannels.get",
+     "path": "adclients/{adClientId}/customchannels/{customChannelId}",
+     "httpMethod": "GET",
+     "description": "Get the specified custom channel from the specified ad client.",
+     "parameters": {
+      "adClientId": {
+       "type": "string",
+       "description": "Ad client which contains the custom channel.",
+       "required": true,
+       "location": "path"
+      },
+      "customChannelId": {
+       "type": "string",
+       "description": "Custom channel to retrieve.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "adClientId",
+      "customChannelId"
+     ],
+     "response": {
+      "$ref": "CustomChannel"
+     }
+    },
     "list": {
-     "id": "adsense.customchannels.list",
+     "id": "adexchangeseller.customchannels.list",
      "path": "adclients/{adClientId}/customchannels",
      "httpMethod": "GET",
-     "description": "List all custom channels in the specified ad client for this AdSense account.",
+     "description": "List all custom channels in the specified ad client for this Ad Exchange account.",
      "parameters": {
       "adClientId": {
        "type": "string",
@@ -441,7 +592,7 @@
       "maxResults": {
        "type": "integer",
        "description": "The maximum number of custom channels to include in the response, used for paging.",
-       "format": "int32",
+       "format": "uint32",
        "minimum": "0",
        "maximum": "10000",
        "location": "query"
@@ -457,28 +608,69 @@
      ],
      "response": {
       "$ref": "CustomChannels"
-     },
-     "scopes": [
-      "https://www.googleapis.com/auth/adsense",
-      "https://www.googleapis.com/auth/adsense.readonly"
-     ]
+     }
+    }
+   },
+   "resources": {
+    "adunits": {
+     "methods": {
+      "list": {
+       "id": "adexchangeseller.customchannels.adunits.list",
+       "path": "adclients/{adClientId}/customchannels/{customChannelId}/adunits",
+       "httpMethod": "GET",
+       "description": "List all ad units in the specified custom channel.",
+       "parameters": {
+        "adClientId": {
+         "type": "string",
+         "description": "Ad client which contains the custom channel.",
+         "required": true,
+         "location": "path"
+        },
+        "customChannelId": {
+         "type": "string",
+         "description": "Custom channel for which to list ad units.",
+         "required": true,
+         "location": "path"
+        },
+        "includeInactive": {
+         "type": "boolean",
+         "description": "Whether to include inactive ad units. Default: true.",
+         "location": "query"
+        },
+        "maxResults": {
+         "type": "integer",
+         "description": "The maximum number of ad units to include in the response, used for paging.",
+         "format": "uint32",
+         "minimum": "0",
+         "maximum": "10000",
+         "location": "query"
+        },
+        "pageToken": {
+         "type": "string",
+         "description": "A continuation token, used to page through ad units. To retrieve the next page, set this parameter to the value of \"nextPageToken\" from the previous response.",
+         "location": "query"
+        }
+       },
+       "parameterOrder": [
+        "adClientId",
+        "customChannelId"
+       ],
+       "response": {
+        "$ref": "AdUnits"
+       }
+      }
+     }
     }
    }
   },
   "reports": {
    "methods": {
     "generate": {
-     "id": "adsense.reports.generate",
+     "id": "adexchangeseller.reports.generate",
      "path": "reports",
      "httpMethod": "GET",
-     "description": "Generate an AdSense report based on the report request sent in the query parameters. Returns the result as JSON; to retrieve output in CSV format specify \"alt=csv\" as a query parameter.",
+     "description": "Generate an Ad Exchange report based on the report request sent in the query parameters. Returns the result as JSON; to retrieve output in CSV format specify \"alt=csv\" as a query parameter.",
      "parameters": {
-      "currency": {
-       "type": "string",
-       "description": "Optional currency to use when reporting on monetary metrics. Defaults to the account's currency if not set.",
-       "pattern": "[a-zA-Z]+",
-       "location": "query"
-      },
       "dimension": {
        "type": "string",
        "description": "Dimensions to base the report on.",
@@ -509,7 +701,7 @@
       "maxResults": {
        "type": "integer",
        "description": "The maximum number of rows of report data to return.",
-       "format": "int32",
+       "format": "uint32",
        "minimum": "0",
        "maximum": "50000",
        "location": "query"
@@ -538,7 +730,7 @@
       "startIndex": {
        "type": "integer",
        "description": "Index of the first row of report data to return.",
-       "format": "int32",
+       "format": "uint32",
        "minimum": "0",
        "maximum": "5000",
        "location": "query"
@@ -549,22 +741,91 @@
       "endDate"
      ],
      "response": {
-      "$ref": "AdsenseReportsGenerateResponse"
+      "$ref": "Report"
      },
-     "scopes": [
-      "https://www.googleapis.com/auth/adsense",
-      "https://www.googleapis.com/auth/adsense.readonly"
-     ]
+     "supportsMediaDownload": true
+    }
+   },
+   "resources": {
+    "saved": {
+     "methods": {
+      "generate": {
+       "id": "adexchangeseller.reports.saved.generate",
+       "path": "reports/{savedReportId}",
+       "httpMethod": "GET",
+       "description": "Generate an Ad Exchange report based on the saved report ID sent in the query parameters.",
+       "parameters": {
+        "locale": {
+         "type": "string",
+         "description": "Optional locale to use for translating report output to a local language. Defaults to \"en_US\" if not specified.",
+         "pattern": "[a-zA-Z_]+",
+         "location": "query"
+        },
+        "maxResults": {
+         "type": "integer",
+         "description": "The maximum number of rows of report data to return.",
+         "format": "int32",
+         "minimum": "0",
+         "maximum": "50000",
+         "location": "query"
+        },
+        "savedReportId": {
+         "type": "string",
+         "description": "The saved report to retrieve.",
+         "required": true,
+         "location": "path"
+        },
+        "startIndex": {
+         "type": "integer",
+         "description": "Index of the first row of report data to return.",
+         "format": "int32",
+         "minimum": "0",
+         "maximum": "5000",
+         "location": "query"
+        }
+       },
+       "parameterOrder": [
+        "savedReportId"
+       ],
+       "response": {
+        "$ref": "Report"
+       }
+      },
+      "list": {
+       "id": "adexchangeseller.reports.saved.list",
+       "path": "reports/saved",
+       "httpMethod": "GET",
+       "description": "List all saved reports in this Ad Exchange account.",
+       "parameters": {
+        "maxResults": {
+         "type": "integer",
+         "description": "The maximum number of saved reports to include in the response, used for paging.",
+         "format": "int32",
+         "minimum": "0",
+         "maximum": "100",
+         "location": "query"
+        },
+        "pageToken": {
+         "type": "string",
+         "description": "A continuation token, used to page through saved reports. To retrieve the next page, set this parameter to the value of \"nextPageToken\" from the previous response.",
+         "location": "query"
+        }
+       },
+       "response": {
+        "$ref": "SavedReports"
+       }
+      }
+     }
     }
    }
   },
   "urlchannels": {
    "methods": {
     "list": {
-     "id": "adsense.urlchannels.list",
+     "id": "adexchangeseller.urlchannels.list",
      "path": "adclients/{adClientId}/urlchannels",
      "httpMethod": "GET",
-     "description": "List all URL channels in the specified ad client for this AdSense account.",
+     "description": "List all URL channels in the specified ad client for this Ad Exchange account.",
      "parameters": {
       "adClientId": {
        "type": "string",
@@ -575,7 +836,7 @@
       "maxResults": {
        "type": "integer",
        "description": "The maximum number of URL channels to include in the response, used for paging.",
-       "format": "int32",
+       "format": "uint32",
        "minimum": "0",
        "maximum": "10000",
        "location": "query"
@@ -591,11 +852,7 @@
      ],
      "response": {
       "$ref": "UrlChannels"
-     },
-     "scopes": [
-      "https://www.googleapis.com/auth/adsense",
-      "https://www.googleapis.com/auth/adsense.readonly"
-     ]
+     }
     }
    }
   }

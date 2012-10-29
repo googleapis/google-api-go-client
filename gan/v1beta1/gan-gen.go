@@ -123,13 +123,13 @@ type Advertiser struct {
 	Description string `json:"description,omitempty"`
 
 	// EpcNinetyDayAverage: The sum of fees paid to publishers divided by
-	// the total number of clicks over the past three months. Values are
-	// multiplied by 100 for display purposes.
+	// the total number of clicks over the past three months. This value
+	// should be multiplied by 100 at the time of display.
 	EpcNinetyDayAverage *Money `json:"epcNinetyDayAverage,omitempty"`
 
 	// EpcSevenDayAverage: The sum of fees paid to publishers divided by the
-	// total number of clicks over the past seven days. Values are
-	// multiplied by 100 for display purposes.
+	// total number of clicks over the past seven days. This value should be
+	// multiplied by 100 at the time of display.
 	EpcSevenDayAverage *Money `json:"epcSevenDayAverage,omitempty"`
 
 	// Id: The ID of this advertiser.
@@ -148,6 +148,9 @@ type Advertiser struct {
 	// LogoUrl: URL to the logo this advertiser uses on the Google Affiliate
 	// Network.
 	LogoUrl string `json:"logoUrl,omitempty"`
+
+	// MerchantCenterIds: List of merchant center ids for this advertiser
+	MerchantCenterIds []int64 `json:"merchantCenterIds,omitempty"`
 
 	// Name: The name of this advertiser.
 	Name string `json:"name,omitempty"`
@@ -622,6 +625,16 @@ type Link struct {
 	// EndDate: Date that this link becomes inactive.
 	EndDate string `json:"endDate,omitempty"`
 
+	// EpcNinetyDayAverage: The sum of fees paid to publishers divided by
+	// the total number of clicks over the past three months on this link.
+	// This value should be multiplied by 100 at the time of display.
+	EpcNinetyDayAverage *Money `json:"epcNinetyDayAverage,omitempty"`
+
+	// EpcSevenDayAverage: The sum of fees paid to publishers divided by the
+	// total number of clicks over the past seven days on this link. This
+	// value should be multiplied by 100 at the time of display.
+	EpcSevenDayAverage *Money `json:"epcSevenDayAverage,omitempty"`
+
 	// Id: The ID of this link.
 	Id int64 `json:"id,omitempty,string"`
 
@@ -646,8 +659,37 @@ type Link struct {
 	// PromotionType: Promotion Type
 	PromotionType string `json:"promotionType,omitempty"`
 
+	// SpecialOffers: Special offers on the link.
+	SpecialOffers *LinkSpecialOffers `json:"specialOffers,omitempty"`
+
 	// StartDate: Date that this link becomes active.
 	StartDate string `json:"startDate,omitempty"`
+}
+
+type LinkSpecialOffers struct {
+	// FreeGift: Whether there is a free gift
+	FreeGift bool `json:"freeGift,omitempty"`
+
+	// FreeShipping: Whether there is free shipping
+	FreeShipping bool `json:"freeShipping,omitempty"`
+
+	// FreeShippingMin: Minimum purchase amount for free shipping promotion
+	FreeShippingMin *Money `json:"freeShippingMin,omitempty"`
+
+	// PercentOff: Percent off on the purchase
+	PercentOff float64 `json:"percentOff,omitempty"`
+
+	// PercentOffMin: Minimum purchase amount for percent off promotion
+	PercentOffMin *Money `json:"percentOffMin,omitempty"`
+
+	// PriceCut: Price cut on the purchase
+	PriceCut *Money `json:"priceCut,omitempty"`
+
+	// PriceCutMin: Minimum purchase amount for price cut promotion
+	PriceCutMin *Money `json:"priceCutMin,omitempty"`
+
+	// PromotionCodes: List of promotion code associated with the link
+	PromotionCodes []string `json:"promotionCodes,omitempty"`
 }
 
 type Links struct {
@@ -1730,13 +1772,6 @@ func (r *LinksService) List(role string, roleId string) *LinksListCall {
 	return c
 }
 
-// AdvertiserCategory sets the optional parameter "advertiserCategory":
-// The advertiser's primary vertical.
-func (c *LinksListCall) AdvertiserCategory(advertiserCategory string) *LinksListCall {
-	c.opt_["advertiserCategory"] = advertiserCategory
-	return c
-}
-
 // AdvertiserId sets the optional parameter "advertiserId": Limits the
 // resulting links to the ones belonging to the listed advertisers.
 func (c *LinksListCall) AdvertiserId(advertiserId int64) *LinksListCall {
@@ -1755,6 +1790,20 @@ func (c *LinksListCall) AssetSize(assetSize string) *LinksListCall {
 // author of the link.
 func (c *LinksListCall) Authorship(authorship string) *LinksListCall {
 	c.opt_["authorship"] = authorship
+	return c
+}
+
+// CreateDateMax sets the optional parameter "createDateMax": The end of
+// the create date range.
+func (c *LinksListCall) CreateDateMax(createDateMax string) *LinksListCall {
+	c.opt_["createDateMax"] = createDateMax
+	return c
+}
+
+// CreateDateMin sets the optional parameter "createDateMin": The
+// beginning of the create date range.
+func (c *LinksListCall) CreateDateMin(createDateMin string) *LinksListCall {
+	c.opt_["createDateMin"] = createDateMin
 	return c
 }
 
@@ -1793,6 +1842,14 @@ func (c *LinksListCall) RelationshipStatus(relationshipStatus string) *LinksList
 	return c
 }
 
+// SearchText sets the optional parameter "searchText": Field for full
+// text search across title and merchandising text, supports link id
+// search.
+func (c *LinksListCall) SearchText(searchText string) *LinksListCall {
+	c.opt_["searchText"] = searchText
+	return c
+}
+
 // StartDateMax sets the optional parameter "startDateMax": The end of
 // the start date range.
 func (c *LinksListCall) StartDateMax(startDateMax string) *LinksListCall {
@@ -1811,9 +1868,6 @@ func (c *LinksListCall) Do() (*Links, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	if v, ok := c.opt_["advertiserCategory"]; ok {
-		params.Set("advertiserCategory", fmt.Sprintf("%v", v))
-	}
 	if v, ok := c.opt_["advertiserId"]; ok {
 		params.Set("advertiserId", fmt.Sprintf("%v", v))
 	}
@@ -1822,6 +1876,12 @@ func (c *LinksListCall) Do() (*Links, error) {
 	}
 	if v, ok := c.opt_["authorship"]; ok {
 		params.Set("authorship", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["createDateMax"]; ok {
+		params.Set("createDateMax", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["createDateMin"]; ok {
+		params.Set("createDateMin", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["linkType"]; ok {
 		params.Set("linkType", fmt.Sprintf("%v", v))
@@ -1837,6 +1897,9 @@ func (c *LinksListCall) Do() (*Links, error) {
 	}
 	if v, ok := c.opt_["relationshipStatus"]; ok {
 		params.Set("relationshipStatus", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["searchText"]; ok {
+		params.Set("searchText", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["startDateMax"]; ok {
 		params.Set("startDateMax", fmt.Sprintf("%v", v))
@@ -1871,96 +1934,6 @@ func (c *LinksListCall) Do() (*Links, error) {
 	//     "roleId"
 	//   ],
 	//   "parameters": {
-	//     "advertiserCategory": {
-	//       "description": "The advertiser's primary vertical.",
-	//       "enum": [
-	//         "apparel_accessories",
-	//         "appliances_electronics",
-	//         "auto_dealer",
-	//         "automotive",
-	//         "babies_kids",
-	//         "blogs_personal_sites",
-	//         "books_magazines",
-	//         "computers",
-	//         "dating",
-	//         "department_stores",
-	//         "education",
-	//         "employment",
-	//         "financial_credit_cards",
-	//         "financial_other",
-	//         "flowers_gifts",
-	//         "grocery",
-	//         "health_beauty",
-	//         "home_garden",
-	//         "hosting_domain",
-	//         "internet_providers",
-	//         "legal",
-	//         "media_entertainment",
-	//         "medical",
-	//         "movies_games",
-	//         "music",
-	//         "nonprofit",
-	//         "office_supplies",
-	//         "online_games",
-	//         "outdoor",
-	//         "pets",
-	//         "real_estate",
-	//         "restaurants",
-	//         "sport_fitness",
-	//         "telecom",
-	//         "ticketing",
-	//         "toys_hobbies",
-	//         "travel",
-	//         "utilities",
-	//         "wholesale_relationship",
-	//         "wine_spirits"
-	//       ],
-	//       "enumDescriptions": [
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         ""
-	//       ],
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     },
 	//     "advertiserId": {
 	//       "description": "Limits the resulting links to the ones belonging to the listed advertisers.",
 	//       "format": "int64",
@@ -1984,6 +1957,16 @@ func (c *LinksListCall) Do() (*Links, error) {
 	//         "",
 	//         ""
 	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "createDateMax": {
+	//       "description": "The end of the create date range.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "createDateMin": {
+	//       "description": "The beginning of the create date range.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2016,27 +1999,13 @@ func (c *LinksListCall) Do() (*Links, error) {
 	//     "promotionType": {
 	//       "description": "The promotion type.",
 	//       "enum": [
-	//         "buy_get",
 	//         "coupon",
 	//         "free_gift",
-	//         "free_gift_wrap",
 	//         "free_shipping",
-	//         "none",
-	//         "ongoing",
 	//         "percent_off",
-	//         "price_cut",
-	//         "product_promotion",
-	//         "sale",
-	//         "sweepstakes"
+	//         "price_cut"
 	//       ],
 	//       "enumDescriptions": [
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         "",
 	//         "",
 	//         "",
 	//         "",
@@ -2078,6 +2047,11 @@ func (c *LinksListCall) Do() (*Links, error) {
 	//       "description": "The ID of the requesting advertiser or publisher.",
 	//       "location": "path",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "searchText": {
+	//       "description": "Field for full text search across title and merchandising text, supports link id search.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "startDateMax": {

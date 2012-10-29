@@ -1,5 +1,6 @@
 {
  "kind": "discovery#restDescription",
+ "etag": "\"oZqOFf-aKzMvpID-BwBAFJLe7Pk/w4oNsm9WYapQlRAudY0Tr7UlWAU\"",
  "discoveryVersion": "v1",
  "id": "androidpublisher:v1",
  "name": "androidpublisher",

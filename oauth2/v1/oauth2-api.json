@@ -1,14 +1,18 @@
 {
  "kind": "discovery#restDescription",
+ "etag": "\"oZqOFf-aKzMvpID-BwBAFJLe7Pk/5sgbvukVlvwrUtPYlqnTswTsvsg\"",
  "discoveryVersion": "v1",
  "id": "oauth2:v1",
  "name": "oauth2",
  "version": "v1",
- "description": "OAuth2 API",
+ "revision": "20120806",
+ "title": "Google OAuth2 API",
+ "description": "Lets you access OAuth2 protocol related APIs.",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/search-16.gif",
   "x32": "http://www.google.com/images/icons/product/search-32.gif"
  },
+ "documentationLink": "https://developers.google.com/accounts/docs/OAuth2",
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/",
  "basePath": "/",
@@ -63,6 +67,9 @@
  "auth": {
   "oauth2": {
    "scopes": {
+    "https://www.googleapis.com/auth/plus.me": {
+     "description": "Know who you are on Google"
+    },
     "https://www.googleapis.com/auth/userinfo.email": {
      "description": "View your email address"
     },
@@ -90,7 +97,8 @@
      "description": "The email address of the user. Present only if the email scope is present in the request."
     },
     "email_verified": {
-     "type": "boolean"
+     "type": "boolean",
+     "description": "Boolean flag which is true if the email address is verified. Present only if the email scope is present in the request."
     },
     "expires_in": {
      "type": "integer",
@@ -123,7 +131,8 @@
      "description": "The Gaia obfuscated user id."
     },
     "verified_email": {
-     "type": "boolean"
+     "type": "boolean",
+     "description": "Boolean flag which is true if the email address is verified. Present only if the email scope is present in the request."
     }
    }
   },
@@ -187,13 +196,16 @@
    "id": "oauth2.tokeninfo",
    "path": "oauth2/v1/tokeninfo",
    "httpMethod": "POST",
+   "description": "Get token info",
    "parameters": {
     "access_token": {
      "type": "string",
+     "description": "The oauth2 access token",
      "location": "query"
     },
     "id_token": {
      "type": "string",
+     "description": "The ID token",
      "location": "query"
     }
    },
@@ -209,10 +221,12 @@
      "id": "oauth2.userinfo.get",
      "path": "oauth2/v1/userinfo",
      "httpMethod": "GET",
+     "description": "Get user info",
      "response": {
       "$ref": "Userinfo"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/plus.me",
       "https://www.googleapis.com/auth/userinfo.email",
       "https://www.googleapis.com/auth/userinfo.profile"
      ]
@@ -227,10 +241,12 @@
          "id": "oauth2.userinfo.v2.me.get",
          "path": "userinfo/v2/me",
          "httpMethod": "GET",
+         "description": "Get user info",
          "response": {
           "$ref": "Userinfo"
          },
          "scopes": [
+          "https://www.googleapis.com/auth/plus.me",
           "https://www.googleapis.com/auth/userinfo.email",
           "https://www.googleapis.com/auth/userinfo.profile"
          ]

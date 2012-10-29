@@ -1,5 +1,6 @@
 {
  "kind": "discovery#restDescription",
+ "etag": "\"oZqOFf-aKzMvpID-BwBAFJLe7Pk/Lo3rgHbbJX8N-wB3Jaq1gHcQ2P0\"",
  "discoveryVersion": "v1",
  "id": "adexchangebuyer:v1.1",
  "name": "adexchangebuyer",

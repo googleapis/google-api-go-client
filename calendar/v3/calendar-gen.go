@@ -382,7 +382,7 @@ type Event struct {
 	Gadget *EventGadget `json:"gadget,omitempty"`
 
 	// GuestsCanInviteOthers: Whether attendees other than the organizer can
-	// invite others to the event. Optional. The default is False.
+	// invite others to the event. Optional. The default is True.
 	GuestsCanInviteOthers bool `json:"guestsCanInviteOthers,omitempty"`
 
 	// GuestsCanModify: Whether attendees other than the organizer can
@@ -390,8 +390,7 @@ type Event struct {
 	GuestsCanModify bool `json:"guestsCanModify,omitempty"`
 
 	// GuestsCanSeeOtherGuests: Whether attendees other than the organizer
-	// can see who the event's attendees are. Optional. The default is
-	// False.
+	// can see who the event's attendees are. Optional. The default is True.
 	GuestsCanSeeOtherGuests bool `json:"guestsCanSeeOtherGuests,omitempty"`
 
 	// HangoutLink: An absolute link to the Google+ hangout associated with
@@ -2489,6 +2488,15 @@ func (r *EventsService) Insert(calendarId string, event *Event) *EventsInsertCal
 	return c
 }
 
+// MaxAttendees sets the optional parameter "maxAttendees": The maximum
+// number of attendees to include in the response. If there are more
+// than the specified number of attendees, only the participant is
+// returned.
+func (c *EventsInsertCall) MaxAttendees(maxAttendees int64) *EventsInsertCall {
+	c.opt_["maxAttendees"] = maxAttendees
+	return c
+}
+
 // SendNotifications sets the optional parameter "sendNotifications":
 // Whether to send notifications about the creation of the new event. 
 // The default is False.
@@ -2506,6 +2514,9 @@ func (c *EventsInsertCall) Do() (*Event, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["maxAttendees"]; ok {
+		params.Set("maxAttendees", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["sendNotifications"]; ok {
 		params.Set("sendNotifications", fmt.Sprintf("%v", v))
 	}
@@ -2540,6 +2551,13 @@ func (c *EventsInsertCall) Do() (*Event, error) {
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "maxAttendees": {
+	//       "description": "The maximum number of attendees to include in the response. If there are more than the specified number of attendees, only the participant is returned. Optional.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "minimum": "1",
+	//       "type": "integer"
 	//     },
 	//     "sendNotifications": {
 	//       "description": "Whether to send notifications about the creation of the new event. Optional. The default is False.",
@@ -3186,6 +3204,15 @@ func (c *EventsPatchCall) AlwaysIncludeEmail(alwaysIncludeEmail bool) *EventsPat
 	return c
 }
 
+// MaxAttendees sets the optional parameter "maxAttendees": The maximum
+// number of attendees to include in the response. If there are more
+// than the specified number of attendees, only the participant is
+// returned.
+func (c *EventsPatchCall) MaxAttendees(maxAttendees int64) *EventsPatchCall {
+	c.opt_["maxAttendees"] = maxAttendees
+	return c
+}
+
 // SendNotifications sets the optional parameter "sendNotifications":
 // Whether to send notifications about the event update (e.g. attendee's
 // responses, title changes, etc.).  The default is False.
@@ -3205,6 +3232,9 @@ func (c *EventsPatchCall) Do() (*Event, error) {
 	params.Set("alt", "json")
 	if v, ok := c.opt_["alwaysIncludeEmail"]; ok {
 		params.Set("alwaysIncludeEmail", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxAttendees"]; ok {
+		params.Set("maxAttendees", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["sendNotifications"]; ok {
 		params.Set("sendNotifications", fmt.Sprintf("%v", v))
@@ -3253,6 +3283,13 @@ func (c *EventsPatchCall) Do() (*Event, error) {
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "maxAttendees": {
+	//       "description": "The maximum number of attendees to include in the response. If there are more than the specified number of attendees, only the participant is returned. Optional.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "minimum": "1",
+	//       "type": "integer"
 	//     },
 	//     "sendNotifications": {
 	//       "description": "Whether to send notifications about the event update (e.g. attendee's responses, title changes, etc.). Optional. The default is False.",
@@ -3393,6 +3430,15 @@ func (c *EventsUpdateCall) AlwaysIncludeEmail(alwaysIncludeEmail bool) *EventsUp
 	return c
 }
 
+// MaxAttendees sets the optional parameter "maxAttendees": The maximum
+// number of attendees to include in the response. If there are more
+// than the specified number of attendees, only the participant is
+// returned.
+func (c *EventsUpdateCall) MaxAttendees(maxAttendees int64) *EventsUpdateCall {
+	c.opt_["maxAttendees"] = maxAttendees
+	return c
+}
+
 // SendNotifications sets the optional parameter "sendNotifications":
 // Whether to send notifications about the event update (e.g. attendee's
 // responses, title changes, etc.).  The default is False.
@@ -3412,6 +3458,9 @@ func (c *EventsUpdateCall) Do() (*Event, error) {
 	params.Set("alt", "json")
 	if v, ok := c.opt_["alwaysIncludeEmail"]; ok {
 		params.Set("alwaysIncludeEmail", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxAttendees"]; ok {
+		params.Set("maxAttendees", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["sendNotifications"]; ok {
 		params.Set("sendNotifications", fmt.Sprintf("%v", v))
@@ -3460,6 +3509,13 @@ func (c *EventsUpdateCall) Do() (*Event, error) {
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "maxAttendees": {
+	//       "description": "The maximum number of attendees to include in the response. If there are more than the specified number of attendees, only the participant is returned. Optional.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "minimum": "1",
+	//       "type": "integer"
 	//     },
 	//     "sendNotifications": {
 	//       "description": "Whether to send notifications about the event update (e.g. attendee's responses, title changes, etc.). Optional. The default is False.",

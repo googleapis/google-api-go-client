@@ -1,17 +1,18 @@
 {
  "kind": "discovery#restDescription",
+ "etag": "\"oZqOFf-aKzMvpID-BwBAFJLe7Pk/0cxOkw9W6EofdmPQ-VQv5tyikiQ\"",
  "discoveryVersion": "v1",
  "id": "customsearch:v1",
  "name": "customsearch",
  "version": "v1",
- "revision": "20120718",
+ "revision": "20120904",
  "title": "CustomSearch API",
  "description": "Lets you search over a website or collection of websites",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/search-16.gif",
   "x32": "http://www.google.com/images/icons/product/search-32.gif"
  },
- "documentationLink": "http://code.google.com/apis/customsearch/v1/using_rest.html",
+ "documentationLink": "https://developers.google.com/custom-search/v1/using_rest",
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/customsearch/",
  "basePath": "/customsearch/",

@@ -75,11 +75,11 @@ type AdministrationRegion struct {
 
 type AdministrativeBody struct {
 	// AbsenteeVotingInfoUrl: A URL provided by this administrative body for
-	// information on absentee
+	// information on absentee voting.
 	AbsenteeVotingInfoUrl string `json:"absenteeVotingInfoUrl,omitempty"`
 
 	// BallotInfoUrl: A URL provided by this administrative body to give
-	// contest information to
+	// contest information to the voter.
 	BallotInfoUrl string `json:"ballotInfoUrl,omitempty"`
 
 	// CorrespondenceAddress: The mailing address of this administrative
@@ -87,7 +87,7 @@ type AdministrativeBody struct {
 	CorrespondenceAddress *SimpleAddressType `json:"correspondenceAddress,omitempty"`
 
 	// ElectionInfoUrl: A URL provided by this administrative body for
-	// looking up general election
+	// looking up general election information.
 	ElectionInfoUrl string `json:"electionInfoUrl,omitempty"`
 
 	// ElectionOfficials: The election officials for this election
@@ -95,15 +95,16 @@ type AdministrativeBody struct {
 	ElectionOfficials []*ElectionOfficial `json:"electionOfficials,omitempty"`
 
 	// ElectionRegistrationConfirmationUrl: A URL provided by this
-	// administrative body for confirming that the voter
+	// administrative body for confirming that the voter is registered to
+	// vote.
 	ElectionRegistrationConfirmationUrl string `json:"electionRegistrationConfirmationUrl,omitempty"`
 
 	// ElectionRegistrationUrl: A URL provided by this administrative body
-	// for looking up how to register
+	// for looking up how to register to vote.
 	ElectionRegistrationUrl string `json:"electionRegistrationUrl,omitempty"`
 
 	// ElectionRulesUrl: A URL provided by this administrative body
-	// describing election rules to
+	// describing election rules to the voter.
 	ElectionRulesUrl string `json:"electionRulesUrl,omitempty"`
 
 	// HoursOfOperation: A description of the hours of operation for this
@@ -197,6 +198,18 @@ type Contest struct {
 	// it is for.
 	PrimaryParty string `json:"primaryParty,omitempty"`
 
+	// ReferendumSubtitle: A brief description of the referendum. This field
+	// is only populated for contests of type 'Referendum'.
+	ReferendumSubtitle string `json:"referendumSubtitle,omitempty"`
+
+	// ReferendumTitle: The title of the referendum. (e.g. 'Proposition 42')
+	// This field is only populated for contests of type 'Referendum'.
+	ReferendumTitle string `json:"referendumTitle,omitempty"`
+
+	// ReferendumUrl: A link the referendum. This field is only populated
+	// for contests of type 'Referendum'.
+	ReferendumUrl string `json:"referendumUrl,omitempty"`
+
 	// Sources: A list of sources for this contest. If multiple sources are
 	// listed, the data has been aggregated from those sources.
 	Sources []*Source `json:"sources,omitempty"`
@@ -205,8 +218,9 @@ type Contest struct {
 	// outside the normal election cycle.
 	Special string `json:"special,omitempty"`
 
-	// Type: The type of contest. Usually this will be General, Primary, or
-	// Run-off.
+	// Type: The type of contest. Usually this will be 'General', 'Primary',
+	// or 'Run-off' for contests with candidates. For referenda this will be
+	// 'Referendum'.
 	Type string `json:"type,omitempty"`
 }
 
@@ -242,7 +256,7 @@ type ElectionsQueryResponse struct {
 	// Elections: A list of available elections
 	Elections []*Election `json:"elections,omitempty"`
 
-	// Kind: The kind, fixed to "civicinfo#electionsqueryresponse".
+	// Kind: The kind, fixed to "civicinfo#electionsQueryResponse".
 	Kind string `json:"kind,omitempty"`
 }
 
@@ -263,26 +277,34 @@ type ElectoralDistrict struct {
 }
 
 type PollingLocation struct {
-	// Address: The address of the polling location.
+	// Address: The address of the location
 	Address *SimpleAddressType `json:"address,omitempty"`
 
-	// EndDate: The last date that this early vote site may be used.
+	// EndDate: The last date that this early vote site may be used. This
+	// field is not populated for polling locations.
 	EndDate string `json:"endDate,omitempty"`
 
-	// Name: The name of the early vote site.
+	// Name: The name of the early vote site. This field is not populated
+	// for polling locations.
 	Name string `json:"name,omitempty"`
 
-	// PollingHours: A description of when this polling location is open.
+	// Notes: Notes about this location (e.g. accessibility ramp or entrance
+	// to use)
+	Notes string `json:"notes,omitempty"`
+
+	// PollingHours: A description of when this location is open.
 	PollingHours string `json:"pollingHours,omitempty"`
 
-	// Sources: A list of sources for this polling location. If multiple
-	// sources are listed the data has been aggregated from those sources.
+	// Sources: A list of sources for this location. If multiple sources are
+	// listed the data has been aggregated from those sources.
 	Sources []*Source `json:"sources,omitempty"`
 
-	// StartDate: The first date that this early vote site may be used.
+	// StartDate: The first date that this early vote site may be used. This
+	// field is not populated for polling locations.
 	StartDate string `json:"startDate,omitempty"`
 
-	// VoterServices: The services provided by this early vote site.
+	// VoterServices: The services provided by this early vote site. This
+	// field is not populated for polling locations.
 	VoterServices string `json:"voterServices,omitempty"`
 }
 
@@ -333,7 +355,7 @@ type VoterInfoResponse struct {
 	// Election: The election that was queried.
 	Election *Election `json:"election,omitempty"`
 
-	// Kind: The kind, fixed to "civicinfo#voterinforesponse".
+	// Kind: The kind, fixed to "civicinfo#voterInfoResponse".
 	Kind string `json:"kind,omitempty"`
 
 	// NormalizedInput: The normalized version of the requested address

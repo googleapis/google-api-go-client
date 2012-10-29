@@ -207,8 +207,12 @@ type Update struct {
 	// CsvInstance: The input features for this instance
 	CsvInstance []interface{} `json:"csvInstance,omitempty"`
 
-	// Label: The true class label of this instance
+	// Label: The class label of this instance
 	Label string `json:"label,omitempty"`
+
+	// Output: The generic output value - could be regression value or class
+	// label
+	Output string `json:"output,omitempty"`
 }
 
 // method id "prediction.hostedmodels.predict":

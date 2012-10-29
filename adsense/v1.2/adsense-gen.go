@@ -1,13 +1,13 @@
-// Package adsensehost provides access to the AdSense Host API.
+// Package adsense provides access to the AdSense Management API.
 //
-// See https://developers.google.com/adsense/host/
+// See https://developers.google.com/adsense/management/
 //
 // Usage example:
 //
-//   import "code.google.com/p/google-api-go-client/adsensehost/v4.1"
+//   import "code.google.com/p/google-api-go-client/adsense/v1.2"
 //   ...
-//   adsensehostService, err := adsensehost.New(oauthHttpClient)
-package adsensehost
+//   adsenseService, err := adsense.New(oauthHttpClient)
+package adsense
 
 import (
 	"bytes"
@@ -31,15 +31,18 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 
-const apiId = "adsensehost:v4.1"
-const apiName = "adsensehost"
-const apiVersion = "v4.1"
-const basePath = "https://www.googleapis.com/adsensehost/v4.1/"
+const apiId = "adsense:v1.2"
+const apiName = "adsense"
+const apiVersion = "v1.2"
+const basePath = "https://www.googleapis.com/adsense/v1.2/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your AdSense host data and associated accounts
-	AdsensehostScope = "https://www.googleapis.com/auth/adsensehost"
+	// View and manage your AdSense data
+	AdsenseScope = "https://www.googleapis.com/auth/adsense"
+
+	// View your AdSense data
+	AdsenseReadonlyScope = "https://www.googleapis.com/auth/adsense.readonly"
 )
 
 func New(client *http.Client) (*Service, error) {
@@ -49,9 +52,10 @@ func New(client *http.Client) (*Service, error) {
 	s := &Service{client: client}
 	s.Accounts = &AccountsService{s: s}
 	s.Adclients = &AdclientsService{s: s}
-	s.Associationsessions = &AssociationsessionsService{s: s}
+	s.Adunits = &AdunitsService{s: s}
 	s.Customchannels = &CustomchannelsService{s: s}
 	s.Reports = &ReportsService{s: s}
+	s.Savedadstyles = &SavedadstylesService{s: s}
 	s.Urlchannels = &UrlchannelsService{s: s}
 	return s, nil
 }
@@ -63,11 +67,13 @@ type Service struct {
 
 	Adclients *AdclientsService
 
-	Associationsessions *AssociationsessionsService
+	Adunits *AdunitsService
 
 	Customchannels *CustomchannelsService
 
 	Reports *ReportsService
+
+	Savedadstyles *SavedadstylesService
 
 	Urlchannels *UrlchannelsService
 }
@@ -80,7 +86,7 @@ type AdclientsService struct {
 	s *Service
 }
 
-type AssociationsessionsService struct {
+type AdunitsService struct {
 	s *Service
 }
 
@@ -92,6 +98,10 @@ type ReportsService struct {
 	s *Service
 }
 
+type SavedadstylesService struct {
+	s *Service
+}
+
 type UrlchannelsService struct {
 	s *Service
 }
@@ -100,15 +110,17 @@ type Account struct {
 	// Id: Unique identifier of this account.
 	Id string `json:"id,omitempty"`
 
-	// Kind: Kind of resource this is, in this case adsensehost#account.
+	// Kind: Kind of resource this is, in this case adsense#account.
 	Kind string `json:"kind,omitempty"`
 
 	// Name: Name of this account.
 	Name string `json:"name,omitempty"`
 
-	// Status: Approval status of this account. One of: PENDING, APPROVED,
-	// DISABLED.
-	Status string `json:"status,omitempty"`
+	// Premium: Whether this account is premium.
+	Premium bool `json:"premium,omitempty"`
+
+	// SubAccounts: Sub accounts of the this account.
+	SubAccounts []*Account `json:"subAccounts,omitempty"`
 }
 
 type Accounts struct {
@@ -118,8 +130,13 @@ type Accounts struct {
 	// Items: The accounts returned in this list response.
 	Items []*Account `json:"items,omitempty"`
 
-	// Kind: Kind of list this is, in this case adsensehost#accounts.
+	// Kind: Kind of list this is, in this case adsense#accounts.
 	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: Continuation token used to page through accounts. To
+	// retrieve the next page of results, set the next request's "pageToken"
+	// value to this.
+	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
 type AdClient struct {
@@ -129,7 +146,7 @@ type AdClient struct {
 	// Id: Unique identifier of this ad client.
 	Id string `json:"id,omitempty"`
 
-	// Kind: Kind of resource this is, in this case adsensehost#adClient.
+	// Kind: Kind of resource this is, in this case adsense#adClient.
 	Kind string `json:"kind,omitempty"`
 
 	// ProductCode: This ad client's product code, which corresponds to the
@@ -147,7 +164,7 @@ type AdClients struct {
 	// Items: The ad clients returned in this list response.
 	Items []*AdClient `json:"items,omitempty"`
 
-	// Kind: Kind of list this is, in this case adsensehost#adClients.
+	// Kind: Kind of list this is, in this case adsense#adClients.
 	Kind string `json:"kind,omitempty"`
 
 	// NextPageToken: Continuation token used to page through ad clients. To
@@ -156,18 +173,10 @@ type AdClients struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
-type AdCode struct {
-	// AdCode: The ad code snippet.
-	AdCode string `json:"adCode,omitempty"`
-
-	// Kind: Kind this is, in this case adsensehost#adCode.
-	Kind string `json:"kind,omitempty"`
-}
-
 type AdStyle struct {
-	// Colors: The colors included in the style. These are represented as
-	// six hexadecimal characters, similar to HTML color codes, but without
-	// the leading hash.
+	// Colors: The colors which are included in the style. These are
+	// represented as six hexadecimal characters, similar to HTML color
+	// codes, but without the leading hash.
 	Colors *AdStyleColors `json:"colors,omitempty"`
 
 	// Corners: The style of the corners in the ad.
@@ -176,7 +185,7 @@ type AdStyle struct {
 	// Font: The font which is included in the style.
 	Font *AdStyleFont `json:"font,omitempty"`
 
-	// Kind: Kind this is, in this case adsensehost#adStyle.
+	// Kind: Kind this is, in this case adsense#adStyle.
 	Kind string `json:"kind,omitempty"`
 }
 
@@ -217,12 +226,15 @@ type AdUnit struct {
 	// CustomStyle: Custom style information specific to this ad unit.
 	CustomStyle *AdStyle `json:"customStyle,omitempty"`
 
+	// FeedAdsSettings: Settings specific to feed ads (AFF).
+	FeedAdsSettings *AdUnitFeedAdsSettings `json:"feedAdsSettings,omitempty"`
+
 	// Id: Unique identifier of this ad unit. This should be considered an
 	// opaque identifier; it is not safe to rely on it being in any
 	// particular format.
 	Id string `json:"id,omitempty"`
 
-	// Kind: Kind of resource this is, in this case adsensehost#adUnit.
+	// Kind: Kind of resource this is, in this case adsense#adUnit.
 	Kind string `json:"kind,omitempty"`
 
 	// MobileContentAdsSettings: Settings specific to WAP mobile content ads
@@ -231,6 +243,10 @@ type AdUnit struct {
 
 	// Name: Name of this ad unit.
 	Name string `json:"name,omitempty"`
+
+	// SavedStyleId: ID of the saved ad style which holds this ad unit's
+	// style information.
+	SavedStyleId string `json:"savedStyleId,omitempty"`
 
 	// Status: Status of this ad unit. Possible values are:
 	// NEW: Indicates
@@ -270,6 +286,22 @@ type AdUnitContentAdsSettingsBackupOption struct {
 	Url string `json:"url,omitempty"`
 }
 
+type AdUnitFeedAdsSettings struct {
+	// AdPosition: The position of the ads relative to the feed entries.
+	AdPosition string `json:"adPosition,omitempty"`
+
+	// Frequency: The frequency at which ads should appear in the feed (i.e.
+	// every N entries).
+	Frequency int64 `json:"frequency,omitempty"`
+
+	// MinimumWordCount: The minimum length an entry should be in order to
+	// have attached ads.
+	MinimumWordCount int64 `json:"minimumWordCount,omitempty"`
+
+	// Type: The type of ads which should appear.
+	Type string `json:"type,omitempty"`
+}
+
 type AdUnitMobileContentAdsSettings struct {
 	// MarkupLanguage: The markup language to use for this ad unit.
 	MarkupLanguage string `json:"markupLanguage,omitempty"`
@@ -291,7 +323,7 @@ type AdUnits struct {
 	// Items: The ad units returned in this list response.
 	Items []*AdUnit `json:"items,omitempty"`
 
-	// Kind: Kind of list this is, in this case adsensehost#adUnits.
+	// Kind: Kind of list this is, in this case adsense#adUnits.
 	Kind string `json:"kind,omitempty"`
 
 	// NextPageToken: Continuation token used to page through ad units. To
@@ -300,77 +332,7 @@ type AdUnits struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
-type AssociationSession struct {
-	// AccountId: Hosted account id of the associated publisher after
-	// association. Present if status is ACCEPTED.
-	AccountId string `json:"accountId,omitempty"`
-
-	// Id: Unique identifier of this association session.
-	Id string `json:"id,omitempty"`
-
-	// Kind: Kind of resource this is, in this case
-	// adsensehost#associationSession.
-	Kind string `json:"kind,omitempty"`
-
-	// ProductCodes: The products to associate with the user. Options: AFC,
-	// AFF, AFS, AFMC
-	ProductCodes []string `json:"productCodes,omitempty"`
-
-	// RedirectUrl: Redirect URL of this association session. Used to
-	// redirect users into the AdSense association flow.
-	RedirectUrl string `json:"redirectUrl,omitempty"`
-
-	// Status: Status of the completed association, available once the
-	// association callback token has been verified. One of ACCEPTED,
-	// REJECTED, or ERROR.
-	Status string `json:"status,omitempty"`
-
-	// UserLocale: The preferred locale of the user themselves when going
-	// through the AdSense association flow.
-	UserLocale string `json:"userLocale,omitempty"`
-
-	// WebsiteLocale: The locale of the user's hosted website.
-	WebsiteLocale string `json:"websiteLocale,omitempty"`
-
-	// WebsiteUrl: The URL of the user's hosted website.
-	WebsiteUrl string `json:"websiteUrl,omitempty"`
-}
-
-type CustomChannel struct {
-	// Code: Code of this custom channel, not necessarily unique across ad
-	// clients.
-	Code string `json:"code,omitempty"`
-
-	// Id: Unique identifier of this custom channel. This should be
-	// considered an opaque identifier; it is not safe to rely on it being
-	// in any particular format.
-	Id string `json:"id,omitempty"`
-
-	// Kind: Kind of resource this is, in this case
-	// adsensehost#customChannel.
-	Kind string `json:"kind,omitempty"`
-
-	// Name: Name of this custom channel.
-	Name string `json:"name,omitempty"`
-}
-
-type CustomChannels struct {
-	// Etag: ETag of this response for caching purposes.
-	Etag string `json:"etag,omitempty"`
-
-	// Items: The custom channels returned in this list response.
-	Items []*CustomChannel `json:"items,omitempty"`
-
-	// Kind: Kind of list this is, in this case adsensehost#customChannels.
-	Kind string `json:"kind,omitempty"`
-
-	// NextPageToken: Continuation token used to page through custom
-	// channels. To retrieve the next page of results, set the next
-	// request's "pageToken" value to this.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-}
-
-type Report struct {
+type AdsenseReportsGenerateResponse struct {
 	// Averages: The averages of the report. This is the same length as any
 	// other row in the report; cells corresponding to dimension columns are
 	// empty.
@@ -379,9 +341,9 @@ type Report struct {
 	// Headers: The header information of the columns requested in the
 	// report. This is a list of headers; one for each dimension in the
 	// request, followed by one for each metric in the request.
-	Headers []*ReportHeaders `json:"headers,omitempty"`
+	Headers []*AdsenseReportsGenerateResponseHeaders `json:"headers,omitempty"`
 
-	// Kind: Kind this is, in this case adsensehost#report.
+	// Kind: Kind this is, in this case adsense#report.
 	Kind string `json:"kind,omitempty"`
 
 	// Rows: The output rows of the report. Each row is a list of cells; one
@@ -404,7 +366,7 @@ type Report struct {
 	Warnings []string `json:"warnings,omitempty"`
 }
 
-type ReportHeaders struct {
+type AdsenseReportsGenerateResponseHeaders struct {
 	// Currency: The currency of this column. Only present if the header
 	// type is METRIC_CURRENCY.
 	Currency string `json:"currency,omitempty"`
@@ -417,13 +379,128 @@ type ReportHeaders struct {
 	Type string `json:"type,omitempty"`
 }
 
+type CustomChannel struct {
+	// Code: Code of this custom channel, not necessarily unique across ad
+	// clients.
+	Code string `json:"code,omitempty"`
+
+	// Id: Unique identifier of this custom channel. This should be
+	// considered an opaque identifier; it is not safe to rely on it being
+	// in any particular format.
+	Id string `json:"id,omitempty"`
+
+	// Kind: Kind of resource this is, in this case adsense#customChannel.
+	Kind string `json:"kind,omitempty"`
+
+	// Name: Name of this custom channel.
+	Name string `json:"name,omitempty"`
+
+	// TargetingInfo: The targeting information of this custom channel, if
+	// activated.
+	TargetingInfo *CustomChannelTargetingInfo `json:"targetingInfo,omitempty"`
+}
+
+type CustomChannelTargetingInfo struct {
+	// AdsAppearOn: The name used to describe this channel externally.
+	AdsAppearOn string `json:"adsAppearOn,omitempty"`
+
+	// Description: The external description of the channel.
+	Description string `json:"description,omitempty"`
+
+	// Location: The locations in which ads appear. (Only valid for content
+	// and mobile content ads). Acceptable values for content ads are:
+	// TOP_LEFT, TOP_CENTER, TOP_RIGHT, MIDDLE_LEFT, MIDDLE_CENTER,
+	// MIDDLE_RIGHT, BOTTOM_LEFT, BOTTOM_CENTER, BOTTOM_RIGHT,
+	// MULTIPLE_LOCATIONS. Acceptable values for mobile content ads are:
+	// TOP, MIDDLE, BOTTOM, MULTIPLE_LOCATIONS.
+	Location string `json:"location,omitempty"`
+
+	// SiteLanguage: The language of the sites ads will be displayed on.
+	SiteLanguage string `json:"siteLanguage,omitempty"`
+}
+
+type CustomChannels struct {
+	// Etag: ETag of this response for caching purposes.
+	Etag string `json:"etag,omitempty"`
+
+	// Items: The custom channels returned in this list response.
+	Items []*CustomChannel `json:"items,omitempty"`
+
+	// Kind: Kind of list this is, in this case adsense#customChannels.
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: Continuation token used to page through custom
+	// channels. To retrieve the next page of results, set the next
+	// request's "pageToken" value to this.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+}
+
+type SavedAdStyle struct {
+	// AdStyle: The AdStyle itself.
+	AdStyle *AdStyle `json:"adStyle,omitempty"`
+
+	// Id: Unique identifier of this saved ad style. This should be
+	// considered an opaque identifier; it is not safe to rely on it being
+	// in any particular format.
+	Id string `json:"id,omitempty"`
+
+	// Kind: Kind of resource this is, in this case adsense#savedAdStyle.
+	Kind string `json:"kind,omitempty"`
+
+	// Name: The user selected name of this SavedAdStyle.
+	Name string `json:"name,omitempty"`
+}
+
+type SavedAdStyles struct {
+	// Etag: ETag of this response for caching purposes.
+	Etag string `json:"etag,omitempty"`
+
+	// Items: The saved ad styles returned in this list response.
+	Items []*SavedAdStyle `json:"items,omitempty"`
+
+	// Kind: Kind of list this is, in this case adsense#savedAdStyles.
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: Continuation token used to page through ad units. To
+	// retrieve the next page of results, set the next request's "pageToken"
+	// value to this.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+}
+
+type SavedReport struct {
+	// Id: Unique identifier of this saved report.
+	Id string `json:"id,omitempty"`
+
+	// Kind: Kind of resource this is, in this case adsense#savedReport.
+	Kind string `json:"kind,omitempty"`
+
+	// Name: This saved report's name.
+	Name string `json:"name,omitempty"`
+}
+
+type SavedReports struct {
+	// Etag: ETag of this response for caching purposes.
+	Etag string `json:"etag,omitempty"`
+
+	// Items: The saved reports returned in this list response.
+	Items []*SavedReport `json:"items,omitempty"`
+
+	// Kind: Kind of list this is, in this case adsense#savedReports.
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: Continuation token used to page through saved reports.
+	// To retrieve the next page of results, set the next request's
+	// "pageToken" value to this.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+}
+
 type UrlChannel struct {
 	// Id: Unique identifier of this URL channel. This should be considered
 	// an opaque identifier; it is not safe to rely on it being in any
 	// particular format.
 	Id string `json:"id,omitempty"`
 
-	// Kind: Kind of resource this is, in this case adsensehost#urlChannel.
+	// Kind: Kind of resource this is, in this case adsense#urlChannel.
 	Kind string `json:"kind,omitempty"`
 
 	// UrlPattern: URL Pattern of this URL channel. Does not include
@@ -438,7 +515,7 @@ type UrlChannels struct {
 	// Items: The URL channels returned in this list response.
 	Items []*UrlChannel `json:"items,omitempty"`
 
-	// Kind: Kind of list this is, in this case adsensehost#urlChannels.
+	// Kind: Kind of list this is, in this case adsense#urlChannels.
 	Kind string `json:"kind,omitempty"`
 
 	// NextPageToken: Continuation token used to page through URL channels.
@@ -447,7 +524,7 @@ type UrlChannels struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
-// method id "adsensehost.accounts.get":
+// method id "adsense.accounts.get":
 
 type AccountsGetCall struct {
 	s         *Service
@@ -455,10 +532,17 @@ type AccountsGetCall struct {
 	opt_      map[string]interface{}
 }
 
-// Get: Get information about the selected associated AdSense account.
+// Get: Get information about the selected AdSense account.
 func (r *AccountsService) Get(accountId string) *AccountsGetCall {
 	c := &AccountsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.accountId = accountId
+	return c
+}
+
+// Tree sets the optional parameter "tree": Whether the tree of sub
+// accounts should be returned.
+func (c *AccountsGetCall) Tree(tree bool) *AccountsGetCall {
+	c.opt_["tree"] = tree
 	return c
 }
 
@@ -466,7 +550,10 @@ func (c *AccountsGetCall) Do() (*Account, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "accounts/{accountId}")
+	if v, ok := c.opt_["tree"]; ok {
+		params.Set("tree", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsense/v1.2/", "accounts/{accountId}")
 	urls = strings.Replace(urls, "{accountId}", cleanPathString(c.accountId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -484,9 +571,9 @@ func (c *AccountsGetCall) Do() (*Account, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Get information about the selected associated AdSense account.",
+	//   "description": "Get information about the selected AdSense account.",
 	//   "httpMethod": "GET",
-	//   "id": "adsensehost.accounts.get",
+	//   "id": "adsense.accounts.get",
 	//   "parameterOrder": [
 	//     "accountId"
 	//   ],
@@ -496,6 +583,11 @@ func (c *AccountsGetCall) Do() (*Account, error) {
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "tree": {
+	//       "description": "Whether the tree of sub accounts should be returned.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     }
 	//   },
 	//   "path": "accounts/{accountId}",
@@ -503,25 +595,39 @@ func (c *AccountsGetCall) Do() (*Account, error) {
 	//     "$ref": "Account"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/adsensehost"
+	//     "https://www.googleapis.com/auth/adsense",
+	//     "https://www.googleapis.com/auth/adsense.readonly"
 	//   ]
 	// }
 
 }
 
-// method id "adsensehost.accounts.list":
+// method id "adsense.accounts.list":
 
 type AccountsListCall struct {
-	s                *Service
-	filterAdClientId []string
-	opt_             map[string]interface{}
+	s    *Service
+	opt_ map[string]interface{}
 }
 
-// List: List hosted accounts associated with this AdSense account by ad
-// client id.
-func (r *AccountsService) List(filterAdClientId []string) *AccountsListCall {
+// List: List all accounts available to this AdSense account.
+func (r *AccountsService) List() *AccountsListCall {
 	c := &AccountsListCall{s: r.s, opt_: make(map[string]interface{})}
-	c.filterAdClientId = filterAdClientId
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of accounts to include in the response, used for paging.
+func (c *AccountsListCall) MaxResults(maxResults int64) *AccountsListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A continuation
+// token, used to page through accounts. To retrieve the next page, set
+// this parameter to the value of "nextPageToken" from the previous
+// response.
+func (c *AccountsListCall) PageToken(pageToken string) *AccountsListCall {
+	c.opt_["pageToken"] = pageToken
 	return c
 }
 
@@ -529,10 +635,13 @@ func (c *AccountsListCall) Do() (*Accounts, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	for _, v := range c.filterAdClientId {
-		params.Add("filterAdClientId", fmt.Sprintf("%v", v))
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "accounts")
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsense/v1.2/", "accounts")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
@@ -549,18 +658,21 @@ func (c *AccountsListCall) Do() (*Accounts, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "List hosted accounts associated with this AdSense account by ad client id.",
+	//   "description": "List all accounts available to this AdSense account.",
 	//   "httpMethod": "GET",
-	//   "id": "adsensehost.accounts.list",
-	//   "parameterOrder": [
-	//     "filterAdClientId"
-	//   ],
+	//   "id": "adsense.accounts.list",
 	//   "parameters": {
-	//     "filterAdClientId": {
-	//       "description": "Ad clients to list accounts for.",
+	//     "maxResults": {
+	//       "description": "The maximum number of accounts to include in the response, used for paging.",
+	//       "format": "int32",
 	//       "location": "query",
-	//       "repeated": true,
-	//       "required": true,
+	//       "maximum": "10000",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A continuation token, used to page through accounts. To retrieve the next page, set this parameter to the value of \"nextPageToken\" from the previous response.",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -569,83 +681,21 @@ func (c *AccountsListCall) Do() (*Accounts, error) {
 	//     "$ref": "Accounts"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/adsensehost"
+	//     "https://www.googleapis.com/auth/adsense",
+	//     "https://www.googleapis.com/auth/adsense.readonly"
 	//   ]
 	// }
 
 }
 
-// method id "adsensehost.adclients.get":
-
-type AdclientsGetCall struct {
-	s          *Service
-	adClientId string
-	opt_       map[string]interface{}
-}
-
-// Get: Get information about one of the ad clients in the Host AdSense
-// account.
-func (r *AdclientsService) Get(adClientId string) *AdclientsGetCall {
-	c := &AdclientsGetCall{s: r.s, opt_: make(map[string]interface{})}
-	c.adClientId = adClientId
-	return c
-}
-
-func (c *AdclientsGetCall) Do() (*AdClient, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "adclients/{adClientId}")
-	urls = strings.Replace(urls, "{adClientId}", cleanPathString(c.adClientId), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(AdClient)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Get information about one of the ad clients in the Host AdSense account.",
-	//   "httpMethod": "GET",
-	//   "id": "adsensehost.adclients.get",
-	//   "parameterOrder": [
-	//     "adClientId"
-	//   ],
-	//   "parameters": {
-	//     "adClientId": {
-	//       "description": "Ad client to get.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "adclients/{adClientId}",
-	//   "response": {
-	//     "$ref": "AdClient"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/adsensehost"
-	//   ]
-	// }
-
-}
-
-// method id "adsensehost.adclients.list":
+// method id "adsense.adclients.list":
 
 type AdclientsListCall struct {
 	s    *Service
 	opt_ map[string]interface{}
 }
 
-// List: List all host ad clients in this AdSense account.
+// List: List all ad clients in this AdSense account.
 func (r *AdclientsService) List() *AdclientsListCall {
 	c := &AdclientsListCall{s: r.s, opt_: make(map[string]interface{})}
 	return c
@@ -677,7 +727,7 @@ func (c *AdclientsListCall) Do() (*AdClients, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "adclients")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsense/v1.2/", "adclients")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
@@ -694,13 +744,13 @@ func (c *AdclientsListCall) Do() (*AdClients, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "List all host ad clients in this AdSense account.",
+	//   "description": "List all ad clients in this AdSense account.",
 	//   "httpMethod": "GET",
-	//   "id": "adsensehost.adclients.list",
+	//   "id": "adsense.adclients.list",
 	//   "parameters": {
 	//     "maxResults": {
 	//       "description": "The maximum number of ad clients to include in the response, used for paging.",
-	//       "format": "uint32",
+	//       "format": "int32",
 	//       "location": "query",
 	//       "maximum": "10000",
 	//       "minimum": "0",
@@ -717,218 +767,39 @@ func (c *AdclientsListCall) Do() (*AdClients, error) {
 	//     "$ref": "AdClients"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/adsensehost"
+	//     "https://www.googleapis.com/auth/adsense",
+	//     "https://www.googleapis.com/auth/adsense.readonly"
 	//   ]
 	// }
 
 }
 
-// method id "adsensehost.associationsessions.start":
+// method id "adsense.adunits.get":
 
-type AssociationsessionsStartCall struct {
-	s           *Service
-	productCode []string
-	websiteUrl  string
-	opt_        map[string]interface{}
+type AdunitsGetCall struct {
+	s          *Service
+	adClientId string
+	adUnitId   string
+	opt_       map[string]interface{}
 }
 
-// Start: Create an association session for initiating an association
-// with an AdSense user.
-func (r *AssociationsessionsService) Start(productCode []string, websiteUrl string) *AssociationsessionsStartCall {
-	c := &AssociationsessionsStartCall{s: r.s, opt_: make(map[string]interface{})}
-	c.productCode = productCode
-	c.websiteUrl = websiteUrl
-	return c
-}
-
-// UserLocale sets the optional parameter "userLocale": The preferred
-// locale of the user.
-func (c *AssociationsessionsStartCall) UserLocale(userLocale string) *AssociationsessionsStartCall {
-	c.opt_["userLocale"] = userLocale
-	return c
-}
-
-// WebsiteLocale sets the optional parameter "websiteLocale": The locale
-// of the user's hosted website.
-func (c *AssociationsessionsStartCall) WebsiteLocale(websiteLocale string) *AssociationsessionsStartCall {
-	c.opt_["websiteLocale"] = websiteLocale
-	return c
-}
-
-func (c *AssociationsessionsStartCall) Do() (*AssociationSession, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	params.Set("websiteUrl", fmt.Sprintf("%v", c.websiteUrl))
-	for _, v := range c.productCode {
-		params.Add("productCode", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["userLocale"]; ok {
-		params.Set("userLocale", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["websiteLocale"]; ok {
-		params.Set("websiteLocale", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "associationsessions/start")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(AssociationSession)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Create an association session for initiating an association with an AdSense user.",
-	//   "httpMethod": "GET",
-	//   "id": "adsensehost.associationsessions.start",
-	//   "parameterOrder": [
-	//     "productCode",
-	//     "websiteUrl"
-	//   ],
-	//   "parameters": {
-	//     "productCode": {
-	//       "description": "Products to associate with the user.",
-	//       "enum": [
-	//         "AFC",
-	//         "AFMC",
-	//         "AFS"
-	//       ],
-	//       "enumDescriptions": [
-	//         "AdSense For Content",
-	//         "AdSense For Mobile Content",
-	//         "AdSense For Search"
-	//       ],
-	//       "location": "query",
-	//       "repeated": true,
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "userLocale": {
-	//       "description": "The preferred locale of the user.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "websiteLocale": {
-	//       "description": "The locale of the user's hosted website.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "websiteUrl": {
-	//       "description": "The URL of the user's hosted website.",
-	//       "location": "query",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "associationsessions/start",
-	//   "response": {
-	//     "$ref": "AssociationSession"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/adsensehost"
-	//   ]
-	// }
-
-}
-
-// method id "adsensehost.associationsessions.verify":
-
-type AssociationsessionsVerifyCall struct {
-	s     *Service
-	token string
-	opt_  map[string]interface{}
-}
-
-// Verify: Verify an association session after the association callback
-// returns from AdSense signup.
-func (r *AssociationsessionsService) Verify(token string) *AssociationsessionsVerifyCall {
-	c := &AssociationsessionsVerifyCall{s: r.s, opt_: make(map[string]interface{})}
-	c.token = token
-	return c
-}
-
-func (c *AssociationsessionsVerifyCall) Do() (*AssociationSession, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	params.Set("token", fmt.Sprintf("%v", c.token))
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "associationsessions/verify")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(AssociationSession)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Verify an association session after the association callback returns from AdSense signup.",
-	//   "httpMethod": "GET",
-	//   "id": "adsensehost.associationsessions.verify",
-	//   "parameterOrder": [
-	//     "token"
-	//   ],
-	//   "parameters": {
-	//     "token": {
-	//       "description": "The token returned to the association callback URL.",
-	//       "location": "query",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "associationsessions/verify",
-	//   "response": {
-	//     "$ref": "AssociationSession"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/adsensehost"
-	//   ]
-	// }
-
-}
-
-// method id "adsensehost.customchannels.delete":
-
-type CustomchannelsDeleteCall struct {
-	s               *Service
-	adClientId      string
-	customChannelId string
-	opt_            map[string]interface{}
-}
-
-// Delete: Delete a specific custom channel from the host AdSense
-// account.
-func (r *CustomchannelsService) Delete(adClientId string, customChannelId string) *CustomchannelsDeleteCall {
-	c := &CustomchannelsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+// Get: Gets the specified ad unit in the specified ad client.
+func (r *AdunitsService) Get(adClientId string, adUnitId string) *AdunitsGetCall {
+	c := &AdunitsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.adClientId = adClientId
-	c.customChannelId = customChannelId
+	c.adUnitId = adUnitId
 	return c
 }
 
-func (c *CustomchannelsDeleteCall) Do() (*CustomChannel, error) {
+func (c *AdunitsGetCall) Do() (*AdUnit, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "adclients/{adClientId}/customchannels/{customChannelId}")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsense/v1.2/", "adclients/{adClientId}/adunits/{adUnitId}")
 	urls = strings.Replace(urls, "{adClientId}", cleanPathString(c.adClientId), 1)
-	urls = strings.Replace(urls, "{customChannelId}", cleanPathString(c.customChannelId), 1)
+	urls = strings.Replace(urls, "{adUnitId}", cleanPathString(c.adUnitId), 1)
 	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("DELETE", urls, body)
+	req, _ := http.NewRequest("GET", urls, body)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -937,45 +808,160 @@ func (c *CustomchannelsDeleteCall) Do() (*CustomChannel, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(CustomChannel)
+	ret := new(AdUnit)
 	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Delete a specific custom channel from the host AdSense account.",
-	//   "httpMethod": "DELETE",
-	//   "id": "adsensehost.customchannels.delete",
+	//   "description": "Gets the specified ad unit in the specified ad client.",
+	//   "httpMethod": "GET",
+	//   "id": "adsense.adunits.get",
 	//   "parameterOrder": [
 	//     "adClientId",
-	//     "customChannelId"
+	//     "adUnitId"
 	//   ],
 	//   "parameters": {
 	//     "adClientId": {
-	//       "description": "Ad client from which to delete the custom channel.",
+	//       "description": "Ad client for which to get the ad unit.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "customChannelId": {
-	//       "description": "Custom channel to delete.",
+	//     "adUnitId": {
+	//       "description": "Ad unit to retrieve.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "adclients/{adClientId}/customchannels/{customChannelId}",
+	//   "path": "adclients/{adClientId}/adunits/{adUnitId}",
 	//   "response": {
-	//     "$ref": "CustomChannel"
+	//     "$ref": "AdUnit"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/adsensehost"
+	//     "https://www.googleapis.com/auth/adsense",
+	//     "https://www.googleapis.com/auth/adsense.readonly"
 	//   ]
 	// }
 
 }
 
-// method id "adsensehost.customchannels.get":
+// method id "adsense.adunits.list":
+
+type AdunitsListCall struct {
+	s          *Service
+	adClientId string
+	opt_       map[string]interface{}
+}
+
+// List: List all ad units in the specified ad client for this AdSense
+// account.
+func (r *AdunitsService) List(adClientId string) *AdunitsListCall {
+	c := &AdunitsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.adClientId = adClientId
+	return c
+}
+
+// IncludeInactive sets the optional parameter "includeInactive":
+// Whether to include inactive ad units. Default: true.
+func (c *AdunitsListCall) IncludeInactive(includeInactive bool) *AdunitsListCall {
+	c.opt_["includeInactive"] = includeInactive
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of ad units to include in the response, used for paging.
+func (c *AdunitsListCall) MaxResults(maxResults int64) *AdunitsListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A continuation
+// token, used to page through ad units. To retrieve the next page, set
+// this parameter to the value of "nextPageToken" from the previous
+// response.
+func (c *AdunitsListCall) PageToken(pageToken string) *AdunitsListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+func (c *AdunitsListCall) Do() (*AdUnits, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["includeInactive"]; ok {
+		params.Set("includeInactive", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsense/v1.2/", "adclients/{adClientId}/adunits")
+	urls = strings.Replace(urls, "{adClientId}", cleanPathString(c.adClientId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(AdUnits)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List all ad units in the specified ad client for this AdSense account.",
+	//   "httpMethod": "GET",
+	//   "id": "adsense.adunits.list",
+	//   "parameterOrder": [
+	//     "adClientId"
+	//   ],
+	//   "parameters": {
+	//     "adClientId": {
+	//       "description": "Ad client for which to list ad units.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "includeInactive": {
+	//       "description": "Whether to include inactive ad units. Default: true.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "maxResults": {
+	//       "description": "The maximum number of ad units to include in the response, used for paging.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "maximum": "10000",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A continuation token, used to page through ad units. To retrieve the next page, set this parameter to the value of \"nextPageToken\" from the previous response.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "adclients/{adClientId}/adunits",
+	//   "response": {
+	//     "$ref": "AdUnits"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adsense",
+	//     "https://www.googleapis.com/auth/adsense.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "adsense.customchannels.get":
 
 type CustomchannelsGetCall struct {
 	s               *Service
@@ -984,7 +970,7 @@ type CustomchannelsGetCall struct {
 	opt_            map[string]interface{}
 }
 
-// Get: Get a specific custom channel from the host AdSense account.
+// Get: Get the specified custom channel from the specified ad client.
 func (r *CustomchannelsService) Get(adClientId string, customChannelId string) *CustomchannelsGetCall {
 	c := &CustomchannelsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.adClientId = adClientId
@@ -996,7 +982,7 @@ func (c *CustomchannelsGetCall) Do() (*CustomChannel, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "adclients/{adClientId}/customchannels/{customChannelId}")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsense/v1.2/", "adclients/{adClientId}/customchannels/{customChannelId}")
 	urls = strings.Replace(urls, "{adClientId}", cleanPathString(c.adClientId), 1)
 	urls = strings.Replace(urls, "{customChannelId}", cleanPathString(c.customChannelId), 1)
 	urls += "?" + params.Encode()
@@ -1015,22 +1001,22 @@ func (c *CustomchannelsGetCall) Do() (*CustomChannel, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Get a specific custom channel from the host AdSense account.",
+	//   "description": "Get the specified custom channel from the specified ad client.",
 	//   "httpMethod": "GET",
-	//   "id": "adsensehost.customchannels.get",
+	//   "id": "adsense.customchannels.get",
 	//   "parameterOrder": [
 	//     "adClientId",
 	//     "customChannelId"
 	//   ],
 	//   "parameters": {
 	//     "adClientId": {
-	//       "description": "Ad client from which to get the custom channel.",
+	//       "description": "Ad client which contains the custom channel.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "customChannelId": {
-	//       "description": "Custom channel to get.",
+	//       "description": "Custom channel to retrieve.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1041,86 +1027,14 @@ func (c *CustomchannelsGetCall) Do() (*CustomChannel, error) {
 	//     "$ref": "CustomChannel"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/adsensehost"
+	//     "https://www.googleapis.com/auth/adsense",
+	//     "https://www.googleapis.com/auth/adsense.readonly"
 	//   ]
 	// }
 
 }
 
-// method id "adsensehost.customchannels.insert":
-
-type CustomchannelsInsertCall struct {
-	s             *Service
-	adClientId    string
-	customchannel *CustomChannel
-	opt_          map[string]interface{}
-}
-
-// Insert: Add a new custom channel to the host AdSense account.
-func (r *CustomchannelsService) Insert(adClientId string, customchannel *CustomChannel) *CustomchannelsInsertCall {
-	c := &CustomchannelsInsertCall{s: r.s, opt_: make(map[string]interface{})}
-	c.adClientId = adClientId
-	c.customchannel = customchannel
-	return c
-}
-
-func (c *CustomchannelsInsertCall) Do() (*CustomChannel, error) {
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.customchannel)
-	if err != nil {
-		return nil, err
-	}
-	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "adclients/{adClientId}/customchannels")
-	urls = strings.Replace(urls, "{adClientId}", cleanPathString(c.adClientId), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("POST", urls, body)
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(CustomChannel)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Add a new custom channel to the host AdSense account.",
-	//   "httpMethod": "POST",
-	//   "id": "adsensehost.customchannels.insert",
-	//   "parameterOrder": [
-	//     "adClientId"
-	//   ],
-	//   "parameters": {
-	//     "adClientId": {
-	//       "description": "Ad client to which the new custom channel will be added.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "adclients/{adClientId}/customchannels",
-	//   "request": {
-	//     "$ref": "CustomChannel"
-	//   },
-	//   "response": {
-	//     "$ref": "CustomChannel"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/adsensehost"
-	//   ]
-	// }
-
-}
-
-// method id "adsensehost.customchannels.list":
+// method id "adsense.customchannels.list":
 
 type CustomchannelsListCall struct {
 	s          *Service
@@ -1128,7 +1042,8 @@ type CustomchannelsListCall struct {
 	opt_       map[string]interface{}
 }
 
-// List: List all host custom channels in this AdSense account.
+// List: List all custom channels in the specified ad client for this
+// AdSense account.
 func (r *CustomchannelsService) List(adClientId string) *CustomchannelsListCall {
 	c := &CustomchannelsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.adClientId = adClientId
@@ -1162,7 +1077,7 @@ func (c *CustomchannelsListCall) Do() (*CustomChannels, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "adclients/{adClientId}/customchannels")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsense/v1.2/", "adclients/{adClientId}/customchannels")
 	urls = strings.Replace(urls, "{adClientId}", cleanPathString(c.adClientId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -1180,9 +1095,9 @@ func (c *CustomchannelsListCall) Do() (*CustomChannels, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "List all host custom channels in this AdSense account.",
+	//   "description": "List all custom channels in the specified ad client for this AdSense account.",
 	//   "httpMethod": "GET",
-	//   "id": "adsensehost.customchannels.list",
+	//   "id": "adsense.customchannels.list",
 	//   "parameterOrder": [
 	//     "adClientId"
 	//   ],
@@ -1195,7 +1110,7 @@ func (c *CustomchannelsListCall) Do() (*CustomChannels, error) {
 	//     },
 	//     "maxResults": {
 	//       "description": "The maximum number of custom channels to include in the response, used for paging.",
-	//       "format": "uint32",
+	//       "format": "int32",
 	//       "location": "query",
 	//       "maximum": "10000",
 	//       "minimum": "0",
@@ -1212,170 +1127,14 @@ func (c *CustomchannelsListCall) Do() (*CustomChannels, error) {
 	//     "$ref": "CustomChannels"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/adsensehost"
+	//     "https://www.googleapis.com/auth/adsense",
+	//     "https://www.googleapis.com/auth/adsense.readonly"
 	//   ]
 	// }
 
 }
 
-// method id "adsensehost.customchannels.patch":
-
-type CustomchannelsPatchCall struct {
-	s               *Service
-	adClientId      string
-	customChannelId string
-	customchannel   *CustomChannel
-	opt_            map[string]interface{}
-}
-
-// Patch: Update a custom channel in the host AdSense account. This
-// method supports patch semantics.
-func (r *CustomchannelsService) Patch(adClientId string, customChannelId string, customchannel *CustomChannel) *CustomchannelsPatchCall {
-	c := &CustomchannelsPatchCall{s: r.s, opt_: make(map[string]interface{})}
-	c.adClientId = adClientId
-	c.customChannelId = customChannelId
-	c.customchannel = customchannel
-	return c
-}
-
-func (c *CustomchannelsPatchCall) Do() (*CustomChannel, error) {
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.customchannel)
-	if err != nil {
-		return nil, err
-	}
-	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", "json")
-	params.Set("customChannelId", fmt.Sprintf("%v", c.customChannelId))
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "adclients/{adClientId}/customchannels")
-	urls = strings.Replace(urls, "{adClientId}", cleanPathString(c.adClientId), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("PATCH", urls, body)
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(CustomChannel)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Update a custom channel in the host AdSense account. This method supports patch semantics.",
-	//   "httpMethod": "PATCH",
-	//   "id": "adsensehost.customchannels.patch",
-	//   "parameterOrder": [
-	//     "adClientId",
-	//     "customChannelId"
-	//   ],
-	//   "parameters": {
-	//     "adClientId": {
-	//       "description": "Ad client in which the custom channel will be updated.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "customChannelId": {
-	//       "description": "Custom channel to get.",
-	//       "location": "query",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "adclients/{adClientId}/customchannels",
-	//   "request": {
-	//     "$ref": "CustomChannel"
-	//   },
-	//   "response": {
-	//     "$ref": "CustomChannel"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/adsensehost"
-	//   ]
-	// }
-
-}
-
-// method id "adsensehost.customchannels.update":
-
-type CustomchannelsUpdateCall struct {
-	s             *Service
-	adClientId    string
-	customchannel *CustomChannel
-	opt_          map[string]interface{}
-}
-
-// Update: Update a custom channel in the host AdSense account.
-func (r *CustomchannelsService) Update(adClientId string, customchannel *CustomChannel) *CustomchannelsUpdateCall {
-	c := &CustomchannelsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
-	c.adClientId = adClientId
-	c.customchannel = customchannel
-	return c
-}
-
-func (c *CustomchannelsUpdateCall) Do() (*CustomChannel, error) {
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.customchannel)
-	if err != nil {
-		return nil, err
-	}
-	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "adclients/{adClientId}/customchannels")
-	urls = strings.Replace(urls, "{adClientId}", cleanPathString(c.adClientId), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("PUT", urls, body)
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(CustomChannel)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Update a custom channel in the host AdSense account.",
-	//   "httpMethod": "PUT",
-	//   "id": "adsensehost.customchannels.update",
-	//   "parameterOrder": [
-	//     "adClientId"
-	//   ],
-	//   "parameters": {
-	//     "adClientId": {
-	//       "description": "Ad client in which the custom channel will be updated.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "adclients/{adClientId}/customchannels",
-	//   "request": {
-	//     "$ref": "CustomChannel"
-	//   },
-	//   "response": {
-	//     "$ref": "CustomChannel"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/adsensehost"
-	//   ]
-	// }
-
-}
-
-// method id "adsensehost.reports.generate":
+// method id "adsense.reports.generate":
 
 type ReportsGenerateCall struct {
 	s         *Service
@@ -1391,6 +1150,21 @@ func (r *ReportsService) Generate(startDate string, endDate string) *ReportsGene
 	c := &ReportsGenerateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.startDate = startDate
 	c.endDate = endDate
+	return c
+}
+
+// AccountId sets the optional parameter "accountId": Accounts upon
+// which to report.
+func (c *ReportsGenerateCall) AccountId(accountId string) *ReportsGenerateCall {
+	c.opt_["accountId"] = accountId
+	return c
+}
+
+// Currency sets the optional parameter "currency": Optional currency to
+// use when reporting on monetary metrics. Defaults to the account's
+// currency if not set.
+func (c *ReportsGenerateCall) Currency(currency string) *ReportsGenerateCall {
+	c.opt_["currency"] = currency
 	return c
 }
 
@@ -1446,12 +1220,18 @@ func (c *ReportsGenerateCall) StartIndex(startIndex int64) *ReportsGenerateCall 
 	return c
 }
 
-func (c *ReportsGenerateCall) Do() (*Report, error) {
+func (c *ReportsGenerateCall) Do() (*AdsenseReportsGenerateResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("endDate", fmt.Sprintf("%v", c.endDate))
 	params.Set("startDate", fmt.Sprintf("%v", c.startDate))
+	if v, ok := c.opt_["accountId"]; ok {
+		params.Set("accountId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["currency"]; ok {
+		params.Set("currency", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["dimension"]; ok {
 		params.Set("dimension", fmt.Sprintf("%v", v))
 	}
@@ -1473,7 +1253,7 @@ func (c *ReportsGenerateCall) Do() (*Report, error) {
 	if v, ok := c.opt_["startIndex"]; ok {
 		params.Set("startIndex", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "reports")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsense/v1.2/", "reports")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
@@ -1484,7 +1264,7 @@ func (c *ReportsGenerateCall) Do() (*Report, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Report)
+	ret := new(AdsenseReportsGenerateResponse)
 	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
 		return nil, err
 	}
@@ -1492,12 +1272,24 @@ func (c *ReportsGenerateCall) Do() (*Report, error) {
 	// {
 	//   "description": "Generate an AdSense report based on the report request sent in the query parameters. Returns the result as JSON; to retrieve output in CSV format specify \"alt=csv\" as a query parameter.",
 	//   "httpMethod": "GET",
-	//   "id": "adsensehost.reports.generate",
+	//   "id": "adsense.reports.generate",
 	//   "parameterOrder": [
 	//     "startDate",
 	//     "endDate"
 	//   ],
 	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Accounts upon which to report.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "currency": {
+	//       "description": "Optional currency to use when reporting on monetary metrics. Defaults to the account's currency if not set.",
+	//       "location": "query",
+	//       "pattern": "[a-zA-Z]+",
+	//       "type": "string"
+	//     },
 	//     "dimension": {
 	//       "description": "Dimensions to base the report on.",
 	//       "location": "query",
@@ -1527,7 +1319,7 @@ func (c *ReportsGenerateCall) Do() (*Report, error) {
 	//     },
 	//     "maxResults": {
 	//       "description": "The maximum number of rows of report data to return.",
-	//       "format": "uint32",
+	//       "format": "int32",
 	//       "location": "query",
 	//       "maximum": "50000",
 	//       "minimum": "0",
@@ -1556,7 +1348,7 @@ func (c *ReportsGenerateCall) Do() (*Report, error) {
 	//     },
 	//     "startIndex": {
 	//       "description": "Index of the first row of report data to return.",
-	//       "format": "uint32",
+	//       "format": "int32",
 	//       "location": "query",
 	//       "maximum": "5000",
 	//       "minimum": "0",
@@ -1565,41 +1357,40 @@ func (c *ReportsGenerateCall) Do() (*Report, error) {
 	//   },
 	//   "path": "reports",
 	//   "response": {
-	//     "$ref": "Report"
+	//     "$ref": "AdsenseReportsGenerateResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/adsensehost"
-	//   ]
+	//     "https://www.googleapis.com/auth/adsense",
+	//     "https://www.googleapis.com/auth/adsense.readonly"
+	//   ],
+	//   "supportsMediaDownload": true
 	// }
 
 }
 
-// method id "adsensehost.urlchannels.delete":
+// method id "adsense.savedadstyles.get":
 
-type UrlchannelsDeleteCall struct {
-	s            *Service
-	adClientId   string
-	urlChannelId string
-	opt_         map[string]interface{}
+type SavedadstylesGetCall struct {
+	s              *Service
+	savedAdStyleId string
+	opt_           map[string]interface{}
 }
 
-// Delete: Delete a URL channel from the host AdSense account.
-func (r *UrlchannelsService) Delete(adClientId string, urlChannelId string) *UrlchannelsDeleteCall {
-	c := &UrlchannelsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
-	c.adClientId = adClientId
-	c.urlChannelId = urlChannelId
+// Get: Get a specific saved ad style from the user's account.
+func (r *SavedadstylesService) Get(savedAdStyleId string) *SavedadstylesGetCall {
+	c := &SavedadstylesGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.savedAdStyleId = savedAdStyleId
 	return c
 }
 
-func (c *UrlchannelsDeleteCall) Do() (*UrlChannel, error) {
+func (c *SavedadstylesGetCall) Do() (*SavedAdStyle, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "adclients/{adClientId}/urlchannels/{urlChannelId}")
-	urls = strings.Replace(urls, "{adClientId}", cleanPathString(c.adClientId), 1)
-	urls = strings.Replace(urls, "{urlChannelId}", cleanPathString(c.urlChannelId), 1)
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsense/v1.2/", "savedadstyles/{savedAdStyleId}")
+	urls = strings.Replace(urls, "{savedAdStyleId}", cleanPathString(c.savedAdStyleId), 1)
 	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("DELETE", urls, body)
+	req, _ := http.NewRequest("GET", urls, body)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1608,118 +1399,126 @@ func (c *UrlchannelsDeleteCall) Do() (*UrlChannel, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(UrlChannel)
+	ret := new(SavedAdStyle)
 	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Delete a URL channel from the host AdSense account.",
-	//   "httpMethod": "DELETE",
-	//   "id": "adsensehost.urlchannels.delete",
+	//   "description": "Get a specific saved ad style from the user's account.",
+	//   "httpMethod": "GET",
+	//   "id": "adsense.savedadstyles.get",
 	//   "parameterOrder": [
-	//     "adClientId",
-	//     "urlChannelId"
+	//     "savedAdStyleId"
 	//   ],
 	//   "parameters": {
-	//     "adClientId": {
-	//       "description": "Ad client from which to delete the URL channel.",
+	//     "savedAdStyleId": {
+	//       "description": "Saved ad style to retrieve.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "savedadstyles/{savedAdStyleId}",
+	//   "response": {
+	//     "$ref": "SavedAdStyle"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adsense",
+	//     "https://www.googleapis.com/auth/adsense.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "adsense.savedadstyles.list":
+
+type SavedadstylesListCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// List: List all saved ad styles in the user's account.
+func (r *SavedadstylesService) List() *SavedadstylesListCall {
+	c := &SavedadstylesListCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of saved ad styles to include in the response, used for
+// paging.
+func (c *SavedadstylesListCall) MaxResults(maxResults int64) *SavedadstylesListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A continuation
+// token, used to page through saved ad styles. To retrieve the next
+// page, set this parameter to the value of "nextPageToken" from the
+// previous response.
+func (c *SavedadstylesListCall) PageToken(pageToken string) *SavedadstylesListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+func (c *SavedadstylesListCall) Do() (*SavedAdStyles, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsense/v1.2/", "savedadstyles")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(SavedAdStyles)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List all saved ad styles in the user's account.",
+	//   "httpMethod": "GET",
+	//   "id": "adsense.savedadstyles.list",
+	//   "parameters": {
+	//     "maxResults": {
+	//       "description": "The maximum number of saved ad styles to include in the response, used for paging.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "maximum": "10000",
+	//       "minimum": "0",
+	//       "type": "integer"
 	//     },
-	//     "urlChannelId": {
-	//       "description": "URL channel to delete.",
-	//       "location": "path",
-	//       "required": true,
+	//     "pageToken": {
+	//       "description": "A continuation token, used to page through saved ad styles. To retrieve the next page, set this parameter to the value of \"nextPageToken\" from the previous response.",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "adclients/{adClientId}/urlchannels/{urlChannelId}",
+	//   "path": "savedadstyles",
 	//   "response": {
-	//     "$ref": "UrlChannel"
+	//     "$ref": "SavedAdStyles"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/adsensehost"
+	//     "https://www.googleapis.com/auth/adsense",
+	//     "https://www.googleapis.com/auth/adsense.readonly"
 	//   ]
 	// }
 
 }
 
-// method id "adsensehost.urlchannels.insert":
-
-type UrlchannelsInsertCall struct {
-	s          *Service
-	adClientId string
-	urlchannel *UrlChannel
-	opt_       map[string]interface{}
-}
-
-// Insert: Add a new URL channel to the host AdSense account.
-func (r *UrlchannelsService) Insert(adClientId string, urlchannel *UrlChannel) *UrlchannelsInsertCall {
-	c := &UrlchannelsInsertCall{s: r.s, opt_: make(map[string]interface{})}
-	c.adClientId = adClientId
-	c.urlchannel = urlchannel
-	return c
-}
-
-func (c *UrlchannelsInsertCall) Do() (*UrlChannel, error) {
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.urlchannel)
-	if err != nil {
-		return nil, err
-	}
-	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "adclients/{adClientId}/urlchannels")
-	urls = strings.Replace(urls, "{adClientId}", cleanPathString(c.adClientId), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("POST", urls, body)
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(UrlChannel)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Add a new URL channel to the host AdSense account.",
-	//   "httpMethod": "POST",
-	//   "id": "adsensehost.urlchannels.insert",
-	//   "parameterOrder": [
-	//     "adClientId"
-	//   ],
-	//   "parameters": {
-	//     "adClientId": {
-	//       "description": "Ad client to which the new URL channel will be added.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "adclients/{adClientId}/urlchannels",
-	//   "request": {
-	//     "$ref": "UrlChannel"
-	//   },
-	//   "response": {
-	//     "$ref": "UrlChannel"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/adsensehost"
-	//   ]
-	// }
-
-}
-
-// method id "adsensehost.urlchannels.list":
+// method id "adsense.urlchannels.list":
 
 type UrlchannelsListCall struct {
 	s          *Service
@@ -1727,7 +1526,8 @@ type UrlchannelsListCall struct {
 	opt_       map[string]interface{}
 }
 
-// List: List all host URL channels in the host AdSense account.
+// List: List all URL channels in the specified ad client for this
+// AdSense account.
 func (r *UrlchannelsService) List(adClientId string) *UrlchannelsListCall {
 	c := &UrlchannelsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.adClientId = adClientId
@@ -1760,7 +1560,7 @@ func (c *UrlchannelsListCall) Do() (*UrlChannels, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "adclients/{adClientId}/urlchannels")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsense/v1.2/", "adclients/{adClientId}/urlchannels")
 	urls = strings.Replace(urls, "{adClientId}", cleanPathString(c.adClientId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -1778,9 +1578,9 @@ func (c *UrlchannelsListCall) Do() (*UrlChannels, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "List all host URL channels in the host AdSense account.",
+	//   "description": "List all URL channels in the specified ad client for this AdSense account.",
 	//   "httpMethod": "GET",
-	//   "id": "adsensehost.urlchannels.list",
+	//   "id": "adsense.urlchannels.list",
 	//   "parameterOrder": [
 	//     "adClientId"
 	//   ],
@@ -1793,7 +1593,7 @@ func (c *UrlchannelsListCall) Do() (*UrlChannels, error) {
 	//     },
 	//     "maxResults": {
 	//       "description": "The maximum number of URL channels to include in the response, used for paging.",
-	//       "format": "uint32",
+	//       "format": "int32",
 	//       "location": "query",
 	//       "maximum": "10000",
 	//       "minimum": "0",
@@ -1810,7 +1610,8 @@ func (c *UrlchannelsListCall) Do() (*UrlChannels, error) {
 	//     "$ref": "UrlChannels"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/adsensehost"
+	//     "https://www.googleapis.com/auth/adsense",
+	//     "https://www.googleapis.com/auth/adsense.readonly"
 	//   ]
 	// }
 

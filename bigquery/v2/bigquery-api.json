@@ -1,10 +1,11 @@
 {
  "kind": "discovery#restDescription",
+ "etag": "\"oZqOFf-aKzMvpID-BwBAFJLe7Pk/WB7nm9zoQBRzWgpZC2djCSb6oAc\"",
  "discoveryVersion": "v1",
  "id": "bigquery:v2",
  "name": "bigquery",
  "version": "v2",
- "revision": "20120831",
+ "revision": "20121024",
  "title": "BigQuery API",
  "description": "A data platform for customers to create, manage, share and query data.",
  "icons": {
@@ -439,7 +440,7 @@
     },
     "quote": {
      "type": "string",
-     "description": "[Optional] Quote character to use. Default is '\"'. Note that quoting is done on the raw, binary data before the encoding is applied."
+     "description": "[Optional] Quote character to use. Default is '\"'. Note that quoting is done on the raw, binary data before the encoding is applied. If no quoting is done, use am empty string."
     },
     "schema": {
      "$ref": "TableSchema",
@@ -634,6 +635,14 @@
      "description": "[Output-only] End time of this job, in milliseconds since the epoch.",
      "format": "int64"
     },
+    "load": {
+     "$ref": "JobStatistics3",
+     "description": "[Output-only] Statistics for a load job."
+    },
+    "query": {
+     "$ref": "JobStatistics2",
+     "description": "[Output-only] Statistics for a query job."
+    },
     "startTime": {
      "type": "string",
      "description": "[Output-only] Start time of this job, in milliseconds since the epoch.",
@@ -641,7 +650,44 @@
     },
     "totalBytesProcessed": {
      "type": "string",
+     "description": "[Output-only] [Deprecated] Use the bytes processed in the query statistics instead.",
+     "format": "int64"
+    }
+   }
+  },
+  "JobStatistics2": {
+   "id": "JobStatistics2",
+   "type": "object",
+   "properties": {
+    "totalBytesProcessed": {
+     "type": "string",
      "description": "[Output-only] Total bytes processed for this job.",
+     "format": "int64"
+    }
+   }
+  },
+  "JobStatistics3": {
+   "id": "JobStatistics3",
+   "type": "object",
+   "properties": {
+    "inputFileBytes": {
+     "type": "string",
+     "description": "[Output-only] Number of bytes of source data in a joad job.",
+     "format": "int64"
+    },
+    "inputFiles": {
+     "type": "string",
+     "description": "[Output-only] Number of source files in a load job.",
+     "format": "int64"
+    },
+    "outputBytes": {
+     "type": "string",
+     "description": "[Output-only] Size of the loaded data in bytes. Note that while an import job is in the running state, this value may change.",
+     "format": "int64"
+    },
+    "outputRows": {
+     "type": "string",
+     "description": "[Output-only] Number of rows imported in a load job. Note that while an import job is in the running state, this value may change.",
      "format": "int64"
     }
    }
@@ -864,6 +910,16 @@
     }
    }
   },
+  "TableCell": {
+   "id": "TableCell",
+   "type": "object",
+   "description": "Represents a single cell in the result set.",
+   "properties": {
+    "v": {
+     "type": "any"
+    }
+   }
+  },
   "TableDataList": {
    "id": "TableDataList",
    "type": "object",
@@ -1006,18 +1062,12 @@
   "TableRow": {
    "id": "TableRow",
    "type": "object",
+   "description": "Represents a single row in the result set, consisting of one or more fields.",
    "properties": {
     "f": {
      "type": "array",
-     "description": "Represents a single row in the result set, consisting of one or more fields.",
      "items": {
-      "type": "object",
-      "properties": {
-       "v": {
-        "type": "string",
-        "description": "Contains the field value in this row, as a string."
-       }
-      }
+      "$ref": "TableCell"
      }
     }
    }

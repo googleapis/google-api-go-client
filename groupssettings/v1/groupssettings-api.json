@@ -1,5 +1,6 @@
 {
  "kind": "discovery#restDescription",
+ "etag": "\"oZqOFf-aKzMvpID-BwBAFJLe7Pk/pqqsKUrIfPnTJ7ZvBF-x-8ISFR8\"",
  "discoveryVersion": "v1",
  "id": "groupssettings:v1",
  "name": "groupssettings",

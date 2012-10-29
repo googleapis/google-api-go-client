@@ -1,10 +1,11 @@
 {
  "kind": "discovery#restDescription",
+ "etag": "\"oZqOFf-aKzMvpID-BwBAFJLe7Pk/Rt-Xv5URZ_v9ONqg3eFY5V0RyIo\"",
  "discoveryVersion": "v1",
  "id": "drive:v2",
  "name": "drive",
  "version": "v2",
- "revision": "20120904",
+ "revision": "20120924",
  "title": "Drive API",
  "description": "The API to interact with Drive.",
  "icons": {
@@ -239,6 +240,11 @@
      "description": "The number of quota bytes used.",
      "format": "int64"
     },
+    "quotaBytesUsedAggregate": {
+     "type": "string",
+     "description": "The number of quota bytes used by all Google apps (Drive, Picasa, etc.).",
+     "format": "int64"
+    },
     "quotaBytesUsedInTrash": {
      "type": "string",
      "description": "The number of quota bytes used by trashed items.",
@@ -256,6 +262,10 @@
     "selfLink": {
      "type": "string",
      "description": "A link back to this item."
+    },
+    "user": {
+     "$ref": "User",
+     "description": "The authenticated user."
     }
    }
   },
@@ -521,6 +531,192 @@
     }
    }
   },
+  "Comment": {
+   "id": "Comment",
+   "type": "object",
+   "description": "A JSON representation of a comment on a file in Google Drive.",
+   "properties": {
+    "anchor": {
+     "type": "string",
+     "description": "A region of the document represented as a JSON string. See anchor documentation for details on how to define and interpret anchor properties."
+    },
+    "author": {
+     "$ref": "User",
+     "description": "The user who wrote this comment."
+    },
+    "commentId": {
+     "type": "string",
+     "description": "The ID of the comment."
+    },
+    "content": {
+     "type": "string",
+     "description": "The plain text content used to create this comment. This is not HTML safe and should only be used as a starting point to make edits to a comment's content.",
+     "annotations": {
+      "required": [
+       "drive.comments.insert",
+       "drive.comments.update"
+      ]
+     }
+    },
+    "context": {
+     "type": "object",
+     "description": "The context of the file which is being commented on.",
+     "properties": {
+      "type": {
+       "type": "string",
+       "description": "The MIME type of the context snippet."
+      },
+      "value": {
+       "type": "string",
+       "description": "Data representation of the segment of the file being commented on. In the case of a text file for example, this would be the actual text that the comment is about."
+      }
+     }
+    },
+    "createdDate": {
+     "type": "string",
+     "description": "The date when this comment was first created.",
+     "format": "date-time"
+    },
+    "deleted": {
+     "type": "boolean",
+     "description": "Whether this comment has been deleted. If a comment has been deleted the content will be cleared and this will only represent a comment that once existed."
+    },
+    "fileId": {
+     "type": "string",
+     "description": "The file which this comment is addressing."
+    },
+    "fileTitle": {
+     "type": "string",
+     "description": "The title of the file which this comment is addressing."
+    },
+    "htmlContent": {
+     "type": "string",
+     "description": "HTML formatted content for this comment."
+    },
+    "kind": {
+     "type": "string",
+     "description": "This is always drive#comment.",
+     "default": "drive#comment"
+    },
+    "modifiedDate": {
+     "type": "string",
+     "description": "The date when this comment or any of its replies were last modified.",
+     "format": "date-time"
+    },
+    "replies": {
+     "type": "array",
+     "description": "Replies to this post.",
+     "items": {
+      "$ref": "CommentReply"
+     }
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "A link back to this comment."
+    },
+    "status": {
+     "type": "any",
+     "description": "The status of this comment. Status can be changed by posting a reply to a comment with the desired status.  \n- \"open\" - The comment is still open. \n- \"resolved\" - The comment has been resolved by one of its replies."
+    }
+   }
+  },
+  "CommentList": {
+   "id": "CommentList",
+   "type": "object",
+   "description": "A JSON representation of a list of comments on a file in Google Drive.",
+   "properties": {
+    "items": {
+     "type": "array",
+     "description": "List of comments.",
+     "items": {
+      "$ref": "Comment"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "This is always drive#commentList.",
+     "default": "drive#commentList"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "The token to use to request the next page of results."
+    }
+   }
+  },
+  "CommentReply": {
+   "id": "CommentReply",
+   "type": "object",
+   "description": "A JSON representation of a reply to a comment on a file in Google Drive.",
+   "properties": {
+    "author": {
+     "$ref": "User",
+     "description": "The user who wrote this reply."
+    },
+    "content": {
+     "type": "string",
+     "description": "The plain text content used to create this reply. This is not HTML safe and should only be used as a starting point to make edits to a reply's content. This field is required on inserts if no verb is specified (resolve/reopen).",
+     "annotations": {
+      "required": [
+       "drive.replies.update"
+      ]
+     }
+    },
+    "createdDate": {
+     "type": "string",
+     "description": "The date when this reply was first created.",
+     "format": "date-time"
+    },
+    "deleted": {
+     "type": "boolean",
+     "description": "Whether this reply has been deleted. If a reply has been deleted the content will be cleared and this will only represent a reply that once existed."
+    },
+    "htmlContent": {
+     "type": "string",
+     "description": "HTML formatted content for this reply."
+    },
+    "kind": {
+     "type": "string",
+     "description": "This is always drive#commentReply.",
+     "default": "drive#commentReply"
+    },
+    "modifiedDate": {
+     "type": "string",
+     "description": "The date when this reply was last modified.",
+     "format": "date-time"
+    },
+    "replyId": {
+     "type": "string",
+     "description": "The ID of the reply."
+    },
+    "verb": {
+     "type": "string",
+     "description": "The action this reply performed to the parent comment. When creating a new reply this is the action to be perform to the parent comment. Possible values are:  \n- \"resolve\" - To resolve a comment. \n- \"reopen\" - To reopen (un-resolve) a comment."
+    }
+   }
+  },
+  "CommentReplyList": {
+   "id": "CommentReplyList",
+   "type": "object",
+   "description": "A JSON representation of a list of replies to a comment on a file in Google Drive.",
+   "properties": {
+    "items": {
+     "type": "array",
+     "description": "List of reply.",
+     "items": {
+      "$ref": "CommentReply"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "This is always drive#commentReplyList.",
+     "default": "drive#commentReplyList"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "The token to use to request the next page of results."
+    }
+   }
+  },
   "File": {
    "id": "File",
    "type": "object",
@@ -584,9 +780,45 @@
      "type": "object",
      "description": "Metadata about image media. This will only be present for image types, and its contents will depend on what can be parsed from the image content.",
      "properties": {
+      "aperture": {
+       "type": "number",
+       "description": "The aperture used to create the photo (f-number).",
+       "format": "float"
+      },
+      "cameraMake": {
+       "type": "string",
+       "description": "The make of the camera used to create the photo."
+      },
+      "cameraModel": {
+       "type": "string",
+       "description": "The model of the camera used to create the photo."
+      },
+      "date": {
+       "type": "string",
+       "description": "The date and time the photo was taken (EXIF format timestamp)."
+      },
+      "exposureTime": {
+       "type": "number",
+       "description": "The length of the exposure, in seconds.",
+       "format": "float"
+      },
+      "flashUsed": {
+       "type": "boolean",
+       "description": "Whether a flash was used to create the photo."
+      },
+      "focalLength": {
+       "type": "number",
+       "description": "The focal length used to create the photo, in millimeters.",
+       "format": "float"
+      },
       "height": {
        "type": "integer",
        "description": "The height of the image in pixels.",
+       "format": "int32"
+      },
+      "isoSpeed": {
+       "type": "integer",
+       "description": "The ISO speed used to create the photo.",
        "format": "int32"
       },
       "location": {
@@ -721,6 +953,21 @@
      "type": "string",
      "description": "Time at which this file was shared with the user (formatted RFC 3339 timestamp).",
      "format": "date-time"
+    },
+    "thumbnail": {
+     "type": "object",
+     "description": "Thumbnail for the file. Only accepted on upload and for files that are not already thumbnailed by Google.",
+     "properties": {
+      "image": {
+       "type": "string",
+       "description": "The URL-safe Base64 encoded bytes of the thumbnail image.",
+       "format": "byte"
+      },
+      "mimeType": {
+       "type": "string",
+       "description": "The MIME type of the thumbnail."
+      }
+     }
     },
     "thumbnailLink": {
      "type": "string",
@@ -1048,6 +1295,36 @@
      "description": "A link back to this list."
     }
    }
+  },
+  "User": {
+   "id": "User",
+   "type": "object",
+   "description": "The JSON template for a user.",
+   "properties": {
+    "displayName": {
+     "type": "string",
+     "description": "A plain text displayable name for this user."
+    },
+    "isAuthenticatedUser": {
+     "type": "boolean",
+     "description": "Whether this user is the same as the authenticated user of which the request was made on behalf."
+    },
+    "kind": {
+     "type": "string",
+     "description": "This is always drive#user.",
+     "default": "drive#user"
+    },
+    "picture": {
+     "type": "object",
+     "description": "The user's profile picture.",
+     "properties": {
+      "url": {
+       "type": "string",
+       "description": "A URL that points to a profile picture of this user."
+      }
+     }
+    }
+   }
   }
  },
  "resources": {
@@ -1340,6 +1617,211 @@
       "https://www.googleapis.com/auth/drive.file",
       "https://www.googleapis.com/auth/drive.metadata.readonly",
       "https://www.googleapis.com/auth/drive.readonly"
+     ]
+    }
+   }
+  },
+  "comments": {
+   "methods": {
+    "delete": {
+     "id": "drive.comments.delete",
+     "path": "files/{fileId}/comments/{commentId}",
+     "httpMethod": "DELETE",
+     "description": "Deletes a comment.",
+     "parameters": {
+      "commentId": {
+       "type": "string",
+       "description": "The ID of the comment.",
+       "required": true,
+       "location": "path"
+      },
+      "fileId": {
+       "type": "string",
+       "description": "The ID of the file.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "fileId",
+      "commentId"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/drive",
+      "https://www.googleapis.com/auth/drive.readonly"
+     ]
+    },
+    "get": {
+     "id": "drive.comments.get",
+     "path": "files/{fileId}/comments/{commentId}",
+     "httpMethod": "GET",
+     "description": "Gets a comment by ID.",
+     "parameters": {
+      "commentId": {
+       "type": "string",
+       "description": "The ID of the comment.",
+       "required": true,
+       "location": "path"
+      },
+      "fileId": {
+       "type": "string",
+       "description": "The ID of the file.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "fileId",
+      "commentId"
+     ],
+     "response": {
+      "$ref": "Comment"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/drive",
+      "https://www.googleapis.com/auth/drive.readonly"
+     ]
+    },
+    "insert": {
+     "id": "drive.comments.insert",
+     "path": "files/{fileId}/comments",
+     "httpMethod": "POST",
+     "description": "Creates a new comment on the given file.",
+     "parameters": {
+      "fileId": {
+       "type": "string",
+       "description": "The ID of the file.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "fileId"
+     ],
+     "request": {
+      "$ref": "Comment"
+     },
+     "response": {
+      "$ref": "Comment"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/drive",
+      "https://www.googleapis.com/auth/drive.readonly"
+     ]
+    },
+    "list": {
+     "id": "drive.comments.list",
+     "path": "files/{fileId}/comments",
+     "httpMethod": "GET",
+     "description": "Lists a file's comments.",
+     "parameters": {
+      "fileId": {
+       "type": "string",
+       "description": "The ID of the file.",
+       "required": true,
+       "location": "path"
+      },
+      "includeDeleted": {
+       "type": "boolean",
+       "description": "If set, all comments, including deleted comments (with content stripped) will be returned.",
+       "default": "false",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "The maximum number of discussions to include in the response, used for paging.",
+       "default": "20",
+       "format": "int32",
+       "minimum": "0",
+       "maximum": "100",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "The continuation token, used to page through large result sets. To get the next page of results, set this parameter to the value of \"nextPageToken\" from the previous response.",
+       "location": "query"
+      },
+      "updatedMin": {
+       "type": "string",
+       "description": "Only discussions that were updated after this timestamp will be returned. Formatted as an RFC 3339 timestamp.",
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "fileId"
+     ],
+     "response": {
+      "$ref": "CommentList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/drive",
+      "https://www.googleapis.com/auth/drive.readonly"
+     ]
+    },
+    "patch": {
+     "id": "drive.comments.patch",
+     "path": "files/{fileId}/comments/{commentId}",
+     "httpMethod": "PATCH",
+     "description": "Updates an existing comment. This method supports patch semantics.",
+     "parameters": {
+      "commentId": {
+       "type": "string",
+       "description": "The ID of the comment.",
+       "required": true,
+       "location": "path"
+      },
+      "fileId": {
+       "type": "string",
+       "description": "The ID of the file.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "fileId",
+      "commentId"
+     ],
+     "request": {
+      "$ref": "Comment"
+     },
+     "response": {
+      "$ref": "Comment"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/drive"
+     ]
+    },
+    "update": {
+     "id": "drive.comments.update",
+     "path": "files/{fileId}/comments/{commentId}",
+     "httpMethod": "PUT",
+     "description": "Updates an existing comment.",
+     "parameters": {
+      "commentId": {
+       "type": "string",
+       "description": "The ID of the comment.",
+       "required": true,
+       "location": "path"
+      },
+      "fileId": {
+       "type": "string",
+       "description": "The ID of the file.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "fileId",
+      "commentId"
+     ],
+     "request": {
+      "$ref": "Comment"
+     },
+     "response": {
+      "$ref": "Comment"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/drive"
      ]
     }
    }
@@ -2181,6 +2663,240 @@
      "scopes": [
       "https://www.googleapis.com/auth/drive",
       "https://www.googleapis.com/auth/drive.file"
+     ]
+    }
+   }
+  },
+  "replies": {
+   "methods": {
+    "delete": {
+     "id": "drive.replies.delete",
+     "path": "files/{fileId}/comments/{commentId}/replies/{replyId}",
+     "httpMethod": "DELETE",
+     "description": "Deletes a reply.",
+     "parameters": {
+      "commentId": {
+       "type": "string",
+       "description": "The ID of the comment.",
+       "required": true,
+       "location": "path"
+      },
+      "fileId": {
+       "type": "string",
+       "description": "The ID of the file.",
+       "required": true,
+       "location": "path"
+      },
+      "replyId": {
+       "type": "string",
+       "description": "The ID of the reply.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "fileId",
+      "commentId",
+      "replyId"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/drive"
+     ]
+    },
+    "get": {
+     "id": "drive.replies.get",
+     "path": "files/{fileId}/comments/{commentId}/replies/{replyId}",
+     "httpMethod": "GET",
+     "description": "Gets a reply.",
+     "parameters": {
+      "commentId": {
+       "type": "string",
+       "description": "The ID of the comment.",
+       "required": true,
+       "location": "path"
+      },
+      "fileId": {
+       "type": "string",
+       "description": "The ID of the file.",
+       "required": true,
+       "location": "path"
+      },
+      "replyId": {
+       "type": "string",
+       "description": "The ID of the reply.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "fileId",
+      "commentId",
+      "replyId"
+     ],
+     "response": {
+      "$ref": "CommentReply"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/drive",
+      "https://www.googleapis.com/auth/drive.readonly"
+     ]
+    },
+    "insert": {
+     "id": "drive.replies.insert",
+     "path": "files/{fileId}/comments/{commentId}/replies",
+     "httpMethod": "POST",
+     "description": "Creates a new reply to the given comment.",
+     "parameters": {
+      "commentId": {
+       "type": "string",
+       "description": "The ID of the comment.",
+       "required": true,
+       "location": "path"
+      },
+      "fileId": {
+       "type": "string",
+       "description": "The ID of the file.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "fileId",
+      "commentId"
+     ],
+     "request": {
+      "$ref": "CommentReply"
+     },
+     "response": {
+      "$ref": "CommentReply"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/drive"
+     ]
+    },
+    "list": {
+     "id": "drive.replies.list",
+     "path": "files/{fileId}/comments/{commentId}/replies",
+     "httpMethod": "GET",
+     "description": "Lists all of the replies to a comment.",
+     "parameters": {
+      "commentId": {
+       "type": "string",
+       "description": "The ID of the comment.",
+       "required": true,
+       "location": "path"
+      },
+      "fileId": {
+       "type": "string",
+       "description": "The ID of the file.",
+       "required": true,
+       "location": "path"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "The maximum number of replies to include in the response, used for paging.",
+       "default": "20",
+       "format": "int32",
+       "minimum": "0",
+       "maximum": "100",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "The continuation token, used to page through large result sets. To get the next page of results, set this parameter to the value of \"nextPageToken\" from the previous response.",
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "fileId",
+      "commentId"
+     ],
+     "response": {
+      "$ref": "CommentReplyList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/drive",
+      "https://www.googleapis.com/auth/drive.readonly"
+     ]
+    },
+    "patch": {
+     "id": "drive.replies.patch",
+     "path": "files/{fileId}/comments/{commentId}/replies/{replyId}",
+     "httpMethod": "PATCH",
+     "description": "Updates an existing reply. This method supports patch semantics.",
+     "parameters": {
+      "commentId": {
+       "type": "string",
+       "description": "The ID of the comment.",
+       "required": true,
+       "location": "path"
+      },
+      "fileId": {
+       "type": "string",
+       "description": "The ID of the file.",
+       "required": true,
+       "location": "path"
+      },
+      "replyId": {
+       "type": "string",
+       "description": "The ID of the reply.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "fileId",
+      "commentId",
+      "replyId"
+     ],
+     "request": {
+      "$ref": "CommentReply"
+     },
+     "response": {
+      "$ref": "CommentReply"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/drive"
+     ]
+    },
+    "update": {
+     "id": "drive.replies.update",
+     "path": "files/{fileId}/comments/{commentId}/replies/{replyId}",
+     "httpMethod": "PUT",
+     "description": "Updates an existing reply.",
+     "parameters": {
+      "commentId": {
+       "type": "string",
+       "description": "The ID of the comment.",
+       "required": true,
+       "location": "path"
+      },
+      "fileId": {
+       "type": "string",
+       "description": "The ID of the file.",
+       "required": true,
+       "location": "path"
+      },
+      "replyId": {
+       "type": "string",
+       "description": "The ID of the reply.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "fileId",
+      "commentId",
+      "replyId"
+     ],
+     "request": {
+      "$ref": "CommentReply"
+     },
+     "response": {
+      "$ref": "CommentReply"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/drive"
      ]
     }
    }

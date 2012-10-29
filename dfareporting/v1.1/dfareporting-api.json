@@ -1,10 +1,10 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"oZqOFf-aKzMvpID-BwBAFJLe7Pk/NL3k0nVBknrlZnhzUEDeEYokJ70\"",
+ "etag": "\"oZqOFf-aKzMvpID-BwBAFJLe7Pk/KNvHx6AgwzCVzuwxQskVRcdAufY\"",
  "discoveryVersion": "v1",
- "id": "dfareporting:v1",
+ "id": "dfareporting:v1.1",
  "name": "dfareporting",
- "version": "v1",
+ "version": "v1.1",
  "revision": "20120831",
  "title": "DFA Reporting API",
  "description": "Lets you create, run and download reports.",
@@ -14,10 +14,10 @@
  },
  "documentationLink": "https://developers.google.com/doubleclick-advertisers/reporting/",
  "protocol": "rest",
- "baseUrl": "https://www.googleapis.com/dfareporting/v1/",
- "basePath": "/dfareporting/v1/",
+ "baseUrl": "https://www.googleapis.com/dfareporting/v1.1/",
+ "basePath": "/dfareporting/v1.1/",
  "rootUrl": "https://www.googleapis.com/",
- "servicePath": "dfareporting/v1/",
+ "servicePath": "dfareporting/v1.1/",
  "batchPath": "batch",
  "parameters": {
   "alt": {
@@ -74,6 +74,77 @@
   }
  },
  "schemas": {
+  "Activities": {
+   "id": "Activities",
+   "type": "object",
+   "description": "Represents an activity group.",
+   "properties": {
+    "filters": {
+     "type": "array",
+     "description": "List of activity filters. The dimension values need to be all either of type \"dfa:activity\" or \"dfa:activityGroup\".",
+     "items": {
+      "$ref": "DimensionValue"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "The kind of resource this is, in this case dfareporting#activities.",
+     "default": "dfareporting#activities"
+    },
+    "metricNames": {
+     "type": "array",
+     "description": "List of names of floodlight activity metrics.",
+     "items": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  "CustomRichMediaEvents": {
+   "id": "CustomRichMediaEvents",
+   "type": "object",
+   "description": "Represents a Custom Rich Media Events group.",
+   "properties": {
+    "filteredEventIds": {
+     "type": "array",
+     "description": "List of custom rich media event IDs. Dimension values must be all of type dfa:richMediaEventTypeIdAndName.",
+     "items": {
+      "$ref": "DimensionValue"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "The kind of resource this is, in this case dfareporting#customRichMediaEvents.",
+     "default": "dfareporting#customRichMediaEvents"
+    }
+   }
+  },
+  "DateRange": {
+   "id": "DateRange",
+   "type": "object",
+   "description": "Represents a date range.",
+   "properties": {
+    "endDate": {
+     "type": "string",
+     "description": "The end date of the date range, inclusive. A string of the format: \"yyyy-MM-dd\".",
+     "format": "date"
+    },
+    "kind": {
+     "type": "string",
+     "description": "The kind of resource this is, in this case dfareporting#dateRange.",
+     "default": "dfareporting#dateRange"
+    },
+    "relativeDateRange": {
+     "type": "string",
+     "description": "The date range relative to the date of when the report is run, one of:  \n- \"TODAY\" \n- \"YESTERDAY\" \n- \"WEEK_TO_DATE\" \n- \"MONTH_TO_DATE\" \n- \"QUARTER_TO_DATE\" \n- \"YEAR_TO_DATE\" \n- \"PREVIOUS_WEEK\" \n- \"PREVIOUS_MONTH\" \n- \"PREVIOUS_QUARTER\" \n- \"PREVIOUS_YEAR\" \n- \"LAST_7_DAYS\" \n- \"LAST_30_DAYS\" \n- \"LAST_90_DAYS\" \n- \"LAST_365_DAYS\" \n- \"LAST_24_MONTHS\""
+    },
+    "startDate": {
+     "type": "string",
+     "description": "The start date of the date range, inclusive. A string of the format: \"yyyy-MM-dd\".",
+     "format": "date"
+    }
+   }
+  },
   "DimensionFilter": {
    "id": "DimensionFilter",
    "type": "object",
@@ -85,12 +156,12 @@
     },
     "kind": {
      "type": "string",
-     "description": "Kind of resource this is, in this case dfareporting#dimensionFilter.",
+     "description": "The kind of resource this is, in this case dfareporting#dimensionFilter.",
      "default": "dfareporting#dimensionFilter"
     },
     "value": {
      "type": "string",
-     "description": "The value of the dimension to filter for."
+     "description": "The value of the dimension to filter."
     }
    }
   },
@@ -101,11 +172,11 @@
    "properties": {
     "dimensionName": {
      "type": "string",
-     "description": "Name of the dimension."
+     "description": "The name of the dimension."
     },
     "etag": {
      "type": "string",
-     "description": "ETag of this response for caching purposes."
+     "description": "The eTag of this response for caching purposes."
     },
     "id": {
      "type": "string",
@@ -113,7 +184,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "Kind of resource this is, in this case dfareporting#dimensionValue.",
+     "description": "The kind of resource this is, in this case dfareporting#dimensionValue.",
      "default": "dfareporting#dimensionValue"
     },
     "value": {
@@ -129,7 +200,7 @@
    "properties": {
     "etag": {
      "type": "string",
-     "description": "ETag of this response for caching purposes."
+     "description": "The eTag of this response for caching purposes."
     },
     "items": {
      "type": "array",
@@ -140,7 +211,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "Kind of list this is, in this case dfareporting#dimensionValueList.",
+     "description": "The kind of list this is, in this case dfareporting#dimensionValueList.",
      "default": "dfareporting#dimensionValueList"
     },
     "nextPageToken": {
@@ -156,7 +227,7 @@
    "properties": {
     "dimensionName": {
      "type": "string",
-     "description": "The name of the dimension values should be requested for."
+     "description": "The name of the dimension for which values should be requested."
     },
     "endDate": {
      "type": "string",
@@ -165,14 +236,14 @@
     },
     "filters": {
      "type": "array",
-     "description": "List of filters to filter values by. The filters are ANDed.",
+     "description": "The list of filters by which to filter values. The filters are ANDed.",
      "items": {
       "$ref": "DimensionFilter"
      }
     },
     "kind": {
      "type": "string",
-     "description": "Kind of request this is, in this case dfareporting#dimensionValueRequest.",
+     "description": "The kind of request this is, in this case dfareporting#dimensionValueRequest.",
      "default": "dfareporting#dimensionValueRequest"
     },
     "startDate": {
@@ -188,28 +259,20 @@
    "description": "Represents a File resource. A File contains the meta-data for a report run. It shows the status of the run and holds the urls to the generated report data if the run is finished and the status is \"REPORT_AVAILABLE\".",
    "properties": {
     "dateRange": {
-     "type": "object",
-     "description": "The date range for which the file has report data.",
-     "properties": {
-      "endDate": {
-       "type": "string",
-       "description": "The end date of the date range, inclusive. A string of the format: \"yyyy-MM-dd\".",
-       "format": "date"
-      },
-      "startDate": {
-       "type": "string",
-       "description": "The start date of the date range, inclusive. A string of the format: \"yyyy-MM-dd\".",
-       "format": "date"
-      }
-     }
+     "$ref": "DateRange",
+     "description": "The date range for which the file has report data. The date range will always be the absolute date range for which the report is run."
     },
     "etag": {
      "type": "string",
-     "description": "ETag of this response for caching purposes."
+     "description": "The eTag of this response for caching purposes."
     },
     "fileName": {
      "type": "string",
      "description": "The file name of the file."
+    },
+    "format": {
+     "type": "string",
+     "description": "The output format of the report. Only available once the file is available."
     },
     "id": {
      "type": "string",
@@ -218,7 +281,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "Kind of resource this is, in this case dfareporting#file.",
+     "description": "The kind of resource this is, in this case dfareporting#file.",
      "default": "dfareporting#file"
     },
     "lastModifiedTime": {
@@ -239,19 +302,13 @@
      "type": "object",
      "description": "The urls where the completed report file can be downloaded.",
      "properties": {
-      "csv": {
-       "type": "object",
-       "description": "Urls for generated CSV data.",
-       "properties": {
-        "apiUrl": {
-         "type": "string",
-         "description": "The url for downloading the report data through the API."
-        },
-        "browserUrl": {
-         "type": "string",
-         "description": "The url for downloading the report data through a browser."
-        }
-       }
+      "apiUrl": {
+       "type": "string",
+       "description": "The url for downloading the report data through the API."
+      },
+      "browserUrl": {
+       "type": "string",
+       "description": "The url for downloading the report data through a browser."
       }
      }
     }
@@ -264,7 +321,7 @@
    "properties": {
     "etag": {
      "type": "string",
-     "description": "ETag of this response for caching purposes."
+     "description": "The eTag of this response for caching purposes."
     },
     "items": {
      "type": "array",
@@ -275,12 +332,44 @@
     },
     "kind": {
      "type": "string",
-     "description": "Kind of list this is, in this case dfareporting#fileList.",
+     "description": "The kind of list this is, in this case dfareporting#fileList.",
      "default": "dfareporting#fileList"
     },
     "nextPageToken": {
      "type": "string",
      "description": "Continuation token used to page through files. To retrieve the next page of results, set the next request's \"pageToken\" to the value of this field. The page token is only valid for a limited amount of time and should not be persisted."
+    }
+   }
+  },
+  "Recipient": {
+   "id": "Recipient",
+   "type": "object",
+   "description": "Represents a recipient.",
+   "properties": {
+    "deliveryType": {
+     "type": "string",
+     "description": "The delivery type for the recipient, one of:  \n- \"ATTACHMENT\"  (support for additional options will be added later)",
+     "annotations": {
+      "required": [
+       "dfareporting.reports.insert",
+       "dfareporting.reports.update"
+      ]
+     }
+    },
+    "email": {
+     "type": "string",
+     "description": "The email address of the recipient.",
+     "annotations": {
+      "required": [
+       "dfareporting.reports.insert",
+       "dfareporting.reports.update"
+      ]
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "The kind of resource this is, in this case dfareporting#recipient.",
+     "default": "dfareporting#recipient"
     }
    }
   },
@@ -291,7 +380,7 @@
    "properties": {
     "accountId": {
      "type": "string",
-     "description": "The account id this report belongs to.",
+     "description": "The account ID to which this report belongs.",
      "format": "int64",
      "annotations": {
       "required": [
@@ -299,66 +388,17 @@
       ]
      }
     },
-    "criteria": {
+    "activeGrpCriteria": {
      "type": "object",
-     "description": "The report criteria.",
+     "description": "The report criteria for a report of type \"ACTIVE_GRP\".",
      "properties": {
-      "activities": {
-       "type": "object",
-       "description": "Activity group.",
-       "properties": {
-        "filters": {
-         "type": "array",
-         "description": "List of activity filters. The dimension values need to be all either of type \"dfa:activity\" or \"dfa:activityGroup\".",
-         "items": {
-          "$ref": "DimensionValue"
-         }
-        },
-        "metricNames": {
-         "type": "array",
-         "description": "List of names of floodlight activity metrics.",
-         "items": {
-          "type": "string"
-         }
-        }
-       }
-      },
-      "customRichMediaEvents": {
-       "type": "object",
-       "description": "Custom Rich Media Events group.",
-       "properties": {
-        "filteredEventIds": {
-         "type": "array",
-         "description": "List of custom rich media event IDs. Dimension values must be all of type dfa:richMediaEventTypeIdAndName.",
-         "items": {
-          "$ref": "DimensionValue"
-         }
-        }
-       }
-      },
       "dateRange": {
-       "type": "object",
-       "description": "The date range this report should be run for.",
-       "properties": {
-        "endDate": {
-         "type": "string",
-         "description": "The end date of the date range, inclusive. A string of the format: \"yyyy-MM-dd\".",
-         "format": "date"
-        },
-        "relativeDateRange": {
-         "type": "string",
-         "description": "The date range relative to the date of when the report is run, one of:  \n- \"TODAY\" \n- \"YESTERDAY\" \n- \"WEEK_TO_DATE\" \n- \"MONTH_TO_DATE\" \n- \"QUARTER_TO_DATE\" \n- \"YEAR_TO_DATE\" \n- \"PREVIOUS_WEEK\" \n- \"PREVIOUS_MONTH\" \n- \"PREVIOUS_QUARTER\" \n- \"PREVIOUS_YEAR\" \n- \"LAST_7_DAYS\" \n- \"LAST_30_DAYS\" \n- \"LAST_90_DAYS\" \n- \"LAST_365_DAYS\" \n- \"LAST_24_MONTHS\""
-        },
-        "startDate": {
-         "type": "string",
-         "description": "The start date of the date range, inclusive. A string of the format: \"yyyy-MM-dd\".",
-         "format": "date"
-        }
-       }
+       "$ref": "DateRange",
+       "description": "The date range this report should be run for."
       },
       "dimensionFilters": {
        "type": "array",
-       "description": "The list of filters dimensions are filtered on.\nFilters for different dimensions are ANDed, filters for the same dimension are grouped together and ORed.",
+       "description": "The list of filters on which dimensions are filtered.\nFilters for different dimensions are ANDed, filters for the same dimension are grouped together and ORed.\nA valid active GRP report needs to have exactly one DimensionValue for the United States in addition to any advertiser or campaign dimension values.",
        "items": {
         "$ref": "DimensionValue"
        }
@@ -379,13 +419,180 @@
       }
      }
     },
+    "criteria": {
+     "type": "object",
+     "description": "The report criteria for a report of type \"STANDARD\".",
+     "properties": {
+      "activities": {
+       "$ref": "Activities",
+       "description": "Activity group."
+      },
+      "customRichMediaEvents": {
+       "$ref": "CustomRichMediaEvents",
+       "description": "Custom Rich Media Events group."
+      },
+      "dateRange": {
+       "$ref": "DateRange",
+       "description": "The date range for which this report should be run."
+      },
+      "dimensionFilters": {
+       "type": "array",
+       "description": "The list of filters on which dimensions are filtered.\nFilters for different dimensions are ANDed, filters for the same dimension are grouped together and ORed.",
+       "items": {
+        "$ref": "DimensionValue"
+       }
+      },
+      "dimensions": {
+       "type": "array",
+       "description": "The list of standard dimensions the report should include.",
+       "items": {
+        "$ref": "SortedDimension"
+       }
+      },
+      "metricNames": {
+       "type": "array",
+       "description": "The list of names of metrics the report should include.",
+       "items": {
+        "type": "string"
+       }
+      }
+     }
+    },
+    "crossDimensionReachCriteria": {
+     "type": "object",
+     "description": "The report criteria for a report of type \"CROSS_DIMENSION_REACH\".",
+     "properties": {
+      "breakdown": {
+       "type": "array",
+       "description": "The list of dimensions the report should include.",
+       "items": {
+        "$ref": "SortedDimension"
+       }
+      },
+      "dateRange": {
+       "$ref": "DateRange",
+       "description": "The date range this report should be run for."
+      },
+      "dimension": {
+       "type": "string",
+       "description": "The dimension option, one of:  \n- \"ADVERTISER\" \n- \"CAMPAIGN\" \n- \"SITE_BY_ADVERTISER\" \n- \"SITE_BY_CAMPAIGN\""
+      },
+      "dimensionFilters": {
+       "type": "array",
+       "description": "The list of filters on which dimensions are filtered.",
+       "items": {
+        "$ref": "DimensionValue"
+       }
+      },
+      "metricNames": {
+       "type": "array",
+       "description": "The list of names of metrics the report should include.",
+       "items": {
+        "type": "string"
+       }
+      },
+      "overlapMetricNames": {
+       "type": "array",
+       "description": "The list of names of overlap metrics the report should include.",
+       "items": {
+        "type": "string"
+       }
+      },
+      "pivoted": {
+       "type": "boolean",
+       "description": "Whether the report is pivoted or not. Defaults to true."
+      }
+     }
+    },
+    "delivery": {
+     "type": "object",
+     "description": "The report's email delivery settings.",
+     "properties": {
+      "emailOwner": {
+       "type": "boolean",
+       "description": "Whether the report should be emailed to the report owner."
+      },
+      "emailOwnerDeliveryType": {
+       "type": "string",
+       "description": "The type of delivery for the owner to receive, if enabled. One of:  \n- \"ATTACHMENT\"  (support for additional options will be added later)"
+      },
+      "message": {
+       "type": "string",
+       "description": "The message to be sent with each email."
+      },
+      "recipients": {
+       "type": "array",
+       "description": "The list of recipients to which to email the report.",
+       "items": {
+        "$ref": "Recipient"
+       }
+      }
+     }
+    },
     "etag": {
      "type": "string",
-     "description": "ETag of this response for caching purposes."
+     "description": "The eTag of this response for caching purposes."
     },
     "fileName": {
      "type": "string",
      "description": "The file name used when generating report files for this report."
+    },
+    "floodlightCriteria": {
+     "type": "object",
+     "description": "The report criteria for a report of type \"FLOODLIGHT\".",
+     "properties": {
+      "dateRange": {
+       "$ref": "DateRange",
+       "description": "The date range this report should be run for."
+      },
+      "dimensionFilters": {
+       "type": "array",
+       "description": "The list of filters on which dimensions are filtered.\nFilters for different dimensions are ANDed, filters for the same dimension are grouped together and ORed.",
+       "items": {
+        "$ref": "DimensionValue"
+       }
+      },
+      "dimensions": {
+       "type": "array",
+       "description": "The list of dimensions the report should include.",
+       "items": {
+        "$ref": "SortedDimension"
+       }
+      },
+      "floodlightConfigId": {
+       "$ref": "DimensionValue",
+       "description": "The floodlight ID for which to show data in this report. All advertisers associated with that ID will automatically be added. The dimension of the value needs to be 'dfa:floodlightConfigId'."
+      },
+      "metricNames": {
+       "type": "array",
+       "description": "The list of names of metrics the report should include.",
+       "items": {
+        "type": "string"
+       }
+      },
+      "reportProperties": {
+       "type": "object",
+       "description": "The properties of the report.",
+       "properties": {
+        "includeAttributedIPConversions": {
+         "type": "boolean",
+         "description": "Include conversions that have no cookie, but do have an exposure path."
+        },
+        "includeUnattributedCookieConversions": {
+         "type": "boolean",
+         "description": "Include conversions of users with a DoubleClick cookie but without an exposure. That means the user did not click or see an ad from the advertiser within the Floodlight group, or that the interaction happened outside the lookback window."
+        },
+        "includeUnattributedIPConversions": {
+         "type": "boolean",
+         "description": "Include conversions that have no associated cookies and no exposures. It’s therefore impossible to know how the user was exposed to your ads during the lookback window prior to a conversion."
+        }
+       }
+      }
+     }
+    },
+    "format": {
+     "type": "string",
+     "description": "The output format of the report, currently only \"CSV\" is supported. If not specified, default format is \"CSV\". Note that the actual format in the completed report file might differ if for instance the report's size exceeds the format's capabilities. \"CSV\" will then be the fallback format."
     },
     "id": {
      "type": "string",
@@ -399,7 +606,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "Kind of resource this is, in this case dfareporting#report.",
+     "description": "The kind of resource this is, in this case dfareporting#report.",
      "default": "dfareporting#report"
     },
     "lastModifiedTime": {
@@ -430,6 +637,148 @@
       "required": [
        "dfareporting.reports.update"
       ]
+     }
+    },
+    "pathToConversionCriteria": {
+     "type": "object",
+     "description": "The report criteria for a report of type \"PATH_TO_CONVERSION\".",
+     "properties": {
+      "activityFilters": {
+       "type": "array",
+       "description": "The list of 'dfa:activity' values to filter on.",
+       "items": {
+        "$ref": "DimensionValue"
+       }
+      },
+      "conversionDimensions": {
+       "type": "array",
+       "description": "The list of conversion dimensions the report should include.",
+       "items": {
+        "$ref": "SortedDimension"
+       }
+      },
+      "customFloodlightVariables": {
+       "type": "array",
+       "description": "The list of custom floodlight variables the report should include.",
+       "items": {
+        "$ref": "SortedDimension"
+       }
+      },
+      "dateRange": {
+       "$ref": "DateRange",
+       "description": "The date range this report should be run for."
+      },
+      "floodlightConfigId": {
+       "$ref": "DimensionValue",
+       "description": "The floodlight ID for which to show data in this report. All advertisers associated with that ID will automatically be added. The dimension of the value needs to be 'dfa:floodlightConfigId'."
+      },
+      "metricNames": {
+       "type": "array",
+       "description": "The list of names of metrics the report should include.",
+       "items": {
+        "type": "string"
+       }
+      },
+      "perInteractionDimensions": {
+       "type": "array",
+       "description": "The list of per interaction dimensions the report should include.",
+       "items": {
+        "$ref": "SortedDimension"
+       }
+      },
+      "reportProperties": {
+       "type": "object",
+       "description": "The properties of the report.",
+       "properties": {
+        "clicksLookbackWindow": {
+         "type": "integer",
+         "description": "DFA checks to see if a click interaction occurred within the specified period of time before a conversion. By default the value is pulled from Floodlight or you can manually enter a custom value. Valid values: 1-90.",
+         "format": "int32"
+        },
+        "impressionsLookbackWindow": {
+         "type": "integer",
+         "description": "DFA checks to see if an impression interaction occurred within the specified period of time before a conversion. By default the value is pulled from Floodlight or you can manually enter a custom value. Valid values: 1-90.",
+         "format": "int32"
+        },
+        "includeAttributedIPConversions": {
+         "type": "boolean",
+         "description": "Include conversions that have no cookie, but do have an exposure path."
+        },
+        "includeUnattributedCookieConversions": {
+         "type": "boolean",
+         "description": "Include conversions of users with a DoubleClick cookie but without an exposure. That means the user did not click or see an ad from the advertiser within the Floodlight group, or that the interaction happened outside the lookback window."
+        },
+        "includeUnattributedIPConversions": {
+         "type": "boolean",
+         "description": "Include conversions that have no associated cookies and no exposures. It’s therefore impossible to know how the user was exposed to your ads during the lookback window prior to a conversion."
+        },
+        "maximumClickInteractions": {
+         "type": "integer",
+         "description": "The maximum number of click interactions to include in the report. Advertisers currently paying for E2C reports get up to 200 (100 clicks, 100 impressions). If another advertiser in your network is paying for E2C, you can have up to 5 total exposures per report.",
+         "format": "int32"
+        },
+        "maximumImpressionInteractions": {
+         "type": "integer",
+         "description": "The maximum number of click interactions to include in the report. Advertisers currently paying for E2C reports get up to 200 (100 clicks, 100 impressions). If another advertiser in your network is paying for E2C, you can have up to 5 total exposures per report.",
+         "format": "int32"
+        },
+        "maximumInteractionGap": {
+         "type": "integer",
+         "description": "The maximum amount of time that can take place between interactions (clicks or impressions) by the same user. Valid values: 1-90.",
+         "format": "int32"
+        },
+        "pivotOnInteractionPath": {
+         "type": "boolean",
+         "description": "Enable pivoting on interaction path."
+        }
+       }
+      }
+     }
+    },
+    "reachCriteria": {
+     "type": "object",
+     "description": "The report criteria for a report of type \"REACH\".",
+     "properties": {
+      "activities": {
+       "$ref": "Activities",
+       "description": "Activity group."
+      },
+      "customRichMediaEvents": {
+       "$ref": "CustomRichMediaEvents",
+       "description": "Custom Rich Media Events group."
+      },
+      "dateRange": {
+       "$ref": "DateRange",
+       "description": "The date range this report should be run for."
+      },
+      "dimensionFilters": {
+       "type": "array",
+       "description": "The list of filters on which dimensions are filtered.\nFilters for different dimensions are ANDed, filters for the same dimension are grouped together and ORed.",
+       "items": {
+        "$ref": "DimensionValue"
+       }
+      },
+      "dimensions": {
+       "type": "array",
+       "description": "The list of dimensions the report should include.",
+       "items": {
+        "$ref": "SortedDimension"
+       }
+      },
+      "metricNames": {
+       "type": "array",
+       "description": "The list of names of metrics the report should include.",
+       "items": {
+        "type": "string"
+       }
+      },
+      "reachByFrequencyMetricNames": {
+       "type": "array",
+       "description": "The list of names of  Reach By Frequency metrics the report should include.",
+       "items": {
+        "type": "string"
+       }
+      }
      }
     },
     "schedule": {
@@ -464,7 +813,7 @@
       },
       "repeats": {
        "type": "string",
-       "description": "The interval the report is repeated for, one of:  \n- \"DAILY\", also requires field \"every\" to be set. \n- \"WEEKLY\", also requires fields \"every\" and \"repeatsOnWeekDays\" to be set. \n- \"TWICE_A_MONTH\" \n- \"MONTHLY\", also requires fields \"every\" and \"runsOnDayOfMonth\" to be set. \n- \"QUARTERLY\" \n- \"YEARLY\"",
+       "description": "The interval for which the report is repeated, one of:  \n- \"DAILY\", also requires field \"every\" to be set. \n- \"WEEKLY\", also requires fields \"every\" and \"repeatsOnWeekDays\" to be set. \n- \"TWICE_A_MONTH\" \n- \"MONTHLY\", also requires fields \"every\" and \"runsOnDayOfMonth\" to be set. \n- \"QUARTERLY\" \n- \"YEARLY\"",
        "annotations": {
         "required": [
          "dfareporting.reports.insert",
@@ -474,7 +823,7 @@
       },
       "repeatsOnWeekDays": {
        "type": "array",
-       "description": "List of week days \"WEEKLY\" scheduled reports should run on.",
+       "description": "List of week days \"WEEKLY\" on which scheduled reports should run.",
        "items": {
         "type": "string"
        }
@@ -498,12 +847,12 @@
     },
     "subAccountId": {
      "type": "string",
-     "description": "The subbaccount id this report belongs to if applicable.",
+     "description": "The subbaccount ID to which this report belongs if applicable.",
      "format": "int64"
     },
     "type": {
      "type": "string",
-     "description": "The type of the report, currently only \"STANDARD\" is supported.",
+     "description": "The type of the report, one of:  \n- STANDARD \n- REACH \n- ACTIVE_GRP \n- PATH_TO_CONVERSION \n- FLOODLIGHT \n- CROSS_DIMENSION_REACH",
      "annotations": {
       "required": [
        "dfareporting.reports.insert",
@@ -520,7 +869,7 @@
    "properties": {
     "etag": {
      "type": "string",
-     "description": "ETag of this response for caching purposes."
+     "description": "The eTag of this response for caching purposes."
     },
     "items": {
      "type": "array",
@@ -531,7 +880,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "Kind of list this is, in this case dfareporting#reportList.",
+     "description": "The kind of list this is, in this case dfareporting#reportList.",
      "default": "dfareporting#reportList"
     },
     "nextPageToken": {
@@ -547,7 +896,7 @@
    "properties": {
     "kind": {
      "type": "string",
-     "description": "Kind of resource this is, in this case dfareporting#sortedDimension.",
+     "description": "The kind of resource this is, in this case dfareporting#sortedDimension.",
      "default": "dfareporting#sortedDimension"
     },
     "name": {
@@ -567,7 +916,7 @@
    "properties": {
     "accountId": {
      "type": "string",
-     "description": "The account ID this profile belongs to.",
+     "description": "The account ID to which this profile belongs.",
      "format": "int64"
     },
     "accountName": {
@@ -576,11 +925,11 @@
     },
     "etag": {
      "type": "string",
-     "description": "ETag of this response for caching purposes."
+     "description": "The eTag of this response for caching purposes."
     },
     "kind": {
      "type": "string",
-     "description": "Kind of resource this is, in this case dfareporting#userProfile.",
+     "description": "The kind of resource this is, in this case dfareporting#userProfile.",
      "default": "dfareporting#userProfile"
     },
     "profileId": {
@@ -610,7 +959,7 @@
    "properties": {
     "etag": {
      "type": "string",
-     "description": "ETag of this response for caching purposes."
+     "description": "The eTag of this response for caching purposes."
     },
     "items": {
      "type": "array",
@@ -621,7 +970,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "Kind of list this is, in this case dfareporting#userProfileList.",
+     "description": "The kind of list this is, in this case dfareporting#userProfileList.",
      "default": "dfareporting#userProfileList"
     }
    }
@@ -651,7 +1000,7 @@
       },
       "profileId": {
        "type": "string",
-       "description": "The DFA user profile id.",
+       "description": "The DFA user profile ID.",
        "required": true,
        "format": "int64",
        "location": "path"
@@ -695,21 +1044,21 @@
       },
       "profileId": {
        "type": "string",
-       "description": "The DFA profile id.",
+       "description": "The DFA profile ID.",
        "required": true,
        "format": "int64",
        "location": "path"
       },
       "sortField": {
        "type": "string",
-       "description": "The field to sort the list by.",
+       "description": "The field by which to sort the list.",
        "default": "LAST_MODIFIED_TIME",
        "enum": [
         "ID",
         "LAST_MODIFIED_TIME"
        ],
        "enumDescriptions": [
-        "Sort by file id.",
+        "Sort by file ID.",
         "Sort by 'lastmodifiedAt' field."
        ],
        "location": "query"
@@ -747,18 +1096,18 @@
      "id": "dfareporting.reports.delete",
      "path": "userprofiles/{profileId}/reports/{reportId}",
      "httpMethod": "DELETE",
-     "description": "Deletes a report by its id.",
+     "description": "Deletes a report by its ID.",
      "parameters": {
       "profileId": {
        "type": "string",
-       "description": "The DFA user profile id.",
+       "description": "The DFA user profile ID.",
        "required": true,
        "format": "int64",
        "location": "path"
       },
       "reportId": {
        "type": "string",
-       "description": "The id of the report.",
+       "description": "The ID of the report.",
        "required": true,
        "format": "int64",
        "location": "path"
@@ -776,18 +1125,18 @@
      "id": "dfareporting.reports.get",
      "path": "userprofiles/{profileId}/reports/{reportId}",
      "httpMethod": "GET",
-     "description": "Retrieves a report by its id.",
+     "description": "Retrieves a report by its ID.",
      "parameters": {
       "profileId": {
        "type": "string",
-       "description": "The DFA user profile id.",
+       "description": "The DFA user profile ID.",
        "required": true,
        "format": "int64",
        "location": "path"
       },
       "reportId": {
        "type": "string",
-       "description": "The id of the report.",
+       "description": "The ID of the report.",
        "required": true,
        "format": "int64",
        "location": "path"
@@ -812,7 +1161,7 @@
      "parameters": {
       "profileId": {
        "type": "string",
-       "description": "The DFA user profile id.",
+       "description": "The DFA user profile ID.",
        "required": true,
        "format": "int64",
        "location": "path"
@@ -852,14 +1201,14 @@
       },
       "profileId": {
        "type": "string",
-       "description": "The DFA user profile id.",
+       "description": "The DFA user profile ID.",
        "required": true,
        "format": "int64",
        "location": "path"
       },
       "sortField": {
        "type": "string",
-       "description": "The field to sort the list by.",
+       "description": "The field by which to sort the list.",
        "default": "LAST_MODIFIED_TIME",
        "enum": [
         "ID",
@@ -867,9 +1216,9 @@
         "NAME"
        ],
        "enumDescriptions": [
-        "Sort by report id.",
+        "Sort by report ID.",
         "Sort by 'lastModifiedTime' field.",
-        "Sort by display name of reports."
+        "Sort by name of reports."
        ],
        "location": "query"
       },
@@ -906,14 +1255,14 @@
      "parameters": {
       "profileId": {
        "type": "string",
-       "description": "The DFA user profile id.",
+       "description": "The DFA user profile ID.",
        "required": true,
        "format": "int64",
        "location": "path"
       },
       "reportId": {
        "type": "string",
-       "description": "The id of the report.",
+       "description": "The ID of the report.",
        "required": true,
        "format": "int64",
        "location": "path"
@@ -941,14 +1290,14 @@
      "parameters": {
       "profileId": {
        "type": "string",
-       "description": "The DFA profile id.",
+       "description": "The DFA profile ID.",
        "required": true,
        "format": "int64",
        "location": "path"
       },
       "reportId": {
        "type": "string",
-       "description": "The id of the report.",
+       "description": "The ID of the report.",
        "required": true,
        "format": "int64",
        "location": "path"
@@ -978,14 +1327,14 @@
      "parameters": {
       "profileId": {
        "type": "string",
-       "description": "The DFA user profile id.",
+       "description": "The DFA user profile ID.",
        "required": true,
        "format": "int64",
        "location": "path"
       },
       "reportId": {
        "type": "string",
-       "description": "The id of the report.",
+       "description": "The ID of the report.",
        "required": true,
        "format": "int64",
        "location": "path"
@@ -1017,21 +1366,21 @@
        "parameters": {
         "fileId": {
          "type": "string",
-         "description": "The id of the report file.",
+         "description": "The ID of the report file.",
          "required": true,
          "format": "int64",
          "location": "path"
         },
         "profileId": {
          "type": "string",
-         "description": "The DFA profile id.",
+         "description": "The DFA profile ID.",
          "required": true,
          "format": "int64",
          "location": "path"
         },
         "reportId": {
          "type": "string",
-         "description": "The id of the report.",
+         "description": "The ID of the report.",
          "required": true,
          "format": "int64",
          "location": "path"
@@ -1070,28 +1419,28 @@
         },
         "profileId": {
          "type": "string",
-         "description": "The DFA profile id.",
+         "description": "The DFA profile ID.",
          "required": true,
          "format": "int64",
          "location": "path"
         },
         "reportId": {
          "type": "string",
-         "description": "The id of the parent report.",
+         "description": "The ID of the parent report.",
          "required": true,
          "format": "int64",
          "location": "path"
         },
         "sortField": {
          "type": "string",
-         "description": "The field to sort the list by.",
+         "description": "The field by which to sort the list.",
          "default": "LAST_MODIFIED_TIME",
          "enum": [
           "ID",
           "LAST_MODIFIED_TIME"
          ],
          "enumDescriptions": [
-          "Sort by file id.",
+          "Sort by file ID.",
           "Sort by 'lastmodifiedAt' field."
          ],
          "location": "query"
@@ -1132,11 +1481,11 @@
      "id": "dfareporting.userProfiles.get",
      "path": "userprofiles/{profileId}",
      "httpMethod": "GET",
-     "description": "Gets one user profile by id.",
+     "description": "Gets one user profile by ID.",
      "parameters": {
       "profileId": {
        "type": "string",
-       "description": "The user profile id.",
+       "description": "The user profile ID.",
        "required": true,
        "format": "int64",
        "location": "path"

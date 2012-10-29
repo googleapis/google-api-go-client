@@ -1,10 +1,11 @@
 {
  "kind": "discovery#restDescription",
+ "etag": "\"oZqOFf-aKzMvpID-BwBAFJLe7Pk/yX0Gg4mZkj1lhYAwFdaCwRRa4Mk\"",
  "discoveryVersion": "v1",
  "id": "prediction:v1.5",
  "name": "prediction",
  "version": "v1.5",
- "revision": "20120724",
+ "revision": "20120712",
  "title": "Prediction API",
  "description": "Lets you access a cloud hosted machine learning service that makes it easy to build smart apps",
  "icons": {
@@ -430,6 +431,26 @@
      "description": "Training completion time (as a RFC 3339 timestamp).",
      "format": "date-time"
     },
+    "trainingInstances": {
+     "type": "array",
+     "description": "Instances to train model on.",
+     "items": {
+      "type": "object",
+      "properties": {
+       "csvInstance": {
+        "type": "array",
+        "description": "The input features for this instance",
+        "items": {
+         "type": "any"
+        }
+       },
+       "output": {
+        "type": "string",
+        "description": "The generic output value - could be regression or class label"
+       }
+      }
+     }
+    },
     "trainingStatus": {
      "type": "string",
      "description": "The current status of the training job. This can be one of following: RUNNING; DONE; ERROR; ERROR: TRAINING JOB NOT FOUND"
@@ -461,7 +482,11 @@
     },
     "label": {
      "type": "string",
-     "description": "The true class label of this instance"
+     "description": "The class label of this instance"
+    },
+    "output": {
+     "type": "string",
+     "description": "The generic output value - could be regression value or class label"
     }
    }
   }

@@ -1,10 +1,11 @@
 {
  "kind": "discovery#restDescription",
+ "etag": "\"oZqOFf-aKzMvpID-BwBAFJLe7Pk/kUYo1r4N7g46he-gAwtqbJMknnE\"",
  "discoveryVersion": "v1",
  "id": "analytics:v3",
  "name": "analytics",
  "version": "v3",
- "revision": "20120831",
+ "revision": "20121022",
  "title": "Google Analytics API",
  "description": "View and manage your Google Analytics data",
  "icons": {
@@ -158,6 +159,294 @@
     "startIndex": {
      "type": "integer",
      "description": "The starting index of the entries, which is 1 by default or otherwise specified by the start-index query parameter.",
+     "format": "int32"
+    },
+    "totalResults": {
+     "type": "integer",
+     "description": "The total number of results for the query, regardless of the number of results in the response.",
+     "format": "int32"
+    },
+    "username": {
+     "type": "string",
+     "description": "Email ID of the authenticated user"
+    }
+   }
+  },
+  "CustomDataSource": {
+   "id": "CustomDataSource",
+   "type": "object",
+   "description": "JSON template for an Analytics custom data source.",
+   "properties": {
+    "accountId": {
+     "type": "string",
+     "description": "Account ID to which this custom data source belongs."
+    },
+    "childLink": {
+     "type": "object",
+     "description": "Child link for this custom data source. Points to the list of daily uploads for this custom data source.",
+     "properties": {
+      "href": {
+       "type": "string",
+       "description": "Link to the list of daily uploads for this custom data source."
+      },
+      "type": {
+       "type": "string",
+       "description": "Value is \"analytics#dailyUploads\".",
+       "default": "analytics#dailyUploads"
+      }
+     }
+    },
+    "created": {
+     "type": "string",
+     "description": "Time this custom data source was created.",
+     "format": "date-time"
+    },
+    "description": {
+     "type": "string",
+     "description": "Description of custom data source."
+    },
+    "id": {
+     "type": "string",
+     "description": "Custom data source ID."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Resource type for Analytics custom data source.",
+     "default": "analytics#customDataSource"
+    },
+    "name": {
+     "type": "string",
+     "description": "Name of this custom data source."
+    },
+    "parentLink": {
+     "type": "object",
+     "description": "Parent link for this custom data source. Points to the web property to which this custom data source belongs.",
+     "properties": {
+      "href": {
+       "type": "string",
+       "description": "Link to the web property to which this custom data source belongs."
+      },
+      "type": {
+       "type": "string",
+       "description": "Value is \"analytics#webproperty\".",
+       "default": "analytics#webproperty"
+      }
+     }
+    },
+    "profilesLinked": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "Link for this Analytics custom data source."
+    },
+    "updated": {
+     "type": "string",
+     "description": "Time this custom data source was last modified.",
+     "format": "date-time"
+    },
+    "webPropertyId": {
+     "type": "string",
+     "description": "Web property ID of the form UA-XXXXX-YY to which this custom data source belongs."
+    }
+   }
+  },
+  "CustomDataSources": {
+   "id": "CustomDataSources",
+   "type": "object",
+   "description": "Lists Analytics custom data sources to which the user has access. Each resource in the collection corresponds to a single Analytics custom data source.",
+   "properties": {
+    "items": {
+     "type": "array",
+     "description": "Collection of custom data sources.",
+     "items": {
+      "$ref": "CustomDataSource"
+     }
+    },
+    "itemsPerPage": {
+     "type": "integer",
+     "description": "The maximum number of resources the response can contain, regardless of the actual number of resources returned. Its value ranges from 1 to 1000 with a value of 1000 by default, or otherwise specified by the max-results query parameter.",
+     "format": "int32"
+    },
+    "kind": {
+     "type": "string",
+     "description": "Collection type.",
+     "default": "analytics#customDataSources"
+    },
+    "nextLink": {
+     "type": "string",
+     "description": "Link to next page for this custom data source collection."
+    },
+    "previousLink": {
+     "type": "string",
+     "description": "Link to previous page for this custom data source collection."
+    },
+    "startIndex": {
+     "type": "integer",
+     "description": "The starting index of the resources, which is 1 by default or otherwise specified by the start-index query parameter.",
+     "format": "int32"
+    },
+    "totalResults": {
+     "type": "integer",
+     "description": "The total number of results for the query, regardless of the number of results in the response.",
+     "format": "int32"
+    },
+    "username": {
+     "type": "string",
+     "description": "Email ID of the authenticated user"
+    }
+   }
+  },
+  "DailyUpload": {
+   "id": "DailyUpload",
+   "type": "object",
+   "description": "Metadata for daily upload entity.",
+   "properties": {
+    "accountId": {
+     "type": "string",
+     "description": "Account ID to which this daily upload belongs."
+    },
+    "appendCount": {
+     "type": "integer",
+     "description": "Number of appends for this date.",
+     "format": "int32"
+    },
+    "createdTime": {
+     "type": "string",
+     "description": "Time this daily upload was created.",
+     "format": "date-time"
+    },
+    "customDataSourceId": {
+     "type": "string",
+     "description": "Custom data source ID to which this daily upload belongs."
+    },
+    "date": {
+     "type": "string",
+     "description": "Date associated with daily upload."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Resource type for Analytics daily upload.",
+     "default": "analytics#dailyUpload"
+    },
+    "modifiedTime": {
+     "type": "string",
+     "description": "Time this daily upload was last modified.",
+     "format": "date-time"
+    },
+    "parentLink": {
+     "type": "object",
+     "description": "Parent link for a daily upload. Points to the custom data source to which this daily upload belongs.",
+     "properties": {
+      "href": {
+       "type": "string",
+       "description": "Link to the custom data source to which this daily upload belongs."
+      },
+      "type": {
+       "type": "string",
+       "description": "Value is \"analytics#customDataSource\".",
+       "default": "analytics#customDataSource"
+      }
+     }
+    },
+    "recentChanges": {
+     "type": "array",
+     "description": "Change log for last 10 changes in chronological order.",
+     "items": {
+      "type": "object",
+      "properties": {
+       "change": {
+        "type": "string"
+       },
+       "time": {
+        "type": "string",
+        "format": "date-time"
+       }
+      }
+     }
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "Link for this daily upload."
+    },
+    "webPropertyId": {
+     "type": "string",
+     "description": "Web property ID of the form UA-XXXXX-YY to which this daily upload belongs."
+    }
+   }
+  },
+  "DailyUploadAppend": {
+   "id": "DailyUploadAppend",
+   "type": "object",
+   "description": "Metadata returned for a successful append operation.",
+   "properties": {
+    "accountId": {
+     "type": "string",
+     "description": "Account Id to which this daily upload append belongs."
+    },
+    "appendNumber": {
+     "type": "integer",
+     "description": "Append number.",
+     "format": "int32"
+    },
+    "customDataSourceId": {
+     "type": "string",
+     "description": "Custom data source Id to which this daily upload append belongs."
+    },
+    "date": {
+     "type": "string",
+     "description": "Date associated with daily upload append."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Resource type for Analytics daily upload append.",
+     "default": "analytics#dailyUploadAppend"
+    },
+    "nextAppendLink": {
+     "type": "string"
+    },
+    "webPropertyId": {
+     "type": "string",
+     "description": "Web property Id of the form UA-XXXXX-YY to which this daily upload append belongs."
+    }
+   }
+  },
+  "DailyUploads": {
+   "id": "DailyUploads",
+   "type": "object",
+   "description": "A daily upload collection lists Analytics daily uploads to which the user has access. Each resource in the collection corresponds to a single Analytics daily upload.",
+   "properties": {
+    "items": {
+     "type": "array",
+     "description": "A collection of daily uploads.",
+     "items": {
+      "$ref": "DailyUpload"
+     }
+    },
+    "itemsPerPage": {
+     "type": "integer",
+     "description": "The maximum number of resources the response can contain, regardless of the actual number of resources returned. Its value ranges from 1 to 1000 with a value of 1000 by default, or otherwise specified by the max-results query parameter.",
+     "format": "int32"
+    },
+    "kind": {
+     "type": "string",
+     "description": "Collection type. Value is analytics#dailyUploads.",
+     "default": "analytics#dailyUploads"
+    },
+    "nextLink": {
+     "type": "string",
+     "description": "Link to next page for this daily upload collection."
+    },
+    "previousLink": {
+     "type": "string",
+     "description": "Link to previous page for this daily upload collection."
+    },
+    "startIndex": {
+     "type": "integer",
+     "description": "The starting index of the resources, which is 1 by default or otherwise specified by the start-index query parameter.",
      "format": "int32"
     },
     "totalResults": {
@@ -738,7 +1027,7 @@
         },
         "primitiveValue": {
          "type": "string",
-         "description": "A primitive metric value. A primitive dimension value."
+         "description": "A primitive dimension value. A primitive metric value."
         }
        }
       }
@@ -1337,6 +1626,282 @@
         "https://www.googleapis.com/auth/analytics",
         "https://www.googleapis.com/auth/analytics.readonly"
        ]
+      }
+     }
+    },
+    "customDataSources": {
+     "methods": {
+      "list": {
+       "id": "analytics.management.customDataSources.list",
+       "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources",
+       "httpMethod": "GET",
+       "description": "List custom data sources to which the user has access.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account Id for the custom data sources to retrieve.",
+         "required": true,
+         "pattern": "\\d+",
+         "location": "path"
+        },
+        "max-results": {
+         "type": "integer",
+         "description": "The maximum number of custom data sources to include in this response.",
+         "format": "int32",
+         "minimum": "1",
+         "location": "query"
+        },
+        "start-index": {
+         "type": "integer",
+         "description": "A 1-based index of the first custom data source to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.",
+         "format": "int32",
+         "minimum": "1",
+         "location": "query"
+        },
+        "webPropertyId": {
+         "type": "string",
+         "description": "Web property Id for the custom data sources to retrieve.",
+         "required": true,
+         "pattern": "UA-(\\d+)-(\\d+)",
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "webPropertyId"
+       ],
+       "response": {
+        "$ref": "CustomDataSources"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics",
+        "https://www.googleapis.com/auth/analytics.readonly"
+       ]
+      }
+     }
+    },
+    "dailyUploads": {
+     "methods": {
+      "delete": {
+       "id": "analytics.management.dailyUploads.delete",
+       "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/dailyUploads/{date}",
+       "httpMethod": "DELETE",
+       "description": "Delete uploaded data for the given date.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account Id associated with daily upload delete.",
+         "required": true,
+         "pattern": "[0-9]+",
+         "location": "path"
+        },
+        "customDataSourceId": {
+         "type": "string",
+         "description": "Custom data source Id associated with daily upload delete.",
+         "required": true,
+         "location": "path"
+        },
+        "date": {
+         "type": "string",
+         "description": "Date for which data is to be deleted. Date should be formatted as YYYY-MM-DD.",
+         "required": true,
+         "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2}",
+         "location": "path"
+        },
+        "type": {
+         "type": "string",
+         "description": "Type of data for this delete.",
+         "required": true,
+         "enum": [
+          "cost"
+         ],
+         "enumDescriptions": [
+          "Value for specifying cost data upload."
+         ],
+         "location": "query"
+        },
+        "webPropertyId": {
+         "type": "string",
+         "description": "Web property Id associated with daily upload delete.",
+         "required": true,
+         "pattern": "UA-[0-9]+-[0-9]+",
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "webPropertyId",
+        "customDataSourceId",
+        "date",
+        "type"
+       ],
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics"
+       ]
+      },
+      "list": {
+       "id": "analytics.management.dailyUploads.list",
+       "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/dailyUploads",
+       "httpMethod": "GET",
+       "description": "List daily uploads to which the user has access.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account Id for the daily uploads to retrieve.",
+         "required": true,
+         "pattern": "\\d+",
+         "location": "path"
+        },
+        "customDataSourceId": {
+         "type": "string",
+         "description": "Custom data source Id for daily uploads to retrieve.",
+         "required": true,
+         "pattern": ".{22}",
+         "location": "path"
+        },
+        "end-date": {
+         "type": "string",
+         "description": "End date of the form YYYY-MM-DD.",
+         "required": true,
+         "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2}",
+         "location": "query"
+        },
+        "max-results": {
+         "type": "integer",
+         "description": "The maximum number of custom data sources to include in this response.",
+         "format": "int32",
+         "minimum": "1",
+         "location": "query"
+        },
+        "start-date": {
+         "type": "string",
+         "description": "Start date of the form YYYY-MM-DD.",
+         "required": true,
+         "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2}",
+         "location": "query"
+        },
+        "start-index": {
+         "type": "integer",
+         "description": "A 1-based index of the first daily upload to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.",
+         "format": "int32",
+         "minimum": "1",
+         "location": "query"
+        },
+        "webPropertyId": {
+         "type": "string",
+         "description": "Web property Id for the daily uploads to retrieve.",
+         "required": true,
+         "pattern": "UA-(\\d+)-(\\d+)",
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "webPropertyId",
+        "customDataSourceId",
+        "start-date",
+        "end-date"
+       ],
+       "response": {
+        "$ref": "DailyUploads"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics",
+        "https://www.googleapis.com/auth/analytics.readonly"
+       ]
+      },
+      "upload": {
+       "id": "analytics.management.dailyUploads.upload",
+       "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/dailyUploads/{date}/uploads",
+       "httpMethod": "POST",
+       "description": "Update/Overwrite data for a custom data source.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account Id associated with daily upload.",
+         "required": true,
+         "pattern": "\\d+",
+         "location": "path"
+        },
+        "appendNumber": {
+         "type": "integer",
+         "description": "Append number for this upload indexed from 1.",
+         "required": true,
+         "format": "int32",
+         "minimum": "1",
+         "maximum": "20",
+         "location": "query"
+        },
+        "customDataSourceId": {
+         "type": "string",
+         "description": "Custom data source Id to which the data being uploaded belongs.",
+         "required": true,
+         "location": "path"
+        },
+        "date": {
+         "type": "string",
+         "description": "Date for which data is uploaded. Date should be formatted as YYYY-MM-DD.",
+         "required": true,
+         "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2}",
+         "location": "path"
+        },
+        "reset": {
+         "type": "boolean",
+         "description": "Reset/Overwrite all previous appends for this date and start over with this file as the first upload.",
+         "default": "false",
+         "location": "query"
+        },
+        "type": {
+         "type": "string",
+         "description": "Type of data for this upload.",
+         "required": true,
+         "enum": [
+          "cost"
+         ],
+         "enumDescriptions": [
+          "Value for specifying cost data upload."
+         ],
+         "location": "query"
+        },
+        "webPropertyId": {
+         "type": "string",
+         "description": "Web property Id associated with daily upload.",
+         "required": true,
+         "pattern": "UA-\\d+-\\d+",
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "webPropertyId",
+        "customDataSourceId",
+        "date",
+        "appendNumber",
+        "type"
+       ],
+       "response": {
+        "$ref": "DailyUploadAppend"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics"
+       ],
+       "supportsMediaUpload": true,
+       "mediaUpload": {
+        "accept": [
+         "application/octet-stream"
+        ],
+        "maxSize": "5MB",
+        "protocols": {
+         "simple": {
+          "multipart": true,
+          "path": "/upload/analytics/v3/management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/dailyUploads/{date}/uploads"
+         },
+         "resumable": {
+          "multipart": true,
+          "path": "/resumable/upload/analytics/v3/management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/dailyUploads/{date}/uploads"
+         }
+        }
+       }
       }
      }
     },

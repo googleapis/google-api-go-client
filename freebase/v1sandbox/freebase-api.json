@@ -1,10 +1,11 @@
 {
  "kind": "discovery#restDescription",
+ "etag": "\"oZqOFf-aKzMvpID-BwBAFJLe7Pk/LflrBfwp4GHIOZqXFzsae4-ypSw\"",
  "discoveryVersion": "v1",
  "id": "freebase:v1sandbox",
  "name": "freebase",
  "version": "v1sandbox",
- "revision": "20120421",
+ "revision": "20121013",
  "title": "Freebase API",
  "description": "Lets you access the Freebase repository of open data.",
  "icons": {
@@ -63,6 +64,15 @@
    "location": "query"
   }
  },
+ "auth": {
+  "oauth2": {
+   "scopes": {
+    "https://www.googleapis.com/auth/freebase": {
+     "description": "Sign in to Freebase with your account"
+    }
+   }
+  }
+ },
  "schemas": {
   "ContentserviceGet": {
    "id": "ContentserviceGet",
@@ -71,6 +81,133 @@
     "result": {
      "type": "string",
      "description": "The text requested."
+    }
+   }
+  },
+  "TopicLookup": {
+   "id": "TopicLookup",
+   "type": "object",
+   "properties": {
+    "id": {
+     "type": "string"
+    },
+    "property": {
+     "type": "object",
+     "properties": {
+      "/freebase/object_profile/linkcount": {
+       "$ref": "TopicStatslinkcount"
+      }
+     },
+     "additionalProperties": {
+      "$ref": "TopicPropertyvalue"
+     }
+    }
+   }
+  },
+  "TopicPropertyvalue": {
+   "id": "TopicPropertyvalue",
+   "type": "object",
+   "properties": {
+    "count": {
+     "type": "number",
+     "format": "double"
+    },
+    "status": {
+     "type": "string"
+    },
+    "values": {
+     "type": "array",
+     "items": {
+      "$ref": "TopicValue"
+     }
+    },
+    "valuetype": {
+     "type": "string"
+    }
+   }
+  },
+  "TopicStatslinkcount": {
+   "id": "TopicStatslinkcount",
+   "type": "object",
+   "properties": {
+    "type": {
+     "type": "string",
+     "default": "custom"
+    },
+    "values": {
+     "type": "array",
+     "items": {
+      "type": "object",
+      "properties": {
+       "count": {
+        "type": "integer",
+        "format": "int32"
+       },
+       "id": {
+        "type": "string"
+       },
+       "values": {
+        "type": "array",
+        "items": {
+         "type": "object",
+         "properties": {
+          "count": {
+           "type": "integer",
+           "format": "int32"
+          },
+          "id": {
+           "type": "string"
+          },
+          "values": {
+           "type": "array",
+           "items": {
+            "type": "object",
+            "properties": {
+             "count": {
+              "type": "integer",
+              "format": "int32"
+             },
+             "id": {
+              "type": "string"
+             }
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "TopicValue": {
+   "id": "TopicValue",
+   "type": "object",
+   "properties": {
+    "creator": {
+     "type": "string"
+    },
+    "id": {
+     "type": "string"
+    },
+    "lang": {
+     "type": "string"
+    },
+    "property": {
+     "type": "object",
+     "additionalProperties": {
+      "$ref": "TopicPropertyvalue"
+     }
+    },
+    "text": {
+     "type": "string"
+    },
+    "timestamp": {
+     "type": "string"
+    },
+    "value": {
+     "type": "any"
     }
    }
   }
@@ -218,6 +355,51 @@
     "query"
    ],
    "supportsMediaDownload": true
+  },
+  "mqlwrite": {
+   "id": "freebase.mqlwrite",
+   "path": "mqlwrite",
+   "httpMethod": "GET",
+   "description": "Performs MQL Write Operations.",
+   "parameters": {
+    "callback": {
+     "type": "string",
+     "description": "JS method name for JSONP callbacks.",
+     "pattern": "([A-Za-z0-9_$.]|\\[|\\])+",
+     "location": "query"
+    },
+    "dateline": {
+     "type": "string",
+     "description": "The dateline that you get in a mqlwrite response to ensure consistent results.",
+     "location": "query"
+    },
+    "indent": {
+     "type": "integer",
+     "description": "How many spaces to indent the json.",
+     "default": "0",
+     "format": "uint32",
+     "maximum": "10",
+     "location": "query"
+    },
+    "query": {
+     "type": "string",
+     "description": "An MQL query with write directives.",
+     "required": true,
+     "location": "query"
+    },
+    "use_permission_of": {
+     "type": "string",
+     "description": "Use the same permission node of the object with the specified id.",
+     "location": "query"
+    }
+   },
+   "parameterOrder": [
+    "query"
+   ],
+   "scopes": [
+    "https://www.googleapis.com/auth/freebase"
+   ],
+   "supportsMediaDownload": true
   }
  },
  "resources": {
@@ -264,6 +446,61 @@
      ],
      "response": {
       "$ref": "ContentserviceGet"
+     }
+    }
+   }
+  },
+  "topic": {
+   "methods": {
+    "lookup": {
+     "id": "freebase.topic.lookup",
+     "path": "topic{/id*}",
+     "httpMethod": "GET",
+     "description": "Get properties and meta-data about a topic.",
+     "parameters": {
+      "dateline": {
+       "type": "string",
+       "description": "Determines how up-to-date the data returned is. A unix epoch time, a guid or a 'now'",
+       "location": "query"
+      },
+      "filter": {
+       "type": "string",
+       "description": "A frebase domain, type or property id, 'suggest', 'commons', or 'all'. Filter the results and returns only appropriate properties.",
+       "repeated": true,
+       "location": "query"
+      },
+      "id": {
+       "type": "string",
+       "description": "The id of the item that you want data about.",
+       "required": true,
+       "repeated": true,
+       "location": "path"
+      },
+      "lang": {
+       "type": "string",
+       "description": "The language you 'd like the content in - a freebase /type/lang language key.",
+       "default": "en",
+       "location": "query"
+      },
+      "limit": {
+       "type": "integer",
+       "description": "The maximum number of property values to return for each property.",
+       "default": "10",
+       "format": "uint32",
+       "location": "query"
+      },
+      "raw": {
+       "type": "boolean",
+       "description": "Do not apply any constraints, or get any names.",
+       "default": "false",
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "id"
+     ],
+     "response": {
+      "$ref": "TopicLookup"
      }
     }
    }

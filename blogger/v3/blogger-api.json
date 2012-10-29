@@ -1,5 +1,6 @@
 {
  "kind": "discovery#restDescription",
+ "etag": "\"oZqOFf-aKzMvpID-BwBAFJLe7Pk/M_0M1tdkaAx6XKP6y-5wRZDX12s\"",
  "discoveryVersion": "v1",
  "id": "blogger:v3",
  "name": "blogger",

@@ -1,10 +1,11 @@
 {
  "kind": "discovery#restDescription",
+ "etag": "\"oZqOFf-aKzMvpID-BwBAFJLe7Pk/yWbFOw3WnmZsZ7VHFrwoI-vrUeg\"",
  "discoveryVersion": "v1",
  "id": "analytics:v2.4",
  "name": "analytics",
  "version": "v2.4",
- "revision": "20120831",
+ "revision": "20121022",
  "title": "Google Analytics API",
  "description": "View and manage your Google Analytics data",
  "icons": {

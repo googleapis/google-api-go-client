@@ -1,4 +1,6 @@
-// Package oauth2 provides access to the .
+// Package oauth2 provides access to the Google OAuth2 API.
+//
+// See https://developers.google.com/accounts/docs/OAuth2
 //
 // Usage example:
 //
@@ -36,6 +38,9 @@ const basePath = "https://www.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
+	// Know who you are on Google
+	PlusMeScope = "https://www.googleapis.com/auth/plus.me"
+
 	// View your email address
 	UserinfoEmailScope = "https://www.googleapis.com/auth/userinfo.email"
 
@@ -246,6 +251,7 @@ func (c *UserinfoGetCall) Do() (*Userinfo, error) {
 	//     "$ref": "Userinfo"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/plus.me",
 	//     "https://www.googleapis.com/auth/userinfo.email",
 	//     "https://www.googleapis.com/auth/userinfo.profile"
 	//   ]

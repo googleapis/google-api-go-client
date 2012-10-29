@@ -221,6 +221,9 @@ type RestDescription struct {
 	// API.
 	DocumentationLink string `json:"documentationLink,omitempty"`
 
+	// Etag: The etag for this response.
+	Etag string `json:"etag,omitempty"`
+
 	// Features: A list of supported features for this API.
 	Features []string `json:"features,omitempty"`
 
@@ -337,7 +340,7 @@ type RestMethod struct {
 	Response *RestMethodResponse `json:"response,omitempty"`
 
 	// Scopes: OAuth 2.0 scopes applicable to this method.
-	Scopes []interface{} `json:"scopes,omitempty"`
+	Scopes []string `json:"scopes,omitempty"`
 
 	// SupportsMediaDownload: Whether this method supports media downloads.
 	SupportsMediaDownload bool `json:"supportsMediaDownload,omitempty"`

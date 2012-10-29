@@ -64,9 +64,11 @@ func New(client *http.Client) (*Service, error) {
 	s.Apps = &AppsService{s: s}
 	s.Changes = &ChangesService{s: s}
 	s.Children = &ChildrenService{s: s}
+	s.Comments = &CommentsService{s: s}
 	s.Files = &FilesService{s: s}
 	s.Parents = &ParentsService{s: s}
 	s.Permissions = &PermissionsService{s: s}
+	s.Replies = &RepliesService{s: s}
 	s.Revisions = &RevisionsService{s: s}
 	return s, nil
 }
@@ -82,11 +84,15 @@ type Service struct {
 
 	Children *ChildrenService
 
+	Comments *CommentsService
+
 	Files *FilesService
 
 	Parents *ParentsService
 
 	Permissions *PermissionsService
+
+	Replies *RepliesService
 
 	Revisions *RevisionsService
 }
@@ -107,6 +113,10 @@ type ChildrenService struct {
 	s *Service
 }
 
+type CommentsService struct {
+	s *Service
+}
+
 type FilesService struct {
 	s *Service
 }
@@ -116,6 +126,10 @@ type ParentsService struct {
 }
 
 type PermissionsService struct {
+	s *Service
+}
+
+type RepliesService struct {
 	s *Service
 }
 
@@ -170,6 +184,10 @@ type About struct {
 	// QuotaBytesUsed: The number of quota bytes used.
 	QuotaBytesUsed int64 `json:"quotaBytesUsed,omitempty,string"`
 
+	// QuotaBytesUsedAggregate: The number of quota bytes used by all Google
+	// apps (Drive, Picasa, etc.).
+	QuotaBytesUsedAggregate int64 `json:"quotaBytesUsedAggregate,omitempty,string"`
+
 	// QuotaBytesUsedInTrash: The number of quota bytes used by trashed
 	// items.
 	QuotaBytesUsedInTrash int64 `json:"quotaBytesUsedInTrash,omitempty,string"`
@@ -182,6 +200,9 @@ type About struct {
 
 	// SelfLink: A link back to this item.
 	SelfLink string `json:"selfLink,omitempty"`
+
+	// User: The authenticated user.
+	User *User `json:"user,omitempty"`
 }
 
 type AboutAdditionalRoleInfo struct {
@@ -394,6 +415,136 @@ type ChildReference struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
+type Comment struct {
+	// Anchor: A region of the document represented as a JSON string. See
+	// anchor documentation for details on how to define and interpret
+	// anchor properties.
+	Anchor string `json:"anchor,omitempty"`
+
+	// Author: The user who wrote this comment.
+	Author *User `json:"author,omitempty"`
+
+	// CommentId: The ID of the comment.
+	CommentId string `json:"commentId,omitempty"`
+
+	// Content: The plain text content used to create this comment. This is
+	// not HTML safe and should only be used as a starting point to make
+	// edits to a comment's content.
+	Content string `json:"content,omitempty"`
+
+	// Context: The context of the file which is being commented on.
+	Context *CommentContext `json:"context,omitempty"`
+
+	// CreatedDate: The date when this comment was first created.
+	CreatedDate string `json:"createdDate,omitempty"`
+
+	// Deleted: Whether this comment has been deleted. If a comment has been
+	// deleted the content will be cleared and this will only represent a
+	// comment that once existed.
+	Deleted bool `json:"deleted,omitempty"`
+
+	// FileId: The file which this comment is addressing.
+	FileId string `json:"fileId,omitempty"`
+
+	// FileTitle: The title of the file which this comment is addressing.
+	FileTitle string `json:"fileTitle,omitempty"`
+
+	// HtmlContent: HTML formatted content for this comment.
+	HtmlContent string `json:"htmlContent,omitempty"`
+
+	// Kind: This is always drive#comment.
+	Kind string `json:"kind,omitempty"`
+
+	// ModifiedDate: The date when this comment or any of its replies were
+	// last modified.
+	ModifiedDate string `json:"modifiedDate,omitempty"`
+
+	// Replies: Replies to this post.
+	Replies []*CommentReply `json:"replies,omitempty"`
+
+	// SelfLink: A link back to this comment.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// Status: The status of this comment. Status can be changed by posting
+	// a reply to a comment with the desired status.  
+	// - "open" - The
+	// comment is still open. 
+	// - "resolved" - The comment has been resolved
+	// by one of its replies.
+	Status interface{} `json:"status,omitempty"`
+}
+
+type CommentContext struct {
+	// Type: The MIME type of the context snippet.
+	Type string `json:"type,omitempty"`
+
+	// Value: Data representation of the segment of the file being commented
+	// on. In the case of a text file for example, this would be the actual
+	// text that the comment is about.
+	Value string `json:"value,omitempty"`
+}
+
+type CommentList struct {
+	// Items: List of comments.
+	Items []*Comment `json:"items,omitempty"`
+
+	// Kind: This is always drive#commentList.
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: The token to use to request the next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+}
+
+type CommentReply struct {
+	// Author: The user who wrote this reply.
+	Author *User `json:"author,omitempty"`
+
+	// Content: The plain text content used to create this reply. This is
+	// not HTML safe and should only be used as a starting point to make
+	// edits to a reply's content. This field is required on inserts if no
+	// verb is specified (resolve/reopen).
+	Content string `json:"content,omitempty"`
+
+	// CreatedDate: The date when this reply was first created.
+	CreatedDate string `json:"createdDate,omitempty"`
+
+	// Deleted: Whether this reply has been deleted. If a reply has been
+	// deleted the content will be cleared and this will only represent a
+	// reply that once existed.
+	Deleted bool `json:"deleted,omitempty"`
+
+	// HtmlContent: HTML formatted content for this reply.
+	HtmlContent string `json:"htmlContent,omitempty"`
+
+	// Kind: This is always drive#commentReply.
+	Kind string `json:"kind,omitempty"`
+
+	// ModifiedDate: The date when this reply was last modified.
+	ModifiedDate string `json:"modifiedDate,omitempty"`
+
+	// ReplyId: The ID of the reply.
+	ReplyId string `json:"replyId,omitempty"`
+
+	// Verb: The action this reply performed to the parent comment. When
+	// creating a new reply this is the action to be perform to the parent
+	// comment. Possible values are:  
+	// - "resolve" - To resolve a comment.
+	// 
+	// - "reopen" - To reopen (un-resolve) a comment.
+	Verb string `json:"verb,omitempty"`
+}
+
+type CommentReplyList struct {
+	// Items: List of reply.
+	Items []*CommentReply `json:"items,omitempty"`
+
+	// Kind: This is always drive#commentReplyList.
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: The token to use to request the next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+}
+
 type File struct {
 	// AlternateLink: A link for opening the file in using a relevant Google
 	// editor or viewer.
@@ -508,6 +659,10 @@ type File struct {
 	// (formatted RFC 3339 timestamp).
 	SharedWithMeDate string `json:"sharedWithMeDate,omitempty"`
 
+	// Thumbnail: Thumbnail for the file. Only accepted on upload and for
+	// files that are not already thumbnailed by Google.
+	Thumbnail *FileThumbnail `json:"thumbnail,omitempty"`
+
 	// ThumbnailLink: A link to the file's thumbnail.
 	ThumbnailLink string `json:"thumbnailLink,omitempty"`
 
@@ -533,8 +688,33 @@ type FileExportLinks struct {
 }
 
 type FileImageMediaMetadata struct {
+	// Aperture: The aperture used to create the photo (f-number).
+	Aperture float64 `json:"aperture,omitempty"`
+
+	// CameraMake: The make of the camera used to create the photo.
+	CameraMake string `json:"cameraMake,omitempty"`
+
+	// CameraModel: The model of the camera used to create the photo.
+	CameraModel string `json:"cameraModel,omitempty"`
+
+	// Date: The date and time the photo was taken (EXIF format timestamp).
+	Date string `json:"date,omitempty"`
+
+	// ExposureTime: The length of the exposure, in seconds.
+	ExposureTime float64 `json:"exposureTime,omitempty"`
+
+	// FlashUsed: Whether a flash was used to create the photo.
+	FlashUsed bool `json:"flashUsed,omitempty"`
+
+	// FocalLength: The focal length used to create the photo, in
+	// millimeters.
+	FocalLength float64 `json:"focalLength,omitempty"`
+
 	// Height: The height of the image in pixels.
 	Height int64 `json:"height,omitempty"`
+
+	// IsoSpeed: The ISO speed used to create the photo.
+	IsoSpeed int64 `json:"isoSpeed,omitempty"`
 
 	// Location: Geographic location information stored in the image.
 	Location *FileImageMediaMetadataLocation `json:"location,omitempty"`
@@ -578,6 +758,14 @@ type FileLabels struct {
 
 	// Viewed: Whether this file has been viewed by this user.
 	Viewed bool `json:"viewed,omitempty"`
+}
+
+type FileThumbnail struct {
+	// Image: The URL-safe Base64 encoded bytes of the thumbnail image.
+	Image string `json:"image,omitempty"`
+
+	// MimeType: The MIME type of the thumbnail.
+	MimeType string `json:"mimeType,omitempty"`
 }
 
 type FileList struct {
@@ -777,6 +965,26 @@ type RevisionList struct {
 
 	// SelfLink: A link back to this list.
 	SelfLink string `json:"selfLink,omitempty"`
+}
+
+type User struct {
+	// DisplayName: A plain text displayable name for this user.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// IsAuthenticatedUser: Whether this user is the same as the
+	// authenticated user of which the request was made on behalf.
+	IsAuthenticatedUser bool `json:"isAuthenticatedUser,omitempty"`
+
+	// Kind: This is always drive#user.
+	Kind string `json:"kind,omitempty"`
+
+	// Picture: The user's profile picture.
+	Picture *UserPicture `json:"picture,omitempty"`
+}
+
+type UserPicture struct {
+	// Url: A URL that points to a profile picture of this user.
+	Url string `json:"url,omitempty"`
 }
 
 // method id "drive.about.get":
@@ -1516,6 +1724,518 @@ func (c *ChildrenListCall) Do() (*ChildList, error) {
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "drive.comments.delete":
+
+type CommentsDeleteCall struct {
+	s         *Service
+	fileId    string
+	commentId string
+	opt_      map[string]interface{}
+}
+
+// Delete: Deletes a comment.
+func (r *CommentsService) Delete(fileId string, commentId string) *CommentsDeleteCall {
+	c := &CommentsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.fileId = fileId
+	c.commentId = commentId
+	return c
+}
+
+func (c *CommentsDeleteCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/comments/{commentId}")
+	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
+	urls = strings.Replace(urls, "{commentId}", cleanPathString(c.commentId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Deletes a comment.",
+	//   "httpMethod": "DELETE",
+	//   "id": "drive.comments.delete",
+	//   "parameterOrder": [
+	//     "fileId",
+	//     "commentId"
+	//   ],
+	//   "parameters": {
+	//     "commentId": {
+	//       "description": "The ID of the comment.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "fileId": {
+	//       "description": "The ID of the file.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "files/{fileId}/comments/{commentId}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "drive.comments.get":
+
+type CommentsGetCall struct {
+	s         *Service
+	fileId    string
+	commentId string
+	opt_      map[string]interface{}
+}
+
+// Get: Gets a comment by ID.
+func (r *CommentsService) Get(fileId string, commentId string) *CommentsGetCall {
+	c := &CommentsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.fileId = fileId
+	c.commentId = commentId
+	return c
+}
+
+func (c *CommentsGetCall) Do() (*Comment, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/comments/{commentId}")
+	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
+	urls = strings.Replace(urls, "{commentId}", cleanPathString(c.commentId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Comment)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a comment by ID.",
+	//   "httpMethod": "GET",
+	//   "id": "drive.comments.get",
+	//   "parameterOrder": [
+	//     "fileId",
+	//     "commentId"
+	//   ],
+	//   "parameters": {
+	//     "commentId": {
+	//       "description": "The ID of the comment.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "fileId": {
+	//       "description": "The ID of the file.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "files/{fileId}/comments/{commentId}",
+	//   "response": {
+	//     "$ref": "Comment"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "drive.comments.insert":
+
+type CommentsInsertCall struct {
+	s       *Service
+	fileId  string
+	comment *Comment
+	opt_    map[string]interface{}
+}
+
+// Insert: Creates a new comment on the given file.
+func (r *CommentsService) Insert(fileId string, comment *Comment) *CommentsInsertCall {
+	c := &CommentsInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.fileId = fileId
+	c.comment = comment
+	return c
+}
+
+func (c *CommentsInsertCall) Do() (*Comment, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.comment)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/comments")
+	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Comment)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new comment on the given file.",
+	//   "httpMethod": "POST",
+	//   "id": "drive.comments.insert",
+	//   "parameterOrder": [
+	//     "fileId"
+	//   ],
+	//   "parameters": {
+	//     "fileId": {
+	//       "description": "The ID of the file.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "files/{fileId}/comments",
+	//   "request": {
+	//     "$ref": "Comment"
+	//   },
+	//   "response": {
+	//     "$ref": "Comment"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "drive.comments.list":
+
+type CommentsListCall struct {
+	s      *Service
+	fileId string
+	opt_   map[string]interface{}
+}
+
+// List: Lists a file's comments.
+func (r *CommentsService) List(fileId string) *CommentsListCall {
+	c := &CommentsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.fileId = fileId
+	return c
+}
+
+// IncludeDeleted sets the optional parameter "includeDeleted": If set,
+// all comments, including deleted comments (with content stripped) will
+// be returned.
+func (c *CommentsListCall) IncludeDeleted(includeDeleted bool) *CommentsListCall {
+	c.opt_["includeDeleted"] = includeDeleted
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of discussions to include in the response, used for paging.
+func (c *CommentsListCall) MaxResults(maxResults int64) *CommentsListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The continuation
+// token, used to page through large result sets. To get the next page
+// of results, set this parameter to the value of "nextPageToken" from
+// the previous response.
+func (c *CommentsListCall) PageToken(pageToken string) *CommentsListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+// UpdatedMin sets the optional parameter "updatedMin": Only discussions
+// that were updated after this timestamp will be returned. Formatted as
+// an RFC 3339 timestamp.
+func (c *CommentsListCall) UpdatedMin(updatedMin string) *CommentsListCall {
+	c.opt_["updatedMin"] = updatedMin
+	return c
+}
+
+func (c *CommentsListCall) Do() (*CommentList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["includeDeleted"]; ok {
+		params.Set("includeDeleted", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["updatedMin"]; ok {
+		params.Set("updatedMin", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/comments")
+	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(CommentList)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists a file's comments.",
+	//   "httpMethod": "GET",
+	//   "id": "drive.comments.list",
+	//   "parameterOrder": [
+	//     "fileId"
+	//   ],
+	//   "parameters": {
+	//     "fileId": {
+	//       "description": "The ID of the file.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "includeDeleted": {
+	//       "default": "false",
+	//       "description": "If set, all comments, including deleted comments (with content stripped) will be returned.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "maxResults": {
+	//       "default": "20",
+	//       "description": "The maximum number of discussions to include in the response, used for paging.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "maximum": "100",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The continuation token, used to page through large result sets. To get the next page of results, set this parameter to the value of \"nextPageToken\" from the previous response.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "updatedMin": {
+	//       "description": "Only discussions that were updated after this timestamp will be returned. Formatted as an RFC 3339 timestamp.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "files/{fileId}/comments",
+	//   "response": {
+	//     "$ref": "CommentList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "drive.comments.patch":
+
+type CommentsPatchCall struct {
+	s         *Service
+	fileId    string
+	commentId string
+	comment   *Comment
+	opt_      map[string]interface{}
+}
+
+// Patch: Updates an existing comment. This method supports patch
+// semantics.
+func (r *CommentsService) Patch(fileId string, commentId string, comment *Comment) *CommentsPatchCall {
+	c := &CommentsPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.fileId = fileId
+	c.commentId = commentId
+	c.comment = comment
+	return c
+}
+
+func (c *CommentsPatchCall) Do() (*Comment, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.comment)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/comments/{commentId}")
+	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
+	urls = strings.Replace(urls, "{commentId}", cleanPathString(c.commentId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Comment)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an existing comment. This method supports patch semantics.",
+	//   "httpMethod": "PATCH",
+	//   "id": "drive.comments.patch",
+	//   "parameterOrder": [
+	//     "fileId",
+	//     "commentId"
+	//   ],
+	//   "parameters": {
+	//     "commentId": {
+	//       "description": "The ID of the comment.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "fileId": {
+	//       "description": "The ID of the file.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "files/{fileId}/comments/{commentId}",
+	//   "request": {
+	//     "$ref": "Comment"
+	//   },
+	//   "response": {
+	//     "$ref": "Comment"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive"
+	//   ]
+	// }
+
+}
+
+// method id "drive.comments.update":
+
+type CommentsUpdateCall struct {
+	s         *Service
+	fileId    string
+	commentId string
+	comment   *Comment
+	opt_      map[string]interface{}
+}
+
+// Update: Updates an existing comment.
+func (r *CommentsService) Update(fileId string, commentId string, comment *Comment) *CommentsUpdateCall {
+	c := &CommentsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.fileId = fileId
+	c.commentId = commentId
+	c.comment = comment
+	return c
+}
+
+func (c *CommentsUpdateCall) Do() (*Comment, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.comment)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/comments/{commentId}")
+	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
+	urls = strings.Replace(urls, "{commentId}", cleanPathString(c.commentId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Comment)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an existing comment.",
+	//   "httpMethod": "PUT",
+	//   "id": "drive.comments.update",
+	//   "parameterOrder": [
+	//     "fileId",
+	//     "commentId"
+	//   ],
+	//   "parameters": {
+	//     "commentId": {
+	//       "description": "The ID of the comment.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "fileId": {
+	//       "description": "The ID of the file.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "files/{fileId}/comments/{commentId}",
+	//   "request": {
+	//     "$ref": "Comment"
+	//   },
+	//   "response": {
+	//     "$ref": "Comment"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive"
 	//   ]
 	// }
 
@@ -3672,6 +4392,543 @@ func (c *PermissionsUpdateCall) Do() (*Permission, error) {
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
 	//     "https://www.googleapis.com/auth/drive.file"
+	//   ]
+	// }
+
+}
+
+// method id "drive.replies.delete":
+
+type RepliesDeleteCall struct {
+	s         *Service
+	fileId    string
+	commentId string
+	replyId   string
+	opt_      map[string]interface{}
+}
+
+// Delete: Deletes a reply.
+func (r *RepliesService) Delete(fileId string, commentId string, replyId string) *RepliesDeleteCall {
+	c := &RepliesDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.fileId = fileId
+	c.commentId = commentId
+	c.replyId = replyId
+	return c
+}
+
+func (c *RepliesDeleteCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/comments/{commentId}/replies/{replyId}")
+	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
+	urls = strings.Replace(urls, "{commentId}", cleanPathString(c.commentId), 1)
+	urls = strings.Replace(urls, "{replyId}", cleanPathString(c.replyId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Deletes a reply.",
+	//   "httpMethod": "DELETE",
+	//   "id": "drive.replies.delete",
+	//   "parameterOrder": [
+	//     "fileId",
+	//     "commentId",
+	//     "replyId"
+	//   ],
+	//   "parameters": {
+	//     "commentId": {
+	//       "description": "The ID of the comment.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "fileId": {
+	//       "description": "The ID of the file.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "replyId": {
+	//       "description": "The ID of the reply.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "files/{fileId}/comments/{commentId}/replies/{replyId}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive"
+	//   ]
+	// }
+
+}
+
+// method id "drive.replies.get":
+
+type RepliesGetCall struct {
+	s         *Service
+	fileId    string
+	commentId string
+	replyId   string
+	opt_      map[string]interface{}
+}
+
+// Get: Gets a reply.
+func (r *RepliesService) Get(fileId string, commentId string, replyId string) *RepliesGetCall {
+	c := &RepliesGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.fileId = fileId
+	c.commentId = commentId
+	c.replyId = replyId
+	return c
+}
+
+func (c *RepliesGetCall) Do() (*CommentReply, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/comments/{commentId}/replies/{replyId}")
+	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
+	urls = strings.Replace(urls, "{commentId}", cleanPathString(c.commentId), 1)
+	urls = strings.Replace(urls, "{replyId}", cleanPathString(c.replyId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(CommentReply)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a reply.",
+	//   "httpMethod": "GET",
+	//   "id": "drive.replies.get",
+	//   "parameterOrder": [
+	//     "fileId",
+	//     "commentId",
+	//     "replyId"
+	//   ],
+	//   "parameters": {
+	//     "commentId": {
+	//       "description": "The ID of the comment.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "fileId": {
+	//       "description": "The ID of the file.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "replyId": {
+	//       "description": "The ID of the reply.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "files/{fileId}/comments/{commentId}/replies/{replyId}",
+	//   "response": {
+	//     "$ref": "CommentReply"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "drive.replies.insert":
+
+type RepliesInsertCall struct {
+	s            *Service
+	fileId       string
+	commentId    string
+	commentreply *CommentReply
+	opt_         map[string]interface{}
+}
+
+// Insert: Creates a new reply to the given comment.
+func (r *RepliesService) Insert(fileId string, commentId string, commentreply *CommentReply) *RepliesInsertCall {
+	c := &RepliesInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.fileId = fileId
+	c.commentId = commentId
+	c.commentreply = commentreply
+	return c
+}
+
+func (c *RepliesInsertCall) Do() (*CommentReply, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.commentreply)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/comments/{commentId}/replies")
+	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
+	urls = strings.Replace(urls, "{commentId}", cleanPathString(c.commentId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(CommentReply)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new reply to the given comment.",
+	//   "httpMethod": "POST",
+	//   "id": "drive.replies.insert",
+	//   "parameterOrder": [
+	//     "fileId",
+	//     "commentId"
+	//   ],
+	//   "parameters": {
+	//     "commentId": {
+	//       "description": "The ID of the comment.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "fileId": {
+	//       "description": "The ID of the file.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "files/{fileId}/comments/{commentId}/replies",
+	//   "request": {
+	//     "$ref": "CommentReply"
+	//   },
+	//   "response": {
+	//     "$ref": "CommentReply"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive"
+	//   ]
+	// }
+
+}
+
+// method id "drive.replies.list":
+
+type RepliesListCall struct {
+	s         *Service
+	fileId    string
+	commentId string
+	opt_      map[string]interface{}
+}
+
+// List: Lists all of the replies to a comment.
+func (r *RepliesService) List(fileId string, commentId string) *RepliesListCall {
+	c := &RepliesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.fileId = fileId
+	c.commentId = commentId
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of replies to include in the response, used for paging.
+func (c *RepliesListCall) MaxResults(maxResults int64) *RepliesListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The continuation
+// token, used to page through large result sets. To get the next page
+// of results, set this parameter to the value of "nextPageToken" from
+// the previous response.
+func (c *RepliesListCall) PageToken(pageToken string) *RepliesListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+func (c *RepliesListCall) Do() (*CommentReplyList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/comments/{commentId}/replies")
+	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
+	urls = strings.Replace(urls, "{commentId}", cleanPathString(c.commentId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(CommentReplyList)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all of the replies to a comment.",
+	//   "httpMethod": "GET",
+	//   "id": "drive.replies.list",
+	//   "parameterOrder": [
+	//     "fileId",
+	//     "commentId"
+	//   ],
+	//   "parameters": {
+	//     "commentId": {
+	//       "description": "The ID of the comment.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "fileId": {
+	//       "description": "The ID of the file.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "20",
+	//       "description": "The maximum number of replies to include in the response, used for paging.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "maximum": "100",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The continuation token, used to page through large result sets. To get the next page of results, set this parameter to the value of \"nextPageToken\" from the previous response.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "files/{fileId}/comments/{commentId}/replies",
+	//   "response": {
+	//     "$ref": "CommentReplyList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "drive.replies.patch":
+
+type RepliesPatchCall struct {
+	s            *Service
+	fileId       string
+	commentId    string
+	replyId      string
+	commentreply *CommentReply
+	opt_         map[string]interface{}
+}
+
+// Patch: Updates an existing reply. This method supports patch
+// semantics.
+func (r *RepliesService) Patch(fileId string, commentId string, replyId string, commentreply *CommentReply) *RepliesPatchCall {
+	c := &RepliesPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.fileId = fileId
+	c.commentId = commentId
+	c.replyId = replyId
+	c.commentreply = commentreply
+	return c
+}
+
+func (c *RepliesPatchCall) Do() (*CommentReply, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.commentreply)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/comments/{commentId}/replies/{replyId}")
+	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
+	urls = strings.Replace(urls, "{commentId}", cleanPathString(c.commentId), 1)
+	urls = strings.Replace(urls, "{replyId}", cleanPathString(c.replyId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(CommentReply)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an existing reply. This method supports patch semantics.",
+	//   "httpMethod": "PATCH",
+	//   "id": "drive.replies.patch",
+	//   "parameterOrder": [
+	//     "fileId",
+	//     "commentId",
+	//     "replyId"
+	//   ],
+	//   "parameters": {
+	//     "commentId": {
+	//       "description": "The ID of the comment.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "fileId": {
+	//       "description": "The ID of the file.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "replyId": {
+	//       "description": "The ID of the reply.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "files/{fileId}/comments/{commentId}/replies/{replyId}",
+	//   "request": {
+	//     "$ref": "CommentReply"
+	//   },
+	//   "response": {
+	//     "$ref": "CommentReply"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive"
+	//   ]
+	// }
+
+}
+
+// method id "drive.replies.update":
+
+type RepliesUpdateCall struct {
+	s            *Service
+	fileId       string
+	commentId    string
+	replyId      string
+	commentreply *CommentReply
+	opt_         map[string]interface{}
+}
+
+// Update: Updates an existing reply.
+func (r *RepliesService) Update(fileId string, commentId string, replyId string, commentreply *CommentReply) *RepliesUpdateCall {
+	c := &RepliesUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.fileId = fileId
+	c.commentId = commentId
+	c.replyId = replyId
+	c.commentreply = commentreply
+	return c
+}
+
+func (c *RepliesUpdateCall) Do() (*CommentReply, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.commentreply)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/comments/{commentId}/replies/{replyId}")
+	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
+	urls = strings.Replace(urls, "{commentId}", cleanPathString(c.commentId), 1)
+	urls = strings.Replace(urls, "{replyId}", cleanPathString(c.replyId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(CommentReply)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an existing reply.",
+	//   "httpMethod": "PUT",
+	//   "id": "drive.replies.update",
+	//   "parameterOrder": [
+	//     "fileId",
+	//     "commentId",
+	//     "replyId"
+	//   ],
+	//   "parameters": {
+	//     "commentId": {
+	//       "description": "The ID of the comment.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "fileId": {
+	//       "description": "The ID of the file.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "replyId": {
+	//       "description": "The ID of the reply.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "files/{fileId}/comments/{commentId}/replies/{replyId}",
+	//   "request": {
+	//     "$ref": "CommentReply"
+	//   },
+	//   "response": {
+	//     "$ref": "CommentReply"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive"
 	//   ]
 	// }
 

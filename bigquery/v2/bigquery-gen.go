@@ -404,7 +404,7 @@ type JobConfigurationLoad struct {
 
 	// Quote: [Optional] Quote character to use. Default is '"'. Note that
 	// quoting is done on the raw, binary data before the encoding is
-	// applied.
+	// applied. If no quoting is done, use am empty string.
 	Quote string `json:"quote,omitempty"`
 
 	// Schema: [Optional] Schema of the table being written to.
@@ -547,13 +547,44 @@ type JobStatistics struct {
 	// the epoch.
 	EndTime int64 `json:"endTime,omitempty,string"`
 
+	// Load: [Output-only] Statistics for a load job.
+	Load *JobStatistics3 `json:"load,omitempty"`
+
+	// Query: [Output-only] Statistics for a query job.
+	Query *JobStatistics2 `json:"query,omitempty"`
+
 	// StartTime: [Output-only] Start time of this job, in milliseconds
 	// since the epoch.
 	StartTime int64 `json:"startTime,omitempty,string"`
 
+	// TotalBytesProcessed: [Output-only] [Deprecated] Use the bytes
+	// processed in the query statistics instead.
+	TotalBytesProcessed int64 `json:"totalBytesProcessed,omitempty,string"`
+}
+
+type JobStatistics2 struct {
 	// TotalBytesProcessed: [Output-only] Total bytes processed for this
 	// job.
 	TotalBytesProcessed int64 `json:"totalBytesProcessed,omitempty,string"`
+}
+
+type JobStatistics3 struct {
+	// InputFileBytes: [Output-only] Number of bytes of source data in a
+	// joad job.
+	InputFileBytes int64 `json:"inputFileBytes,omitempty,string"`
+
+	// InputFiles: [Output-only] Number of source files in a load job.
+	InputFiles int64 `json:"inputFiles,omitempty,string"`
+
+	// OutputBytes: [Output-only] Size of the loaded data in bytes. Note
+	// that while an import job is in the running state, this value may
+	// change.
+	OutputBytes int64 `json:"outputBytes,omitempty,string"`
+
+	// OutputRows: [Output-only] Number of rows imported in a load job. Note
+	// that while an import job is in the running state, this value may
+	// change.
+	OutputRows int64 `json:"outputRows,omitempty,string"`
 }
 
 type JobStatus struct {
@@ -722,6 +753,10 @@ type Table struct {
 	TableReference *TableReference `json:"tableReference,omitempty"`
 }
 
+type TableCell struct {
+	V interface{} `json:"v,omitempty"`
+}
+
 type TableDataList struct {
 	// Etag: A hash of this page of results.
 	Etag string `json:"etag,omitempty"`
@@ -800,14 +835,7 @@ type TableReference struct {
 }
 
 type TableRow struct {
-	// F: Represents a single row in the result set, consisting of one or
-	// more fields.
-	F []*TableRowF `json:"f,omitempty"`
-}
-
-type TableRowF struct {
-	// V: Contains the field value in this row, as a string.
-	V string `json:"v,omitempty"`
+	F []*TableCell `json:"f,omitempty"`
 }
 
 type TableSchema struct {

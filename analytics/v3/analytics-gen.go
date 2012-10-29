@@ -134,6 +134,203 @@ type Accounts struct {
 	Username string `json:"username,omitempty"`
 }
 
+type CustomDataSource struct {
+	// AccountId: Account ID to which this custom data source belongs.
+	AccountId string `json:"accountId,omitempty"`
+
+	// ChildLink: Child link for this custom data source. Points to the list
+	// of daily uploads for this custom data source.
+	ChildLink *CustomDataSourceChildLink `json:"childLink,omitempty"`
+
+	// Created: Time this custom data source was created.
+	Created string `json:"created,omitempty"`
+
+	// Description: Description of custom data source.
+	Description string `json:"description,omitempty"`
+
+	// Id: Custom data source ID.
+	Id string `json:"id,omitempty"`
+
+	// Kind: Resource type for Analytics custom data source.
+	Kind string `json:"kind,omitempty"`
+
+	// Name: Name of this custom data source.
+	Name string `json:"name,omitempty"`
+
+	// ParentLink: Parent link for this custom data source. Points to the
+	// web property to which this custom data source belongs.
+	ParentLink *CustomDataSourceParentLink `json:"parentLink,omitempty"`
+
+	ProfilesLinked []string `json:"profilesLinked,omitempty"`
+
+	// SelfLink: Link for this Analytics custom data source.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// Updated: Time this custom data source was last modified.
+	Updated string `json:"updated,omitempty"`
+
+	// WebPropertyId: Web property ID of the form UA-XXXXX-YY to which this
+	// custom data source belongs.
+	WebPropertyId string `json:"webPropertyId,omitempty"`
+}
+
+type CustomDataSourceChildLink struct {
+	// Href: Link to the list of daily uploads for this custom data source.
+	Href string `json:"href,omitempty"`
+
+	// Type: Value is "analytics#dailyUploads".
+	Type string `json:"type,omitempty"`
+}
+
+type CustomDataSourceParentLink struct {
+	// Href: Link to the web property to which this custom data source
+	// belongs.
+	Href string `json:"href,omitempty"`
+
+	// Type: Value is "analytics#webproperty".
+	Type string `json:"type,omitempty"`
+}
+
+type CustomDataSources struct {
+	// Items: Collection of custom data sources.
+	Items []*CustomDataSource `json:"items,omitempty"`
+
+	// ItemsPerPage: The maximum number of resources the response can
+	// contain, regardless of the actual number of resources returned. Its
+	// value ranges from 1 to 1000 with a value of 1000 by default, or
+	// otherwise specified by the max-results query parameter.
+	ItemsPerPage int64 `json:"itemsPerPage,omitempty"`
+
+	// Kind: Collection type.
+	Kind string `json:"kind,omitempty"`
+
+	// NextLink: Link to next page for this custom data source collection.
+	NextLink string `json:"nextLink,omitempty"`
+
+	// PreviousLink: Link to previous page for this custom data source
+	// collection.
+	PreviousLink string `json:"previousLink,omitempty"`
+
+	// StartIndex: The starting index of the resources, which is 1 by
+	// default or otherwise specified by the start-index query parameter.
+	StartIndex int64 `json:"startIndex,omitempty"`
+
+	// TotalResults: The total number of results for the query, regardless
+	// of the number of results in the response.
+	TotalResults int64 `json:"totalResults,omitempty"`
+
+	// Username: Email ID of the authenticated user
+	Username string `json:"username,omitempty"`
+}
+
+type DailyUpload struct {
+	// AccountId: Account ID to which this daily upload belongs.
+	AccountId string `json:"accountId,omitempty"`
+
+	// AppendCount: Number of appends for this date.
+	AppendCount int64 `json:"appendCount,omitempty"`
+
+	// CreatedTime: Time this daily upload was created.
+	CreatedTime string `json:"createdTime,omitempty"`
+
+	// CustomDataSourceId: Custom data source ID to which this daily upload
+	// belongs.
+	CustomDataSourceId string `json:"customDataSourceId,omitempty"`
+
+	// Date: Date associated with daily upload.
+	Date string `json:"date,omitempty"`
+
+	// Kind: Resource type for Analytics daily upload.
+	Kind string `json:"kind,omitempty"`
+
+	// ModifiedTime: Time this daily upload was last modified.
+	ModifiedTime string `json:"modifiedTime,omitempty"`
+
+	// ParentLink: Parent link for a daily upload. Points to the custom data
+	// source to which this daily upload belongs.
+	ParentLink *DailyUploadParentLink `json:"parentLink,omitempty"`
+
+	// RecentChanges: Change log for last 10 changes in chronological order.
+	RecentChanges []*DailyUploadRecentChanges `json:"recentChanges,omitempty"`
+
+	// SelfLink: Link for this daily upload.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// WebPropertyId: Web property ID of the form UA-XXXXX-YY to which this
+	// daily upload belongs.
+	WebPropertyId string `json:"webPropertyId,omitempty"`
+}
+
+type DailyUploadParentLink struct {
+	// Href: Link to the custom data source to which this daily upload
+	// belongs.
+	Href string `json:"href,omitempty"`
+
+	// Type: Value is "analytics#customDataSource".
+	Type string `json:"type,omitempty"`
+}
+
+type DailyUploadRecentChanges struct {
+	Change string `json:"change,omitempty"`
+
+	Time string `json:"time,omitempty"`
+}
+
+type DailyUploadAppend struct {
+	// AccountId: Account Id to which this daily upload append belongs.
+	AccountId string `json:"accountId,omitempty"`
+
+	// AppendNumber: Append number.
+	AppendNumber int64 `json:"appendNumber,omitempty"`
+
+	// CustomDataSourceId: Custom data source Id to which this daily upload
+	// append belongs.
+	CustomDataSourceId string `json:"customDataSourceId,omitempty"`
+
+	// Date: Date associated with daily upload append.
+	Date string `json:"date,omitempty"`
+
+	// Kind: Resource type for Analytics daily upload append.
+	Kind string `json:"kind,omitempty"`
+
+	NextAppendLink string `json:"nextAppendLink,omitempty"`
+
+	// WebPropertyId: Web property Id of the form UA-XXXXX-YY to which this
+	// daily upload append belongs.
+	WebPropertyId string `json:"webPropertyId,omitempty"`
+}
+
+type DailyUploads struct {
+	// Items: A collection of daily uploads.
+	Items []*DailyUpload `json:"items,omitempty"`
+
+	// ItemsPerPage: The maximum number of resources the response can
+	// contain, regardless of the actual number of resources returned. Its
+	// value ranges from 1 to 1000 with a value of 1000 by default, or
+	// otherwise specified by the max-results query parameter.
+	ItemsPerPage int64 `json:"itemsPerPage,omitempty"`
+
+	// Kind: Collection type. Value is analytics#dailyUploads.
+	Kind string `json:"kind,omitempty"`
+
+	// NextLink: Link to next page for this daily upload collection.
+	NextLink string `json:"nextLink,omitempty"`
+
+	// PreviousLink: Link to previous page for this daily upload collection.
+	PreviousLink string `json:"previousLink,omitempty"`
+
+	// StartIndex: The starting index of the resources, which is 1 by
+	// default or otherwise specified by the start-index query parameter.
+	StartIndex int64 `json:"startIndex,omitempty"`
+
+	// TotalResults: The total number of results for the query, regardless
+	// of the number of results in the response.
+	TotalResults int64 `json:"totalResults,omitempty"`
+
+	// Username: Email ID of the authenticated user
+	Username string `json:"username,omitempty"`
+}
+
 type GaData struct {
 	// ColumnHeaders: Column headers that list dimension names followed by
 	// the metric names. The order of dimensions and metrics is same as
@@ -562,7 +759,7 @@ type McfDataRowsItem struct {
 	// list of interactions with their attributes.
 	ConversionPathValue []*McfDataRowsItemConversionPathValue `json:"conversionPathValue,omitempty"`
 
-	// PrimitiveValue: A primitive metric value. A primitive dimension
+	// PrimitiveValue: A primitive dimension value. A primitive metric
 	// value.
 	PrimitiveValue string `json:"primitiveValue,omitempty"`
 }

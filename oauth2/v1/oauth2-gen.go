@@ -1,4 +1,6 @@
-// Package oauth2 provides access to the .
+// Package oauth2 provides access to the Google OAuth2 API.
+//
+// See https://developers.google.com/accounts/docs/OAuth2
 //
 // Usage example:
 //
@@ -36,6 +38,9 @@ const basePath = "https://www.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
+	// Know who you are on Google
+	PlusMeScope = "https://www.googleapis.com/auth/plus.me"
+
 	// View your email address
 	UserinfoEmailScope = "https://www.googleapis.com/auth/userinfo.email"
 
@@ -75,6 +80,8 @@ type Tokeninfo struct {
 	// is present in the request.
 	Email string `json:"email,omitempty"`
 
+	// Email_verified: Boolean flag which is true if the email address is
+	// verified. Present only if the email scope is present in the request.
 	Email_verified bool `json:"email_verified,omitempty"`
 
 	// Expires_in: The expiry time of the token, as number of seconds left
@@ -100,6 +107,8 @@ type Tokeninfo struct {
 	// User_id: The Gaia obfuscated user id.
 	User_id string `json:"user_id,omitempty"`
 
+	// Verified_email: Boolean flag which is true if the email address is
+	// verified. Present only if the email scope is present in the request.
 	Verified_email bool `json:"verified_email,omitempty"`
 }
 
@@ -149,19 +158,20 @@ type TokeninfoCall struct {
 	opt_ map[string]interface{}
 }
 
-// Tokeninfo: 
+// Tokeninfo: Get token info
 func (s *Service) Tokeninfo() *TokeninfoCall {
 	c := &TokeninfoCall{s: s, opt_: make(map[string]interface{})}
 	return c
 }
 
-// Access_token sets the optional parameter "access_token": 
+// Access_token sets the optional parameter "access_token": The oauth2
+// access token
 func (c *TokeninfoCall) Access_token(access_token string) *TokeninfoCall {
 	c.opt_["access_token"] = access_token
 	return c
 }
 
-// Id_token sets the optional parameter "id_token": 
+// Id_token sets the optional parameter "id_token": The ID token
 func (c *TokeninfoCall) Id_token(id_token string) *TokeninfoCall {
 	c.opt_["id_token"] = id_token
 	return c
@@ -194,14 +204,17 @@ func (c *TokeninfoCall) Do() (*Tokeninfo, error) {
 	}
 	return ret, nil
 	// {
+	//   "description": "Get token info",
 	//   "httpMethod": "POST",
 	//   "id": "oauth2.tokeninfo",
 	//   "parameters": {
 	//     "access_token": {
+	//       "description": "The oauth2 access token",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "id_token": {
+	//       "description": "The ID token",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -221,7 +234,7 @@ type UserinfoGetCall struct {
 	opt_ map[string]interface{}
 }
 
-// Get: 
+// Get: Get user info
 func (r *UserinfoService) Get() *UserinfoGetCall {
 	c := &UserinfoGetCall{s: r.s, opt_: make(map[string]interface{})}
 	return c
@@ -248,6 +261,7 @@ func (c *UserinfoGetCall) Do() (*Userinfo, error) {
 	}
 	return ret, nil
 	// {
+	//   "description": "Get user info",
 	//   "httpMethod": "GET",
 	//   "id": "oauth2.userinfo.get",
 	//   "path": "oauth2/v1/userinfo",
@@ -255,6 +269,7 @@ func (c *UserinfoGetCall) Do() (*Userinfo, error) {
 	//     "$ref": "Userinfo"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/plus.me",
 	//     "https://www.googleapis.com/auth/userinfo.email",
 	//     "https://www.googleapis.com/auth/userinfo.profile"
 	//   ]

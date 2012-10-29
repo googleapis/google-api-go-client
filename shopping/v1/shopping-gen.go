@@ -83,8 +83,8 @@ type Product struct {
 	// RequestId: Unique identifier for this request.
 	RequestId string `json:"requestId,omitempty"`
 
-	// SelfLink: Self link of product when generated for a search request.
-	// Self link of product when generated for a lookup request.
+	// SelfLink: Self link of product when generated for a lookup request.
+	// Self link of product when generated for a search request.
 	SelfLink string `json:"selfLink,omitempty"`
 }
 

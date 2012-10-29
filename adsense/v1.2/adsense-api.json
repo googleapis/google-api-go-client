@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"oZqOFf-aKzMvpID-BwBAFJLe7Pk/ARn_ApxLViFnDHDcJziFXdyzgFw\"",
+ "etag": "\"oZqOFf-aKzMvpID-BwBAFJLe7Pk/3hrffyj4cW1Xgj0P0hvsXfnYr1Y\"",
  "discoveryVersion": "v1",
- "id": "adsense:v1.1",
+ "id": "adsense:v1.2",
  "name": "adsense",
  "canonicalName": "AdSense",
- "version": "v1.1",
+ "version": "v1.2",
  "revision": "20121016",
  "title": "AdSense Management API",
  "description": "Gives AdSense publishers access to their inventory and the ability to generate reports",
@@ -15,10 +15,10 @@
  },
  "documentationLink": "https://developers.google.com/adsense/management/",
  "protocol": "rest",
- "baseUrl": "https://www.googleapis.com/adsense/v1.1/",
- "basePath": "/adsense/v1.1/",
+ "baseUrl": "https://www.googleapis.com/adsense/v1.2/",
+ "basePath": "/adsense/v1.2/",
  "rootUrl": "https://www.googleapis.com/",
- "servicePath": "adsense/v1.1/",
+ "servicePath": "adsense/v1.2/",
  "batchPath": "batch",
  "parameters": {
   "alt": {
@@ -97,6 +97,10 @@
      "type": "string",
      "description": "Name of this account."
     },
+    "premium": {
+     "type": "boolean",
+     "description": "Whether this account is premium."
+    },
     "subAccounts": {
      "type": "array",
      "description": "Sub accounts of the this account.",
@@ -136,6 +140,10 @@
    "id": "AdClient",
    "type": "object",
    "properties": {
+    "arcOptIn": {
+     "type": "boolean",
+     "description": "Whether this ad client is opted in to ARC."
+    },
     "id": {
      "type": "string",
      "description": "Unique identifier of this ad client."
@@ -181,6 +189,61 @@
     }
    }
   },
+  "AdStyle": {
+   "id": "AdStyle",
+   "type": "object",
+   "properties": {
+    "colors": {
+     "type": "object",
+     "description": "The colors which are included in the style. These are represented as six hexadecimal characters, similar to HTML color codes, but without the leading hash.",
+     "properties": {
+      "background": {
+       "type": "string",
+       "description": "The color of the ad background."
+      },
+      "border": {
+       "type": "string",
+       "description": "The color of the ad border."
+      },
+      "text": {
+       "type": "string",
+       "description": "The color of the ad text."
+      },
+      "title": {
+       "type": "string",
+       "description": "The color of the ad title."
+      },
+      "url": {
+       "type": "string",
+       "description": "The color of the ad url."
+      }
+     }
+    },
+    "corners": {
+     "type": "string",
+     "description": "The style of the corners in the ad."
+    },
+    "font": {
+     "type": "object",
+     "description": "The font which is included in the style.",
+     "properties": {
+      "family": {
+       "type": "string",
+       "description": "The family of the font."
+      },
+      "size": {
+       "type": "string",
+       "description": "The size of the font."
+      }
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Kind this is, in this case adsense#adStyle.",
+     "default": "adsense#adStyle"
+    }
+   }
+  },
   "AdUnit": {
    "id": "AdUnit",
    "type": "object",
@@ -188,6 +251,66 @@
     "code": {
      "type": "string",
      "description": "Identity code of this ad unit, not necessarily unique across ad clients."
+    },
+    "contentAdsSettings": {
+     "type": "object",
+     "description": "Settings specific to content ads (AFC) and highend mobile content ads (AFMC).",
+     "properties": {
+      "backupOption": {
+       "type": "object",
+       "description": "The backup option to be used in instances where no ad is available.",
+       "properties": {
+        "color": {
+         "type": "string",
+         "description": "Color to use when type is set to COLOR."
+        },
+        "type": {
+         "type": "string",
+         "description": "Type of the backup option. Possible values are BLANK, COLOR and URL."
+        },
+        "url": {
+         "type": "string",
+         "description": "URL to use when type is set to URL."
+        }
+       }
+      },
+      "size": {
+       "type": "string",
+       "description": "Size of this ad unit."
+      },
+      "type": {
+       "type": "string",
+       "description": "Type of this ad unit."
+      }
+     }
+    },
+    "customStyle": {
+     "$ref": "AdStyle",
+     "description": "Custom style information specific to this ad unit."
+    },
+    "feedAdsSettings": {
+     "type": "object",
+     "description": "Settings specific to feed ads (AFF).",
+     "properties": {
+      "adPosition": {
+       "type": "string",
+       "description": "The position of the ads relative to the feed entries."
+      },
+      "frequency": {
+       "type": "integer",
+       "description": "The frequency at which ads should appear in the feed (i.e. every N entries).",
+       "format": "int32"
+      },
+      "minimumWordCount": {
+       "type": "integer",
+       "description": "The minimum length an entry should be in order to have attached ads.",
+       "format": "int32"
+      },
+      "type": {
+       "type": "string",
+       "description": "The type of ads which should appear."
+      }
+     }
     },
     "id": {
      "type": "string",
@@ -198,9 +321,35 @@
      "description": "Kind of resource this is, in this case adsense#adUnit.",
      "default": "adsense#adUnit"
     },
+    "mobileContentAdsSettings": {
+     "type": "object",
+     "description": "Settings specific to WAP mobile content ads (AFMC).",
+     "properties": {
+      "markupLanguage": {
+       "type": "string",
+       "description": "The markup language to use for this ad unit."
+      },
+      "scriptingLanguage": {
+       "type": "string",
+       "description": "The scripting language to use for this ad unit."
+      },
+      "size": {
+       "type": "string",
+       "description": "Size of this ad unit."
+      },
+      "type": {
+       "type": "string",
+       "description": "Type of this ad unit."
+      }
+     }
+    },
     "name": {
      "type": "string",
      "description": "Name of this ad unit."
+    },
+    "savedStyleId": {
+     "type": "string",
+     "description": "ID of the saved ad style which holds this ad unit's style information."
     },
     "status": {
      "type": "string",
@@ -370,6 +519,100 @@
     "nextPageToken": {
      "type": "string",
      "description": "Continuation token used to page through custom channels. To retrieve the next page of results, set the next request's \"pageToken\" value to this."
+    }
+   }
+  },
+  "SavedAdStyle": {
+   "id": "SavedAdStyle",
+   "type": "object",
+   "properties": {
+    "adStyle": {
+     "$ref": "AdStyle",
+     "description": "The AdStyle itself."
+    },
+    "id": {
+     "type": "string",
+     "description": "Unique identifier of this saved ad style. This should be considered an opaque identifier; it is not safe to rely on it being in any particular format."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Kind of resource this is, in this case adsense#savedAdStyle.",
+     "default": "adsense#savedAdStyle"
+    },
+    "name": {
+     "type": "string",
+     "description": "The user selected name of this SavedAdStyle."
+    }
+   }
+  },
+  "SavedAdStyles": {
+   "id": "SavedAdStyles",
+   "type": "object",
+   "properties": {
+    "etag": {
+     "type": "string",
+     "description": "ETag of this response for caching purposes."
+    },
+    "items": {
+     "type": "array",
+     "description": "The saved ad styles returned in this list response.",
+     "items": {
+      "$ref": "SavedAdStyle"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Kind of list this is, in this case adsense#savedAdStyles.",
+     "default": "adsense#savedAdStyles"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "Continuation token used to page through ad units. To retrieve the next page of results, set the next request's \"pageToken\" value to this."
+    }
+   }
+  },
+  "SavedReport": {
+   "id": "SavedReport",
+   "type": "object",
+   "properties": {
+    "id": {
+     "type": "string",
+     "description": "Unique identifier of this saved report."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Kind of resource this is, in this case adsense#savedReport.",
+     "default": "adsense#savedReport"
+    },
+    "name": {
+     "type": "string",
+     "description": "This saved report's name."
+    }
+   }
+  },
+  "SavedReports": {
+   "id": "SavedReports",
+   "type": "object",
+   "properties": {
+    "etag": {
+     "type": "string",
+     "description": "ETag of this response for caching purposes."
+    },
+    "items": {
+     "type": "array",
+     "description": "The saved reports returned in this list response.",
+     "items": {
+      "$ref": "SavedReport"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Kind of list this is, in this case adsense#savedReports.",
+     "default": "adsense#savedReports"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "Continuation token used to page through saved reports. To retrieve the next page of results, set the next request's \"pageToken\" value to this."
     }
    }
   },
@@ -917,6 +1160,174 @@
        ],
        "supportsMediaDownload": true
       }
+     },
+     "resources": {
+      "saved": {
+       "methods": {
+        "generate": {
+         "id": "adsense.accounts.reports.saved.generate",
+         "path": "accounts/{accountId}/reports/{savedReportId}",
+         "httpMethod": "GET",
+         "description": "Generate an AdSense report based on the saved report ID sent in the query parameters.",
+         "parameters": {
+          "accountId": {
+           "type": "string",
+           "description": "Account to which the saved reports belong.",
+           "required": true,
+           "location": "path"
+          },
+          "locale": {
+           "type": "string",
+           "description": "Optional locale to use for translating report output to a local language. Defaults to \"en_US\" if not specified.",
+           "pattern": "[a-zA-Z_]+",
+           "location": "query"
+          },
+          "maxResults": {
+           "type": "integer",
+           "description": "The maximum number of rows of report data to return.",
+           "format": "int32",
+           "minimum": "0",
+           "maximum": "50000",
+           "location": "query"
+          },
+          "savedReportId": {
+           "type": "string",
+           "description": "The saved report to retrieve.",
+           "required": true,
+           "location": "path"
+          },
+          "startIndex": {
+           "type": "integer",
+           "description": "Index of the first row of report data to return.",
+           "format": "int32",
+           "minimum": "0",
+           "maximum": "5000",
+           "location": "query"
+          }
+         },
+         "parameterOrder": [
+          "accountId",
+          "savedReportId"
+         ],
+         "response": {
+          "$ref": "AdsenseReportsGenerateResponse"
+         },
+         "scopes": [
+          "https://www.googleapis.com/auth/adsense",
+          "https://www.googleapis.com/auth/adsense.readonly"
+         ]
+        },
+        "list": {
+         "id": "adsense.accounts.reports.saved.list",
+         "path": "accounts/{accountId}/reports/saved",
+         "httpMethod": "GET",
+         "description": "List all saved reports in the specified AdSense account.",
+         "parameters": {
+          "accountId": {
+           "type": "string",
+           "description": "Account to which the saved reports belong.",
+           "required": true,
+           "location": "path"
+          },
+          "maxResults": {
+           "type": "integer",
+           "description": "The maximum number of saved reports to include in the response, used for paging.",
+           "format": "int32",
+           "minimum": "0",
+           "maximum": "100",
+           "location": "query"
+          },
+          "pageToken": {
+           "type": "string",
+           "description": "A continuation token, used to page through saved reports. To retrieve the next page, set this parameter to the value of \"nextPageToken\" from the previous response.",
+           "location": "query"
+          }
+         },
+         "parameterOrder": [
+          "accountId"
+         ],
+         "response": {
+          "$ref": "SavedReports"
+         },
+         "scopes": [
+          "https://www.googleapis.com/auth/adsense",
+          "https://www.googleapis.com/auth/adsense.readonly"
+         ]
+        }
+       }
+      }
+     }
+    },
+    "savedadstyles": {
+     "methods": {
+      "get": {
+       "id": "adsense.accounts.savedadstyles.get",
+       "path": "accounts/{accountId}/savedadstyles/{savedAdStyleId}",
+       "httpMethod": "GET",
+       "description": "List a specific saved ad style for the specified account.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account for which to get the saved ad style.",
+         "required": true,
+         "location": "path"
+        },
+        "savedAdStyleId": {
+         "type": "string",
+         "description": "Saved ad style to retrieve.",
+         "required": true,
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "savedAdStyleId"
+       ],
+       "response": {
+        "$ref": "SavedAdStyle"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/adsense",
+        "https://www.googleapis.com/auth/adsense.readonly"
+       ]
+      },
+      "list": {
+       "id": "adsense.accounts.savedadstyles.list",
+       "path": "accounts/{accountId}/savedadstyles",
+       "httpMethod": "GET",
+       "description": "List all saved ad styles in the specified account.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account for which to list saved ad styles.",
+         "required": true,
+         "location": "path"
+        },
+        "maxResults": {
+         "type": "integer",
+         "description": "The maximum number of saved ad styles to include in the response, used for paging.",
+         "format": "int32",
+         "minimum": "0",
+         "maximum": "10000",
+         "location": "query"
+        },
+        "pageToken": {
+         "type": "string",
+         "description": "A continuation token, used to page through saved ad styles. To retrieve the next page, set this parameter to the value of \"nextPageToken\" from the previous response.",
+         "location": "query"
+        }
+       },
+       "parameterOrder": [
+        "accountId"
+       ],
+       "response": {
+        "$ref": "SavedAdStyles"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/adsense",
+        "https://www.googleapis.com/auth/adsense.readonly"
+       ]
+      }
      }
     },
     "urlchannels": {
@@ -1352,6 +1763,142 @@
       "https://www.googleapis.com/auth/adsense.readonly"
      ],
      "supportsMediaDownload": true
+    }
+   },
+   "resources": {
+    "saved": {
+     "methods": {
+      "generate": {
+       "id": "adsense.reports.saved.generate",
+       "path": "reports/{savedReportId}",
+       "httpMethod": "GET",
+       "description": "Generate an AdSense report based on the saved report ID sent in the query parameters.",
+       "parameters": {
+        "locale": {
+         "type": "string",
+         "description": "Optional locale to use for translating report output to a local language. Defaults to \"en_US\" if not specified.",
+         "pattern": "[a-zA-Z_]+",
+         "location": "query"
+        },
+        "maxResults": {
+         "type": "integer",
+         "description": "The maximum number of rows of report data to return.",
+         "format": "int32",
+         "minimum": "0",
+         "maximum": "50000",
+         "location": "query"
+        },
+        "savedReportId": {
+         "type": "string",
+         "description": "The saved report to retrieve.",
+         "required": true,
+         "location": "path"
+        },
+        "startIndex": {
+         "type": "integer",
+         "description": "Index of the first row of report data to return.",
+         "format": "int32",
+         "minimum": "0",
+         "maximum": "5000",
+         "location": "query"
+        }
+       },
+       "parameterOrder": [
+        "savedReportId"
+       ],
+       "response": {
+        "$ref": "AdsenseReportsGenerateResponse"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/adsense",
+        "https://www.googleapis.com/auth/adsense.readonly"
+       ]
+      },
+      "list": {
+       "id": "adsense.reports.saved.list",
+       "path": "reports/saved",
+       "httpMethod": "GET",
+       "description": "List all saved reports in this AdSense account.",
+       "parameters": {
+        "maxResults": {
+         "type": "integer",
+         "description": "The maximum number of saved reports to include in the response, used for paging.",
+         "format": "int32",
+         "minimum": "0",
+         "maximum": "100",
+         "location": "query"
+        },
+        "pageToken": {
+         "type": "string",
+         "description": "A continuation token, used to page through saved reports. To retrieve the next page, set this parameter to the value of \"nextPageToken\" from the previous response.",
+         "location": "query"
+        }
+       },
+       "response": {
+        "$ref": "SavedReports"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/adsense",
+        "https://www.googleapis.com/auth/adsense.readonly"
+       ]
+      }
+     }
+    }
+   }
+  },
+  "savedadstyles": {
+   "methods": {
+    "get": {
+     "id": "adsense.savedadstyles.get",
+     "path": "savedadstyles/{savedAdStyleId}",
+     "httpMethod": "GET",
+     "description": "Get a specific saved ad style from the user's account.",
+     "parameters": {
+      "savedAdStyleId": {
+       "type": "string",
+       "description": "Saved ad style to retrieve.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "savedAdStyleId"
+     ],
+     "response": {
+      "$ref": "SavedAdStyle"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/adsense",
+      "https://www.googleapis.com/auth/adsense.readonly"
+     ]
+    },
+    "list": {
+     "id": "adsense.savedadstyles.list",
+     "path": "savedadstyles",
+     "httpMethod": "GET",
+     "description": "List all saved ad styles in the user's account.",
+     "parameters": {
+      "maxResults": {
+       "type": "integer",
+       "description": "The maximum number of saved ad styles to include in the response, used for paging.",
+       "format": "int32",
+       "minimum": "0",
+       "maximum": "10000",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "A continuation token, used to page through saved ad styles. To retrieve the next page, set this parameter to the value of \"nextPageToken\" from the previous response.",
+       "location": "query"
+      }
+     },
+     "response": {
+      "$ref": "SavedAdStyles"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/adsense",
+      "https://www.googleapis.com/auth/adsense.readonly"
+     ]
     }
    }
   },

@@ -1,10 +1,11 @@
 {
  "kind": "discovery#restDescription",
+ "etag": "\"oZqOFf-aKzMvpID-BwBAFJLe7Pk/RDthA8RrVCv0M9wxCBeRiHR94BQ\"",
  "discoveryVersion": "v1",
  "id": "plus:v1moments",
  "name": "plus",
  "version": "v1moments",
- "revision": "20120806",
+ "revision": "20121022",
  "title": "Google+ API",
  "description": "The Google+ API enables developers to build on top of the Google+ platform.",
  "icons": {
@@ -333,7 +334,7 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "The frame ID."
+     "description": "The moment ID."
     },
     "kind": {
      "type": "string",

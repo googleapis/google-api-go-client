@@ -1,5 +1,6 @@
 {
  "kind": "discovery#restDescription",
+ "etag": "\"oZqOFf-aKzMvpID-BwBAFJLe7Pk/iZEHjUYCgEoiSTA0XZpMHdbLR3M\"",
  "discoveryVersion": "v1",
  "id": "discovery:v1",
  "name": "discovery",
@@ -307,6 +308,10 @@
      "type": "string",
      "description": "A link to human readable documentation for the API."
     },
+    "etag": {
+     "type": "string",
+     "description": "The etag for this response."
+    },
     "features": {
      "type": "array",
      "description": "A list of supported features for this API.",
@@ -519,7 +524,7 @@
      "type": "array",
      "description": "OAuth 2.0 scopes applicable to this method.",
      "items": {
-      "type": "any"
+      "type": "string"
      }
     },
     "supportsMediaDownload": {

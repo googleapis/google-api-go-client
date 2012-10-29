@@ -1,10 +1,12 @@
 {
  "kind": "discovery#restDescription",
+ "etag": "\"oZqOFf-aKzMvpID-BwBAFJLe7Pk/eM9rcT1Zj_zHnRZhIGUdNb2Vm7I\"",
  "discoveryVersion": "v1",
  "id": "civicinfo:us_v1",
  "name": "civicinfo",
+ "canonicalName": "Civic Info",
  "version": "us_v1",
- "revision": "20120904",
+ "revision": "20121013",
  "title": "Google Civic Information API",
  "description": "An API for accessing civic information.",
  "icons": {
@@ -97,11 +99,11 @@
    "properties": {
     "absenteeVotingInfoUrl": {
      "type": "string",
-     "description": "A URL provided by this administrative body for information on absentee"
+     "description": "A URL provided by this administrative body for information on absentee voting."
     },
     "ballotInfoUrl": {
      "type": "string",
-     "description": "A URL provided by this administrative body to give contest information to"
+     "description": "A URL provided by this administrative body to give contest information to the voter."
     },
     "correspondenceAddress": {
      "$ref": "SimpleAddressType",
@@ -109,7 +111,7 @@
     },
     "electionInfoUrl": {
      "type": "string",
-     "description": "A URL provided by this administrative body for looking up general election"
+     "description": "A URL provided by this administrative body for looking up general election information."
     },
     "electionOfficials": {
      "type": "array",
@@ -120,15 +122,15 @@
     },
     "electionRegistrationConfirmationUrl": {
      "type": "string",
-     "description": "A URL provided by this administrative body for confirming that the voter"
+     "description": "A URL provided by this administrative body for confirming that the voter is registered to vote."
     },
     "electionRegistrationUrl": {
      "type": "string",
-     "description": "A URL provided by this administrative body for looking up how to register"
+     "description": "A URL provided by this administrative body for looking up how to register to vote."
     },
     "electionRulesUrl": {
      "type": "string",
-     "description": "A URL provided by this administrative body describing election rules to"
+     "description": "A URL provided by this administrative body describing election rules to the voter."
     },
     "hoursOfOperation": {
      "type": "string",
@@ -260,6 +262,18 @@
      "type": "string",
      "description": "If this is a partisan election, the name of the party it is for."
     },
+    "referendumSubtitle": {
+     "type": "string",
+     "description": "A brief description of the referendum. This field is only populated for contests of type 'Referendum'."
+    },
+    "referendumTitle": {
+     "type": "string",
+     "description": "The title of the referendum. (e.g. 'Proposition 42') This field is only populated for contests of type 'Referendum'."
+    },
+    "referendumUrl": {
+     "type": "string",
+     "description": "A link the referendum. This field is only populated for contests of type 'Referendum'."
+    },
     "sources": {
      "type": "array",
      "description": "A list of sources for this contest. If multiple sources are listed, the data has been aggregated from those sources.",
@@ -273,7 +287,7 @@
     },
     "type": {
      "type": "string",
-     "description": "The type of contest. Usually this will be General, Primary, or Run-off."
+     "description": "The type of contest. Usually this will be 'General', 'Primary', or 'Run-off' for contests with candidates. For referenda this will be 'Referendum'."
     }
    }
   },
@@ -338,8 +352,8 @@
     },
     "kind": {
      "type": "string",
-     "description": "The kind, fixed to \"civicinfo#electionsqueryresponse\".",
-     "default": "civicinfo#electionsqueryresponse"
+     "description": "The kind, fixed to \"civicinfo#electionsQueryResponse\".",
+     "default": "civicinfo#electionsQueryResponse"
     }
    }
   },
@@ -369,34 +383,38 @@
    "properties": {
     "address": {
      "$ref": "SimpleAddressType",
-     "description": "The address of the polling location."
+     "description": "The address of the location"
     },
     "endDate": {
      "type": "string",
-     "description": "The last date that this early vote site may be used."
+     "description": "The last date that this early vote site may be used. This field is not populated for polling locations."
     },
     "name": {
      "type": "string",
-     "description": "The name of the early vote site."
+     "description": "The name of the early vote site. This field is not populated for polling locations."
+    },
+    "notes": {
+     "type": "string",
+     "description": "Notes about this location (e.g. accessibility ramp or entrance to use)"
     },
     "pollingHours": {
      "type": "string",
-     "description": "A description of when this polling location is open."
+     "description": "A description of when this location is open."
     },
     "sources": {
      "type": "array",
-     "description": "A list of sources for this polling location. If multiple sources are listed the data has been aggregated from those sources.",
+     "description": "A list of sources for this location. If multiple sources are listed the data has been aggregated from those sources.",
      "items": {
       "$ref": "Source"
      }
     },
     "startDate": {
      "type": "string",
-     "description": "The first date that this early vote site may be used."
+     "description": "The first date that this early vote site may be used. This field is not populated for polling locations."
     },
     "voterServices": {
      "type": "string",
-     "description": "The services provided by this early vote site."
+     "description": "The services provided by this early vote site. This field is not populated for polling locations."
     }
    }
   },
@@ -486,8 +504,8 @@
     },
     "kind": {
      "type": "string",
-     "description": "The kind, fixed to \"civicinfo#voterinforesponse\".",
-     "default": "civicinfo#voterinforesponse"
+     "description": "The kind, fixed to \"civicinfo#voterInfoResponse\".",
+     "default": "civicinfo#voterInfoResponse"
     },
     "normalizedInput": {
      "$ref": "SimpleAddressType",

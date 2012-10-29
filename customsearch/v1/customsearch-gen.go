@@ -1,6 +1,6 @@
 // Package customsearch provides access to the CustomSearch API.
 //
-// See http://code.google.com/apis/customsearch/v1/using_rest.html
+// See https://developers.google.com/custom-search/v1/using_rest
 //
 // Usage example:
 //

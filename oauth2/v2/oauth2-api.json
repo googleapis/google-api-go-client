@@ -1,14 +1,18 @@
 {
  "kind": "discovery#restDescription",
+ "etag": "\"oZqOFf-aKzMvpID-BwBAFJLe7Pk/Pu7-Vm8xmZRzhWO0Ba2Ui4bG58E\"",
  "discoveryVersion": "v1",
  "id": "oauth2:v2",
  "name": "oauth2",
  "version": "v2",
- "description": "OAuth2 API",
+ "revision": "20120806",
+ "title": "Google OAuth2 API",
+ "description": "Lets you access OAuth2 protocol related APIs.",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/search-16.gif",
   "x32": "http://www.google.com/images/icons/product/search-32.gif"
  },
+ "documentationLink": "https://developers.google.com/accounts/docs/OAuth2",
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/",
  "basePath": "/",
@@ -63,6 +67,9 @@
  "auth": {
   "oauth2": {
    "scopes": {
+    "https://www.googleapis.com/auth/plus.me": {
+     "description": "Know who you are on Google"
+    },
     "https://www.googleapis.com/auth/userinfo.email": {
      "description": "View your email address"
     },
@@ -198,6 +205,7 @@
       "$ref": "Userinfo"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/plus.me",
       "https://www.googleapis.com/auth/userinfo.email",
       "https://www.googleapis.com/auth/userinfo.profile"
      ]
@@ -216,6 +224,7 @@
           "$ref": "Userinfo"
          },
          "scopes": [
+          "https://www.googleapis.com/auth/plus.me",
           "https://www.googleapis.com/auth/userinfo.email",
           "https://www.googleapis.com/auth/userinfo.profile"
          ]

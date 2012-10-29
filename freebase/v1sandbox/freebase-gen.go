@@ -36,12 +36,19 @@ const apiName = "freebase"
 const apiVersion = "v1sandbox"
 const basePath = "https://www.googleapis.com/freebase/v1sandbox/"
 
+// OAuth2 scopes used by this API.
+const (
+	// Sign in to Freebase with your account
+	FreebaseScope = "https://www.googleapis.com/auth/freebase"
+)
+
 func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
 	s.Text = &TextService{s: s}
+	s.Topic = &TopicService{s: s}
 	return s, nil
 }
 
@@ -49,15 +56,88 @@ type Service struct {
 	client *http.Client
 
 	Text *TextService
+
+	Topic *TopicService
 }
 
 type TextService struct {
 	s *Service
 }
 
+type TopicService struct {
+	s *Service
+}
+
 type ContentserviceGet struct {
 	// Result: The text requested.
 	Result string `json:"result,omitempty"`
+}
+
+type TopicLookup struct {
+	Id string `json:"id,omitempty"`
+
+	Property *TopicLookupProperty `json:"property,omitempty"`
+}
+
+type TopicLookupProperty struct {
+	FreebaseObject_profileLinkcount *TopicStatslinkcount `json:"/freebase/object_profile/linkcount,omitempty"`
+}
+
+type TopicPropertyvalue struct {
+	Count float64 `json:"count,omitempty"`
+
+	Status string `json:"status,omitempty"`
+
+	Values []*TopicValue `json:"values,omitempty"`
+
+	Valuetype string `json:"valuetype,omitempty"`
+}
+
+type TopicStatslinkcount struct {
+	Type string `json:"type,omitempty"`
+
+	Values []*TopicStatslinkcountValues `json:"values,omitempty"`
+}
+
+type TopicStatslinkcountValues struct {
+	Count int64 `json:"count,omitempty"`
+
+	Id string `json:"id,omitempty"`
+
+	Values []*TopicStatslinkcountValuesValues `json:"values,omitempty"`
+}
+
+type TopicStatslinkcountValuesValues struct {
+	Count int64 `json:"count,omitempty"`
+
+	Id string `json:"id,omitempty"`
+
+	Values []*TopicStatslinkcountValuesValuesValues `json:"values,omitempty"`
+}
+
+type TopicStatslinkcountValuesValuesValues struct {
+	Count int64 `json:"count,omitempty"`
+
+	Id string `json:"id,omitempty"`
+}
+
+type TopicValue struct {
+	Creator string `json:"creator,omitempty"`
+
+	Id string `json:"id,omitempty"`
+
+	Lang string `json:"lang,omitempty"`
+
+	Property *TopicValueProperty `json:"property,omitempty"`
+
+	Text string `json:"text,omitempty"`
+
+	Timestamp string `json:"timestamp,omitempty"`
+
+	Value interface{} `json:"value,omitempty"`
+}
+
+type TopicValueProperty struct {
 }
 
 // method id "freebase.image":
@@ -412,6 +492,126 @@ func (c *MqlreadCall) Do() error {
 
 }
 
+// method id "freebase.mqlwrite":
+
+type MqlwriteCall struct {
+	s     *Service
+	query string
+	opt_  map[string]interface{}
+}
+
+// Mqlwrite: Performs MQL Write Operations.
+func (s *Service) Mqlwrite(query string) *MqlwriteCall {
+	c := &MqlwriteCall{s: s, opt_: make(map[string]interface{})}
+	c.query = query
+	return c
+}
+
+// Callback sets the optional parameter "callback": JS method name for
+// JSONP callbacks.
+func (c *MqlwriteCall) Callback(callback string) *MqlwriteCall {
+	c.opt_["callback"] = callback
+	return c
+}
+
+// Dateline sets the optional parameter "dateline": The dateline that
+// you get in a mqlwrite response to ensure consistent results.
+func (c *MqlwriteCall) Dateline(dateline string) *MqlwriteCall {
+	c.opt_["dateline"] = dateline
+	return c
+}
+
+// Indent sets the optional parameter "indent": How many spaces to
+// indent the json.
+func (c *MqlwriteCall) Indent(indent int64) *MqlwriteCall {
+	c.opt_["indent"] = indent
+	return c
+}
+
+// Use_permission_of sets the optional parameter "use_permission_of":
+// Use the same permission node of the object with the specified id.
+func (c *MqlwriteCall) Use_permission_of(use_permission_of string) *MqlwriteCall {
+	c.opt_["use_permission_of"] = use_permission_of
+	return c
+}
+
+func (c *MqlwriteCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("query", fmt.Sprintf("%v", c.query))
+	if v, ok := c.opt_["callback"]; ok {
+		params.Set("callback", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["dateline"]; ok {
+		params.Set("dateline", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["indent"]; ok {
+		params.Set("indent", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["use_permission_of"]; ok {
+		params.Set("use_permission_of", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/freebase/v1sandbox/", "mqlwrite")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Performs MQL Write Operations.",
+	//   "httpMethod": "GET",
+	//   "id": "freebase.mqlwrite",
+	//   "parameterOrder": [
+	//     "query"
+	//   ],
+	//   "parameters": {
+	//     "callback": {
+	//       "description": "JS method name for JSONP callbacks.",
+	//       "location": "query",
+	//       "pattern": "([A-Za-z0-9_$.]|\\[|\\])+",
+	//       "type": "string"
+	//     },
+	//     "dateline": {
+	//       "description": "The dateline that you get in a mqlwrite response to ensure consistent results.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "indent": {
+	//       "default": "0",
+	//       "description": "How many spaces to indent the json.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "10",
+	//       "type": "integer"
+	//     },
+	//     "query": {
+	//       "description": "An MQL query with write directives.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "use_permission_of": {
+	//       "description": "Use the same permission node of the object with the specified id.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "mqlwrite",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/freebase"
+	//   ],
+	//   "supportsMediaDownload": true
+	// }
+
+}
+
 // method id "freebase.text.get":
 
 type TextGetCall struct {
@@ -509,6 +709,147 @@ func (c *TextGetCall) Do() (*ContentserviceGet, error) {
 	//   "path": "text{/id*}",
 	//   "response": {
 	//     "$ref": "ContentserviceGet"
+	//   }
+	// }
+
+}
+
+// method id "freebase.topic.lookup":
+
+type TopicLookupCall struct {
+	s    *Service
+	id   []string
+	opt_ map[string]interface{}
+}
+
+// Lookup: Get properties and meta-data about a topic.
+func (r *TopicService) Lookup(id []string) *TopicLookupCall {
+	c := &TopicLookupCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	return c
+}
+
+// Dateline sets the optional parameter "dateline": Determines how
+// up-to-date the data returned is. A unix epoch time, a guid or a 'now'
+func (c *TopicLookupCall) Dateline(dateline string) *TopicLookupCall {
+	c.opt_["dateline"] = dateline
+	return c
+}
+
+// Filter sets the optional parameter "filter": A frebase domain, type
+// or property id, 'suggest', 'commons', or 'all'. Filter the results
+// and returns only appropriate properties.
+func (c *TopicLookupCall) Filter(filter string) *TopicLookupCall {
+	c.opt_["filter"] = filter
+	return c
+}
+
+// Lang sets the optional parameter "lang": The language you 'd like the
+// content in - a freebase /type/lang language key.
+func (c *TopicLookupCall) Lang(lang string) *TopicLookupCall {
+	c.opt_["lang"] = lang
+	return c
+}
+
+// Limit sets the optional parameter "limit": The maximum number of
+// property values to return for each property.
+func (c *TopicLookupCall) Limit(limit int64) *TopicLookupCall {
+	c.opt_["limit"] = limit
+	return c
+}
+
+// Raw sets the optional parameter "raw": Do not apply any constraints,
+// or get any names.
+func (c *TopicLookupCall) Raw(raw bool) *TopicLookupCall {
+	c.opt_["raw"] = raw
+	return c
+}
+
+func (c *TopicLookupCall) Do() (*TopicLookup, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["dateline"]; ok {
+		params.Set("dateline", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["filter"]; ok {
+		params.Set("filter", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["lang"]; ok {
+		params.Set("lang", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["limit"]; ok {
+		params.Set("limit", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["raw"]; ok {
+		params.Set("raw", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/freebase/v1sandbox/", "topic{/id*}")
+	urls = strings.Replace(urls, "{id}", cleanPathString(c.id[0]), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(TopicLookup)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get properties and meta-data about a topic.",
+	//   "httpMethod": "GET",
+	//   "id": "freebase.topic.lookup",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "dateline": {
+	//       "description": "Determines how up-to-date the data returned is. A unix epoch time, a guid or a 'now'",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "filter": {
+	//       "description": "A frebase domain, type or property id, 'suggest', 'commons', or 'all'. Filter the results and returns only appropriate properties.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "id": {
+	//       "description": "The id of the item that you want data about.",
+	//       "location": "path",
+	//       "repeated": true,
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "lang": {
+	//       "default": "en",
+	//       "description": "The language you 'd like the content in - a freebase /type/lang language key.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "limit": {
+	//       "default": "10",
+	//       "description": "The maximum number of property values to return for each property.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "raw": {
+	//       "default": "false",
+	//       "description": "Do not apply any constraints, or get any names.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "topic{/id*}",
+	//   "response": {
+	//     "$ref": "TopicLookup"
 	//   }
 	// }
 

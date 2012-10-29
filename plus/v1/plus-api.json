@@ -1,10 +1,11 @@
 {
  "kind": "discovery#restDescription",
+ "etag": "\"oZqOFf-aKzMvpID-BwBAFJLe7Pk/qFi9KMgRuRnHAq1_hy13dHgbdW4\"",
  "discoveryVersion": "v1",
  "id": "plus:v1",
  "name": "plus",
  "version": "v1",
- "revision": "20120712",
+ "revision": "20121022",
  "title": "Google+ API",
  "description": "The Google+ API enables developers to build on top of the Google+ platform.",
  "icons": {
@@ -68,9 +69,6 @@
    "scopes": {
     "https://www.googleapis.com/auth/plus.me": {
      "description": "Know who you are on Google"
-    },
-    "https://www.googleapis.com/auth/userinfo.email": {
-     "description": "View your email address"
     }
    }
   }
@@ -217,7 +215,7 @@
         "properties": {
          "content": {
           "type": "string",
-          "description": "If the attachment is an article, this property contains a snippet of text from the article."
+          "description": "If the attachment is an article, this property contains a snippet of text from the article. It may also include descriptions for other types."
          },
          "displayName": {
           "type": "string",
@@ -239,7 +237,7 @@
          },
          "fullImage": {
           "type": "object",
-          "description": "The full image url for photo attachments.",
+          "description": "The full image URL for photo attachments.",
           "properties": {
            "height": {
             "type": "integer",
@@ -252,7 +250,7 @@
            },
            "url": {
             "type": "string",
-            "description": "URL of the link."
+            "description": "URL to the image."
            },
            "width": {
             "type": "integer",
@@ -263,7 +261,7 @@
          },
          "id": {
           "type": "string",
-          "description": "The ID of the media object's resource."
+          "description": "The ID of the attachment."
          },
          "image": {
           "type": "object",
@@ -280,7 +278,7 @@
            },
            "url": {
             "type": "string",
-            "description": "URL of the link."
+            "description": "Image url."
            },
            "width": {
             "type": "integer",
@@ -291,7 +289,48 @@
          },
          "objectType": {
           "type": "string",
-          "description": "The type of media object. Possible values are:  \n- \"photo\" - A photo. \n- \"video\" - A video. \n- \"article\" - An article, specified by a link."
+          "description": "The type of media object. Possible values are:  \n- \"photo\" - A photo. \n- \"album\" - A photo album. \n- \"video\" - A video. \n- \"article\" - An article, specified by a link."
+         },
+         "thumbnails": {
+          "type": "array",
+          "description": "If the attachment is an album, potential additional thumbnails from the album.",
+          "items": {
+           "type": "object",
+           "properties": {
+            "description": {
+             "type": "string",
+             "description": "Potential name of the thumbnail."
+            },
+            "image": {
+             "type": "object",
+             "description": "Image resource.",
+             "properties": {
+              "height": {
+               "type": "integer",
+               "description": "The height, in pixels, of the linked resource.",
+               "format": "uint32"
+              },
+              "type": {
+               "type": "string",
+               "description": "Media type of the link."
+              },
+              "url": {
+               "type": "string",
+               "description": "Image url."
+              },
+              "width": {
+               "type": "integer",
+               "description": "The width, in pixels, of the linked resource.",
+               "format": "uint32"
+              }
+             }
+            },
+            "url": {
+             "type": "string",
+             "description": "URL to the webpage containing the image."
+            }
+           }
+          }
          },
          "url": {
           "type": "string",
@@ -302,7 +341,7 @@
       },
       "content": {
        "type": "string",
-       "description": "The HTML-formatted content, suitable for display. When creating or updating an activity, this value must be supplied as plain text in the request. If successful, the response will contain the HTML-formatted content. When updating an activity, use originalContent as the starting value, then assign the updated text to this property."
+       "description": "The HTML-formatted content, suitable for display."
       },
       "id": {
        "type": "string",
@@ -314,7 +353,7 @@
       },
       "originalContent": {
        "type": "string",
-       "description": "The content (text) as provided by the author, stored without any HTML formatting. When updating an activity's content, use the value of originalContent as the starting point from which to make edits."
+       "description": "The content (text) as provided by the author, stored without any HTML formatting. When creating or updating an activity, this value must be supplied as plain text in the request."
       },
       "plusoners": {
        "type": "object",
@@ -409,7 +448,7 @@
     },
     "verb": {
      "type": "string",
-     "description": "This activity's verb, indicating what action was performed. Possible values are:  \n- \"post\" - Publish content to the stream. \n- \"checkin\" - Check in to a location. \n- \"share\" - Reshare an activity."
+     "description": "This activity's verb, indicating what action was performed. Possible values are:  \n- \"post\" - Publish content to the stream. \n- \"share\" - Reshare an activity."
     }
    }
   },
@@ -443,7 +482,7 @@
     },
     "nextPageToken": {
      "type": "string",
-     "description": "The continuation token, used to page through large result sets. Provide this value in a subsequent request to return the next page of results."
+     "description": "The continuation token, which is used to page through large result sets. Provide this value in a subsequent request to return the next page of results."
     },
     "selfLink": {
      "type": "string",
@@ -508,11 +547,11 @@
       "properties": {
        "id": {
         "type": "string",
-        "description": "The id of the activity."
+        "description": "The ID of the activity."
        },
        "url": {
         "type": "string",
-        "description": "The url of the activity."
+        "description": "The URL of the activity."
        }
       }
      }
@@ -528,12 +567,27 @@
      "properties": {
       "content": {
        "type": "string",
-       "description": "The content of this comment."
+       "description": "The HTML-formatted content, suitable for display."
       },
       "objectType": {
        "type": "string",
        "description": "The object type of this comment. Possible values are:  \n- \"comment\" - A comment in reply to an activity.",
        "default": "comment"
+      },
+      "originalContent": {
+       "type": "string",
+       "description": "The content (text) as provided by the author, stored without any HTML formatting. When creating or updating a comment, this value must be supplied as plain text in the request."
+      }
+     }
+    },
+    "plusoners": {
+     "type": "object",
+     "description": "People who +1'd this comment.",
+     "properties": {
+      "totalItems": {
+       "type": "integer",
+       "description": "Total number of people who +1'd this comment.",
+       "format": "uint32"
       }
      }
     },
@@ -588,7 +642,7 @@
     },
     "nextPageToken": {
      "type": "string",
-     "description": "The continuation token, used to page through large result sets. Provide this value in a subsequent request to return the next page of results."
+     "description": "The continuation token, which is used to page through large result sets. Provide this value in a subsequent request to return the next page of results."
     },
     "title": {
      "type": "string",
@@ -611,7 +665,7 @@
     },
     "items": {
      "type": "array",
-     "description": "The people in this page of results. Each item will include the id, displayName, image, and url for the person. To retrieve additional profile data, see the people.get method.",
+     "description": "The people in this page of results. Each item includes the id, displayName, image, and url for the person. To retrieve additional profile data, see the people.get method.",
      "items": {
       "$ref": "Person"
      }
@@ -623,7 +677,7 @@
     },
     "nextPageToken": {
      "type": "string",
-     "description": "The continuation token, used to page through large result sets. Provide this value in a subsequent request to return the next page of results."
+     "description": "The continuation token, which is used to page through large result sets. Provide this value in a subsequent request to return the next page of results."
     },
     "selfLink": {
      "type": "string",
@@ -632,6 +686,11 @@
     "title": {
      "type": "string",
      "description": "The title of this collection of people."
+    },
+    "totalItems": {
+     "type": "integer",
+     "description": "The total number of people available in this list. The number of people in a response may be smaller due to paging. This may not be set for all collections.",
+     "format": "int32"
     }
    }
   },
@@ -702,17 +761,14 @@
       }
      }
     },
+    "isPlusUser": {
+     "type": "boolean",
+     "description": "Whether this user has signed up for G+."
+    },
     "kind": {
      "type": "string",
      "description": "Identifies this resource as a person. Value: \"plus#person\".",
      "default": "plus#person"
-    },
-    "languagesSpoken": {
-     "type": "array",
-     "description": "The languages spoken by this person.",
-     "items": {
-      "type": "string"
-     }
     },
     "name": {
      "type": "object",
@@ -853,6 +909,10 @@
    "id": "PlusAclentryResource",
    "type": "object",
    "properties": {
+    "displayName": {
+     "type": "string",
+     "description": "A descriptive name for this entry. Suitable for display."
+    },
     "id": {
      "type": "string",
      "description": "The ID of the entry. For entries of type \"person\" or \"circle\", this is the ID of the resource. For other types, this property is not set."
@@ -910,7 +970,7 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "The maximum number of activities to include in the response, used for paging. For any response, the actual number returned may be less than the specified maxResults.",
+       "description": "The maximum number of activities to include in the response, which is used for paging. For any response, the actual number returned might be less than the specified maxResults.",
        "default": "20",
        "format": "uint32",
        "minimum": "1",
@@ -919,14 +979,13 @@
       },
       "pageToken": {
        "type": "string",
-       "description": "The continuation token, used to page through large result sets. To get the next page of results, set this parameter to the value of \"nextPageToken\" from the previous response.",
+       "description": "The continuation token, which is used to page through large result sets. To get the next page of results, set this parameter to the value of \"nextPageToken\" from the previous response.",
        "location": "query"
       },
       "userId": {
        "type": "string",
        "description": "The ID of the user to get activities for. The special value \"me\" can be used to indicate the authenticated user.",
        "required": true,
-       "pattern": "me|[0-9]+",
        "location": "path"
       }
      },
@@ -955,7 +1014,7 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "The maximum number of activities to include in the response, used for paging. For any response, the actual number returned may be less than the specified maxResults.",
+       "description": "The maximum number of activities to include in the response, which is used for paging. For any response, the actual number returned might be less than the specified maxResults.",
        "default": "10",
        "format": "uint32",
        "minimum": "1",
@@ -978,7 +1037,7 @@
       },
       "pageToken": {
        "type": "string",
-       "description": "The continuation token, used to page through large result sets. To get the next page of results, set this parameter to the value of \"nextPageToken\" from the previous response. This token may be of any length.",
+       "description": "The continuation token, which is used to page through large result sets. To get the next page of results, set this parameter to the value of \"nextPageToken\" from the previous response. This token can be of any length.",
        "location": "query"
       },
       "query": {
@@ -1039,16 +1098,16 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "The maximum number of comments to include in the response, used for paging. For any response, the actual number returned may be less than the specified maxResults.",
+       "description": "The maximum number of comments to include in the response, which is used for paging. For any response, the actual number returned might be less than the specified maxResults.",
        "default": "20",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "100",
+       "maximum": "500",
        "location": "query"
       },
       "pageToken": {
        "type": "string",
-       "description": "The continuation token, used to page through large result sets. To get the next page of results, set this parameter to the value of \"nextPageToken\" from the previous response.",
+       "description": "The continuation token, which is used to page through large result sets. To get the next page of results, set this parameter to the value of \"nextPageToken\" from the previous response.",
        "location": "query"
       },
       "sortOrder": {
@@ -1090,7 +1149,6 @@
        "type": "string",
        "description": "The ID of the person to get the profile for. The special value \"me\" can be used to indicate the authenticated user.",
        "required": true,
-       "pattern": "me|[0-9]+",
        "location": "path"
       }
      },
@@ -1101,8 +1159,7 @@
       "$ref": "Person"
      },
      "scopes": [
-      "https://www.googleapis.com/auth/plus.me",
-      "https://www.googleapis.com/auth/userinfo.email"
+      "https://www.googleapis.com/auth/plus.me"
      ]
     },
     "listByActivity": {
@@ -1133,7 +1190,7 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "The maximum number of people to include in the response, used for paging. For any response, the actual number returned may be less than the specified maxResults.",
+       "description": "The maximum number of people to include in the response, which is used for paging. For any response, the actual number returned might be less than the specified maxResults.",
        "default": "20",
        "format": "uint32",
        "minimum": "1",
@@ -1142,7 +1199,7 @@
       },
       "pageToken": {
        "type": "string",
-       "description": "The continuation token, used to page through large result sets. To get the next page of results, set this parameter to the value of \"nextPageToken\" from the previous response.",
+       "description": "The continuation token, which is used to page through large result sets. To get the next page of results, set this parameter to the value of \"nextPageToken\" from the previous response.",
        "location": "query"
       }
      },
@@ -1171,7 +1228,7 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "The maximum number of people to include in the response, used for paging. For any response, the actual number returned may be less than the specified maxResults.",
+       "description": "The maximum number of people to include in the response, which is used for paging. For any response, the actual number returned might be less than the specified maxResults.",
        "default": "10",
        "format": "uint32",
        "minimum": "1",
@@ -1180,7 +1237,7 @@
       },
       "pageToken": {
        "type": "string",
-       "description": "The continuation token, used to page through large result sets. To get the next page of results, set this parameter to the value of \"nextPageToken\" from the previous response. This token may be of any length.",
+       "description": "The continuation token, which is used to page through large result sets. To get the next page of results, set this parameter to the value of \"nextPageToken\" from the previous response. This token can be of any length.",
        "location": "query"
       },
       "query": {

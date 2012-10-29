@@ -288,6 +288,9 @@ type Training struct {
 	// TrainingComplete: Training completion time (as a RFC 3339 timestamp).
 	TrainingComplete string `json:"trainingComplete,omitempty"`
 
+	// TrainingInstances: Instances to train model on.
+	TrainingInstances []*TrainingTrainingInstances `json:"trainingInstances,omitempty"`
+
 	// TrainingStatus: The current status of the training job. This can be
 	// one of following: RUNNING; DONE; ERROR; ERROR: TRAINING JOB NOT FOUND
 	TrainingStatus string `json:"trainingStatus,omitempty"`
@@ -327,6 +330,14 @@ type TrainingModelInfo struct {
 	NumberLabels int64 `json:"numberLabels,omitempty,string"`
 }
 
+type TrainingTrainingInstances struct {
+	// CsvInstance: The input features for this instance
+	CsvInstance []interface{} `json:"csvInstance,omitempty"`
+
+	// Output: The generic output value - could be regression or class label
+	Output string `json:"output,omitempty"`
+}
+
 type TrainingUtility struct {
 }
 
@@ -334,8 +345,12 @@ type Update struct {
 	// CsvInstance: The input features for this instance
 	CsvInstance []interface{} `json:"csvInstance,omitempty"`
 
-	// Label: The true class label of this instance
+	// Label: The class label of this instance
 	Label string `json:"label,omitempty"`
+
+	// Output: The generic output value - could be regression value or class
+	// label
+	Output string `json:"output,omitempty"`
 }
 
 // method id "prediction.hostedmodels.predict":

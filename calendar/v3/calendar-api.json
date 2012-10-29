@@ -1,10 +1,11 @@
 {
  "kind": "discovery#restDescription",
+ "etag": "\"oZqOFf-aKzMvpID-BwBAFJLe7Pk/g1SNYcP88KWjZSG5l7CxDCAQqcg\"",
  "discoveryVersion": "v1",
  "id": "calendar:v3",
  "name": "calendar",
  "version": "v3",
- "revision": "20120821",
+ "revision": "20120831",
  "title": "Calendar API",
  "description": "Lets you manipulate events and other calendar data.",
  "icons": {
@@ -496,7 +497,7 @@
     },
     "guestsCanInviteOthers": {
      "type": "boolean",
-     "description": "Whether attendees other than the organizer can invite others to the event. Optional. The default is False."
+     "description": "Whether attendees other than the organizer can invite others to the event. Optional. The default is True."
     },
     "guestsCanModify": {
      "type": "boolean",
@@ -504,7 +505,7 @@
     },
     "guestsCanSeeOtherGuests": {
      "type": "boolean",
-     "description": "Whether attendees other than the organizer can see who the event's attendees are. Optional. The default is False."
+     "description": "Whether attendees other than the organizer can see who the event's attendees are. Optional. The default is True."
     },
     "hangoutLink": {
      "type": "string",
@@ -1615,6 +1616,13 @@
        "required": true,
        "location": "path"
       },
+      "maxAttendees": {
+       "type": "integer",
+       "description": "The maximum number of attendees to include in the response. If there are more than the specified number of attendees, only the participant is returned. Optional.",
+       "format": "int32",
+       "minimum": "1",
+       "location": "query"
+      },
       "sendNotifications": {
        "type": "boolean",
        "description": "Whether to send notifications about the creation of the new event. Optional. The default is False.",
@@ -1878,6 +1886,13 @@
        "required": true,
        "location": "path"
       },
+      "maxAttendees": {
+       "type": "integer",
+       "description": "The maximum number of attendees to include in the response. If there are more than the specified number of attendees, only the participant is returned. Optional.",
+       "format": "int32",
+       "minimum": "1",
+       "location": "query"
+      },
       "sendNotifications": {
        "type": "boolean",
        "description": "Whether to send notifications about the event update (e.g. attendee's responses, title changes, etc.). Optional. The default is False.",
@@ -1955,6 +1970,13 @@
        "description": "Event identifier.",
        "required": true,
        "location": "path"
+      },
+      "maxAttendees": {
+       "type": "integer",
+       "description": "The maximum number of attendees to include in the response. If there are more than the specified number of attendees, only the participant is returned. Optional.",
+       "format": "int32",
+       "minimum": "1",
+       "location": "query"
       },
       "sendNotifications": {
        "type": "boolean",

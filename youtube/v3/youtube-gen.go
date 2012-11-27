@@ -127,158 +127,209 @@ type VideosService struct {
 }
 
 type Activity struct {
-	// ContentDetails: Type specific information about the activity.
+	// ContentDetails: The contentDetails object contains information about
+	// the content associated with the activity. For example, if the
+	// snippet.type value is videoRated, then the contentDetails object's
+	// content identifies the rated video.
 	ContentDetails *ActivityContentDetails `json:"contentDetails,omitempty"`
 
-	// Etag: The eTag of the activity.
+	// Etag: The ETag of the activity resource.
 	Etag string `json:"etag,omitempty"`
 
-	// Id: The unique ID of the activity.
+	// Id: The ID that YouTube uses to uniquely identify the activity.
 	Id string `json:"id,omitempty"`
 
-	// Kind: The type of this API response.
+	// Kind: The type of the API resource. For activity resources, the value
+	// will be youtube#activity.
 	Kind string `json:"kind,omitempty"`
 
-	// Snippet: Basic details about the activity: title, description,
-	// thumbnails.
+	// Snippet: The snippet object contains basic details about the
+	// activity, including the activity's type and group ID.
 	Snippet *ActivitySnippet `json:"snippet,omitempty"`
 }
 
 type ActivityContentDetails struct {
-	// Bulletin: Only present if the type is "bulletin".
+	// Bulletin: The bulletin object contains details about a channel
+	// bulletin post. This object is only present if the snippet.type is
+	// bulletin.
 	Bulletin *ActivityContentDetailsBulletin `json:"bulletin,omitempty"`
 
-	// Comment: Only present if the type is "comment".
+	// Comment: The comment object contains information about a resource
+	// that received a comment. This property is only present if the
+	// snippet.type is comment.
 	Comment *ActivityContentDetailsComment `json:"comment,omitempty"`
 
-	// Favorite: Only present if the type is "favorite".
+	// Favorite: The favorite object contains information about a video that
+	// was marked as a favorite video. This property is only present if the
+	// snippet.type is favorite.
 	Favorite *ActivityContentDetailsFavorite `json:"favorite,omitempty"`
 
-	// Like: Only present if the type is "like".
+	// Like: The like object contains information about a resource that
+	// received a positive (like) rating. This property is only present if
+	// the snippet.type is like.
 	Like *ActivityContentDetailsLike `json:"like,omitempty"`
 
-	// PlaylistItem: Only present if the type is "playlistItem".
+	// PlaylistItem: The playlistItem object contains information about a
+	// new playlist item. This property is only present if the snippet.type
+	// is playlistItem.
 	PlaylistItem *ActivityContentDetailsPlaylistItem `json:"playlistItem,omitempty"`
 
-	// Recommendation: Only set if the type is "recommendation".
+	// Recommendation: The recommendation object contains information about
+	// a recommended resource. This property is only present if the
+	// snippet.type is recommendation.
 	Recommendation *ActivityContentDetailsRecommendation `json:"recommendation,omitempty"`
 
-	// Social: Only present if the type is "social".
+	// Social: The social object contains details about a social network
+	// post. This property is only present if the snippet.type is social.
 	Social *ActivityContentDetailsSocial `json:"social,omitempty"`
 
-	// Subscription: Only present if the type is "subscription".
+	// Subscription: The subscription object contains information about a
+	// channel that a user subscribed to. This property is only present if
+	// the snippet.type is subscription.
 	Subscription *ActivityContentDetailsSubscription `json:"subscription,omitempty"`
 
-	// Upload: Only present if the type is "upload".
+	// Upload: The upload object contains information about the uploaded
+	// video. This property is only present if the snippet.type is upload.
 	Upload *ActivityContentDetailsUpload `json:"upload,omitempty"`
 }
 
 type ActivityContentDetailsBulletin struct {
-	// ResourceId: ID of the resource this bulletin is about.
+	// ResourceId: The resourceId object contains information that
+	// identifies the resource associated with a bulletin post.
 	ResourceId *ResourceId `json:"resourceId,omitempty"`
 }
 
 type ActivityContentDetailsComment struct {
-	// ResourceId: ID of the commented resource.
+	// ResourceId: The resourceId object contains information that
+	// identifies the resource associated with the comment.
 	ResourceId *ResourceId `json:"resourceId,omitempty"`
 }
 
 type ActivityContentDetailsFavorite struct {
-	// ResourceId: ID of the favorited resource.
+	// ResourceId: The resourceId object contains information that
+	// identifies the resource that was marked as a favorite.
 	ResourceId *ResourceId `json:"resourceId,omitempty"`
 }
 
 type ActivityContentDetailsLike struct {
-	// ResourceId: ID of the rated resource.
+	// ResourceId: The resourceId object contains information that
+	// identifies the rated resource.
 	ResourceId *ResourceId `json:"resourceId,omitempty"`
 }
 
 type ActivityContentDetailsPlaylistItem struct {
-	// PlaylistId: ID of the playlist the resource was added to.
+	// PlaylistId: The value that YouTube uses to uniquely identify the
+	// playlist.
 	PlaylistId string `json:"playlistId,omitempty"`
 
-	// ResourceId: ID of the resource added to the playlist.
+	// PlaylistItemId: ID of the item within the playlist.
+	PlaylistItemId string `json:"playlistItemId,omitempty"`
+
+	// ResourceId: The resourceId object contains information about the
+	// resource that was added to the playlist.
 	ResourceId *ResourceId `json:"resourceId,omitempty"`
 }
 
 type ActivityContentDetailsRecommendation struct {
-	// Reason: Reason for which the video was recommended.
+	// Reason: The reason that the resource is recommended to the user.
 	Reason string `json:"reason,omitempty"`
 
-	// ResourceId: ID of the recommended resource.
+	// ResourceId: The resourceId object contains information that
+	// identifies the recommended resource.
 	ResourceId *ResourceId `json:"resourceId,omitempty"`
 
-	// SeedResourceId: ID of the video that caused this recommendation.
+	// SeedResourceId: The seedResourceId object contains information about
+	// the resource that caused the recommendation.
 	SeedResourceId *ResourceId `json:"seedResourceId,omitempty"`
 }
 
 type ActivityContentDetailsSocial struct {
-	// Author: Author of the post.
+	// Author: The author of the social network post.
 	Author string `json:"author,omitempty"`
 
-	// ImageUrl: Image of the post author.
+	// ImageUrl: An image of the post's author.
 	ImageUrl string `json:"imageUrl,omitempty"`
 
-	// ReferenceUrl: Url of the social post.
+	// ReferenceUrl: The URL of the social network post.
 	ReferenceUrl string `json:"referenceUrl,omitempty"`
 
-	// ResourceId: ID of the resource this social activity is about.
+	// ResourceId: The resourceId object encapsulates information that
+	// identifies the resource associated with a social network post.
 	ResourceId *ResourceId `json:"resourceId,omitempty"`
 
-	// Type: Type of the social network.
+	// Type: The name of the social network.
 	Type string `json:"type,omitempty"`
 }
 
 type ActivityContentDetailsSubscription struct {
-	// ResourceId: ID of the resource subscribed to.
+	// ResourceId: The resourceId object contains information that
+	// identifies the resource that the user subscribed to.
 	ResourceId *ResourceId `json:"resourceId,omitempty"`
 }
 
 type ActivityContentDetailsUpload struct {
-	// VideoId: ID of the uploaded video.
+	// VideoId: The ID that YouTube uses to uniquely identify the uploaded
+	// video.
 	VideoId string `json:"videoId,omitempty"`
 }
 
 type ActivityListResponse struct {
-	// Etag: The eTag of the response.
+	// Etag: The ETag of the response.
 	Etag string `json:"etag,omitempty"`
 
-	// Items: List of activities matching the request criteria.
+	// Items: A list of activities, or events, that match the request
+	// criteria.
 	Items []*Activity `json:"items,omitempty"`
 
-	// Kind: The type of this API response.
+	// Kind: The type of the API response. For this operation, the value
+	// will be youtube#activityListResponse.
 	Kind string `json:"kind,omitempty"`
 
-	// NextPageToken: Token to the next page.
+	// NextPageToken: The token that can be used as the value of the
+	// pageToken parameter to retrieve the next page in the result set.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// PageInfo: Paging information for the list result.
+	// PageInfo: The pageInfo object encapsulates paging information for the
+	// result set.
 	PageInfo *PageInfo `json:"pageInfo,omitempty"`
 
-	// PrevPageToken: Token to the previous page.
+	// PrevPageToken: The token that can be used as the value of the
+	// pageToken parameter to retrieve the previous page in the result set.
 	PrevPageToken string `json:"prevPageToken,omitempty"`
 }
 
 type ActivitySnippet struct {
-	// ChannelId: Channel publishing the activity.
+	// ChannelId: The ID that YouTube uses to uniquely identify the channel
+	// associated with the activity.
 	ChannelId string `json:"channelId,omitempty"`
 
-	// Description: Description of the activity.
+	// Description: The description of the resource primarily associated
+	// with the activity.
 	Description string `json:"description,omitempty"`
 
-	// GroupId: Id of the group that this activity is part of.
+	// GroupId: The group ID associated with the activity. A group ID
+	// identifies user events that are associated with the same user and
+	// resource. For example, if a user rates a video and marks the same
+	// video as a favorite, the entries for those events would have the same
+	// group ID in the user's activity feed. In your user interface, you can
+	// avoid repetition by grouping events with the same groupId value.
 	GroupId string `json:"groupId,omitempty"`
 
-	// PublishedAt: Date and time the activity was published at.
+	// PublishedAt: The date and time that the activity occurred. The value
+	// is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.
 	PublishedAt string `json:"publishedAt,omitempty"`
 
-	// Thumbnails: Activity thumbnails.
+	// Thumbnails: A map of thumbnail images associated with the resource
+	// that is primarily associated with the activity. For each object in
+	// the map, the key is the name of the thumbnail image, and the value is
+	// an object that contains other information about the thumbnail.
 	Thumbnails *ActivitySnippetThumbnails `json:"thumbnails,omitempty"`
 
-	// Title: Title of the activity.
+	// Title: The title of the resource primarily associated with the
+	// activity.
 	Title string `json:"title,omitempty"`
 
-	// Type: Type of the activity.
+	// Type: The type of activity that the resource describes.
 	Type string `json:"type,omitempty"`
 }
 
@@ -286,74 +337,114 @@ type ActivitySnippetThumbnails struct {
 }
 
 type Channel struct {
-	// ContentDetails: Information about the channel content: upload
-	// playlist id, privacy status.
+	// ContentDetails: The contentDetails object encapsulates information
+	// about the channel's content.
 	ContentDetails *ChannelContentDetails `json:"contentDetails,omitempty"`
 
-	// Etag: The eTag of the channel.
+	// Etag: The ETag for the channel resource.
 	Etag string `json:"etag,omitempty"`
 
-	// Id: The unique ID of the channel.
+	// Id: The ID that YouTube uses to uniquely identify the channel.
 	Id string `json:"id,omitempty"`
 
-	// Kind: The type of this API resource.
+	// Kind: The type of the API resource. For channel resources, the value
+	// will be youtube#channel.
 	Kind string `json:"kind,omitempty"`
 
-	// Snippet: Basic details about the channel: title, description, and
-	// thumbnails.
+	// Snippet: The snippet object contains basic details about the channel,
+	// such as its title, description, and thumbnail images.
 	Snippet *ChannelSnippet `json:"snippet,omitempty"`
 
-	// Statistics: Statistics about the channel: number of subscribers,
-	// views, and comments.
+	// Statistics: The statistics object encapsulates statistics for the
+	// channel.
 	Statistics *ChannelStatistics `json:"statistics,omitempty"`
 
-	// TopicDetails: Information about channel topics
+	// Status: The status object encapsulates information about the privacy
+	// status of the channel.
+	Status *ChannelStatus `json:"status,omitempty"`
+
+	// TopicDetails: The topicDetails object encapsulates information about
+	// Freebase topics associated with the channel.
 	TopicDetails *ChannelTopicDetails `json:"topicDetails,omitempty"`
 }
 
 type ChannelContentDetails struct {
-	// PrivacyStatus: Privacy status of the channel.
-	PrivacyStatus string `json:"privacyStatus,omitempty"`
+	// RelatedPlaylists: The relatedPlaylists object is a map that
+	// identifies playlists associated with the channel, such as the
+	// channel's uploaded videos or favorite videos. You can retrieve any of
+	// these playlists using the playlists.list method.
+	RelatedPlaylists *ChannelContentDetailsRelatedPlaylists `json:"relatedPlaylists,omitempty"`
+}
 
-	// Uploads: The ID of the playlist containing the uploads of this
-	// channel.
+type ChannelContentDetailsRelatedPlaylists struct {
+	// Favorites: The ID of the playlist that contains the channel's
+	// favorite videos. Use the playlistItems.insert and
+	// playlistItems.delete to add or remove items from that list.
+	Favorites string `json:"favorites,omitempty"`
+
+	// Likes: The ID of the playlist that contains the channel's liked
+	// videos. Use the playlistItems.insert and playlistItems.delete to add
+	// or remove items from that list.
+	Likes string `json:"likes,omitempty"`
+
+	// Uploads: The ID of the playlist that contains the channel's uploaded
+	// videos. Use the videos.insert method to upload new videos and the
+	// videos.delete method to delete previously uploaded videos.
 	Uploads string `json:"uploads,omitempty"`
+
+	// WatchHistory: The ID of the playlist that contains the channel's
+	// watch history. Use the playlistItems.insert and playlistItems.delete
+	// to add or remove items from that list.
+	WatchHistory string `json:"watchHistory,omitempty"`
+
+	// WatchLater: The ID of the channel's watch later playlist. Use the
+	// playlistItems.insert and playlistItems.delete to add or remove items
+	// from that list.
+	WatchLater string `json:"watchLater,omitempty"`
 }
 
 type ChannelListResponse struct {
-	// Etag: The eTag of the response.
+	// Etag: The ETag for the response.
 	Etag string `json:"etag,omitempty"`
 
-	// Items: List of channels matching the request criteria.
+	// Items: A list of channels that match the request criteria.
 	Items []*Channel `json:"items,omitempty"`
 
-	// Kind: The type of this API response.
+	// Kind: The type of the API response. For this operation, the value
+	// will be youtube#channelListResponse.
 	Kind string `json:"kind,omitempty"`
 
-	// NextPageToken: Token to the next page.
+	// NextPageToken: The token that can be used as the value of the
+	// pageToken parameter to retrieve the next page in the result set.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// PageInfo: Paging information for the list result.
+	// PageInfo: The pageInfo object encapsulates paging information for the
+	// result set.
 	PageInfo *PageInfo `json:"pageInfo,omitempty"`
 
-	// PrevPageToken: Token to the previous page.
+	// PrevPageToken: The token that can be used as the value of the
+	// pageToken parameter to retrieve the previous page in the result set.
 	PrevPageToken string `json:"prevPageToken,omitempty"`
 }
 
 type ChannelSnippet struct {
-	// ChannelId: Id of the channel.
+	// ChannelId: The ID that YouTube uses to uniquely identify the channel.
 	ChannelId string `json:"channelId,omitempty"`
 
-	// Description: Description of the channel.
+	// Description: The channel's description.
 	Description string `json:"description,omitempty"`
 
-	// PublishedAt: Date and time the channel was published at.
+	// PublishedAt: The date and time that the channel was created. The
+	// value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.
 	PublishedAt string `json:"publishedAt,omitempty"`
 
-	// Thumbnails: Channel thumbnails.
+	// Thumbnails: A map of thumbnail images associated with the channel.
+	// For each object in the map, the key is the name of the thumbnail
+	// image, and the value is an object that contains other information
+	// about the thumbnail.
 	Thumbnails *ChannelSnippetThumbnails `json:"thumbnails,omitempty"`
 
-	// Title: Title of the channel.
+	// Title: The channel's title.
 	Title string `json:"title,omitempty"`
 }
 
@@ -361,159 +452,211 @@ type ChannelSnippetThumbnails struct {
 }
 
 type ChannelStatistics struct {
-	// CommentCount: Number of comments for this channel.
+	// CommentCount: The number of comments for the channel.
 	CommentCount uint64 `json:"commentCount,omitempty,string"`
 
-	// SubscriberCount: Number of subscribers to this channel.
+	// SubscriberCount: The number of subscribers that the channel has.
 	SubscriberCount uint64 `json:"subscriberCount,omitempty,string"`
 
-	// VideoCount: Number of videos in the channel.
+	// VideoCount: The number of videos uploaded to the channel.
 	VideoCount uint64 `json:"videoCount,omitempty,string"`
 
-	// ViewCount: Number of times the channel has been viewed.
+	// ViewCount: The number of times the channel has been viewed.
 	ViewCount uint64 `json:"viewCount,omitempty,string"`
 }
 
+type ChannelStatus struct {
+	// PrivacyStatus: Privacy status of the channel.
+	PrivacyStatus string `json:"privacyStatus,omitempty"`
+}
+
 type ChannelTopicDetails struct {
-	// TopicIds: List of topic ids for this channel *
+	// TopicIds: A list of Freebase topic IDs associated with the channel.
+	// You can retrieve information about each topic using the Freebase
+	// Topic API.
 	TopicIds []string `json:"topicIds,omitempty"`
 }
 
+type GeoPoint struct {
+	// Elevation: Altitude above the Earth, in meters.
+	Elevation float64 `json:"elevation,omitempty"`
+
+	// Latitude: Latitude in degrees.
+	Latitude float64 `json:"latitude,omitempty"`
+
+	// Longitude: Longitude in degrees.
+	Longitude float64 `json:"longitude,omitempty"`
+}
+
 type GuideCategory struct {
-	// Etag: The eTag of the guide category.
+	// Etag: The ETag of the guideCategory resource.
 	Etag string `json:"etag,omitempty"`
 
-	// Id: The unique ID of the guide category.
+	// Id: The ID that YouTube uses to uniquely identify the guide category.
 	Id string `json:"id,omitempty"`
 
-	// Kind: The type of this API resource.
+	// Kind: The type of the API resource. For guideCategory resources, the
+	// value will be youtube#guideCategory/code>.
 	Kind string `json:"kind,omitempty"`
 
-	// Snippet: Snippet of the category.
+	// Snippet: The snippet object contains basic details about the
+	// category, such as its title.
 	Snippet *GuideCategorySnippet `json:"snippet,omitempty"`
 }
 
 type GuideCategoryListResponse struct {
-	// Etag: The eTag of the response.
+	// Etag: The ETag of the response.
 	Etag string `json:"etag,omitempty"`
 
-	// Items: List of categories matching the request criteria.
+	// Items: A list of categories that can be associated with YouTube
+	// channels. In this map, the category ID is the map key, and its value
+	// is the corresponding guideCategory resource.
 	Items []*GuideCategory `json:"items,omitempty"`
 
-	// Kind: The type of this API response.
+	// Kind: The type of the API response. For this operation, the value
+	// will be youtube#guideCategoryListResponse.
 	Kind string `json:"kind,omitempty"`
 }
 
 type GuideCategorySnippet struct {
-	// ChannelId: Channel publishing the guide category.
+	// ChannelId: The ID that YouTube uses to uniquely identify the channel
+	// publishing the guide category.
 	ChannelId string `json:"channelId,omitempty"`
 
-	// Title: Title of the guide category.
+	// Title: The category's title.
 	Title string `json:"title,omitempty"`
 }
 
 type PageInfo struct {
-	// ResultsPerPage: The number of results to display for each page.
+	// ResultsPerPage: The number of results included in the API response.
 	ResultsPerPage int64 `json:"resultsPerPage,omitempty"`
 
-	// TotalResults: The total number of results.
+	// TotalResults: The total number of results in the result set.
 	TotalResults int64 `json:"totalResults,omitempty"`
 }
 
 type Playlist struct {
-	// Etag: The eTag of the playlist.
+	// Etag: The ETag for the playlist resource.
 	Etag string `json:"etag,omitempty"`
 
-	// Id: The unique id of the playlist.
+	// Id: The ID that YouTube uses to uniquely identify the playlist.
 	Id string `json:"id,omitempty"`
 
-	// Kind: The type of this API resource.
+	// Kind: The type of the API resource. For video resources, the value
+	// will be youtube#playlist.
 	Kind string `json:"kind,omitempty"`
 
-	// Snippet: Basic details about the playlist: title, description,
-	// thumbnails.
+	// Snippet: The snippet object contains basic details about the
+	// playlist, such as its title and description.
 	Snippet *PlaylistSnippet `json:"snippet,omitempty"`
 
-	// Status: Status of the playlist: only privacy_status for now.
+	// Status: The status object contains status information for the
+	// playlist.
 	Status *PlaylistStatus `json:"status,omitempty"`
 }
 
 type PlaylistItem struct {
-	// ContentDetails: Content details about the playlist item: start and
-	// end clipping time.
+	// ContentDetails: The contentDetails object is included in the resource
+	// if the included item is a YouTube video. The object contains
+	// additional information about the video.
 	ContentDetails *PlaylistItemContentDetails `json:"contentDetails,omitempty"`
 
-	// Etag: The eTag of the playlist item.
+	// Etag: The ETag for the playlist item resource.
 	Etag string `json:"etag,omitempty"`
 
-	// Id: The unique id of the playlist item.
+	// Id: The ID that YouTube uses to uniquely identify the playlist item.
 	Id string `json:"id,omitempty"`
 
-	// Kind: The type of this API resource.
+	// Kind: The type of the API resource. For playlist item resources, the
+	// value will be youtube#playlistItem.
 	Kind string `json:"kind,omitempty"`
 
-	// Snippet: Basic details about the playlist item: title, description,
-	// thumbnails.
+	// Snippet: The snippet object contains basic details about the playlist
+	// item, such as its title and position in the playlist.
 	Snippet *PlaylistItemSnippet `json:"snippet,omitempty"`
 }
 
 type PlaylistItemContentDetails struct {
-	// EndAt: The time video playback ends.
+	// EndAt: The time, measured in seconds from the start of the video,
+	// when the video should stop playing. (The playlist owner can specify
+	// the times when the video should start and stop playing when the video
+	// is played in the context of the playlist.) By default, assume that
+	// the video.endTime is the end of the video.
 	EndAt string `json:"endAt,omitempty"`
 
-	// Note: The user-generated note for this item.
+	// Note: A user-generated note for this item.
 	Note string `json:"note,omitempty"`
 
-	// StartAt: The time video playback begins.
+	// StartAt: The time, measured in seconds from the start of the video,
+	// when the video should start playing. (The playlist owner can specify
+	// the times when the video should start and stop playing when the video
+	// is played in the context of the playlist.) The default value is 0.
 	StartAt string `json:"startAt,omitempty"`
 
-	// VideoId: ID of the video.
+	// VideoId: The ID that YouTube uses to uniquely identify a video. To
+	// retrieve the video resource, set the id query parameter to this value
+	// in your API request.
 	VideoId string `json:"videoId,omitempty"`
 }
 
 type PlaylistItemListResponse struct {
-	// Etag: The eTag of the response.
+	// Etag: The ETag for the response.
 	Etag string `json:"etag,omitempty"`
 
-	// Items: List of playlist items matching the request criteria.
+	// Items: A list of playlist items that match the request criteria.
 	Items []*PlaylistItem `json:"items,omitempty"`
 
-	// Kind: The type of this API response.
+	// Kind: The type of the API response. For this operation, the value
+	// will be youtube#playlistItemListResponse.
 	Kind string `json:"kind,omitempty"`
 
-	// NextPageToken: Token to the next page.
+	// NextPageToken: A token that can be used as the value of the pageToken
+	// parameter to retrieve the next page in the result set.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// PageInfo: Paging information for the list result.
+	// PageInfo: The pageInfo object encapsulates paging information for the
+	// result set.
 	PageInfo *PageInfo `json:"pageInfo,omitempty"`
 
-	// PrevPageToken: Token to the previous page.
+	// PrevPageToken: A token that can be used as the value of the pageToken
+	// parameter to retrieve the previous page in the result set.
 	PrevPageToken string `json:"prevPageToken,omitempty"`
 }
 
 type PlaylistItemSnippet struct {
-	// ChannelId: Channel publishing the playlist item.
+	// ChannelId: The ID that YouTube uses to uniquely identify the user
+	// that added the item to the playlist.
 	ChannelId string `json:"channelId,omitempty"`
 
-	// Description: Description of the playlist item.
+	// Description: The item's description.
 	Description string `json:"description,omitempty"`
 
-	// PlaylistId: The playlist the item is part of.
+	// PlaylistId: The ID that YouTube uses to uniquely identify the
+	// playlist that the playlist item is in.
 	PlaylistId string `json:"playlistId,omitempty"`
 
-	// Position: The position of the item within the playlist.
+	// Position: The order in which the item appears in the playlist. The
+	// value uses a zero-based index, so the first item has a position of 0,
+	// the second item has a position of 1, and so forth.
 	Position int64 `json:"position,omitempty"`
 
-	// PublishedAt: Date and time the playlist item was published at.
+	// PublishedAt: The date and time that the item was added to the
+	// playlist. The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ)
+	// format.
 	PublishedAt string `json:"publishedAt,omitempty"`
 
-	// ResourceId: The ID of the resource referenced by the playlist item.
+	// ResourceId: The id object contains information that can be used to
+	// uniquely identify the resource that is included in the playlist as
+	// the playlist item.
 	ResourceId *ResourceId `json:"resourceId,omitempty"`
 
-	// Thumbnails: Playlist item thumbnails.
+	// Thumbnails: A map of thumbnail images associated with the playlist
+	// item. For each object in the map, the key is the name of the
+	// thumbnail image, and the value is an object that contains other
+	// information about the thumbnail.
 	Thumbnails *PlaylistItemSnippetThumbnails `json:"thumbnails,omitempty"`
 
-	// Title: Title of the playlist item.
+	// Title: The item's title.
 	Title string `json:"title,omitempty"`
 }
 
@@ -521,39 +664,48 @@ type PlaylistItemSnippetThumbnails struct {
 }
 
 type PlaylistListResponse struct {
-	// Etag: The eTag of the response.
+	// Etag: The ETag of the response.
 	Etag string `json:"etag,omitempty"`
 
-	// Items: List of playlists matching the request criteria.
+	// Items: A list of playlists that match the request criteria.
 	Items []*Playlist `json:"items,omitempty"`
 
-	// Kind: The type of this API response.
+	// Kind: The type of the API response. For this operation, the value
+	// will be youtube#playlistListResponse.
 	Kind string `json:"kind,omitempty"`
 
-	// NextPageToken: Token to the next page.
+	// NextPageToken: The token that can be used as the value of the
+	// pageToken parameter to retrieve the next page in the result set.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// PageInfo: Paging information for the list result.
+	// PageInfo: The pageInfo object encapsulates paging information for the
+	// result set.
 	PageInfo *PageInfo `json:"pageInfo,omitempty"`
 
-	// PrevPageToken: Token to the previous page.
+	// PrevPageToken: The token that can be used as the value of the
+	// pageToken parameter to retrieve the previous page in the result set.
 	PrevPageToken string `json:"prevPageToken,omitempty"`
 }
 
 type PlaylistSnippet struct {
-	// ChannelId: Channel publishing the playlist.
+	// ChannelId: The ID that YouTube uses to uniquely identify the channel
+	// that published the playlist.
 	ChannelId string `json:"channelId,omitempty"`
 
-	// Description: Description of the playlist.
+	// Description: The playlist's description.
 	Description string `json:"description,omitempty"`
 
-	// PublishedAt: Date and time the playlist was published at.
+	// PublishedAt: The date and time that the playlist was created. The
+	// value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.
 	PublishedAt string `json:"publishedAt,omitempty"`
 
-	// Thumbnails: Playlist thumbnails.
+	// Thumbnails: A map of thumbnail images associated with the playlist.
+	// For each object in the map, the key is the name of the thumbnail
+	// image, and the value is an object that contains other information
+	// about the thumbnail.
 	Thumbnails *PlaylistSnippetThumbnails `json:"thumbnails,omitempty"`
 
-	// Title: Title of the playlist.
+	// Title: The playlist's title.
 	Title string `json:"title,omitempty"`
 }
 
@@ -561,75 +713,94 @@ type PlaylistSnippetThumbnails struct {
 }
 
 type PlaylistStatus struct {
-	// PrivacyStatus: Privacy of the playlist.
+	// PrivacyStatus: The playlist's privacy status.
 	PrivacyStatus string `json:"privacyStatus,omitempty"`
 }
 
 type ResourceId struct {
-	// ChannelId: ID of the referred channel. Present only when type is
-	// "CHANNEL".
+	// ChannelId: The ID that YouTube uses to uniquely identify the referred
+	// resource, if that resource is a channel. This property is only
+	// present if the resourceId.kind value is youtube#channel.
 	ChannelId string `json:"channelId,omitempty"`
 
-	// Kind: The kind of the referred resource.
+	// Kind: The kind, or type, of the referred resource.
 	Kind string `json:"kind,omitempty"`
 
-	// PlaylistId: ID of the referred playlist. Present only when type is
-	// "PLAYLIST".
+	// PlaylistId: The ID that YouTube uses to uniquely identify the
+	// referred resource, if that resource is a playlist. This property is
+	// only present if the resourceId.kind value is youtube#playlist.
 	PlaylistId string `json:"playlistId,omitempty"`
 
-	// VideoId: ID of the referred video. Present only when type is "VIDEO".
+	// VideoId: The ID that YouTube uses to uniquely identify the referred
+	// resource, if that resource is a video. This property is only present
+	// if the resourceId.kind value is youtube#video.
 	VideoId string `json:"videoId,omitempty"`
 }
 
 type SearchListResponse struct {
-	// Etag: The eTag of the response.
+	// Etag: The ETag for the response.
 	Etag string `json:"etag,omitempty"`
 
-	// Items: List of results matching the request criteria.
+	// Items: A list of results that match the search criteria.
 	Items []*SearchResult `json:"items,omitempty"`
 
-	// Kind: The type of this API response.
+	// Kind: The type of the API response. For this operation, the value
+	// will be youtube#searchListResponse.
 	Kind string `json:"kind,omitempty"`
 
-	// NextPageToken: Token to the next page.
+	// NextPageToken: The token that can be used as the value of the
+	// pageToken parameter to retrieve the next page in the result set.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// PageInfo: Paging information for the search result.
+	// PageInfo: The pageInfo object encapsulates paging information for the
+	// search result set.
 	PageInfo *PageInfo `json:"pageInfo,omitempty"`
 
-	// PrevPageToken: Token to the previous page.
+	// PrevPageToken: The token that can be used as the value of the
+	// pageToken parameter to retrieve the previous page in the result set.
 	PrevPageToken string `json:"prevPageToken,omitempty"`
 }
 
 type SearchResult struct {
-	// Etag: The eTag of the search result.
+	// Etag: The ETag of the search result.
 	Etag string `json:"etag,omitempty"`
 
-	// Id: The id of the resource.
+	// Id: The id object contains information that can be used to uniquely
+	// identify the resource that matches the search request.
 	Id *ResourceId `json:"id,omitempty"`
 
-	// Kind: The type of this API resource.
+	// Kind: The type of the API response. For this resource, the value will
+	// be youtube#searchResult.
 	Kind string `json:"kind,omitempty"`
 
-	// Snippet: Basic details about the search result: title, description,
-	// author.
+	// Snippet: The snippet object contains basic details about a search
+	// result, such as its title or description. For example, if the search
+	// result is a video, then the title will be the video's title and the
+	// description will be the video's description.
 	Snippet *SearchResultSnippet `json:"snippet,omitempty"`
 }
 
 type SearchResultSnippet struct {
-	// ChannelId: Channel publishing the found resource.
+	// ChannelId: The value that YouTube uses to uniquely identify the
+	// channel that published the resource that the search result
+	// identifies.
 	ChannelId string `json:"channelId,omitempty"`
 
-	// Description: Description of the found resource.
+	// Description: A description of the search result.
 	Description string `json:"description,omitempty"`
 
-	// PublishedAt: Date and time the found resource was published at.
+	// PublishedAt: The creation date and time of the resource that the
+	// search result identifies. The value is specified in ISO 8601
+	// (YYYY-MM-DDThh:mm:ss.sZ) format.
 	PublishedAt string `json:"publishedAt,omitempty"`
 
-	// Thumbnails: Thumbnails for the found resource.
+	// Thumbnails: A map of thumbnail images associated with the search
+	// result. For each object in the map, the key is the name of the
+	// thumbnail image, and the value is an object that contains other
+	// information about the thumbnail.
 	Thumbnails *SearchResultSnippetThumbnails `json:"thumbnails,omitempty"`
 
-	// Title: Title of the found resource.
+	// Title: The title to display for the search result.
 	Title string `json:"title,omitempty"`
 }
 
@@ -637,69 +808,83 @@ type SearchResultSnippetThumbnails struct {
 }
 
 type Subscription struct {
-	// ContentDetails: Basic statistics about the subscription
+	// ContentDetails: The contentDetails object contains basic statistics
+	// about the subscription.
 	ContentDetails *SubscriptionContentDetails `json:"contentDetails,omitempty"`
 
-	// Etag: The eTag of the subscription.
+	// Etag: The ETag of the subscription resource.
 	Etag string `json:"etag,omitempty"`
 
-	// Id: The unique id of the subscription.
+	// Id: The ID that YouTube uses to uniquely identify the subscription.
 	Id string `json:"id,omitempty"`
 
-	// Kind: The type of this API resource.
+	// Kind: The type of the API resource. For subscription resources, the
+	// value will be youtube#subscription.
 	Kind string `json:"kind,omitempty"`
 
-	// Snippet: Basic details about the subscription
+	// Snippet: The snippet object contains basic details about the
+	// subscription, including its title and the channel that the user
+	// subscribed to.
 	Snippet *SubscriptionSnippet `json:"snippet,omitempty"`
 }
 
 type SubscriptionContentDetails struct {
-	// NewItemCount: Number of new items in the subscription since its
+	// NewItemCount: The number of new items in the subscription since its
 	// content was last read.
 	NewItemCount int64 `json:"newItemCount,omitempty"`
 
-	// TotalItemCount: Approximate total number of items the subscription
+	// TotalItemCount: The approximate number of items that the subscription
 	// points to.
 	TotalItemCount int64 `json:"totalItemCount,omitempty"`
 }
 
 type SubscriptionListResponse struct {
-	// Etag: The eTag of the response.
+	// Etag: The ETag of the response.
 	Etag string `json:"etag,omitempty"`
 
-	// Items: List of subscriptions matching the request criteria.
+	// Items: A list of subscriptions that match the request criteria.
 	Items []*Subscription `json:"items,omitempty"`
 
-	// Kind: The type of this API response.
+	// Kind: The type of the API response. For this operation, the value
+	// will be youtube#subscriptionListResponse.
 	Kind string `json:"kind,omitempty"`
 
-	// NextPageToken: Token to the next page.
+	// NextPageToken: The token that can be used as the value of the
+	// pageToken parameter to retrieve the next page in the result set.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// PageInfo: Paging information for the list result.
+	// PageInfo: The pageInfo object encapsulates paging information for the
+	// result set.
 	PageInfo *PageInfo `json:"pageInfo,omitempty"`
 
-	// PrevPageToken: Token to the previous page.
+	// PrevPageToken: The token that can be used as the value of the
+	// pageToken parameter to retrieve the previous page in the result set.
 	PrevPageToken string `json:"prevPageToken,omitempty"`
 }
 
 type SubscriptionSnippet struct {
-	// ChannelId: Channel publishing the subscription.
+	// ChannelId: The ID that YouTube uses to uniquely identify the
+	// subscriber's channel.
 	ChannelId string `json:"channelId,omitempty"`
 
-	// Description: Description of the subscription.
+	// Description: The subscription's details.
 	Description string `json:"description,omitempty"`
 
-	// PublishedAt: Date and time the subscription was published at.
+	// PublishedAt: The date and time that the subscription was created. The
+	// value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.
 	PublishedAt string `json:"publishedAt,omitempty"`
 
-	// ResourceId: The resource subscribed to.
+	// ResourceId: The id object contains information about the channel that
+	// the user subscribed to.
 	ResourceId *ResourceId `json:"resourceId,omitempty"`
 
-	// Thumbnails: Subscription thumbnails.
+	// Thumbnails: A map of thumbnail images associated with the
+	// subscription. For each object in the map, the key is the name of the
+	// thumbnail image, and the value is an object that contains other
+	// information about the thumbnail.
 	Thumbnails *SubscriptionSnippetThumbnails `json:"thumbnails,omitempty"`
 
-	// Title: Title of the subscription.
+	// Title: The subscription's title.
 	Title string `json:"title,omitempty"`
 }
 
@@ -707,125 +892,180 @@ type SubscriptionSnippetThumbnails struct {
 }
 
 type Thumbnail struct {
-	// Url: The URL for the thumbnail.
+	// Url: The thumbnail image's URL.
 	Url string `json:"url,omitempty"`
 }
 
 type Video struct {
-	// ContentDetails: Information about the video content, media file.
+	// ContentDetails: The contentDetails object contains information about
+	// the video content, including the length of the video and its aspect
+	// ratio.
 	ContentDetails *VideoContentDetails `json:"contentDetails,omitempty"`
 
-	// Etag: The eTag of the video.
+	// Etag: The ETag of the video resource.
 	Etag string `json:"etag,omitempty"`
 
-	// Id: The unique id of the video.
+	// Id: The ID that YouTube uses to uniquely identify the video.
 	Id string `json:"id,omitempty"`
 
-	// Kind: The type of this API resource.
+	// Kind: The type of the API resource. For video resources, the value
+	// will be youtube#video.
 	Kind string `json:"kind,omitempty"`
 
-	// Player: Information used to play the video.
+	// Player: The player object contains information that you would use to
+	// play the video in an embedded player.
 	Player *VideoPlayer `json:"player,omitempty"`
 
-	// Snippet: Basic details about the video: title, description,
-	// thumbnails.
+	// RecordingDetails: The recordingDetails object encapsulates
+	// information about the location, date and address where the video was
+	// recorded.
+	RecordingDetails *VideoRecordingDetails `json:"recordingDetails,omitempty"`
+
+	// Snippet: The snippet object contains basic details about the video,
+	// such as its title, description, and category.
 	Snippet *VideoSnippet `json:"snippet,omitempty"`
 
-	// Statistics: Statistics about the video: number of views, ratings.
+	// Statistics: The statistics object contains statistics about the
+	// video.
 	Statistics *VideoStatistics `json:"statistics,omitempty"`
 
-	// Status: Status of the video upload, privacy status.
+	// Status: The status object contains information about the video's
+	// uploading, processing, and privacy statuses.
 	Status *VideoStatus `json:"status,omitempty"`
 
-	// TopicDetails: Topics related to the video
+	// TopicDetails: The topicDetails object encapsulates information about
+	// Freebase topics associated with the video.
 	TopicDetails *VideoTopicDetails `json:"topicDetails,omitempty"`
 }
 
 type VideoCategory struct {
-	// Etag: The eTag of the video.
+	// Etag: The ETag of the videoCategory resource.
 	Etag string `json:"etag,omitempty"`
 
-	// Id: The unique id of the video category.
+	// Id: The ID that YouTube uses to uniquely identify the video category.
 	Id string `json:"id,omitempty"`
 
-	// Kind: The type of this API resource.
+	// Kind: The type of the API resource. For video category resources, the
+	// value will be youtube#videoCategory.
 	Kind string `json:"kind,omitempty"`
 
-	// Snippet: Basic details about the video category.
+	// Snippet: The snippet object contains basic details about the video
+	// category, including its title.
 	Snippet *VideoCategorySnippet `json:"snippet,omitempty"`
 }
 
 type VideoCategoryListResponse struct {
-	// Etag: The eTag of the response.
+	// Etag: The ETag of the response.
 	Etag string `json:"etag,omitempty"`
 
-	// Items: List of video categories matching the request criteria.
+	// Items: A list of video categories that can be associated with YouTube
+	// videos. In this map, the video category ID is the map key, and its
+	// value is the corresponding videoCategory resource.
 	Items []*VideoCategory `json:"items,omitempty"`
 
-	// Kind: The type of this API response.
+	// Kind: The type of the API response. For this operation, the value
+	// will be youtube#videoCategoryListResponse.
 	Kind string `json:"kind,omitempty"`
 }
 
 type VideoCategorySnippet struct {
-	// ChannelId: Channel publishing the video category.
+	// ChannelId: The YouTube channel that created the video category.
 	ChannelId string `json:"channelId,omitempty"`
 
-	// Title: Title of the video category.
+	// Title: The video category's title.
 	Title string `json:"title,omitempty"`
 }
 
 type VideoContentDetails struct {
-	// Duration: Duration of the video.
+	// Duration: The length of the video. The tag value is an ISO 8601
+	// duration in the format PT#M#S, in which the letters PT indicate that
+	// the value specifies a period of time, and the letters M and S refer
+	// to length in minutes and seconds, respectively. The # characters
+	// preceding the M and S letters are both integers that specify the
+	// number of minutes (or seconds) of the video. For example, a value of
+	// PT15M51S indicates that the video is 15 minutes and 51 seconds long.
 	Duration string `json:"duration,omitempty"`
 
-	// RegionRestriction: Region restriction of the video.
+	// RegionRestriction: The regionRestriction object contains information
+	// about the countries where a video is (or is not) viewable. The object
+	// will contain either the contentDetails.regionRestriction.allowed
+	// property or the contentDetails.regionRestriction.blocked property.
 	RegionRestriction *VideoContentDetailsRegionRestriction `json:"regionRestriction,omitempty"`
 }
 
 type VideoContentDetailsRegionRestriction struct {
-	// Allowed: List of allowed region codes.
+	// Allowed: A list of region codes that identify countries where the
+	// video is viewable. If this property is present and a country is not
+	// listed in its value, then the video is blocked from appearing in that
+	// country. If this property is present and contains an empty list, the
+	// video is blocked in all countries.
 	Allowed []string `json:"allowed,omitempty"`
 
-	// Blocked: List of blocked region codes.
+	// Blocked: A list of region codes that identify countries where the
+	// video is blocked. If this property is present and a country is not
+	// listed in its value, then the video is viewable in that country. If
+	// this property is present and contains an empty list, the video is
+	// viewable in all countries.
 	Blocked []string `json:"blocked,omitempty"`
 }
 
 type VideoListResponse struct {
-	// Etag: The eTag of the response.
+	// Etag: The ETag of the response.
 	Etag string `json:"etag,omitempty"`
 
-	// Items: List of videos matching the request criteria.
+	// Items: A list of videos that match the request criteria.
 	Items []*Video `json:"items,omitempty"`
 
-	// Kind: The type of this API response.
+	// Kind: The type of the API response. For this operation, the value
+	// will be youtube#videoListResponse.
 	Kind string `json:"kind,omitempty"`
 }
 
 type VideoPlayer struct {
-	// EmbedHtml: Iframe embed for the video.
+	// EmbedHtml: An <iframe> tag that embeds a player that will play the
+	// video.
 	EmbedHtml string `json:"embedHtml,omitempty"`
 }
 
+type VideoRecordingDetails struct {
+	// Location: The geolocation information associated with the video.
+	Location *GeoPoint `json:"location,omitempty"`
+
+	// LocationDescription: The text description of the location where the
+	// video was recorded.
+	LocationDescription string `json:"locationDescription,omitempty"`
+
+	// RecordingDate: The date and time when the video was recorded. The
+	// value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.
+	RecordingDate string `json:"recordingDate,omitempty"`
+}
+
 type VideoSnippet struct {
-	// CategoryId: Video category the video belongs to.
+	// CategoryId: The YouTube video category associated with the video.
 	CategoryId string `json:"categoryId,omitempty"`
 
-	// ChannelId: Channel publishing the video.
+	// ChannelId: The ID that YouTube uses to uniquely identify the channel
+	// that the video was uploaded to.
 	ChannelId string `json:"channelId,omitempty"`
 
-	// Description: Description of the video.
+	// Description: The video's description.
 	Description string `json:"description,omitempty"`
 
-	// PublishedAt: Date and time the video was published at.
+	// PublishedAt: The date and time that the video was uploaded. The value
+	// is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.
 	PublishedAt string `json:"publishedAt,omitempty"`
 
-	// Tags: Textual tags associated with the video.
+	// Tags: A list of keyword tags associated with the video. Tags may
+	// contain spaces. This field is only visible to the video's uploader.
 	Tags []string `json:"tags,omitempty"`
 
-	// Thumbnails: Video thumbnails.
+	// Thumbnails: A map of thumbnail images associated with the video. For
+	// each object in the map, the key is the name of the thumbnail image,
+	// and the value is an object that contains other information about the
+	// thumbnail.
 	Thumbnails *VideoSnippetThumbnails `json:"thumbnails,omitempty"`
 
-	// Title: Title of the video.
+	// Title: The video's title.
 	Title string `json:"title,omitempty"`
 }
 
@@ -833,41 +1073,47 @@ type VideoSnippetThumbnails struct {
 }
 
 type VideoStatistics struct {
-	// CommentCount: Number of comments for this video.
+	// CommentCount: The number of comments for the video.
 	CommentCount uint64 `json:"commentCount,omitempty,string"`
 
-	// DislikeCount: Number of times the video was disliked.
+	// DislikeCount: The number of users who have indicated that they
+	// disliked the video by giving it a negative rating.
 	DislikeCount uint64 `json:"dislikeCount,omitempty,string"`
 
-	// FavoriteCount: Number of times the video was added to a user's
-	// favorites list.
+	// FavoriteCount: The number of users who currently have the video
+	// marked as a favorite video.
 	FavoriteCount uint64 `json:"favoriteCount,omitempty,string"`
 
-	// LikeCount: Number of times the video was liked.
+	// LikeCount: The number of users who have indicated that they liked the
+	// video by giving it a positive rating.
 	LikeCount uint64 `json:"likeCount,omitempty,string"`
 
-	// ViewCount: Number of times the video was viewed.
+	// ViewCount: The number of times the video has been viewed.
 	ViewCount uint64 `json:"viewCount,omitempty,string"`
 }
 
 type VideoStatus struct {
-	// FailureReason: Present only if the uploadStatus indicates a failed
-	// upload.
+	// FailureReason: This value explains why a video failed to upload. This
+	// property is only present if the uploadStatus property indicates that
+	// the upload failed.
 	FailureReason string `json:"failureReason,omitempty"`
 
-	// PrivacyStatus: Privacy of the video.
+	// PrivacyStatus: The video's privacy status.
 	PrivacyStatus string `json:"privacyStatus,omitempty"`
 
-	// RejectionReason: Present only if the uploadStatus indicates a
-	// rejected upload.
+	// RejectionReason: This value explains why YouTube rejected an uploaded
+	// video. This property is only present if the uploadStatus property
+	// indicates that the upload was rejected.
 	RejectionReason string `json:"rejectionReason,omitempty"`
 
-	// UploadStatus: Status of the video upload.
+	// UploadStatus: The status of the uploaded video.
 	UploadStatus string `json:"uploadStatus,omitempty"`
 }
 
 type VideoTopicDetails struct {
-	// TopicIds: List of topic ids for this video *
+	// TopicIds: A list of Freebase topic IDs associated with the video. You
+	// can retrieve information about each topic using the Freebase Topic
+	// API.
 	TopicIds []string `json:"topicIds,omitempty"`
 }
 
@@ -880,19 +1126,12 @@ type ActivitiesInsertCall struct {
 	opt_     map[string]interface{}
 }
 
-// Insert: Post a channel bulletin.
+// Insert: Posts a bulletin for a specific channel. (The user submitting
+// the request must be authorized to act on the channel's behalf.)
 func (r *ActivitiesService) Insert(part string, activity *Activity) *ActivitiesInsertCall {
 	c := &ActivitiesInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.part = part
 	c.activity = activity
-	return c
-}
-
-// OnBehalfOfContentOwner sets the optional parameter
-// "onBehalfOfContentOwner": The authenticated user acts on behalf of
-// this content owner.
-func (c *ActivitiesInsertCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *ActivitiesInsertCall {
-	c.opt_["onBehalfOfContentOwner"] = onBehalfOfContentOwner
 	return c
 }
 
@@ -906,9 +1145,6 @@ func (c *ActivitiesInsertCall) Do() (*Activity, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("part", fmt.Sprintf("%v", c.part))
-	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
-		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
-	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "activities")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -927,20 +1163,15 @@ func (c *ActivitiesInsertCall) Do() (*Activity, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Post a channel bulletin.",
+	//   "description": "Posts a bulletin for a specific channel. (The user submitting the request must be authorized to act on the channel's behalf.)",
 	//   "httpMethod": "POST",
 	//   "id": "youtube.activities.insert",
 	//   "parameterOrder": [
 	//     "part"
 	//   ],
 	//   "parameters": {
-	//     "onBehalfOfContentOwner": {
-	//       "description": "The authenticated user acts on behalf of this content owner.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "part": {
-	//       "description": "One or more parts to return on the current request.",
+	//       "description": "The part parameter serves two purposes in this operation. It identifies the properties that the write operation will set as well as the properties that the API response will include.\n\nThe part names that you can include in the parameter value are snippet and contentDetails.",
 	//       "location": "query",
 	//       "required": true,
 	//       "type": "string"
@@ -968,65 +1199,73 @@ type ActivitiesListCall struct {
 	opt_ map[string]interface{}
 }
 
-// List: Browse the YouTube channel activity collection.
+// List: Returns a list of channel activity events that match the
+// request criteria. For example, you can retrieve events associated
+// with a particular channel, events associated with the user's
+// subscriptions and Google+ friends, or the YouTube home page feed,
+// which is customized for each user.
 func (r *ActivitiesService) List(part string) *ActivitiesListCall {
 	c := &ActivitiesListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.part = part
 	return c
 }
 
-// ChannelId sets the optional parameter "channelId": YouTube ID of the
-// channel.
+// ChannelId sets the optional parameter "channelId": The channelId
+// parameter specifies a unique YouTube channel ID. The API will then
+// return a list of that channel's activities.
 func (c *ActivitiesListCall) ChannelId(channelId string) *ActivitiesListCall {
 	c.opt_["channelId"] = channelId
 	return c
 }
 
-// Home sets the optional parameter "home": Flag indicating to return
-// user's homepage feed.
+// Home sets the optional parameter "home": Set this parameter's value
+// to true to retrieve the activity feed that displays on the YouTube
+// home page for the currently authenticated user.
 func (c *ActivitiesListCall) Home(home string) *ActivitiesListCall {
 	c.opt_["home"] = home
 	return c
 }
 
-// MaxResults sets the optional parameter "maxResults": Maximum number
-// of results to return
+// MaxResults sets the optional parameter "maxResults": USE_DESCRIPTION
+// --- channels:list:maxResults
 func (c *ActivitiesListCall) MaxResults(maxResults int64) *ActivitiesListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
 }
 
-// Mine sets the optional parameter "mine": Flag indicating to return
-// user's activities.
-func (c *ActivitiesListCall) Mine(mine string) *ActivitiesListCall {
+// Mine sets the optional parameter "mine": Set this parameter's value
+// to true to retrieve a feed of the authenticated user's activities.
+func (c *ActivitiesListCall) Mine(mine bool) *ActivitiesListCall {
 	c.opt_["mine"] = mine
 	return c
 }
 
-// OnBehalfOfContentOwner sets the optional parameter
-// "onBehalfOfContentOwner": The authenticated user acts on behalf of
-// this content owner.
-func (c *ActivitiesListCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *ActivitiesListCall {
-	c.opt_["onBehalfOfContentOwner"] = onBehalfOfContentOwner
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": Token for the page
-// selection.
+// PageToken sets the optional parameter "pageToken": USE_DESCRIPTION
+// --- channels:list:pageToken
 func (c *ActivitiesListCall) PageToken(pageToken string) *ActivitiesListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
 }
 
-// PublishedAfter sets the optional parameter "publishedAfter": Only
-// return activities published after given date (inclusive).
+// PublishedAfter sets the optional parameter "publishedAfter": The
+// publishedAfter parameter specifies the earliest date and time that an
+// activity could have occurred for that activity to be included in the
+// API response. If the parameter value specifies a day, but not a time,
+// then any activities that occurred that day will be included in the
+// result set. The value is specified in ISO 8601
+// (YYYY-MM-DDThh:mm:ss.sZ) format.
 func (c *ActivitiesListCall) PublishedAfter(publishedAfter string) *ActivitiesListCall {
 	c.opt_["publishedAfter"] = publishedAfter
 	return c
 }
 
-// PublishedBefore sets the optional parameter "publishedBefore": Only
-// return activities published before given date (exclusive).
+// PublishedBefore sets the optional parameter "publishedBefore": The
+// publishedBefore parameter specifies the date and time before which an
+// activity must have occurred for that activity to be included in the
+// API response. If the parameter value specifies a day, but not a time,
+// then any activities that occurred that day will be excluded from the
+// result set. The value is specified in ISO 8601
+// (YYYY-MM-DDThh:mm:ss.sZ) format.
 func (c *ActivitiesListCall) PublishedBefore(publishedBefore string) *ActivitiesListCall {
 	c.opt_["publishedBefore"] = publishedBefore
 	return c
@@ -1048,9 +1287,6 @@ func (c *ActivitiesListCall) Do() (*ActivityListResponse, error) {
 	}
 	if v, ok := c.opt_["mine"]; ok {
 		params.Set("mine", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
-		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
@@ -1078,7 +1314,7 @@ func (c *ActivitiesListCall) Do() (*ActivityListResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Browse the YouTube channel activity collection.",
+	//   "description": "Returns a list of channel activity events that match the request criteria. For example, you can retrieve events associated with a particular channel, events associated with the user's subscriptions and Google+ friends, or the YouTube home page feed, which is customized for each user.",
 	//   "httpMethod": "GET",
 	//   "id": "youtube.activities.list",
 	//   "parameterOrder": [
@@ -1086,18 +1322,18 @@ func (c *ActivitiesListCall) Do() (*ActivityListResponse, error) {
 	//   ],
 	//   "parameters": {
 	//     "channelId": {
-	//       "description": "YouTube ID of the channel.",
+	//       "description": "The channelId parameter specifies a unique YouTube channel ID. The API will then return a list of that channel's activities.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "home": {
-	//       "description": "Flag indicating to return user's homepage feed.",
+	//       "description": "Set this parameter's value to true to retrieve the activity feed that displays on the YouTube home page for the currently authenticated user.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
 	//       "default": "5",
-	//       "description": "Maximum number of results to return",
+	//       "description": "USE_DESCRIPTION --- channels:list:maxResults",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "50",
@@ -1105,34 +1341,29 @@ func (c *ActivitiesListCall) Do() (*ActivityListResponse, error) {
 	//       "type": "integer"
 	//     },
 	//     "mine": {
-	//       "description": "Flag indicating to return user's activities.",
+	//       "description": "Set this parameter's value to true to retrieve a feed of the authenticated user's activities.",
 	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "onBehalfOfContentOwner": {
-	//       "description": "The authenticated user acts on behalf of this content owner.",
-	//       "location": "query",
-	//       "type": "string"
+	//       "type": "boolean"
 	//     },
 	//     "pageToken": {
-	//       "description": "Token for the page selection.",
+	//       "description": "USE_DESCRIPTION --- channels:list:pageToken",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "part": {
-	//       "description": "Activity parts to include in the returned response. Valid values are: id, snippet and contentDetails.",
+	//       "description": "The part parameter specifies a comma-separated list of one or more activity resource properties that the API response will include. The part names that you can include in the parameter value are id, snippet, and contentDetails.\n\nIf the parameter identifies a property that contains child properties, the child properties will be included in the response. For example, in a activity resource, the snippet property contains other properties that identify the type of activity, a display title for the activity, and so forth. If you set part=snippet, the API response will also contain all of those nested properties.",
 	//       "location": "query",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "publishedAfter": {
-	//       "description": "Only return activities published after given date (inclusive).",
+	//       "description": "The publishedAfter parameter specifies the earliest date and time that an activity could have occurred for that activity to be included in the API response. If the parameter value specifies a day, but not a time, then any activities that occurred that day will be included in the result set. The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.",
 	//       "format": "date-time",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "publishedBefore": {
-	//       "description": "Only return activities published before given date (exclusive).",
+	//       "description": "The publishedBefore parameter specifies the date and time before which an activity must have occurred for that activity to be included in the API response. If the parameter value specifies a day, but not a time, then any activities that occurred that day will be excluded from the result set. The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.",
 	//       "format": "date-time",
 	//       "location": "query",
 	//       "type": "string"
@@ -1158,59 +1389,59 @@ type ChannelsListCall struct {
 	opt_ map[string]interface{}
 }
 
-// List: Browse the YouTube channel collection. Either the 'id' or
-// 'mine' parameter must be set.
+// List: Returns a collection of zero or more channel resources that
+// match the request criteria.
 func (r *ChannelsService) List(part string) *ChannelsListCall {
 	c := &ChannelsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.part = part
 	return c
 }
 
-// CategoryId sets the optional parameter "categoryId": Filter to
-// retrieve the channels within the given category ID.
+// CategoryId sets the optional parameter "categoryId": The categoryId
+// parameter specifies a YouTube guide category, thereby requesting
+// YouTube channels associated with that category.
 func (c *ChannelsListCall) CategoryId(categoryId string) *ChannelsListCall {
 	c.opt_["categoryId"] = categoryId
 	return c
 }
 
-// Id sets the optional parameter "id": YouTube IDs of the channels to
-// be returned.
+// Id sets the optional parameter "id": The id parameter specifies a
+// comma-separated list of the YouTube channel ID(s) for the resource(s)
+// that are being retrieved. In a channel resource, the id property
+// specifies the channel's YouTube channel ID.
 func (c *ChannelsListCall) Id(id string) *ChannelsListCall {
 	c.opt_["id"] = id
 	return c
 }
 
-// MaxResults sets the optional parameter "maxResults": Maximum number
-// of results to return
+// MaxResults sets the optional parameter "maxResults": The maxResults
+// parameter specifies the maximum number of items that should be
+// returned in the result set.
 func (c *ChannelsListCall) MaxResults(maxResults int64) *ChannelsListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
 }
 
-// Mine sets the optional parameter "mine": Filter to only channels
-// owned by authenticated user.
-func (c *ChannelsListCall) Mine(mine string) *ChannelsListCall {
+// Mine sets the optional parameter "mine": Set this parameter's value
+// to true to instruct the API to only return channels owned by the
+// authenticated user.
+func (c *ChannelsListCall) Mine(mine bool) *ChannelsListCall {
 	c.opt_["mine"] = mine
 	return c
 }
 
-// MySubscribers sets the optional parameter "mySubscribers": Filter to
-// channels that subscribed to the channel of the authenticated user.
+// MySubscribers sets the optional parameter "mySubscribers": Set this
+// parameter's value to true to retrieve a list of channels that
+// subscribed to the authenticated user's channel.
 func (c *ChannelsListCall) MySubscribers(mySubscribers string) *ChannelsListCall {
 	c.opt_["mySubscribers"] = mySubscribers
 	return c
 }
 
-// OnBehalfOfContentOwner sets the optional parameter
-// "onBehalfOfContentOwner": The authenticated user acts on behalf of
-// this content owner.
-func (c *ChannelsListCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *ChannelsListCall {
-	c.opt_["onBehalfOfContentOwner"] = onBehalfOfContentOwner
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": Token for the page
-// selection.
+// PageToken sets the optional parameter "pageToken": The pageToken
+// parameter identifies a specific page in the result set that should be
+// returned. In an API response, the nextPageToken and prevPageToken
+// properties identify other pages that could be retrieved.
 func (c *ChannelsListCall) PageToken(pageToken string) *ChannelsListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -1236,9 +1467,6 @@ func (c *ChannelsListCall) Do() (*ChannelListResponse, error) {
 	if v, ok := c.opt_["mySubscribers"]; ok {
 		params.Set("mySubscribers", fmt.Sprintf("%v", v))
 	}
-	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
-		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
-	}
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
@@ -1259,7 +1487,7 @@ func (c *ChannelsListCall) Do() (*ChannelListResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Browse the YouTube channel collection. Either the 'id' or 'mine' parameter must be set.",
+	//   "description": "Returns a collection of zero or more channel resources that match the request criteria.",
 	//   "httpMethod": "GET",
 	//   "id": "youtube.channels.list",
 	//   "parameterOrder": [
@@ -1267,18 +1495,18 @@ func (c *ChannelsListCall) Do() (*ChannelListResponse, error) {
 	//   ],
 	//   "parameters": {
 	//     "categoryId": {
-	//       "description": "Filter to retrieve the channels within the given category ID.",
+	//       "description": "The categoryId parameter specifies a YouTube guide category, thereby requesting YouTube channels associated with that category.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "id": {
-	//       "description": "YouTube IDs of the channels to be returned.",
+	//       "description": "The id parameter specifies a comma-separated list of the YouTube channel ID(s) for the resource(s) that are being retrieved. In a channel resource, the id property specifies the channel's YouTube channel ID.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
 	//       "default": "5",
-	//       "description": "Maximum number of results to return",
+	//       "description": "The maxResults parameter specifies the maximum number of items that should be returned in the result set.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "50",
@@ -1286,27 +1514,22 @@ func (c *ChannelsListCall) Do() (*ChannelListResponse, error) {
 	//       "type": "integer"
 	//     },
 	//     "mine": {
-	//       "description": "Filter to only channels owned by authenticated user.",
+	//       "description": "Set this parameter's value to true to instruct the API to only return channels owned by the authenticated user.",
 	//       "location": "query",
-	//       "type": "string"
+	//       "type": "boolean"
 	//     },
 	//     "mySubscribers": {
-	//       "description": "Filter to channels that subscribed to the channel of the authenticated user.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "onBehalfOfContentOwner": {
-	//       "description": "The authenticated user acts on behalf of this content owner.",
+	//       "description": "Set this parameter's value to true to retrieve a list of channels that subscribed to the authenticated user's channel.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageToken": {
-	//       "description": "Token for the page selection.",
+	//       "description": "The pageToken parameter identifies a specific page in the result set that should be returned. In an API response, the nextPageToken and prevPageToken properties identify other pages that could be retrieved.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "part": {
-	//       "description": "Channel parts to include in the returned response. Valid values are: id, snippet, contentDetails and topicDetails.",
+	//       "description": "The part parameter specifies a comma-separated list of one or more channel resource properties that the API response will include. The part names that you can include in the parameter value are id, snippet, contentDetails, statistics, and topicDetails.\n\nIf the parameter identifies a property that contains child properties, the child properties will be included in the response. For example, in a channel resource, the contentDetails property contains other properties, such as the uploads properties. As such, if you set part=contentDetails, the API response will also contain all of those nested properties.",
 	//       "location": "query",
 	//       "required": true,
 	//       "type": "string"
@@ -1333,37 +1556,34 @@ type GuideCategoriesListCall struct {
 	opt_ map[string]interface{}
 }
 
-// List: Browse the YouTube guide category collection.
+// List: Returns a list of categories that can be associated with
+// YouTube channels.
 func (r *GuideCategoriesService) List(part string) *GuideCategoriesListCall {
 	c := &GuideCategoriesListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.part = part
 	return c
 }
 
-// Hl sets the optional parameter "hl": Language for the returned
-// channelCategories.
+// Hl sets the optional parameter "hl": The hl parameter specifies the
+// language that will be used for text values in the API response.
 func (c *GuideCategoriesListCall) Hl(hl string) *GuideCategoriesListCall {
 	c.opt_["hl"] = hl
 	return c
 }
 
-// Id sets the optional parameter "id": Comma-separated YouTube IDs of
-// the channelCategories to be returned.
+// Id sets the optional parameter "id": The id parameter specifies a
+// comma-separated list of the YouTube channel category ID(s) for the
+// resource(s) that are being retrieved. In a guideCategory resource,
+// the id property specifies the YouTube channel category ID.
 func (c *GuideCategoriesListCall) Id(id string) *GuideCategoriesListCall {
 	c.opt_["id"] = id
 	return c
 }
 
-// OnBehalfOfContentOwner sets the optional parameter
-// "onBehalfOfContentOwner": The authenticated user acts on behalf of
-// this content owner.
-func (c *GuideCategoriesListCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *GuideCategoriesListCall {
-	c.opt_["onBehalfOfContentOwner"] = onBehalfOfContentOwner
-	return c
-}
-
-// RegionCode sets the optional parameter "regionCode": Return the
-// channelCategories in the given region code.
+// RegionCode sets the optional parameter "regionCode": The regionCode
+// parameter instructs the API to return the list of guide categories
+// available in the specified country. The parameter value is an ISO
+// 3166-1 alpha-2 country code.
 func (c *GuideCategoriesListCall) RegionCode(regionCode string) *GuideCategoriesListCall {
 	c.opt_["regionCode"] = regionCode
 	return c
@@ -1379,9 +1599,6 @@ func (c *GuideCategoriesListCall) Do() (*GuideCategoryListResponse, error) {
 	}
 	if v, ok := c.opt_["id"]; ok {
 		params.Set("id", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
-		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["regionCode"]; ok {
 		params.Set("regionCode", fmt.Sprintf("%v", v))
@@ -1403,7 +1620,7 @@ func (c *GuideCategoriesListCall) Do() (*GuideCategoryListResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Browse the YouTube guide category collection.",
+	//   "description": "Returns a list of categories that can be associated with YouTube channels.",
 	//   "httpMethod": "GET",
 	//   "id": "youtube.guideCategories.list",
 	//   "parameterOrder": [
@@ -1412,28 +1629,23 @@ func (c *GuideCategoriesListCall) Do() (*GuideCategoryListResponse, error) {
 	//   "parameters": {
 	//     "hl": {
 	//       "default": "en-US",
-	//       "description": "Language for the returned channelCategories.",
+	//       "description": "The hl parameter specifies the language that will be used for text values in the API response.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "id": {
-	//       "description": "Comma-separated YouTube IDs of the channelCategories to be returned.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "onBehalfOfContentOwner": {
-	//       "description": "The authenticated user acts on behalf of this content owner.",
+	//       "description": "The id parameter specifies a comma-separated list of the YouTube channel category ID(s) for the resource(s) that are being retrieved. In a guideCategory resource, the id property specifies the YouTube channel category ID.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "part": {
-	//       "description": "Guide category parts to include in the returned response. Valid values are: id and snippet.",
+	//       "description": "The part parameter specifies a comma-separated list of one or more guideCategory resource properties that the API response will include. The part names that you can include in the parameter value are id and snippet.\n\nIf the parameter identifies a property that contains child properties, the child properties will be included in the response. For example, in a guideCategory resource, the snippet property contains other properties, such as the category's title. If you set part=snippet, the API response will also contain all of those nested properties.",
 	//       "location": "query",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "regionCode": {
-	//       "description": "Return the channelCategories in the given region code.",
+	//       "description": "The regionCode parameter instructs the API to return the list of guide categories available in the specified country. The parameter value is an ISO 3166-1 alpha-2 country code.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -1459,18 +1671,10 @@ type PlaylistItemsDeleteCall struct {
 	opt_ map[string]interface{}
 }
 
-// Delete: Deletes playlist items by IDs.
+// Delete: Deletes a playlist item.
 func (r *PlaylistItemsService) Delete(id string) *PlaylistItemsDeleteCall {
 	c := &PlaylistItemsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.id = id
-	return c
-}
-
-// OnBehalfOfContentOwner sets the optional parameter
-// "onBehalfOfContentOwner": The authenticated user acts on behalf of
-// this content owner.
-func (c *PlaylistItemsDeleteCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *PlaylistItemsDeleteCall {
-	c.opt_["onBehalfOfContentOwner"] = onBehalfOfContentOwner
 	return c
 }
 
@@ -1479,9 +1683,6 @@ func (c *PlaylistItemsDeleteCall) Do() error {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("id", fmt.Sprintf("%v", c.id))
-	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
-		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
-	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "playlistItems")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
@@ -1495,7 +1696,7 @@ func (c *PlaylistItemsDeleteCall) Do() error {
 	}
 	return nil
 	// {
-	//   "description": "Deletes playlist items by IDs.",
+	//   "description": "Deletes a playlist item.",
 	//   "httpMethod": "DELETE",
 	//   "id": "youtube.playlistItems.delete",
 	//   "parameterOrder": [
@@ -1503,14 +1704,9 @@ func (c *PlaylistItemsDeleteCall) Do() error {
 	//   ],
 	//   "parameters": {
 	//     "id": {
-	//       "description": "YouTube IDs of the playlist items to be deleted.",
+	//       "description": "The id parameter specifies the YouTube playlist item ID for the playlist item that is being deleted. In a playlistItem resource, the id property specifies the playlist item's ID.",
 	//       "location": "query",
 	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "onBehalfOfContentOwner": {
-	//       "description": "The authenticated user acts on behalf of this content owner.",
-	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -1532,19 +1728,11 @@ type PlaylistItemsInsertCall struct {
 	opt_         map[string]interface{}
 }
 
-// Insert: Insert a resource into a playlist.
+// Insert: Adds a resource to a playlist.
 func (r *PlaylistItemsService) Insert(part string, playlistitem *PlaylistItem) *PlaylistItemsInsertCall {
 	c := &PlaylistItemsInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.part = part
 	c.playlistitem = playlistitem
-	return c
-}
-
-// OnBehalfOfContentOwner sets the optional parameter
-// "onBehalfOfContentOwner": The authenticated user acts on behalf of
-// this content owner.
-func (c *PlaylistItemsInsertCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *PlaylistItemsInsertCall {
-	c.opt_["onBehalfOfContentOwner"] = onBehalfOfContentOwner
 	return c
 }
 
@@ -1558,9 +1746,6 @@ func (c *PlaylistItemsInsertCall) Do() (*PlaylistItem, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("part", fmt.Sprintf("%v", c.part))
-	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
-		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
-	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "playlistItems")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -1579,20 +1764,15 @@ func (c *PlaylistItemsInsertCall) Do() (*PlaylistItem, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Insert a resource into a playlist.",
+	//   "description": "Adds a resource to a playlist.",
 	//   "httpMethod": "POST",
 	//   "id": "youtube.playlistItems.insert",
 	//   "parameterOrder": [
 	//     "part"
 	//   ],
 	//   "parameters": {
-	//     "onBehalfOfContentOwner": {
-	//       "description": "The authenticated user acts on behalf of this content owner.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "part": {
-	//       "description": "One or more parts to return on the current request.",
+	//       "description": "The part parameter serves two purposes in this operation. It identifies the properties that the write operation will set as well as the properties that the API response will include.\n\nThe part names that you can include in the parameter value are snippet and contentDetails.",
 	//       "location": "query",
 	//       "required": true,
 	//       "type": "string"
@@ -1621,44 +1801,42 @@ type PlaylistItemsListCall struct {
 	opt_ map[string]interface{}
 }
 
-// List: Browse the YouTube playlist collection.
+// List: Returns a collection of playlist items that match the API
+// request parameters. You can retrieve all of the playlist items in a
+// specified playlist or retrieve one or more playlist items by their
+// unique IDs.
 func (r *PlaylistItemsService) List(part string) *PlaylistItemsListCall {
 	c := &PlaylistItemsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.part = part
 	return c
 }
 
-// Id sets the optional parameter "id": YouTube IDs of the playlist
-// items to be returned.
+// Id sets the optional parameter "id": The id parameter specifies a
+// comma-separated list of one or more unique playlist item IDs.
 func (c *PlaylistItemsListCall) Id(id string) *PlaylistItemsListCall {
 	c.opt_["id"] = id
 	return c
 }
 
-// MaxResults sets the optional parameter "maxResults": Maximum number
-// of results to return
+// MaxResults sets the optional parameter "maxResults": USE_DESCRIPTION
+// --- channels:list:maxResults
 func (c *PlaylistItemsListCall) MaxResults(maxResults int64) *PlaylistItemsListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
 }
 
-// OnBehalfOfContentOwner sets the optional parameter
-// "onBehalfOfContentOwner": The authenticated user acts on behalf of
-// this content owner.
-func (c *PlaylistItemsListCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *PlaylistItemsListCall {
-	c.opt_["onBehalfOfContentOwner"] = onBehalfOfContentOwner
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": Token for the page
-// selection.
+// PageToken sets the optional parameter "pageToken": USE_DESCRIPTION
+// --- channels:list:pageToken
 func (c *PlaylistItemsListCall) PageToken(pageToken string) *PlaylistItemsListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
 }
 
-// PlaylistId sets the optional parameter "playlistId": Retrieves
-// playlist items from the given playlist id.
+// PlaylistId sets the optional parameter "playlistId": The playlistId
+// parameter specifies the unique ID of the playlist for which you want
+// to retrieve playlist items. Note that even though this is an optional
+// parameter, every request to retrieve playlist items must specify a
+// value for either the id parameter or the playlistId parameter.
 func (c *PlaylistItemsListCall) PlaylistId(playlistId string) *PlaylistItemsListCall {
 	c.opt_["playlistId"] = playlistId
 	return c
@@ -1674,9 +1852,6 @@ func (c *PlaylistItemsListCall) Do() (*PlaylistItemListResponse, error) {
 	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
-		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
@@ -1701,7 +1876,7 @@ func (c *PlaylistItemsListCall) Do() (*PlaylistItemListResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Browse the YouTube playlist collection.",
+	//   "description": "Returns a collection of playlist items that match the API request parameters. You can retrieve all of the playlist items in a specified playlist or retrieve one or more playlist items by their unique IDs.",
 	//   "httpMethod": "GET",
 	//   "id": "youtube.playlistItems.list",
 	//   "parameterOrder": [
@@ -1709,37 +1884,32 @@ func (c *PlaylistItemsListCall) Do() (*PlaylistItemListResponse, error) {
 	//   ],
 	//   "parameters": {
 	//     "id": {
-	//       "description": "YouTube IDs of the playlist items to be returned.",
+	//       "description": "The id parameter specifies a comma-separated list of one or more unique playlist item IDs.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
 	//       "default": "5",
-	//       "description": "Maximum number of results to return",
+	//       "description": "USE_DESCRIPTION --- channels:list:maxResults",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "50",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
-	//     "onBehalfOfContentOwner": {
-	//       "description": "The authenticated user acts on behalf of this content owner.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "pageToken": {
-	//       "description": "Token for the page selection.",
+	//       "description": "USE_DESCRIPTION --- channels:list:pageToken",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "part": {
-	//       "description": "Playlist item parts to include in the returned response. Valid values are: id, snippet and contentDetails.",
+	//       "description": "The part parameter specifies a comma-separated list of one or more playlistItem resource properties that the API response will include. The part names that you can include in the parameter value are id, snippet, and contentDetails.\n\nIf the parameter identifies a property that contains child properties, the child properties will be included in the response. For example, in a playlistItem resource, the snippet property contains numerous fields, including the title, description, position, and resourceId properties. As such, if you set part=snippet, the API response will contain all of those properties.",
 	//       "location": "query",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "playlistId": {
-	//       "description": "Retrieves playlist items from the given playlist id.",
+	//       "description": "The playlistId parameter specifies the unique ID of the playlist for which you want to retrieve playlist items. Note that even though this is an optional parameter, every request to retrieve playlist items must specify a value for either the id parameter or the playlistId parameter.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -1766,19 +1936,12 @@ type PlaylistItemsUpdateCall struct {
 	opt_         map[string]interface{}
 }
 
-// Update: Update a playlist item.
+// Update: Modifies a playlist item. For example, you could update the
+// item's position in the playlist.
 func (r *PlaylistItemsService) Update(part string, playlistitem *PlaylistItem) *PlaylistItemsUpdateCall {
 	c := &PlaylistItemsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.part = part
 	c.playlistitem = playlistitem
-	return c
-}
-
-// OnBehalfOfContentOwner sets the optional parameter
-// "onBehalfOfContentOwner": The authenticated user acts on behalf of
-// this content owner.
-func (c *PlaylistItemsUpdateCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *PlaylistItemsUpdateCall {
-	c.opt_["onBehalfOfContentOwner"] = onBehalfOfContentOwner
 	return c
 }
 
@@ -1792,9 +1955,6 @@ func (c *PlaylistItemsUpdateCall) Do() (*PlaylistItem, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("part", fmt.Sprintf("%v", c.part))
-	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
-		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
-	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "playlistItems")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
@@ -1813,20 +1973,15 @@ func (c *PlaylistItemsUpdateCall) Do() (*PlaylistItem, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Update a playlist item.",
+	//   "description": "Modifies a playlist item. For example, you could update the item's position in the playlist.",
 	//   "httpMethod": "PUT",
 	//   "id": "youtube.playlistItems.update",
 	//   "parameterOrder": [
 	//     "part"
 	//   ],
 	//   "parameters": {
-	//     "onBehalfOfContentOwner": {
-	//       "description": "The authenticated user acts on behalf of this content owner.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "part": {
-	//       "description": "One or more parts to return on the current request.",
+	//       "description": "The part parameter serves two purposes in this operation. It identifies the properties that the write operation will set as well as the properties that the API response will include.\n\nThe part names that you can include in the parameter value are snippet and contentDetails.\n\nNote that this method will override the existing values for all of the mutable properties that are contained in any parts that the parameter value specifies. For example, a playlist item can specify a start time and end time, which identify the times portion of the video that should play when users watch the video in the playlist. If your request is updating a playlist item that sets these values, and the request's part parameter value includes the contentDetails part, the playlist item's start and end times will be updated to whatever value the request body specifies. If the request body does not specify values, the existing start and end times will be removed and replaced with the default settings.",
 	//       "location": "query",
 	//       "required": true,
 	//       "type": "string"
@@ -1855,18 +2010,10 @@ type PlaylistsDeleteCall struct {
 	opt_ map[string]interface{}
 }
 
-// Delete: Deletes playlists by IDs.
+// Delete: Deletes a playlist.
 func (r *PlaylistsService) Delete(id string) *PlaylistsDeleteCall {
 	c := &PlaylistsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.id = id
-	return c
-}
-
-// OnBehalfOfContentOwner sets the optional parameter
-// "onBehalfOfContentOwner": The authenticated user acts on behalf of
-// this content owner.
-func (c *PlaylistsDeleteCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *PlaylistsDeleteCall {
-	c.opt_["onBehalfOfContentOwner"] = onBehalfOfContentOwner
 	return c
 }
 
@@ -1875,9 +2022,6 @@ func (c *PlaylistsDeleteCall) Do() error {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("id", fmt.Sprintf("%v", c.id))
-	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
-		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
-	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "playlists")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
@@ -1891,7 +2035,7 @@ func (c *PlaylistsDeleteCall) Do() error {
 	}
 	return nil
 	// {
-	//   "description": "Deletes playlists by IDs.",
+	//   "description": "Deletes a playlist.",
 	//   "httpMethod": "DELETE",
 	//   "id": "youtube.playlists.delete",
 	//   "parameterOrder": [
@@ -1899,14 +2043,9 @@ func (c *PlaylistsDeleteCall) Do() error {
 	//   ],
 	//   "parameters": {
 	//     "id": {
-	//       "description": "YouTube IDs of the playlists to be deleted.",
+	//       "description": "The id parameter specifies the YouTube playlist ID for the playlist that is being deleted. In a playlist resource, the id property specifies the playlist's ID.",
 	//       "location": "query",
 	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "onBehalfOfContentOwner": {
-	//       "description": "The authenticated user acts on behalf of this content owner.",
-	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -1928,19 +2067,11 @@ type PlaylistsInsertCall struct {
 	opt_     map[string]interface{}
 }
 
-// Insert: Create a playlist.
+// Insert: Creates a playlist.
 func (r *PlaylistsService) Insert(part string, playlist *Playlist) *PlaylistsInsertCall {
 	c := &PlaylistsInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.part = part
 	c.playlist = playlist
-	return c
-}
-
-// OnBehalfOfContentOwner sets the optional parameter
-// "onBehalfOfContentOwner": The authenticated user acts on behalf of
-// this content owner.
-func (c *PlaylistsInsertCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *PlaylistsInsertCall {
-	c.opt_["onBehalfOfContentOwner"] = onBehalfOfContentOwner
 	return c
 }
 
@@ -1954,9 +2085,6 @@ func (c *PlaylistsInsertCall) Do() (*Playlist, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("part", fmt.Sprintf("%v", c.part))
-	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
-		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
-	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "playlists")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -1975,20 +2103,15 @@ func (c *PlaylistsInsertCall) Do() (*Playlist, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Create a playlist.",
+	//   "description": "Creates a playlist.",
 	//   "httpMethod": "POST",
 	//   "id": "youtube.playlists.insert",
 	//   "parameterOrder": [
 	//     "part"
 	//   ],
 	//   "parameters": {
-	//     "onBehalfOfContentOwner": {
-	//       "description": "The authenticated user acts on behalf of this content owner.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "part": {
-	//       "description": "One or more parts to return on the current request.",
+	//       "description": "The part parameter serves two purposes in this operation. It identifies the properties that the write operation will set as well as the properties that the API response will include.\n\nThe part names that you can include in the parameter value are snippet and status.",
 	//       "location": "query",
 	//       "required": true,
 	//       "type": "string"
@@ -2017,44 +2140,50 @@ type PlaylistsListCall struct {
 	opt_ map[string]interface{}
 }
 
-// List: Browse the YouTube playlist collection.
+// List: Returns a collection of playlists that match the API request
+// parameters. For example, you can retrieve all playlists that the
+// authenticated user owns, or you can retrieve one or more playlists by
+// their unique IDs.
 func (r *PlaylistsService) List(part string) *PlaylistsListCall {
 	c := &PlaylistsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.part = part
 	return c
 }
 
-// Id sets the optional parameter "id": Comma-separated YouTube IDs of
-// the playlists to be returned.
+// ChannelId sets the optional parameter "channelId": This value
+// indicates that the API should only return the specified channel's
+// playlists.
+func (c *PlaylistsListCall) ChannelId(channelId string) *PlaylistsListCall {
+	c.opt_["channelId"] = channelId
+	return c
+}
+
+// Id sets the optional parameter "id": The id parameter specifies a
+// comma-separated list of the YouTube playlist ID(s) for the
+// resource(s) that are being retrieved. In a playlist resource, the id
+// property specifies the playlist's YouTube playlist ID.
 func (c *PlaylistsListCall) Id(id string) *PlaylistsListCall {
 	c.opt_["id"] = id
 	return c
 }
 
-// MaxResults sets the optional parameter "maxResults": Maximum number
-// of results to return
+// MaxResults sets the optional parameter "maxResults": USE_DESCRIPTION
+// --- channels:list:maxResults
 func (c *PlaylistsListCall) MaxResults(maxResults int64) *PlaylistsListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
 }
 
-// Mine sets the optional parameter "mine": Flag indicating only return
-// the playlists of the authenticated user.
-func (c *PlaylistsListCall) Mine(mine string) *PlaylistsListCall {
+// Mine sets the optional parameter "mine": Set this parameter's value
+// to true to instruct the API to only return playlists owned by the
+// authenticated user.
+func (c *PlaylistsListCall) Mine(mine bool) *PlaylistsListCall {
 	c.opt_["mine"] = mine
 	return c
 }
 
-// OnBehalfOfContentOwner sets the optional parameter
-// "onBehalfOfContentOwner": The authenticated user acts on behalf of
-// this content owner.
-func (c *PlaylistsListCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *PlaylistsListCall {
-	c.opt_["onBehalfOfContentOwner"] = onBehalfOfContentOwner
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": Token for the page
-// selection.
+// PageToken sets the optional parameter "pageToken": USE_DESCRIPTION
+// --- channels:list:pageToken
 func (c *PlaylistsListCall) PageToken(pageToken string) *PlaylistsListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -2065,6 +2194,9 @@ func (c *PlaylistsListCall) Do() (*PlaylistListResponse, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("part", fmt.Sprintf("%v", c.part))
+	if v, ok := c.opt_["channelId"]; ok {
+		params.Set("channelId", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["id"]; ok {
 		params.Set("id", fmt.Sprintf("%v", v))
 	}
@@ -2073,9 +2205,6 @@ func (c *PlaylistsListCall) Do() (*PlaylistListResponse, error) {
 	}
 	if v, ok := c.opt_["mine"]; ok {
 		params.Set("mine", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
-		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
@@ -2097,21 +2226,26 @@ func (c *PlaylistsListCall) Do() (*PlaylistListResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Browse the YouTube playlist collection.",
+	//   "description": "Returns a collection of playlists that match the API request parameters. For example, you can retrieve all playlists that the authenticated user owns, or you can retrieve one or more playlists by their unique IDs.",
 	//   "httpMethod": "GET",
 	//   "id": "youtube.playlists.list",
 	//   "parameterOrder": [
 	//     "part"
 	//   ],
 	//   "parameters": {
+	//     "channelId": {
+	//       "description": "This value indicates that the API should only return the specified channel's playlists.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "id": {
-	//       "description": "Comma-separated YouTube IDs of the playlists to be returned.",
+	//       "description": "The id parameter specifies a comma-separated list of the YouTube playlist ID(s) for the resource(s) that are being retrieved. In a playlist resource, the id property specifies the playlist's YouTube playlist ID.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
 	//       "default": "5",
-	//       "description": "Maximum number of results to return",
+	//       "description": "USE_DESCRIPTION --- channels:list:maxResults",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "50",
@@ -2119,22 +2253,17 @@ func (c *PlaylistsListCall) Do() (*PlaylistListResponse, error) {
 	//       "type": "integer"
 	//     },
 	//     "mine": {
-	//       "description": "Flag indicating only return the playlists of the authenticated user.",
+	//       "description": "Set this parameter's value to true to instruct the API to only return playlists owned by the authenticated user.",
 	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "onBehalfOfContentOwner": {
-	//       "description": "The authenticated user acts on behalf of this content owner.",
-	//       "location": "query",
-	//       "type": "string"
+	//       "type": "boolean"
 	//     },
 	//     "pageToken": {
-	//       "description": "Token for the page selection.",
+	//       "description": "USE_DESCRIPTION --- channels:list:pageToken",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "part": {
-	//       "description": "Playlist parts to include in the returned response. Valid values are: id, snippet and status.",
+	//       "description": "The part parameter specifies a comma-separated list of one or more playlist resource properties that the API response will include. The part names that you can include in the parameter value are id, snippet, and status.\n\nIf the parameter identifies a property that contains child properties, the child properties will be included in the response. For example, in a playlist resource, the snippet property contains properties like author, title, description, tags, and timeCreated. As such, if you set part=snippet, the API response will contain all of those properties.",
 	//       "location": "query",
 	//       "required": true,
 	//       "type": "string"
@@ -2162,19 +2291,12 @@ type PlaylistsUpdateCall struct {
 	opt_     map[string]interface{}
 }
 
-// Update: Update a playlist.
+// Update: Modifies a playlist. For example, you could change a
+// playlist's title, description, or privacy status.
 func (r *PlaylistsService) Update(part string, playlist *Playlist) *PlaylistsUpdateCall {
 	c := &PlaylistsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.part = part
 	c.playlist = playlist
-	return c
-}
-
-// OnBehalfOfContentOwner sets the optional parameter
-// "onBehalfOfContentOwner": The authenticated user acts on behalf of
-// this content owner.
-func (c *PlaylistsUpdateCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *PlaylistsUpdateCall {
-	c.opt_["onBehalfOfContentOwner"] = onBehalfOfContentOwner
 	return c
 }
 
@@ -2188,9 +2310,6 @@ func (c *PlaylistsUpdateCall) Do() (*Playlist, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("part", fmt.Sprintf("%v", c.part))
-	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
-		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
-	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "playlists")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
@@ -2209,20 +2328,15 @@ func (c *PlaylistsUpdateCall) Do() (*Playlist, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Update a playlist.",
+	//   "description": "Modifies a playlist. For example, you could change a playlist's title, description, or privacy status.",
 	//   "httpMethod": "PUT",
 	//   "id": "youtube.playlists.update",
 	//   "parameterOrder": [
 	//     "part"
 	//   ],
 	//   "parameters": {
-	//     "onBehalfOfContentOwner": {
-	//       "description": "The authenticated user acts on behalf of this content owner.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "part": {
-	//       "description": "One or more parts to return on the current request.",
+	//       "description": "The part parameter serves two purposes in this operation. It identifies the properties that the write operation will set as well as the properties that the API response will include.\n\nThe part names that you can include in the parameter value are snippet and status.\n\nNote that this method will override the existing values for all of the mutable properties that are contained in any parts that the parameter value specifies. For example, a playlist's privacy setting is contained in the status part. As such, if your request is updating a private playlist, and the request's part parameter value includes the status part, the playlist's privacy setting will be updated to whatever value the request body specifies. If the request body does not specify a value, the existing privacy setting will be removed and the playlist will revert to the default privacy setting.",
 	//       "location": "query",
 	//       "required": true,
 	//       "type": "string"
@@ -2251,105 +2365,119 @@ type SearchListCall struct {
 	opt_ map[string]interface{}
 }
 
-// List: Universal search for youtube.
+// List: Returns a collection of search results that match the query
+// parameters specified in the API request. By default, a search result
+// set identifies matching video, channel, and playlist resources, but
+// you can also configure queries to only retrieve a specific type of
+// resource.
 func (r *SearchService) List(part string) *SearchListCall {
 	c := &SearchListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.part = part
 	return c
 }
 
-// MaxResults sets the optional parameter "maxResults": Maximum number
-// of search results to return per page.
+// MaxResults sets the optional parameter "maxResults": USE_DESCRIPTION
+// --- channels:list:maxResults
 func (c *SearchListCall) MaxResults(maxResults int64) *SearchListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
 }
 
-// OnBehalfOfContentOwner sets the optional parameter
-// "onBehalfOfContentOwner": The authenticated user acts on behalf of
-// this content owner.
-func (c *SearchListCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *SearchListCall {
-	c.opt_["onBehalfOfContentOwner"] = onBehalfOfContentOwner
-	return c
-}
-
-// Order sets the optional parameter "order": Sort order.
+// Order sets the optional parameter "order": The order parameter
+// specifies the method that will be used to order resources in the API
+// response.
 func (c *SearchListCall) Order(order string) *SearchListCall {
 	c.opt_["order"] = order
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Token for the page
-// selection.
+// PageToken sets the optional parameter "pageToken": USE_DESCRIPTION
+// --- channels:list:pageToken
 func (c *SearchListCall) PageToken(pageToken string) *SearchListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
 }
 
-// Published sets the optional parameter "published": Only search for
-// resources uploaded at a specific pediod
+// Published sets the optional parameter "published": The published
+// parameter indicates that the API response should only contain
+// resources created within the specified time period.
 func (c *SearchListCall) Published(published string) *SearchListCall {
 	c.opt_["published"] = published
 	return c
 }
 
-// Q sets the optional parameter "q": Query to search in Youtube.
+// Q sets the optional parameter "q": The q parameter specifies the
+// query term to search for.
 func (c *SearchListCall) Q(q string) *SearchListCall {
 	c.opt_["q"] = q
 	return c
 }
 
-// RelatedToVideo sets the optional parameter "relatedToVideo": Search
-// for resources related to this video. Need to be used with type set to
-// 'video'
-func (c *SearchListCall) RelatedToVideo(relatedToVideo string) *SearchListCall {
-	c.opt_["relatedToVideo"] = relatedToVideo
+// RelatedToVideoId sets the optional parameter "relatedToVideoId": The
+// relatedToVideoId parameter retrieves a list of videos that are
+// related to the video that the parameter value identifies. The
+// parameter value must be set to a YouTube video ID and, if you are
+// using this parameter, the type parameter must be set to video.
+func (c *SearchListCall) RelatedToVideoId(relatedToVideoId string) *SearchListCall {
+	c.opt_["relatedToVideoId"] = relatedToVideoId
 	return c
 }
 
-// TopicId sets the optional parameter "topicId": Only search for
-// resources with the specified topic
+// TopicId sets the optional parameter "topicId": The topicId parameter
+// indicates that the API response should only contain resources
+// associated with the specified topic. The value identifies a Freebase
+// topic ID.
 func (c *SearchListCall) TopicId(topicId string) *SearchListCall {
 	c.opt_["topicId"] = topicId
 	return c
 }
 
-// Type sets the optional parameter "type": Type of resource to search.
+// Type sets the optional parameter "type": The type parameter restricts
+// a search query to only retrieve a particular type of resource.
 func (c *SearchListCall) Type(type_ string) *SearchListCall {
 	c.opt_["type"] = type_
 	return c
 }
 
-// VideoCaption sets the optional parameter "videoCaption": Add a filter
-// on the the presence of captions on the videos.
+// VideoCaption sets the optional parameter "videoCaption": The
+// videoCaption parameter indicates whether the API should filter video
+// search results based on whether they have captions.
 func (c *SearchListCall) VideoCaption(videoCaption string) *SearchListCall {
 	c.opt_["videoCaption"] = videoCaption
 	return c
 }
 
-// VideoDefinition sets the optional parameter "videoDefinition": Add a
-// filter for the definition of the videos.
+// VideoDefinition sets the optional parameter "videoDefinition": The
+// videoDefinition parameter lets you restrict a search to only include
+// either high definition (HD) or standard definition (SD) videos. HD
+// videos are available for playback in at least 720p, though higher
+// resolutions, like 1080p, might also be available.
 func (c *SearchListCall) VideoDefinition(videoDefinition string) *SearchListCall {
 	c.opt_["videoDefinition"] = videoDefinition
 	return c
 }
 
-// VideoDimension sets the optional parameter "videoDimension": Add a
-// filter for the number of dimensions in the videos.
+// VideoDimension sets the optional parameter "videoDimension": The
+// videoDimension parameter lets you restrict a search to only retrieve
+// 2D or 3D videos.
 func (c *SearchListCall) VideoDimension(videoDimension string) *SearchListCall {
 	c.opt_["videoDimension"] = videoDimension
 	return c
 }
 
-// VideoDuration sets the optional parameter "videoDuration": Add a
-// filter on the duration of the videos.
+// VideoDuration sets the optional parameter "videoDuration": The
+// videoDuration parameter filters video search results based on their
+// duration.
 func (c *SearchListCall) VideoDuration(videoDuration string) *SearchListCall {
 	c.opt_["videoDuration"] = videoDuration
 	return c
 }
 
-// VideoLicense sets the optional parameter "videoLicense": Add a filter
-// on the licensing of the videos.
+// VideoLicense sets the optional parameter "videoLicense": The
+// videoLicense parameter filters search results to only include videos
+// with a particular license. YouTube lets video uploaders choose to
+// attach either the Creative Commons license or the standard YouTube
+// license to each of their videos.
 func (c *SearchListCall) VideoLicense(videoLicense string) *SearchListCall {
 	c.opt_["videoLicense"] = videoLicense
 	return c
@@ -2363,9 +2491,6 @@ func (c *SearchListCall) Do() (*SearchListResponse, error) {
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
-	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
-		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
-	}
 	if v, ok := c.opt_["order"]; ok {
 		params.Set("order", fmt.Sprintf("%v", v))
 	}
@@ -2378,8 +2503,8 @@ func (c *SearchListCall) Do() (*SearchListResponse, error) {
 	if v, ok := c.opt_["q"]; ok {
 		params.Set("q", fmt.Sprintf("%v", v))
 	}
-	if v, ok := c.opt_["relatedToVideo"]; ok {
-		params.Set("relatedToVideo", fmt.Sprintf("%v", v))
+	if v, ok := c.opt_["relatedToVideoId"]; ok {
+		params.Set("relatedToVideoId", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["topicId"]; ok {
 		params.Set("topicId", fmt.Sprintf("%v", v))
@@ -2419,7 +2544,7 @@ func (c *SearchListCall) Do() (*SearchListResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Universal search for youtube.",
+	//   "description": "Returns a collection of search results that match the query parameters specified in the API request. By default, a search result set identifies matching video, channel, and playlist resources, but you can also configure queries to only retrieve a specific type of resource.",
 	//   "httpMethod": "GET",
 	//   "id": "youtube.search.list",
 	//   "parameterOrder": [
@@ -2428,130 +2553,127 @@ func (c *SearchListCall) Do() (*SearchListResponse, error) {
 	//   "parameters": {
 	//     "maxResults": {
 	//       "default": "5",
-	//       "description": "Maximum number of search results to return per page.",
+	//       "description": "USE_DESCRIPTION --- channels:list:maxResults",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "50",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
-	//     "onBehalfOfContentOwner": {
-	//       "description": "The authenticated user acts on behalf of this content owner.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "order": {
 	//       "default": "SEARCH_SORT_RELEVANCE",
-	//       "description": "Sort order.",
+	//       "description": "The order parameter specifies the method that will be used to order resources in the API response.",
 	//       "enum": [
 	//         "date",
 	//         "rating",
 	//         "relevance",
-	//         "view_count"
+	//         "viewCount"
 	//       ],
 	//       "enumDescriptions": [
-	//         "Sort according to the date.",
-	//         "Sort according to the rating.",
-	//         "Sort according to the relevance.",
-	//         "Sort according to the view count."
+	//         "Resources are sorted in reverse chronological order based on the date they were created.",
+	//         "Resources are sorted from highest to lowest rating.",
+	//         "Resources are sorted based on their relevance to the search query. This is the default value for this parameter.",
+	//         "Resources are sorted from highest to lowest number of views."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageToken": {
-	//       "description": "Token for the page selection.",
+	//       "description": "USE_DESCRIPTION --- channels:list:pageToken",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "part": {
-	//       "description": "Search result parts to include in the returned response. Valid values are: id and snippet.",
+	//       "description": "The part parameter specifies a comma-separated list of one or more search resource properties that the API response will include. The part names that you can include in the parameter value are id and snippet.\n\nIf the parameter identifies a property that contains child properties, the child properties will be included in the response. For example, in a search result, the snippet property contains other properties that identify the result's title, description, and so forth. If you set part=snippet, the API response will also contain all of those nested properties.",
 	//       "location": "query",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "published": {
-	//       "description": "Only search for resources uploaded at a specific pediod",
+	//       "description": "The published parameter indicates that the API response should only contain resources created within the specified time period.",
 	//       "enum": [
 	//         "any",
+	//         "thisMonth",
 	//         "thisWeek",
 	//         "today"
 	//       ],
 	//       "enumDescriptions": [
-	//         "No filter on the release date",
-	//         "Videos uploaded this month",
-	//         "Videos uploaded today"
+	//         "Do not filter results based on their creation date. This is the default value.",
+	//         "Return videos that were uploaded within the past month.",
+	//         "Return videos that were uploaded within the past week.",
+	//         "Return videos that were uploaded today."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "q": {
-	//       "description": "Query to search in Youtube.",
+	//       "description": "The q parameter specifies the query term to search for.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
-	//     "relatedToVideo": {
-	//       "description": "Search for resources related to this video. Need to be used with type set to 'video'",
+	//     "relatedToVideoId": {
+	//       "description": "The relatedToVideoId parameter retrieves a list of videos that are related to the video that the parameter value identifies. The parameter value must be set to a YouTube video ID and, if you are using this parameter, the type parameter must be set to video.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "topicId": {
-	//       "description": "Only search for resources with the specified topic",
+	//       "description": "The topicId parameter indicates that the API response should only contain resources associated with the specified topic. The value identifies a Freebase topic ID.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "type": {
 	//       "default": "video,channel,playlist",
-	//       "description": "Type of resource to search.",
+	//       "description": "The type parameter restricts a search query to only retrieve a particular type of resource.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "videoCaption": {
-	//       "description": "Add a filter on the the presence of captions on the videos.",
+	//       "description": "The videoCaption parameter indicates whether the API should filter video search results based on whether they have captions.",
 	//       "enum": [
 	//         "any",
 	//         "closedCaption",
 	//         "none"
 	//       ],
 	//       "enumDescriptions": [
-	//         "No filter on the captions.",
-	//         "Videos with closed captions.",
-	//         "Videos without captions."
+	//         "Do not filter results based on caption availability.",
+	//         "Only include videos that have captions.",
+	//         "Only include videos that do not have captions."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "videoDefinition": {
-	//       "description": "Add a filter for the definition of the videos.",
+	//       "description": "The videoDefinition parameter lets you restrict a search to only include either high definition (HD) or standard definition (SD) videos. HD videos are available for playback in at least 720p, though higher resolutions, like 1080p, might also be available.",
 	//       "enum": [
 	//         "any",
 	//         "high",
 	//         "standard"
 	//       ],
 	//       "enumDescriptions": [
-	//         "No filter on the definition.",
-	//         "Videos in high definition.",
-	//         "Videos in standard definition."
+	//         "Return all videos, regardless of their resolution.",
+	//         "Only retrieve HD videos.",
+	//         "Only retrieve videos in standard definition."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "videoDimension": {
-	//       "description": "Add a filter for the number of dimensions in the videos.",
+	//       "description": "The videoDimension parameter lets you restrict a search to only retrieve 2D or 3D videos.",
 	//       "enum": [
 	//         "2d",
 	//         "3d",
 	//         "any"
 	//       ],
 	//       "enumDescriptions": [
-	//         "Videos in two dimensions.",
-	//         "Videos in three dimensions.",
-	//         "No filter on the dimension."
+	//         "Restrict search results to exclude 3D videos.",
+	//         "Restrict search results to only include 3D videos.",
+	//         "Include both 3D and non-3D videos in returned results. This is the default value."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "videoDuration": {
-	//       "description": "Add a filter on the duration of the videos.",
+	//       "description": "The videoDuration parameter filters video search results based on their duration.",
 	//       "enum": [
 	//         "any",
 	//         "long",
@@ -2559,25 +2681,25 @@ func (c *SearchListCall) Do() (*SearchListResponse, error) {
 	//         "short"
 	//       ],
 	//       "enumDescriptions": [
-	//         "No filter on the duration.",
-	//         "Videos with a duration longer than 20 minutes.",
-	//         "Videos with a duration between 4 and 20 minutes.",
-	//         "Videos with a duration under 4 minutes."
+	//         "Do not filter video search results based on their duration. This is the default value.",
+	//         "Only include videos longer than 20 minutes.",
+	//         "Only include videos that are between four and 20 minutes long (inclusive).",
+	//         "Only include videos that are less than four minutes long."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "videoLicense": {
-	//       "description": "Add a filter on the licensing of the videos.",
+	//       "description": "The videoLicense parameter filters search results to only include videos with a particular license. YouTube lets video uploaders choose to attach either the Creative Commons license or the standard YouTube license to each of their videos.",
 	//       "enum": [
 	//         "any",
 	//         "creativeCommon",
 	//         "youtube"
 	//       ],
 	//       "enumDescriptions": [
-	//         "No filter on the license.",
-	//         "Videos under the Creative Common license.",
-	//         "Videos under the YouTube license."
+	//         "Return all videos, regardless of which license they have, that match the query parameters.",
+	//         "Only return videos that have a Creative Commons license. Users can reuse videos with this license in other videos that they create. Learn more.",
+	//         "Only return videos that have the standard YouTube license."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -2604,18 +2726,10 @@ type SubscriptionsDeleteCall struct {
 	opt_ map[string]interface{}
 }
 
-// Delete: Deletes subscriptions by IDs.
+// Delete: Deletes a subscription.
 func (r *SubscriptionsService) Delete(id string) *SubscriptionsDeleteCall {
 	c := &SubscriptionsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.id = id
-	return c
-}
-
-// OnBehalfOfContentOwner sets the optional parameter
-// "onBehalfOfContentOwner": The authenticated user acts on behalf of
-// this content owner.
-func (c *SubscriptionsDeleteCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *SubscriptionsDeleteCall {
-	c.opt_["onBehalfOfContentOwner"] = onBehalfOfContentOwner
 	return c
 }
 
@@ -2624,9 +2738,6 @@ func (c *SubscriptionsDeleteCall) Do() error {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("id", fmt.Sprintf("%v", c.id))
-	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
-		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
-	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "subscriptions")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
@@ -2640,7 +2751,7 @@ func (c *SubscriptionsDeleteCall) Do() error {
 	}
 	return nil
 	// {
-	//   "description": "Deletes subscriptions by IDs.",
+	//   "description": "Deletes a subscription.",
 	//   "httpMethod": "DELETE",
 	//   "id": "youtube.subscriptions.delete",
 	//   "parameterOrder": [
@@ -2648,14 +2759,9 @@ func (c *SubscriptionsDeleteCall) Do() error {
 	//   ],
 	//   "parameters": {
 	//     "id": {
-	//       "description": "YouTube IDs of the subscription to be deleted.",
+	//       "description": "The id parameter specifies the YouTube subscription ID for the resource that is being deleted. In a subscription resource, the id property specifies the YouTube subscription ID.",
 	//       "location": "query",
 	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "onBehalfOfContentOwner": {
-	//       "description": "The authenticated user acts on behalf of this content owner.",
-	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -2677,19 +2783,11 @@ type SubscriptionsInsertCall struct {
 	opt_         map[string]interface{}
 }
 
-// Insert: Insert a subscription.
+// Insert: Adds a subscription for the authenticated user's channel.
 func (r *SubscriptionsService) Insert(part string, subscription *Subscription) *SubscriptionsInsertCall {
 	c := &SubscriptionsInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.part = part
 	c.subscription = subscription
-	return c
-}
-
-// OnBehalfOfContentOwner sets the optional parameter
-// "onBehalfOfContentOwner": The authenticated user acts on behalf of
-// this content owner.
-func (c *SubscriptionsInsertCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *SubscriptionsInsertCall {
-	c.opt_["onBehalfOfContentOwner"] = onBehalfOfContentOwner
 	return c
 }
 
@@ -2703,9 +2801,6 @@ func (c *SubscriptionsInsertCall) Do() (*Subscription, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("part", fmt.Sprintf("%v", c.part))
-	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
-		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
-	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "subscriptions")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -2724,20 +2819,15 @@ func (c *SubscriptionsInsertCall) Do() (*Subscription, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Insert a subscription.",
+	//   "description": "Adds a subscription for the authenticated user's channel.",
 	//   "httpMethod": "POST",
 	//   "id": "youtube.subscriptions.insert",
 	//   "parameterOrder": [
 	//     "part"
 	//   ],
 	//   "parameters": {
-	//     "onBehalfOfContentOwner": {
-	//       "description": "The authenticated user acts on behalf of this content owner.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "part": {
-	//       "description": "One or more parts to return on the current request.",
+	//       "description": "The part parameter serves two purposes in this operation. It identifies the properties that the write operation will set as well as the properties that the API response will include.\n\nThe part names that you can include in the parameter value are snippet and contentDetails.",
 	//       "location": "query",
 	//       "required": true,
 	//       "type": "string"
@@ -2766,64 +2856,64 @@ type SubscriptionsListCall struct {
 	opt_ map[string]interface{}
 }
 
-// List: Browses the subscriptions collection.
+// List: Returns subscription resources that match the API request
+// criteria.
 func (r *SubscriptionsService) List(part string) *SubscriptionsListCall {
 	c := &SubscriptionsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.part = part
 	return c
 }
 
-// ChannelId sets the optional parameter "channelId": Only return
-// subscriptions to given channelId.
+// ChannelId sets the optional parameter "channelId": The channelId
+// parameter specifies a YouTube channel ID. The API will only return
+// that channel's subscriptions.
 func (c *SubscriptionsListCall) ChannelId(channelId string) *SubscriptionsListCall {
 	c.opt_["channelId"] = channelId
 	return c
 }
 
-// ForChannelId sets the optional parameter "forChannelId": Comma
-// separated list of channel IDs to return subscriptions for.
+// ForChannelId sets the optional parameter "forChannelId": The
+// forChannelId parameter specifies a comma-separated list of channel
+// IDs. The API response will then only contain subscriptions matching
+// those channels.
 func (c *SubscriptionsListCall) ForChannelId(forChannelId string) *SubscriptionsListCall {
 	c.opt_["forChannelId"] = forChannelId
 	return c
 }
 
-// Id sets the optional parameter "id": YouTube IDs of the subscriptions
-// to be returned.
+// Id sets the optional parameter "id": The id parameter specifies a
+// comma-separated list of the YouTube subscription ID(s) for the
+// resource(s) that are being retrieved. In a subscription resource, the
+// id property specifies the YouTube subscription ID.
 func (c *SubscriptionsListCall) Id(id string) *SubscriptionsListCall {
 	c.opt_["id"] = id
 	return c
 }
 
-// MaxResults sets the optional parameter "maxResults": Maximum number
-// of search results to return per page.
+// MaxResults sets the optional parameter "maxResults": USE_DESCRIPTION
+// --- channels:list:maxResults
 func (c *SubscriptionsListCall) MaxResults(maxResults int64) *SubscriptionsListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
 }
 
-// Mine sets the optional parameter "mine": Flag indicating only return
-// the subscriptions of the authenticated user.
-func (c *SubscriptionsListCall) Mine(mine string) *SubscriptionsListCall {
+// Mine sets the optional parameter "mine": Set this parameter's value
+// to true to retrieve a feed of the authenticated user's subscriptions.
+func (c *SubscriptionsListCall) Mine(mine bool) *SubscriptionsListCall {
 	c.opt_["mine"] = mine
 	return c
 }
 
-// OnBehalfOfContentOwner sets the optional parameter
-// "onBehalfOfContentOwner": The authenticated user acts on behalf of
-// this content owner.
-func (c *SubscriptionsListCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *SubscriptionsListCall {
-	c.opt_["onBehalfOfContentOwner"] = onBehalfOfContentOwner
-	return c
-}
-
-// Order sets the optional parameter "order": Sort order.
+// Order sets the optional parameter "order": The order parameter
+// specifies the method that will be used to sort resources in the API
+// response.
 func (c *SubscriptionsListCall) Order(order string) *SubscriptionsListCall {
 	c.opt_["order"] = order
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Token for the page
-// selection.
+// PageToken sets the optional parameter "pageToken": USE_DESCRIPTION
+// --- channels:list:pageToken
 func (c *SubscriptionsListCall) PageToken(pageToken string) *SubscriptionsListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -2849,9 +2939,6 @@ func (c *SubscriptionsListCall) Do() (*SubscriptionListResponse, error) {
 	if v, ok := c.opt_["mine"]; ok {
 		params.Set("mine", fmt.Sprintf("%v", v))
 	}
-	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
-		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
-	}
 	if v, ok := c.opt_["order"]; ok {
 		params.Set("order", fmt.Sprintf("%v", v))
 	}
@@ -2875,7 +2962,7 @@ func (c *SubscriptionsListCall) Do() (*SubscriptionListResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Browses the subscriptions collection.",
+	//   "description": "Returns subscription resources that match the API request criteria.",
 	//   "httpMethod": "GET",
 	//   "id": "youtube.subscriptions.list",
 	//   "parameterOrder": [
@@ -2883,23 +2970,23 @@ func (c *SubscriptionsListCall) Do() (*SubscriptionListResponse, error) {
 	//   ],
 	//   "parameters": {
 	//     "channelId": {
-	//       "description": "Only return subscriptions to given channelId.",
+	//       "description": "The channelId parameter specifies a YouTube channel ID. The API will only return that channel's subscriptions.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "forChannelId": {
-	//       "description": "Comma separated list of channel IDs to return subscriptions for.",
+	//       "description": "The forChannelId parameter specifies a comma-separated list of channel IDs. The API response will then only contain subscriptions matching those channels.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "id": {
-	//       "description": "YouTube IDs of the subscriptions to be returned.",
+	//       "description": "The id parameter specifies a comma-separated list of the YouTube subscription ID(s) for the resource(s) that are being retrieved. In a subscription resource, the id property specifies the YouTube subscription ID.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
 	//       "default": "5",
-	//       "description": "Maximum number of search results to return per page.",
+	//       "description": "USE_DESCRIPTION --- channels:list:maxResults",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "50",
@@ -2907,25 +2994,20 @@ func (c *SubscriptionsListCall) Do() (*SubscriptionListResponse, error) {
 	//       "type": "integer"
 	//     },
 	//     "mine": {
-	//       "description": "Flag indicating only return the subscriptions of the authenticated user.",
+	//       "description": "Set this parameter's value to true to retrieve a feed of the authenticated user's subscriptions.",
 	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "onBehalfOfContentOwner": {
-	//       "description": "The authenticated user acts on behalf of this content owner.",
-	//       "location": "query",
-	//       "type": "string"
+	//       "type": "boolean"
 	//     },
 	//     "order": {
 	//       "default": "SUBSCRIPTION_ORDER_RELEVANCE",
-	//       "description": "Sort order.",
+	//       "description": "The order parameter specifies the method that will be used to sort resources in the API response.",
 	//       "enum": [
 	//         "alphabetical",
 	//         "relevance",
 	//         "unread"
 	//       ],
 	//       "enumDescriptions": [
-	//         "Sort alphabetically",
+	//         "Sort alphabetically.",
 	//         "Sort by relevance.",
 	//         "Sort by order of activity."
 	//       ],
@@ -2933,12 +3015,12 @@ func (c *SubscriptionsListCall) Do() (*SubscriptionListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "pageToken": {
-	//       "description": "Token for the page selection.",
+	//       "description": "USE_DESCRIPTION --- channels:list:pageToken",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "part": {
-	//       "description": "Subscription parts to include in the returned response. Valid values are: id, snippet and contentDetails.",
+	//       "description": "The part parameter specifies a comma-separated list of one or more subscription resource properties that the API response will include. The part names that you can include in the parameter value are id, snippet, and contentDetails.\n\nIf the parameter identifies a property that contains child properties, the child properties will be included in the response. For example, in a subscription resource, the snippet property contains other properties, such as a display title for the subscription. If you set part=snippet, the API response will also contain all of those nested properties.",
 	//       "location": "query",
 	//       "required": true,
 	//       "type": "string"
@@ -2964,37 +3046,33 @@ type VideoCategoriesListCall struct {
 	opt_ map[string]interface{}
 }
 
-// List: Browse list of video categories.
+// List: Returns a list of categories that can be associated with
+// YouTube videos.
 func (r *VideoCategoriesService) List(part string) *VideoCategoriesListCall {
 	c := &VideoCategoriesListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.part = part
 	return c
 }
 
-// Hl sets the optional parameter "hl": Language used for the title of
-// the categories.
+// Hl sets the optional parameter "hl": The hl parameter specifies the
+// language that should be used for text values in the API response.
 func (c *VideoCategoriesListCall) Hl(hl string) *VideoCategoriesListCall {
 	c.opt_["hl"] = hl
 	return c
 }
 
-// Id sets the optional parameter "id": IDs of the categories to be
-// returned.
+// Id sets the optional parameter "id": The id parameter specifies a
+// comma-separated list of video category IDs for the resources that you
+// are retrieving.
 func (c *VideoCategoriesListCall) Id(id string) *VideoCategoriesListCall {
 	c.opt_["id"] = id
 	return c
 }
 
-// OnBehalfOfContentOwner sets the optional parameter
-// "onBehalfOfContentOwner": The authenticated user acts on behalf of
-// this content owner.
-func (c *VideoCategoriesListCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *VideoCategoriesListCall {
-	c.opt_["onBehalfOfContentOwner"] = onBehalfOfContentOwner
-	return c
-}
-
-// RegionCode sets the optional parameter "regionCode": Return all the
-// categories in this region.
+// RegionCode sets the optional parameter "regionCode": The regionCode
+// parameter instructs the API to return the list of video categories
+// available in the specified country. The parameter value is an ISO
+// 3166-1 alpha-2 country code.
 func (c *VideoCategoriesListCall) RegionCode(regionCode string) *VideoCategoriesListCall {
 	c.opt_["regionCode"] = regionCode
 	return c
@@ -3010,9 +3088,6 @@ func (c *VideoCategoriesListCall) Do() (*VideoCategoryListResponse, error) {
 	}
 	if v, ok := c.opt_["id"]; ok {
 		params.Set("id", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
-		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["regionCode"]; ok {
 		params.Set("regionCode", fmt.Sprintf("%v", v))
@@ -3034,7 +3109,7 @@ func (c *VideoCategoriesListCall) Do() (*VideoCategoryListResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Browse list of video categories.",
+	//   "description": "Returns a list of categories that can be associated with YouTube videos.",
 	//   "httpMethod": "GET",
 	//   "id": "youtube.videoCategories.list",
 	//   "parameterOrder": [
@@ -3043,28 +3118,23 @@ func (c *VideoCategoriesListCall) Do() (*VideoCategoryListResponse, error) {
 	//   "parameters": {
 	//     "hl": {
 	//       "default": "en_US",
-	//       "description": "Language used for the title of the categories.",
+	//       "description": "The hl parameter specifies the language that should be used for text values in the API response.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "id": {
-	//       "description": "IDs of the categories to be returned.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "onBehalfOfContentOwner": {
-	//       "description": "The authenticated user acts on behalf of this content owner.",
+	//       "description": "The id parameter specifies a comma-separated list of video category IDs for the resources that you are retrieving.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "part": {
-	//       "description": "Video category parts to include in the returned response. Valid values are: id and snippet.",
+	//       "description": "The part parameter specifies the videoCategory resource parts that the API response will include. Supported values are id and snippet.",
 	//       "location": "query",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "regionCode": {
-	//       "description": "Return all the categories in this region.",
+	//       "description": "The regionCode parameter instructs the API to return the list of video categories available in the specified country. The parameter value is an ISO 3166-1 alpha-2 country code.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -3090,18 +3160,10 @@ type VideosDeleteCall struct {
 	opt_ map[string]interface{}
 }
 
-// Delete: Delete a YouTube video.
+// Delete: Deletes a YouTube video.
 func (r *VideosService) Delete(id string) *VideosDeleteCall {
 	c := &VideosDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.id = id
-	return c
-}
-
-// OnBehalfOfContentOwner sets the optional parameter
-// "onBehalfOfContentOwner": The authenticated user acts on behalf of
-// this content owner.
-func (c *VideosDeleteCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *VideosDeleteCall {
-	c.opt_["onBehalfOfContentOwner"] = onBehalfOfContentOwner
 	return c
 }
 
@@ -3110,9 +3172,6 @@ func (c *VideosDeleteCall) Do() error {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("id", fmt.Sprintf("%v", c.id))
-	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
-		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
-	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "videos")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
@@ -3126,7 +3185,7 @@ func (c *VideosDeleteCall) Do() error {
 	}
 	return nil
 	// {
-	//   "description": "Delete a YouTube video.",
+	//   "description": "Deletes a YouTube video.",
 	//   "httpMethod": "DELETE",
 	//   "id": "youtube.videos.delete",
 	//   "parameterOrder": [
@@ -3134,14 +3193,9 @@ func (c *VideosDeleteCall) Do() error {
 	//   ],
 	//   "parameters": {
 	//     "id": {
-	//       "description": "YouTube ID of the video to be deleted.",
+	//       "description": "The id parameter specifies the YouTube video ID for the resource that is being deleted. In a video resource, the id property specifies the video's ID.",
 	//       "location": "query",
 	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "onBehalfOfContentOwner": {
-	//       "description": "The authenticated user acts on behalf of this content owner.",
-	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -3164,19 +3218,12 @@ type VideosInsertCall struct {
 	media_ io.Reader
 }
 
-// Insert: Upload a video to YouTube.
+// Insert: Uploads a video to YouTube and optionally sets the video's
+// metadata.
 func (r *VideosService) Insert(part string, video *Video) *VideosInsertCall {
 	c := &VideosInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.part = part
 	c.video = video
-	return c
-}
-
-// OnBehalfOfContentOwner sets the optional parameter
-// "onBehalfOfContentOwner": The authenticated user acts on behalf of
-// this content owner.
-func (c *VideosInsertCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *VideosInsertCall {
-	c.opt_["onBehalfOfContentOwner"] = onBehalfOfContentOwner
 	return c
 }
 func (c *VideosInsertCall) Media(r io.Reader) *VideosInsertCall {
@@ -3194,9 +3241,6 @@ func (c *VideosInsertCall) Do() (*Video, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("part", fmt.Sprintf("%v", c.part))
-	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
-		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
-	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "videos")
 	if c.media_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
@@ -3223,7 +3267,7 @@ func (c *VideosInsertCall) Do() (*Video, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Upload a video to YouTube.",
+	//   "description": "Uploads a video to YouTube and optionally sets the video's metadata.",
 	//   "httpMethod": "POST",
 	//   "id": "youtube.videos.insert",
 	//   "mediaUpload": {
@@ -3247,13 +3291,8 @@ func (c *VideosInsertCall) Do() (*Video, error) {
 	//     "part"
 	//   ],
 	//   "parameters": {
-	//     "onBehalfOfContentOwner": {
-	//       "description": "The authenticated user acts on behalf of this content owner.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "part": {
-	//       "description": "One or more parts to return on the current request.",
+	//       "description": "The part parameter serves two purposes in this operation. It identifies the properties that the write operation will set as well as the properties that the API response will include.\n\nThe part names that you can include in the parameter value are snippet, contentDetails, player, statistics, status, and topicDetails. However, not all of those parts contain properties that can be set when setting or updating a video's metadata. For example, the statistics object encapsulates statistics that YouTube calculates for a video and does not contain values that you can set or modify. If the parameter value specifies a part that does not contain mutable values, that part will still be included in the API response.",
 	//       "location": "query",
 	//       "required": true,
 	//       "type": "string"
@@ -3284,19 +3323,11 @@ type VideosListCall struct {
 	opt_ map[string]interface{}
 }
 
-// List: Browse the YouTube video collection.
+// List: Returns a list of videos that match the API request parameters.
 func (r *VideosService) List(id string, part string) *VideosListCall {
 	c := &VideosListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.id = id
 	c.part = part
-	return c
-}
-
-// OnBehalfOfContentOwner sets the optional parameter
-// "onBehalfOfContentOwner": The authenticated user acts on behalf of
-// this content owner.
-func (c *VideosListCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *VideosListCall {
-	c.opt_["onBehalfOfContentOwner"] = onBehalfOfContentOwner
 	return c
 }
 
@@ -3306,9 +3337,6 @@ func (c *VideosListCall) Do() (*VideoListResponse, error) {
 	params.Set("alt", "json")
 	params.Set("id", fmt.Sprintf("%v", c.id))
 	params.Set("part", fmt.Sprintf("%v", c.part))
-	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
-		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
-	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "videos")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -3326,7 +3354,7 @@ func (c *VideosListCall) Do() (*VideoListResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Browse the YouTube video collection.",
+	//   "description": "Returns a list of videos that match the API request parameters.",
 	//   "httpMethod": "GET",
 	//   "id": "youtube.videos.list",
 	//   "parameterOrder": [
@@ -3335,18 +3363,13 @@ func (c *VideosListCall) Do() (*VideoListResponse, error) {
 	//   ],
 	//   "parameters": {
 	//     "id": {
-	//       "description": "YouTube IDs of the videos to be returned.",
+	//       "description": "The id parameter specifies a comma-separated list of the YouTube video ID(s) for the resource(s) that are being retrieved. In a video resource, the id property specifies the video's ID.",
 	//       "location": "query",
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "onBehalfOfContentOwner": {
-	//       "description": "The authenticated user acts on behalf of this content owner.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "part": {
-	//       "description": "Video parts to include in the returned response. Valid values are: id, snippet, contentDetails, player, statistics, status and topicDetails.",
+	//       "description": "The part parameter specifies a comma-separated list of one or more video resource properties that the API response will include. The part names that you can include in the parameter value are id, snippet, contentDetails, player, statistics, status, and topicDetails.\n\nIf the parameter identifies a property that contains child properties, the child properties will be included in the response. For example, in a video resource, the snippet property contains the channelId, title, description, tags, and categoryId properties. As such, if you set part=snippet, the API response will contain all of those properties.",
 	//       "location": "query",
 	//       "required": true,
 	//       "type": "string"
@@ -3374,19 +3397,11 @@ type VideosUpdateCall struct {
 	opt_  map[string]interface{}
 }
 
-// Update: Update a video.
+// Update: Updates a video's metadata.
 func (r *VideosService) Update(part string, video *Video) *VideosUpdateCall {
 	c := &VideosUpdateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.part = part
 	c.video = video
-	return c
-}
-
-// OnBehalfOfContentOwner sets the optional parameter
-// "onBehalfOfContentOwner": The authenticated user acts on behalf of
-// this content owner.
-func (c *VideosUpdateCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *VideosUpdateCall {
-	c.opt_["onBehalfOfContentOwner"] = onBehalfOfContentOwner
 	return c
 }
 
@@ -3400,9 +3415,6 @@ func (c *VideosUpdateCall) Do() (*Video, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("part", fmt.Sprintf("%v", c.part))
-	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
-		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
-	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "videos")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
@@ -3421,20 +3433,15 @@ func (c *VideosUpdateCall) Do() (*Video, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Update a video.",
+	//   "description": "Updates a video's metadata.",
 	//   "httpMethod": "PUT",
 	//   "id": "youtube.videos.update",
 	//   "parameterOrder": [
 	//     "part"
 	//   ],
 	//   "parameters": {
-	//     "onBehalfOfContentOwner": {
-	//       "description": "The authenticated user acts on behalf of this content owner.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "part": {
-	//       "description": "One or more parts to return on the current request.",
+	//       "description": "The part parameter serves two purposes in this operation. It identifies the properties that the write operation will set as well as the properties that the API response will include.\n\nThe part names that you can include in the parameter value are snippet, contentDetails, player, statistics, status, and topicDetails.\n\nNote that this method will override the existing values for all of the mutable properties that are contained in any parts that the parameter value specifies. For example, a video's privacy setting is contained in the status part. As such, if your request is updating a private video, and the request's part parameter value includes the status part, the video's privacy setting will be updated to whatever value the request body specifies. If the request body does not specify a value, the existing privacy setting will be removed and the video will revert to the default privacy setting.\n\nIn addition, not all of those parts contain properties that can be set when setting or updating a video's metadata. For example, the statistics object encapsulates statistics that YouTube calculates for a video and does not contain values that you can set or modify. If the parameter value specifies a part that does not contain mutable values, that part will still be included in the API response.",
 	//       "location": "query",
 	//       "required": true,
 	//       "type": "string"
@@ -3457,7 +3464,7 @@ func (c *VideosUpdateCall) Do() (*Video, error) {
 
 func cleanPathString(s string) string {
 	return strings.Map(func(r rune) rune {
-		if r >= 0x2d && r <= 0x7a {
+		if r >= 0x2d && r <= 0x7a || r == '~' {
 			return r
 		}
 		return -1

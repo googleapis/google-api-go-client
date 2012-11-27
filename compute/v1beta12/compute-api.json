@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"oZqOFf-aKzMvpID-BwBAFJLe7Pk/KxI1gEHp1zG2MdIykn0ADcAitM4\"",
+ "etag": "\"a3GBuXuTtUYW9BV1SIieU5LiL7w/OMc_Q6bo_yRgn65QpS7XfQtbdfQ\"",
  "discoveryVersion": "v1",
  "id": "compute:v1beta12",
  "name": "compute",
  "version": "v1beta12",
- "revision": "20120712",
+ "revision": "20121022",
  "title": "Compute Engine API",
  "description": "API for the Google Compute Engine service.",
  "icons": {
@@ -739,9 +739,9 @@
      "format": "int32"
     },
     "hostCpus": {
-     "type": "integer",
+     "type": "number",
      "description": "Count of physical CPUs reserved on the virtual machine host. Deprecated.",
-     "format": "int32"
+     "format": "double"
     },
     "id": {
      "type": "string",

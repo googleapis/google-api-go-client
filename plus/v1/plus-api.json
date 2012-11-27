@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"oZqOFf-aKzMvpID-BwBAFJLe7Pk/qFi9KMgRuRnHAq1_hy13dHgbdW4\"",
+ "etag": "\"a3GBuXuTtUYW9BV1SIieU5LiL7w/jhkT15jgh0_h3WYyaGuoCfL-D3U\"",
  "discoveryVersion": "v1",
  "id": "plus:v1",
  "name": "plus",
@@ -215,7 +215,7 @@
         "properties": {
          "content": {
           "type": "string",
-          "description": "If the attachment is an article, this property contains a snippet of text from the article. It may also include descriptions for other types."
+          "description": "If the attachment is an article, this property contains a snippet of text from the article. It can also include descriptions for other types."
          },
          "displayName": {
           "type": "string",
@@ -448,7 +448,7 @@
     },
     "verb": {
      "type": "string",
-     "description": "This activity's verb, indicating what action was performed. Possible values are:  \n- \"post\" - Publish content to the stream. \n- \"share\" - Reshare an activity."
+     "description": "This activity's verb, indicating what action was performed. Possible values are:  \n- \"checkin\" - Check in to a location. \n- \"post\" - Publish content to the stream. \n- \"share\" - Reshare an activity."
     }
    }
   },
@@ -689,7 +689,7 @@
     },
     "totalItems": {
      "type": "integer",
-     "description": "The total number of people available in this list. The number of people in a response may be smaller due to paging. This may not be set for all collections.",
+     "description": "The total number of people available in this list. The number of people in a response might be smaller due to paging. This might not be set for all collections.",
      "format": "int32"
     }
    }
@@ -705,6 +705,57 @@
     "birthday": {
      "type": "string",
      "description": "The person's date of birth, represented as YYYY-MM-DD."
+    },
+    "circledByCount": {
+     "type": "integer",
+     "description": "If a Google+ Page and for followers who are visible, the number of people who have added this page to a circle.",
+     "format": "int32"
+    },
+    "cover": {
+     "type": "object",
+     "description": "The cover photo content.",
+     "properties": {
+      "coverInfo": {
+       "type": "object",
+       "description": "Extra information about the cover photo.",
+       "properties": {
+        "leftImageOffset": {
+         "type": "integer",
+         "description": "The difference between the left position of the image cover and the actual displayed cover image. Only valid for BANNER layout.",
+         "format": "int32"
+        },
+        "topImageOffset": {
+         "type": "integer",
+         "description": "The difference between the top position of the image cover and the actual displayed cover image. Only valid for BANNER layout.",
+         "format": "int32"
+        }
+       }
+      },
+      "coverPhoto": {
+       "type": "object",
+       "description": "The person's primary cover image.",
+       "properties": {
+        "height": {
+         "type": "integer",
+         "description": "The height to the image.",
+         "format": "int32"
+        },
+        "url": {
+         "type": "string",
+         "description": "The url to the image."
+        },
+        "width": {
+         "type": "integer",
+         "description": "The width to the image.",
+         "format": "int32"
+        }
+       }
+      },
+      "layout": {
+       "type": "string",
+       "description": "The layout of the cover art. Possible values are:  \n- \"banner\" - One large image banner."
+      }
+     }
     },
     "currentLocation": {
      "type": "string",
@@ -870,6 +921,11 @@
       }
      }
     },
+    "plusOneCount": {
+     "type": "integer",
+     "description": "If a Google+ Page, the number of people who have +1'ed this page.",
+     "format": "int32"
+    },
     "relationshipStatus": {
      "type": "string",
      "description": "The person's relationship status. Possible values are:  \n- \"single\" - Person is single. \n- \"in_a_relationship\" - Person is in a relationship. \n- \"engaged\" - Person is engaged. \n- \"married\" - Person is married. \n- \"its_complicated\" - The relationship is complicated. \n- \"open_relationship\" - Person is in an open relationship. \n- \"widowed\" - Person is widowed. \n- \"in_domestic_partnership\" - Person is in a domestic partnership. \n- \"in_civil_union\" - Person is in a civil union."
@@ -902,6 +958,10 @@
        }
       }
      }
+    },
+    "verified": {
+     "type": "boolean",
+     "description": "If a Google+ Page, whether it has been verified."
     }
    }
   },
@@ -1009,7 +1069,7 @@
       "language": {
        "type": "string",
        "description": "Specify the preferred language to search with. See search language codes for available values.",
-       "default": "",
+       "default": "en-US",
        "location": "query"
       },
       "maxResults": {
@@ -1223,7 +1283,7 @@
       "language": {
        "type": "string",
        "description": "Specify the preferred language to search with. See search language codes for available values.",
-       "default": "",
+       "default": "en-US",
        "location": "query"
       },
       "maxResults": {

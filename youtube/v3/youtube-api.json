@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"oZqOFf-aKzMvpID-BwBAFJLe7Pk/TOdPgdcxJiSF2xkjK1KcVgVS110\"",
+ "etag": "\"a3GBuXuTtUYW9BV1SIieU5LiL7w/3-RvkScNi9xYBzxOaIw825kE9N4\"",
  "discoveryVersion": "v1",
  "id": "youtube:v3",
  "name": "youtube",
  "canonicalName": "YouTube",
  "version": "v3",
- "revision": "20121022",
+ "revision": "20121116",
  "title": "YouTube API",
  "description": "Programmatic access to YouTube features.",
  "icons": {
@@ -87,28 +87,28 @@
   "Activity": {
    "id": "Activity",
    "type": "object",
-   "description": "An activity resource contains information about an action that a channel has taken on YouTube.",
+   "description": "An activity resource contains information about an action that a particular channel, or user, has taken on YouTube. The actions reported in activity feeds include rating a video, sharing a video, marking a video as a favorite, commenting on a video, uploading a video, and so forth. Each activity resource identifies the type of action, the channel associated with the action, and the resource(s) associated with the action, such as the video that was rated or uploaded.",
    "properties": {
     "contentDetails": {
      "$ref": "ActivityContentDetails",
-     "description": "Type specific information about the activity."
+     "description": "The contentDetails object contains information about the content associated with the activity. For example, if the snippet.type value is videoRated, then the contentDetails object's content identifies the rated video."
     },
     "etag": {
      "type": "string",
-     "description": "The eTag of the activity."
+     "description": "The ETag of the activity resource."
     },
     "id": {
      "type": "string",
-     "description": "The unique ID of the activity."
+     "description": "The ID that YouTube uses to uniquely identify the activity."
     },
     "kind": {
      "type": "string",
-     "description": "The type of this API response.",
+     "description": "The type of the API resource. For activity resources, the value will be youtube#activity.",
      "default": "youtube#activity"
     },
     "snippet": {
      "$ref": "ActivitySnippet",
-     "description": "Basic details about the activity: title, description, thumbnails."
+     "description": "The snippet object contains basic details about the activity, including the activity's type and group ID."
     }
    }
   },
@@ -119,119 +119,123 @@
    "properties": {
     "bulletin": {
      "type": "object",
-     "description": "Only present if the type is \"bulletin\".",
+     "description": "The bulletin object contains details about a channel bulletin post. This object is only present if the snippet.type is bulletin.",
      "properties": {
       "resourceId": {
        "$ref": "ResourceId",
-       "description": "ID of the resource this bulletin is about."
+       "description": "The resourceId object contains information that identifies the resource associated with a bulletin post."
       }
      }
     },
     "comment": {
      "type": "object",
-     "description": "Only present if the type is \"comment\".",
+     "description": "The comment object contains information about a resource that received a comment. This property is only present if the snippet.type is comment.",
      "properties": {
       "resourceId": {
        "$ref": "ResourceId",
-       "description": "ID of the commented resource."
+       "description": "The resourceId object contains information that identifies the resource associated with the comment."
       }
      }
     },
     "favorite": {
      "type": "object",
-     "description": "Only present if the type is \"favorite\".",
+     "description": "The favorite object contains information about a video that was marked as a favorite video. This property is only present if the snippet.type is favorite.",
      "properties": {
       "resourceId": {
        "$ref": "ResourceId",
-       "description": "ID of the favorited resource."
+       "description": "The resourceId object contains information that identifies the resource that was marked as a favorite."
       }
      }
     },
     "like": {
      "type": "object",
-     "description": "Only present if the type is \"like\".",
+     "description": "The like object contains information about a resource that received a positive (like) rating. This property is only present if the snippet.type is like.",
      "properties": {
       "resourceId": {
        "$ref": "ResourceId",
-       "description": "ID of the rated resource."
+       "description": "The resourceId object contains information that identifies the rated resource."
       }
      }
     },
     "playlistItem": {
      "type": "object",
-     "description": "Only present if the type is \"playlistItem\".",
+     "description": "The playlistItem object contains information about a new playlist item. This property is only present if the snippet.type is playlistItem.",
      "properties": {
       "playlistId": {
        "type": "string",
-       "description": "ID of the playlist the resource was added to."
+       "description": "The value that YouTube uses to uniquely identify the playlist."
+      },
+      "playlistItemId": {
+       "type": "string",
+       "description": "ID of the item within the playlist."
       },
       "resourceId": {
        "$ref": "ResourceId",
-       "description": "ID of the resource added to the playlist."
+       "description": "The resourceId object contains information about the resource that was added to the playlist."
       }
      }
     },
     "recommendation": {
      "type": "object",
-     "description": "Only set if the type is \"recommendation\".",
+     "description": "The recommendation object contains information about a recommended resource. This property is only present if the snippet.type is recommendation.",
      "properties": {
       "reason": {
        "type": "string",
-       "description": "Reason for which the video was recommended."
+       "description": "The reason that the resource is recommended to the user."
       },
       "resourceId": {
        "$ref": "ResourceId",
-       "description": "ID of the recommended resource."
+       "description": "The resourceId object contains information that identifies the recommended resource."
       },
       "seedResourceId": {
        "$ref": "ResourceId",
-       "description": "ID of the video that caused this recommendation."
+       "description": "The seedResourceId object contains information about the resource that caused the recommendation."
       }
      }
     },
     "social": {
      "type": "object",
-     "description": "Only present if the type is \"social\".",
+     "description": "The social object contains details about a social network post. This property is only present if the snippet.type is social.",
      "properties": {
       "author": {
        "type": "string",
-       "description": "Author of the post."
+       "description": "The author of the social network post."
       },
       "imageUrl": {
        "type": "string",
-       "description": "Image of the post author."
+       "description": "An image of the post's author."
       },
       "referenceUrl": {
        "type": "string",
-       "description": "Url of the social post."
+       "description": "The URL of the social network post."
       },
       "resourceId": {
        "$ref": "ResourceId",
-       "description": "ID of the resource this social activity is about."
+       "description": "The resourceId object encapsulates information that identifies the resource associated with a social network post."
       },
       "type": {
        "type": "string",
-       "description": "Type of the social network."
+       "description": "The name of the social network."
       }
      }
     },
     "subscription": {
      "type": "object",
-     "description": "Only present if the type is \"subscription\".",
+     "description": "The subscription object contains information about a channel that a user subscribed to. This property is only present if the snippet.type is subscription.",
      "properties": {
       "resourceId": {
        "$ref": "ResourceId",
-       "description": "ID of the resource subscribed to."
+       "description": "The resourceId object contains information that identifies the resource that the user subscribed to."
       }
      }
     },
     "upload": {
      "type": "object",
-     "description": "Only present if the type is \"upload\".",
+     "description": "The upload object contains information about the uploaded video. This property is only present if the snippet.type is upload.",
      "properties": {
       "videoId": {
        "type": "string",
-       "description": "ID of the uploaded video."
+       "description": "The ID that YouTube uses to uniquely identify the uploaded video."
       }
      }
     }
@@ -244,31 +248,31 @@
    "properties": {
     "etag": {
      "type": "string",
-     "description": "The eTag of the response."
+     "description": "The ETag of the response."
     },
     "items": {
      "type": "array",
-     "description": "List of activities matching the request criteria.",
+     "description": "A list of activities, or events, that match the request criteria.",
      "items": {
       "$ref": "Activity"
      }
     },
     "kind": {
      "type": "string",
-     "description": "The type of this API response.",
+     "description": "The type of the API response. For this operation, the value will be youtube#activityListResponse.",
      "default": "youtube#activityListResponse"
     },
     "nextPageToken": {
      "type": "string",
-     "description": "Token to the next page."
+     "description": "The token that can be used as the value of the pageToken parameter to retrieve the next page in the result set."
     },
     "pageInfo": {
      "$ref": "PageInfo",
-     "description": "Paging information for the list result."
+     "description": "The pageInfo object encapsulates paging information for the result set."
     },
     "prevPageToken": {
      "type": "string",
-     "description": "Token to the previous page."
+     "description": "The token that can be used as the value of the pageToken parameter to retrieve the previous page in the result set."
     }
    }
   },
@@ -279,72 +283,81 @@
    "properties": {
     "channelId": {
      "type": "string",
-     "description": "Channel publishing the activity."
+     "description": "The ID that YouTube uses to uniquely identify the channel associated with the activity."
     },
     "description": {
      "type": "string",
-     "description": "Description of the activity."
+     "description": "The description of the resource primarily associated with the activity.",
+     "annotations": {
+      "required": [
+       "youtube.activities.insert"
+      ]
+     }
     },
     "groupId": {
      "type": "string",
-     "description": "Id of the group that this activity is part of."
+     "description": "The group ID associated with the activity. A group ID identifies user events that are associated with the same user and resource. For example, if a user rates a video and marks the same video as a favorite, the entries for those events would have the same group ID in the user's activity feed. In your user interface, you can avoid repetition by grouping events with the same groupId value."
     },
     "publishedAt": {
      "type": "string",
-     "description": "Date and time the activity was published at.",
+     "description": "The date and time that the activity occurred. The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.",
      "format": "date-time"
     },
     "thumbnails": {
      "type": "object",
-     "description": "Activity thumbnails.",
+     "description": "A map of thumbnail images associated with the resource that is primarily associated with the activity. For each object in the map, the key is the name of the thumbnail image, and the value is an object that contains other information about the thumbnail.",
      "additionalProperties": {
       "$ref": "Thumbnail",
-      "description": "A map of thumbnails by their name."
+      "description": "The thumbnail image's name."
      }
     },
     "title": {
      "type": "string",
-     "description": "Title of the activity."
+     "description": "The title of the resource primarily associated with the activity."
     },
     "type": {
      "type": "string",
-     "description": "Type of the activity."
+     "description": "The type of activity that the resource describes."
     }
    }
   },
   "Channel": {
    "id": "Channel",
    "type": "object",
-   "description": "A channel resource contains information about a single YouTube channel.",
+   "description": "A channel resource contains information about a YouTube channel.",
    "properties": {
     "contentDetails": {
      "$ref": "ChannelContentDetails",
-     "description": "Information about the channel content: upload playlist id, privacy status."
+     "description": "The contentDetails object encapsulates information about the channel's content."
     },
     "etag": {
      "type": "string",
-     "description": "The eTag of the channel."
+     "description": "The ETag for the channel resource."
     },
     "id": {
      "type": "string",
-     "description": "The unique ID of the channel."
+     "description": "The ID that YouTube uses to uniquely identify the channel."
     },
     "kind": {
      "type": "string",
-     "description": "The type of this API resource.",
+     "description": "The type of the API resource. For channel resources, the value will be youtube#channel.",
      "default": "youtube#channel"
     },
     "snippet": {
      "$ref": "ChannelSnippet",
-     "description": "Basic details about the channel: title, description, and thumbnails."
+     "description": "The snippet object contains basic details about the channel, such as its title, description, and thumbnail images."
     },
     "statistics": {
      "$ref": "ChannelStatistics",
-     "description": "Statistics about the channel: number of subscribers, views, and comments."
+     "description": "The statistics object encapsulates statistics for the channel."
+    },
+    "status": {
+     "$ref": "ChannelStatus",
+     "description": "The status object encapsulates information about the privacy status of the channel."
     },
     "topicDetails": {
      "$ref": "ChannelTopicDetails",
-     "description": "Information about channel topics"
+     "description": "The topicDetails object encapsulates information about Freebase topics associated with the channel."
     }
    }
   },
@@ -353,13 +366,31 @@
    "type": "object",
    "description": "Details about the content of a channel.",
    "properties": {
-    "privacyStatus": {
-     "type": "string",
-     "description": "Privacy status of the channel."
-    },
-    "uploads": {
-     "type": "string",
-     "description": "The ID of the playlist containing the uploads of this channel."
+    "relatedPlaylists": {
+     "type": "object",
+     "description": "The relatedPlaylists object is a map that identifies playlists associated with the channel, such as the channel's uploaded videos or favorite videos. You can retrieve any of these playlists using the playlists.list method.",
+     "properties": {
+      "favorites": {
+       "type": "string",
+       "description": "The ID of the playlist that contains the channel's favorite videos. Use the playlistItems.insert and playlistItems.delete to add or remove items from that list."
+      },
+      "likes": {
+       "type": "string",
+       "description": "The ID of the playlist that contains the channel's liked videos. Use the playlistItems.insert and playlistItems.delete to add or remove items from that list."
+      },
+      "uploads": {
+       "type": "string",
+       "description": "The ID of the playlist that contains the channel's uploaded videos. Use the videos.insert method to upload new videos and the videos.delete method to delete previously uploaded videos."
+      },
+      "watchHistory": {
+       "type": "string",
+       "description": "The ID of the playlist that contains the channel's watch history. Use the playlistItems.insert and playlistItems.delete to add or remove items from that list."
+      },
+      "watchLater": {
+       "type": "string",
+       "description": "The ID of the channel's watch later playlist. Use the playlistItems.insert and playlistItems.delete to add or remove items from that list."
+      }
+     }
     }
    }
   },
@@ -370,31 +401,31 @@
    "properties": {
     "etag": {
      "type": "string",
-     "description": "The eTag of the response."
+     "description": "The ETag for the response."
     },
     "items": {
      "type": "array",
-     "description": "List of channels matching the request criteria.",
+     "description": "A list of channels that match the request criteria.",
      "items": {
       "$ref": "Channel"
      }
     },
     "kind": {
      "type": "string",
-     "description": "The type of this API response.",
+     "description": "The type of the API response. For this operation, the value will be youtube#channelListResponse.",
      "default": "youtube#channelListResponse"
     },
     "nextPageToken": {
      "type": "string",
-     "description": "Token to the next page."
+     "description": "The token that can be used as the value of the pageToken parameter to retrieve the next page in the result set."
     },
     "pageInfo": {
      "$ref": "PageInfo",
-     "description": "Paging information for the list result."
+     "description": "The pageInfo object encapsulates paging information for the result set."
     },
     "prevPageToken": {
      "type": "string",
-     "description": "Token to the previous page."
+     "description": "The token that can be used as the value of the pageToken parameter to retrieve the previous page in the result set."
     }
    }
   },
@@ -405,28 +436,28 @@
    "properties": {
     "channelId": {
      "type": "string",
-     "description": "Id of the channel."
+     "description": "The ID that YouTube uses to uniquely identify the channel."
     },
     "description": {
      "type": "string",
-     "description": "Description of the channel."
+     "description": "The channel's description."
     },
     "publishedAt": {
      "type": "string",
-     "description": "Date and time the channel was published at.",
+     "description": "The date and time that the channel was created. The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.",
      "format": "date-time"
     },
     "thumbnails": {
      "type": "object",
-     "description": "Channel thumbnails.",
+     "description": "A map of thumbnail images associated with the channel. For each object in the map, the key is the name of the thumbnail image, and the value is an object that contains other information about the thumbnail.",
      "additionalProperties": {
       "$ref": "Thumbnail",
-      "description": "A map of thumbnails by their name."
+      "description": "The thumbnail image's name. This value is used as the key in the snippet.thumbnails map."
      }
     },
     "title": {
      "type": "string",
-     "description": "Title of the channel."
+     "description": "The channel's title."
     }
    }
   },
@@ -437,23 +468,34 @@
    "properties": {
     "commentCount": {
      "type": "string",
-     "description": "Number of comments for this channel.",
+     "description": "The number of comments for the channel.",
      "format": "uint64"
     },
     "subscriberCount": {
      "type": "string",
-     "description": "Number of subscribers to this channel.",
+     "description": "The number of subscribers that the channel has.",
      "format": "uint64"
     },
     "videoCount": {
      "type": "string",
-     "description": "Number of videos in the channel.",
+     "description": "The number of videos uploaded to the channel.",
      "format": "uint64"
     },
     "viewCount": {
      "type": "string",
-     "description": "Number of times the channel has been viewed.",
+     "description": "The number of times the channel has been viewed.",
      "format": "uint64"
+    }
+   }
+  },
+  "ChannelStatus": {
+   "id": "ChannelStatus",
+   "type": "object",
+   "description": "JSON template for the status part of a channel.",
+   "properties": {
+    "privacyStatus": {
+     "type": "string",
+     "description": "Privacy status of the channel."
     }
    }
   },
@@ -464,34 +506,56 @@
    "properties": {
     "topicIds": {
      "type": "array",
-     "description": "List of topic ids for this channel *",
+     "description": "A list of Freebase topic IDs associated with the channel. You can retrieve information about each topic using the Freebase Topic API.",
      "items": {
       "type": "string"
      }
     }
    }
   },
+  "GeoPoint": {
+   "id": "GeoPoint",
+   "type": "object",
+   "description": "A geoPoint holds geo location information associated with a YouTube resource.",
+   "properties": {
+    "elevation": {
+     "type": "number",
+     "description": "Altitude above the Earth, in meters.",
+     "format": "double"
+    },
+    "latitude": {
+     "type": "number",
+     "description": "Latitude in degrees.",
+     "format": "double"
+    },
+    "longitude": {
+     "type": "number",
+     "description": "Longitude in degrees.",
+     "format": "double"
+    }
+   }
+  },
   "GuideCategory": {
    "id": "GuideCategory",
    "type": "object",
-   "description": "A guideCategory resource identifies a category that YouTube assigns based on a channel's content or other indicators, such as the channel's popularity.",
+   "description": "A guideCategory resource identifies a category that YouTube algorithmically assigns based on a channel's content or other indicators, such as the channel's popularity. The list is similar to video categories, with the difference being that a video's uploader can assign a video category but only YouTube can assign a channel category.",
    "properties": {
     "etag": {
      "type": "string",
-     "description": "The eTag of the guide category."
+     "description": "The ETag of the guideCategory resource."
     },
     "id": {
      "type": "string",
-     "description": "The unique ID of the guide category."
+     "description": "The ID that YouTube uses to uniquely identify the guide category."
     },
     "kind": {
      "type": "string",
-     "description": "The type of this API resource.",
+     "description": "The type of the API resource. For guideCategory resources, the value will be youtube#guideCategory/code\u003e.",
      "default": "youtube#guideCategory"
     },
     "snippet": {
      "$ref": "GuideCategorySnippet",
-     "description": "Snippet of the category."
+     "description": "The snippet object contains basic details about the category, such as its title."
     }
    }
   },
@@ -502,18 +566,18 @@
    "properties": {
     "etag": {
      "type": "string",
-     "description": "The eTag of the response."
+     "description": "The ETag of the response."
     },
     "items": {
      "type": "array",
-     "description": "List of categories matching the request criteria.",
+     "description": "A list of categories that can be associated with YouTube channels. In this map, the category ID is the map key, and its value is the corresponding guideCategory resource.",
      "items": {
       "$ref": "GuideCategory"
      }
     },
     "kind": {
      "type": "string",
-     "description": "The type of this API response.",
+     "description": "The type of the API response. For this operation, the value will be youtube#guideCategoryListResponse.",
      "default": "youtube#guideCategoryListResponse"
     }
    }
@@ -525,12 +589,12 @@
    "properties": {
     "channelId": {
      "type": "string",
-     "description": "Channel publishing the guide category.",
+     "description": "The ID that YouTube uses to uniquely identify the channel publishing the guide category.",
      "default": "UCBR8-60-B28hp2BmDPdntcQ"
     },
     "title": {
      "type": "string",
-     "description": "Title of the guide category."
+     "description": "The category's title."
     }
    }
   },
@@ -541,12 +605,12 @@
    "properties": {
     "resultsPerPage": {
      "type": "integer",
-     "description": "The number of results to display for each page.",
+     "description": "The number of results included in the API response.",
      "format": "int32"
     },
     "totalResults": {
      "type": "integer",
-     "description": "The total number of results.",
+     "description": "The total number of results in the result set.",
      "format": "int32"
     }
    }
@@ -554,56 +618,56 @@
   "Playlist": {
    "id": "Playlist",
    "type": "object",
-   "description": "A playlist resource represents a single YouTube playlist.",
+   "description": "A playlist resource represents a YouTube playlist. A playlist is a collection of videos that can be viewed sequentially and shared with other users. A playlist can contain up to 200 videos, and YouTube does not limit the number of playlists that each user creates. By default, playlists are publicly visible to other users, but playlists can be public or private.\n\nYouTube also uses playlists to identify special collections of videos for a channel, such as:  \n- uploaded videos \n- favorite videos \n- positively rated (liked) videos \n- watch history \n- watch later  To be more specific, these lists are associated with a channel, which is a collection of a person, group, or company's videos, playlists, and other YouTube information. You can retrieve the playlist IDs for each of these lists from the channel resource for a given channel.\n\nYou can then use the playlistItems.list method to retrieve any of those lists. You can also add or remove items from those lists by calling the playlistItems.insert and playlistItems.delete methods.",
    "properties": {
     "etag": {
      "type": "string",
-     "description": "The eTag of the playlist."
+     "description": "The ETag for the playlist resource."
     },
     "id": {
      "type": "string",
-     "description": "The unique id of the playlist."
+     "description": "The ID that YouTube uses to uniquely identify the playlist."
     },
     "kind": {
      "type": "string",
-     "description": "The type of this API resource.",
+     "description": "The type of the API resource. For video resources, the value will be youtube#playlist.",
      "default": "youtube#playlist"
     },
     "snippet": {
      "$ref": "PlaylistSnippet",
-     "description": "Basic details about the playlist: title, description, thumbnails."
+     "description": "The snippet object contains basic details about the playlist, such as its title and description."
     },
     "status": {
      "$ref": "PlaylistStatus",
-     "description": "Status of the playlist: only privacy_status for now."
+     "description": "The status object contains status information for the playlist."
     }
    }
   },
   "PlaylistItem": {
    "id": "PlaylistItem",
    "type": "object",
-   "description": "A playlistItem resource refers to another resource, such as a video, that is included in a playlist.",
+   "description": "A playlistItem resource identifies another resource, such as a video, that is included in a playlist. In addition, the playlistItem resource contains details about the included resource that pertain specifically to how that resource is used in that playlist.\n\nYouTube uses playlists to identify special collections of videos for a channel, such as:  \n- uploaded videos \n- favorite videos \n- positively rated (liked) videos \n- watch history \n- watch later  To be more specific, these lists are associated with a channel, which is a collection of a person, group, or company's videos, playlists, and other YouTube information.\n\nYou can retrieve the playlist IDs for each of these lists from the channel resource for a given channel. You can then use the playlistItems.list method to retrieve any of those lists. You can also add or remove items from those lists by calling the playlistItems.insert and playlistItems.delete methods. For example, if a user gives a positive rating to a video, you would insert that video into the liked videos playlist for that user's channel.",
    "properties": {
     "contentDetails": {
      "$ref": "PlaylistItemContentDetails",
-     "description": "Content details about the playlist item: start and end clipping time."
+     "description": "The contentDetails object is included in the resource if the included item is a YouTube video. The object contains additional information about the video."
     },
     "etag": {
      "type": "string",
-     "description": "The eTag of the playlist item."
+     "description": "The ETag for the playlist item resource."
     },
     "id": {
      "type": "string",
-     "description": "The unique id of the playlist item."
+     "description": "The ID that YouTube uses to uniquely identify the playlist item."
     },
     "kind": {
      "type": "string",
-     "description": "The type of this API resource.",
+     "description": "The type of the API resource. For playlist item resources, the value will be youtube#playlistItem.",
      "default": "youtube#playlistItem"
     },
     "snippet": {
      "$ref": "PlaylistItemSnippet",
-     "description": "Basic details about the playlist item: title, description, thumbnails."
+     "description": "The snippet object contains basic details about the playlist item, such as its title and position in the playlist."
     }
    }
   },
@@ -614,19 +678,19 @@
    "properties": {
     "endAt": {
      "type": "string",
-     "description": "The time video playback ends."
+     "description": "The time, measured in seconds from the start of the video, when the video should stop playing. (The playlist owner can specify the times when the video should start and stop playing when the video is played in the context of the playlist.) By default, assume that the video.endTime is the end of the video."
     },
     "note": {
      "type": "string",
-     "description": "The user-generated note for this item."
+     "description": "A user-generated note for this item."
     },
     "startAt": {
      "type": "string",
-     "description": "The time video playback begins."
+     "description": "The time, measured in seconds from the start of the video, when the video should start playing. (The playlist owner can specify the times when the video should start and stop playing when the video is played in the context of the playlist.) The default value is 0."
     },
     "videoId": {
      "type": "string",
-     "description": "ID of the video."
+     "description": "The ID that YouTube uses to uniquely identify a video. To retrieve the video resource, set the id query parameter to this value in your API request."
     }
    }
   },
@@ -637,31 +701,31 @@
    "properties": {
     "etag": {
      "type": "string",
-     "description": "The eTag of the response."
+     "description": "The ETag for the response."
     },
     "items": {
      "type": "array",
-     "description": "List of playlist items matching the request criteria.",
+     "description": "A list of playlist items that match the request criteria.",
      "items": {
       "$ref": "PlaylistItem"
      }
     },
     "kind": {
      "type": "string",
-     "description": "The type of this API response.",
+     "description": "The type of the API response. For this operation, the value will be youtube#playlistItemListResponse.",
      "default": "youtube#playlistItemListResponse"
     },
     "nextPageToken": {
      "type": "string",
-     "description": "Token to the next page."
+     "description": "A token that can be used as the value of the pageToken parameter to retrieve the next page in the result set."
     },
     "pageInfo": {
      "$ref": "PageInfo",
-     "description": "Paging information for the list result."
+     "description": "The pageInfo object encapsulates paging information for the result set."
     },
     "prevPageToken": {
      "type": "string",
-     "description": "Token to the previous page."
+     "description": "A token that can be used as the value of the pageToken parameter to retrieve the previous page in the result set."
     }
    }
   },
@@ -672,15 +736,15 @@
    "properties": {
     "channelId": {
      "type": "string",
-     "description": "Channel publishing the playlist item."
+     "description": "The ID that YouTube uses to uniquely identify the user that added the item to the playlist."
     },
     "description": {
      "type": "string",
-     "description": "Description of the playlist item."
+     "description": "The item's description."
     },
     "playlistId": {
      "type": "string",
-     "description": "The playlist the item is part of.",
+     "description": "The ID that YouTube uses to uniquely identify the playlist that the playlist item is in.",
      "annotations": {
       "required": [
        "youtube.playlistItems.insert"
@@ -689,17 +753,17 @@
     },
     "position": {
      "type": "integer",
-     "description": "The position of the item within the playlist.",
+     "description": "The order in which the item appears in the playlist. The value uses a zero-based index, so the first item has a position of 0, the second item has a position of 1, and so forth.",
      "format": "uint32"
     },
     "publishedAt": {
      "type": "string",
-     "description": "Date and time the playlist item was published at.",
+     "description": "The date and time that the item was added to the playlist. The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.",
      "format": "date-time"
     },
     "resourceId": {
      "$ref": "ResourceId",
-     "description": "The ID of the resource referenced by the playlist item.",
+     "description": "The id object contains information that can be used to uniquely identify the resource that is included in the playlist as the playlist item.",
      "annotations": {
       "required": [
        "youtube.playlistItems.insert"
@@ -708,15 +772,15 @@
     },
     "thumbnails": {
      "type": "object",
-     "description": "Playlist item thumbnails.",
+     "description": "A map of thumbnail images associated with the playlist item. For each object in the map, the key is the name of the thumbnail image, and the value is an object that contains other information about the thumbnail.",
      "additionalProperties": {
       "$ref": "Thumbnail",
-      "description": "A map of thumbnails by their name."
+      "description": "The thumbnail image's name. This value is used as the key in the snippet.thumbnails map."
      }
     },
     "title": {
      "type": "string",
-     "description": "Title of the playlist item."
+     "description": "The item's title."
     }
    }
   },
@@ -727,31 +791,31 @@
    "properties": {
     "etag": {
      "type": "string",
-     "description": "The eTag of the response."
+     "description": "The ETag of the response."
     },
     "items": {
      "type": "array",
-     "description": "List of playlists matching the request criteria.",
+     "description": "A list of playlists that match the request criteria.",
      "items": {
       "$ref": "Playlist"
      }
     },
     "kind": {
      "type": "string",
-     "description": "The type of this API response.",
+     "description": "The type of the API response. For this operation, the value will be youtube#playlistListResponse.",
      "default": "youtube#playlistListResponse"
     },
     "nextPageToken": {
      "type": "string",
-     "description": "Token to the next page."
+     "description": "The token that can be used as the value of the pageToken parameter to retrieve the next page in the result set."
     },
     "pageInfo": {
      "$ref": "PageInfo",
-     "description": "Paging information for the list result."
+     "description": "The pageInfo object encapsulates paging information for the result set."
     },
     "prevPageToken": {
      "type": "string",
-     "description": "Token to the previous page."
+     "description": "The token that can be used as the value of the pageToken parameter to retrieve the previous page in the result set."
     }
    }
   },
@@ -762,28 +826,34 @@
    "properties": {
     "channelId": {
      "type": "string",
-     "description": "Channel publishing the playlist."
+     "description": "The ID that YouTube uses to uniquely identify the channel that published the playlist."
     },
     "description": {
      "type": "string",
-     "description": "Description of the playlist."
+     "description": "The playlist's description."
     },
     "publishedAt": {
      "type": "string",
-     "description": "Date and time the playlist was published at.",
+     "description": "The date and time that the playlist was created. The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.",
      "format": "date-time"
     },
     "thumbnails": {
      "type": "object",
-     "description": "Playlist thumbnails.",
+     "description": "A map of thumbnail images associated with the playlist. For each object in the map, the key is the name of the thumbnail image, and the value is an object that contains other information about the thumbnail.",
      "additionalProperties": {
       "$ref": "Thumbnail",
-      "description": "A map of thumbnails by their name."
+      "description": "The thumbnail image's name. This value is used as the key in the snippet.thumbnails map."
      }
     },
     "title": {
      "type": "string",
-     "description": "Title of the playlist."
+     "description": "The playlist's title.",
+     "annotations": {
+      "required": [
+       "youtube.playlists.insert",
+       "youtube.playlists.update"
+      ]
+     }
     }
    }
   },
@@ -794,7 +864,7 @@
    "properties": {
     "privacyStatus": {
      "type": "string",
-     "description": "Privacy of the playlist."
+     "description": "The playlist's privacy status."
     }
    }
   },
@@ -805,19 +875,19 @@
    "properties": {
     "channelId": {
      "type": "string",
-     "description": "ID of the referred channel. Present only when type is \"CHANNEL\"."
+     "description": "The ID that YouTube uses to uniquely identify the referred resource, if that resource is a channel. This property is only present if the resourceId.kind value is youtube#channel."
     },
     "kind": {
      "type": "string",
-     "description": "The kind of the referred resource."
+     "description": "The kind, or type, of the referred resource."
     },
     "playlistId": {
      "type": "string",
-     "description": "ID of the referred playlist. Present only when type is \"PLAYLIST\"."
+     "description": "The ID that YouTube uses to uniquely identify the referred resource, if that resource is a playlist. This property is only present if the resourceId.kind value is youtube#playlist."
     },
     "videoId": {
      "type": "string",
-     "description": "ID of the referred video. Present only when type is \"VIDEO\"."
+     "description": "The ID that YouTube uses to uniquely identify the referred resource, if that resource is a video. This property is only present if the resourceId.kind value is youtube#video."
     }
    }
   },
@@ -828,55 +898,55 @@
    "properties": {
     "etag": {
      "type": "string",
-     "description": "The eTag of the response."
+     "description": "The ETag for the response."
     },
     "items": {
      "type": "array",
-     "description": "List of results matching the request criteria.",
+     "description": "A list of results that match the search criteria.",
      "items": {
       "$ref": "SearchResult"
      }
     },
     "kind": {
      "type": "string",
-     "description": "The type of this API response.",
+     "description": "The type of the API response. For this operation, the value will be youtube#searchListResponse.",
      "default": "youtube#searchListResponse"
     },
     "nextPageToken": {
      "type": "string",
-     "description": "Token to the next page."
+     "description": "The token that can be used as the value of the pageToken parameter to retrieve the next page in the result set."
     },
     "pageInfo": {
      "$ref": "PageInfo",
-     "description": "Paging information for the search result."
+     "description": "The pageInfo object encapsulates paging information for the search result set."
     },
     "prevPageToken": {
      "type": "string",
-     "description": "Token to the previous page."
+     "description": "The token that can be used as the value of the pageToken parameter to retrieve the previous page in the result set."
     }
    }
   },
   "SearchResult": {
    "id": "SearchResult",
    "type": "object",
-   "description": "A search result contains information about a YouTube video, channel, or playlist that matches the search parameters specified in an API request.",
+   "description": "A search result contains information about a YouTube video, channel, or playlist that matches the search parameters specified in an API request. While a search result points to a uniquely identifiable resource, like a video, it does not have its own persistent data.",
    "properties": {
     "etag": {
      "type": "string",
-     "description": "The eTag of the search result."
+     "description": "The ETag of the search result."
     },
     "id": {
      "$ref": "ResourceId",
-     "description": "The id of the resource."
+     "description": "The id object contains information that can be used to uniquely identify the resource that matches the search request."
     },
     "kind": {
      "type": "string",
-     "description": "The type of this API resource.",
+     "description": "The type of the API response. For this resource, the value will be youtube#searchResult.",
      "default": "youtube#searchResult"
     },
     "snippet": {
      "$ref": "SearchResultSnippet",
-     "description": "Basic details about the search result: title, description, author."
+     "description": "The snippet object contains basic details about a search result, such as its title or description. For example, if the search result is a video, then the title will be the video's title and the description will be the video's description."
     }
    }
   },
@@ -887,56 +957,56 @@
    "properties": {
     "channelId": {
      "type": "string",
-     "description": "Channel publishing the found resource."
+     "description": "The value that YouTube uses to uniquely identify the channel that published the resource that the search result identifies."
     },
     "description": {
      "type": "string",
-     "description": "Description of the found resource."
+     "description": "A description of the search result."
     },
     "publishedAt": {
      "type": "string",
-     "description": "Date and time the found resource was published at.",
+     "description": "The creation date and time of the resource that the search result identifies. The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.",
      "format": "date-time"
     },
     "thumbnails": {
      "type": "object",
-     "description": "Thumbnails for the found resource.",
+     "description": "A map of thumbnail images associated with the search result. For each object in the map, the key is the name of the thumbnail image, and the value is an object that contains other information about the thumbnail.",
      "additionalProperties": {
       "$ref": "Thumbnail",
-      "description": "A map of thumbnails by their name."
+      "description": "The thumbnail image's name. This value is used as the key in the snippet.thumbnails map."
      }
     },
     "title": {
      "type": "string",
-     "description": "Title of the found resource."
+     "description": "The title to display for the search result."
     }
    }
   },
   "Subscription": {
    "id": "Subscription",
    "type": "object",
-   "description": "A subscription resource contains information about a YouTube user subscription.",
+   "description": "A subscription resource contains information about a YouTube user subscription. A subscription notifies a user when new videos are added to a channel or when another user takes one of several actions on YouTube, such as uploading a video, rating a video, or commenting on a video.",
    "properties": {
     "contentDetails": {
      "$ref": "SubscriptionContentDetails",
-     "description": "Basic statistics about the subscription"
+     "description": "The contentDetails object contains basic statistics about the subscription."
     },
     "etag": {
      "type": "string",
-     "description": "The eTag of the subscription."
+     "description": "The ETag of the subscription resource."
     },
     "id": {
      "type": "string",
-     "description": "The unique id of the subscription."
+     "description": "The ID that YouTube uses to uniquely identify the subscription."
     },
     "kind": {
      "type": "string",
-     "description": "The type of this API resource.",
+     "description": "The type of the API resource. For subscription resources, the value will be youtube#subscription.",
      "default": "youtube#subscription"
     },
     "snippet": {
      "$ref": "SubscriptionSnippet",
-     "description": "Basic details about the subscription"
+     "description": "The snippet object contains basic details about the subscription, including its title and the channel that the user subscribed to."
     }
    }
   },
@@ -947,12 +1017,12 @@
    "properties": {
     "newItemCount": {
      "type": "integer",
-     "description": "Number of new items in the subscription since its content was last read.",
+     "description": "The number of new items in the subscription since its content was last read.",
      "format": "uint32"
     },
     "totalItemCount": {
      "type": "integer",
-     "description": "Approximate total number of items the subscription points to.",
+     "description": "The approximate number of items that the subscription points to.",
      "format": "uint32"
     }
    }
@@ -964,31 +1034,31 @@
    "properties": {
     "etag": {
      "type": "string",
-     "description": "The eTag of the response."
+     "description": "The ETag of the response."
     },
     "items": {
      "type": "array",
-     "description": "List of subscriptions matching the request criteria.",
+     "description": "A list of subscriptions that match the request criteria.",
      "items": {
       "$ref": "Subscription"
      }
     },
     "kind": {
      "type": "string",
-     "description": "The type of this API response.",
+     "description": "The type of the API response. For this operation, the value will be youtube#subscriptionListResponse.",
      "default": "youtube#subscriptionListResponse"
     },
     "nextPageToken": {
      "type": "string",
-     "description": "Token to the next page."
+     "description": "The token that can be used as the value of the pageToken parameter to retrieve the next page in the result set."
     },
     "pageInfo": {
      "$ref": "PageInfo",
-     "description": "Paging information for the list result."
+     "description": "The pageInfo object encapsulates paging information for the result set."
     },
     "prevPageToken": {
      "type": "string",
-     "description": "Token to the previous page."
+     "description": "The token that can be used as the value of the pageToken parameter to retrieve the previous page in the result set."
     }
    }
   },
@@ -999,20 +1069,20 @@
    "properties": {
     "channelId": {
      "type": "string",
-     "description": "Channel publishing the subscription."
+     "description": "The ID that YouTube uses to uniquely identify the subscriber's channel."
     },
     "description": {
      "type": "string",
-     "description": "Description of the subscription."
+     "description": "The subscription's details."
     },
     "publishedAt": {
      "type": "string",
-     "description": "Date and time the subscription was published at.",
+     "description": "The date and time that the subscription was created. The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.",
      "format": "date-time"
     },
     "resourceId": {
      "$ref": "ResourceId",
-     "description": "The resource subscribed to.",
+     "description": "The id object contains information about the channel that the user subscribed to.",
      "annotations": {
       "required": [
        "youtube.subscriptions.insert"
@@ -1021,15 +1091,15 @@
     },
     "thumbnails": {
      "type": "object",
-     "description": "Subscription thumbnails.",
+     "description": "A map of thumbnail images associated with the subscription. For each object in the map, the key is the name of the thumbnail image, and the value is an object that contains other information about the thumbnail.",
      "additionalProperties": {
       "$ref": "Thumbnail",
-      "description": "A map of thumbnails by their name."
+      "description": "The thumbnail image's name."
      }
     },
     "title": {
      "type": "string",
-     "description": "Title of the subscription."
+     "description": "The subscription's title."
     }
    }
   },
@@ -1040,51 +1110,55 @@
    "properties": {
     "url": {
      "type": "string",
-     "description": "The URL for the thumbnail."
+     "description": "The thumbnail image's URL."
     }
    }
   },
   "Video": {
    "id": "Video",
    "type": "object",
-   "description": "A video resource represents a single YouTube video.",
+   "description": "A video resource represents a YouTube video.",
    "properties": {
     "contentDetails": {
      "$ref": "VideoContentDetails",
-     "description": "Information about the video content, media file."
+     "description": "The contentDetails object contains information about the video content, including the length of the video and its aspect ratio."
     },
     "etag": {
      "type": "string",
-     "description": "The eTag of the video."
+     "description": "The ETag of the video resource."
     },
     "id": {
      "type": "string",
-     "description": "The unique id of the video."
+     "description": "The ID that YouTube uses to uniquely identify the video."
     },
     "kind": {
      "type": "string",
-     "description": "The type of this API resource.",
+     "description": "The type of the API resource. For video resources, the value will be youtube#video.",
      "default": "youtube#video"
     },
     "player": {
      "$ref": "VideoPlayer",
-     "description": "Information used to play the video."
+     "description": "The player object contains information that you would use to play the video in an embedded player."
+    },
+    "recordingDetails": {
+     "$ref": "VideoRecordingDetails",
+     "description": "The recordingDetails object encapsulates information about the location, date and address where the video was recorded."
     },
     "snippet": {
      "$ref": "VideoSnippet",
-     "description": "Basic details about the video: title, description, thumbnails."
+     "description": "The snippet object contains basic details about the video, such as its title, description, and category."
     },
     "statistics": {
      "$ref": "VideoStatistics",
-     "description": "Statistics about the video: number of views, ratings."
+     "description": "The statistics object contains statistics about the video."
     },
     "status": {
      "$ref": "VideoStatus",
-     "description": "Status of the video upload, privacy status."
+     "description": "The status object contains information about the video's uploading, processing, and privacy statuses."
     },
     "topicDetails": {
      "$ref": "VideoTopicDetails",
-     "description": "Topics related to the video"
+     "description": "The topicDetails object encapsulates information about Freebase topics associated with the video."
     }
    }
   },
@@ -1095,20 +1169,20 @@
    "properties": {
     "etag": {
      "type": "string",
-     "description": "The eTag of the video."
+     "description": "The ETag of the videoCategory resource."
     },
     "id": {
      "type": "string",
-     "description": "The unique id of the video category."
+     "description": "The ID that YouTube uses to uniquely identify the video category."
     },
     "kind": {
      "type": "string",
-     "description": "The type of this API resource.",
+     "description": "The type of the API resource. For video category resources, the value will be youtube#videoCategory.",
      "default": "youtube#videoCategory"
     },
     "snippet": {
      "$ref": "VideoCategorySnippet",
-     "description": "Basic details about the video category."
+     "description": "The snippet object contains basic details about the video category, including its title."
     }
    }
   },
@@ -1119,18 +1193,18 @@
    "properties": {
     "etag": {
      "type": "string",
-     "description": "The eTag of the response."
+     "description": "The ETag of the response."
     },
     "items": {
      "type": "array",
-     "description": "List of video categories matching the request criteria.",
+     "description": "A list of video categories that can be associated with YouTube videos. In this map, the video category ID is the map key, and its value is the corresponding videoCategory resource.",
      "items": {
       "$ref": "VideoCategory"
      }
     },
     "kind": {
      "type": "string",
-     "description": "The type of this API response.",
+     "description": "The type of the API response. For this operation, the value will be youtube#videoCategoryListResponse.",
      "default": "youtube#videoCategoryListResponse"
     }
    }
@@ -1142,12 +1216,12 @@
    "properties": {
     "channelId": {
      "type": "string",
-     "description": "Channel publishing the video category.",
+     "description": "The YouTube channel that created the video category.",
      "default": "UCBR8-60-B28hp2BmDPdntcQ"
     },
     "title": {
      "type": "string",
-     "description": "Title of the video category."
+     "description": "The video category's title."
     }
    }
   },
@@ -1158,22 +1232,22 @@
    "properties": {
     "duration": {
      "type": "string",
-     "description": "Duration of the video."
+     "description": "The length of the video. The tag value is an ISO 8601 duration in the format PT#M#S, in which the letters PT indicate that the value specifies a period of time, and the letters M and S refer to length in minutes and seconds, respectively. The # characters preceding the M and S letters are both integers that specify the number of minutes (or seconds) of the video. For example, a value of PT15M51S indicates that the video is 15 minutes and 51 seconds long."
     },
     "regionRestriction": {
      "type": "object",
-     "description": "Region restriction of the video.",
+     "description": "The regionRestriction object contains information about the countries where a video is (or is not) viewable. The object will contain either the contentDetails.regionRestriction.allowed property or the contentDetails.regionRestriction.blocked property.",
      "properties": {
       "allowed": {
        "type": "array",
-       "description": "List of allowed region codes.",
+       "description": "A list of region codes that identify countries where the video is viewable. If this property is present and a country is not listed in its value, then the video is blocked from appearing in that country. If this property is present and contains an empty list, the video is blocked in all countries.",
        "items": {
         "type": "string"
        }
       },
       "blocked": {
        "type": "array",
-       "description": "List of blocked region codes.",
+       "description": "A list of region codes that identify countries where the video is blocked. If this property is present and a country is not listed in its value, then the video is viewable in that country. If this property is present and contains an empty list, the video is viewable in all countries.",
        "items": {
         "type": "string"
        }
@@ -1189,18 +1263,18 @@
    "properties": {
     "etag": {
      "type": "string",
-     "description": "The eTag of the response."
+     "description": "The ETag of the response."
     },
     "items": {
      "type": "array",
-     "description": "List of videos matching the request criteria.",
+     "description": "A list of videos that match the request criteria.",
      "items": {
       "$ref": "Video"
      }
     },
     "kind": {
      "type": "string",
-     "description": "The type of this API response.",
+     "description": "The type of the API response. For this operation, the value will be youtube#videoListResponse.",
      "default": "youtube#videoListResponse"
     }
    }
@@ -1212,7 +1286,27 @@
    "properties": {
     "embedHtml": {
      "type": "string",
-     "description": "Iframe embed for the video."
+     "description": "An \u003ciframe\u003e tag that embeds a player that will play the video."
+    }
+   }
+  },
+  "VideoRecordingDetails": {
+   "id": "VideoRecordingDetails",
+   "type": "object",
+   "description": "Recording information associated with the video.",
+   "properties": {
+    "location": {
+     "$ref": "GeoPoint",
+     "description": "The geolocation information associated with the video."
+    },
+    "locationDescription": {
+     "type": "string",
+     "description": "The text description of the location where the video was recorded."
+    },
+    "recordingDate": {
+     "type": "string",
+     "description": "The date and time when the video was recorded. The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.",
+     "format": "date-time"
     }
    }
   },
@@ -1223,39 +1317,39 @@
    "properties": {
     "categoryId": {
      "type": "string",
-     "description": "Video category the video belongs to."
+     "description": "The YouTube video category associated with the video."
     },
     "channelId": {
      "type": "string",
-     "description": "Channel publishing the video."
+     "description": "The ID that YouTube uses to uniquely identify the channel that the video was uploaded to."
     },
     "description": {
      "type": "string",
-     "description": "Description of the video."
+     "description": "The video's description."
     },
     "publishedAt": {
      "type": "string",
-     "description": "Date and time the video was published at.",
+     "description": "The date and time that the video was uploaded. The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.",
      "format": "date-time"
     },
     "tags": {
      "type": "array",
-     "description": "Textual tags associated with the video.",
+     "description": "A list of keyword tags associated with the video. Tags may contain spaces. This field is only visible to the video's uploader.",
      "items": {
       "type": "string"
      }
     },
     "thumbnails": {
      "type": "object",
-     "description": "Video thumbnails.",
+     "description": "A map of thumbnail images associated with the video. For each object in the map, the key is the name of the thumbnail image, and the value is an object that contains other information about the thumbnail.",
      "additionalProperties": {
       "$ref": "Thumbnail",
-      "description": "A map of thumbnails by their name."
+      "description": "The thumbnail image's name. This value is used as the key in the snippet.thumbnails map."
      }
     },
     "title": {
      "type": "string",
-     "description": "Title of the video."
+     "description": "The video's title."
     }
    }
   },
@@ -1266,27 +1360,27 @@
    "properties": {
     "commentCount": {
      "type": "string",
-     "description": "Number of comments for this video.",
+     "description": "The number of comments for the video.",
      "format": "uint64"
     },
     "dislikeCount": {
      "type": "string",
-     "description": "Number of times the video was disliked.",
+     "description": "The number of users who have indicated that they disliked the video by giving it a negative rating.",
      "format": "uint64"
     },
     "favoriteCount": {
      "type": "string",
-     "description": "Number of times the video was added to a user's favorites list.",
+     "description": "The number of users who currently have the video marked as a favorite video.",
      "format": "uint64"
     },
     "likeCount": {
      "type": "string",
-     "description": "Number of times the video was liked.",
+     "description": "The number of users who have indicated that they liked the video by giving it a positive rating.",
      "format": "uint64"
     },
     "viewCount": {
      "type": "string",
-     "description": "Number of times the video was viewed.",
+     "description": "The number of times the video has been viewed.",
      "format": "uint64"
     }
    }
@@ -1298,19 +1392,19 @@
    "properties": {
     "failureReason": {
      "type": "string",
-     "description": "Present only if the uploadStatus indicates a failed upload."
+     "description": "This value explains why a video failed to upload. This property is only present if the uploadStatus property indicates that the upload failed."
     },
     "privacyStatus": {
      "type": "string",
-     "description": "Privacy of the video."
+     "description": "The video's privacy status."
     },
     "rejectionReason": {
      "type": "string",
-     "description": "Present only if the uploadStatus indicates a rejected upload."
+     "description": "This value explains why YouTube rejected an uploaded video. This property is only present if the uploadStatus property indicates that the upload was rejected."
     },
     "uploadStatus": {
      "type": "string",
-     "description": "Status of the video upload."
+     "description": "The status of the uploaded video."
     }
    }
   },
@@ -1321,7 +1415,7 @@
    "properties": {
     "topicIds": {
      "type": "array",
-     "description": "List of topic ids for this video *",
+     "description": "A list of Freebase topic IDs associated with the video. You can retrieve information about each topic using the Freebase Topic API.",
      "items": {
       "type": "string"
      }
@@ -1336,16 +1430,11 @@
      "id": "youtube.activities.insert",
      "path": "activities",
      "httpMethod": "POST",
-     "description": "Post a channel bulletin.",
+     "description": "Posts a bulletin for a specific channel. (The user submitting the request must be authorized to act on the channel's behalf.)",
      "parameters": {
-      "onBehalfOfContentOwner": {
-       "type": "string",
-       "description": "The authenticated user acts on behalf of this content owner.",
-       "location": "query"
-      },
       "part": {
        "type": "string",
-       "description": "One or more parts to return on the current request.",
+       "description": "The part parameter serves two purposes in this operation. It identifies the properties that the write operation will set as well as the properties that the API response will include.\n\nThe part names that you can include in the parameter value are snippet and contentDetails.",
        "required": true,
        "location": "query"
       }
@@ -1367,21 +1456,21 @@
      "id": "youtube.activities.list",
      "path": "activities",
      "httpMethod": "GET",
-     "description": "Browse the YouTube channel activity collection.",
+     "description": "Returns a list of channel activity events that match the request criteria. For example, you can retrieve events associated with a particular channel, events associated with the user's subscriptions and Google+ friends, or the YouTube home page feed, which is customized for each user.",
      "parameters": {
       "channelId": {
        "type": "string",
-       "description": "YouTube ID of the channel.",
+       "description": "The channelId parameter specifies a unique YouTube channel ID. The API will then return a list of that channel's activities.",
        "location": "query"
       },
       "home": {
        "type": "string",
-       "description": "Flag indicating to return user's homepage feed.",
+       "description": "Set this parameter's value to true to retrieve the activity feed that displays on the YouTube home page for the currently authenticated user.",
        "location": "query"
       },
       "maxResults": {
        "type": "integer",
-       "description": "Maximum number of results to return",
+       "description": "USE_DESCRIPTION --- channels:list:maxResults",
        "default": "5",
        "format": "uint32",
        "minimum": "0",
@@ -1389,35 +1478,30 @@
        "location": "query"
       },
       "mine": {
-       "type": "string",
-       "description": "Flag indicating to return user's activities.",
-       "location": "query"
-      },
-      "onBehalfOfContentOwner": {
-       "type": "string",
-       "description": "The authenticated user acts on behalf of this content owner.",
+       "type": "boolean",
+       "description": "Set this parameter's value to true to retrieve a feed of the authenticated user's activities.",
        "location": "query"
       },
       "pageToken": {
        "type": "string",
-       "description": "Token for the page selection.",
+       "description": "USE_DESCRIPTION --- channels:list:pageToken",
        "location": "query"
       },
       "part": {
        "type": "string",
-       "description": "Activity parts to include in the returned response. Valid values are: id, snippet and contentDetails.",
+       "description": "The part parameter specifies a comma-separated list of one or more activity resource properties that the API response will include. The part names that you can include in the parameter value are id, snippet, and contentDetails.\n\nIf the parameter identifies a property that contains child properties, the child properties will be included in the response. For example, in a activity resource, the snippet property contains other properties that identify the type of activity, a display title for the activity, and so forth. If you set part=snippet, the API response will also contain all of those nested properties.",
        "required": true,
        "location": "query"
       },
       "publishedAfter": {
        "type": "string",
-       "description": "Only return activities published after given date (inclusive).",
+       "description": "The publishedAfter parameter specifies the earliest date and time that an activity could have occurred for that activity to be included in the API response. If the parameter value specifies a day, but not a time, then any activities that occurred that day will be included in the result set. The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.",
        "format": "date-time",
        "location": "query"
       },
       "publishedBefore": {
        "type": "string",
-       "description": "Only return activities published before given date (exclusive).",
+       "description": "The publishedBefore parameter specifies the date and time before which an activity must have occurred for that activity to be included in the API response. If the parameter value specifies a day, but not a time, then any activities that occurred that day will be excluded from the result set. The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.",
        "format": "date-time",
        "location": "query"
       }
@@ -1441,21 +1525,21 @@
      "id": "youtube.channels.list",
      "path": "channels",
      "httpMethod": "GET",
-     "description": "Browse the YouTube channel collection. Either the 'id' or 'mine' parameter must be set.",
+     "description": "Returns a collection of zero or more channel resources that match the request criteria.",
      "parameters": {
       "categoryId": {
        "type": "string",
-       "description": "Filter to retrieve the channels within the given category ID.",
+       "description": "The categoryId parameter specifies a YouTube guide category, thereby requesting YouTube channels associated with that category.",
        "location": "query"
       },
       "id": {
        "type": "string",
-       "description": "YouTube IDs of the channels to be returned.",
+       "description": "The id parameter specifies a comma-separated list of the YouTube channel ID(s) for the resource(s) that are being retrieved. In a channel resource, the id property specifies the channel's YouTube channel ID.",
        "location": "query"
       },
       "maxResults": {
        "type": "integer",
-       "description": "Maximum number of results to return",
+       "description": "The maxResults parameter specifies the maximum number of items that should be returned in the result set.",
        "default": "5",
        "format": "uint32",
        "minimum": "0",
@@ -1463,28 +1547,23 @@
        "location": "query"
       },
       "mine": {
-       "type": "string",
-       "description": "Filter to only channels owned by authenticated user.",
+       "type": "boolean",
+       "description": "Set this parameter's value to true to instruct the API to only return channels owned by the authenticated user.",
        "location": "query"
       },
       "mySubscribers": {
        "type": "string",
-       "description": "Filter to channels that subscribed to the channel of the authenticated user.",
-       "location": "query"
-      },
-      "onBehalfOfContentOwner": {
-       "type": "string",
-       "description": "The authenticated user acts on behalf of this content owner.",
+       "description": "Set this parameter's value to true to retrieve a list of channels that subscribed to the authenticated user's channel.",
        "location": "query"
       },
       "pageToken": {
        "type": "string",
-       "description": "Token for the page selection.",
+       "description": "The pageToken parameter identifies a specific page in the result set that should be returned. In an API response, the nextPageToken and prevPageToken properties identify other pages that could be retrieved.",
        "location": "query"
       },
       "part": {
        "type": "string",
-       "description": "Channel parts to include in the returned response. Valid values are: id, snippet, contentDetails and topicDetails.",
+       "description": "The part parameter specifies a comma-separated list of one or more channel resource properties that the API response will include. The part names that you can include in the parameter value are id, snippet, contentDetails, statistics, and topicDetails.\n\nIf the parameter identifies a property that contains child properties, the child properties will be included in the response. For example, in a channel resource, the contentDetails property contains other properties, such as the uploads properties. As such, if you set part=contentDetails, the API response will also contain all of those nested properties.",
        "required": true,
        "location": "query"
       }
@@ -1509,33 +1588,28 @@
      "id": "youtube.guideCategories.list",
      "path": "guideCategories",
      "httpMethod": "GET",
-     "description": "Browse the YouTube guide category collection.",
+     "description": "Returns a list of categories that can be associated with YouTube channels.",
      "parameters": {
       "hl": {
        "type": "string",
-       "description": "Language for the returned channelCategories.",
+       "description": "The hl parameter specifies the language that will be used for text values in the API response.",
        "default": "en-US",
        "location": "query"
       },
       "id": {
        "type": "string",
-       "description": "Comma-separated YouTube IDs of the channelCategories to be returned.",
-       "location": "query"
-      },
-      "onBehalfOfContentOwner": {
-       "type": "string",
-       "description": "The authenticated user acts on behalf of this content owner.",
+       "description": "The id parameter specifies a comma-separated list of the YouTube channel category ID(s) for the resource(s) that are being retrieved. In a guideCategory resource, the id property specifies the YouTube channel category ID.",
        "location": "query"
       },
       "part": {
        "type": "string",
-       "description": "Guide category parts to include in the returned response. Valid values are: id and snippet.",
+       "description": "The part parameter specifies a comma-separated list of one or more guideCategory resource properties that the API response will include. The part names that you can include in the parameter value are id and snippet.\n\nIf the parameter identifies a property that contains child properties, the child properties will be included in the response. For example, in a guideCategory resource, the snippet property contains other properties, such as the category's title. If you set part=snippet, the API response will also contain all of those nested properties.",
        "required": true,
        "location": "query"
       },
       "regionCode": {
        "type": "string",
-       "description": "Return the channelCategories in the given region code.",
+       "description": "The regionCode parameter instructs the API to return the list of guide categories available in the specified country. The parameter value is an ISO 3166-1 alpha-2 country code.",
        "location": "query"
       }
      },
@@ -1559,17 +1633,12 @@
      "id": "youtube.playlistItems.delete",
      "path": "playlistItems",
      "httpMethod": "DELETE",
-     "description": "Deletes playlist items by IDs.",
+     "description": "Deletes a playlist item.",
      "parameters": {
       "id": {
        "type": "string",
-       "description": "YouTube IDs of the playlist items to be deleted.",
+       "description": "The id parameter specifies the YouTube playlist item ID for the playlist item that is being deleted. In a playlistItem resource, the id property specifies the playlist item's ID.",
        "required": true,
-       "location": "query"
-      },
-      "onBehalfOfContentOwner": {
-       "type": "string",
-       "description": "The authenticated user acts on behalf of this content owner.",
        "location": "query"
       }
      },
@@ -1585,16 +1654,11 @@
      "id": "youtube.playlistItems.insert",
      "path": "playlistItems",
      "httpMethod": "POST",
-     "description": "Insert a resource into a playlist.",
+     "description": "Adds a resource to a playlist.",
      "parameters": {
-      "onBehalfOfContentOwner": {
-       "type": "string",
-       "description": "The authenticated user acts on behalf of this content owner.",
-       "location": "query"
-      },
       "part": {
        "type": "string",
-       "description": "One or more parts to return on the current request.",
+       "description": "The part parameter serves two purposes in this operation. It identifies the properties that the write operation will set as well as the properties that the API response will include.\n\nThe part names that you can include in the parameter value are snippet and contentDetails.",
        "required": true,
        "location": "query"
       }
@@ -1617,41 +1681,36 @@
      "id": "youtube.playlistItems.list",
      "path": "playlistItems",
      "httpMethod": "GET",
-     "description": "Browse the YouTube playlist collection.",
+     "description": "Returns a collection of playlist items that match the API request parameters. You can retrieve all of the playlist items in a specified playlist or retrieve one or more playlist items by their unique IDs.",
      "parameters": {
       "id": {
        "type": "string",
-       "description": "YouTube IDs of the playlist items to be returned.",
+       "description": "The id parameter specifies a comma-separated list of one or more unique playlist item IDs.",
        "location": "query"
       },
       "maxResults": {
        "type": "integer",
-       "description": "Maximum number of results to return",
+       "description": "USE_DESCRIPTION --- channels:list:maxResults",
        "default": "5",
        "format": "uint32",
        "minimum": "0",
        "maximum": "50",
        "location": "query"
       },
-      "onBehalfOfContentOwner": {
-       "type": "string",
-       "description": "The authenticated user acts on behalf of this content owner.",
-       "location": "query"
-      },
       "pageToken": {
        "type": "string",
-       "description": "Token for the page selection.",
+       "description": "USE_DESCRIPTION --- channels:list:pageToken",
        "location": "query"
       },
       "part": {
        "type": "string",
-       "description": "Playlist item parts to include in the returned response. Valid values are: id, snippet and contentDetails.",
+       "description": "The part parameter specifies a comma-separated list of one or more playlistItem resource properties that the API response will include. The part names that you can include in the parameter value are id, snippet, and contentDetails.\n\nIf the parameter identifies a property that contains child properties, the child properties will be included in the response. For example, in a playlistItem resource, the snippet property contains numerous fields, including the title, description, position, and resourceId properties. As such, if you set part=snippet, the API response will contain all of those properties.",
        "required": true,
        "location": "query"
       },
       "playlistId": {
        "type": "string",
-       "description": "Retrieves playlist items from the given playlist id.",
+       "description": "The playlistId parameter specifies the unique ID of the playlist for which you want to retrieve playlist items. Note that even though this is an optional parameter, every request to retrieve playlist items must specify a value for either the id parameter or the playlistId parameter.",
        "location": "query"
       }
      },
@@ -1671,16 +1730,11 @@
      "id": "youtube.playlistItems.update",
      "path": "playlistItems",
      "httpMethod": "PUT",
-     "description": "Update a playlist item.",
+     "description": "Modifies a playlist item. For example, you could update the item's position in the playlist.",
      "parameters": {
-      "onBehalfOfContentOwner": {
-       "type": "string",
-       "description": "The authenticated user acts on behalf of this content owner.",
-       "location": "query"
-      },
       "part": {
        "type": "string",
-       "description": "One or more parts to return on the current request.",
+       "description": "The part parameter serves two purposes in this operation. It identifies the properties that the write operation will set as well as the properties that the API response will include.\n\nThe part names that you can include in the parameter value are snippet and contentDetails.\n\nNote that this method will override the existing values for all of the mutable properties that are contained in any parts that the parameter value specifies. For example, a playlist item can specify a start time and end time, which identify the times portion of the video that should play when users watch the video in the playlist. If your request is updating a playlist item that sets these values, and the request's part parameter value includes the contentDetails part, the playlist item's start and end times will be updated to whatever value the request body specifies. If the request body does not specify values, the existing start and end times will be removed and replaced with the default settings.",
        "required": true,
        "location": "query"
       }
@@ -1707,17 +1761,12 @@
      "id": "youtube.playlists.delete",
      "path": "playlists",
      "httpMethod": "DELETE",
-     "description": "Deletes playlists by IDs.",
+     "description": "Deletes a playlist.",
      "parameters": {
       "id": {
        "type": "string",
-       "description": "YouTube IDs of the playlists to be deleted.",
+       "description": "The id parameter specifies the YouTube playlist ID for the playlist that is being deleted. In a playlist resource, the id property specifies the playlist's ID.",
        "required": true,
-       "location": "query"
-      },
-      "onBehalfOfContentOwner": {
-       "type": "string",
-       "description": "The authenticated user acts on behalf of this content owner.",
        "location": "query"
       }
      },
@@ -1733,16 +1782,11 @@
      "id": "youtube.playlists.insert",
      "path": "playlists",
      "httpMethod": "POST",
-     "description": "Create a playlist.",
+     "description": "Creates a playlist.",
      "parameters": {
-      "onBehalfOfContentOwner": {
-       "type": "string",
-       "description": "The authenticated user acts on behalf of this content owner.",
-       "location": "query"
-      },
       "part": {
        "type": "string",
-       "description": "One or more parts to return on the current request.",
+       "description": "The part parameter serves two purposes in this operation. It identifies the properties that the write operation will set as well as the properties that the API response will include.\n\nThe part names that you can include in the parameter value are snippet and status.",
        "required": true,
        "location": "query"
       }
@@ -1765,16 +1809,21 @@
      "id": "youtube.playlists.list",
      "path": "playlists",
      "httpMethod": "GET",
-     "description": "Browse the YouTube playlist collection.",
+     "description": "Returns a collection of playlists that match the API request parameters. For example, you can retrieve all playlists that the authenticated user owns, or you can retrieve one or more playlists by their unique IDs.",
      "parameters": {
+      "channelId": {
+       "type": "string",
+       "description": "This value indicates that the API should only return the specified channel's playlists.",
+       "location": "query"
+      },
       "id": {
        "type": "string",
-       "description": "Comma-separated YouTube IDs of the playlists to be returned.",
+       "description": "The id parameter specifies a comma-separated list of the YouTube playlist ID(s) for the resource(s) that are being retrieved. In a playlist resource, the id property specifies the playlist's YouTube playlist ID.",
        "location": "query"
       },
       "maxResults": {
        "type": "integer",
-       "description": "Maximum number of results to return",
+       "description": "USE_DESCRIPTION --- channels:list:maxResults",
        "default": "5",
        "format": "uint32",
        "minimum": "0",
@@ -1782,23 +1831,18 @@
        "location": "query"
       },
       "mine": {
-       "type": "string",
-       "description": "Flag indicating only return the playlists of the authenticated user.",
-       "location": "query"
-      },
-      "onBehalfOfContentOwner": {
-       "type": "string",
-       "description": "The authenticated user acts on behalf of this content owner.",
+       "type": "boolean",
+       "description": "Set this parameter's value to true to instruct the API to only return playlists owned by the authenticated user.",
        "location": "query"
       },
       "pageToken": {
        "type": "string",
-       "description": "Token for the page selection.",
+       "description": "USE_DESCRIPTION --- channels:list:pageToken",
        "location": "query"
       },
       "part": {
        "type": "string",
-       "description": "Playlist parts to include in the returned response. Valid values are: id, snippet and status.",
+       "description": "The part parameter specifies a comma-separated list of one or more playlist resource properties that the API response will include. The part names that you can include in the parameter value are id, snippet, and status.\n\nIf the parameter identifies a property that contains child properties, the child properties will be included in the response. For example, in a playlist resource, the snippet property contains properties like author, title, description, tags, and timeCreated. As such, if you set part=snippet, the API response will contain all of those properties.",
        "required": true,
        "location": "query"
       }
@@ -1819,16 +1863,11 @@
      "id": "youtube.playlists.update",
      "path": "playlists",
      "httpMethod": "PUT",
-     "description": "Update a playlist.",
+     "description": "Modifies a playlist. For example, you could change a playlist's title, description, or privacy status.",
      "parameters": {
-      "onBehalfOfContentOwner": {
-       "type": "string",
-       "description": "The authenticated user acts on behalf of this content owner.",
-       "location": "query"
-      },
       "part": {
        "type": "string",
-       "description": "One or more parts to return on the current request.",
+       "description": "The part parameter serves two purposes in this operation. It identifies the properties that the write operation will set as well as the properties that the API response will include.\n\nThe part names that you can include in the parameter value are snippet and status.\n\nNote that this method will override the existing values for all of the mutable properties that are contained in any parts that the parameter value specifies. For example, a playlist's privacy setting is contained in the status part. As such, if your request is updating a private playlist, and the request's part parameter value includes the status part, the playlist's privacy setting will be updated to whatever value the request body specifies. If the request body does not specify a value, the existing privacy setting will be removed and the playlist will revert to the default privacy setting.",
        "required": true,
        "location": "query"
       }
@@ -1855,135 +1894,132 @@
      "id": "youtube.search.list",
      "path": "search",
      "httpMethod": "GET",
-     "description": "Universal search for youtube.",
+     "description": "Returns a collection of search results that match the query parameters specified in the API request. By default, a search result set identifies matching video, channel, and playlist resources, but you can also configure queries to only retrieve a specific type of resource.",
      "parameters": {
       "maxResults": {
        "type": "integer",
-       "description": "Maximum number of search results to return per page.",
+       "description": "USE_DESCRIPTION --- channels:list:maxResults",
        "default": "5",
        "format": "uint32",
        "minimum": "0",
        "maximum": "50",
        "location": "query"
       },
-      "onBehalfOfContentOwner": {
-       "type": "string",
-       "description": "The authenticated user acts on behalf of this content owner.",
-       "location": "query"
-      },
       "order": {
        "type": "string",
-       "description": "Sort order.",
+       "description": "The order parameter specifies the method that will be used to order resources in the API response.",
        "default": "SEARCH_SORT_RELEVANCE",
        "enum": [
         "date",
         "rating",
         "relevance",
-        "view_count"
+        "viewCount"
        ],
        "enumDescriptions": [
-        "Sort according to the date.",
-        "Sort according to the rating.",
-        "Sort according to the relevance.",
-        "Sort according to the view count."
+        "Resources are sorted in reverse chronological order based on the date they were created.",
+        "Resources are sorted from highest to lowest rating.",
+        "Resources are sorted based on their relevance to the search query. This is the default value for this parameter.",
+        "Resources are sorted from highest to lowest number of views."
        ],
        "location": "query"
       },
       "pageToken": {
        "type": "string",
-       "description": "Token for the page selection.",
+       "description": "USE_DESCRIPTION --- channels:list:pageToken",
        "location": "query"
       },
       "part": {
        "type": "string",
-       "description": "Search result parts to include in the returned response. Valid values are: id and snippet.",
+       "description": "The part parameter specifies a comma-separated list of one or more search resource properties that the API response will include. The part names that you can include in the parameter value are id and snippet.\n\nIf the parameter identifies a property that contains child properties, the child properties will be included in the response. For example, in a search result, the snippet property contains other properties that identify the result's title, description, and so forth. If you set part=snippet, the API response will also contain all of those nested properties.",
        "required": true,
        "location": "query"
       },
       "published": {
        "type": "string",
-       "description": "Only search for resources uploaded at a specific pediod",
+       "description": "The published parameter indicates that the API response should only contain resources created within the specified time period.",
        "enum": [
         "any",
+        "thisMonth",
         "thisWeek",
         "today"
        ],
        "enumDescriptions": [
-        "No filter on the release date",
-        "Videos uploaded this month",
-        "Videos uploaded today"
+        "Do not filter results based on their creation date. This is the default value.",
+        "Return videos that were uploaded within the past month.",
+        "Return videos that were uploaded within the past week.",
+        "Return videos that were uploaded today."
        ],
        "location": "query"
       },
       "q": {
        "type": "string",
-       "description": "Query to search in Youtube.",
+       "description": "The q parameter specifies the query term to search for.",
        "location": "query"
       },
-      "relatedToVideo": {
+      "relatedToVideoId": {
        "type": "string",
-       "description": "Search for resources related to this video. Need to be used with type set to 'video'",
+       "description": "The relatedToVideoId parameter retrieves a list of videos that are related to the video that the parameter value identifies. The parameter value must be set to a YouTube video ID and, if you are using this parameter, the type parameter must be set to video.",
        "location": "query"
       },
       "topicId": {
        "type": "string",
-       "description": "Only search for resources with the specified topic",
+       "description": "The topicId parameter indicates that the API response should only contain resources associated with the specified topic. The value identifies a Freebase topic ID.",
        "location": "query"
       },
       "type": {
        "type": "string",
-       "description": "Type of resource to search.",
+       "description": "The type parameter restricts a search query to only retrieve a particular type of resource.",
        "default": "video,channel,playlist",
        "location": "query"
       },
       "videoCaption": {
        "type": "string",
-       "description": "Add a filter on the the presence of captions on the videos.",
+       "description": "The videoCaption parameter indicates whether the API should filter video search results based on whether they have captions.",
        "enum": [
         "any",
         "closedCaption",
         "none"
        ],
        "enumDescriptions": [
-        "No filter on the captions.",
-        "Videos with closed captions.",
-        "Videos without captions."
+        "Do not filter results based on caption availability.",
+        "Only include videos that have captions.",
+        "Only include videos that do not have captions."
        ],
        "location": "query"
       },
       "videoDefinition": {
        "type": "string",
-       "description": "Add a filter for the definition of the videos.",
+       "description": "The videoDefinition parameter lets you restrict a search to only include either high definition (HD) or standard definition (SD) videos. HD videos are available for playback in at least 720p, though higher resolutions, like 1080p, might also be available.",
        "enum": [
         "any",
         "high",
         "standard"
        ],
        "enumDescriptions": [
-        "No filter on the definition.",
-        "Videos in high definition.",
-        "Videos in standard definition."
+        "Return all videos, regardless of their resolution.",
+        "Only retrieve HD videos.",
+        "Only retrieve videos in standard definition."
        ],
        "location": "query"
       },
       "videoDimension": {
        "type": "string",
-       "description": "Add a filter for the number of dimensions in the videos.",
+       "description": "The videoDimension parameter lets you restrict a search to only retrieve 2D or 3D videos.",
        "enum": [
         "2d",
         "3d",
         "any"
        ],
        "enumDescriptions": [
-        "Videos in two dimensions.",
-        "Videos in three dimensions.",
-        "No filter on the dimension."
+        "Restrict search results to exclude 3D videos.",
+        "Restrict search results to only include 3D videos.",
+        "Include both 3D and non-3D videos in returned results. This is the default value."
        ],
        "location": "query"
       },
       "videoDuration": {
        "type": "string",
-       "description": "Add a filter on the duration of the videos.",
+       "description": "The videoDuration parameter filters video search results based on their duration.",
        "enum": [
         "any",
         "long",
@@ -1991,25 +2027,25 @@
         "short"
        ],
        "enumDescriptions": [
-        "No filter on the duration.",
-        "Videos with a duration longer than 20 minutes.",
-        "Videos with a duration between 4 and 20 minutes.",
-        "Videos with a duration under 4 minutes."
+        "Do not filter video search results based on their duration. This is the default value.",
+        "Only include videos longer than 20 minutes.",
+        "Only include videos that are between four and 20 minutes long (inclusive).",
+        "Only include videos that are less than four minutes long."
        ],
        "location": "query"
       },
       "videoLicense": {
        "type": "string",
-       "description": "Add a filter on the licensing of the videos.",
+       "description": "The videoLicense parameter filters search results to only include videos with a particular license. YouTube lets video uploaders choose to attach either the Creative Commons license or the standard YouTube license to each of their videos.",
        "enum": [
         "any",
         "creativeCommon",
         "youtube"
        ],
        "enumDescriptions": [
-        "No filter on the license.",
-        "Videos under the Creative Common license.",
-        "Videos under the YouTube license."
+        "Return all videos, regardless of which license they have, that match the query parameters.",
+        "Only return videos that have a Creative Commons license. Users can reuse videos with this license in other videos that they create. Learn more.",
+        "Only return videos that have the standard YouTube license."
        ],
        "location": "query"
       }
@@ -2034,17 +2070,12 @@
      "id": "youtube.subscriptions.delete",
      "path": "subscriptions",
      "httpMethod": "DELETE",
-     "description": "Deletes subscriptions by IDs.",
+     "description": "Deletes a subscription.",
      "parameters": {
       "id": {
        "type": "string",
-       "description": "YouTube IDs of the subscription to be deleted.",
+       "description": "The id parameter specifies the YouTube subscription ID for the resource that is being deleted. In a subscription resource, the id property specifies the YouTube subscription ID.",
        "required": true,
-       "location": "query"
-      },
-      "onBehalfOfContentOwner": {
-       "type": "string",
-       "description": "The authenticated user acts on behalf of this content owner.",
        "location": "query"
       }
      },
@@ -2060,16 +2091,11 @@
      "id": "youtube.subscriptions.insert",
      "path": "subscriptions",
      "httpMethod": "POST",
-     "description": "Insert a subscription.",
+     "description": "Adds a subscription for the authenticated user's channel.",
      "parameters": {
-      "onBehalfOfContentOwner": {
-       "type": "string",
-       "description": "The authenticated user acts on behalf of this content owner.",
-       "location": "query"
-      },
       "part": {
        "type": "string",
-       "description": "One or more parts to return on the current request.",
+       "description": "The part parameter serves two purposes in this operation. It identifies the properties that the write operation will set as well as the properties that the API response will include.\n\nThe part names that you can include in the parameter value are snippet and contentDetails.",
        "required": true,
        "location": "query"
       }
@@ -2092,26 +2118,26 @@
      "id": "youtube.subscriptions.list",
      "path": "subscriptions",
      "httpMethod": "GET",
-     "description": "Browses the subscriptions collection.",
+     "description": "Returns subscription resources that match the API request criteria.",
      "parameters": {
       "channelId": {
        "type": "string",
-       "description": "Only return subscriptions to given channelId.",
+       "description": "The channelId parameter specifies a YouTube channel ID. The API will only return that channel's subscriptions.",
        "location": "query"
       },
       "forChannelId": {
        "type": "string",
-       "description": "Comma separated list of channel IDs to return subscriptions for.",
+       "description": "The forChannelId parameter specifies a comma-separated list of channel IDs. The API response will then only contain subscriptions matching those channels.",
        "location": "query"
       },
       "id": {
        "type": "string",
-       "description": "YouTube IDs of the subscriptions to be returned.",
+       "description": "The id parameter specifies a comma-separated list of the YouTube subscription ID(s) for the resource(s) that are being retrieved. In a subscription resource, the id property specifies the YouTube subscription ID.",
        "location": "query"
       },
       "maxResults": {
        "type": "integer",
-       "description": "Maximum number of search results to return per page.",
+       "description": "USE_DESCRIPTION --- channels:list:maxResults",
        "default": "5",
        "format": "uint32",
        "minimum": "0",
@@ -2119,18 +2145,13 @@
        "location": "query"
       },
       "mine": {
-       "type": "string",
-       "description": "Flag indicating only return the subscriptions of the authenticated user.",
-       "location": "query"
-      },
-      "onBehalfOfContentOwner": {
-       "type": "string",
-       "description": "The authenticated user acts on behalf of this content owner.",
+       "type": "boolean",
+       "description": "Set this parameter's value to true to retrieve a feed of the authenticated user's subscriptions.",
        "location": "query"
       },
       "order": {
        "type": "string",
-       "description": "Sort order.",
+       "description": "The order parameter specifies the method that will be used to sort resources in the API response.",
        "default": "SUBSCRIPTION_ORDER_RELEVANCE",
        "enum": [
         "alphabetical",
@@ -2138,7 +2159,7 @@
         "unread"
        ],
        "enumDescriptions": [
-        "Sort alphabetically",
+        "Sort alphabetically.",
         "Sort by relevance.",
         "Sort by order of activity."
        ],
@@ -2146,12 +2167,12 @@
       },
       "pageToken": {
        "type": "string",
-       "description": "Token for the page selection.",
+       "description": "USE_DESCRIPTION --- channels:list:pageToken",
        "location": "query"
       },
       "part": {
        "type": "string",
-       "description": "Subscription parts to include in the returned response. Valid values are: id, snippet and contentDetails.",
+       "description": "The part parameter specifies a comma-separated list of one or more subscription resource properties that the API response will include. The part names that you can include in the parameter value are id, snippet, and contentDetails.\n\nIf the parameter identifies a property that contains child properties, the child properties will be included in the response. For example, in a subscription resource, the snippet property contains other properties, such as a display title for the subscription. If you set part=snippet, the API response will also contain all of those nested properties.",
        "required": true,
        "location": "query"
       }
@@ -2175,33 +2196,28 @@
      "id": "youtube.videoCategories.list",
      "path": "videoCategories",
      "httpMethod": "GET",
-     "description": "Browse list of video categories.",
+     "description": "Returns a list of categories that can be associated with YouTube videos.",
      "parameters": {
       "hl": {
        "type": "string",
-       "description": "Language used for the title of the categories.",
+       "description": "The hl parameter specifies the language that should be used for text values in the API response.",
        "default": "en_US",
        "location": "query"
       },
       "id": {
        "type": "string",
-       "description": "IDs of the categories to be returned.",
-       "location": "query"
-      },
-      "onBehalfOfContentOwner": {
-       "type": "string",
-       "description": "The authenticated user acts on behalf of this content owner.",
+       "description": "The id parameter specifies a comma-separated list of video category IDs for the resources that you are retrieving.",
        "location": "query"
       },
       "part": {
        "type": "string",
-       "description": "Video category parts to include in the returned response. Valid values are: id and snippet.",
+       "description": "The part parameter specifies the videoCategory resource parts that the API response will include. Supported values are id and snippet.",
        "required": true,
        "location": "query"
       },
       "regionCode": {
        "type": "string",
-       "description": "Return all the categories in this region.",
+       "description": "The regionCode parameter instructs the API to return the list of video categories available in the specified country. The parameter value is an ISO 3166-1 alpha-2 country code.",
        "location": "query"
       }
      },
@@ -2225,17 +2241,12 @@
      "id": "youtube.videos.delete",
      "path": "videos",
      "httpMethod": "DELETE",
-     "description": "Delete a YouTube video.",
+     "description": "Deletes a YouTube video.",
      "parameters": {
       "id": {
        "type": "string",
-       "description": "YouTube ID of the video to be deleted.",
+       "description": "The id parameter specifies the YouTube video ID for the resource that is being deleted. In a video resource, the id property specifies the video's ID.",
        "required": true,
-       "location": "query"
-      },
-      "onBehalfOfContentOwner": {
-       "type": "string",
-       "description": "The authenticated user acts on behalf of this content owner.",
        "location": "query"
       }
      },
@@ -2251,16 +2262,11 @@
      "id": "youtube.videos.insert",
      "path": "videos",
      "httpMethod": "POST",
-     "description": "Upload a video to YouTube.",
+     "description": "Uploads a video to YouTube and optionally sets the video's metadata.",
      "parameters": {
-      "onBehalfOfContentOwner": {
-       "type": "string",
-       "description": "The authenticated user acts on behalf of this content owner.",
-       "location": "query"
-      },
       "part": {
        "type": "string",
-       "description": "One or more parts to return on the current request.",
+       "description": "The part parameter serves two purposes in this operation. It identifies the properties that the write operation will set as well as the properties that the API response will include.\n\nThe part names that you can include in the parameter value are snippet, contentDetails, player, statistics, status, and topicDetails. However, not all of those parts contain properties that can be set when setting or updating a video's metadata. For example, the statistics object encapsulates statistics that YouTube calculates for a video and does not contain values that you can set or modify. If the parameter value specifies a part that does not contain mutable values, that part will still be included in the API response.",
        "required": true,
        "location": "query"
       }
@@ -2301,22 +2307,17 @@
      "id": "youtube.videos.list",
      "path": "videos",
      "httpMethod": "GET",
-     "description": "Browse the YouTube video collection.",
+     "description": "Returns a list of videos that match the API request parameters.",
      "parameters": {
       "id": {
        "type": "string",
-       "description": "YouTube IDs of the videos to be returned.",
+       "description": "The id parameter specifies a comma-separated list of the YouTube video ID(s) for the resource(s) that are being retrieved. In a video resource, the id property specifies the video's ID.",
        "required": true,
-       "location": "query"
-      },
-      "onBehalfOfContentOwner": {
-       "type": "string",
-       "description": "The authenticated user acts on behalf of this content owner.",
        "location": "query"
       },
       "part": {
        "type": "string",
-       "description": "Video parts to include in the returned response. Valid values are: id, snippet, contentDetails, player, statistics, status and topicDetails.",
+       "description": "The part parameter specifies a comma-separated list of one or more video resource properties that the API response will include. The part names that you can include in the parameter value are id, snippet, contentDetails, player, statistics, status, and topicDetails.\n\nIf the parameter identifies a property that contains child properties, the child properties will be included in the response. For example, in a video resource, the snippet property contains the channelId, title, description, tags, and categoryId properties. As such, if you set part=snippet, the API response will contain all of those properties.",
        "required": true,
        "location": "query"
       }
@@ -2338,16 +2339,11 @@
      "id": "youtube.videos.update",
      "path": "videos",
      "httpMethod": "PUT",
-     "description": "Update a video.",
+     "description": "Updates a video's metadata.",
      "parameters": {
-      "onBehalfOfContentOwner": {
-       "type": "string",
-       "description": "The authenticated user acts on behalf of this content owner.",
-       "location": "query"
-      },
       "part": {
        "type": "string",
-       "description": "One or more parts to return on the current request.",
+       "description": "The part parameter serves two purposes in this operation. It identifies the properties that the write operation will set as well as the properties that the API response will include.\n\nThe part names that you can include in the parameter value are snippet, contentDetails, player, statistics, status, and topicDetails.\n\nNote that this method will override the existing values for all of the mutable properties that are contained in any parts that the parameter value specifies. For example, a video's privacy setting is contained in the status part. As such, if your request is updating a private video, and the request's part parameter value includes the status part, the video's privacy setting will be updated to whatever value the request body specifies. If the request body does not specify a value, the existing privacy setting will be removed and the video will revert to the default privacy setting.\n\nIn addition, not all of those parts contain properties that can be set when setting or updating a video's metadata. For example, the statistics object encapsulates statistics that YouTube calculates for a video and does not contain values that you can set or modify. If the parameter value specifies a part that does not contain mutable values, that part will still be included in the API response.",
        "required": true,
        "location": "query"
       }

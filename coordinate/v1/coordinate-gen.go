@@ -52,6 +52,9 @@ func New(client *http.Client) (*Service, error) {
 	s := &Service{client: client}
 	s.CustomFieldDef = &CustomFieldDefService{s: s}
 	s.Jobs = &JobsService{s: s}
+	s.Location = &LocationService{s: s}
+	s.Schedule = &ScheduleService{s: s}
+	s.Worker = &WorkerService{s: s}
 	return s, nil
 }
 
@@ -61,6 +64,12 @@ type Service struct {
 	CustomFieldDef *CustomFieldDefService
 
 	Jobs *JobsService
+
+	Location *LocationService
+
+	Schedule *ScheduleService
+
+	Worker *WorkerService
 }
 
 type CustomFieldDefService struct {
@@ -68,6 +77,18 @@ type CustomFieldDefService struct {
 }
 
 type JobsService struct {
+	s *Service
+}
+
+type LocationService struct {
+	s *Service
+}
+
+type ScheduleService struct {
+	s *Service
+}
+
+type WorkerService struct {
 	s *Service
 }
 
@@ -198,6 +219,98 @@ type Location struct {
 
 	// Lng: Longitude.
 	Lng float64 `json:"lng,omitempty"`
+}
+
+type LocationListResponse struct {
+	// Items: Locations in the collection.
+	Items []*LocationRecord `json:"items,omitempty"`
+
+	// Kind: Identifies this object as a list of locations.
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: A token to provide to get the next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// PageInfo: General pagination information.
+	PageInfo *PageInfo `json:"pageInfo,omitempty"`
+
+	// TokenPagination: Pagination information for token pagination.
+	TokenPagination *TokenPagination `json:"tokenPagination,omitempty"`
+}
+
+type LocationRecord struct {
+	// CollectionTime: The collection time in milliseconds since the epoch.
+	CollectionTime int64 `json:"collectionTime,omitempty,string"`
+
+	// ConfidenceRadius: The location accuracy in meters. This is the radius
+	// of a 95% confidence interval around the location measurement.
+	ConfidenceRadius float64 `json:"confidenceRadius,omitempty"`
+
+	// Kind: Identifies this object as a location.
+	Kind string `json:"kind,omitempty"`
+
+	// Latitude: Latitude.
+	Latitude float64 `json:"latitude,omitempty"`
+
+	// Longitude: Longitude.
+	Longitude float64 `json:"longitude,omitempty"`
+}
+
+type PageInfo struct {
+	// Kind: Identifies this object as page information.
+	Kind string `json:"kind,omitempty"`
+
+	// ResultPerPage: Number of results per page.
+	ResultPerPage int64 `json:"resultPerPage,omitempty"`
+
+	// StartIndex: Page start index.
+	StartIndex int64 `json:"startIndex,omitempty"`
+
+	// TotalResults: Number of results available.
+	TotalResults int64 `json:"totalResults,omitempty"`
+}
+
+type Schedule struct {
+	// AllDay: Whether the job is scheduled for the whole day. Time of day
+	// in start/end times is ignored if this is true.
+	AllDay bool `json:"allDay,omitempty"`
+
+	// EndTime: Scheduled end time in milliseconds since epoch.
+	EndTime uint64 `json:"endTime,omitempty,string"`
+
+	// Kind: Identifies this object as a job schedule.
+	Kind string `json:"kind,omitempty"`
+
+	// StartTime: Scheduled start time in milliseconds since epoch.
+	StartTime uint64 `json:"startTime,omitempty,string"`
+}
+
+type TokenPagination struct {
+	// Kind: Identifies this object as pagination information.
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: A token to provide to get the next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// PreviousPageToken: A token to provide to get the previous page of
+	// results.
+	PreviousPageToken string `json:"previousPageToken,omitempty"`
+}
+
+type Worker struct {
+	// Id: Worker email address.
+	Id string `json:"id,omitempty"`
+
+	// Kind: Identifies this object as a worker.
+	Kind string `json:"kind,omitempty"`
+}
+
+type WorkerListResponse struct {
+	// Items: Workers in the collection.
+	Items []*Worker `json:"items,omitempty"`
+
+	// Kind: Identifies this object as a list of workers.
+	Kind string `json:"kind,omitempty"`
 }
 
 // method id "coordinate.customFieldDef.list":
@@ -1142,9 +1255,495 @@ func (c *JobsUpdateCall) Do() (*Job, error) {
 
 }
 
+// method id "coordinate.location.list":
+
+type LocationListCall struct {
+	s                *Service
+	teamId           string
+	workerEmail      string
+	startTimestampMs uint64
+	opt_             map[string]interface{}
+}
+
+// List: Retrieves a list of locations for a worker.
+func (r *LocationService) List(teamId string, workerEmail string, startTimestampMs uint64) *LocationListCall {
+	c := &LocationListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.teamId = teamId
+	c.workerEmail = workerEmail
+	c.startTimestampMs = startTimestampMs
+	return c
+}
+
+func (c *LocationListCall) Do() (*LocationListResponse, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("startTimestampMs", fmt.Sprintf("%v", c.startTimestampMs))
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/coordinate/v1/teams/", "{teamId}/workers/{workerEmail}/locations")
+	urls = strings.Replace(urls, "{teamId}", cleanPathString(c.teamId), 1)
+	urls = strings.Replace(urls, "{workerEmail}", cleanPathString(c.workerEmail), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(LocationListResponse)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a list of locations for a worker.",
+	//   "httpMethod": "GET",
+	//   "id": "coordinate.location.list",
+	//   "parameterOrder": [
+	//     "teamId",
+	//     "workerEmail",
+	//     "startTimestampMs"
+	//   ],
+	//   "parameters": {
+	//     "startTimestampMs": {
+	//       "description": "Start timestamp in milliseconds since the epoch.",
+	//       "format": "uint64",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "teamId": {
+	//       "description": "Team ID",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "workerEmail": {
+	//       "description": "Worker email address.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{teamId}/workers/{workerEmail}/locations",
+	//   "response": {
+	//     "$ref": "LocationListResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/coordinate",
+	//     "https://www.googleapis.com/auth/coordinate.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "coordinate.schedule.get":
+
+type ScheduleGetCall struct {
+	s      *Service
+	teamId string
+	jobId  uint64
+	opt_   map[string]interface{}
+}
+
+// Get: Retrieves the schedule for a job.
+func (r *ScheduleService) Get(teamId string, jobId uint64) *ScheduleGetCall {
+	c := &ScheduleGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.teamId = teamId
+	c.jobId = jobId
+	return c
+}
+
+func (c *ScheduleGetCall) Do() (*Schedule, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/coordinate/v1/teams/", "{teamId}/jobs/{jobId}/schedule")
+	urls = strings.Replace(urls, "{teamId}", cleanPathString(c.teamId), 1)
+	urls = strings.Replace(urls, "{jobId}", strconv.FormatUint(c.jobId, 10), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Schedule)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the schedule for a job.",
+	//   "httpMethod": "GET",
+	//   "id": "coordinate.schedule.get",
+	//   "parameterOrder": [
+	//     "teamId",
+	//     "jobId"
+	//   ],
+	//   "parameters": {
+	//     "jobId": {
+	//       "description": "Job number",
+	//       "format": "uint64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "teamId": {
+	//       "description": "Team ID",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{teamId}/jobs/{jobId}/schedule",
+	//   "response": {
+	//     "$ref": "Schedule"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/coordinate",
+	//     "https://www.googleapis.com/auth/coordinate.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "coordinate.schedule.patch":
+
+type SchedulePatchCall struct {
+	s        *Service
+	teamId   string
+	jobId    uint64
+	schedule *Schedule
+	opt_     map[string]interface{}
+}
+
+// Patch: Replaces the schedule of a job with the provided schedule.
+// This method supports patch semantics.
+func (r *ScheduleService) Patch(teamId string, jobId uint64, schedule *Schedule) *SchedulePatchCall {
+	c := &SchedulePatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.teamId = teamId
+	c.jobId = jobId
+	c.schedule = schedule
+	return c
+}
+
+// AllDay sets the optional parameter "allDay": Whether the job is
+// scheduled for the whole day. Time of day in start/end times is
+// ignored if this is true.
+func (c *SchedulePatchCall) AllDay(allDay bool) *SchedulePatchCall {
+	c.opt_["allDay"] = allDay
+	return c
+}
+
+// EndTime sets the optional parameter "endTime": Scheduled end time in
+// milliseconds since epoch.
+func (c *SchedulePatchCall) EndTime(endTime uint64) *SchedulePatchCall {
+	c.opt_["endTime"] = endTime
+	return c
+}
+
+// StartTime sets the optional parameter "startTime": Scheduled start
+// time in milliseconds since epoch.
+func (c *SchedulePatchCall) StartTime(startTime uint64) *SchedulePatchCall {
+	c.opt_["startTime"] = startTime
+	return c
+}
+
+func (c *SchedulePatchCall) Do() (*Schedule, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.schedule)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["allDay"]; ok {
+		params.Set("allDay", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["endTime"]; ok {
+		params.Set("endTime", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["startTime"]; ok {
+		params.Set("startTime", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/coordinate/v1/teams/", "{teamId}/jobs/{jobId}/schedule")
+	urls = strings.Replace(urls, "{teamId}", cleanPathString(c.teamId), 1)
+	urls = strings.Replace(urls, "{jobId}", strconv.FormatUint(c.jobId, 10), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Schedule)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Replaces the schedule of a job with the provided schedule. This method supports patch semantics.",
+	//   "httpMethod": "PATCH",
+	//   "id": "coordinate.schedule.patch",
+	//   "parameterOrder": [
+	//     "teamId",
+	//     "jobId"
+	//   ],
+	//   "parameters": {
+	//     "allDay": {
+	//       "description": "Whether the job is scheduled for the whole day. Time of day in start/end times is ignored if this is true.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "endTime": {
+	//       "description": "Scheduled end time in milliseconds since epoch.",
+	//       "format": "uint64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "jobId": {
+	//       "description": "Job number",
+	//       "format": "uint64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "startTime": {
+	//       "description": "Scheduled start time in milliseconds since epoch.",
+	//       "format": "uint64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "teamId": {
+	//       "description": "Team ID",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{teamId}/jobs/{jobId}/schedule",
+	//   "request": {
+	//     "$ref": "Schedule"
+	//   },
+	//   "response": {
+	//     "$ref": "Schedule"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/coordinate"
+	//   ]
+	// }
+
+}
+
+// method id "coordinate.schedule.update":
+
+type ScheduleUpdateCall struct {
+	s        *Service
+	teamId   string
+	jobId    uint64
+	schedule *Schedule
+	opt_     map[string]interface{}
+}
+
+// Update: Replaces the schedule of a job with the provided schedule.
+func (r *ScheduleService) Update(teamId string, jobId uint64, schedule *Schedule) *ScheduleUpdateCall {
+	c := &ScheduleUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.teamId = teamId
+	c.jobId = jobId
+	c.schedule = schedule
+	return c
+}
+
+// AllDay sets the optional parameter "allDay": Whether the job is
+// scheduled for the whole day. Time of day in start/end times is
+// ignored if this is true.
+func (c *ScheduleUpdateCall) AllDay(allDay bool) *ScheduleUpdateCall {
+	c.opt_["allDay"] = allDay
+	return c
+}
+
+// EndTime sets the optional parameter "endTime": Scheduled end time in
+// milliseconds since epoch.
+func (c *ScheduleUpdateCall) EndTime(endTime uint64) *ScheduleUpdateCall {
+	c.opt_["endTime"] = endTime
+	return c
+}
+
+// StartTime sets the optional parameter "startTime": Scheduled start
+// time in milliseconds since epoch.
+func (c *ScheduleUpdateCall) StartTime(startTime uint64) *ScheduleUpdateCall {
+	c.opt_["startTime"] = startTime
+	return c
+}
+
+func (c *ScheduleUpdateCall) Do() (*Schedule, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.schedule)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["allDay"]; ok {
+		params.Set("allDay", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["endTime"]; ok {
+		params.Set("endTime", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["startTime"]; ok {
+		params.Set("startTime", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/coordinate/v1/teams/", "{teamId}/jobs/{jobId}/schedule")
+	urls = strings.Replace(urls, "{teamId}", cleanPathString(c.teamId), 1)
+	urls = strings.Replace(urls, "{jobId}", strconv.FormatUint(c.jobId, 10), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Schedule)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Replaces the schedule of a job with the provided schedule.",
+	//   "httpMethod": "PUT",
+	//   "id": "coordinate.schedule.update",
+	//   "parameterOrder": [
+	//     "teamId",
+	//     "jobId"
+	//   ],
+	//   "parameters": {
+	//     "allDay": {
+	//       "description": "Whether the job is scheduled for the whole day. Time of day in start/end times is ignored if this is true.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "endTime": {
+	//       "description": "Scheduled end time in milliseconds since epoch.",
+	//       "format": "uint64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "jobId": {
+	//       "description": "Job number",
+	//       "format": "uint64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "startTime": {
+	//       "description": "Scheduled start time in milliseconds since epoch.",
+	//       "format": "uint64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "teamId": {
+	//       "description": "Team ID",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{teamId}/jobs/{jobId}/schedule",
+	//   "request": {
+	//     "$ref": "Schedule"
+	//   },
+	//   "response": {
+	//     "$ref": "Schedule"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/coordinate"
+	//   ]
+	// }
+
+}
+
+// method id "coordinate.worker.list":
+
+type WorkerListCall struct {
+	s      *Service
+	teamId string
+	opt_   map[string]interface{}
+}
+
+// List: Retrieves a list of workers in a team.
+func (r *WorkerService) List(teamId string) *WorkerListCall {
+	c := &WorkerListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.teamId = teamId
+	return c
+}
+
+func (c *WorkerListCall) Do() (*WorkerListResponse, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/coordinate/v1/teams/", "{teamId}/workers")
+	urls = strings.Replace(urls, "{teamId}", cleanPathString(c.teamId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(WorkerListResponse)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a list of workers in a team.",
+	//   "httpMethod": "GET",
+	//   "id": "coordinate.worker.list",
+	//   "parameterOrder": [
+	//     "teamId"
+	//   ],
+	//   "parameters": {
+	//     "teamId": {
+	//       "description": "Team ID",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{teamId}/workers",
+	//   "response": {
+	//     "$ref": "WorkerListResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/coordinate",
+	//     "https://www.googleapis.com/auth/coordinate.readonly"
+	//   ]
+	// }
+
+}
+
 func cleanPathString(s string) string {
 	return strings.Map(func(r rune) rune {
-		if r >= 0x2d && r <= 0x7a {
+		if r >= 0x2d && r <= 0x7a || r == '~' {
 			return r
 		}
 		return -1

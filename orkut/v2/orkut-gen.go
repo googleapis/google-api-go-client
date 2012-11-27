@@ -223,14 +223,14 @@ type Activity struct {
 	Updated string `json:"updated,omitempty"`
 
 	// Verb: This activity's verb, indicating what action was performed.
-	// Possible values are:  
+	// Possible values are:
 	// - add - User added new content to profile or
-	// album, e.g. video, photo. 
+	// album, e.g. video, photo.
 	// - post - User publish content to the
-	// stream, e.g. status, scrap. 
+	// stream, e.g. status, scrap.
 	// - update - User commented on an
-	// activity. 
-	// - make-friend - User added a new friend. 
+	// activity.
+	// - make-friend - User added a new friend.
 	// - birthday -
 	// User has a birthday.
 	Verb string `json:"verb,omitempty"`
@@ -932,11 +932,11 @@ type OrkutCounterResource struct {
 	Link *OrkutLinkResource `json:"link,omitempty"`
 
 	// Name: The name of the counted collection. Currently supported
-	// collections are:  
-	// - scraps - The scraps of the user. 
+	// collections are:
+	// - scraps - The scraps of the user.
 	// - photos - The
-	// photos of the user. 
-	// - videos - The videos of the user. 
+	// photos of the user.
+	// - videos - The videos of the user.
 	// -
 	// pendingTestimonials - The pending testimonials of the user.
 	Name string `json:"name,omitempty"`
@@ -967,9 +967,9 @@ type Visibility struct {
 	// Links: List of resources for the visibility item.
 	Links []*OrkutLinkResource `json:"links,omitempty"`
 
-	// Visibility: The visibility of the resource. Possible values are:  
+	// Visibility: The visibility of the resource. Possible values are:
 	// -
-	// default: not hidden by the user 
+	// default: not hidden by the user
 	// - hidden: hidden
 	Visibility string `json:"visibility,omitempty"`
 }
@@ -3942,7 +3942,7 @@ func (c *ScrapsInsertCall) Do() (*Activity, error) {
 
 func cleanPathString(s string) string {
 	return strings.Map(func(r rune) rune {
-		if r >= 0x2d && r <= 0x7a {
+		if r >= 0x2d && r <= 0x7a || r == '~' {
 			return r
 		}
 		return -1

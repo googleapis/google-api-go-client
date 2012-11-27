@@ -918,7 +918,7 @@ func (r *TasksService) List(tasklistid string) *TasksListCall {
 }
 
 // CompletedMax sets the optional parameter "completedMax": Upper bound
-// for a task's completion date (as a RFC 3339 timestamp) to filter by. 
+// for a task's completion date (as a RFC 3339 timestamp) to filter by.
 // The default is not to filter by completion date.
 func (c *TasksListCall) CompletedMax(completedMax string) *TasksListCall {
 	c.opt_["completedMax"] = completedMax
@@ -926,7 +926,7 @@ func (c *TasksListCall) CompletedMax(completedMax string) *TasksListCall {
 }
 
 // CompletedMin sets the optional parameter "completedMin": Lower bound
-// for a task's completion date (as a RFC 3339 timestamp) to filter by. 
+// for a task's completion date (as a RFC 3339 timestamp) to filter by.
 // The default is not to filter by completion date.
 func (c *TasksListCall) CompletedMin(completedMin string) *TasksListCall {
 	c.opt_["completedMin"] = completedMin
@@ -1399,7 +1399,7 @@ func (c *TasksUpdateCall) Do() (*Task, error) {
 
 func cleanPathString(s string) string {
 	return strings.Map(func(r rune) rune {
-		if r >= 0x2d && r <= 0x7a {
+		if r >= 0x2d && r <= 0x7a || r == '~' {
 			return r
 		}
 		return -1

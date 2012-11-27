@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"oZqOFf-aKzMvpID-BwBAFJLe7Pk/yX0Gg4mZkj1lhYAwFdaCwRRa4Mk\"",
+ "etag": "\"a3GBuXuTtUYW9BV1SIieU5LiL7w/0VLs4ON8ZqPhFZD12QXko48iifo\"",
  "discoveryVersion": "v1",
  "id": "prediction:v1.5",
  "name": "prediction",
  "version": "v1.5",
- "revision": "20120712",
+ "revision": "20120724",
  "title": "Prediction API",
  "description": "Lets you access a cloud hosted machine learning service that makes it easy to build smart apps",
  "icons": {

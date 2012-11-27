@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"oZqOFf-aKzMvpID-BwBAFJLe7Pk/Pu7-Vm8xmZRzhWO0Ba2Ui4bG58E\"",
+ "etag": "\"a3GBuXuTtUYW9BV1SIieU5LiL7w/wvq3HGWoe5C3opa6CmYvkA_khfI\"",
  "discoveryVersion": "v1",
  "id": "oauth2:v2",
  "name": "oauth2",
@@ -142,6 +142,10 @@
     "given_name": {
      "type": "string",
      "description": "The user's first name."
+    },
+    "hd": {
+     "type": "string",
+     "description": "The hosted domain e.g. example.com if the user is Google apps user."
     },
     "id": {
      "type": "string",

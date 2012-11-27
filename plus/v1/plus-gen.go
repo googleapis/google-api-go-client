@@ -152,10 +152,12 @@ type Activity struct {
 	Url string `json:"url,omitempty"`
 
 	// Verb: This activity's verb, indicating what action was performed.
-	// Possible values are:  
-	// - "post" - Publish content to the stream. 
+	// Possible values are:
+	// - "checkin" - Check in to a location.
 	// -
-	// "share" - Reshare an activity.
+	// "post" - Publish content to the stream.
+	// - "share" - Reshare an
+	// activity.
 	Verb string `json:"verb,omitempty"`
 }
 
@@ -207,9 +209,9 @@ type ActivityObject struct {
 	// of the activity being reshared.
 	Id string `json:"id,omitempty"`
 
-	// ObjectType: The type of the object. Possible values are:  
+	// ObjectType: The type of the object. Possible values are:
 	// - "note" -
-	// Textual content. 
+	// Textual content.
 	// - "activity" - A Google+ activity.
 	ObjectType string `json:"objectType,omitempty"`
 
@@ -252,7 +254,7 @@ type ActivityObjectActorImage struct {
 
 type ActivityObjectAttachments struct {
 	// Content: If the attachment is an article, this property contains a
-	// snippet of text from the article. It may also include descriptions
+	// snippet of text from the article. It can also include descriptions
 	// for other types.
 	Content string `json:"content,omitempty"`
 
@@ -272,12 +274,12 @@ type ActivityObjectAttachments struct {
 	// Image: The preview image for photos or videos.
 	Image *ActivityObjectAttachmentsImage `json:"image,omitempty"`
 
-	// ObjectType: The type of media object. Possible values are:  
+	// ObjectType: The type of media object. Possible values are:
 	// -
-	// "photo" - A photo. 
-	// - "album" - A photo album. 
+	// "photo" - A photo.
+	// - "album" - A photo album.
 	// - "video" - A video.
-	// 
+	//
 	// - "article" - An article, specified by a link.
 	ObjectType string `json:"objectType,omitempty"`
 
@@ -448,7 +450,7 @@ type Comment struct {
 	Updated string `json:"updated,omitempty"`
 
 	// Verb: This comment's verb, indicating what action was performed.
-	// Possible values are:  
+	// Possible values are:
 	// - "post" - Publish content to the stream.
 	Verb string `json:"verb,omitempty"`
 }
@@ -486,7 +488,7 @@ type CommentObject struct {
 	// Content: The HTML-formatted content, suitable for display.
 	Content string `json:"content,omitempty"`
 
-	// ObjectType: The object type of this comment. Possible values are:  
+	// ObjectType: The object type of this comment. Possible values are:
 	// -
 	// "comment" - A comment in reply to an activity.
 	ObjectType string `json:"objectType,omitempty"`
@@ -557,8 +559,8 @@ type PeopleFeed struct {
 	Title string `json:"title,omitempty"`
 
 	// TotalItems: The total number of people available in this list. The
-	// number of people in a response may be smaller due to paging. This may
-	// not be set for all collections.
+	// number of people in a response might be smaller due to paging. This
+	// might not be set for all collections.
 	TotalItems int64 `json:"totalItems,omitempty"`
 }
 
@@ -568,6 +570,13 @@ type Person struct {
 
 	// Birthday: The person's date of birth, represented as YYYY-MM-DD.
 	Birthday string `json:"birthday,omitempty"`
+
+	// CircledByCount: If a Google+ Page and for followers who are visible,
+	// the number of people who have added this page to a circle.
+	CircledByCount int64 `json:"circledByCount,omitempty"`
+
+	// Cover: The cover photo content.
+	Cover *PersonCover `json:"cover,omitempty"`
 
 	// CurrentLocation: The current location for this person.
 	CurrentLocation string `json:"currentLocation,omitempty"`
@@ -581,10 +590,10 @@ type Person struct {
 	// Etag: ETag of this response for caching purposes.
 	Etag string `json:"etag,omitempty"`
 
-	// Gender: The person's gender. Possible values are:  
+	// Gender: The person's gender. Possible values are:
 	// - "male" - Male
-	// gender. 
-	// - "female" - Female gender. 
+	// gender.
+	// - "female" - Female gender.
 	// - "other" - Other.
 	Gender string `json:"gender,omitempty"`
 
@@ -614,9 +623,9 @@ type Person struct {
 	// Nickname: The nickname of this person.
 	Nickname string `json:"nickname,omitempty"`
 
-	// ObjectType: Type of person within Google+. Possible values are:  
+	// ObjectType: Type of person within Google+. Possible values are:
 	// -
-	// "person" - represents an actual person. 
+	// "person" - represents an actual person.
 	// - "page" - represents a
 	// page.
 	ObjectType string `json:"objectType,omitempty"`
@@ -628,21 +637,25 @@ type Person struct {
 	// PlacesLived: A list of places where this person has lived.
 	PlacesLived []*PersonPlacesLived `json:"placesLived,omitempty"`
 
+	// PlusOneCount: If a Google+ Page, the number of people who have +1'ed
+	// this page.
+	PlusOneCount int64 `json:"plusOneCount,omitempty"`
+
 	// RelationshipStatus: The person's relationship status. Possible values
-	// are:  
-	// - "single" - Person is single. 
+	// are:
+	// - "single" - Person is single.
 	// - "in_a_relationship" - Person
-	// is in a relationship. 
-	// - "engaged" - Person is engaged. 
+	// is in a relationship.
+	// - "engaged" - Person is engaged.
 	// - "married"
-	// - Person is married. 
+	// - Person is married.
 	// - "its_complicated" - The relationship is
-	// complicated. 
+	// complicated.
 	// - "open_relationship" - Person is in an open
-	// relationship. 
-	// - "widowed" - Person is widowed. 
+	// relationship.
+	// - "widowed" - Person is widowed.
 	// -
-	// "in_domestic_partnership" - Person is in a domestic partnership. 
+	// "in_domestic_partnership" - Person is in a domestic partnership.
 	// -
 	// "in_civil_union" - Person is in a civil union.
 	RelationshipStatus string `json:"relationshipStatus,omitempty"`
@@ -655,6 +668,45 @@ type Person struct {
 
 	// Urls: A list of URLs for this person.
 	Urls []*PersonUrls `json:"urls,omitempty"`
+
+	// Verified: If a Google+ Page, whether it has been verified.
+	Verified bool `json:"verified,omitempty"`
+}
+
+type PersonCover struct {
+	// CoverInfo: Extra information about the cover photo.
+	CoverInfo *PersonCoverCoverInfo `json:"coverInfo,omitempty"`
+
+	// CoverPhoto: The person's primary cover image.
+	CoverPhoto *PersonCoverCoverPhoto `json:"coverPhoto,omitempty"`
+
+	// Layout: The layout of the cover art. Possible values are:
+	// -
+	// "banner" - One large image banner.
+	Layout string `json:"layout,omitempty"`
+}
+
+type PersonCoverCoverInfo struct {
+	// LeftImageOffset: The difference between the left position of the
+	// image cover and the actual displayed cover image. Only valid for
+	// BANNER layout.
+	LeftImageOffset int64 `json:"leftImageOffset,omitempty"`
+
+	// TopImageOffset: The difference between the top position of the image
+	// cover and the actual displayed cover image. Only valid for BANNER
+	// layout.
+	TopImageOffset int64 `json:"topImageOffset,omitempty"`
+}
+
+type PersonCoverCoverPhoto struct {
+	// Height: The height to the image.
+	Height int64 `json:"height,omitempty"`
+
+	// Url: The url to the image.
+	Url string `json:"url,omitempty"`
+
+	// Width: The width to the image.
+	Width int64 `json:"width,omitempty"`
 }
 
 type PersonEmails struct {
@@ -662,10 +714,10 @@ type PersonEmails struct {
 	// primary one.
 	Primary bool `json:"primary,omitempty"`
 
-	// Type: The type of address. Possible values are:  
+	// Type: The type of address. Possible values are:
 	// - "home" - Home
-	// email address. 
-	// - "work" - Work email address. 
+	// email address.
+	// - "work" - Work email address.
 	// - "other" - Other.
 	Type string `json:"type,omitempty"`
 
@@ -730,9 +782,9 @@ type PersonOrganizations struct {
 	// Title: The person's job title or role within the organization.
 	Title string `json:"title,omitempty"`
 
-	// Type: The type of organization. Possible values are:  
+	// Type: The type of organization. Possible values are:
 	// - "work" -
-	// Work. 
+	// Work.
 	// - "school" - School.
 	Type string `json:"type,omitempty"`
 }
@@ -751,13 +803,13 @@ type PersonUrls struct {
 	// Primary: If "true", this URL is the person's primary URL.
 	Primary bool `json:"primary,omitempty"`
 
-	// Type: The type of URL. Possible values are:  
+	// Type: The type of URL. Possible values are:
 	// - "home" - URL for
-	// home. 
-	// - "work" - URL for work. 
-	// - "blog" - URL for blog. 
+	// home.
+	// - "work" - URL for work.
+	// - "blog" - URL for blog.
 	// -
-	// "profile" - URL for profile. 
+	// "profile" - URL for profile.
 	// - "other" - Other.
 	Type string `json:"type,omitempty"`
 
@@ -775,15 +827,15 @@ type PlusAclentryResource struct {
 	Id string `json:"id,omitempty"`
 
 	// Type: The type of entry describing to whom access is granted.
-	// Possible values are:  
-	// - "person" - Access to an individual. 
+	// Possible values are:
+	// - "person" - Access to an individual.
 	// -
-	// "circle" - Access to members of a circle. 
+	// "circle" - Access to members of a circle.
 	// - "myCircles" - Access to
-	// members of all the person's circles. 
+	// members of all the person's circles.
 	// - "extendedCircles" - Access to
 	// members of everyone in a person's circles, plus all of the people in
-	// their circles. 
+	// their circles.
 	// - "public" - Access to anyone on the web.
 	Type string `json:"type,omitempty"`
 }
@@ -1058,7 +1110,7 @@ func (c *ActivitiesSearchCall) Do() (*ActivityFeed, error) {
 	//   ],
 	//   "parameters": {
 	//     "language": {
-	//       "default": "",
+	//       "default": "en-US",
 	//       "description": "Specify the preferred language to search with. See search language codes for available values.",
 	//       "location": "query",
 	//       "type": "string"
@@ -1557,7 +1609,7 @@ func (c *PeopleSearchCall) Do() (*PeopleFeed, error) {
 	//   ],
 	//   "parameters": {
 	//     "language": {
-	//       "default": "",
+	//       "default": "en-US",
 	//       "description": "Specify the preferred language to search with. See search language codes for available values.",
 	//       "location": "query",
 	//       "type": "string"
@@ -1596,7 +1648,7 @@ func (c *PeopleSearchCall) Do() (*PeopleFeed, error) {
 
 func cleanPathString(s string) string {
 	return strings.Map(func(r rune) rune {
-		if r >= 0x2d && r <= 0x7a {
+		if r >= 0x2d && r <= 0x7a || r == '~' {
 			return r
 		}
 		return -1

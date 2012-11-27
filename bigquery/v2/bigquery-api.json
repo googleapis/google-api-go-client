@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"oZqOFf-aKzMvpID-BwBAFJLe7Pk/WB7nm9zoQBRzWgpZC2djCSb6oAc\"",
+ "etag": "\"a3GBuXuTtUYW9BV1SIieU5LiL7w/lcBIitt3-YzMjqLjtixfzBa6hag\"",
  "discoveryVersion": "v1",
  "id": "bigquery:v2",
  "name": "bigquery",
  "version": "v2",
- "revision": "20121024",
+ "revision": "20121114",
  "title": "BigQuery API",
  "description": "A data platform for customers to create, manage, share and query data.",
  "icons": {

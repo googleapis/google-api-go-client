@@ -481,7 +481,8 @@ type Instance struct {
 	ServiceAccounts []*ServiceAccount `json:"serviceAccounts,omitempty"`
 
 	// Status: Instance status. One of the following values: "PROVISIONING",
-	// "STAGING", "RUNNING" (output only).
+	// "STAGING", "RUNNING", "STOPPED", "TERMINATED", and "STOPPING" (output
+	// only).
 	Status string `json:"status,omitempty"`
 
 	// StatusMessage: An optional, human-readable explanation of the status
@@ -4466,7 +4467,7 @@ func (c *ZonesListCall) Do() (*ZoneList, error) {
 
 func cleanPathString(s string) string {
 	return strings.Map(func(r rune) rune {
-		if r >= 0x2d && r <= 0x7a {
+		if r >= 0x2d && r <= 0x7a || r == '~' {
 			return r
 		}
 		return -1

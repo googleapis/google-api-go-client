@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"oZqOFf-aKzMvpID-BwBAFJLe7Pk/Rt-Xv5URZ_v9ONqg3eFY5V0RyIo\"",
+ "etag": "\"a3GBuXuTtUYW9BV1SIieU5LiL7w/18kJNv0xiUPmIAiyEv3K-Dk8QAc\"",
  "discoveryVersion": "v1",
  "id": "drive:v2",
  "name": "drive",
  "version": "v2",
- "revision": "20120924",
+ "revision": "20121022",
  "title": "Drive API",
  "description": "The API to interact with Drive.",
  "icons": {
@@ -615,7 +615,7 @@
      "description": "A link back to this comment."
     },
     "status": {
-     "type": "any",
+     "type": "string",
      "description": "The status of this comment. Status can be changed by posting a reply to a comment with the desired status.  \n- \"open\" - The comment is still open. \n- \"resolved\" - The comment has been resolved by one of its replies."
     }
    }
@@ -725,6 +725,10 @@
     "alternateLink": {
      "type": "string",
      "description": "A link for opening the file in using a relevant Google editor or viewer."
+    },
+    "appDataContents": {
+     "type": "boolean",
+     "description": "Whether this file is in the appdata folder."
     },
     "createdDate": {
      "type": "string",
@@ -978,8 +982,7 @@
      "description": "The title of this file."
     },
     "userPermission": {
-     "$ref": "Permission",
-     "description": "The permissions for the authenticated user on this file."
+     "$ref": "Permission"
     },
     "webContentLink": {
      "type": "string",
@@ -1060,12 +1063,7 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "The ID of the parent.",
-     "annotations": {
-      "required": [
-       "drive.parents.insert"
-      ]
-     }
+     "description": "The ID of the parent."
     },
     "isRoot": {
      "type": "boolean",
@@ -1125,12 +1123,7 @@
     },
     "role": {
      "type": "string",
-     "description": "The primary role for this user. Allowed values are:  \n- owner \n- reader \n- writer",
-     "annotations": {
-      "required": [
-       "drive.permissions.insert"
-      ]
-     }
+     "description": "The primary role for this user. Allowed values are:  \n- owner \n- reader \n- writer"
     },
     "selfLink": {
      "type": "string",
@@ -1138,21 +1131,11 @@
     },
     "type": {
      "type": "string",
-     "description": "The account type. Allowed values are:  \n- user \n- group \n- domain \n- anyone",
-     "annotations": {
-      "required": [
-       "drive.permissions.insert"
-      ]
-     }
+     "description": "The account type. Allowed values are:  \n- user \n- group \n- domain \n- anyone"
     },
     "value": {
      "type": "string",
-     "description": "The email address or domain name for the entity. This is not populated in responses.",
-     "annotations": {
-      "required": [
-       "drive.permissions.insert"
-      ]
-     }
+     "description": "The email address or domain name for the entity. This is not populated in responses."
     },
     "withLink": {
      "type": "boolean",
@@ -1338,7 +1321,7 @@
      "parameters": {
       "includeSubscribed": {
        "type": "boolean",
-       "description": "Whether to include subscribed items when calculating the number of remaining change IDs",
+       "description": "When calculating the number of remaining change IDs, whether to include shared files and public files the user has opened. When set to false, this counts only change IDs for owned files and any shared or public files that the user has explictly added to a folder in Drive.",
        "default": "true",
        "location": "query"
       },
@@ -1449,7 +1432,7 @@
       },
       "includeSubscribed": {
        "type": "boolean",
-       "description": "Whether to include subscribed items.",
+       "description": "Whether to include shared files and public files the user has opened. When set to false, the list will include owned files plus any shared or public files the user has explictly added to a folder in Drive.",
        "default": "true",
        "location": "query"
       },
@@ -1668,6 +1651,12 @@
        "description": "The ID of the file.",
        "required": true,
        "location": "path"
+      },
+      "includeDeleted": {
+       "type": "boolean",
+       "description": "If set, this will succeed when retrieving a deleted comment, and will include any deleted replies.",
+       "default": "false",
+       "location": "query"
       }
      },
      "parameterOrder": [
@@ -1723,7 +1712,7 @@
       },
       "includeDeleted": {
        "type": "boolean",
-       "description": "If set, all comments, including deleted comments (with content stripped) will be returned.",
+       "description": "If set, all comments and replies, including deleted comments and replies (with content stripped) will be returned.",
        "default": "false",
        "location": "query"
       },
@@ -2721,6 +2710,12 @@
        "required": true,
        "location": "path"
       },
+      "includeDeleted": {
+       "type": "boolean",
+       "description": "If set, this will succeed when retrieving a deleted reply.",
+       "default": "false",
+       "location": "query"
+      },
       "replyId": {
        "type": "string",
        "description": "The ID of the reply.",
@@ -2791,6 +2786,12 @@
        "description": "The ID of the file.",
        "required": true,
        "location": "path"
+      },
+      "includeDeleted": {
+       "type": "boolean",
+       "description": "If set, all replies, including deleted replies (with content stripped) will be returned.",
+       "default": "false",
+       "location": "query"
       },
       "maxResults": {
        "type": "integer",

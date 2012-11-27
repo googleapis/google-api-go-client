@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"oZqOFf-aKzMvpID-BwBAFJLe7Pk/E-ZPOcla7VqHv_wAssbrz6vzdz4\"",
+ "etag": "\"a3GBuXuTtUYW9BV1SIieU5LiL7w/fkGa4jJB_jGfibeN9C5BItCQTOc\"",
  "discoveryVersion": "v1",
  "id": "shopping:v1",
  "name": "shopping",
  "version": "v1",
- "revision": "20120904",
+ "revision": "20121026",
  "title": "Search API For Shopping",
  "description": "Lets you search over product data.",
  "icons": {
@@ -1053,6 +1053,11 @@
       "facets.include": {
        "type": "string",
        "description": "Facets to include (applies when useGcsConfig == false)",
+       "location": "query"
+      },
+      "facets.includeEmptyBuckets": {
+       "type": "boolean",
+       "description": "Return empty facet buckets.",
        "location": "query"
       },
       "facets.useGcsConfig": {

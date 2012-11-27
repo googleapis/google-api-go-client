@@ -115,6 +115,10 @@ type Userinfo struct {
 	// Given_name: The user's first name.
 	Given_name string `json:"given_name,omitempty"`
 
+	// Hd: The hosted domain e.g. example.com if the user is Google apps
+	// user.
+	Hd string `json:"hd,omitempty"`
+
 	// Id: The focus obfuscated gaia id of the user.
 	Id string `json:"id,omitempty"`
 
@@ -145,19 +149,19 @@ type TokeninfoCall struct {
 	opt_ map[string]interface{}
 }
 
-// Tokeninfo: 
+// Tokeninfo:
 func (s *Service) Tokeninfo() *TokeninfoCall {
 	c := &TokeninfoCall{s: s, opt_: make(map[string]interface{})}
 	return c
 }
 
-// Access_token sets the optional parameter "access_token": 
+// Access_token sets the optional parameter "access_token":
 func (c *TokeninfoCall) Access_token(access_token string) *TokeninfoCall {
 	c.opt_["access_token"] = access_token
 	return c
 }
 
-// Id_token sets the optional parameter "id_token": 
+// Id_token sets the optional parameter "id_token":
 func (c *TokeninfoCall) Id_token(id_token string) *TokeninfoCall {
 	c.opt_["id_token"] = id_token
 	return c
@@ -217,7 +221,7 @@ type UserinfoGetCall struct {
 	opt_ map[string]interface{}
 }
 
-// Get: 
+// Get:
 func (r *UserinfoService) Get() *UserinfoGetCall {
 	c := &UserinfoGetCall{s: r.s, opt_: make(map[string]interface{})}
 	return c
@@ -261,7 +265,7 @@ func (c *UserinfoGetCall) Do() (*Userinfo, error) {
 
 func cleanPathString(s string) string {
 	return strings.Map(func(r rune) rune {
-		if r >= 0x2d && r <= 0x7a {
+		if r >= 0x2d && r <= 0x7a || r == '~' {
 			return r
 		}
 		return -1

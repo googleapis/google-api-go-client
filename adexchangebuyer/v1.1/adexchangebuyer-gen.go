@@ -105,10 +105,10 @@ type AccountBidderLocation struct {
 
 	// Region: The geographical region the Ad Exchange should send requests
 	// from. Only used by some quota systems, but always setting the value
-	// is recommended. Allowed values:  
-	// - ASIA 
-	// - EUROPE 
-	// - US_EAST 
+	// is recommended. Allowed values:
+	// - ASIA
+	// - EUROPE
+	// - US_EAST
 	// -
 	// US_WEST
 	Region string `json:"region,omitempty"`
@@ -862,7 +862,7 @@ func (c *DirectDealsListCall) Do() (*DirectDealsList, error) {
 
 func cleanPathString(s string) string {
 	return strings.Map(func(r rune) rune {
-		if r >= 0x2d && r <= 0x7a {
+		if r >= 0x2d && r <= 0x7a || r == '~' {
 			return r
 		}
 		return -1

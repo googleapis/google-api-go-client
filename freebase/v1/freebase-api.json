@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"oZqOFf-aKzMvpID-BwBAFJLe7Pk/twR9YupjCKeg461WYqcRRxa059M\"",
+ "etag": "\"a3GBuXuTtUYW9BV1SIieU5LiL7w/rRQME0la_ZOFu8L8XDfoYZIPMyU\"",
  "discoveryVersion": "v1",
  "id": "freebase:v1",
  "name": "freebase",
  "version": "v1",
- "revision": "20121013",
+ "revision": "20121022",
  "title": "Freebase API",
  "description": "Lets you access the Freebase repository of open data.",
  "icons": {

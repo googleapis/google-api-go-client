@@ -1883,7 +1883,7 @@ func (c *TopicsListCall) MaxResults(maxResults int64) *TopicsListCall {
 	return c
 }
 
-// Mode sets the optional parameter "mode": 
+// Mode sets the optional parameter "mode":
 func (c *TopicsListCall) Mode(mode string) *TopicsListCall {
 	c.opt_["mode"] = mode
 	return c
@@ -2093,7 +2093,7 @@ func (c *VotesGetCall) UnauthToken(unauthToken string) *VotesGetCall {
 	return c
 }
 
-// UserId sets the optional parameter "userId": 
+// UserId sets the optional parameter "userId":
 func (c *VotesGetCall) UserId(userId string) *VotesGetCall {
 	c.opt_["userId"] = userId
 	return c
@@ -2395,7 +2395,7 @@ func (c *VotesPatchCall) UnauthToken(unauthToken string) *VotesPatchCall {
 	return c
 }
 
-// UserId sets the optional parameter "userId": 
+// UserId sets the optional parameter "userId":
 func (c *VotesPatchCall) UserId(userId string) *VotesPatchCall {
 	c.opt_["userId"] = userId
 	return c
@@ -2509,7 +2509,7 @@ func (c *VotesUpdateCall) UnauthToken(unauthToken string) *VotesUpdateCall {
 	return c
 }
 
-// UserId sets the optional parameter "userId": 
+// UserId sets the optional parameter "userId":
 func (c *VotesUpdateCall) UserId(userId string) *VotesUpdateCall {
 	c.opt_["userId"] = userId
 	return c
@@ -2598,7 +2598,7 @@ func (c *VotesUpdateCall) Do() (*Vote, error) {
 
 func cleanPathString(s string) string {
 	return strings.Map(func(r rune) rune {
-		if r >= 0x2d && r <= 0x7a {
+		if r >= 0x2d && r <= 0x7a || r == '~' {
 			return r
 		}
 		return -1

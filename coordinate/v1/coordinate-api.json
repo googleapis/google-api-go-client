@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"oZqOFf-aKzMvpID-BwBAFJLe7Pk/Vs95H8U0NOHeh2UcF2XpiEnUkzU\"",
+ "etag": "\"a3GBuXuTtUYW9BV1SIieU5LiL7w/m3b4ViigavMco7hXnCkHwRsiJhM\"",
  "discoveryVersion": "v1",
  "id": "coordinate:v1",
  "name": "coordinate",
  "version": "v1",
- "revision": "20121016",
+ "revision": "20121022",
  "title": "Google Maps Coordinate API",
  "description": "Lets you view and manage jobs in a Coordinate team.",
  "icons": {
@@ -314,6 +314,177 @@
      "type": "number",
      "description": "Longitude.",
      "format": "double"
+    }
+   }
+  },
+  "LocationListResponse": {
+   "id": "LocationListResponse",
+   "type": "object",
+   "description": "Response from a List Locations request.",
+   "properties": {
+    "items": {
+     "type": "array",
+     "description": "Locations in the collection.",
+     "items": {
+      "$ref": "LocationRecord"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies this object as a list of locations.",
+     "default": "coordinate#locationList"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "A token to provide to get the next page of results."
+    },
+    "pageInfo": {
+     "$ref": "PageInfo",
+     "description": "General pagination information."
+    },
+    "tokenPagination": {
+     "$ref": "TokenPagination",
+     "description": "Pagination information for token pagination."
+    }
+   }
+  },
+  "LocationRecord": {
+   "id": "LocationRecord",
+   "type": "object",
+   "description": "Recorded location of a worker.",
+   "properties": {
+    "collectionTime": {
+     "type": "string",
+     "description": "The collection time in milliseconds since the epoch.",
+     "format": "int64"
+    },
+    "confidenceRadius": {
+     "type": "number",
+     "description": "The location accuracy in meters. This is the radius of a 95% confidence interval around the location measurement.",
+     "format": "double"
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies this object as a location.",
+     "default": "coordinate#locationRecord"
+    },
+    "latitude": {
+     "type": "number",
+     "description": "Latitude.",
+     "format": "double"
+    },
+    "longitude": {
+     "type": "number",
+     "description": "Longitude.",
+     "format": "double"
+    }
+   }
+  },
+  "PageInfo": {
+   "id": "PageInfo",
+   "type": "object",
+   "description": "Page information.",
+   "properties": {
+    "kind": {
+     "type": "string",
+     "description": "Identifies this object as page information.",
+     "default": "coordinate#pageInfo"
+    },
+    "resultPerPage": {
+     "type": "integer",
+     "description": "Number of results per page.",
+     "format": "int32"
+    },
+    "startIndex": {
+     "type": "integer",
+     "description": "Page start index.",
+     "format": "int32"
+    },
+    "totalResults": {
+     "type": "integer",
+     "description": "Number of results available.",
+     "format": "int32"
+    }
+   }
+  },
+  "Schedule": {
+   "id": "Schedule",
+   "type": "object",
+   "description": "Job schedule.",
+   "properties": {
+    "allDay": {
+     "type": "boolean",
+     "description": "Whether the job is scheduled for the whole day. Time of day in start/end times is ignored if this is true."
+    },
+    "endTime": {
+     "type": "string",
+     "description": "Scheduled end time in milliseconds since epoch.",
+     "format": "uint64"
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies this object as a job schedule.",
+     "default": "coordinate#schedule"
+    },
+    "startTime": {
+     "type": "string",
+     "description": "Scheduled start time in milliseconds since epoch.",
+     "format": "uint64"
+    }
+   }
+  },
+  "TokenPagination": {
+   "id": "TokenPagination",
+   "type": "object",
+   "description": "Pagination information.",
+   "properties": {
+    "kind": {
+     "type": "string",
+     "description": "Identifies this object as pagination information.",
+     "default": "coordinate#tokenPagination"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "A token to provide to get the next page of results."
+    },
+    "previousPageToken": {
+     "type": "string",
+     "description": "A token to provide to get the previous page of results."
+    }
+   }
+  },
+  "Worker": {
+   "id": "Worker",
+   "type": "object",
+   "description": "A worker in a Coordinate team.",
+   "properties": {
+    "id": {
+     "type": "string",
+     "description": "Worker email address."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies this object as a worker.",
+     "default": "coordinate#worker"
+    }
+   }
+  },
+  "WorkerListResponse": {
+   "id": "WorkerListResponse",
+   "type": "object",
+   "description": "Response from a List Workers request.",
+   "properties": {
+    "items": {
+     "type": "array",
+     "description": "Workers in the collection.",
+     "items": {
+      "$ref": "Worker"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies this object as a list of workers.",
+     "default": "coordinate#workerList"
     }
    }
   }
@@ -704,6 +875,215 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/coordinate"
+     ]
+    }
+   }
+  },
+  "location": {
+   "methods": {
+    "list": {
+     "id": "coordinate.location.list",
+     "path": "{teamId}/workers/{workerEmail}/locations",
+     "httpMethod": "GET",
+     "description": "Retrieves a list of locations for a worker.",
+     "parameters": {
+      "startTimestampMs": {
+       "type": "string",
+       "description": "Start timestamp in milliseconds since the epoch.",
+       "required": true,
+       "format": "uint64",
+       "location": "query"
+      },
+      "teamId": {
+       "type": "string",
+       "description": "Team ID",
+       "required": true,
+       "location": "path"
+      },
+      "workerEmail": {
+       "type": "string",
+       "description": "Worker email address.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "teamId",
+      "workerEmail",
+      "startTimestampMs"
+     ],
+     "response": {
+      "$ref": "LocationListResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/coordinate",
+      "https://www.googleapis.com/auth/coordinate.readonly"
+     ]
+    }
+   }
+  },
+  "schedule": {
+   "methods": {
+    "get": {
+     "id": "coordinate.schedule.get",
+     "path": "{teamId}/jobs/{jobId}/schedule",
+     "httpMethod": "GET",
+     "description": "Retrieves the schedule for a job.",
+     "parameters": {
+      "jobId": {
+       "type": "string",
+       "description": "Job number",
+       "required": true,
+       "format": "uint64",
+       "location": "path"
+      },
+      "teamId": {
+       "type": "string",
+       "description": "Team ID",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "teamId",
+      "jobId"
+     ],
+     "response": {
+      "$ref": "Schedule"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/coordinate",
+      "https://www.googleapis.com/auth/coordinate.readonly"
+     ]
+    },
+    "patch": {
+     "id": "coordinate.schedule.patch",
+     "path": "{teamId}/jobs/{jobId}/schedule",
+     "httpMethod": "PATCH",
+     "description": "Replaces the schedule of a job with the provided schedule. This method supports patch semantics.",
+     "parameters": {
+      "allDay": {
+       "type": "boolean",
+       "description": "Whether the job is scheduled for the whole day. Time of day in start/end times is ignored if this is true.",
+       "location": "query"
+      },
+      "endTime": {
+       "type": "string",
+       "description": "Scheduled end time in milliseconds since epoch.",
+       "format": "uint64",
+       "location": "query"
+      },
+      "jobId": {
+       "type": "string",
+       "description": "Job number",
+       "required": true,
+       "format": "uint64",
+       "location": "path"
+      },
+      "startTime": {
+       "type": "string",
+       "description": "Scheduled start time in milliseconds since epoch.",
+       "format": "uint64",
+       "location": "query"
+      },
+      "teamId": {
+       "type": "string",
+       "description": "Team ID",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "teamId",
+      "jobId"
+     ],
+     "request": {
+      "$ref": "Schedule"
+     },
+     "response": {
+      "$ref": "Schedule"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/coordinate"
+     ]
+    },
+    "update": {
+     "id": "coordinate.schedule.update",
+     "path": "{teamId}/jobs/{jobId}/schedule",
+     "httpMethod": "PUT",
+     "description": "Replaces the schedule of a job with the provided schedule.",
+     "parameters": {
+      "allDay": {
+       "type": "boolean",
+       "description": "Whether the job is scheduled for the whole day. Time of day in start/end times is ignored if this is true.",
+       "location": "query"
+      },
+      "endTime": {
+       "type": "string",
+       "description": "Scheduled end time in milliseconds since epoch.",
+       "format": "uint64",
+       "location": "query"
+      },
+      "jobId": {
+       "type": "string",
+       "description": "Job number",
+       "required": true,
+       "format": "uint64",
+       "location": "path"
+      },
+      "startTime": {
+       "type": "string",
+       "description": "Scheduled start time in milliseconds since epoch.",
+       "format": "uint64",
+       "location": "query"
+      },
+      "teamId": {
+       "type": "string",
+       "description": "Team ID",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "teamId",
+      "jobId"
+     ],
+     "request": {
+      "$ref": "Schedule"
+     },
+     "response": {
+      "$ref": "Schedule"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/coordinate"
+     ]
+    }
+   }
+  },
+  "worker": {
+   "methods": {
+    "list": {
+     "id": "coordinate.worker.list",
+     "path": "{teamId}/workers",
+     "httpMethod": "GET",
+     "description": "Retrieves a list of workers in a team.",
+     "parameters": {
+      "teamId": {
+       "type": "string",
+       "description": "Team ID",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "teamId"
+     ],
+     "response": {
+      "$ref": "WorkerListResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/coordinate",
+      "https://www.googleapis.com/auth/coordinate.readonly"
      ]
     }
    }

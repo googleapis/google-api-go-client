@@ -1000,6 +1000,13 @@ func (c *ProductsListCall) FacetsInclude(facetsInclude string) *ProductsListCall
 	return c
 }
 
+// FacetsIncludeEmptyBuckets sets the optional parameter
+// "facets.includeEmptyBuckets": Return empty facet buckets.
+func (c *ProductsListCall) FacetsIncludeEmptyBuckets(facetsIncludeEmptyBuckets bool) *ProductsListCall {
+	c.opt_["facets.includeEmptyBuckets"] = facetsIncludeEmptyBuckets
+	return c
+}
+
 // FacetsUseGcsConfig sets the optional parameter "facets.useGcsConfig":
 // Whether to return facet information as configured in the GCS account
 func (c *ProductsListCall) FacetsUseGcsConfig(facetsUseGcsConfig bool) *ProductsListCall {
@@ -1226,6 +1233,9 @@ func (c *ProductsListCall) Do() (*Products, error) {
 	if v, ok := c.opt_["facets.include"]; ok {
 		params.Set("facets.include", fmt.Sprintf("%v", v))
 	}
+	if v, ok := c.opt_["facets.includeEmptyBuckets"]; ok {
+		params.Set("facets.includeEmptyBuckets", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["facets.useGcsConfig"]; ok {
 		params.Set("facets.useGcsConfig", fmt.Sprintf("%v", v))
 	}
@@ -1413,6 +1423,11 @@ func (c *ProductsListCall) Do() (*Products, error) {
 	//       "location": "query",
 	//       "type": "string"
 	//     },
+	//     "facets.includeEmptyBuckets": {
+	//       "description": "Return empty facet buckets.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "facets.useGcsConfig": {
 	//       "description": "Whether to return facet information as configured in the GCS account",
 	//       "location": "query",
@@ -1556,7 +1571,7 @@ func (c *ProductsListCall) Do() (*Products, error) {
 
 func cleanPathString(s string) string {
 	return strings.Map(func(r rune) rune {
-		if r >= 0x2d && r <= 0x7a {
+		if r >= 0x2d && r <= 0x7a || r == '~' {
 			return r
 		}
 		return -1

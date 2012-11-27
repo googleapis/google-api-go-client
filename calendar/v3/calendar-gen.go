@@ -131,17 +131,17 @@ type AclRule struct {
 	// Kind: Type of the resource ("calendar#aclRule").
 	Kind string `json:"kind,omitempty"`
 
-	// Role: The role assigned to the scope. Possible values are:  
+	// Role: The role assigned to the scope. Possible values are:
 	// - "none"
-	// - Provides no access. 
+	// - Provides no access.
 	// - "freeBusyReader" - Provides read access to
-	// free/busy information. 
+	// free/busy information.
 	// - "reader" - Provides read access to the
 	// calendar. Private events will appear to users with reader access, but
-	// event details will be hidden. 
+	// event details will be hidden.
 	// - "writer" - Provides read and write
 	// access to the calendar. Private events will appear to users with
-	// writer access, and event details will be visible. 
+	// writer access, and event details will be visible.
 	// - "owner" -
 	// Provides ownership of the calendar. This role has all of the
 	// permissions of the writer role with the additional ability to see and
@@ -153,12 +153,12 @@ type AclRule struct {
 }
 
 type AclRuleScope struct {
-	// Type: The type of the scope. Possible values are:  
+	// Type: The type of the scope. Possible values are:
 	// - "default" - The
-	// public scope. This is the default value. 
+	// public scope. This is the default value.
 	// - "user" - Limits the scope
-	// to a single user. 
-	// - "group" - Limits the scope to a group. 
+	// to a single user.
+	// - "group" - Limits the scope to a group.
 	// -
 	// "domain" - Limits the scope to a domain.  Note: The permissions
 	// granted to the "default", or public, scope apply to any user,
@@ -210,16 +210,16 @@ type CalendarList struct {
 
 type CalendarListEntry struct {
 	// AccessRole: The effective access role that the authenticated user has
-	// on the calendar. Read-only. Possible values are:  
+	// on the calendar. Read-only. Possible values are:
 	// - "freeBusyReader"
-	// - Provides read access to free/busy information. 
+	// - Provides read access to free/busy information.
 	// - "reader" -
 	// Provides read access to the calendar. Private events will appear to
-	// users with reader access, but event details will be hidden. 
+	// users with reader access, but event details will be hidden.
 	// -
 	// "writer" - Provides read and write access to the calendar. Private
 	// events will appear to users with writer access, and event details
-	// will be visible. 
+	// will be visible.
 	// - "owner" - Provides ownership of the calendar.
 	// This role has all of the permissions of the writer role with the
 	// additional ability to see and manipulate ACLs.
@@ -319,13 +319,13 @@ type Error struct {
 	Domain string `json:"domain,omitempty"`
 
 	// Reason: Specific reason for the error. Some of the possible values
-	// are:  
+	// are:
 	// - "groupTooBig" - The group of users requested is too large
-	// for a single query. 
+	// for a single query.
 	// - "tooManyCalendarsRequested" - The number of
-	// calendars requested is too large for a single query. 
+	// calendars requested is too large for a single query.
 	// - "notFound" -
-	// The requested resource was not found. 
+	// The requested resource was not found.
 	// - "internalError" - The API
 	// service has encountered an internal error.  Additional error types
 	// may be added in the future, so clients should gracefully handle
@@ -454,11 +454,11 @@ type Event struct {
 	// event, this is the start time of the first instance.
 	Start *EventDateTime `json:"start,omitempty"`
 
-	// Status: Status of the event. Optional. Possible values are:  
+	// Status: Status of the event. Optional. Possible values are:
 	// -
-	// "confirmed" - The event is confirmed. This is the default status. 
+	// "confirmed" - The event is confirmed. This is the default status.
 	// -
-	// "tentative" - The event is tentatively confirmed. 
+	// "tentative" - The event is tentatively confirmed.
 	// - "cancelled" -
 	// The event is cancelled.
 	Status string `json:"status,omitempty"`
@@ -467,9 +467,9 @@ type Event struct {
 	Summary string `json:"summary,omitempty"`
 
 	// Transparency: Whether the event blocks time on the calendar.
-	// Optional. Possible values are:  
+	// Optional. Possible values are:
 	// - "opaque" - The event blocks time
-	// on the calendar. This is the default value. 
+	// on the calendar. This is the default value.
 	// - "transparent" - The
 	// event does not block time on the calendar.
 	Transparency string `json:"transparency,omitempty"`
@@ -478,15 +478,15 @@ type Event struct {
 	// timestamp). Read-only.
 	Updated string `json:"updated,omitempty"`
 
-	// Visibility: Visibility of the event. Optional. Possible values are: 
-	// 
+	// Visibility: Visibility of the event. Optional. Possible values are:
+	//
 	// - "default" - Uses the default visibility for events on the
-	// calendar. This is the default value. 
+	// calendar. This is the default value.
 	// - "public" - The event is
 	// public and event details are visible to all readers of the calendar.
-	// 
+	//
 	// - "private" - The event is private and only event attendees may view
-	// event details. 
+	// event details.
 	// - "confidential" - The event is private. This value
 	// is provided for compatibility reasons.
 	Visibility string `json:"visibility,omitempty"`
@@ -524,10 +524,10 @@ type EventExtendedPropertiesShared struct {
 }
 
 type EventGadget struct {
-	// Display: The gadget's display mode. Optional. Possible values are: 
-	// 
+	// Display: The gadget's display mode. Optional. Possible values are:
+	//
 	// - "icon" - The gadget displays next to the event's title in the
-	// calendar view. 
+	// calendar view.
 	// - "chip" - The gadget displays when the event is
 	// clicked.
 	Display string `json:"display,omitempty"`
@@ -613,14 +613,14 @@ type EventAttendee struct {
 	// is False.
 	Resource bool `json:"resource,omitempty"`
 
-	// ResponseStatus: The attendee's response status. Possible values are: 
-	// 
+	// ResponseStatus: The attendee's response status. Possible values are:
+	//
 	// - "needsAction" - The attendee has not responded to the invitation.
-	// 
-	// - "declined" - The attendee has declined the invitation. 
+	//
+	// - "declined" - The attendee has declined the invitation.
 	// -
 	// "tentative" - The attendee has tentatively accepted the invitation.
-	// 
+	//
 	// - "accepted" - The attendee has accepted the invitation.
 	ResponseStatus string `json:"responseStatus,omitempty"`
 
@@ -646,11 +646,11 @@ type EventDateTime struct {
 }
 
 type EventReminder struct {
-	// Method: The method used by this reminder. Possible values are:  
+	// Method: The method used by this reminder. Possible values are:
 	// -
-	// "email" - Reminders are sent via email. 
+	// "email" - Reminders are sent via email.
 	// - "sms" - Reminders are sent
-	// via SMS. 
+	// via SMS.
 	// - "popup" - Reminders are sent via a UI popup.
 	Method string `json:"method,omitempty"`
 
@@ -661,17 +661,17 @@ type EventReminder struct {
 
 type Events struct {
 	// AccessRole: The user's access role for this calendar. Read-only.
-	// Possible values are:  
-	// - "none" - The user has no access. 
+	// Possible values are:
+	// - "none" - The user has no access.
 	// -
 	// "freeBusyReader" - The user has read access to free/busy information.
-	// 
+	//
 	// - "reader" - The user has read access to the calendar. Private
 	// events will appear to users with reader access, but event details
-	// will be hidden. 
+	// will be hidden.
 	// - "writer" - The user has read and write access to
 	// the calendar. Private events will appear to users with writer access,
-	// and event details will be visible. 
+	// and event details will be visible.
 	// - "owner" - The user has
 	// ownership of the calendar. This role has all of the permissions of
 	// the writer role with the additional ability to see and manipulate
@@ -1390,7 +1390,7 @@ func (r *CalendarListService) Insert(calendarlistentry *CalendarListEntry) *Cale
 // ColorRgbFormat sets the optional parameter "colorRgbFormat": Whether
 // to use the 'frontendColor' and 'backgroundColor' fields to write the
 // calendar colors (RGB). If this feature is used, the index-based
-// 'color' field will be set to the best matching option automatically. 
+// 'color' field will be set to the best matching option automatically.
 // The default is False.
 func (c *CalendarListInsertCall) ColorRgbFormat(colorRgbFormat bool) *CalendarListInsertCall {
 	c.opt_["colorRgbFormat"] = colorRgbFormat
@@ -1598,7 +1598,7 @@ func (r *CalendarListService) Patch(calendarId string, calendarlistentry *Calend
 // ColorRgbFormat sets the optional parameter "colorRgbFormat": Whether
 // to use the 'frontendColor' and 'backgroundColor' fields to write the
 // calendar colors (RGB). If this feature is used, the index-based
-// 'color' field will be set to the best matching option automatically. 
+// 'color' field will be set to the best matching option automatically.
 // The default is False.
 func (c *CalendarListPatchCall) ColorRgbFormat(colorRgbFormat bool) *CalendarListPatchCall {
 	c.opt_["colorRgbFormat"] = colorRgbFormat
@@ -1689,7 +1689,7 @@ func (r *CalendarListService) Update(calendarId string, calendarlistentry *Calen
 // ColorRgbFormat sets the optional parameter "colorRgbFormat": Whether
 // to use the 'frontendColor' and 'backgroundColor' fields to write the
 // calendar colors (RGB). If this feature is used, the index-based
-// 'color' field will be set to the best matching option automatically. 
+// 'color' field will be set to the best matching option automatically.
 // The default is False.
 func (c *CalendarListUpdateCall) ColorRgbFormat(colorRgbFormat bool) *CalendarListUpdateCall {
 	c.opt_["colorRgbFormat"] = colorRgbFormat
@@ -2498,7 +2498,7 @@ func (c *EventsInsertCall) MaxAttendees(maxAttendees int64) *EventsInsertCall {
 }
 
 // SendNotifications sets the optional parameter "sendNotifications":
-// Whether to send notifications about the creation of the new event. 
+// Whether to send notifications about the creation of the new event.
 // The default is False.
 func (c *EventsInsertCall) SendNotifications(sendNotifications bool) *EventsInsertCall {
 	c.opt_["sendNotifications"] = sendNotifications
@@ -3711,7 +3711,7 @@ func (c *SettingsListCall) Do() (*Settings, error) {
 
 func cleanPathString(s string) string {
 	return strings.Map(func(r rune) rune {
-		if r >= 0x2d && r <= 0x7a {
+		if r >= 0x2d && r <= 0x7a || r == '~' {
 			return r
 		}
 		return -1

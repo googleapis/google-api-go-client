@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"oZqOFf-aKzMvpID-BwBAFJLe7Pk/zqjOvKzdVI0qzSnS7F0tgBbCQd0\"",
+ "etag": "\"a3GBuXuTtUYW9BV1SIieU5LiL7w/q9ec63ZaOAmdjm6_6o8zAzVOPTo\"",
  "discoveryVersion": "v1",
  "id": "compute:v1beta13",
  "name": "compute",
  "version": "v1beta13",
- "revision": "20120712",
+ "revision": "20121022",
  "title": "Compute Engine API",
  "description": "API for the Google Compute Engine service.",
  "icons": {
@@ -582,7 +582,7 @@
     },
     "status": {
      "type": "string",
-     "description": "Instance status. One of the following values: \"PROVISIONING\", \"STAGING\", \"RUNNING\" (output only)."
+     "description": "Instance status. One of the following values: \"PROVISIONING\", \"STAGING\", \"RUNNING\", \"STOPPED\", \"TERMINATED\", and \"STOPPING\" (output only)."
     },
     "statusMessage": {
      "type": "string",

@@ -128,6 +128,10 @@ type Userinfo struct {
 	// Given_name: The user's first name.
 	Given_name string `json:"given_name,omitempty"`
 
+	// Hd: The hosted domain e.g. example.com if the user is Google apps
+	// user.
+	Hd string `json:"hd,omitempty"`
+
 	// Id: The focus obfuscated gaia id of the user.
 	Id string `json:"id,omitempty"`
 
@@ -279,7 +283,7 @@ func (c *UserinfoGetCall) Do() (*Userinfo, error) {
 
 func cleanPathString(s string) string {
 	return strings.Map(func(r rune) rune {
-		if r >= 0x2d && r <= 0x7a {
+		if r >= 0x2d && r <= 0x7a || r == '~' {
 			return r
 		}
 		return -1

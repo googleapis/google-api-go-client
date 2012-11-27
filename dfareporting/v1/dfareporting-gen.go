@@ -174,11 +174,11 @@ type File struct {
 	// ReportId: The ID of the report this file was generated from.
 	ReportId int64 `json:"reportId,omitempty,string"`
 
-	// Status: The status of the report file, one of:  
-	// - "PROCESSING" 
+	// Status: The status of the report file, one of:
+	// - "PROCESSING"
 	// -
-	// "REPORT_AVAILABLE" 
-	// - "FAILED" 
+	// "REPORT_AVAILABLE"
+	// - "FAILED"
 	// - "CANCELLED"
 	Status string `json:"status,omitempty"`
 
@@ -314,25 +314,25 @@ type ReportCriteriaDateRange struct {
 	EndDate string `json:"endDate,omitempty"`
 
 	// RelativeDateRange: The date range relative to the date of when the
-	// report is run, one of:  
-	// - "TODAY" 
-	// - "YESTERDAY" 
+	// report is run, one of:
+	// - "TODAY"
+	// - "YESTERDAY"
 	// - "WEEK_TO_DATE"
-	// 
-	// - "MONTH_TO_DATE" 
-	// - "QUARTER_TO_DATE" 
-	// - "YEAR_TO_DATE" 
+	//
+	// - "MONTH_TO_DATE"
+	// - "QUARTER_TO_DATE"
+	// - "YEAR_TO_DATE"
 	// -
-	// "PREVIOUS_WEEK" 
-	// - "PREVIOUS_MONTH" 
-	// - "PREVIOUS_QUARTER" 
+	// "PREVIOUS_WEEK"
+	// - "PREVIOUS_MONTH"
+	// - "PREVIOUS_QUARTER"
 	// -
-	// "PREVIOUS_YEAR" 
-	// - "LAST_7_DAYS" 
-	// - "LAST_30_DAYS" 
+	// "PREVIOUS_YEAR"
+	// - "LAST_7_DAYS"
+	// - "LAST_30_DAYS"
 	// - "LAST_90_DAYS"
-	// 
-	// - "LAST_365_DAYS" 
+	//
+	// - "LAST_365_DAYS"
 	// - "LAST_24_MONTHS"
 	RelativeDateRange string `json:"relativeDateRange,omitempty"`
 
@@ -355,16 +355,16 @@ type ReportSchedule struct {
 	// running.
 	ExpirationDate string `json:"expirationDate,omitempty"`
 
-	// Repeats: The interval the report is repeated for, one of:  
+	// Repeats: The interval the report is repeated for, one of:
 	// -
-	// "DAILY", also requires field "every" to be set. 
+	// "DAILY", also requires field "every" to be set.
 	// - "WEEKLY", also
-	// requires fields "every" and "repeatsOnWeekDays" to be set. 
+	// requires fields "every" and "repeatsOnWeekDays" to be set.
 	// -
-	// "TWICE_A_MONTH" 
+	// "TWICE_A_MONTH"
 	// - "MONTHLY", also requires fields "every" and
-	// "runsOnDayOfMonth" to be set. 
-	// - "QUARTERLY" 
+	// "runsOnDayOfMonth" to be set.
+	// - "QUARTERLY"
 	// - "YEARLY"
 	Repeats string `json:"repeats,omitempty"`
 
@@ -375,9 +375,9 @@ type ReportSchedule struct {
 	// RunsOnDayOfMonth: Enum to define for "MONTHLY" scheduled reports
 	// whether reports should be repeated on the same day of the month as
 	// "startDate" or the same day of the week of the month. Possible values
-	// are:  
-	// - DAY_OF_MONTH 
-	// - WEEK_OF_MONTH  
+	// are:
+	// - DAY_OF_MONTH
+	// - WEEK_OF_MONTH
 	// Example: If 'startDate' is
 	// Monday, April 2nd 2012 (2012-04-02), "DAY_OF_MONTH" would run
 	// subsequent reports on the 2nd of every Month, and "WEEK_OF_MONTH"
@@ -414,9 +414,9 @@ type SortedDimension struct {
 	// Name: The name of the dimension.
 	Name string `json:"name,omitempty"`
 
-	// SortOrder: An optional sort order for the dimension column, one of: 
-	// 
-	// - "ASCENDING" 
+	// SortOrder: An optional sort order for the dimension column, one of:
+	//
+	// - "ASCENDING"
 	// - "DESCENDING"
 	SortOrder string `json:"sortOrder,omitempty"`
 }
@@ -1447,7 +1447,7 @@ func (c *UserProfilesListCall) Do() (*UserProfileList, error) {
 
 func cleanPathString(s string) string {
 	return strings.Map(func(r rune) rune {
-		if r >= 0x2d && r <= 0x7a {
+		if r >= 0x2d && r <= 0x7a || r == '~' {
 			return r
 		}
 		return -1

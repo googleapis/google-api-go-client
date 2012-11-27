@@ -306,11 +306,11 @@ type App struct {
 }
 
 type AppIcons struct {
-	// Category: Category of the icon. Allowed values are:  
+	// Category: Category of the icon. Allowed values are:
 	// - application -
-	// icon for the application 
+	// icon for the application
 	// - document - icon for a file associated
-	// with the app 
+	// with the app
 	// - documentShared - icon for a shared file associated
 	// with the app
 	Category string `json:"category,omitempty"`
@@ -466,12 +466,12 @@ type Comment struct {
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// Status: The status of this comment. Status can be changed by posting
-	// a reply to a comment with the desired status.  
+	// a reply to a comment with the desired status.
 	// - "open" - The
-	// comment is still open. 
+	// comment is still open.
 	// - "resolved" - The comment has been resolved
 	// by one of its replies.
-	Status interface{} `json:"status,omitempty"`
+	Status string `json:"status,omitempty"`
 }
 
 type CommentContext struct {
@@ -527,9 +527,9 @@ type CommentReply struct {
 
 	// Verb: The action this reply performed to the parent comment. When
 	// creating a new reply this is the action to be perform to the parent
-	// comment. Possible values are:  
+	// comment. Possible values are:
 	// - "resolve" - To resolve a comment.
-	// 
+	//
 	// - "reopen" - To reopen (un-resolve) a comment.
 	Verb string `json:"verb,omitempty"`
 }
@@ -549,6 +549,9 @@ type File struct {
 	// AlternateLink: A link for opening the file in using a relevant Google
 	// editor or viewer.
 	AlternateLink string `json:"alternateLink,omitempty"`
+
+	// AppDataContents: Whether this file is in the appdata folder.
+	AppDataContents bool `json:"appDataContents,omitempty"`
 
 	// CreatedDate: Create time for this file (formatted ISO8601 timestamp).
 	CreatedDate string `json:"createdDate,omitempty"`
@@ -669,8 +672,6 @@ type File struct {
 	// Title: The title of this file.
 	Title string `json:"title,omitempty"`
 
-	// UserPermission: The permissions for the authenticated user on this
-	// file.
 	UserPermission *Permission `json:"userPermission,omitempty"`
 
 	// WebContentLink: A link for downloading the content of the file in a
@@ -842,21 +843,21 @@ type Permission struct {
 	// PhotoLink: A link to the profile photo, if available.
 	PhotoLink string `json:"photoLink,omitempty"`
 
-	// Role: The primary role for this user. Allowed values are:  
+	// Role: The primary role for this user. Allowed values are:
 	// - owner
-	// 
-	// - reader 
+	//
+	// - reader
 	// - writer
 	Role string `json:"role,omitempty"`
 
 	// SelfLink: A link back to this permission.
 	SelfLink string `json:"selfLink,omitempty"`
 
-	// Type: The account type. Allowed values are:  
-	// - user 
-	// - group 
+	// Type: The account type. Allowed values are:
+	// - user
+	// - group
 	// -
-	// domain 
+	// domain
 	// - anyone
 	Type string `json:"type,omitempty"`
 
@@ -1002,8 +1003,11 @@ func (r *AboutService) Get() *AboutGetCall {
 }
 
 // IncludeSubscribed sets the optional parameter "includeSubscribed":
-// Whether to include subscribed items when calculating the number of
-// remaining change IDs
+// When calculating the number of remaining change IDs, whether to
+// include shared files and public files the user has opened. When set
+// to false, this counts only change IDs for owned files and any shared
+// or public files that the user has explictly added to a folder in
+// Drive.
 func (c *AboutGetCall) IncludeSubscribed(includeSubscribed bool) *AboutGetCall {
 	c.opt_["includeSubscribed"] = includeSubscribed
 	return c
@@ -1060,7 +1064,7 @@ func (c *AboutGetCall) Do() (*About, error) {
 	//   "parameters": {
 	//     "includeSubscribed": {
 	//       "default": "true",
-	//       "description": "Whether to include subscribed items when calculating the number of remaining change IDs",
+	//       "description": "When calculating the number of remaining change IDs, whether to include shared files and public files the user has opened. When set to false, this counts only change IDs for owned files and any shared or public files that the user has explictly added to a folder in Drive.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -1288,7 +1292,9 @@ func (c *ChangesListCall) IncludeDeleted(includeDeleted bool) *ChangesListCall {
 }
 
 // IncludeSubscribed sets the optional parameter "includeSubscribed":
-// Whether to include subscribed items.
+// Whether to include shared files and public files the user has opened.
+// When set to false, the list will include owned files plus any shared
+// or public files the user has explictly added to a folder in Drive.
 func (c *ChangesListCall) IncludeSubscribed(includeSubscribed bool) *ChangesListCall {
 	c.opt_["includeSubscribed"] = includeSubscribed
 	return c
@@ -1363,7 +1369,7 @@ func (c *ChangesListCall) Do() (*ChangeList, error) {
 	//     },
 	//     "includeSubscribed": {
 	//       "default": "true",
-	//       "description": "Whether to include subscribed items.",
+	//       "description": "Whether to include shared files and public files the user has opened. When set to false, the list will include owned files plus any shared or public files the user has explictly added to a folder in Drive.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -1812,10 +1818,21 @@ func (r *CommentsService) Get(fileId string, commentId string) *CommentsGetCall 
 	return c
 }
 
+// IncludeDeleted sets the optional parameter "includeDeleted": If set,
+// this will succeed when retrieving a deleted comment, and will include
+// any deleted replies.
+func (c *CommentsGetCall) IncludeDeleted(includeDeleted bool) *CommentsGetCall {
+	c.opt_["includeDeleted"] = includeDeleted
+	return c
+}
+
 func (c *CommentsGetCall) Do() (*Comment, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["includeDeleted"]; ok {
+		params.Set("includeDeleted", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/comments/{commentId}")
 	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
 	urls = strings.Replace(urls, "{commentId}", cleanPathString(c.commentId), 1)
@@ -1854,6 +1871,12 @@ func (c *CommentsGetCall) Do() (*Comment, error) {
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "includeDeleted": {
+	//       "default": "false",
+	//       "description": "If set, this will succeed when retrieving a deleted comment, and will include any deleted replies.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     }
 	//   },
 	//   "path": "files/{fileId}/comments/{commentId}",
@@ -1958,8 +1981,8 @@ func (r *CommentsService) List(fileId string) *CommentsListCall {
 }
 
 // IncludeDeleted sets the optional parameter "includeDeleted": If set,
-// all comments, including deleted comments (with content stripped) will
-// be returned.
+// all comments and replies, including deleted comments and replies
+// (with content stripped) will be returned.
 func (c *CommentsListCall) IncludeDeleted(includeDeleted bool) *CommentsListCall {
 	c.opt_["includeDeleted"] = includeDeleted
 	return c
@@ -2038,7 +2061,7 @@ func (c *CommentsListCall) Do() (*CommentList, error) {
 	//     },
 	//     "includeDeleted": {
 	//       "default": "false",
-	//       "description": "If set, all comments, including deleted comments (with content stripped) will be returned.",
+	//       "description": "If set, all comments and replies, including deleted comments and replies (with content stripped) will be returned.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -4491,10 +4514,20 @@ func (r *RepliesService) Get(fileId string, commentId string, replyId string) *R
 	return c
 }
 
+// IncludeDeleted sets the optional parameter "includeDeleted": If set,
+// this will succeed when retrieving a deleted reply.
+func (c *RepliesGetCall) IncludeDeleted(includeDeleted bool) *RepliesGetCall {
+	c.opt_["includeDeleted"] = includeDeleted
+	return c
+}
+
 func (c *RepliesGetCall) Do() (*CommentReply, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["includeDeleted"]; ok {
+		params.Set("includeDeleted", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/comments/{commentId}/replies/{replyId}")
 	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
 	urls = strings.Replace(urls, "{commentId}", cleanPathString(c.commentId), 1)
@@ -4535,6 +4568,12 @@ func (c *RepliesGetCall) Do() (*CommentReply, error) {
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "includeDeleted": {
+	//       "default": "false",
+	//       "description": "If set, this will succeed when retrieving a deleted reply.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     },
 	//     "replyId": {
 	//       "description": "The ID of the reply.",
@@ -4655,6 +4694,14 @@ func (r *RepliesService) List(fileId string, commentId string) *RepliesListCall 
 	return c
 }
 
+// IncludeDeleted sets the optional parameter "includeDeleted": If set,
+// all replies, including deleted replies (with content stripped) will
+// be returned.
+func (c *RepliesListCall) IncludeDeleted(includeDeleted bool) *RepliesListCall {
+	c.opt_["includeDeleted"] = includeDeleted
+	return c
+}
+
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of replies to include in the response, used for paging.
 func (c *RepliesListCall) MaxResults(maxResults int64) *RepliesListCall {
@@ -4675,6 +4722,9 @@ func (c *RepliesListCall) Do() (*CommentReplyList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["includeDeleted"]; ok {
+		params.Set("includeDeleted", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
@@ -4719,6 +4769,12 @@ func (c *RepliesListCall) Do() (*CommentReplyList, error) {
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "includeDeleted": {
+	//       "default": "false",
+	//       "description": "If set, all replies, including deleted replies (with content stripped) will be returned.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     },
 	//     "maxResults": {
 	//       "default": "20",
@@ -5310,7 +5366,7 @@ func (c *RevisionsUpdateCall) Do() (*Revision, error) {
 
 func cleanPathString(s string) string {
 	return strings.Map(func(r rune) rune {
-		if r >= 0x2d && r <= 0x7a {
+		if r >= 0x2d && r <= 0x7a || r == '~' {
 			return r
 		}
 		return -1

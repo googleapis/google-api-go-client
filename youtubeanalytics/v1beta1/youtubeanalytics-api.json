@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"oZqOFf-aKzMvpID-BwBAFJLe7Pk/UXpCz74wiOoy7aDIgrY_dNsh7nA\"",
+ "etag": "\"a3GBuXuTtUYW9BV1SIieU5LiL7w/gcEwxpDPO0rIiLbaeLoHnbk1_XM\"",
  "discoveryVersion": "v1",
  "id": "youtubeAnalytics:v1beta1",
  "name": "youtubeAnalytics",
  "version": "v1beta1",
- "revision": "20120928",
+ "revision": "20121108",
  "title": "YouTube Analytics API",
  "description": "Retrieve your YouTube Analytics reports.",
  "icons": {

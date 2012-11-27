@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"oZqOFf-aKzMvpID-BwBAFJLe7Pk/O9-TPzYRYpuwqVT6yeFNuBJe1Hw\"",
+ "etag": "\"a3GBuXuTtUYW9BV1SIieU5LiL7w/njYdmyOO3vQxNLitTmCcbYTgxn8\"",
  "discoveryVersion": "v1",
  "id": "adsensehost:v4.1",
  "name": "adsensehost",
  "canonicalName": "AdSense Host",
  "version": "v4.1",
- "revision": "20121016",
+ "revision": "20121022",
  "title": "AdSense Host API",
  "description": "Gives AdSense Hosts access to report generation, ad code generation, and publisher management capabilities.",
  "icons": {

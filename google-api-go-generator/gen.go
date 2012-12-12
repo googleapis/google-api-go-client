@@ -158,6 +158,17 @@ func getAPIs() []*API {
 	if err := json.Unmarshal(disco, &all); err != nil {
 		log.Fatalf("error decoding JSON in %s: %v", apisURL, err)
 	}
+	if !*publicOnly && *apiToGenerate != "*" {
+		parts := strings.SplitN(*apiToGenerate, ":", 2)
+		apiName := parts[0]
+		apiVersion := parts[1]
+		all.Items = append(all.Items, &API{
+			ID:            *apiToGenerate,
+			Name:          apiName,
+			Version:       apiVersion,
+			DiscoveryLink: fmt.Sprintf("./apis/%s/%s/rest", apiName, apiVersion),
+		})
+	}
 	return all.Items
 }
 

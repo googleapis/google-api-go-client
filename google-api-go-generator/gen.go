@@ -31,12 +31,14 @@ const goGenVersion = "0.5"
 var (
 	apiToGenerate = flag.String("api", "*", "The API ID to generate, like 'tasks:v1'. A value of '*' means all.")
 	useCache      = flag.Bool("cache", true, "Use cache of discovered Google API discovery documents.")
-	genDir        = flag.String("gendir", "", "Directory to use to write out generated Go files and Makefiles")
+	genDir        = flag.String("gendir", "", "Directory to use to write out generated Go files")
 	build         = flag.Bool("build", false, "Compile generated packages.")
 	install       = flag.Bool("install", false, "Install generated packages.")
 	apisURL       = flag.String("discoveryurl", "https://www.googleapis.com/discovery/v1/apis", "URL to root discovery document")
 
 	publicOnly = flag.Bool("publiconly", true, "Only build public, released APIs. Only applicable for Google employees.")
+
+	jsonFile = flag.String("api_json_file", "", "If non-empty, the path to a local file on disk containing the API to generate. Exclusive with setting --api.")
 )
 
 // API represents an API to generate, as well as its state while it's
@@ -51,11 +53,24 @@ type API struct {
 
 	m map[string]interface{}
 
+	forceJSON []byte // if non-nil, the JSON schema file. else fetched.
 	usedNames namePool
 	schemas   map[string]*Schema // apiName -> schema
 
 	p  func(format string, args ...interface{}) // print raw
 	pn func(format string, args ...interface{}) // print with indent and newline
+}
+
+// apiJSON is a type for decoding an API JSON file into.
+// TODO(bradfitz): remove this hack once golang.org/issue/4660 is fixed,
+// then we can just use the API type instead.
+type apiJSON struct {
+	ID            string `json:"id"`
+	Name          string `json:"name"`
+	Version       string `json:"version"`
+	Title         string `json:"title"`
+	DiscoveryLink string `json:"discoveryLink"` // relative
+	Preferred     bool   `json:"preferred"`
 }
 
 func (a *API) sortedSchemaNames() (names []string) {
@@ -119,7 +134,7 @@ func main() {
 			} else {
 				args = append(args, "build")
 			}
-			args = append(args, "./"+api.SourceDir())
+			args = append(args, api.Target())
 			out, err := exec.Command("go", args...).CombinedOutput()
 			if err != nil {
 				errors = append(errors, &compileError{api, string(out)})
@@ -153,6 +168,9 @@ func (a *API) want() bool {
 }
 
 func getAPIs() []*API {
+	if *jsonFile != "" {
+		return getAPIsFromFile()
+	}
 	var all AllAPIs
 	disco := slurpURL(*apisURL)
 	if err := json.Unmarshal(disco, &all); err != nil {
@@ -170,6 +188,33 @@ func getAPIs() []*API {
 		})
 	}
 	return all.Items
+}
+
+// getAPIsFromFile handles the case of generating exactly one API
+// from the flag given in --api_json_file
+func getAPIsFromFile() []*API {
+	if *apiToGenerate != "*" {
+		log.Fatalf("Can't set --api with --api_json_file.")
+	}
+	if !*publicOnly {
+		log.Fatalf("Can't set --publiconly with --api_json_file.")
+	}
+	jsonBytes, err := ioutil.ReadFile(*jsonFile)
+	if err != nil {
+		log.Fatalf("Error reading %s: %v", *jsonFile, err)
+	}
+	a := &API{
+		forceJSON: jsonBytes,
+	}
+	aj := &apiJSON{}
+	err = json.Unmarshal(jsonBytes, aj)
+	if err != nil {
+		log.Fatalf("Decoding JSON in %s: %v", *jsonFile, err)
+	}
+	a.ID = aj.ID
+	a.Name = aj.Name
+	a.Version = aj.Version
+	return []*API{a}
 }
 
 func writeFile(file string, contents []byte) error {
@@ -238,6 +283,12 @@ func (p *namePool) Get(preferred string) string {
 }
 
 func (a *API) SourceDir() string {
+	if *genDir == "" {
+		paths := filepath.SplitList(os.Getenv("GOPATH"))
+		if len(paths) > 0 && paths[0] != "" {
+			*genDir = filepath.Join(paths[0], "src", "code.google.com", "p", "google-api-go-client")
+		}
+	}
 	return filepath.Join(*genDir, a.Package(), a.Version)
 }
 
@@ -280,10 +331,17 @@ func (a *API) needsDataWrapper() bool {
 	return false
 }
 
+func (a *API) jsonBytes() []byte {
+	if v := a.forceJSON; v != nil {
+		return v
+	}
+	return slurpURL(a.DiscoveryURL())
+}
+
 func (a *API) GenerateCode() (outerr error) {
 	a.m = make(map[string]interface{})
 	m := a.m
-	jsonBytes := slurpURL(a.DiscoveryURL())
+	jsonBytes := a.jsonBytes()
 	err := json.Unmarshal(jsonBytes, &a.m)
 	if err != nil {
 		return err

@@ -1,10 +1,10 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"-vXktEC13RBC5q_wkxEsszrjKM4/N8vwkCG6aHfvBSWrJ0B86AK4lho\"",
+ "etag": "\"-vXktEC13RBC5q_wkxEsszrjKM4/DYDnwbmXlO5-LrkTA5HLCewMNJQ\"",
  "discoveryVersion": "v1",
- "id": "compute:v1beta13",
+ "id": "compute:v1beta14",
  "name": "compute",
- "version": "v1beta13",
+ "version": "v1beta14",
  "revision": "20130119",
  "title": "Compute Engine API",
  "description": "API for the Google Compute Engine service.",
@@ -12,15 +12,15 @@
   "x16": "http://www.google.com/images/icons/product/compute_engine-16.png",
   "x32": "http://www.google.com/images/icons/product/compute_engine-32.png"
  },
- "documentationLink": "https://developers.google.com/compute/docs/reference/v1beta13",
+ "documentationLink": "https://developers.google.com/compute/docs/reference/v1beta14",
  "labels": [
   "limited_availability"
  ],
  "protocol": "rest",
- "baseUrl": "https://www.googleapis.com/compute/v1beta13/projects/",
- "basePath": "/compute/v1beta13/projects/",
+ "baseUrl": "https://www.googleapis.com/compute/v1beta14/projects/",
+ "basePath": "/compute/v1beta14/projects/",
  "rootUrl": "https://www.googleapis.com/",
- "servicePath": "compute/v1beta13/projects/",
+ "servicePath": "compute/v1beta14/projects/",
  "batchPath": "batch",
  "parameters": {
   "alt": {
@@ -113,9 +113,9 @@
    "type": "object",
    "description": "An instance-attached disk resource.",
    "properties": {
-    "deleteOnTerminate": {
+    "boot": {
      "type": "boolean",
-     "description": "Persistent disk only; If true, delete the disk and all its data when the associated instance is deleted. This property defaults to false if not specified."
+     "description": "Indicates that this is a boot disk. VM will use the first partition of the disk for its root filesystem."
     },
     "deviceName": {
      "type": "string",
@@ -147,6 +147,33 @@
        "compute.instances.insert"
       ]
      }
+    }
+   }
+  },
+  "DeprecationStatus": {
+   "id": "DeprecationStatus",
+   "type": "object",
+   "description": "Deprecation status for a public resource.",
+   "properties": {
+    "deleted": {
+     "type": "string",
+     "description": "An optional RFC3339 timestamp on or after which the deprecation state of this resource will be changed to DELETED."
+    },
+    "deprecated": {
+     "type": "string",
+     "description": "An optional RFC3339 timestamp on or after which the deprecation state of this resource will be changed to DEPRECATED."
+    },
+    "obsolete": {
+     "type": "string",
+     "description": "An optional RFC3339 timestamp on or after which the deprecation state of this resource will be changed to OBSOLETE."
+    },
+    "replacement": {
+     "type": "string",
+     "description": "A URL of the suggested replacement for the deprecated resource. The deprecated resource and its replacement must be resources of the same kind."
+    },
+    "state": {
+     "type": "string",
+     "description": "The deprecation state. Can be \"DEPRECATED\", \"OBSOLETE\", or \"DELETED\". Operations which create a new resource using a \"DEPRECATED\" resource will return successfully, but with a warning indicating the deprecated resource and recommending its replacement. New uses of \"OBSOLETE\" or \"DELETED\" resources will result in an error."
     }
    }
   },
@@ -193,13 +220,8 @@
     },
     "sizeGb": {
      "type": "string",
-     "description": "Size of the persistent disk, specified in GB.",
-     "format": "int64",
-     "annotations": {
-      "required": [
-       "compute.disks.insert"
-      ]
-     }
+     "description": "Size of the persistent disk, specified in GB. This parameter is optional when creating a disk from a disk image or a snapshot, otherwise it is required.",
+     "format": "int64"
     },
     "sourceSnapshot": {
      "type": "string",
@@ -215,12 +237,7 @@
     },
     "zone": {
      "type": "string",
-     "description": "URL for the zone where the persistent disk resides; provided by the client when the disk is created. A persistent disk must reside in the same zone as the instance to which it is attached.",
-     "annotations": {
-      "required": [
-       "compute.disks.insert"
-      ]
-     }
+     "description": "URL of the zone where the disk resides (output only)."
     }
    }
   },
@@ -272,7 +289,7 @@
        },
        "ports": {
         "type": "array",
-        "description": "An optional list of ports which are allowed. It is an error to specify this for any protocol that isn't UDP or TCP. Each entry must be either an integer or a range. If not specified, connections through any port are allowed.\nExample inputs include: [\"22\"], [\"80,\"443\"] and [\"12345-12349\"].",
+        "description": "An optional list of ports which are allowed. It is an error to specify this for any protocol that isn't UDP or TCP. Each entry must be either an integer or a range. If not specified, connections through any port are allowed.\nExample inputs include: [\"22\"], [\"80\",\"443\"] and [\"12345-12349\"].",
         "items": {
          "type": "string"
         }
@@ -327,24 +344,21 @@
      "type": "array",
      "description": "A list of IP address blocks expressed in CIDR format which this rule applies to. One or both of sourceRanges and sourceTags may be set; an inbound connection is allowed if either the range or the tag of the source matches.",
      "items": {
-      "type": "string",
-      "pattern": "[0-9]{1,3}(?:\\.[0-9]{1,3}){3}/[0-9]{1,2}"
+      "type": "string"
      }
     },
     "sourceTags": {
      "type": "array",
      "description": "A list of instance tags which this rule applies to. One or both of sourceRanges and sourceTags may be set; an inbound connection is allowed if either the range or the tag of the source matches.",
      "items": {
-      "type": "string",
-      "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?"
+      "type": "string"
      }
     },
     "targetTags": {
      "type": "array",
      "description": "A list of instance tags indicating sets of instances located on network which may make network connections as specified in allowed. If no targetTags are specified, the firewall rule applies to all instances on the specified network.",
      "items": {
-      "type": "string",
-      "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?"
+      "type": "string"
      }
     }
    }
@@ -389,24 +403,13 @@
      "type": "string",
      "description": "Creation timestamp in RFC3339 text format (output only)."
     },
+    "deprecated": {
+     "$ref": "DeprecationStatus",
+     "description": "The deprecation status associated with this image."
+    },
     "description": {
      "type": "string",
      "description": "Textual description of the resource; provided by the client when the resource is created."
-    },
-    "diskSnapshot": {
-     "type": "object",
-     "description": "Not yet implemented.",
-     "properties": {
-      "source": {
-       "type": "string",
-       "description": "URL of the disk snapshot.",
-       "annotations": {
-        "required": [
-         "compute.images.insert"
-        ]
-       }
-      }
-     }
     },
     "id": {
      "type": "string",
@@ -430,7 +433,12 @@
     },
     "preferredKernel": {
      "type": "string",
-     "description": "An optional URL of the preferred kernel for use with this disk image. If not specified, a server defined default kernel will be used."
+     "description": "An optional URL of the preferred kernel for use with this disk image. If not specified, a server defined default kernel will be used.",
+     "annotations": {
+      "required": [
+       "compute.images.insert"
+      ]
+     }
     },
     "rawDisk": {
      "type": "object",
@@ -439,12 +447,7 @@
       "containerType": {
        "type": "string",
        "description": "The format used to encode and transmit the block device. Should be TAR. This is just a container and transmission format and not a runtime format. Provided by the client when the disk image is created.",
-       "default": "TAR",
-       "annotations": {
-        "required": [
-         "compute.images.insert"
-        ]
-       }
+       "default": "TAR"
       },
       "sha1Checksum": {
        "type": "string",
@@ -514,6 +517,10 @@
    "type": "object",
    "description": "An instance resource.",
    "properties": {
+    "canIpForward": {
+     "type": "boolean",
+     "description": "Reserved for future use."
+    },
     "creationTimestamp": {
      "type": "string",
      "description": "Creation timestamp in RFC3339 text format (output only)."
@@ -536,12 +543,11 @@
     },
     "image": {
      "type": "string",
-     "description": "An optional URL of the disk image resource to be to be installed on this instance; provided by the client when the instance is created. If not specified, the server will choose a default image.",
-     "annotations": {
-      "required": [
-       "compute.instances.insert"
-      ]
-     }
+     "description": "An optional URL of the disk image resource to be installed on this instance; provided by the client when the instance is created. Alternatively to passing the image, the client may choose to boot from a persistent disk, by setting boot=true flag on one of the entries in disks[] collection."
+    },
+    "kernel": {
+     "type": "string",
+     "description": "URL of the kernel resource to use when booting. In case of booting from persistent disk, this parameter is required. When booting from a disk image, it is optional, but may be provided to use a different kernel than the one associated with the image."
     },
     "kind": {
      "type": "string",
@@ -591,28 +597,19 @@
     },
     "status": {
      "type": "string",
-     "description": "Instance status. One of the following values: \"PROVISIONING\", \"STAGING\", \"RUNNING\", \"STOPPED\", \"TERMINATED\", and \"STOPPING\" (output only)."
+     "description": "Instance status. One of the following values: \"PROVISIONING\", \"STAGING\", \"RUNNING\", \"STOPPING\", \"STOPPED\", \"TERMINATED\" (output only)."
     },
     "statusMessage": {
      "type": "string",
      "description": "An optional, human-readable explanation of the status (output only)."
     },
     "tags": {
-     "type": "array",
-     "description": "An optional set of tags applied to this instance. Used to identify valid sources or targets for network firewalls. Provided by the client when the instance is created. Each tag must be 1-63 characters long, and comply with RFC1035.",
-     "items": {
-      "type": "string",
-      "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?"
-     }
+     "$ref": "Tags",
+     "description": "A list of tags to be applied to this instance. Used to identify valid sources or targets for network firewalls. Provided by the client on instance creation. The tags can be later modified by the setTags method. Each tag within the list must comply with RFC1035."
     },
     "zone": {
      "type": "string",
-     "description": "URL of the zone resource describing where this instance should be hosted; provided by the client when the instance is created.",
-     "annotations": {
-      "required": [
-       "compute.instances.insert"
-      ]
-     }
+     "description": "URL of the zone where the instance resides (output only)."
     }
    }
   },
@@ -655,6 +652,10 @@
     "creationTimestamp": {
      "type": "string",
      "description": "Creation timestamp in RFC3339 text format (output only)."
+    },
+    "deprecated": {
+     "$ref": "DeprecationStatus",
+     "description": "The deprecation status associated with this kernel."
     },
     "description": {
      "type": "string",
@@ -727,6 +728,10 @@
     "creationTimestamp": {
      "type": "string",
      "description": "Creation timestamp in RFC3339 text format (output only)."
+    },
+    "deprecated": {
+     "$ref": "DeprecationStatus",
+     "description": "The deprecation status associated with this machine type."
     },
     "description": {
      "type": "string",
@@ -828,6 +833,11 @@
    "type": "object",
    "description": "A metadata key/value entry.",
    "properties": {
+    "fingerprint": {
+     "type": "string",
+     "description": "Fingerprint of this resource. A hash of the metadata's contents. This field is used for optimistic locking. An up-to-date metadata fingerprint must be provided in order to modify metadata.",
+     "format": "byte"
+    },
     "items": {
      "type": "array",
      "description": "Array of key/value pairs. The total size of all keys and values must be less than 512 KB.",
@@ -931,14 +941,9 @@
       "$ref": "AccessConfig"
      }
     },
-    "kind": {
-     "type": "string",
-     "description": "Type of the resource.",
-     "default": "compute#networkInterface"
-    },
     "name": {
      "type": "string",
-     "description": "Name of the resource, determined by the server; for network devices, these are e.g. eth0, eth1, etc. (output only)."
+     "description": "Name of the network interface, determined by the server; for network devices, these are e.g. eth0, eth1, etc. (output only)."
     },
     "network": {
      "type": "string",
@@ -951,7 +956,7 @@
     },
     "networkIP": {
      "type": "string",
-     "description": "An optional IPV4 internal network address to assign to this instance. If not specified, one will be assigned from the available range."
+     "description": "An optional IPV4 internal network address to assign to the instance for this network interface. If not specified, one will be assigned from the available range."
     }
    }
   },
@@ -1055,7 +1060,7 @@
     },
     "name": {
      "type": "string",
-     "description": "Name of the resource."
+     "description": "Name of the resource (output only)."
     },
     "operationType": {
      "type": "string",
@@ -1094,6 +1099,44 @@
     "user": {
      "type": "string",
      "description": "User who requested the operation, for example \"user@example.com\" (output only)."
+    },
+    "warnings": {
+     "type": "array",
+     "description": "If warning messages generated during processing of this operation, this field will be populated (output only).",
+     "items": {
+      "type": "object",
+      "properties": {
+       "code": {
+        "type": "string",
+        "description": "The warning type identifier for this warning."
+       },
+       "data": {
+        "type": "array",
+        "description": "Metadata for this warning in 'key: value' format.",
+        "items": {
+         "type": "object",
+         "properties": {
+          "key": {
+           "type": "string",
+           "description": "A key for the warning data."
+          },
+          "value": {
+           "type": "string",
+           "description": "A warning data value corresponding to the key."
+          }
+         }
+        }
+       },
+       "message": {
+        "type": "string",
+        "description": "Optional human-readable details for this warning."
+       }
+      }
+     }
+    },
+    "zone": {
+     "type": "string",
+     "description": "URL of the zone where the operation resides (output only)."
     }
    }
   },
@@ -1170,28 +1213,33 @@
      "type": "array",
      "description": "Quotas assigned to this project.",
      "items": {
-      "type": "object",
-      "properties": {
-       "limit": {
-        "type": "number",
-        "description": "Quota limit for this metric.",
-        "format": "double"
-       },
-       "metric": {
-        "type": "string",
-        "description": "Name of the quota metric."
-       },
-       "usage": {
-        "type": "number",
-        "description": "Current usage of this metric.",
-        "format": "double"
-       }
-      }
+      "$ref": "Quota"
      }
     },
     "selfLink": {
      "type": "string",
      "description": "Server defined URL for the resource (output only)."
+    }
+   }
+  },
+  "Quota": {
+   "id": "Quota",
+   "type": "object",
+   "description": "A quotas entry.",
+   "properties": {
+    "limit": {
+     "type": "number",
+     "description": "Quota limit for this metric.",
+     "format": "double"
+    },
+    "metric": {
+     "type": "string",
+     "description": "Name of the quota metric."
+    },
+    "usage": {
+     "type": "number",
+     "description": "Current usage of this metric.",
+     "format": "double"
     }
    }
   },
@@ -1211,7 +1259,7 @@
     },
     "selfLink": {
      "type": "string",
-     "description": "Server defined URL for the resource."
+     "description": "Server defined URL for the resource (output only)."
     }
    }
   },
@@ -1223,11 +1271,6 @@
     "email": {
      "type": "string",
      "description": "Email address of the service account."
-    },
-    "kind": {
-     "type": "string",
-     "description": "Type of the resource.",
-     "default": "compute#serviceAccount"
     },
     "scopes": {
      "type": "array",
@@ -1325,6 +1368,25 @@
     }
    }
   },
+  "Tags": {
+   "id": "Tags",
+   "type": "object",
+   "description": "A set of instance tags.",
+   "properties": {
+    "fingerprint": {
+     "type": "string",
+     "description": "Fingerprint of this resource. A hash of the tags stored in this object. This field is used optimistic locking. An up-to-date tags fingerprint must be provided in order to modify tags.",
+     "format": "byte"
+    },
+    "items": {
+     "type": "array",
+     "description": "An array of tags. Each tag must be 1-63 characters long, and comply with RFC1035.",
+     "items": {
+      "type": "string"
+     }
+    }
+   }
+  },
   "Zone": {
    "id": "Zone",
    "type": "object",
@@ -1340,6 +1402,10 @@
     "creationTimestamp": {
      "type": "string",
      "description": "Creation timestamp in RFC3339 text format (output only)."
+    },
+    "deprecated": {
+     "$ref": "DeprecationStatus",
+     "description": "The deprecation status associated with this zone."
     },
     "description": {
      "type": "string",
@@ -1383,6 +1449,13 @@
     "name": {
      "type": "string",
      "description": "Name of the resource."
+    },
+    "quotas": {
+     "type": "array",
+     "description": "Quotas assigned to this zone.",
+     "items": {
+      "$ref": "Quota"
+     }
     },
     "selfLink": {
      "type": "string",
@@ -1431,7 +1504,7 @@
    "methods": {
     "delete": {
      "id": "compute.disks.delete",
-     "path": "{project}/disks/{disk}",
+     "path": "{project}/zones/{zone}/disks/{disk}",
      "httpMethod": "DELETE",
      "description": "Deletes the specified persistent disk resource.",
      "parameters": {
@@ -1448,10 +1521,18 @@
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
+      },
+      "zone": {
+       "type": "string",
+       "description": "Name of the zone scoping this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
       }
      },
      "parameterOrder": [
       "project",
+      "zone",
       "disk"
      ],
      "response": {
@@ -1463,7 +1544,7 @@
     },
     "get": {
      "id": "compute.disks.get",
-     "path": "{project}/disks/{disk}",
+     "path": "{project}/zones/{zone}/disks/{disk}",
      "httpMethod": "GET",
      "description": "Returns the specified persistent disk resource.",
      "parameters": {
@@ -1480,10 +1561,18 @@
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
+      },
+      "zone": {
+       "type": "string",
+       "description": "Name of the zone scoping this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
       }
      },
      "parameterOrder": [
       "project",
+      "zone",
       "disk"
      ],
      "response": {
@@ -1495,7 +1584,7 @@
     },
     "insert": {
      "id": "compute.disks.insert",
-     "path": "{project}/disks",
+     "path": "{project}/zones/{zone}/disks",
      "httpMethod": "POST",
      "description": "Creates a persistent disk resource in the specified project using the data included in the request.",
      "parameters": {
@@ -1505,10 +1594,23 @@
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
+      },
+      "sourceImage": {
+       "type": "string",
+       "description": "Optional. Source image to restore onto a disk.",
+       "location": "query"
+      },
+      "zone": {
+       "type": "string",
+       "description": "Name of the zone scoping this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
       }
      },
      "parameterOrder": [
-      "project"
+      "project",
+      "zone"
      ],
      "request": {
       "$ref": "Disk"
@@ -1522,9 +1624,9 @@
     },
     "list": {
      "id": "compute.disks.list",
-     "path": "{project}/disks",
+     "path": "{project}/zones/{zone}/disks",
      "httpMethod": "GET",
-     "description": "Retrieves the list of persistent disk resources contained within the specified project.",
+     "description": "Retrieves the list of persistent disk resources contained within the specified zone.",
      "parameters": {
       "filter": {
        "type": "string",
@@ -1551,10 +1653,18 @@
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
+      },
+      "zone": {
+       "type": "string",
+       "description": "Name of the zone scoping this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
       }
      },
      "parameterOrder": [
-      "project"
+      "project",
+      "zone"
      ],
      "response": {
       "$ref": "DiskList"
@@ -1569,7 +1679,7 @@
    "methods": {
     "delete": {
      "id": "compute.firewalls.delete",
-     "path": "{project}/firewalls/{firewall}",
+     "path": "{project}/global/firewalls/{firewall}",
      "httpMethod": "DELETE",
      "description": "Deletes the specified firewall resource.",
      "parameters": {
@@ -1601,7 +1711,7 @@
     },
     "get": {
      "id": "compute.firewalls.get",
-     "path": "{project}/firewalls/{firewall}",
+     "path": "{project}/global/firewalls/{firewall}",
      "httpMethod": "GET",
      "description": "Returns the specified firewall resource.",
      "parameters": {
@@ -1633,7 +1743,7 @@
     },
     "insert": {
      "id": "compute.firewalls.insert",
-     "path": "{project}/firewalls",
+     "path": "{project}/global/firewalls",
      "httpMethod": "POST",
      "description": "Creates a firewall resource in the specified project using the data included in the request.",
      "parameters": {
@@ -1660,7 +1770,7 @@
     },
     "list": {
      "id": "compute.firewalls.list",
-     "path": "{project}/firewalls",
+     "path": "{project}/global/firewalls",
      "httpMethod": "GET",
      "description": "Retrieves the list of firewall resources available to the specified project.",
      "parameters": {
@@ -1703,7 +1813,7 @@
     },
     "patch": {
      "id": "compute.firewalls.patch",
-     "path": "{project}/firewalls/{firewall}",
+     "path": "{project}/global/firewalls/{firewall}",
      "httpMethod": "PATCH",
      "description": "Updates the specified firewall resource with the data included in the request. This method supports patch semantics.",
      "parameters": {
@@ -1738,7 +1848,7 @@
     },
     "update": {
      "id": "compute.firewalls.update",
-     "path": "{project}/firewalls/{firewall}",
+     "path": "{project}/global/firewalls/{firewall}",
      "httpMethod": "PUT",
      "description": "Updates the specified firewall resource with the data included in the request.",
      "parameters": {
@@ -1773,11 +1883,119 @@
     }
    }
   },
+  "globalOperations": {
+   "methods": {
+    "delete": {
+     "id": "compute.globalOperations.delete",
+     "path": "{project}/global/operations/{operation}",
+     "httpMethod": "DELETE",
+     "description": "Deletes the specified operation resource.",
+     "parameters": {
+      "operation": {
+       "type": "string",
+       "description": "Name of the operation resource to delete.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "operation"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "get": {
+     "id": "compute.globalOperations.get",
+     "path": "{project}/global/operations/{operation}",
+     "httpMethod": "GET",
+     "description": "Retrieves the specified operation resource.",
+     "parameters": {
+      "operation": {
+       "type": "string",
+       "description": "Name of the operation resource to return.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "operation"
+     ],
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "list": {
+     "id": "compute.globalOperations.list",
+     "path": "{project}/global/operations",
+     "httpMethod": "GET",
+     "description": "Retrieves the list of operation resources contained within the specified project.",
+     "parameters": {
+      "filter": {
+       "type": "string",
+       "description": "Optional. Filter expression for filtering listed resources.",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+       "default": "100",
+       "format": "uint32",
+       "minimum": "0",
+       "maximum": "100",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "location": "query"
+      },
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "response": {
+      "$ref": "OperationList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    }
+   }
+  },
   "images": {
    "methods": {
     "delete": {
      "id": "compute.images.delete",
-     "path": "{project}/images/{image}",
+     "path": "{project}/global/images/{image}",
      "httpMethod": "DELETE",
      "description": "Deletes the specified image resource.",
      "parameters": {
@@ -1807,9 +2025,44 @@
       "https://www.googleapis.com/auth/compute"
      ]
     },
+    "deprecate": {
+     "id": "compute.images.deprecate",
+     "path": "{project}/global/images/{image}/deprecate",
+     "httpMethod": "POST",
+     "description": "Sets the deprecation status of an image. If no message body is given, clears the deprecation status instead.",
+     "parameters": {
+      "image": {
+       "type": "string",
+       "description": "Image name.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "image"
+     ],
+     "request": {
+      "$ref": "DeprecationStatus"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
     "get": {
      "id": "compute.images.get",
-     "path": "{project}/images/{image}",
+     "path": "{project}/global/images/{image}",
      "httpMethod": "GET",
      "description": "Returns the specified image resource.",
      "parameters": {
@@ -1841,7 +2094,7 @@
     },
     "insert": {
      "id": "compute.images.insert",
-     "path": "{project}/images",
+     "path": "{project}/global/images",
      "httpMethod": "POST",
      "description": "Creates an image resource in the specified project using the data included in the request.",
      "parameters": {
@@ -1869,7 +2122,7 @@
     },
     "list": {
      "id": "compute.images.list",
-     "path": "{project}/images",
+     "path": "{project}/global/images",
      "httpMethod": "GET",
      "description": "Retrieves the list of image resources available to the specified project.",
      "parameters": {
@@ -1916,7 +2169,7 @@
    "methods": {
     "addAccessConfig": {
      "id": "compute.instances.addAccessConfig",
-     "path": "{project}/instances/{instance}/addAccessConfig",
+     "path": "{project}/zones/{zone}/instances/{instance}/addAccessConfig",
      "httpMethod": "POST",
      "description": "Adds an access config to an instance's network interface.",
      "parameters": {
@@ -1939,10 +2192,18 @@
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
+      },
+      "zone": {
+       "type": "string",
+       "description": "Name of the zone scoping this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
       }
      },
      "parameterOrder": [
       "project",
+      "zone",
       "instance",
       "network_interface"
      ],
@@ -1958,7 +2219,7 @@
     },
     "delete": {
      "id": "compute.instances.delete",
-     "path": "{project}/instances/{instance}",
+     "path": "{project}/zones/{zone}/instances/{instance}",
      "httpMethod": "DELETE",
      "description": "Deletes the specified instance resource.",
      "parameters": {
@@ -1975,10 +2236,18 @@
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
+      },
+      "zone": {
+       "type": "string",
+       "description": "Name of the zone scoping this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
       }
      },
      "parameterOrder": [
       "project",
+      "zone",
       "instance"
      ],
      "response": {
@@ -1990,7 +2259,7 @@
     },
     "deleteAccessConfig": {
      "id": "compute.instances.deleteAccessConfig",
-     "path": "{project}/instances/{instance}/deleteAccessConfig",
+     "path": "{project}/zones/{zone}/instances/{instance}/deleteAccessConfig",
      "httpMethod": "POST",
      "description": "Deletes an access config from an instance's network interface.",
      "parameters": {
@@ -2019,10 +2288,18 @@
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
+      },
+      "zone": {
+       "type": "string",
+       "description": "Name of the zone scoping this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
       }
      },
      "parameterOrder": [
       "project",
+      "zone",
       "instance",
       "access_config",
       "network_interface"
@@ -2036,7 +2313,7 @@
     },
     "get": {
      "id": "compute.instances.get",
-     "path": "{project}/instances/{instance}",
+     "path": "{project}/zones/{zone}/instances/{instance}",
      "httpMethod": "GET",
      "description": "Returns the specified instance resource.",
      "parameters": {
@@ -2053,10 +2330,18 @@
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
+      },
+      "zone": {
+       "type": "string",
+       "description": "Name of the zone scoping this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
       }
      },
      "parameterOrder": [
       "project",
+      "zone",
       "instance"
      ],
      "response": {
@@ -2068,7 +2353,7 @@
     },
     "getSerialPortOutput": {
      "id": "compute.instances.getSerialPortOutput",
-     "path": "{project}/instances/{instance}/serialPort",
+     "path": "{project}/zones/{zone}/instances/{instance}/serialPort",
      "httpMethod": "GET",
      "description": "Returns the specified instance's serial port output.",
      "parameters": {
@@ -2085,10 +2370,18 @@
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
+      },
+      "zone": {
+       "type": "string",
+       "description": "Name of the zone scoping this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
       }
      },
      "parameterOrder": [
       "project",
+      "zone",
       "instance"
      ],
      "response": {
@@ -2100,7 +2393,7 @@
     },
     "insert": {
      "id": "compute.instances.insert",
-     "path": "{project}/instances",
+     "path": "{project}/zones/{zone}/instances",
      "httpMethod": "POST",
      "description": "Creates an instance resource in the specified project using the data included in the request.",
      "parameters": {
@@ -2110,10 +2403,18 @@
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
+      },
+      "zone": {
+       "type": "string",
+       "description": "Name of the zone scoping this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
       }
      },
      "parameterOrder": [
-      "project"
+      "project",
+      "zone"
      ],
      "request": {
       "$ref": "Instance"
@@ -2127,9 +2428,9 @@
     },
     "list": {
      "id": "compute.instances.list",
-     "path": "{project}/instances",
+     "path": "{project}/zones/{zone}/instances",
      "httpMethod": "GET",
-     "description": "Retrieves the list of instance resources contained within the specified project.",
+     "description": "Retrieves the list of instance resources contained within the specified zone.",
      "parameters": {
       "filter": {
        "type": "string",
@@ -2156,16 +2457,110 @@
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
+      },
+      "zone": {
+       "type": "string",
+       "description": "Name of the zone scoping this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
       }
      },
      "parameterOrder": [
-      "project"
+      "project",
+      "zone"
      ],
      "response": {
       "$ref": "InstanceList"
      },
      "scopes": [
       "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "setMetadata": {
+     "id": "compute.instances.setMetadata",
+     "path": "{project}/zones/{zone}/instances/{instance}/setMetadata",
+     "httpMethod": "POST",
+     "description": "Sets metadata for the specified instance to the data included in the request.",
+     "parameters": {
+      "instance": {
+       "type": "string",
+       "description": "Name of the instance scoping this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "zone": {
+       "type": "string",
+       "description": "Name of the zone scoping this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "zone",
+      "instance"
+     ],
+     "request": {
+      "$ref": "Metadata"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "setTags": {
+     "id": "compute.instances.setTags",
+     "path": "{project}/zones/{zone}/instances/{instance}/setTags",
+     "httpMethod": "POST",
+     "description": "Sets tags for the specified instance to the data included in the request.",
+     "parameters": {
+      "instance": {
+       "type": "string",
+       "description": "Name of the instance scoping this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "zone": {
+       "type": "string",
+       "description": "Name of the zone scoping this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "zone",
+      "instance"
+     ],
+     "request": {
+      "$ref": "Tags"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute"
      ]
     }
    }
@@ -2174,7 +2569,7 @@
    "methods": {
     "get": {
      "id": "compute.kernels.get",
-     "path": "{project}/kernels/{kernel}",
+     "path": "{project}/global/kernels/{kernel}",
      "httpMethod": "GET",
      "description": "Returns the specified kernel resource.",
      "parameters": {
@@ -2206,7 +2601,7 @@
     },
     "list": {
      "id": "compute.kernels.list",
-     "path": "{project}/kernels",
+     "path": "{project}/global/kernels",
      "httpMethod": "GET",
      "description": "Retrieves the list of kernel resources available to the specified project.",
      "parameters": {
@@ -2253,7 +2648,7 @@
    "methods": {
     "get": {
      "id": "compute.machineTypes.get",
-     "path": "{project}/machineTypes/{machineType}",
+     "path": "{project}/global/machineTypes/{machineType}",
      "httpMethod": "GET",
      "description": "Returns the specified machine type resource.",
      "parameters": {
@@ -2285,7 +2680,7 @@
     },
     "list": {
      "id": "compute.machineTypes.list",
-     "path": "{project}/machineTypes",
+     "path": "{project}/global/machineTypes",
      "httpMethod": "GET",
      "description": "Retrieves the list of machine type resources available to the specified project.",
      "parameters": {
@@ -2332,7 +2727,7 @@
    "methods": {
     "delete": {
      "id": "compute.networks.delete",
-     "path": "{project}/networks/{network}",
+     "path": "{project}/global/networks/{network}",
      "httpMethod": "DELETE",
      "description": "Deletes the specified network resource.",
      "parameters": {
@@ -2364,7 +2759,7 @@
     },
     "get": {
      "id": "compute.networks.get",
-     "path": "{project}/networks/{network}",
+     "path": "{project}/global/networks/{network}",
      "httpMethod": "GET",
      "description": "Returns the specified network resource.",
      "parameters": {
@@ -2396,7 +2791,7 @@
     },
     "insert": {
      "id": "compute.networks.insert",
-     "path": "{project}/networks",
+     "path": "{project}/global/networks",
      "httpMethod": "POST",
      "description": "Creates a network resource in the specified project using the data included in the request.",
      "parameters": {
@@ -2423,7 +2818,7 @@
     },
     "list": {
      "id": "compute.networks.list",
-     "path": "{project}/networks",
+     "path": "{project}/global/networks",
      "httpMethod": "GET",
      "description": "Retrieves the list of network resources available to the specified project.",
      "parameters": {
@@ -2459,114 +2854,6 @@
      ],
      "response": {
       "$ref": "NetworkList"
-     },
-     "scopes": [
-      "https://www.googleapis.com/auth/compute.readonly"
-     ]
-    }
-   }
-  },
-  "operations": {
-   "methods": {
-    "delete": {
-     "id": "compute.operations.delete",
-     "path": "{project}/operations/{operation}",
-     "httpMethod": "DELETE",
-     "description": "Deletes the specified operation resource.",
-     "parameters": {
-      "operation": {
-       "type": "string",
-       "description": "Name of the operation resource to delete.",
-       "required": true,
-       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
-       "location": "path"
-      },
-      "project": {
-       "type": "string",
-       "description": "Name of the project scoping this request.",
-       "required": true,
-       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
-       "location": "path"
-      }
-     },
-     "parameterOrder": [
-      "project",
-      "operation"
-     ],
-     "scopes": [
-      "https://www.googleapis.com/auth/compute"
-     ]
-    },
-    "get": {
-     "id": "compute.operations.get",
-     "path": "{project}/operations/{operation}",
-     "httpMethod": "GET",
-     "description": "Retrieves the specified operation resource.",
-     "parameters": {
-      "operation": {
-       "type": "string",
-       "description": "Name of the operation resource to return.",
-       "required": true,
-       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
-       "location": "path"
-      },
-      "project": {
-       "type": "string",
-       "description": "Name of the project scoping this request.",
-       "required": true,
-       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
-       "location": "path"
-      }
-     },
-     "parameterOrder": [
-      "project",
-      "operation"
-     ],
-     "response": {
-      "$ref": "Operation"
-     },
-     "scopes": [
-      "https://www.googleapis.com/auth/compute.readonly"
-     ]
-    },
-    "list": {
-     "id": "compute.operations.list",
-     "path": "{project}/operations",
-     "httpMethod": "GET",
-     "description": "Retrieves the list of operation resources contained within the specified project.",
-     "parameters": {
-      "filter": {
-       "type": "string",
-       "description": "Optional. Filter expression for filtering listed resources.",
-       "location": "query"
-      },
-      "maxResults": {
-       "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
-       "default": "100",
-       "format": "uint32",
-       "minimum": "0",
-       "maximum": "100",
-       "location": "query"
-      },
-      "pageToken": {
-       "type": "string",
-       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
-       "location": "query"
-      },
-      "project": {
-       "type": "string",
-       "description": "Name of the project scoping this request.",
-       "required": true,
-       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
-       "location": "path"
-      }
-     },
-     "parameterOrder": [
-      "project"
-     ],
-     "response": {
-      "$ref": "OperationList"
      },
      "scopes": [
       "https://www.googleapis.com/auth/compute.readonly"
@@ -2633,7 +2920,7 @@
    "methods": {
     "delete": {
      "id": "compute.snapshots.delete",
-     "path": "{project}/snapshots/{snapshot}",
+     "path": "{project}/global/snapshots/{snapshot}",
      "httpMethod": "DELETE",
      "description": "Deletes the specified persistent disk snapshot resource.",
      "parameters": {
@@ -2665,7 +2952,7 @@
     },
     "get": {
      "id": "compute.snapshots.get",
-     "path": "{project}/snapshots/{snapshot}",
+     "path": "{project}/global/snapshots/{snapshot}",
      "httpMethod": "GET",
      "description": "Returns the specified persistent disk snapshot resource.",
      "parameters": {
@@ -2697,7 +2984,7 @@
     },
     "insert": {
      "id": "compute.snapshots.insert",
-     "path": "{project}/snapshots",
+     "path": "{project}/global/snapshots",
      "httpMethod": "POST",
      "description": "Creates a persistent disk snapshot resource in the specified project using the data included in the request.",
      "parameters": {
@@ -2724,7 +3011,7 @@
     },
     "list": {
      "id": "compute.snapshots.list",
-     "path": "{project}/snapshots",
+     "path": "{project}/global/snapshots",
      "httpMethod": "GET",
      "description": "Retrieves the list of persistent disk snapshot resources contained within the specified project.",
      "parameters": {
@@ -2760,6 +3047,138 @@
      ],
      "response": {
       "$ref": "SnapshotList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    }
+   }
+  },
+  "zoneOperations": {
+   "methods": {
+    "delete": {
+     "id": "compute.zoneOperations.delete",
+     "path": "{project}/zones/{zone}/operations/{operation}",
+     "httpMethod": "DELETE",
+     "description": "Deletes the specified zone-specific operation resource.",
+     "parameters": {
+      "operation": {
+       "type": "string",
+       "description": "Name of the operation resource to delete.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "zone": {
+       "type": "string",
+       "description": "Name of the zone scoping this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "zone",
+      "operation"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "get": {
+     "id": "compute.zoneOperations.get",
+     "path": "{project}/zones/{zone}/operations/{operation}",
+     "httpMethod": "GET",
+     "description": "Retrieves the specified zone-specific operation resource.",
+     "parameters": {
+      "operation": {
+       "type": "string",
+       "description": "Name of the operation resource to return.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "zone": {
+       "type": "string",
+       "description": "Name of the zone scoping this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "zone",
+      "operation"
+     ],
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "list": {
+     "id": "compute.zoneOperations.list",
+     "path": "{project}/zones/{zone}/operations",
+     "httpMethod": "GET",
+     "description": "Retrieves the list of operation resources contained within the specified zone.",
+     "parameters": {
+      "filter": {
+       "type": "string",
+       "description": "Optional. Filter expression for filtering listed resources.",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+       "default": "100",
+       "format": "uint32",
+       "minimum": "0",
+       "maximum": "100",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "location": "query"
+      },
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "zone": {
+       "type": "string",
+       "description": "Name of the zone scoping this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "zone"
+     ],
+     "response": {
+      "$ref": "OperationList"
      },
      "scopes": [
       "https://www.googleapis.com/auth/compute.readonly"

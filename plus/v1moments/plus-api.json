@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"a3GBuXuTtUYW9BV1SIieU5LiL7w/RDthA8RrVCv0M9wxCBeRiHR94BQ\"",
+ "etag": "\"-vXktEC13RBC5q_wkxEsszrjKM4/fRqXZNx5yvahLJC3dn8LITx-zWM\"",
  "discoveryVersion": "v1",
  "id": "plus:v1moments",
  "name": "plus",
  "version": "v1moments",
- "revision": "20121022",
+ "revision": "20121127",
  "title": "Google+ API",
  "description": "The Google+ API enables developers to build on top of the Google+ platform.",
  "icons": {
@@ -67,18 +67,6 @@
    "location": "query"
   }
  },
- "auth": {
-  "oauth2": {
-   "scopes": {
-    "https://www.googleapis.com/auth/plus.me": {
-     "description": "Know who you are on Google"
-    },
-    "https://www.googleapis.com/auth/plus.moments.write": {
-     "description": "Send your activity to your private Google+ history"
-    }
-   }
-  }
- },
  "schemas": {
   "ItemScope": {
    "id": "ItemScope",
@@ -136,14 +124,14 @@
     },
     "author": {
      "type": "array",
-     "description": "The person who created this scope.",
+     "description": "The person or persons who created this result. In the example of restaurant reviews, this might be the reviewer's name.",
      "items": {
       "$ref": "ItemScope"
      }
     },
     "bestRating": {
      "type": "string",
-     "description": "Best possible rating value."
+     "description": "Best possible rating value that a result might obtain. This property defines the upper bound for the ratingValue. For example, you might have a 5 star rating scale, you would provide 5 as the value for this property."
     },
     "birthDate": {
      "type": "string",
@@ -167,26 +155,26 @@
     },
     "contributor": {
      "type": "array",
-     "description": "The list of contributors for this scope.",
+     "description": "A list of contributors to this result.",
      "items": {
       "$ref": "ItemScope"
      }
     },
     "dateCreated": {
      "type": "string",
-     "description": "The date this scope was created."
+     "description": "The date the result was created such as the date that a review was first created."
     },
     "dateModified": {
      "type": "string",
-     "description": "The date this scope was last modified."
+     "description": "The date the result was last modified such as the date that a review was last edited."
     },
     "datePublished": {
      "type": "string",
-     "description": "The initial date this scope was published."
+     "description": "The initial date that the result was published. For example, a user writes a comment on a blog, which has a result.dateCreated of when they submit it. If the blog users comment moderation, the result.datePublished value would match the date when the owner approved the message."
     },
     "description": {
      "type": "string",
-     "description": "The string describing the content of this scope."
+     "description": "The string that describes the content of the result."
     },
     "duration": {
      "type": "string",
@@ -202,7 +190,7 @@
     },
     "familyName": {
      "type": "string",
-     "description": "Family name. In the U.S., the last name of an Person. This can be used along with givenName instead of the Name property."
+     "description": "Family name. This property can be used with givenName instead of the name property."
     },
     "gender": {
      "type": "string",
@@ -214,7 +202,7 @@
     },
     "givenName": {
      "type": "string",
-     "description": "Given name. In the U.S., the first name of a Person. This can be used along with familyName instead of the Name property."
+     "description": "Given name. This property can be used with familyName instead of the name property."
     },
     "height": {
      "type": "string",
@@ -222,11 +210,11 @@
     },
     "id": {
      "type": "string",
-     "description": "The id for this item scope."
+     "description": "An identifier for the target. Your app can choose how to identify targets. The target.id is required if you are writing an activity that does not have a corresponding web page or target.url property."
     },
     "image": {
      "type": "string",
-     "description": "A url to the image for this scope."
+     "description": "A URL to the image that represents this result. For example, if a user writes a review of a restaurant and attaches a photo of their meal, you might use that photo as the result.image."
     },
     "inAlbum": {
      "$ref": "ItemScope",
@@ -253,7 +241,7 @@
     },
     "name": {
      "type": "string",
-     "description": "The name of this scope."
+     "description": "The name of the result. In the example of a restaurant review, this might be the summary the user gave their review such as \"Great ambiance, but overpriced.\""
     },
     "partOfTVSeries": {
      "$ref": "ItemScope",
@@ -268,7 +256,7 @@
     },
     "playerType": {
      "type": "string",
-     "description": "Player type required-for example, Flash or Silverlight."
+     "description": "Player type that is required. For example: Flash or Silverlight."
     },
     "postOfficeBoxNumber": {
      "type": "string",
@@ -296,7 +284,7 @@
     },
     "text": {
      "type": "string",
-     "description": "Comment text, review text, etc."
+     "description": "The text that is the result of the app activity. For example, if a user leaves a review of a restaurant, this might be the text of the review."
     },
     "thumbnail": {
      "$ref": "ItemScope",
@@ -304,7 +292,7 @@
     },
     "thumbnailUrl": {
      "type": "string",
-     "description": "A url to a thumbnail image for this scope."
+     "description": "A URL to a thumbnail image that represents this result."
     },
     "tickerSymbol": {
      "type": "string",
@@ -312,11 +300,11 @@
     },
     "type": {
      "type": "string",
-     "description": "The item type."
+     "description": "The schema.org URL that best describes the referenced target and matches the type of moment."
     },
     "url": {
      "type": "string",
-     "description": "A URL for the item upon which the action was performed."
+     "description": "The URL that points to the result object. For example, a permalink directly to a restaurant reviewer's comment."
     },
     "width": {
      "type": "string",
@@ -324,7 +312,7 @@
     },
     "worstRating": {
      "type": "string",
-     "description": "Worst possible rating value."
+     "description": "Worst possible rating value that a result might obtain. This property defines the lower bound for the ratingValue."
     }
    }
   },
@@ -343,7 +331,7 @@
     },
     "result": {
      "$ref": "ItemScope",
-     "description": "The object generated by performing the action on the item"
+     "description": "The object generated by performing the action on the target. For example, a user writes a review of a restaurant, the target is the restaurant and the result is the review."
     },
     "startDate": {
      "type": "string",
@@ -361,7 +349,7 @@
     },
     "type": {
      "type": "string",
-     "description": "The schema.org activity type.",
+     "description": "The Google schema for the type of moment to write. For example, http://schemas.google.com/AddActivity.",
      "annotations": {
       "required": [
        "plus.moments.insert"
@@ -378,7 +366,7 @@
      "id": "plus.moments.insert",
      "path": "{userId}/moments/{collection}",
      "httpMethod": "POST",
-     "description": "Record a user activity (e.g Bill watched a video on Youtube)",
+     "description": "Record a moment representing a user's activity such as making a purchase or commenting on a blog.",
      "parameters": {
       "collection": {
        "type": "string",
@@ -413,11 +401,7 @@
      },
      "response": {
       "$ref": "Moment"
-     },
-     "scopes": [
-      "https://www.googleapis.com/auth/plus.me",
-      "https://www.googleapis.com/auth/plus.moments.write"
-     ]
+     }
     }
    }
   }

@@ -642,6 +642,12 @@ type Layersummary struct {
 	// updated. (RFC 3339 UTC date-time format).
 	Updated string `json:"updated,omitempty"`
 
+	// VolumeAnnotationsVersion: The current version of this layer's volume
+	// annotations. Note that this version applies only to the data in the
+	// books.layers.volumeAnnotations.* responses. The actual annotation
+	// data is versioned separately.
+	VolumeAnnotationsVersion string `json:"volumeAnnotationsVersion,omitempty"`
+
 	// VolumeId: The volume id this resource is for.
 	VolumeId string `json:"volumeId,omitempty"`
 }
@@ -749,6 +755,13 @@ type Volume struct {
 	// Kind: Resource type for a volume. (In LITE projection.)
 	Kind string `json:"kind,omitempty"`
 
+	// LayerInfo: What layers exist in this volume and high level
+	// information about them.
+	LayerInfo *VolumeLayerInfo `json:"layerInfo,omitempty"`
+
+	// RecommendedInfo: Recommendation related information for this volume.
+	RecommendedInfo *VolumeRecommendedInfo `json:"recommendedInfo,omitempty"`
+
 	// SaleInfo: Any information about a volume related to the eBookstore
 	// and/or purchaseability. This information can depend on the country
 	// where the request originates from (i.e. books may not be for sale in
@@ -844,6 +857,28 @@ type VolumeAccessInfoPdf struct {
 	// IsAvailable: Is a scanned image pdf available either as public domain
 	// or for purchase. (In LITE projection.)
 	IsAvailable bool `json:"isAvailable,omitempty"`
+}
+
+type VolumeLayerInfo struct {
+	// Layers: A layer should appear here if and only if the layer exists
+	// for this book.
+	Layers []*VolumeLayerInfoLayers `json:"layers,omitempty"`
+}
+
+type VolumeLayerInfoLayers struct {
+	// LayerId: The layer id of this layer (e.g. "geo").
+	LayerId string `json:"layerId,omitempty"`
+
+	// VolumeAnnotationsVersion: The current version of this layer's volume
+	// annotations. Note that this version applies only to the data in the
+	// books.layers.volumeAnnotations.* responses. The actual annotation
+	// data is versioned separately.
+	VolumeAnnotationsVersion string `json:"volumeAnnotationsVersion,omitempty"`
+}
+
+type VolumeRecommendedInfo struct {
+	// Explanation: A text explaining why this volume is recommended.
+	Explanation string `json:"explanation,omitempty"`
 }
 
 type VolumeSaleInfo struct {
@@ -1120,6 +1155,12 @@ type Volumeannotations struct {
 
 	// TotalItems: The total number of volume annotations found.
 	TotalItems int64 `json:"totalItems,omitempty"`
+
+	// Version: The version string for all of the volume annotations in this
+	// layer (not just the ones in this response). Note: the version string
+	// doesn't apply to the annotation data, just the information in this
+	// response (e.g. the location of annotations in the book).
+	Version string `json:"version,omitempty"`
 }
 
 type Volumes struct {

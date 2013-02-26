@@ -181,7 +181,7 @@ type About struct {
 	// QuotaBytesTotal: The total number of quota bytes.
 	QuotaBytesTotal int64 `json:"quotaBytesTotal,omitempty,string"`
 
-	// QuotaBytesUsed: The number of quota bytes used.
+	// QuotaBytesUsed: The number of quota bytes used by Google Drive.
 	QuotaBytesUsed int64 `json:"quotaBytesUsed,omitempty,string"`
 
 	// QuotaBytesUsedAggregate: The number of quota bytes used by all Google
@@ -550,9 +550,6 @@ type File struct {
 	// editor or viewer.
 	AlternateLink string `json:"alternateLink,omitempty"`
 
-	// AppDataContents: Whether this file is in the appdata folder.
-	AppDataContents bool `json:"appDataContents,omitempty"`
-
 	// CreatedDate: Create time for this file (formatted ISO8601 timestamp).
 	CreatedDate string `json:"createdDate,omitempty"`
 
@@ -590,6 +587,9 @@ type File struct {
 	// on files with content stored in Drive.
 	FileSize int64 `json:"fileSize,omitempty,string"`
 
+	// IconLink: A link to the file's icon.
+	IconLink string `json:"iconLink,omitempty"`
+
 	// Id: The id of the file.
 	Id string `json:"id,omitempty"`
 
@@ -608,8 +608,10 @@ type File struct {
 	// Labels: A group of labels for the file.
 	Labels *FileLabels `json:"labels,omitempty"`
 
+	// LastModifyingUser: The last user to modify this file.
+	LastModifyingUser *User `json:"lastModifyingUser,omitempty"`
+
 	// LastModifyingUserName: Name of the last user to modify this file.
-	// This will only be populated if a user has edited this file.
 	LastModifyingUserName string `json:"lastModifyingUserName,omitempty"`
 
 	// LastViewedByMeDate: Last time this file was viewed by the user
@@ -645,6 +647,9 @@ type File struct {
 	// OwnerNames: Name(s) of the owner(s) of this file.
 	OwnerNames []string `json:"ownerNames,omitempty"`
 
+	// Owners: The owner(s) of this file.
+	Owners []*User `json:"owners,omitempty"`
+
 	// Parents: Collection of parent folders which contain this
 	// file.
 	// Setting this field will put the file in all of the provided
@@ -657,6 +662,9 @@ type File struct {
 
 	// SelfLink: A link back to this file.
 	SelfLink string `json:"selfLink,omitempty"`
+
+	// Shared: Whether the file has been shared.
+	Shared bool `json:"shared,omitempty"`
 
 	// SharedWithMeDate: Time at which this file was shared with the user
 	// (formatted RFC 3339 timestamp).
@@ -672,6 +680,8 @@ type File struct {
 	// Title: The title of this file.
 	Title string `json:"title,omitempty"`
 
+	// UserPermission: The permissions for the authenticated user on this
+	// file.
 	UserPermission *Permission `json:"userPermission,omitempty"`
 
 	// WebContentLink: A link for downloading the content of the file in a
@@ -679,6 +689,11 @@ type File struct {
 	// is shared publicly, the content can be downloaded without any
 	// credentials.
 	WebContentLink string `json:"webContentLink,omitempty"`
+
+	// WebViewLink: A link only available on public folders for viewing
+	// their static web assets (HTML, CSS, JS, etc) via Google Drive's
+	// Website Hosting.
+	WebViewLink string `json:"webViewLink,omitempty"`
 
 	// WritersCanShare: Whether writers can share the document with other
 	// users.
@@ -698,8 +713,17 @@ type FileImageMediaMetadata struct {
 	// CameraModel: The model of the camera used to create the photo.
 	CameraModel string `json:"cameraModel,omitempty"`
 
+	// ColorSpace: The color space of the photo.
+	ColorSpace string `json:"colorSpace,omitempty"`
+
 	// Date: The date and time the photo was taken (EXIF format timestamp).
 	Date string `json:"date,omitempty"`
+
+	// ExposureBias: The exposure bias of the photo (APEX value).
+	ExposureBias float64 `json:"exposureBias,omitempty"`
+
+	// ExposureMode: The exposure mode used to create the photo.
+	ExposureMode string `json:"exposureMode,omitempty"`
 
 	// ExposureTime: The length of the exposure, in seconds.
 	ExposureTime float64 `json:"exposureTime,omitempty"`
@@ -717,12 +741,31 @@ type FileImageMediaMetadata struct {
 	// IsoSpeed: The ISO speed used to create the photo.
 	IsoSpeed int64 `json:"isoSpeed,omitempty"`
 
+	// Lens: The lens used to create the photo.
+	Lens string `json:"lens,omitempty"`
+
 	// Location: Geographic location information stored in the image.
 	Location *FileImageMediaMetadataLocation `json:"location,omitempty"`
+
+	// MaxApertureValue: The smallest f-number of the lens at the focal
+	// length used to create the photo (APEX value).
+	MaxApertureValue float64 `json:"maxApertureValue,omitempty"`
+
+	// MeteringMode: The metering mode used to create the photo.
+	MeteringMode string `json:"meteringMode,omitempty"`
 
 	// Rotation: The rotation in clockwise degrees from the image's original
 	// orientation.
 	Rotation int64 `json:"rotation,omitempty"`
+
+	// Sensor: The type of sensor used to create the photo.
+	Sensor string `json:"sensor,omitempty"`
+
+	// SubjectDistance: The distance to the subject of the photo, in meters.
+	SubjectDistance int64 `json:"subjectDistance,omitempty"`
+
+	// WhiteBalance: The white balance mode used to create the photo.
+	WhiteBalance string `json:"whiteBalance,omitempty"`
 
 	// Width: The width of the image in pixels.
 	Width int64 `json:"width,omitempty"`
@@ -904,6 +947,9 @@ type Revision struct {
 	// Kind: This is always drive#revision.
 	Kind string `json:"kind,omitempty"`
 
+	// LastModifyingUser: The last user to modify this revision.
+	LastModifyingUser *User `json:"lastModifyingUser,omitempty"`
+
 	// LastModifyingUserName: Name of the last user to modify this revision.
 	LastModifyingUserName string `json:"lastModifyingUserName,omitempty"`
 
@@ -978,6 +1024,9 @@ type User struct {
 
 	// Kind: This is always drive#user.
 	Kind string `json:"kind,omitempty"`
+
+	// PermissionId: The user's ID as visible in the permissions collection.
+	PermissionId string `json:"permissionId,omitempty"`
 
 	// Picture: The user's profile picture.
 	Picture *UserPicture `json:"picture,omitempty"`
@@ -1402,7 +1451,8 @@ func (c *ChangesListCall) Do() (*ChangeList, error) {
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
-	//   ]
+	//   ],
+	//   "supportsSubscription": true
 	// }
 
 }
@@ -1795,6 +1845,7 @@ func (c *CommentsDeleteCall) Do() error {
 	//   "path": "files/{fileId}/comments/{commentId}",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.readonly"
 	//   ]
 	// }
@@ -1885,6 +1936,7 @@ func (c *CommentsGetCall) Do() (*Comment, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.readonly"
 	//   ]
 	// }
@@ -1959,6 +2011,7 @@ func (c *CommentsInsertCall) Do() (*Comment, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.readonly"
 	//   ]
 	// }
@@ -2091,6 +2144,7 @@ func (c *CommentsListCall) Do() (*CommentList, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.readonly"
 	//   ]
 	// }
@@ -2175,7 +2229,8 @@ func (c *CommentsPatchCall) Do() (*Comment, error) {
 	//     "$ref": "Comment"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/drive"
+	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.file"
 	//   ]
 	// }
 
@@ -2258,7 +2313,8 @@ func (c *CommentsUpdateCall) Do() (*Comment, error) {
 	//     "$ref": "Comment"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/drive"
+	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.file"
 	//   ]
 	// }
 
@@ -2309,21 +2365,6 @@ func (c *FilesCopyCall) Pinned(pinned bool) *FilesCopyCall {
 	return c
 }
 
-// SourceLanguage sets the optional parameter "sourceLanguage": The
-// language of the original file to be translated.
-func (c *FilesCopyCall) SourceLanguage(sourceLanguage string) *FilesCopyCall {
-	c.opt_["sourceLanguage"] = sourceLanguage
-	return c
-}
-
-// TargetLanguage sets the optional parameter "targetLanguage": Target
-// language to translate the file to. If no sourceLanguage is provided,
-// the API will attempt to detect the language.
-func (c *FilesCopyCall) TargetLanguage(targetLanguage string) *FilesCopyCall {
-	c.opt_["targetLanguage"] = targetLanguage
-	return c
-}
-
 // TimedTextLanguage sets the optional parameter "timedTextLanguage":
 // The language of the timed text.
 func (c *FilesCopyCall) TimedTextLanguage(timedTextLanguage string) *FilesCopyCall {
@@ -2358,12 +2399,6 @@ func (c *FilesCopyCall) Do() (*File, error) {
 	}
 	if v, ok := c.opt_["pinned"]; ok {
 		params.Set("pinned", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["sourceLanguage"]; ok {
-		params.Set("sourceLanguage", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["targetLanguage"]; ok {
-		params.Set("targetLanguage", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["timedTextLanguage"]; ok {
 		params.Set("timedTextLanguage", fmt.Sprintf("%v", v))
@@ -2425,16 +2460,6 @@ func (c *FilesCopyCall) Do() (*File, error) {
 	//       "description": "Whether to pin the head revision of the new copy.",
 	//       "location": "query",
 	//       "type": "boolean"
-	//     },
-	//     "sourceLanguage": {
-	//       "description": "The language of the original file to be translated.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "targetLanguage": {
-	//       "description": "Target language to translate the file to. If no sourceLanguage is provided, the API will attempt to detect the language.",
-	//       "location": "query",
-	//       "type": "string"
 	//     },
 	//     "timedTextLanguage": {
 	//       "description": "The language of the timed text.",
@@ -2618,7 +2643,8 @@ func (c *FilesGetCall) Do() (*File, error) {
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
-	//   ]
+	//   ],
+	//   "supportsSubscription": true
 	// }
 
 }
@@ -2667,21 +2693,6 @@ func (c *FilesInsertCall) Pinned(pinned bool) *FilesInsertCall {
 	return c
 }
 
-// SourceLanguage sets the optional parameter "sourceLanguage": The
-// language of the original file to be translated.
-func (c *FilesInsertCall) SourceLanguage(sourceLanguage string) *FilesInsertCall {
-	c.opt_["sourceLanguage"] = sourceLanguage
-	return c
-}
-
-// TargetLanguage sets the optional parameter "targetLanguage": Target
-// language to translate the file to. If no sourceLanguage is provided,
-// the API will attempt to detect the language.
-func (c *FilesInsertCall) TargetLanguage(targetLanguage string) *FilesInsertCall {
-	c.opt_["targetLanguage"] = targetLanguage
-	return c
-}
-
 // TimedTextLanguage sets the optional parameter "timedTextLanguage":
 // The language of the timed text.
 func (c *FilesInsertCall) TimedTextLanguage(timedTextLanguage string) *FilesInsertCall {
@@ -2693,6 +2704,14 @@ func (c *FilesInsertCall) TimedTextLanguage(timedTextLanguage string) *FilesInse
 // The timed text track name.
 func (c *FilesInsertCall) TimedTextTrackName(timedTextTrackName string) *FilesInsertCall {
 	c.opt_["timedTextTrackName"] = timedTextTrackName
+	return c
+}
+
+// UseContentAsIndexableText sets the optional parameter
+// "useContentAsIndexableText": Whether to use the content as indexable
+// text.
+func (c *FilesInsertCall) UseContentAsIndexableText(useContentAsIndexableText bool) *FilesInsertCall {
+	c.opt_["useContentAsIndexableText"] = useContentAsIndexableText
 	return c
 }
 func (c *FilesInsertCall) Media(r io.Reader) *FilesInsertCall {
@@ -2721,17 +2740,14 @@ func (c *FilesInsertCall) Do() (*File, error) {
 	if v, ok := c.opt_["pinned"]; ok {
 		params.Set("pinned", fmt.Sprintf("%v", v))
 	}
-	if v, ok := c.opt_["sourceLanguage"]; ok {
-		params.Set("sourceLanguage", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["targetLanguage"]; ok {
-		params.Set("targetLanguage", fmt.Sprintf("%v", v))
-	}
 	if v, ok := c.opt_["timedTextLanguage"]; ok {
 		params.Set("timedTextLanguage", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["timedTextTrackName"]; ok {
 		params.Set("timedTextTrackName", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["useContentAsIndexableText"]; ok {
+		params.Set("useContentAsIndexableText", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files")
 	if c.media_ != nil {
@@ -2802,16 +2818,6 @@ func (c *FilesInsertCall) Do() (*File, error) {
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
-	//     "sourceLanguage": {
-	//       "description": "The language of the original file to be translated.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "targetLanguage": {
-	//       "description": "Target language to translate the file to. If no sourceLanguage is provided, the API will attempt to detect the language.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "timedTextLanguage": {
 	//       "description": "The language of the timed text.",
 	//       "location": "query",
@@ -2821,6 +2827,12 @@ func (c *FilesInsertCall) Do() (*File, error) {
 	//       "description": "The timed text track name.",
 	//       "location": "query",
 	//       "type": "string"
+	//     },
+	//     "useContentAsIndexableText": {
+	//       "default": "false",
+	//       "description": "Whether to use the content as indexable text.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     }
 	//   },
 	//   "path": "files",
@@ -2834,7 +2846,8 @@ func (c *FilesInsertCall) Do() (*File, error) {
 	//     "https://www.googleapis.com/auth/drive",
 	//     "https://www.googleapis.com/auth/drive.file"
 	//   ],
-	//   "supportsMediaUpload": true
+	//   "supportsMediaUpload": true,
+	//   "supportsSubscription": true
 	// }
 
 }
@@ -3023,21 +3036,6 @@ func (c *FilesPatchCall) SetModifiedDate(setModifiedDate bool) *FilesPatchCall {
 	return c
 }
 
-// SourceLanguage sets the optional parameter "sourceLanguage": The
-// language of the original file to be translated.
-func (c *FilesPatchCall) SourceLanguage(sourceLanguage string) *FilesPatchCall {
-	c.opt_["sourceLanguage"] = sourceLanguage
-	return c
-}
-
-// TargetLanguage sets the optional parameter "targetLanguage": Target
-// language to translate the file to. If no sourceLanguage is provided,
-// the API will attempt to detect the language.
-func (c *FilesPatchCall) TargetLanguage(targetLanguage string) *FilesPatchCall {
-	c.opt_["targetLanguage"] = targetLanguage
-	return c
-}
-
 // TimedTextLanguage sets the optional parameter "timedTextLanguage":
 // The language of the timed text.
 func (c *FilesPatchCall) TimedTextLanguage(timedTextLanguage string) *FilesPatchCall {
@@ -3056,6 +3054,14 @@ func (c *FilesPatchCall) TimedTextTrackName(timedTextTrackName string) *FilesPat
 // Whether to update the view date after successfully updating the file.
 func (c *FilesPatchCall) UpdateViewedDate(updateViewedDate bool) *FilesPatchCall {
 	c.opt_["updateViewedDate"] = updateViewedDate
+	return c
+}
+
+// UseContentAsIndexableText sets the optional parameter
+// "useContentAsIndexableText": Whether to use the content as indexable
+// text.
+func (c *FilesPatchCall) UseContentAsIndexableText(useContentAsIndexableText bool) *FilesPatchCall {
+	c.opt_["useContentAsIndexableText"] = useContentAsIndexableText
 	return c
 }
 
@@ -3086,12 +3092,6 @@ func (c *FilesPatchCall) Do() (*File, error) {
 	if v, ok := c.opt_["setModifiedDate"]; ok {
 		params.Set("setModifiedDate", fmt.Sprintf("%v", v))
 	}
-	if v, ok := c.opt_["sourceLanguage"]; ok {
-		params.Set("sourceLanguage", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["targetLanguage"]; ok {
-		params.Set("targetLanguage", fmt.Sprintf("%v", v))
-	}
 	if v, ok := c.opt_["timedTextLanguage"]; ok {
 		params.Set("timedTextLanguage", fmt.Sprintf("%v", v))
 	}
@@ -3100,6 +3100,9 @@ func (c *FilesPatchCall) Do() (*File, error) {
 	}
 	if v, ok := c.opt_["updateViewedDate"]; ok {
 		params.Set("updateViewedDate", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["useContentAsIndexableText"]; ok {
+		params.Set("useContentAsIndexableText", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}")
 	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
@@ -3168,16 +3171,6 @@ func (c *FilesPatchCall) Do() (*File, error) {
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
-	//     "sourceLanguage": {
-	//       "description": "The language of the original file to be translated.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "targetLanguage": {
-	//       "description": "Target language to translate the file to. If no sourceLanguage is provided, the API will attempt to detect the language.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "timedTextLanguage": {
 	//       "description": "The language of the timed text.",
 	//       "location": "query",
@@ -3191,6 +3184,12 @@ func (c *FilesPatchCall) Do() (*File, error) {
 	//     "updateViewedDate": {
 	//       "default": "true",
 	//       "description": "Whether to update the view date after successfully updating the file.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "useContentAsIndexableText": {
+	//       "default": "false",
+	//       "description": "Whether to use the content as indexable text.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -3460,21 +3459,6 @@ func (c *FilesUpdateCall) SetModifiedDate(setModifiedDate bool) *FilesUpdateCall
 	return c
 }
 
-// SourceLanguage sets the optional parameter "sourceLanguage": The
-// language of the original file to be translated.
-func (c *FilesUpdateCall) SourceLanguage(sourceLanguage string) *FilesUpdateCall {
-	c.opt_["sourceLanguage"] = sourceLanguage
-	return c
-}
-
-// TargetLanguage sets the optional parameter "targetLanguage": Target
-// language to translate the file to. If no sourceLanguage is provided,
-// the API will attempt to detect the language.
-func (c *FilesUpdateCall) TargetLanguage(targetLanguage string) *FilesUpdateCall {
-	c.opt_["targetLanguage"] = targetLanguage
-	return c
-}
-
 // TimedTextLanguage sets the optional parameter "timedTextLanguage":
 // The language of the timed text.
 func (c *FilesUpdateCall) TimedTextLanguage(timedTextLanguage string) *FilesUpdateCall {
@@ -3493,6 +3477,14 @@ func (c *FilesUpdateCall) TimedTextTrackName(timedTextTrackName string) *FilesUp
 // Whether to update the view date after successfully updating the file.
 func (c *FilesUpdateCall) UpdateViewedDate(updateViewedDate bool) *FilesUpdateCall {
 	c.opt_["updateViewedDate"] = updateViewedDate
+	return c
+}
+
+// UseContentAsIndexableText sets the optional parameter
+// "useContentAsIndexableText": Whether to use the content as indexable
+// text.
+func (c *FilesUpdateCall) UseContentAsIndexableText(useContentAsIndexableText bool) *FilesUpdateCall {
+	c.opt_["useContentAsIndexableText"] = useContentAsIndexableText
 	return c
 }
 func (c *FilesUpdateCall) Media(r io.Reader) *FilesUpdateCall {
@@ -3527,12 +3519,6 @@ func (c *FilesUpdateCall) Do() (*File, error) {
 	if v, ok := c.opt_["setModifiedDate"]; ok {
 		params.Set("setModifiedDate", fmt.Sprintf("%v", v))
 	}
-	if v, ok := c.opt_["sourceLanguage"]; ok {
-		params.Set("sourceLanguage", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["targetLanguage"]; ok {
-		params.Set("targetLanguage", fmt.Sprintf("%v", v))
-	}
 	if v, ok := c.opt_["timedTextLanguage"]; ok {
 		params.Set("timedTextLanguage", fmt.Sprintf("%v", v))
 	}
@@ -3541,6 +3527,9 @@ func (c *FilesUpdateCall) Do() (*File, error) {
 	}
 	if v, ok := c.opt_["updateViewedDate"]; ok {
 		params.Set("updateViewedDate", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["useContentAsIndexableText"]; ok {
+		params.Set("useContentAsIndexableText", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}")
 	if c.media_ != nil {
@@ -3633,16 +3622,6 @@ func (c *FilesUpdateCall) Do() (*File, error) {
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
-	//     "sourceLanguage": {
-	//       "description": "The language of the original file to be translated.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "targetLanguage": {
-	//       "description": "Target language to translate the file to. If no sourceLanguage is provided, the API will attempt to detect the language.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "timedTextLanguage": {
 	//       "description": "The language of the timed text.",
 	//       "location": "query",
@@ -3656,6 +3635,12 @@ func (c *FilesUpdateCall) Do() (*File, error) {
 	//     "updateViewedDate": {
 	//       "default": "true",
 	//       "description": "Whether to update the view date after successfully updating the file.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "useContentAsIndexableText": {
+	//       "default": "false",
+	//       "description": "Whether to use the content as indexable text.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -4114,8 +4099,16 @@ func (r *PermissionsService) Insert(fileId string, permission *Permission) *Perm
 	return c
 }
 
+// EmailMessage sets the optional parameter "emailMessage": A custom
+// message to include in notification emails.
+func (c *PermissionsInsertCall) EmailMessage(emailMessage string) *PermissionsInsertCall {
+	c.opt_["emailMessage"] = emailMessage
+	return c
+}
+
 // SendNotificationEmails sets the optional parameter
-// "sendNotificationEmails": Whether to send notification emails.
+// "sendNotificationEmails": Whether to send notification emails when
+// sharing to users or groups.
 func (c *PermissionsInsertCall) SendNotificationEmails(sendNotificationEmails bool) *PermissionsInsertCall {
 	c.opt_["sendNotificationEmails"] = sendNotificationEmails
 	return c
@@ -4130,6 +4123,9 @@ func (c *PermissionsInsertCall) Do() (*Permission, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["emailMessage"]; ok {
+		params.Set("emailMessage", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["sendNotificationEmails"]; ok {
 		params.Set("sendNotificationEmails", fmt.Sprintf("%v", v))
 	}
@@ -4159,6 +4155,11 @@ func (c *PermissionsInsertCall) Do() (*Permission, error) {
 	//     "fileId"
 	//   ],
 	//   "parameters": {
+	//     "emailMessage": {
+	//       "description": "A custom message to include in notification emails.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "fileId": {
 	//       "description": "The ID for the file.",
 	//       "location": "path",
@@ -4167,7 +4168,7 @@ func (c *PermissionsInsertCall) Do() (*Permission, error) {
 	//     },
 	//     "sendNotificationEmails": {
 	//       "default": "true",
-	//       "description": "Whether to send notification emails.",
+	//       "description": "Whether to send notification emails when sharing to users or groups.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -4489,7 +4490,8 @@ func (c *RepliesDeleteCall) Do() error {
 	//   },
 	//   "path": "files/{fileId}/comments/{commentId}/replies/{replyId}",
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/drive"
+	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.file"
 	//   ]
 	// }
 
@@ -4588,6 +4590,7 @@ func (c *RepliesGetCall) Do() (*CommentReply, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.readonly"
 	//   ]
 	// }
@@ -4671,7 +4674,8 @@ func (c *RepliesInsertCall) Do() (*CommentReply, error) {
 	//     "$ref": "CommentReply"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/drive"
+	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.file"
 	//   ]
 	// }
 
@@ -4797,6 +4801,7 @@ func (c *RepliesListCall) Do() (*CommentReplyList, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.readonly"
 	//   ]
 	// }
@@ -4891,7 +4896,8 @@ func (c *RepliesPatchCall) Do() (*CommentReply, error) {
 	//     "$ref": "CommentReply"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/drive"
+	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.file"
 	//   ]
 	// }
 
@@ -4984,7 +4990,8 @@ func (c *RepliesUpdateCall) Do() (*CommentReply, error) {
 	//     "$ref": "CommentReply"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/drive"
+	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.file"
 	//   ]
 	// }
 

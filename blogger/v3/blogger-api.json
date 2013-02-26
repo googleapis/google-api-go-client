@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"a3GBuXuTtUYW9BV1SIieU5LiL7w/M_0M1tdkaAx6XKP6y-5wRZDX12s\"",
+ "etag": "\"-vXktEC13RBC5q_wkxEsszrjKM4/wvjLETJIWXJWQpgvvfdyNcNE9b8\"",
  "discoveryVersion": "v1",
  "id": "blogger:v3",
  "name": "blogger",
  "version": "v3",
- "revision": "20120508",
+ "revision": "20130122",
  "title": "Blogger API",
  "description": "API for access to the data within Blogger.",
  "icons": {
@@ -94,8 +94,7 @@
     },
     "id": {
      "type": "string",
-     "description": "The identifier for this resource.",
-     "format": "int64"
+     "description": "The identifier for this resource."
     },
     "kind": {
      "type": "string",
@@ -237,8 +236,7 @@
      "properties": {
       "id": {
        "type": "string",
-       "description": "The identifier of the blog containing this comment.",
-       "format": "int64"
+       "description": "The identifier of the blog containing this comment."
       }
      }
     },
@@ -248,8 +246,7 @@
     },
     "id": {
      "type": "string",
-     "description": "The identifier for this resource.",
-     "format": "int64"
+     "description": "The identifier for this resource."
     },
     "inReplyTo": {
      "type": "object",
@@ -257,8 +254,7 @@
      "properties": {
       "id": {
        "type": "string",
-       "description": "The identified of the parent of this comment.",
-       "format": "int64"
+       "description": "The identified of the parent of this comment."
       }
      }
     },
@@ -273,8 +269,7 @@
      "properties": {
       "id": {
        "type": "string",
-       "description": "The identifier of the post containing this comment.",
-       "format": "int64"
+       "description": "The identifier of the post containing this comment."
       }
      }
     },
@@ -358,8 +353,7 @@
      "properties": {
       "id": {
        "type": "string",
-       "description": "The identifier of the blog containing this page.",
-       "format": "int64"
+       "description": "The identifier of the blog containing this page."
       }
      }
     },
@@ -369,8 +363,7 @@
     },
     "id": {
      "type": "string",
-     "description": "The identifier for this resource.",
-     "format": "int64"
+     "description": "The identifier for this resource."
     },
     "kind": {
      "type": "string",
@@ -457,8 +450,7 @@
      "properties": {
       "id": {
        "type": "string",
-       "description": "The identifier of the Blog that contains this Post.",
-       "format": "int64"
+       "description": "The identifier of the Blog that contains this Post."
       }
      }
     },
@@ -472,8 +464,7 @@
     },
     "id": {
      "type": "string",
-     "description": "The identifier of this Post.",
-     "format": "int64"
+     "description": "The identifier of this Post."
     },
     "kind": {
      "type": "string",
@@ -690,9 +681,13 @@
       "url": {
        "type": "string",
        "description": "The URL of the blog to retrieve.",
+       "required": true,
        "location": "query"
       }
      },
+     "parameterOrder": [
+      "url"
+     ],
      "response": {
       "$ref": "Blog"
      },
@@ -979,11 +974,13 @@
       "path": {
        "type": "string",
        "description": "Path of the Post to retrieve.",
+       "required": true,
        "location": "query"
       }
      },
      "parameterOrder": [
-      "blogId"
+      "blogId",
+      "path"
      ],
      "response": {
       "$ref": "Post"
@@ -1124,11 +1121,13 @@
       "q": {
        "type": "string",
        "description": "Query terms to search this blog for matching posts.",
+       "required": true,
        "location": "query"
       }
      },
      "parameterOrder": [
-      "blogId"
+      "blogId",
+      "q"
      ],
      "response": {
       "$ref": "PostList"

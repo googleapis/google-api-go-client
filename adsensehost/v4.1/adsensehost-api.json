@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"a3GBuXuTtUYW9BV1SIieU5LiL7w/njYdmyOO3vQxNLitTmCcbYTgxn8\"",
+ "etag": "\"-vXktEC13RBC5q_wkxEsszrjKM4/4k57lIyfVRlgDt0t6G-UQ-z7bvs\"",
  "discoveryVersion": "v1",
  "id": "adsensehost:v4.1",
  "name": "adsensehost",
  "canonicalName": "AdSense Host",
  "version": "v4.1",
- "revision": "20121022",
+ "revision": "20130211",
  "title": "AdSense Host API",
  "description": "Gives AdSense Hosts access to report generation, ad code generation, and publisher management capabilities.",
  "icons": {
@@ -14,6 +14,9 @@
   "x32": "http://www.google.com/images/icons/product/adsense-32.png"
  },
  "documentationLink": "https://developers.google.com/adsense/host/",
+ "labels": [
+  "limited_availability"
+ ],
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/adsensehost/v4.1/",
  "basePath": "/adsensehost/v4.1/",
@@ -222,7 +225,7 @@
     },
     "corners": {
      "type": "string",
-     "description": "The style of the corners in the ad."
+     "description": "The style of the corners in the ad. Possible values are SQUARE, SLIGHTLY_ROUNDED and VERY_ROUNDED."
     },
     "font": {
      "type": "object",
@@ -230,11 +233,11 @@
      "properties": {
       "family": {
        "type": "string",
-       "description": "The family of the font."
+       "description": "The family of the font. Possible values are: ACCOUNT_DEFAULT_FAMILY, ADSENSE_DEFAULT_FAMILY, ARIAL, TIMES and VERDANA."
       },
       "size": {
        "type": "string",
-       "description": "The size of the font."
+       "description": "The size of the font. Possible values are: ACCOUNT_DEFAULT_SIZE, ADSENSE_DEFAULT_SIZE, SMALL, MEDIUM and LARGE."
       }
      }
     },
@@ -263,7 +266,7 @@
        "properties": {
         "color": {
          "type": "string",
-         "description": "Color to use when type is set to COLOR."
+         "description": "Color to use when type is set to COLOR. These are represented as six hexadecimal characters, similar to HTML color codes, but without the leading hash."
         },
         "type": {
          "type": "string",
@@ -277,11 +280,11 @@
       },
       "size": {
        "type": "string",
-       "description": "Size of this ad unit."
+       "description": "Size of this ad unit. Size values are in the form SIZE_{width}_{height}."
       },
       "type": {
        "type": "string",
-       "description": "Type of this ad unit."
+       "description": "Type of this ad unit. Possible values are TEXT, TEXT_IMAGE, IMAGE and LINK."
       }
      }
     },
@@ -1125,13 +1128,17 @@
        "required": true,
        "enum": [
         "AFC",
+        "AFG",
         "AFMC",
-        "AFS"
+        "AFS",
+        "AFV"
        ],
        "enumDescriptions": [
         "AdSense For Content",
+        "AdSense For Games",
         "AdSense For Mobile Content",
-        "AdSense For Search"
+        "AdSense For Search",
+        "AdSense For Video"
        ],
        "repeated": true,
        "location": "query"

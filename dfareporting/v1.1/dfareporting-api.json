@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"a3GBuXuTtUYW9BV1SIieU5LiL7w/KNvHx6AgwzCVzuwxQskVRcdAufY\"",
+ "etag": "\"-vXktEC13RBC5q_wkxEsszrjKM4/0sNIo9J7-Ilu5EhCJNwpWx4AlNo\"",
  "discoveryVersion": "v1",
  "id": "dfareporting:v1.1",
  "name": "dfareporting",
  "version": "v1.1",
- "revision": "20120831",
+ "revision": "20121127",
  "title": "DFA Reporting API",
  "description": "Lets you create, run and download reports.",
  "icons": {
@@ -592,7 +592,7 @@
     },
     "format": {
      "type": "string",
-     "description": "The output format of the report, currently only \"CSV\" is supported. If not specified, default format is \"CSV\". Note that the actual format in the completed report file might differ if for instance the report's size exceeds the format's capabilities. \"CSV\" will then be the fallback format."
+     "description": "The output format of the report, one of:  \n- \"CSV\" \n- \"EXCEL\"  If not specified, default format is \"CSV\". Note that the actual format in the completed report file might differ if for instance the report's size exceeds the format's capabilities. \"CSV\" will then be the fallback format."
     },
     "id": {
      "type": "string",

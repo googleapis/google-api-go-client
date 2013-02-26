@@ -1,6 +1,6 @@
 // Package audit provides access to the Enterprise Audit API.
 //
-// See http://code.google.com/googleapps/domain/audit_admin/v1/getting_started.html
+// See https://developers.google.com/google-apps/admin-audit/get_started
 //
 // Usage example:
 //
@@ -210,14 +210,6 @@ func (c *ActivitiesListCall) MaxResults(maxResults int64) *ActivitiesListCall {
 	return c
 }
 
-// Parameters sets the optional parameter "parameters": Event parameters
-// in the form [parameter1 name]:[parameter1 value],[parameter2
-// name]:[parameter2 value],...
-func (c *ActivitiesListCall) Parameters(parameters string) *ActivitiesListCall {
-	c.opt_["parameters"] = parameters
-	return c
-}
-
 // StartTime sets the optional parameter "startTime": Return events
 // which occured at or after this time.
 func (c *ActivitiesListCall) StartTime(startTime string) *ActivitiesListCall {
@@ -252,9 +244,6 @@ func (c *ActivitiesListCall) Do() (*Activities, error) {
 	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["parameters"]; ok {
-		params.Set("parameters", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["startTime"]; ok {
 		params.Set("startTime", fmt.Sprintf("%v", v))
@@ -351,11 +340,6 @@ func (c *ActivitiesListCall) Do() (*Activities, error) {
 	//       "maximum": "1000",
 	//       "minimum": "1",
 	//       "type": "integer"
-	//     },
-	//     "parameters": {
-	//       "description": "Event parameters in the form [parameter1 name]:[parameter1 value],[parameter2 name]:[parameter2 value],...",
-	//       "location": "query",
-	//       "type": "string"
 	//     },
 	//     "startTime": {
 	//       "description": "Return events which occured at or after this time.",

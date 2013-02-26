@@ -268,7 +268,7 @@ type ObjectMedia struct {
 	Hash string `json:"hash,omitempty"`
 
 	// Length: Content-Length of the data in bytes.
-	Length int64 `json:"length,omitempty,string"`
+	Length uint64 `json:"length,omitempty,string"`
 
 	// Link: Media download link.
 	Link string `json:"link,omitempty"`
@@ -2145,6 +2145,7 @@ func (c *ObjectsInsertCall) Do() (*Object, error) {
 	//     "https://www.googleapis.com/auth/devstorage.full_control",
 	//     "https://www.googleapis.com/auth/devstorage.read_write"
 	//   ],
+	//   "supportsMediaDownload": true,
 	//   "supportsMediaUpload": true
 	// }
 
@@ -2516,7 +2517,8 @@ func (c *ObjectsUpdateCall) Do() (*Object, error) {
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/devstorage.full_control",
 	//     "https://www.googleapis.com/auth/devstorage.read_write"
-	//   ]
+	//   ],
+	//   "supportsMediaDownload": true
 	// }
 
 }

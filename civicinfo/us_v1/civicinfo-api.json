@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"a3GBuXuTtUYW9BV1SIieU5LiL7w/eM9rcT1Zj_zHnRZhIGUdNb2Vm7I\"",
+ "etag": "\"-vXktEC13RBC5q_wkxEsszrjKM4/GUSiSBmfRFVT1g49BkUdVcfHreA\"",
  "discoveryVersion": "v1",
  "id": "civicinfo:us_v1",
  "name": "civicinfo",
  "canonicalName": "Civic Info",
  "version": "us_v1",
- "revision": "20121013",
+ "revision": "20130103",
  "title": "Google Civic Information API",
  "description": "An API for accessing civic information.",
  "icons": {
@@ -74,6 +74,10 @@
     "electionAdministrationBody": {
      "$ref": "AdministrativeBody",
      "description": "The election administration body for this area."
+    },
+    "id": {
+     "type": "string",
+     "description": "An ID for this object. IDs may change in future requests and should not be cached. Access to this field requires special access that can be requested from the Request more link on the Quotas page."
     },
     "local_jurisdiction": {
      "$ref": "AdministrationRegion",
@@ -240,6 +244,10 @@
      "type": "string",
      "description": "A description of any additional eligibility requirements for voting in this contest."
     },
+    "id": {
+     "type": "string",
+     "description": "An ID for this object. IDs may change in future requests and should not be cached. Access to this field requires special access that can be requested from the Request more link on the Quotas page."
+    },
     "level": {
      "type": "string",
      "description": "The level of office for this contest. One of: federal, state, county, city, other"
@@ -388,6 +396,10 @@
     "endDate": {
      "type": "string",
      "description": "The last date that this early vote site may be used. This field is not populated for polling locations."
+    },
+    "id": {
+     "type": "string",
+     "description": "An ID for this object. IDs may change in future requests and should not be cached. Access to this field requires special access that can be requested from the Request more link on the Quotas page."
     },
     "name": {
      "type": "string",
@@ -560,6 +572,7 @@
       "officialOnly": {
        "type": "boolean",
        "description": "If set to true, only data from official state sources will be returned.",
+       "default": "false",
        "location": "query"
       }
      },

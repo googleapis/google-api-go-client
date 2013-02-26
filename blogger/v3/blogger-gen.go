@@ -101,7 +101,7 @@ type Blog struct {
 	Description string `json:"description,omitempty"`
 
 	// Id: The identifier for this resource.
-	Id int64 `json:"id,omitempty,string"`
+	Id string `json:"id,omitempty"`
 
 	// Kind: The kind of this entry. Always blogger#blog
 	Kind string `json:"kind,omitempty"`
@@ -181,7 +181,7 @@ type Comment struct {
 	Content string `json:"content,omitempty"`
 
 	// Id: The identifier for this resource.
-	Id int64 `json:"id,omitempty,string"`
+	Id string `json:"id,omitempty"`
 
 	// InReplyTo: Data about the comment this is in reply to.
 	InReplyTo *CommentInReplyTo `json:"inReplyTo,omitempty"`
@@ -223,17 +223,17 @@ type CommentAuthorImage struct {
 
 type CommentBlog struct {
 	// Id: The identifier of the blog containing this comment.
-	Id int64 `json:"id,omitempty,string"`
+	Id string `json:"id,omitempty"`
 }
 
 type CommentInReplyTo struct {
 	// Id: The identified of the parent of this comment.
-	Id int64 `json:"id,omitempty,string"`
+	Id string `json:"id,omitempty"`
 }
 
 type CommentPost struct {
 	// Id: The identifier of the post containing this comment.
-	Id int64 `json:"id,omitempty,string"`
+	Id string `json:"id,omitempty"`
 }
 
 type CommentList struct {
@@ -263,7 +263,7 @@ type Page struct {
 	Content string `json:"content,omitempty"`
 
 	// Id: The identifier for this resource.
-	Id int64 `json:"id,omitempty,string"`
+	Id string `json:"id,omitempty"`
 
 	// Kind: The kind of this entity. Always blogger#page
 	Kind string `json:"kind,omitempty"`
@@ -306,7 +306,7 @@ type PageAuthorImage struct {
 
 type PageBlog struct {
 	// Id: The identifier of the blog containing this page.
-	Id int64 `json:"id,omitempty,string"`
+	Id string `json:"id,omitempty"`
 }
 
 type PageList struct {
@@ -331,7 +331,7 @@ type Post struct {
 	CustomMetaData string `json:"customMetaData,omitempty"`
 
 	// Id: The identifier of this Post.
-	Id int64 `json:"id,omitempty,string"`
+	Id string `json:"id,omitempty"`
 
 	// Kind: The kind of this entity. Always blogger#post
 	Kind string `json:"kind,omitempty"`
@@ -382,7 +382,7 @@ type PostAuthorImage struct {
 
 type PostBlog struct {
 	// Id: The identifier of the Blog that contains this Post.
-	Id int64 `json:"id,omitempty,string"`
+	Id string `json:"id,omitempty"`
 }
 
 type PostLocation struct {
@@ -556,19 +556,14 @@ func (c *BlogsGetCall) Do() (*Blog, error) {
 
 type BlogsGetByUrlCall struct {
 	s    *Service
+	url  string
 	opt_ map[string]interface{}
 }
 
 // GetByUrl: Retrieve a Blog by URL.
-func (r *BlogsService) GetByUrl() *BlogsGetByUrlCall {
+func (r *BlogsService) GetByUrl(url string) *BlogsGetByUrlCall {
 	c := &BlogsGetByUrlCall{s: r.s, opt_: make(map[string]interface{})}
-	return c
-}
-
-// Url sets the optional parameter "url": The URL of the blog to
-// retrieve.
-func (c *BlogsGetByUrlCall) Url(url string) *BlogsGetByUrlCall {
-	c.opt_["url"] = url
+	c.url = url
 	return c
 }
 
@@ -576,9 +571,7 @@ func (c *BlogsGetByUrlCall) Do() (*Blog, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	if v, ok := c.opt_["url"]; ok {
-		params.Set("url", fmt.Sprintf("%v", v))
-	}
+	params.Set("url", fmt.Sprintf("%v", c.url))
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/blogger/v3/", "blogs/byurl")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -599,10 +592,14 @@ func (c *BlogsGetByUrlCall) Do() (*Blog, error) {
 	//   "description": "Retrieve a Blog by URL.",
 	//   "httpMethod": "GET",
 	//   "id": "blogger.blogs.getByUrl",
+	//   "parameterOrder": [
+	//     "url"
+	//   ],
 	//   "parameters": {
 	//     "url": {
 	//       "description": "The URL of the blog to retrieve.",
 	//       "location": "query",
+	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
@@ -1225,13 +1222,15 @@ func (c *PostsGetCall) Do() (*Post, error) {
 type PostsGetByPathCall struct {
 	s      *Service
 	blogId string
+	path   string
 	opt_   map[string]interface{}
 }
 
 // GetByPath: Retrieve a Post by Path.
-func (r *PostsService) GetByPath(blogId string) *PostsGetByPathCall {
+func (r *PostsService) GetByPath(blogId string, path string) *PostsGetByPathCall {
 	c := &PostsGetByPathCall{s: r.s, opt_: make(map[string]interface{})}
 	c.blogId = blogId
+	c.path = path
 	return c
 }
 
@@ -1242,22 +1241,13 @@ func (c *PostsGetByPathCall) MaxComments(maxComments int64) *PostsGetByPathCall 
 	return c
 }
 
-// Path sets the optional parameter "path": Path of the Post to
-// retrieve.
-func (c *PostsGetByPathCall) Path(path string) *PostsGetByPathCall {
-	c.opt_["path"] = path
-	return c
-}
-
 func (c *PostsGetByPathCall) Do() (*Post, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	params.Set("path", fmt.Sprintf("%v", c.path))
 	if v, ok := c.opt_["maxComments"]; ok {
 		params.Set("maxComments", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["path"]; ok {
-		params.Set("path", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/blogger/v3/", "blogs/{blogId}/posts/bypath")
 	urls = strings.Replace(urls, "{blogId}", cleanPathString(c.blogId), 1)
@@ -1281,7 +1271,8 @@ func (c *PostsGetByPathCall) Do() (*Post, error) {
 	//   "httpMethod": "GET",
 	//   "id": "blogger.posts.getByPath",
 	//   "parameterOrder": [
-	//     "blogId"
+	//     "blogId",
+	//     "path"
 	//   ],
 	//   "parameters": {
 	//     "blogId": {
@@ -1299,6 +1290,7 @@ func (c *PostsGetByPathCall) Do() (*Post, error) {
 	//     "path": {
 	//       "description": "Path of the Post to retrieve.",
 	//       "location": "query",
+	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
@@ -1631,20 +1623,15 @@ func (c *PostsPatchCall) Do() (*Post, error) {
 type PostsSearchCall struct {
 	s      *Service
 	blogId string
+	q      string
 	opt_   map[string]interface{}
 }
 
 // Search: Search for a post.
-func (r *PostsService) Search(blogId string) *PostsSearchCall {
+func (r *PostsService) Search(blogId string, q string) *PostsSearchCall {
 	c := &PostsSearchCall{s: r.s, opt_: make(map[string]interface{})}
 	c.blogId = blogId
-	return c
-}
-
-// Q sets the optional parameter "q": Query terms to search this blog
-// for matching posts.
-func (c *PostsSearchCall) Q(q string) *PostsSearchCall {
-	c.opt_["q"] = q
+	c.q = q
 	return c
 }
 
@@ -1652,9 +1639,7 @@ func (c *PostsSearchCall) Do() (*PostList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	if v, ok := c.opt_["q"]; ok {
-		params.Set("q", fmt.Sprintf("%v", v))
-	}
+	params.Set("q", fmt.Sprintf("%v", c.q))
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/blogger/v3/", "blogs/{blogId}/posts/search")
 	urls = strings.Replace(urls, "{blogId}", cleanPathString(c.blogId), 1)
 	urls += "?" + params.Encode()
@@ -1677,7 +1662,8 @@ func (c *PostsSearchCall) Do() (*PostList, error) {
 	//   "httpMethod": "GET",
 	//   "id": "blogger.posts.search",
 	//   "parameterOrder": [
-	//     "blogId"
+	//     "blogId",
+	//     "q"
 	//   ],
 	//   "parameters": {
 	//     "blogId": {
@@ -1689,6 +1675,7 @@ func (c *PostsSearchCall) Do() (*PostList, error) {
 	//     "q": {
 	//       "description": "Query terms to search this blog for matching posts.",
 	//       "location": "query",
+	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },

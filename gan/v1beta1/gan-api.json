@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"a3GBuXuTtUYW9BV1SIieU5LiL7w/qgkbld3g8jzLHwCePodQw6uaV44\"",
+ "etag": "\"-vXktEC13RBC5q_wkxEsszrjKM4/ssCMsTR8qer8niLnWCvmMLudAIk\"",
  "discoveryVersion": "v1",
  "id": "gan:v1beta1",
  "name": "gan",
  "version": "v1beta1",
- "revision": "20121013",
+ "revision": "20130205",
  "title": "Google Affiliate Network API",
  "description": "Lets you have programmatic access to your Google Affiliate Network data.",
  "icons": {
@@ -969,6 +969,64 @@
      "description": "The 'pageToken' to pass to the next request to get the next page, if there are more to retrieve."
     }
    }
+  },
+  "Report": {
+   "id": "Report",
+   "type": "object",
+   "description": "A ReportResource representing a report of a certain type either for an advertiser or publisher.",
+   "properties": {
+    "column_names": {
+     "type": "array",
+     "description": "The column names for the report",
+     "items": {
+      "type": "string"
+     }
+    },
+    "end_date": {
+     "type": "string",
+     "description": "The end of the date range for this report, exclusive."
+    },
+    "kind": {
+     "type": "string",
+     "description": "The kind for a report.",
+     "default": "gan#report"
+    },
+    "matching_row_count": {
+     "type": "string",
+     "description": "The number of matching rows before paging is applied.",
+     "format": "int64"
+    },
+    "rows": {
+     "type": "array",
+     "description": "The rows of data for the report",
+     "items": {
+      "type": "array",
+      "description": "Loop over each column in the row.",
+      "items": {
+       "type": "any"
+      }
+     }
+    },
+    "start_date": {
+     "type": "string",
+     "description": "The start of the date range for this report, inclusive."
+    },
+    "totals_rows": {
+     "type": "array",
+     "description": "The totals rows for the report",
+     "items": {
+      "type": "array",
+      "description": "Loop over each column in the row.",
+      "items": {
+       "type": "any"
+      }
+     }
+    },
+    "type": {
+     "type": "string",
+     "description": "The report type."
+    }
+   }
   }
  },
  "resources": {
@@ -1700,6 +1758,145 @@
      ],
      "response": {
       "$ref": "Publishers"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/gan",
+      "https://www.googleapis.com/auth/gan.readonly"
+     ]
+    }
+   }
+  },
+  "reports": {
+   "methods": {
+    "get": {
+     "id": "gan.reports.get",
+     "path": "{role}/{roleId}/report/{reportType}",
+     "httpMethod": "GET",
+     "description": "Retrieves a report of the specified type.",
+     "parameters": {
+      "advertiserId": {
+       "type": "string",
+       "description": "The IDs of the advertisers to look up, if applicable.",
+       "repeated": true,
+       "location": "query"
+      },
+      "calculateTotals": {
+       "type": "boolean",
+       "description": "Whether or not to calculate totals rows. Optional.",
+       "location": "query"
+      },
+      "endDate": {
+       "type": "string",
+       "description": "The end date (exclusive), in RFC 3339 format, for the report data to be returned. Defaults to one day after startDate, if that is given, or today. Optional.",
+       "location": "query"
+      },
+      "eventType": {
+       "type": "string",
+       "description": "Filters out all events that are not of the given type. Valid values: 'action', 'transaction', or 'charge'. Optional.",
+       "enum": [
+        "action",
+        "charge",
+        "transaction"
+       ],
+       "enumDescriptions": [
+        "Event type is action.",
+        "Event type is charge.",
+        "Event type is transaction."
+       ],
+       "location": "query"
+      },
+      "linkId": {
+       "type": "string",
+       "description": "Filters to capture one of given link IDs. Optional.",
+       "repeated": true,
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "Max number of items to return in this page. Optional. Defaults to return all results.",
+       "format": "uint32",
+       "minimum": "0",
+       "location": "query"
+      },
+      "orderId": {
+       "type": "string",
+       "description": "Filters to capture one of the given order IDs. Optional.",
+       "repeated": true,
+       "location": "query"
+      },
+      "publisherId": {
+       "type": "string",
+       "description": "The IDs of the publishers to look up, if applicable.",
+       "repeated": true,
+       "location": "query"
+      },
+      "reportType": {
+       "type": "string",
+       "description": "The type of report being requested. Valid values: 'order_delta'. Required.",
+       "required": true,
+       "enum": [
+        "order_delta"
+       ],
+       "enumDescriptions": [
+        "The order delta report type."
+       ],
+       "location": "path"
+      },
+      "role": {
+       "type": "string",
+       "description": "The role of the requester. Valid values: 'advertisers' or 'publishers'.",
+       "required": true,
+       "enum": [
+        "advertisers",
+        "publishers"
+       ],
+       "enumDescriptions": [
+        "The requester is requesting as an advertiser.",
+        "The requester is requesting as a publisher."
+       ],
+       "location": "path"
+      },
+      "roleId": {
+       "type": "string",
+       "description": "The ID of the requesting advertiser or publisher.",
+       "required": true,
+       "location": "path"
+      },
+      "startDate": {
+       "type": "string",
+       "description": "The start date (inclusive), in RFC 3339 format, for the report data to be returned. Defaults to one day before endDate, if that is given, or yesterday. Optional.",
+       "location": "query"
+      },
+      "startIndex": {
+       "type": "integer",
+       "description": "Offset on which to return results when paging. Optional.",
+       "format": "uint32",
+       "minimum": "0",
+       "location": "query"
+      },
+      "status": {
+       "type": "string",
+       "description": "Filters out all events that do not have the given status. Valid values: 'active', 'canceled', or 'invalid'. Optional.",
+       "enum": [
+        "active",
+        "canceled",
+        "invalid"
+       ],
+       "enumDescriptions": [
+        "Event is currently active.",
+        "Event is currently canceled.",
+        "Event is currently invalid."
+       ],
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "role",
+      "roleId",
+      "reportType"
+     ],
+     "response": {
+      "$ref": "Report"
      },
      "scopes": [
       "https://www.googleapis.com/auth/gan",

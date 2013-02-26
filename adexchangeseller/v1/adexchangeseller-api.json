@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"a3GBuXuTtUYW9BV1SIieU5LiL7w/BNJuBtuZFT42pQWbY0jsF7tMLho\"",
+ "etag": "\"-vXktEC13RBC5q_wkxEsszrjKM4/VZqLojDuaTtVd310w_Dbg9m3VqU\"",
  "discoveryVersion": "v1",
  "id": "adexchangeseller:v1",
  "name": "adexchangeseller",
  "canonicalName": "Ad Exchange Seller",
  "version": "v1",
- "revision": "20121022",
+ "revision": "20130211",
  "title": "Ad Exchange Seller API",
  "description": "Gives Ad Exchange seller users access to their inventory and the ability to generate reports",
  "icons": {
@@ -65,6 +65,18 @@
    "type": "string",
    "description": "IP address of the site where the request originates. Use this if you want to enforce per-user limits.",
    "location": "query"
+  }
+ },
+ "auth": {
+  "oauth2": {
+   "scopes": {
+    "https://www.googleapis.com/auth/adexchange.seller": {
+     "description": "View and manage your Ad Exchange data"
+    },
+    "https://www.googleapis.com/auth/adexchange.seller.readonly": {
+     "description": "View your Ad Exchange data"
+    }
+   }
   }
  },
  "schemas": {
@@ -429,7 +441,11 @@
      },
      "response": {
       "$ref": "AdClients"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/adexchange.seller",
+      "https://www.googleapis.com/auth/adexchange.seller.readonly"
+     ]
     }
    }
   },
@@ -460,7 +476,11 @@
      ],
      "response": {
       "$ref": "AdUnit"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/adexchange.seller",
+      "https://www.googleapis.com/auth/adexchange.seller.readonly"
+     ]
     },
     "list": {
      "id": "adexchangeseller.adunits.list",
@@ -498,7 +518,11 @@
      ],
      "response": {
       "$ref": "AdUnits"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/adexchange.seller",
+      "https://www.googleapis.com/auth/adexchange.seller.readonly"
+     ]
     }
    },
    "resources": {
@@ -542,7 +566,11 @@
        ],
        "response": {
         "$ref": "CustomChannels"
-       }
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/adexchange.seller",
+        "https://www.googleapis.com/auth/adexchange.seller.readonly"
+       ]
       }
      }
     }
@@ -575,7 +603,11 @@
      ],
      "response": {
       "$ref": "CustomChannel"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/adexchange.seller",
+      "https://www.googleapis.com/auth/adexchange.seller.readonly"
+     ]
     },
     "list": {
      "id": "adexchangeseller.customchannels.list",
@@ -608,7 +640,11 @@
      ],
      "response": {
       "$ref": "CustomChannels"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/adexchange.seller",
+      "https://www.googleapis.com/auth/adexchange.seller.readonly"
+     ]
     }
    },
    "resources": {
@@ -657,7 +693,11 @@
        ],
        "response": {
         "$ref": "AdUnits"
-       }
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/adexchange.seller",
+        "https://www.googleapis.com/auth/adexchange.seller.readonly"
+       ]
       }
      }
     }
@@ -743,6 +783,10 @@
      "response": {
       "$ref": "Report"
      },
+     "scopes": [
+      "https://www.googleapis.com/auth/adexchange.seller",
+      "https://www.googleapis.com/auth/adexchange.seller.readonly"
+     ],
      "supportsMediaDownload": true
     }
    },
@@ -789,7 +833,11 @@
        ],
        "response": {
         "$ref": "Report"
-       }
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/adexchange.seller",
+        "https://www.googleapis.com/auth/adexchange.seller.readonly"
+       ]
       },
       "list": {
        "id": "adexchangeseller.reports.saved.list",
@@ -813,7 +861,11 @@
        },
        "response": {
         "$ref": "SavedReports"
-       }
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/adexchange.seller",
+        "https://www.googleapis.com/auth/adexchange.seller.readonly"
+       ]
       }
      }
     }
@@ -852,7 +904,11 @@
      ],
      "response": {
       "$ref": "UrlChannels"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/adexchange.seller",
+      "https://www.googleapis.com/auth/adexchange.seller.readonly"
+     ]
     }
    }
   }

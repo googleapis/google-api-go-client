@@ -376,66 +376,92 @@ type JobConfigurationLink struct {
 }
 
 type JobConfigurationLoad struct {
-	// AllowQuotedNewlines: [Experimental] Whether to allow quoted newlines
-	// in the source CSV data.
+	// AllowQuotedNewlines: Indicates if BigQuery should allow quoted data
+	// sections that contain newline characters in a CSV file. The default
+	// value is false.
 	AllowQuotedNewlines bool `json:"allowQuotedNewlines,omitempty"`
 
-	// CreateDisposition: [Optional] Whether to create the table if it
-	// doesn't already exist (CREATE_IF_NEEDED) or to require the table
-	// already exist (CREATE_NEVER). Default is CREATE_IF_NEEDED.
+	// CreateDisposition: [Optional] Specifies whether the job is allowed to
+	// create new tables. The following values are supported:
+	// CREATE_IF_NEEDED: If the table does not exist, BigQuery creates the
+	// table. CREATE_NEVER: The table must already exist. If it does not, a
+	// 'notFound' error is returned in the job result. The default value is
+	// CREATE_IF_NEEDED. Creation, truncation and append actions occur as
+	// one atomic update upon job completion.
 	CreateDisposition string `json:"createDisposition,omitempty"`
 
-	// DestinationTable: [Required] Table being written to.
+	// DestinationTable: [Required] The destination table to load the data
+	// into.
 	DestinationTable *TableReference `json:"destinationTable,omitempty"`
 
-	// Encoding: [Optional] Character encoding of the input data. May be
-	// UTF-8 or ISO-8859-1. Default is UTF-8.
+	// Encoding: [Optional] The character encoding of the data. The
+	// supported values are UTF-8 or ISO-8859-1. The default value is UTF-8.
+	// BigQuery decodes the data after the raw, binary data has been split
+	// using the values of the quote and fieldDelimiter properties.
 	Encoding string `json:"encoding,omitempty"`
 
-	// FieldDelimiter: [Optional] Delimiter to use between fields in the
-	// import data. Default is ','. Note that delimiters are applied to the
-	// raw, binary data before the encoding is applied.
+	// FieldDelimiter: [Optional] The separator for fields in a CSV file.
+	// BigQuery converts the string to ISO-8859-1 encoding, and then uses
+	// the first byte of the encoded string to split the data in its raw,
+	// binary state. BigQuery also supports the escape sequence "\t" to
+	// specify a tab separator. The default value is a comma (',').
 	FieldDelimiter string `json:"fieldDelimiter,omitempty"`
 
-	// MaxBadRecords: [Optional] Maximum number of bad records that should
-	// be ignored before the entire job is aborted and no updates are
-	// performed.
+	// MaxBadRecords: [Optional] The maximum number of bad records that
+	// BigQuery can ignore when running the job. If the number of bad
+	// records exceeds this value, an 'invalid' error is returned in the job
+	// result and the job fails. The default value is 0, which requires that
+	// all records are valid.
 	MaxBadRecords int64 `json:"maxBadRecords,omitempty"`
 
-	// Quote: [Optional] Quote character to use. Default is '"'. Note that
-	// quoting is done on the raw, binary data before the encoding is
-	// applied. If no quoting is done, use am empty string.
+	// Quote: [Optional] The value that is used to quote data sections in a
+	// CSV file. BigQuery converts the string to ISO-8859-1 encoding, and
+	// then uses the first byte of the encoded string to split the data in
+	// its raw, binary state. The default value is a double-quote ('"'). If
+	// your data does not contain quoted sections, set the property value to
+	// an empty string. If your data contains quoted newline characters, you
+	// must also set the allowQuotedNewlines property to true.
 	Quote string `json:"quote,omitempty"`
 
-	// Schema: [Optional] Schema of the table being written to.
+	// Schema: [Optional] The schema for the destination table. The schema
+	// can be omitted if the destination table already exists or if the
+	// schema can be inferred from the loaded data.
 	Schema *TableSchema `json:"schema,omitempty"`
 
-	// SchemaInline: [Experimental] Inline schema. For CSV schemas, specify
-	// as "Field1:Type1[,Field2:Type2]*". For example, "foo:STRING,
-	// bar:INTEGER, baz:FLOAT"
+	// SchemaInline: [Deprecated] The inline schema. For CSV schemas,
+	// specify as "Field1:Type1[,Field2:Type2]*". For example, "foo:STRING,
+	// bar:INTEGER, baz:FLOAT".
 	SchemaInline string `json:"schemaInline,omitempty"`
 
-	// SchemaInlineFormat: [Experimental] Format of inlineSchema field.
+	// SchemaInlineFormat: [Deprecated] The format of the schemaInline
+	// property.
 	SchemaInlineFormat string `json:"schemaInlineFormat,omitempty"`
 
-	// SkipLeadingRows: [Optional] Number of rows of initial data to skip in
-	// the data being imported.
+	// SkipLeadingRows: [Optional] The number of rows at the top of a CSV
+	// file that BigQuery will skip when loading the data. The default value
+	// is 0. This property is useful if you have header rows in the file
+	// that should be skipped.
 	SkipLeadingRows int64 `json:"skipLeadingRows,omitempty"`
 
-	// SourceFormat: [Experimental] Optional and defaults to CSV. Format of
-	// source files. For CSV uploads, specify "CSV". For imports of
-	// datastore backups, specify "DATASTORE_BACKUP". For imports of
-	// newline-delimited JSON, specify "NEWLINE_DELIMITED_JSON".
+	// SourceFormat: [Optional] The format of the data files. For CSV files,
+	// specify "CSV". For datastore backups, specify "DATASTORE_BACKUP". For
+	// newline-delimited JSON, specify "NEWLINE_DELIMITED_JSON". The default
+	// value is CSV.
 	SourceFormat string `json:"sourceFormat,omitempty"`
 
-	// SourceUris: [Required] Source URIs describing Google Cloud Storage
-	// locations of data to load.
+	// SourceUris: [Required] The fully-qualified URIs that point to your
+	// data on Google Cloud Storage.
 	SourceUris []string `json:"sourceUris,omitempty"`
 
-	// WriteDisposition: [Optional] Whether to overwrite an existing table
-	// (WRITE_TRUNCATE), append to an existing table (WRITE_APPEND), or
-	// require that the the table is empty (WRITE_EMPTY). Default is
-	// WRITE_APPEND.
+	// WriteDisposition: [Optional] Specifies the action that occurs if the
+	// destination table already exists. Each action is atomic and only
+	// occurs if BigQuery is able to fully load the data and the load job
+	// completes without error. The following values are supported:
+	// WRITE_TRUNCATE: If the table already exists, BigQuery overwrites the
+	// table. WRITE_APPEND: If the table already exists, BigQuery appends
+	// the data to the table. WRITE_EMPTY: If the table already exists, a
+	// 'duplicate' error is returned in the job result. Creation, truncation
+	// and append actions occur as one atomic update upon job completion.
 	WriteDisposition string `json:"writeDisposition,omitempty"`
 }
 
@@ -443,6 +469,11 @@ type JobConfigurationProperties struct {
 }
 
 type JobConfigurationQuery struct {
+	// AllowLargeResults: [Experimental] If true, allows >128M results to be
+	// materialized in the destination table. Requires destination_table to
+	// be set.
+	AllowLargeResults bool `json:"allowLargeResults,omitempty"`
+
 	// CreateDisposition: [Optional] Whether to create the table if it
 	// doesn't already exist (CREATE_IF_NEEDED) or to require the table
 	// already exist (CREATE_NEVER). Default is CREATE_IF_NEEDED.
@@ -456,6 +487,14 @@ type JobConfigurationQuery struct {
 	// results should be stored. If not present, a new table will be created
 	// to store the results.
 	DestinationTable *TableReference `json:"destinationTable,omitempty"`
+
+	// PreserveNulls: [Experimental] If set, preserve null values in table
+	// data, rather than mapping null values to the column's default value.
+	// This flag currently defaults to false, but the default will soon be
+	// changed to true. Shortly afterward, this flag will be removed
+	// completely. Please specify true if possible, and false only if you
+	// need to force the old behavior while updating client code.
+	PreserveNulls bool `json:"preserveNulls,omitempty"`
 
 	// Priority: [Optional] Specifies a priority for the query. Default is
 	// INTERACTIVE. Alternative is BATCH.
@@ -659,6 +698,14 @@ type QueryRequest struct {
 	// results. Default is to return the maximum response size.
 	MaxResults int64 `json:"maxResults,omitempty"`
 
+	// PreserveNulls: [Experimental] If set, preserve null values in table
+	// data, rather than mapping null values to the column's default value.
+	// This flag currently defaults to false, but the default will soon be
+	// changed to true. Shortly afterward, this flag will be removed
+	// completely. Please specify true if possible, and false only if you
+	// need to force the old behavior while updating client code.
+	PreserveNulls bool `json:"preserveNulls,omitempty"`
+
 	// Query: [Required] A query string, following the BigQuery query syntax
 	// of the query to execute. Table names should be qualified by dataset
 	// name in the format projectId:datasetId.tableId unless you specify the
@@ -777,17 +824,20 @@ type TableDataList struct {
 }
 
 type TableFieldSchema struct {
-	// Fields: [Optional] Describes nested fields when type is RECORD.
+	// Fields: [Optional] Describes the nested schema fields if the type
+	// property is set to RECORD.
 	Fields []*TableFieldSchema `json:"fields,omitempty"`
 
-	// Mode: [Optional] Mode of the field (whether or not it can be null.
-	// Default is NULLABLE.
+	// Mode: [Optional] The field mode. Possible values include NULLABLE,
+	// REQUIRED and REPEATED. The default value is NULLABLE.
 	Mode string `json:"mode,omitempty"`
 
-	// Name: [Required] Name of the field.
+	// Name: [Required] The field name.
 	Name string `json:"name,omitempty"`
 
-	// Type: [Required] Data type of the field.
+	// Type: [Required] The field data type. Possible values include STRING,
+	// INTEGER, FLOAT, BOOLEAN, TIMESTAMP or RECORD (where RECORD indicates
+	// a nested schema).
 	Type string `json:"type,omitempty"`
 }
 

@@ -36,6 +36,15 @@ const apiName = "adexchangeseller"
 const apiVersion = "v1"
 const basePath = "https://www.googleapis.com/adexchangeseller/v1/"
 
+// OAuth2 scopes used by this API.
+const (
+	// View and manage your Ad Exchange data
+	AdexchangeSellerScope = "https://www.googleapis.com/auth/adexchange.seller"
+
+	// View your Ad Exchange data
+	AdexchangeSellerReadonlyScope = "https://www.googleapis.com/auth/adexchange.seller.readonly"
+)
+
 func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
@@ -407,7 +416,11 @@ func (c *AdclientsListCall) Do() (*AdClients, error) {
 	//   "path": "adclients",
 	//   "response": {
 	//     "$ref": "AdClients"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.seller",
+	//     "https://www.googleapis.com/auth/adexchange.seller.readonly"
+	//   ]
 	// }
 
 }
@@ -476,7 +489,11 @@ func (c *AdunitsGetCall) Do() (*AdUnit, error) {
 	//   "path": "adclients/{adClientId}/adunits/{adUnitId}",
 	//   "response": {
 	//     "$ref": "AdUnit"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.seller",
+	//     "https://www.googleapis.com/auth/adexchange.seller.readonly"
+	//   ]
 	// }
 
 }
@@ -586,7 +603,11 @@ func (c *AdunitsListCall) Do() (*AdUnits, error) {
 	//   "path": "adclients/{adClientId}/adunits",
 	//   "response": {
 	//     "$ref": "AdUnits"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.seller",
+	//     "https://www.googleapis.com/auth/adexchange.seller.readonly"
+	//   ]
 	// }
 
 }
@@ -655,7 +676,11 @@ func (c *CustomchannelsGetCall) Do() (*CustomChannel, error) {
 	//   "path": "adclients/{adClientId}/customchannels/{customChannelId}",
 	//   "response": {
 	//     "$ref": "CustomChannel"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.seller",
+	//     "https://www.googleapis.com/auth/adexchange.seller.readonly"
+	//   ]
 	// }
 
 }
@@ -751,7 +776,11 @@ func (c *CustomchannelsListCall) Do() (*CustomChannels, error) {
 	//   "path": "adclients/{adClientId}/customchannels",
 	//   "response": {
 	//     "$ref": "CustomChannels"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.seller",
+	//     "https://www.googleapis.com/auth/adexchange.seller.readonly"
+	//   ]
 	// }
 
 }
@@ -948,6 +977,10 @@ func (c *ReportsGenerateCall) Do() (*Report, error) {
 	//   "response": {
 	//     "$ref": "Report"
 	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.seller",
+	//     "https://www.googleapis.com/auth/adexchange.seller.readonly"
+	//   ],
 	//   "supportsMediaDownload": true
 	// }
 
@@ -1043,7 +1076,11 @@ func (c *UrlchannelsListCall) Do() (*UrlChannels, error) {
 	//   "path": "adclients/{adClientId}/urlchannels",
 	//   "response": {
 	//     "$ref": "UrlChannels"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.seller",
+	//     "https://www.googleapis.com/auth/adexchange.seller.readonly"
+	//   ]
 	// }
 
 }

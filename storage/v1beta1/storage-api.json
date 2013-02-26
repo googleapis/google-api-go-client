@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"a3GBuXuTtUYW9BV1SIieU5LiL7w/1N7R4ewUiEfRymB_9IwE3tEWoXM\"",
+ "etag": "\"-vXktEC13RBC5q_wkxEsszrjKM4/sXjGX9rIWNpd0tuNKTcVIkLnJrY\"",
  "discoveryVersion": "v1",
  "id": "storage:v1beta1",
  "name": "storage",
  "version": "v1beta1",
- "revision": "20120806",
+ "revision": "20130212",
  "title": "Cloud Storage API",
  "description": "Lets you store and retrieve potentially-large, immutable data objects.",
  "icons": {
@@ -322,7 +322,8 @@
      "properties": {
       "algorithm": {
        "type": "string",
-       "description": "Hash algorithm used. Currently only MD5 is supported. Required if a hash is provided."
+       "description": "Hash algorithm used. Currently only MD5 is supported. Required if a hash is provided.",
+       "default": "MD5"
       },
       "contentType": {
        "type": "string",
@@ -351,7 +352,7 @@
       "length": {
        "type": "string",
        "description": "Content-Length of the data in bytes.",
-       "format": "int64"
+       "format": "uint64"
       },
       "link": {
        "type": "string",
@@ -1244,6 +1245,7 @@
       "https://www.googleapis.com/auth/devstorage.full_control",
       "https://www.googleapis.com/auth/devstorage.read_write"
      ],
+     "supportsMediaDownload": true,
      "supportsMediaUpload": true,
      "mediaUpload": {
       "accept": [
@@ -1414,7 +1416,8 @@
      "scopes": [
       "https://www.googleapis.com/auth/devstorage.full_control",
       "https://www.googleapis.com/auth/devstorage.read_write"
-     ]
+     ],
+     "supportsMediaDownload": true
     }
    }
   }

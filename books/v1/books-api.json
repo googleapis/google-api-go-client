@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"a3GBuXuTtUYW9BV1SIieU5LiL7w/qjZq2HiiFoSSwCaYiocS1WFEpX8\"",
+ "etag": "\"-vXktEC13RBC5q_wkxEsszrjKM4/L3DlRwRJcBgGXSdEqTCePLW8Egw\"",
  "discoveryVersion": "v1",
  "id": "books:v1",
  "name": "books",
  "version": "v1",
- "revision": "20120822",
+ "revision": "20121212",
  "title": "Books API",
  "description": "Lets you search for books and manage your Google Books library.",
  "icons": {
@@ -893,6 +893,10 @@
      "description": "Timestamp for the last time an item in this layer was updated. (RFC 3339 UTC date-time format).",
      "format": "date-time"
     },
+    "volumeAnnotationsVersion": {
+     "type": "string",
+     "description": "The current version of this layer's volume annotations. Note that this version applies only to the data in the books.layers.volumeAnnotations.* responses. The actual annotation data is versioned separately."
+    },
     "volumeId": {
      "type": "string",
      "description": "The volume id this resource is for."
@@ -1115,6 +1119,39 @@
      "type": "string",
      "description": "Resource type for a volume. (In LITE projection.)",
      "default": "books#volume"
+    },
+    "layerInfo": {
+     "type": "object",
+     "description": "What layers exist in this volume and high level information about them.",
+     "properties": {
+      "layers": {
+       "type": "array",
+       "description": "A layer should appear here if and only if the layer exists for this book.",
+       "items": {
+        "type": "object",
+        "properties": {
+         "layerId": {
+          "type": "string",
+          "description": "The layer id of this layer (e.g. \"geo\")."
+         },
+         "volumeAnnotationsVersion": {
+          "type": "string",
+          "description": "The current version of this layer's volume annotations. Note that this version applies only to the data in the books.layers.volumeAnnotations.* responses. The actual annotation data is versioned separately."
+         }
+        }
+       }
+      }
+     }
+    },
+    "recommendedInfo": {
+     "type": "object",
+     "description": "Recommendation related information for this volume.",
+     "properties": {
+      "explanation": {
+       "type": "string",
+       "description": "A text explaining why this volume is recommended."
+      }
+     }
     },
     "saleInfo": {
      "type": "object",
@@ -1477,6 +1514,10 @@
      "type": "integer",
      "description": "The total number of volume annotations found.",
      "format": "int32"
+    },
+    "version": {
+     "type": "string",
+     "description": "The version string for all of the volume annotations in this layer (not just the ones in this response). Note: the version string doesn't apply to the annotation data, just the information in this response (e.g. the location of annotations in the book)."
     }
    }
   },
@@ -2017,6 +2058,11 @@
         "updatedMin": {
          "type": "string",
          "description": "RFC 3339 timestamp to restrict to items updated since this timestamp (inclusive).",
+         "location": "query"
+        },
+        "volumeAnnotationsVersion": {
+         "type": "string",
+         "description": "The version of the volume annotations that you are requesting.",
          "location": "query"
         },
         "volumeId": {
@@ -2692,6 +2738,11 @@
          "description": "Volume content version for which this reading position applies.",
          "location": "query"
         },
+        "deviceCookie": {
+         "type": "string",
+         "description": "Random persistent device cookie optional on set position.",
+         "location": "query"
+        },
         "position": {
          "type": "string",
          "description": "Position string for the new volume reading position.",
@@ -2967,6 +3018,34 @@
        "parameterOrder": [
         "volumeId"
        ],
+       "response": {
+        "$ref": "Volumes"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/books"
+       ]
+      }
+     }
+    },
+    "recommended": {
+     "methods": {
+      "list": {
+       "id": "books.volumes.recommended.list",
+       "path": "volumes/recommended",
+       "httpMethod": "GET",
+       "description": "Return a list of recommended books for the current user.",
+       "parameters": {
+        "locale": {
+         "type": "string",
+         "description": "ISO-639-1 language and ISO-3166-1 country code. Ex: 'en_US'. Used for generating recommendations.",
+         "location": "query"
+        },
+        "source": {
+         "type": "string",
+         "description": "String to identify the originator of this request.",
+         "location": "query"
+        }
+       },
        "response": {
         "$ref": "Volumes"
        },

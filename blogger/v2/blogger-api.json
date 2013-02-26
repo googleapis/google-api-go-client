@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"a3GBuXuTtUYW9BV1SIieU5LiL7w/L-FvwciKnyblN_QE3wRQRHPCFt0\"",
+ "etag": "\"-vXktEC13RBC5q_wkxEsszrjKM4/wWJ7TtNjfut6r56gioJaHq1lxEM\"",
  "discoveryVersion": "v1",
  "id": "blogger:v2",
  "name": "blogger",
  "version": "v2",
- "revision": "20120508",
+ "revision": "20130122",
  "title": "Blogger API",
  "description": "API for access to the data within Blogger.",
  "icons": {

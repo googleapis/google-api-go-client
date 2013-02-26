@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"a3GBuXuTtUYW9BV1SIieU5LiL7w/pqqsKUrIfPnTJ7ZvBF-x-8ISFR8\"",
+ "etag": "\"-vXktEC13RBC5q_wkxEsszrjKM4/XCJGMk5WwslTiebY6kuQv3KYwjw\"",
  "discoveryVersion": "v1",
  "id": "groupssettings:v1",
  "name": "groupssettings",
  "version": "v1",
- "revision": "20120831",
+ "revision": "20130213",
  "title": "Groups Settings API",
  "description": "Lets you manage permission levels and related settings of a group.",
  "icons": {
@@ -13,9 +13,6 @@
   "x32": "http://www.google.com/images/icons/product/search-32.gif"
  },
  "documentationLink": "https://developers.google.com/google-apps/groups-settings/get_started",
- "labels": [
-  "limited_availability"
- ],
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/groups/v1/groups/",
  "basePath": "/groups/v1/groups/",

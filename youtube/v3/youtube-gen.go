@@ -1,6 +1,6 @@
-// Package youtube provides access to the YouTube API.
+// Package youtube provides access to the YouTube Data API.
 //
-// See https://developers.google.com/youtube
+// See https://developers.google.com/youtube/v3
 //
 // Usage example:
 //
@@ -59,6 +59,8 @@ func New(client *http.Client) (*Service, error) {
 	s.Activities = &ActivitiesService{s: s}
 	s.Channels = &ChannelsService{s: s}
 	s.GuideCategories = &GuideCategoriesService{s: s}
+	s.LiveBroadcasts = &LiveBroadcastsService{s: s}
+	s.LiveStreams = &LiveStreamsService{s: s}
 	s.PlaylistItems = &PlaylistItemsService{s: s}
 	s.Playlists = &PlaylistsService{s: s}
 	s.Search = &SearchService{s: s}
@@ -76,6 +78,10 @@ type Service struct {
 	Channels *ChannelsService
 
 	GuideCategories *GuideCategoriesService
+
+	LiveBroadcasts *LiveBroadcastsService
+
+	LiveStreams *LiveStreamsService
 
 	PlaylistItems *PlaylistItemsService
 
@@ -102,6 +108,14 @@ type GuideCategoriesService struct {
 	s *Service
 }
 
+type LiveBroadcastsService struct {
+	s *Service
+}
+
+type LiveStreamsService struct {
+	s *Service
+}
+
 type PlaylistItemsService struct {
 	s *Service
 }
@@ -124,6 +138,16 @@ type VideoCategoriesService struct {
 
 type VideosService struct {
 	s *Service
+}
+
+type AccessPolicy struct {
+	// Allowed: The value of allowed indicates whether the access to the
+	// policy is allowed or denied by default.
+	Allowed bool `json:"allowed,omitempty"`
+
+	// Exception: A list of region codes that identify countries where the
+	// default policy do not apply.
+	Exception []string `json:"exception,omitempty"`
 }
 
 type Activity struct {
@@ -153,6 +177,11 @@ type ActivityContentDetails struct {
 	// bulletin post. This object is only present if the snippet.type is
 	// bulletin.
 	Bulletin *ActivityContentDetailsBulletin `json:"bulletin,omitempty"`
+
+	// ChannelItem: The channelItem object contains details about a resource
+	// which was added to a channel. This property is only present if the
+	// snippet.type is channelItem.
+	ChannelItem *ActivityContentDetailsChannelItem `json:"channelItem,omitempty"`
 
 	// Comment: The comment object contains information about a resource
 	// that received a comment. This property is only present if the
@@ -196,6 +225,12 @@ type ActivityContentDetails struct {
 type ActivityContentDetailsBulletin struct {
 	// ResourceId: The resourceId object contains information that
 	// identifies the resource associated with a bulletin post.
+	ResourceId *ResourceId `json:"resourceId,omitempty"`
+}
+
+type ActivityContentDetailsChannelItem struct {
+	// ResourceId: The resourceId object contains information that
+	// identifies the resource that was added to the channel.
 	ResourceId *ResourceId `json:"resourceId,omitempty"`
 }
 
@@ -369,6 +404,10 @@ type Channel struct {
 }
 
 type ChannelContentDetails struct {
+	// GooglePlusUserId: The googlePlusUserId object identifies the Google+
+	// profile ID associated with this channel.
+	GooglePlusUserId string `json:"googlePlusUserId,omitempty"`
+
 	// RelatedPlaylists: The relatedPlaylists object is a map that
 	// identifies playlists associated with the channel, such as the
 	// channel's uploaded videos or favorite videos. You can retrieve any of
@@ -428,10 +467,7 @@ type ChannelListResponse struct {
 }
 
 type ChannelSnippet struct {
-	// ChannelId: The ID that YouTube uses to uniquely identify the channel.
-	ChannelId string `json:"channelId,omitempty"`
-
-	// Description: The channel's description.
+	// Description: The description of the channel.
 	Description string `json:"description,omitempty"`
 
 	// PublishedAt: The date and time that the channel was created. The
@@ -527,6 +563,248 @@ type GuideCategorySnippet struct {
 	Title string `json:"title,omitempty"`
 }
 
+type LiveBroadcast struct {
+	// ContentDetails: The content details of the live broadcast.
+	ContentDetails *LiveBroadcastContentDetails `json:"contentDetails,omitempty"`
+
+	// Etag: The eTag of the broadcast.
+	Etag string `json:"etag,omitempty"`
+
+	// Id: The unique id of the broadcast.
+	Id string `json:"id,omitempty"`
+
+	// Kind: The type of this API resource.
+	Kind string `json:"kind,omitempty"`
+
+	// SlateSettings: The slate settings of the live broadcast.
+	SlateSettings *LiveBroadcastSlateSettings `json:"slateSettings,omitempty"`
+
+	// Snippet: Basic details about the live broadcast.
+	Snippet *LiveBroadcastSnippet `json:"snippet,omitempty"`
+
+	// Status: The status of the live broadcast.
+	Status *LiveBroadcastStatus `json:"status,omitempty"`
+}
+
+type LiveBroadcastContentDetails struct {
+	// BoundStreamId: The id of the stream bound to the broadcast.
+	BoundStreamId string `json:"boundStreamId,omitempty"`
+
+	// EnableArchive: Whether the live event will be archived or not.
+	EnableArchive bool `json:"enableArchive,omitempty"`
+
+	// EnableContentEncryption: Whether to enable or disable content
+	// encryption.
+	EnableContentEncryption bool `json:"enableContentEncryption,omitempty"`
+
+	// EnableDvr: Whether the dvr (digital video recording) is enabled or
+	// not.
+	EnableDvr bool `json:"enableDvr,omitempty"`
+
+	// EnableEmbed: Whether to allow the broadcast to be played in an
+	// embedded player.
+	EnableEmbed bool `json:"enableEmbed,omitempty"`
+
+	// MonitorStream: Information about the monitor stream which helps the
+	// broadcaster to review the event content before shown to the public.
+	MonitorStream *LiveBroadcastContentDetailsMonitorStream `json:"monitorStream,omitempty"`
+
+	// StartWithSlateCuepoint: Automatically start with a slate cuepoint.
+	StartWithSlateCuepoint bool `json:"startWithSlateCuepoint,omitempty"`
+}
+
+type LiveBroadcastContentDetailsMonitorStream struct {
+	// BroadcastStreamDelayMs: If enableMonitorStream is true, the public
+	// broadcast will be delayed by this value.
+	BroadcastStreamDelayMs int64 `json:"broadcastStreamDelayMs,omitempty"`
+
+	// EmbedHtml: The html code of the embedded player for the monitor
+	// stream.
+	EmbedHtml string `json:"embedHtml,omitempty"`
+
+	// EnableMonitorStream: Whether to enable the monitor stream for the
+	// broadcast.
+	EnableMonitorStream bool `json:"enableMonitorStream,omitempty"`
+}
+
+type LiveBroadcastList struct {
+	// Etag: The eTag of the chart.
+	Etag string `json:"etag,omitempty"`
+
+	// Items: A list of broadcasts that match the request criteria.
+	Items []*LiveBroadcast `json:"items,omitempty"`
+
+	// Kind: The type of this API resource.
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: The token that can be used as the value of the {@code
+	// pageInfo} parameter to retrieve the next page in the result set.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// PageInfo: The {@code pageInfo} object encapsulates paging information
+	// for the result set.
+	PageInfo *PageInfo `json:"pageInfo,omitempty"`
+
+	// PrevPageToken: The token that can be used as the value of the {@code
+	// pageInfo} parameter to retrieve the previous page in the result set.
+	PrevPageToken string `json:"prevPageToken,omitempty"`
+}
+
+type LiveBroadcastSlateSettings struct {
+	// EnableSlates: Whether slate is enabled or not.
+	EnableSlates bool `json:"enableSlates,omitempty"`
+
+	// Slates: Broadcast slates.
+	Slates *LiveBroadcastSlateSettingsSlates `json:"slates,omitempty"`
+}
+
+type LiveBroadcastSlateSettingsSlates struct {
+}
+
+type LiveBroadcastSnippet struct {
+	// ActualEndTime: Date and time the broadcast is actual to end. The
+	// value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.
+	ActualEndTime string `json:"actualEndTime,omitempty"`
+
+	// ActualStartTime: Date and time the broadcast is actual to start. The
+	// value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.
+	ActualStartTime string `json:"actualStartTime,omitempty"`
+
+	// ChannelId: Channel publishing the broadcast.
+	ChannelId string `json:"channelId,omitempty"`
+
+	// Description: Description of the broadcast.
+	Description string `json:"description,omitempty"`
+
+	// PublishedAt: Date and time the broadcast was published at. The value
+	// is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.
+	PublishedAt string `json:"publishedAt,omitempty"`
+
+	// ScheduledEndTime: Date and time the broadcast is scheduled to end.
+	// The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.
+	ScheduledEndTime string `json:"scheduledEndTime,omitempty"`
+
+	// ScheduledStartTime: Date and time the broadcast is scheduled to
+	// start. The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ)
+	// format.
+	ScheduledStartTime string `json:"scheduledStartTime,omitempty"`
+
+	// Thumbnails: Video thumbnails.
+	Thumbnails *LiveBroadcastSnippetThumbnails `json:"thumbnails,omitempty"`
+
+	// Title: Title of the broadcast.
+	Title string `json:"title,omitempty"`
+}
+
+type LiveBroadcastSnippetThumbnails struct {
+}
+
+type LiveBroadcastStatus struct {
+	// LifeCycleStatus: Life status of the live broadcast.
+	LifeCycleStatus string `json:"lifeCycleStatus,omitempty"`
+
+	// PrivacyStatus: Privacy settings of the live broadcast. Allowed
+	// values: private, unlisted, public.
+	PrivacyStatus string `json:"privacyStatus,omitempty"`
+}
+
+type LiveStream struct {
+	// Cdn: Cdn settings of the live stream.
+	Cdn *LiveStreamCdn `json:"cdn,omitempty"`
+
+	// Etag: The eTag of the stream.
+	Etag string `json:"etag,omitempty"`
+
+	// Id: The unique id of the stream.
+	Id string `json:"id,omitempty"`
+
+	// Kind: The type of this API resource.
+	Kind string `json:"kind,omitempty"`
+
+	// Snippet: Basic details about the live stream.
+	Snippet *LiveStreamSnippet `json:"snippet,omitempty"`
+
+	// Status: Status of the live stream.
+	Status *LiveStreamStatus `json:"status,omitempty"`
+}
+
+type LiveStreamCdn struct {
+	// Format: The format of the inbound data. Allowed values: 240p, 360p,
+	// 480p, 720p, 1080p, webm_360p, multicast_qcif, multicast_240p,
+	// multicast_360p, multicast_480p, multicast_720p, multicast_1080p.
+	Format string `json:"format,omitempty"`
+
+	// IngestionInfo: Encapsulates information for ingesting an RTMP or an
+	// HTTP stream.
+	IngestionInfo *LiveStreamCdnIngestionInfo `json:"ingestionInfo,omitempty"`
+
+	// IngestionType: The live stream ingestion type. Allowed values: rtmp,
+	// http, multicast.
+	IngestionType string `json:"ingestionType,omitempty"`
+
+	// MulticastIngestionInfo: Encapsulates information for ingesting a
+	// multicast stream.
+	MulticastIngestionInfo *LiveStreamCdnMulticastIngestionInfo `json:"multicastIngestionInfo,omitempty"`
+}
+
+type LiveStreamCdnIngestionInfo struct {
+	// BackupIngestionAddress: The backup address of the inbound data.
+	BackupIngestionAddress string `json:"backupIngestionAddress,omitempty"`
+
+	// IngestionAddress: The address of the inbound data.
+	IngestionAddress string `json:"ingestionAddress,omitempty"`
+
+	// StreamName: Ingestion stream name.
+	StreamName string `json:"streamName,omitempty"`
+}
+
+type LiveStreamCdnMulticastIngestionInfo struct {
+	// MulticastAddress: The IP address of the multicast data.
+	MulticastAddress string `json:"multicastAddress,omitempty"`
+}
+
+type LiveStreamList struct {
+	// Etag: The eTag of the chart.
+	Etag string `json:"etag,omitempty"`
+
+	// Items: A list of live streams that match the request criteria.
+	Items []*LiveStream `json:"items,omitempty"`
+
+	// Kind: The type of this API resource.
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: The token that can be used as the value of the {@code
+	// pageInfo} parameter to retrieve the next page in the result set.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// PageInfo: The {@code pageInfo} object encapsulates paging information
+	// for the result set.
+	PageInfo *PageInfo `json:"pageInfo,omitempty"`
+
+	// PrevPageToken: The token that can be used as the value of the {@code
+	// pageInfo} parameter to retrieve the previous page in the result set.
+	PrevPageToken string `json:"prevPageToken,omitempty"`
+}
+
+type LiveStreamSnippet struct {
+	// ChannelId: Channel publishing the live stream.
+	ChannelId string `json:"channelId,omitempty"`
+
+	// Description: Description of the live stream.
+	Description string `json:"description,omitempty"`
+
+	// PublishedAt: Date and time the live stream was published at.
+	PublishedAt string `json:"publishedAt,omitempty"`
+
+	// Title: Title of the live stream.
+	Title string `json:"title,omitempty"`
+}
+
+type LiveStreamStatus struct {
+	// StreamStatus: The status of the stream.
+	StreamStatus string `json:"streamStatus,omitempty"`
+}
+
 type PageInfo struct {
 	// ResultsPerPage: The number of results included in the API response.
 	ResultsPerPage int64 `json:"resultsPerPage,omitempty"`
@@ -536,6 +814,10 @@ type PageInfo struct {
 }
 
 type Playlist struct {
+	// ContentDetails: The contentDetails object contains information like
+	// video count.
+	ContentDetails *PlaylistContentDetails `json:"contentDetails,omitempty"`
+
 	// Etag: The ETag for the playlist resource.
 	Etag string `json:"etag,omitempty"`
 
@@ -546,6 +828,10 @@ type Playlist struct {
 	// will be youtube#playlist.
 	Kind string `json:"kind,omitempty"`
 
+	// Player: The player object contains information that you would use to
+	// play the playlist in an embedded player.
+	Player *PlaylistPlayer `json:"player,omitempty"`
+
 	// Snippet: The snippet object contains basic details about the
 	// playlist, such as its title and description.
 	Snippet *PlaylistSnippet `json:"snippet,omitempty"`
@@ -553,6 +839,11 @@ type Playlist struct {
 	// Status: The status object contains status information for the
 	// playlist.
 	Status *PlaylistStatus `json:"status,omitempty"`
+}
+
+type PlaylistContentDetails struct {
+	// ItemCount: The number of videos in the playlist.
+	ItemCount int64 `json:"itemCount,omitempty"`
 }
 
 type PlaylistItem struct {
@@ -685,6 +976,12 @@ type PlaylistListResponse struct {
 	// PrevPageToken: The token that can be used as the value of the
 	// pageToken parameter to retrieve the previous page in the result set.
 	PrevPageToken string `json:"prevPageToken,omitempty"`
+}
+
+type PlaylistPlayer struct {
+	// EmbedHtml: An <iframe> tag that embeds a player that will play the
+	// playlist.
+	EmbedHtml string `json:"embedHtml,omitempty"`
 }
 
 type PlaylistSnippet struct {
@@ -892,8 +1189,14 @@ type SubscriptionSnippetThumbnails struct {
 }
 
 type Thumbnail struct {
+	// Height: (Optional) Height of the thumbnail image.
+	Height int64 `json:"height,omitempty"`
+
 	// Url: The thumbnail image's URL.
 	Url string `json:"url,omitempty"`
+
+	// Width: (Optional) Width of the thumbnail image.
+	Width int64 `json:"width,omitempty"`
 }
 
 type Video struct {
@@ -905,6 +1208,12 @@ type Video struct {
 	// Etag: The ETag of the video resource.
 	Etag string `json:"etag,omitempty"`
 
+	// FileDetails: The fileDetails object encapsulates information about
+	// the video file that was uploaded to YouTube, including the file's
+	// resolution, duration, audio and video codecs, stream bitrates, and
+	// more. This data can only be retrieved by the video owner.
+	FileDetails *VideoFileDetails `json:"fileDetails,omitempty"`
+
 	// Id: The ID that YouTube uses to uniquely identify the video.
 	Id string `json:"id,omitempty"`
 
@@ -912,9 +1221,27 @@ type Video struct {
 	// will be youtube#video.
 	Kind string `json:"kind,omitempty"`
 
+	// MonetizationDetails: The monetizationDetails object encapsulates
+	// information about the monetization status of the video.
+	MonetizationDetails *VideoMonetizationDetails `json:"monetizationDetails,omitempty"`
+
 	// Player: The player object contains information that you would use to
 	// play the video in an embedded player.
 	Player *VideoPlayer `json:"player,omitempty"`
+
+	// ProcessingDetails: The processingProgress object encapsulates
+	// information about YouTube's progress in processing the uploaded video
+	// file. The properties in the object identify the current processing
+	// status and an estimate of the time remaining until YouTube finishes
+	// processing the video. This part also indicates whether different
+	// types of data or content, such as file details or thumbnail images,
+	// are available for the video.
+	//
+	// The processingProgress object is
+	// designed to be polled so that the video uploaded can track the
+	// progress that YouTube has made in processing the uploaded video file.
+	// This data can only be retrieved by the video owner.
+	ProcessingDetails *VideoProcessingDetails `json:"processingDetails,omitempty"`
 
 	// RecordingDetails: The recordingDetails object encapsulates
 	// information about the location, date and address where the video was
@@ -932,6 +1259,12 @@ type Video struct {
 	// Status: The status object contains information about the video's
 	// uploading, processing, and privacy statuses.
 	Status *VideoStatus `json:"status,omitempty"`
+
+	// Suggestions: The suggestions object encapsulates suggestions that
+	// identify opportunities to improve the video quality or the metadata
+	// for the uploaded video. This data can only be retrieved by the video
+	// owner.
+	Suggestions *VideoSuggestions `json:"suggestions,omitempty"`
 
 	// TopicDetails: The topicDetails object encapsulates information about
 	// Freebase topics associated with the video.
@@ -977,6 +1310,18 @@ type VideoCategorySnippet struct {
 }
 
 type VideoContentDetails struct {
+	// Caption: The value of captions indicates whether the video has
+	// captions or not.
+	Caption string `json:"caption,omitempty"`
+
+	// Definition: The value of definition indicates whether the video is
+	// available in high definition or only in standard definition.
+	Definition string `json:"definition,omitempty"`
+
+	// Dimension: The value of dimension indicates whether the video is
+	// available in 3D or in 2D.
+	Dimension string `json:"dimension,omitempty"`
+
 	// Duration: The length of the video. The tag value is an ISO 8601
 	// duration in the format PT#M#S, in which the letters PT indicate that
 	// the value specifies a period of time, and the letters M and S refer
@@ -985,6 +1330,10 @@ type VideoContentDetails struct {
 	// number of minutes (or seconds) of the video. For example, a value of
 	// PT15M51S indicates that the video is 15 minutes and 51 seconds long.
 	Duration string `json:"duration,omitempty"`
+
+	// LicensedContent: The value of is_license_content indicates whether
+	// the video is licensed content.
+	LicensedContent bool `json:"licensedContent,omitempty"`
 
 	// RegionRestriction: The regionRestriction object contains information
 	// about the countries where a video is (or is not) viewable. The object
@@ -1009,6 +1358,83 @@ type VideoContentDetailsRegionRestriction struct {
 	Blocked []string `json:"blocked,omitempty"`
 }
 
+type VideoFileDetails struct {
+	// AudioStreams: Audio streams.
+	AudioStreams []*VideoFileDetailsAudioStream `json:"audioStreams,omitempty"`
+
+	// BitrateBps: Combined audio and video bitrate, in bits per second.
+	BitrateBps uint64 `json:"bitrateBps,omitempty,string"`
+
+	// Container: Container format used.
+	Container string `json:"container,omitempty"`
+
+	// CreationTime: Date and time when the video file was created, in ISO
+	// 8601 format. Currently the only ISO 8601 formats produced are: - Date
+	// only: YYYY-MM-DD - Naive time: YYYY-MM-DDTHH:MM:SS - Time with
+	// timezone: YYYY-MM-DDTHH:MM:SS+HH:MM
+	CreationTime string `json:"creationTime,omitempty"`
+
+	// DurationMs: Video duration in milliseconds.
+	DurationMs uint64 `json:"durationMs,omitempty,string"`
+
+	// FileName: File name.
+	FileName string `json:"fileName,omitempty"`
+
+	// FileSize: File size.
+	FileSize uint64 `json:"fileSize,omitempty,string"`
+
+	// FileType: File type.
+	FileType string `json:"fileType,omitempty"`
+
+	// RecordingLocation: Location of the place where the video was
+	// recorded.
+	RecordingLocation *GeoPoint `json:"recordingLocation,omitempty"`
+
+	// VideoStreams: Video streams.
+	VideoStreams []*VideoFileDetailsVideoStream `json:"videoStreams,omitempty"`
+}
+
+type VideoFileDetailsAudioStream struct {
+	// BitrateBps: Audio stream bitrate, in bits per second.
+	BitrateBps uint64 `json:"bitrateBps,omitempty,string"`
+
+	// ChannelCount: Number of audio channels.
+	ChannelCount int64 `json:"channelCount,omitempty"`
+
+	// Codec: Audio codec used.
+	Codec string `json:"codec,omitempty"`
+
+	// Vendor: Audio vendor identifier, typically a four-letter vendor code.
+	Vendor string `json:"vendor,omitempty"`
+}
+
+type VideoFileDetailsVideoStream struct {
+	// AspectRatio: Display aspect ratio, which might differ from
+	// width_pixels / height_pixels.
+	AspectRatio float64 `json:"aspectRatio,omitempty"`
+
+	// BitrateBps: Video stream bitrate, in bits per second.
+	BitrateBps uint64 `json:"bitrateBps,omitempty,string"`
+
+	// Codec: Video codec used.
+	Codec string `json:"codec,omitempty"`
+
+	// FrameRateFps: Video frame rate, in frames per second.
+	FrameRateFps float64 `json:"frameRateFps,omitempty"`
+
+	// HeightPixels: Video height in pixels.
+	HeightPixels int64 `json:"heightPixels,omitempty"`
+
+	// Rotation: Rotation that is necessary to display the video properly.
+	Rotation string `json:"rotation,omitempty"`
+
+	// Vendor: Video vendor identifier, typically a four-letter vendor code.
+	Vendor string `json:"vendor,omitempty"`
+
+	// WidthPixels: Video width in pixels.
+	WidthPixels int64 `json:"widthPixels,omitempty"`
+}
+
 type VideoListResponse struct {
 	// Etag: The ETag of the response.
 	Etag string `json:"etag,omitempty"`
@@ -1021,10 +1447,59 @@ type VideoListResponse struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+type VideoMonetizationDetails struct {
+	// Access: The value of access indicates whether the video can be
+	// monetized or not.
+	Access *AccessPolicy `json:"access,omitempty"`
+}
+
 type VideoPlayer struct {
 	// EmbedHtml: An <iframe> tag that embeds a player that will play the
 	// video.
 	EmbedHtml string `json:"embedHtml,omitempty"`
+}
+
+type VideoProcessingDetails struct {
+	// EditorSuggestionsAvailability: Editor suggestions availability.
+	EditorSuggestionsAvailability string `json:"editorSuggestionsAvailability,omitempty"`
+
+	// FileDetailsAvailability: File details availability.
+	FileDetailsAvailability string `json:"fileDetailsAvailability,omitempty"`
+
+	// ProcessingFailureReason: Reason why video processing has failed.
+	ProcessingFailureReason string `json:"processingFailureReason,omitempty"`
+
+	// ProcessingIssuesAvailability: Processing issues availability.
+	ProcessingIssuesAvailability string `json:"processingIssuesAvailability,omitempty"`
+
+	// ProcessingProgress: Video processing progress and completion time
+	// estimate.
+	ProcessingProgress *VideoProcessingDetailsProcessingProgress `json:"processingProgress,omitempty"`
+
+	// ProcessingStatus: Video processing status.
+	ProcessingStatus string `json:"processingStatus,omitempty"`
+
+	// TagSuggestionsAvailability: Tag suggestions availability.
+	TagSuggestionsAvailability string `json:"tagSuggestionsAvailability,omitempty"`
+
+	// ThumbnailsAvailability: Thumbnails availability.
+	ThumbnailsAvailability string `json:"thumbnailsAvailability,omitempty"`
+}
+
+type VideoProcessingDetailsProcessingProgress struct {
+	// PartsProcessed: Number of parts already processed. Progress expressed
+	// in percent should be computed as: 100 * parts_processed /
+	// parts_total.
+	PartsProcessed uint64 `json:"partsProcessed,omitempty,string"`
+
+	// PartsTotal: An estimate of total number of parts to process. The
+	// number might be updated with more precise estimates as the processing
+	// progresses.
+	PartsTotal uint64 `json:"partsTotal,omitempty,string"`
+
+	// TimeLeftMs: Estimated time till video processing is complete, in
+	// milliseconds.
+	TimeLeftMs uint64 `json:"timeLeftMs,omitempty,string"`
 }
 
 type VideoRecordingDetails struct {
@@ -1093,10 +1568,17 @@ type VideoStatistics struct {
 }
 
 type VideoStatus struct {
+	// Embeddable: This value indicates if the video can be embedded on
+	// another website.
+	Embeddable bool `json:"embeddable,omitempty"`
+
 	// FailureReason: This value explains why a video failed to upload. This
 	// property is only present if the uploadStatus property indicates that
 	// the upload failed.
 	FailureReason string `json:"failureReason,omitempty"`
+
+	// License: The video's license.
+	License string `json:"license,omitempty"`
 
 	// PrivacyStatus: The video's privacy status.
 	PrivacyStatus string `json:"privacyStatus,omitempty"`
@@ -1108,6 +1590,33 @@ type VideoStatus struct {
 
 	// UploadStatus: The status of the uploaded video.
 	UploadStatus string `json:"uploadStatus,omitempty"`
+}
+
+type VideoSuggestions struct {
+	// EditorSuggestions: Editor operations that could improve video
+	// quality.
+	EditorSuggestions []string `json:"editorSuggestions,omitempty"`
+
+	// ProcessingErrors: Errors encountered during video processing.
+	ProcessingErrors []string `json:"processingErrors,omitempty"`
+
+	// ProcessingHints: Hints about how to improve video processing.
+	ProcessingHints []string `json:"processingHints,omitempty"`
+
+	// ProcessingWarnings: Warnings produced by the video processing engine.
+	ProcessingWarnings []string `json:"processingWarnings,omitempty"`
+
+	// TagSuggestions: Tags that could be added to aid video discovery.
+	TagSuggestions []*VideoSuggestionsTagSuggestion `json:"tagSuggestions,omitempty"`
+}
+
+type VideoSuggestionsTagSuggestion struct {
+	// CategoryRestricts: Set of categories this tag should be restricted
+	// to. Tag applies to all categories if there are no restricts.
+	CategoryRestricts []string `json:"categoryRestricts,omitempty"`
+
+	// Tag: Tag label.
+	Tag string `json:"tag,omitempty"`
 }
 
 type VideoTopicDetails struct {
@@ -1663,6 +2172,898 @@ func (c *GuideCategoriesListCall) Do() (*GuideCategoryListResponse, error) {
 
 }
 
+// method id "youtube.liveBroadcasts.bind":
+
+type LiveBroadcastsBindCall struct {
+	s    *Service
+	id   string
+	part string
+	opt_ map[string]interface{}
+}
+
+// Bind: Bind a YouTube live broadcast to a stream.
+func (r *LiveBroadcastsService) Bind(id string, part string) *LiveBroadcastsBindCall {
+	c := &LiveBroadcastsBindCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	c.part = part
+	return c
+}
+
+// StreamId sets the optional parameter "streamId": ID of the stream to
+// bind to the broadcast
+func (c *LiveBroadcastsBindCall) StreamId(streamId string) *LiveBroadcastsBindCall {
+	c.opt_["streamId"] = streamId
+	return c
+}
+
+func (c *LiveBroadcastsBindCall) Do() (*LiveBroadcast, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("id", fmt.Sprintf("%v", c.id))
+	params.Set("part", fmt.Sprintf("%v", c.part))
+	if v, ok := c.opt_["streamId"]; ok {
+		params.Set("streamId", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "liveBroadcasts/bind")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(LiveBroadcast)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Bind a YouTube live broadcast to a stream.",
+	//   "httpMethod": "POST",
+	//   "id": "youtube.liveBroadcasts.bind",
+	//   "parameterOrder": [
+	//     "id",
+	//     "part"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "ID of the broadcast to which the stream will be bound",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "part": {
+	//       "description": "Live broadcast parts to be returned in the response. Valid values are: id, snippet, status, slateSettings, contentDetails.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "streamId": {
+	//       "description": "ID of the stream to bind to the broadcast",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "liveBroadcasts/bind",
+	//   "response": {
+	//     "$ref": "LiveBroadcast"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/youtube"
+	//   ]
+	// }
+
+}
+
+// method id "youtube.liveBroadcasts.delete":
+
+type LiveBroadcastsDeleteCall struct {
+	s    *Service
+	id   string
+	opt_ map[string]interface{}
+}
+
+// Delete: Delete a YouTube live broadcast.
+func (r *LiveBroadcastsService) Delete(id string) *LiveBroadcastsDeleteCall {
+	c := &LiveBroadcastsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	return c
+}
+
+func (c *LiveBroadcastsDeleteCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("id", fmt.Sprintf("%v", c.id))
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "liveBroadcasts")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Delete a YouTube live broadcast.",
+	//   "httpMethod": "DELETE",
+	//   "id": "youtube.liveBroadcasts.delete",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The id parameter specifies the YouTube live broadcast ID for the resource that is being deleted.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "liveBroadcasts",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/youtube"
+	//   ]
+	// }
+
+}
+
+// method id "youtube.liveBroadcasts.insert":
+
+type LiveBroadcastsInsertCall struct {
+	s             *Service
+	part          string
+	livebroadcast *LiveBroadcast
+	opt_          map[string]interface{}
+}
+
+// Insert: Insert a YouTube live broadcast.
+func (r *LiveBroadcastsService) Insert(part string, livebroadcast *LiveBroadcast) *LiveBroadcastsInsertCall {
+	c := &LiveBroadcastsInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.part = part
+	c.livebroadcast = livebroadcast
+	return c
+}
+
+func (c *LiveBroadcastsInsertCall) Do() (*LiveBroadcast, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.livebroadcast)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("part", fmt.Sprintf("%v", c.part))
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "liveBroadcasts")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(LiveBroadcast)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Insert a YouTube live broadcast.",
+	//   "httpMethod": "POST",
+	//   "id": "youtube.liveBroadcasts.insert",
+	//   "parameterOrder": [
+	//     "part"
+	//   ],
+	//   "parameters": {
+	//     "part": {
+	//       "description": "Live broadcast parts to be set for the broadcast as well as included in the returned response. Valid values are: snippet, status, slateSettings, contentDetails.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "liveBroadcasts",
+	//   "request": {
+	//     "$ref": "LiveBroadcast"
+	//   },
+	//   "response": {
+	//     "$ref": "LiveBroadcast"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/youtube"
+	//   ]
+	// }
+
+}
+
+// method id "youtube.liveBroadcasts.list":
+
+type LiveBroadcastsListCall struct {
+	s    *Service
+	part string
+	opt_ map[string]interface{}
+}
+
+// List: Browse the YouTube broadcast collection.
+func (r *LiveBroadcastsService) List(part string) *LiveBroadcastsListCall {
+	c := &LiveBroadcastsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.part = part
+	return c
+}
+
+// BroadcastStatus sets the optional parameter "broadcastStatus": Filter
+// to only return broadcasts with the given status by the authenticated
+// user.
+func (c *LiveBroadcastsListCall) BroadcastStatus(broadcastStatus string) *LiveBroadcastsListCall {
+	c.opt_["broadcastStatus"] = broadcastStatus
+	return c
+}
+
+// Id sets the optional parameter "id": IDs of the live broadcasts to be
+// returned.
+func (c *LiveBroadcastsListCall) Id(id string) *LiveBroadcastsListCall {
+	c.opt_["id"] = id
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum number
+// of results to return
+func (c *LiveBroadcastsListCall) MaxResults(maxResults int64) *LiveBroadcastsListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// Mine sets the optional parameter "mine": Filter to only return
+// broadcasts owned by authenticated user.
+func (c *LiveBroadcastsListCall) Mine(mine bool) *LiveBroadcastsListCall {
+	c.opt_["mine"] = mine
+	return c
+}
+
+// OnBehalfOf sets the optional parameter "onBehalfOf": ID of the
+// Google+ Page for the channel that the request is be on behalf of
+func (c *LiveBroadcastsListCall) OnBehalfOf(onBehalfOf string) *LiveBroadcastsListCall {
+	c.opt_["onBehalfOf"] = onBehalfOf
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Token for the page
+// selection.
+func (c *LiveBroadcastsListCall) PageToken(pageToken string) *LiveBroadcastsListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+func (c *LiveBroadcastsListCall) Do() (*LiveBroadcastList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("part", fmt.Sprintf("%v", c.part))
+	if v, ok := c.opt_["broadcastStatus"]; ok {
+		params.Set("broadcastStatus", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["id"]; ok {
+		params.Set("id", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["mine"]; ok {
+		params.Set("mine", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["onBehalfOf"]; ok {
+		params.Set("onBehalfOf", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "liveBroadcasts")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(LiveBroadcastList)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Browse the YouTube broadcast collection.",
+	//   "httpMethod": "GET",
+	//   "id": "youtube.liveBroadcasts.list",
+	//   "parameterOrder": [
+	//     "part"
+	//   ],
+	//   "parameters": {
+	//     "broadcastStatus": {
+	//       "description": "Filter to only return broadcasts with the given status by the authenticated user.",
+	//       "enum": [
+	//         "active",
+	//         "all",
+	//         "completed",
+	//         "upcoming"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Return active broadcasts.",
+	//         "Return all the broadcasts.",
+	//         "Return previously completed broadcasts.",
+	//         "Return upcoming broadcasts."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "id": {
+	//       "description": "IDs of the live broadcasts to be returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "5",
+	//       "description": "Maximum number of results to return",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "50",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "mine": {
+	//       "description": "Filter to only return broadcasts owned by authenticated user.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "onBehalfOf": {
+	//       "description": "ID of the Google+ Page for the channel that the request is be on behalf of",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageToken": {
+	//       "description": "Token for the page selection.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "part": {
+	//       "description": "Live broadcast parts to include in the returned response. Valid values are: id, snippet, status, slateSettings, contentDetails.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "liveBroadcasts",
+	//   "response": {
+	//     "$ref": "LiveBroadcastList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/youtube.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "youtube.liveBroadcasts.transition":
+
+type LiveBroadcastsTransitionCall struct {
+	s               *Service
+	broadcastStatus string
+	id              string
+	part            string
+	opt_            map[string]interface{}
+}
+
+// Transition: Change the broadcasting status of a YouTube live
+// broadcast and start all the processes associated with it.
+func (r *LiveBroadcastsService) Transition(broadcastStatus string, id string, part string) *LiveBroadcastsTransitionCall {
+	c := &LiveBroadcastsTransitionCall{s: r.s, opt_: make(map[string]interface{})}
+	c.broadcastStatus = broadcastStatus
+	c.id = id
+	c.part = part
+	return c
+}
+
+func (c *LiveBroadcastsTransitionCall) Do() (*LiveBroadcast, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("broadcastStatus", fmt.Sprintf("%v", c.broadcastStatus))
+	params.Set("id", fmt.Sprintf("%v", c.id))
+	params.Set("part", fmt.Sprintf("%v", c.part))
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "liveBroadcasts/transition")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(LiveBroadcast)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Change the broadcasting status of a YouTube live broadcast and start all the processes associated with it.",
+	//   "httpMethod": "POST",
+	//   "id": "youtube.liveBroadcasts.transition",
+	//   "parameterOrder": [
+	//     "broadcastStatus",
+	//     "id",
+	//     "part"
+	//   ],
+	//   "parameters": {
+	//     "broadcastStatus": {
+	//       "description": "Desired broadcast status.",
+	//       "enum": [
+	//         "complete",
+	//         "live",
+	//         "testing"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Stop broadcasting.",
+	//         "Start broadcasting.",
+	//         "Start broadcast testing."
+	//       ],
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "id": {
+	//       "description": "ID of the broadcast to change status",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "part": {
+	//       "description": "Live broadcast parts to be returned in the response. Valid values are: id, snippet, status, slateSettings, contentDetails.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "liveBroadcasts/transition",
+	//   "response": {
+	//     "$ref": "LiveBroadcast"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/youtube"
+	//   ]
+	// }
+
+}
+
+// method id "youtube.liveBroadcasts.update":
+
+type LiveBroadcastsUpdateCall struct {
+	s             *Service
+	part          string
+	livebroadcast *LiveBroadcast
+	opt_          map[string]interface{}
+}
+
+// Update: Update a YouTube live broadcast.
+func (r *LiveBroadcastsService) Update(part string, livebroadcast *LiveBroadcast) *LiveBroadcastsUpdateCall {
+	c := &LiveBroadcastsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.part = part
+	c.livebroadcast = livebroadcast
+	return c
+}
+
+func (c *LiveBroadcastsUpdateCall) Do() (*LiveBroadcast, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.livebroadcast)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("part", fmt.Sprintf("%v", c.part))
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "liveBroadcasts")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(LiveBroadcast)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Update a YouTube live broadcast.",
+	//   "httpMethod": "PUT",
+	//   "id": "youtube.liveBroadcasts.update",
+	//   "parameterOrder": [
+	//     "part"
+	//   ],
+	//   "parameters": {
+	//     "part": {
+	//       "description": "The part parameter serves two purposes in this operation. It identifies the properties that the write operation will set as well as the properties that the API response will include.\n\nThe part names that you can include in the parameter value are id, snippet, status, slateSettings, contentDetails.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "liveBroadcasts",
+	//   "request": {
+	//     "$ref": "LiveBroadcast"
+	//   },
+	//   "response": {
+	//     "$ref": "LiveBroadcast"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/youtube"
+	//   ]
+	// }
+
+}
+
+// method id "youtube.liveStreams.delete":
+
+type LiveStreamsDeleteCall struct {
+	s    *Service
+	id   string
+	opt_ map[string]interface{}
+}
+
+// Delete: Delete a live stream.
+func (r *LiveStreamsService) Delete(id string) *LiveStreamsDeleteCall {
+	c := &LiveStreamsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	return c
+}
+
+func (c *LiveStreamsDeleteCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("id", fmt.Sprintf("%v", c.id))
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "liveStreams")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Delete a live stream.",
+	//   "httpMethod": "DELETE",
+	//   "id": "youtube.liveStreams.delete",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The id parameter specifies the YouTube live stream ID for the resource that is being deleted.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "liveStreams",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/youtube"
+	//   ]
+	// }
+
+}
+
+// method id "youtube.liveStreams.insert":
+
+type LiveStreamsInsertCall struct {
+	s          *Service
+	part       string
+	livestream *LiveStream
+	opt_       map[string]interface{}
+}
+
+// Insert: Insert a YouTube live stream.
+func (r *LiveStreamsService) Insert(part string, livestream *LiveStream) *LiveStreamsInsertCall {
+	c := &LiveStreamsInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.part = part
+	c.livestream = livestream
+	return c
+}
+
+func (c *LiveStreamsInsertCall) Do() (*LiveStream, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.livestream)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("part", fmt.Sprintf("%v", c.part))
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "liveStreams")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(LiveStream)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Insert a YouTube live stream.",
+	//   "httpMethod": "POST",
+	//   "id": "youtube.liveStreams.insert",
+	//   "parameterOrder": [
+	//     "part"
+	//   ],
+	//   "parameters": {
+	//     "part": {
+	//       "description": "Live stream parts to include in the returned response. Valid values are: id, snippet, cdn, status.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "liveStreams",
+	//   "request": {
+	//     "$ref": "LiveStream"
+	//   },
+	//   "response": {
+	//     "$ref": "LiveStream"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/youtube"
+	//   ]
+	// }
+
+}
+
+// method id "youtube.liveStreams.list":
+
+type LiveStreamsListCall struct {
+	s    *Service
+	part string
+	opt_ map[string]interface{}
+}
+
+// List: Browse the YouTube live stream collection.
+func (r *LiveStreamsService) List(part string) *LiveStreamsListCall {
+	c := &LiveStreamsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.part = part
+	return c
+}
+
+// Id sets the optional parameter "id": IDs of the live streams to be
+// returned.
+func (c *LiveStreamsListCall) Id(id string) *LiveStreamsListCall {
+	c.opt_["id"] = id
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum number
+// of results to return
+func (c *LiveStreamsListCall) MaxResults(maxResults int64) *LiveStreamsListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// Mine sets the optional parameter "mine": Filter to only live streams
+// owned by authenticated user.
+func (c *LiveStreamsListCall) Mine(mine bool) *LiveStreamsListCall {
+	c.opt_["mine"] = mine
+	return c
+}
+
+// OnBehalfOf sets the optional parameter "onBehalfOf": ID of the
+// Google+ Page for the channel that the request is to be on behalf of
+func (c *LiveStreamsListCall) OnBehalfOf(onBehalfOf string) *LiveStreamsListCall {
+	c.opt_["onBehalfOf"] = onBehalfOf
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Token for the page
+// selection.
+func (c *LiveStreamsListCall) PageToken(pageToken string) *LiveStreamsListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+func (c *LiveStreamsListCall) Do() (*LiveStreamList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("part", fmt.Sprintf("%v", c.part))
+	if v, ok := c.opt_["id"]; ok {
+		params.Set("id", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["mine"]; ok {
+		params.Set("mine", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["onBehalfOf"]; ok {
+		params.Set("onBehalfOf", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "liveStreams")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(LiveStreamList)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Browse the YouTube live stream collection.",
+	//   "httpMethod": "GET",
+	//   "id": "youtube.liveStreams.list",
+	//   "parameterOrder": [
+	//     "part"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "IDs of the live streams to be returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "5",
+	//       "description": "Maximum number of results to return",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "50",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "mine": {
+	//       "description": "Filter to only live streams owned by authenticated user.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "onBehalfOf": {
+	//       "description": "ID of the Google+ Page for the channel that the request is to be on behalf of",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageToken": {
+	//       "description": "Token for the page selection.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "part": {
+	//       "description": "Live stream parts to include in the returned response. Valid values are: id, snippet, cdn, status.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "liveStreams",
+	//   "response": {
+	//     "$ref": "LiveStreamList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/youtube.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "youtube.liveStreams.update":
+
+type LiveStreamsUpdateCall struct {
+	s          *Service
+	part       string
+	livestream *LiveStream
+	opt_       map[string]interface{}
+}
+
+// Update: Update a YouTube live stream.
+func (r *LiveStreamsService) Update(part string, livestream *LiveStream) *LiveStreamsUpdateCall {
+	c := &LiveStreamsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.part = part
+	c.livestream = livestream
+	return c
+}
+
+func (c *LiveStreamsUpdateCall) Do() (*LiveStream, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.livestream)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("part", fmt.Sprintf("%v", c.part))
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "liveStreams")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(LiveStream)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Update a YouTube live stream.",
+	//   "httpMethod": "PUT",
+	//   "id": "youtube.liveStreams.update",
+	//   "parameterOrder": [
+	//     "part"
+	//   ],
+	//   "parameters": {
+	//     "part": {
+	//       "description": "The part parameter serves two purposes in this operation. It identifies the properties that the write operation will set as well as the properties that the API response will include.\n\nThe part names that you can include in the parameter value are id, snippet, cdn, status.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "liveStreams",
+	//   "request": {
+	//     "$ref": "LiveStream"
+	//   },
+	//   "response": {
+	//     "$ref": "LiveStream"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/youtube"
+	//   ]
+	// }
+
+}
+
 // method id "youtube.playlistItems.delete":
 
 type PlaylistItemsDeleteCall struct {
@@ -1842,6 +3243,14 @@ func (c *PlaylistItemsListCall) PlaylistId(playlistId string) *PlaylistItemsList
 	return c
 }
 
+// VideoId sets the optional parameter "videoId": The videoId parameter
+// specifies that the request should return only the playlist items that
+// contain the specified video.
+func (c *PlaylistItemsListCall) VideoId(videoId string) *PlaylistItemsListCall {
+	c.opt_["videoId"] = videoId
+	return c
+}
+
 func (c *PlaylistItemsListCall) Do() (*PlaylistItemListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1858,6 +3267,9 @@ func (c *PlaylistItemsListCall) Do() (*PlaylistItemListResponse, error) {
 	}
 	if v, ok := c.opt_["playlistId"]; ok {
 		params.Set("playlistId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["videoId"]; ok {
+		params.Set("videoId", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "playlistItems")
 	urls += "?" + params.Encode()
@@ -1910,6 +3322,11 @@ func (c *PlaylistItemsListCall) Do() (*PlaylistItemListResponse, error) {
 	//     },
 	//     "playlistId": {
 	//       "description": "The playlistId parameter specifies the unique ID of the playlist for which you want to retrieve playlist items. Note that even though this is an optional parameter, every request to retrieve playlist items must specify a value for either the id parameter or the playlistId parameter.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "videoId": {
+	//       "description": "The videoId parameter specifies that the request should return only the playlist items that contain the specified video.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -2376,6 +3793,14 @@ func (r *SearchService) List(part string) *SearchListCall {
 	return c
 }
 
+// ChannelId sets the optional parameter "channelId": The channelId
+// parameter indicates that the API response should only contain
+// resources created by the channel
+func (c *SearchListCall) ChannelId(channelId string) *SearchListCall {
+	c.opt_["channelId"] = channelId
+	return c
+}
+
 // MaxResults sets the optional parameter "maxResults": USE_DESCRIPTION
 // --- channels:list:maxResults
 func (c *SearchListCall) MaxResults(maxResults int64) *SearchListCall {
@@ -2398,11 +3823,21 @@ func (c *SearchListCall) PageToken(pageToken string) *SearchListCall {
 	return c
 }
 
-// Published sets the optional parameter "published": The published
-// parameter indicates that the API response should only contain
-// resources created within the specified time period.
-func (c *SearchListCall) Published(published string) *SearchListCall {
-	c.opt_["published"] = published
+// PublishedAfter sets the optional parameter "publishedAfter": The
+// publishedAfter parameter indicates that the API response should only
+// contain resources created after the specified time. The value is an
+// RFC 3339 formatted date-time value (1970-01-01T00:00:00Z).
+func (c *SearchListCall) PublishedAfter(publishedAfter string) *SearchListCall {
+	c.opt_["publishedAfter"] = publishedAfter
+	return c
+}
+
+// PublishedBefore sets the optional parameter "publishedBefore": The
+// publishedBefore parameter indicates that the API response should only
+// contain resources created before the specified time. The value is an
+// RFC 3339 formatted date-time value (1970-01-01T00:00:00Z).
+func (c *SearchListCall) PublishedBefore(publishedBefore string) *SearchListCall {
+	c.opt_["publishedBefore"] = publishedBefore
 	return c
 }
 
@@ -2410,6 +3845,15 @@ func (c *SearchListCall) Published(published string) *SearchListCall {
 // query term to search for.
 func (c *SearchListCall) Q(q string) *SearchListCall {
 	c.opt_["q"] = q
+	return c
+}
+
+// RegionCode sets the optional parameter "regionCode": The regionCode
+// parameter instructs the API to return search results for the
+// specified country. The parameter value is an ISO 3166-1 alpha-2
+// country code.
+func (c *SearchListCall) RegionCode(regionCode string) *SearchListCall {
+	c.opt_["regionCode"] = regionCode
 	return c
 }
 
@@ -2447,6 +3891,14 @@ func (c *SearchListCall) VideoCaption(videoCaption string) *SearchListCall {
 	return c
 }
 
+// VideoCategoryId sets the optional parameter "videoCategoryId": The
+// videoCategoryId parameter filters video search results based on their
+// category.
+func (c *SearchListCall) VideoCategoryId(videoCategoryId string) *SearchListCall {
+	c.opt_["videoCategoryId"] = videoCategoryId
+	return c
+}
+
 // VideoDefinition sets the optional parameter "videoDefinition": The
 // videoDefinition parameter lets you restrict a search to only include
 // either high definition (HD) or standard definition (SD) videos. HD
@@ -2473,6 +3925,14 @@ func (c *SearchListCall) VideoDuration(videoDuration string) *SearchListCall {
 	return c
 }
 
+// VideoEmbeddable sets the optional parameter "videoEmbeddable": The
+// videoEmbeddable parameter lets you to restrict a search to only
+// videos that can be embedded into a webpage.
+func (c *SearchListCall) VideoEmbeddable(videoEmbeddable string) *SearchListCall {
+	c.opt_["videoEmbeddable"] = videoEmbeddable
+	return c
+}
+
 // VideoLicense sets the optional parameter "videoLicense": The
 // videoLicense parameter filters search results to only include videos
 // with a particular license. YouTube lets video uploaders choose to
@@ -2483,11 +3943,22 @@ func (c *SearchListCall) VideoLicense(videoLicense string) *SearchListCall {
 	return c
 }
 
+// VideoSyndicated sets the optional parameter "videoSyndicated": The
+// videoSyndicated parameter lets you to restrict a search to only
+// videos that can be played outside youtube.com.
+func (c *SearchListCall) VideoSyndicated(videoSyndicated string) *SearchListCall {
+	c.opt_["videoSyndicated"] = videoSyndicated
+	return c
+}
+
 func (c *SearchListCall) Do() (*SearchListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("part", fmt.Sprintf("%v", c.part))
+	if v, ok := c.opt_["channelId"]; ok {
+		params.Set("channelId", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
@@ -2497,11 +3968,17 @@ func (c *SearchListCall) Do() (*SearchListResponse, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	if v, ok := c.opt_["published"]; ok {
-		params.Set("published", fmt.Sprintf("%v", v))
+	if v, ok := c.opt_["publishedAfter"]; ok {
+		params.Set("publishedAfter", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["publishedBefore"]; ok {
+		params.Set("publishedBefore", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["q"]; ok {
 		params.Set("q", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["regionCode"]; ok {
+		params.Set("regionCode", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["relatedToVideoId"]; ok {
 		params.Set("relatedToVideoId", fmt.Sprintf("%v", v))
@@ -2515,6 +3992,9 @@ func (c *SearchListCall) Do() (*SearchListResponse, error) {
 	if v, ok := c.opt_["videoCaption"]; ok {
 		params.Set("videoCaption", fmt.Sprintf("%v", v))
 	}
+	if v, ok := c.opt_["videoCategoryId"]; ok {
+		params.Set("videoCategoryId", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["videoDefinition"]; ok {
 		params.Set("videoDefinition", fmt.Sprintf("%v", v))
 	}
@@ -2524,8 +4004,14 @@ func (c *SearchListCall) Do() (*SearchListResponse, error) {
 	if v, ok := c.opt_["videoDuration"]; ok {
 		params.Set("videoDuration", fmt.Sprintf("%v", v))
 	}
+	if v, ok := c.opt_["videoEmbeddable"]; ok {
+		params.Set("videoEmbeddable", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["videoLicense"]; ok {
 		params.Set("videoLicense", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["videoSyndicated"]; ok {
+		params.Set("videoSyndicated", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "search")
 	urls += "?" + params.Encode()
@@ -2551,6 +4037,11 @@ func (c *SearchListCall) Do() (*SearchListResponse, error) {
 	//     "part"
 	//   ],
 	//   "parameters": {
+	//     "channelId": {
+	//       "description": "The channelId parameter indicates that the API response should only contain resources created by the channel",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "maxResults": {
 	//       "default": "5",
 	//       "description": "USE_DESCRIPTION --- channels:list:maxResults",
@@ -2589,25 +4080,25 @@ func (c *SearchListCall) Do() (*SearchListResponse, error) {
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "published": {
-	//       "description": "The published parameter indicates that the API response should only contain resources created within the specified time period.",
-	//       "enum": [
-	//         "any",
-	//         "thisMonth",
-	//         "thisWeek",
-	//         "today"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Do not filter results based on their creation date. This is the default value.",
-	//         "Return videos that were uploaded within the past month.",
-	//         "Return videos that were uploaded within the past week.",
-	//         "Return videos that were uploaded today."
-	//       ],
+	//     "publishedAfter": {
+	//       "description": "The publishedAfter parameter indicates that the API response should only contain resources created after the specified time. The value is an RFC 3339 formatted date-time value (1970-01-01T00:00:00Z).",
+	//       "format": "date-time",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "publishedBefore": {
+	//       "description": "The publishedBefore parameter indicates that the API response should only contain resources created before the specified time. The value is an RFC 3339 formatted date-time value (1970-01-01T00:00:00Z).",
+	//       "format": "date-time",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "q": {
 	//       "description": "The q parameter specifies the query term to search for.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "regionCode": {
+	//       "description": "The regionCode parameter instructs the API to return search results for the specified country. The parameter value is an ISO 3166-1 alpha-2 country code.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2639,6 +4130,11 @@ func (c *SearchListCall) Do() (*SearchListResponse, error) {
 	//         "Only include videos that have captions.",
 	//         "Only include videos that do not have captions."
 	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "videoCategoryId": {
+	//       "description": "The videoCategoryId parameter filters video search results based on their category.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2689,6 +4185,19 @@ func (c *SearchListCall) Do() (*SearchListResponse, error) {
 	//       "location": "query",
 	//       "type": "string"
 	//     },
+	//     "videoEmbeddable": {
+	//       "description": "The videoEmbeddable parameter lets you to restrict a search to only videos that can be embedded into a webpage.",
+	//       "enum": [
+	//         "any",
+	//         "true"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Return all videos, embeddable or not.",
+	//         "Only retrieve embeddable videos."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "videoLicense": {
 	//       "description": "The videoLicense parameter filters search results to only include videos with a particular license. YouTube lets video uploaders choose to attach either the Creative Commons license or the standard YouTube license to each of their videos.",
 	//       "enum": [
@@ -2700,6 +4209,19 @@ func (c *SearchListCall) Do() (*SearchListResponse, error) {
 	//         "Return all videos, regardless of which license they have, that match the query parameters.",
 	//         "Only return videos that have a Creative Commons license. Users can reuse videos with this license in other videos that they create. Learn more.",
 	//         "Only return videos that have the standard YouTube license."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "videoSyndicated": {
+	//       "description": "The videoSyndicated parameter lets you to restrict a search to only videos that can be played outside youtube.com.",
+	//       "enum": [
+	//         "any",
+	//         "true"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Return all videos, syndicated or not.",
+	//         "Only retrieve syndicated videos."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -3307,7 +4829,8 @@ func (c *VideosInsertCall) Do() (*Video, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/youtube",
-	//     "https://www.googleapis.com/auth/youtube.upload"
+	//     "https://www.googleapis.com/auth/youtube.upload",
+	//     "https://www.googleapis.com/auth/youtubepartner"
 	//   ],
 	//   "supportsMediaUpload": true
 	// }

@@ -1,18 +1,18 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"a3GBuXuTtUYW9BV1SIieU5LiL7w/-B8kiF2Fdgu0yrollZG4PolyOWM\"",
+ "etag": "\"-vXktEC13RBC5q_wkxEsszrjKM4/rcdT42EgbW_o3PieOF4QP6aNZTY\"",
  "discoveryVersion": "v1",
  "id": "audit:v1",
  "name": "audit",
  "version": "v1",
- "revision": "20111110",
+ "revision": "20130108",
  "title": "Enterprise Audit API",
  "description": "Lets you access user activities in your enterprise made through various applications.",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/search-16.gif",
   "x32": "http://www.google.com/images/icons/product/search-32.gif"
  },
- "documentationLink": "http://code.google.com/googleapps/domain/audit_admin/v1/getting_started.html",
+ "documentationLink": "https://developers.google.com/google-apps/admin-audit/get_started",
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/apps/reporting/audit/v1/",
  "basePath": "/apps/reporting/audit/v1/",
@@ -264,11 +264,6 @@
        "format": "int32",
        "minimum": "1",
        "maximum": "1000",
-       "location": "query"
-      },
-      "parameters": {
-       "type": "string",
-       "description": "Event parameters in the form [parameter1 name]:[parameter1 value],[parameter2 name]:[parameter2 value],...",
        "location": "query"
       },
       "startTime": {

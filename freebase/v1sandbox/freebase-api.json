@@ -1,13 +1,13 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"a3GBuXuTtUYW9BV1SIieU5LiL7w/T1QvYBXKTiD9lQubyDrkB1jlC58\"",
+ "etag": "\"-vXktEC13RBC5q_wkxEsszrjKM4/hClJoNxdINNSNanLlDOcwfZ_PVI\"",
  "discoveryVersion": "v1",
  "id": "freebase:v1sandbox",
  "name": "freebase",
  "version": "v1sandbox",
- "revision": "20121022",
+ "revision": "20130130",
  "title": "Freebase API",
- "description": "Lets you access the Freebase repository of open data.",
+ "description": "Topic and MQL APIs provide you structured access to Freebase data.",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/freebase-16.png",
   "x32": "http://www.google.com/images/icons/product/freebase-32.png"
@@ -185,13 +185,33 @@
    "id": "TopicValue",
    "type": "object",
    "properties": {
+    "citation": {
+     "type": "object",
+     "properties": {
+      "provider": {
+       "type": "string"
+      },
+      "statement": {
+       "type": "string"
+      },
+      "uri": {
+       "type": "string"
+      }
+     }
+    },
     "creator": {
+     "type": "string"
+    },
+    "dataset": {
      "type": "string"
     },
     "id": {
      "type": "string"
     },
     "lang": {
+     "type": "string"
+    },
+    "project": {
      "type": "string"
     },
     "property": {

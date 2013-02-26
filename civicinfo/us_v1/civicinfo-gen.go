@@ -60,6 +60,11 @@ type AdministrationRegion struct {
 	// area.
 	ElectionAdministrationBody *AdministrativeBody `json:"electionAdministrationBody,omitempty"`
 
+	// Id: An ID for this object. IDs may change in future requests and
+	// should not be cached. Access to this field requires special access
+	// that can be requested from the Request more link on the Quotas page.
+	Id string `json:"id,omitempty"`
+
 	// Local_jurisdiction: The city or county that provides election
 	// information for this voter. This object can have the same elements as
 	// state.
@@ -179,6 +184,11 @@ type Contest struct {
 	// requirements for voting in this contest.
 	ElectorateSpecifications string `json:"electorateSpecifications,omitempty"`
 
+	// Id: An ID for this object. IDs may change in future requests and
+	// should not be cached. Access to this field requires special access
+	// that can be requested from the Request more link on the Quotas page.
+	Id string `json:"id,omitempty"`
+
 	// Level: The level of office for this contest. One of: federal, state,
 	// county, city, other
 	Level string `json:"level,omitempty"`
@@ -283,6 +293,11 @@ type PollingLocation struct {
 	// EndDate: The last date that this early vote site may be used. This
 	// field is not populated for polling locations.
 	EndDate string `json:"endDate,omitempty"`
+
+	// Id: An ID for this object. IDs may change in future requests and
+	// should not be cached. Access to this field requires special access
+	// that can be requested from the Request more link on the Quotas page.
+	Id string `json:"id,omitempty"`
 
 	// Name: The name of the early vote site. This field is not populated
 	// for polling locations.
@@ -494,6 +509,7 @@ func (c *ElectionsVoterInfoQueryCall) Do() (*VoterInfoResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "officialOnly": {
+	//       "default": "false",
 	//       "description": "If set to true, only data from official state sources will be returned.",
 	//       "location": "query",
 	//       "type": "boolean"

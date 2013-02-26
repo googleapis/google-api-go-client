@@ -1,10 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"a3GBuXuTtUYW9BV1SIieU5LiL7w/WCwV-jRPeKYlNeT77m5u4pcZ4cY\"",
+ "etag": "\"-vXktEC13RBC5q_wkxEsszrjKM4/BodB-85zhgjGIJCnSXD9jtowGx8\"",
  "discoveryVersion": "v1",
  "id": "discovery:v1",
  "name": "discovery",
  "version": "v1",
+ "revision": "20130106",
  "title": "APIs Discovery Service",
  "description": "Lets you discover information about other Google APIs, such as what APIs are available, the resource and method details for each API",
  "icons": {
@@ -423,6 +424,10 @@
     "description": {
      "type": "string",
      "description": "Description of this method."
+    },
+    "etagRequired": {
+     "type": "boolean",
+     "description": "Whether this method requires an ETag to be specified. The ETag is sent as an HTTP If-Match or If-None-Match header."
     },
     "httpMethod": {
      "type": "string",

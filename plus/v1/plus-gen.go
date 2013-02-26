@@ -49,6 +49,7 @@ func New(client *http.Client) (*Service, error) {
 	s := &Service{client: client}
 	s.Activities = &ActivitiesService{s: s}
 	s.Comments = &CommentsService{s: s}
+	s.Moments = &MomentsService{s: s}
 	s.People = &PeopleService{s: s}
 	return s, nil
 }
@@ -60,6 +61,8 @@ type Service struct {
 
 	Comments *CommentsService
 
+	Moments *MomentsService
+
 	People *PeopleService
 }
 
@@ -68,6 +71,10 @@ type ActivitiesService struct {
 }
 
 type CommentsService struct {
+	s *Service
+}
+
+type MomentsService struct {
 	s *Service
 }
 
@@ -153,11 +160,9 @@ type Activity struct {
 
 	// Verb: This activity's verb, indicating what action was performed.
 	// Possible values are:
-	// - "checkin" - Check in to a location.
+	// - "post" - Publish content to the stream.
 	// -
-	// "post" - Publish content to the stream.
-	// - "share" - Reshare an
-	// activity.
+	// "share" - Reshare an activity.
 	Verb string `json:"verb,omitempty"`
 }
 
@@ -387,7 +392,7 @@ type ActivityFeed struct {
 	// Etag: ETag of this response for caching purposes.
 	Etag string `json:"etag,omitempty"`
 
-	// Id: The ID of this collection of activities.
+	// Id: The ID of this collection of activities. Deprecated.
 	Id string `json:"id,omitempty"`
 
 	// Items: The activities in this page of results.
@@ -534,6 +539,266 @@ type CommentFeed struct {
 	Updated string `json:"updated,omitempty"`
 }
 
+type ItemScope struct {
+	// About: The subject matter of the content.
+	About *ItemScope `json:"about,omitempty"`
+
+	// AdditionalName: An additional name for a Person, can be used for a
+	// middle name.
+	AdditionalName []string `json:"additionalName,omitempty"`
+
+	// Address: Postal address.
+	Address *ItemScope `json:"address,omitempty"`
+
+	// AddressCountry: Address country.
+	AddressCountry string `json:"addressCountry,omitempty"`
+
+	// AddressLocality: Address locality.
+	AddressLocality string `json:"addressLocality,omitempty"`
+
+	// AddressRegion: Address region.
+	AddressRegion string `json:"addressRegion,omitempty"`
+
+	// Associated_media: The encoding.
+	Associated_media []*ItemScope `json:"associated_media,omitempty"`
+
+	// AttendeeCount: Number of attendees.
+	AttendeeCount int64 `json:"attendeeCount,omitempty"`
+
+	// Attendees: A person attending the event.
+	Attendees []*ItemScope `json:"attendees,omitempty"`
+
+	// Audio: From http://schema.org/MusicRecording, the audio file.
+	Audio *ItemScope `json:"audio,omitempty"`
+
+	// Author: The person or persons who created this result. In the example
+	// of restaurant reviews, this might be the reviewer's name.
+	Author []*ItemScope `json:"author,omitempty"`
+
+	// BestRating: Best possible rating value that a result might obtain.
+	// This property defines the upper bound for the ratingValue. For
+	// example, you might have a 5 star rating scale, you would provide 5 as
+	// the value for this property.
+	BestRating string `json:"bestRating,omitempty"`
+
+	// BirthDate: Date of birth.
+	BirthDate string `json:"birthDate,omitempty"`
+
+	// ByArtist: From http://schema.org/MusicRecording, the artist that
+	// performed this recording.
+	ByArtist *ItemScope `json:"byArtist,omitempty"`
+
+	// Caption: The caption for this object.
+	Caption string `json:"caption,omitempty"`
+
+	// ContentSize: File size in (mega/kilo) bytes.
+	ContentSize string `json:"contentSize,omitempty"`
+
+	// ContentUrl: Actual bytes of the media object, for example the image
+	// file or video file.
+	ContentUrl string `json:"contentUrl,omitempty"`
+
+	// Contributor: A list of contributors to this result.
+	Contributor []*ItemScope `json:"contributor,omitempty"`
+
+	// DateCreated: The date the result was created such as the date that a
+	// review was first created.
+	DateCreated string `json:"dateCreated,omitempty"`
+
+	// DateModified: The date the result was last modified such as the date
+	// that a review was last edited.
+	DateModified string `json:"dateModified,omitempty"`
+
+	// DatePublished: The initial date that the result was published. For
+	// example, a user writes a comment on a blog, which has a
+	// result.dateCreated of when they submit it. If the blog users comment
+	// moderation, the result.datePublished value would match the date when
+	// the owner approved the message.
+	DatePublished string `json:"datePublished,omitempty"`
+
+	// Description: The string that describes the content of the result.
+	Description string `json:"description,omitempty"`
+
+	// Duration: The duration of the item (movie, audio recording, event,
+	// etc.) in ISO 8601 date format.
+	Duration string `json:"duration,omitempty"`
+
+	// EmbedUrl: A URL pointing to a player for a specific video. In
+	// general, this is the information in the src element of an embed tag
+	// and should not be the same as the content of the loc tag.
+	EmbedUrl string `json:"embedUrl,omitempty"`
+
+	// EndDate: The end date and time of the event (in ISO 8601 date
+	// format).
+	EndDate string `json:"endDate,omitempty"`
+
+	// FamilyName: Family name. This property can be used with givenName
+	// instead of the name property.
+	FamilyName string `json:"familyName,omitempty"`
+
+	// Gender: Gender of the person.
+	Gender string `json:"gender,omitempty"`
+
+	// Geo: Geo coordinates.
+	Geo *ItemScope `json:"geo,omitempty"`
+
+	// GivenName: Given name. This property can be used with familyName
+	// instead of the name property.
+	GivenName string `json:"givenName,omitempty"`
+
+	// Height: The height of the media object.
+	Height string `json:"height,omitempty"`
+
+	// Id: An identifier for the target. Your app can choose how to identify
+	// targets. The target.id is required if you are writing an activity
+	// that does not have a corresponding web page or target.url property.
+	Id string `json:"id,omitempty"`
+
+	// Image: A URL to the image that represents this result. For example,
+	// if a user writes a review of a restaurant and attaches a photo of
+	// their meal, you might use that photo as the result.image.
+	Image string `json:"image,omitempty"`
+
+	// InAlbum: From http://schema.org/MusicRecording, which album a song is
+	// in.
+	InAlbum *ItemScope `json:"inAlbum,omitempty"`
+
+	// Kind: Identifies this resource as an itemScope.
+	Kind string `json:"kind,omitempty"`
+
+	// Latitude: Latitude.
+	Latitude float64 `json:"latitude,omitempty"`
+
+	// Location: The location of the event or organization.
+	Location *ItemScope `json:"location,omitempty"`
+
+	// Longitude: Longitude.
+	Longitude float64 `json:"longitude,omitempty"`
+
+	// Name: The name of the result. In the example of a restaurant review,
+	// this might be the summary the user gave their review such as "Great
+	// ambiance, but overpriced."
+	Name string `json:"name,omitempty"`
+
+	// PartOfTVSeries: Property of http://schema.org/TVEpisode indicating
+	// which series the episode belongs to.
+	PartOfTVSeries *ItemScope `json:"partOfTVSeries,omitempty"`
+
+	// Performers: The main performer or performers of the event-for
+	// example, a presenter, musician, or actor.
+	Performers []*ItemScope `json:"performers,omitempty"`
+
+	// PlayerType: Player type that is required. For example: Flash or
+	// Silverlight.
+	PlayerType string `json:"playerType,omitempty"`
+
+	// PostOfficeBoxNumber: Post office box number.
+	PostOfficeBoxNumber string `json:"postOfficeBoxNumber,omitempty"`
+
+	// PostalCode: Postal code.
+	PostalCode string `json:"postalCode,omitempty"`
+
+	// RatingValue: Rating value.
+	RatingValue string `json:"ratingValue,omitempty"`
+
+	// ReviewRating: Review rating.
+	ReviewRating *ItemScope `json:"reviewRating,omitempty"`
+
+	// StartDate: The start date and time of the event (in ISO 8601 date
+	// format).
+	StartDate string `json:"startDate,omitempty"`
+
+	// StreetAddress: Street address.
+	StreetAddress string `json:"streetAddress,omitempty"`
+
+	// Text: The text that is the result of the app activity. For example,
+	// if a user leaves a review of a restaurant, this might be the text of
+	// the review.
+	Text string `json:"text,omitempty"`
+
+	// Thumbnail: Thumbnail image for an image or video.
+	Thumbnail *ItemScope `json:"thumbnail,omitempty"`
+
+	// ThumbnailUrl: A URL to a thumbnail image that represents this result.
+	ThumbnailUrl string `json:"thumbnailUrl,omitempty"`
+
+	// TickerSymbol: The exchange traded instrument associated with a
+	// Corporation object. The tickerSymbol is expressed as an exchange and
+	// an instrument name separated by a space character. For the exchange
+	// component of the tickerSymbol attribute, we reccommend using the
+	// controlled vocaulary of Market Identifier Codes (MIC) specified in
+	// ISO15022.
+	TickerSymbol string `json:"tickerSymbol,omitempty"`
+
+	// Type: The schema.org URL that best describes the referenced target
+	// and matches the type of moment.
+	Type string `json:"type,omitempty"`
+
+	// Url: The URL that points to the result object. For example, a
+	// permalink directly to a restaurant reviewer's comment.
+	Url string `json:"url,omitempty"`
+
+	// Width: The width of the media object.
+	Width string `json:"width,omitempty"`
+
+	// WorstRating: Worst possible rating value that a result might obtain.
+	// This property defines the lower bound for the ratingValue.
+	WorstRating string `json:"worstRating,omitempty"`
+}
+
+type Moment struct {
+	// Id: The moment ID.
+	Id string `json:"id,omitempty"`
+
+	// Kind: Identifies this resource as a moment.
+	Kind string `json:"kind,omitempty"`
+
+	// Result: The object generated by performing the action on the target.
+	// For example, a user writes a review of a restaurant, the target is
+	// the restaurant and the result is the review.
+	Result *ItemScope `json:"result,omitempty"`
+
+	// StartDate: Time stamp of when the action occurred in RFC3339 format.
+	StartDate string `json:"startDate,omitempty"`
+
+	// Target: The object on which the action was performed.
+	Target *ItemScope `json:"target,omitempty"`
+
+	// Type: The Google schema for the type of moment to write. For example,
+	// http://schemas.google.com/AddActivity.
+	Type string `json:"type,omitempty"`
+}
+
+type MomentsFeed struct {
+	// Etag: ETag of this response for caching purposes.
+	Etag string `json:"etag,omitempty"`
+
+	// Items: The moments in this page of results.
+	Items []*Moment `json:"items,omitempty"`
+
+	// Kind: Identifies this resource as a collection of moments. Value:
+	// "plus#momentsFeed".
+	Kind string `json:"kind,omitempty"`
+
+	// NextLink: Link to the next page of moments.
+	NextLink string `json:"nextLink,omitempty"`
+
+	// NextPageToken: The continuation token, which is used to page through
+	// large result sets. Provide this value in a subsequent request to
+	// return the next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SelfLink: Link to this page of moments.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// Title: The title of this collection of moments.
+	Title string `json:"title,omitempty"`
+
+	// Updated: The RFC 339 timestamp for when this collection of moments
+	// was last updated.
+	Updated string `json:"updated,omitempty"`
+}
+
 type PeopleFeed struct {
 	// Etag: ETag of this response for caching purposes.
 	Etag string `json:"etag,omitempty"`
@@ -568,8 +833,14 @@ type Person struct {
 	// AboutMe: A short biography for this person.
 	AboutMe string `json:"aboutMe,omitempty"`
 
+	// AgeRange: The age range of the person.
+	AgeRange *PersonAgeRange `json:"ageRange,omitempty"`
+
 	// Birthday: The person's date of birth, represented as YYYY-MM-DD.
 	Birthday string `json:"birthday,omitempty"`
+
+	// BraggingRights: The "bragging rights" line of this person.
+	BraggingRights string `json:"braggingRights,omitempty"`
 
 	// CircledByCount: If a Google+ Page and for followers who are visible,
 	// the number of people who have added this page to a circle.
@@ -584,7 +855,9 @@ type Person struct {
 	// DisplayName: The name of this person, suitable for display.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Emails: A list of email addresses for this person.
+	// Emails: A list of email addresses that this person has set to public
+	// on their Google+ profile. You can also use the userinfo.email scope
+	// to retrieve an authenticated user's email address.
 	Emails []*PersonEmails `json:"emails,omitempty"`
 
 	// Etag: ETag of this response for caching purposes.
@@ -610,11 +883,14 @@ type Person struct {
 	// Image: The representation of the person's profile photo.
 	Image *PersonImage `json:"image,omitempty"`
 
-	// IsPlusUser: Whether this user has signed up for G+.
+	// IsPlusUser: Whether this user has signed up for Google+.
 	IsPlusUser bool `json:"isPlusUser,omitempty"`
 
 	// Kind: Identifies this resource as a person. Value: "plus#person".
 	Kind string `json:"kind,omitempty"`
+
+	// Language: The user's preferred language for rendering.
+	Language string `json:"language,omitempty"`
 
 	// Name: An object representation of the individual components of a
 	// person's name.
@@ -669,8 +945,16 @@ type Person struct {
 	// Urls: A list of URLs for this person.
 	Urls []*PersonUrls `json:"urls,omitempty"`
 
-	// Verified: If a Google+ Page, whether it has been verified.
+	// Verified: Whether the person or Google+ Page has been verified.
 	Verified bool `json:"verified,omitempty"`
+}
+
+type PersonAgeRange struct {
+	// Max: The age range's upper bound, if any.
+	Max int64 `json:"max,omitempty"`
+
+	// Min: The age range's lower bound, if any.
+	Min int64 `json:"min,omitempty"`
 }
 
 type PersonCover struct {
@@ -1347,6 +1631,303 @@ func (c *CommentsListCall) Do() (*CommentFeed, error) {
 
 }
 
+// method id "plus.moments.insert":
+
+type MomentsInsertCall struct {
+	s          *Service
+	userId     string
+	collection string
+	moment     *Moment
+	opt_       map[string]interface{}
+}
+
+// Insert: Record a moment representing a user's activity such as making
+// a purchase or commenting on a blog.
+func (r *MomentsService) Insert(userId string, collection string, moment *Moment) *MomentsInsertCall {
+	c := &MomentsInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.userId = userId
+	c.collection = collection
+	c.moment = moment
+	return c
+}
+
+// Debug sets the optional parameter "debug": Return the moment as
+// written. Should be used only for debugging.
+func (c *MomentsInsertCall) Debug(debug bool) *MomentsInsertCall {
+	c.opt_["debug"] = debug
+	return c
+}
+
+func (c *MomentsInsertCall) Do() (*Moment, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.moment)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["debug"]; ok {
+		params.Set("debug", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/plus/v1/", "people/{userId}/moments/{collection}")
+	urls = strings.Replace(urls, "{userId}", cleanPathString(c.userId), 1)
+	urls = strings.Replace(urls, "{collection}", cleanPathString(c.collection), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Moment)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Record a moment representing a user's activity such as making a purchase or commenting on a blog.",
+	//   "httpMethod": "POST",
+	//   "id": "plus.moments.insert",
+	//   "parameterOrder": [
+	//     "userId",
+	//     "collection"
+	//   ],
+	//   "parameters": {
+	//     "collection": {
+	//       "description": "The collection to which to write moments.",
+	//       "enum": [
+	//         "vault"
+	//       ],
+	//       "enumDescriptions": [
+	//         "The default collection for writing new moments."
+	//       ],
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "debug": {
+	//       "description": "Return the moment as written. Should be used only for debugging.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "userId": {
+	//       "description": "The ID of the user to record activities for. The only valid values are \"me\" and the ID of the authenticated user.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "people/{userId}/moments/{collection}",
+	//   "request": {
+	//     "$ref": "Moment"
+	//   },
+	//   "response": {
+	//     "$ref": "Moment"
+	//   }
+	// }
+
+}
+
+// method id "plus.moments.list":
+
+type MomentsListCall struct {
+	s          *Service
+	userId     string
+	collection string
+	opt_       map[string]interface{}
+}
+
+// List: List all of the moments for a particular user.
+func (r *MomentsService) List(userId string, collection string) *MomentsListCall {
+	c := &MomentsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.userId = userId
+	c.collection = collection
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of moments to include in the response, which is used for
+// paging. For any response, the actual number returned might be less
+// than the specified maxResults.
+func (c *MomentsListCall) MaxResults(maxResults int64) *MomentsListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The continuation
+// token, which is used to page through large result sets. To get the
+// next page of results, set this parameter to the value of
+// "nextPageToken" from the previous response.
+func (c *MomentsListCall) PageToken(pageToken string) *MomentsListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+// TargetUrl sets the optional parameter "targetUrl": Only moments
+// containing this targetUrl will be returned.
+func (c *MomentsListCall) TargetUrl(targetUrl string) *MomentsListCall {
+	c.opt_["targetUrl"] = targetUrl
+	return c
+}
+
+// Type sets the optional parameter "type": Only moments of this type
+// will be returned.
+func (c *MomentsListCall) Type(type_ string) *MomentsListCall {
+	c.opt_["type"] = type_
+	return c
+}
+
+func (c *MomentsListCall) Do() (*MomentsFeed, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["targetUrl"]; ok {
+		params.Set("targetUrl", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["type"]; ok {
+		params.Set("type", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/plus/v1/", "people/{userId}/moments/{collection}")
+	urls = strings.Replace(urls, "{userId}", cleanPathString(c.userId), 1)
+	urls = strings.Replace(urls, "{collection}", cleanPathString(c.collection), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(MomentsFeed)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List all of the moments for a particular user.",
+	//   "httpMethod": "GET",
+	//   "id": "plus.moments.list",
+	//   "parameterOrder": [
+	//     "userId",
+	//     "collection"
+	//   ],
+	//   "parameters": {
+	//     "collection": {
+	//       "description": "The collection of moments to list.",
+	//       "enum": [
+	//         "vault"
+	//       ],
+	//       "enumDescriptions": [
+	//         "All moments created by the requesting application for the authenticated user."
+	//       ],
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "20",
+	//       "description": "The maximum number of moments to include in the response, which is used for paging. For any response, the actual number returned might be less than the specified maxResults.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "100",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The continuation token, which is used to page through large result sets. To get the next page of results, set this parameter to the value of \"nextPageToken\" from the previous response.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "targetUrl": {
+	//       "description": "Only moments containing this targetUrl will be returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "type": {
+	//       "description": "Only moments of this type will be returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "userId": {
+	//       "description": "The ID of the user to get moments for. The special value \"me\" can be used to indicate the authenticated user.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "people/{userId}/moments/{collection}",
+	//   "response": {
+	//     "$ref": "MomentsFeed"
+	//   }
+	// }
+
+}
+
+// method id "plus.moments.remove":
+
+type MomentsRemoveCall struct {
+	s    *Service
+	id   string
+	opt_ map[string]interface{}
+}
+
+// Remove: Delete a moment.
+func (r *MomentsService) Remove(id string) *MomentsRemoveCall {
+	c := &MomentsRemoveCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	return c
+}
+
+func (c *MomentsRemoveCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/plus/v1/", "moments/{id}")
+	urls = strings.Replace(urls, "{id}", cleanPathString(c.id), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Delete a moment.",
+	//   "httpMethod": "DELETE",
+	//   "id": "plus.moments.remove",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The ID of the moment to delete.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "moments/{id}"
+	// }
+
+}
+
 // method id "plus.people.get":
 
 type PeopleGetCall struct {
@@ -1355,7 +1936,9 @@ type PeopleGetCall struct {
 	opt_   map[string]interface{}
 }
 
-// Get: Get a person's profile.
+// Get: Get a person's profile. If your app uses scope
+// https://www.googleapis.com/auth/plus.login, this method is guaranteed
+// to return ageRange and language.
 func (r *PeopleService) Get(userId string) *PeopleGetCall {
 	c := &PeopleGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userId = userId
@@ -1384,7 +1967,7 @@ func (c *PeopleGetCall) Do() (*Person, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Get a person's profile.",
+	//   "description": "Get a person's profile. If your app uses scope https://www.googleapis.com/auth/plus.login, this method is guaranteed to return ageRange and language.",
 	//   "httpMethod": "GET",
 	//   "id": "plus.people.get",
 	//   "parameterOrder": [
@@ -1405,6 +1988,142 @@ func (c *PeopleGetCall) Do() (*Person, error) {
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
+	// }
+
+}
+
+// method id "plus.people.list":
+
+type PeopleListCall struct {
+	s          *Service
+	userId     string
+	collection string
+	opt_       map[string]interface{}
+}
+
+// List: List all of the people in the specified collection.
+func (r *PeopleService) List(userId string, collection string) *PeopleListCall {
+	c := &PeopleListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.userId = userId
+	c.collection = collection
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of people to include in the response, which is used for
+// paging. For any response, the actual number returned might be less
+// than the specified maxResults.
+func (c *PeopleListCall) MaxResults(maxResults int64) *PeopleListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": The order to return
+// people in.
+func (c *PeopleListCall) OrderBy(orderBy string) *PeopleListCall {
+	c.opt_["orderBy"] = orderBy
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The continuation
+// token, which is used to page through large result sets. To get the
+// next page of results, set this parameter to the value of
+// "nextPageToken" from the previous response.
+func (c *PeopleListCall) PageToken(pageToken string) *PeopleListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+func (c *PeopleListCall) Do() (*PeopleFeed, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["orderBy"]; ok {
+		params.Set("orderBy", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/plus/v1/", "people/{userId}/people/{collection}")
+	urls = strings.Replace(urls, "{userId}", cleanPathString(c.userId), 1)
+	urls = strings.Replace(urls, "{collection}", cleanPathString(c.collection), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(PeopleFeed)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List all of the people in the specified collection.",
+	//   "httpMethod": "GET",
+	//   "id": "plus.people.list",
+	//   "parameterOrder": [
+	//     "userId",
+	//     "collection"
+	//   ],
+	//   "parameters": {
+	//     "collection": {
+	//       "description": "The collection of people to list.",
+	//       "enum": [
+	//         "visible"
+	//       ],
+	//       "enumDescriptions": [
+	//         "The list of people who this user has added to one or more circles, limited to the circles visible to the requesting application."
+	//       ],
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "100",
+	//       "description": "The maximum number of people to include in the response, which is used for paging. For any response, the actual number returned might be less than the specified maxResults.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "100",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "The order to return people in.",
+	//       "enum": [
+	//         "alphabetical",
+	//         "best"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Order the people by their display name.",
+	//         "Order people based on the relevence to the viewer."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageToken": {
+	//       "description": "The continuation token, which is used to page through large result sets. To get the next page of results, set this parameter to the value of \"nextPageToken\" from the previous response.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "userId": {
+	//       "description": "Get the collection of people for the person identified. Use \"me\" to indiciated the authenticated user.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "people/{userId}/people/{collection}",
+	//   "response": {
+	//     "$ref": "PeopleFeed"
+	//   }
 	// }
 
 }

@@ -322,11 +322,13 @@ type Report struct {
 	// "FLOODLIGHT".
 	FloodlightCriteria *ReportFloodlightCriteria `json:"floodlightCriteria,omitempty"`
 
-	// Format: The output format of the report, currently only "CSV" is
-	// supported. If not specified, default format is "CSV". Note that the
-	// actual format in the completed report file might differ if for
-	// instance the report's size exceeds the format's capabilities. "CSV"
-	// will then be the fallback format.
+	// Format: The output format of the report, one of:
+	// - "CSV"
+	// - "EXCEL"
+	//  If not specified, default format is "CSV". Note that the actual
+	// format in the completed report file might differ if for instance the
+	// report's size exceeds the format's capabilities. "CSV" will then be
+	// the fallback format.
 	Format string `json:"format,omitempty"`
 
 	// Id: The unique ID identifying this report resource.

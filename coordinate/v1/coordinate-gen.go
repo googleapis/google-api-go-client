@@ -1274,11 +1274,30 @@ func (r *LocationService) List(teamId string, workerEmail string, startTimestamp
 	return c
 }
 
+// MaxResults sets the optional parameter "maxResults": Maximum number
+// of results to return in one page.
+func (c *LocationListCall) MaxResults(maxResults int64) *LocationListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Continuation token
+func (c *LocationListCall) PageToken(pageToken string) *LocationListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
 func (c *LocationListCall) Do() (*LocationListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("startTimestampMs", fmt.Sprintf("%v", c.startTimestampMs))
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/coordinate/v1/teams/", "{teamId}/workers/{workerEmail}/locations")
 	urls = strings.Replace(urls, "{teamId}", cleanPathString(c.teamId), 1)
 	urls = strings.Replace(urls, "{workerEmail}", cleanPathString(c.workerEmail), 1)
@@ -1307,6 +1326,17 @@ func (c *LocationListCall) Do() (*LocationListResponse, error) {
 	//     "startTimestampMs"
 	//   ],
 	//   "parameters": {
+	//     "maxResults": {
+	//       "description": "Maximum number of results to return in one page.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Continuation token",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "startTimestampMs": {
 	//       "description": "Start timestamp in milliseconds since the epoch.",
 	//       "format": "uint64",

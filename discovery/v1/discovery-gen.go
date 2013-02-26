@@ -316,6 +316,10 @@ type RestMethod struct {
 	// Description: Description of this method.
 	Description string `json:"description,omitempty"`
 
+	// EtagRequired: Whether this method requires an ETag to be specified.
+	// The ETag is sent as an HTTP If-Match or If-None-Match header.
+	EtagRequired bool `json:"etagRequired,omitempty"`
+
 	// HttpMethod: HTTP method used by this method.
 	HttpMethod string `json:"httpMethod,omitempty"`
 

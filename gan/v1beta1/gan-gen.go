@@ -55,6 +55,7 @@ func New(client *http.Client) (*Service, error) {
 	s.Events = &EventsService{s: s}
 	s.Links = &LinksService{s: s}
 	s.Publishers = &PublishersService{s: s}
+	s.Reports = &ReportsService{s: s}
 	return s, nil
 }
 
@@ -70,6 +71,8 @@ type Service struct {
 	Links *LinksService
 
 	Publishers *PublishersService
+
+	Reports *ReportsService
 }
 
 type AdvertisersService struct {
@@ -89,6 +92,10 @@ type LinksService struct {
 }
 
 type PublishersService struct {
+	s *Service
+}
+
+type ReportsService struct {
 	s *Service
 }
 
@@ -768,6 +775,33 @@ type Publishers struct {
 	// NextPageToken: The 'pageToken' to pass to the next request to get the
 	// next page, if there are more to retrieve.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+}
+
+type Report struct {
+	// Column_names: The column names for the report
+	Column_names []string `json:"column_names,omitempty"`
+
+	// End_date: The end of the date range for this report, exclusive.
+	End_date string `json:"end_date,omitempty"`
+
+	// Kind: The kind for a report.
+	Kind string `json:"kind,omitempty"`
+
+	// Matching_row_count: The number of matching rows before paging is
+	// applied.
+	Matching_row_count int64 `json:"matching_row_count,omitempty,string"`
+
+	// Rows: The rows of data for the report
+	Rows [][]interface{} `json:"rows,omitempty"`
+
+	// Start_date: The start of the date range for this report, inclusive.
+	Start_date string `json:"start_date,omitempty"`
+
+	// Totals_rows: The totals rows for the report
+	Totals_rows [][]interface{} `json:"totals_rows,omitempty"`
+
+	// Type: The report type.
+	Type string `json:"type,omitempty"`
 }
 
 // method id "gan.advertisers.get":
@@ -2387,6 +2421,300 @@ func (c *PublishersListCall) Do() (*Publishers, error) {
 	//   "path": "{role}/{roleId}/publishers",
 	//   "response": {
 	//     "$ref": "Publishers"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/gan",
+	//     "https://www.googleapis.com/auth/gan.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "gan.reports.get":
+
+type ReportsGetCall struct {
+	s          *Service
+	role       string
+	roleId     string
+	reportType string
+	opt_       map[string]interface{}
+}
+
+// Get: Retrieves a report of the specified type.
+func (r *ReportsService) Get(role string, roleId string, reportType string) *ReportsGetCall {
+	c := &ReportsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.role = role
+	c.roleId = roleId
+	c.reportType = reportType
+	return c
+}
+
+// AdvertiserId sets the optional parameter "advertiserId": The IDs of
+// the advertisers to look up, if applicable.
+func (c *ReportsGetCall) AdvertiserId(advertiserId string) *ReportsGetCall {
+	c.opt_["advertiserId"] = advertiserId
+	return c
+}
+
+// CalculateTotals sets the optional parameter "calculateTotals":
+// Whether or not to calculate totals rows.
+func (c *ReportsGetCall) CalculateTotals(calculateTotals bool) *ReportsGetCall {
+	c.opt_["calculateTotals"] = calculateTotals
+	return c
+}
+
+// EndDate sets the optional parameter "endDate": The end date
+// (exclusive), in RFC 3339 format, for the report data to be returned.
+// Defaults to one day after startDate, if that is given, or today.
+func (c *ReportsGetCall) EndDate(endDate string) *ReportsGetCall {
+	c.opt_["endDate"] = endDate
+	return c
+}
+
+// EventType sets the optional parameter "eventType": Filters out all
+// events that are not of the given type. Valid values: 'action',
+// 'transaction', or 'charge'.
+func (c *ReportsGetCall) EventType(eventType string) *ReportsGetCall {
+	c.opt_["eventType"] = eventType
+	return c
+}
+
+// LinkId sets the optional parameter "linkId": Filters to capture one
+// of given link IDs.
+func (c *ReportsGetCall) LinkId(linkId string) *ReportsGetCall {
+	c.opt_["linkId"] = linkId
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Max number of
+// items to return in this page.  Defaults to return all results.
+func (c *ReportsGetCall) MaxResults(maxResults int64) *ReportsGetCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// OrderId sets the optional parameter "orderId": Filters to capture one
+// of the given order IDs.
+func (c *ReportsGetCall) OrderId(orderId string) *ReportsGetCall {
+	c.opt_["orderId"] = orderId
+	return c
+}
+
+// PublisherId sets the optional parameter "publisherId": The IDs of the
+// publishers to look up, if applicable.
+func (c *ReportsGetCall) PublisherId(publisherId string) *ReportsGetCall {
+	c.opt_["publisherId"] = publisherId
+	return c
+}
+
+// StartDate sets the optional parameter "startDate": The start date
+// (inclusive), in RFC 3339 format, for the report data to be returned.
+// Defaults to one day before endDate, if that is given, or yesterday.
+func (c *ReportsGetCall) StartDate(startDate string) *ReportsGetCall {
+	c.opt_["startDate"] = startDate
+	return c
+}
+
+// StartIndex sets the optional parameter "startIndex": Offset on which
+// to return results when paging.
+func (c *ReportsGetCall) StartIndex(startIndex int64) *ReportsGetCall {
+	c.opt_["startIndex"] = startIndex
+	return c
+}
+
+// Status sets the optional parameter "status": Filters out all events
+// that do not have the given status. Valid values: 'active',
+// 'canceled', or 'invalid'.
+func (c *ReportsGetCall) Status(status string) *ReportsGetCall {
+	c.opt_["status"] = status
+	return c
+}
+
+func (c *ReportsGetCall) Do() (*Report, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["advertiserId"]; ok {
+		params.Set("advertiserId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["calculateTotals"]; ok {
+		params.Set("calculateTotals", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["endDate"]; ok {
+		params.Set("endDate", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["eventType"]; ok {
+		params.Set("eventType", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["linkId"]; ok {
+		params.Set("linkId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["orderId"]; ok {
+		params.Set("orderId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["publisherId"]; ok {
+		params.Set("publisherId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["startDate"]; ok {
+		params.Set("startDate", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["startIndex"]; ok {
+		params.Set("startIndex", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["status"]; ok {
+		params.Set("status", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/gan/v1beta1/", "{role}/{roleId}/report/{reportType}")
+	urls = strings.Replace(urls, "{role}", cleanPathString(c.role), 1)
+	urls = strings.Replace(urls, "{roleId}", cleanPathString(c.roleId), 1)
+	urls = strings.Replace(urls, "{reportType}", cleanPathString(c.reportType), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Report)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a report of the specified type.",
+	//   "httpMethod": "GET",
+	//   "id": "gan.reports.get",
+	//   "parameterOrder": [
+	//     "role",
+	//     "roleId",
+	//     "reportType"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "The IDs of the advertisers to look up, if applicable.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "calculateTotals": {
+	//       "description": "Whether or not to calculate totals rows. Optional.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "endDate": {
+	//       "description": "The end date (exclusive), in RFC 3339 format, for the report data to be returned. Defaults to one day after startDate, if that is given, or today. Optional.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "eventType": {
+	//       "description": "Filters out all events that are not of the given type. Valid values: 'action', 'transaction', or 'charge'. Optional.",
+	//       "enum": [
+	//         "action",
+	//         "charge",
+	//         "transaction"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Event type is action.",
+	//         "Event type is charge.",
+	//         "Event type is transaction."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "linkId": {
+	//       "description": "Filters to capture one of given link IDs. Optional.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "description": "Max number of items to return in this page. Optional. Defaults to return all results.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "orderId": {
+	//       "description": "Filters to capture one of the given order IDs. Optional.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "publisherId": {
+	//       "description": "The IDs of the publishers to look up, if applicable.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "reportType": {
+	//       "description": "The type of report being requested. Valid values: 'order_delta'. Required.",
+	//       "enum": [
+	//         "order_delta"
+	//       ],
+	//       "enumDescriptions": [
+	//         "The order delta report type."
+	//       ],
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "role": {
+	//       "description": "The role of the requester. Valid values: 'advertisers' or 'publishers'.",
+	//       "enum": [
+	//         "advertisers",
+	//         "publishers"
+	//       ],
+	//       "enumDescriptions": [
+	//         "The requester is requesting as an advertiser.",
+	//         "The requester is requesting as a publisher."
+	//       ],
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "roleId": {
+	//       "description": "The ID of the requesting advertiser or publisher.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "startDate": {
+	//       "description": "The start date (inclusive), in RFC 3339 format, for the report data to be returned. Defaults to one day before endDate, if that is given, or yesterday. Optional.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "startIndex": {
+	//       "description": "Offset on which to return results when paging. Optional.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "status": {
+	//       "description": "Filters out all events that do not have the given status. Valid values: 'active', 'canceled', or 'invalid'. Optional.",
+	//       "enum": [
+	//         "active",
+	//         "canceled",
+	//         "invalid"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Event is currently active.",
+	//         "Event is currently canceled.",
+	//         "Event is currently invalid."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{role}/{roleId}/report/{reportType}",
+	//   "response": {
+	//     "$ref": "Report"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/gan",

@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"a3GBuXuTtUYW9BV1SIieU5LiL7w/rEsxPrm_sA7bLLyVsmcqfZqQldA\"",
+ "etag": "\"-vXktEC13RBC5q_wkxEsszrjKM4/AxXZJtkSbnf2IXf65zFzS9BWV6M\"",
  "discoveryVersion": "v1",
  "id": "drive:v1",
  "name": "drive",
  "version": "v1",
- "revision": "20121022",
+ "revision": "20130107",
  "title": "Drive API",
  "description": "The API to interact with Drive.",
  "icons": {

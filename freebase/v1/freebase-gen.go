@@ -122,11 +122,17 @@ type TopicStatslinkcountValuesValuesValues struct {
 }
 
 type TopicValue struct {
+	Citation *TopicValueCitation `json:"citation,omitempty"`
+
 	Creator string `json:"creator,omitempty"`
+
+	Dataset string `json:"dataset,omitempty"`
 
 	Id string `json:"id,omitempty"`
 
 	Lang string `json:"lang,omitempty"`
+
+	Project string `json:"project,omitempty"`
 
 	Property *TopicValueProperty `json:"property,omitempty"`
 
@@ -135,6 +141,14 @@ type TopicValue struct {
 	Timestamp string `json:"timestamp,omitempty"`
 
 	Value interface{} `json:"value,omitempty"`
+}
+
+type TopicValueCitation struct {
+	Provider string `json:"provider,omitempty"`
+
+	Statement string `json:"statement,omitempty"`
+
+	Uri string `json:"uri,omitempty"`
 }
 
 type TopicValueProperty struct {

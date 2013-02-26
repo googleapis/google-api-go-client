@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"a3GBuXuTtUYW9BV1SIieU5LiL7w/m3b4ViigavMco7hXnCkHwRsiJhM\"",
+ "etag": "\"-vXktEC13RBC5q_wkxEsszrjKM4/WX03ZewQxfF2XWOwzKkIKbyKtY4\"",
  "discoveryVersion": "v1",
  "id": "coordinate:v1",
  "name": "coordinate",
  "version": "v1",
- "revision": "20121022",
+ "revision": "20121205",
  "title": "Google Maps Coordinate API",
  "description": "Lets you view and manage jobs in a Coordinate team.",
  "icons": {
@@ -887,6 +887,17 @@
      "httpMethod": "GET",
      "description": "Retrieves a list of locations for a worker.",
      "parameters": {
+      "maxResults": {
+       "type": "integer",
+       "description": "Maximum number of results to return in one page.",
+       "format": "uint32",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Continuation token",
+       "location": "query"
+      },
       "startTimestampMs": {
        "type": "string",
        "description": "Start timestamp in milliseconds since the epoch.",

@@ -1388,10 +1388,10 @@ func (r *CalendarListService) Insert(calendarlistentry *CalendarListEntry) *Cale
 }
 
 // ColorRgbFormat sets the optional parameter "colorRgbFormat": Whether
-// to use the 'frontendColor' and 'backgroundColor' fields to write the
-// calendar colors (RGB). If this feature is used, the index-based
-// 'color' field will be set to the best matching option automatically.
-// The default is False.
+// to use the 'foregroundColor' and 'backgroundColor' fields to write
+// the calendar colors (RGB). If this feature is used, the index-based
+// 'colorId' field will be set to the best matching option
+// automatically.  The default is False.
 func (c *CalendarListInsertCall) ColorRgbFormat(colorRgbFormat bool) *CalendarListInsertCall {
 	c.opt_["colorRgbFormat"] = colorRgbFormat
 	return c
@@ -1432,7 +1432,7 @@ func (c *CalendarListInsertCall) Do() (*CalendarListEntry, error) {
 	//   "id": "calendar.calendarList.insert",
 	//   "parameters": {
 	//     "colorRgbFormat": {
-	//       "description": "Whether to use the 'frontendColor' and 'backgroundColor' fields to write the calendar colors (RGB). If this feature is used, the index-based 'color' field will be set to the best matching option automatically. Optional. The default is False.",
+	//       "description": "Whether to use the 'foregroundColor' and 'backgroundColor' fields to write the calendar colors (RGB). If this feature is used, the index-based 'colorId' field will be set to the best matching option automatically. Optional. The default is False.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -1596,10 +1596,10 @@ func (r *CalendarListService) Patch(calendarId string, calendarlistentry *Calend
 }
 
 // ColorRgbFormat sets the optional parameter "colorRgbFormat": Whether
-// to use the 'frontendColor' and 'backgroundColor' fields to write the
-// calendar colors (RGB). If this feature is used, the index-based
-// 'color' field will be set to the best matching option automatically.
-// The default is False.
+// to use the 'foregroundColor' and 'backgroundColor' fields to write
+// the calendar colors (RGB). If this feature is used, the index-based
+// 'colorId' field will be set to the best matching option
+// automatically.  The default is False.
 func (c *CalendarListPatchCall) ColorRgbFormat(colorRgbFormat bool) *CalendarListPatchCall {
 	c.opt_["colorRgbFormat"] = colorRgbFormat
 	return c
@@ -1650,7 +1650,7 @@ func (c *CalendarListPatchCall) Do() (*CalendarListEntry, error) {
 	//       "type": "string"
 	//     },
 	//     "colorRgbFormat": {
-	//       "description": "Whether to use the 'frontendColor' and 'backgroundColor' fields to write the calendar colors (RGB). If this feature is used, the index-based 'color' field will be set to the best matching option automatically. Optional. The default is False.",
+	//       "description": "Whether to use the 'foregroundColor' and 'backgroundColor' fields to write the calendar colors (RGB). If this feature is used, the index-based 'colorId' field will be set to the best matching option automatically. Optional. The default is False.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -1687,10 +1687,10 @@ func (r *CalendarListService) Update(calendarId string, calendarlistentry *Calen
 }
 
 // ColorRgbFormat sets the optional parameter "colorRgbFormat": Whether
-// to use the 'frontendColor' and 'backgroundColor' fields to write the
-// calendar colors (RGB). If this feature is used, the index-based
-// 'color' field will be set to the best matching option automatically.
-// The default is False.
+// to use the 'foregroundColor' and 'backgroundColor' fields to write
+// the calendar colors (RGB). If this feature is used, the index-based
+// 'colorId' field will be set to the best matching option
+// automatically.  The default is False.
 func (c *CalendarListUpdateCall) ColorRgbFormat(colorRgbFormat bool) *CalendarListUpdateCall {
 	c.opt_["colorRgbFormat"] = colorRgbFormat
 	return c
@@ -1741,7 +1741,7 @@ func (c *CalendarListUpdateCall) Do() (*CalendarListEntry, error) {
 	//       "type": "string"
 	//     },
 	//     "colorRgbFormat": {
-	//       "description": "Whether to use the 'frontendColor' and 'backgroundColor' fields to write the calendar colors (RGB). If this feature is used, the index-based 'color' field will be set to the best matching option automatically. Optional. The default is False.",
+	//       "description": "Whether to use the 'foregroundColor' and 'backgroundColor' fields to write the calendar colors (RGB). If this feature is used, the index-based 'colorId' field will be set to the best matching option automatically. Optional. The default is False.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -2646,6 +2646,22 @@ func (c *EventsInstancesCall) ShowDeleted(showDeleted bool) *EventsInstancesCall
 	return c
 }
 
+// TimeMax sets the optional parameter "timeMax": Upper bound
+// (exclusive) for an event's start time to filter by.  The default is
+// not to filter by start time.
+func (c *EventsInstancesCall) TimeMax(timeMax string) *EventsInstancesCall {
+	c.opt_["timeMax"] = timeMax
+	return c
+}
+
+// TimeMin sets the optional parameter "timeMin": Lower bound
+// (inclusive) for an event's end time to filter by.  The default is not
+// to filter by end time.
+func (c *EventsInstancesCall) TimeMin(timeMin string) *EventsInstancesCall {
+	c.opt_["timeMin"] = timeMin
+	return c
+}
+
 // TimeZone sets the optional parameter "timeZone": Time zone used in
 // the response.  The default is the time zone of the calendar.
 func (c *EventsInstancesCall) TimeZone(timeZone string) *EventsInstancesCall {
@@ -2674,6 +2690,12 @@ func (c *EventsInstancesCall) Do() (*Events, error) {
 	}
 	if v, ok := c.opt_["showDeleted"]; ok {
 		params.Set("showDeleted", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["timeMax"]; ok {
+		params.Set("timeMax", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["timeMin"]; ok {
+		params.Set("timeMin", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["timeZone"]; ok {
 		params.Set("timeZone", fmt.Sprintf("%v", v))
@@ -2750,6 +2772,18 @@ func (c *EventsInstancesCall) Do() (*Events, error) {
 	//       "description": "Whether to include deleted events (with 'eventStatus' equals 'cancelled') in the result. Optional. The default is False.",
 	//       "location": "query",
 	//       "type": "boolean"
+	//     },
+	//     "timeMax": {
+	//       "description": "Upper bound (exclusive) for an event's start time to filter by. Optional. The default is not to filter by start time.",
+	//       "format": "date-time",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "timeMin": {
+	//       "description": "Lower bound (inclusive) for an event's end time to filter by. Optional. The default is not to filter by end time.",
+	//       "format": "date-time",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "timeZone": {
 	//       "description": "Time zone used in the response. Optional. The default is the time zone of the calendar.",

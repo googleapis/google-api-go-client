@@ -832,6 +832,9 @@ type Profile struct {
 	// Timezone: Time zone for which this profile has been configured.
 	Timezone string `json:"timezone,omitempty"`
 
+	// Type: Profile type. Supported types: WEB or APP.
+	Type string `json:"type,omitempty"`
+
 	// Updated: Time this profile was last modified.
 	Updated string `json:"updated,omitempty"`
 

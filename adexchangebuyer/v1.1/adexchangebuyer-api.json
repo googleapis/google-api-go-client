@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"a3GBuXuTtUYW9BV1SIieU5LiL7w/Lo3rgHbbJX8N-wB3Jaq1gHcQ2P0\"",
+ "etag": "\"-vXktEC13RBC5q_wkxEsszrjKM4/HyGp4nHTxNI1wrE-i3tPuLVR820\"",
  "discoveryVersion": "v1",
  "id": "adexchangebuyer:v1.1",
  "name": "adexchangebuyer",
  "version": "v1.1",
- "revision": "20120718",
+ "revision": "20130130",
  "title": "Ad Exchange Buyer API",
  "description": "Lets you manage your Ad Exchange Buyer account.",
  "icons": {

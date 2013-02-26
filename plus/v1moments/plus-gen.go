@@ -36,15 +36,6 @@ const apiName = "plus"
 const apiVersion = "v1moments"
 const basePath = "https://www.googleapis.com/plus/v1moments/people/"
 
-// OAuth2 scopes used by this API.
-const (
-	// Know who you are on Google
-	PlusMeScope = "https://www.googleapis.com/auth/plus.me"
-
-	// Send your activity to your private Google+ history
-	PlusMomentsWriteScope = "https://www.googleapis.com/auth/plus.moments.write"
-)
-
 func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
@@ -96,10 +87,14 @@ type ItemScope struct {
 	// Audio: From http://schema.org/MusicRecording, the audio file.
 	Audio *ItemScope `json:"audio,omitempty"`
 
-	// Author: The person who created this scope.
+	// Author: The person or persons who created this result. In the example
+	// of restaurant reviews, this might be the reviewer's name.
 	Author []*ItemScope `json:"author,omitempty"`
 
-	// BestRating: Best possible rating value.
+	// BestRating: Best possible rating value that a result might obtain.
+	// This property defines the upper bound for the ratingValue. For
+	// example, you might have a 5 star rating scale, you would provide 5 as
+	// the value for this property.
 	BestRating string `json:"bestRating,omitempty"`
 
 	// BirthDate: Date of birth.
@@ -119,19 +114,25 @@ type ItemScope struct {
 	// file or video file.
 	ContentUrl string `json:"contentUrl,omitempty"`
 
-	// Contributor: The list of contributors for this scope.
+	// Contributor: A list of contributors to this result.
 	Contributor []*ItemScope `json:"contributor,omitempty"`
 
-	// DateCreated: The date this scope was created.
+	// DateCreated: The date the result was created such as the date that a
+	// review was first created.
 	DateCreated string `json:"dateCreated,omitempty"`
 
-	// DateModified: The date this scope was last modified.
+	// DateModified: The date the result was last modified such as the date
+	// that a review was last edited.
 	DateModified string `json:"dateModified,omitempty"`
 
-	// DatePublished: The initial date this scope was published.
+	// DatePublished: The initial date that the result was published. For
+	// example, a user writes a comment on a blog, which has a
+	// result.dateCreated of when they submit it. If the blog users comment
+	// moderation, the result.datePublished value would match the date when
+	// the owner approved the message.
 	DatePublished string `json:"datePublished,omitempty"`
 
-	// Description: The string describing the content of this scope.
+	// Description: The string that describes the content of the result.
 	Description string `json:"description,omitempty"`
 
 	// Duration: The duration of the item (movie, audio recording, event,
@@ -147,8 +148,8 @@ type ItemScope struct {
 	// format).
 	EndDate string `json:"endDate,omitempty"`
 
-	// FamilyName: Family name. In the U.S., the last name of an Person.
-	// This can be used along with givenName instead of the Name property.
+	// FamilyName: Family name. This property can be used with givenName
+	// instead of the name property.
 	FamilyName string `json:"familyName,omitempty"`
 
 	// Gender: Gender of the person.
@@ -157,17 +158,21 @@ type ItemScope struct {
 	// Geo: Geo coordinates.
 	Geo *ItemScope `json:"geo,omitempty"`
 
-	// GivenName: Given name. In the U.S., the first name of a Person. This
-	// can be used along with familyName instead of the Name property.
+	// GivenName: Given name. This property can be used with familyName
+	// instead of the name property.
 	GivenName string `json:"givenName,omitempty"`
 
 	// Height: The height of the media object.
 	Height string `json:"height,omitempty"`
 
-	// Id: The id for this item scope.
+	// Id: An identifier for the target. Your app can choose how to identify
+	// targets. The target.id is required if you are writing an activity
+	// that does not have a corresponding web page or target.url property.
 	Id string `json:"id,omitempty"`
 
-	// Image: A url to the image for this scope.
+	// Image: A URL to the image that represents this result. For example,
+	// if a user writes a review of a restaurant and attaches a photo of
+	// their meal, you might use that photo as the result.image.
 	Image string `json:"image,omitempty"`
 
 	// InAlbum: From http://schema.org/MusicRecording, which album a song is
@@ -186,7 +191,9 @@ type ItemScope struct {
 	// Longitude: Longitude.
 	Longitude float64 `json:"longitude,omitempty"`
 
-	// Name: The name of this scope.
+	// Name: The name of the result. In the example of a restaurant review,
+	// this might be the summary the user gave their review such as "Great
+	// ambiance, but overpriced."
 	Name string `json:"name,omitempty"`
 
 	// PartOfTVSeries: Property of http://schema.org/TVEpisode indicating
@@ -197,7 +204,8 @@ type ItemScope struct {
 	// example, a presenter, musician, or actor.
 	Performers []*ItemScope `json:"performers,omitempty"`
 
-	// PlayerType: Player type required-for example, Flash or Silverlight.
+	// PlayerType: Player type that is required. For example: Flash or
+	// Silverlight.
 	PlayerType string `json:"playerType,omitempty"`
 
 	// PostOfficeBoxNumber: Post office box number.
@@ -219,13 +227,15 @@ type ItemScope struct {
 	// StreetAddress: Street address.
 	StreetAddress string `json:"streetAddress,omitempty"`
 
-	// Text: Comment text, review text, etc.
+	// Text: The text that is the result of the app activity. For example,
+	// if a user leaves a review of a restaurant, this might be the text of
+	// the review.
 	Text string `json:"text,omitempty"`
 
 	// Thumbnail: Thumbnail image for an image or video.
 	Thumbnail *ItemScope `json:"thumbnail,omitempty"`
 
-	// ThumbnailUrl: A url to a thumbnail image for this scope.
+	// ThumbnailUrl: A URL to a thumbnail image that represents this result.
 	ThumbnailUrl string `json:"thumbnailUrl,omitempty"`
 
 	// TickerSymbol: The exchange traded instrument associated with a
@@ -236,16 +246,19 @@ type ItemScope struct {
 	// ISO15022.
 	TickerSymbol string `json:"tickerSymbol,omitempty"`
 
-	// Type: The item type.
+	// Type: The schema.org URL that best describes the referenced target
+	// and matches the type of moment.
 	Type string `json:"type,omitempty"`
 
-	// Url: A URL for the item upon which the action was performed.
+	// Url: The URL that points to the result object. For example, a
+	// permalink directly to a restaurant reviewer's comment.
 	Url string `json:"url,omitempty"`
 
 	// Width: The width of the media object.
 	Width string `json:"width,omitempty"`
 
-	// WorstRating: Worst possible rating value.
+	// WorstRating: Worst possible rating value that a result might obtain.
+	// This property defines the lower bound for the ratingValue.
 	WorstRating string `json:"worstRating,omitempty"`
 }
 
@@ -256,7 +269,9 @@ type Moment struct {
 	// Kind: Identifies this resource as a moment.
 	Kind string `json:"kind,omitempty"`
 
-	// Result: The object generated by performing the action on the item
+	// Result: The object generated by performing the action on the target.
+	// For example, a user writes a review of a restaurant, the target is
+	// the restaurant and the result is the review.
 	Result *ItemScope `json:"result,omitempty"`
 
 	// StartDate: Time stamp of when the action occurred in RFC3339 format.
@@ -265,7 +280,8 @@ type Moment struct {
 	// Target: The object on which the action was performed.
 	Target *ItemScope `json:"target,omitempty"`
 
-	// Type: The schema.org activity type.
+	// Type: The Google schema for the type of moment to write. For example,
+	// http://schemas.google.com/AddActivity.
 	Type string `json:"type,omitempty"`
 }
 
@@ -279,7 +295,8 @@ type MomentsInsertCall struct {
 	opt_       map[string]interface{}
 }
 
-// Insert: Record a user activity (e.g Bill watched a video on Youtube)
+// Insert: Record a moment representing a user's activity such as making
+// a purchase or commenting on a blog.
 func (r *MomentsService) Insert(userId string, collection string, moment *Moment) *MomentsInsertCall {
 	c := &MomentsInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userId = userId
@@ -327,7 +344,7 @@ func (c *MomentsInsertCall) Do() (*Moment, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Record a user activity (e.g Bill watched a video on Youtube)",
+	//   "description": "Record a moment representing a user's activity such as making a purchase or commenting on a blog.",
 	//   "httpMethod": "POST",
 	//   "id": "plus.moments.insert",
 	//   "parameterOrder": [
@@ -365,11 +382,7 @@ func (c *MomentsInsertCall) Do() (*Moment, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "Moment"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/plus.me",
-	//     "https://www.googleapis.com/auth/plus.moments.write"
-	//   ]
+	//   }
 	// }
 
 }

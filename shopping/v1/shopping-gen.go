@@ -104,6 +104,9 @@ type Products struct {
 	// Etag: Etag of feed.
 	Etag string `json:"etag,omitempty"`
 
+	// Extras: List of extras.
+	Extras *ShoppingModelExtrasJsonV1 `json:"extras,omitempty"`
+
 	// Facets: List of facets.
 	Facets []*ProductsFacets `json:"facets,omitempty"`
 
@@ -323,6 +326,22 @@ type ShoppingModelDebugJsonV1BackendTimes struct {
 
 	// ServerMillis: Google internal
 	ServerMillis int64 `json:"serverMillis,omitempty,string"`
+}
+
+type ShoppingModelExtrasJsonV1 struct {
+	FacetRules []*ShoppingModelExtrasJsonV1FacetRules `json:"facetRules,omitempty"`
+
+	// RankingRules: Names of boost (ranking) rules applicable to this
+	// search.
+	RankingRules []*ShoppingModelExtrasJsonV1RankingRules `json:"rankingRules,omitempty"`
+}
+
+type ShoppingModelExtrasJsonV1FacetRules struct {
+	Name string `json:"name,omitempty"`
+}
+
+type ShoppingModelExtrasJsonV1RankingRules struct {
+	Name string `json:"name,omitempty"`
 }
 
 type ShoppingModelProductJsonV1 struct {
@@ -979,6 +998,20 @@ func (c *ProductsListCall) Currency(currency string) *ProductsListCall {
 	return c
 }
 
+// ExtrasEnabled sets the optional parameter "extras.enabled": Whether
+// to return extra information.
+func (c *ProductsListCall) ExtrasEnabled(extrasEnabled bool) *ProductsListCall {
+	c.opt_["extras.enabled"] = extrasEnabled
+	return c
+}
+
+// ExtrasInfo sets the optional parameter "extras.info": What extra
+// information to return.
+func (c *ProductsListCall) ExtrasInfo(extrasInfo string) *ProductsListCall {
+	c.opt_["extras.info"] = extrasInfo
+	return c
+}
+
 // FacetsDiscover sets the optional parameter "facets.discover": Facets
 // to discover
 func (c *ProductsListCall) FacetsDiscover(facetsDiscover string) *ProductsListCall {
@@ -1224,6 +1257,12 @@ func (c *ProductsListCall) Do() (*Products, error) {
 	if v, ok := c.opt_["currency"]; ok {
 		params.Set("currency", fmt.Sprintf("%v", v))
 	}
+	if v, ok := c.opt_["extras.enabled"]; ok {
+		params.Set("extras.enabled", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["extras.info"]; ok {
+		params.Set("extras.info", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["facets.discover"]; ok {
 		params.Set("facets.discover", fmt.Sprintf("%v", v))
 	}
@@ -1405,6 +1444,16 @@ func (c *ProductsListCall) Do() (*Products, error) {
 	//     },
 	//     "currency": {
 	//       "description": "Currency restriction (ISO 4217)",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "extras.enabled": {
+	//       "description": "Whether to return extra information.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "extras.info": {
+	//       "description": "What extra information to return.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

@@ -1,10 +1,10 @@
 // Package compute provides access to the Compute Engine API.
 //
-// See https://developers.google.com/compute/docs/reference/v1beta13
+// See https://developers.google.com/compute/docs/reference/v1beta14
 //
 // Usage example:
 //
-//   import "code.google.com/p/google-api-go-client/compute/v1beta13"
+//   import "code.google.com/p/google-api-go-client/compute/v1beta14"
 //   ...
 //   computeService, err := compute.New(oauthHttpClient)
 package compute
@@ -31,10 +31,10 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 
-const apiId = "compute:v1beta13"
+const apiId = "compute:v1beta14"
 const apiName = "compute"
-const apiVersion = "v1beta13"
-const basePath = "https://www.googleapis.com/compute/v1beta13/projects/"
+const apiVersion = "v1beta14"
+const basePath = "https://www.googleapis.com/compute/v1beta14/projects/"
 
 // OAuth2 scopes used by this API.
 const (
@@ -55,14 +55,15 @@ func New(client *http.Client) (*Service, error) {
 	s := &Service{client: client}
 	s.Disks = &DisksService{s: s}
 	s.Firewalls = &FirewallsService{s: s}
+	s.GlobalOperations = &GlobalOperationsService{s: s}
 	s.Images = &ImagesService{s: s}
 	s.Instances = &InstancesService{s: s}
 	s.Kernels = &KernelsService{s: s}
 	s.MachineTypes = &MachineTypesService{s: s}
 	s.Networks = &NetworksService{s: s}
-	s.Operations = &OperationsService{s: s}
 	s.Projects = &ProjectsService{s: s}
 	s.Snapshots = &SnapshotsService{s: s}
+	s.ZoneOperations = &ZoneOperationsService{s: s}
 	s.Zones = &ZonesService{s: s}
 	return s, nil
 }
@@ -74,6 +75,8 @@ type Service struct {
 
 	Firewalls *FirewallsService
 
+	GlobalOperations *GlobalOperationsService
+
 	Images *ImagesService
 
 	Instances *InstancesService
@@ -84,11 +87,11 @@ type Service struct {
 
 	Networks *NetworksService
 
-	Operations *OperationsService
-
 	Projects *ProjectsService
 
 	Snapshots *SnapshotsService
+
+	ZoneOperations *ZoneOperationsService
 
 	Zones *ZonesService
 }
@@ -98,6 +101,10 @@ type DisksService struct {
 }
 
 type FirewallsService struct {
+	s *Service
+}
+
+type GlobalOperationsService struct {
 	s *Service
 }
 
@@ -121,15 +128,15 @@ type NetworksService struct {
 	s *Service
 }
 
-type OperationsService struct {
-	s *Service
-}
-
 type ProjectsService struct {
 	s *Service
 }
 
 type SnapshotsService struct {
+	s *Service
+}
+
+type ZoneOperationsService struct {
 	s *Service
 }
 
@@ -156,10 +163,9 @@ type AccessConfig struct {
 }
 
 type AttachedDisk struct {
-	// DeleteOnTerminate: Persistent disk only; If true, delete the disk and
-	// all its data when the associated instance is deleted. This property
-	// defaults to false if not specified.
-	DeleteOnTerminate bool `json:"deleteOnTerminate,omitempty"`
+	// Boot: Indicates that this is a boot disk. VM will use the first
+	// partition of the disk for its root filesystem.
+	Boot bool `json:"boot,omitempty"`
 
 	// DeviceName: Persistent disk only; must be unique within the instance
 	// when specified. This represents a unique device name that is
@@ -189,6 +195,33 @@ type AttachedDisk struct {
 	Type string `json:"type,omitempty"`
 }
 
+type DeprecationStatus struct {
+	// Deleted: An optional RFC3339 timestamp on or after which the
+	// deprecation state of this resource will be changed to DELETED.
+	Deleted string `json:"deleted,omitempty"`
+
+	// Deprecated: An optional RFC3339 timestamp on or after which the
+	// deprecation state of this resource will be changed to DEPRECATED.
+	Deprecated string `json:"deprecated,omitempty"`
+
+	// Obsolete: An optional RFC3339 timestamp on or after which the
+	// deprecation state of this resource will be changed to OBSOLETE.
+	Obsolete string `json:"obsolete,omitempty"`
+
+	// Replacement: A URL of the suggested replacement for the deprecated
+	// resource. The deprecated resource and its replacement must be
+	// resources of the same kind.
+	Replacement string `json:"replacement,omitempty"`
+
+	// State: The deprecation state. Can be "DEPRECATED", "OBSOLETE", or
+	// "DELETED". Operations which create a new resource using a
+	// "DEPRECATED" resource will return successfully, but with a warning
+	// indicating the deprecated resource and recommending its replacement.
+	// New uses of "OBSOLETE" or "DELETED" resources will result in an
+	// error.
+	State string `json:"state,omitempty"`
+}
+
 type Disk struct {
 	// CreationTimestamp: Creation timestamp in RFC3339 text format (output
 	// only).
@@ -216,7 +249,9 @@ type Disk struct {
 	// SelfLink: Server defined URL for the resource (output only).
 	SelfLink string `json:"selfLink,omitempty"`
 
-	// SizeGb: Size of the persistent disk, specified in GB.
+	// SizeGb: Size of the persistent disk, specified in GB. This parameter
+	// is optional when creating a disk from a disk image or a snapshot,
+	// otherwise it is required.
 	SizeGb int64 `json:"sizeGb,omitempty,string"`
 
 	// SourceSnapshot: The source snapshot used to create this disk. Once
@@ -234,9 +269,7 @@ type Disk struct {
 	// Status: The status of disk creation (output only).
 	Status string `json:"status,omitempty"`
 
-	// Zone: URL for the zone where the persistent disk resides; provided by
-	// the client when the disk is created. A persistent disk must reside in
-	// the same zone as the instance to which it is attached.
+	// Zone: URL of the zone where the disk resides (output only).
 	Zone string `json:"zone,omitempty"`
 }
 
@@ -322,7 +355,7 @@ type FirewallAllowed struct {
 	// be either an integer or a range. If not specified, connections
 	// through any port are allowed.
 	// Example inputs include: ["22"],
-	// ["80,"443"] and ["12345-12349"].
+	// ["80","443"] and ["12345-12349"].
 	Ports []string `json:"ports,omitempty"`
 }
 
@@ -350,12 +383,12 @@ type Image struct {
 	// only).
 	CreationTimestamp string `json:"creationTimestamp,omitempty"`
 
+	// Deprecated: The deprecation status associated with this image.
+	Deprecated *DeprecationStatus `json:"deprecated,omitempty"`
+
 	// Description: Textual description of the resource; provided by the
 	// client when the resource is created.
 	Description string `json:"description,omitempty"`
-
-	// DiskSnapshot: Not yet implemented.
-	DiskSnapshot *ImageDiskSnapshot `json:"diskSnapshot,omitempty"`
 
 	// Id: Unique identifier for the resource; defined by the server (output
 	// only).
@@ -383,11 +416,6 @@ type Image struct {
 	// SourceType: Must be "RAW"; provided by the client when the disk image
 	// is created.
 	SourceType string `json:"sourceType,omitempty"`
-}
-
-type ImageDiskSnapshot struct {
-	// Source: URL of the disk snapshot.
-	Source string `json:"source,omitempty"`
 }
 
 type ImageRawDisk struct {
@@ -426,6 +454,9 @@ type ImageList struct {
 }
 
 type Instance struct {
+	// CanIpForward: Reserved for future use.
+	CanIpForward bool `json:"canIpForward,omitempty"`
+
 	// CreationTimestamp: Creation timestamp in RFC3339 text format (output
 	// only).
 	CreationTimestamp string `json:"creationTimestamp,omitempty"`
@@ -442,10 +473,18 @@ type Instance struct {
 	// only).
 	Id uint64 `json:"id,omitempty,string"`
 
-	// Image: An optional URL of the disk image resource to be to be
-	// installed on this instance; provided by the client when the instance
-	// is created. If not specified, the server will choose a default image.
+	// Image: An optional URL of the disk image resource to be installed on
+	// this instance; provided by the client when the instance is created.
+	// Alternatively to passing the image, the client may choose to boot
+	// from a persistent disk, by setting boot=true flag on one of the
+	// entries in disks[] collection.
 	Image string `json:"image,omitempty"`
+
+	// Kernel: URL of the kernel resource to use when booting. In case of
+	// booting from persistent disk, this parameter is required. When
+	// booting from a disk image, it is optional, but may be provided to use
+	// a different kernel than the one associated with the image.
+	Kernel string `json:"kernel,omitempty"`
 
 	// Kind: Type of the resource.
 	Kind string `json:"kind,omitempty"`
@@ -482,7 +521,7 @@ type Instance struct {
 	ServiceAccounts []*ServiceAccount `json:"serviceAccounts,omitempty"`
 
 	// Status: Instance status. One of the following values: "PROVISIONING",
-	// "STAGING", "RUNNING", "STOPPED", "TERMINATED", and "STOPPING" (output
+	// "STAGING", "RUNNING", "STOPPING", "STOPPED", "TERMINATED" (output
 	// only).
 	Status string `json:"status,omitempty"`
 
@@ -490,14 +529,13 @@ type Instance struct {
 	// (output only).
 	StatusMessage string `json:"statusMessage,omitempty"`
 
-	// Tags: An optional set of tags applied to this instance. Used to
-	// identify valid sources or targets for network firewalls. Provided by
-	// the client when the instance is created. Each tag must be 1-63
-	// characters long, and comply with RFC1035.
-	Tags []string `json:"tags,omitempty"`
+	// Tags: A list of tags to be applied to this instance. Used to identify
+	// valid sources or targets for network firewalls. Provided by the
+	// client on instance creation. The tags can be later modified by the
+	// setTags method. Each tag within the list must comply with RFC1035.
+	Tags *Tags `json:"tags,omitempty"`
 
-	// Zone: URL of the zone resource describing where this instance should
-	// be hosted; provided by the client when the instance is created.
+	// Zone: URL of the zone where the instance resides (output only).
 	Zone string `json:"zone,omitempty"`
 }
 
@@ -524,6 +562,9 @@ type Kernel struct {
 	// CreationTimestamp: Creation timestamp in RFC3339 text format (output
 	// only).
 	CreationTimestamp string `json:"creationTimestamp,omitempty"`
+
+	// Deprecated: The deprecation status associated with this kernel.
+	Deprecated *DeprecationStatus `json:"deprecated,omitempty"`
 
 	// Description: An optional textual description of the resource.
 	Description string `json:"description,omitempty"`
@@ -568,6 +609,9 @@ type MachineType struct {
 	// CreationTimestamp: Creation timestamp in RFC3339 text format (output
 	// only).
 	CreationTimestamp string `json:"creationTimestamp,omitempty"`
+
+	// Deprecated: The deprecation status associated with this machine type.
+	Deprecated *DeprecationStatus `json:"deprecated,omitempty"`
 
 	// Description: An optional textual description of the resource.
 	Description string `json:"description,omitempty"`
@@ -631,6 +675,11 @@ type MachineTypeList struct {
 }
 
 type Metadata struct {
+	// Fingerprint: Fingerprint of this resource. A hash of the metadata's
+	// contents. This field is used for optimistic locking. An up-to-date
+	// metadata fingerprint must be provided in order to modify metadata.
+	Fingerprint string `json:"fingerprint,omitempty"`
+
 	// Items: Array of key/value pairs. The total size of all keys and
 	// values must be less than 512 KB.
 	Items []*MetadataItems `json:"items,omitempty"`
@@ -700,19 +749,16 @@ type NetworkInterface struct {
 	// internet access.
 	AccessConfigs []*AccessConfig `json:"accessConfigs,omitempty"`
 
-	// Kind: Type of the resource.
-	Kind string `json:"kind,omitempty"`
-
-	// Name: Name of the resource, determined by the server; for network
-	// devices, these are e.g. eth0, eth1, etc. (output only).
+	// Name: Name of the network interface, determined by the server; for
+	// network devices, these are e.g. eth0, eth1, etc. (output only).
 	Name string `json:"name,omitempty"`
 
 	// Network: URL of the network resource attached to this interface.
 	Network string `json:"network,omitempty"`
 
-	// NetworkIP: An optional IPV4 internal network address to assign to
-	// this instance. If not specified, one will be assigned from the
-	// available range.
+	// NetworkIP: An optional IPV4 internal network address to assign to the
+	// instance for this network interface. If not specified, one will be
+	// assigned from the available range.
 	NetworkIP string `json:"networkIP,omitempty"`
 }
 
@@ -772,7 +818,7 @@ type Operation struct {
 	// Kind: Type of the resource.
 	Kind string `json:"kind,omitempty"`
 
-	// Name: Name of the resource.
+	// Name: Name of the resource (output only).
 	Name string `json:"name,omitempty"`
 
 	// OperationType: Type of the operation. Examples include "insert",
@@ -812,6 +858,13 @@ type Operation struct {
 	// User: User who requested the operation, for example
 	// "user@example.com" (output only).
 	User string `json:"user,omitempty"`
+
+	// Warnings: If warning messages generated during processing of this
+	// operation, this field will be populated (output only).
+	Warnings []*OperationWarnings `json:"warnings,omitempty"`
+
+	// Zone: URL of the zone where the operation resides (output only).
+	Zone string `json:"zone,omitempty"`
 }
 
 type OperationError struct {
@@ -830,6 +883,25 @@ type OperationErrorErrors struct {
 
 	// Message: An optional, human-readable error message.
 	Message string `json:"message,omitempty"`
+}
+
+type OperationWarnings struct {
+	// Code: The warning type identifier for this warning.
+	Code string `json:"code,omitempty"`
+
+	// Data: Metadata for this warning in 'key: value' format.
+	Data []*OperationWarningsData `json:"data,omitempty"`
+
+	// Message: Optional human-readable details for this warning.
+	Message string `json:"message,omitempty"`
+}
+
+type OperationWarningsData struct {
+	// Key: A key for the warning data.
+	Key string `json:"key,omitempty"`
+
+	// Value: A warning data value corresponding to the key.
+	Value string `json:"value,omitempty"`
 }
 
 type OperationList struct {
@@ -878,13 +950,13 @@ type Project struct {
 	Name string `json:"name,omitempty"`
 
 	// Quotas: Quotas assigned to this project.
-	Quotas []*ProjectQuotas `json:"quotas,omitempty"`
+	Quotas []*Quota `json:"quotas,omitempty"`
 
 	// SelfLink: Server defined URL for the resource (output only).
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
-type ProjectQuotas struct {
+type Quota struct {
 	// Limit: Quota limit for this metric.
 	Limit float64 `json:"limit,omitempty"`
 
@@ -902,16 +974,13 @@ type SerialPortOutput struct {
 	// Kind: Type of the resource.
 	Kind string `json:"kind,omitempty"`
 
-	// SelfLink: Server defined URL for the resource.
+	// SelfLink: Server defined URL for the resource (output only).
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
 type ServiceAccount struct {
 	// Email: Email address of the service account.
 	Email string `json:"email,omitempty"`
-
-	// Kind: Type of the resource.
-	Kind string `json:"kind,omitempty"`
 
 	// Scopes: The list of scopes to be made available for this service
 	// account.
@@ -981,6 +1050,17 @@ type SnapshotList struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
+type Tags struct {
+	// Fingerprint: Fingerprint of this resource. A hash of the tags stored
+	// in this object. This field is used optimistic locking. An up-to-date
+	// tags fingerprint must be provided in order to modify tags.
+	Fingerprint string `json:"fingerprint,omitempty"`
+
+	// Items: An array of tags. Each tag must be 1-63 characters long, and
+	// comply with RFC1035.
+	Items []string `json:"items,omitempty"`
+}
+
 type Zone struct {
 	// AvailableMachineType: The machine types that can be used in this zone
 	// (output only).
@@ -989,6 +1069,9 @@ type Zone struct {
 	// CreationTimestamp: Creation timestamp in RFC3339 text format (output
 	// only).
 	CreationTimestamp string `json:"creationTimestamp,omitempty"`
+
+	// Deprecated: The deprecation status associated with this zone.
+	Deprecated *DeprecationStatus `json:"deprecated,omitempty"`
 
 	// Description: Textual description of the resource.
 	Description string `json:"description,omitempty"`
@@ -1007,6 +1090,9 @@ type Zone struct {
 
 	// Name: Name of the resource.
 	Name string `json:"name,omitempty"`
+
+	// Quotas: Quotas assigned to this zone.
+	Quotas []*Quota `json:"quotas,omitempty"`
 
 	// SelfLink: Server defined URL for the resource (output only).
 	SelfLink string `json:"selfLink,omitempty"`
@@ -1053,14 +1139,16 @@ type ZoneList struct {
 type DisksDeleteCall struct {
 	s       *Service
 	project string
+	zone    string
 	disk    string
 	opt_    map[string]interface{}
 }
 
 // Delete: Deletes the specified persistent disk resource.
-func (r *DisksService) Delete(project string, disk string) *DisksDeleteCall {
+func (r *DisksService) Delete(project string, zone string, disk string) *DisksDeleteCall {
 	c := &DisksDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
+	c.zone = zone
 	c.disk = disk
 	return c
 }
@@ -1069,8 +1157,9 @@ func (c *DisksDeleteCall) Do() (*Operation, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/disks/{disk}")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta14/projects/", "{project}/zones/{zone}/disks/{disk}")
 	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
+	urls = strings.Replace(urls, "{zone}", cleanPathString(c.zone), 1)
 	urls = strings.Replace(urls, "{disk}", cleanPathString(c.disk), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
@@ -1093,6 +1182,7 @@ func (c *DisksDeleteCall) Do() (*Operation, error) {
 	//   "id": "compute.disks.delete",
 	//   "parameterOrder": [
 	//     "project",
+	//     "zone",
 	//     "disk"
 	//   ],
 	//   "parameters": {
@@ -1109,9 +1199,16 @@ func (c *DisksDeleteCall) Do() (*Operation, error) {
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "Name of the zone scoping this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/disks/{disk}",
+	//   "path": "{project}/zones/{zone}/disks/{disk}",
 	//   "response": {
 	//     "$ref": "Operation"
 	//   },
@@ -1127,14 +1224,16 @@ func (c *DisksDeleteCall) Do() (*Operation, error) {
 type DisksGetCall struct {
 	s       *Service
 	project string
+	zone    string
 	disk    string
 	opt_    map[string]interface{}
 }
 
 // Get: Returns the specified persistent disk resource.
-func (r *DisksService) Get(project string, disk string) *DisksGetCall {
+func (r *DisksService) Get(project string, zone string, disk string) *DisksGetCall {
 	c := &DisksGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
+	c.zone = zone
 	c.disk = disk
 	return c
 }
@@ -1143,8 +1242,9 @@ func (c *DisksGetCall) Do() (*Disk, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/disks/{disk}")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta14/projects/", "{project}/zones/{zone}/disks/{disk}")
 	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
+	urls = strings.Replace(urls, "{zone}", cleanPathString(c.zone), 1)
 	urls = strings.Replace(urls, "{disk}", cleanPathString(c.disk), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -1167,6 +1267,7 @@ func (c *DisksGetCall) Do() (*Disk, error) {
 	//   "id": "compute.disks.get",
 	//   "parameterOrder": [
 	//     "project",
+	//     "zone",
 	//     "disk"
 	//   ],
 	//   "parameters": {
@@ -1183,9 +1284,16 @@ func (c *DisksGetCall) Do() (*Disk, error) {
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "Name of the zone scoping this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/disks/{disk}",
+	//   "path": "{project}/zones/{zone}/disks/{disk}",
 	//   "response": {
 	//     "$ref": "Disk"
 	//   },
@@ -1201,16 +1309,25 @@ func (c *DisksGetCall) Do() (*Disk, error) {
 type DisksInsertCall struct {
 	s       *Service
 	project string
+	zone    string
 	disk    *Disk
 	opt_    map[string]interface{}
 }
 
 // Insert: Creates a persistent disk resource in the specified project
 // using the data included in the request.
-func (r *DisksService) Insert(project string, disk *Disk) *DisksInsertCall {
+func (r *DisksService) Insert(project string, zone string, disk *Disk) *DisksInsertCall {
 	c := &DisksInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
+	c.zone = zone
 	c.disk = disk
+	return c
+}
+
+// SourceImage sets the optional parameter "sourceImage": Source image
+// to restore onto a disk.
+func (c *DisksInsertCall) SourceImage(sourceImage string) *DisksInsertCall {
+	c.opt_["sourceImage"] = sourceImage
 	return c
 }
 
@@ -1223,8 +1340,12 @@ func (c *DisksInsertCall) Do() (*Operation, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/disks")
+	if v, ok := c.opt_["sourceImage"]; ok {
+		params.Set("sourceImage", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta14/projects/", "{project}/zones/{zone}/disks")
 	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
+	urls = strings.Replace(urls, "{zone}", cleanPathString(c.zone), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.Header.Set("Content-Type", ctype)
@@ -1246,7 +1367,8 @@ func (c *DisksInsertCall) Do() (*Operation, error) {
 	//   "httpMethod": "POST",
 	//   "id": "compute.disks.insert",
 	//   "parameterOrder": [
-	//     "project"
+	//     "project",
+	//     "zone"
 	//   ],
 	//   "parameters": {
 	//     "project": {
@@ -1255,9 +1377,21 @@ func (c *DisksInsertCall) Do() (*Operation, error) {
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "sourceImage": {
+	//       "description": "Optional. Source image to restore onto a disk.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "Name of the zone scoping this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/disks",
+	//   "path": "{project}/zones/{zone}/disks",
 	//   "request": {
 	//     "$ref": "Disk"
 	//   },
@@ -1276,14 +1410,16 @@ func (c *DisksInsertCall) Do() (*Operation, error) {
 type DisksListCall struct {
 	s       *Service
 	project string
+	zone    string
 	opt_    map[string]interface{}
 }
 
 // List: Retrieves the list of persistent disk resources contained
-// within the specified project.
-func (r *DisksService) List(project string) *DisksListCall {
+// within the specified zone.
+func (r *DisksService) List(project string, zone string) *DisksListCall {
 	c := &DisksListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
+	c.zone = zone
 	return c
 }
 
@@ -1322,8 +1458,9 @@ func (c *DisksListCall) Do() (*DiskList, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/disks")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta14/projects/", "{project}/zones/{zone}/disks")
 	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
+	urls = strings.Replace(urls, "{zone}", cleanPathString(c.zone), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
@@ -1340,11 +1477,12 @@ func (c *DisksListCall) Do() (*DiskList, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves the list of persistent disk resources contained within the specified project.",
+	//   "description": "Retrieves the list of persistent disk resources contained within the specified zone.",
 	//   "httpMethod": "GET",
 	//   "id": "compute.disks.list",
 	//   "parameterOrder": [
-	//     "project"
+	//     "project",
+	//     "zone"
 	//   ],
 	//   "parameters": {
 	//     "filter": {
@@ -1372,9 +1510,16 @@ func (c *DisksListCall) Do() (*DiskList, error) {
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "Name of the zone scoping this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/disks",
+	//   "path": "{project}/zones/{zone}/disks",
 	//   "response": {
 	//     "$ref": "DiskList"
 	//   },
@@ -1406,7 +1551,7 @@ func (c *FirewallsDeleteCall) Do() (*Operation, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/firewalls/{firewall}")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta14/projects/", "{project}/global/firewalls/{firewall}")
 	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
 	urls = strings.Replace(urls, "{firewall}", cleanPathString(c.firewall), 1)
 	urls += "?" + params.Encode()
@@ -1448,7 +1593,7 @@ func (c *FirewallsDeleteCall) Do() (*Operation, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/firewalls/{firewall}",
+	//   "path": "{project}/global/firewalls/{firewall}",
 	//   "response": {
 	//     "$ref": "Operation"
 	//   },
@@ -1480,7 +1625,7 @@ func (c *FirewallsGetCall) Do() (*Firewall, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/firewalls/{firewall}")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta14/projects/", "{project}/global/firewalls/{firewall}")
 	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
 	urls = strings.Replace(urls, "{firewall}", cleanPathString(c.firewall), 1)
 	urls += "?" + params.Encode()
@@ -1522,7 +1667,7 @@ func (c *FirewallsGetCall) Do() (*Firewall, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/firewalls/{firewall}",
+	//   "path": "{project}/global/firewalls/{firewall}",
 	//   "response": {
 	//     "$ref": "Firewall"
 	//   },
@@ -1560,7 +1705,7 @@ func (c *FirewallsInsertCall) Do() (*Operation, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/firewalls")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta14/projects/", "{project}/global/firewalls")
 	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -1594,7 +1739,7 @@ func (c *FirewallsInsertCall) Do() (*Operation, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/firewalls",
+	//   "path": "{project}/global/firewalls",
 	//   "request": {
 	//     "$ref": "Firewall"
 	//   },
@@ -1659,7 +1804,7 @@ func (c *FirewallsListCall) Do() (*FirewallList, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/firewalls")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta14/projects/", "{project}/global/firewalls")
 	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -1711,7 +1856,7 @@ func (c *FirewallsListCall) Do() (*FirewallList, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/firewalls",
+	//   "path": "{project}/global/firewalls",
 	//   "response": {
 	//     "$ref": "FirewallList"
 	//   },
@@ -1751,7 +1896,7 @@ func (c *FirewallsPatchCall) Do() (*Operation, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/firewalls/{firewall}")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta14/projects/", "{project}/global/firewalls/{firewall}")
 	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
 	urls = strings.Replace(urls, "{firewall}", cleanPathString(c.firewall), 1)
 	urls += "?" + params.Encode()
@@ -1794,7 +1939,7 @@ func (c *FirewallsPatchCall) Do() (*Operation, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/firewalls/{firewall}",
+	//   "path": "{project}/global/firewalls/{firewall}",
 	//   "request": {
 	//     "$ref": "Firewall"
 	//   },
@@ -1837,7 +1982,7 @@ func (c *FirewallsUpdateCall) Do() (*Operation, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/firewalls/{firewall}")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta14/projects/", "{project}/global/firewalls/{firewall}")
 	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
 	urls = strings.Replace(urls, "{firewall}", cleanPathString(c.firewall), 1)
 	urls += "?" + params.Encode()
@@ -1880,7 +2025,7 @@ func (c *FirewallsUpdateCall) Do() (*Operation, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/firewalls/{firewall}",
+	//   "path": "{project}/global/firewalls/{firewall}",
 	//   "request": {
 	//     "$ref": "Firewall"
 	//   },
@@ -1889,6 +2034,261 @@ func (c *FirewallsUpdateCall) Do() (*Operation, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.globalOperations.delete":
+
+type GlobalOperationsDeleteCall struct {
+	s         *Service
+	project   string
+	operation string
+	opt_      map[string]interface{}
+}
+
+// Delete: Deletes the specified operation resource.
+func (r *GlobalOperationsService) Delete(project string, operation string) *GlobalOperationsDeleteCall {
+	c := &GlobalOperationsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.operation = operation
+	return c
+}
+
+func (c *GlobalOperationsDeleteCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta14/projects/", "{project}/global/operations/{operation}")
+	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
+	urls = strings.Replace(urls, "{operation}", cleanPathString(c.operation), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Deletes the specified operation resource.",
+	//   "httpMethod": "DELETE",
+	//   "id": "compute.globalOperations.delete",
+	//   "parameterOrder": [
+	//     "project",
+	//     "operation"
+	//   ],
+	//   "parameters": {
+	//     "operation": {
+	//       "description": "Name of the operation resource to delete.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/operations/{operation}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.globalOperations.get":
+
+type GlobalOperationsGetCall struct {
+	s         *Service
+	project   string
+	operation string
+	opt_      map[string]interface{}
+}
+
+// Get: Retrieves the specified operation resource.
+func (r *GlobalOperationsService) Get(project string, operation string) *GlobalOperationsGetCall {
+	c := &GlobalOperationsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.operation = operation
+	return c
+}
+
+func (c *GlobalOperationsGetCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta14/projects/", "{project}/global/operations/{operation}")
+	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
+	urls = strings.Replace(urls, "{operation}", cleanPathString(c.operation), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Operation)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the specified operation resource.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.globalOperations.get",
+	//   "parameterOrder": [
+	//     "project",
+	//     "operation"
+	//   ],
+	//   "parameters": {
+	//     "operation": {
+	//       "description": "Name of the operation resource to return.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/operations/{operation}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.globalOperations.list":
+
+type GlobalOperationsListCall struct {
+	s       *Service
+	project string
+	opt_    map[string]interface{}
+}
+
+// List: Retrieves the list of operation resources contained within the
+// specified project.
+func (r *GlobalOperationsService) List(project string) *GlobalOperationsListCall {
+	c := &GlobalOperationsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter expression for
+// filtering listed resources.
+func (c *GlobalOperationsListCall) Filter(filter string) *GlobalOperationsListCall {
+	c.opt_["filter"] = filter
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum count of
+// results to be returned. Maximum and default value is 100.
+func (c *GlobalOperationsListCall) MaxResults(maxResults int64) *GlobalOperationsListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Tag returned by a
+// previous list request truncated by maxResults. Used to continue a
+// previous list request.
+func (c *GlobalOperationsListCall) PageToken(pageToken string) *GlobalOperationsListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+func (c *GlobalOperationsListCall) Do() (*OperationList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["filter"]; ok {
+		params.Set("filter", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta14/projects/", "{project}/global/operations")
+	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(OperationList)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the list of operation resources contained within the specified project.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.globalOperations.list",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Filter expression for filtering listed resources.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "100",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "100",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/operations",
+	//   "response": {
+	//     "$ref": "OperationList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
 
@@ -1915,7 +2315,7 @@ func (c *ImagesDeleteCall) Do() (*Operation, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/images/{image}")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta14/projects/", "{project}/global/images/{image}")
 	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
 	urls = strings.Replace(urls, "{image}", cleanPathString(c.image), 1)
 	urls += "?" + params.Encode()
@@ -1957,7 +2357,93 @@ func (c *ImagesDeleteCall) Do() (*Operation, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/images/{image}",
+	//   "path": "{project}/global/images/{image}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.images.deprecate":
+
+type ImagesDeprecateCall struct {
+	s                 *Service
+	project           string
+	image             string
+	deprecationstatus *DeprecationStatus
+	opt_              map[string]interface{}
+}
+
+// Deprecate: Sets the deprecation status of an image. If no message
+// body is given, clears the deprecation status instead.
+func (r *ImagesService) Deprecate(project string, image string, deprecationstatus *DeprecationStatus) *ImagesDeprecateCall {
+	c := &ImagesDeprecateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.image = image
+	c.deprecationstatus = deprecationstatus
+	return c
+}
+
+func (c *ImagesDeprecateCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.deprecationstatus)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta14/projects/", "{project}/global/images/{image}/deprecate")
+	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
+	urls = strings.Replace(urls, "{image}", cleanPathString(c.image), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Operation)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Sets the deprecation status of an image. If no message body is given, clears the deprecation status instead.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.images.deprecate",
+	//   "parameterOrder": [
+	//     "project",
+	//     "image"
+	//   ],
+	//   "parameters": {
+	//     "image": {
+	//       "description": "Image name.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/images/{image}/deprecate",
+	//   "request": {
+	//     "$ref": "DeprecationStatus"
+	//   },
 	//   "response": {
 	//     "$ref": "Operation"
 	//   },
@@ -1989,7 +2475,7 @@ func (c *ImagesGetCall) Do() (*Image, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/images/{image}")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta14/projects/", "{project}/global/images/{image}")
 	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
 	urls = strings.Replace(urls, "{image}", cleanPathString(c.image), 1)
 	urls += "?" + params.Encode()
@@ -2031,7 +2517,7 @@ func (c *ImagesGetCall) Do() (*Image, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/images/{image}",
+	//   "path": "{project}/global/images/{image}",
 	//   "response": {
 	//     "$ref": "Image"
 	//   },
@@ -2069,7 +2555,7 @@ func (c *ImagesInsertCall) Do() (*Operation, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/images")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta14/projects/", "{project}/global/images")
 	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -2103,7 +2589,7 @@ func (c *ImagesInsertCall) Do() (*Operation, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/images",
+	//   "path": "{project}/global/images",
 	//   "request": {
 	//     "$ref": "Image"
 	//   },
@@ -2169,7 +2655,7 @@ func (c *ImagesListCall) Do() (*ImageList, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/images")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta14/projects/", "{project}/global/images")
 	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -2221,7 +2707,7 @@ func (c *ImagesListCall) Do() (*ImageList, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/images",
+	//   "path": "{project}/global/images",
 	//   "response": {
 	//     "$ref": "ImageList"
 	//   },
@@ -2237,6 +2723,7 @@ func (c *ImagesListCall) Do() (*ImageList, error) {
 type InstancesAddAccessConfigCall struct {
 	s                 *Service
 	project           string
+	zone              string
 	instance          string
 	network_interface string
 	accessconfig      *AccessConfig
@@ -2245,9 +2732,10 @@ type InstancesAddAccessConfigCall struct {
 
 // AddAccessConfig: Adds an access config to an instance's network
 // interface.
-func (r *InstancesService) AddAccessConfig(project string, instance string, network_interface string, accessconfig *AccessConfig) *InstancesAddAccessConfigCall {
+func (r *InstancesService) AddAccessConfig(project string, zone string, instance string, network_interface string, accessconfig *AccessConfig) *InstancesAddAccessConfigCall {
 	c := &InstancesAddAccessConfigCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
+	c.zone = zone
 	c.instance = instance
 	c.network_interface = network_interface
 	c.accessconfig = accessconfig
@@ -2264,8 +2752,9 @@ func (c *InstancesAddAccessConfigCall) Do() (*Operation, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("network_interface", fmt.Sprintf("%v", c.network_interface))
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/instances/{instance}/addAccessConfig")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta14/projects/", "{project}/zones/{zone}/instances/{instance}/addAccessConfig")
 	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
+	urls = strings.Replace(urls, "{zone}", cleanPathString(c.zone), 1)
 	urls = strings.Replace(urls, "{instance}", cleanPathString(c.instance), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -2289,6 +2778,7 @@ func (c *InstancesAddAccessConfigCall) Do() (*Operation, error) {
 	//   "id": "compute.instances.addAccessConfig",
 	//   "parameterOrder": [
 	//     "project",
+	//     "zone",
 	//     "instance",
 	//     "network_interface"
 	//   ],
@@ -2312,9 +2802,16 @@ func (c *InstancesAddAccessConfigCall) Do() (*Operation, error) {
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "Name of the zone scoping this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/instances/{instance}/addAccessConfig",
+	//   "path": "{project}/zones/{zone}/instances/{instance}/addAccessConfig",
 	//   "request": {
 	//     "$ref": "AccessConfig"
 	//   },
@@ -2333,14 +2830,16 @@ func (c *InstancesAddAccessConfigCall) Do() (*Operation, error) {
 type InstancesDeleteCall struct {
 	s        *Service
 	project  string
+	zone     string
 	instance string
 	opt_     map[string]interface{}
 }
 
 // Delete: Deletes the specified instance resource.
-func (r *InstancesService) Delete(project string, instance string) *InstancesDeleteCall {
+func (r *InstancesService) Delete(project string, zone string, instance string) *InstancesDeleteCall {
 	c := &InstancesDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
+	c.zone = zone
 	c.instance = instance
 	return c
 }
@@ -2349,8 +2848,9 @@ func (c *InstancesDeleteCall) Do() (*Operation, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/instances/{instance}")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta14/projects/", "{project}/zones/{zone}/instances/{instance}")
 	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
+	urls = strings.Replace(urls, "{zone}", cleanPathString(c.zone), 1)
 	urls = strings.Replace(urls, "{instance}", cleanPathString(c.instance), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
@@ -2373,6 +2873,7 @@ func (c *InstancesDeleteCall) Do() (*Operation, error) {
 	//   "id": "compute.instances.delete",
 	//   "parameterOrder": [
 	//     "project",
+	//     "zone",
 	//     "instance"
 	//   ],
 	//   "parameters": {
@@ -2389,9 +2890,16 @@ func (c *InstancesDeleteCall) Do() (*Operation, error) {
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "Name of the zone scoping this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/instances/{instance}",
+	//   "path": "{project}/zones/{zone}/instances/{instance}",
 	//   "response": {
 	//     "$ref": "Operation"
 	//   },
@@ -2407,6 +2915,7 @@ func (c *InstancesDeleteCall) Do() (*Operation, error) {
 type InstancesDeleteAccessConfigCall struct {
 	s                 *Service
 	project           string
+	zone              string
 	instance          string
 	access_config     string
 	network_interface string
@@ -2415,9 +2924,10 @@ type InstancesDeleteAccessConfigCall struct {
 
 // DeleteAccessConfig: Deletes an access config from an instance's
 // network interface.
-func (r *InstancesService) DeleteAccessConfig(project string, instance string, access_config string, network_interface string) *InstancesDeleteAccessConfigCall {
+func (r *InstancesService) DeleteAccessConfig(project string, zone string, instance string, access_config string, network_interface string) *InstancesDeleteAccessConfigCall {
 	c := &InstancesDeleteAccessConfigCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
+	c.zone = zone
 	c.instance = instance
 	c.access_config = access_config
 	c.network_interface = network_interface
@@ -2430,8 +2940,9 @@ func (c *InstancesDeleteAccessConfigCall) Do() (*Operation, error) {
 	params.Set("alt", "json")
 	params.Set("access_config", fmt.Sprintf("%v", c.access_config))
 	params.Set("network_interface", fmt.Sprintf("%v", c.network_interface))
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/instances/{instance}/deleteAccessConfig")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta14/projects/", "{project}/zones/{zone}/instances/{instance}/deleteAccessConfig")
 	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
+	urls = strings.Replace(urls, "{zone}", cleanPathString(c.zone), 1)
 	urls = strings.Replace(urls, "{instance}", cleanPathString(c.instance), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -2454,6 +2965,7 @@ func (c *InstancesDeleteAccessConfigCall) Do() (*Operation, error) {
 	//   "id": "compute.instances.deleteAccessConfig",
 	//   "parameterOrder": [
 	//     "project",
+	//     "zone",
 	//     "instance",
 	//     "access_config",
 	//     "network_interface"
@@ -2484,9 +2996,16 @@ func (c *InstancesDeleteAccessConfigCall) Do() (*Operation, error) {
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "Name of the zone scoping this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/instances/{instance}/deleteAccessConfig",
+	//   "path": "{project}/zones/{zone}/instances/{instance}/deleteAccessConfig",
 	//   "response": {
 	//     "$ref": "Operation"
 	//   },
@@ -2502,14 +3021,16 @@ func (c *InstancesDeleteAccessConfigCall) Do() (*Operation, error) {
 type InstancesGetCall struct {
 	s        *Service
 	project  string
+	zone     string
 	instance string
 	opt_     map[string]interface{}
 }
 
 // Get: Returns the specified instance resource.
-func (r *InstancesService) Get(project string, instance string) *InstancesGetCall {
+func (r *InstancesService) Get(project string, zone string, instance string) *InstancesGetCall {
 	c := &InstancesGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
+	c.zone = zone
 	c.instance = instance
 	return c
 }
@@ -2518,8 +3039,9 @@ func (c *InstancesGetCall) Do() (*Instance, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/instances/{instance}")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta14/projects/", "{project}/zones/{zone}/instances/{instance}")
 	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
+	urls = strings.Replace(urls, "{zone}", cleanPathString(c.zone), 1)
 	urls = strings.Replace(urls, "{instance}", cleanPathString(c.instance), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -2542,6 +3064,7 @@ func (c *InstancesGetCall) Do() (*Instance, error) {
 	//   "id": "compute.instances.get",
 	//   "parameterOrder": [
 	//     "project",
+	//     "zone",
 	//     "instance"
 	//   ],
 	//   "parameters": {
@@ -2558,9 +3081,16 @@ func (c *InstancesGetCall) Do() (*Instance, error) {
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "Name of the zone scoping this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/instances/{instance}",
+	//   "path": "{project}/zones/{zone}/instances/{instance}",
 	//   "response": {
 	//     "$ref": "Instance"
 	//   },
@@ -2576,15 +3106,17 @@ func (c *InstancesGetCall) Do() (*Instance, error) {
 type InstancesGetSerialPortOutputCall struct {
 	s        *Service
 	project  string
+	zone     string
 	instance string
 	opt_     map[string]interface{}
 }
 
 // GetSerialPortOutput: Returns the specified instance's serial port
 // output.
-func (r *InstancesService) GetSerialPortOutput(project string, instance string) *InstancesGetSerialPortOutputCall {
+func (r *InstancesService) GetSerialPortOutput(project string, zone string, instance string) *InstancesGetSerialPortOutputCall {
 	c := &InstancesGetSerialPortOutputCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
+	c.zone = zone
 	c.instance = instance
 	return c
 }
@@ -2593,8 +3125,9 @@ func (c *InstancesGetSerialPortOutputCall) Do() (*SerialPortOutput, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/instances/{instance}/serialPort")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta14/projects/", "{project}/zones/{zone}/instances/{instance}/serialPort")
 	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
+	urls = strings.Replace(urls, "{zone}", cleanPathString(c.zone), 1)
 	urls = strings.Replace(urls, "{instance}", cleanPathString(c.instance), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -2617,6 +3150,7 @@ func (c *InstancesGetSerialPortOutputCall) Do() (*SerialPortOutput, error) {
 	//   "id": "compute.instances.getSerialPortOutput",
 	//   "parameterOrder": [
 	//     "project",
+	//     "zone",
 	//     "instance"
 	//   ],
 	//   "parameters": {
@@ -2633,9 +3167,16 @@ func (c *InstancesGetSerialPortOutputCall) Do() (*SerialPortOutput, error) {
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "Name of the zone scoping this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/instances/{instance}/serialPort",
+	//   "path": "{project}/zones/{zone}/instances/{instance}/serialPort",
 	//   "response": {
 	//     "$ref": "SerialPortOutput"
 	//   },
@@ -2651,15 +3192,17 @@ func (c *InstancesGetSerialPortOutputCall) Do() (*SerialPortOutput, error) {
 type InstancesInsertCall struct {
 	s        *Service
 	project  string
+	zone     string
 	instance *Instance
 	opt_     map[string]interface{}
 }
 
 // Insert: Creates an instance resource in the specified project using
 // the data included in the request.
-func (r *InstancesService) Insert(project string, instance *Instance) *InstancesInsertCall {
+func (r *InstancesService) Insert(project string, zone string, instance *Instance) *InstancesInsertCall {
 	c := &InstancesInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
+	c.zone = zone
 	c.instance = instance
 	return c
 }
@@ -2673,8 +3216,9 @@ func (c *InstancesInsertCall) Do() (*Operation, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/instances")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta14/projects/", "{project}/zones/{zone}/instances")
 	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
+	urls = strings.Replace(urls, "{zone}", cleanPathString(c.zone), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.Header.Set("Content-Type", ctype)
@@ -2696,7 +3240,8 @@ func (c *InstancesInsertCall) Do() (*Operation, error) {
 	//   "httpMethod": "POST",
 	//   "id": "compute.instances.insert",
 	//   "parameterOrder": [
-	//     "project"
+	//     "project",
+	//     "zone"
 	//   ],
 	//   "parameters": {
 	//     "project": {
@@ -2705,9 +3250,16 @@ func (c *InstancesInsertCall) Do() (*Operation, error) {
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "Name of the zone scoping this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/instances",
+	//   "path": "{project}/zones/{zone}/instances",
 	//   "request": {
 	//     "$ref": "Instance"
 	//   },
@@ -2726,14 +3278,16 @@ func (c *InstancesInsertCall) Do() (*Operation, error) {
 type InstancesListCall struct {
 	s       *Service
 	project string
+	zone    string
 	opt_    map[string]interface{}
 }
 
 // List: Retrieves the list of instance resources contained within the
-// specified project.
-func (r *InstancesService) List(project string) *InstancesListCall {
+// specified zone.
+func (r *InstancesService) List(project string, zone string) *InstancesListCall {
 	c := &InstancesListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
+	c.zone = zone
 	return c
 }
 
@@ -2772,8 +3326,9 @@ func (c *InstancesListCall) Do() (*InstanceList, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/instances")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta14/projects/", "{project}/zones/{zone}/instances")
 	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
+	urls = strings.Replace(urls, "{zone}", cleanPathString(c.zone), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
@@ -2790,11 +3345,12 @@ func (c *InstancesListCall) Do() (*InstanceList, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves the list of instance resources contained within the specified project.",
+	//   "description": "Retrieves the list of instance resources contained within the specified zone.",
 	//   "httpMethod": "GET",
 	//   "id": "compute.instances.list",
 	//   "parameterOrder": [
-	//     "project"
+	//     "project",
+	//     "zone"
 	//   ],
 	//   "parameters": {
 	//     "filter": {
@@ -2822,14 +3378,215 @@ func (c *InstancesListCall) Do() (*InstanceList, error) {
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "Name of the zone scoping this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/instances",
+	//   "path": "{project}/zones/{zone}/instances",
 	//   "response": {
 	//     "$ref": "InstanceList"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.instances.setMetadata":
+
+type InstancesSetMetadataCall struct {
+	s        *Service
+	project  string
+	zone     string
+	instance string
+	metadata *Metadata
+	opt_     map[string]interface{}
+}
+
+// SetMetadata: Sets metadata for the specified instance to the data
+// included in the request.
+func (r *InstancesService) SetMetadata(project string, zone string, instance string, metadata *Metadata) *InstancesSetMetadataCall {
+	c := &InstancesSetMetadataCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.zone = zone
+	c.instance = instance
+	c.metadata = metadata
+	return c
+}
+
+func (c *InstancesSetMetadataCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.metadata)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta14/projects/", "{project}/zones/{zone}/instances/{instance}/setMetadata")
+	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
+	urls = strings.Replace(urls, "{zone}", cleanPathString(c.zone), 1)
+	urls = strings.Replace(urls, "{instance}", cleanPathString(c.instance), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Operation)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Sets metadata for the specified instance to the data included in the request.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.instances.setMetadata",
+	//   "parameterOrder": [
+	//     "project",
+	//     "zone",
+	//     "instance"
+	//   ],
+	//   "parameters": {
+	//     "instance": {
+	//       "description": "Name of the instance scoping this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "Name of the zone scoping this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/zones/{zone}/instances/{instance}/setMetadata",
+	//   "request": {
+	//     "$ref": "Metadata"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.instances.setTags":
+
+type InstancesSetTagsCall struct {
+	s        *Service
+	project  string
+	zone     string
+	instance string
+	tags     *Tags
+	opt_     map[string]interface{}
+}
+
+// SetTags: Sets tags for the specified instance to the data included in
+// the request.
+func (r *InstancesService) SetTags(project string, zone string, instance string, tags *Tags) *InstancesSetTagsCall {
+	c := &InstancesSetTagsCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.zone = zone
+	c.instance = instance
+	c.tags = tags
+	return c
+}
+
+func (c *InstancesSetTagsCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.tags)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta14/projects/", "{project}/zones/{zone}/instances/{instance}/setTags")
+	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
+	urls = strings.Replace(urls, "{zone}", cleanPathString(c.zone), 1)
+	urls = strings.Replace(urls, "{instance}", cleanPathString(c.instance), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Operation)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Sets tags for the specified instance to the data included in the request.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.instances.setTags",
+	//   "parameterOrder": [
+	//     "project",
+	//     "zone",
+	//     "instance"
+	//   ],
+	//   "parameters": {
+	//     "instance": {
+	//       "description": "Name of the instance scoping this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "Name of the zone scoping this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/zones/{zone}/instances/{instance}/setTags",
+	//   "request": {
+	//     "$ref": "Tags"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
 
@@ -2856,7 +3613,7 @@ func (c *KernelsGetCall) Do() (*Kernel, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/kernels/{kernel}")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta14/projects/", "{project}/global/kernels/{kernel}")
 	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
 	urls = strings.Replace(urls, "{kernel}", cleanPathString(c.kernel), 1)
 	urls += "?" + params.Encode()
@@ -2898,7 +3655,7 @@ func (c *KernelsGetCall) Do() (*Kernel, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/kernels/{kernel}",
+	//   "path": "{project}/global/kernels/{kernel}",
 	//   "response": {
 	//     "$ref": "Kernel"
 	//   },
@@ -2960,7 +3717,7 @@ func (c *KernelsListCall) Do() (*KernelList, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/kernels")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta14/projects/", "{project}/global/kernels")
 	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -3012,7 +3769,7 @@ func (c *KernelsListCall) Do() (*KernelList, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/kernels",
+	//   "path": "{project}/global/kernels",
 	//   "response": {
 	//     "$ref": "KernelList"
 	//   },
@@ -3044,7 +3801,7 @@ func (c *MachineTypesGetCall) Do() (*MachineType, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/machineTypes/{machineType}")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta14/projects/", "{project}/global/machineTypes/{machineType}")
 	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
 	urls = strings.Replace(urls, "{machineType}", cleanPathString(c.machineType), 1)
 	urls += "?" + params.Encode()
@@ -3086,7 +3843,7 @@ func (c *MachineTypesGetCall) Do() (*MachineType, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/machineTypes/{machineType}",
+	//   "path": "{project}/global/machineTypes/{machineType}",
 	//   "response": {
 	//     "$ref": "MachineType"
 	//   },
@@ -3148,7 +3905,7 @@ func (c *MachineTypesListCall) Do() (*MachineTypeList, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/machineTypes")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta14/projects/", "{project}/global/machineTypes")
 	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -3200,7 +3957,7 @@ func (c *MachineTypesListCall) Do() (*MachineTypeList, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/machineTypes",
+	//   "path": "{project}/global/machineTypes",
 	//   "response": {
 	//     "$ref": "MachineTypeList"
 	//   },
@@ -3232,7 +3989,7 @@ func (c *NetworksDeleteCall) Do() (*Operation, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/networks/{network}")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta14/projects/", "{project}/global/networks/{network}")
 	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
 	urls = strings.Replace(urls, "{network}", cleanPathString(c.network), 1)
 	urls += "?" + params.Encode()
@@ -3274,7 +4031,7 @@ func (c *NetworksDeleteCall) Do() (*Operation, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/networks/{network}",
+	//   "path": "{project}/global/networks/{network}",
 	//   "response": {
 	//     "$ref": "Operation"
 	//   },
@@ -3306,7 +4063,7 @@ func (c *NetworksGetCall) Do() (*Network, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/networks/{network}")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta14/projects/", "{project}/global/networks/{network}")
 	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
 	urls = strings.Replace(urls, "{network}", cleanPathString(c.network), 1)
 	urls += "?" + params.Encode()
@@ -3348,7 +4105,7 @@ func (c *NetworksGetCall) Do() (*Network, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/networks/{network}",
+	//   "path": "{project}/global/networks/{network}",
 	//   "response": {
 	//     "$ref": "Network"
 	//   },
@@ -3386,7 +4143,7 @@ func (c *NetworksInsertCall) Do() (*Operation, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/networks")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta14/projects/", "{project}/global/networks")
 	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -3420,7 +4177,7 @@ func (c *NetworksInsertCall) Do() (*Operation, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/networks",
+	//   "path": "{project}/global/networks",
 	//   "request": {
 	//     "$ref": "Network"
 	//   },
@@ -3485,7 +4242,7 @@ func (c *NetworksListCall) Do() (*NetworkList, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/networks")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta14/projects/", "{project}/global/networks")
 	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -3537,264 +4294,9 @@ func (c *NetworksListCall) Do() (*NetworkList, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/networks",
+	//   "path": "{project}/global/networks",
 	//   "response": {
 	//     "$ref": "NetworkList"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/compute.readonly"
-	//   ]
-	// }
-
-}
-
-// method id "compute.operations.delete":
-
-type OperationsDeleteCall struct {
-	s         *Service
-	project   string
-	operation string
-	opt_      map[string]interface{}
-}
-
-// Delete: Deletes the specified operation resource.
-func (r *OperationsService) Delete(project string, operation string) *OperationsDeleteCall {
-	c := &OperationsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
-	c.project = project
-	c.operation = operation
-	return c
-}
-
-func (c *OperationsDeleteCall) Do() error {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/operations/{operation}")
-	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
-	urls = strings.Replace(urls, "{operation}", cleanPathString(c.operation), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("DELETE", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return err
-	}
-	return nil
-	// {
-	//   "description": "Deletes the specified operation resource.",
-	//   "httpMethod": "DELETE",
-	//   "id": "compute.operations.delete",
-	//   "parameterOrder": [
-	//     "project",
-	//     "operation"
-	//   ],
-	//   "parameters": {
-	//     "operation": {
-	//       "description": "Name of the operation resource to delete.",
-	//       "location": "path",
-	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "project": {
-	//       "description": "Name of the project scoping this request.",
-	//       "location": "path",
-	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "{project}/operations/{operation}",
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/compute"
-	//   ]
-	// }
-
-}
-
-// method id "compute.operations.get":
-
-type OperationsGetCall struct {
-	s         *Service
-	project   string
-	operation string
-	opt_      map[string]interface{}
-}
-
-// Get: Retrieves the specified operation resource.
-func (r *OperationsService) Get(project string, operation string) *OperationsGetCall {
-	c := &OperationsGetCall{s: r.s, opt_: make(map[string]interface{})}
-	c.project = project
-	c.operation = operation
-	return c
-}
-
-func (c *OperationsGetCall) Do() (*Operation, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/operations/{operation}")
-	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
-	urls = strings.Replace(urls, "{operation}", cleanPathString(c.operation), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(Operation)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Retrieves the specified operation resource.",
-	//   "httpMethod": "GET",
-	//   "id": "compute.operations.get",
-	//   "parameterOrder": [
-	//     "project",
-	//     "operation"
-	//   ],
-	//   "parameters": {
-	//     "operation": {
-	//       "description": "Name of the operation resource to return.",
-	//       "location": "path",
-	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "project": {
-	//       "description": "Name of the project scoping this request.",
-	//       "location": "path",
-	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "{project}/operations/{operation}",
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/compute.readonly"
-	//   ]
-	// }
-
-}
-
-// method id "compute.operations.list":
-
-type OperationsListCall struct {
-	s       *Service
-	project string
-	opt_    map[string]interface{}
-}
-
-// List: Retrieves the list of operation resources contained within the
-// specified project.
-func (r *OperationsService) List(project string) *OperationsListCall {
-	c := &OperationsListCall{s: r.s, opt_: make(map[string]interface{})}
-	c.project = project
-	return c
-}
-
-// Filter sets the optional parameter "filter": Filter expression for
-// filtering listed resources.
-func (c *OperationsListCall) Filter(filter string) *OperationsListCall {
-	c.opt_["filter"] = filter
-	return c
-}
-
-// MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum and default value is 100.
-func (c *OperationsListCall) MaxResults(maxResults int64) *OperationsListCall {
-	c.opt_["maxResults"] = maxResults
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request truncated by maxResults. Used to continue a
-// previous list request.
-func (c *OperationsListCall) PageToken(pageToken string) *OperationsListCall {
-	c.opt_["pageToken"] = pageToken
-	return c
-}
-
-func (c *OperationsListCall) Do() (*OperationList, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	if v, ok := c.opt_["filter"]; ok {
-		params.Set("filter", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/operations")
-	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(OperationList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Retrieves the list of operation resources contained within the specified project.",
-	//   "httpMethod": "GET",
-	//   "id": "compute.operations.list",
-	//   "parameterOrder": [
-	//     "project"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "Optional. Filter expression for filtering listed resources.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "maxResults": {
-	//       "default": "100",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
-	//       "format": "uint32",
-	//       "location": "query",
-	//       "maximum": "100",
-	//       "minimum": "0",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "project": {
-	//       "description": "Name of the project scoping this request.",
-	//       "location": "path",
-	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "{project}/operations",
-	//   "response": {
-	//     "$ref": "OperationList"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/compute.readonly"
@@ -3822,7 +4324,7 @@ func (c *ProjectsGetCall) Do() (*Project, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta14/projects/", "{project}")
 	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -3893,7 +4395,7 @@ func (c *ProjectsSetCommonInstanceMetadataCall) Do() (*Operation, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/setCommonInstanceMetadata")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta14/projects/", "{project}/setCommonInstanceMetadata")
 	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -3962,7 +4464,7 @@ func (c *SnapshotsDeleteCall) Do() (*Operation, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/snapshots/{snapshot}")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta14/projects/", "{project}/global/snapshots/{snapshot}")
 	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
 	urls = strings.Replace(urls, "{snapshot}", cleanPathString(c.snapshot), 1)
 	urls += "?" + params.Encode()
@@ -4004,7 +4506,7 @@ func (c *SnapshotsDeleteCall) Do() (*Operation, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/snapshots/{snapshot}",
+	//   "path": "{project}/global/snapshots/{snapshot}",
 	//   "response": {
 	//     "$ref": "Operation"
 	//   },
@@ -4036,7 +4538,7 @@ func (c *SnapshotsGetCall) Do() (*Snapshot, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/snapshots/{snapshot}")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta14/projects/", "{project}/global/snapshots/{snapshot}")
 	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
 	urls = strings.Replace(urls, "{snapshot}", cleanPathString(c.snapshot), 1)
 	urls += "?" + params.Encode()
@@ -4078,7 +4580,7 @@ func (c *SnapshotsGetCall) Do() (*Snapshot, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/snapshots/{snapshot}",
+	//   "path": "{project}/global/snapshots/{snapshot}",
 	//   "response": {
 	//     "$ref": "Snapshot"
 	//   },
@@ -4116,7 +4618,7 @@ func (c *SnapshotsInsertCall) Do() (*Operation, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/snapshots")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta14/projects/", "{project}/global/snapshots")
 	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -4150,7 +4652,7 @@ func (c *SnapshotsInsertCall) Do() (*Operation, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/snapshots",
+	//   "path": "{project}/global/snapshots",
 	//   "request": {
 	//     "$ref": "Snapshot"
 	//   },
@@ -4215,7 +4717,7 @@ func (c *SnapshotsListCall) Do() (*SnapshotList, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/snapshots")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta14/projects/", "{project}/global/snapshots")
 	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -4267,9 +4769,297 @@ func (c *SnapshotsListCall) Do() (*SnapshotList, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/snapshots",
+	//   "path": "{project}/global/snapshots",
 	//   "response": {
 	//     "$ref": "SnapshotList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.zoneOperations.delete":
+
+type ZoneOperationsDeleteCall struct {
+	s         *Service
+	project   string
+	zone      string
+	operation string
+	opt_      map[string]interface{}
+}
+
+// Delete: Deletes the specified zone-specific operation resource.
+func (r *ZoneOperationsService) Delete(project string, zone string, operation string) *ZoneOperationsDeleteCall {
+	c := &ZoneOperationsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.zone = zone
+	c.operation = operation
+	return c
+}
+
+func (c *ZoneOperationsDeleteCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta14/projects/", "{project}/zones/{zone}/operations/{operation}")
+	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
+	urls = strings.Replace(urls, "{zone}", cleanPathString(c.zone), 1)
+	urls = strings.Replace(urls, "{operation}", cleanPathString(c.operation), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Deletes the specified zone-specific operation resource.",
+	//   "httpMethod": "DELETE",
+	//   "id": "compute.zoneOperations.delete",
+	//   "parameterOrder": [
+	//     "project",
+	//     "zone",
+	//     "operation"
+	//   ],
+	//   "parameters": {
+	//     "operation": {
+	//       "description": "Name of the operation resource to delete.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "Name of the zone scoping this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/zones/{zone}/operations/{operation}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.zoneOperations.get":
+
+type ZoneOperationsGetCall struct {
+	s         *Service
+	project   string
+	zone      string
+	operation string
+	opt_      map[string]interface{}
+}
+
+// Get: Retrieves the specified zone-specific operation resource.
+func (r *ZoneOperationsService) Get(project string, zone string, operation string) *ZoneOperationsGetCall {
+	c := &ZoneOperationsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.zone = zone
+	c.operation = operation
+	return c
+}
+
+func (c *ZoneOperationsGetCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta14/projects/", "{project}/zones/{zone}/operations/{operation}")
+	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
+	urls = strings.Replace(urls, "{zone}", cleanPathString(c.zone), 1)
+	urls = strings.Replace(urls, "{operation}", cleanPathString(c.operation), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Operation)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the specified zone-specific operation resource.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.zoneOperations.get",
+	//   "parameterOrder": [
+	//     "project",
+	//     "zone",
+	//     "operation"
+	//   ],
+	//   "parameters": {
+	//     "operation": {
+	//       "description": "Name of the operation resource to return.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "Name of the zone scoping this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/zones/{zone}/operations/{operation}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.zoneOperations.list":
+
+type ZoneOperationsListCall struct {
+	s       *Service
+	project string
+	zone    string
+	opt_    map[string]interface{}
+}
+
+// List: Retrieves the list of operation resources contained within the
+// specified zone.
+func (r *ZoneOperationsService) List(project string, zone string) *ZoneOperationsListCall {
+	c := &ZoneOperationsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.zone = zone
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter expression for
+// filtering listed resources.
+func (c *ZoneOperationsListCall) Filter(filter string) *ZoneOperationsListCall {
+	c.opt_["filter"] = filter
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum count of
+// results to be returned. Maximum and default value is 100.
+func (c *ZoneOperationsListCall) MaxResults(maxResults int64) *ZoneOperationsListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Tag returned by a
+// previous list request truncated by maxResults. Used to continue a
+// previous list request.
+func (c *ZoneOperationsListCall) PageToken(pageToken string) *ZoneOperationsListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+func (c *ZoneOperationsListCall) Do() (*OperationList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["filter"]; ok {
+		params.Set("filter", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta14/projects/", "{project}/zones/{zone}/operations")
+	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
+	urls = strings.Replace(urls, "{zone}", cleanPathString(c.zone), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(OperationList)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the list of operation resources contained within the specified zone.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.zoneOperations.list",
+	//   "parameterOrder": [
+	//     "project",
+	//     "zone"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Filter expression for filtering listed resources.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "100",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "100",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "Name of the zone scoping this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/zones/{zone}/operations",
+	//   "response": {
+	//     "$ref": "OperationList"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/compute.readonly"
@@ -4299,7 +5089,7 @@ func (c *ZonesGetCall) Do() (*Zone, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/zones/{zone}")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta14/projects/", "{project}/zones/{zone}")
 	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
 	urls = strings.Replace(urls, "{zone}", cleanPathString(c.zone), 1)
 	urls += "?" + params.Encode()
@@ -4403,7 +5193,7 @@ func (c *ZonesListCall) Do() (*ZoneList, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/zones")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta14/projects/", "{project}/zones")
 	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)

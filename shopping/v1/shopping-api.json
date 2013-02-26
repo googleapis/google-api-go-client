@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"a3GBuXuTtUYW9BV1SIieU5LiL7w/fkGa4jJB_jGfibeN9C5BItCQTOc\"",
+ "etag": "\"-vXktEC13RBC5q_wkxEsszrjKM4/Xn5zS3DmHZ8oaSaV6KXllh7qNe8\"",
  "discoveryVersion": "v1",
  "id": "shopping:v1",
  "name": "shopping",
  "version": "v1",
- "revision": "20121026",
+ "revision": "20130212",
  "title": "Search API For Shopping",
  "description": "Lets you search over product data.",
  "icons": {
@@ -151,6 +151,10 @@
     "etag": {
      "type": "string",
      "description": "Etag of feed."
+    },
+    "extras": {
+     "$ref": "ShoppingModelExtrasJsonV1",
+     "description": "List of extras."
     },
     "facets": {
      "type": "array",
@@ -473,6 +477,35 @@
     "searchResponse": {
      "type": "string",
      "description": "Google internal."
+    }
+   }
+  },
+  "ShoppingModelExtrasJsonV1": {
+   "id": "ShoppingModelExtrasJsonV1",
+   "type": "object",
+   "properties": {
+    "facetRules": {
+     "type": "array",
+     "items": {
+      "type": "object",
+      "properties": {
+       "name": {
+        "type": "string"
+       }
+      }
+     }
+    },
+    "rankingRules": {
+     "type": "array",
+     "description": "Names of boost (ranking) rules applicable to this search.",
+     "items": {
+      "type": "object",
+      "properties": {
+       "name": {
+        "type": "string"
+       }
+      }
+     }
     }
    }
   },
@@ -1038,6 +1071,16 @@
       "currency": {
        "type": "string",
        "description": "Currency restriction (ISO 4217)",
+       "location": "query"
+      },
+      "extras.enabled": {
+       "type": "boolean",
+       "description": "Whether to return extra information.",
+       "location": "query"
+      },
+      "extras.info": {
+       "type": "string",
+       "description": "What extra information to return.",
        "location": "query"
       },
       "facets.discover": {

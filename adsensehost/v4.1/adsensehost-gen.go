@@ -170,7 +170,8 @@ type AdStyle struct {
 	// the leading hash.
 	Colors *AdStyleColors `json:"colors,omitempty"`
 
-	// Corners: The style of the corners in the ad.
+	// Corners: The style of the corners in the ad. Possible values are
+	// SQUARE, SLIGHTLY_ROUNDED and VERY_ROUNDED.
 	Corners string `json:"corners,omitempty"`
 
 	// Font: The font which is included in the style.
@@ -198,10 +199,13 @@ type AdStyleColors struct {
 }
 
 type AdStyleFont struct {
-	// Family: The family of the font.
+	// Family: The family of the font. Possible values are:
+	// ACCOUNT_DEFAULT_FAMILY, ADSENSE_DEFAULT_FAMILY, ARIAL, TIMES and
+	// VERDANA.
 	Family string `json:"family,omitempty"`
 
-	// Size: The size of the font.
+	// Size: The size of the font. Possible values are:
+	// ACCOUNT_DEFAULT_SIZE, ADSENSE_DEFAULT_SIZE, SMALL, MEDIUM and LARGE.
 	Size string `json:"size,omitempty"`
 }
 
@@ -251,15 +255,19 @@ type AdUnitContentAdsSettings struct {
 	// is available.
 	BackupOption *AdUnitContentAdsSettingsBackupOption `json:"backupOption,omitempty"`
 
-	// Size: Size of this ad unit.
+	// Size: Size of this ad unit. Size values are in the form
+	// SIZE_{width}_{height}.
 	Size string `json:"size,omitempty"`
 
-	// Type: Type of this ad unit.
+	// Type: Type of this ad unit. Possible values are TEXT, TEXT_IMAGE,
+	// IMAGE and LINK.
 	Type string `json:"type,omitempty"`
 }
 
 type AdUnitContentAdsSettingsBackupOption struct {
-	// Color: Color to use when type is set to COLOR.
+	// Color: Color to use when type is set to COLOR. These are represented
+	// as six hexadecimal characters, similar to HTML color codes, but
+	// without the leading hash.
 	Color string `json:"color,omitempty"`
 
 	// Type: Type of the backup option. Possible values are BLANK, COLOR and
@@ -798,13 +806,17 @@ func (c *AssociationsessionsStartCall) Do() (*AssociationSession, error) {
 	//       "description": "Products to associate with the user.",
 	//       "enum": [
 	//         "AFC",
+	//         "AFG",
 	//         "AFMC",
-	//         "AFS"
+	//         "AFS",
+	//         "AFV"
 	//       ],
 	//       "enumDescriptions": [
 	//         "AdSense For Content",
+	//         "AdSense For Games",
 	//         "AdSense For Mobile Content",
-	//         "AdSense For Search"
+	//         "AdSense For Search",
+	//         "AdSense For Video"
 	//       ],
 	//       "location": "query",
 	//       "repeated": true,

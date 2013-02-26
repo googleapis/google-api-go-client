@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"a3GBuXuTtUYW9BV1SIieU5LiL7w/kUYo1r4N7g46he-gAwtqbJMknnE\"",
+ "etag": "\"-vXktEC13RBC5q_wkxEsszrjKM4/zs8ouxPuDoxiCshrHnMm6UJ4-dw\"",
  "discoveryVersion": "v1",
  "id": "analytics:v3",
  "name": "analytics",
  "version": "v3",
- "revision": "20121022",
+ "revision": "20130205",
  "title": "Google Analytics API",
  "description": "View and manage your Google Analytics data",
  "icons": {
@@ -1144,6 +1144,10 @@
     "timezone": {
      "type": "string",
      "description": "Time zone for which this profile has been configured."
+    },
+    "type": {
+     "type": "string",
+     "description": "Profile type. Supported types: WEB or APP."
     },
     "updated": {
      "type": "string",

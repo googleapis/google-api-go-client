@@ -556,8 +556,8 @@ type File struct {
 	// Description: A short description of the file.
 	Description string `json:"description,omitempty"`
 
-	// DownloadUrl: Short term download URL for the file. This will only be
-	// populated on files with content stored in Drive.
+	// DownloadUrl: Short lived download URL for the file. This is only
+	// populated for files with content stored in Drive.
 	DownloadUrl string `json:"downloadUrl,omitempty"`
 
 	// Editable: Whether the file can be edited by the current user.
@@ -578,19 +578,19 @@ type File struct {
 	ExportLinks *FileExportLinks `json:"exportLinks,omitempty"`
 
 	// FileExtension: The file extension used when downloading this file.
-	// This field is set from the title when inserting or uploading new
-	// content. This will only be populated on files with content stored in
-	// Drive.
+	// This field is read only. To set the extension, include it in the
+	// title when creating the file. This is only populated for files with
+	// content stored in Drive.
 	FileExtension string `json:"fileExtension,omitempty"`
 
-	// FileSize: The size of the file in bytes. This will only be populated
-	// on files with content stored in Drive.
+	// FileSize: The size of the file in bytes. This is only populated for
+	// files with content stored in Drive.
 	FileSize int64 `json:"fileSize,omitempty,string"`
 
 	// IconLink: A link to the file's icon.
 	IconLink string `json:"iconLink,omitempty"`
 
-	// Id: The id of the file.
+	// Id: The ID of the file.
 	Id string `json:"id,omitempty"`
 
 	// ImageMediaMetadata: Metadata about image media. This will only be
@@ -618,8 +618,8 @@ type File struct {
 	// (formatted RFC 3339 timestamp).
 	LastViewedByMeDate string `json:"lastViewedByMeDate,omitempty"`
 
-	// Md5Checksum: An MD5 checksum for the content of this file. This will
-	// only be populated on files with content stored in Drive.
+	// Md5Checksum: An MD5 checksum for the content of this file. This is
+	// populated only for files with content stored in Drive.
 	Md5Checksum string `json:"md5Checksum,omitempty"`
 
 	// MimeType: The MIME type of the file. This is only mutable on update
@@ -783,7 +783,7 @@ type FileImageMediaMetadataLocation struct {
 }
 
 type FileIndexableText struct {
-	// Text: The text to be indexed for this file
+	// Text: The text to be indexed for this file.
 	Text string `json:"text,omitempty"`
 }
 
@@ -1019,7 +1019,7 @@ type User struct {
 	DisplayName string `json:"displayName,omitempty"`
 
 	// IsAuthenticatedUser: Whether this user is the same as the
-	// authenticated user of which the request was made on behalf.
+	// authenticated user for whom the request was made.
 	IsAuthenticatedUser bool `json:"isAuthenticatedUser,omitempty"`
 
 	// Kind: This is always drive#user.
@@ -1214,7 +1214,7 @@ type AppsListCall struct {
 	opt_ map[string]interface{}
 }
 
-// List: Lists a user's apps.
+// List: Lists a user's installed apps.
 func (r *AppsService) List() *AppsListCall {
 	c := &AppsListCall{s: r.s, opt_: make(map[string]interface{})}
 	return c
@@ -1241,7 +1241,7 @@ func (c *AppsListCall) Do() (*AppList, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists a user's apps.",
+	//   "description": "Lists a user's installed apps.",
 	//   "httpMethod": "GET",
 	//   "id": "drive.apps.list",
 	//   "path": "apps",
@@ -3001,8 +3001,10 @@ func (c *FilesPatchCall) Convert(convert bool) *FilesPatchCall {
 }
 
 // NewRevision sets the optional parameter "newRevision": Whether a blob
-// upload should create a new revision. If false, the blob data in the
-// current head revision will be replaced.
+// upload should create a new revision. If not set or false, the blob
+// data in the current head revision is replaced. If true, a new blob is
+// created as head revision, and previous revisions are preserved
+// (causing increased use of the user's data storage quota).
 func (c *FilesPatchCall) NewRevision(newRevision bool) *FilesPatchCall {
 	c.opt_["newRevision"] = newRevision
 	return c
@@ -3144,7 +3146,7 @@ func (c *FilesPatchCall) Do() (*File, error) {
 	//     },
 	//     "newRevision": {
 	//       "default": "true",
-	//       "description": "Whether a blob upload should create a new revision. If false, the blob data in the current head revision will be replaced.",
+	//       "description": "Whether a blob upload should create a new revision. If not set or false, the blob data in the current head revision is replaced. If true, a new blob is created as head revision, and previous revisions are preserved (causing increased use of the user's data storage quota).",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -3408,7 +3410,7 @@ type FilesUpdateCall struct {
 	media_ io.Reader
 }
 
-// Update: Updates file metadata and/or content
+// Update: Updates file metadata and/or content.
 func (r *FilesService) Update(fileId string, file *File) *FilesUpdateCall {
 	c := &FilesUpdateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.fileId = fileId
@@ -3424,8 +3426,10 @@ func (c *FilesUpdateCall) Convert(convert bool) *FilesUpdateCall {
 }
 
 // NewRevision sets the optional parameter "newRevision": Whether a blob
-// upload should create a new revision. If false, the blob data in the
-// current head revision will be replaced.
+// upload should create a new revision. If not set or false, the blob
+// data in the current head revision is replaced. If true, a new blob is
+// created as head revision, and previous revisions are preserved
+// (causing increased use of the user's data storage quota).
 func (c *FilesUpdateCall) NewRevision(newRevision bool) *FilesUpdateCall {
 	c.opt_["newRevision"] = newRevision
 	return c
@@ -3558,7 +3562,7 @@ func (c *FilesUpdateCall) Do() (*File, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates file metadata and/or content",
+	//   "description": "Updates file metadata and/or content.",
 	//   "httpMethod": "PUT",
 	//   "id": "drive.files.update",
 	//   "mediaUpload": {
@@ -3595,7 +3599,7 @@ func (c *FilesUpdateCall) Do() (*File, error) {
 	//     },
 	//     "newRevision": {
 	//       "default": "true",
-	//       "description": "Whether a blob upload should create a new revision. If false, the blob data in the current head revision will be replaced.",
+	//       "description": "Whether a blob upload should create a new revision. If not set or false, the blob data in the current head revision is replaced. If true, a new blob is created as head revision, and previous revisions are preserved (causing increased use of the user's data storage quota).",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },

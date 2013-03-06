@@ -2825,6 +2825,102 @@ func (c *InstancesAddAccessConfigCall) Do() (*Operation, error) {
 
 }
 
+// method id "compute.instances.attachDisk":
+
+type InstancesAttachDiskCall struct {
+	s            *Service
+	project      string
+	zone         string
+	instance     string
+	attacheddisk *AttachedDisk
+	opt_         map[string]interface{}
+}
+
+// AttachDisk: Attaches a disk resource to an instance.
+func (r *InstancesService) AttachDisk(project string, zone string, instance string, attacheddisk *AttachedDisk) *InstancesAttachDiskCall {
+	c := &InstancesAttachDiskCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.zone = zone
+	c.instance = instance
+	c.attacheddisk = attacheddisk
+	return c
+}
+
+func (c *InstancesAttachDiskCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.attacheddisk)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta14/projects/", "{project}/zones/{zone}/instances/{instance}/attachDisk")
+	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
+	urls = strings.Replace(urls, "{zone}", cleanPathString(c.zone), 1)
+	urls = strings.Replace(urls, "{instance}", cleanPathString(c.instance), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Operation)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Attaches a disk resource to an instance.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.instances.attachDisk",
+	//   "parameterOrder": [
+	//     "project",
+	//     "zone",
+	//     "instance"
+	//   ],
+	//   "parameters": {
+	//     "instance": {
+	//       "description": "Instance name.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Project name.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "Name of the zone scoping this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/zones/{zone}/instances/{instance}/attachDisk",
+	//   "request": {
+	//     "$ref": "AttachedDisk"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
 // method id "compute.instances.delete":
 
 type InstancesDeleteCall struct {
@@ -3006,6 +3102,102 @@ func (c *InstancesDeleteAccessConfigCall) Do() (*Operation, error) {
 	//     }
 	//   },
 	//   "path": "{project}/zones/{zone}/instances/{instance}/deleteAccessConfig",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.instances.detachDisk":
+
+type InstancesDetachDiskCall struct {
+	s          *Service
+	project    string
+	zone       string
+	instance   string
+	deviceName string
+	opt_       map[string]interface{}
+}
+
+// DetachDisk: Detaches a disk from an instance.
+func (r *InstancesService) DetachDisk(project string, zone string, instance string, deviceName string) *InstancesDetachDiskCall {
+	c := &InstancesDetachDiskCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.zone = zone
+	c.instance = instance
+	c.deviceName = deviceName
+	return c
+}
+
+func (c *InstancesDetachDiskCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("deviceName", fmt.Sprintf("%v", c.deviceName))
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta14/projects/", "{project}/zones/{zone}/instances/{instance}/detachDisk")
+	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
+	urls = strings.Replace(urls, "{zone}", cleanPathString(c.zone), 1)
+	urls = strings.Replace(urls, "{instance}", cleanPathString(c.instance), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Operation)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Detaches a disk from an instance.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.instances.detachDisk",
+	//   "parameterOrder": [
+	//     "project",
+	//     "zone",
+	//     "instance",
+	//     "deviceName"
+	//   ],
+	//   "parameters": {
+	//     "deviceName": {
+	//       "description": "Disk device name to detach.",
+	//       "location": "query",
+	//       "pattern": "\\w[\\w.-]{0,254}",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "instance": {
+	//       "description": "Instance name.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Project name.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "Name of the zone scoping this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/zones/{zone}/instances/{instance}/detachDisk",
 	//   "response": {
 	//     "$ref": "Operation"
 	//   },

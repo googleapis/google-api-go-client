@@ -38,6 +38,10 @@ const basePath = "https://www.googleapis.com/plus/v1/"
 
 // OAuth2 scopes used by this API.
 const (
+	// Know your name, basic info, and list of people you're connected to on
+	// Google+
+	PlusLoginScope = "https://www.googleapis.com/auth/plus.login"
+
 	// Know who you are on Google
 	PlusMeScope = "https://www.googleapis.com/auth/plus.me"
 )
@@ -1180,6 +1184,7 @@ func (c *ActivitiesGetCall) Do() (*Activity, error) {
 	//     "$ref": "Activity"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/plus.login",
 	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
@@ -1297,6 +1302,7 @@ func (c *ActivitiesListCall) Do() (*ActivityFeed, error) {
 	//     "$ref": "ActivityFeed"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/plus.login",
 	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
@@ -1439,6 +1445,7 @@ func (c *ActivitiesSearchCall) Do() (*ActivityFeed, error) {
 	//     "$ref": "ActivityFeed"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/plus.login",
 	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
@@ -1501,6 +1508,7 @@ func (c *CommentsGetCall) Do() (*Comment, error) {
 	//     "$ref": "Comment"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/plus.login",
 	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
@@ -1625,6 +1633,7 @@ func (c *CommentsListCall) Do() (*CommentFeed, error) {
 	//     "$ref": "CommentFeed"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/plus.login",
 	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
@@ -1728,7 +1737,10 @@ func (c *MomentsInsertCall) Do() (*Moment, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "Moment"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/plus.login"
+	//   ]
 	// }
 
 }
@@ -1871,7 +1883,10 @@ func (c *MomentsListCall) Do() (*MomentsFeed, error) {
 	//   "path": "people/{userId}/moments/{collection}",
 	//   "response": {
 	//     "$ref": "MomentsFeed"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/plus.login"
+	//   ]
 	// }
 
 }
@@ -1923,7 +1938,10 @@ func (c *MomentsRemoveCall) Do() error {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "moments/{id}"
+	//   "path": "moments/{id}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/plus.login"
+	//   ]
 	// }
 
 }
@@ -1986,6 +2004,7 @@ func (c *PeopleGetCall) Do() (*Person, error) {
 	//     "$ref": "Person"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/plus.login",
 	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
@@ -2114,7 +2133,7 @@ func (c *PeopleListCall) Do() (*PeopleFeed, error) {
 	//       "type": "string"
 	//     },
 	//     "userId": {
-	//       "description": "Get the collection of people for the person identified. Use \"me\" to indiciated the authenticated user.",
+	//       "description": "Get the collection of people for the person identified. Use \"me\" to indicate the authenticated user.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2123,7 +2142,10 @@ func (c *PeopleListCall) Do() (*PeopleFeed, error) {
 	//   "path": "people/{userId}/people/{collection}",
 	//   "response": {
 	//     "$ref": "PeopleFeed"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/plus.login"
+	//   ]
 	// }
 
 }
@@ -2241,6 +2263,7 @@ func (c *PeopleListByActivityCall) Do() (*PeopleFeed, error) {
 	//     "$ref": "PeopleFeed"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/plus.login",
 	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
@@ -2359,6 +2382,7 @@ func (c *PeopleSearchCall) Do() (*PeopleFeed, error) {
 	//     "$ref": "PeopleFeed"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/plus.login",
 	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }

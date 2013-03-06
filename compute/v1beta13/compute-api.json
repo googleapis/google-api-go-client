@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"-vXktEC13RBC5q_wkxEsszrjKM4/N8vwkCG6aHfvBSWrJ0B86AK4lho\"",
+ "etag": "\"-vXktEC13RBC5q_wkxEsszrjKM4/ltkVqRwzyveVPezupuf_ncmsvvI\"",
  "discoveryVersion": "v1",
  "id": "compute:v1beta13",
  "name": "compute",
  "version": "v1beta13",
- "revision": "20130119",
+ "revision": "20130301",
  "title": "Compute Engine API",
  "description": "API for the Google Compute Engine service.",
  "icons": {

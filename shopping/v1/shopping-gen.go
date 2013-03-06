@@ -998,6 +998,13 @@ func (c *ProductsListCall) Currency(currency string) *ProductsListCall {
 	return c
 }
 
+// ExperimentId sets the optional parameter "experimentId": The Id of
+// the experiment
+func (c *ProductsListCall) ExperimentId(experimentId string) *ProductsListCall {
+	c.opt_["experimentId"] = experimentId
+	return c
+}
+
 // ExtrasEnabled sets the optional parameter "extras.enabled": Whether
 // to return extra information.
 func (c *ProductsListCall) ExtrasEnabled(extrasEnabled bool) *ProductsListCall {
@@ -1257,6 +1264,9 @@ func (c *ProductsListCall) Do() (*Products, error) {
 	if v, ok := c.opt_["currency"]; ok {
 		params.Set("currency", fmt.Sprintf("%v", v))
 	}
+	if v, ok := c.opt_["experimentId"]; ok {
+		params.Set("experimentId", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["extras.enabled"]; ok {
 		params.Set("extras.enabled", fmt.Sprintf("%v", v))
 	}
@@ -1444,6 +1454,11 @@ func (c *ProductsListCall) Do() (*Products, error) {
 	//     },
 	//     "currency": {
 	//       "description": "Currency restriction (ISO 4217)",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "experimentId": {
+	//       "description": "The Id of the experiment",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

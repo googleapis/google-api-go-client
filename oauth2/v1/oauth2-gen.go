@@ -38,6 +38,10 @@ const basePath = "https://www.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
+	// Know your name, basic info, and list of people you're connected to on
+	// Google+
+	PlusLoginScope = "https://www.googleapis.com/auth/plus.login"
+
 	// Know who you are on Google
 	PlusMeScope = "https://www.googleapis.com/auth/plus.me"
 
@@ -273,6 +277,7 @@ func (c *UserinfoGetCall) Do() (*Userinfo, error) {
 	//     "$ref": "Userinfo"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/plus.login",
 	//     "https://www.googleapis.com/auth/plus.me",
 	//     "https://www.googleapis.com/auth/userinfo.email",
 	//     "https://www.googleapis.com/auth/userinfo.profile"

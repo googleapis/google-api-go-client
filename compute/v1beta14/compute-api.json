@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"-vXktEC13RBC5q_wkxEsszrjKM4/DYDnwbmXlO5-LrkTA5HLCewMNJQ\"",
+ "etag": "\"-vXktEC13RBC5q_wkxEsszrjKM4/_LGxch8ishx1HOf9ujuZ5CuoV_A\"",
  "discoveryVersion": "v1",
  "id": "compute:v1beta14",
  "name": "compute",
  "version": "v1beta14",
- "revision": "20130119",
+ "revision": "20130301",
  "title": "Compute Engine API",
  "description": "API for the Google Compute Engine service.",
  "icons": {
@@ -2217,6 +2217,49 @@
       "https://www.googleapis.com/auth/compute"
      ]
     },
+    "attachDisk": {
+     "id": "compute.instances.attachDisk",
+     "path": "{project}/zones/{zone}/instances/{instance}/attachDisk",
+     "httpMethod": "POST",
+     "description": "Attaches a disk resource to an instance.",
+     "parameters": {
+      "instance": {
+       "type": "string",
+       "description": "Instance name.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project name.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "zone": {
+       "type": "string",
+       "description": "Name of the zone scoping this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "zone",
+      "instance"
+     ],
+     "request": {
+      "$ref": "AttachedDisk"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
     "delete": {
      "id": "compute.instances.delete",
      "path": "{project}/zones/{zone}/instances/{instance}",
@@ -2303,6 +2346,54 @@
       "instance",
       "access_config",
       "network_interface"
+     ],
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "detachDisk": {
+     "id": "compute.instances.detachDisk",
+     "path": "{project}/zones/{zone}/instances/{instance}/detachDisk",
+     "httpMethod": "POST",
+     "description": "Detaches a disk from an instance.",
+     "parameters": {
+      "deviceName": {
+       "type": "string",
+       "description": "Disk device name to detach.",
+       "required": true,
+       "pattern": "\\w[\\w.-]{0,254}",
+       "location": "query"
+      },
+      "instance": {
+       "type": "string",
+       "description": "Instance name.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project name.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "zone": {
+       "type": "string",
+       "description": "Name of the zone scoping this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "zone",
+      "instance",
+      "deviceName"
      ],
      "response": {
       "$ref": "Operation"

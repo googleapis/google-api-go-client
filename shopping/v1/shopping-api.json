@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"-vXktEC13RBC5q_wkxEsszrjKM4/Xn5zS3DmHZ8oaSaV6KXllh7qNe8\"",
+ "etag": "\"-vXktEC13RBC5q_wkxEsszrjKM4/Bs4Qq2Y7vuaqBU-qM8o3CRyRWOw\"",
  "discoveryVersion": "v1",
  "id": "shopping:v1",
  "name": "shopping",
  "version": "v1",
- "revision": "20130212",
+ "revision": "20130304",
  "title": "Search API For Shopping",
  "description": "Lets you search over product data.",
  "icons": {
@@ -1071,6 +1071,11 @@
       "currency": {
        "type": "string",
        "description": "Currency restriction (ISO 4217)",
+       "location": "query"
+      },
+      "experimentId": {
+       "type": "string",
+       "description": "The Id of the experiment",
        "location": "query"
       },
       "extras.enabled": {

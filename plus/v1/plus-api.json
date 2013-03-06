@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"-vXktEC13RBC5q_wkxEsszrjKM4/uUZCZ8NG1jXnATIk62vJbV96V2U\"",
+ "etag": "\"-vXktEC13RBC5q_wkxEsszrjKM4/39WzIgV4z1HKekFmH2Ue2jwci-c\"",
  "discoveryVersion": "v1",
  "id": "plus:v1",
  "name": "plus",
  "version": "v1",
- "revision": "20121127",
+ "revision": "20130301",
  "title": "Google+ API",
  "description": "The Google+ API enables developers to build on top of the Google+ platform.",
  "icons": {
@@ -67,6 +67,9 @@
  "auth": {
   "oauth2": {
    "scopes": {
+    "https://www.googleapis.com/auth/plus.login": {
+     "description": "Know your name, basic info, and list of people you're connected to on Google+"
+    },
     "https://www.googleapis.com/auth/plus.me": {
      "description": "Know who you are on Google"
     }
@@ -1364,6 +1367,7 @@
       "$ref": "Activity"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/plus.login",
       "https://www.googleapis.com/auth/plus.me"
      ]
     },
@@ -1414,6 +1418,7 @@
       "$ref": "ActivityFeed"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/plus.login",
       "https://www.googleapis.com/auth/plus.me"
      ]
     },
@@ -1471,6 +1476,7 @@
       "$ref": "ActivityFeed"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/plus.login",
       "https://www.googleapis.com/auth/plus.me"
      ]
     }
@@ -1498,6 +1504,7 @@
       "$ref": "Comment"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/plus.login",
       "https://www.googleapis.com/auth/plus.me"
      ]
     },
@@ -1549,6 +1556,7 @@
       "$ref": "CommentFeed"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/plus.login",
       "https://www.googleapis.com/auth/plus.me"
      ]
     }
@@ -1595,7 +1603,10 @@
      },
      "response": {
       "$ref": "Moment"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/plus.login"
+     ]
     },
     "list": {
      "id": "plus.moments.list",
@@ -1652,7 +1663,10 @@
      ],
      "response": {
       "$ref": "MomentsFeed"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/plus.login"
+     ]
     },
     "remove": {
      "id": "plus.moments.remove",
@@ -1669,6 +1683,9 @@
      },
      "parameterOrder": [
       "id"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/plus.login"
      ]
     }
    }
@@ -1695,6 +1712,7 @@
       "$ref": "Person"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/plus.login",
       "https://www.googleapis.com/auth/plus.me"
      ]
     },
@@ -1745,7 +1763,7 @@
       },
       "userId": {
        "type": "string",
-       "description": "Get the collection of people for the person identified. Use \"me\" to indiciated the authenticated user.",
+       "description": "Get the collection of people for the person identified. Use \"me\" to indicate the authenticated user.",
        "required": true,
        "location": "path"
       }
@@ -1756,7 +1774,10 @@
      ],
      "response": {
       "$ref": "PeopleFeed"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/plus.login"
+     ]
     },
     "listByActivity": {
      "id": "plus.people.listByActivity",
@@ -1807,6 +1828,7 @@
       "$ref": "PeopleFeed"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/plus.login",
       "https://www.googleapis.com/auth/plus.me"
      ]
     },
@@ -1850,6 +1872,7 @@
       "$ref": "PeopleFeed"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/plus.login",
       "https://www.googleapis.com/auth/plus.me"
      ]
     }

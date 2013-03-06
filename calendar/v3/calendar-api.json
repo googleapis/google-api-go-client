@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"-vXktEC13RBC5q_wkxEsszrjKM4/yZUqLAOF2gL7ULyAMt60Y_McUr0\"",
+ "etag": "\"-vXktEC13RBC5q_wkxEsszrjKM4/9goYwV2t7pSbKgGtFP09_Jt9brY\"",
  "discoveryVersion": "v1",
  "id": "calendar:v3",
  "name": "calendar",
  "version": "v3",
- "revision": "20130117",
+ "revision": "20130301",
  "title": "Calendar API",
  "description": "Lets you manipulate events and other calendar data.",
  "icons": {
@@ -277,6 +277,10 @@
     "location": {
      "type": "string",
      "description": "Geographic location of the calendar as free-form text. Optional. Read-only."
+    },
+    "primary": {
+     "type": "boolean",
+     "description": "Whether the calendar is the primary calendar of the authenticated user. Read-only. Optional. The default is False."
     },
     "selected": {
      "type": "boolean",
@@ -1691,7 +1695,7 @@
       },
       "showDeleted": {
        "type": "boolean",
-       "description": "Whether to include deleted events (with 'eventStatus' equals 'cancelled') in the result. Optional. The default is False.",
+       "description": "Whether to include deleted events (with 'status' equals 'cancelled') in the result. Cancelled instances of recurring events will still be included if 'singleEvents' is False. Optional. The default is False.",
        "location": "query"
       },
       "timeMax": {
@@ -1722,7 +1726,8 @@
      "scopes": [
       "https://www.googleapis.com/auth/calendar",
       "https://www.googleapis.com/auth/calendar.readonly"
-     ]
+     ],
+     "supportsSubscription": true
     },
     "list": {
      "id": "calendar.events.list",
@@ -1785,7 +1790,7 @@
       },
       "showDeleted": {
        "type": "boolean",
-       "description": "Whether to include deleted single events (with 'status' equals 'cancelled') in the result. Cancelled instances of recurring events will still be included if 'singleEvents' is False. Optional. The default is False.",
+       "description": "Whether to include deleted events (with 'status' equals 'cancelled') in the result. Cancelled instances of recurring events (but not the underlying recurring event) will still be included if 'showDeleted' and 'singleEvents' are both False. If 'showDeleted' and 'singleEvents' are both True only single instances of deleted events (but not the underlying recurring events) are returned. Optional. The default is False.",
        "location": "query"
       },
       "showHiddenInvitations": {
@@ -1831,7 +1836,8 @@
      "scopes": [
       "https://www.googleapis.com/auth/calendar",
       "https://www.googleapis.com/auth/calendar.readonly"
-     ]
+     ],
+     "supportsSubscription": true
     },
     "move": {
      "id": "calendar.events.move",

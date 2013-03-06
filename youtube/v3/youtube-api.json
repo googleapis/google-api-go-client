@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"-vXktEC13RBC5q_wkxEsszrjKM4/ZAi8NQ9jiQvselHH4bZr6RIV99c\"",
+ "etag": "\"-vXktEC13RBC5q_wkxEsszrjKM4/60MkXtghmFo3IAbnXWTI1IlGp0k\"",
  "discoveryVersion": "v1",
  "id": "youtube:v3",
  "name": "youtube",
  "canonicalName": "YouTube",
  "version": "v3",
- "revision": "20130221",
+ "revision": "20130225",
  "title": "YouTube Data API",
  "description": "Programmatic access to YouTube features.",
  "icons": {
@@ -1596,6 +1596,10 @@
      "$ref": "VideoProcessingDetails",
      "description": "The processingProgress object encapsulates information about YouTube's progress in processing the uploaded video file. The properties in the object identify the current processing status and an estimate of the time remaining until YouTube finishes processing the video. This part also indicates whether different types of data or content, such as file details or thumbnail images, are available for the video.\n\nThe processingProgress object is designed to be polled so that the video uploaded can track the progress that YouTube has made in processing the uploaded video file. This data can only be retrieved by the video owner."
     },
+    "projectDetails": {
+     "$ref": "VideoProjectDetails",
+     "description": "The projectDetails object contains information about the project specific video metadata."
+    },
     "recordingDetails": {
      "$ref": "VideoRecordingDetails",
      "description": "The recordingDetails object encapsulates information about the location, date and address where the video was recorded."
@@ -1672,7 +1676,6 @@
   "VideoCategorySnippet": {
    "id": "VideoCategorySnippet",
    "type": "object",
-   "description": "Basic details about a video category, such as its localized title.",
    "properties": {
     "channelId": {
      "type": "string",
@@ -1680,8 +1683,7 @@
      "default": "UCBR8-60-B28hp2BmDPdntcQ"
     },
     "title": {
-     "type": "string",
-     "description": "The video category's title."
+     "type": "string"
     }
    }
   },
@@ -1744,49 +1746,49 @@
    "properties": {
     "audioStreams": {
      "type": "array",
-     "description": "Audio streams.",
+     "description": "A list of audio streams contained in the uploaded video file. Each item in the list contains detailed metadata about an audio stream.",
      "items": {
       "$ref": "VideoFileDetailsAudioStream"
      }
     },
     "bitrateBps": {
      "type": "string",
-     "description": "Combined audio and video bitrate, in bits per second.",
+     "description": "The uploaded video file's combined (video and audio) bitrate in bits per second.",
      "format": "uint64"
     },
     "container": {
      "type": "string",
-     "description": "Container format used."
+     "description": "The uploaded video file's container format."
     },
     "creationTime": {
      "type": "string",
-     "description": "Date and time when the video file was created, in ISO 8601 format. Currently the only ISO 8601 formats produced are: - Date only: YYYY-MM-DD - Naive time: YYYY-MM-DDTHH:MM:SS - Time with timezone: YYYY-MM-DDTHH:MM:SS+HH:MM"
+     "description": "The date and time when the uploaded video file was created. The value is specified in ISO 8601 format. Currently, the following ISO 8601 formats are supported:  \n- Date only: YYYY-MM-DD \n- Naive time: YYYY-MM-DDTHH:MM:SS \n- Time with timezone: YYYY-MM-DDTHH:MM:SS+HH:MM"
     },
     "durationMs": {
      "type": "string",
-     "description": "Video duration in milliseconds.",
+     "description": "The length of the uploaded video in milliseconds.",
      "format": "uint64"
     },
     "fileName": {
      "type": "string",
-     "description": "File name."
+     "description": "The uploaded file's name. This field is present whether a video file or another type of file was uploaded."
     },
     "fileSize": {
      "type": "string",
-     "description": "File size.",
+     "description": "The uploaded file's size in bytes. This field is present whether a video file or another type of file was uploaded.",
      "format": "uint64"
     },
     "fileType": {
      "type": "string",
-     "description": "File type."
+     "description": "The uploaded file's type as detected by YouTube's video processing engine. Currently, YouTube only processes video files, but this field is present whether a video file or another type of file was uploaded."
     },
     "recordingLocation": {
      "$ref": "GeoPoint",
-     "description": "Location of the place where the video was recorded."
+     "description": "Geographic coordinates that identify the place where the uploaded video was recorded. Coordinates are defined using WGS 84."
     },
     "videoStreams": {
      "type": "array",
-     "description": "Video streams.",
+     "description": "A list of video streams contained in the uploaded video file. Each item in the list contains detailed metadata about a video stream.",
      "items": {
       "$ref": "VideoFileDetailsVideoStream"
      }
@@ -1800,21 +1802,21 @@
    "properties": {
     "bitrateBps": {
      "type": "string",
-     "description": "Audio stream bitrate, in bits per second.",
+     "description": "The audio stream's bitrate, in bits per second.",
      "format": "uint64"
     },
     "channelCount": {
      "type": "integer",
-     "description": "Number of audio channels.",
+     "description": "The number of audio channels that the stream contains.",
      "format": "uint32"
     },
     "codec": {
      "type": "string",
-     "description": "Audio codec used."
+     "description": "The audio codec that the stream uses."
     },
     "vendor": {
      "type": "string",
-     "description": "Audio vendor identifier, typically a four-letter vendor code."
+     "description": "A value that uniquely identifies a video vendor. Typically, the value is a four-letter vendor code."
     }
    }
   },
@@ -1825,39 +1827,39 @@
    "properties": {
     "aspectRatio": {
      "type": "number",
-     "description": "Display aspect ratio, which might differ from width_pixels / height_pixels.",
+     "description": "The video content's display aspect ratio, which specifies the aspect ratio in which the video should be displayed.",
      "format": "double"
     },
     "bitrateBps": {
      "type": "string",
-     "description": "Video stream bitrate, in bits per second.",
+     "description": "The video stream's bitrate, in bits per second.",
      "format": "uint64"
     },
     "codec": {
      "type": "string",
-     "description": "Video codec used."
+     "description": "The video codec that the stream uses."
     },
     "frameRateFps": {
      "type": "number",
-     "description": "Video frame rate, in frames per second.",
+     "description": "The video stream's frame rate, in frames per second.",
      "format": "double"
     },
     "heightPixels": {
      "type": "integer",
-     "description": "Video height in pixels.",
+     "description": "The encoded video content's height in pixels.",
      "format": "uint32"
     },
     "rotation": {
      "type": "string",
-     "description": "Rotation that is necessary to display the video properly."
+     "description": "The amount that YouTube needs to rotate the original source content to properly display the video."
     },
     "vendor": {
      "type": "string",
-     "description": "Video vendor identifier, typically a four-letter vendor code."
+     "description": "A value that uniquely identifies a video vendor. Typically, the value is a four-letter vendor code."
     },
     "widthPixels": {
      "type": "integer",
-     "description": "Video width in pixels.",
+     "description": "The encoded video content's width in pixels. You can calculate the video's encoding aspect ratio as width_pixels / height_pixels.",
      "format": "uint32"
     }
    }
@@ -1914,35 +1916,35 @@
    "properties": {
     "editorSuggestionsAvailability": {
      "type": "string",
-     "description": "Editor suggestions availability."
+     "description": "This value indicates whether video editing suggestions, which might improve video quality or the playback experience, are available for the video. You can retrieve these suggestions by requesting the suggestions part in your videos.list() request."
     },
     "fileDetailsAvailability": {
      "type": "string",
-     "description": "File details availability."
+     "description": "This value indicates whether file details are available for the uploaded video. You can retrieve a video's file details by requesting the fileDetails part in your videos.list() request."
     },
     "processingFailureReason": {
      "type": "string",
-     "description": "Reason why video processing has failed."
+     "description": "The reason that YouTube failed to process the video. This property will only have a value if the processingStatus property's value is failed."
     },
     "processingIssuesAvailability": {
      "type": "string",
-     "description": "Processing issues availability."
+     "description": "This value indicates whether the video processing engine has generated suggestions that might improve YouTube's ability to process the the video, warnings that explain video processing problems, or errors that cause video processing problems. You can retrieve these suggestions by requesting the suggestions part in your videos.list() request."
     },
     "processingProgress": {
      "$ref": "VideoProcessingDetailsProcessingProgress",
-     "description": "Video processing progress and completion time estimate."
+     "description": "The processingProgress object contains information about the progress YouTube has made in processing the video. The values are really only relevant if the video's processing status is processing."
     },
     "processingStatus": {
      "type": "string",
-     "description": "Video processing status."
+     "description": "The video's processing status. This value indicates whether YouTube was able to process the video or if the video is still being processed."
     },
     "tagSuggestionsAvailability": {
      "type": "string",
-     "description": "Tag suggestions availability."
+     "description": "This value indicates whether keyword (tag) suggestions are available for the video. Tags can be added to a video's metadata to make it easier for other users to find the video. You can retrieve these suggestions by requesting the suggestions part in your videos.list() request."
     },
     "thumbnailsAvailability": {
      "type": "string",
-     "description": "Thumbnails availability."
+     "description": "This value indicates whether thumbnail images have been generated for the video."
     }
    }
   },
@@ -1953,18 +1955,32 @@
    "properties": {
     "partsProcessed": {
      "type": "string",
-     "description": "Number of parts already processed. Progress expressed in percent should be computed as: 100 * parts_processed / parts_total.",
+     "description": "The number of parts of the video that YouTube has already processed. You can estimate the percentage of the video that YouTube has already processed by calculating:\n100 * parts_processed / parts_total\n\nNote that since the estimated number of parts could increase without a corresponding increase in the number of parts that have already been processed, it is possible that the calculated progress could periodically decrease while YouTube processes a video.",
      "format": "uint64"
     },
     "partsTotal": {
      "type": "string",
-     "description": "An estimate of total number of parts to process. The number might be updated with more precise estimates as the processing progresses.",
+     "description": "An estimate of the total number of parts that need to be processed for the video. The number may be updated with more precise estimates while YouTube processes the video.",
      "format": "uint64"
     },
     "timeLeftMs": {
      "type": "string",
-     "description": "Estimated time till video processing is complete, in milliseconds.",
+     "description": "An estimate of the amount of time, in millseconds, that YouTube needs to finish processing the video.",
      "format": "uint64"
+    }
+   }
+  },
+  "VideoProjectDetails": {
+   "id": "VideoProjectDetails",
+   "type": "object",
+   "description": "Project specific details about the content of a YouTube Video.",
+   "properties": {
+    "tags": {
+     "type": "array",
+     "description": "A list of project tags associated with the video during the upload.",
+     "items": {
+      "type": "string"
+     }
     }
    }
   },
@@ -2000,6 +2016,10 @@
     "channelId": {
      "type": "string",
      "description": "The ID that YouTube uses to uniquely identify the channel that the video was uploaded to."
+    },
+    "channelTitle": {
+     "type": "string",
+     "description": "Channel title for the channel that the video belongs to."
     },
     "description": {
      "type": "string",
@@ -2101,35 +2121,35 @@
    "properties": {
     "editorSuggestions": {
      "type": "array",
-     "description": "Editor operations that could improve video quality.",
+     "description": "A list of video editing operations that might improve the video quality or playback experience of the uploaded video.",
      "items": {
       "type": "string"
      }
     },
     "processingErrors": {
      "type": "array",
-     "description": "Errors encountered during video processing.",
+     "description": "A list of errors that will prevent YouTube from successfully processing the uploaded video video. These errors indicate that, regardless of the video's current processing status, eventually, that status will almost certainly be failed.",
      "items": {
       "type": "string"
      }
     },
     "processingHints": {
      "type": "array",
-     "description": "Hints about how to improve video processing.",
+     "description": "A list of suggestions that may improve YouTube's ability to process the video.",
      "items": {
       "type": "string"
      }
     },
     "processingWarnings": {
      "type": "array",
-     "description": "Warnings produced by the video processing engine.",
+     "description": "A list of reasons why YouTube may have difficulty transcoding the uploaded video or that might result in an erroneous transcoding. These warnings are generated before YouTube actually processes the uploaded video file. In addition, they identify issues that are unlikely to cause the video processing to fail but that might cause problems such as sync issues, video artifacts, or a missing audio track.",
      "items": {
       "type": "string"
      }
     },
     "tagSuggestions": {
      "type": "array",
-     "description": "Tags that could be added to aid video discovery.",
+     "description": "A list of keyword tags that could be added to the video's metadata to increase the likelihood that users will locate your video when searching or browsing on YouTube.",
      "items": {
       "$ref": "VideoSuggestionsTagSuggestion"
      }
@@ -2143,14 +2163,14 @@
    "properties": {
     "categoryRestricts": {
      "type": "array",
-     "description": "Set of categories this tag should be restricted to. Tag applies to all categories if there are no restricts.",
+     "description": "A set of video categories for which the tag is relevant. You can use this information to display appropriate tag suggestions based on the video category that the video uploader associates with the video. By default, tag suggestions are relevant for all categories if there are no restricts defined for the keyword.",
      "items": {
       "type": "string"
      }
     },
     "tag": {
      "type": "string",
-     "description": "Tag label."
+     "description": "The keyword tag suggested for the video."
     }
    }
   },

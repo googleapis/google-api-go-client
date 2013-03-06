@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"-vXktEC13RBC5q_wkxEsszrjKM4/J632H2mplFExKiknDevv2M23Fs4\"",
+ "etag": "\"-vXktEC13RBC5q_wkxEsszrjKM4/t6s6DfbUfhXZ0tTFRjGvWlHOTzY\"",
  "discoveryVersion": "v1",
  "id": "oauth2:v1",
  "name": "oauth2",
@@ -67,6 +67,9 @@
  "auth": {
   "oauth2": {
    "scopes": {
+    "https://www.googleapis.com/auth/plus.login": {
+     "description": "Know your name, basic info, and list of people you're connected to on Google+"
+    },
     "https://www.googleapis.com/auth/plus.me": {
      "description": "Know who you are on Google"
     },
@@ -230,6 +233,7 @@
       "$ref": "Userinfo"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/plus.login",
       "https://www.googleapis.com/auth/plus.me",
       "https://www.googleapis.com/auth/userinfo.email",
       "https://www.googleapis.com/auth/userinfo.profile"
@@ -250,6 +254,7 @@
           "$ref": "Userinfo"
          },
          "scopes": [
+          "https://www.googleapis.com/auth/plus.login",
           "https://www.googleapis.com/auth/plus.me",
           "https://www.googleapis.com/auth/userinfo.email",
           "https://www.googleapis.com/auth/userinfo.profile"

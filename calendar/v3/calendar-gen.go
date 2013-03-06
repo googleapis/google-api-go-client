@@ -264,6 +264,10 @@ type CalendarListEntry struct {
 	// Optional. Read-only.
 	Location string `json:"location,omitempty"`
 
+	// Primary: Whether the calendar is the primary calendar of the
+	// authenticated user. Read-only. Optional. The default is False.
+	Primary bool `json:"primary,omitempty"`
+
 	// Selected: Whether the calendar content shows up in the calendar UI.
 	// Optional. The default is False.
 	Selected bool `json:"selected,omitempty"`
@@ -2639,8 +2643,9 @@ func (c *EventsInstancesCall) PageToken(pageToken string) *EventsInstancesCall {
 }
 
 // ShowDeleted sets the optional parameter "showDeleted": Whether to
-// include deleted events (with 'eventStatus' equals 'cancelled') in the
-// result.  The default is False.
+// include deleted events (with 'status' equals 'cancelled') in the
+// result. Cancelled instances of recurring events will still be
+// included if 'singleEvents' is False.  The default is False.
 func (c *EventsInstancesCall) ShowDeleted(showDeleted bool) *EventsInstancesCall {
 	c.opt_["showDeleted"] = showDeleted
 	return c
@@ -2769,7 +2774,7 @@ func (c *EventsInstancesCall) Do() (*Events, error) {
 	//       "type": "string"
 	//     },
 	//     "showDeleted": {
-	//       "description": "Whether to include deleted events (with 'eventStatus' equals 'cancelled') in the result. Optional. The default is False.",
+	//       "description": "Whether to include deleted events (with 'status' equals 'cancelled') in the result. Cancelled instances of recurring events will still be included if 'singleEvents' is False. Optional. The default is False.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -2798,7 +2803,8 @@ func (c *EventsInstancesCall) Do() (*Events, error) {
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/calendar",
 	//     "https://www.googleapis.com/auth/calendar.readonly"
-	//   ]
+	//   ],
+	//   "supportsSubscription": true
 	// }
 
 }
@@ -2877,9 +2883,13 @@ func (c *EventsListCall) Q(q string) *EventsListCall {
 }
 
 // ShowDeleted sets the optional parameter "showDeleted": Whether to
-// include deleted single events (with 'status' equals 'cancelled') in
-// the result. Cancelled instances of recurring events will still be
-// included if 'singleEvents' is False.  The default is False.
+// include deleted events (with 'status' equals 'cancelled') in the
+// result. Cancelled instances of recurring events (but not the
+// underlying recurring event) will still be included if 'showDeleted'
+// and 'singleEvents' are both False. If 'showDeleted' and
+// 'singleEvents' are both True only single instances of deleted events
+// (but not the underlying recurring events) are returned.  The default
+// is False.
 func (c *EventsListCall) ShowDeleted(showDeleted bool) *EventsListCall {
 	c.opt_["showDeleted"] = showDeleted
 	return c
@@ -3058,7 +3068,7 @@ func (c *EventsListCall) Do() (*Events, error) {
 	//       "type": "string"
 	//     },
 	//     "showDeleted": {
-	//       "description": "Whether to include deleted single events (with 'status' equals 'cancelled') in the result. Cancelled instances of recurring events will still be included if 'singleEvents' is False. Optional. The default is False.",
+	//       "description": "Whether to include deleted events (with 'status' equals 'cancelled') in the result. Cancelled instances of recurring events (but not the underlying recurring event) will still be included if 'showDeleted' and 'singleEvents' are both False. If 'showDeleted' and 'singleEvents' are both True only single instances of deleted events (but not the underlying recurring events) are returned. Optional. The default is False.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -3103,7 +3113,8 @@ func (c *EventsListCall) Do() (*Events, error) {
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/calendar",
 	//     "https://www.googleapis.com/auth/calendar.readonly"
-	//   ]
+	//   ],
+	//   "supportsSubscription": true
 	// }
 
 }

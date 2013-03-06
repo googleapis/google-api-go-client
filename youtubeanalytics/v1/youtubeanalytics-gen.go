@@ -62,28 +62,39 @@ type ReportsService struct {
 }
 
 type ResultTable struct {
-	// ColumnHeaders: Contains information about the columns returned in the
-	// "rows" fields. The order of the elements matches the order of the
-	// corresponding columns in "rows" field.
+	// ColumnHeaders: This value specifies information about the data
+	// returned in the rows fields. Each item in the columnHeaders list
+	// identifies a field returned in the rows value, which contains a list
+	// of comma-delimited data. The columnHeaders list will begin with the
+	// dimensions specified in the API request, which will be followed by
+	// the metrics specified in the API request. The order of both
+	// dimensions and metrics will match the ordering in the API request.
+	// For example, if the API request contains the parameters
+	// dimensions=ageGroup,gender&metrics=viewerPercentage, the API response
+	// will return columns in this order: ageGroup,gender,viewerPercentage.
 	ColumnHeaders []*ResultTableColumnHeaders `json:"columnHeaders,omitempty"`
 
-	// Kind: Identifier used to mark the structure as a result table.
+	// Kind: This value specifies the type of data included in the API
+	// response. For the query method, the kind property value will be
+	// youtubeAnalytics#resultTable.
 	Kind string `json:"kind,omitempty"`
 
-	// Rows: Contains all rows of the result table. Each row contains an
-	// array with the values for the columns. The order matches the order of
-	// the column information provided in the "columnHeaders" field. If no
-	// data is available for the given query, the "rows" element will be
-	// omitted from the response. The response for a query with the day
-	// dimension will not contain rows for the most recent days.
+	// Rows: The list contains all rows of the result table. Each item in
+	// the list is an array that contains comma-delimited data corresponding
+	// to a single row of data. The order of the comma-delimited data fields
+	// will match the order of the columns listed in the columnHeaders
+	// field. If no data is available for the given query, the rows element
+	// will be omitted from the response. The response for a query with the
+	// day dimension will not contain rows for the most recent days.
 	Rows [][]interface{} `json:"rows,omitempty"`
 }
 
 type ResultTableColumnHeaders struct {
-	// ColumnType: The type of the column (DIMENSION, METRIC).
+	// ColumnType: The type of the column (DIMENSION or METRIC).
 	ColumnType string `json:"columnType,omitempty"`
 
-	// DataType: Type of the data in the column (STRING, INTEGER, FLOAT).
+	// DataType: The type of the data in the column (STRING, INTEGER, FLOAT,
+	// etc.).
 	DataType string `json:"dataType,omitempty"`
 
 	// Name: The name of the dimension or metric.
@@ -112,18 +123,25 @@ func (r *ReportsService) Query(ids string, startDate string, endDate string, met
 }
 
 // Dimensions sets the optional parameter "dimensions": A
-// comma-separated list of YouTube Analytics dimensions. E.g., 'video',
-// or 'ageGroup,gender'.
+// comma-separated list of YouTube Analytics dimensions, such as views
+// or ageGroup,gender. See the Available Reports document for a list of
+// the reports that you can retrieve and the dimensions used for those
+// reports. Also see the Dimensions document for definitions of those
+// dimensions.
 func (c *ReportsQueryCall) Dimensions(dimensions string) *ReportsQueryCall {
 	c.opt_["dimensions"] = dimensions
 	return c
 }
 
-// Filters sets the optional parameter "filters": A list of dimension
-// filters to be applied to YouTube Analytics data. Multiple filters can
-// be joined together with the ';' character. The returned result table
-// will satisfy both filters. E.g., video==dMH0bHeiRNg;country==IT will
-// restrict the returned stats to the given video and the country Italy.
+// Filters sets the optional parameter "filters": A list of filters that
+// should be applied when retrieving YouTube Analytics data. The
+// Available Reports document identifies the dimensions that can be used
+// to filter each report, and the Dimensions document defines those
+// dimensions. If a request uses multiple filters, join them together
+// with a semicolon (;), and the returned result table will satisfy both
+// filters. For example, a filters parameter value of
+// video==dMH0bHeiRNg;country==IT restricts the result set to include
+// data for the given video in Italy.
 func (c *ReportsQueryCall) Filters(filters string) *ReportsQueryCall {
 	c.opt_["filters"] = filters
 	return c
@@ -138,8 +156,8 @@ func (c *ReportsQueryCall) MaxResults(maxResults int64) *ReportsQueryCall {
 
 // Sort sets the optional parameter "sort": A comma-separated list of
 // dimensions or metrics that determine the sort order for YouTube
-// Analytics data. By default the sort order is ascending, '-' prefix
-// causes descending sort order.
+// Analytics data. By default the sort order is ascending. The '-'
+// prefix causes descending sort order.
 func (c *ReportsQueryCall) Sort(sort string) *ReportsQueryCall {
 	c.opt_["sort"] = sort
 	return c
@@ -205,25 +223,25 @@ func (c *ReportsQueryCall) Do() (*ResultTable, error) {
 	//   ],
 	//   "parameters": {
 	//     "dimensions": {
-	//       "description": "A comma-separated list of YouTube Analytics dimensions. E.g., 'video', or 'ageGroup,gender'.",
+	//       "description": "A comma-separated list of YouTube Analytics dimensions, such as views or ageGroup,gender. See the Available Reports document for a list of the reports that you can retrieve and the dimensions used for those reports. Also see the Dimensions document for definitions of those dimensions.",
 	//       "location": "query",
 	//       "pattern": "[0-9a-zA-Z,]+",
 	//       "type": "string"
 	//     },
 	//     "end-date": {
-	//       "description": "End date for fetching YouTube Analytics data. All requests should specify an end date formatted as YYYY-MM-DD.",
+	//       "description": "The end date for fetching YouTube Analytics data. The value should be in YYYY-MM-DD format.",
 	//       "location": "query",
 	//       "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2}",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "filters": {
-	//       "description": "A list of dimension filters to be applied to YouTube Analytics data. Multiple filters can be joined together with the ';' character. The returned result table will satisfy both filters. E.g., video==dMH0bHeiRNg;country==IT will restrict the returned stats to the given video and the country Italy.",
+	//       "description": "A list of filters that should be applied when retrieving YouTube Analytics data. The Available Reports document identifies the dimensions that can be used to filter each report, and the Dimensions document defines those dimensions. If a request uses multiple filters, join them together with a semicolon (;), and the returned result table will satisfy both filters. For example, a filters parameter value of video==dMH0bHeiRNg;country==IT restricts the result set to include data for the given video in Italy.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "ids": {
-	//       "description": "Unique channel or content owner ID for retrieving YouTube Analytics data. Either channel==C or contentOwner==O where 'C' is the encrypted channel ID and 'O' is the content owner name.",
+	//       "description": "Identifies the YouTube channel or content owner for which you are retrieving YouTube Analytics data.\n- To request data for a YouTube user, set the ids parameter value to channel==CHANNEL_ID, where CHANNEL_ID specifies the unique YouTube channel ID.\n- To request data for a YouTube CMS content owner, set the ids parameter value to contentOwner==OWNER_NAME, where OWNER_NAME is the CMS name of the content owner.",
 	//       "location": "query",
 	//       "pattern": "[a-zA-Z]+==[a-zA-Z0-9_+-]+",
 	//       "required": true,
@@ -237,20 +255,20 @@ func (c *ReportsQueryCall) Do() (*ResultTable, error) {
 	//       "type": "integer"
 	//     },
 	//     "metrics": {
-	//       "description": "A comma-separated list of YouTube Analytics metrics. E.g., 'views' or 'likes,dislikes'",
+	//       "description": "A comma-separated list of YouTube Analytics metrics, such as views or likes,dislikes. See the Available Reports document for a list of the reports that you can retrieve and the metrics available in each report, and see the Metrics document for definitions of those metrics.",
 	//       "location": "query",
 	//       "pattern": "[0-9a-zA-Z,]+",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "sort": {
-	//       "description": "A comma-separated list of dimensions or metrics that determine the sort order for YouTube Analytics data. By default the sort order is ascending, '-' prefix causes descending sort order.",
+	//       "description": "A comma-separated list of dimensions or metrics that determine the sort order for YouTube Analytics data. By default the sort order is ascending. The '-' prefix causes descending sort order.",
 	//       "location": "query",
 	//       "pattern": "(-)?[0-9a-zA-Z,]+",
 	//       "type": "string"
 	//     },
 	//     "start-date": {
-	//       "description": "Start date for fetching YouTube Analytics data. All requests should specify a start date formatted as YYYY-MM-DD.",
+	//       "description": "The start date for fetching YouTube Analytics data. The value should be in YYYY-MM-DD format.",
 	//       "location": "query",
 	//       "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2}",
 	//       "required": true,

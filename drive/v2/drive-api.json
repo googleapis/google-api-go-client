@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"-vXktEC13RBC5q_wkxEsszrjKM4/RQ8G4L_82rd5KCHgkHzB0zl2bYI\"",
+ "etag": "\"-vXktEC13RBC5q_wkxEsszrjKM4/NTDCSI2X0HRrWfcLUq5NVUkrWfA\"",
  "discoveryVersion": "v1",
  "id": "drive:v2",
  "name": "drive",
  "version": "v2",
- "revision": "20130107",
+ "revision": "20130206",
  "title": "Drive API",
  "description": "The API to interact with Drive.",
  "icons": {
@@ -272,7 +272,7 @@
   "App": {
    "id": "App",
    "type": "object",
-   "description": "Information about a third-party application which the user has installed or given access to Google Drive.",
+   "description": "The apps resource provides a list of the apps that a user has installed, with information about each app's supported MIME types, file extensions, and other details.",
    "properties": {
     "authorized": {
      "type": "boolean",
@@ -505,7 +505,7 @@
   "ChildReference": {
    "id": "ChildReference",
    "type": "object",
-   "description": "A reference to a file's child.",
+   "description": "A reference to a folder's child.",
    "properties": {
     "childLink": {
      "type": "string",
@@ -737,7 +737,7 @@
     },
     "downloadUrl": {
      "type": "string",
-     "description": "Short term download URL for the file. This will only be populated on files with content stored in Drive."
+     "description": "Short lived download URL for the file. This is only populated for files with content stored in Drive."
     },
     "editable": {
      "type": "boolean",
@@ -765,11 +765,11 @@
     },
     "fileExtension": {
      "type": "string",
-     "description": "The file extension used when downloading this file. This field is set from the title when inserting or uploading new content. This will only be populated on files with content stored in Drive."
+     "description": "The file extension used when downloading this file. This field is read only. To set the extension, include it in the title when creating the file. This is only populated for files with content stored in Drive."
     },
     "fileSize": {
      "type": "string",
-     "description": "The size of the file in bytes. This will only be populated on files with content stored in Drive.",
+     "description": "The size of the file in bytes. This is only populated for files with content stored in Drive.",
      "format": "int64"
     },
     "iconLink": {
@@ -778,7 +778,7 @@
     },
     "id": {
      "type": "string",
-     "description": "The id of the file."
+     "description": "The ID of the file."
     },
     "imageMediaMetadata": {
      "type": "object",
@@ -903,7 +903,7 @@
      "properties": {
       "text": {
        "type": "string",
-       "description": "The text to be indexed for this file"
+       "description": "The text to be indexed for this file."
       }
      }
     },
@@ -953,7 +953,7 @@
     },
     "md5Checksum": {
      "type": "string",
-     "description": "An MD5 checksum for the content of this file. This will only be populated on files with content stored in Drive."
+     "description": "An MD5 checksum for the content of this file. This is populated only for files with content stored in Drive."
     },
     "mimeType": {
      "type": "string",
@@ -1151,7 +1151,7 @@
   "Permission": {
    "id": "Permission",
    "type": "object",
-   "description": "A single permission for a file.",
+   "description": "A permission for a file.",
    "properties": {
     "additionalRoles": {
      "type": "array",
@@ -1252,7 +1252,7 @@
   "Revision": {
    "id": "Revision",
    "type": "object",
-   "description": "A single revision of a file.",
+   "description": "A revision of a file.",
    "properties": {
     "downloadUrl": {
      "type": "string",
@@ -1373,7 +1373,7 @@
     },
     "isAuthenticatedUser": {
      "type": "boolean",
-     "description": "Whether this user is the same as the authenticated user of which the request was made on behalf."
+     "description": "Whether this user is the same as the authenticated user for whom the request was made."
     },
     "kind": {
      "type": "string",
@@ -1467,7 +1467,7 @@
      "id": "drive.apps.list",
      "path": "apps",
      "httpMethod": "GET",
-     "description": "Lists a user's apps.",
+     "description": "Lists a user's installed apps.",
      "response": {
       "$ref": "AppList"
      },
@@ -2181,7 +2181,7 @@
       },
       "newRevision": {
        "type": "boolean",
-       "description": "Whether a blob upload should create a new revision. If false, the blob data in the current head revision will be replaced.",
+       "description": "Whether a blob upload should create a new revision. If not set or false, the blob data in the current head revision is replaced. If true, a new blob is created as head revision, and previous revisions are preserved (causing increased use of the user's data storage quota).",
        "default": "true",
        "location": "query"
       },
@@ -2321,7 +2321,7 @@
      "id": "drive.files.update",
      "path": "files/{fileId}",
      "httpMethod": "PUT",
-     "description": "Updates file metadata and/or content",
+     "description": "Updates file metadata and/or content.",
      "parameters": {
       "convert": {
        "type": "boolean",
@@ -2337,7 +2337,7 @@
       },
       "newRevision": {
        "type": "boolean",
-       "description": "Whether a blob upload should create a new revision. If false, the blob data in the current head revision will be replaced.",
+       "description": "Whether a blob upload should create a new revision. If not set or false, the blob data in the current head revision is replaced. If true, a new blob is created as head revision, and previous revisions are preserved (causing increased use of the user's data storage quota).",
        "default": "true",
        "location": "query"
       },

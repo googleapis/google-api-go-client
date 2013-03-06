@@ -1243,6 +1243,10 @@ type Video struct {
 	// This data can only be retrieved by the video owner.
 	ProcessingDetails *VideoProcessingDetails `json:"processingDetails,omitempty"`
 
+	// ProjectDetails: The projectDetails object contains information about
+	// the project specific video metadata.
+	ProjectDetails *VideoProjectDetails `json:"projectDetails,omitempty"`
+
 	// RecordingDetails: The recordingDetails object encapsulates
 	// information about the location, date and address where the video was
 	// recorded.
@@ -1305,7 +1309,6 @@ type VideoCategorySnippet struct {
 	// ChannelId: The YouTube channel that created the video category.
 	ChannelId string `json:"channelId,omitempty"`
 
-	// Title: The video category's title.
 	Title string `json:"title,omitempty"`
 }
 
@@ -1359,79 +1362,99 @@ type VideoContentDetailsRegionRestriction struct {
 }
 
 type VideoFileDetails struct {
-	// AudioStreams: Audio streams.
+	// AudioStreams: A list of audio streams contained in the uploaded video
+	// file. Each item in the list contains detailed metadata about an audio
+	// stream.
 	AudioStreams []*VideoFileDetailsAudioStream `json:"audioStreams,omitempty"`
 
-	// BitrateBps: Combined audio and video bitrate, in bits per second.
+	// BitrateBps: The uploaded video file's combined (video and audio)
+	// bitrate in bits per second.
 	BitrateBps uint64 `json:"bitrateBps,omitempty,string"`
 
-	// Container: Container format used.
+	// Container: The uploaded video file's container format.
 	Container string `json:"container,omitempty"`
 
-	// CreationTime: Date and time when the video file was created, in ISO
-	// 8601 format. Currently the only ISO 8601 formats produced are: - Date
-	// only: YYYY-MM-DD - Naive time: YYYY-MM-DDTHH:MM:SS - Time with
-	// timezone: YYYY-MM-DDTHH:MM:SS+HH:MM
+	// CreationTime: The date and time when the uploaded video file was
+	// created. The value is specified in ISO 8601 format. Currently, the
+	// following ISO 8601 formats are supported:
+	// - Date only: YYYY-MM-DD
+	//
+	// - Naive time: YYYY-MM-DDTHH:MM:SS
+	// - Time with timezone:
+	// YYYY-MM-DDTHH:MM:SS+HH:MM
 	CreationTime string `json:"creationTime,omitempty"`
 
-	// DurationMs: Video duration in milliseconds.
+	// DurationMs: The length of the uploaded video in milliseconds.
 	DurationMs uint64 `json:"durationMs,omitempty,string"`
 
-	// FileName: File name.
+	// FileName: The uploaded file's name. This field is present whether a
+	// video file or another type of file was uploaded.
 	FileName string `json:"fileName,omitempty"`
 
-	// FileSize: File size.
+	// FileSize: The uploaded file's size in bytes. This field is present
+	// whether a video file or another type of file was uploaded.
 	FileSize uint64 `json:"fileSize,omitempty,string"`
 
-	// FileType: File type.
+	// FileType: The uploaded file's type as detected by YouTube's video
+	// processing engine. Currently, YouTube only processes video files, but
+	// this field is present whether a video file or another type of file
+	// was uploaded.
 	FileType string `json:"fileType,omitempty"`
 
-	// RecordingLocation: Location of the place where the video was
-	// recorded.
+	// RecordingLocation: Geographic coordinates that identify the place
+	// where the uploaded video was recorded. Coordinates are defined using
+	// WGS 84.
 	RecordingLocation *GeoPoint `json:"recordingLocation,omitempty"`
 
-	// VideoStreams: Video streams.
+	// VideoStreams: A list of video streams contained in the uploaded video
+	// file. Each item in the list contains detailed metadata about a video
+	// stream.
 	VideoStreams []*VideoFileDetailsVideoStream `json:"videoStreams,omitempty"`
 }
 
 type VideoFileDetailsAudioStream struct {
-	// BitrateBps: Audio stream bitrate, in bits per second.
+	// BitrateBps: The audio stream's bitrate, in bits per second.
 	BitrateBps uint64 `json:"bitrateBps,omitempty,string"`
 
-	// ChannelCount: Number of audio channels.
+	// ChannelCount: The number of audio channels that the stream contains.
 	ChannelCount int64 `json:"channelCount,omitempty"`
 
-	// Codec: Audio codec used.
+	// Codec: The audio codec that the stream uses.
 	Codec string `json:"codec,omitempty"`
 
-	// Vendor: Audio vendor identifier, typically a four-letter vendor code.
+	// Vendor: A value that uniquely identifies a video vendor. Typically,
+	// the value is a four-letter vendor code.
 	Vendor string `json:"vendor,omitempty"`
 }
 
 type VideoFileDetailsVideoStream struct {
-	// AspectRatio: Display aspect ratio, which might differ from
-	// width_pixels / height_pixels.
+	// AspectRatio: The video content's display aspect ratio, which
+	// specifies the aspect ratio in which the video should be displayed.
 	AspectRatio float64 `json:"aspectRatio,omitempty"`
 
-	// BitrateBps: Video stream bitrate, in bits per second.
+	// BitrateBps: The video stream's bitrate, in bits per second.
 	BitrateBps uint64 `json:"bitrateBps,omitempty,string"`
 
-	// Codec: Video codec used.
+	// Codec: The video codec that the stream uses.
 	Codec string `json:"codec,omitempty"`
 
-	// FrameRateFps: Video frame rate, in frames per second.
+	// FrameRateFps: The video stream's frame rate, in frames per second.
 	FrameRateFps float64 `json:"frameRateFps,omitempty"`
 
-	// HeightPixels: Video height in pixels.
+	// HeightPixels: The encoded video content's height in pixels.
 	HeightPixels int64 `json:"heightPixels,omitempty"`
 
-	// Rotation: Rotation that is necessary to display the video properly.
+	// Rotation: The amount that YouTube needs to rotate the original source
+	// content to properly display the video.
 	Rotation string `json:"rotation,omitempty"`
 
-	// Vendor: Video vendor identifier, typically a four-letter vendor code.
+	// Vendor: A value that uniquely identifies a video vendor. Typically,
+	// the value is a four-letter vendor code.
 	Vendor string `json:"vendor,omitempty"`
 
-	// WidthPixels: Video width in pixels.
+	// WidthPixels: The encoded video content's width in pixels. You can
+	// calculate the video's encoding aspect ratio as
+	// width_pixels / height_pixels.
 	WidthPixels int64 `json:"widthPixels,omitempty"`
 }
 
@@ -1460,46 +1483,82 @@ type VideoPlayer struct {
 }
 
 type VideoProcessingDetails struct {
-	// EditorSuggestionsAvailability: Editor suggestions availability.
+	// EditorSuggestionsAvailability: This value indicates whether video
+	// editing suggestions, which might improve video quality or the
+	// playback experience, are available for the video. You can retrieve
+	// these suggestions by requesting the suggestions part in your
+	// videos.list() request.
 	EditorSuggestionsAvailability string `json:"editorSuggestionsAvailability,omitempty"`
 
-	// FileDetailsAvailability: File details availability.
+	// FileDetailsAvailability: This value indicates whether file details
+	// are available for the uploaded video. You can retrieve a video's file
+	// details by requesting the fileDetails part in your videos.list()
+	// request.
 	FileDetailsAvailability string `json:"fileDetailsAvailability,omitempty"`
 
-	// ProcessingFailureReason: Reason why video processing has failed.
+	// ProcessingFailureReason: The reason that YouTube failed to process
+	// the video. This property will only have a value if the
+	// processingStatus property's value is failed.
 	ProcessingFailureReason string `json:"processingFailureReason,omitempty"`
 
-	// ProcessingIssuesAvailability: Processing issues availability.
+	// ProcessingIssuesAvailability: This value indicates whether the video
+	// processing engine has generated suggestions that might improve
+	// YouTube's ability to process the the video, warnings that explain
+	// video processing problems, or errors that cause video processing
+	// problems. You can retrieve these suggestions by requesting the
+	// suggestions part in your videos.list() request.
 	ProcessingIssuesAvailability string `json:"processingIssuesAvailability,omitempty"`
 
-	// ProcessingProgress: Video processing progress and completion time
-	// estimate.
+	// ProcessingProgress: The processingProgress object contains
+	// information about the progress YouTube has made in processing the
+	// video. The values are really only relevant if the video's processing
+	// status is processing.
 	ProcessingProgress *VideoProcessingDetailsProcessingProgress `json:"processingProgress,omitempty"`
 
-	// ProcessingStatus: Video processing status.
+	// ProcessingStatus: The video's processing status. This value indicates
+	// whether YouTube was able to process the video or if the video is
+	// still being processed.
 	ProcessingStatus string `json:"processingStatus,omitempty"`
 
-	// TagSuggestionsAvailability: Tag suggestions availability.
+	// TagSuggestionsAvailability: This value indicates whether keyword
+	// (tag) suggestions are available for the video. Tags can be added to a
+	// video's metadata to make it easier for other users to find the video.
+	// You can retrieve these suggestions by requesting the suggestions part
+	// in your videos.list() request.
 	TagSuggestionsAvailability string `json:"tagSuggestionsAvailability,omitempty"`
 
-	// ThumbnailsAvailability: Thumbnails availability.
+	// ThumbnailsAvailability: This value indicates whether thumbnail images
+	// have been generated for the video.
 	ThumbnailsAvailability string `json:"thumbnailsAvailability,omitempty"`
 }
 
 type VideoProcessingDetailsProcessingProgress struct {
-	// PartsProcessed: Number of parts already processed. Progress expressed
-	// in percent should be computed as: 100 * parts_processed /
-	// parts_total.
+	// PartsProcessed: The number of parts of the video that YouTube has
+	// already processed. You can estimate the percentage of the video that
+	// YouTube has already processed by calculating:
+	// 100 * parts_processed /
+	// parts_total
+	//
+	// Note that since the estimated number of parts could
+	// increase without a corresponding increase in the number of parts that
+	// have already been processed, it is possible that the calculated
+	// progress could periodically decrease while YouTube processes a video.
 	PartsProcessed uint64 `json:"partsProcessed,omitempty,string"`
 
-	// PartsTotal: An estimate of total number of parts to process. The
-	// number might be updated with more precise estimates as the processing
-	// progresses.
+	// PartsTotal: An estimate of the total number of parts that need to be
+	// processed for the video. The number may be updated with more precise
+	// estimates while YouTube processes the video.
 	PartsTotal uint64 `json:"partsTotal,omitempty,string"`
 
-	// TimeLeftMs: Estimated time till video processing is complete, in
-	// milliseconds.
+	// TimeLeftMs: An estimate of the amount of time, in millseconds, that
+	// YouTube needs to finish processing the video.
 	TimeLeftMs uint64 `json:"timeLeftMs,omitempty,string"`
+}
+
+type VideoProjectDetails struct {
+	// Tags: A list of project tags associated with the video during the
+	// upload.
+	Tags []string `json:"tags,omitempty"`
 }
 
 type VideoRecordingDetails struct {
@@ -1522,6 +1581,10 @@ type VideoSnippet struct {
 	// ChannelId: The ID that YouTube uses to uniquely identify the channel
 	// that the video was uploaded to.
 	ChannelId string `json:"channelId,omitempty"`
+
+	// ChannelTitle: Channel title for the channel that the video belongs
+	// to.
+	ChannelTitle string `json:"channelTitle,omitempty"`
 
 	// Description: The video's description.
 	Description string `json:"description,omitempty"`
@@ -1593,29 +1656,45 @@ type VideoStatus struct {
 }
 
 type VideoSuggestions struct {
-	// EditorSuggestions: Editor operations that could improve video
-	// quality.
+	// EditorSuggestions: A list of video editing operations that might
+	// improve the video quality or playback experience of the uploaded
+	// video.
 	EditorSuggestions []string `json:"editorSuggestions,omitempty"`
 
-	// ProcessingErrors: Errors encountered during video processing.
+	// ProcessingErrors: A list of errors that will prevent YouTube from
+	// successfully processing the uploaded video video. These errors
+	// indicate that, regardless of the video's current processing status,
+	// eventually, that status will almost certainly be failed.
 	ProcessingErrors []string `json:"processingErrors,omitempty"`
 
-	// ProcessingHints: Hints about how to improve video processing.
+	// ProcessingHints: A list of suggestions that may improve YouTube's
+	// ability to process the video.
 	ProcessingHints []string `json:"processingHints,omitempty"`
 
-	// ProcessingWarnings: Warnings produced by the video processing engine.
+	// ProcessingWarnings: A list of reasons why YouTube may have difficulty
+	// transcoding the uploaded video or that might result in an erroneous
+	// transcoding. These warnings are generated before YouTube actually
+	// processes the uploaded video file. In addition, they identify issues
+	// that are unlikely to cause the video processing to fail but that
+	// might cause problems such as sync issues, video artifacts, or a
+	// missing audio track.
 	ProcessingWarnings []string `json:"processingWarnings,omitempty"`
 
-	// TagSuggestions: Tags that could be added to aid video discovery.
+	// TagSuggestions: A list of keyword tags that could be added to the
+	// video's metadata to increase the likelihood that users will locate
+	// your video when searching or browsing on YouTube.
 	TagSuggestions []*VideoSuggestionsTagSuggestion `json:"tagSuggestions,omitempty"`
 }
 
 type VideoSuggestionsTagSuggestion struct {
-	// CategoryRestricts: Set of categories this tag should be restricted
-	// to. Tag applies to all categories if there are no restricts.
+	// CategoryRestricts: A set of video categories for which the tag is
+	// relevant. You can use this information to display appropriate tag
+	// suggestions based on the video category that the video uploader
+	// associates with the video. By default, tag suggestions are relevant
+	// for all categories if there are no restricts defined for the keyword.
 	CategoryRestricts []string `json:"categoryRestricts,omitempty"`
 
-	// Tag: Tag label.
+	// Tag: The keyword tag suggested for the video.
 	Tag string `json:"tag,omitempty"`
 }
 

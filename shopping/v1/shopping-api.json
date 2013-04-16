@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/9xpcucVLjNrY44EBZOzWnp7hbl0\"",
+ "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/WBsBLTRFwKkAJXQZTwvXsRM2Tzs\"",
  "discoveryVersion": "v1",
  "id": "shopping:v1",
  "name": "shopping",
  "version": "v1",
- "revision": "20130405",
+ "revision": "20130411",
  "title": "Search API For Shopping",
  "description": "Lets you search over product data.",
  "icons": {

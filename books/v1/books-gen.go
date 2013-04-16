@@ -48,6 +48,7 @@ func New(client *http.Client) (*Service, error) {
 	}
 	s := &Service{client: client}
 	s.Bookshelves = &BookshelvesService{s: s}
+	s.Cloudloading = &CloudloadingService{s: s}
 	s.Layers = &LayersService{s: s}
 	s.Myconfig = &MyconfigService{s: s}
 	s.Mylibrary = &MylibraryService{s: s}
@@ -60,6 +61,8 @@ type Service struct {
 
 	Bookshelves *BookshelvesService
 
+	Cloudloading *CloudloadingService
+
 	Layers *LayersService
 
 	Myconfig *MyconfigService
@@ -70,6 +73,10 @@ type Service struct {
 }
 
 type BookshelvesService struct {
+	s *Service
+}
+
+type CloudloadingService struct {
 	s *Service
 }
 
@@ -90,10 +97,14 @@ type VolumesService struct {
 }
 
 type Annotation struct {
-	// AfterSelectedText: Anchor text after excerpt.
+	// AfterSelectedText: Anchor text after excerpt. For requests, if the
+	// user bookmarked a screen that has no flowing text on it, then this
+	// field should be empty.
 	AfterSelectedText string `json:"afterSelectedText,omitempty"`
 
-	// BeforeSelectedText: Anchor text before excerpt.
+	// BeforeSelectedText: Anchor text before excerpt. For requests, if the
+	// user bookmarked a screen that has no flowing text on it, then this
+	// field should be empty.
 	BeforeSelectedText string `json:"beforeSelectedText,omitempty"`
 
 	// ClientVersionRanges: Selection ranges sent from the client.
@@ -154,6 +165,10 @@ type AnnotationClientVersionRanges struct {
 	// GbTextRange: Range in GB text format for this annotation sent by
 	// client.
 	GbTextRange *BooksAnnotationsRange `json:"gbTextRange,omitempty"`
+
+	// ImageCfiRange: Range in image CFI format for this annotation sent by
+	// client.
+	ImageCfiRange *BooksAnnotationsRange `json:"imageCfiRange,omitempty"`
 }
 
 type AnnotationCurrentVersionRanges struct {
@@ -170,6 +185,10 @@ type AnnotationCurrentVersionRanges struct {
 	// GbTextRange: Range in GB text format for this annotation for version
 	// above.
 	GbTextRange *BooksAnnotationsRange `json:"gbTextRange,omitempty"`
+
+	// ImageCfiRange: Range in image CFI format for this annotation for
+	// version above.
+	ImageCfiRange *BooksAnnotationsRange `json:"imageCfiRange,omitempty"`
 }
 
 type Annotationdata struct {
@@ -245,6 +264,16 @@ type BooksAnnotationsRange struct {
 
 	// StartPosition: The starting position for the range.
 	StartPosition string `json:"startPosition,omitempty"`
+}
+
+type BooksCloudloadingResource struct {
+	Author string `json:"author,omitempty"`
+
+	ProcessingState string `json:"processingState,omitempty"`
+
+	Title string `json:"title,omitempty"`
+
+	VolumeId string `json:"volumeId,omitempty"`
 }
 
 type BooksLayerDictData struct {
@@ -947,6 +976,9 @@ type VolumeUserInfo struct {
 	// authenticated user making the request. (In LITE projection.)
 	IsPurchased bool `json:"isPurchased,omitempty"`
 
+	// IsUploaded: Whether or not this volume was user uploaded.
+	IsUploaded bool `json:"isUploaded,omitempty"`
+
 	// ReadingPosition: The user's current reading position in the volume,
 	// if one is available. (In LITE projection.)
 	ReadingPosition *ReadingPosition `json:"readingPosition,omitempty"`
@@ -958,6 +990,12 @@ type VolumeUserInfo struct {
 	// action, such as a reading position update, volume purchase or writing
 	// a review. (RFC 3339 UTC date-time format).
 	Updated string `json:"updated,omitempty"`
+
+	UserUploadedVolumeInfo *VolumeUserInfoUserUploadedVolumeInfo `json:"userUploadedVolumeInfo,omitempty"`
+}
+
+type VolumeUserInfoUserUploadedVolumeInfo struct {
+	ProcessingState string `json:"processingState,omitempty"`
 }
 
 type VolumeVolumeInfo struct {
@@ -1334,6 +1372,170 @@ func (c *BookshelvesListCall) Do() (*Bookshelves, error) {
 	//   "response": {
 	//     "$ref": "Bookshelves"
 	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/books"
+	//   ]
+	// }
+
+}
+
+// method id "books.cloudloading.addBook":
+
+type CloudloadingAddBookCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// AddBook:
+func (r *CloudloadingService) AddBook() *CloudloadingAddBookCall {
+	c := &CloudloadingAddBookCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+// Drive_document_id sets the optional parameter "drive_document_id": A
+// drive document id. The upload_client_token must not be set.
+func (c *CloudloadingAddBookCall) Drive_document_id(drive_document_id string) *CloudloadingAddBookCall {
+	c.opt_["drive_document_id"] = drive_document_id
+	return c
+}
+
+// Mime_type sets the optional parameter "mime_type": The document MIME
+// type. It can be set only if the drive_document_id is set.
+func (c *CloudloadingAddBookCall) Mime_type(mime_type string) *CloudloadingAddBookCall {
+	c.opt_["mime_type"] = mime_type
+	return c
+}
+
+// Name sets the optional parameter "name": The document name. It can be
+// set only if the drive_document_id is set.
+func (c *CloudloadingAddBookCall) Name(name string) *CloudloadingAddBookCall {
+	c.opt_["name"] = name
+	return c
+}
+
+// Upload_client_token sets the optional parameter
+// "upload_client_token":
+func (c *CloudloadingAddBookCall) Upload_client_token(upload_client_token string) *CloudloadingAddBookCall {
+	c.opt_["upload_client_token"] = upload_client_token
+	return c
+}
+
+func (c *CloudloadingAddBookCall) Do() (*BooksCloudloadingResource, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["drive_document_id"]; ok {
+		params.Set("drive_document_id", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["mime_type"]; ok {
+		params.Set("mime_type", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["name"]; ok {
+		params.Set("name", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["upload_client_token"]; ok {
+		params.Set("upload_client_token", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "cloudloading/addBook")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(BooksCloudloadingResource)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "",
+	//   "httpMethod": "POST",
+	//   "id": "books.cloudloading.addBook",
+	//   "parameters": {
+	//     "drive_document_id": {
+	//       "description": "A drive document id. The upload_client_token must not be set.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "mime_type": {
+	//       "description": "The document MIME type. It can be set only if the drive_document_id is set.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "The document name. It can be set only if the drive_document_id is set.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "upload_client_token": {
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "cloudloading/addBook",
+	//   "response": {
+	//     "$ref": "BooksCloudloadingResource"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/books"
+	//   ]
+	// }
+
+}
+
+// method id "books.cloudloading.deleteBook":
+
+type CloudloadingDeleteBookCall struct {
+	s        *Service
+	volumeId string
+	opt_     map[string]interface{}
+}
+
+// DeleteBook: Remove the book and its contents
+func (r *CloudloadingService) DeleteBook(volumeId string) *CloudloadingDeleteBookCall {
+	c := &CloudloadingDeleteBookCall{s: r.s, opt_: make(map[string]interface{})}
+	c.volumeId = volumeId
+	return c
+}
+
+func (c *CloudloadingDeleteBookCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("volumeId", fmt.Sprintf("%v", c.volumeId))
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "cloudloading/deleteBook")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Remove the book and its contents",
+	//   "httpMethod": "POST",
+	//   "id": "books.cloudloading.deleteBook",
+	//   "parameterOrder": [
+	//     "volumeId"
+	//   ],
+	//   "parameters": {
+	//     "volumeId": {
+	//       "description": "The id of the book to be removed.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "cloudloading/deleteBook",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/books"
 	//   ]

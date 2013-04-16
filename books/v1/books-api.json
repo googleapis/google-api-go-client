@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/FrenxV0g3Y2ygmAJ0ic-Va85Xlo\"",
+ "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/iMEOh-Fn5GH0aj3PVknQxL_fWRQ\"",
  "discoveryVersion": "v1",
  "id": "books:v1",
  "name": "books",
  "version": "v1",
- "revision": "20121212",
+ "revision": "20130415",
  "title": "Books API",
  "description": "Lets you search for books and manage your Google Books library.",
  "icons": {
@@ -80,11 +80,11 @@
    "properties": {
     "afterSelectedText": {
      "type": "string",
-     "description": "Anchor text after excerpt."
+     "description": "Anchor text after excerpt. For requests, if the user bookmarked a screen that has no flowing text on it, then this field should be empty."
     },
     "beforeSelectedText": {
      "type": "string",
-     "description": "Anchor text before excerpt."
+     "description": "Anchor text before excerpt. For requests, if the user bookmarked a screen that has no flowing text on it, then this field should be empty."
     },
     "clientVersionRanges": {
      "type": "object",
@@ -105,6 +105,10 @@
       "gbTextRange": {
        "$ref": "BooksAnnotationsRange",
        "description": "Range in GB text format for this annotation sent by client."
+      },
+      "imageCfiRange": {
+       "$ref": "BooksAnnotationsRange",
+       "description": "Range in image CFI format for this annotation sent by client."
       }
      }
     },
@@ -132,6 +136,10 @@
       "gbTextRange": {
        "$ref": "BooksAnnotationsRange",
        "description": "Range in GB text format for this annotation for version above."
+      },
+      "imageCfiRange": {
+       "$ref": "BooksAnnotationsRange",
+       "description": "Range in image CFI format for this annotation for version above."
       }
      }
     },
@@ -303,6 +311,24 @@
     "startPosition": {
      "type": "string",
      "description": "The starting position for the range."
+    }
+   }
+  },
+  "BooksCloudloadingResource": {
+   "id": "BooksCloudloadingResource",
+   "type": "object",
+   "properties": {
+    "author": {
+     "type": "string"
+    },
+    "processingState": {
+     "type": "string"
+    },
+    "title": {
+     "type": "string"
+    },
+    "volumeId": {
+     "type": "string"
     }
    }
   },
@@ -1240,6 +1266,10 @@
        "type": "boolean",
        "description": "Whether or not this volume was purchased by the authenticated user making the request. (In LITE projection.)"
       },
+      "isUploaded": {
+       "type": "boolean",
+       "description": "Whether or not this volume was user uploaded."
+      },
       "readingPosition": {
        "$ref": "ReadingPosition",
        "description": "The user's current reading position in the volume, if one is available. (In LITE projection.)"
@@ -1252,6 +1282,14 @@
        "type": "string",
        "description": "Timestamp when this volume was last modified by a user action, such as a reading position update, volume purchase or writing a review. (RFC 3339 UTC date-time format).",
        "format": "date-time"
+      },
+      "userUploadedVolumeInfo": {
+       "type": "object",
+       "properties": {
+        "processingState": {
+         "type": "string"
+        }
+       }
       }
      }
     },
@@ -1670,6 +1708,63 @@
        ]
       }
      }
+    }
+   }
+  },
+  "cloudloading": {
+   "methods": {
+    "addBook": {
+     "id": "books.cloudloading.addBook",
+     "path": "cloudloading/addBook",
+     "httpMethod": "POST",
+     "description": "",
+     "parameters": {
+      "drive_document_id": {
+       "type": "string",
+       "description": "A drive document id. The upload_client_token must not be set.",
+       "location": "query"
+      },
+      "mime_type": {
+       "type": "string",
+       "description": "The document MIME type. It can be set only if the drive_document_id is set.",
+       "location": "query"
+      },
+      "name": {
+       "type": "string",
+       "description": "The document name. It can be set only if the drive_document_id is set.",
+       "location": "query"
+      },
+      "upload_client_token": {
+       "type": "string",
+       "location": "query"
+      }
+     },
+     "response": {
+      "$ref": "BooksCloudloadingResource"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/books"
+     ]
+    },
+    "deleteBook": {
+     "id": "books.cloudloading.deleteBook",
+     "path": "cloudloading/deleteBook",
+     "httpMethod": "POST",
+     "description": "Remove the book and its contents",
+     "parameters": {
+      "volumeId": {
+       "type": "string",
+       "description": "The id of the book to be removed.",
+       "required": true,
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "volumeId"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/books"
+     ]
     }
    }
   },
@@ -3043,6 +3138,65 @@
         "source": {
          "type": "string",
          "description": "String to identify the originator of this request.",
+         "location": "query"
+        }
+       },
+       "response": {
+        "$ref": "Volumes"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/books"
+       ]
+      }
+     }
+    },
+    "useruploaded": {
+     "methods": {
+      "list": {
+       "id": "books.volumes.useruploaded.list",
+       "path": "volumes/useruploaded",
+       "httpMethod": "GET",
+       "description": "Return a list of books uploaded by the current user.",
+       "parameters": {
+        "locale": {
+         "type": "string",
+         "description": "ISO-639-1 language and ISO-3166-1 country code. Ex: 'en_US'. Used for generating recommendations.",
+         "location": "query"
+        },
+        "maxResults": {
+         "type": "integer",
+         "description": "Maximum number of results to return.",
+         "format": "uint32",
+         "minimum": "0",
+         "maximum": "40",
+         "location": "query"
+        },
+        "processingState": {
+         "type": "string",
+         "description": "The processing state of the user uploaded volumes to be returned.",
+         "enum": [
+          "COMPLETED_FAILED",
+          "COMPLETED_SUCCESS",
+          "RUNNING"
+         ],
+         "enumDescriptions": [
+          "The volume processing hase failed.",
+          "The volume processing was completed.",
+          "The volume processing is not completed."
+         ],
+         "repeated": true,
+         "location": "query"
+        },
+        "source": {
+         "type": "string",
+         "description": "String to identify the originator of this request.",
+         "location": "query"
+        },
+        "startIndex": {
+         "type": "integer",
+         "description": "Index of the first result to return (starts at 0)",
+         "format": "uint32",
+         "minimum": "0",
          "location": "query"
         }
        },

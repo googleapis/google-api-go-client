@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"-vXktEC13RBC5q_wkxEsszrjKM4/39WzIgV4z1HKekFmH2Ue2jwci-c\"",
+ "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/qcNz5hP2mls7Mu4VwLjORZ-cVrY\"",
  "discoveryVersion": "v1",
  "id": "plus:v1",
  "name": "plus",
  "version": "v1",
- "revision": "20130301",
+ "revision": "20130403",
  "title": "Google+ API",
  "description": "The Google+ API enables developers to build on top of the Google+ platform.",
  "icons": {
@@ -177,6 +177,10 @@
      "type": "string",
      "description": "Identifies this resource as an activity. Value: \"plus#activity\".",
      "default": "plus#activity"
+    },
+    "location": {
+     "$ref": "Place",
+     "description": "The location where this activity occurred."
     },
     "object": {
      "type": "object",
@@ -1322,6 +1326,47 @@
     "verified": {
      "type": "boolean",
      "description": "Whether the person or Google+ Page has been verified."
+    }
+   }
+  },
+  "Place": {
+   "id": "Place",
+   "type": "object",
+   "properties": {
+    "address": {
+     "type": "object",
+     "description": "The physical address of the place.",
+     "properties": {
+      "formatted": {
+       "type": "string",
+       "description": "The formatted address for display."
+      }
+     }
+    },
+    "displayName": {
+     "type": "string",
+     "description": "The display name of the place."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies this resource as a place. Value: \"plus#place\".",
+     "default": "plus#place"
+    },
+    "position": {
+     "type": "object",
+     "description": "The position of the place.",
+     "properties": {
+      "latitude": {
+       "type": "number",
+       "description": "The latitude of this position.",
+       "format": "double"
+      },
+      "longitude": {
+       "type": "number",
+       "description": "The longitude of this position.",
+       "format": "double"
+      }
+     }
     }
    }
   },

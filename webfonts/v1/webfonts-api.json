@@ -1,18 +1,18 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"-vXktEC13RBC5q_wkxEsszrjKM4/-NYZzVNscWryV-b3u6PRKwWChcc\"",
+ "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/KyP1rlE9O6ohvW2O9e5uMKtw83U\"",
  "discoveryVersion": "v1",
  "id": "webfonts:v1",
  "name": "webfonts",
  "version": "v1",
- "revision": "20120614",
- "title": "Google Web Fonts Developer API",
- "description": "The Google Web Fonts Developer API.",
+ "revision": "20130404",
+ "title": "Google Fonts Developer API",
+ "description": "The Google Fonts Developer API.",
  "icons": {
   "x16": "http://www.google.com/images/icons/feature/font_api-16.png",
   "x32": "http://www.google.com/images/icons/feature/font_api-32.gif"
  },
- "documentationLink": "http://code.google.com/apis/webfonts/docs/developer_api.html",
+ "documentationLink": "https://developers.google.com/fonts/docs/developer_api",
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/webfonts/v1/",
  "basePath": "/webfonts/v1/",
@@ -73,10 +73,21 @@
      "type": "any",
      "description": "The name of the font."
     },
+    "files": {
+     "type": "object",
+     "description": "The font files (with all supported scripts) for each one of the available variants.",
+     "additionalProperties": {
+      "type": "any"
+     }
+    },
     "kind": {
      "type": "string",
      "description": "This kind represents a webfont object in the webfonts service.",
      "default": "webfonts#webfont"
+    },
+    "lastModified": {
+     "type": "any",
+     "description": "The date (format \"yyyy-MM-dd\") the font was modified for the last time."
     },
     "subsets": {
      "type": "any",
@@ -85,6 +96,10 @@
     "variants": {
      "type": "any",
      "description": "The available variants for the font."
+    },
+    "version": {
+     "type": "any",
+     "description": "The font version."
     }
    }
   },
@@ -114,7 +129,7 @@
      "id": "webfonts.webfonts.list",
      "path": "webfonts",
      "httpMethod": "GET",
-     "description": "Retrieves the list of fonts currently served by the Google Web Fonts Developer API",
+     "description": "Retrieves the list of fonts currently served by the Google Fonts Developer API",
      "parameters": {
       "sort": {
        "type": "string",

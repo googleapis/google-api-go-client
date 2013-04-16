@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"-vXktEC13RBC5q_wkxEsszrjKM4/MryjawCTL8a22SEShzoJVtYmFKY\"",
+ "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/UIyAkv_5pk3lLRK5A-ipqJHG-Ic\"",
  "discoveryVersion": "v1",
  "id": "youtubeAnalytics:v1beta1",
  "name": "youtubeAnalytics",
  "canonicalName": "YouTube Analytics",
  "version": "v1beta1",
- "revision": "20130225",
+ "revision": "20130308",
  "title": "YouTube Analytics API",
  "description": "Retrieve your YouTube Analytics reports.",
  "icons": {
@@ -73,6 +73,9 @@
  "auth": {
   "oauth2": {
    "scopes": {
+    "https://www.googleapis.com/auth/yt-analytics-monetary.readonly": {
+     "description": "View YouTube Analytics monetary reports for your YouTube content"
+    },
     "https://www.googleapis.com/auth/yt-analytics.readonly": {
      "description": "View YouTube Analytics reports for your YouTube content"
     }
@@ -203,6 +206,7 @@
       "$ref": "ResultTable"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/yt-analytics-monetary.readonly",
       "https://www.googleapis.com/auth/yt-analytics.readonly"
      ]
     }

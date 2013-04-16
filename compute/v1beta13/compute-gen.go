@@ -1190,6 +1190,7 @@ func (c *DisksGetCall) Do() (*Disk, error) {
 	//     "$ref": "Disk"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
@@ -1379,6 +1380,7 @@ func (c *DisksListCall) Do() (*DiskList, error) {
 	//     "$ref": "DiskList"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
@@ -1527,6 +1529,7 @@ func (c *FirewallsGetCall) Do() (*Firewall, error) {
 	//     "$ref": "Firewall"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
@@ -1716,6 +1719,7 @@ func (c *FirewallsListCall) Do() (*FirewallList, error) {
 	//     "$ref": "FirewallList"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
@@ -2036,6 +2040,7 @@ func (c *ImagesGetCall) Do() (*Image, error) {
 	//     "$ref": "Image"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
@@ -2226,6 +2231,7 @@ func (c *ImagesListCall) Do() (*ImageList, error) {
 	//     "$ref": "ImageList"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
@@ -2565,6 +2571,7 @@ func (c *InstancesGetCall) Do() (*Instance, error) {
 	//     "$ref": "Instance"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
@@ -2640,6 +2647,7 @@ func (c *InstancesGetSerialPortOutputCall) Do() (*SerialPortOutput, error) {
 	//     "$ref": "SerialPortOutput"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
@@ -2829,6 +2837,7 @@ func (c *InstancesListCall) Do() (*InstanceList, error) {
 	//     "$ref": "InstanceList"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
@@ -2903,6 +2912,7 @@ func (c *KernelsGetCall) Do() (*Kernel, error) {
 	//     "$ref": "Kernel"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
@@ -3017,6 +3027,7 @@ func (c *KernelsListCall) Do() (*KernelList, error) {
 	//     "$ref": "KernelList"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
@@ -3091,6 +3102,7 @@ func (c *MachineTypesGetCall) Do() (*MachineType, error) {
 	//     "$ref": "MachineType"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
@@ -3205,6 +3217,7 @@ func (c *MachineTypesListCall) Do() (*MachineTypeList, error) {
 	//     "$ref": "MachineTypeList"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
@@ -3353,6 +3366,7 @@ func (c *NetworksGetCall) Do() (*Network, error) {
 	//     "$ref": "Network"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
@@ -3542,6 +3556,7 @@ func (c *NetworksListCall) Do() (*NetworkList, error) {
 	//     "$ref": "NetworkList"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
@@ -3683,6 +3698,7 @@ func (c *OperationsGetCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
@@ -3797,6 +3813,7 @@ func (c *OperationsListCall) Do() (*OperationList, error) {
 	//     "$ref": "OperationList"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
@@ -3860,6 +3877,7 @@ func (c *ProjectsGetCall) Do() (*Project, error) {
 	//     "$ref": "Project"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
@@ -4083,6 +4101,7 @@ func (c *SnapshotsGetCall) Do() (*Snapshot, error) {
 	//     "$ref": "Snapshot"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
@@ -4272,6 +4291,7 @@ func (c *SnapshotsListCall) Do() (*SnapshotList, error) {
 	//     "$ref": "SnapshotList"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
@@ -4346,6 +4366,7 @@ func (c *ZonesGetCall) Do() (*Zone, error) {
 	//     "$ref": "Zone"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
@@ -4460,6 +4481,7 @@ func (c *ZonesListCall) Do() (*ZoneList, error) {
 	//     "$ref": "ZoneList"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }

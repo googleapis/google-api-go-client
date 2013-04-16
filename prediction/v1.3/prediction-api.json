@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"-vXktEC13RBC5q_wkxEsszrjKM4/Dp8atsDipKqr3jwFG9DJK09wH80\"",
+ "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/29enF95-xAinr69EDODyy8ewDlA\"",
  "discoveryVersion": "v1",
  "id": "prediction:v1.3",
  "name": "prediction",
  "version": "v1.3",
- "revision": "20130213",
+ "revision": "20130318",
  "title": "Prediction API",
  "description": "Lets you access a cloud hosted machine learning service that makes it easy to build smart apps",
  "icons": {
@@ -67,8 +67,14 @@
  "auth": {
   "oauth2": {
    "scopes": {
+    "https://www.googleapis.com/auth/devstorage.full_control": {
+     "description": "Manage your data and permissions in Google Cloud Storage"
+    },
     "https://www.googleapis.com/auth/devstorage.read_only": {
      "description": "View your data in Google Cloud Storage"
+    },
+    "https://www.googleapis.com/auth/devstorage.read_write": {
+     "description": "Manage your data in Google Cloud Storage"
     },
     "https://www.googleapis.com/auth/prediction": {
      "description": "Manage your data in the Google Prediction API"
@@ -340,7 +346,9 @@
       "$ref": "Training"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/devstorage.full_control",
       "https://www.googleapis.com/auth/devstorage.read_only",
+      "https://www.googleapis.com/auth/devstorage.read_write",
       "https://www.googleapis.com/auth/prediction"
      ]
     },

@@ -400,6 +400,9 @@ type ShoppingModelProductJsonV1 struct {
 	// Internal15: Google Internal.
 	Internal15 float64 `json:"internal15,omitempty"`
 
+	// Internal16: Google Internal. Attribute names are deliberately vague.
+	Internal16 *ShoppingModelProductJsonV1Internal16 `json:"internal16,omitempty"`
+
 	// Internal3: Google Internal.
 	Internal3 string `json:"internal3,omitempty"`
 
@@ -506,6 +509,14 @@ type ShoppingModelProductJsonV1ImagesThumbnails struct {
 
 	// Width: Width of thumbnail (omitted if not specified in the request).
 	Width int64 `json:"width,omitempty"`
+}
+
+type ShoppingModelProductJsonV1Internal16 struct {
+	Length int64 `json:"length,omitempty"`
+
+	Number int64 `json:"number,omitempty"`
+
+	Size int64 `json:"size,omitempty,string"`
 }
 
 type ShoppingModelProductJsonV1Internal4 struct {
@@ -998,13 +1009,6 @@ func (c *ProductsListCall) Currency(currency string) *ProductsListCall {
 	return c
 }
 
-// ExperimentId sets the optional parameter "experimentId": The Id of
-// the experiment
-func (c *ProductsListCall) ExperimentId(experimentId string) *ProductsListCall {
-	c.opt_["experimentId"] = experimentId
-	return c
-}
-
 // ExtrasEnabled sets the optional parameter "extras.enabled": Whether
 // to return extra information.
 func (c *ProductsListCall) ExtrasEnabled(extrasEnabled bool) *ProductsListCall {
@@ -1264,9 +1268,6 @@ func (c *ProductsListCall) Do() (*Products, error) {
 	if v, ok := c.opt_["currency"]; ok {
 		params.Set("currency", fmt.Sprintf("%v", v))
 	}
-	if v, ok := c.opt_["experimentId"]; ok {
-		params.Set("experimentId", fmt.Sprintf("%v", v))
-	}
 	if v, ok := c.opt_["extras.enabled"]; ok {
 		params.Set("extras.enabled", fmt.Sprintf("%v", v))
 	}
@@ -1454,11 +1455,6 @@ func (c *ProductsListCall) Do() (*Products, error) {
 	//     },
 	//     "currency": {
 	//       "description": "Currency restriction (ISO 4217)",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "experimentId": {
-	//       "description": "The Id of the experiment",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

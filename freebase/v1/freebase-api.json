@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"-vXktEC13RBC5q_wkxEsszrjKM4/tbmXhzMC4jzBgRSIoHQJd85ZLw8\"",
+ "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/b1_0WIlPpVCotgPDBhzZPFXX0Vo\"",
  "discoveryVersion": "v1",
  "id": "freebase:v1",
  "name": "freebase",
  "version": "v1",
- "revision": "20130211",
+ "revision": "20130318",
  "title": "Freebase API",
  "description": "Topic and MQL APIs provide you structured access to Freebase data.",
  "icons": {

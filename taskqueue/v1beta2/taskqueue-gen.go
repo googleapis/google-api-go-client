@@ -1,6 +1,6 @@
 // Package taskqueue provides access to the TaskQueue API.
 //
-// See http://code.google.com/appengine/docs/python/taskqueue/rest.html
+// See https://developers.google.com/appengine/docs/python/taskqueue/rest
 //
 // Usage example:
 //
@@ -93,6 +93,9 @@ type Task struct {
 
 	// QueueName: Name of the queue that the task is in.
 	QueueName string `json:"queueName,omitempty"`
+
+	// Retry_count: The number of leases applied to this task.
+	Retry_count int64 `json:"retry_count,omitempty"`
 
 	// Tag: Tag for the task, could be used later to lease tasks grouped by
 	// a specific tag.

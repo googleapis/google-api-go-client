@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"-vXktEC13RBC5q_wkxEsszrjKM4/U5nodZTDs51g9ZbpRkOxkkLbdKQ\"",
+ "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/5lPlrXkysBNBiqMLDXMb0ovtUjQ\"",
  "discoveryVersion": "v1",
  "id": "dfareporting:v1",
  "name": "dfareporting",
  "version": "v1",
- "revision": "20121127",
+ "revision": "20130307",
  "title": "DFA Reporting API",
  "description": "Lets you create, run and download reports.",
  "icons": {

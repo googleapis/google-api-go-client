@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"-vXktEC13RBC5q_wkxEsszrjKM4/NTDCSI2X0HRrWfcLUq5NVUkrWfA\"",
+ "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/IKXu8Ifx6RZBvxjw0v_Lnh82Soc\"",
  "discoveryVersion": "v1",
  "id": "drive:v2",
  "name": "drive",
  "version": "v2",
- "revision": "20130206",
+ "revision": "20130404",
  "title": "Drive API",
  "description": "The API to interact with Drive.",
  "icons": {
@@ -81,6 +81,9 @@
     },
     "https://www.googleapis.com/auth/drive.readonly": {
      "description": "View the files and documents in your Google Drive"
+    },
+    "https://www.googleapis.com/auth/drive.scripts": {
+     "description": "Modify your Google Apps Script scripts' behavior"
     }
    }
   }
@@ -726,6 +729,10 @@
      "type": "string",
      "description": "A link for opening the file in using a relevant Google editor or viewer."
     },
+    "appDataContents": {
+     "type": "boolean",
+     "description": "Whether this file is in the appdata folder."
+    },
     "createdDate": {
      "type": "string",
      "description": "Create time for this file (formatted ISO8601 timestamp).",
@@ -1246,6 +1253,65 @@
     "selfLink": {
      "type": "string",
      "description": "A link back to this list."
+    }
+   }
+  },
+  "Property": {
+   "id": "Property",
+   "type": "object",
+   "description": "A key-value pair that is either public or private to an application.",
+   "properties": {
+    "etag": {
+     "type": "string",
+     "description": "ETag of the property."
+    },
+    "key": {
+     "type": "string",
+     "description": "The key of this property."
+    },
+    "kind": {
+     "type": "string",
+     "description": "This is always drive#property.",
+     "default": "drive#property"
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "The link back to this property."
+    },
+    "value": {
+     "type": "string",
+     "description": "The value of this property."
+    },
+    "visibility": {
+     "type": "string",
+     "description": "The visibility of this property."
+    }
+   }
+  },
+  "PropertyList": {
+   "id": "PropertyList",
+   "type": "object",
+   "description": "A collection of properties, key-value pairs that are either public or private to an application.",
+   "properties": {
+    "etag": {
+     "type": "string",
+     "description": "The ETag of the list."
+    },
+    "items": {
+     "type": "array",
+     "description": "The list of properties.",
+     "items": {
+      "$ref": "Property"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "This is always drive#propertyList.",
+     "default": "drive#propertyList"
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "The link back to this list."
     }
    }
   },
@@ -2242,7 +2308,8 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/drive",
-      "https://www.googleapis.com/auth/drive.file"
+      "https://www.googleapis.com/auth/drive.file",
+      "https://www.googleapis.com/auth/drive.scripts"
      ]
     },
     "touch": {
@@ -2398,7 +2465,8 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/drive",
-      "https://www.googleapis.com/auth/drive.file"
+      "https://www.googleapis.com/auth/drive.file",
+      "https://www.googleapis.com/auth/drive.scripts"
      ],
      "supportsMediaUpload": true,
      "mediaUpload": {
@@ -2682,6 +2750,12 @@
        "description": "The ID for the permission.",
        "required": true,
        "location": "path"
+      },
+      "transferOwnership": {
+       "type": "boolean",
+       "description": "Whether changing a role to 'owner' should also downgrade the current owners to writers.",
+       "default": "false",
+       "location": "query"
       }
      },
      "parameterOrder": [
@@ -2716,6 +2790,12 @@
        "description": "The ID for the permission.",
        "required": true,
        "location": "path"
+      },
+      "transferOwnership": {
+       "type": "boolean",
+       "description": "Whether changing a role to 'owner' should also downgrade the current owners to writers.",
+       "default": "false",
+       "location": "query"
       }
      },
      "parameterOrder": [
@@ -2727,6 +2807,216 @@
      },
      "response": {
       "$ref": "Permission"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/drive",
+      "https://www.googleapis.com/auth/drive.file"
+     ]
+    }
+   }
+  },
+  "properties": {
+   "methods": {
+    "delete": {
+     "id": "drive.properties.delete",
+     "path": "files/{fileId}/properties/{propertyKey}",
+     "httpMethod": "DELETE",
+     "description": "Deletes a property.",
+     "parameters": {
+      "fileId": {
+       "type": "string",
+       "description": "The ID of the file.",
+       "required": true,
+       "location": "path"
+      },
+      "propertyKey": {
+       "type": "string",
+       "description": "The key of the property.",
+       "required": true,
+       "location": "path"
+      },
+      "visibility": {
+       "type": "string",
+       "description": "The visibility of the property.",
+       "default": "private",
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "fileId",
+      "propertyKey"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/drive",
+      "https://www.googleapis.com/auth/drive.file"
+     ]
+    },
+    "get": {
+     "id": "drive.properties.get",
+     "path": "files/{fileId}/properties/{propertyKey}",
+     "httpMethod": "GET",
+     "description": "Gets a property by its key.",
+     "parameters": {
+      "fileId": {
+       "type": "string",
+       "description": "The ID of the file.",
+       "required": true,
+       "location": "path"
+      },
+      "propertyKey": {
+       "type": "string",
+       "description": "The key of the property.",
+       "required": true,
+       "location": "path"
+      },
+      "visibility": {
+       "type": "string",
+       "description": "The visibility of the property.",
+       "default": "private",
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "fileId",
+      "propertyKey"
+     ],
+     "response": {
+      "$ref": "Property"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/drive",
+      "https://www.googleapis.com/auth/drive.file",
+      "https://www.googleapis.com/auth/drive.metadata.readonly",
+      "https://www.googleapis.com/auth/drive.readonly"
+     ]
+    },
+    "insert": {
+     "id": "drive.properties.insert",
+     "path": "files/{fileId}/properties",
+     "httpMethod": "POST",
+     "description": "Adds a property to a file.",
+     "parameters": {
+      "fileId": {
+       "type": "string",
+       "description": "The ID of the file.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "fileId"
+     ],
+     "request": {
+      "$ref": "Property"
+     },
+     "response": {
+      "$ref": "Property"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/drive",
+      "https://www.googleapis.com/auth/drive.file"
+     ]
+    },
+    "list": {
+     "id": "drive.properties.list",
+     "path": "files/{fileId}/properties",
+     "httpMethod": "GET",
+     "description": "Lists a file's properties.",
+     "parameters": {
+      "fileId": {
+       "type": "string",
+       "description": "The ID of the file.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "fileId"
+     ],
+     "response": {
+      "$ref": "PropertyList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/drive",
+      "https://www.googleapis.com/auth/drive.file",
+      "https://www.googleapis.com/auth/drive.metadata.readonly",
+      "https://www.googleapis.com/auth/drive.readonly"
+     ]
+    },
+    "patch": {
+     "id": "drive.properties.patch",
+     "path": "files/{fileId}/properties/{propertyKey}",
+     "httpMethod": "PATCH",
+     "description": "Updates a property. This method supports patch semantics.",
+     "parameters": {
+      "fileId": {
+       "type": "string",
+       "description": "The ID of the file.",
+       "required": true,
+       "location": "path"
+      },
+      "propertyKey": {
+       "type": "string",
+       "description": "The key of the property.",
+       "required": true,
+       "location": "path"
+      },
+      "visibility": {
+       "type": "string",
+       "description": "The visibility of the property.",
+       "default": "private",
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "fileId",
+      "propertyKey"
+     ],
+     "request": {
+      "$ref": "Property"
+     },
+     "response": {
+      "$ref": "Property"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/drive",
+      "https://www.googleapis.com/auth/drive.file"
+     ]
+    },
+    "update": {
+     "id": "drive.properties.update",
+     "path": "files/{fileId}/properties/{propertyKey}",
+     "httpMethod": "PUT",
+     "description": "Updates a property.",
+     "parameters": {
+      "fileId": {
+       "type": "string",
+       "description": "The ID of the file.",
+       "required": true,
+       "location": "path"
+      },
+      "propertyKey": {
+       "type": "string",
+       "description": "The key of the property.",
+       "required": true,
+       "location": "path"
+      },
+      "visibility": {
+       "type": "string",
+       "description": "The visibility of the property.",
+       "default": "private",
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "fileId",
+      "propertyKey"
+     ],
+     "request": {
+      "$ref": "Property"
+     },
+     "response": {
+      "$ref": "Property"
      },
      "scopes": [
       "https://www.googleapis.com/auth/drive",

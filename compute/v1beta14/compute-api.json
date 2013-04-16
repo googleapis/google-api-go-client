@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"-vXktEC13RBC5q_wkxEsszrjKM4/_LGxch8ishx1HOf9ujuZ5CuoV_A\"",
+ "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/oevN_ASggY2gGMx4cIcfSGCphwo\"",
  "discoveryVersion": "v1",
  "id": "compute:v1beta14",
  "name": "compute",
  "version": "v1beta14",
- "revision": "20130301",
+ "revision": "20130306",
  "title": "Compute Engine API",
  "description": "API for the Google Compute Engine service.",
  "icons": {
@@ -1579,6 +1579,7 @@
       "$ref": "Disk"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
     },
@@ -1670,6 +1671,7 @@
       "$ref": "DiskList"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
     }
@@ -1738,6 +1740,7 @@
       "$ref": "Firewall"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
     },
@@ -1808,6 +1811,7 @@
       "$ref": "FirewallList"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
     },
@@ -1943,6 +1947,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
     },
@@ -1986,6 +1991,7 @@
       "$ref": "OperationList"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
     }
@@ -2089,6 +2095,7 @@
       "$ref": "Image"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
     },
@@ -2160,6 +2167,7 @@
       "$ref": "ImageList"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
     }
@@ -2439,6 +2447,7 @@
       "$ref": "Instance"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
     },
@@ -2479,6 +2488,7 @@
       "$ref": "SerialPortOutput"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
     },
@@ -2565,6 +2575,7 @@
       "$ref": "InstanceList"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
     },
@@ -2687,6 +2698,7 @@
       "$ref": "Kernel"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
     },
@@ -2730,6 +2742,7 @@
       "$ref": "KernelList"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
     }
@@ -2766,6 +2779,7 @@
       "$ref": "MachineType"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
     },
@@ -2809,6 +2823,7 @@
       "$ref": "MachineTypeList"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
     }
@@ -2877,6 +2892,7 @@
       "$ref": "Network"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
     },
@@ -2947,6 +2963,7 @@
       "$ref": "NetworkList"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
     }
@@ -2975,6 +2992,7 @@
       "$ref": "Project"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
     },
@@ -3070,6 +3088,7 @@
       "$ref": "Snapshot"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
     },
@@ -3140,6 +3159,7 @@
       "$ref": "SnapshotList"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
     }
@@ -3221,6 +3241,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
     },
@@ -3272,6 +3293,7 @@
       "$ref": "OperationList"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
     }
@@ -3308,6 +3330,7 @@
       "$ref": "Zone"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
     },
@@ -3351,6 +3374,7 @@
       "$ref": "ZoneList"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
     }

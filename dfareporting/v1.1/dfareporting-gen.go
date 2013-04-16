@@ -282,7 +282,8 @@ type FileList struct {
 type Recipient struct {
 	// DeliveryType: The delivery type for the recipient, one of:
 	// -
-	// "ATTACHMENT"  (support for additional options will be added later)
+	// "ATTACHMENT"
+	// - "LINK"
 	DeliveryType string `json:"deliveryType,omitempty"`
 
 	// Email: The email address of the recipient.
@@ -455,8 +456,8 @@ type ReportDelivery struct {
 
 	// EmailOwnerDeliveryType: The type of delivery for the owner to
 	// receive, if enabled. One of:
-	// - "ATTACHMENT"  (support for
-	// additional options will be added later)
+	// - "ATTACHMENT"
+	// - "LINK"
 	EmailOwnerDeliveryType string `json:"emailOwnerDeliveryType,omitempty"`
 
 	// Message: The message to be sent with each email.

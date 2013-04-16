@@ -1,6 +1,6 @@
-// Package webfonts provides access to the Google Web Fonts Developer API.
+// Package webfonts provides access to the Google Fonts Developer API.
 //
-// See http://code.google.com/apis/webfonts/docs/developer_api.html
+// See https://developers.google.com/fonts/docs/developer_api
 //
 // Usage example:
 //
@@ -59,14 +59,28 @@ type Webfont struct {
 	// Family: The name of the font.
 	Family interface{} `json:"family,omitempty"`
 
+	// Files: The font files (with all supported scripts) for each one of
+	// the available variants.
+	Files *WebfontFiles `json:"files,omitempty"`
+
 	// Kind: This kind represents a webfont object in the webfonts service.
 	Kind string `json:"kind,omitempty"`
+
+	// LastModified: The date (format "yyyy-MM-dd") the font was modified
+	// for the last time.
+	LastModified interface{} `json:"lastModified,omitempty"`
 
 	// Subsets: The scripts supported by the font.
 	Subsets interface{} `json:"subsets,omitempty"`
 
 	// Variants: The available variants for the font.
 	Variants interface{} `json:"variants,omitempty"`
+
+	// Version: The font version.
+	Version interface{} `json:"version,omitempty"`
+}
+
+type WebfontFiles struct {
 }
 
 type WebfontList struct {
@@ -85,7 +99,7 @@ type WebfontsListCall struct {
 	opt_ map[string]interface{}
 }
 
-// List: Retrieves the list of fonts currently served by the Google Web
+// List: Retrieves the list of fonts currently served by the Google
 // Fonts Developer API
 func (r *WebfontsService) List() *WebfontsListCall {
 	c := &WebfontsListCall{s: r.s, opt_: make(map[string]interface{})}
@@ -122,7 +136,7 @@ func (c *WebfontsListCall) Do() (*WebfontList, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves the list of fonts currently served by the Google Web Fonts Developer API",
+	//   "description": "Retrieves the list of fonts currently served by the Google Fonts Developer API",
 	//   "httpMethod": "GET",
 	//   "id": "webfonts.webfonts.list",
 	//   "parameters": {

@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"-vXktEC13RBC5q_wkxEsszrjKM4/YG5xELnARaG4eUTdxJ1VwuDIQzA\"",
+ "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/FwUbYZ1HxhUxMqyAuFUXlQjngA0\"",
  "discoveryVersion": "v1",
  "id": "siteVerification:v1",
  "name": "siteVerification",

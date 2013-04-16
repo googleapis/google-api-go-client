@@ -57,6 +57,7 @@ func New(client *http.Client) (*Service, error) {
 	s.Events = &EventsService{s: s}
 	s.Freebusy = &FreebusyService{s: s}
 	s.Settings = &SettingsService{s: s}
+	s.Subscriptions = &SubscriptionsService{s: s}
 	return s, nil
 }
 
@@ -76,6 +77,8 @@ type Service struct {
 	Freebusy *FreebusyService
 
 	Settings *SettingsService
+
+	Subscriptions *SubscriptionsService
 }
 
 type AclService struct {
@@ -103,6 +106,10 @@ type FreebusyService struct {
 }
 
 type SettingsService struct {
+	s *Service
+}
+
+type SubscriptionsService struct {
 	s *Service
 }
 
@@ -436,6 +443,7 @@ type Event struct {
 
 	// PrivateCopy: Whether this is a private event copy where changes are
 	// not shared with other copies on other calendars. Optional. Immutable.
+	// The default is False.
 	PrivateCopy bool `json:"privateCopy,omitempty"`
 
 	// Recurrence: List of RRULE, EXRULE, RDATE and EXDATE lines for a
@@ -453,6 +461,12 @@ type Event struct {
 
 	// Sequence: Sequence number as per iCalendar.
 	Sequence int64 `json:"sequence,omitempty"`
+
+	// Source: Source of an event from which it was created; for example a
+	// web page, an email message or any document identifiable by an URL
+	// using HTTP/HTTPS protocol. Accessible only by the creator of the
+	// event.
+	Source *EventSource `json:"source,omitempty"`
 
 	// Start: The (inclusive) start time of the event. For a recurring
 	// event, this is the start time of the first instance.
@@ -585,6 +599,16 @@ type EventReminders struct {
 	// UseDefault: Whether the default reminders of the calendar apply to
 	// the event.
 	UseDefault bool `json:"useDefault,omitempty"`
+}
+
+type EventSource struct {
+	// Title: Title of the source; for example a title of a web page or an
+	// email subject.
+	Title string `json:"title,omitempty"`
+
+	// Url: URL of the source pointing to a resource. URL's protocol must be
+	// HTTP or HTTPS.
+	Url string `json:"url,omitempty"`
 }
 
 type EventAttendee struct {
@@ -808,6 +832,44 @@ type Settings struct {
 
 	// Kind: Type of the collection ("calendar#settings").
 	Kind string `json:"kind,omitempty"`
+}
+
+type Subscription struct {
+	// Address: The address of the receiving entity where notifications are
+	// delivered. Specific to the channel mechanism.
+	Address string `json:"address,omitempty"`
+
+	// Channel: The delivery channel mechanism to use for notifications
+	Channel string `json:"channel,omitempty"`
+
+	// ChannelParams: Additional parameters controlling delivery channel
+	// behavior
+	ChannelParams *SubscriptionChannelParams `json:"channelParams,omitempty"`
+
+	// ClientToken: An arbitrary string associated with the subscription
+	// that is delivered to the target address with each notification for
+	// this subscription.
+	ClientToken string `json:"clientToken,omitempty"`
+
+	// Expiration: The expiration instant for this subscription if it is
+	// defined.
+	Expiration int64 `json:"expiration,omitempty,string"`
+
+	// Id: A UUID for the subscription
+	Id string `json:"id,omitempty"`
+
+	// Kind: A subscription to an API resource
+	Kind string `json:"kind,omitempty"`
+
+	// TopicId: An opaque topic id that identifies the backend resource
+	// which has been subscribed to. Stable across different API versions
+	TopicId string `json:"topicId,omitempty"`
+
+	// TopicUri: The canonicalized URI of the subscribed-to resource.
+	TopicUri string `json:"topicUri,omitempty"`
+}
+
+type SubscriptionChannelParams struct {
 }
 
 type TimePeriod struct {
@@ -2887,7 +2949,7 @@ func (c *EventsListCall) Q(q string) *EventsListCall {
 // result. Cancelled instances of recurring events (but not the
 // underlying recurring event) will still be included if 'showDeleted'
 // and 'singleEvents' are both False. If 'showDeleted' and
-// 'singleEvents' are both True only single instances of deleted events
+// 'singleEvents' are both True, only single instances of deleted events
 // (but not the underlying recurring events) are returned.  The default
 // is False.
 func (c *EventsListCall) ShowDeleted(showDeleted bool) *EventsListCall {
@@ -3068,7 +3130,7 @@ func (c *EventsListCall) Do() (*Events, error) {
 	//       "type": "string"
 	//     },
 	//     "showDeleted": {
-	//       "description": "Whether to include deleted events (with 'status' equals 'cancelled') in the result. Cancelled instances of recurring events (but not the underlying recurring event) will still be included if 'showDeleted' and 'singleEvents' are both False. If 'showDeleted' and 'singleEvents' are both True only single instances of deleted events (but not the underlying recurring events) are returned. Optional. The default is False.",
+	//       "description": "Whether to include deleted events (with 'status' equals 'cancelled') in the result. Cancelled instances of recurring events (but not the underlying recurring event) will still be included if 'showDeleted' and 'singleEvents' are both False. If 'showDeleted' and 'singleEvents' are both True, only single instances of deleted events (but not the underlying recurring events) are returned. Optional. The default is False.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -3745,6 +3807,58 @@ func (c *SettingsListCall) Do() (*Settings, error) {
 	//   "path": "users/me/settings",
 	//   "response": {
 	//     "$ref": "Settings"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/calendar",
+	//     "https://www.googleapis.com/auth/calendar.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "calendar.subscriptions.unsubscribe":
+
+type SubscriptionsUnsubscribeCall struct {
+	s            *Service
+	subscription *Subscription
+	opt_         map[string]interface{}
+}
+
+// Unsubscribe:
+func (r *SubscriptionsService) Unsubscribe(subscription *Subscription) *SubscriptionsUnsubscribeCall {
+	c := &SubscriptionsUnsubscribeCall{s: r.s, opt_: make(map[string]interface{})}
+	c.subscription = subscription
+	return c
+}
+
+func (c *SubscriptionsUnsubscribeCall) Do() error {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.subscription)
+	if err != nil {
+		return err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "subscriptions/unsubscribe")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "httpMethod": "POST",
+	//   "id": "calendar.subscriptions.unsubscribe",
+	//   "path": "subscriptions/unsubscribe",
+	//   "request": {
+	//     "$ref": "Subscription"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/calendar",

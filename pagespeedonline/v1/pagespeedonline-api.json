@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"-vXktEC13RBC5q_wkxEsszrjKM4/6-BFiu68A96TLwM7VIrcHdw1dCU\"",
+ "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/aELXXL8IOLrFeQLBHl9LnAjH468\"",
  "discoveryVersion": "v1",
  "id": "pagespeedonline:v1",
  "name": "pagespeedonline",
  "version": "v1",
- "revision": "20120827",
+ "revision": "20130321",
  "title": "Page Speed Online API",
  "description": "Lets you analyze the performance of a web page and get tailored suggestions to make that page faster.",
  "icons": {
@@ -302,6 +302,31 @@
      "description": "The Page Speed Score (0-100), which indicates how much faster a page could be. A high score indicates little room for improvement, while a lower score indicates more room for improvement.",
      "format": "int32"
     },
+    "screenshot": {
+     "type": "object",
+     "description": "Base64 encoded screenshot of the page that was analyzed.",
+     "properties": {
+      "data": {
+       "type": "string",
+       "description": "Image data base64 encoded.",
+       "format": "byte"
+      },
+      "height": {
+       "type": "integer",
+       "description": "Height of screenshot in pixels.",
+       "format": "int32"
+      },
+      "mime_type": {
+       "type": "string",
+       "description": "Mime type of image data. E.g. \"image/jpeg\"."
+      },
+      "width": {
+       "type": "integer",
+       "description": "Width of screenshot in pixels.",
+       "format": "int32"
+      }
+     }
+    },
     "title": {
      "type": "string",
      "description": "Title of the page, as displayed in the browser's title bar."
@@ -345,6 +370,12 @@
        "description": "A Page Speed rule to run; if none are given, all rules are run",
        "pattern": "[a-zA-Z]+",
        "repeated": true,
+       "location": "query"
+      },
+      "screenshot": {
+       "type": "boolean",
+       "description": "Indicates if binary data containing a screenshot should be included",
+       "default": "false",
        "location": "query"
       },
       "strategy": {

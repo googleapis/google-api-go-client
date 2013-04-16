@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"-vXktEC13RBC5q_wkxEsszrjKM4/WX03ZewQxfF2XWOwzKkIKbyKtY4\"",
+ "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/NcpqpQFvQq81G4OS9ycWZXCV2iE\"",
  "discoveryVersion": "v1",
  "id": "coordinate:v1",
  "name": "coordinate",
  "version": "v1",
- "revision": "20121205",
+ "revision": "20130326",
  "title": "Google Maps Coordinate API",
  "description": "Lets you view and manage jobs in a Coordinate team.",
  "icons": {
@@ -338,10 +338,6 @@
      "type": "string",
      "description": "A token to provide to get the next page of results."
     },
-    "pageInfo": {
-     "$ref": "PageInfo",
-     "description": "General pagination information."
-    },
     "tokenPagination": {
      "$ref": "TokenPagination",
      "description": "Pagination information for token pagination."
@@ -377,33 +373,6 @@
      "type": "number",
      "description": "Longitude.",
      "format": "double"
-    }
-   }
-  },
-  "PageInfo": {
-   "id": "PageInfo",
-   "type": "object",
-   "description": "Page information.",
-   "properties": {
-    "kind": {
-     "type": "string",
-     "description": "Identifies this object as page information.",
-     "default": "coordinate#pageInfo"
-    },
-    "resultPerPage": {
-     "type": "integer",
-     "description": "Number of results per page.",
-     "format": "int32"
-    },
-    "startIndex": {
-     "type": "integer",
-     "description": "Page start index.",
-     "format": "int32"
-    },
-    "totalResults": {
-     "type": "integer",
-     "description": "Number of results available.",
-     "format": "int32"
     }
    }
   },

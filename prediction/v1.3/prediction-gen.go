@@ -38,8 +38,14 @@ const basePath = "https://www.googleapis.com/prediction/v1.3/"
 
 // OAuth2 scopes used by this API.
 const (
+	// Manage your data and permissions in Google Cloud Storage
+	DevstorageFull_controlScope = "https://www.googleapis.com/auth/devstorage.full_control"
+
 	// View your data in Google Cloud Storage
 	DevstorageRead_onlyScope = "https://www.googleapis.com/auth/devstorage.read_only"
+
+	// Manage your data in Google Cloud Storage
+	DevstorageRead_writeScope = "https://www.googleapis.com/auth/devstorage.read_write"
 
 	// Manage your data in the Google Prediction API
 	PredictionScope = "https://www.googleapis.com/auth/prediction"
@@ -435,7 +441,9 @@ func (c *TrainingInsertCall) Do() (*Training, error) {
 	//     "$ref": "Training"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/devstorage.full_control",
 	//     "https://www.googleapis.com/auth/devstorage.read_only",
+	//     "https://www.googleapis.com/auth/devstorage.read_write",
 	//     "https://www.googleapis.com/auth/prediction"
 	//   ]
 	// }

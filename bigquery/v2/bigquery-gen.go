@@ -266,6 +266,9 @@ type GetQueryResultsResponse struct {
 	// Kind: The resource type of the response.
 	Kind string `json:"kind,omitempty"`
 
+	// PageToken: A token used for paging results.
+	PageToken string `json:"pageToken,omitempty"`
+
 	// Rows: An object with as many results as can be contained within the
 	// maximum permitted reply size. To get any additional rows, you can
 	// call GetQueryResults and specify the jobReference returned above.
@@ -316,6 +319,12 @@ type JobConfiguration struct {
 	// Copy: [Pick one] Copies a table.
 	Copy *JobConfigurationTableCopy `json:"copy,omitempty"`
 
+	// DryRun: [Optional] If set, don't actually run this job. A valid query
+	// will return a mostly empty response with some processing statistics,
+	// while an invalid query will return the same error it would if it
+	// wasn't a dry run. Behavior of non-query jobs is undefined.
+	DryRun bool `json:"dryRun,omitempty"`
+
 	// Extract: [Pick one] Configures an extract job.
 	Extract *JobConfigurationExtract `json:"extract,omitempty"`
 
@@ -324,10 +333,6 @@ type JobConfiguration struct {
 
 	// Load: [Pick one] Configures a load job.
 	Load *JobConfigurationLoad `json:"load,omitempty"`
-
-	// Properties: [Optional] Properties providing extra details about how
-	// the job should be run. Not used for most jobs.
-	Properties *JobConfigurationProperties `json:"properties,omitempty"`
 
 	// Query: [Pick one] Configures a query job.
 	Query *JobConfigurationQuery `json:"query,omitempty"`
@@ -463,9 +468,6 @@ type JobConfigurationLoad struct {
 	// 'duplicate' error is returned in the job result. Creation, truncation
 	// and append actions occur as one atomic update upon job completion.
 	WriteDisposition string `json:"writeDisposition,omitempty"`
-}
-
-type JobConfigurationProperties struct {
 }
 
 type JobConfigurationQuery struct {
@@ -667,6 +669,9 @@ type ProjectListProjects struct {
 	// Kind: The resource type.
 	Kind string `json:"kind,omitempty"`
 
+	// NumericId: The numeric ID of this project.
+	NumericId uint64 `json:"numericId,omitempty,string"`
+
 	// ProjectReference: A unique reference to this project.
 	ProjectReference *ProjectReference `json:"projectReference,omitempty"`
 }
@@ -738,6 +743,9 @@ type QueryResponse struct {
 	// Kind: The resource type.
 	Kind string `json:"kind,omitempty"`
 
+	// PageToken: A token used for paging results.
+	PageToken string `json:"pageToken,omitempty"`
+
 	// Rows: An object with as many results as can be contained within the
 	// maximum permitted reply size. To get any additional rows, you can
 	// call GetQueryResults and specify the jobReference returned above.
@@ -746,6 +754,11 @@ type QueryResponse struct {
 	// Schema: The schema of the results. Present only when the query
 	// completes successfully.
 	Schema *TableSchema `json:"schema,omitempty"`
+
+	// TotalBytesProcessed: The total number of bytes processed for this
+	// query. If this query was a dry run, this is the number of bytes that
+	// would be processed if the query were run.
+	TotalBytesProcessed int64 `json:"totalBytesProcessed,omitempty,string"`
 
 	// TotalRows: The total number of rows in the complete query result set,
 	// which can be more than the number of rows in this single page of
@@ -1487,6 +1500,13 @@ func (c *JobsGetQueryResultsCall) MaxResults(maxResults int64) *JobsGetQueryResu
 	return c
 }
 
+// PageToken sets the optional parameter "pageToken": Page token,
+// returned by a previous call, to request the next page of results
+func (c *JobsGetQueryResultsCall) PageToken(pageToken string) *JobsGetQueryResultsCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
 // StartIndex sets the optional parameter "startIndex": Zero-based index
 // of the starting row
 func (c *JobsGetQueryResultsCall) StartIndex(startIndex uint64) *JobsGetQueryResultsCall {
@@ -1509,6 +1529,9 @@ func (c *JobsGetQueryResultsCall) Do() (*GetQueryResultsResponse, error) {
 	params.Set("alt", "json")
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["startIndex"]; ok {
 		params.Set("startIndex", fmt.Sprintf("%v", v))
@@ -1554,6 +1577,11 @@ func (c *JobsGetQueryResultsCall) Do() (*GetQueryResultsResponse, error) {
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Page token, returned by a previous call, to request the next page of results",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "projectId": {
 	//       "description": "Project ID of the query job",

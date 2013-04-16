@@ -38,6 +38,9 @@ const basePath = "https://www.googleapis.com/youtube/analytics/v1/"
 
 // OAuth2 scopes used by this API.
 const (
+	// View YouTube Analytics monetary reports for your YouTube content
+	YtAnalyticsMonetaryReadonlyScope = "https://www.googleapis.com/auth/yt-analytics-monetary.readonly"
+
 	// View YouTube Analytics reports for your YouTube content
 	YtAnalyticsReadonlyScope = "https://www.googleapis.com/auth/yt-analytics.readonly"
 )
@@ -287,6 +290,7 @@ func (c *ReportsQueryCall) Do() (*ResultTable, error) {
 	//     "$ref": "ResultTable"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/yt-analytics-monetary.readonly",
 	//     "https://www.googleapis.com/auth/yt-analytics.readonly"
 	//   ]
 	// }

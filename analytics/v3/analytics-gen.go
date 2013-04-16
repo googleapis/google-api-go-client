@@ -331,6 +331,210 @@ type DailyUploads struct {
 	Username string `json:"username,omitempty"`
 }
 
+type Experiment struct {
+	// AccountId: Account ID to which this experiment belongs. This field is
+	// read-only.
+	AccountId string `json:"accountId,omitempty"`
+
+	// Created: Time the experiment was created. This field is read-only.
+	Created string `json:"created,omitempty"`
+
+	// Description: Notes about this experiment.
+	Description string `json:"description,omitempty"`
+
+	// EditableInGaUi: If true, the end user will be able to edit the
+	// experiment via the Google Analytics user interface.
+	EditableInGaUi interface{} `json:"editableInGaUi,omitempty"`
+
+	// EndTime: The ending time of the experiment (the time the status
+	// changed from RUNNING to ENDED). This field is present only if the
+	// experiment has ended. This field is read-only.
+	EndTime string `json:"endTime,omitempty"`
+
+	// Id: Experiment ID. Required for patch and update. Disallowed for
+	// create.
+	Id string `json:"id,omitempty"`
+
+	// InternalWebPropertyId: Internal ID for the web property to which this
+	// experiment belongs. This field is read-only.
+	InternalWebPropertyId string `json:"internalWebPropertyId,omitempty"`
+
+	// Kind: Resource type for an Analytics experiment. This field is
+	// read-only.
+	Kind string `json:"kind,omitempty"`
+
+	// MinimumExperimentLengthInDays: Specifies the minimum length of the
+	// experiment. Can be changed for a running experiment. This field may
+	// not be changed for an experiments whose status is ENDED.
+	MinimumExperimentLengthInDays int64 `json:"minimumExperimentLengthInDays,omitempty"`
+
+	// Name: Experiment name. This field may not be changed for an
+	// experiment whose status is ENDED. This field is required when
+	// creating an experiment.
+	Name string `json:"name,omitempty"`
+
+	// ObjectiveMetric: The metric that the experiment is optimizing. Valid
+	// values: "ga:goal(n)Completions", "ga:bounces", "ga:pageviews",
+	// "ga:timeOnSite", "ga:transactions", "ga:transactionRevenue". This
+	// field is required if status is "RUNNING" and servingFramework is one
+	// of "REDIRECT" or "API".
+	ObjectiveMetric string `json:"objectiveMetric,omitempty"`
+
+	// OptimizationType: Whether the objectiveMetric should be minimized or
+	// maximized. Possible values: "MAXIMUM", "MINIMUM". Optional--defaults
+	// to "MAXIMUM". Cannot be specified without objectiveMetric. Cannot be
+	// modified when status is "RUNNING" or "ENDED".
+	OptimizationType string `json:"optimizationType,omitempty"`
+
+	// ParentLink: Parent link for an experiment. Points to the profile to
+	// which this experiment belongs.
+	ParentLink *ExperimentParentLink `json:"parentLink,omitempty"`
+
+	// ProfileId: Profile ID to which this experiment belongs. This field is
+	// read-only.
+	ProfileId string `json:"profileId,omitempty"`
+
+	// ReasonExperimentEnded: Why the experiment ended. Possible values:
+	// "STOPPED_BY_USER", "WINNER_FOUND", "EXPERIMENT_EXPIRED",
+	// "ENDED_WITH_NO_WINNER", "GOAL_OBJECTIVE_CHANGED".
+	// "ENDED_WITH_NO_WINNER" means that the experiment didn't expire but no
+	// winner was projected to be found. If the experiment status is changed
+	// via the API to ENDED this field is set to STOPPED_BY_USER. This field
+	// is read-only.
+	ReasonExperimentEnded string `json:"reasonExperimentEnded,omitempty"`
+
+	// RewriteVariationUrlsAsOriginal: Boolean specifying whether variations
+	// URLS are rewritten to match those of the original. This field may not
+	// be changed for an experiments whose status is ENDED.
+	RewriteVariationUrlsAsOriginal bool `json:"rewriteVariationUrlsAsOriginal,omitempty"`
+
+	// SelfLink: Link for this experiment. This field is read-only.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// ServingFramework: The framework used to serve the experiment
+	// variations and evaluate the results. One of:
+	// - REDIRECT: Google
+	// Analytics redirects traffic to different variation pages, reports the
+	// chosen variation and evaluates the results.
+	// - API: Google Analytics
+	// chooses and reports the variation to serve and evaluates the results;
+	// the caller is responsible for serving the selected variation.
+	// -
+	// EXTERNAL: The variations will be served externally and the chosen
+	// variation reported to Google Analytics. The caller is responsible for
+	// serving the selected variation and evaluating the results.
+	ServingFramework interface{} `json:"servingFramework,omitempty"`
+
+	// Snippet: The snippet of code to include on the control page(s). This
+	// field is read-only.
+	Snippet string `json:"snippet,omitempty"`
+
+	// StartTime: The starting time of the experiment (the time the status
+	// changed from READY_TO_RUN to RUNNING). This field is present only if
+	// the experiment has started. This field is read-only.
+	StartTime string `json:"startTime,omitempty"`
+
+	// Status: Experiment status. Possible values: "DRAFT", "READY_TO_RUN",
+	// "RUNNING", "ENDED". Experiments can be created in the "DRAFT",
+	// "READY_TO_RUN" or "RUNNING" state. This field is required when
+	// creating an experiment.
+	Status string `json:"status,omitempty"`
+
+	// TrafficCoverage: A floating-point number between 0 and 1. Specifies
+	// the fraction of the traffic that participates in the experiment. Can
+	// be changed for a running experiment. This field may not be changed
+	// for an experiments whose status is ENDED.
+	TrafficCoverage float64 `json:"trafficCoverage,omitempty"`
+
+	// Updated: Time the experiment was last modified. This field is
+	// read-only.
+	Updated string `json:"updated,omitempty"`
+
+	// Variations: Array of variations. The first variation in the array is
+	// the original. The number of variations may not change once an
+	// experiment is in the RUNNING state. At least two variations are
+	// required before status can be set to RUNNING.
+	Variations []*ExperimentVariations `json:"variations,omitempty"`
+
+	// WebPropertyId: Web property ID to which this experiment belongs. The
+	// web property ID is of the form UA-XXXXX-YY. This field is read-only.
+	WebPropertyId string `json:"webPropertyId,omitempty"`
+
+	// WinnerConfidenceLevel: A floating-point number between 0 and 1.
+	// Specifies the necessary confidence level to choose a winner. This
+	// field may not be changed for an experiments whose status is ENDED.
+	WinnerConfidenceLevel float64 `json:"winnerConfidenceLevel,omitempty"`
+
+	// WinnerFound: Boolean specifying whether a winner has been found for
+	// this experiment. This field is read-only.
+	WinnerFound bool `json:"winnerFound,omitempty"`
+}
+
+type ExperimentParentLink struct {
+	// Href: Link to the profile to which this experiment belongs. This
+	// field is read-only.
+	Href string `json:"href,omitempty"`
+
+	// Type: Value is "analytics#profile". This field is read-only.
+	Type string `json:"type,omitempty"`
+}
+
+type ExperimentVariations struct {
+	// Name: The name of the variation. This field is required when creating
+	// an experiment. This field may not be changed for an experiment whose
+	// status is ENDED.
+	Name string `json:"name,omitempty"`
+
+	// Status: Status of the variation. Possible values: "ACTIVE",
+	// "INACTIVE". INACTIVE variations are not served. This field may not be
+	// changed for an experiment whose status is ENDED.
+	Status string `json:"status,omitempty"`
+
+	// Url: The URL of the variation. This field may not be changed for an
+	// experiment whose status is RUNNING or ENDED.
+	Url string `json:"url,omitempty"`
+
+	// Weight: Weight that this variation should receive. Only present if
+	// the experiment is running. This field is read-only.
+	Weight float64 `json:"weight,omitempty"`
+
+	// Won: True if the experiment has ended and this variation performed
+	// (statistically) significantly better than the original. This field is
+	// read-only.
+	Won bool `json:"won,omitempty"`
+}
+
+type Experiments struct {
+	// Items: A list of experiments.
+	Items []*Experiment `json:"items,omitempty"`
+
+	// ItemsPerPage: The maximum number of resources the response can
+	// contain, regardless of the actual number of resources returned. Its
+	// value ranges from 1 to 1000 with a value of 1000 by default, or
+	// otherwise specified by the max-results query parameter.
+	ItemsPerPage int64 `json:"itemsPerPage,omitempty"`
+
+	// Kind: Collection type.
+	Kind string `json:"kind,omitempty"`
+
+	// NextLink: Link to next page for this experiment collection.
+	NextLink string `json:"nextLink,omitempty"`
+
+	// PreviousLink: Link to previous page for this experiment collection.
+	PreviousLink string `json:"previousLink,omitempty"`
+
+	// StartIndex: The starting index of the resources, which is 1 by
+	// default or otherwise specified by the start-index query parameter.
+	StartIndex int64 `json:"startIndex,omitempty"`
+
+	// TotalResults: The total number of results for the query, regardless
+	// of the number of resources in the result.
+	TotalResults int64 `json:"totalResults,omitempty"`
+
+	// Username: Email ID of the authenticated user
+	Username string `json:"username,omitempty"`
+}
+
 type GaData struct {
 	// ColumnHeaders: Column headers that list dimension names followed by
 	// the metric names. The order of dimensions and metrics is same as

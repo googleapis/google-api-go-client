@@ -130,6 +130,9 @@ type Activity struct {
 	// "plus#activity".
 	Kind string `json:"kind,omitempty"`
 
+	// Location: The location where this activity occurred.
+	Location *Place `json:"location,omitempty"`
+
 	// Object: The object of this activity.
 	Object *ActivityObject `json:"object,omitempty"`
 
@@ -1103,6 +1106,33 @@ type PersonUrls struct {
 
 	// Value: The URL value.
 	Value string `json:"value,omitempty"`
+}
+
+type Place struct {
+	// Address: The physical address of the place.
+	Address *PlaceAddress `json:"address,omitempty"`
+
+	// DisplayName: The display name of the place.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Kind: Identifies this resource as a place. Value: "plus#place".
+	Kind string `json:"kind,omitempty"`
+
+	// Position: The position of the place.
+	Position *PlacePosition `json:"position,omitempty"`
+}
+
+type PlaceAddress struct {
+	// Formatted: The formatted address for display.
+	Formatted string `json:"formatted,omitempty"`
+}
+
+type PlacePosition struct {
+	// Latitude: The latitude of this position.
+	Latitude float64 `json:"latitude,omitempty"`
+
+	// Longitude: The longitude of this position.
+	Longitude float64 `json:"longitude,omitempty"`
 }
 
 type PlusAclentryResource struct {

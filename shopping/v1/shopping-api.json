@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"-vXktEC13RBC5q_wkxEsszrjKM4/Bs4Qq2Y7vuaqBU-qM8o3CRyRWOw\"",
+ "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/9xpcucVLjNrY44EBZOzWnp7hbl0\"",
  "discoveryVersion": "v1",
  "id": "shopping:v1",
  "name": "shopping",
  "version": "v1",
- "revision": "20130304",
+ "revision": "20130405",
  "title": "Search API For Shopping",
  "description": "Lets you search over product data.",
  "icons": {
@@ -677,6 +677,24 @@
      "description": "Google Internal.",
      "format": "double"
     },
+    "internal16": {
+     "type": "object",
+     "description": "Google Internal. Attribute names are deliberately vague.",
+     "properties": {
+      "length": {
+       "type": "integer",
+       "format": "int32"
+      },
+      "number": {
+       "type": "integer",
+       "format": "int32"
+      },
+      "size": {
+       "type": "string",
+       "format": "int64"
+      }
+     }
+    },
     "internal3": {
      "type": "string",
      "description": "Google Internal."
@@ -1071,11 +1089,6 @@
       "currency": {
        "type": "string",
        "description": "Currency restriction (ISO 4217)",
-       "location": "query"
-      },
-      "experimentId": {
-       "type": "string",
-       "description": "The Id of the experiment",
        "location": "query"
       },
       "extras.enabled": {

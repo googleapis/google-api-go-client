@@ -85,6 +85,9 @@ type Result struct {
 	// while a lower score indicates more room for improvement.
 	Score int64 `json:"score,omitempty"`
 
+	// Screenshot: Base64 encoded screenshot of the page that was analyzed.
+	Screenshot *ResultScreenshot `json:"screenshot,omitempty"`
+
 	// Title: Title of the page, as displayed in the browser's title bar.
 	Title string `json:"title,omitempty"`
 
@@ -156,6 +159,20 @@ type ResultPageStats struct {
 	TotalRequestBytes int64 `json:"totalRequestBytes,omitempty,string"`
 }
 
+type ResultScreenshot struct {
+	// Data: Image data base64 encoded.
+	Data string `json:"data,omitempty"`
+
+	// Height: Height of screenshot in pixels.
+	Height int64 `json:"height,omitempty"`
+
+	// Mime_type: Mime type of image data. E.g. "image/jpeg".
+	Mime_type string `json:"mime_type,omitempty"`
+
+	// Width: Width of screenshot in pixels.
+	Width int64 `json:"width,omitempty"`
+}
+
 type ResultVersion struct {
 	// Major: The major version number of the Page Speed SDK used to
 	// generate these results.
@@ -197,6 +214,13 @@ func (c *PagespeedapiRunpagespeedCall) Rule(rule string) *PagespeedapiRunpagespe
 	return c
 }
 
+// Screenshot sets the optional parameter "screenshot": Indicates if
+// binary data containing a screenshot should be included
+func (c *PagespeedapiRunpagespeedCall) Screenshot(screenshot bool) *PagespeedapiRunpagespeedCall {
+	c.opt_["screenshot"] = screenshot
+	return c
+}
+
 // Strategy sets the optional parameter "strategy": The analysis
 // strategy to use
 func (c *PagespeedapiRunpagespeedCall) Strategy(strategy string) *PagespeedapiRunpagespeedCall {
@@ -214,6 +238,9 @@ func (c *PagespeedapiRunpagespeedCall) Do() (*Result, error) {
 	}
 	if v, ok := c.opt_["rule"]; ok {
 		params.Set("rule", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["screenshot"]; ok {
+		params.Set("screenshot", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["strategy"]; ok {
 		params.Set("strategy", fmt.Sprintf("%v", v))
@@ -254,6 +281,12 @@ func (c *PagespeedapiRunpagespeedCall) Do() (*Result, error) {
 	//       "pattern": "[a-zA-Z]+",
 	//       "repeated": true,
 	//       "type": "string"
+	//     },
+	//     "screenshot": {
+	//       "default": "false",
+	//       "description": "Indicates if binary data containing a screenshot should be included",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     },
 	//     "strategy": {
 	//       "description": "The analysis strategy to use",

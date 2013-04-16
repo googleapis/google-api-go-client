@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"-vXktEC13RBC5q_wkxEsszrjKM4/HAnhgIXXpZhWFeMrKT8hlbfOE0Q\"",
+ "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/k_Hr9ZF4632j9aTZhFm_OYVbIVY\"",
  "discoveryVersion": "v1",
  "id": "bigquery:v2",
  "name": "bigquery",
  "version": "v2",
- "revision": "20130213",
+ "revision": "20130404",
  "title": "BigQuery API",
  "description": "A data platform for customers to create, manage, share and query data.",
  "icons": {
@@ -271,6 +271,10 @@
      "description": "The resource type of the response.",
      "default": "bigquery#getQueryResultsResponse"
     },
+    "pageToken": {
+     "type": "string",
+     "description": "A token used for paging results."
+    },
     "rows": {
      "type": "array",
      "description": "An object with as many results as can be contained within the maximum permitted reply size. To get any additional rows, you can call GetQueryResults and specify the jobReference returned above. Present only when the query completes successfully.",
@@ -336,6 +340,10 @@
      "$ref": "JobConfigurationTableCopy",
      "description": "[Pick one] Copies a table."
     },
+    "dryRun": {
+     "type": "boolean",
+     "description": "[Optional] If set, don't actually run this job. A valid query will return a mostly empty response with some processing statistics, while an invalid query will return the same error it would if it wasn't a dry run. Behavior of non-query jobs is undefined."
+    },
     "extract": {
      "$ref": "JobConfigurationExtract",
      "description": "[Pick one] Configures an extract job."
@@ -347,10 +355,6 @@
     "load": {
      "$ref": "JobConfigurationLoad",
      "description": "[Pick one] Configures a load job."
-    },
-    "properties": {
-     "$ref": "JobConfigurationProperties",
-     "description": "[Optional] Properties providing extra details about how the job should be run. Not used for most jobs."
     },
     "query": {
      "$ref": "JobConfigurationQuery",
@@ -474,14 +478,6 @@
      "type": "string",
      "description": "[Optional] Specifies the action that occurs if the destination table already exists. Each action is atomic and only occurs if BigQuery is able to fully load the data and the load job completes without error. The following values are supported: WRITE_TRUNCATE: If the table already exists, BigQuery overwrites the table. WRITE_APPEND: If the table already exists, BigQuery appends the data to the table. WRITE_EMPTY: If the table already exists, a 'duplicate' error is returned in the job result. Creation, truncation and append actions occur as one atomic update upon job completion."
     }
-   }
-  },
-  "JobConfigurationProperties": {
-   "id": "JobConfigurationProperties",
-   "type": "object",
-   "additionalProperties": {
-    "type": "string",
-    "description": "Key-value property pairs."
    }
   },
   "JobConfigurationQuery": {
@@ -757,6 +753,11 @@
         "description": "The resource type.",
         "default": "bigquery#project"
        },
+       "numericId": {
+        "type": "string",
+        "description": "The numeric ID of this project.",
+        "format": "uint64"
+       },
        "projectReference": {
         "$ref": "ProjectReference",
         "description": "A unique reference to this project."
@@ -840,6 +841,10 @@
      "description": "The resource type.",
      "default": "bigquery#queryResponse"
     },
+    "pageToken": {
+     "type": "string",
+     "description": "A token used for paging results."
+    },
     "rows": {
      "type": "array",
      "description": "An object with as many results as can be contained within the maximum permitted reply size. To get any additional rows, you can call GetQueryResults and specify the jobReference returned above.",
@@ -850,6 +855,11 @@
     "schema": {
      "$ref": "TableSchema",
      "description": "The schema of the results. Present only when the query completes successfully."
+    },
+    "totalBytesProcessed": {
+     "type": "string",
+     "description": "The total number of bytes processed for this query. If this query was a dry run, this is the number of bytes that would be processed if the query were run.",
+     "format": "int64"
     },
     "totalRows": {
      "type": "string",
@@ -1339,6 +1349,11 @@
        "type": "integer",
        "description": "Maximum number of results to read",
        "format": "uint32",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Page token, returned by a previous call, to request the next page of results",
        "location": "query"
       },
       "projectId": {

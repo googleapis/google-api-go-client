@@ -1,18 +1,18 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"-vXktEC13RBC5q_wkxEsszrjKM4/q03i16qcwHr1-zUMI_XxU3jXwjA\"",
+ "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/WDEGka5nT0HAjoC0Qqxn1-bqOHA\"",
  "discoveryVersion": "v1",
  "id": "taskqueue:v1beta2",
  "name": "taskqueue",
  "version": "v1beta2",
- "revision": "20120501",
+ "revision": "20130318",
  "title": "TaskQueue API",
  "description": "Lets you access a Google App Engine Pull Task Queue over REST.",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/app_engine-16.png",
   "x32": "http://www.google.com/images/icons/product/app_engine-32.png"
  },
- "documentationLink": "http://code.google.com/appengine/docs/python/taskqueue/rest.html",
+ "documentationLink": "https://developers.google.com/appengine/docs/python/taskqueue/rest",
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/taskqueue/v1beta2/projects/",
  "basePath": "/taskqueue/v1beta2/projects/",
@@ -107,6 +107,11 @@
     "queueName": {
      "type": "string",
      "description": "Name of the queue that the task is in."
+    },
+    "retry_count": {
+     "type": "integer",
+     "description": "The number of leases applied to this task.",
+     "format": "int32"
     },
     "tag": {
      "type": "string",

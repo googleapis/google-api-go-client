@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"-vXktEC13RBC5q_wkxEsszrjKM4/zs8ouxPuDoxiCshrHnMm6UJ4-dw\"",
+ "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/g1rixLDE2HWw-CGsC4FfvWsySNI\"",
  "discoveryVersion": "v1",
  "id": "analytics:v3",
  "name": "analytics",
  "version": "v3",
- "revision": "20130205",
+ "revision": "20130403",
  "title": "Google Analytics API",
  "description": "View and manage your Google Analytics data",
  "icons": {
@@ -452,6 +452,236 @@
     "totalResults": {
      "type": "integer",
      "description": "The total number of results for the query, regardless of the number of results in the response.",
+     "format": "int32"
+    },
+    "username": {
+     "type": "string",
+     "description": "Email ID of the authenticated user"
+    }
+   }
+  },
+  "Experiment": {
+   "id": "Experiment",
+   "type": "object",
+   "description": "JSON template for Analytics experiment resource.",
+   "properties": {
+    "accountId": {
+     "type": "string",
+     "description": "Account ID to which this experiment belongs. This field is read-only."
+    },
+    "created": {
+     "type": "string",
+     "description": "Time the experiment was created. This field is read-only.",
+     "format": "date-time"
+    },
+    "description": {
+     "type": "string",
+     "description": "Notes about this experiment."
+    },
+    "editableInGaUi": {
+     "type": "any",
+     "description": "If true, the end user will be able to edit the experiment via the Google Analytics user interface."
+    },
+    "endTime": {
+     "type": "string",
+     "description": "The ending time of the experiment (the time the status changed from RUNNING to ENDED). This field is present only if the experiment has ended. This field is read-only.",
+     "format": "date-time"
+    },
+    "id": {
+     "type": "string",
+     "description": "Experiment ID. Required for patch and update. Disallowed for create.",
+     "annotations": {
+      "required": [
+       "analytics.management.experiments.patch",
+       "analytics.management.experiments.update"
+      ]
+     }
+    },
+    "internalWebPropertyId": {
+     "type": "string",
+     "description": "Internal ID for the web property to which this experiment belongs. This field is read-only."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Resource type for an Analytics experiment. This field is read-only.",
+     "default": "analytics#experiment"
+    },
+    "minimumExperimentLengthInDays": {
+     "type": "integer",
+     "description": "Specifies the minimum length of the experiment. Can be changed for a running experiment. This field may not be changed for an experiments whose status is ENDED.",
+     "format": "int32"
+    },
+    "name": {
+     "type": "string",
+     "description": "Experiment name. This field may not be changed for an experiment whose status is ENDED. This field is required when creating an experiment.",
+     "annotations": {
+      "required": [
+       "analytics.management.experiments.insert",
+       "analytics.management.experiments.update"
+      ]
+     }
+    },
+    "objectiveMetric": {
+     "type": "string",
+     "description": "The metric that the experiment is optimizing. Valid values: \"ga:goal(n)Completions\", \"ga:bounces\", \"ga:pageviews\", \"ga:timeOnSite\", \"ga:transactions\", \"ga:transactionRevenue\". This field is required if status is \"RUNNING\" and servingFramework is one of \"REDIRECT\" or \"API\"."
+    },
+    "optimizationType": {
+     "type": "string",
+     "description": "Whether the objectiveMetric should be minimized or maximized. Possible values: \"MAXIMUM\", \"MINIMUM\". Optional--defaults to \"MAXIMUM\". Cannot be specified without objectiveMetric. Cannot be modified when status is \"RUNNING\" or \"ENDED\"."
+    },
+    "parentLink": {
+     "type": "object",
+     "description": "Parent link for an experiment. Points to the profile to which this experiment belongs.",
+     "properties": {
+      "href": {
+       "type": "string",
+       "description": "Link to the profile to which this experiment belongs. This field is read-only."
+      },
+      "type": {
+       "type": "string",
+       "description": "Value is \"analytics#profile\". This field is read-only.",
+       "default": "analytics#profile"
+      }
+     }
+    },
+    "profileId": {
+     "type": "string",
+     "description": "Profile ID to which this experiment belongs. This field is read-only."
+    },
+    "reasonExperimentEnded": {
+     "type": "string",
+     "description": "Why the experiment ended. Possible values: \"STOPPED_BY_USER\", \"WINNER_FOUND\", \"EXPERIMENT_EXPIRED\", \"ENDED_WITH_NO_WINNER\", \"GOAL_OBJECTIVE_CHANGED\". \"ENDED_WITH_NO_WINNER\" means that the experiment didn't expire but no winner was projected to be found. If the experiment status is changed via the API to ENDED this field is set to STOPPED_BY_USER. This field is read-only."
+    },
+    "rewriteVariationUrlsAsOriginal": {
+     "type": "boolean",
+     "description": "Boolean specifying whether variations URLS are rewritten to match those of the original. This field may not be changed for an experiments whose status is ENDED."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "Link for this experiment. This field is read-only."
+    },
+    "servingFramework": {
+     "type": "any",
+     "description": "The framework used to serve the experiment variations and evaluate the results. One of:  \n- REDIRECT: Google Analytics redirects traffic to different variation pages, reports the chosen variation and evaluates the results.\n- API: Google Analytics chooses and reports the variation to serve and evaluates the results; the caller is responsible for serving the selected variation.\n- EXTERNAL: The variations will be served externally and the chosen variation reported to Google Analytics. The caller is responsible for serving the selected variation and evaluating the results."
+    },
+    "snippet": {
+     "type": "string",
+     "description": "The snippet of code to include on the control page(s). This field is read-only."
+    },
+    "startTime": {
+     "type": "string",
+     "description": "The starting time of the experiment (the time the status changed from READY_TO_RUN to RUNNING). This field is present only if the experiment has started. This field is read-only.",
+     "format": "date-time"
+    },
+    "status": {
+     "type": "string",
+     "description": "Experiment status. Possible values: \"DRAFT\", \"READY_TO_RUN\", \"RUNNING\", \"ENDED\". Experiments can be created in the \"DRAFT\", \"READY_TO_RUN\" or \"RUNNING\" state. This field is required when creating an experiment.",
+     "annotations": {
+      "required": [
+       "analytics.management.experiments.insert",
+       "analytics.management.experiments.update"
+      ]
+     }
+    },
+    "trafficCoverage": {
+     "type": "number",
+     "description": "A floating-point number between 0 and 1. Specifies the fraction of the traffic that participates in the experiment. Can be changed for a running experiment. This field may not be changed for an experiments whose status is ENDED.",
+     "format": "double"
+    },
+    "updated": {
+     "type": "string",
+     "description": "Time the experiment was last modified. This field is read-only.",
+     "format": "date-time"
+    },
+    "variations": {
+     "type": "array",
+     "description": "Array of variations. The first variation in the array is the original. The number of variations may not change once an experiment is in the RUNNING state. At least two variations are required before status can be set to RUNNING.",
+     "items": {
+      "type": "object",
+      "properties": {
+       "name": {
+        "type": "string",
+        "description": "The name of the variation. This field is required when creating an experiment. This field may not be changed for an experiment whose status is ENDED.",
+        "annotations": {
+         "required": [
+          "analytics.management.experiments.insert",
+          "analytics.management.experiments.update"
+         ]
+        }
+       },
+       "status": {
+        "type": "string",
+        "description": "Status of the variation. Possible values: \"ACTIVE\", \"INACTIVE\". INACTIVE variations are not served. This field may not be changed for an experiment whose status is ENDED."
+       },
+       "url": {
+        "type": "string",
+        "description": "The URL of the variation. This field may not be changed for an experiment whose status is RUNNING or ENDED."
+       },
+       "weight": {
+        "type": "number",
+        "description": "Weight that this variation should receive. Only present if the experiment is running. This field is read-only.",
+        "format": "double"
+       },
+       "won": {
+        "type": "boolean",
+        "description": "True if the experiment has ended and this variation performed (statistically) significantly better than the original. This field is read-only."
+       }
+      }
+     }
+    },
+    "webPropertyId": {
+     "type": "string",
+     "description": "Web property ID to which this experiment belongs. The web property ID is of the form UA-XXXXX-YY. This field is read-only."
+    },
+    "winnerConfidenceLevel": {
+     "type": "number",
+     "description": "A floating-point number between 0 and 1. Specifies the necessary confidence level to choose a winner. This field may not be changed for an experiments whose status is ENDED.",
+     "format": "double"
+    },
+    "winnerFound": {
+     "type": "boolean",
+     "description": "Boolean specifying whether a winner has been found for this experiment. This field is read-only."
+    }
+   }
+  },
+  "Experiments": {
+   "id": "Experiments",
+   "type": "object",
+   "description": "An experiment collection lists Analytics experiments to which the user has access. Each profile can have a set of experiments. Each resource in the Experiment collection corresponds to a single Analytics experiment.",
+   "properties": {
+    "items": {
+     "type": "array",
+     "description": "A list of experiments.",
+     "items": {
+      "$ref": "Experiment"
+     }
+    },
+    "itemsPerPage": {
+     "type": "integer",
+     "description": "The maximum number of resources the response can contain, regardless of the actual number of resources returned. Its value ranges from 1 to 1000 with a value of 1000 by default, or otherwise specified by the max-results query parameter.",
+     "format": "int32"
+    },
+    "kind": {
+     "type": "string",
+     "description": "Collection type.",
+     "default": "analytics#experiments"
+    },
+    "nextLink": {
+     "type": "string",
+     "description": "Link to next page for this experiment collection."
+    },
+    "previousLink": {
+     "type": "string",
+     "description": "Link to previous page for this experiment collection."
+    },
+    "startIndex": {
+     "type": "integer",
+     "description": "The starting index of the resources, which is 1 by default or otherwise specified by the start-index query parameter.",
+     "format": "int32"
+    },
+    "totalResults": {
+     "type": "integer",
+     "description": "The total number of results for the query, regardless of the number of resources in the result.",
      "format": "int32"
     },
     "username": {
@@ -1906,6 +2136,284 @@
          }
         }
        }
+      }
+     }
+    },
+    "experiments": {
+     "methods": {
+      "delete": {
+       "id": "analytics.management.experiments.delete",
+       "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/experiments/{experimentId}",
+       "httpMethod": "DELETE",
+       "description": "Delete an experiment.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account ID to which the experiment belongs",
+         "required": true,
+         "location": "path"
+        },
+        "experimentId": {
+         "type": "string",
+         "description": "ID of the experiment to delete",
+         "required": true,
+         "location": "path"
+        },
+        "profileId": {
+         "type": "string",
+         "description": "Profile ID to which the experiment belongs",
+         "required": true,
+         "location": "path"
+        },
+        "webPropertyId": {
+         "type": "string",
+         "description": "Web property ID to which the experiment belongs",
+         "required": true,
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "webPropertyId",
+        "profileId",
+        "experimentId"
+       ],
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics"
+       ]
+      },
+      "get": {
+       "id": "analytics.management.experiments.get",
+       "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/experiments/{experimentId}",
+       "httpMethod": "GET",
+       "description": "Returns an experiment to which the user has access.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account ID to retrieve the experiment for.",
+         "required": true,
+         "location": "path"
+        },
+        "experimentId": {
+         "type": "string",
+         "description": "Experiment ID to retrieve the experiment for.",
+         "required": true,
+         "location": "path"
+        },
+        "profileId": {
+         "type": "string",
+         "description": "Profile ID to retrieve the experiment for.",
+         "required": true,
+         "location": "path"
+        },
+        "webPropertyId": {
+         "type": "string",
+         "description": "Web property ID to retrieve the experiment for.",
+         "required": true,
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "webPropertyId",
+        "profileId",
+        "experimentId"
+       ],
+       "response": {
+        "$ref": "Experiment"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics",
+        "https://www.googleapis.com/auth/analytics.readonly"
+       ]
+      },
+      "insert": {
+       "id": "analytics.management.experiments.insert",
+       "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/experiments",
+       "httpMethod": "POST",
+       "description": "Create a new experiment.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account ID to create the experiment for.",
+         "required": true,
+         "location": "path"
+        },
+        "profileId": {
+         "type": "string",
+         "description": "Profile ID to create the experiment for.",
+         "required": true,
+         "location": "path"
+        },
+        "webPropertyId": {
+         "type": "string",
+         "description": "Web property ID to create the experiment for.",
+         "required": true,
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "webPropertyId",
+        "profileId"
+       ],
+       "request": {
+        "$ref": "Experiment"
+       },
+       "response": {
+        "$ref": "Experiment"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics"
+       ]
+      },
+      "list": {
+       "id": "analytics.management.experiments.list",
+       "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/experiments",
+       "httpMethod": "GET",
+       "description": "Lists experiments to which the user has access.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account ID to retrieve experiments for.",
+         "required": true,
+         "pattern": "\\d+",
+         "location": "path"
+        },
+        "max-results": {
+         "type": "integer",
+         "description": "The maximum number of experiments to include in this response.",
+         "format": "int32",
+         "location": "query"
+        },
+        "profileId": {
+         "type": "string",
+         "description": "Profile ID to retrieve experiments for.",
+         "required": true,
+         "pattern": "\\d+",
+         "location": "path"
+        },
+        "start-index": {
+         "type": "integer",
+         "description": "An index of the first experiment to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.",
+         "format": "int32",
+         "minimum": "1",
+         "location": "query"
+        },
+        "webPropertyId": {
+         "type": "string",
+         "description": "Web property ID to retrieve experiments for.",
+         "required": true,
+         "pattern": "UA-(\\d+)-(\\d+)",
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "webPropertyId",
+        "profileId"
+       ],
+       "response": {
+        "$ref": "Experiments"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics",
+        "https://www.googleapis.com/auth/analytics.readonly"
+       ]
+      },
+      "patch": {
+       "id": "analytics.management.experiments.patch",
+       "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/experiments/{experimentId}",
+       "httpMethod": "PATCH",
+       "description": "Update an existing experiment. This method supports patch semantics.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account ID of the experiment to update.",
+         "required": true,
+         "location": "path"
+        },
+        "experimentId": {
+         "type": "string",
+         "description": "Experiment ID of the experiment to update.",
+         "required": true,
+         "location": "path"
+        },
+        "profileId": {
+         "type": "string",
+         "description": "Profile ID of the experiment to update.",
+         "required": true,
+         "location": "path"
+        },
+        "webPropertyId": {
+         "type": "string",
+         "description": "Web property ID of the experiment to update.",
+         "required": true,
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "webPropertyId",
+        "profileId",
+        "experimentId"
+       ],
+       "request": {
+        "$ref": "Experiment"
+       },
+       "response": {
+        "$ref": "Experiment"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics"
+       ]
+      },
+      "update": {
+       "id": "analytics.management.experiments.update",
+       "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/experiments/{experimentId}",
+       "httpMethod": "PUT",
+       "description": "Update an existing experiment.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account ID of the experiment to update.",
+         "required": true,
+         "location": "path"
+        },
+        "experimentId": {
+         "type": "string",
+         "description": "Experiment ID of the experiment to update.",
+         "required": true,
+         "location": "path"
+        },
+        "profileId": {
+         "type": "string",
+         "description": "Profile ID of the experiment to update.",
+         "required": true,
+         "location": "path"
+        },
+        "webPropertyId": {
+         "type": "string",
+         "description": "Web property ID of the experiment to update.",
+         "required": true,
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "webPropertyId",
+        "profileId",
+        "experimentId"
+       ],
+       "request": {
+        "$ref": "Experiment"
+       },
+       "response": {
+        "$ref": "Experiment"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics"
+       ]
       }
      }
     },

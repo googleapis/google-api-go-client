@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"-vXktEC13RBC5q_wkxEsszrjKM4/McEdfQ2-SjPY2KUK0Y-R05Jq1BE\"",
+ "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/kQn9hPBTFn-Z3Y6jDFUjB1wsLJk\"",
  "discoveryVersion": "v1",
  "id": "adexchangeseller:v1",
  "name": "adexchangeseller",
  "canonicalName": "Ad Exchange Seller",
  "version": "v1",
- "revision": "20130305",
+ "revision": "20130403",
  "title": "Ad Exchange Seller API",
  "description": "Gives Ad Exchange seller users access to their inventory and the ability to generate reports",
  "icons": {

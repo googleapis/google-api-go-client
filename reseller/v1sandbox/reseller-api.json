@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"-vXktEC13RBC5q_wkxEsszrjKM4/iGE0DIRlxXuoNpWku7S06XZCKnk\"",
+ "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/8TjWQ_GuqIq7iZTvKiVD9o03Y4w\"",
  "discoveryVersion": "v1",
  "id": "reseller:v1sandbox",
  "name": "reseller",
  "version": "v1sandbox",
- "revision": "20130118",
+ "revision": "20130308",
  "title": "Enterprise Apps Reseller API",
  "description": "Lets you create and manage your customers and their subscriptions.",
  "icons": {

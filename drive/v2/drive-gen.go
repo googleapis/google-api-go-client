@@ -53,6 +53,9 @@ const (
 
 	// View the files and documents in your Google Drive
 	DriveReadonlyScope = "https://www.googleapis.com/auth/drive.readonly"
+
+	// Modify your Google Apps Script scripts' behavior
+	DriveScriptsScope = "https://www.googleapis.com/auth/drive.scripts"
 )
 
 func New(client *http.Client) (*Service, error) {
@@ -68,6 +71,7 @@ func New(client *http.Client) (*Service, error) {
 	s.Files = &FilesService{s: s}
 	s.Parents = &ParentsService{s: s}
 	s.Permissions = &PermissionsService{s: s}
+	s.Properties = &PropertiesService{s: s}
 	s.Replies = &RepliesService{s: s}
 	s.Revisions = &RevisionsService{s: s}
 	return s, nil
@@ -91,6 +95,8 @@ type Service struct {
 	Parents *ParentsService
 
 	Permissions *PermissionsService
+
+	Properties *PropertiesService
 
 	Replies *RepliesService
 
@@ -126,6 +132,10 @@ type ParentsService struct {
 }
 
 type PermissionsService struct {
+	s *Service
+}
+
+type PropertiesService struct {
 	s *Service
 }
 
@@ -550,6 +560,9 @@ type File struct {
 	// editor or viewer.
 	AlternateLink string `json:"alternateLink,omitempty"`
 
+	// AppDataContents: Whether this file is in the appdata folder.
+	AppDataContents bool `json:"appDataContents,omitempty"`
+
 	// CreatedDate: Create time for this file (formatted ISO8601 timestamp).
 	CreatedDate string `json:"createdDate,omitempty"`
 
@@ -923,6 +936,40 @@ type PermissionList struct {
 	Kind string `json:"kind,omitempty"`
 
 	// SelfLink: A link back to this list.
+	SelfLink string `json:"selfLink,omitempty"`
+}
+
+type Property struct {
+	// Etag: ETag of the property.
+	Etag string `json:"etag,omitempty"`
+
+	// Key: The key of this property.
+	Key string `json:"key,omitempty"`
+
+	// Kind: This is always drive#property.
+	Kind string `json:"kind,omitempty"`
+
+	// SelfLink: The link back to this property.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// Value: The value of this property.
+	Value string `json:"value,omitempty"`
+
+	// Visibility: The visibility of this property.
+	Visibility string `json:"visibility,omitempty"`
+}
+
+type PropertyList struct {
+	// Etag: The ETag of the list.
+	Etag string `json:"etag,omitempty"`
+
+	// Items: The list of properties.
+	Items []*Property `json:"items,omitempty"`
+
+	// Kind: This is always drive#propertyList.
+	Kind string `json:"kind,omitempty"`
+
+	// SelfLink: The link back to this list.
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
@@ -3205,7 +3252,8 @@ func (c *FilesPatchCall) Do() (*File, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
-	//     "https://www.googleapis.com/auth/drive.file"
+	//     "https://www.googleapis.com/auth/drive.file",
+	//     "https://www.googleapis.com/auth/drive.scripts"
 	//   ]
 	// }
 
@@ -3658,7 +3706,8 @@ func (c *FilesUpdateCall) Do() (*File, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
-	//     "https://www.googleapis.com/auth/drive.file"
+	//     "https://www.googleapis.com/auth/drive.file",
+	//     "https://www.googleapis.com/auth/drive.scripts"
 	//   ],
 	//   "supportsMediaUpload": true
 	// }
@@ -4276,6 +4325,14 @@ func (r *PermissionsService) Patch(fileId string, permissionId string, permissio
 	return c
 }
 
+// TransferOwnership sets the optional parameter "transferOwnership":
+// Whether changing a role to 'owner' should also downgrade the current
+// owners to writers.
+func (c *PermissionsPatchCall) TransferOwnership(transferOwnership bool) *PermissionsPatchCall {
+	c.opt_["transferOwnership"] = transferOwnership
+	return c
+}
+
 func (c *PermissionsPatchCall) Do() (*Permission, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.permission)
@@ -4285,6 +4342,9 @@ func (c *PermissionsPatchCall) Do() (*Permission, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["transferOwnership"]; ok {
+		params.Set("transferOwnership", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/permissions/{permissionId}")
 	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
 	urls = strings.Replace(urls, "{permissionId}", cleanPathString(c.permissionId), 1)
@@ -4324,6 +4384,12 @@ func (c *PermissionsPatchCall) Do() (*Permission, error) {
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "transferOwnership": {
+	//       "default": "false",
+	//       "description": "Whether changing a role to 'owner' should also downgrade the current owners to writers.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     }
 	//   },
 	//   "path": "files/{fileId}/permissions/{permissionId}",
@@ -4360,6 +4426,14 @@ func (r *PermissionsService) Update(fileId string, permissionId string, permissi
 	return c
 }
 
+// TransferOwnership sets the optional parameter "transferOwnership":
+// Whether changing a role to 'owner' should also downgrade the current
+// owners to writers.
+func (c *PermissionsUpdateCall) TransferOwnership(transferOwnership bool) *PermissionsUpdateCall {
+	c.opt_["transferOwnership"] = transferOwnership
+	return c
+}
+
 func (c *PermissionsUpdateCall) Do() (*Permission, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.permission)
@@ -4369,6 +4443,9 @@ func (c *PermissionsUpdateCall) Do() (*Permission, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["transferOwnership"]; ok {
+		params.Set("transferOwnership", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/permissions/{permissionId}")
 	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
 	urls = strings.Replace(urls, "{permissionId}", cleanPathString(c.permissionId), 1)
@@ -4408,6 +4485,12 @@ func (c *PermissionsUpdateCall) Do() (*Permission, error) {
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "transferOwnership": {
+	//       "default": "false",
+	//       "description": "Whether changing a role to 'owner' should also downgrade the current owners to writers.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     }
 	//   },
 	//   "path": "files/{fileId}/permissions/{permissionId}",
@@ -4416,6 +4499,518 @@ func (c *PermissionsUpdateCall) Do() (*Permission, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "Permission"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.file"
+	//   ]
+	// }
+
+}
+
+// method id "drive.properties.delete":
+
+type PropertiesDeleteCall struct {
+	s           *Service
+	fileId      string
+	propertyKey string
+	opt_        map[string]interface{}
+}
+
+// Delete: Deletes a property.
+func (r *PropertiesService) Delete(fileId string, propertyKey string) *PropertiesDeleteCall {
+	c := &PropertiesDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.fileId = fileId
+	c.propertyKey = propertyKey
+	return c
+}
+
+// Visibility sets the optional parameter "visibility": The visibility
+// of the property.
+func (c *PropertiesDeleteCall) Visibility(visibility string) *PropertiesDeleteCall {
+	c.opt_["visibility"] = visibility
+	return c
+}
+
+func (c *PropertiesDeleteCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["visibility"]; ok {
+		params.Set("visibility", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/properties/{propertyKey}")
+	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
+	urls = strings.Replace(urls, "{propertyKey}", cleanPathString(c.propertyKey), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Deletes a property.",
+	//   "httpMethod": "DELETE",
+	//   "id": "drive.properties.delete",
+	//   "parameterOrder": [
+	//     "fileId",
+	//     "propertyKey"
+	//   ],
+	//   "parameters": {
+	//     "fileId": {
+	//       "description": "The ID of the file.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "propertyKey": {
+	//       "description": "The key of the property.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "visibility": {
+	//       "default": "private",
+	//       "description": "The visibility of the property.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "files/{fileId}/properties/{propertyKey}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.file"
+	//   ]
+	// }
+
+}
+
+// method id "drive.properties.get":
+
+type PropertiesGetCall struct {
+	s           *Service
+	fileId      string
+	propertyKey string
+	opt_        map[string]interface{}
+}
+
+// Get: Gets a property by its key.
+func (r *PropertiesService) Get(fileId string, propertyKey string) *PropertiesGetCall {
+	c := &PropertiesGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.fileId = fileId
+	c.propertyKey = propertyKey
+	return c
+}
+
+// Visibility sets the optional parameter "visibility": The visibility
+// of the property.
+func (c *PropertiesGetCall) Visibility(visibility string) *PropertiesGetCall {
+	c.opt_["visibility"] = visibility
+	return c
+}
+
+func (c *PropertiesGetCall) Do() (*Property, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["visibility"]; ok {
+		params.Set("visibility", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/properties/{propertyKey}")
+	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
+	urls = strings.Replace(urls, "{propertyKey}", cleanPathString(c.propertyKey), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Property)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a property by its key.",
+	//   "httpMethod": "GET",
+	//   "id": "drive.properties.get",
+	//   "parameterOrder": [
+	//     "fileId",
+	//     "propertyKey"
+	//   ],
+	//   "parameters": {
+	//     "fileId": {
+	//       "description": "The ID of the file.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "propertyKey": {
+	//       "description": "The key of the property.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "visibility": {
+	//       "default": "private",
+	//       "description": "The visibility of the property.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "files/{fileId}/properties/{propertyKey}",
+	//   "response": {
+	//     "$ref": "Property"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.file",
+	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
+	//     "https://www.googleapis.com/auth/drive.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "drive.properties.insert":
+
+type PropertiesInsertCall struct {
+	s        *Service
+	fileId   string
+	property *Property
+	opt_     map[string]interface{}
+}
+
+// Insert: Adds a property to a file.
+func (r *PropertiesService) Insert(fileId string, property *Property) *PropertiesInsertCall {
+	c := &PropertiesInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.fileId = fileId
+	c.property = property
+	return c
+}
+
+func (c *PropertiesInsertCall) Do() (*Property, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.property)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/properties")
+	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Property)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Adds a property to a file.",
+	//   "httpMethod": "POST",
+	//   "id": "drive.properties.insert",
+	//   "parameterOrder": [
+	//     "fileId"
+	//   ],
+	//   "parameters": {
+	//     "fileId": {
+	//       "description": "The ID of the file.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "files/{fileId}/properties",
+	//   "request": {
+	//     "$ref": "Property"
+	//   },
+	//   "response": {
+	//     "$ref": "Property"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.file"
+	//   ]
+	// }
+
+}
+
+// method id "drive.properties.list":
+
+type PropertiesListCall struct {
+	s      *Service
+	fileId string
+	opt_   map[string]interface{}
+}
+
+// List: Lists a file's properties.
+func (r *PropertiesService) List(fileId string) *PropertiesListCall {
+	c := &PropertiesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.fileId = fileId
+	return c
+}
+
+func (c *PropertiesListCall) Do() (*PropertyList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/properties")
+	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(PropertyList)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists a file's properties.",
+	//   "httpMethod": "GET",
+	//   "id": "drive.properties.list",
+	//   "parameterOrder": [
+	//     "fileId"
+	//   ],
+	//   "parameters": {
+	//     "fileId": {
+	//       "description": "The ID of the file.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "files/{fileId}/properties",
+	//   "response": {
+	//     "$ref": "PropertyList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.file",
+	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
+	//     "https://www.googleapis.com/auth/drive.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "drive.properties.patch":
+
+type PropertiesPatchCall struct {
+	s           *Service
+	fileId      string
+	propertyKey string
+	property    *Property
+	opt_        map[string]interface{}
+}
+
+// Patch: Updates a property. This method supports patch semantics.
+func (r *PropertiesService) Patch(fileId string, propertyKey string, property *Property) *PropertiesPatchCall {
+	c := &PropertiesPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.fileId = fileId
+	c.propertyKey = propertyKey
+	c.property = property
+	return c
+}
+
+// Visibility sets the optional parameter "visibility": The visibility
+// of the property.
+func (c *PropertiesPatchCall) Visibility(visibility string) *PropertiesPatchCall {
+	c.opt_["visibility"] = visibility
+	return c
+}
+
+func (c *PropertiesPatchCall) Do() (*Property, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.property)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["visibility"]; ok {
+		params.Set("visibility", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/properties/{propertyKey}")
+	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
+	urls = strings.Replace(urls, "{propertyKey}", cleanPathString(c.propertyKey), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Property)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a property. This method supports patch semantics.",
+	//   "httpMethod": "PATCH",
+	//   "id": "drive.properties.patch",
+	//   "parameterOrder": [
+	//     "fileId",
+	//     "propertyKey"
+	//   ],
+	//   "parameters": {
+	//     "fileId": {
+	//       "description": "The ID of the file.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "propertyKey": {
+	//       "description": "The key of the property.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "visibility": {
+	//       "default": "private",
+	//       "description": "The visibility of the property.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "files/{fileId}/properties/{propertyKey}",
+	//   "request": {
+	//     "$ref": "Property"
+	//   },
+	//   "response": {
+	//     "$ref": "Property"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.file"
+	//   ]
+	// }
+
+}
+
+// method id "drive.properties.update":
+
+type PropertiesUpdateCall struct {
+	s           *Service
+	fileId      string
+	propertyKey string
+	property    *Property
+	opt_        map[string]interface{}
+}
+
+// Update: Updates a property.
+func (r *PropertiesService) Update(fileId string, propertyKey string, property *Property) *PropertiesUpdateCall {
+	c := &PropertiesUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.fileId = fileId
+	c.propertyKey = propertyKey
+	c.property = property
+	return c
+}
+
+// Visibility sets the optional parameter "visibility": The visibility
+// of the property.
+func (c *PropertiesUpdateCall) Visibility(visibility string) *PropertiesUpdateCall {
+	c.opt_["visibility"] = visibility
+	return c
+}
+
+func (c *PropertiesUpdateCall) Do() (*Property, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.property)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["visibility"]; ok {
+		params.Set("visibility", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/properties/{propertyKey}")
+	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
+	urls = strings.Replace(urls, "{propertyKey}", cleanPathString(c.propertyKey), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Property)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a property.",
+	//   "httpMethod": "PUT",
+	//   "id": "drive.properties.update",
+	//   "parameterOrder": [
+	//     "fileId",
+	//     "propertyKey"
+	//   ],
+	//   "parameters": {
+	//     "fileId": {
+	//       "description": "The ID of the file.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "propertyKey": {
+	//       "description": "The key of the property.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "visibility": {
+	//       "default": "private",
+	//       "description": "The visibility of the property.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "files/{fileId}/properties/{propertyKey}",
+	//   "request": {
+	//     "$ref": "Property"
+	//   },
+	//   "response": {
+	//     "$ref": "Property"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",

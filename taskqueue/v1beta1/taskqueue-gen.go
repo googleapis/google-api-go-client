@@ -1,6 +1,6 @@
 // Package taskqueue provides access to the TaskQueue API.
 //
-// See http://code.google.com/appengine/docs/python/taskqueue/rest.html
+// See https://developers.google.com/appengine/docs/python/taskqueue/rest
 //
 // Usage example:
 //

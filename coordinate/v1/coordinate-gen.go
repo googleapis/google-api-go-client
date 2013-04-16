@@ -231,9 +231,6 @@ type LocationListResponse struct {
 	// NextPageToken: A token to provide to get the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// PageInfo: General pagination information.
-	PageInfo *PageInfo `json:"pageInfo,omitempty"`
-
 	// TokenPagination: Pagination information for token pagination.
 	TokenPagination *TokenPagination `json:"tokenPagination,omitempty"`
 }
@@ -254,20 +251,6 @@ type LocationRecord struct {
 
 	// Longitude: Longitude.
 	Longitude float64 `json:"longitude,omitempty"`
-}
-
-type PageInfo struct {
-	// Kind: Identifies this object as page information.
-	Kind string `json:"kind,omitempty"`
-
-	// ResultPerPage: Number of results per page.
-	ResultPerPage int64 `json:"resultPerPage,omitempty"`
-
-	// StartIndex: Page start index.
-	StartIndex int64 `json:"startIndex,omitempty"`
-
-	// TotalResults: Number of results available.
-	TotalResults int64 `json:"totalResults,omitempty"`
 }
 
 type Schedule struct {

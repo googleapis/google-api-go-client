@@ -41,7 +41,7 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
-	s.Archive = &ArchiveService{s: s}
+	s.Archive = NewArchiveService(s)
 	return s, nil
 }
 
@@ -49,6 +49,11 @@ type Service struct {
 	client *http.Client
 
 	Archive *ArchiveService
+}
+
+func NewArchiveService(s *Service) *ArchiveService {
+	rs := &ArchiveService{s: s}
+	return rs
 }
 
 type ArchiveService struct {
@@ -94,11 +99,14 @@ func (c *ArchiveInsertCall) Do() (*Groups, error) {
 	}
 	urls = strings.Replace(urls, "{groupId}", cleanPathString(c.groupId), 1)
 	urls += "?" + params.Encode()
+	body = new(bytes.Buffer)
+	ctype := "application/json"
 	contentLength_, hasMedia_ := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
 	req, _ := http.NewRequest("POST", urls, body)
 	if hasMedia_ {
 		req.ContentLength = contentLength_
 	}
+	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {

@@ -50,22 +50,22 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
-	s.Acl = &AclService{s: s}
-	s.Activities = &ActivitiesService{s: s}
-	s.ActivityVisibility = &ActivityVisibilityService{s: s}
-	s.Badges = &BadgesService{s: s}
-	s.Comments = &CommentsService{s: s}
-	s.Communities = &CommunitiesService{s: s}
-	s.CommunityFollow = &CommunityFollowService{s: s}
-	s.CommunityMembers = &CommunityMembersService{s: s}
-	s.CommunityMessages = &CommunityMessagesService{s: s}
-	s.CommunityPollComments = &CommunityPollCommentsService{s: s}
-	s.CommunityPollVotes = &CommunityPollVotesService{s: s}
-	s.CommunityPolls = &CommunityPollsService{s: s}
-	s.CommunityRelated = &CommunityRelatedService{s: s}
-	s.CommunityTopics = &CommunityTopicsService{s: s}
-	s.Counters = &CountersService{s: s}
-	s.Scraps = &ScrapsService{s: s}
+	s.Acl = NewAclService(s)
+	s.Activities = NewActivitiesService(s)
+	s.ActivityVisibility = NewActivityVisibilityService(s)
+	s.Badges = NewBadgesService(s)
+	s.Comments = NewCommentsService(s)
+	s.Communities = NewCommunitiesService(s)
+	s.CommunityFollow = NewCommunityFollowService(s)
+	s.CommunityMembers = NewCommunityMembersService(s)
+	s.CommunityMessages = NewCommunityMessagesService(s)
+	s.CommunityPollComments = NewCommunityPollCommentsService(s)
+	s.CommunityPollVotes = NewCommunityPollVotesService(s)
+	s.CommunityPolls = NewCommunityPollsService(s)
+	s.CommunityRelated = NewCommunityRelatedService(s)
+	s.CommunityTopics = NewCommunityTopicsService(s)
+	s.Counters = NewCountersService(s)
+	s.Scraps = NewScrapsService(s)
 	return s, nil
 }
 
@@ -105,64 +105,144 @@ type Service struct {
 	Scraps *ScrapsService
 }
 
+func NewAclService(s *Service) *AclService {
+	rs := &AclService{s: s}
+	return rs
+}
+
 type AclService struct {
 	s *Service
+}
+
+func NewActivitiesService(s *Service) *ActivitiesService {
+	rs := &ActivitiesService{s: s}
+	return rs
 }
 
 type ActivitiesService struct {
 	s *Service
 }
 
+func NewActivityVisibilityService(s *Service) *ActivityVisibilityService {
+	rs := &ActivityVisibilityService{s: s}
+	return rs
+}
+
 type ActivityVisibilityService struct {
 	s *Service
+}
+
+func NewBadgesService(s *Service) *BadgesService {
+	rs := &BadgesService{s: s}
+	return rs
 }
 
 type BadgesService struct {
 	s *Service
 }
 
+func NewCommentsService(s *Service) *CommentsService {
+	rs := &CommentsService{s: s}
+	return rs
+}
+
 type CommentsService struct {
 	s *Service
+}
+
+func NewCommunitiesService(s *Service) *CommunitiesService {
+	rs := &CommunitiesService{s: s}
+	return rs
 }
 
 type CommunitiesService struct {
 	s *Service
 }
 
+func NewCommunityFollowService(s *Service) *CommunityFollowService {
+	rs := &CommunityFollowService{s: s}
+	return rs
+}
+
 type CommunityFollowService struct {
 	s *Service
+}
+
+func NewCommunityMembersService(s *Service) *CommunityMembersService {
+	rs := &CommunityMembersService{s: s}
+	return rs
 }
 
 type CommunityMembersService struct {
 	s *Service
 }
 
+func NewCommunityMessagesService(s *Service) *CommunityMessagesService {
+	rs := &CommunityMessagesService{s: s}
+	return rs
+}
+
 type CommunityMessagesService struct {
 	s *Service
+}
+
+func NewCommunityPollCommentsService(s *Service) *CommunityPollCommentsService {
+	rs := &CommunityPollCommentsService{s: s}
+	return rs
 }
 
 type CommunityPollCommentsService struct {
 	s *Service
 }
 
+func NewCommunityPollVotesService(s *Service) *CommunityPollVotesService {
+	rs := &CommunityPollVotesService{s: s}
+	return rs
+}
+
 type CommunityPollVotesService struct {
 	s *Service
+}
+
+func NewCommunityPollsService(s *Service) *CommunityPollsService {
+	rs := &CommunityPollsService{s: s}
+	return rs
 }
 
 type CommunityPollsService struct {
 	s *Service
 }
 
+func NewCommunityRelatedService(s *Service) *CommunityRelatedService {
+	rs := &CommunityRelatedService{s: s}
+	return rs
+}
+
 type CommunityRelatedService struct {
 	s *Service
+}
+
+func NewCommunityTopicsService(s *Service) *CommunityTopicsService {
+	rs := &CommunityTopicsService{s: s}
+	return rs
 }
 
 type CommunityTopicsService struct {
 	s *Service
 }
 
+func NewCountersService(s *Service) *CountersService {
+	rs := &CountersService{s: s}
+	return rs
+}
+
 type CountersService struct {
 	s *Service
+}
+
+func NewScrapsService(s *Service) *ScrapsService {
+	rs := &ScrapsService{s: s}
+	return rs
 }
 
 type ScrapsService struct {

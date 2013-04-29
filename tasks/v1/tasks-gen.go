@@ -1,6 +1,6 @@
 // Package tasks provides access to the Tasks API.
 //
-// See http://code.google.com/apis/tasks/v1/using.html
+// See https://developers.google.com/google-apps/tasks/firstapp
 //
 // Usage example:
 //
@@ -50,8 +50,8 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
-	s.Tasklists = &TasklistsService{s: s}
-	s.Tasks = &TasksService{s: s}
+	s.Tasklists = NewTasklistsService(s)
+	s.Tasks = NewTasksService(s)
 	return s, nil
 }
 
@@ -63,8 +63,18 @@ type Service struct {
 	Tasks *TasksService
 }
 
+func NewTasklistsService(s *Service) *TasklistsService {
+	rs := &TasklistsService{s: s}
+	return rs
+}
+
 type TasklistsService struct {
 	s *Service
+}
+
+func NewTasksService(s *Service) *TasksService {
+	rs := &TasksService{s: s}
+	return rs
 }
 
 type TasksService struct {

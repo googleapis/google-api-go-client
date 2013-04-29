@@ -50,8 +50,8 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
-	s.Data = &DataService{s: s}
-	s.Management = &ManagementService{s: s}
+	s.Data = NewDataService(s)
+	s.Management = NewManagementService(s)
 	return s, nil
 }
 
@@ -63,11 +63,81 @@ type Service struct {
 	Management *ManagementService
 }
 
+func NewDataService(s *Service) *DataService {
+	rs := &DataService{s: s}
+	return rs
+}
+
 type DataService struct {
 	s *Service
 }
 
+func NewManagementService(s *Service) *ManagementService {
+	rs := &ManagementService{s: s}
+	rs.Accounts = NewManagementAccountsService(s)
+	rs.Goals = NewManagementGoalsService(s)
+	rs.Profiles = NewManagementProfilesService(s)
+	rs.Segments = NewManagementSegmentsService(s)
+	rs.Webproperties = NewManagementWebpropertiesService(s)
+	return rs
+}
+
 type ManagementService struct {
+	s *Service
+
+	Accounts *ManagementAccountsService
+
+	Goals *ManagementGoalsService
+
+	Profiles *ManagementProfilesService
+
+	Segments *ManagementSegmentsService
+
+	Webproperties *ManagementWebpropertiesService
+}
+
+func NewManagementAccountsService(s *Service) *ManagementAccountsService {
+	rs := &ManagementAccountsService{s: s}
+	return rs
+}
+
+type ManagementAccountsService struct {
+	s *Service
+}
+
+func NewManagementGoalsService(s *Service) *ManagementGoalsService {
+	rs := &ManagementGoalsService{s: s}
+	return rs
+}
+
+type ManagementGoalsService struct {
+	s *Service
+}
+
+func NewManagementProfilesService(s *Service) *ManagementProfilesService {
+	rs := &ManagementProfilesService{s: s}
+	return rs
+}
+
+type ManagementProfilesService struct {
+	s *Service
+}
+
+func NewManagementSegmentsService(s *Service) *ManagementSegmentsService {
+	rs := &ManagementSegmentsService{s: s}
+	return rs
+}
+
+type ManagementSegmentsService struct {
+	s *Service
+}
+
+func NewManagementWebpropertiesService(s *Service) *ManagementWebpropertiesService {
+	rs := &ManagementWebpropertiesService{s: s}
+	return rs
+}
+
+type ManagementWebpropertiesService struct {
 	s *Service
 }
 
@@ -252,6 +322,462 @@ func (c *DataGetCall) Do() error {
 	//     }
 	//   },
 	//   "path": "data",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.accounts.list":
+
+type ManagementAccountsListCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// List: Lists all accounts to which the user has access.
+func (r *ManagementAccountsService) List() *ManagementAccountsListCall {
+	c := &ManagementAccountsListCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+// MaxResults sets the optional parameter "max-results": The maximum
+// number of accounts to include in this response.
+func (c *ManagementAccountsListCall) MaxResults(maxResults int64) *ManagementAccountsListCall {
+	c.opt_["max-results"] = maxResults
+	return c
+}
+
+// StartIndex sets the optional parameter "start-index": An index of the
+// first account to retrieve. Use this parameter as a pagination
+// mechanism along with the max-results parameter.
+func (c *ManagementAccountsListCall) StartIndex(startIndex int64) *ManagementAccountsListCall {
+	c.opt_["start-index"] = startIndex
+	return c
+}
+
+func (c *ManagementAccountsListCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["max-results"]; ok {
+		params.Set("max-results", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["start-index"]; ok {
+		params.Set("start-index", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v2.4/", "management/accounts")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Lists all accounts to which the user has access.",
+	//   "httpMethod": "GET",
+	//   "id": "analytics.management.accounts.list",
+	//   "parameters": {
+	//     "max-results": {
+	//       "description": "The maximum number of accounts to include in this response.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "start-index": {
+	//       "description": "An index of the first account to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     }
+	//   },
+	//   "path": "management/accounts",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.goals.list":
+
+type ManagementGoalsListCall struct {
+	s             *Service
+	accountId     string
+	webPropertyId string
+	profileId     string
+	opt_          map[string]interface{}
+}
+
+// List: Lists goals to which the user has access.
+func (r *ManagementGoalsService) List(accountId string, webPropertyId string, profileId string) *ManagementGoalsListCall {
+	c := &ManagementGoalsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.webPropertyId = webPropertyId
+	c.profileId = profileId
+	return c
+}
+
+// MaxResults sets the optional parameter "max-results": The maximum
+// number of goals to include in this response.
+func (c *ManagementGoalsListCall) MaxResults(maxResults int64) *ManagementGoalsListCall {
+	c.opt_["max-results"] = maxResults
+	return c
+}
+
+// StartIndex sets the optional parameter "start-index": An index of the
+// first goal to retrieve. Use this parameter as a pagination mechanism
+// along with the max-results parameter.
+func (c *ManagementGoalsListCall) StartIndex(startIndex int64) *ManagementGoalsListCall {
+	c.opt_["start-index"] = startIndex
+	return c
+}
+
+func (c *ManagementGoalsListCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["max-results"]; ok {
+		params.Set("max-results", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["start-index"]; ok {
+		params.Set("start-index", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v2.4/", "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/goals")
+	urls = strings.Replace(urls, "{accountId}", cleanPathString(c.accountId), 1)
+	urls = strings.Replace(urls, "{webPropertyId}", cleanPathString(c.webPropertyId), 1)
+	urls = strings.Replace(urls, "{profileId}", cleanPathString(c.profileId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Lists goals to which the user has access.",
+	//   "httpMethod": "GET",
+	//   "id": "analytics.management.goals.list",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "webPropertyId",
+	//     "profileId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account ID to retrieve goals for. Can either be a specific account ID or '~all', which refers to all the accounts that user has access to.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "max-results": {
+	//       "description": "The maximum number of goals to include in this response.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "profileId": {
+	//       "description": "Profile ID to retrieve goals for. Can either be a specific profile ID or '~all', which refers to all the profiles that user has access to.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "start-index": {
+	//       "description": "An index of the first goal to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     },
+	//     "webPropertyId": {
+	//       "description": "Web property ID to retrieve goals for. Can either be a specific web property ID or '~all', which refers to all the web properties that user has access to.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/goals",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.profiles.list":
+
+type ManagementProfilesListCall struct {
+	s             *Service
+	accountId     string
+	webPropertyId string
+	opt_          map[string]interface{}
+}
+
+// List: Lists profiles to which the user has access.
+func (r *ManagementProfilesService) List(accountId string, webPropertyId string) *ManagementProfilesListCall {
+	c := &ManagementProfilesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.webPropertyId = webPropertyId
+	return c
+}
+
+// MaxResults sets the optional parameter "max-results": The maximum
+// number of profiles to include in this response.
+func (c *ManagementProfilesListCall) MaxResults(maxResults int64) *ManagementProfilesListCall {
+	c.opt_["max-results"] = maxResults
+	return c
+}
+
+// StartIndex sets the optional parameter "start-index": An index of the
+// first entity to retrieve. Use this parameter as a pagination
+// mechanism along with the max-results parameter.
+func (c *ManagementProfilesListCall) StartIndex(startIndex int64) *ManagementProfilesListCall {
+	c.opt_["start-index"] = startIndex
+	return c
+}
+
+func (c *ManagementProfilesListCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["max-results"]; ok {
+		params.Set("max-results", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["start-index"]; ok {
+		params.Set("start-index", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v2.4/", "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles")
+	urls = strings.Replace(urls, "{accountId}", cleanPathString(c.accountId), 1)
+	urls = strings.Replace(urls, "{webPropertyId}", cleanPathString(c.webPropertyId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Lists profiles to which the user has access.",
+	//   "httpMethod": "GET",
+	//   "id": "analytics.management.profiles.list",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "webPropertyId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account ID for the profiles to retrieve. Can either be a specific account ID or '~all', which refers to all the accounts to which the user has access.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "max-results": {
+	//       "description": "The maximum number of profiles to include in this response.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "start-index": {
+	//       "description": "An index of the first entity to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     },
+	//     "webPropertyId": {
+	//       "description": "Web property ID for the profiles to retrieve. Can either be a specific web property ID or '~all', which refers to all the web properties to which the user has access.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.segments.list":
+
+type ManagementSegmentsListCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// List: Lists advanced segments to which the user has access.
+func (r *ManagementSegmentsService) List() *ManagementSegmentsListCall {
+	c := &ManagementSegmentsListCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+// MaxResults sets the optional parameter "max-results": The maximum
+// number of advanced segments to include in this response.
+func (c *ManagementSegmentsListCall) MaxResults(maxResults int64) *ManagementSegmentsListCall {
+	c.opt_["max-results"] = maxResults
+	return c
+}
+
+// StartIndex sets the optional parameter "start-index": An index of the
+// first advanced segment to retrieve. Use this parameter as a
+// pagination mechanism along with the max-results parameter.
+func (c *ManagementSegmentsListCall) StartIndex(startIndex int64) *ManagementSegmentsListCall {
+	c.opt_["start-index"] = startIndex
+	return c
+}
+
+func (c *ManagementSegmentsListCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["max-results"]; ok {
+		params.Set("max-results", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["start-index"]; ok {
+		params.Set("start-index", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v2.4/", "management/segments")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Lists advanced segments to which the user has access.",
+	//   "httpMethod": "GET",
+	//   "id": "analytics.management.segments.list",
+	//   "parameters": {
+	//     "max-results": {
+	//       "description": "The maximum number of advanced segments to include in this response.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "start-index": {
+	//       "description": "An index of the first advanced segment to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     }
+	//   },
+	//   "path": "management/segments",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.webproperties.list":
+
+type ManagementWebpropertiesListCall struct {
+	s         *Service
+	accountId string
+	opt_      map[string]interface{}
+}
+
+// List: Lists web properties to which the user has access.
+func (r *ManagementWebpropertiesService) List(accountId string) *ManagementWebpropertiesListCall {
+	c := &ManagementWebpropertiesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	return c
+}
+
+// MaxResults sets the optional parameter "max-results": The maximum
+// number of web properties to include in this response.
+func (c *ManagementWebpropertiesListCall) MaxResults(maxResults int64) *ManagementWebpropertiesListCall {
+	c.opt_["max-results"] = maxResults
+	return c
+}
+
+// StartIndex sets the optional parameter "start-index": An index of the
+// first entity to retrieve. Use this parameter as a pagination
+// mechanism along with the max-results parameter.
+func (c *ManagementWebpropertiesListCall) StartIndex(startIndex int64) *ManagementWebpropertiesListCall {
+	c.opt_["start-index"] = startIndex
+	return c
+}
+
+func (c *ManagementWebpropertiesListCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["max-results"]; ok {
+		params.Set("max-results", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["start-index"]; ok {
+		params.Set("start-index", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v2.4/", "management/accounts/{accountId}/webproperties")
+	urls = strings.Replace(urls, "{accountId}", cleanPathString(c.accountId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Lists web properties to which the user has access.",
+	//   "httpMethod": "GET",
+	//   "id": "analytics.management.webproperties.list",
+	//   "parameterOrder": [
+	//     "accountId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account ID to retrieve web properties for. Can either be a specific account ID or '~all', which refers to all the accounts that user has access to.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "max-results": {
+	//       "description": "The maximum number of web properties to include in this response.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "start-index": {
+	//       "description": "An index of the first entity to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/webproperties",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/analytics",
 	//     "https://www.googleapis.com/auth/analytics.readonly"

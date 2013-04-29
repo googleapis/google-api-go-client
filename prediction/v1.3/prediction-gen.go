@@ -56,8 +56,8 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
-	s.Hostedmodels = &HostedmodelsService{s: s}
-	s.Training = &TrainingService{s: s}
+	s.Hostedmodels = NewHostedmodelsService(s)
+	s.Training = NewTrainingService(s)
 	return s, nil
 }
 
@@ -69,8 +69,18 @@ type Service struct {
 	Training *TrainingService
 }
 
+func NewHostedmodelsService(s *Service) *HostedmodelsService {
+	rs := &HostedmodelsService{s: s}
+	return rs
+}
+
 type HostedmodelsService struct {
 	s *Service
+}
+
+func NewTrainingService(s *Service) *TrainingService {
+	rs := &TrainingService{s: s}
+	return rs
 }
 
 type TrainingService struct {

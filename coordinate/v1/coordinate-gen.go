@@ -50,11 +50,11 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
-	s.CustomFieldDef = &CustomFieldDefService{s: s}
-	s.Jobs = &JobsService{s: s}
-	s.Location = &LocationService{s: s}
-	s.Schedule = &ScheduleService{s: s}
-	s.Worker = &WorkerService{s: s}
+	s.CustomFieldDef = NewCustomFieldDefService(s)
+	s.Jobs = NewJobsService(s)
+	s.Location = NewLocationService(s)
+	s.Schedule = NewScheduleService(s)
+	s.Worker = NewWorkerService(s)
 	return s, nil
 }
 
@@ -72,20 +72,45 @@ type Service struct {
 	Worker *WorkerService
 }
 
+func NewCustomFieldDefService(s *Service) *CustomFieldDefService {
+	rs := &CustomFieldDefService{s: s}
+	return rs
+}
+
 type CustomFieldDefService struct {
 	s *Service
+}
+
+func NewJobsService(s *Service) *JobsService {
+	rs := &JobsService{s: s}
+	return rs
 }
 
 type JobsService struct {
 	s *Service
 }
 
+func NewLocationService(s *Service) *LocationService {
+	rs := &LocationService{s: s}
+	return rs
+}
+
 type LocationService struct {
 	s *Service
 }
 
+func NewScheduleService(s *Service) *ScheduleService {
+	rs := &ScheduleService{s: s}
+	return rs
+}
+
 type ScheduleService struct {
 	s *Service
+}
+
+func NewWorkerService(s *Service) *WorkerService {
+	rs := &WorkerService{s: s}
+	return rs
 }
 
 type WorkerService struct {

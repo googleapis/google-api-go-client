@@ -50,12 +50,12 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
-	s.Advertisers = &AdvertisersService{s: s}
-	s.CcOffers = &CcOffersService{s: s}
-	s.Events = &EventsService{s: s}
-	s.Links = &LinksService{s: s}
-	s.Publishers = &PublishersService{s: s}
-	s.Reports = &ReportsService{s: s}
+	s.Advertisers = NewAdvertisersService(s)
+	s.CcOffers = NewCcOffersService(s)
+	s.Events = NewEventsService(s)
+	s.Links = NewLinksService(s)
+	s.Publishers = NewPublishersService(s)
+	s.Reports = NewReportsService(s)
 	return s, nil
 }
 
@@ -75,24 +75,54 @@ type Service struct {
 	Reports *ReportsService
 }
 
+func NewAdvertisersService(s *Service) *AdvertisersService {
+	rs := &AdvertisersService{s: s}
+	return rs
+}
+
 type AdvertisersService struct {
 	s *Service
+}
+
+func NewCcOffersService(s *Service) *CcOffersService {
+	rs := &CcOffersService{s: s}
+	return rs
 }
 
 type CcOffersService struct {
 	s *Service
 }
 
+func NewEventsService(s *Service) *EventsService {
+	rs := &EventsService{s: s}
+	return rs
+}
+
 type EventsService struct {
 	s *Service
+}
+
+func NewLinksService(s *Service) *LinksService {
+	rs := &LinksService{s: s}
+	return rs
 }
 
 type LinksService struct {
 	s *Service
 }
 
+func NewPublishersService(s *Service) *PublishersService {
+	rs := &PublishersService{s: s}
+	return rs
+}
+
 type PublishersService struct {
 	s *Service
+}
+
+func NewReportsService(s *Service) *ReportsService {
+	rs := &ReportsService{s: s}
+	return rs
 }
 
 type ReportsService struct {

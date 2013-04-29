@@ -47,12 +47,12 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
-	s.Accounts = &AccountsService{s: s}
-	s.Adclients = &AdclientsService{s: s}
-	s.Associationsessions = &AssociationsessionsService{s: s}
-	s.Customchannels = &CustomchannelsService{s: s}
-	s.Reports = &ReportsService{s: s}
-	s.Urlchannels = &UrlchannelsService{s: s}
+	s.Accounts = NewAccountsService(s)
+	s.Adclients = NewAdclientsService(s)
+	s.Associationsessions = NewAssociationsessionsService(s)
+	s.Customchannels = NewCustomchannelsService(s)
+	s.Reports = NewReportsService(s)
+	s.Urlchannels = NewUrlchannelsService(s)
 	return s, nil
 }
 
@@ -72,24 +72,90 @@ type Service struct {
 	Urlchannels *UrlchannelsService
 }
 
+func NewAccountsService(s *Service) *AccountsService {
+	rs := &AccountsService{s: s}
+	rs.Adclients = NewAccountsAdclientsService(s)
+	rs.Adunits = NewAccountsAdunitsService(s)
+	rs.Reports = NewAccountsReportsService(s)
+	return rs
+}
+
 type AccountsService struct {
 	s *Service
+
+	Adclients *AccountsAdclientsService
+
+	Adunits *AccountsAdunitsService
+
+	Reports *AccountsReportsService
+}
+
+func NewAccountsAdclientsService(s *Service) *AccountsAdclientsService {
+	rs := &AccountsAdclientsService{s: s}
+	return rs
+}
+
+type AccountsAdclientsService struct {
+	s *Service
+}
+
+func NewAccountsAdunitsService(s *Service) *AccountsAdunitsService {
+	rs := &AccountsAdunitsService{s: s}
+	return rs
+}
+
+type AccountsAdunitsService struct {
+	s *Service
+}
+
+func NewAccountsReportsService(s *Service) *AccountsReportsService {
+	rs := &AccountsReportsService{s: s}
+	return rs
+}
+
+type AccountsReportsService struct {
+	s *Service
+}
+
+func NewAdclientsService(s *Service) *AdclientsService {
+	rs := &AdclientsService{s: s}
+	return rs
 }
 
 type AdclientsService struct {
 	s *Service
 }
 
+func NewAssociationsessionsService(s *Service) *AssociationsessionsService {
+	rs := &AssociationsessionsService{s: s}
+	return rs
+}
+
 type AssociationsessionsService struct {
 	s *Service
+}
+
+func NewCustomchannelsService(s *Service) *CustomchannelsService {
+	rs := &CustomchannelsService{s: s}
+	return rs
 }
 
 type CustomchannelsService struct {
 	s *Service
 }
 
+func NewReportsService(s *Service) *ReportsService {
+	rs := &ReportsService{s: s}
+	return rs
+}
+
 type ReportsService struct {
 	s *Service
+}
+
+func NewUrlchannelsService(s *Service) *UrlchannelsService {
+	rs := &UrlchannelsService{s: s}
+	return rs
 }
 
 type UrlchannelsService struct {
@@ -575,6 +641,1033 @@ func (c *AccountsListCall) Do() (*Accounts, error) {
 	//   "path": "accounts",
 	//   "response": {
 	//     "$ref": "Accounts"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adsensehost"
+	//   ]
+	// }
+
+}
+
+// method id "adsensehost.accounts.adclients.get":
+
+type AccountsAdclientsGetCall struct {
+	s          *Service
+	accountId  string
+	adClientId string
+	opt_       map[string]interface{}
+}
+
+// Get: Get information about one of the ad clients in the specified
+// publisher's AdSense account.
+func (r *AccountsAdclientsService) Get(accountId string, adClientId string) *AccountsAdclientsGetCall {
+	c := &AccountsAdclientsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.adClientId = adClientId
+	return c
+}
+
+func (c *AccountsAdclientsGetCall) Do() (*AdClient, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "accounts/{accountId}/adclients/{adClientId}")
+	urls = strings.Replace(urls, "{accountId}", cleanPathString(c.accountId), 1)
+	urls = strings.Replace(urls, "{adClientId}", cleanPathString(c.adClientId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(AdClient)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get information about one of the ad clients in the specified publisher's AdSense account.",
+	//   "httpMethod": "GET",
+	//   "id": "adsensehost.accounts.adclients.get",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "adClientId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account which contains the ad client.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "adClientId": {
+	//       "description": "Ad client to get.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "accounts/{accountId}/adclients/{adClientId}",
+	//   "response": {
+	//     "$ref": "AdClient"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adsensehost"
+	//   ]
+	// }
+
+}
+
+// method id "adsensehost.accounts.adclients.list":
+
+type AccountsAdclientsListCall struct {
+	s         *Service
+	accountId string
+	opt_      map[string]interface{}
+}
+
+// List: List all hosted ad clients in the specified hosted account.
+func (r *AccountsAdclientsService) List(accountId string) *AccountsAdclientsListCall {
+	c := &AccountsAdclientsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of ad clients to include in the response, used for paging.
+func (c *AccountsAdclientsListCall) MaxResults(maxResults int64) *AccountsAdclientsListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A continuation
+// token, used to page through ad clients. To retrieve the next page,
+// set this parameter to the value of "nextPageToken" from the previous
+// response.
+func (c *AccountsAdclientsListCall) PageToken(pageToken string) *AccountsAdclientsListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+func (c *AccountsAdclientsListCall) Do() (*AdClients, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "accounts/{accountId}/adclients")
+	urls = strings.Replace(urls, "{accountId}", cleanPathString(c.accountId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(AdClients)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List all hosted ad clients in the specified hosted account.",
+	//   "httpMethod": "GET",
+	//   "id": "adsensehost.accounts.adclients.list",
+	//   "parameterOrder": [
+	//     "accountId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account for which to list ad clients.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "description": "The maximum number of ad clients to include in the response, used for paging.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "10000",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A continuation token, used to page through ad clients. To retrieve the next page, set this parameter to the value of \"nextPageToken\" from the previous response.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "accounts/{accountId}/adclients",
+	//   "response": {
+	//     "$ref": "AdClients"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adsensehost"
+	//   ]
+	// }
+
+}
+
+// method id "adsensehost.accounts.adunits.delete":
+
+type AccountsAdunitsDeleteCall struct {
+	s          *Service
+	accountId  string
+	adClientId string
+	adUnitId   string
+	opt_       map[string]interface{}
+}
+
+// Delete: Delete the specified ad unit from the specified publisher
+// AdSense account.
+func (r *AccountsAdunitsService) Delete(accountId string, adClientId string, adUnitId string) *AccountsAdunitsDeleteCall {
+	c := &AccountsAdunitsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.adClientId = adClientId
+	c.adUnitId = adUnitId
+	return c
+}
+
+func (c *AccountsAdunitsDeleteCall) Do() (*AdUnit, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "accounts/{accountId}/adclients/{adClientId}/adunits/{adUnitId}")
+	urls = strings.Replace(urls, "{accountId}", cleanPathString(c.accountId), 1)
+	urls = strings.Replace(urls, "{adClientId}", cleanPathString(c.adClientId), 1)
+	urls = strings.Replace(urls, "{adUnitId}", cleanPathString(c.adUnitId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(AdUnit)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Delete the specified ad unit from the specified publisher AdSense account.",
+	//   "httpMethod": "DELETE",
+	//   "id": "adsensehost.accounts.adunits.delete",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "adClientId",
+	//     "adUnitId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account which contains the ad unit.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "adClientId": {
+	//       "description": "Ad client for which to get ad unit.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "adUnitId": {
+	//       "description": "Ad unit to delete.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "accounts/{accountId}/adclients/{adClientId}/adunits/{adUnitId}",
+	//   "response": {
+	//     "$ref": "AdUnit"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adsensehost"
+	//   ]
+	// }
+
+}
+
+// method id "adsensehost.accounts.adunits.get":
+
+type AccountsAdunitsGetCall struct {
+	s          *Service
+	accountId  string
+	adClientId string
+	adUnitId   string
+	opt_       map[string]interface{}
+}
+
+// Get: Get the specified host ad unit in this AdSense account.
+func (r *AccountsAdunitsService) Get(accountId string, adClientId string, adUnitId string) *AccountsAdunitsGetCall {
+	c := &AccountsAdunitsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.adClientId = adClientId
+	c.adUnitId = adUnitId
+	return c
+}
+
+func (c *AccountsAdunitsGetCall) Do() (*AdUnit, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "accounts/{accountId}/adclients/{adClientId}/adunits/{adUnitId}")
+	urls = strings.Replace(urls, "{accountId}", cleanPathString(c.accountId), 1)
+	urls = strings.Replace(urls, "{adClientId}", cleanPathString(c.adClientId), 1)
+	urls = strings.Replace(urls, "{adUnitId}", cleanPathString(c.adUnitId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(AdUnit)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get the specified host ad unit in this AdSense account.",
+	//   "httpMethod": "GET",
+	//   "id": "adsensehost.accounts.adunits.get",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "adClientId",
+	//     "adUnitId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account which contains the ad unit.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "adClientId": {
+	//       "description": "Ad client for which to get ad unit.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "adUnitId": {
+	//       "description": "Ad unit to get.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "accounts/{accountId}/adclients/{adClientId}/adunits/{adUnitId}",
+	//   "response": {
+	//     "$ref": "AdUnit"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adsensehost"
+	//   ]
+	// }
+
+}
+
+// method id "adsensehost.accounts.adunits.getAdCode":
+
+type AccountsAdunitsGetAdCodeCall struct {
+	s          *Service
+	accountId  string
+	adClientId string
+	adUnitId   string
+	opt_       map[string]interface{}
+}
+
+// GetAdCode: Get ad code for the specified ad unit, attaching the
+// specified host custom channels.
+func (r *AccountsAdunitsService) GetAdCode(accountId string, adClientId string, adUnitId string) *AccountsAdunitsGetAdCodeCall {
+	c := &AccountsAdunitsGetAdCodeCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.adClientId = adClientId
+	c.adUnitId = adUnitId
+	return c
+}
+
+// HostCustomChannelId sets the optional parameter
+// "hostCustomChannelId": Host custom channel to attach to the ad code.
+func (c *AccountsAdunitsGetAdCodeCall) HostCustomChannelId(hostCustomChannelId string) *AccountsAdunitsGetAdCodeCall {
+	c.opt_["hostCustomChannelId"] = hostCustomChannelId
+	return c
+}
+
+func (c *AccountsAdunitsGetAdCodeCall) Do() (*AdCode, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["hostCustomChannelId"]; ok {
+		params.Set("hostCustomChannelId", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "accounts/{accountId}/adclients/{adClientId}/adunits/{adUnitId}/adcode")
+	urls = strings.Replace(urls, "{accountId}", cleanPathString(c.accountId), 1)
+	urls = strings.Replace(urls, "{adClientId}", cleanPathString(c.adClientId), 1)
+	urls = strings.Replace(urls, "{adUnitId}", cleanPathString(c.adUnitId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(AdCode)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get ad code for the specified ad unit, attaching the specified host custom channels.",
+	//   "httpMethod": "GET",
+	//   "id": "adsensehost.accounts.adunits.getAdCode",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "adClientId",
+	//     "adUnitId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account which contains the ad client.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "adClientId": {
+	//       "description": "Ad client with contains the ad unit.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "adUnitId": {
+	//       "description": "Ad unit to get the code for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "hostCustomChannelId": {
+	//       "description": "Host custom channel to attach to the ad code.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "accounts/{accountId}/adclients/{adClientId}/adunits/{adUnitId}/adcode",
+	//   "response": {
+	//     "$ref": "AdCode"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adsensehost"
+	//   ]
+	// }
+
+}
+
+// method id "adsensehost.accounts.adunits.insert":
+
+type AccountsAdunitsInsertCall struct {
+	s          *Service
+	accountId  string
+	adClientId string
+	adunit     *AdUnit
+	opt_       map[string]interface{}
+}
+
+// Insert: Insert the supplied ad unit into the specified publisher
+// AdSense account.
+func (r *AccountsAdunitsService) Insert(accountId string, adClientId string, adunit *AdUnit) *AccountsAdunitsInsertCall {
+	c := &AccountsAdunitsInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.adClientId = adClientId
+	c.adunit = adunit
+	return c
+}
+
+func (c *AccountsAdunitsInsertCall) Do() (*AdUnit, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.adunit)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "accounts/{accountId}/adclients/{adClientId}/adunits")
+	urls = strings.Replace(urls, "{accountId}", cleanPathString(c.accountId), 1)
+	urls = strings.Replace(urls, "{adClientId}", cleanPathString(c.adClientId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(AdUnit)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Insert the supplied ad unit into the specified publisher AdSense account.",
+	//   "httpMethod": "POST",
+	//   "id": "adsensehost.accounts.adunits.insert",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "adClientId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account which will contain the ad unit.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "adClientId": {
+	//       "description": "Ad client into which to insert the ad unit.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "accounts/{accountId}/adclients/{adClientId}/adunits",
+	//   "request": {
+	//     "$ref": "AdUnit"
+	//   },
+	//   "response": {
+	//     "$ref": "AdUnit"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adsensehost"
+	//   ]
+	// }
+
+}
+
+// method id "adsensehost.accounts.adunits.list":
+
+type AccountsAdunitsListCall struct {
+	s          *Service
+	accountId  string
+	adClientId string
+	opt_       map[string]interface{}
+}
+
+// List: List all ad units in the specified publisher's AdSense account.
+func (r *AccountsAdunitsService) List(accountId string, adClientId string) *AccountsAdunitsListCall {
+	c := &AccountsAdunitsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.adClientId = adClientId
+	return c
+}
+
+// IncludeInactive sets the optional parameter "includeInactive":
+// Whether to include inactive ad units. Default: true.
+func (c *AccountsAdunitsListCall) IncludeInactive(includeInactive bool) *AccountsAdunitsListCall {
+	c.opt_["includeInactive"] = includeInactive
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of ad units to include in the response, used for paging.
+func (c *AccountsAdunitsListCall) MaxResults(maxResults int64) *AccountsAdunitsListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A continuation
+// token, used to page through ad units. To retrieve the next page, set
+// this parameter to the value of "nextPageToken" from the previous
+// response.
+func (c *AccountsAdunitsListCall) PageToken(pageToken string) *AccountsAdunitsListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+func (c *AccountsAdunitsListCall) Do() (*AdUnits, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["includeInactive"]; ok {
+		params.Set("includeInactive", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "accounts/{accountId}/adclients/{adClientId}/adunits")
+	urls = strings.Replace(urls, "{accountId}", cleanPathString(c.accountId), 1)
+	urls = strings.Replace(urls, "{adClientId}", cleanPathString(c.adClientId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(AdUnits)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List all ad units in the specified publisher's AdSense account.",
+	//   "httpMethod": "GET",
+	//   "id": "adsensehost.accounts.adunits.list",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "adClientId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account which contains the ad client.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "adClientId": {
+	//       "description": "Ad client for which to list ad units.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "includeInactive": {
+	//       "description": "Whether to include inactive ad units. Default: true.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "maxResults": {
+	//       "description": "The maximum number of ad units to include in the response, used for paging.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "10000",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A continuation token, used to page through ad units. To retrieve the next page, set this parameter to the value of \"nextPageToken\" from the previous response.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "accounts/{accountId}/adclients/{adClientId}/adunits",
+	//   "response": {
+	//     "$ref": "AdUnits"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adsensehost"
+	//   ]
+	// }
+
+}
+
+// method id "adsensehost.accounts.adunits.patch":
+
+type AccountsAdunitsPatchCall struct {
+	s          *Service
+	accountId  string
+	adClientId string
+	adUnitId   string
+	adunit     *AdUnit
+	opt_       map[string]interface{}
+}
+
+// Patch: Update the supplied ad unit in the specified publisher AdSense
+// account. This method supports patch semantics.
+func (r *AccountsAdunitsService) Patch(accountId string, adClientId string, adUnitId string, adunit *AdUnit) *AccountsAdunitsPatchCall {
+	c := &AccountsAdunitsPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.adClientId = adClientId
+	c.adUnitId = adUnitId
+	c.adunit = adunit
+	return c
+}
+
+func (c *AccountsAdunitsPatchCall) Do() (*AdUnit, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.adunit)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("adUnitId", fmt.Sprintf("%v", c.adUnitId))
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "accounts/{accountId}/adclients/{adClientId}/adunits")
+	urls = strings.Replace(urls, "{accountId}", cleanPathString(c.accountId), 1)
+	urls = strings.Replace(urls, "{adClientId}", cleanPathString(c.adClientId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(AdUnit)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Update the supplied ad unit in the specified publisher AdSense account. This method supports patch semantics.",
+	//   "httpMethod": "PATCH",
+	//   "id": "adsensehost.accounts.adunits.patch",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "adClientId",
+	//     "adUnitId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account which contains the ad client.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "adClientId": {
+	//       "description": "Ad client which contains the ad unit.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "adUnitId": {
+	//       "description": "Ad unit to get.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "accounts/{accountId}/adclients/{adClientId}/adunits",
+	//   "request": {
+	//     "$ref": "AdUnit"
+	//   },
+	//   "response": {
+	//     "$ref": "AdUnit"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adsensehost"
+	//   ]
+	// }
+
+}
+
+// method id "adsensehost.accounts.adunits.update":
+
+type AccountsAdunitsUpdateCall struct {
+	s          *Service
+	accountId  string
+	adClientId string
+	adunit     *AdUnit
+	opt_       map[string]interface{}
+}
+
+// Update: Update the supplied ad unit in the specified publisher
+// AdSense account.
+func (r *AccountsAdunitsService) Update(accountId string, adClientId string, adunit *AdUnit) *AccountsAdunitsUpdateCall {
+	c := &AccountsAdunitsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.adClientId = adClientId
+	c.adunit = adunit
+	return c
+}
+
+func (c *AccountsAdunitsUpdateCall) Do() (*AdUnit, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.adunit)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "accounts/{accountId}/adclients/{adClientId}/adunits")
+	urls = strings.Replace(urls, "{accountId}", cleanPathString(c.accountId), 1)
+	urls = strings.Replace(urls, "{adClientId}", cleanPathString(c.adClientId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(AdUnit)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Update the supplied ad unit in the specified publisher AdSense account.",
+	//   "httpMethod": "PUT",
+	//   "id": "adsensehost.accounts.adunits.update",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "adClientId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account which contains the ad client.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "adClientId": {
+	//       "description": "Ad client which contains the ad unit.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "accounts/{accountId}/adclients/{adClientId}/adunits",
+	//   "request": {
+	//     "$ref": "AdUnit"
+	//   },
+	//   "response": {
+	//     "$ref": "AdUnit"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adsensehost"
+	//   ]
+	// }
+
+}
+
+// method id "adsensehost.accounts.reports.generate":
+
+type AccountsReportsGenerateCall struct {
+	s         *Service
+	accountId string
+	startDate string
+	endDate   string
+	opt_      map[string]interface{}
+}
+
+// Generate: Generate an AdSense report based on the report request sent
+// in the query parameters. Returns the result as JSON; to retrieve
+// output in CSV format specify "alt=csv" as a query parameter.
+func (r *AccountsReportsService) Generate(accountId string, startDate string, endDate string) *AccountsReportsGenerateCall {
+	c := &AccountsReportsGenerateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.startDate = startDate
+	c.endDate = endDate
+	return c
+}
+
+// Dimension sets the optional parameter "dimension": Dimensions to base
+// the report on.
+func (c *AccountsReportsGenerateCall) Dimension(dimension string) *AccountsReportsGenerateCall {
+	c.opt_["dimension"] = dimension
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filters to be run on the
+// report.
+func (c *AccountsReportsGenerateCall) Filter(filter string) *AccountsReportsGenerateCall {
+	c.opt_["filter"] = filter
+	return c
+}
+
+// Locale sets the optional parameter "locale": Optional locale to use
+// for translating report output to a local language. Defaults to
+// "en_US" if not specified.
+func (c *AccountsReportsGenerateCall) Locale(locale string) *AccountsReportsGenerateCall {
+	c.opt_["locale"] = locale
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of rows of report data to return.
+func (c *AccountsReportsGenerateCall) MaxResults(maxResults int64) *AccountsReportsGenerateCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// Metric sets the optional parameter "metric": Numeric columns to
+// include in the report.
+func (c *AccountsReportsGenerateCall) Metric(metric string) *AccountsReportsGenerateCall {
+	c.opt_["metric"] = metric
+	return c
+}
+
+// Sort sets the optional parameter "sort": The name of a dimension or
+// metric to sort the resulting report on, optionally prefixed with "+"
+// to sort ascending or "-" to sort descending. If no prefix is
+// specified, the column is sorted ascending.
+func (c *AccountsReportsGenerateCall) Sort(sort string) *AccountsReportsGenerateCall {
+	c.opt_["sort"] = sort
+	return c
+}
+
+// StartIndex sets the optional parameter "startIndex": Index of the
+// first row of report data to return.
+func (c *AccountsReportsGenerateCall) StartIndex(startIndex int64) *AccountsReportsGenerateCall {
+	c.opt_["startIndex"] = startIndex
+	return c
+}
+
+func (c *AccountsReportsGenerateCall) Do() (*Report, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("endDate", fmt.Sprintf("%v", c.endDate))
+	params.Set("startDate", fmt.Sprintf("%v", c.startDate))
+	if v, ok := c.opt_["dimension"]; ok {
+		params.Set("dimension", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["filter"]; ok {
+		params.Set("filter", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["locale"]; ok {
+		params.Set("locale", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["metric"]; ok {
+		params.Set("metric", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["sort"]; ok {
+		params.Set("sort", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["startIndex"]; ok {
+		params.Set("startIndex", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "accounts/{accountId}/reports")
+	urls = strings.Replace(urls, "{accountId}", cleanPathString(c.accountId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Report)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Generate an AdSense report based on the report request sent in the query parameters. Returns the result as JSON; to retrieve output in CSV format specify \"alt=csv\" as a query parameter.",
+	//   "httpMethod": "GET",
+	//   "id": "adsensehost.accounts.reports.generate",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "startDate",
+	//     "endDate"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Hosted account upon which to report.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "dimension": {
+	//       "description": "Dimensions to base the report on.",
+	//       "location": "query",
+	//       "pattern": "[a-zA-Z_]+",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "endDate": {
+	//       "description": "End of the date range to report on in \"YYYY-MM-DD\" format, inclusive.",
+	//       "location": "query",
+	//       "pattern": "\\d{4}-\\d{2}-\\d{2}|(today|startOfMonth|startOfYear)(([\\-\\+]\\d+[dwmy]){0,2}?)",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "filter": {
+	//       "description": "Filters to be run on the report.",
+	//       "location": "query",
+	//       "pattern": "[a-zA-Z_]+(==|=@).+",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "locale": {
+	//       "description": "Optional locale to use for translating report output to a local language. Defaults to \"en_US\" if not specified.",
+	//       "location": "query",
+	//       "pattern": "[a-zA-Z_]+",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "description": "The maximum number of rows of report data to return.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "50000",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "metric": {
+	//       "description": "Numeric columns to include in the report.",
+	//       "location": "query",
+	//       "pattern": "[a-zA-Z_]+",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "sort": {
+	//       "description": "The name of a dimension or metric to sort the resulting report on, optionally prefixed with \"+\" to sort ascending or \"-\" to sort descending. If no prefix is specified, the column is sorted ascending.",
+	//       "location": "query",
+	//       "pattern": "(\\+|-)?[a-zA-Z_]+",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "startDate": {
+	//       "description": "Start of the date range to report on in \"YYYY-MM-DD\" format, inclusive.",
+	//       "location": "query",
+	//       "pattern": "\\d{4}-\\d{2}-\\d{2}|(today|startOfMonth|startOfYear)(([\\-\\+]\\d+[dwmy]){0,2}?)",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "startIndex": {
+	//       "description": "Index of the first row of report data to return.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "5000",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     }
+	//   },
+	//   "path": "accounts/{accountId}/reports",
+	//   "response": {
+	//     "$ref": "Report"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/adsensehost"

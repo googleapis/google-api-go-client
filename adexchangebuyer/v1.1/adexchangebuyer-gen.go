@@ -47,9 +47,9 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
-	s.Accounts = &AccountsService{s: s}
-	s.Creatives = &CreativesService{s: s}
-	s.DirectDeals = &DirectDealsService{s: s}
+	s.Accounts = NewAccountsService(s)
+	s.Creatives = NewCreativesService(s)
+	s.DirectDeals = NewDirectDealsService(s)
 	return s, nil
 }
 
@@ -63,12 +63,27 @@ type Service struct {
 	DirectDeals *DirectDealsService
 }
 
+func NewAccountsService(s *Service) *AccountsService {
+	rs := &AccountsService{s: s}
+	return rs
+}
+
 type AccountsService struct {
 	s *Service
 }
 
+func NewCreativesService(s *Service) *CreativesService {
+	rs := &CreativesService{s: s}
+	return rs
+}
+
 type CreativesService struct {
 	s *Service
+}
+
+func NewDirectDealsService(s *Service) *DirectDealsService {
+	rs := &DirectDealsService{s: s}
+	return rs
 }
 
 type DirectDealsService struct {

@@ -41,9 +41,9 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
-	s.Detections = &DetectionsService{s: s}
-	s.Languages = &LanguagesService{s: s}
-	s.Translations = &TranslationsService{s: s}
+	s.Detections = NewDetectionsService(s)
+	s.Languages = NewLanguagesService(s)
+	s.Translations = NewTranslationsService(s)
 	return s, nil
 }
 
@@ -57,12 +57,27 @@ type Service struct {
 	Translations *TranslationsService
 }
 
+func NewDetectionsService(s *Service) *DetectionsService {
+	rs := &DetectionsService{s: s}
+	return rs
+}
+
 type DetectionsService struct {
 	s *Service
 }
 
+func NewLanguagesService(s *Service) *LanguagesService {
+	rs := &LanguagesService{s: s}
+	return rs
+}
+
 type LanguagesService struct {
 	s *Service
+}
+
+func NewTranslationsService(s *Service) *TranslationsService {
+	rs := &TranslationsService{s: s}
+	return rs
 }
 
 type TranslationsService struct {

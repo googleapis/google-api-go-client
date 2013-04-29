@@ -1,19 +1,19 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/kQn9hPBTFn-Z3Y6jDFUjB1wsLJk\"",
+ "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/ml4Buz_9MjvD_tExKw-NrpAQxDg\"",
  "discoveryVersion": "v1",
  "id": "adexchangeseller:v1",
  "name": "adexchangeseller",
  "canonicalName": "Ad Exchange Seller",
  "version": "v1",
- "revision": "20130403",
+ "revision": "20130411",
  "title": "Ad Exchange Seller API",
  "description": "Gives Ad Exchange seller users access to their inventory and the ability to generate reports",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/doubleclick-16.gif",
   "x32": "http://www.google.com/images/icons/product/doubleclick-32.gif"
  },
- "documentationLink": "https://developers.google.com/adsense/management/",
+ "documentationLink": "https://developers.google.com/ad-exchange/seller-rest/",
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/adexchangeseller/v1/",
  "basePath": "/adexchangeseller/v1/",

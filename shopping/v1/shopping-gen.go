@@ -47,7 +47,7 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
-	s.Products = &ProductsService{s: s}
+	s.Products = NewProductsService(s)
 	return s, nil
 }
 
@@ -55,6 +55,11 @@ type Service struct {
 	client *http.Client
 
 	Products *ProductsService
+}
+
+func NewProductsService(s *Service) *ProductsService {
+	rs := &ProductsService{s: s}
+	return rs
 }
 
 type ProductsService struct {

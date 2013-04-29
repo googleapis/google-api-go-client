@@ -1,6 +1,6 @@
 // Package adexchangeseller provides access to the Ad Exchange Seller API.
 //
-// See https://developers.google.com/adsense/management/
+// See https://developers.google.com/ad-exchange/seller-rest/
 //
 // Usage example:
 //
@@ -50,11 +50,11 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
-	s.Adclients = &AdclientsService{s: s}
-	s.Adunits = &AdunitsService{s: s}
-	s.Customchannels = &CustomchannelsService{s: s}
-	s.Reports = &ReportsService{s: s}
-	s.Urlchannels = &UrlchannelsService{s: s}
+	s.Adclients = NewAdclientsService(s)
+	s.Adunits = NewAdunitsService(s)
+	s.Customchannels = NewCustomchannelsService(s)
+	s.Reports = NewReportsService(s)
+	s.Urlchannels = NewUrlchannelsService(s)
 	return s, nil
 }
 
@@ -72,20 +72,81 @@ type Service struct {
 	Urlchannels *UrlchannelsService
 }
 
+func NewAdclientsService(s *Service) *AdclientsService {
+	rs := &AdclientsService{s: s}
+	return rs
+}
+
 type AdclientsService struct {
 	s *Service
 }
 
+func NewAdunitsService(s *Service) *AdunitsService {
+	rs := &AdunitsService{s: s}
+	rs.Customchannels = NewAdunitsCustomchannelsService(s)
+	return rs
+}
+
 type AdunitsService struct {
 	s *Service
+
+	Customchannels *AdunitsCustomchannelsService
+}
+
+func NewAdunitsCustomchannelsService(s *Service) *AdunitsCustomchannelsService {
+	rs := &AdunitsCustomchannelsService{s: s}
+	return rs
+}
+
+type AdunitsCustomchannelsService struct {
+	s *Service
+}
+
+func NewCustomchannelsService(s *Service) *CustomchannelsService {
+	rs := &CustomchannelsService{s: s}
+	rs.Adunits = NewCustomchannelsAdunitsService(s)
+	return rs
 }
 
 type CustomchannelsService struct {
 	s *Service
+
+	Adunits *CustomchannelsAdunitsService
+}
+
+func NewCustomchannelsAdunitsService(s *Service) *CustomchannelsAdunitsService {
+	rs := &CustomchannelsAdunitsService{s: s}
+	return rs
+}
+
+type CustomchannelsAdunitsService struct {
+	s *Service
+}
+
+func NewReportsService(s *Service) *ReportsService {
+	rs := &ReportsService{s: s}
+	rs.Saved = NewReportsSavedService(s)
+	return rs
 }
 
 type ReportsService struct {
 	s *Service
+
+	Saved *ReportsSavedService
+}
+
+func NewReportsSavedService(s *Service) *ReportsSavedService {
+	rs := &ReportsSavedService{s: s}
+	return rs
+}
+
+type ReportsSavedService struct {
+	s *Service
+}
+
+func NewUrlchannelsService(s *Service) *UrlchannelsService {
+	rs := &UrlchannelsService{s: s}
+	return rs
 }
 
 type UrlchannelsService struct {
@@ -612,6 +673,116 @@ func (c *AdunitsListCall) Do() (*AdUnits, error) {
 
 }
 
+// method id "adexchangeseller.adunits.customchannels.list":
+
+type AdunitsCustomchannelsListCall struct {
+	s          *Service
+	adClientId string
+	adUnitId   string
+	opt_       map[string]interface{}
+}
+
+// List: List all custom channels which the specified ad unit belongs
+// to.
+func (r *AdunitsCustomchannelsService) List(adClientId string, adUnitId string) *AdunitsCustomchannelsListCall {
+	c := &AdunitsCustomchannelsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.adClientId = adClientId
+	c.adUnitId = adUnitId
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of custom channels to include in the response, used for
+// paging.
+func (c *AdunitsCustomchannelsListCall) MaxResults(maxResults int64) *AdunitsCustomchannelsListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A continuation
+// token, used to page through custom channels. To retrieve the next
+// page, set this parameter to the value of "nextPageToken" from the
+// previous response.
+func (c *AdunitsCustomchannelsListCall) PageToken(pageToken string) *AdunitsCustomchannelsListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+func (c *AdunitsCustomchannelsListCall) Do() (*CustomChannels, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangeseller/v1/", "adclients/{adClientId}/adunits/{adUnitId}/customchannels")
+	urls = strings.Replace(urls, "{adClientId}", cleanPathString(c.adClientId), 1)
+	urls = strings.Replace(urls, "{adUnitId}", cleanPathString(c.adUnitId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(CustomChannels)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List all custom channels which the specified ad unit belongs to.",
+	//   "httpMethod": "GET",
+	//   "id": "adexchangeseller.adunits.customchannels.list",
+	//   "parameterOrder": [
+	//     "adClientId",
+	//     "adUnitId"
+	//   ],
+	//   "parameters": {
+	//     "adClientId": {
+	//       "description": "Ad client which contains the ad unit.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "adUnitId": {
+	//       "description": "Ad unit for which to list custom channels.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "description": "The maximum number of custom channels to include in the response, used for paging.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "10000",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A continuation token, used to page through custom channels. To retrieve the next page, set this parameter to the value of \"nextPageToken\" from the previous response.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "adclients/{adClientId}/adunits/{adUnitId}/customchannels",
+	//   "response": {
+	//     "$ref": "CustomChannels"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.seller",
+	//     "https://www.googleapis.com/auth/adexchange.seller.readonly"
+	//   ]
+	// }
+
+}
+
 // method id "adexchangeseller.customchannels.get":
 
 type CustomchannelsGetCall struct {
@@ -776,6 +947,129 @@ func (c *CustomchannelsListCall) Do() (*CustomChannels, error) {
 	//   "path": "adclients/{adClientId}/customchannels",
 	//   "response": {
 	//     "$ref": "CustomChannels"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.seller",
+	//     "https://www.googleapis.com/auth/adexchange.seller.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangeseller.customchannels.adunits.list":
+
+type CustomchannelsAdunitsListCall struct {
+	s               *Service
+	adClientId      string
+	customChannelId string
+	opt_            map[string]interface{}
+}
+
+// List: List all ad units in the specified custom channel.
+func (r *CustomchannelsAdunitsService) List(adClientId string, customChannelId string) *CustomchannelsAdunitsListCall {
+	c := &CustomchannelsAdunitsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.adClientId = adClientId
+	c.customChannelId = customChannelId
+	return c
+}
+
+// IncludeInactive sets the optional parameter "includeInactive":
+// Whether to include inactive ad units. Default: true.
+func (c *CustomchannelsAdunitsListCall) IncludeInactive(includeInactive bool) *CustomchannelsAdunitsListCall {
+	c.opt_["includeInactive"] = includeInactive
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of ad units to include in the response, used for paging.
+func (c *CustomchannelsAdunitsListCall) MaxResults(maxResults int64) *CustomchannelsAdunitsListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A continuation
+// token, used to page through ad units. To retrieve the next page, set
+// this parameter to the value of "nextPageToken" from the previous
+// response.
+func (c *CustomchannelsAdunitsListCall) PageToken(pageToken string) *CustomchannelsAdunitsListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+func (c *CustomchannelsAdunitsListCall) Do() (*AdUnits, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["includeInactive"]; ok {
+		params.Set("includeInactive", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangeseller/v1/", "adclients/{adClientId}/customchannels/{customChannelId}/adunits")
+	urls = strings.Replace(urls, "{adClientId}", cleanPathString(c.adClientId), 1)
+	urls = strings.Replace(urls, "{customChannelId}", cleanPathString(c.customChannelId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(AdUnits)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List all ad units in the specified custom channel.",
+	//   "httpMethod": "GET",
+	//   "id": "adexchangeseller.customchannels.adunits.list",
+	//   "parameterOrder": [
+	//     "adClientId",
+	//     "customChannelId"
+	//   ],
+	//   "parameters": {
+	//     "adClientId": {
+	//       "description": "Ad client which contains the custom channel.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "customChannelId": {
+	//       "description": "Custom channel for which to list ad units.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "includeInactive": {
+	//       "description": "Whether to include inactive ad units. Default: true.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "maxResults": {
+	//       "description": "The maximum number of ad units to include in the response, used for paging.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "10000",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A continuation token, used to page through ad units. To retrieve the next page, set this parameter to the value of \"nextPageToken\" from the previous response.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "adclients/{adClientId}/customchannels/{customChannelId}/adunits",
+	//   "response": {
+	//     "$ref": "AdUnits"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/adexchange.seller",
@@ -982,6 +1276,209 @@ func (c *ReportsGenerateCall) Do() (*Report, error) {
 	//     "https://www.googleapis.com/auth/adexchange.seller.readonly"
 	//   ],
 	//   "supportsMediaDownload": true
+	// }
+
+}
+
+// method id "adexchangeseller.reports.saved.generate":
+
+type ReportsSavedGenerateCall struct {
+	s             *Service
+	savedReportId string
+	opt_          map[string]interface{}
+}
+
+// Generate: Generate an Ad Exchange report based on the saved report ID
+// sent in the query parameters.
+func (r *ReportsSavedService) Generate(savedReportId string) *ReportsSavedGenerateCall {
+	c := &ReportsSavedGenerateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.savedReportId = savedReportId
+	return c
+}
+
+// Locale sets the optional parameter "locale": Optional locale to use
+// for translating report output to a local language. Defaults to
+// "en_US" if not specified.
+func (c *ReportsSavedGenerateCall) Locale(locale string) *ReportsSavedGenerateCall {
+	c.opt_["locale"] = locale
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of rows of report data to return.
+func (c *ReportsSavedGenerateCall) MaxResults(maxResults int64) *ReportsSavedGenerateCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// StartIndex sets the optional parameter "startIndex": Index of the
+// first row of report data to return.
+func (c *ReportsSavedGenerateCall) StartIndex(startIndex int64) *ReportsSavedGenerateCall {
+	c.opt_["startIndex"] = startIndex
+	return c
+}
+
+func (c *ReportsSavedGenerateCall) Do() (*Report, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["locale"]; ok {
+		params.Set("locale", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["startIndex"]; ok {
+		params.Set("startIndex", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangeseller/v1/", "reports/{savedReportId}")
+	urls = strings.Replace(urls, "{savedReportId}", cleanPathString(c.savedReportId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Report)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Generate an Ad Exchange report based on the saved report ID sent in the query parameters.",
+	//   "httpMethod": "GET",
+	//   "id": "adexchangeseller.reports.saved.generate",
+	//   "parameterOrder": [
+	//     "savedReportId"
+	//   ],
+	//   "parameters": {
+	//     "locale": {
+	//       "description": "Optional locale to use for translating report output to a local language. Defaults to \"en_US\" if not specified.",
+	//       "location": "query",
+	//       "pattern": "[a-zA-Z_]+",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "description": "The maximum number of rows of report data to return.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "maximum": "50000",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "savedReportId": {
+	//       "description": "The saved report to retrieve.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "startIndex": {
+	//       "description": "Index of the first row of report data to return.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "maximum": "5000",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     }
+	//   },
+	//   "path": "reports/{savedReportId}",
+	//   "response": {
+	//     "$ref": "Report"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.seller",
+	//     "https://www.googleapis.com/auth/adexchange.seller.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangeseller.reports.saved.list":
+
+type ReportsSavedListCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// List: List all saved reports in this Ad Exchange account.
+func (r *ReportsSavedService) List() *ReportsSavedListCall {
+	c := &ReportsSavedListCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of saved reports to include in the response, used for paging.
+func (c *ReportsSavedListCall) MaxResults(maxResults int64) *ReportsSavedListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A continuation
+// token, used to page through saved reports. To retrieve the next page,
+// set this parameter to the value of "nextPageToken" from the previous
+// response.
+func (c *ReportsSavedListCall) PageToken(pageToken string) *ReportsSavedListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+func (c *ReportsSavedListCall) Do() (*SavedReports, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangeseller/v1/", "reports/saved")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(SavedReports)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List all saved reports in this Ad Exchange account.",
+	//   "httpMethod": "GET",
+	//   "id": "adexchangeseller.reports.saved.list",
+	//   "parameters": {
+	//     "maxResults": {
+	//       "description": "The maximum number of saved reports to include in the response, used for paging.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "maximum": "100",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A continuation token, used to page through saved reports. To retrieve the next page, set this parameter to the value of \"nextPageToken\" from the previous response.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "reports/saved",
+	//   "response": {
+	//     "$ref": "SavedReports"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.seller",
+	//     "https://www.googleapis.com/auth/adexchange.seller.readonly"
+	//   ]
 	// }
 
 }

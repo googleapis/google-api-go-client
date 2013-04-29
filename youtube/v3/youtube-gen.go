@@ -56,18 +56,18 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
-	s.Activities = &ActivitiesService{s: s}
-	s.Channels = &ChannelsService{s: s}
-	s.GuideCategories = &GuideCategoriesService{s: s}
-	s.LiveBroadcasts = &LiveBroadcastsService{s: s}
-	s.LiveStreams = &LiveStreamsService{s: s}
-	s.Players = &PlayersService{s: s}
-	s.PlaylistItems = &PlaylistItemsService{s: s}
-	s.Playlists = &PlaylistsService{s: s}
-	s.Search = &SearchService{s: s}
-	s.Subscriptions = &SubscriptionsService{s: s}
-	s.VideoCategories = &VideoCategoriesService{s: s}
-	s.Videos = &VideosService{s: s}
+	s.Activities = NewActivitiesService(s)
+	s.Channels = NewChannelsService(s)
+	s.GuideCategories = NewGuideCategoriesService(s)
+	s.LiveBroadcasts = NewLiveBroadcastsService(s)
+	s.LiveStreams = NewLiveStreamsService(s)
+	s.Players = NewPlayersService(s)
+	s.PlaylistItems = NewPlaylistItemsService(s)
+	s.Playlists = NewPlaylistsService(s)
+	s.Search = NewSearchService(s)
+	s.Subscriptions = NewSubscriptionsService(s)
+	s.VideoCategories = NewVideoCategoriesService(s)
+	s.Videos = NewVideosService(s)
 	return s, nil
 }
 
@@ -99,48 +99,108 @@ type Service struct {
 	Videos *VideosService
 }
 
+func NewActivitiesService(s *Service) *ActivitiesService {
+	rs := &ActivitiesService{s: s}
+	return rs
+}
+
 type ActivitiesService struct {
 	s *Service
+}
+
+func NewChannelsService(s *Service) *ChannelsService {
+	rs := &ChannelsService{s: s}
+	return rs
 }
 
 type ChannelsService struct {
 	s *Service
 }
 
+func NewGuideCategoriesService(s *Service) *GuideCategoriesService {
+	rs := &GuideCategoriesService{s: s}
+	return rs
+}
+
 type GuideCategoriesService struct {
 	s *Service
+}
+
+func NewLiveBroadcastsService(s *Service) *LiveBroadcastsService {
+	rs := &LiveBroadcastsService{s: s}
+	return rs
 }
 
 type LiveBroadcastsService struct {
 	s *Service
 }
 
+func NewLiveStreamsService(s *Service) *LiveStreamsService {
+	rs := &LiveStreamsService{s: s}
+	return rs
+}
+
 type LiveStreamsService struct {
 	s *Service
+}
+
+func NewPlayersService(s *Service) *PlayersService {
+	rs := &PlayersService{s: s}
+	return rs
 }
 
 type PlayersService struct {
 	s *Service
 }
 
+func NewPlaylistItemsService(s *Service) *PlaylistItemsService {
+	rs := &PlaylistItemsService{s: s}
+	return rs
+}
+
 type PlaylistItemsService struct {
 	s *Service
+}
+
+func NewPlaylistsService(s *Service) *PlaylistsService {
+	rs := &PlaylistsService{s: s}
+	return rs
 }
 
 type PlaylistsService struct {
 	s *Service
 }
 
+func NewSearchService(s *Service) *SearchService {
+	rs := &SearchService{s: s}
+	return rs
+}
+
 type SearchService struct {
 	s *Service
+}
+
+func NewSubscriptionsService(s *Service) *SubscriptionsService {
+	rs := &SubscriptionsService{s: s}
+	return rs
 }
 
 type SubscriptionsService struct {
 	s *Service
 }
 
+func NewVideoCategoriesService(s *Service) *VideoCategoriesService {
+	rs := &VideoCategoriesService{s: s}
+	return rs
+}
+
 type VideoCategoriesService struct {
 	s *Service
+}
+
+func NewVideosService(s *Service) *VideosService {
+	rs := &VideosService{s: s}
+	return rs
 }
 
 type VideosService struct {
@@ -210,6 +270,11 @@ type ActivityContentDetails struct {
 	// is playlistItem.
 	PlaylistItem *ActivityContentDetailsPlaylistItem `json:"playlistItem,omitempty"`
 
+	// PromotedItem: The promotedItem object contains details about a
+	// resource which is being promoted. This property is only present if
+	// the snippet.type is promotedItem.
+	PromotedItem *ActivityContentDetailsPromotedItem `json:"promotedItem,omitempty"`
+
 	// Recommendation: The recommendation object contains information about
 	// a recommended resource. This property is only present if the
 	// snippet.type is recommendation.
@@ -270,6 +335,23 @@ type ActivityContentDetailsPlaylistItem struct {
 	// ResourceId: The resourceId object contains information about the
 	// resource that was added to the playlist.
 	ResourceId *ResourceId `json:"resourceId,omitempty"`
+}
+
+type ActivityContentDetailsPromotedItem struct {
+	// AdTag: The URL the client should fetch to request a promoted item.
+	AdTag string `json:"adTag,omitempty"`
+
+	// ClickTrackingUrl: The URL the client should ping to indicate that the
+	// user clicked through on this promoted item.
+	ClickTrackingUrl string `json:"clickTrackingUrl,omitempty"`
+
+	// CreativeViewUrl: The URL the client should ping to indicate that the
+	// user was shown this promoted item.
+	CreativeViewUrl string `json:"creativeViewUrl,omitempty"`
+
+	// VideoId: The ID that YouTube uses to uniquely identify the promoted
+	// video.
+	VideoId string `json:"videoId,omitempty"`
 }
 
 type ActivityContentDetailsRecommendation struct {
@@ -379,6 +461,28 @@ type ActivitySnippet struct {
 	Type string `json:"type,omitempty"`
 }
 
+type CallToAction struct {
+	CallToActionId string `json:"callToActionId,omitempty"`
+
+	Description1 string `json:"description1,omitempty"`
+
+	Description2 string `json:"description2,omitempty"`
+
+	DestinationUrl string `json:"destinationUrl,omitempty"`
+
+	DisplayUrl string `json:"displayUrl,omitempty"`
+
+	EndTimeMs int64 `json:"endTimeMs,omitempty,string"`
+
+	Headline string `json:"headline,omitempty"`
+
+	HideTimeMs int64 `json:"hideTimeMs,omitempty,string"`
+
+	ImageUrl string `json:"imageUrl,omitempty"`
+
+	StartTimeMs int64 `json:"startTimeMs,omitempty,string"`
+}
+
 type Channel struct {
 	// BrandingSettings: The brandingSettings object encapsulates
 	// information about the branding of the channel.
@@ -387,6 +491,10 @@ type Channel struct {
 	// ContentDetails: The contentDetails object encapsulates information
 	// about the channel's content.
 	ContentDetails *ChannelContentDetails `json:"contentDetails,omitempty"`
+
+	// ConversionPings: The conversionPings object encapsulates information
+	// about conversion pings that need to be respected by the channel.
+	ConversionPings *ChannelConversionPings `json:"conversionPings,omitempty"`
 
 	// Etag: The ETag for the channel resource.
 	Etag string `json:"etag,omitempty"`
@@ -466,6 +574,28 @@ type ChannelContentDetailsRelatedPlaylists struct {
 	// playlistItems.insert and playlistItems.delete to add or remove items
 	// from that list.
 	WatchLater string `json:"watchLater,omitempty"`
+}
+
+type ChannelConversionPing struct {
+	// Context: Defines the context of the ping.
+	Context string `json:"context,omitempty"`
+
+	// ConversionUrl: The url (without the schema) that the player shall
+	// send the ping to. It's at caller's descretion to decide which schema
+	// to use (http vs https) Example of a returned url:
+	// //googleads.g.doubleclick.net/pagead/
+	// viewthroughconversion/962985656/?data=path%3DtHe_path%3Btype%3D
+	// cview%3Butuid%3DGISQtTNGYqaYl4sKxoVvKA&labe=default The caller must
+	// append biscotti authentication (ms param in case of mobile, for
+	// example) to this ping.
+	ConversionUrl string `json:"conversionUrl,omitempty"`
+}
+
+type ChannelConversionPings struct {
+	// Pings: Pings that the app shall fire (authenticated by biscotti
+	// cookie). Each ping has a context, in which the app must fire the
+	// ping, and a url identifying the ping.
+	Pings []*ChannelConversionPing `json:"pings,omitempty"`
 }
 
 type ChannelListResponse struct {
@@ -633,28 +763,40 @@ type ContentRating struct {
 }
 
 type FeaturedChannel struct {
+	// ChannelId: External id of the featured channel.
 	ChannelId string `json:"channelId,omitempty"`
 
+	// ChannelSnippet: Contains further information about the featured
+	// channel.
 	ChannelSnippet *ChannelSnippet `json:"channelSnippet,omitempty"`
 
+	// EndTimeMs: Stop showing the feature at this playback time.
 	EndTimeMs int64 `json:"endTimeMs,omitempty,string"`
 
+	// FeatureId: Id of this feature (for logging).
 	FeatureId string `json:"featureId,omitempty"`
 
+	// StartTimeMs: Start showing the feature at this playback time.
 	StartTimeMs int64 `json:"startTimeMs,omitempty,string"`
 
+	// WatermarkUrl: URL of the default/custom image url.
 	WatermarkUrl string `json:"watermarkUrl,omitempty"`
 }
 
 type FeaturedVideo struct {
+	// EndTimeMs: Stop showing the feature at the playback time.
 	EndTimeMs int64 `json:"endTimeMs,omitempty,string"`
 
+	// FeatureId: Id of this feature (for logging).
 	FeatureId string `json:"featureId,omitempty"`
 
+	// StartTimeMs: Start showing the feature at this playback time.
 	StartTimeMs int64 `json:"startTimeMs,omitempty,string"`
 
+	// VideoId: The external id of the featured video.
 	VideoId string `json:"videoId,omitempty"`
 
+	// VideoSnippet: Contains further information about the featured video.
 	VideoSnippet *VideoSnippet `json:"videoSnippet,omitempty"`
 }
 
@@ -783,8 +925,14 @@ type ImageSettings struct {
 }
 
 type InvideoFeature struct {
+	CallToAction *CallToAction `json:"callToAction,omitempty"`
+
+	// FeaturedChannel: If present, the playback should display a featured
+	// channel.
 	FeaturedChannel *FeaturedChannel `json:"featuredChannel,omitempty"`
 
+	// FeaturedVideo: If present, the playback should display a featured
+	// video.
 	FeaturedVideo *FeaturedVideo `json:"featuredVideo,omitempty"`
 }
 
@@ -805,13 +953,6 @@ type LiveBroadcast struct {
 	// value will be youtube#liveBroadcast.
 	Kind string `json:"kind,omitempty"`
 
-	// SlateSettings: The slateSettings object contains details about the
-	// content that will display in the player when you show a broadcast
-	// slate. A broadcast slate displays above the video. However, while it
-	// displays, the video continues to play and is also audible in the
-	// background.
-	SlateSettings *LiveBroadcastSlateSettings `json:"slateSettings,omitempty"`
-
 	// Snippet: The snippet object contains basic details about the event,
 	// including its title, description, start time, and end time.
 	Snippet *LiveBroadcastSnippet `json:"snippet,omitempty"`
@@ -821,26 +962,10 @@ type LiveBroadcast struct {
 	Status *LiveBroadcastStatus `json:"status,omitempty"`
 }
 
-type LiveBroadcastSlateSettings struct {
-}
-
 type LiveBroadcastContentDetails struct {
 	// BoundStreamId: This value uniquely identifies the live stream bound
 	// to the broadcast.
 	BoundStreamId string `json:"boundStreamId,omitempty"`
-
-	// EnableArchive: DEPRECATED: Please use recordFromStart instead. This
-	// setting indicates whether the live event should be archived so that
-	// YouTube viewers can watch it at a later date. The default value for
-	// this property is true.
-	//
-	// Important: You must also set the enableDvr
-	// property's value to true if you want the playback to be available
-	// immediately after the broadcast ends. If you set this property's
-	// value to true but do not also set the enableDvr property to true,
-	// there may be a delay of around one day before the archived video will
-	// be available for playback.
-	EnableArchive *LiveBroadcastContentDetailsEnableArchive `json:"enableArchive,omitempty"`
 
 	// EnableContentEncryption: This setting indicates whether YouTube
 	// should enable content encryption for the broadcast.
@@ -886,18 +1011,6 @@ type LiveBroadcastContentDetails struct {
 	// eventState to end to remove the in-stream slate and make your
 	// broadcast stream visible to viewers.
 	StartWithSlate bool `json:"startWithSlate,omitempty"`
-
-	// StartWithSlateCuepoint: DEPRECATED: Please use startWithSlate
-	// instead. This setting indicates whether the broadcast should
-	// automatically begin with an in-stream slate when you update the
-	// broadcast's status to live. After updating the status, you then need
-	// to send a liveCuepoints.insert request that sets the cuepoint's
-	// eventState to end to remove the in-stream slate and make your
-	// broadcast stream visible to viewers.
-	StartWithSlateCuepoint *LiveBroadcastContentDetailsStartWithSlateCuepoint `json:"startWithSlateCuepoint,omitempty"`
-}
-
-type LiveBroadcastContentDetailsEnableArchive struct {
 }
 
 type LiveBroadcastContentDetailsMonitorStream struct {
@@ -923,9 +1036,6 @@ type LiveBroadcastContentDetailsMonitorStream struct {
 	// Note: This property
 	// cannot be updated once the broadcast is in the testing or live state.
 	EnableMonitorStream bool `json:"enableMonitorStream,omitempty"`
-}
-
-type LiveBroadcastContentDetailsStartWithSlateCuepoint struct {
 }
 
 type LiveBroadcastList struct {
@@ -1327,6 +1437,10 @@ type PlaylistItemSnippet struct {
 	// that added the item to the playlist.
 	ChannelId string `json:"channelId,omitempty"`
 
+	// ChannelTitle: Channel title for the channel that the playlist item
+	// belongs to.
+	ChannelTitle string `json:"channelTitle,omitempty"`
+
 	// Description: The item's description.
 	Description string `json:"description,omitempty"`
 
@@ -1360,6 +1474,7 @@ type PlaylistItemSnippet struct {
 }
 
 type PlaylistItemStatus struct {
+	// PrivacyStatus: This resource's privacy status.
 	PrivacyStatus string `json:"privacyStatus,omitempty"`
 }
 
@@ -1398,6 +1513,10 @@ type PlaylistSnippet struct {
 	// that published the playlist.
 	ChannelId string `json:"channelId,omitempty"`
 
+	// ChannelTitle: Channel title for the channel that the video belongs
+	// to.
+	ChannelTitle string `json:"channelTitle,omitempty"`
+
 	// Description: The playlist's description.
 	Description string `json:"description,omitempty"`
 
@@ -1421,8 +1540,10 @@ type PlaylistStatus struct {
 }
 
 type PropertyValue struct {
+	// Property: A property.
 	Property string `json:"property,omitempty"`
 
+	// Value: The property's value.
 	Value string `json:"value,omitempty"`
 }
 
@@ -1432,6 +1553,7 @@ type ResourceId struct {
 	// present if the resourceId.kind value is youtube#channel.
 	ChannelId string `json:"channelId,omitempty"`
 
+	// Kind: The type of the API resource.
 	Kind string `json:"kind,omitempty"`
 
 	// PlaylistId: The ID that YouTube uses to uniquely identify the
@@ -1516,6 +1638,44 @@ type SearchResultSnippet struct {
 }
 
 type Subscription struct {
+	// Address: The address of the receiving entity where notifications are
+	// delivered. Specific to the channel mechanism.
+	Address string `json:"address,omitempty"`
+
+	// Channel: The delivery channel mechanism to use for notifications
+	Channel string `json:"channel,omitempty"`
+
+	// ChannelParams: Additional parameters controlling delivery channel
+	// behavior
+	ChannelParams *SubscriptionChannelParams `json:"channelParams,omitempty"`
+
+	// ClientToken: An arbitrary string associated with the subscription
+	// that is delivered to the target address with each notification for
+	// this subscription.
+	ClientToken string `json:"clientToken,omitempty"`
+
+	// Expiration: The expiration instant for this subscription if it is
+	// defined.
+	Expiration int64 `json:"expiration,omitempty,string"`
+
+	// Id: A UUID for the subscription
+	Id string `json:"id,omitempty"`
+
+	// Kind: A subscription to an API resource
+	Kind string `json:"kind,omitempty"`
+
+	// TopicId: An opaque topic id that identifies the backend resource
+	// which has been subscribed to. Stable across different API versions
+	TopicId string `json:"topicId,omitempty"`
+
+	// TopicUri: The canonicalized URI of the subscribed-to resource.
+	TopicUri string `json:"topicUri,omitempty"`
+}
+
+type SubscriptionChannelParams struct {
+}
+
+type Subscription2 struct {
 	// ContentDetails: The contentDetails object contains basic statistics
 	// about the subscription.
 	ContentDetails *SubscriptionContentDetails `json:"contentDetails,omitempty"`
@@ -1534,6 +1694,10 @@ type Subscription struct {
 	// subscription, including its title and the channel that the user
 	// subscribed to.
 	Snippet *SubscriptionSnippet `json:"snippet,omitempty"`
+
+	// SubscriberSnippet: The subscriberSnippet object contains basic
+	// details about the subscriber.
+	SubscriberSnippet *SubscriptionSubscriberSnippet `json:"subscriberSnippet,omitempty"`
 }
 
 type SubscriptionContentDetails struct {
@@ -1551,7 +1715,7 @@ type SubscriptionListResponse struct {
 	Etag string `json:"etag,omitempty"`
 
 	// Items: A list of subscriptions that match the request criteria.
-	Items []*Subscription `json:"items,omitempty"`
+	Items []*Subscription2 `json:"items,omitempty"`
 
 	// Kind: The type of the API response. For this operation, the value
 	// will be youtube#subscriptionListResponse.
@@ -1575,6 +1739,10 @@ type SubscriptionSnippet struct {
 	// subscriber's channel.
 	ChannelId string `json:"channelId,omitempty"`
 
+	// ChannelTitle: Channel title for the channel that the subscription
+	// belongs to.
+	ChannelTitle string `json:"channelTitle,omitempty"`
+
 	// Description: The subscription's details.
 	Description string `json:"description,omitempty"`
 
@@ -1586,13 +1754,27 @@ type SubscriptionSnippet struct {
 	// the user subscribed to.
 	ResourceId *ResourceId `json:"resourceId,omitempty"`
 
-	// Thumbnails: A map of thumbnail images associated with the
-	// subscription. For each object in the map, the key is the name of the
-	// thumbnail image, and the value is an object that contains other
-	// information about the thumbnail.
+	// Thumbnails: A map of thumbnail images associated with the video. For
+	// each object in the map, the key is the name of the thumbnail image,
+	// and the value is an object that contains other information about the
+	// thumbnail.
 	Thumbnails *ThumbnailDetails `json:"thumbnails,omitempty"`
 
 	// Title: The subscription's title.
+	Title string `json:"title,omitempty"`
+}
+
+type SubscriptionSubscriberSnippet struct {
+	// ChannelId: The channel ID of the subscriber.
+	ChannelId string `json:"channelId,omitempty"`
+
+	// Description: The description of the subscriber.
+	Description string `json:"description,omitempty"`
+
+	// Thumbnails: Thumbnails for this subscriber.
+	Thumbnails *ThumbnailDetails `json:"thumbnails,omitempty"`
+
+	// Title: The title of the subscriber.
 	Title string `json:"title,omitempty"`
 }
 
@@ -1608,14 +1790,19 @@ type Thumbnail struct {
 }
 
 type ThumbnailDetails struct {
+	// Default: The default image for this resource.
 	Default *Thumbnail `json:"default,omitempty"`
 
+	// High: The high quality image for this resource.
 	High *Thumbnail `json:"high,omitempty"`
 
+	// Maxres: The maximum resolution quality image for this resource.
 	Maxres *Thumbnail `json:"maxres,omitempty"`
 
+	// Medium: The medium quality image for this resource.
 	Medium *Thumbnail `json:"medium,omitempty"`
 
+	// Standard: The standard quality image for this resource.
 	Standard *Thumbnail `json:"standard,omitempty"`
 }
 
@@ -1627,6 +1814,11 @@ type Video struct {
 	// the video content, including the length of the video and its aspect
 	// ratio.
 	ContentDetails *VideoContentDetails `json:"contentDetails,omitempty"`
+
+	// ConversionPings: The conversionPings object encapsulates information
+	// about url pings that need to be respected by the App in different
+	// video contexts.
+	ConversionPings *VideoConversionPings `json:"conversionPings,omitempty"`
 
 	// Etag: The ETag of the video resource.
 	Etag string `json:"etag,omitempty"`
@@ -1748,6 +1940,7 @@ type VideoCategorySnippet struct {
 	// ChannelId: The YouTube channel that created the video category.
 	ChannelId string `json:"channelId,omitempty"`
 
+	// Title: The video category's title.
 	Title string `json:"title,omitempty"`
 }
 
@@ -1807,6 +2000,28 @@ type VideoContentDetailsRegionRestriction struct {
 	// this property is present and contains an empty list, the video is
 	// viewable in all countries.
 	Blocked []string `json:"blocked,omitempty"`
+}
+
+type VideoConversionPing struct {
+	// Context: Defines the context of the ping.
+	Context string `json:"context,omitempty"`
+
+	// ConversionUrl: The url (without the schema) that the app shall send
+	// the ping to. It's at caller's descretion to decide which schema to
+	// use (http vs https) Example of a returned url:
+	// //googleads.g.doubleclick.net/pagead/
+	// viewthroughconversion/962985656/?data=path%3DtHe_path%3Btype%3D
+	// like%3Butuid%3DGISQtTNGYqaYl4sKxoVvKA%3Bytvid%3DUrIaJUvIQDg&labe=defau
+	// lt The caller must append biscotti authentication (ms param in case
+	// of mobile, for example) to this ping.
+	ConversionUrl string `json:"conversionUrl,omitempty"`
+}
+
+type VideoConversionPings struct {
+	// Pings: Pings that the app shall fire for a video (authenticated by
+	// biscotti cookie). Each ping has a context, in which the app must fire
+	// the ping, and a url identifying the ping.
+	Pings []*VideoConversionPing `json:"pings,omitempty"`
 }
 
 type VideoFileDetails struct {
@@ -1904,6 +2119,18 @@ type VideoFileDetailsVideoStream struct {
 	// calculate the video's encoding aspect ratio as
 	// width_pixels / height_pixels.
 	WidthPixels int64 `json:"widthPixels,omitempty"`
+}
+
+type VideoGetRatingResponse struct {
+	// Etag: The ETag of the response.
+	Etag string `json:"etag,omitempty"`
+
+	// Items: A list of ratings that match the request criteria.
+	Items []*VideoRating `json:"items,omitempty"`
+
+	// Kind: The type of the API response. For this operation, the value
+	// will be youtube#videoGetRatingResponse.
+	Kind string `json:"kind,omitempty"`
 }
 
 type VideoListResponse struct {
@@ -2007,6 +2234,14 @@ type VideoProjectDetails struct {
 	// Tags: A list of project tags associated with the video during the
 	// upload.
 	Tags []string `json:"tags,omitempty"`
+}
+
+type VideoRating struct {
+	// Rating: Rating of a video.
+	Rating string `json:"rating,omitempty"`
+
+	// VideoId: The ID that YouTube uses to uniquely identify the video.
+	VideoId string `json:"videoId,omitempty"`
 }
 
 type VideoRecordingDetails struct {
@@ -2848,6 +3083,121 @@ func (c *LiveBroadcastsBindCall) Do() (*LiveBroadcast, error) {
 
 }
 
+// method id "youtube.liveBroadcasts.control":
+
+type LiveBroadcastsControlCall struct {
+	s    *Service
+	id   string
+	part string
+	opt_ map[string]interface{}
+}
+
+// Control: Control the slate of the broadacast.
+func (r *LiveBroadcastsService) Control(id string, part string) *LiveBroadcastsControlCall {
+	c := &LiveBroadcastsControlCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	c.part = part
+	return c
+}
+
+// DisplaySlate sets the optional parameter "displaySlate": The
+// displaySlate parameter specifies whether to enable or disable the
+// slate.
+func (c *LiveBroadcastsControlCall) DisplaySlate(displaySlate bool) *LiveBroadcastsControlCall {
+	c.opt_["displaySlate"] = displaySlate
+	return c
+}
+
+// OffsetTimeMs sets the optional parameter "offsetTimeMs": The
+// offsetTimeMs parameter specifies a point in time in the video when
+// the specified action (e.g. display a slate) is executed. The property
+// value identifies a positive time offset, in milliseconds, from the
+// beginning of the monitor stream. Though measured in milliseconds, the
+// value is actually an approximation, and YouTube will act as closely
+// as possible to that time. If not specified, it indicates that the
+// action should be performed as soon as possible. If your broadcast
+// stream is not delayed, then it should not be specified. However, if
+// your broadcast stream is delayed, then the parameter can specify the
+// time when the operation should be executed. See the Getting started
+// guide for more details. Note: The offset is measured from the time
+// that the testing phase began.
+func (c *LiveBroadcastsControlCall) OffsetTimeMs(offsetTimeMs uint64) *LiveBroadcastsControlCall {
+	c.opt_["offsetTimeMs"] = offsetTimeMs
+	return c
+}
+
+func (c *LiveBroadcastsControlCall) Do() (*LiveBroadcast, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("id", fmt.Sprintf("%v", c.id))
+	params.Set("part", fmt.Sprintf("%v", c.part))
+	if v, ok := c.opt_["displaySlate"]; ok {
+		params.Set("displaySlate", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["offsetTimeMs"]; ok {
+		params.Set("offsetTimeMs", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "liveBroadcasts/control")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(LiveBroadcast)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Control the slate of the broadacast.",
+	//   "httpMethod": "POST",
+	//   "id": "youtube.liveBroadcasts.control",
+	//   "parameterOrder": [
+	//     "id",
+	//     "part"
+	//   ],
+	//   "parameters": {
+	//     "displaySlate": {
+	//       "description": "The displaySlate parameter specifies whether to enable or disable the slate.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "id": {
+	//       "description": "The id parameter specifies the YouTube live broadcast ID for the resource that is being deleted.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "offsetTimeMs": {
+	//       "description": "The offsetTimeMs parameter specifies a point in time in the video when the specified action (e.g. display a slate) is executed. The property value identifies a positive time offset, in milliseconds, from the beginning of the monitor stream. Though measured in milliseconds, the value is actually an approximation, and YouTube will act as closely as possible to that time. If not specified, it indicates that the action should be performed as soon as possible. If your broadcast stream is not delayed, then it should not be specified. However, if your broadcast stream is delayed, then the parameter can specify the time when the operation should be executed. See the Getting started guide for more details. Note: The offset is measured from the time that the testing phase began.",
+	//       "format": "uint64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "part": {
+	//       "description": "The part parameter specifies a comma-separated list of one or more liveBroadcast resource properties that the API response will include. The part names that you can include in the parameter value are id, snippet, contentDetails, and status.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "liveBroadcasts/control",
+	//   "response": {
+	//     "$ref": "LiveBroadcast"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/youtube"
+	//   ]
+	// }
+
+}
+
 // method id "youtube.liveBroadcasts.delete":
 
 type LiveBroadcastsDeleteCall struct {
@@ -3483,13 +3833,6 @@ func (c *LiveStreamsListCall) Mine(mine bool) *LiveStreamsListCall {
 	return c
 }
 
-// OnBehalfOf sets the optional parameter "onBehalfOf": ID of the
-// Google+ Page for the channel on whose behalf this request is made
-func (c *LiveStreamsListCall) OnBehalfOf(onBehalfOf string) *LiveStreamsListCall {
-	c.opt_["onBehalfOf"] = onBehalfOf
-	return c
-}
-
 // PageToken sets the optional parameter "pageToken": The pageToken
 // parameter identifies a specific page in the result set that should be
 // returned. In an API response, the nextPageToken and prevPageToken
@@ -3512,9 +3855,6 @@ func (c *LiveStreamsListCall) Do() (*LiveStreamList, error) {
 	}
 	if v, ok := c.opt_["mine"]; ok {
 		params.Set("mine", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["onBehalfOf"]; ok {
-		params.Set("onBehalfOf", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
@@ -3561,11 +3901,6 @@ func (c *LiveStreamsListCall) Do() (*LiveStreamList, error) {
 	//       "description": "The mine parameter can be used to instruct the API to only return streams owned by the authenticated user. Set the parameter value to true to only retrieve your own streams.",
 	//       "location": "query",
 	//       "type": "boolean"
-	//     },
-	//     "onBehalfOf": {
-	//       "description": "ID of the Google+ Page for the channel on whose behalf this request is made",
-	//       "location": "query",
-	//       "type": "string"
 	//     },
 	//     "pageToken": {
 	//       "description": "The pageToken parameter identifies a specific page in the result set that should be returned. In an API response, the nextPageToken and prevPageToken properties identify other pages that could be retrieved.",
@@ -5137,23 +5472,23 @@ func (c *SubscriptionsDeleteCall) Do() error {
 // method id "youtube.subscriptions.insert":
 
 type SubscriptionsInsertCall struct {
-	s            *Service
-	part         string
-	subscription *Subscription
-	opt_         map[string]interface{}
+	s             *Service
+	part          string
+	subscription2 *Subscription2
+	opt_          map[string]interface{}
 }
 
 // Insert: Adds a subscription for the authenticated user's channel.
-func (r *SubscriptionsService) Insert(part string, subscription *Subscription) *SubscriptionsInsertCall {
+func (r *SubscriptionsService) Insert(part string, subscription2 *Subscription2) *SubscriptionsInsertCall {
 	c := &SubscriptionsInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.part = part
-	c.subscription = subscription
+	c.subscription2 = subscription2
 	return c
 }
 
-func (c *SubscriptionsInsertCall) Do() (*Subscription, error) {
+func (c *SubscriptionsInsertCall) Do() (*Subscription2, error) {
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.subscription)
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.subscription2)
 	if err != nil {
 		return nil, err
 	}
@@ -5173,7 +5508,7 @@ func (c *SubscriptionsInsertCall) Do() (*Subscription, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Subscription)
+	ret := new(Subscription2)
 	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
 		return nil, err
 	}
@@ -5195,10 +5530,10 @@ func (c *SubscriptionsInsertCall) Do() (*Subscription, error) {
 	//   },
 	//   "path": "subscriptions",
 	//   "request": {
-	//     "$ref": "Subscription"
+	//     "$ref": "Subscription2"
 	//   },
 	//   "response": {
-	//     "$ref": "Subscription"
+	//     "$ref": "Subscription2"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/youtube",
@@ -5392,6 +5727,60 @@ func (c *SubscriptionsListCall) Do() (*SubscriptionListResponse, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.readonly",
+	//     "https://www.googleapis.com/auth/youtubepartner"
+	//   ]
+	// }
+
+}
+
+// method id "youtube.subscriptions.unsubscribe":
+
+type SubscriptionsUnsubscribeCall struct {
+	s            *Service
+	subscription *Subscription
+	opt_         map[string]interface{}
+}
+
+// Unsubscribe:
+func (r *SubscriptionsService) Unsubscribe(subscription *Subscription) *SubscriptionsUnsubscribeCall {
+	c := &SubscriptionsUnsubscribeCall{s: r.s, opt_: make(map[string]interface{})}
+	c.subscription = subscription
+	return c
+}
+
+func (c *SubscriptionsUnsubscribeCall) Do() error {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.subscription)
+	if err != nil {
+		return err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "subscriptions/unsubscribe")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "httpMethod": "POST",
+	//   "id": "youtube.subscriptions.unsubscribe",
+	//   "path": "subscriptions/unsubscribe",
+	//   "request": {
+	//     "$ref": "Subscription"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.readonly",
 	//     "https://www.googleapis.com/auth/youtubepartner"
 	//   ]
 	// }
@@ -5560,6 +5949,69 @@ func (c *VideosDeleteCall) Do() error {
 	//     }
 	//   },
 	//   "path": "videos",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtubepartner"
+	//   ]
+	// }
+
+}
+
+// method id "youtube.videos.getRating":
+
+type VideosGetRatingCall struct {
+	s    *Service
+	id   string
+	opt_ map[string]interface{}
+}
+
+// GetRating: Get user ratings for videos.
+func (r *VideosService) GetRating(id string) *VideosGetRatingCall {
+	c := &VideosGetRatingCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	return c
+}
+
+func (c *VideosGetRatingCall) Do() (*VideoGetRatingResponse, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("id", fmt.Sprintf("%v", c.id))
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "videos/getRating")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(VideoGetRatingResponse)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get user ratings for videos.",
+	//   "httpMethod": "GET",
+	//   "id": "youtube.videos.getRating",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The id parameter specifies a comma-separated list of the YouTube video ID(s) for the resource(s) that are being retrieved. In a video resource, the id property specifies the video's ID.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "videos/getRating",
+	//   "response": {
+	//     "$ref": "VideoGetRatingResponse"
+	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/youtube",
 	//     "https://www.googleapis.com/auth/youtubepartner"

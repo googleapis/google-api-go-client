@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/LSYDIudGoPYvp_DevFE_bMeNJxM\"",
+ "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/uMwrv3tTmXi585ZE0AKM9F_TFeY\"",
  "discoveryVersion": "v1",
  "id": "storage:v1beta1",
  "name": "storage",
  "version": "v1beta1",
- "revision": "20130412",
+ "revision": "20130419",
  "title": "Cloud Storage API",
  "description": "Lets you store and retrieve potentially-large, immutable data objects.",
  "icons": {

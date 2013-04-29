@@ -63,17 +63,17 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
-	s.About = &AboutService{s: s}
-	s.Apps = &AppsService{s: s}
-	s.Changes = &ChangesService{s: s}
-	s.Children = &ChildrenService{s: s}
-	s.Comments = &CommentsService{s: s}
-	s.Files = &FilesService{s: s}
-	s.Parents = &ParentsService{s: s}
-	s.Permissions = &PermissionsService{s: s}
-	s.Properties = &PropertiesService{s: s}
-	s.Replies = &RepliesService{s: s}
-	s.Revisions = &RevisionsService{s: s}
+	s.About = NewAboutService(s)
+	s.Apps = NewAppsService(s)
+	s.Changes = NewChangesService(s)
+	s.Children = NewChildrenService(s)
+	s.Comments = NewCommentsService(s)
+	s.Files = NewFilesService(s)
+	s.Parents = NewParentsService(s)
+	s.Permissions = NewPermissionsService(s)
+	s.Properties = NewPropertiesService(s)
+	s.Replies = NewRepliesService(s)
+	s.Revisions = NewRevisionsService(s)
 	return s, nil
 }
 
@@ -103,44 +103,99 @@ type Service struct {
 	Revisions *RevisionsService
 }
 
+func NewAboutService(s *Service) *AboutService {
+	rs := &AboutService{s: s}
+	return rs
+}
+
 type AboutService struct {
 	s *Service
+}
+
+func NewAppsService(s *Service) *AppsService {
+	rs := &AppsService{s: s}
+	return rs
 }
 
 type AppsService struct {
 	s *Service
 }
 
+func NewChangesService(s *Service) *ChangesService {
+	rs := &ChangesService{s: s}
+	return rs
+}
+
 type ChangesService struct {
 	s *Service
+}
+
+func NewChildrenService(s *Service) *ChildrenService {
+	rs := &ChildrenService{s: s}
+	return rs
 }
 
 type ChildrenService struct {
 	s *Service
 }
 
+func NewCommentsService(s *Service) *CommentsService {
+	rs := &CommentsService{s: s}
+	return rs
+}
+
 type CommentsService struct {
 	s *Service
+}
+
+func NewFilesService(s *Service) *FilesService {
+	rs := &FilesService{s: s}
+	return rs
 }
 
 type FilesService struct {
 	s *Service
 }
 
+func NewParentsService(s *Service) *ParentsService {
+	rs := &ParentsService{s: s}
+	return rs
+}
+
 type ParentsService struct {
 	s *Service
+}
+
+func NewPermissionsService(s *Service) *PermissionsService {
+	rs := &PermissionsService{s: s}
+	return rs
 }
 
 type PermissionsService struct {
 	s *Service
 }
 
+func NewPropertiesService(s *Service) *PropertiesService {
+	rs := &PropertiesService{s: s}
+	return rs
+}
+
 type PropertiesService struct {
 	s *Service
 }
 
+func NewRepliesService(s *Service) *RepliesService {
+	rs := &RepliesService{s: s}
+	return rs
+}
+
 type RepliesService struct {
 	s *Service
+}
+
+func NewRevisionsService(s *Service) *RevisionsService {
+	rs := &RevisionsService{s: s}
+	return rs
 }
 
 type RevisionsService struct {
@@ -282,6 +337,9 @@ type App struct {
 	// Kind: This is always drive#app.
 	Kind string `json:"kind,omitempty"`
 
+	// LongDescription: A long description of the app.
+	LongDescription string `json:"longDescription,omitempty"`
+
 	// Name: The name of the app.
 	Name string `json:"name,omitempty"`
 
@@ -303,6 +361,9 @@ type App struct {
 
 	// SecondaryMimeTypes: The list of secondary mime types.
 	SecondaryMimeTypes []string `json:"secondaryMimeTypes,omitempty"`
+
+	// ShortDescription: A short description of the app.
+	ShortDescription string `json:"shortDescription,omitempty"`
 
 	// SupportsCreate: Whether this app supports creating new objects.
 	SupportsCreate bool `json:"supportsCreate,omitempty"`
@@ -501,8 +562,14 @@ type CommentList struct {
 	// Kind: This is always drive#commentList.
 	Kind string `json:"kind,omitempty"`
 
+	// NextLink: A link to the next page of comments.
+	NextLink string `json:"nextLink,omitempty"`
+
 	// NextPageToken: The token to use to request the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SelfLink: A link back to this list.
+	SelfLink string `json:"selfLink,omitempty"`
 }
 
 type CommentReply struct {
@@ -551,8 +618,14 @@ type CommentReplyList struct {
 	// Kind: This is always drive#commentReplyList.
 	Kind string `json:"kind,omitempty"`
 
+	// NextLink: A link to the next page of replies.
+	NextLink string `json:"nextLink,omitempty"`
+
 	// NextPageToken: The token to use to request the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SelfLink: A link back to this list.
+	SelfLink string `json:"selfLink,omitempty"`
 }
 
 type File struct {
@@ -565,6 +638,11 @@ type File struct {
 
 	// CreatedDate: Create time for this file (formatted ISO8601 timestamp).
 	CreatedDate string `json:"createdDate,omitempty"`
+
+	// DefaultOpenWithLink: A link to open this file with the user's default
+	// app for this file. Only populated when the drive.apps.readonly scope
+	// is used.
+	DefaultOpenWithLink string `json:"defaultOpenWithLink,omitempty"`
 
 	// Description: A short description of the file.
 	Description string `json:"description,omitempty"`
@@ -649,6 +727,11 @@ type File struct {
 	// RFC 3339 timestamp). This is only mutable on update when the
 	// setModifiedDate parameter is set.
 	ModifiedDate string `json:"modifiedDate,omitempty"`
+
+	// OpenWithLinks: A map of the id of each of the user's apps to a link
+	// to open this file with that app. Only populated when the
+	// drive.apps.readonly scope is used.
+	OpenWithLinks *FileOpenWithLinks `json:"openWithLinks,omitempty"`
 
 	// OriginalFilename: The original filename if the file was uploaded
 	// manually, or the original title if the file was inserted through the
@@ -815,6 +898,9 @@ type FileLabels struct {
 
 	// Viewed: Whether this file has been viewed by this user.
 	Viewed bool `json:"viewed,omitempty"`
+}
+
+type FileOpenWithLinks struct {
 }
 
 type FileThumbnail struct {

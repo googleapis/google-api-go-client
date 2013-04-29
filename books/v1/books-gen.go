@@ -47,12 +47,12 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
-	s.Bookshelves = &BookshelvesService{s: s}
-	s.Cloudloading = &CloudloadingService{s: s}
-	s.Layers = &LayersService{s: s}
-	s.Myconfig = &MyconfigService{s: s}
-	s.Mylibrary = &MylibraryService{s: s}
-	s.Volumes = &VolumesService{s: s}
+	s.Bookshelves = NewBookshelvesService(s)
+	s.Cloudloading = NewCloudloadingService(s)
+	s.Layers = NewLayersService(s)
+	s.Myconfig = NewMyconfigService(s)
+	s.Mylibrary = NewMylibraryService(s)
+	s.Volumes = NewVolumesService(s)
 	return s, nil
 }
 
@@ -72,27 +72,189 @@ type Service struct {
 	Volumes *VolumesService
 }
 
+func NewBookshelvesService(s *Service) *BookshelvesService {
+	rs := &BookshelvesService{s: s}
+	rs.Volumes = NewBookshelvesVolumesService(s)
+	return rs
+}
+
 type BookshelvesService struct {
 	s *Service
+
+	Volumes *BookshelvesVolumesService
+}
+
+func NewBookshelvesVolumesService(s *Service) *BookshelvesVolumesService {
+	rs := &BookshelvesVolumesService{s: s}
+	return rs
+}
+
+type BookshelvesVolumesService struct {
+	s *Service
+}
+
+func NewCloudloadingService(s *Service) *CloudloadingService {
+	rs := &CloudloadingService{s: s}
+	return rs
 }
 
 type CloudloadingService struct {
 	s *Service
 }
 
+func NewLayersService(s *Service) *LayersService {
+	rs := &LayersService{s: s}
+	rs.AnnotationData = NewLayersAnnotationDataService(s)
+	rs.VolumeAnnotations = NewLayersVolumeAnnotationsService(s)
+	return rs
+}
+
 type LayersService struct {
 	s *Service
+
+	AnnotationData *LayersAnnotationDataService
+
+	VolumeAnnotations *LayersVolumeAnnotationsService
+}
+
+func NewLayersAnnotationDataService(s *Service) *LayersAnnotationDataService {
+	rs := &LayersAnnotationDataService{s: s}
+	return rs
+}
+
+type LayersAnnotationDataService struct {
+	s *Service
+}
+
+func NewLayersVolumeAnnotationsService(s *Service) *LayersVolumeAnnotationsService {
+	rs := &LayersVolumeAnnotationsService{s: s}
+	return rs
+}
+
+type LayersVolumeAnnotationsService struct {
+	s *Service
+}
+
+func NewMyconfigService(s *Service) *MyconfigService {
+	rs := &MyconfigService{s: s}
+	return rs
 }
 
 type MyconfigService struct {
 	s *Service
 }
 
+func NewMylibraryService(s *Service) *MylibraryService {
+	rs := &MylibraryService{s: s}
+	rs.Annotations = NewMylibraryAnnotationsService(s)
+	rs.Bookshelves = NewMylibraryBookshelvesService(s)
+	rs.Readingpositions = NewMylibraryReadingpositionsService(s)
+	return rs
+}
+
 type MylibraryService struct {
+	s *Service
+
+	Annotations *MylibraryAnnotationsService
+
+	Bookshelves *MylibraryBookshelvesService
+
+	Readingpositions *MylibraryReadingpositionsService
+}
+
+func NewMylibraryAnnotationsService(s *Service) *MylibraryAnnotationsService {
+	rs := &MylibraryAnnotationsService{s: s}
+	return rs
+}
+
+type MylibraryAnnotationsService struct {
 	s *Service
 }
 
+func NewMylibraryBookshelvesService(s *Service) *MylibraryBookshelvesService {
+	rs := &MylibraryBookshelvesService{s: s}
+	rs.Volumes = NewMylibraryBookshelvesVolumesService(s)
+	return rs
+}
+
+type MylibraryBookshelvesService struct {
+	s *Service
+
+	Volumes *MylibraryBookshelvesVolumesService
+}
+
+func NewMylibraryBookshelvesVolumesService(s *Service) *MylibraryBookshelvesVolumesService {
+	rs := &MylibraryBookshelvesVolumesService{s: s}
+	return rs
+}
+
+type MylibraryBookshelvesVolumesService struct {
+	s *Service
+}
+
+func NewMylibraryReadingpositionsService(s *Service) *MylibraryReadingpositionsService {
+	rs := &MylibraryReadingpositionsService{s: s}
+	return rs
+}
+
+type MylibraryReadingpositionsService struct {
+	s *Service
+}
+
+func NewVolumesService(s *Service) *VolumesService {
+	rs := &VolumesService{s: s}
+	rs.Associated = NewVolumesAssociatedService(s)
+	rs.Mybooks = NewVolumesMybooksService(s)
+	rs.Recommended = NewVolumesRecommendedService(s)
+	rs.Useruploaded = NewVolumesUseruploadedService(s)
+	return rs
+}
+
 type VolumesService struct {
+	s *Service
+
+	Associated *VolumesAssociatedService
+
+	Mybooks *VolumesMybooksService
+
+	Recommended *VolumesRecommendedService
+
+	Useruploaded *VolumesUseruploadedService
+}
+
+func NewVolumesAssociatedService(s *Service) *VolumesAssociatedService {
+	rs := &VolumesAssociatedService{s: s}
+	return rs
+}
+
+type VolumesAssociatedService struct {
+	s *Service
+}
+
+func NewVolumesMybooksService(s *Service) *VolumesMybooksService {
+	rs := &VolumesMybooksService{s: s}
+	return rs
+}
+
+type VolumesMybooksService struct {
+	s *Service
+}
+
+func NewVolumesRecommendedService(s *Service) *VolumesRecommendedService {
+	rs := &VolumesRecommendedService{s: s}
+	return rs
+}
+
+type VolumesRecommendedService struct {
+	s *Service
+}
+
+func NewVolumesUseruploadedService(s *Service) *VolumesUseruploadedService {
+	rs := &VolumesUseruploadedService{s: s}
+	return rs
+}
+
+type VolumesUseruploadedService struct {
 	s *Service
 }
 
@@ -1379,6 +1541,143 @@ func (c *BookshelvesListCall) Do() (*Bookshelves, error) {
 
 }
 
+// method id "books.bookshelves.volumes.list":
+
+type BookshelvesVolumesListCall struct {
+	s      *Service
+	userId string
+	shelf  string
+	opt_   map[string]interface{}
+}
+
+// List: Retrieves volumes in a specific bookshelf for the specified
+// user.
+func (r *BookshelvesVolumesService) List(userId string, shelf string) *BookshelvesVolumesListCall {
+	c := &BookshelvesVolumesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.userId = userId
+	c.shelf = shelf
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum number
+// of results to return
+func (c *BookshelvesVolumesListCall) MaxResults(maxResults int64) *BookshelvesVolumesListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// ShowPreorders sets the optional parameter "showPreorders": Set to
+// true to show pre-ordered books. Defaults to false.
+func (c *BookshelvesVolumesListCall) ShowPreorders(showPreorders bool) *BookshelvesVolumesListCall {
+	c.opt_["showPreorders"] = showPreorders
+	return c
+}
+
+// Source sets the optional parameter "source": String to identify the
+// originator of this request.
+func (c *BookshelvesVolumesListCall) Source(source string) *BookshelvesVolumesListCall {
+	c.opt_["source"] = source
+	return c
+}
+
+// StartIndex sets the optional parameter "startIndex": Index of the
+// first element to return (starts at 0)
+func (c *BookshelvesVolumesListCall) StartIndex(startIndex int64) *BookshelvesVolumesListCall {
+	c.opt_["startIndex"] = startIndex
+	return c
+}
+
+func (c *BookshelvesVolumesListCall) Do() (*Volumes, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["showPreorders"]; ok {
+		params.Set("showPreorders", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["startIndex"]; ok {
+		params.Set("startIndex", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "users/{userId}/bookshelves/{shelf}/volumes")
+	urls = strings.Replace(urls, "{userId}", cleanPathString(c.userId), 1)
+	urls = strings.Replace(urls, "{shelf}", cleanPathString(c.shelf), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Volumes)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves volumes in a specific bookshelf for the specified user.",
+	//   "httpMethod": "GET",
+	//   "id": "books.bookshelves.volumes.list",
+	//   "parameterOrder": [
+	//     "userId",
+	//     "shelf"
+	//   ],
+	//   "parameters": {
+	//     "maxResults": {
+	//       "description": "Maximum number of results to return",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "shelf": {
+	//       "description": "ID of bookshelf to retrieve volumes.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "showPreorders": {
+	//       "description": "Set to true to show pre-ordered books. Defaults to false.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "source": {
+	//       "description": "String to identify the originator of this request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "startIndex": {
+	//       "description": "Index of the first element to return (starts at 0)",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "userId": {
+	//       "description": "ID of user for whom to retrieve bookshelf volumes.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "users/{userId}/bookshelves/{shelf}/volumes",
+	//   "response": {
+	//     "$ref": "Volumes"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/books"
+	//   ]
+	// }
+
+}
+
 // method id "books.cloudloading.addBook":
 
 type CloudloadingAddBookCall struct {
@@ -1770,6 +2069,805 @@ func (c *LayersListCall) Do() (*Layersummaries, error) {
 
 }
 
+// method id "books.layers.annotationData.get":
+
+type LayersAnnotationDataGetCall struct {
+	s                *Service
+	volumeId         string
+	layerId          string
+	annotationDataId string
+	contentVersion   string
+	opt_             map[string]interface{}
+}
+
+// Get: Gets the annotation data.
+func (r *LayersAnnotationDataService) Get(volumeId string, layerId string, annotationDataId string, contentVersion string) *LayersAnnotationDataGetCall {
+	c := &LayersAnnotationDataGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.volumeId = volumeId
+	c.layerId = layerId
+	c.annotationDataId = annotationDataId
+	c.contentVersion = contentVersion
+	return c
+}
+
+// H sets the optional parameter "h": The requested pixel height for any
+// images. If height is provided width must also be provided.
+func (c *LayersAnnotationDataGetCall) H(h int64) *LayersAnnotationDataGetCall {
+	c.opt_["h"] = h
+	return c
+}
+
+// Locale sets the optional parameter "locale": The locale information
+// for the data. ISO-639-1 language and ISO-3166-1 country code. Ex:
+// 'en_US'.
+func (c *LayersAnnotationDataGetCall) Locale(locale string) *LayersAnnotationDataGetCall {
+	c.opt_["locale"] = locale
+	return c
+}
+
+// Scale sets the optional parameter "scale": The requested scale for
+// the image.
+func (c *LayersAnnotationDataGetCall) Scale(scale int64) *LayersAnnotationDataGetCall {
+	c.opt_["scale"] = scale
+	return c
+}
+
+// Source sets the optional parameter "source": String to identify the
+// originator of this request.
+func (c *LayersAnnotationDataGetCall) Source(source string) *LayersAnnotationDataGetCall {
+	c.opt_["source"] = source
+	return c
+}
+
+// W sets the optional parameter "w": The requested pixel width for any
+// images. If width is provided height must also be provided.
+func (c *LayersAnnotationDataGetCall) W(w int64) *LayersAnnotationDataGetCall {
+	c.opt_["w"] = w
+	return c
+}
+
+func (c *LayersAnnotationDataGetCall) Do() (*Annotationdata, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("contentVersion", fmt.Sprintf("%v", c.contentVersion))
+	if v, ok := c.opt_["h"]; ok {
+		params.Set("h", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["locale"]; ok {
+		params.Set("locale", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["scale"]; ok {
+		params.Set("scale", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["w"]; ok {
+		params.Set("w", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "volumes/{volumeId}/layers/{layerId}/data/{annotationDataId}")
+	urls = strings.Replace(urls, "{volumeId}", cleanPathString(c.volumeId), 1)
+	urls = strings.Replace(urls, "{layerId}", cleanPathString(c.layerId), 1)
+	urls = strings.Replace(urls, "{annotationDataId}", cleanPathString(c.annotationDataId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Annotationdata)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the annotation data.",
+	//   "httpMethod": "GET",
+	//   "id": "books.layers.annotationData.get",
+	//   "parameterOrder": [
+	//     "volumeId",
+	//     "layerId",
+	//     "annotationDataId",
+	//     "contentVersion"
+	//   ],
+	//   "parameters": {
+	//     "annotationDataId": {
+	//       "description": "The ID of the annotation data to retrieve.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "contentVersion": {
+	//       "description": "The content version for the volume you are trying to retrieve.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "h": {
+	//       "description": "The requested pixel height for any images. If height is provided width must also be provided.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "layerId": {
+	//       "description": "The ID for the layer to get the annotations.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "locale": {
+	//       "description": "The locale information for the data. ISO-639-1 language and ISO-3166-1 country code. Ex: 'en_US'.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "scale": {
+	//       "description": "The requested scale for the image.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "source": {
+	//       "description": "String to identify the originator of this request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "volumeId": {
+	//       "description": "The volume to retrieve annotations for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "w": {
+	//       "description": "The requested pixel width for any images. If width is provided height must also be provided.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     }
+	//   },
+	//   "path": "volumes/{volumeId}/layers/{layerId}/data/{annotationDataId}",
+	//   "response": {
+	//     "$ref": "Annotationdata"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/books"
+	//   ]
+	// }
+
+}
+
+// method id "books.layers.annotationData.list":
+
+type LayersAnnotationDataListCall struct {
+	s              *Service
+	volumeId       string
+	layerId        string
+	contentVersion string
+	opt_           map[string]interface{}
+}
+
+// List: Gets the annotation data for a volume and layer.
+func (r *LayersAnnotationDataService) List(volumeId string, layerId string, contentVersion string) *LayersAnnotationDataListCall {
+	c := &LayersAnnotationDataListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.volumeId = volumeId
+	c.layerId = layerId
+	c.contentVersion = contentVersion
+	return c
+}
+
+// AnnotationDataId sets the optional parameter "annotationDataId": The
+// list of Annotation Data Ids to retrieve. Pagination is ignored if
+// this is set.
+func (c *LayersAnnotationDataListCall) AnnotationDataId(annotationDataId string) *LayersAnnotationDataListCall {
+	c.opt_["annotationDataId"] = annotationDataId
+	return c
+}
+
+// H sets the optional parameter "h": The requested pixel height for any
+// images. If height is provided width must also be provided.
+func (c *LayersAnnotationDataListCall) H(h int64) *LayersAnnotationDataListCall {
+	c.opt_["h"] = h
+	return c
+}
+
+// Locale sets the optional parameter "locale": The locale information
+// for the data. ISO-639-1 language and ISO-3166-1 country code. Ex:
+// 'en_US'.
+func (c *LayersAnnotationDataListCall) Locale(locale string) *LayersAnnotationDataListCall {
+	c.opt_["locale"] = locale
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum number
+// of results to return
+func (c *LayersAnnotationDataListCall) MaxResults(maxResults int64) *LayersAnnotationDataListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value of the
+// nextToken from the previous page.
+func (c *LayersAnnotationDataListCall) PageToken(pageToken string) *LayersAnnotationDataListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+// Scale sets the optional parameter "scale": The requested scale for
+// the image.
+func (c *LayersAnnotationDataListCall) Scale(scale int64) *LayersAnnotationDataListCall {
+	c.opt_["scale"] = scale
+	return c
+}
+
+// Source sets the optional parameter "source": String to identify the
+// originator of this request.
+func (c *LayersAnnotationDataListCall) Source(source string) *LayersAnnotationDataListCall {
+	c.opt_["source"] = source
+	return c
+}
+
+// UpdatedMax sets the optional parameter "updatedMax": RFC 3339
+// timestamp to restrict to items updated prior to this timestamp
+// (exclusive).
+func (c *LayersAnnotationDataListCall) UpdatedMax(updatedMax string) *LayersAnnotationDataListCall {
+	c.opt_["updatedMax"] = updatedMax
+	return c
+}
+
+// UpdatedMin sets the optional parameter "updatedMin": RFC 3339
+// timestamp to restrict to items updated since this timestamp
+// (inclusive).
+func (c *LayersAnnotationDataListCall) UpdatedMin(updatedMin string) *LayersAnnotationDataListCall {
+	c.opt_["updatedMin"] = updatedMin
+	return c
+}
+
+// W sets the optional parameter "w": The requested pixel width for any
+// images. If width is provided height must also be provided.
+func (c *LayersAnnotationDataListCall) W(w int64) *LayersAnnotationDataListCall {
+	c.opt_["w"] = w
+	return c
+}
+
+func (c *LayersAnnotationDataListCall) Do() (*Annotationsdata, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("contentVersion", fmt.Sprintf("%v", c.contentVersion))
+	if v, ok := c.opt_["annotationDataId"]; ok {
+		params.Set("annotationDataId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["h"]; ok {
+		params.Set("h", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["locale"]; ok {
+		params.Set("locale", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["scale"]; ok {
+		params.Set("scale", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["updatedMax"]; ok {
+		params.Set("updatedMax", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["updatedMin"]; ok {
+		params.Set("updatedMin", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["w"]; ok {
+		params.Set("w", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "volumes/{volumeId}/layers/{layerId}/data")
+	urls = strings.Replace(urls, "{volumeId}", cleanPathString(c.volumeId), 1)
+	urls = strings.Replace(urls, "{layerId}", cleanPathString(c.layerId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Annotationsdata)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the annotation data for a volume and layer.",
+	//   "httpMethod": "GET",
+	//   "id": "books.layers.annotationData.list",
+	//   "parameterOrder": [
+	//     "volumeId",
+	//     "layerId",
+	//     "contentVersion"
+	//   ],
+	//   "parameters": {
+	//     "annotationDataId": {
+	//       "description": "The list of Annotation Data Ids to retrieve. Pagination is ignored if this is set.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "contentVersion": {
+	//       "description": "The content version for the requested volume.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "h": {
+	//       "description": "The requested pixel height for any images. If height is provided width must also be provided.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "layerId": {
+	//       "description": "The ID for the layer to get the annotation data.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "locale": {
+	//       "description": "The locale information for the data. ISO-639-1 language and ISO-3166-1 country code. Ex: 'en_US'.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "description": "Maximum number of results to return",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "200",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The value of the nextToken from the previous page.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "scale": {
+	//       "description": "The requested scale for the image.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "source": {
+	//       "description": "String to identify the originator of this request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "updatedMax": {
+	//       "description": "RFC 3339 timestamp to restrict to items updated prior to this timestamp (exclusive).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "updatedMin": {
+	//       "description": "RFC 3339 timestamp to restrict to items updated since this timestamp (inclusive).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "volumeId": {
+	//       "description": "The volume to retrieve annotation data for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "w": {
+	//       "description": "The requested pixel width for any images. If width is provided height must also be provided.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     }
+	//   },
+	//   "path": "volumes/{volumeId}/layers/{layerId}/data",
+	//   "response": {
+	//     "$ref": "Annotationsdata"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/books"
+	//   ]
+	// }
+
+}
+
+// method id "books.layers.volumeAnnotations.get":
+
+type LayersVolumeAnnotationsGetCall struct {
+	s            *Service
+	volumeId     string
+	layerId      string
+	annotationId string
+	opt_         map[string]interface{}
+}
+
+// Get: Gets the volume annotation.
+func (r *LayersVolumeAnnotationsService) Get(volumeId string, layerId string, annotationId string) *LayersVolumeAnnotationsGetCall {
+	c := &LayersVolumeAnnotationsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.volumeId = volumeId
+	c.layerId = layerId
+	c.annotationId = annotationId
+	return c
+}
+
+// Locale sets the optional parameter "locale": The locale information
+// for the data. ISO-639-1 language and ISO-3166-1 country code. Ex:
+// 'en_US'.
+func (c *LayersVolumeAnnotationsGetCall) Locale(locale string) *LayersVolumeAnnotationsGetCall {
+	c.opt_["locale"] = locale
+	return c
+}
+
+// Source sets the optional parameter "source": String to identify the
+// originator of this request.
+func (c *LayersVolumeAnnotationsGetCall) Source(source string) *LayersVolumeAnnotationsGetCall {
+	c.opt_["source"] = source
+	return c
+}
+
+func (c *LayersVolumeAnnotationsGetCall) Do() (*Volumeannotation, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["locale"]; ok {
+		params.Set("locale", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "volumes/{volumeId}/layers/{layerId}/annotations/{annotationId}")
+	urls = strings.Replace(urls, "{volumeId}", cleanPathString(c.volumeId), 1)
+	urls = strings.Replace(urls, "{layerId}", cleanPathString(c.layerId), 1)
+	urls = strings.Replace(urls, "{annotationId}", cleanPathString(c.annotationId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Volumeannotation)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the volume annotation.",
+	//   "httpMethod": "GET",
+	//   "id": "books.layers.volumeAnnotations.get",
+	//   "parameterOrder": [
+	//     "volumeId",
+	//     "layerId",
+	//     "annotationId"
+	//   ],
+	//   "parameters": {
+	//     "annotationId": {
+	//       "description": "The ID of the volume annotation to retrieve.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "layerId": {
+	//       "description": "The ID for the layer to get the annotations.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "locale": {
+	//       "description": "The locale information for the data. ISO-639-1 language and ISO-3166-1 country code. Ex: 'en_US'.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "source": {
+	//       "description": "String to identify the originator of this request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "volumeId": {
+	//       "description": "The volume to retrieve annotations for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "volumes/{volumeId}/layers/{layerId}/annotations/{annotationId}",
+	//   "response": {
+	//     "$ref": "Volumeannotation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/books"
+	//   ]
+	// }
+
+}
+
+// method id "books.layers.volumeAnnotations.list":
+
+type LayersVolumeAnnotationsListCall struct {
+	s              *Service
+	volumeId       string
+	layerId        string
+	contentVersion string
+	opt_           map[string]interface{}
+}
+
+// List: Gets the volume annotations for a volume and layer.
+func (r *LayersVolumeAnnotationsService) List(volumeId string, layerId string, contentVersion string) *LayersVolumeAnnotationsListCall {
+	c := &LayersVolumeAnnotationsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.volumeId = volumeId
+	c.layerId = layerId
+	c.contentVersion = contentVersion
+	return c
+}
+
+// EndOffset sets the optional parameter "endOffset": The end offset to
+// end retrieving data from.
+func (c *LayersVolumeAnnotationsListCall) EndOffset(endOffset string) *LayersVolumeAnnotationsListCall {
+	c.opt_["endOffset"] = endOffset
+	return c
+}
+
+// EndPosition sets the optional parameter "endPosition": The end
+// position to end retrieving data from.
+func (c *LayersVolumeAnnotationsListCall) EndPosition(endPosition string) *LayersVolumeAnnotationsListCall {
+	c.opt_["endPosition"] = endPosition
+	return c
+}
+
+// Locale sets the optional parameter "locale": The locale information
+// for the data. ISO-639-1 language and ISO-3166-1 country code. Ex:
+// 'en_US'.
+func (c *LayersVolumeAnnotationsListCall) Locale(locale string) *LayersVolumeAnnotationsListCall {
+	c.opt_["locale"] = locale
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum number
+// of results to return
+func (c *LayersVolumeAnnotationsListCall) MaxResults(maxResults int64) *LayersVolumeAnnotationsListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value of the
+// nextToken from the previous page.
+func (c *LayersVolumeAnnotationsListCall) PageToken(pageToken string) *LayersVolumeAnnotationsListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+// ShowDeleted sets the optional parameter "showDeleted": Set to true to
+// return deleted annotations. updatedMin must be in the request to use
+// this. Defaults to false.
+func (c *LayersVolumeAnnotationsListCall) ShowDeleted(showDeleted bool) *LayersVolumeAnnotationsListCall {
+	c.opt_["showDeleted"] = showDeleted
+	return c
+}
+
+// Source sets the optional parameter "source": String to identify the
+// originator of this request.
+func (c *LayersVolumeAnnotationsListCall) Source(source string) *LayersVolumeAnnotationsListCall {
+	c.opt_["source"] = source
+	return c
+}
+
+// StartOffset sets the optional parameter "startOffset": The start
+// offset to start retrieving data from.
+func (c *LayersVolumeAnnotationsListCall) StartOffset(startOffset string) *LayersVolumeAnnotationsListCall {
+	c.opt_["startOffset"] = startOffset
+	return c
+}
+
+// StartPosition sets the optional parameter "startPosition": The start
+// position to start retrieving data from.
+func (c *LayersVolumeAnnotationsListCall) StartPosition(startPosition string) *LayersVolumeAnnotationsListCall {
+	c.opt_["startPosition"] = startPosition
+	return c
+}
+
+// UpdatedMax sets the optional parameter "updatedMax": RFC 3339
+// timestamp to restrict to items updated prior to this timestamp
+// (exclusive).
+func (c *LayersVolumeAnnotationsListCall) UpdatedMax(updatedMax string) *LayersVolumeAnnotationsListCall {
+	c.opt_["updatedMax"] = updatedMax
+	return c
+}
+
+// UpdatedMin sets the optional parameter "updatedMin": RFC 3339
+// timestamp to restrict to items updated since this timestamp
+// (inclusive).
+func (c *LayersVolumeAnnotationsListCall) UpdatedMin(updatedMin string) *LayersVolumeAnnotationsListCall {
+	c.opt_["updatedMin"] = updatedMin
+	return c
+}
+
+// VolumeAnnotationsVersion sets the optional parameter
+// "volumeAnnotationsVersion": The version of the volume annotations
+// that you are requesting.
+func (c *LayersVolumeAnnotationsListCall) VolumeAnnotationsVersion(volumeAnnotationsVersion string) *LayersVolumeAnnotationsListCall {
+	c.opt_["volumeAnnotationsVersion"] = volumeAnnotationsVersion
+	return c
+}
+
+func (c *LayersVolumeAnnotationsListCall) Do() (*Volumeannotations, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("contentVersion", fmt.Sprintf("%v", c.contentVersion))
+	if v, ok := c.opt_["endOffset"]; ok {
+		params.Set("endOffset", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["endPosition"]; ok {
+		params.Set("endPosition", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["locale"]; ok {
+		params.Set("locale", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["showDeleted"]; ok {
+		params.Set("showDeleted", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["startOffset"]; ok {
+		params.Set("startOffset", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["startPosition"]; ok {
+		params.Set("startPosition", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["updatedMax"]; ok {
+		params.Set("updatedMax", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["updatedMin"]; ok {
+		params.Set("updatedMin", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["volumeAnnotationsVersion"]; ok {
+		params.Set("volumeAnnotationsVersion", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "volumes/{volumeId}/layers/{layerId}")
+	urls = strings.Replace(urls, "{volumeId}", cleanPathString(c.volumeId), 1)
+	urls = strings.Replace(urls, "{layerId}", cleanPathString(c.layerId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Volumeannotations)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the volume annotations for a volume and layer.",
+	//   "httpMethod": "GET",
+	//   "id": "books.layers.volumeAnnotations.list",
+	//   "parameterOrder": [
+	//     "volumeId",
+	//     "layerId",
+	//     "contentVersion"
+	//   ],
+	//   "parameters": {
+	//     "contentVersion": {
+	//       "description": "The content version for the requested volume.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "endOffset": {
+	//       "description": "The end offset to end retrieving data from.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "endPosition": {
+	//       "description": "The end position to end retrieving data from.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "layerId": {
+	//       "description": "The ID for the layer to get the annotations.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "locale": {
+	//       "description": "The locale information for the data. ISO-639-1 language and ISO-3166-1 country code. Ex: 'en_US'.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "description": "Maximum number of results to return",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "200",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The value of the nextToken from the previous page.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "showDeleted": {
+	//       "description": "Set to true to return deleted annotations. updatedMin must be in the request to use this. Defaults to false.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "source": {
+	//       "description": "String to identify the originator of this request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "startOffset": {
+	//       "description": "The start offset to start retrieving data from.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "startPosition": {
+	//       "description": "The start position to start retrieving data from.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "updatedMax": {
+	//       "description": "RFC 3339 timestamp to restrict to items updated prior to this timestamp (exclusive).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "updatedMin": {
+	//       "description": "RFC 3339 timestamp to restrict to items updated since this timestamp (inclusive).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "volumeAnnotationsVersion": {
+	//       "description": "The version of the volume annotations that you are requesting.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "volumeId": {
+	//       "description": "The volume to retrieve annotations for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "volumes/{volumeId}/layers/{layerId}",
+	//   "response": {
+	//     "$ref": "Volumeannotations"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/books"
+	//   ]
+	// }
+
+}
+
 // method id "books.myconfig.releaseDownloadAccess":
 
 type MyconfigReleaseDownloadAccessCall struct {
@@ -2104,6 +3202,1411 @@ func (c *MyconfigSyncVolumeLicensesCall) Do() (*Volumes, error) {
 	//   "response": {
 	//     "$ref": "Volumes"
 	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/books"
+	//   ]
+	// }
+
+}
+
+// method id "books.mylibrary.annotations.delete":
+
+type MylibraryAnnotationsDeleteCall struct {
+	s            *Service
+	annotationId string
+	opt_         map[string]interface{}
+}
+
+// Delete: Deletes an annotation.
+func (r *MylibraryAnnotationsService) Delete(annotationId string) *MylibraryAnnotationsDeleteCall {
+	c := &MylibraryAnnotationsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.annotationId = annotationId
+	return c
+}
+
+// Source sets the optional parameter "source": String to identify the
+// originator of this request.
+func (c *MylibraryAnnotationsDeleteCall) Source(source string) *MylibraryAnnotationsDeleteCall {
+	c.opt_["source"] = source
+	return c
+}
+
+func (c *MylibraryAnnotationsDeleteCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "mylibrary/annotations/{annotationId}")
+	urls = strings.Replace(urls, "{annotationId}", cleanPathString(c.annotationId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Deletes an annotation.",
+	//   "httpMethod": "DELETE",
+	//   "id": "books.mylibrary.annotations.delete",
+	//   "parameterOrder": [
+	//     "annotationId"
+	//   ],
+	//   "parameters": {
+	//     "annotationId": {
+	//       "description": "The ID for the annotation to delete.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "source": {
+	//       "description": "String to identify the originator of this request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "mylibrary/annotations/{annotationId}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/books"
+	//   ]
+	// }
+
+}
+
+// method id "books.mylibrary.annotations.get":
+
+type MylibraryAnnotationsGetCall struct {
+	s            *Service
+	annotationId string
+	opt_         map[string]interface{}
+}
+
+// Get: Gets an annotation by its ID.
+func (r *MylibraryAnnotationsService) Get(annotationId string) *MylibraryAnnotationsGetCall {
+	c := &MylibraryAnnotationsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.annotationId = annotationId
+	return c
+}
+
+// Source sets the optional parameter "source": String to identify the
+// originator of this request.
+func (c *MylibraryAnnotationsGetCall) Source(source string) *MylibraryAnnotationsGetCall {
+	c.opt_["source"] = source
+	return c
+}
+
+func (c *MylibraryAnnotationsGetCall) Do() (*Annotation, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "mylibrary/annotations/{annotationId}")
+	urls = strings.Replace(urls, "{annotationId}", cleanPathString(c.annotationId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Annotation)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets an annotation by its ID.",
+	//   "httpMethod": "GET",
+	//   "id": "books.mylibrary.annotations.get",
+	//   "parameterOrder": [
+	//     "annotationId"
+	//   ],
+	//   "parameters": {
+	//     "annotationId": {
+	//       "description": "The ID for the annotation to retrieve.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "source": {
+	//       "description": "String to identify the originator of this request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "mylibrary/annotations/{annotationId}",
+	//   "response": {
+	//     "$ref": "Annotation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/books"
+	//   ]
+	// }
+
+}
+
+// method id "books.mylibrary.annotations.insert":
+
+type MylibraryAnnotationsInsertCall struct {
+	s          *Service
+	annotation *Annotation
+	opt_       map[string]interface{}
+}
+
+// Insert: Inserts a new annotation.
+func (r *MylibraryAnnotationsService) Insert(annotation *Annotation) *MylibraryAnnotationsInsertCall {
+	c := &MylibraryAnnotationsInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.annotation = annotation
+	return c
+}
+
+// Source sets the optional parameter "source": String to identify the
+// originator of this request.
+func (c *MylibraryAnnotationsInsertCall) Source(source string) *MylibraryAnnotationsInsertCall {
+	c.opt_["source"] = source
+	return c
+}
+
+func (c *MylibraryAnnotationsInsertCall) Do() (*Annotation, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.annotation)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "mylibrary/annotations")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Annotation)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Inserts a new annotation.",
+	//   "httpMethod": "POST",
+	//   "id": "books.mylibrary.annotations.insert",
+	//   "parameters": {
+	//     "source": {
+	//       "description": "String to identify the originator of this request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "mylibrary/annotations",
+	//   "request": {
+	//     "$ref": "Annotation"
+	//   },
+	//   "response": {
+	//     "$ref": "Annotation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/books"
+	//   ]
+	// }
+
+}
+
+// method id "books.mylibrary.annotations.list":
+
+type MylibraryAnnotationsListCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// List: Retrieves a list of annotations, possibly filtered.
+func (r *MylibraryAnnotationsService) List() *MylibraryAnnotationsListCall {
+	c := &MylibraryAnnotationsListCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+// ContentVersion sets the optional parameter "contentVersion": The
+// content version for the requested volume.
+func (c *MylibraryAnnotationsListCall) ContentVersion(contentVersion string) *MylibraryAnnotationsListCall {
+	c.opt_["contentVersion"] = contentVersion
+	return c
+}
+
+// LayerId sets the optional parameter "layerId": The layer ID to limit
+// annotation by.
+func (c *MylibraryAnnotationsListCall) LayerId(layerId string) *MylibraryAnnotationsListCall {
+	c.opt_["layerId"] = layerId
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum number
+// of results to return
+func (c *MylibraryAnnotationsListCall) MaxResults(maxResults int64) *MylibraryAnnotationsListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageIds sets the optional parameter "pageIds": The page ID(s) for the
+// volume that is being queried.
+func (c *MylibraryAnnotationsListCall) PageIds(pageIds string) *MylibraryAnnotationsListCall {
+	c.opt_["pageIds"] = pageIds
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value of the
+// nextToken from the previous page.
+func (c *MylibraryAnnotationsListCall) PageToken(pageToken string) *MylibraryAnnotationsListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+// ShowDeleted sets the optional parameter "showDeleted": Set to true to
+// return deleted annotations. updatedMin must be in the request to use
+// this. Defaults to false.
+func (c *MylibraryAnnotationsListCall) ShowDeleted(showDeleted bool) *MylibraryAnnotationsListCall {
+	c.opt_["showDeleted"] = showDeleted
+	return c
+}
+
+// Source sets the optional parameter "source": String to identify the
+// originator of this request.
+func (c *MylibraryAnnotationsListCall) Source(source string) *MylibraryAnnotationsListCall {
+	c.opt_["source"] = source
+	return c
+}
+
+// UpdatedMax sets the optional parameter "updatedMax": RFC 3339
+// timestamp to restrict to items updated prior to this timestamp
+// (exclusive).
+func (c *MylibraryAnnotationsListCall) UpdatedMax(updatedMax string) *MylibraryAnnotationsListCall {
+	c.opt_["updatedMax"] = updatedMax
+	return c
+}
+
+// UpdatedMin sets the optional parameter "updatedMin": RFC 3339
+// timestamp to restrict to items updated since this timestamp
+// (inclusive).
+func (c *MylibraryAnnotationsListCall) UpdatedMin(updatedMin string) *MylibraryAnnotationsListCall {
+	c.opt_["updatedMin"] = updatedMin
+	return c
+}
+
+// VolumeId sets the optional parameter "volumeId": The volume to
+// restrict annotations to.
+func (c *MylibraryAnnotationsListCall) VolumeId(volumeId string) *MylibraryAnnotationsListCall {
+	c.opt_["volumeId"] = volumeId
+	return c
+}
+
+func (c *MylibraryAnnotationsListCall) Do() (*Annotations, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["contentVersion"]; ok {
+		params.Set("contentVersion", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["layerId"]; ok {
+		params.Set("layerId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageIds"]; ok {
+		params.Set("pageIds", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["showDeleted"]; ok {
+		params.Set("showDeleted", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["updatedMax"]; ok {
+		params.Set("updatedMax", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["updatedMin"]; ok {
+		params.Set("updatedMin", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["volumeId"]; ok {
+		params.Set("volumeId", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "mylibrary/annotations")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Annotations)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a list of annotations, possibly filtered.",
+	//   "httpMethod": "GET",
+	//   "id": "books.mylibrary.annotations.list",
+	//   "parameters": {
+	//     "contentVersion": {
+	//       "description": "The content version for the requested volume.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "layerId": {
+	//       "description": "The layer ID to limit annotation by.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "description": "Maximum number of results to return",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "40",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "pageIds": {
+	//       "description": "The page ID(s) for the volume that is being queried.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "pageToken": {
+	//       "description": "The value of the nextToken from the previous page.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "showDeleted": {
+	//       "description": "Set to true to return deleted annotations. updatedMin must be in the request to use this. Defaults to false.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "source": {
+	//       "description": "String to identify the originator of this request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "updatedMax": {
+	//       "description": "RFC 3339 timestamp to restrict to items updated prior to this timestamp (exclusive).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "updatedMin": {
+	//       "description": "RFC 3339 timestamp to restrict to items updated since this timestamp (inclusive).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "volumeId": {
+	//       "description": "The volume to restrict annotations to.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "mylibrary/annotations",
+	//   "response": {
+	//     "$ref": "Annotations"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/books"
+	//   ]
+	// }
+
+}
+
+// method id "books.mylibrary.annotations.update":
+
+type MylibraryAnnotationsUpdateCall struct {
+	s            *Service
+	annotationId string
+	annotation   *Annotation
+	opt_         map[string]interface{}
+}
+
+// Update: Updates an existing annotation.
+func (r *MylibraryAnnotationsService) Update(annotationId string, annotation *Annotation) *MylibraryAnnotationsUpdateCall {
+	c := &MylibraryAnnotationsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.annotationId = annotationId
+	c.annotation = annotation
+	return c
+}
+
+// Source sets the optional parameter "source": String to identify the
+// originator of this request.
+func (c *MylibraryAnnotationsUpdateCall) Source(source string) *MylibraryAnnotationsUpdateCall {
+	c.opt_["source"] = source
+	return c
+}
+
+func (c *MylibraryAnnotationsUpdateCall) Do() (*Annotation, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.annotation)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "mylibrary/annotations/{annotationId}")
+	urls = strings.Replace(urls, "{annotationId}", cleanPathString(c.annotationId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Annotation)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an existing annotation.",
+	//   "httpMethod": "PUT",
+	//   "id": "books.mylibrary.annotations.update",
+	//   "parameterOrder": [
+	//     "annotationId"
+	//   ],
+	//   "parameters": {
+	//     "annotationId": {
+	//       "description": "The ID for the annotation to update.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "source": {
+	//       "description": "String to identify the originator of this request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "mylibrary/annotations/{annotationId}",
+	//   "request": {
+	//     "$ref": "Annotation"
+	//   },
+	//   "response": {
+	//     "$ref": "Annotation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/books"
+	//   ]
+	// }
+
+}
+
+// method id "books.mylibrary.bookshelves.addVolume":
+
+type MylibraryBookshelvesAddVolumeCall struct {
+	s        *Service
+	shelf    string
+	volumeId string
+	opt_     map[string]interface{}
+}
+
+// AddVolume: Adds a volume to a bookshelf.
+func (r *MylibraryBookshelvesService) AddVolume(shelf string, volumeId string) *MylibraryBookshelvesAddVolumeCall {
+	c := &MylibraryBookshelvesAddVolumeCall{s: r.s, opt_: make(map[string]interface{})}
+	c.shelf = shelf
+	c.volumeId = volumeId
+	return c
+}
+
+// Source sets the optional parameter "source": String to identify the
+// originator of this request.
+func (c *MylibraryBookshelvesAddVolumeCall) Source(source string) *MylibraryBookshelvesAddVolumeCall {
+	c.opt_["source"] = source
+	return c
+}
+
+func (c *MylibraryBookshelvesAddVolumeCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("volumeId", fmt.Sprintf("%v", c.volumeId))
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "mylibrary/bookshelves/{shelf}/addVolume")
+	urls = strings.Replace(urls, "{shelf}", cleanPathString(c.shelf), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Adds a volume to a bookshelf.",
+	//   "httpMethod": "POST",
+	//   "id": "books.mylibrary.bookshelves.addVolume",
+	//   "parameterOrder": [
+	//     "shelf",
+	//     "volumeId"
+	//   ],
+	//   "parameters": {
+	//     "shelf": {
+	//       "description": "ID of bookshelf to which to add a volume.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "source": {
+	//       "description": "String to identify the originator of this request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "volumeId": {
+	//       "description": "ID of volume to add.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "mylibrary/bookshelves/{shelf}/addVolume",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/books"
+	//   ]
+	// }
+
+}
+
+// method id "books.mylibrary.bookshelves.clearVolumes":
+
+type MylibraryBookshelvesClearVolumesCall struct {
+	s     *Service
+	shelf string
+	opt_  map[string]interface{}
+}
+
+// ClearVolumes: Clears all volumes from a bookshelf.
+func (r *MylibraryBookshelvesService) ClearVolumes(shelf string) *MylibraryBookshelvesClearVolumesCall {
+	c := &MylibraryBookshelvesClearVolumesCall{s: r.s, opt_: make(map[string]interface{})}
+	c.shelf = shelf
+	return c
+}
+
+// Source sets the optional parameter "source": String to identify the
+// originator of this request.
+func (c *MylibraryBookshelvesClearVolumesCall) Source(source string) *MylibraryBookshelvesClearVolumesCall {
+	c.opt_["source"] = source
+	return c
+}
+
+func (c *MylibraryBookshelvesClearVolumesCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "mylibrary/bookshelves/{shelf}/clearVolumes")
+	urls = strings.Replace(urls, "{shelf}", cleanPathString(c.shelf), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Clears all volumes from a bookshelf.",
+	//   "httpMethod": "POST",
+	//   "id": "books.mylibrary.bookshelves.clearVolumes",
+	//   "parameterOrder": [
+	//     "shelf"
+	//   ],
+	//   "parameters": {
+	//     "shelf": {
+	//       "description": "ID of bookshelf from which to remove a volume.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "source": {
+	//       "description": "String to identify the originator of this request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "mylibrary/bookshelves/{shelf}/clearVolumes",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/books"
+	//   ]
+	// }
+
+}
+
+// method id "books.mylibrary.bookshelves.get":
+
+type MylibraryBookshelvesGetCall struct {
+	s     *Service
+	shelf string
+	opt_  map[string]interface{}
+}
+
+// Get: Retrieves metadata for a specific bookshelf belonging to the
+// authenticated user.
+func (r *MylibraryBookshelvesService) Get(shelf string) *MylibraryBookshelvesGetCall {
+	c := &MylibraryBookshelvesGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.shelf = shelf
+	return c
+}
+
+// Source sets the optional parameter "source": String to identify the
+// originator of this request.
+func (c *MylibraryBookshelvesGetCall) Source(source string) *MylibraryBookshelvesGetCall {
+	c.opt_["source"] = source
+	return c
+}
+
+func (c *MylibraryBookshelvesGetCall) Do() (*Bookshelf, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "mylibrary/bookshelves/{shelf}")
+	urls = strings.Replace(urls, "{shelf}", cleanPathString(c.shelf), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Bookshelf)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves metadata for a specific bookshelf belonging to the authenticated user.",
+	//   "httpMethod": "GET",
+	//   "id": "books.mylibrary.bookshelves.get",
+	//   "parameterOrder": [
+	//     "shelf"
+	//   ],
+	//   "parameters": {
+	//     "shelf": {
+	//       "description": "ID of bookshelf to retrieve.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "source": {
+	//       "description": "String to identify the originator of this request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "mylibrary/bookshelves/{shelf}",
+	//   "response": {
+	//     "$ref": "Bookshelf"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/books"
+	//   ]
+	// }
+
+}
+
+// method id "books.mylibrary.bookshelves.list":
+
+type MylibraryBookshelvesListCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// List: Retrieves a list of bookshelves belonging to the authenticated
+// user.
+func (r *MylibraryBookshelvesService) List() *MylibraryBookshelvesListCall {
+	c := &MylibraryBookshelvesListCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+// Source sets the optional parameter "source": String to identify the
+// originator of this request.
+func (c *MylibraryBookshelvesListCall) Source(source string) *MylibraryBookshelvesListCall {
+	c.opt_["source"] = source
+	return c
+}
+
+func (c *MylibraryBookshelvesListCall) Do() (*Bookshelves, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "mylibrary/bookshelves")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Bookshelves)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a list of bookshelves belonging to the authenticated user.",
+	//   "httpMethod": "GET",
+	//   "id": "books.mylibrary.bookshelves.list",
+	//   "parameters": {
+	//     "source": {
+	//       "description": "String to identify the originator of this request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "mylibrary/bookshelves",
+	//   "response": {
+	//     "$ref": "Bookshelves"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/books"
+	//   ]
+	// }
+
+}
+
+// method id "books.mylibrary.bookshelves.moveVolume":
+
+type MylibraryBookshelvesMoveVolumeCall struct {
+	s              *Service
+	shelf          string
+	volumeId       string
+	volumePosition int64
+	opt_           map[string]interface{}
+}
+
+// MoveVolume: Moves a volume within a bookshelf.
+func (r *MylibraryBookshelvesService) MoveVolume(shelf string, volumeId string, volumePosition int64) *MylibraryBookshelvesMoveVolumeCall {
+	c := &MylibraryBookshelvesMoveVolumeCall{s: r.s, opt_: make(map[string]interface{})}
+	c.shelf = shelf
+	c.volumeId = volumeId
+	c.volumePosition = volumePosition
+	return c
+}
+
+// Source sets the optional parameter "source": String to identify the
+// originator of this request.
+func (c *MylibraryBookshelvesMoveVolumeCall) Source(source string) *MylibraryBookshelvesMoveVolumeCall {
+	c.opt_["source"] = source
+	return c
+}
+
+func (c *MylibraryBookshelvesMoveVolumeCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("volumeId", fmt.Sprintf("%v", c.volumeId))
+	params.Set("volumePosition", fmt.Sprintf("%v", c.volumePosition))
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "mylibrary/bookshelves/{shelf}/moveVolume")
+	urls = strings.Replace(urls, "{shelf}", cleanPathString(c.shelf), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Moves a volume within a bookshelf.",
+	//   "httpMethod": "POST",
+	//   "id": "books.mylibrary.bookshelves.moveVolume",
+	//   "parameterOrder": [
+	//     "shelf",
+	//     "volumeId",
+	//     "volumePosition"
+	//   ],
+	//   "parameters": {
+	//     "shelf": {
+	//       "description": "ID of bookshelf with the volume.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "source": {
+	//       "description": "String to identify the originator of this request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "volumeId": {
+	//       "description": "ID of volume to move.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "volumePosition": {
+	//       "description": "Position on shelf to move the item (0 puts the item before the current first item, 1 puts it between the first and the second and so on.)",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "integer"
+	//     }
+	//   },
+	//   "path": "mylibrary/bookshelves/{shelf}/moveVolume",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/books"
+	//   ]
+	// }
+
+}
+
+// method id "books.mylibrary.bookshelves.removeVolume":
+
+type MylibraryBookshelvesRemoveVolumeCall struct {
+	s        *Service
+	shelf    string
+	volumeId string
+	opt_     map[string]interface{}
+}
+
+// RemoveVolume: Removes a volume from a bookshelf.
+func (r *MylibraryBookshelvesService) RemoveVolume(shelf string, volumeId string) *MylibraryBookshelvesRemoveVolumeCall {
+	c := &MylibraryBookshelvesRemoveVolumeCall{s: r.s, opt_: make(map[string]interface{})}
+	c.shelf = shelf
+	c.volumeId = volumeId
+	return c
+}
+
+// Source sets the optional parameter "source": String to identify the
+// originator of this request.
+func (c *MylibraryBookshelvesRemoveVolumeCall) Source(source string) *MylibraryBookshelvesRemoveVolumeCall {
+	c.opt_["source"] = source
+	return c
+}
+
+func (c *MylibraryBookshelvesRemoveVolumeCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("volumeId", fmt.Sprintf("%v", c.volumeId))
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "mylibrary/bookshelves/{shelf}/removeVolume")
+	urls = strings.Replace(urls, "{shelf}", cleanPathString(c.shelf), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Removes a volume from a bookshelf.",
+	//   "httpMethod": "POST",
+	//   "id": "books.mylibrary.bookshelves.removeVolume",
+	//   "parameterOrder": [
+	//     "shelf",
+	//     "volumeId"
+	//   ],
+	//   "parameters": {
+	//     "shelf": {
+	//       "description": "ID of bookshelf from which to remove a volume.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "source": {
+	//       "description": "String to identify the originator of this request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "volumeId": {
+	//       "description": "ID of volume to remove.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "mylibrary/bookshelves/{shelf}/removeVolume",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/books"
+	//   ]
+	// }
+
+}
+
+// method id "books.mylibrary.bookshelves.volumes.list":
+
+type MylibraryBookshelvesVolumesListCall struct {
+	s     *Service
+	shelf string
+	opt_  map[string]interface{}
+}
+
+// List: Gets volume information for volumes on a bookshelf.
+func (r *MylibraryBookshelvesVolumesService) List(shelf string) *MylibraryBookshelvesVolumesListCall {
+	c := &MylibraryBookshelvesVolumesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.shelf = shelf
+	return c
+}
+
+// Country sets the optional parameter "country": ISO-3166-1 code to
+// override the IP-based location.
+func (c *MylibraryBookshelvesVolumesListCall) Country(country string) *MylibraryBookshelvesVolumesListCall {
+	c.opt_["country"] = country
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum number
+// of results to return
+func (c *MylibraryBookshelvesVolumesListCall) MaxResults(maxResults int64) *MylibraryBookshelvesVolumesListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// Projection sets the optional parameter "projection": Restrict
+// information returned to a set of selected fields.
+func (c *MylibraryBookshelvesVolumesListCall) Projection(projection string) *MylibraryBookshelvesVolumesListCall {
+	c.opt_["projection"] = projection
+	return c
+}
+
+// Q sets the optional parameter "q": Full-text search query string in
+// this bookshelf.
+func (c *MylibraryBookshelvesVolumesListCall) Q(q string) *MylibraryBookshelvesVolumesListCall {
+	c.opt_["q"] = q
+	return c
+}
+
+// ShowPreorders sets the optional parameter "showPreorders": Set to
+// true to show pre-ordered books. Defaults to false.
+func (c *MylibraryBookshelvesVolumesListCall) ShowPreorders(showPreorders bool) *MylibraryBookshelvesVolumesListCall {
+	c.opt_["showPreorders"] = showPreorders
+	return c
+}
+
+// Source sets the optional parameter "source": String to identify the
+// originator of this request.
+func (c *MylibraryBookshelvesVolumesListCall) Source(source string) *MylibraryBookshelvesVolumesListCall {
+	c.opt_["source"] = source
+	return c
+}
+
+// StartIndex sets the optional parameter "startIndex": Index of the
+// first element to return (starts at 0)
+func (c *MylibraryBookshelvesVolumesListCall) StartIndex(startIndex int64) *MylibraryBookshelvesVolumesListCall {
+	c.opt_["startIndex"] = startIndex
+	return c
+}
+
+func (c *MylibraryBookshelvesVolumesListCall) Do() (*Volumes, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["country"]; ok {
+		params.Set("country", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["projection"]; ok {
+		params.Set("projection", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["q"]; ok {
+		params.Set("q", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["showPreorders"]; ok {
+		params.Set("showPreorders", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["startIndex"]; ok {
+		params.Set("startIndex", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "mylibrary/bookshelves/{shelf}/volumes")
+	urls = strings.Replace(urls, "{shelf}", cleanPathString(c.shelf), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Volumes)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets volume information for volumes on a bookshelf.",
+	//   "httpMethod": "GET",
+	//   "id": "books.mylibrary.bookshelves.volumes.list",
+	//   "parameterOrder": [
+	//     "shelf"
+	//   ],
+	//   "parameters": {
+	//     "country": {
+	//       "description": "ISO-3166-1 code to override the IP-based location.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "description": "Maximum number of results to return",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "projection": {
+	//       "description": "Restrict information returned to a set of selected fields.",
+	//       "enum": [
+	//         "full",
+	//         "lite"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Includes all volume data.",
+	//         "Includes a subset of fields in volumeInfo and accessInfo."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "q": {
+	//       "description": "Full-text search query string in this bookshelf.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "shelf": {
+	//       "description": "The bookshelf ID or name retrieve volumes for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "showPreorders": {
+	//       "description": "Set to true to show pre-ordered books. Defaults to false.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "source": {
+	//       "description": "String to identify the originator of this request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "startIndex": {
+	//       "description": "Index of the first element to return (starts at 0)",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     }
+	//   },
+	//   "path": "mylibrary/bookshelves/{shelf}/volumes",
+	//   "response": {
+	//     "$ref": "Volumes"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/books"
+	//   ]
+	// }
+
+}
+
+// method id "books.mylibrary.readingpositions.get":
+
+type MylibraryReadingpositionsGetCall struct {
+	s        *Service
+	volumeId string
+	opt_     map[string]interface{}
+}
+
+// Get: Retrieves my reading position information for a volume.
+func (r *MylibraryReadingpositionsService) Get(volumeId string) *MylibraryReadingpositionsGetCall {
+	c := &MylibraryReadingpositionsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.volumeId = volumeId
+	return c
+}
+
+// ContentVersion sets the optional parameter "contentVersion": Volume
+// content version for which this reading position is requested.
+func (c *MylibraryReadingpositionsGetCall) ContentVersion(contentVersion string) *MylibraryReadingpositionsGetCall {
+	c.opt_["contentVersion"] = contentVersion
+	return c
+}
+
+// Source sets the optional parameter "source": String to identify the
+// originator of this request.
+func (c *MylibraryReadingpositionsGetCall) Source(source string) *MylibraryReadingpositionsGetCall {
+	c.opt_["source"] = source
+	return c
+}
+
+func (c *MylibraryReadingpositionsGetCall) Do() (*ReadingPosition, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["contentVersion"]; ok {
+		params.Set("contentVersion", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "mylibrary/readingpositions/{volumeId}")
+	urls = strings.Replace(urls, "{volumeId}", cleanPathString(c.volumeId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(ReadingPosition)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves my reading position information for a volume.",
+	//   "httpMethod": "GET",
+	//   "id": "books.mylibrary.readingpositions.get",
+	//   "parameterOrder": [
+	//     "volumeId"
+	//   ],
+	//   "parameters": {
+	//     "contentVersion": {
+	//       "description": "Volume content version for which this reading position is requested.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "source": {
+	//       "description": "String to identify the originator of this request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "volumeId": {
+	//       "description": "ID of volume for which to retrieve a reading position.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "mylibrary/readingpositions/{volumeId}",
+	//   "response": {
+	//     "$ref": "ReadingPosition"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/books"
+	//   ]
+	// }
+
+}
+
+// method id "books.mylibrary.readingpositions.setPosition":
+
+type MylibraryReadingpositionsSetPositionCall struct {
+	s         *Service
+	volumeId  string
+	timestamp string
+	position  string
+	opt_      map[string]interface{}
+}
+
+// SetPosition: Sets my reading position information for a volume.
+func (r *MylibraryReadingpositionsService) SetPosition(volumeId string, timestamp string, position string) *MylibraryReadingpositionsSetPositionCall {
+	c := &MylibraryReadingpositionsSetPositionCall{s: r.s, opt_: make(map[string]interface{})}
+	c.volumeId = volumeId
+	c.timestamp = timestamp
+	c.position = position
+	return c
+}
+
+// Action sets the optional parameter "action": Action that caused this
+// reading position to be set.
+func (c *MylibraryReadingpositionsSetPositionCall) Action(action string) *MylibraryReadingpositionsSetPositionCall {
+	c.opt_["action"] = action
+	return c
+}
+
+// ContentVersion sets the optional parameter "contentVersion": Volume
+// content version for which this reading position applies.
+func (c *MylibraryReadingpositionsSetPositionCall) ContentVersion(contentVersion string) *MylibraryReadingpositionsSetPositionCall {
+	c.opt_["contentVersion"] = contentVersion
+	return c
+}
+
+// DeviceCookie sets the optional parameter "deviceCookie": Random
+// persistent device cookie optional on set position.
+func (c *MylibraryReadingpositionsSetPositionCall) DeviceCookie(deviceCookie string) *MylibraryReadingpositionsSetPositionCall {
+	c.opt_["deviceCookie"] = deviceCookie
+	return c
+}
+
+// Source sets the optional parameter "source": String to identify the
+// originator of this request.
+func (c *MylibraryReadingpositionsSetPositionCall) Source(source string) *MylibraryReadingpositionsSetPositionCall {
+	c.opt_["source"] = source
+	return c
+}
+
+func (c *MylibraryReadingpositionsSetPositionCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("position", fmt.Sprintf("%v", c.position))
+	params.Set("timestamp", fmt.Sprintf("%v", c.timestamp))
+	if v, ok := c.opt_["action"]; ok {
+		params.Set("action", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["contentVersion"]; ok {
+		params.Set("contentVersion", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["deviceCookie"]; ok {
+		params.Set("deviceCookie", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "mylibrary/readingpositions/{volumeId}/setPosition")
+	urls = strings.Replace(urls, "{volumeId}", cleanPathString(c.volumeId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Sets my reading position information for a volume.",
+	//   "httpMethod": "POST",
+	//   "id": "books.mylibrary.readingpositions.setPosition",
+	//   "parameterOrder": [
+	//     "volumeId",
+	//     "timestamp",
+	//     "position"
+	//   ],
+	//   "parameters": {
+	//     "action": {
+	//       "description": "Action that caused this reading position to be set.",
+	//       "enum": [
+	//         "bookmark",
+	//         "chapter",
+	//         "next-page",
+	//         "prev-page",
+	//         "scroll",
+	//         "search"
+	//       ],
+	//       "enumDescriptions": [
+	//         "User chose bookmark within volume.",
+	//         "User selected chapter from list.",
+	//         "Next page event.",
+	//         "Previous page event.",
+	//         "User navigated to page.",
+	//         "User chose search results within volume."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "contentVersion": {
+	//       "description": "Volume content version for which this reading position applies.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "deviceCookie": {
+	//       "description": "Random persistent device cookie optional on set position.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "position": {
+	//       "description": "Position string for the new volume reading position.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "source": {
+	//       "description": "String to identify the originator of this request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "timestamp": {
+	//       "description": "RFC 3339 UTC format timestamp associated with this reading position.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "volumeId": {
+	//       "description": "ID of volume for which to update the reading position.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "mylibrary/readingpositions/{volumeId}/setPosition",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/books"
 	//   ]
@@ -2530,6 +5033,491 @@ func (c *VolumesListCall) Do() (*Volumes, error) {
 	//     }
 	//   },
 	//   "path": "volumes",
+	//   "response": {
+	//     "$ref": "Volumes"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/books"
+	//   ]
+	// }
+
+}
+
+// method id "books.volumes.associated.list":
+
+type VolumesAssociatedListCall struct {
+	s        *Service
+	volumeId string
+	opt_     map[string]interface{}
+}
+
+// List: Return a list of associated books.
+func (r *VolumesAssociatedService) List(volumeId string) *VolumesAssociatedListCall {
+	c := &VolumesAssociatedListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.volumeId = volumeId
+	return c
+}
+
+// Association sets the optional parameter "association": Association
+// type.
+func (c *VolumesAssociatedListCall) Association(association string) *VolumesAssociatedListCall {
+	c.opt_["association"] = association
+	return c
+}
+
+// Locale sets the optional parameter "locale": ISO-639-1 language and
+// ISO-3166-1 country code. Ex: 'en_US'. Used for generating
+// recommendations.
+func (c *VolumesAssociatedListCall) Locale(locale string) *VolumesAssociatedListCall {
+	c.opt_["locale"] = locale
+	return c
+}
+
+// Source sets the optional parameter "source": String to identify the
+// originator of this request.
+func (c *VolumesAssociatedListCall) Source(source string) *VolumesAssociatedListCall {
+	c.opt_["source"] = source
+	return c
+}
+
+func (c *VolumesAssociatedListCall) Do() (*Volumes, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["association"]; ok {
+		params.Set("association", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["locale"]; ok {
+		params.Set("locale", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "volumes/{volumeId}/associated")
+	urls = strings.Replace(urls, "{volumeId}", cleanPathString(c.volumeId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Volumes)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Return a list of associated books.",
+	//   "httpMethod": "GET",
+	//   "id": "books.volumes.associated.list",
+	//   "parameterOrder": [
+	//     "volumeId"
+	//   ],
+	//   "parameters": {
+	//     "association": {
+	//       "description": "Association type.",
+	//       "enum": [
+	//         "end-of-sample",
+	//         "end-of-volume"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Recommendations for display end-of-sample.",
+	//         "Recommendations for display end-of-volume."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "locale": {
+	//       "description": "ISO-639-1 language and ISO-3166-1 country code. Ex: 'en_US'. Used for generating recommendations.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "source": {
+	//       "description": "String to identify the originator of this request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "volumeId": {
+	//       "description": "ID of the source volume.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "volumes/{volumeId}/associated",
+	//   "response": {
+	//     "$ref": "Volumes"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/books"
+	//   ]
+	// }
+
+}
+
+// method id "books.volumes.mybooks.list":
+
+type VolumesMybooksListCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// List: Return a list of books in My Library.
+func (r *VolumesMybooksService) List() *VolumesMybooksListCall {
+	c := &VolumesMybooksListCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+// AcquireMethod sets the optional parameter "acquireMethod": How the
+// book was aquired
+func (c *VolumesMybooksListCall) AcquireMethod(acquireMethod string) *VolumesMybooksListCall {
+	c.opt_["acquireMethod"] = acquireMethod
+	return c
+}
+
+// Locale sets the optional parameter "locale": ISO-639-1 language and
+// ISO-3166-1 country code. Ex:'en_US'. Used for generating
+// recommendations.
+func (c *VolumesMybooksListCall) Locale(locale string) *VolumesMybooksListCall {
+	c.opt_["locale"] = locale
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum number
+// of results to return.
+func (c *VolumesMybooksListCall) MaxResults(maxResults int64) *VolumesMybooksListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// Source sets the optional parameter "source": String to identify the
+// originator of this request.
+func (c *VolumesMybooksListCall) Source(source string) *VolumesMybooksListCall {
+	c.opt_["source"] = source
+	return c
+}
+
+// StartIndex sets the optional parameter "startIndex": Index of the
+// first result to return (starts at 0)
+func (c *VolumesMybooksListCall) StartIndex(startIndex int64) *VolumesMybooksListCall {
+	c.opt_["startIndex"] = startIndex
+	return c
+}
+
+func (c *VolumesMybooksListCall) Do() (*Volumes, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["acquireMethod"]; ok {
+		params.Set("acquireMethod", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["locale"]; ok {
+		params.Set("locale", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["startIndex"]; ok {
+		params.Set("startIndex", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "volumes/mybooks")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Volumes)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Return a list of books in My Library.",
+	//   "httpMethod": "GET",
+	//   "id": "books.volumes.mybooks.list",
+	//   "parameters": {
+	//     "acquireMethod": {
+	//       "description": "How the book was aquired",
+	//       "enum": [
+	//         "PREORDERED",
+	//         "PUBLIC_DOMAIN",
+	//         "PURCHASED",
+	//         "SAMPLE",
+	//         "UPLOADED"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Preordered books (not yet available)",
+	//         "Public domain books",
+	//         "Purchased books",
+	//         "Sample books",
+	//         "User uploaded books"
+	//       ],
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "locale": {
+	//       "description": "ISO-639-1 language and ISO-3166-1 country code. Ex:'en_US'. Used for generating recommendations.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "description": "Maximum number of results to return.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "100",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "source": {
+	//       "description": "String to identify the originator of this request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "startIndex": {
+	//       "description": "Index of the first result to return (starts at 0)",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     }
+	//   },
+	//   "path": "volumes/mybooks",
+	//   "response": {
+	//     "$ref": "Volumes"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/books"
+	//   ]
+	// }
+
+}
+
+// method id "books.volumes.recommended.list":
+
+type VolumesRecommendedListCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// List: Return a list of recommended books for the current user.
+func (r *VolumesRecommendedService) List() *VolumesRecommendedListCall {
+	c := &VolumesRecommendedListCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+// Locale sets the optional parameter "locale": ISO-639-1 language and
+// ISO-3166-1 country code. Ex: 'en_US'. Used for generating
+// recommendations.
+func (c *VolumesRecommendedListCall) Locale(locale string) *VolumesRecommendedListCall {
+	c.opt_["locale"] = locale
+	return c
+}
+
+// Source sets the optional parameter "source": String to identify the
+// originator of this request.
+func (c *VolumesRecommendedListCall) Source(source string) *VolumesRecommendedListCall {
+	c.opt_["source"] = source
+	return c
+}
+
+func (c *VolumesRecommendedListCall) Do() (*Volumes, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["locale"]; ok {
+		params.Set("locale", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "volumes/recommended")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Volumes)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Return a list of recommended books for the current user.",
+	//   "httpMethod": "GET",
+	//   "id": "books.volumes.recommended.list",
+	//   "parameters": {
+	//     "locale": {
+	//       "description": "ISO-639-1 language and ISO-3166-1 country code. Ex: 'en_US'. Used for generating recommendations.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "source": {
+	//       "description": "String to identify the originator of this request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "volumes/recommended",
+	//   "response": {
+	//     "$ref": "Volumes"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/books"
+	//   ]
+	// }
+
+}
+
+// method id "books.volumes.useruploaded.list":
+
+type VolumesUseruploadedListCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// List: Return a list of books uploaded by the current user.
+func (r *VolumesUseruploadedService) List() *VolumesUseruploadedListCall {
+	c := &VolumesUseruploadedListCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+// Locale sets the optional parameter "locale": ISO-639-1 language and
+// ISO-3166-1 country code. Ex: 'en_US'. Used for generating
+// recommendations.
+func (c *VolumesUseruploadedListCall) Locale(locale string) *VolumesUseruploadedListCall {
+	c.opt_["locale"] = locale
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum number
+// of results to return.
+func (c *VolumesUseruploadedListCall) MaxResults(maxResults int64) *VolumesUseruploadedListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// ProcessingState sets the optional parameter "processingState": The
+// processing state of the user uploaded volumes to be returned.
+func (c *VolumesUseruploadedListCall) ProcessingState(processingState string) *VolumesUseruploadedListCall {
+	c.opt_["processingState"] = processingState
+	return c
+}
+
+// Source sets the optional parameter "source": String to identify the
+// originator of this request.
+func (c *VolumesUseruploadedListCall) Source(source string) *VolumesUseruploadedListCall {
+	c.opt_["source"] = source
+	return c
+}
+
+// StartIndex sets the optional parameter "startIndex": Index of the
+// first result to return (starts at 0)
+func (c *VolumesUseruploadedListCall) StartIndex(startIndex int64) *VolumesUseruploadedListCall {
+	c.opt_["startIndex"] = startIndex
+	return c
+}
+
+func (c *VolumesUseruploadedListCall) Do() (*Volumes, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["locale"]; ok {
+		params.Set("locale", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["processingState"]; ok {
+		params.Set("processingState", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["startIndex"]; ok {
+		params.Set("startIndex", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "volumes/useruploaded")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Volumes)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Return a list of books uploaded by the current user.",
+	//   "httpMethod": "GET",
+	//   "id": "books.volumes.useruploaded.list",
+	//   "parameters": {
+	//     "locale": {
+	//       "description": "ISO-639-1 language and ISO-3166-1 country code. Ex: 'en_US'. Used for generating recommendations.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "description": "Maximum number of results to return.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "40",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "processingState": {
+	//       "description": "The processing state of the user uploaded volumes to be returned.",
+	//       "enum": [
+	//         "COMPLETED_FAILED",
+	//         "COMPLETED_SUCCESS",
+	//         "RUNNING"
+	//       ],
+	//       "enumDescriptions": [
+	//         "The volume processing hase failed.",
+	//         "The volume processing was completed.",
+	//         "The volume processing is not completed."
+	//       ],
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "source": {
+	//       "description": "String to identify the originator of this request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "startIndex": {
+	//       "description": "Index of the first result to return (starts at 0)",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     }
+	//   },
+	//   "path": "volumes/useruploaded",
 	//   "response": {
 	//     "$ref": "Volumes"
 	//   },

@@ -41,7 +41,7 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
-	s.Webfonts = &WebfontsService{s: s}
+	s.Webfonts = NewWebfontsService(s)
 	return s, nil
 }
 
@@ -51,16 +51,21 @@ type Service struct {
 	Webfonts *WebfontsService
 }
 
+func NewWebfontsService(s *Service) *WebfontsService {
+	rs := &WebfontsService{s: s}
+	return rs
+}
+
 type WebfontsService struct {
 	s *Service
 }
 
 type Webfont struct {
 	// Family: The name of the font.
-	Family interface{} `json:"family,omitempty"`
+	Family string `json:"family,omitempty"`
 
 	// Files: The font files (with all supported scripts) for each one of
-	// the available variants.
+	// the available variants, as a key : value map.
 	Files *WebfontFiles `json:"files,omitempty"`
 
 	// Kind: This kind represents a webfont object in the webfonts service.
@@ -68,16 +73,16 @@ type Webfont struct {
 
 	// LastModified: The date (format "yyyy-MM-dd") the font was modified
 	// for the last time.
-	LastModified interface{} `json:"lastModified,omitempty"`
+	LastModified string `json:"lastModified,omitempty"`
 
 	// Subsets: The scripts supported by the font.
-	Subsets interface{} `json:"subsets,omitempty"`
+	Subsets []string `json:"subsets,omitempty"`
 
 	// Variants: The available variants for the font.
-	Variants interface{} `json:"variants,omitempty"`
+	Variants []string `json:"variants,omitempty"`
 
 	// Version: The font version.
-	Version interface{} `json:"version,omitempty"`
+	Version string `json:"version,omitempty"`
 }
 
 type WebfontFiles struct {

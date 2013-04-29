@@ -41,7 +41,7 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
-	s.Cse = &CseService{s: s}
+	s.Cse = NewCseService(s)
 	return s, nil
 }
 
@@ -49,6 +49,11 @@ type Service struct {
 	client *http.Client
 
 	Cse *CseService
+}
+
+func NewCseService(s *Service) *CseService {
+	rs := &CseService{s: s}
+	return rs
 }
 
 type CseService struct {

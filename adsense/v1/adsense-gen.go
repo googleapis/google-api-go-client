@@ -50,11 +50,11 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
-	s.Adclients = &AdclientsService{s: s}
-	s.Adunits = &AdunitsService{s: s}
-	s.Customchannels = &CustomchannelsService{s: s}
-	s.Reports = &ReportsService{s: s}
-	s.Urlchannels = &UrlchannelsService{s: s}
+	s.Adclients = NewAdclientsService(s)
+	s.Adunits = NewAdunitsService(s)
+	s.Customchannels = NewCustomchannelsService(s)
+	s.Reports = NewReportsService(s)
+	s.Urlchannels = NewUrlchannelsService(s)
 	return s, nil
 }
 
@@ -72,20 +72,45 @@ type Service struct {
 	Urlchannels *UrlchannelsService
 }
 
+func NewAdclientsService(s *Service) *AdclientsService {
+	rs := &AdclientsService{s: s}
+	return rs
+}
+
 type AdclientsService struct {
 	s *Service
+}
+
+func NewAdunitsService(s *Service) *AdunitsService {
+	rs := &AdunitsService{s: s}
+	return rs
 }
 
 type AdunitsService struct {
 	s *Service
 }
 
+func NewCustomchannelsService(s *Service) *CustomchannelsService {
+	rs := &CustomchannelsService{s: s}
+	return rs
+}
+
 type CustomchannelsService struct {
 	s *Service
 }
 
+func NewReportsService(s *Service) *ReportsService {
+	rs := &ReportsService{s: s}
+	return rs
+}
+
 type ReportsService struct {
 	s *Service
+}
+
+func NewUrlchannelsService(s *Service) *UrlchannelsService {
+	rs := &UrlchannelsService{s: s}
+	return rs
 }
 
 type UrlchannelsService struct {

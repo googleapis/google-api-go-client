@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/hzyXfaDH3zfLCv_asMfMl-efTMc\"",
+ "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/hnzfKbandlZWUkWL3SnuaQjIEdo\"",
  "discoveryVersion": "v1",
  "id": "youtube:v3",
  "name": "youtube",
  "canonicalName": "YouTube",
  "version": "v3",
- "revision": "20130405",
+ "revision": "20130422",
  "title": "YouTube Data API",
  "description": "Programmatic access to YouTube features.",
  "icons": {
@@ -203,13 +203,47 @@
       }
      }
     },
+    "promotedItem": {
+     "type": "object",
+     "description": "The promotedItem object contains details about a resource which is being promoted. This property is only present if the snippet.type is promotedItem.",
+     "properties": {
+      "adTag": {
+       "type": "string",
+       "description": "The URL the client should fetch to request a promoted item."
+      },
+      "clickTrackingUrl": {
+       "type": "string",
+       "description": "The URL the client should ping to indicate that the user clicked through on this promoted item."
+      },
+      "creativeViewUrl": {
+       "type": "string",
+       "description": "The URL the client should ping to indicate that the user was shown this promoted item."
+      },
+      "videoId": {
+       "type": "string",
+       "description": "The ID that YouTube uses to uniquely identify the promoted video."
+      }
+     }
+    },
     "recommendation": {
      "type": "object",
      "description": "The recommendation object contains information about a recommended resource. This property is only present if the snippet.type is recommendation.",
      "properties": {
       "reason": {
        "type": "string",
-       "description": "The reason that the resource is recommended to the user."
+       "description": "The reason that the resource is recommended to the user.",
+       "enum": [
+        "unspecified",
+        "videoFavorited",
+        "videoLiked",
+        "videoWatched"
+       ],
+       "enumDescriptions": [
+        "",
+        "",
+        "",
+        ""
+       ]
       },
       "resourceId": {
        "$ref": "ResourceId",
@@ -243,7 +277,19 @@
       },
       "type": {
        "type": "string",
-       "description": "The name of the social network."
+       "description": "The name of the social network.",
+       "enum": [
+        "facebook",
+        "googlePlus",
+        "twitter",
+        "unspecified"
+       ],
+       "enumDescriptions": [
+        "",
+        "",
+        "",
+        ""
+       ]
       }
      }
     },
@@ -345,7 +391,73 @@
     },
     "type": {
      "type": "string",
-     "description": "The type of activity that the resource describes."
+     "description": "The type of activity that the resource describes.",
+     "enum": [
+      "bulletin",
+      "channelItem",
+      "comment",
+      "favorite",
+      "like",
+      "playlistItem",
+      "promotedItem",
+      "recommendation",
+      "social",
+      "subscription",
+      "upload"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    }
+   }
+  },
+  "CallToAction": {
+   "id": "CallToAction",
+   "type": "object",
+   "description": "Describes a call-to-action overlay.",
+   "properties": {
+    "callToActionId": {
+     "type": "string"
+    },
+    "description1": {
+     "type": "string"
+    },
+    "description2": {
+     "type": "string"
+    },
+    "destinationUrl": {
+     "type": "string"
+    },
+    "displayUrl": {
+     "type": "string"
+    },
+    "endTimeMs": {
+     "type": "string",
+     "format": "int64"
+    },
+    "headline": {
+     "type": "string"
+    },
+    "hideTimeMs": {
+     "type": "string",
+     "format": "int64"
+    },
+    "imageUrl": {
+     "type": "string"
+    },
+    "startTimeMs": {
+     "type": "string",
+     "format": "int64"
     }
    }
   },
@@ -361,6 +473,10 @@
     "contentDetails": {
      "$ref": "ChannelContentDetails",
      "description": "The contentDetails object encapsulates information about the channel's content."
+    },
+    "conversionPings": {
+     "$ref": "ChannelConversionPings",
+     "description": "The conversionPings object encapsulates information about conversion pings that need to be respected by the channel."
     },
     "etag": {
      "type": "string",
@@ -452,6 +568,45 @@
        "type": "string",
        "description": "The ID of the channel's watch later playlist. Use the playlistItems.insert and playlistItems.delete to add or remove items from that list."
       }
+     }
+    }
+   }
+  },
+  "ChannelConversionPing": {
+   "id": "ChannelConversionPing",
+   "type": "object",
+   "description": "Pings that the app shall fire (authenticated by biscotti cookie). Each ping has a context, in which the app must fire the ping, and a url identifying the ping.",
+   "properties": {
+    "context": {
+     "type": "string",
+     "description": "Defines the context of the ping.",
+     "enum": [
+      "cview",
+      "subscribe",
+      "unsubscribe"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      ""
+     ]
+    },
+    "conversionUrl": {
+     "type": "string",
+     "description": "The url (without the schema) that the player shall send the ping to. It's at caller's descretion to decide which schema to use (http vs https) Example of a returned url: //googleads.g.doubleclick.net/pagead/ viewthroughconversion/962985656/?data=path%3DtHe_path%3Btype%3D cview%3Butuid%3DGISQtTNGYqaYl4sKxoVvKA&labe=default The caller must append biscotti authentication (ms param in case of mobile, for example) to this ping."
+    }
+   }
+  },
+  "ChannelConversionPings": {
+   "id": "ChannelConversionPings",
+   "type": "object",
+   "description": "The conversionPings object encapsulates information about conversion pings that need to be respected by the channel.",
+   "properties": {
+    "pings": {
+     "type": "array",
+     "description": "Pings that the app shall fire (authenticated by biscotti cookie). Each ping has a context, in which the app must fire the ping, and a url identifying the ping.",
+     "items": {
+      "$ref": "ChannelConversionPing"
      }
     }
    }
@@ -603,7 +758,15 @@
    "properties": {
     "privacyStatus": {
      "type": "string",
-     "description": "Privacy status of the channel."
+     "description": "Privacy status of the channel.",
+     "enum": [
+      "private",
+      "public"
+     ],
+     "enumDescriptions": [
+      "",
+      ""
+     ]
     }
    }
   },
@@ -628,112 +791,357 @@
    "properties": {
     "acbRating": {
      "type": "string",
-     "description": "Rating system in Australia - Australian Classification Board"
+     "description": "Rating system in Australia - Australian Classification Board",
+     "enum": [
+      "acbE",
+      "acbG",
+      "acbM",
+      "acbMa15plus",
+      "acbPg",
+      "acbR18plus"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
     },
     "bbfcRating": {
      "type": "string",
-     "description": "British Board of Film Classification"
+     "description": "British Board of Film Classification",
+     "enum": [
+      "bbfc12",
+      "bbfc12a",
+      "bbfc15",
+      "bbfc18",
+      "bbfcPg",
+      "bbfcR18",
+      "bbfcU"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
     },
     "cbfcRating": {
      "type": "string",
-     "description": "Rating system in India - Central Board of Film Certification"
+     "description": "Rating system in India - Central Board of Film Certification",
+     "enum": [
+      "cbfcA",
+      "cbfcS",
+      "cbfcU",
+      "cbfcUA"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      ""
+     ]
     },
     "chvrsRating": {
      "type": "string",
-     "description": "Canadian Home Video Rating System"
+     "description": "Canadian Home Video Rating System",
+     "enum": [
+      "chvrs14a",
+      "chvrs18a",
+      "chvrsE",
+      "chvrsG",
+      "chvrsPg",
+      "chvrsR"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
     },
     "djctqRating": {
      "type": "string",
-     "description": "Rating system in Brazil - Department of Justice, Rating, Titles and Qualification"
+     "description": "Rating system in Brazil - Department of Justice, Rating, Titles and Qualification",
+     "enum": [
+      "djctq10",
+      "djctq12",
+      "djctq14",
+      "djctq16",
+      "djctq18",
+      "djctqL"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
     },
     "eirinRating": {
      "type": "string",
-     "description": "Rating system in Japan - Eiga Rinri Kanri Iinkai"
+     "description": "Rating system in Japan - Eiga Rinri Kanri Iinkai",
+     "enum": [
+      "eirinG",
+      "eirinPg12",
+      "eirinR15plus",
+      "eirinR18plus"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      ""
+     ]
     },
     "fmocRating": {
      "type": "string",
-     "description": "Rating system in France - French Minister of Culture"
+     "description": "Rating system in France - French Minister of Culture",
+     "enum": [
+      "fmoc10",
+      "fmoc12",
+      "fmoc16",
+      "fmoc18",
+      "fmocE",
+      "fmocU"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
     },
     "fskRating": {
      "type": "string",
-     "description": "Rating system in Germany - Voluntary Self Regulation of the Movie Industry"
+     "description": "Rating system in Germany - Voluntary Self Regulation of the Movie Industry",
+     "enum": [
+      "fsk0",
+      "fsk12",
+      "fsk16",
+      "fsk18",
+      "fsk6"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
     },
     "icaaRating": {
      "type": "string",
-     "description": "Rating system in Spain - Instituto de Cinematografia y de las Artes Audiovisuales"
+     "description": "Rating system in Spain - Instituto de Cinematografia y de las Artes Audiovisuales",
+     "enum": [
+      "icaa12",
+      "icaa13",
+      "icaa16",
+      "icaa18",
+      "icaa7",
+      "icaaApta",
+      "icaaX"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
     },
     "kmrbRating": {
      "type": "string",
-     "description": "Rating system in South Korea - Korea Media Rating Board"
+     "description": "Rating system in South Korea - Korea Media Rating Board",
+     "enum": [
+      "kmrb12plus",
+      "kmrb15plus",
+      "kmrbAll",
+      "kmrbR",
+      "kmrbTeenr"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
     },
     "mpaaRating": {
      "type": "string",
-     "description": "Motion Picture Association of America rating for the content."
+     "description": "Motion Picture Association of America rating for the content.",
+     "enum": [
+      "mpaaG",
+      "mpaaNc17",
+      "mpaaPg",
+      "mpaaPg13",
+      "mpaaR"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
     },
     "oflcRating": {
      "type": "string",
-     "description": "Rating system in New Zealand - Office of Film and Literature Classification"
+     "description": "Rating system in New Zealand - Office of Film and Literature Classification",
+     "enum": [
+      "oflcG",
+      "oflcM",
+      "oflcPg",
+      "oflcR13",
+      "oflcR15",
+      "oflcR16",
+      "oflcR18"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
     },
     "rtcRating": {
      "type": "string",
-     "description": "Rating system in Mexico - General Directorate of Radio, Television and Cinematography"
+     "description": "Rating system in Mexico - General Directorate of Radio, Television and Cinematography",
+     "enum": [
+      "rtcA",
+      "rtcAa",
+      "rtcB",
+      "rtcB15",
+      "rtcC",
+      "rtcD"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
     },
     "russiaRating": {
      "type": "string",
-     "description": "Rating system in Russia"
+     "description": "Rating system in Russia",
+     "enum": [
+      "russia0",
+      "russia12",
+      "russia16",
+      "russia18",
+      "russia6"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
     },
     "tvpgRating": {
      "type": "string",
-     "description": "TV Parental Guidelines rating of the content."
+     "description": "TV Parental Guidelines rating of the content.",
+     "enum": [
+      "tvpg14",
+      "tvpgG",
+      "tvpgMa",
+      "tvpgPg",
+      "tvpgY",
+      "tvpgY7",
+      "tvpgY7Fv"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
     }
    }
   },
   "FeaturedChannel": {
    "id": "FeaturedChannel",
    "type": "object",
+   "description": "Describes a featured channel.",
    "properties": {
     "channelId": {
-     "type": "string"
+     "type": "string",
+     "description": "External id of the featured channel."
     },
     "channelSnippet": {
-     "$ref": "ChannelSnippet"
+     "$ref": "ChannelSnippet",
+     "description": "Contains further information about the featured channel."
     },
     "endTimeMs": {
      "type": "string",
+     "description": "Stop showing the feature at this playback time.",
      "format": "int64"
     },
     "featureId": {
-     "type": "string"
+     "type": "string",
+     "description": "Id of this feature (for logging)."
     },
     "startTimeMs": {
      "type": "string",
+     "description": "Start showing the feature at this playback time.",
      "format": "int64"
     },
     "watermarkUrl": {
-     "type": "string"
+     "type": "string",
+     "description": "URL of the default/custom image url."
     }
    }
   },
   "FeaturedVideo": {
    "id": "FeaturedVideo",
    "type": "object",
+   "description": "The representation of one featured video.",
    "properties": {
     "endTimeMs": {
      "type": "string",
+     "description": "Stop showing the feature at the playback time.",
      "format": "int64"
     },
     "featureId": {
-     "type": "string"
+     "type": "string",
+     "description": "Id of this feature (for logging)."
     },
     "startTimeMs": {
      "type": "string",
+     "description": "Start showing the feature at this playback time.",
      "format": "int64"
     },
     "videoId": {
-     "type": "string"
+     "type": "string",
+     "description": "The external id of the featured video."
     },
     "videoSnippet": {
-     "$ref": "VideoSnippet"
+     "$ref": "VideoSnippet",
+     "description": "Contains further information about the featured video."
     }
    }
   },
@@ -825,6 +1233,7 @@
   "ImageSettings": {
    "id": "ImageSettings",
    "type": "object",
+   "description": "Branding properties for images associated with the channel.",
    "properties": {
     "backgroundImageUrl": {
      "$ref": "LocalizedProperty",
@@ -903,12 +1312,18 @@
   "InvideoFeature": {
    "id": "InvideoFeature",
    "type": "object",
+   "description": "A set of invideo features to display for a video playback.",
    "properties": {
+    "callToAction": {
+     "$ref": "CallToAction"
+    },
     "featuredChannel": {
-     "$ref": "FeaturedChannel"
+     "$ref": "FeaturedChannel",
+     "description": "If present, the playback should display a featured channel."
     },
     "featuredVideo": {
-     "$ref": "FeaturedVideo"
+     "$ref": "FeaturedVideo",
+     "description": "If present, the playback should display a featured video."
     }
    }
   },
@@ -939,10 +1354,6 @@
      "description": "The type of the API resource. For live broadcast resources, the value will be youtube#liveBroadcast.",
      "default": "youtube#liveBroadcast"
     },
-    "slateSettings": {
-     "type": "object",
-     "description": "The slateSettings object contains details about the content that will display in the player when you show a broadcast slate. A broadcast slate displays above the video. However, while it displays, the video continues to play and is also audible in the background."
-    },
     "snippet": {
      "$ref": "LiveBroadcastSnippet",
      "description": "The snippet object contains basic details about the event, including its title, description, start time, and end time."
@@ -961,15 +1372,6 @@
     "boundStreamId": {
      "type": "string",
      "description": "This value uniquely identifies the live stream bound to the broadcast."
-    },
-    "enableArchive": {
-     "type": "object",
-     "description": "DEPRECATED: Please use recordFromStart instead. This setting indicates whether the live event should be archived so that YouTube viewers can watch it at a later date. The default value for this property is true.\n\nImportant: You must also set the enableDvr property's value to true if you want the playback to be available immediately after the broadcast ends. If you set this property's value to true but do not also set the enableDvr property to true, there may be a delay of around one day before the archived video will be available for playback.",
-     "annotations": {
-      "required": [
-       "youtube.liveBroadcasts.update"
-      ]
-     }
     },
     "enableContentEncryption": {
      "type": "boolean",
@@ -1039,15 +1441,6 @@
     "startWithSlate": {
      "type": "boolean",
      "description": "This setting indicates whether the broadcast should automatically begin with an in-stream slate when you update the broadcast's status to live. After updating the status, you then need to send a liveCuepoints.insert request that sets the cuepoint's eventState to end to remove the in-stream slate and make your broadcast stream visible to viewers.",
-     "annotations": {
-      "required": [
-       "youtube.liveBroadcasts.update"
-      ]
-     }
-    },
-    "startWithSlateCuepoint": {
-     "type": "object",
-     "description": "DEPRECATED: Please use startWithSlate instead. This setting indicates whether the broadcast should automatically begin with an in-stream slate when you update the broadcast's status to live. After updating the status, you then need to send a liveCuepoints.insert request that sets the cuepoint's eventState to end to remove the in-stream slate and make your broadcast stream visible to viewers.",
      "annotations": {
       "required": [
        "youtube.liveBroadcasts.update"
@@ -1164,11 +1557,47 @@
    "properties": {
     "lifeCycleStatus": {
      "type": "string",
-     "description": "The broadcast's status. The status can be updated using the API's liveBroadcasts.transition method."
+     "description": "The broadcast's status. The status can be updated using the API's liveBroadcasts.transition method.",
+     "enum": [
+      "abandoned",
+      "complete",
+      "completeStarting",
+      "created",
+      "live",
+      "liveStarting",
+      "ready",
+      "reclaimed",
+      "revoked",
+      "testStarting",
+      "testing"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
     },
     "privacyStatus": {
      "type": "string",
      "description": "The broadcast's privacy status. Note that the broadcast represents exactly one YouTube video, so the privacy settings are identical to those supported for videos. In addition, you can set this field by modifying the broadcast resource or by setting the privacyStatus field of the corresponding video resource.",
+     "enum": [
+      "private",
+      "public",
+      "unlisted"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      ""
+     ],
      "annotations": {
       "required": [
        "youtube.liveBroadcasts.insert",
@@ -1237,6 +1666,12 @@
     "ingestionType": {
      "type": "string",
      "description": "The method or protocol used to transmit the video stream.",
+     "enum": [
+      "rtmp"
+     ],
+     "enumDescriptions": [
+      ""
+     ],
      "annotations": {
       "required": [
        "youtube.liveStreams.insert",
@@ -1337,7 +1772,21 @@
    "properties": {
     "streamStatus": {
      "type": "string",
-     "description": "The stream's status."
+     "description": "The stream's status.",
+     "enum": [
+      "active",
+      "created",
+      "error",
+      "inactive",
+      "ready"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
     }
    }
   },
@@ -1472,7 +1921,19 @@
     },
     "restriction": {
      "type": "string",
-     "description": "A code describing the restriction class."
+     "description": "A code describing the restriction class.",
+     "enum": [
+      "notAvailableInYourCountry",
+      "notAvailableOnYourPlatform",
+      "notPublished",
+      "notPurchased"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      ""
+     ]
     }
    }
   },
@@ -1651,10 +2112,15 @@
   "PlaylistItemSnippet": {
    "id": "PlaylistItemSnippet",
    "type": "object",
+   "description": "Basic details about a playlist, including title, description and thumbnails.",
    "properties": {
     "channelId": {
      "type": "string",
      "description": "The ID that YouTube uses to uniquely identify the user that added the item to the playlist."
+    },
+    "channelTitle": {
+     "type": "string",
+     "description": "Channel title for the channel that the playlist item belongs to."
     },
     "description": {
      "type": "string",
@@ -1703,9 +2169,21 @@
   "PlaylistItemStatus": {
    "id": "PlaylistItemStatus",
    "type": "object",
+   "description": "Information about the playlist item's privacy status.",
    "properties": {
     "privacyStatus": {
-     "type": "string"
+     "type": "string",
+     "description": "This resource's privacy status.",
+     "enum": [
+      "private",
+      "public",
+      "unlisted"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      ""
+     ]
     }
    }
   },
@@ -1764,6 +2242,10 @@
      "type": "string",
      "description": "The ID that YouTube uses to uniquely identify the channel that published the playlist."
     },
+    "channelTitle": {
+     "type": "string",
+     "description": "Channel title for the channel that the video belongs to."
+    },
     "description": {
      "type": "string",
      "description": "The playlist's description."
@@ -1796,7 +2278,15 @@
    "properties": {
     "privacyStatus": {
      "type": "string",
-     "description": "The playlist's privacy status."
+     "description": "The playlist's privacy status.",
+     "enum": [
+      "private",
+      "public"
+     ],
+     "enumDescriptions": [
+      "",
+      ""
+     ]
     }
    }
   },
@@ -1806,10 +2296,12 @@
    "description": "A pair Property / Value.",
    "properties": {
     "property": {
-     "type": "string"
+     "type": "string",
+     "description": "A property."
     },
     "value": {
-     "type": "string"
+     "type": "string",
+     "description": "The property's value."
     }
    }
   },
@@ -1823,7 +2315,8 @@
      "description": "The ID that YouTube uses to uniquely identify the referred resource, if that resource is a channel. This property is only present if the resourceId.kind value is youtube#channel."
     },
     "kind": {
-     "type": "string"
+     "type": "string",
+     "description": "The type of the API resource."
     },
     "playlistId": {
      "type": "string",
@@ -1897,6 +2390,7 @@
   "SearchResultSnippet": {
    "id": "SearchResultSnippet",
    "type": "object",
+   "description": "Basic details about a search result, including title, description and thumbnails of the item referenced by the search result.",
    "properties": {
     "channelId": {
      "type": "string",
@@ -1928,6 +2422,54 @@
   "Subscription": {
    "id": "Subscription",
    "type": "object",
+   "properties": {
+    "address": {
+     "type": "string",
+     "description": "The address of the receiving entity where notifications are delivered. Specific to the channel mechanism."
+    },
+    "channel": {
+     "type": "string",
+     "description": "The delivery channel mechanism to use for notifications"
+    },
+    "channelParams": {
+     "type": "object",
+     "description": "Additional parameters controlling delivery channel behavior",
+     "additionalProperties": {
+      "type": "string",
+      "description": "Declares a new parameter by name."
+     }
+    },
+    "clientToken": {
+     "type": "string",
+     "description": "An arbitrary string associated with the subscription that is delivered to the target address with each notification for this subscription."
+    },
+    "expiration": {
+     "type": "string",
+     "description": "The expiration instant for this subscription if it is defined.",
+     "format": "int64"
+    },
+    "id": {
+     "type": "string",
+     "description": "A UUID for the subscription"
+    },
+    "kind": {
+     "type": "string",
+     "description": "A subscription to an API resource",
+     "default": "api#subscription"
+    },
+    "topicId": {
+     "type": "string",
+     "description": "An opaque topic id that identifies the backend resource which has been subscribed to. Stable across different API versions"
+    },
+    "topicUri": {
+     "type": "string",
+     "description": "The canonicalized URI of the subscribed-to resource."
+    }
+   }
+  },
+  "Subscription2": {
+   "id": "Subscription2",
+   "type": "object",
    "description": "A subscription resource contains information about a YouTube user subscription. A subscription notifies a user when new videos are added to a channel or when another user takes one of several actions on YouTube, such as uploading a video, rating a video, or commenting on a video.",
    "properties": {
     "contentDetails": {
@@ -1950,6 +2492,10 @@
     "snippet": {
      "$ref": "SubscriptionSnippet",
      "description": "The snippet object contains basic details about the subscription, including its title and the channel that the user subscribed to."
+    },
+    "subscriberSnippet": {
+     "$ref": "SubscriptionSubscriberSnippet",
+     "description": "The subscriberSnippet object contains basic details about the subscriber."
     }
    }
   },
@@ -1983,7 +2529,7 @@
      "type": "array",
      "description": "A list of subscriptions that match the request criteria.",
      "items": {
-      "$ref": "Subscription"
+      "$ref": "Subscription2"
      }
     },
     "kind": {
@@ -2014,6 +2560,10 @@
      "type": "string",
      "description": "The ID that YouTube uses to uniquely identify the subscriber's channel."
     },
+    "channelTitle": {
+     "type": "string",
+     "description": "Channel title for the channel that the subscription belongs to."
+    },
     "description": {
      "type": "string",
      "description": "The subscription's details."
@@ -2034,11 +2584,34 @@
     },
     "thumbnails": {
      "$ref": "ThumbnailDetails",
-     "description": "A map of thumbnail images associated with the subscription. For each object in the map, the key is the name of the thumbnail image, and the value is an object that contains other information about the thumbnail."
+     "description": "A map of thumbnail images associated with the video. For each object in the map, the key is the name of the thumbnail image, and the value is an object that contains other information about the thumbnail."
     },
     "title": {
      "type": "string",
      "description": "The subscription's title."
+    }
+   }
+  },
+  "SubscriptionSubscriberSnippet": {
+   "id": "SubscriptionSubscriberSnippet",
+   "type": "object",
+   "description": "Basic details about a subscription's subscriber including title, description, channel ID and thumbnails.",
+   "properties": {
+    "channelId": {
+     "type": "string",
+     "description": "The channel ID of the subscriber."
+    },
+    "description": {
+     "type": "string",
+     "description": "The description of the subscriber."
+    },
+    "thumbnails": {
+     "$ref": "ThumbnailDetails",
+     "description": "Thumbnails for this subscriber."
+    },
+    "title": {
+     "type": "string",
+     "description": "The title of the subscriber."
     }
    }
   },
@@ -2066,21 +2639,27 @@
   "ThumbnailDetails": {
    "id": "ThumbnailDetails",
    "type": "object",
+   "description": "Internal representation of thumbnails for a YouTube resource.",
    "properties": {
     "default": {
-     "$ref": "Thumbnail"
+     "$ref": "Thumbnail",
+     "description": "The default image for this resource."
     },
     "high": {
-     "$ref": "Thumbnail"
+     "$ref": "Thumbnail",
+     "description": "The high quality image for this resource."
     },
     "maxres": {
-     "$ref": "Thumbnail"
+     "$ref": "Thumbnail",
+     "description": "The maximum resolution quality image for this resource."
     },
     "medium": {
-     "$ref": "Thumbnail"
+     "$ref": "Thumbnail",
+     "description": "The medium quality image for this resource."
     },
     "standard": {
-     "$ref": "Thumbnail"
+     "$ref": "Thumbnail",
+     "description": "The standard quality image for this resource."
     }
    }
   },
@@ -2096,6 +2675,10 @@
     "contentDetails": {
      "$ref": "VideoContentDetails",
      "description": "The contentDetails object contains information about the video content, including the length of the video and its aspect ratio."
+    },
+    "conversionPings": {
+     "$ref": "VideoConversionPings",
+     "description": "The conversionPings object encapsulates information about url pings that need to be respected by the App in different video contexts."
     },
     "etag": {
      "type": "string",
@@ -2170,7 +2753,19 @@
     },
     "videoGameRating": {
      "type": "string",
-     "description": "Video game rating, if any."
+     "description": "Video game rating, if any.",
+     "enum": [
+      "anyone",
+      "m15Plus",
+      "m16Plus",
+      "m17Plus"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      ""
+     ]
     }
    }
   },
@@ -2224,6 +2819,7 @@
   "VideoCategorySnippet": {
    "id": "VideoCategorySnippet",
    "type": "object",
+   "description": "Basic details about a video category, such as its localized title.",
    "properties": {
     "channelId": {
      "type": "string",
@@ -2231,7 +2827,8 @@
      "default": "UCBR8-60-B28hp2BmDPdntcQ"
     },
     "title": {
-     "type": "string"
+     "type": "string",
+     "description": "The video category's title."
     }
    }
   },
@@ -2242,7 +2839,15 @@
    "properties": {
     "caption": {
      "type": "string",
-     "description": "The value of captions indicates whether the video has captions or not."
+     "description": "The value of captions indicates whether the video has captions or not.",
+     "enum": [
+      "false",
+      "true"
+     ],
+     "enumDescriptions": [
+      "",
+      ""
+     ]
     },
     "contentRating": {
      "$ref": "ContentRating",
@@ -2254,7 +2859,15 @@
     },
     "definition": {
      "type": "string",
-     "description": "The value of definition indicates whether the video is available in high definition or only in standard definition."
+     "description": "The value of definition indicates whether the video is available in high definition or only in standard definition.",
+     "enum": [
+      "hd",
+      "sd"
+     ],
+     "enumDescriptions": [
+      "",
+      ""
+     ]
     },
     "dimension": {
      "type": "string",
@@ -2291,6 +2904,45 @@
      "description": "A list of region codes that identify countries where the video is blocked. If this property is present and a country is not listed in its value, then the video is viewable in that country. If this property is present and contains an empty list, the video is viewable in all countries.",
      "items": {
       "type": "string"
+     }
+    }
+   }
+  },
+  "VideoConversionPing": {
+   "id": "VideoConversionPing",
+   "type": "object",
+   "properties": {
+    "context": {
+     "type": "string",
+     "description": "Defines the context of the ping.",
+     "enum": [
+      "comment",
+      "dislike",
+      "like",
+      "share"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "conversionUrl": {
+     "type": "string",
+     "description": "The url (without the schema) that the app shall send the ping to. It's at caller's descretion to decide which schema to use (http vs https) Example of a returned url: //googleads.g.doubleclick.net/pagead/ viewthroughconversion/962985656/?data=path%3DtHe_path%3Btype%3D like%3Butuid%3DGISQtTNGYqaYl4sKxoVvKA%3Bytvid%3DUrIaJUvIQDg&labe=default The caller must append biscotti authentication (ms param in case of mobile, for example) to this ping."
+    }
+   }
+  },
+  "VideoConversionPings": {
+   "id": "VideoConversionPings",
+   "type": "object",
+   "properties": {
+    "pings": {
+     "type": "array",
+     "description": "Pings that the app shall fire for a video (authenticated by biscotti cookie). Each ping has a context, in which the app must fire the ping, and a url identifying the ping.",
+     "items": {
+      "$ref": "VideoConversionPing"
      }
     }
    }
@@ -2336,7 +2988,25 @@
     },
     "fileType": {
      "type": "string",
-     "description": "The uploaded file's type as detected by YouTube's video processing engine. Currently, YouTube only processes video files, but this field is present whether a video file or another type of file was uploaded."
+     "description": "The uploaded file's type as detected by YouTube's video processing engine. Currently, YouTube only processes video files, but this field is present whether a video file or another type of file was uploaded.",
+     "enum": [
+      "archive",
+      "audio",
+      "document",
+      "image",
+      "other",
+      "project",
+      "video"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
     },
     "recordingLocation": {
      "$ref": "GeoPoint",
@@ -2407,7 +3077,21 @@
     },
     "rotation": {
      "type": "string",
-     "description": "The amount that YouTube needs to rotate the original source content to properly display the video."
+     "description": "The amount that YouTube needs to rotate the original source content to properly display the video.",
+     "enum": [
+      "clockwise",
+      "counterClockwise",
+      "none",
+      "other",
+      "upsideDown"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
     },
     "vendor": {
      "type": "string",
@@ -2417,6 +3101,29 @@
      "type": "integer",
      "description": "The encoded video content's width in pixels. You can calculate the video's encoding aspect ratio as width_pixels / height_pixels.",
      "format": "uint32"
+    }
+   }
+  },
+  "VideoGetRatingResponse": {
+   "id": "VideoGetRatingResponse",
+   "type": "object",
+   "description": "A list of video ratings returned as the response to a youtube.videos.getRating call.",
+   "properties": {
+    "etag": {
+     "type": "string",
+     "description": "The ETag of the response."
+    },
+    "items": {
+     "type": "array",
+     "description": "A list of ratings that match the request criteria.",
+     "items": {
+      "$ref": "VideoRating"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "The type of the API response. For this operation, the value will be youtube#videoGetRatingResponse.",
+     "default": "youtube#videoGetRatingResponse"
     }
    }
   },
@@ -2480,7 +3187,19 @@
     },
     "processingFailureReason": {
      "type": "string",
-     "description": "The reason that YouTube failed to process the video. This property will only have a value if the processingStatus property's value is failed."
+     "description": "The reason that YouTube failed to process the video. This property will only have a value if the processingStatus property's value is failed.",
+     "enum": [
+      "other",
+      "streamingFailed",
+      "transcodeFailed",
+      "uploadFailed"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      ""
+     ]
     },
     "processingIssuesAvailability": {
      "type": "string",
@@ -2492,7 +3211,19 @@
     },
     "processingStatus": {
      "type": "string",
-     "description": "The video's processing status. This value indicates whether YouTube was able to process the video or if the video is still being processed."
+     "description": "The video's processing status. This value indicates whether YouTube was able to process the video or if the video is still being processed.",
+     "enum": [
+      "failed",
+      "processing",
+      "succeeded",
+      "terminated"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      ""
+     ]
     },
     "tagSuggestionsAvailability": {
      "type": "string",
@@ -2537,6 +3268,33 @@
      "items": {
       "type": "string"
      }
+    }
+   }
+  },
+  "VideoRating": {
+   "id": "VideoRating",
+   "type": "object",
+   "description": "Basic details about rating of a video.",
+   "properties": {
+    "rating": {
+     "type": "string",
+     "description": "Rating of a video.",
+     "enum": [
+      "dislike",
+      "like",
+      "none",
+      "unspecified"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "videoId": {
+     "type": "string",
+     "description": "The ID that YouTube uses to uniquely identify the video."
     }
    }
   },
@@ -2638,6 +3396,7 @@
   "VideoStatus": {
    "id": "VideoStatus",
    "type": "object",
+   "description": "Basic details about a video category, such as its localized title.",
    "properties": {
     "embeddable": {
      "type": "boolean",
@@ -2645,15 +3404,49 @@
     },
     "failureReason": {
      "type": "string",
-     "description": "This value explains why a video failed to upload. This property is only present if the uploadStatus property indicates that the upload failed."
+     "description": "This value explains why a video failed to upload. This property is only present if the uploadStatus property indicates that the upload failed.",
+     "enum": [
+      "codec",
+      "conversion",
+      "emptyFile",
+      "invalidFile",
+      "tooSmall",
+      "uploadAborted"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
     },
     "license": {
      "type": "string",
-     "description": "The video's license."
+     "description": "The video's license.",
+     "enum": [
+      "creativeCommon",
+      "youtube"
+     ],
+     "enumDescriptions": [
+      "",
+      ""
+     ]
     },
     "privacyStatus": {
      "type": "string",
-     "description": "The video's privacy status."
+     "description": "The video's privacy status.",
+     "enum": [
+      "private",
+      "public",
+      "unlisted"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      ""
+     ]
     },
     "publicStatsViewable": {
      "type": "boolean",
@@ -2661,11 +3454,47 @@
     },
     "rejectionReason": {
      "type": "string",
-     "description": "This value explains why YouTube rejected an uploaded video. This property is only present if the uploadStatus property indicates that the upload was rejected."
+     "description": "This value explains why YouTube rejected an uploaded video. This property is only present if the uploadStatus property indicates that the upload was rejected.",
+     "enum": [
+      "claim",
+      "copyright",
+      "duplicate",
+      "inappropriate",
+      "length",
+      "termsOfUse",
+      "trademark",
+      "uploaderAccountClosed",
+      "uploaderAccountSuspended"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
     },
     "uploadStatus": {
      "type": "string",
-     "description": "The status of the uploaded video."
+     "description": "The status of the uploaded video.",
+     "enum": [
+      "deleted",
+      "failed",
+      "processed",
+      "rejected",
+      "uploaded"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
     }
    }
   },
@@ -2678,28 +3507,82 @@
      "type": "array",
      "description": "A list of video editing operations that might improve the video quality or playback experience of the uploaded video.",
      "items": {
-      "type": "string"
+      "type": "string",
+      "enum": [
+       "audioQuietAudioSwap",
+       "videoAutoLevels",
+       "videoCrop",
+       "videoStabilize"
+      ],
+      "enumDescriptions": [
+       "",
+       "",
+       "",
+       ""
+      ]
      }
     },
     "processingErrors": {
      "type": "array",
      "description": "A list of errors that will prevent YouTube from successfully processing the uploaded video video. These errors indicate that, regardless of the video's current processing status, eventually, that status will almost certainly be failed.",
      "items": {
-      "type": "string"
+      "type": "string",
+      "enum": [
+       "archiveFile",
+       "audioFile",
+       "docFile",
+       "imageFile",
+       "notAVideoFile",
+       "projectFile"
+      ],
+      "enumDescriptions": [
+       "",
+       "",
+       "",
+       "",
+       "",
+       ""
+      ]
      }
     },
     "processingHints": {
      "type": "array",
      "description": "A list of suggestions that may improve YouTube's ability to process the video.",
      "items": {
-      "type": "string"
+      "type": "string",
+      "enum": [
+       "nonStreamableMov",
+       "sendBestQualityVideo"
+      ],
+      "enumDescriptions": [
+       "",
+       ""
+      ]
      }
     },
     "processingWarnings": {
      "type": "array",
      "description": "A list of reasons why YouTube may have difficulty transcoding the uploaded video or that might result in an erroneous transcoding. These warnings are generated before YouTube actually processes the uploaded video file. In addition, they identify issues that are unlikely to cause the video processing to fail but that might cause problems such as sync issues, video artifacts, or a missing audio track.",
      "items": {
-      "type": "string"
+      "type": "string",
+      "enum": [
+       "hasEditlist",
+       "inconsistentResolution",
+       "problematicAudioCodec",
+       "problematicVideoCodec",
+       "unknownAudioCodec",
+       "unknownContainer",
+       "unknownVideoCodec"
+      ],
+      "enumDescriptions": [
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       ""
+      ]
      }
     },
     "tagSuggestions": {
@@ -3014,6 +3897,47 @@
       "https://www.googleapis.com/auth/youtube"
      ]
     },
+    "control": {
+     "id": "youtube.liveBroadcasts.control",
+     "path": "liveBroadcasts/control",
+     "httpMethod": "POST",
+     "description": "Control the slate of the broadacast.",
+     "parameters": {
+      "displaySlate": {
+       "type": "boolean",
+       "description": "The displaySlate parameter specifies whether to enable or disable the slate.",
+       "location": "query"
+      },
+      "id": {
+       "type": "string",
+       "description": "The id parameter specifies the YouTube live broadcast ID for the resource that is being deleted.",
+       "required": true,
+       "location": "query"
+      },
+      "offsetTimeMs": {
+       "type": "string",
+       "description": "The offsetTimeMs parameter specifies a point in time in the video when the specified action (e.g. display a slate) is executed. The property value identifies a positive time offset, in milliseconds, from the beginning of the monitor stream. Though measured in milliseconds, the value is actually an approximation, and YouTube will act as closely as possible to that time. If not specified, it indicates that the action should be performed as soon as possible. If your broadcast stream is not delayed, then it should not be specified. However, if your broadcast stream is delayed, then the parameter can specify the time when the operation should be executed. See the Getting started guide for more details. Note: The offset is measured from the time that the testing phase began.",
+       "format": "uint64",
+       "location": "query"
+      },
+      "part": {
+       "type": "string",
+       "description": "The part parameter specifies a comma-separated list of one or more liveBroadcast resource properties that the API response will include. The part names that you can include in the parameter value are id, snippet, contentDetails, and status.",
+       "required": true,
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "id",
+      "part"
+     ],
+     "response": {
+      "$ref": "LiveBroadcast"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/youtube"
+     ]
+    },
     "delete": {
      "id": "youtube.liveBroadcasts.delete",
      "path": "liveBroadcasts",
@@ -3271,11 +4195,6 @@
       "mine": {
        "type": "boolean",
        "description": "The mine parameter can be used to instruct the API to only return streams owned by the authenticated user. Set the parameter value to true to only retrieve your own streams.",
-       "location": "query"
-      },
-      "onBehalfOf": {
-       "type": "string",
-       "description": "ID of the Google+ Page for the channel on whose behalf this request is made",
        "location": "query"
       },
       "pageToken": {
@@ -3948,10 +4867,10 @@
       "part"
      ],
      "request": {
-      "$ref": "Subscription"
+      "$ref": "Subscription2"
      },
      "response": {
-      "$ref": "Subscription"
+      "$ref": "Subscription2"
      },
      "scopes": [
       "https://www.googleapis.com/auth/youtube",
@@ -4029,6 +4948,20 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/youtube",
+      "https://www.googleapis.com/auth/youtube.readonly",
+      "https://www.googleapis.com/auth/youtubepartner"
+     ]
+    },
+    "unsubscribe": {
+     "id": "youtube.subscriptions.unsubscribe",
+     "path": "subscriptions/unsubscribe",
+     "httpMethod": "POST",
+     "request": {
+      "$ref": "Subscription"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/youtube",
+      "https://www.googleapis.com/auth/youtube.readonly",
       "https://www.googleapis.com/auth/youtubepartner"
      ]
     }
@@ -4097,6 +5030,30 @@
      "parameterOrder": [
       "id"
      ],
+     "scopes": [
+      "https://www.googleapis.com/auth/youtube",
+      "https://www.googleapis.com/auth/youtubepartner"
+     ]
+    },
+    "getRating": {
+     "id": "youtube.videos.getRating",
+     "path": "videos/getRating",
+     "httpMethod": "GET",
+     "description": "Get user ratings for videos.",
+     "parameters": {
+      "id": {
+       "type": "string",
+       "description": "The id parameter specifies a comma-separated list of the YouTube video ID(s) for the resource(s) that are being retrieved. In a video resource, the id property specifies the video's ID.",
+       "required": true,
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "id"
+     ],
+     "response": {
+      "$ref": "VideoGetRatingResponse"
+     },
      "scopes": [
       "https://www.googleapis.com/auth/youtube",
       "https://www.googleapis.com/auth/youtubepartner"

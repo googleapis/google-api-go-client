@@ -41,7 +41,7 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
-	s.LicenseAssignments = &LicenseAssignmentsService{s: s}
+	s.LicenseAssignments = NewLicenseAssignmentsService(s)
 	return s, nil
 }
 
@@ -49,6 +49,11 @@ type Service struct {
 	client *http.Client
 
 	LicenseAssignments *LicenseAssignmentsService
+}
+
+func NewLicenseAssignmentsService(s *Service) *LicenseAssignmentsService {
+	rs := &LicenseAssignmentsService{s: s}
+	return rs
 }
 
 type LicenseAssignmentsService struct {

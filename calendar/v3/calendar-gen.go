@@ -50,14 +50,14 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
-	s.Acl = &AclService{s: s}
-	s.CalendarList = &CalendarListService{s: s}
-	s.Calendars = &CalendarsService{s: s}
-	s.Colors = &ColorsService{s: s}
-	s.Events = &EventsService{s: s}
-	s.Freebusy = &FreebusyService{s: s}
-	s.Settings = &SettingsService{s: s}
-	s.Subscriptions = &SubscriptionsService{s: s}
+	s.Acl = NewAclService(s)
+	s.CalendarList = NewCalendarListService(s)
+	s.Calendars = NewCalendarsService(s)
+	s.Colors = NewColorsService(s)
+	s.Events = NewEventsService(s)
+	s.Freebusy = NewFreebusyService(s)
+	s.Settings = NewSettingsService(s)
+	s.Subscriptions = NewSubscriptionsService(s)
 	return s, nil
 }
 
@@ -81,32 +81,72 @@ type Service struct {
 	Subscriptions *SubscriptionsService
 }
 
+func NewAclService(s *Service) *AclService {
+	rs := &AclService{s: s}
+	return rs
+}
+
 type AclService struct {
 	s *Service
+}
+
+func NewCalendarListService(s *Service) *CalendarListService {
+	rs := &CalendarListService{s: s}
+	return rs
 }
 
 type CalendarListService struct {
 	s *Service
 }
 
+func NewCalendarsService(s *Service) *CalendarsService {
+	rs := &CalendarsService{s: s}
+	return rs
+}
+
 type CalendarsService struct {
 	s *Service
+}
+
+func NewColorsService(s *Service) *ColorsService {
+	rs := &ColorsService{s: s}
+	return rs
 }
 
 type ColorsService struct {
 	s *Service
 }
 
+func NewEventsService(s *Service) *EventsService {
+	rs := &EventsService{s: s}
+	return rs
+}
+
 type EventsService struct {
 	s *Service
+}
+
+func NewFreebusyService(s *Service) *FreebusyService {
+	rs := &FreebusyService{s: s}
+	return rs
 }
 
 type FreebusyService struct {
 	s *Service
 }
 
+func NewSettingsService(s *Service) *SettingsService {
+	rs := &SettingsService{s: s}
+	return rs
+}
+
 type SettingsService struct {
 	s *Service
+}
+
+func NewSubscriptionsService(s *Service) *SubscriptionsService {
+	rs := &SubscriptionsService{s: s}
+	return rs
 }
 
 type SubscriptionsService struct {

@@ -1,6 +1,6 @@
 // Package freebase provides access to the Freebase API.
 //
-// See http://wiki.freebase.com/wiki/API
+// See https://developers.google.com/freebase/
 //
 // Usage example:
 //
@@ -47,8 +47,8 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
-	s.Text = &TextService{s: s}
-	s.Topic = &TopicService{s: s}
+	s.Text = NewTextService(s)
+	s.Topic = NewTopicService(s)
 	return s, nil
 }
 
@@ -60,8 +60,18 @@ type Service struct {
 	Topic *TopicService
 }
 
+func NewTextService(s *Service) *TextService {
+	rs := &TextService{s: s}
+	return rs
+}
+
 type TextService struct {
 	s *Service
+}
+
+func NewTopicService(s *Service) *TopicService {
+	rs := &TopicService{s: s}
+	return rs
 }
 
 type TopicService struct {

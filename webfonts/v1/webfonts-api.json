@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/KyP1rlE9O6ohvW2O9e5uMKtw83U\"",
+ "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/1WzYt_qi7HSJHYzKbIDpdsLq_Jk\"",
  "discoveryVersion": "v1",
  "id": "webfonts:v1",
  "name": "webfonts",
@@ -70,14 +70,15 @@
    "type": "object",
    "properties": {
     "family": {
-     "type": "any",
+     "type": "string",
      "description": "The name of the font."
     },
     "files": {
      "type": "object",
-     "description": "The font files (with all supported scripts) for each one of the available variants.",
+     "description": "The font files (with all supported scripts) for each one of the available variants, as a key : value map.",
      "additionalProperties": {
-      "type": "any"
+      "type": "string",
+      "description": "The font file URL (value) for an specific variant (key)."
      }
     },
     "kind": {
@@ -86,19 +87,26 @@
      "default": "webfonts#webfont"
     },
     "lastModified": {
-     "type": "any",
-     "description": "The date (format \"yyyy-MM-dd\") the font was modified for the last time."
+     "type": "string",
+     "description": "The date (format \"yyyy-MM-dd\") the font was modified for the last time.",
+     "format": "date"
     },
     "subsets": {
-     "type": "any",
-     "description": "The scripts supported by the font."
+     "type": "array",
+     "description": "The scripts supported by the font.",
+     "items": {
+      "type": "string"
+     }
     },
     "variants": {
-     "type": "any",
-     "description": "The available variants for the font."
+     "type": "array",
+     "description": "The available variants for the font.",
+     "items": {
+      "type": "string"
+     }
     },
     "version": {
-     "type": "any",
+     "type": "string",
      "description": "The font version."
     }
    }

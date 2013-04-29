@@ -1,18 +1,18 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/b1_0WIlPpVCotgPDBhzZPFXX0Vo\"",
+ "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/vrdPJmkVunCo_Y66TJj8GOM9xwo\"",
  "discoveryVersion": "v1",
  "id": "freebase:v1",
  "name": "freebase",
  "version": "v1",
- "revision": "20130318",
+ "revision": "20130422",
  "title": "Freebase API",
  "description": "Topic and MQL APIs provide you structured access to Freebase data.",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/freebase-16.png",
   "x32": "http://www.google.com/images/icons/product/freebase-32.png"
  },
- "documentationLink": "http://wiki.freebase.com/wiki/API",
+ "documentationLink": "https://developers.google.com/freebase/",
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/freebase/v1/",
  "basePath": "/freebase/v1/",

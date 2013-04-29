@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/k_Hr9ZF4632j9aTZhFm_OYVbIVY\"",
+ "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/emS2GNIl_c-LGa5TS3ajAbBWSVo\"",
  "discoveryVersion": "v1",
  "id": "bigquery:v2",
  "name": "bigquery",
  "version": "v2",
- "revision": "20130404",
+ "revision": "20130412",
  "title": "BigQuery API",
  "description": "A data platform for customers to create, manage, share and query data.",
  "icons": {
@@ -935,7 +935,7 @@
   "TableCell": {
    "id": "TableCell",
    "type": "object",
-   "description": "Represents a single cell in the result set.",
+   "description": "Represents a single cell in the result set. Users of the java client can detect whether their value result is null by calling 'com.google.api.client.util.Data.isNull(cell.getV())'.",
    "properties": {
     "v": {
      "type": "any"

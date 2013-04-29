@@ -50,12 +50,12 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
-	s.Accounts = &AccountsService{s: s}
-	s.Adclients = &AdclientsService{s: s}
-	s.Adunits = &AdunitsService{s: s}
-	s.Customchannels = &CustomchannelsService{s: s}
-	s.Reports = &ReportsService{s: s}
-	s.Urlchannels = &UrlchannelsService{s: s}
+	s.Accounts = NewAccountsService(s)
+	s.Adclients = NewAdclientsService(s)
+	s.Adunits = NewAdunitsService(s)
+	s.Customchannels = NewCustomchannelsService(s)
+	s.Reports = NewReportsService(s)
+	s.Urlchannels = NewUrlchannelsService(s)
 	return s, nil
 }
 
@@ -75,24 +75,162 @@ type Service struct {
 	Urlchannels *UrlchannelsService
 }
 
+func NewAccountsService(s *Service) *AccountsService {
+	rs := &AccountsService{s: s}
+	rs.Adclients = NewAccountsAdclientsService(s)
+	rs.Adunits = NewAccountsAdunitsService(s)
+	rs.Customchannels = NewAccountsCustomchannelsService(s)
+	rs.Reports = NewAccountsReportsService(s)
+	rs.Urlchannels = NewAccountsUrlchannelsService(s)
+	return rs
+}
+
 type AccountsService struct {
 	s *Service
+
+	Adclients *AccountsAdclientsService
+
+	Adunits *AccountsAdunitsService
+
+	Customchannels *AccountsCustomchannelsService
+
+	Reports *AccountsReportsService
+
+	Urlchannels *AccountsUrlchannelsService
+}
+
+func NewAccountsAdclientsService(s *Service) *AccountsAdclientsService {
+	rs := &AccountsAdclientsService{s: s}
+	return rs
+}
+
+type AccountsAdclientsService struct {
+	s *Service
+}
+
+func NewAccountsAdunitsService(s *Service) *AccountsAdunitsService {
+	rs := &AccountsAdunitsService{s: s}
+	rs.Customchannels = NewAccountsAdunitsCustomchannelsService(s)
+	return rs
+}
+
+type AccountsAdunitsService struct {
+	s *Service
+
+	Customchannels *AccountsAdunitsCustomchannelsService
+}
+
+func NewAccountsAdunitsCustomchannelsService(s *Service) *AccountsAdunitsCustomchannelsService {
+	rs := &AccountsAdunitsCustomchannelsService{s: s}
+	return rs
+}
+
+type AccountsAdunitsCustomchannelsService struct {
+	s *Service
+}
+
+func NewAccountsCustomchannelsService(s *Service) *AccountsCustomchannelsService {
+	rs := &AccountsCustomchannelsService{s: s}
+	rs.Adunits = NewAccountsCustomchannelsAdunitsService(s)
+	return rs
+}
+
+type AccountsCustomchannelsService struct {
+	s *Service
+
+	Adunits *AccountsCustomchannelsAdunitsService
+}
+
+func NewAccountsCustomchannelsAdunitsService(s *Service) *AccountsCustomchannelsAdunitsService {
+	rs := &AccountsCustomchannelsAdunitsService{s: s}
+	return rs
+}
+
+type AccountsCustomchannelsAdunitsService struct {
+	s *Service
+}
+
+func NewAccountsReportsService(s *Service) *AccountsReportsService {
+	rs := &AccountsReportsService{s: s}
+	return rs
+}
+
+type AccountsReportsService struct {
+	s *Service
+}
+
+func NewAccountsUrlchannelsService(s *Service) *AccountsUrlchannelsService {
+	rs := &AccountsUrlchannelsService{s: s}
+	return rs
+}
+
+type AccountsUrlchannelsService struct {
+	s *Service
+}
+
+func NewAdclientsService(s *Service) *AdclientsService {
+	rs := &AdclientsService{s: s}
+	return rs
 }
 
 type AdclientsService struct {
 	s *Service
 }
 
+func NewAdunitsService(s *Service) *AdunitsService {
+	rs := &AdunitsService{s: s}
+	rs.Customchannels = NewAdunitsCustomchannelsService(s)
+	return rs
+}
+
 type AdunitsService struct {
 	s *Service
+
+	Customchannels *AdunitsCustomchannelsService
+}
+
+func NewAdunitsCustomchannelsService(s *Service) *AdunitsCustomchannelsService {
+	rs := &AdunitsCustomchannelsService{s: s}
+	return rs
+}
+
+type AdunitsCustomchannelsService struct {
+	s *Service
+}
+
+func NewCustomchannelsService(s *Service) *CustomchannelsService {
+	rs := &CustomchannelsService{s: s}
+	rs.Adunits = NewCustomchannelsAdunitsService(s)
+	return rs
 }
 
 type CustomchannelsService struct {
 	s *Service
+
+	Adunits *CustomchannelsAdunitsService
+}
+
+func NewCustomchannelsAdunitsService(s *Service) *CustomchannelsAdunitsService {
+	rs := &CustomchannelsAdunitsService{s: s}
+	return rs
+}
+
+type CustomchannelsAdunitsService struct {
+	s *Service
+}
+
+func NewReportsService(s *Service) *ReportsService {
+	rs := &ReportsService{s: s}
+	return rs
 }
 
 type ReportsService struct {
 	s *Service
+}
+
+func NewUrlchannelsService(s *Service) *UrlchannelsService {
+	rs := &UrlchannelsService{s: s}
+	return rs
 }
 
 type UrlchannelsService struct {
@@ -503,6 +641,1096 @@ func (c *AccountsListCall) Do() (*Accounts, error) {
 
 }
 
+// method id "adsense.accounts.adclients.list":
+
+type AccountsAdclientsListCall struct {
+	s         *Service
+	accountId string
+	opt_      map[string]interface{}
+}
+
+// List: List all ad clients in the specified account.
+func (r *AccountsAdclientsService) List(accountId string) *AccountsAdclientsListCall {
+	c := &AccountsAdclientsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of ad clients to include in the response, used for paging.
+func (c *AccountsAdclientsListCall) MaxResults(maxResults int64) *AccountsAdclientsListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A continuation
+// token, used to page through ad clients. To retrieve the next page,
+// set this parameter to the value of "nextPageToken" from the previous
+// response.
+func (c *AccountsAdclientsListCall) PageToken(pageToken string) *AccountsAdclientsListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+func (c *AccountsAdclientsListCall) Do() (*AdClients, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsense/v1.1/", "accounts/{accountId}/adclients")
+	urls = strings.Replace(urls, "{accountId}", cleanPathString(c.accountId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(AdClients)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List all ad clients in the specified account.",
+	//   "httpMethod": "GET",
+	//   "id": "adsense.accounts.adclients.list",
+	//   "parameterOrder": [
+	//     "accountId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account for which to list ad clients.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "description": "The maximum number of ad clients to include in the response, used for paging.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "maximum": "10000",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A continuation token, used to page through ad clients. To retrieve the next page, set this parameter to the value of \"nextPageToken\" from the previous response.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "accounts/{accountId}/adclients",
+	//   "response": {
+	//     "$ref": "AdClients"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adsense",
+	//     "https://www.googleapis.com/auth/adsense.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "adsense.accounts.adunits.get":
+
+type AccountsAdunitsGetCall struct {
+	s          *Service
+	accountId  string
+	adClientId string
+	adUnitId   string
+	opt_       map[string]interface{}
+}
+
+// Get: Gets the specified ad unit in the specified ad client for the
+// specified account.
+func (r *AccountsAdunitsService) Get(accountId string, adClientId string, adUnitId string) *AccountsAdunitsGetCall {
+	c := &AccountsAdunitsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.adClientId = adClientId
+	c.adUnitId = adUnitId
+	return c
+}
+
+func (c *AccountsAdunitsGetCall) Do() (*AdUnit, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsense/v1.1/", "accounts/{accountId}/adclients/{adClientId}/adunits/{adUnitId}")
+	urls = strings.Replace(urls, "{accountId}", cleanPathString(c.accountId), 1)
+	urls = strings.Replace(urls, "{adClientId}", cleanPathString(c.adClientId), 1)
+	urls = strings.Replace(urls, "{adUnitId}", cleanPathString(c.adUnitId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(AdUnit)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the specified ad unit in the specified ad client for the specified account.",
+	//   "httpMethod": "GET",
+	//   "id": "adsense.accounts.adunits.get",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "adClientId",
+	//     "adUnitId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account to which the ad client belongs.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "adClientId": {
+	//       "description": "Ad client for which to get the ad unit.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "adUnitId": {
+	//       "description": "Ad unit to retrieve.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "accounts/{accountId}/adclients/{adClientId}/adunits/{adUnitId}",
+	//   "response": {
+	//     "$ref": "AdUnit"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adsense",
+	//     "https://www.googleapis.com/auth/adsense.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "adsense.accounts.adunits.list":
+
+type AccountsAdunitsListCall struct {
+	s          *Service
+	accountId  string
+	adClientId string
+	opt_       map[string]interface{}
+}
+
+// List: List all ad units in the specified ad client for the specified
+// account.
+func (r *AccountsAdunitsService) List(accountId string, adClientId string) *AccountsAdunitsListCall {
+	c := &AccountsAdunitsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.adClientId = adClientId
+	return c
+}
+
+// IncludeInactive sets the optional parameter "includeInactive":
+// Whether to include inactive ad units. Default: true.
+func (c *AccountsAdunitsListCall) IncludeInactive(includeInactive bool) *AccountsAdunitsListCall {
+	c.opt_["includeInactive"] = includeInactive
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of ad units to include in the response, used for paging.
+func (c *AccountsAdunitsListCall) MaxResults(maxResults int64) *AccountsAdunitsListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A continuation
+// token, used to page through ad units. To retrieve the next page, set
+// this parameter to the value of "nextPageToken" from the previous
+// response.
+func (c *AccountsAdunitsListCall) PageToken(pageToken string) *AccountsAdunitsListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+func (c *AccountsAdunitsListCall) Do() (*AdUnits, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["includeInactive"]; ok {
+		params.Set("includeInactive", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsense/v1.1/", "accounts/{accountId}/adclients/{adClientId}/adunits")
+	urls = strings.Replace(urls, "{accountId}", cleanPathString(c.accountId), 1)
+	urls = strings.Replace(urls, "{adClientId}", cleanPathString(c.adClientId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(AdUnits)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List all ad units in the specified ad client for the specified account.",
+	//   "httpMethod": "GET",
+	//   "id": "adsense.accounts.adunits.list",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "adClientId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account to which the ad client belongs.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "adClientId": {
+	//       "description": "Ad client for which to list ad units.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "includeInactive": {
+	//       "description": "Whether to include inactive ad units. Default: true.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "maxResults": {
+	//       "description": "The maximum number of ad units to include in the response, used for paging.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "maximum": "10000",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A continuation token, used to page through ad units. To retrieve the next page, set this parameter to the value of \"nextPageToken\" from the previous response.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "accounts/{accountId}/adclients/{adClientId}/adunits",
+	//   "response": {
+	//     "$ref": "AdUnits"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adsense",
+	//     "https://www.googleapis.com/auth/adsense.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "adsense.accounts.adunits.customchannels.list":
+
+type AccountsAdunitsCustomchannelsListCall struct {
+	s          *Service
+	accountId  string
+	adClientId string
+	adUnitId   string
+	opt_       map[string]interface{}
+}
+
+// List: List all custom channels which the specified ad unit belongs
+// to.
+func (r *AccountsAdunitsCustomchannelsService) List(accountId string, adClientId string, adUnitId string) *AccountsAdunitsCustomchannelsListCall {
+	c := &AccountsAdunitsCustomchannelsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.adClientId = adClientId
+	c.adUnitId = adUnitId
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of custom channels to include in the response, used for
+// paging.
+func (c *AccountsAdunitsCustomchannelsListCall) MaxResults(maxResults int64) *AccountsAdunitsCustomchannelsListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A continuation
+// token, used to page through custom channels. To retrieve the next
+// page, set this parameter to the value of "nextPageToken" from the
+// previous response.
+func (c *AccountsAdunitsCustomchannelsListCall) PageToken(pageToken string) *AccountsAdunitsCustomchannelsListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+func (c *AccountsAdunitsCustomchannelsListCall) Do() (*CustomChannels, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsense/v1.1/", "accounts/{accountId}/adclients/{adClientId}/adunits/{adUnitId}/customchannels")
+	urls = strings.Replace(urls, "{accountId}", cleanPathString(c.accountId), 1)
+	urls = strings.Replace(urls, "{adClientId}", cleanPathString(c.adClientId), 1)
+	urls = strings.Replace(urls, "{adUnitId}", cleanPathString(c.adUnitId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(CustomChannels)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List all custom channels which the specified ad unit belongs to.",
+	//   "httpMethod": "GET",
+	//   "id": "adsense.accounts.adunits.customchannels.list",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "adClientId",
+	//     "adUnitId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account to which the ad client belongs.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "adClientId": {
+	//       "description": "Ad client which contains the ad unit.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "adUnitId": {
+	//       "description": "Ad unit for which to list custom channels.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "description": "The maximum number of custom channels to include in the response, used for paging.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "maximum": "10000",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A continuation token, used to page through custom channels. To retrieve the next page, set this parameter to the value of \"nextPageToken\" from the previous response.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "accounts/{accountId}/adclients/{adClientId}/adunits/{adUnitId}/customchannels",
+	//   "response": {
+	//     "$ref": "CustomChannels"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adsense",
+	//     "https://www.googleapis.com/auth/adsense.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "adsense.accounts.customchannels.get":
+
+type AccountsCustomchannelsGetCall struct {
+	s               *Service
+	accountId       string
+	adClientId      string
+	customChannelId string
+	opt_            map[string]interface{}
+}
+
+// Get: Get the specified custom channel from the specified ad client
+// for the specified account.
+func (r *AccountsCustomchannelsService) Get(accountId string, adClientId string, customChannelId string) *AccountsCustomchannelsGetCall {
+	c := &AccountsCustomchannelsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.adClientId = adClientId
+	c.customChannelId = customChannelId
+	return c
+}
+
+func (c *AccountsCustomchannelsGetCall) Do() (*CustomChannel, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsense/v1.1/", "accounts/{accountId}/adclients/{adClientId}/customchannels/{customChannelId}")
+	urls = strings.Replace(urls, "{accountId}", cleanPathString(c.accountId), 1)
+	urls = strings.Replace(urls, "{adClientId}", cleanPathString(c.adClientId), 1)
+	urls = strings.Replace(urls, "{customChannelId}", cleanPathString(c.customChannelId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(CustomChannel)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get the specified custom channel from the specified ad client for the specified account.",
+	//   "httpMethod": "GET",
+	//   "id": "adsense.accounts.customchannels.get",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "adClientId",
+	//     "customChannelId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account to which the ad client belongs.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "adClientId": {
+	//       "description": "Ad client which contains the custom channel.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "customChannelId": {
+	//       "description": "Custom channel to retrieve.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "accounts/{accountId}/adclients/{adClientId}/customchannels/{customChannelId}",
+	//   "response": {
+	//     "$ref": "CustomChannel"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adsense",
+	//     "https://www.googleapis.com/auth/adsense.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "adsense.accounts.customchannels.list":
+
+type AccountsCustomchannelsListCall struct {
+	s          *Service
+	accountId  string
+	adClientId string
+	opt_       map[string]interface{}
+}
+
+// List: List all custom channels in the specified ad client for the
+// specified account.
+func (r *AccountsCustomchannelsService) List(accountId string, adClientId string) *AccountsCustomchannelsListCall {
+	c := &AccountsCustomchannelsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.adClientId = adClientId
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of custom channels to include in the response, used for
+// paging.
+func (c *AccountsCustomchannelsListCall) MaxResults(maxResults int64) *AccountsCustomchannelsListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A continuation
+// token, used to page through custom channels. To retrieve the next
+// page, set this parameter to the value of "nextPageToken" from the
+// previous response.
+func (c *AccountsCustomchannelsListCall) PageToken(pageToken string) *AccountsCustomchannelsListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+func (c *AccountsCustomchannelsListCall) Do() (*CustomChannels, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsense/v1.1/", "accounts/{accountId}/adclients/{adClientId}/customchannels")
+	urls = strings.Replace(urls, "{accountId}", cleanPathString(c.accountId), 1)
+	urls = strings.Replace(urls, "{adClientId}", cleanPathString(c.adClientId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(CustomChannels)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List all custom channels in the specified ad client for the specified account.",
+	//   "httpMethod": "GET",
+	//   "id": "adsense.accounts.customchannels.list",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "adClientId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account to which the ad client belongs.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "adClientId": {
+	//       "description": "Ad client for which to list custom channels.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "description": "The maximum number of custom channels to include in the response, used for paging.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "maximum": "10000",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A continuation token, used to page through custom channels. To retrieve the next page, set this parameter to the value of \"nextPageToken\" from the previous response.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "accounts/{accountId}/adclients/{adClientId}/customchannels",
+	//   "response": {
+	//     "$ref": "CustomChannels"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adsense",
+	//     "https://www.googleapis.com/auth/adsense.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "adsense.accounts.customchannels.adunits.list":
+
+type AccountsCustomchannelsAdunitsListCall struct {
+	s               *Service
+	accountId       string
+	adClientId      string
+	customChannelId string
+	opt_            map[string]interface{}
+}
+
+// List: List all ad units in the specified custom channel.
+func (r *AccountsCustomchannelsAdunitsService) List(accountId string, adClientId string, customChannelId string) *AccountsCustomchannelsAdunitsListCall {
+	c := &AccountsCustomchannelsAdunitsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.adClientId = adClientId
+	c.customChannelId = customChannelId
+	return c
+}
+
+// IncludeInactive sets the optional parameter "includeInactive":
+// Whether to include inactive ad units. Default: true.
+func (c *AccountsCustomchannelsAdunitsListCall) IncludeInactive(includeInactive bool) *AccountsCustomchannelsAdunitsListCall {
+	c.opt_["includeInactive"] = includeInactive
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of ad units to include in the response, used for paging.
+func (c *AccountsCustomchannelsAdunitsListCall) MaxResults(maxResults int64) *AccountsCustomchannelsAdunitsListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A continuation
+// token, used to page through ad units. To retrieve the next page, set
+// this parameter to the value of "nextPageToken" from the previous
+// response.
+func (c *AccountsCustomchannelsAdunitsListCall) PageToken(pageToken string) *AccountsCustomchannelsAdunitsListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+func (c *AccountsCustomchannelsAdunitsListCall) Do() (*AdUnits, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["includeInactive"]; ok {
+		params.Set("includeInactive", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsense/v1.1/", "accounts/{accountId}/adclients/{adClientId}/customchannels/{customChannelId}/adunits")
+	urls = strings.Replace(urls, "{accountId}", cleanPathString(c.accountId), 1)
+	urls = strings.Replace(urls, "{adClientId}", cleanPathString(c.adClientId), 1)
+	urls = strings.Replace(urls, "{customChannelId}", cleanPathString(c.customChannelId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(AdUnits)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List all ad units in the specified custom channel.",
+	//   "httpMethod": "GET",
+	//   "id": "adsense.accounts.customchannels.adunits.list",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "adClientId",
+	//     "customChannelId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account to which the ad client belongs.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "adClientId": {
+	//       "description": "Ad client which contains the custom channel.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "customChannelId": {
+	//       "description": "Custom channel for which to list ad units.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "includeInactive": {
+	//       "description": "Whether to include inactive ad units. Default: true.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "maxResults": {
+	//       "description": "The maximum number of ad units to include in the response, used for paging.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "maximum": "10000",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A continuation token, used to page through ad units. To retrieve the next page, set this parameter to the value of \"nextPageToken\" from the previous response.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "accounts/{accountId}/adclients/{adClientId}/customchannels/{customChannelId}/adunits",
+	//   "response": {
+	//     "$ref": "AdUnits"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adsense",
+	//     "https://www.googleapis.com/auth/adsense.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "adsense.accounts.reports.generate":
+
+type AccountsReportsGenerateCall struct {
+	s         *Service
+	accountId string
+	startDate string
+	endDate   string
+	opt_      map[string]interface{}
+}
+
+// Generate: Generate an AdSense report based on the report request sent
+// in the query parameters. Returns the result as JSON; to retrieve
+// output in CSV format specify "alt=csv" as a query parameter.
+func (r *AccountsReportsService) Generate(accountId string, startDate string, endDate string) *AccountsReportsGenerateCall {
+	c := &AccountsReportsGenerateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.startDate = startDate
+	c.endDate = endDate
+	return c
+}
+
+// Currency sets the optional parameter "currency": Optional currency to
+// use when reporting on monetary metrics. Defaults to the account's
+// currency if not set.
+func (c *AccountsReportsGenerateCall) Currency(currency string) *AccountsReportsGenerateCall {
+	c.opt_["currency"] = currency
+	return c
+}
+
+// Dimension sets the optional parameter "dimension": Dimensions to base
+// the report on.
+func (c *AccountsReportsGenerateCall) Dimension(dimension string) *AccountsReportsGenerateCall {
+	c.opt_["dimension"] = dimension
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filters to be run on the
+// report.
+func (c *AccountsReportsGenerateCall) Filter(filter string) *AccountsReportsGenerateCall {
+	c.opt_["filter"] = filter
+	return c
+}
+
+// Locale sets the optional parameter "locale": Optional locale to use
+// for translating report output to a local language. Defaults to
+// "en_US" if not specified.
+func (c *AccountsReportsGenerateCall) Locale(locale string) *AccountsReportsGenerateCall {
+	c.opt_["locale"] = locale
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of rows of report data to return.
+func (c *AccountsReportsGenerateCall) MaxResults(maxResults int64) *AccountsReportsGenerateCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// Metric sets the optional parameter "metric": Numeric columns to
+// include in the report.
+func (c *AccountsReportsGenerateCall) Metric(metric string) *AccountsReportsGenerateCall {
+	c.opt_["metric"] = metric
+	return c
+}
+
+// Sort sets the optional parameter "sort": The name of a dimension or
+// metric to sort the resulting report on, optionally prefixed with "+"
+// to sort ascending or "-" to sort descending. If no prefix is
+// specified, the column is sorted ascending.
+func (c *AccountsReportsGenerateCall) Sort(sort string) *AccountsReportsGenerateCall {
+	c.opt_["sort"] = sort
+	return c
+}
+
+// StartIndex sets the optional parameter "startIndex": Index of the
+// first row of report data to return.
+func (c *AccountsReportsGenerateCall) StartIndex(startIndex int64) *AccountsReportsGenerateCall {
+	c.opt_["startIndex"] = startIndex
+	return c
+}
+
+func (c *AccountsReportsGenerateCall) Do() (*AdsenseReportsGenerateResponse, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("endDate", fmt.Sprintf("%v", c.endDate))
+	params.Set("startDate", fmt.Sprintf("%v", c.startDate))
+	if v, ok := c.opt_["currency"]; ok {
+		params.Set("currency", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["dimension"]; ok {
+		params.Set("dimension", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["filter"]; ok {
+		params.Set("filter", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["locale"]; ok {
+		params.Set("locale", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["metric"]; ok {
+		params.Set("metric", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["sort"]; ok {
+		params.Set("sort", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["startIndex"]; ok {
+		params.Set("startIndex", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsense/v1.1/", "accounts/{accountId}/reports")
+	urls = strings.Replace(urls, "{accountId}", cleanPathString(c.accountId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(AdsenseReportsGenerateResponse)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Generate an AdSense report based on the report request sent in the query parameters. Returns the result as JSON; to retrieve output in CSV format specify \"alt=csv\" as a query parameter.",
+	//   "httpMethod": "GET",
+	//   "id": "adsense.accounts.reports.generate",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "startDate",
+	//     "endDate"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account upon which to report.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "currency": {
+	//       "description": "Optional currency to use when reporting on monetary metrics. Defaults to the account's currency if not set.",
+	//       "location": "query",
+	//       "pattern": "[a-zA-Z]+",
+	//       "type": "string"
+	//     },
+	//     "dimension": {
+	//       "description": "Dimensions to base the report on.",
+	//       "location": "query",
+	//       "pattern": "[a-zA-Z_]+",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "endDate": {
+	//       "description": "End of the date range to report on in \"YYYY-MM-DD\" format, inclusive.",
+	//       "location": "query",
+	//       "pattern": "\\d{4}-\\d{2}-\\d{2}|(today|startOfMonth|startOfYear)(([\\-\\+]\\d+[dwmy]){0,2}?)",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "filter": {
+	//       "description": "Filters to be run on the report.",
+	//       "location": "query",
+	//       "pattern": "[a-zA-Z_]+(==|=@).+",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "locale": {
+	//       "description": "Optional locale to use for translating report output to a local language. Defaults to \"en_US\" if not specified.",
+	//       "location": "query",
+	//       "pattern": "[a-zA-Z_]+",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "description": "The maximum number of rows of report data to return.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "maximum": "50000",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "metric": {
+	//       "description": "Numeric columns to include in the report.",
+	//       "location": "query",
+	//       "pattern": "[a-zA-Z_]+",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "sort": {
+	//       "description": "The name of a dimension or metric to sort the resulting report on, optionally prefixed with \"+\" to sort ascending or \"-\" to sort descending. If no prefix is specified, the column is sorted ascending.",
+	//       "location": "query",
+	//       "pattern": "(\\+|-)?[a-zA-Z_]+",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "startDate": {
+	//       "description": "Start of the date range to report on in \"YYYY-MM-DD\" format, inclusive.",
+	//       "location": "query",
+	//       "pattern": "\\d{4}-\\d{2}-\\d{2}|(today|startOfMonth|startOfYear)(([\\-\\+]\\d+[dwmy]){0,2}?)",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "startIndex": {
+	//       "description": "Index of the first row of report data to return.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "maximum": "5000",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     }
+	//   },
+	//   "path": "accounts/{accountId}/reports",
+	//   "response": {
+	//     "$ref": "AdsenseReportsGenerateResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adsense",
+	//     "https://www.googleapis.com/auth/adsense.readonly"
+	//   ],
+	//   "supportsMediaDownload": true
+	// }
+
+}
+
+// method id "adsense.accounts.urlchannels.list":
+
+type AccountsUrlchannelsListCall struct {
+	s          *Service
+	accountId  string
+	adClientId string
+	opt_       map[string]interface{}
+}
+
+// List: List all URL channels in the specified ad client for the
+// specified account.
+func (r *AccountsUrlchannelsService) List(accountId string, adClientId string) *AccountsUrlchannelsListCall {
+	c := &AccountsUrlchannelsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.adClientId = adClientId
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of URL channels to include in the response, used for paging.
+func (c *AccountsUrlchannelsListCall) MaxResults(maxResults int64) *AccountsUrlchannelsListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A continuation
+// token, used to page through URL channels. To retrieve the next page,
+// set this parameter to the value of "nextPageToken" from the previous
+// response.
+func (c *AccountsUrlchannelsListCall) PageToken(pageToken string) *AccountsUrlchannelsListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+func (c *AccountsUrlchannelsListCall) Do() (*UrlChannels, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsense/v1.1/", "accounts/{accountId}/adclients/{adClientId}/urlchannels")
+	urls = strings.Replace(urls, "{accountId}", cleanPathString(c.accountId), 1)
+	urls = strings.Replace(urls, "{adClientId}", cleanPathString(c.adClientId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(UrlChannels)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List all URL channels in the specified ad client for the specified account.",
+	//   "httpMethod": "GET",
+	//   "id": "adsense.accounts.urlchannels.list",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "adClientId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account to which the ad client belongs.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "adClientId": {
+	//       "description": "Ad client for which to list URL channels.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "description": "The maximum number of URL channels to include in the response, used for paging.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "maximum": "10000",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A continuation token, used to page through URL channels. To retrieve the next page, set this parameter to the value of \"nextPageToken\" from the previous response.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "accounts/{accountId}/adclients/{adClientId}/urlchannels",
+	//   "response": {
+	//     "$ref": "UrlChannels"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adsense",
+	//     "https://www.googleapis.com/auth/adsense.readonly"
+	//   ]
+	// }
+
+}
+
 // method id "adsense.adclients.list":
 
 type AdclientsListCall struct {
@@ -776,6 +2004,116 @@ func (c *AdunitsListCall) Do() (*AdUnits, error) {
 
 }
 
+// method id "adsense.adunits.customchannels.list":
+
+type AdunitsCustomchannelsListCall struct {
+	s          *Service
+	adClientId string
+	adUnitId   string
+	opt_       map[string]interface{}
+}
+
+// List: List all custom channels which the specified ad unit belongs
+// to.
+func (r *AdunitsCustomchannelsService) List(adClientId string, adUnitId string) *AdunitsCustomchannelsListCall {
+	c := &AdunitsCustomchannelsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.adClientId = adClientId
+	c.adUnitId = adUnitId
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of custom channels to include in the response, used for
+// paging.
+func (c *AdunitsCustomchannelsListCall) MaxResults(maxResults int64) *AdunitsCustomchannelsListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A continuation
+// token, used to page through custom channels. To retrieve the next
+// page, set this parameter to the value of "nextPageToken" from the
+// previous response.
+func (c *AdunitsCustomchannelsListCall) PageToken(pageToken string) *AdunitsCustomchannelsListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+func (c *AdunitsCustomchannelsListCall) Do() (*CustomChannels, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsense/v1.1/", "adclients/{adClientId}/adunits/{adUnitId}/customchannels")
+	urls = strings.Replace(urls, "{adClientId}", cleanPathString(c.adClientId), 1)
+	urls = strings.Replace(urls, "{adUnitId}", cleanPathString(c.adUnitId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(CustomChannels)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List all custom channels which the specified ad unit belongs to.",
+	//   "httpMethod": "GET",
+	//   "id": "adsense.adunits.customchannels.list",
+	//   "parameterOrder": [
+	//     "adClientId",
+	//     "adUnitId"
+	//   ],
+	//   "parameters": {
+	//     "adClientId": {
+	//       "description": "Ad client which contains the ad unit.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "adUnitId": {
+	//       "description": "Ad unit for which to list custom channels.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "description": "The maximum number of custom channels to include in the response, used for paging.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "maximum": "10000",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A continuation token, used to page through custom channels. To retrieve the next page, set this parameter to the value of \"nextPageToken\" from the previous response.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "adclients/{adClientId}/adunits/{adUnitId}/customchannels",
+	//   "response": {
+	//     "$ref": "CustomChannels"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adsense",
+	//     "https://www.googleapis.com/auth/adsense.readonly"
+	//   ]
+	// }
+
+}
+
 // method id "adsense.customchannels.get":
 
 type CustomchannelsGetCall struct {
@@ -940,6 +2278,129 @@ func (c *CustomchannelsListCall) Do() (*CustomChannels, error) {
 	//   "path": "adclients/{adClientId}/customchannels",
 	//   "response": {
 	//     "$ref": "CustomChannels"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adsense",
+	//     "https://www.googleapis.com/auth/adsense.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "adsense.customchannels.adunits.list":
+
+type CustomchannelsAdunitsListCall struct {
+	s               *Service
+	adClientId      string
+	customChannelId string
+	opt_            map[string]interface{}
+}
+
+// List: List all ad units in the specified custom channel.
+func (r *CustomchannelsAdunitsService) List(adClientId string, customChannelId string) *CustomchannelsAdunitsListCall {
+	c := &CustomchannelsAdunitsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.adClientId = adClientId
+	c.customChannelId = customChannelId
+	return c
+}
+
+// IncludeInactive sets the optional parameter "includeInactive":
+// Whether to include inactive ad units. Default: true.
+func (c *CustomchannelsAdunitsListCall) IncludeInactive(includeInactive bool) *CustomchannelsAdunitsListCall {
+	c.opt_["includeInactive"] = includeInactive
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of ad units to include in the response, used for paging.
+func (c *CustomchannelsAdunitsListCall) MaxResults(maxResults int64) *CustomchannelsAdunitsListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A continuation
+// token, used to page through ad units. To retrieve the next page, set
+// this parameter to the value of "nextPageToken" from the previous
+// response.
+func (c *CustomchannelsAdunitsListCall) PageToken(pageToken string) *CustomchannelsAdunitsListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+func (c *CustomchannelsAdunitsListCall) Do() (*AdUnits, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["includeInactive"]; ok {
+		params.Set("includeInactive", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsense/v1.1/", "adclients/{adClientId}/customchannels/{customChannelId}/adunits")
+	urls = strings.Replace(urls, "{adClientId}", cleanPathString(c.adClientId), 1)
+	urls = strings.Replace(urls, "{customChannelId}", cleanPathString(c.customChannelId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(AdUnits)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List all ad units in the specified custom channel.",
+	//   "httpMethod": "GET",
+	//   "id": "adsense.customchannels.adunits.list",
+	//   "parameterOrder": [
+	//     "adClientId",
+	//     "customChannelId"
+	//   ],
+	//   "parameters": {
+	//     "adClientId": {
+	//       "description": "Ad client which contains the custom channel.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "customChannelId": {
+	//       "description": "Custom channel for which to list ad units.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "includeInactive": {
+	//       "description": "Whether to include inactive ad units. Default: true.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "maxResults": {
+	//       "description": "The maximum number of ad units to include in the response, used for paging.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "maximum": "10000",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A continuation token, used to page through ad units. To retrieve the next page, set this parameter to the value of \"nextPageToken\" from the previous response.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "adclients/{adClientId}/customchannels/{customChannelId}/adunits",
+	//   "response": {
+	//     "$ref": "AdUnits"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/adsense",

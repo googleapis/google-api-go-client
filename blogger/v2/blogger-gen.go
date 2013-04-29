@@ -47,11 +47,11 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
-	s.Blogs = &BlogsService{s: s}
-	s.Comments = &CommentsService{s: s}
-	s.Pages = &PagesService{s: s}
-	s.Posts = &PostsService{s: s}
-	s.Users = &UsersService{s: s}
+	s.Blogs = NewBlogsService(s)
+	s.Comments = NewCommentsService(s)
+	s.Pages = NewPagesService(s)
+	s.Posts = NewPostsService(s)
+	s.Users = NewUsersService(s)
 	return s, nil
 }
 
@@ -69,23 +69,60 @@ type Service struct {
 	Users *UsersService
 }
 
+func NewBlogsService(s *Service) *BlogsService {
+	rs := &BlogsService{s: s}
+	return rs
+}
+
 type BlogsService struct {
 	s *Service
+}
+
+func NewCommentsService(s *Service) *CommentsService {
+	rs := &CommentsService{s: s}
+	return rs
 }
 
 type CommentsService struct {
 	s *Service
 }
 
+func NewPagesService(s *Service) *PagesService {
+	rs := &PagesService{s: s}
+	return rs
+}
+
 type PagesService struct {
 	s *Service
+}
+
+func NewPostsService(s *Service) *PostsService {
+	rs := &PostsService{s: s}
+	return rs
 }
 
 type PostsService struct {
 	s *Service
 }
 
+func NewUsersService(s *Service) *UsersService {
+	rs := &UsersService{s: s}
+	rs.Blogs = NewUsersBlogsService(s)
+	return rs
+}
+
 type UsersService struct {
+	s *Service
+
+	Blogs *UsersBlogsService
+}
+
+func NewUsersBlogsService(s *Service) *UsersBlogsService {
+	rs := &UsersBlogsService{s: s}
+	return rs
+}
+
+type UsersBlogsService struct {
 	s *Service
 }
 
@@ -1117,6 +1154,68 @@ func (c *UsersGetCall) Do() (*User, error) {
 	//   "path": "users/{userId}",
 	//   "response": {
 	//     "$ref": "User"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/blogger"
+	//   ]
+	// }
+
+}
+
+// method id "blogger.users.blogs.list":
+
+type UsersBlogsListCall struct {
+	s      *Service
+	userId string
+	opt_   map[string]interface{}
+}
+
+// List: Retrieves a list of blogs, possibly filtered.
+func (r *UsersBlogsService) List(userId string) *UsersBlogsListCall {
+	c := &UsersBlogsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.userId = userId
+	return c
+}
+
+func (c *UsersBlogsListCall) Do() (*BlogList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/blogger/v2/", "users/{userId}/blogs")
+	urls = strings.Replace(urls, "{userId}", cleanPathString(c.userId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(BlogList)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a list of blogs, possibly filtered.",
+	//   "httpMethod": "GET",
+	//   "id": "blogger.users.blogs.list",
+	//   "parameterOrder": [
+	//     "userId"
+	//   ],
+	//   "parameters": {
+	//     "userId": {
+	//       "description": "ID of the user whose blogs are to be fetched. Either the word 'self' (sans quote marks) or the user's profile identifier.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "users/{userId}/blogs",
+	//   "response": {
+	//     "$ref": "BlogList"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/blogger"

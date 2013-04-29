@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/iMEOh-Fn5GH0aj3PVknQxL_fWRQ\"",
+ "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/mmD2e3rvoGxDQirJeNWdzi29lZg\"",
  "discoveryVersion": "v1",
  "id": "books:v1",
  "name": "books",
  "version": "v1",
- "revision": "20130415",
+ "revision": "20130409",
  "title": "Books API",
  "description": "Lets you search for books and manage your Google Books library.",
  "icons": {
@@ -3113,6 +3113,69 @@
        "parameterOrder": [
         "volumeId"
        ],
+       "response": {
+        "$ref": "Volumes"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/books"
+       ]
+      }
+     }
+    },
+    "mybooks": {
+     "methods": {
+      "list": {
+       "id": "books.volumes.mybooks.list",
+       "path": "volumes/mybooks",
+       "httpMethod": "GET",
+       "description": "Return a list of books in My Library.",
+       "parameters": {
+        "acquireMethod": {
+         "type": "string",
+         "description": "How the book was aquired",
+         "enum": [
+          "PREORDERED",
+          "PUBLIC_DOMAIN",
+          "PURCHASED",
+          "SAMPLE",
+          "UPLOADED"
+         ],
+         "enumDescriptions": [
+          "Preordered books (not yet available)",
+          "Public domain books",
+          "Purchased books",
+          "Sample books",
+          "User uploaded books"
+         ],
+         "repeated": true,
+         "location": "query"
+        },
+        "locale": {
+         "type": "string",
+         "description": "ISO-639-1 language and ISO-3166-1 country code. Ex:'en_US'. Used for generating recommendations.",
+         "location": "query"
+        },
+        "maxResults": {
+         "type": "integer",
+         "description": "Maximum number of results to return.",
+         "format": "uint32",
+         "minimum": "0",
+         "maximum": "100",
+         "location": "query"
+        },
+        "source": {
+         "type": "string",
+         "description": "String to identify the originator of this request.",
+         "location": "query"
+        },
+        "startIndex": {
+         "type": "integer",
+         "description": "Index of the first result to return (starts at 0)",
+         "format": "uint32",
+         "minimum": "0",
+         "location": "query"
+        }
+       },
        "response": {
         "$ref": "Volumes"
        },

@@ -50,7 +50,7 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
-	s.WebResource = &WebResourceService{s: s}
+	s.WebResource = NewWebResourceService(s)
 	return s, nil
 }
 
@@ -58,6 +58,11 @@ type Service struct {
 	client *http.Client
 
 	WebResource *WebResourceService
+}
+
+func NewWebResourceService(s *Service) *WebResourceService {
+	rs := &WebResourceService{s: s}
+	return rs
 }
 
 type WebResourceService struct {

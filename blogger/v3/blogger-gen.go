@@ -50,11 +50,11 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
-	s.Blogs = &BlogsService{s: s}
-	s.Comments = &CommentsService{s: s}
-	s.Pages = &PagesService{s: s}
-	s.Posts = &PostsService{s: s}
-	s.Users = &UsersService{s: s}
+	s.Blogs = NewBlogsService(s)
+	s.Comments = NewCommentsService(s)
+	s.Pages = NewPagesService(s)
+	s.Posts = NewPostsService(s)
+	s.Users = NewUsersService(s)
 	return s, nil
 }
 
@@ -72,20 +72,45 @@ type Service struct {
 	Users *UsersService
 }
 
+func NewBlogsService(s *Service) *BlogsService {
+	rs := &BlogsService{s: s}
+	return rs
+}
+
 type BlogsService struct {
 	s *Service
+}
+
+func NewCommentsService(s *Service) *CommentsService {
+	rs := &CommentsService{s: s}
+	return rs
 }
 
 type CommentsService struct {
 	s *Service
 }
 
+func NewPagesService(s *Service) *PagesService {
+	rs := &PagesService{s: s}
+	return rs
+}
+
 type PagesService struct {
 	s *Service
 }
 
+func NewPostsService(s *Service) *PostsService {
+	rs := &PostsService{s: s}
+	return rs
+}
+
 type PostsService struct {
 	s *Service
+}
+
+func NewUsersService(s *Service) *UsersService {
+	rs := &UsersService{s: s}
+	return rs
 }
 
 type UsersService struct {

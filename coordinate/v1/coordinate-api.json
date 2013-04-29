@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/NcpqpQFvQq81G4OS9ycWZXCV2iE\"",
+ "etag": "\"DsY8aw3zSOMYNAy_X4JnK21hrvA/-7_E6vfT2yuZ4bjaaQRx3DITqsU\"",
  "discoveryVersion": "v1",
  "id": "coordinate:v1",
  "name": "coordinate",
@@ -8,6 +8,8 @@
  "revision": "20130326",
  "title": "Google Maps Coordinate API",
  "description": "Lets you view and manage jobs in a Coordinate team.",
+ "ownerDomain": "google.com",
+ "ownerName": "Google",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/search-16.gif",
   "x32": "http://www.google.com/images/icons/product/search-32.gif"

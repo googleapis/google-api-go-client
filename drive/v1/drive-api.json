@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/CWbBD4rv6lqZ_OA-kdLOMjZxuDE\"",
+ "etag": "\"DsY8aw3zSOMYNAy_X4JnK21hrvA/Y4pqCwwideuG2u2Tm6UtLnFG_WE\"",
  "discoveryVersion": "v1",
  "id": "drive:v1",
  "name": "drive",
@@ -8,6 +8,8 @@
  "revision": "20130404",
  "title": "Drive API",
  "description": "The API to interact with Drive.",
+ "ownerDomain": "google.com",
+ "ownerName": "Google",
  "icons": {
   "x16": "https://ssl.gstatic.com/docs/doclist/images/drive_icon_16.png",
   "x32": "https://ssl.gstatic.com/docs/doclist/images/drive_icon_32.png"

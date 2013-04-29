@@ -51,10 +51,10 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
-	s.Activities = &ActivitiesService{s: s}
-	s.Comments = &CommentsService{s: s}
-	s.Moments = &MomentsService{s: s}
-	s.People = &PeopleService{s: s}
+	s.Activities = NewActivitiesService(s)
+	s.Comments = NewCommentsService(s)
+	s.Moments = NewMomentsService(s)
+	s.People = NewPeopleService(s)
 	return s, nil
 }
 
@@ -70,16 +70,36 @@ type Service struct {
 	People *PeopleService
 }
 
+func NewActivitiesService(s *Service) *ActivitiesService {
+	rs := &ActivitiesService{s: s}
+	return rs
+}
+
 type ActivitiesService struct {
 	s *Service
+}
+
+func NewCommentsService(s *Service) *CommentsService {
+	rs := &CommentsService{s: s}
+	return rs
 }
 
 type CommentsService struct {
 	s *Service
 }
 
+func NewMomentsService(s *Service) *MomentsService {
+	rs := &MomentsService{s: s}
+	return rs
+}
+
 type MomentsService struct {
 	s *Service
+}
+
+func NewPeopleService(s *Service) *PeopleService {
+	rs := &PeopleService{s: s}
+	return rs
 }
 
 type PeopleService struct {
@@ -877,13 +897,6 @@ type Person struct {
 	// - "other" - Other.
 	Gender string `json:"gender,omitempty"`
 
-	// HasApp: If "true", indicates that the person has installed the app
-	// that is making the request and has chosen to expose this install
-	// state to the caller. A value of "false" indicates that the install
-	// state cannot be determined (it is either not installed or the person
-	// has chosen to keep this information private).
-	HasApp bool `json:"hasApp,omitempty"`
-
 	// Id: The ID of this person.
 	Id string `json:"id,omitempty"`
 
@@ -1091,16 +1104,16 @@ type PersonPlacesLived struct {
 }
 
 type PersonUrls struct {
-	// Primary: If "true", this URL is the person's primary URL.
-	Primary bool `json:"primary,omitempty"`
+	// Label: The label of the URL.
+	Label string `json:"label,omitempty"`
 
 	// Type: The type of URL. Possible values are:
-	// - "home" - URL for
-	// home.
-	// - "work" - URL for work.
-	// - "blog" - URL for blog.
-	// -
-	// "profile" - URL for profile.
+	// - "otherProfile" - URL
+	// for another profile.
+	// - "contributor" - URL for which this person is
+	// a contributor to.
+	// - "website" - URL for this +Page's primary
+	// website.
 	// - "other" - Other.
 	Type string `json:"type,omitempty"`
 

@@ -50,8 +50,8 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
-	s.Taskqueues = &TaskqueuesService{s: s}
-	s.Tasks = &TasksService{s: s}
+	s.Taskqueues = NewTaskqueuesService(s)
+	s.Tasks = NewTasksService(s)
 	return s, nil
 }
 
@@ -63,8 +63,18 @@ type Service struct {
 	Tasks *TasksService
 }
 
+func NewTaskqueuesService(s *Service) *TaskqueuesService {
+	rs := &TaskqueuesService{s: s}
+	return rs
+}
+
 type TaskqueuesService struct {
 	s *Service
+}
+
+func NewTasksService(s *Service) *TasksService {
+	rs := &TasksService{s: s}
+	return rs
 }
 
 type TasksService struct {

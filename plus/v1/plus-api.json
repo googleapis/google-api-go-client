@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/qcNz5hP2mls7Mu4VwLjORZ-cVrY\"",
+ "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/fqDQJaCYcVMA5esBQjeVnm3e2lk\"",
  "discoveryVersion": "v1",
  "id": "plus:v1",
  "name": "plus",
  "version": "v1",
- "revision": "20130403",
+ "revision": "20130320",
  "title": "Google+ API",
  "description": "The Google+ API enables developers to build on top of the Google+ platform.",
  "icons": {
@@ -1154,10 +1154,6 @@
      "type": "string",
      "description": "The person's gender. Possible values are:  \n- \"male\" - Male gender. \n- \"female\" - Female gender. \n- \"other\" - Other."
     },
-    "hasApp": {
-     "type": "boolean",
-     "description": "If \"true\", indicates that the person has installed the app that is making the request and has chosen to expose this install state to the caller. A value of \"false\" indicates that the install state cannot be determined (it is either not installed or the person has chosen to keep this information private)."
-    },
     "id": {
      "type": "string",
      "description": "The ID of this person."
@@ -1308,13 +1304,13 @@
      "items": {
       "type": "object",
       "properties": {
-       "primary": {
-        "type": "boolean",
-        "description": "If \"true\", this URL is the person's primary URL."
+       "label": {
+        "type": "string",
+        "description": "The label of the URL."
        },
        "type": {
         "type": "string",
-        "description": "The type of URL. Possible values are:  \n- \"home\" - URL for home. \n- \"work\" - URL for work. \n- \"blog\" - URL for blog. \n- \"profile\" - URL for profile. \n- \"other\" - Other."
+        "description": "The type of URL. Possible values are:  \n- \"otherProfile\" - URL for another profile. \n- \"contributor\" - URL for which this person is a contributor to. \n- \"website\" - URL for this +Page's primary website. \n- \"other\" - Other."
        },
        "value": {
         "type": "string",

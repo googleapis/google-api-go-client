@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/IKXu8Ifx6RZBvxjw0v_Lnh82Soc\"",
+ "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/91Bv0kFY3qaTMJ7ejWDpXwf36R4\"",
  "discoveryVersion": "v1",
  "id": "drive:v2",
  "name": "drive",
@@ -316,6 +316,10 @@
      "description": "This is always drive#app.",
      "default": "drive#app"
     },
+    "longDescription": {
+     "type": "string",
+     "description": "A long description of the app."
+    },
     "name": {
      "type": "string",
      "description": "The name of the app."
@@ -355,6 +359,10 @@
      "items": {
       "type": "string"
      }
+    },
+    "shortDescription": {
+     "type": "string",
+     "description": "A short description of the app."
     },
     "supportsCreate": {
      "type": "boolean",
@@ -640,9 +648,17 @@
      "description": "This is always drive#commentList.",
      "default": "drive#commentList"
     },
+    "nextLink": {
+     "type": "string",
+     "description": "A link to the next page of comments."
+    },
     "nextPageToken": {
      "type": "string",
      "description": "The token to use to request the next page of results."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "A link back to this list."
     }
    }
   },
@@ -714,9 +730,17 @@
      "description": "This is always drive#commentReplyList.",
      "default": "drive#commentReplyList"
     },
+    "nextLink": {
+     "type": "string",
+     "description": "A link to the next page of replies."
+    },
     "nextPageToken": {
      "type": "string",
      "description": "The token to use to request the next page of results."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "A link back to this list."
     }
    }
   },
@@ -737,6 +761,10 @@
      "type": "string",
      "description": "Create time for this file (formatted ISO8601 timestamp).",
      "format": "date-time"
+    },
+    "defaultOpenWithLink": {
+     "type": "string",
+     "description": "A link to open this file with the user's default app for this file. Only populated when the drive.apps.readonly scope is used."
     },
     "description": {
      "type": "string",
@@ -975,6 +1003,13 @@
      "type": "string",
      "description": "Last time this file was modified by anyone (formatted RFC 3339 timestamp). This is only mutable on update when the setModifiedDate parameter is set.",
      "format": "date-time"
+    },
+    "openWithLinks": {
+     "type": "object",
+     "description": "A map of the id of each of the user's apps to a link to open this file with that app. Only populated when the drive.apps.readonly scope is used.",
+     "additionalProperties": {
+      "type": "string"
+     }
     },
     "originalFilename": {
      "type": "string",

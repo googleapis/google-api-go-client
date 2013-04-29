@@ -56,8 +56,8 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
-	s.CurrentLocation = &CurrentLocationService{s: s}
-	s.Location = &LocationService{s: s}
+	s.CurrentLocation = NewCurrentLocationService(s)
+	s.Location = NewLocationService(s)
 	return s, nil
 }
 
@@ -69,8 +69,18 @@ type Service struct {
 	Location *LocationService
 }
 
+func NewCurrentLocationService(s *Service) *CurrentLocationService {
+	rs := &CurrentLocationService{s: s}
+	return rs
+}
+
 type CurrentLocationService struct {
 	s *Service
+}
+
+func NewLocationService(s *Service) *LocationService {
+	rs := &LocationService{s: s}
+	return rs
 }
 
 type LocationService struct {

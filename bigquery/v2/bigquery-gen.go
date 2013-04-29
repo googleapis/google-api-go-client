@@ -56,11 +56,11 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
-	s.Datasets = &DatasetsService{s: s}
-	s.Jobs = &JobsService{s: s}
-	s.Projects = &ProjectsService{s: s}
-	s.Tabledata = &TabledataService{s: s}
-	s.Tables = &TablesService{s: s}
+	s.Datasets = NewDatasetsService(s)
+	s.Jobs = NewJobsService(s)
+	s.Projects = NewProjectsService(s)
+	s.Tabledata = NewTabledataService(s)
+	s.Tables = NewTablesService(s)
 	return s, nil
 }
 
@@ -78,20 +78,45 @@ type Service struct {
 	Tables *TablesService
 }
 
+func NewDatasetsService(s *Service) *DatasetsService {
+	rs := &DatasetsService{s: s}
+	return rs
+}
+
 type DatasetsService struct {
 	s *Service
+}
+
+func NewJobsService(s *Service) *JobsService {
+	rs := &JobsService{s: s}
+	return rs
 }
 
 type JobsService struct {
 	s *Service
 }
 
+func NewProjectsService(s *Service) *ProjectsService {
+	rs := &ProjectsService{s: s}
+	return rs
+}
+
 type ProjectsService struct {
 	s *Service
 }
 
+func NewTabledataService(s *Service) *TabledataService {
+	rs := &TabledataService{s: s}
+	return rs
+}
+
 type TabledataService struct {
 	s *Service
+}
+
+func NewTablesService(s *Service) *TablesService {
+	rs := &TablesService{s: s}
+	return rs
 }
 
 type TablesService struct {

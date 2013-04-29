@@ -50,8 +50,8 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
-	s.Data = &DataService{s: s}
-	s.Management = &ManagementService{s: s}
+	s.Data = NewDataService(s)
+	s.Management = NewManagementService(s)
 	return s, nil
 }
 
@@ -63,11 +63,141 @@ type Service struct {
 	Management *ManagementService
 }
 
+func NewDataService(s *Service) *DataService {
+	rs := &DataService{s: s}
+	rs.Ga = NewDataGaService(s)
+	rs.Mcf = NewDataMcfService(s)
+	return rs
+}
+
 type DataService struct {
+	s *Service
+
+	Ga *DataGaService
+
+	Mcf *DataMcfService
+}
+
+func NewDataGaService(s *Service) *DataGaService {
+	rs := &DataGaService{s: s}
+	return rs
+}
+
+type DataGaService struct {
 	s *Service
 }
 
+func NewDataMcfService(s *Service) *DataMcfService {
+	rs := &DataMcfService{s: s}
+	return rs
+}
+
+type DataMcfService struct {
+	s *Service
+}
+
+func NewManagementService(s *Service) *ManagementService {
+	rs := &ManagementService{s: s}
+	rs.Accounts = NewManagementAccountsService(s)
+	rs.CustomDataSources = NewManagementCustomDataSourcesService(s)
+	rs.DailyUploads = NewManagementDailyUploadsService(s)
+	rs.Experiments = NewManagementExperimentsService(s)
+	rs.Goals = NewManagementGoalsService(s)
+	rs.Profiles = NewManagementProfilesService(s)
+	rs.Segments = NewManagementSegmentsService(s)
+	rs.Webproperties = NewManagementWebpropertiesService(s)
+	return rs
+}
+
 type ManagementService struct {
+	s *Service
+
+	Accounts *ManagementAccountsService
+
+	CustomDataSources *ManagementCustomDataSourcesService
+
+	DailyUploads *ManagementDailyUploadsService
+
+	Experiments *ManagementExperimentsService
+
+	Goals *ManagementGoalsService
+
+	Profiles *ManagementProfilesService
+
+	Segments *ManagementSegmentsService
+
+	Webproperties *ManagementWebpropertiesService
+}
+
+func NewManagementAccountsService(s *Service) *ManagementAccountsService {
+	rs := &ManagementAccountsService{s: s}
+	return rs
+}
+
+type ManagementAccountsService struct {
+	s *Service
+}
+
+func NewManagementCustomDataSourcesService(s *Service) *ManagementCustomDataSourcesService {
+	rs := &ManagementCustomDataSourcesService{s: s}
+	return rs
+}
+
+type ManagementCustomDataSourcesService struct {
+	s *Service
+}
+
+func NewManagementDailyUploadsService(s *Service) *ManagementDailyUploadsService {
+	rs := &ManagementDailyUploadsService{s: s}
+	return rs
+}
+
+type ManagementDailyUploadsService struct {
+	s *Service
+}
+
+func NewManagementExperimentsService(s *Service) *ManagementExperimentsService {
+	rs := &ManagementExperimentsService{s: s}
+	return rs
+}
+
+type ManagementExperimentsService struct {
+	s *Service
+}
+
+func NewManagementGoalsService(s *Service) *ManagementGoalsService {
+	rs := &ManagementGoalsService{s: s}
+	return rs
+}
+
+type ManagementGoalsService struct {
+	s *Service
+}
+
+func NewManagementProfilesService(s *Service) *ManagementProfilesService {
+	rs := &ManagementProfilesService{s: s}
+	return rs
+}
+
+type ManagementProfilesService struct {
+	s *Service
+}
+
+func NewManagementSegmentsService(s *Service) *ManagementSegmentsService {
+	rs := &ManagementSegmentsService{s: s}
+	return rs
+}
+
+type ManagementSegmentsService struct {
+	s *Service
+}
+
+func NewManagementWebpropertiesService(s *Service) *ManagementWebpropertiesService {
+	rs := &ManagementWebpropertiesService{s: s}
+	return rs
+}
+
+type ManagementWebpropertiesService struct {
 	s *Service
 }
 
@@ -1238,6 +1368,2003 @@ type WebpropertyParentLink struct {
 
 	// Type: Type of the parent link. Its value is "analytics#account".
 	Type string `json:"type,omitempty"`
+}
+
+// method id "analytics.data.ga.get":
+
+type DataGaGetCall struct {
+	s         *Service
+	ids       string
+	startDate string
+	endDate   string
+	metrics   string
+	opt_      map[string]interface{}
+}
+
+// Get: Returns Analytics data for a profile.
+func (r *DataGaService) Get(ids string, startDate string, endDate string, metrics string) *DataGaGetCall {
+	c := &DataGaGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.ids = ids
+	c.startDate = startDate
+	c.endDate = endDate
+	c.metrics = metrics
+	return c
+}
+
+// Dimensions sets the optional parameter "dimensions": A
+// comma-separated list of Analytics dimensions. E.g.,
+// 'ga:browser,ga:city'.
+func (c *DataGaGetCall) Dimensions(dimensions string) *DataGaGetCall {
+	c.opt_["dimensions"] = dimensions
+	return c
+}
+
+// Filters sets the optional parameter "filters": A comma-separated list
+// of dimension or metric filters to be applied to Analytics data.
+func (c *DataGaGetCall) Filters(filters string) *DataGaGetCall {
+	c.opt_["filters"] = filters
+	return c
+}
+
+// MaxResults sets the optional parameter "max-results": The maximum
+// number of entries to include in this feed.
+func (c *DataGaGetCall) MaxResults(maxResults int64) *DataGaGetCall {
+	c.opt_["max-results"] = maxResults
+	return c
+}
+
+// Segment sets the optional parameter "segment": An Analytics advanced
+// segment to be applied to data.
+func (c *DataGaGetCall) Segment(segment string) *DataGaGetCall {
+	c.opt_["segment"] = segment
+	return c
+}
+
+// Sort sets the optional parameter "sort": A comma-separated list of
+// dimensions or metrics that determine the sort order for Analytics
+// data.
+func (c *DataGaGetCall) Sort(sort string) *DataGaGetCall {
+	c.opt_["sort"] = sort
+	return c
+}
+
+// StartIndex sets the optional parameter "start-index": An index of the
+// first entity to retrieve. Use this parameter as a pagination
+// mechanism along with the max-results parameter.
+func (c *DataGaGetCall) StartIndex(startIndex int64) *DataGaGetCall {
+	c.opt_["start-index"] = startIndex
+	return c
+}
+
+func (c *DataGaGetCall) Do() (*GaData, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("end-date", fmt.Sprintf("%v", c.endDate))
+	params.Set("ids", fmt.Sprintf("%v", c.ids))
+	params.Set("metrics", fmt.Sprintf("%v", c.metrics))
+	params.Set("start-date", fmt.Sprintf("%v", c.startDate))
+	if v, ok := c.opt_["dimensions"]; ok {
+		params.Set("dimensions", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["filters"]; ok {
+		params.Set("filters", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["max-results"]; ok {
+		params.Set("max-results", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["segment"]; ok {
+		params.Set("segment", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["sort"]; ok {
+		params.Set("sort", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["start-index"]; ok {
+		params.Set("start-index", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "data/ga")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(GaData)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns Analytics data for a profile.",
+	//   "httpMethod": "GET",
+	//   "id": "analytics.data.ga.get",
+	//   "parameterOrder": [
+	//     "ids",
+	//     "start-date",
+	//     "end-date",
+	//     "metrics"
+	//   ],
+	//   "parameters": {
+	//     "dimensions": {
+	//       "description": "A comma-separated list of Analytics dimensions. E.g., 'ga:browser,ga:city'.",
+	//       "location": "query",
+	//       "pattern": "(ga:.+)?",
+	//       "type": "string"
+	//     },
+	//     "end-date": {
+	//       "description": "End date for fetching Analytics data. All requests should specify an end date formatted as YYYY-MM-DD.",
+	//       "location": "query",
+	//       "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2}",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "filters": {
+	//       "description": "A comma-separated list of dimension or metric filters to be applied to Analytics data.",
+	//       "location": "query",
+	//       "pattern": "ga:.+",
+	//       "type": "string"
+	//     },
+	//     "ids": {
+	//       "description": "Unique table ID for retrieving Analytics data. Table ID is of the form ga:XXXX, where XXXX is the Analytics profile ID.",
+	//       "location": "query",
+	//       "pattern": "ga:[0-9]+",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "max-results": {
+	//       "description": "The maximum number of entries to include in this feed.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "metrics": {
+	//       "description": "A comma-separated list of Analytics metrics. E.g., 'ga:visits,ga:pageviews'. At least one metric must be specified.",
+	//       "location": "query",
+	//       "pattern": "ga:.+",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "segment": {
+	//       "description": "An Analytics advanced segment to be applied to data.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "sort": {
+	//       "description": "A comma-separated list of dimensions or metrics that determine the sort order for Analytics data.",
+	//       "location": "query",
+	//       "pattern": "(-)?ga:.+",
+	//       "type": "string"
+	//     },
+	//     "start-date": {
+	//       "description": "Start date for fetching Analytics data. All requests should specify a start date formatted as YYYY-MM-DD.",
+	//       "location": "query",
+	//       "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2}",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "start-index": {
+	//       "description": "An index of the first entity to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     }
+	//   },
+	//   "path": "data/ga",
+	//   "response": {
+	//     "$ref": "GaData"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.data.mcf.get":
+
+type DataMcfGetCall struct {
+	s         *Service
+	ids       string
+	startDate string
+	endDate   string
+	metrics   string
+	opt_      map[string]interface{}
+}
+
+// Get: Returns Analytics Multi-Channel Funnels data for a profile.
+func (r *DataMcfService) Get(ids string, startDate string, endDate string, metrics string) *DataMcfGetCall {
+	c := &DataMcfGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.ids = ids
+	c.startDate = startDate
+	c.endDate = endDate
+	c.metrics = metrics
+	return c
+}
+
+// Dimensions sets the optional parameter "dimensions": A
+// comma-separated list of Multi-Channel Funnels dimensions. E.g.,
+// 'mcf:source,mcf:medium'.
+func (c *DataMcfGetCall) Dimensions(dimensions string) *DataMcfGetCall {
+	c.opt_["dimensions"] = dimensions
+	return c
+}
+
+// Filters sets the optional parameter "filters": A comma-separated list
+// of dimension or metric filters to be applied to the Analytics data.
+func (c *DataMcfGetCall) Filters(filters string) *DataMcfGetCall {
+	c.opt_["filters"] = filters
+	return c
+}
+
+// MaxResults sets the optional parameter "max-results": The maximum
+// number of entries to include in this feed.
+func (c *DataMcfGetCall) MaxResults(maxResults int64) *DataMcfGetCall {
+	c.opt_["max-results"] = maxResults
+	return c
+}
+
+// Sort sets the optional parameter "sort": A comma-separated list of
+// dimensions or metrics that determine the sort order for the Analytics
+// data.
+func (c *DataMcfGetCall) Sort(sort string) *DataMcfGetCall {
+	c.opt_["sort"] = sort
+	return c
+}
+
+// StartIndex sets the optional parameter "start-index": An index of the
+// first entity to retrieve. Use this parameter as a pagination
+// mechanism along with the max-results parameter.
+func (c *DataMcfGetCall) StartIndex(startIndex int64) *DataMcfGetCall {
+	c.opt_["start-index"] = startIndex
+	return c
+}
+
+func (c *DataMcfGetCall) Do() (*McfData, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("end-date", fmt.Sprintf("%v", c.endDate))
+	params.Set("ids", fmt.Sprintf("%v", c.ids))
+	params.Set("metrics", fmt.Sprintf("%v", c.metrics))
+	params.Set("start-date", fmt.Sprintf("%v", c.startDate))
+	if v, ok := c.opt_["dimensions"]; ok {
+		params.Set("dimensions", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["filters"]; ok {
+		params.Set("filters", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["max-results"]; ok {
+		params.Set("max-results", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["sort"]; ok {
+		params.Set("sort", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["start-index"]; ok {
+		params.Set("start-index", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "data/mcf")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(McfData)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns Analytics Multi-Channel Funnels data for a profile.",
+	//   "httpMethod": "GET",
+	//   "id": "analytics.data.mcf.get",
+	//   "parameterOrder": [
+	//     "ids",
+	//     "start-date",
+	//     "end-date",
+	//     "metrics"
+	//   ],
+	//   "parameters": {
+	//     "dimensions": {
+	//       "description": "A comma-separated list of Multi-Channel Funnels dimensions. E.g., 'mcf:source,mcf:medium'.",
+	//       "location": "query",
+	//       "pattern": "(mcf:.+)?",
+	//       "type": "string"
+	//     },
+	//     "end-date": {
+	//       "description": "End date for fetching Analytics data. All requests should specify an end date formatted as YYYY-MM-DD.",
+	//       "location": "query",
+	//       "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2}",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "filters": {
+	//       "description": "A comma-separated list of dimension or metric filters to be applied to the Analytics data.",
+	//       "location": "query",
+	//       "pattern": "mcf:.+",
+	//       "type": "string"
+	//     },
+	//     "ids": {
+	//       "description": "Unique table ID for retrieving Analytics data. Table ID is of the form ga:XXXX, where XXXX is the Analytics profile ID.",
+	//       "location": "query",
+	//       "pattern": "ga:[0-9]+",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "max-results": {
+	//       "description": "The maximum number of entries to include in this feed.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "metrics": {
+	//       "description": "A comma-separated list of Multi-Channel Funnels metrics. E.g., 'mcf:totalConversions,mcf:totalConversionValue'. At least one metric must be specified.",
+	//       "location": "query",
+	//       "pattern": "mcf:.+",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "sort": {
+	//       "description": "A comma-separated list of dimensions or metrics that determine the sort order for the Analytics data.",
+	//       "location": "query",
+	//       "pattern": "(-)?mcf:.+",
+	//       "type": "string"
+	//     },
+	//     "start-date": {
+	//       "description": "Start date for fetching Analytics data. All requests should specify a start date formatted as YYYY-MM-DD.",
+	//       "location": "query",
+	//       "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2}",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "start-index": {
+	//       "description": "An index of the first entity to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     }
+	//   },
+	//   "path": "data/mcf",
+	//   "response": {
+	//     "$ref": "McfData"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.accounts.list":
+
+type ManagementAccountsListCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// List: Lists all accounts to which the user has access.
+func (r *ManagementAccountsService) List() *ManagementAccountsListCall {
+	c := &ManagementAccountsListCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+// MaxResults sets the optional parameter "max-results": The maximum
+// number of accounts to include in this response.
+func (c *ManagementAccountsListCall) MaxResults(maxResults int64) *ManagementAccountsListCall {
+	c.opt_["max-results"] = maxResults
+	return c
+}
+
+// StartIndex sets the optional parameter "start-index": An index of the
+// first account to retrieve. Use this parameter as a pagination
+// mechanism along with the max-results parameter.
+func (c *ManagementAccountsListCall) StartIndex(startIndex int64) *ManagementAccountsListCall {
+	c.opt_["start-index"] = startIndex
+	return c
+}
+
+func (c *ManagementAccountsListCall) Do() (*Accounts, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["max-results"]; ok {
+		params.Set("max-results", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["start-index"]; ok {
+		params.Set("start-index", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Accounts)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all accounts to which the user has access.",
+	//   "httpMethod": "GET",
+	//   "id": "analytics.management.accounts.list",
+	//   "parameters": {
+	//     "max-results": {
+	//       "description": "The maximum number of accounts to include in this response.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "start-index": {
+	//       "description": "An index of the first account to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     }
+	//   },
+	//   "path": "management/accounts",
+	//   "response": {
+	//     "$ref": "Accounts"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.customDataSources.list":
+
+type ManagementCustomDataSourcesListCall struct {
+	s             *Service
+	accountId     string
+	webPropertyId string
+	opt_          map[string]interface{}
+}
+
+// List: List custom data sources to which the user has access.
+func (r *ManagementCustomDataSourcesService) List(accountId string, webPropertyId string) *ManagementCustomDataSourcesListCall {
+	c := &ManagementCustomDataSourcesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.webPropertyId = webPropertyId
+	return c
+}
+
+// MaxResults sets the optional parameter "max-results": The maximum
+// number of custom data sources to include in this response.
+func (c *ManagementCustomDataSourcesListCall) MaxResults(maxResults int64) *ManagementCustomDataSourcesListCall {
+	c.opt_["max-results"] = maxResults
+	return c
+}
+
+// StartIndex sets the optional parameter "start-index": A 1-based index
+// of the first custom data source to retrieve. Use this parameter as a
+// pagination mechanism along with the max-results parameter.
+func (c *ManagementCustomDataSourcesListCall) StartIndex(startIndex int64) *ManagementCustomDataSourcesListCall {
+	c.opt_["start-index"] = startIndex
+	return c
+}
+
+func (c *ManagementCustomDataSourcesListCall) Do() (*CustomDataSources, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["max-results"]; ok {
+		params.Set("max-results", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["start-index"]; ok {
+		params.Set("start-index", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources")
+	urls = strings.Replace(urls, "{accountId}", cleanPathString(c.accountId), 1)
+	urls = strings.Replace(urls, "{webPropertyId}", cleanPathString(c.webPropertyId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(CustomDataSources)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List custom data sources to which the user has access.",
+	//   "httpMethod": "GET",
+	//   "id": "analytics.management.customDataSources.list",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "webPropertyId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account Id for the custom data sources to retrieve.",
+	//       "location": "path",
+	//       "pattern": "\\d+",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "max-results": {
+	//       "description": "The maximum number of custom data sources to include in this response.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     },
+	//     "start-index": {
+	//       "description": "A 1-based index of the first custom data source to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     },
+	//     "webPropertyId": {
+	//       "description": "Web property Id for the custom data sources to retrieve.",
+	//       "location": "path",
+	//       "pattern": "UA-(\\d+)-(\\d+)",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources",
+	//   "response": {
+	//     "$ref": "CustomDataSources"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.dailyUploads.delete":
+
+type ManagementDailyUploadsDeleteCall struct {
+	s                  *Service
+	accountId          string
+	webPropertyId      string
+	customDataSourceId string
+	date               string
+	type_              string
+	opt_               map[string]interface{}
+}
+
+// Delete: Delete uploaded data for the given date.
+func (r *ManagementDailyUploadsService) Delete(accountId string, webPropertyId string, customDataSourceId string, date string, type_ string) *ManagementDailyUploadsDeleteCall {
+	c := &ManagementDailyUploadsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.webPropertyId = webPropertyId
+	c.customDataSourceId = customDataSourceId
+	c.date = date
+	c.type_ = type_
+	return c
+}
+
+func (c *ManagementDailyUploadsDeleteCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("type", fmt.Sprintf("%v", c.type_))
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/dailyUploads/{date}")
+	urls = strings.Replace(urls, "{accountId}", cleanPathString(c.accountId), 1)
+	urls = strings.Replace(urls, "{webPropertyId}", cleanPathString(c.webPropertyId), 1)
+	urls = strings.Replace(urls, "{customDataSourceId}", cleanPathString(c.customDataSourceId), 1)
+	urls = strings.Replace(urls, "{date}", cleanPathString(c.date), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Delete uploaded data for the given date.",
+	//   "httpMethod": "DELETE",
+	//   "id": "analytics.management.dailyUploads.delete",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "webPropertyId",
+	//     "customDataSourceId",
+	//     "date",
+	//     "type"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account Id associated with daily upload delete.",
+	//       "location": "path",
+	//       "pattern": "[0-9]+",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "customDataSourceId": {
+	//       "description": "Custom data source Id associated with daily upload delete.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "date": {
+	//       "description": "Date for which data is to be deleted. Date should be formatted as YYYY-MM-DD.",
+	//       "location": "path",
+	//       "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2}",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "type": {
+	//       "description": "Type of data for this delete.",
+	//       "enum": [
+	//         "cost"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Value for specifying cost data upload."
+	//       ],
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "webPropertyId": {
+	//       "description": "Web property Id associated with daily upload delete.",
+	//       "location": "path",
+	//       "pattern": "UA-[0-9]+-[0-9]+",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/dailyUploads/{date}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.dailyUploads.list":
+
+type ManagementDailyUploadsListCall struct {
+	s                  *Service
+	accountId          string
+	webPropertyId      string
+	customDataSourceId string
+	startDate          string
+	endDate            string
+	opt_               map[string]interface{}
+}
+
+// List: List daily uploads to which the user has access.
+func (r *ManagementDailyUploadsService) List(accountId string, webPropertyId string, customDataSourceId string, startDate string, endDate string) *ManagementDailyUploadsListCall {
+	c := &ManagementDailyUploadsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.webPropertyId = webPropertyId
+	c.customDataSourceId = customDataSourceId
+	c.startDate = startDate
+	c.endDate = endDate
+	return c
+}
+
+// MaxResults sets the optional parameter "max-results": The maximum
+// number of custom data sources to include in this response.
+func (c *ManagementDailyUploadsListCall) MaxResults(maxResults int64) *ManagementDailyUploadsListCall {
+	c.opt_["max-results"] = maxResults
+	return c
+}
+
+// StartIndex sets the optional parameter "start-index": A 1-based index
+// of the first daily upload to retrieve. Use this parameter as a
+// pagination mechanism along with the max-results parameter.
+func (c *ManagementDailyUploadsListCall) StartIndex(startIndex int64) *ManagementDailyUploadsListCall {
+	c.opt_["start-index"] = startIndex
+	return c
+}
+
+func (c *ManagementDailyUploadsListCall) Do() (*DailyUploads, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("end-date", fmt.Sprintf("%v", c.endDate))
+	params.Set("start-date", fmt.Sprintf("%v", c.startDate))
+	if v, ok := c.opt_["max-results"]; ok {
+		params.Set("max-results", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["start-index"]; ok {
+		params.Set("start-index", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/dailyUploads")
+	urls = strings.Replace(urls, "{accountId}", cleanPathString(c.accountId), 1)
+	urls = strings.Replace(urls, "{webPropertyId}", cleanPathString(c.webPropertyId), 1)
+	urls = strings.Replace(urls, "{customDataSourceId}", cleanPathString(c.customDataSourceId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(DailyUploads)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List daily uploads to which the user has access.",
+	//   "httpMethod": "GET",
+	//   "id": "analytics.management.dailyUploads.list",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "webPropertyId",
+	//     "customDataSourceId",
+	//     "start-date",
+	//     "end-date"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account Id for the daily uploads to retrieve.",
+	//       "location": "path",
+	//       "pattern": "\\d+",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "customDataSourceId": {
+	//       "description": "Custom data source Id for daily uploads to retrieve.",
+	//       "location": "path",
+	//       "pattern": ".{22}",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "end-date": {
+	//       "description": "End date of the form YYYY-MM-DD.",
+	//       "location": "query",
+	//       "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2}",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "max-results": {
+	//       "description": "The maximum number of custom data sources to include in this response.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     },
+	//     "start-date": {
+	//       "description": "Start date of the form YYYY-MM-DD.",
+	//       "location": "query",
+	//       "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2}",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "start-index": {
+	//       "description": "A 1-based index of the first daily upload to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     },
+	//     "webPropertyId": {
+	//       "description": "Web property Id for the daily uploads to retrieve.",
+	//       "location": "path",
+	//       "pattern": "UA-(\\d+)-(\\d+)",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/dailyUploads",
+	//   "response": {
+	//     "$ref": "DailyUploads"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.dailyUploads.upload":
+
+type ManagementDailyUploadsUploadCall struct {
+	s                  *Service
+	accountId          string
+	webPropertyId      string
+	customDataSourceId string
+	date               string
+	appendNumber       int64
+	type_              string
+	opt_               map[string]interface{}
+	media_             io.Reader
+}
+
+// Upload: Update/Overwrite data for a custom data source.
+func (r *ManagementDailyUploadsService) Upload(accountId string, webPropertyId string, customDataSourceId string, date string, appendNumber int64, type_ string) *ManagementDailyUploadsUploadCall {
+	c := &ManagementDailyUploadsUploadCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.webPropertyId = webPropertyId
+	c.customDataSourceId = customDataSourceId
+	c.date = date
+	c.appendNumber = appendNumber
+	c.type_ = type_
+	return c
+}
+
+// Reset sets the optional parameter "reset": Reset/Overwrite all
+// previous appends for this date and start over with this file as the
+// first upload.
+func (c *ManagementDailyUploadsUploadCall) Reset(reset bool) *ManagementDailyUploadsUploadCall {
+	c.opt_["reset"] = reset
+	return c
+}
+func (c *ManagementDailyUploadsUploadCall) Media(r io.Reader) *ManagementDailyUploadsUploadCall {
+	c.media_ = r
+	return c
+}
+
+func (c *ManagementDailyUploadsUploadCall) Do() (*DailyUploadAppend, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("appendNumber", fmt.Sprintf("%v", c.appendNumber))
+	params.Set("type", fmt.Sprintf("%v", c.type_))
+	if v, ok := c.opt_["reset"]; ok {
+		params.Set("reset", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/dailyUploads/{date}/uploads")
+	if c.media_ != nil {
+		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
+		params.Set("uploadType", "multipart")
+	}
+	urls = strings.Replace(urls, "{accountId}", cleanPathString(c.accountId), 1)
+	urls = strings.Replace(urls, "{webPropertyId}", cleanPathString(c.webPropertyId), 1)
+	urls = strings.Replace(urls, "{customDataSourceId}", cleanPathString(c.customDataSourceId), 1)
+	urls = strings.Replace(urls, "{date}", cleanPathString(c.date), 1)
+	urls += "?" + params.Encode()
+	body = new(bytes.Buffer)
+	ctype := "application/json"
+	contentLength_, hasMedia_ := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+	req, _ := http.NewRequest("POST", urls, body)
+	if hasMedia_ {
+		req.ContentLength = contentLength_
+	}
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(DailyUploadAppend)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Update/Overwrite data for a custom data source.",
+	//   "httpMethod": "POST",
+	//   "id": "analytics.management.dailyUploads.upload",
+	//   "mediaUpload": {
+	//     "accept": [
+	//       "application/octet-stream"
+	//     ],
+	//     "maxSize": "5MB",
+	//     "protocols": {
+	//       "resumable": {
+	//         "multipart": true,
+	//         "path": "/resumable/upload/analytics/v3/management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/dailyUploads/{date}/uploads"
+	//       },
+	//       "simple": {
+	//         "multipart": true,
+	//         "path": "/upload/analytics/v3/management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/dailyUploads/{date}/uploads"
+	//       }
+	//     }
+	//   },
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "webPropertyId",
+	//     "customDataSourceId",
+	//     "date",
+	//     "appendNumber",
+	//     "type"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account Id associated with daily upload.",
+	//       "location": "path",
+	//       "pattern": "\\d+",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "appendNumber": {
+	//       "description": "Append number for this upload indexed from 1.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "maximum": "20",
+	//       "minimum": "1",
+	//       "required": true,
+	//       "type": "integer"
+	//     },
+	//     "customDataSourceId": {
+	//       "description": "Custom data source Id to which the data being uploaded belongs.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "date": {
+	//       "description": "Date for which data is uploaded. Date should be formatted as YYYY-MM-DD.",
+	//       "location": "path",
+	//       "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2}",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "reset": {
+	//       "default": "false",
+	//       "description": "Reset/Overwrite all previous appends for this date and start over with this file as the first upload.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "type": {
+	//       "description": "Type of data for this upload.",
+	//       "enum": [
+	//         "cost"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Value for specifying cost data upload."
+	//       ],
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "webPropertyId": {
+	//       "description": "Web property Id associated with daily upload.",
+	//       "location": "path",
+	//       "pattern": "UA-\\d+-\\d+",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/dailyUploads/{date}/uploads",
+	//   "response": {
+	//     "$ref": "DailyUploadAppend"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics"
+	//   ],
+	//   "supportsMediaUpload": true
+	// }
+
+}
+
+// method id "analytics.management.experiments.delete":
+
+type ManagementExperimentsDeleteCall struct {
+	s             *Service
+	accountId     string
+	webPropertyId string
+	profileId     string
+	experimentId  string
+	opt_          map[string]interface{}
+}
+
+// Delete: Delete an experiment.
+func (r *ManagementExperimentsService) Delete(accountId string, webPropertyId string, profileId string, experimentId string) *ManagementExperimentsDeleteCall {
+	c := &ManagementExperimentsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.webPropertyId = webPropertyId
+	c.profileId = profileId
+	c.experimentId = experimentId
+	return c
+}
+
+func (c *ManagementExperimentsDeleteCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/experiments/{experimentId}")
+	urls = strings.Replace(urls, "{accountId}", cleanPathString(c.accountId), 1)
+	urls = strings.Replace(urls, "{webPropertyId}", cleanPathString(c.webPropertyId), 1)
+	urls = strings.Replace(urls, "{profileId}", cleanPathString(c.profileId), 1)
+	urls = strings.Replace(urls, "{experimentId}", cleanPathString(c.experimentId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Delete an experiment.",
+	//   "httpMethod": "DELETE",
+	//   "id": "analytics.management.experiments.delete",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "webPropertyId",
+	//     "profileId",
+	//     "experimentId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account ID to which the experiment belongs",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "experimentId": {
+	//       "description": "ID of the experiment to delete",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "profileId": {
+	//       "description": "Profile ID to which the experiment belongs",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "webPropertyId": {
+	//       "description": "Web property ID to which the experiment belongs",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/experiments/{experimentId}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.experiments.get":
+
+type ManagementExperimentsGetCall struct {
+	s             *Service
+	accountId     string
+	webPropertyId string
+	profileId     string
+	experimentId  string
+	opt_          map[string]interface{}
+}
+
+// Get: Returns an experiment to which the user has access.
+func (r *ManagementExperimentsService) Get(accountId string, webPropertyId string, profileId string, experimentId string) *ManagementExperimentsGetCall {
+	c := &ManagementExperimentsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.webPropertyId = webPropertyId
+	c.profileId = profileId
+	c.experimentId = experimentId
+	return c
+}
+
+func (c *ManagementExperimentsGetCall) Do() (*Experiment, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/experiments/{experimentId}")
+	urls = strings.Replace(urls, "{accountId}", cleanPathString(c.accountId), 1)
+	urls = strings.Replace(urls, "{webPropertyId}", cleanPathString(c.webPropertyId), 1)
+	urls = strings.Replace(urls, "{profileId}", cleanPathString(c.profileId), 1)
+	urls = strings.Replace(urls, "{experimentId}", cleanPathString(c.experimentId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Experiment)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns an experiment to which the user has access.",
+	//   "httpMethod": "GET",
+	//   "id": "analytics.management.experiments.get",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "webPropertyId",
+	//     "profileId",
+	//     "experimentId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account ID to retrieve the experiment for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "experimentId": {
+	//       "description": "Experiment ID to retrieve the experiment for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "profileId": {
+	//       "description": "Profile ID to retrieve the experiment for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "webPropertyId": {
+	//       "description": "Web property ID to retrieve the experiment for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/experiments/{experimentId}",
+	//   "response": {
+	//     "$ref": "Experiment"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.experiments.insert":
+
+type ManagementExperimentsInsertCall struct {
+	s             *Service
+	accountId     string
+	webPropertyId string
+	profileId     string
+	experiment    *Experiment
+	opt_          map[string]interface{}
+}
+
+// Insert: Create a new experiment.
+func (r *ManagementExperimentsService) Insert(accountId string, webPropertyId string, profileId string, experiment *Experiment) *ManagementExperimentsInsertCall {
+	c := &ManagementExperimentsInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.webPropertyId = webPropertyId
+	c.profileId = profileId
+	c.experiment = experiment
+	return c
+}
+
+func (c *ManagementExperimentsInsertCall) Do() (*Experiment, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.experiment)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/experiments")
+	urls = strings.Replace(urls, "{accountId}", cleanPathString(c.accountId), 1)
+	urls = strings.Replace(urls, "{webPropertyId}", cleanPathString(c.webPropertyId), 1)
+	urls = strings.Replace(urls, "{profileId}", cleanPathString(c.profileId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Experiment)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Create a new experiment.",
+	//   "httpMethod": "POST",
+	//   "id": "analytics.management.experiments.insert",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "webPropertyId",
+	//     "profileId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account ID to create the experiment for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "profileId": {
+	//       "description": "Profile ID to create the experiment for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "webPropertyId": {
+	//       "description": "Web property ID to create the experiment for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/experiments",
+	//   "request": {
+	//     "$ref": "Experiment"
+	//   },
+	//   "response": {
+	//     "$ref": "Experiment"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.experiments.list":
+
+type ManagementExperimentsListCall struct {
+	s             *Service
+	accountId     string
+	webPropertyId string
+	profileId     string
+	opt_          map[string]interface{}
+}
+
+// List: Lists experiments to which the user has access.
+func (r *ManagementExperimentsService) List(accountId string, webPropertyId string, profileId string) *ManagementExperimentsListCall {
+	c := &ManagementExperimentsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.webPropertyId = webPropertyId
+	c.profileId = profileId
+	return c
+}
+
+// MaxResults sets the optional parameter "max-results": The maximum
+// number of experiments to include in this response.
+func (c *ManagementExperimentsListCall) MaxResults(maxResults int64) *ManagementExperimentsListCall {
+	c.opt_["max-results"] = maxResults
+	return c
+}
+
+// StartIndex sets the optional parameter "start-index": An index of the
+// first experiment to retrieve. Use this parameter as a pagination
+// mechanism along with the max-results parameter.
+func (c *ManagementExperimentsListCall) StartIndex(startIndex int64) *ManagementExperimentsListCall {
+	c.opt_["start-index"] = startIndex
+	return c
+}
+
+func (c *ManagementExperimentsListCall) Do() (*Experiments, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["max-results"]; ok {
+		params.Set("max-results", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["start-index"]; ok {
+		params.Set("start-index", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/experiments")
+	urls = strings.Replace(urls, "{accountId}", cleanPathString(c.accountId), 1)
+	urls = strings.Replace(urls, "{webPropertyId}", cleanPathString(c.webPropertyId), 1)
+	urls = strings.Replace(urls, "{profileId}", cleanPathString(c.profileId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Experiments)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists experiments to which the user has access.",
+	//   "httpMethod": "GET",
+	//   "id": "analytics.management.experiments.list",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "webPropertyId",
+	//     "profileId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account ID to retrieve experiments for.",
+	//       "location": "path",
+	//       "pattern": "\\d+",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "max-results": {
+	//       "description": "The maximum number of experiments to include in this response.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "profileId": {
+	//       "description": "Profile ID to retrieve experiments for.",
+	//       "location": "path",
+	//       "pattern": "\\d+",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "start-index": {
+	//       "description": "An index of the first experiment to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     },
+	//     "webPropertyId": {
+	//       "description": "Web property ID to retrieve experiments for.",
+	//       "location": "path",
+	//       "pattern": "UA-(\\d+)-(\\d+)",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/experiments",
+	//   "response": {
+	//     "$ref": "Experiments"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.experiments.patch":
+
+type ManagementExperimentsPatchCall struct {
+	s             *Service
+	accountId     string
+	webPropertyId string
+	profileId     string
+	experimentId  string
+	experiment    *Experiment
+	opt_          map[string]interface{}
+}
+
+// Patch: Update an existing experiment. This method supports patch
+// semantics.
+func (r *ManagementExperimentsService) Patch(accountId string, webPropertyId string, profileId string, experimentId string, experiment *Experiment) *ManagementExperimentsPatchCall {
+	c := &ManagementExperimentsPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.webPropertyId = webPropertyId
+	c.profileId = profileId
+	c.experimentId = experimentId
+	c.experiment = experiment
+	return c
+}
+
+func (c *ManagementExperimentsPatchCall) Do() (*Experiment, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.experiment)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/experiments/{experimentId}")
+	urls = strings.Replace(urls, "{accountId}", cleanPathString(c.accountId), 1)
+	urls = strings.Replace(urls, "{webPropertyId}", cleanPathString(c.webPropertyId), 1)
+	urls = strings.Replace(urls, "{profileId}", cleanPathString(c.profileId), 1)
+	urls = strings.Replace(urls, "{experimentId}", cleanPathString(c.experimentId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Experiment)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Update an existing experiment. This method supports patch semantics.",
+	//   "httpMethod": "PATCH",
+	//   "id": "analytics.management.experiments.patch",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "webPropertyId",
+	//     "profileId",
+	//     "experimentId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account ID of the experiment to update.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "experimentId": {
+	//       "description": "Experiment ID of the experiment to update.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "profileId": {
+	//       "description": "Profile ID of the experiment to update.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "webPropertyId": {
+	//       "description": "Web property ID of the experiment to update.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/experiments/{experimentId}",
+	//   "request": {
+	//     "$ref": "Experiment"
+	//   },
+	//   "response": {
+	//     "$ref": "Experiment"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.experiments.update":
+
+type ManagementExperimentsUpdateCall struct {
+	s             *Service
+	accountId     string
+	webPropertyId string
+	profileId     string
+	experimentId  string
+	experiment    *Experiment
+	opt_          map[string]interface{}
+}
+
+// Update: Update an existing experiment.
+func (r *ManagementExperimentsService) Update(accountId string, webPropertyId string, profileId string, experimentId string, experiment *Experiment) *ManagementExperimentsUpdateCall {
+	c := &ManagementExperimentsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.webPropertyId = webPropertyId
+	c.profileId = profileId
+	c.experimentId = experimentId
+	c.experiment = experiment
+	return c
+}
+
+func (c *ManagementExperimentsUpdateCall) Do() (*Experiment, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.experiment)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/experiments/{experimentId}")
+	urls = strings.Replace(urls, "{accountId}", cleanPathString(c.accountId), 1)
+	urls = strings.Replace(urls, "{webPropertyId}", cleanPathString(c.webPropertyId), 1)
+	urls = strings.Replace(urls, "{profileId}", cleanPathString(c.profileId), 1)
+	urls = strings.Replace(urls, "{experimentId}", cleanPathString(c.experimentId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Experiment)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Update an existing experiment.",
+	//   "httpMethod": "PUT",
+	//   "id": "analytics.management.experiments.update",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "webPropertyId",
+	//     "profileId",
+	//     "experimentId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account ID of the experiment to update.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "experimentId": {
+	//       "description": "Experiment ID of the experiment to update.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "profileId": {
+	//       "description": "Profile ID of the experiment to update.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "webPropertyId": {
+	//       "description": "Web property ID of the experiment to update.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/experiments/{experimentId}",
+	//   "request": {
+	//     "$ref": "Experiment"
+	//   },
+	//   "response": {
+	//     "$ref": "Experiment"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.goals.list":
+
+type ManagementGoalsListCall struct {
+	s             *Service
+	accountId     string
+	webPropertyId string
+	profileId     string
+	opt_          map[string]interface{}
+}
+
+// List: Lists goals to which the user has access.
+func (r *ManagementGoalsService) List(accountId string, webPropertyId string, profileId string) *ManagementGoalsListCall {
+	c := &ManagementGoalsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.webPropertyId = webPropertyId
+	c.profileId = profileId
+	return c
+}
+
+// MaxResults sets the optional parameter "max-results": The maximum
+// number of goals to include in this response.
+func (c *ManagementGoalsListCall) MaxResults(maxResults int64) *ManagementGoalsListCall {
+	c.opt_["max-results"] = maxResults
+	return c
+}
+
+// StartIndex sets the optional parameter "start-index": An index of the
+// first goal to retrieve. Use this parameter as a pagination mechanism
+// along with the max-results parameter.
+func (c *ManagementGoalsListCall) StartIndex(startIndex int64) *ManagementGoalsListCall {
+	c.opt_["start-index"] = startIndex
+	return c
+}
+
+func (c *ManagementGoalsListCall) Do() (*Goals, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["max-results"]; ok {
+		params.Set("max-results", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["start-index"]; ok {
+		params.Set("start-index", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/goals")
+	urls = strings.Replace(urls, "{accountId}", cleanPathString(c.accountId), 1)
+	urls = strings.Replace(urls, "{webPropertyId}", cleanPathString(c.webPropertyId), 1)
+	urls = strings.Replace(urls, "{profileId}", cleanPathString(c.profileId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Goals)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists goals to which the user has access.",
+	//   "httpMethod": "GET",
+	//   "id": "analytics.management.goals.list",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "webPropertyId",
+	//     "profileId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account ID to retrieve goals for. Can either be a specific account ID or '~all', which refers to all the accounts that user has access to.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "max-results": {
+	//       "description": "The maximum number of goals to include in this response.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "profileId": {
+	//       "description": "Profile ID to retrieve goals for. Can either be a specific profile ID or '~all', which refers to all the profiles that user has access to.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "start-index": {
+	//       "description": "An index of the first goal to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     },
+	//     "webPropertyId": {
+	//       "description": "Web property ID to retrieve goals for. Can either be a specific web property ID or '~all', which refers to all the web properties that user has access to.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/goals",
+	//   "response": {
+	//     "$ref": "Goals"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.profiles.list":
+
+type ManagementProfilesListCall struct {
+	s             *Service
+	accountId     string
+	webPropertyId string
+	opt_          map[string]interface{}
+}
+
+// List: Lists profiles to which the user has access.
+func (r *ManagementProfilesService) List(accountId string, webPropertyId string) *ManagementProfilesListCall {
+	c := &ManagementProfilesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.webPropertyId = webPropertyId
+	return c
+}
+
+// MaxResults sets the optional parameter "max-results": The maximum
+// number of profiles to include in this response.
+func (c *ManagementProfilesListCall) MaxResults(maxResults int64) *ManagementProfilesListCall {
+	c.opt_["max-results"] = maxResults
+	return c
+}
+
+// StartIndex sets the optional parameter "start-index": An index of the
+// first entity to retrieve. Use this parameter as a pagination
+// mechanism along with the max-results parameter.
+func (c *ManagementProfilesListCall) StartIndex(startIndex int64) *ManagementProfilesListCall {
+	c.opt_["start-index"] = startIndex
+	return c
+}
+
+func (c *ManagementProfilesListCall) Do() (*Profiles, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["max-results"]; ok {
+		params.Set("max-results", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["start-index"]; ok {
+		params.Set("start-index", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles")
+	urls = strings.Replace(urls, "{accountId}", cleanPathString(c.accountId), 1)
+	urls = strings.Replace(urls, "{webPropertyId}", cleanPathString(c.webPropertyId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Profiles)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists profiles to which the user has access.",
+	//   "httpMethod": "GET",
+	//   "id": "analytics.management.profiles.list",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "webPropertyId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account ID for the profiles to retrieve. Can either be a specific account ID or '~all', which refers to all the accounts to which the user has access.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "max-results": {
+	//       "description": "The maximum number of profiles to include in this response.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "start-index": {
+	//       "description": "An index of the first entity to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     },
+	//     "webPropertyId": {
+	//       "description": "Web property ID for the profiles to retrieve. Can either be a specific web property ID or '~all', which refers to all the web properties to which the user has access.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles",
+	//   "response": {
+	//     "$ref": "Profiles"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.segments.list":
+
+type ManagementSegmentsListCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// List: Lists advanced segments to which the user has access.
+func (r *ManagementSegmentsService) List() *ManagementSegmentsListCall {
+	c := &ManagementSegmentsListCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+// MaxResults sets the optional parameter "max-results": The maximum
+// number of advanced segments to include in this response.
+func (c *ManagementSegmentsListCall) MaxResults(maxResults int64) *ManagementSegmentsListCall {
+	c.opt_["max-results"] = maxResults
+	return c
+}
+
+// StartIndex sets the optional parameter "start-index": An index of the
+// first advanced segment to retrieve. Use this parameter as a
+// pagination mechanism along with the max-results parameter.
+func (c *ManagementSegmentsListCall) StartIndex(startIndex int64) *ManagementSegmentsListCall {
+	c.opt_["start-index"] = startIndex
+	return c
+}
+
+func (c *ManagementSegmentsListCall) Do() (*Segments, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["max-results"]; ok {
+		params.Set("max-results", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["start-index"]; ok {
+		params.Set("start-index", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/segments")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Segments)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists advanced segments to which the user has access.",
+	//   "httpMethod": "GET",
+	//   "id": "analytics.management.segments.list",
+	//   "parameters": {
+	//     "max-results": {
+	//       "description": "The maximum number of advanced segments to include in this response.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "start-index": {
+	//       "description": "An index of the first advanced segment to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     }
+	//   },
+	//   "path": "management/segments",
+	//   "response": {
+	//     "$ref": "Segments"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.webproperties.list":
+
+type ManagementWebpropertiesListCall struct {
+	s         *Service
+	accountId string
+	opt_      map[string]interface{}
+}
+
+// List: Lists web properties to which the user has access.
+func (r *ManagementWebpropertiesService) List(accountId string) *ManagementWebpropertiesListCall {
+	c := &ManagementWebpropertiesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	return c
+}
+
+// MaxResults sets the optional parameter "max-results": The maximum
+// number of web properties to include in this response.
+func (c *ManagementWebpropertiesListCall) MaxResults(maxResults int64) *ManagementWebpropertiesListCall {
+	c.opt_["max-results"] = maxResults
+	return c
+}
+
+// StartIndex sets the optional parameter "start-index": An index of the
+// first entity to retrieve. Use this parameter as a pagination
+// mechanism along with the max-results parameter.
+func (c *ManagementWebpropertiesListCall) StartIndex(startIndex int64) *ManagementWebpropertiesListCall {
+	c.opt_["start-index"] = startIndex
+	return c
+}
+
+func (c *ManagementWebpropertiesListCall) Do() (*Webproperties, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["max-results"]; ok {
+		params.Set("max-results", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["start-index"]; ok {
+		params.Set("start-index", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties")
+	urls = strings.Replace(urls, "{accountId}", cleanPathString(c.accountId), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Webproperties)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists web properties to which the user has access.",
+	//   "httpMethod": "GET",
+	//   "id": "analytics.management.webproperties.list",
+	//   "parameterOrder": [
+	//     "accountId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account ID to retrieve web properties for. Can either be a specific account ID or '~all', which refers to all the accounts that user has access to.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "max-results": {
+	//       "description": "The maximum number of web properties to include in this response.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "start-index": {
+	//       "description": "An index of the first entity to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/webproperties",
+	//   "response": {
+	//     "$ref": "Webproperties"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
 }
 
 func cleanPathString(s string) string {

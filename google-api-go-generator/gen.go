@@ -403,7 +403,7 @@ func (a *API) GenerateCode() (outerr error) {
 
 	p, pn := a.p, a.pn
 
-	reslist := a.Resources()
+	reslist := a.Resources(a.m, "")
 
 	p("// Package %s provides access to the %s.\n", pkg, jstr(m, "title"))
 	if docs := jstr(m, "documentationLink"); docs != "" {
@@ -455,8 +455,8 @@ func (a *API) GenerateCode() (outerr error) {
 	pn("func New(client *http.Client) (*Service, error) {")
 	pn("if client == nil { return nil, errors.New(\"client is nil\") }")
 	pn("s := &Service{client: client}")
-	for _, res := range reslist {
-		pn("s.%s = &%s{s: s}", res.GoField(), res.GoType())
+	for _, res := range reslist { // add top level resources.
+		pn("s.%s = New%s(s)", res.GoField(), res.GoType())
 	}
 	pn("return s, nil")
 	pn("}")
@@ -471,8 +471,7 @@ func (a *API) GenerateCode() (outerr error) {
 	p("}\n")
 
 	for _, res := range reslist {
-		p("\ntype %s struct {\n", res.GoType())
-		p("\ts *Service\n}\n")
+		res.generateType()
 	}
 
 	a.PopulateSchemas()
@@ -486,9 +485,7 @@ func (a *API) GenerateCode() (outerr error) {
 	}
 
 	for _, res := range reslist {
-		for _, meth := range res.Methods() {
-			meth.generateCode()
-		}
+		res.generateMethods()
 	}
 
 	pn("\nfunc cleanPathString(s string) string { return strings.Map(func(r rune) rune { if r >= 0x2d && r <= 0x7a || r == '~' { return r }; return -1 }, s) }")
@@ -880,9 +877,43 @@ func (a *API) PopulateSchemas() {
 }
 
 type Resource struct {
-	api  *API
-	name string
-	m    map[string]interface{}
+	api       *API
+	name      string
+	parent    string
+	m         map[string]interface{}
+	resources []*Resource
+}
+
+func (r *Resource) generateType() {
+	p, pn := r.api.p, r.api.pn
+	t := r.GoType()
+	pn(fmt.Sprintf("func New%s(s *Service) *%s {", t, t))
+	pn("rs := &%s{s : s}", t)
+	for _, res := range r.resources {
+		pn("rs.%s = New%s(s)", res.GoField(), res.GoType())
+	}
+	pn("return rs")
+	pn("}")
+
+	p("\ntype %s struct {\n", t)
+	p("\ts *Service\n")
+	for _, res := range r.resources {
+		p("\n\t%s\t*%s\n", res.GoField(), res.GoType())
+	}
+	p("}\n")
+
+	for _, res := range r.resources {
+		res.generateType()
+	}
+}
+
+func (r *Resource) generateMethods() {
+	for _, meth := range r.Methods() {
+		meth.generateCode()
+	}
+	for _, res := range r.resources {
+		res.generateMethods()
+	}
 }
 
 func (r *Resource) GoField() string {
@@ -890,7 +921,7 @@ func (r *Resource) GoField() string {
 }
 
 func (r *Resource) GoType() string {
-	return initialCap(r.name) + "Service"
+	return initialCap(fmt.Sprintf("%s.%s", r.parent, r.name)) + "Service"
 }
 
 func (r *Resource) Methods() []*Method {
@@ -1004,7 +1035,7 @@ func (meth *Method) generateCode() {
 
 	prefix := ""
 	if res != nil {
-		prefix = initialCap(res.name)
+		prefix = initialCap(fmt.Sprintf("%s.%s", res.parent, res.name))
 	}
 	callName := a.GetName(prefix + methodName + "Call")
 
@@ -1111,6 +1142,11 @@ func (meth *Method) generateCode() {
 	}
 	pn("urls += \"?\" + params.Encode()")
 	if meth.supportsMedia() {
+		if !hasContentType { // Support mediaUpload but no ctype set.
+			pn("body = new(bytes.Buffer)")
+			pn(`ctype := "application/json"`)
+			hasContentType = true
+		}
 		pn("contentLength_, hasMedia_ := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)")
 	}
 	pn("req, _ := http.NewRequest(%q, urls, body)", jstr(meth.m, "httpMethod"))
@@ -1195,13 +1231,13 @@ func (a *API) APIMethods() []*Method {
 	return meths
 }
 
-func (a *API) Resources() []*Resource {
+func (a *API) Resources(m map[string]interface{}, p string) []*Resource {
 	res := []*Resource{}
-	resMap := jobj(a.m, "resources")
+	resMap := jobj(m, "resources")
 	for _, rname := range sortedKeys(resMap) {
 		rmi := resMap[rname]
 		rm := rmi.(map[string]interface{})
-		res = append(res, &Resource{a, rname, rm})
+		res = append(res, &Resource{a, rname, p, rm, a.Resources(rm, fmt.Sprintf("%s.%s", p, rname))})
 	}
 	return res
 }

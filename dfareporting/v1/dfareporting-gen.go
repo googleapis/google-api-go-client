@@ -47,10 +47,10 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
-	s.DimensionValues = &DimensionValuesService{s: s}
-	s.Files = &FilesService{s: s}
-	s.Reports = &ReportsService{s: s}
-	s.UserProfiles = &UserProfilesService{s: s}
+	s.DimensionValues = NewDimensionValuesService(s)
+	s.Files = NewFilesService(s)
+	s.Reports = NewReportsService(s)
+	s.UserProfiles = NewUserProfilesService(s)
 	return s, nil
 }
 
@@ -66,16 +66,48 @@ type Service struct {
 	UserProfiles *UserProfilesService
 }
 
+func NewDimensionValuesService(s *Service) *DimensionValuesService {
+	rs := &DimensionValuesService{s: s}
+	return rs
+}
+
 type DimensionValuesService struct {
 	s *Service
+}
+
+func NewFilesService(s *Service) *FilesService {
+	rs := &FilesService{s: s}
+	return rs
 }
 
 type FilesService struct {
 	s *Service
 }
 
+func NewReportsService(s *Service) *ReportsService {
+	rs := &ReportsService{s: s}
+	rs.Files = NewReportsFilesService(s)
+	return rs
+}
+
 type ReportsService struct {
 	s *Service
+
+	Files *ReportsFilesService
+}
+
+func NewReportsFilesService(s *Service) *ReportsFilesService {
+	rs := &ReportsFilesService{s: s}
+	return rs
+}
+
+type ReportsFilesService struct {
+	s *Service
+}
+
+func NewUserProfilesService(s *Service) *UserProfilesService {
+	rs := &UserProfilesService{s: s}
+	return rs
 }
 
 type UserProfilesService struct {
@@ -1326,6 +1358,246 @@ func (c *ReportsUpdateCall) Do() (*Report, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "Report"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/dfareporting"
+	//   ]
+	// }
+
+}
+
+// method id "dfareporting.reports.files.get":
+
+type ReportsFilesGetCall struct {
+	s         *Service
+	profileId int64
+	reportId  int64
+	fileId    int64
+	opt_      map[string]interface{}
+}
+
+// Get: Retrieves a report file.
+func (r *ReportsFilesService) Get(profileId int64, reportId int64, fileId int64) *ReportsFilesGetCall {
+	c := &ReportsFilesGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.profileId = profileId
+	c.reportId = reportId
+	c.fileId = fileId
+	return c
+}
+
+func (c *ReportsFilesGetCall) Do() (*File, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/dfareporting/v1/", "userprofiles/{profileId}/reports/{reportId}/files/{fileId}")
+	urls = strings.Replace(urls, "{profileId}", strconv.FormatInt(c.profileId, 10), 1)
+	urls = strings.Replace(urls, "{reportId}", strconv.FormatInt(c.reportId, 10), 1)
+	urls = strings.Replace(urls, "{fileId}", strconv.FormatInt(c.fileId, 10), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(File)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a report file.",
+	//   "httpMethod": "GET",
+	//   "id": "dfareporting.reports.files.get",
+	//   "parameterOrder": [
+	//     "profileId",
+	//     "reportId",
+	//     "fileId"
+	//   ],
+	//   "parameters": {
+	//     "fileId": {
+	//       "description": "The id of the report file.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "profileId": {
+	//       "description": "The DFA profile id.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "reportId": {
+	//       "description": "The id of the report.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "userprofiles/{profileId}/reports/{reportId}/files/{fileId}",
+	//   "response": {
+	//     "$ref": "File"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/dfareporting"
+	//   ]
+	// }
+
+}
+
+// method id "dfareporting.reports.files.list":
+
+type ReportsFilesListCall struct {
+	s         *Service
+	profileId int64
+	reportId  int64
+	opt_      map[string]interface{}
+}
+
+// List: Lists files for a report.
+func (r *ReportsFilesService) List(profileId int64, reportId int64) *ReportsFilesListCall {
+	c := &ReportsFilesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.profileId = profileId
+	c.reportId = reportId
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum number
+// of results to return.
+func (c *ReportsFilesListCall) MaxResults(maxResults int64) *ReportsFilesListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value of the
+// nextToken from the previous result page.
+func (c *ReportsFilesListCall) PageToken(pageToken string) *ReportsFilesListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+// SortField sets the optional parameter "sortField": The field to sort
+// the list by.
+func (c *ReportsFilesListCall) SortField(sortField string) *ReportsFilesListCall {
+	c.opt_["sortField"] = sortField
+	return c
+}
+
+// SortOrder sets the optional parameter "sortOrder": Order of sorted
+// results, default is 'DESCENDING'.
+func (c *ReportsFilesListCall) SortOrder(sortOrder string) *ReportsFilesListCall {
+	c.opt_["sortOrder"] = sortOrder
+	return c
+}
+
+func (c *ReportsFilesListCall) Do() (*FileList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["sortField"]; ok {
+		params.Set("sortField", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["sortOrder"]; ok {
+		params.Set("sortOrder", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/dfareporting/v1/", "userprofiles/{profileId}/reports/{reportId}/files")
+	urls = strings.Replace(urls, "{profileId}", strconv.FormatInt(c.profileId, 10), 1)
+	urls = strings.Replace(urls, "{reportId}", strconv.FormatInt(c.reportId, 10), 1)
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(FileList)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists files for a report.",
+	//   "httpMethod": "GET",
+	//   "id": "dfareporting.reports.files.list",
+	//   "parameterOrder": [
+	//     "profileId",
+	//     "reportId"
+	//   ],
+	//   "parameters": {
+	//     "maxResults": {
+	//       "description": "Maximum number of results to return.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "maximum": "10",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The value of the nextToken from the previous result page.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "profileId": {
+	//       "description": "The DFA profile id.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "reportId": {
+	//       "description": "The id of the parent report.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "sortField": {
+	//       "default": "LAST_MODIFIED_TIME",
+	//       "description": "The field to sort the list by.",
+	//       "enum": [
+	//         "ID",
+	//         "LAST_MODIFIED_TIME"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Sort by file id.",
+	//         "Sort by 'lastmodifiedAt' field."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "sortOrder": {
+	//       "default": "DESCENDING",
+	//       "description": "Order of sorted results, default is 'DESCENDING'.",
+	//       "enum": [
+	//         "ASCENDING",
+	//         "DESCENDING"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Ascending order.",
+	//         "Descending order."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "userprofiles/{profileId}/reports/{reportId}/files",
+	//   "response": {
+	//     "$ref": "FileList"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/dfareporting"

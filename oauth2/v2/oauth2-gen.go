@@ -57,7 +57,7 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
-	s.Userinfo = &UserinfoService{s: s}
+	s.Userinfo = NewUserinfoService(s)
 	return s, nil
 }
 
@@ -67,7 +67,36 @@ type Service struct {
 	Userinfo *UserinfoService
 }
 
+func NewUserinfoService(s *Service) *UserinfoService {
+	rs := &UserinfoService{s: s}
+	rs.V2 = NewUserinfoV2Service(s)
+	return rs
+}
+
 type UserinfoService struct {
+	s *Service
+
+	V2 *UserinfoV2Service
+}
+
+func NewUserinfoV2Service(s *Service) *UserinfoV2Service {
+	rs := &UserinfoV2Service{s: s}
+	rs.Me = NewUserinfoV2MeService(s)
+	return rs
+}
+
+type UserinfoV2Service struct {
+	s *Service
+
+	Me *UserinfoV2MeService
+}
+
+func NewUserinfoV2MeService(s *Service) *UserinfoV2MeService {
+	rs := &UserinfoV2MeService{s: s}
+	return rs
+}
+
+type UserinfoV2MeService struct {
 	s *Service
 }
 
@@ -255,6 +284,56 @@ func (c *UserinfoGetCall) Do() (*Userinfo, error) {
 	//   "httpMethod": "GET",
 	//   "id": "oauth2.userinfo.get",
 	//   "path": "oauth2/v2/userinfo",
+	//   "response": {
+	//     "$ref": "Userinfo"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/plus.login",
+	//     "https://www.googleapis.com/auth/plus.me",
+	//     "https://www.googleapis.com/auth/userinfo.email",
+	//     "https://www.googleapis.com/auth/userinfo.profile"
+	//   ]
+	// }
+
+}
+
+// method id "oauth2.userinfo.v2.me.get":
+
+type UserinfoV2MeGetCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// Get:
+func (r *UserinfoV2MeService) Get() *UserinfoV2MeGetCall {
+	c := &UserinfoV2MeGetCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+func (c *UserinfoV2MeGetCall) Do() (*Userinfo, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/", "userinfo/v2/me")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Userinfo)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "httpMethod": "GET",
+	//   "id": "oauth2.userinfo.v2.me.get",
+	//   "path": "userinfo/v2/me",
 	//   "response": {
 	//     "$ref": "Userinfo"
 	//   },

@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/oevN_ASggY2gGMx4cIcfSGCphwo\"",
+ "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/RZz1s1ZlX5Ol7GBgHPQgqgiP88o\"",
  "discoveryVersion": "v1",
  "id": "compute:v1beta14",
  "name": "compute",
  "version": "v1beta14",
- "revision": "20130306",
+ "revision": "20130403",
  "title": "Compute Engine API",
  "description": "API for the Google Compute Engine service.",
  "icons": {
@@ -289,7 +289,7 @@
        },
        "ports": {
         "type": "array",
-        "description": "An optional list of ports which are allowed. It is an error to specify this for any protocol that isn't UDP or TCP. Each entry must be either an integer or a range. If not specified, connections through any port are allowed.\nExample inputs include: [\"22\"], [\"80\",\"443\"] and [\"12345-12349\"].",
+        "description": "An optional list of ports which are allowed. It is an error to specify this for any protocol that isn't UDP or TCP. Each entry must be either an integer or a range. If not specified, connections through any port are allowed.\n\nExample inputs include: [\"22\"], [\"80\",\"443\"] and [\"12345-12349\"].",
         "items": {
          "type": "string"
         }
@@ -815,7 +815,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "Type of resource.",
+     "description": "Type of the resource.",
      "default": "compute#machineTypeList"
     },
     "nextPageToken": {
@@ -824,7 +824,7 @@
     },
     "selfLink": {
      "type": "string",
-     "description": "Server defined URL for this resource (output only)."
+     "description": "Server defined URL for the resource (output only)."
     }
    }
   },

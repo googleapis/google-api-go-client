@@ -53,18 +53,18 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
-	s.Disks = &DisksService{s: s}
-	s.Firewalls = &FirewallsService{s: s}
-	s.GlobalOperations = &GlobalOperationsService{s: s}
-	s.Images = &ImagesService{s: s}
-	s.Instances = &InstancesService{s: s}
-	s.Kernels = &KernelsService{s: s}
-	s.MachineTypes = &MachineTypesService{s: s}
-	s.Networks = &NetworksService{s: s}
-	s.Projects = &ProjectsService{s: s}
-	s.Snapshots = &SnapshotsService{s: s}
-	s.ZoneOperations = &ZoneOperationsService{s: s}
-	s.Zones = &ZonesService{s: s}
+	s.Disks = NewDisksService(s)
+	s.Firewalls = NewFirewallsService(s)
+	s.GlobalOperations = NewGlobalOperationsService(s)
+	s.Images = NewImagesService(s)
+	s.Instances = NewInstancesService(s)
+	s.Kernels = NewKernelsService(s)
+	s.MachineTypes = NewMachineTypesService(s)
+	s.Networks = NewNetworksService(s)
+	s.Projects = NewProjectsService(s)
+	s.Snapshots = NewSnapshotsService(s)
+	s.ZoneOperations = NewZoneOperationsService(s)
+	s.Zones = NewZonesService(s)
 	return s, nil
 }
 
@@ -96,48 +96,108 @@ type Service struct {
 	Zones *ZonesService
 }
 
+func NewDisksService(s *Service) *DisksService {
+	rs := &DisksService{s: s}
+	return rs
+}
+
 type DisksService struct {
 	s *Service
+}
+
+func NewFirewallsService(s *Service) *FirewallsService {
+	rs := &FirewallsService{s: s}
+	return rs
 }
 
 type FirewallsService struct {
 	s *Service
 }
 
+func NewGlobalOperationsService(s *Service) *GlobalOperationsService {
+	rs := &GlobalOperationsService{s: s}
+	return rs
+}
+
 type GlobalOperationsService struct {
 	s *Service
+}
+
+func NewImagesService(s *Service) *ImagesService {
+	rs := &ImagesService{s: s}
+	return rs
 }
 
 type ImagesService struct {
 	s *Service
 }
 
+func NewInstancesService(s *Service) *InstancesService {
+	rs := &InstancesService{s: s}
+	return rs
+}
+
 type InstancesService struct {
 	s *Service
+}
+
+func NewKernelsService(s *Service) *KernelsService {
+	rs := &KernelsService{s: s}
+	return rs
 }
 
 type KernelsService struct {
 	s *Service
 }
 
+func NewMachineTypesService(s *Service) *MachineTypesService {
+	rs := &MachineTypesService{s: s}
+	return rs
+}
+
 type MachineTypesService struct {
 	s *Service
+}
+
+func NewNetworksService(s *Service) *NetworksService {
+	rs := &NetworksService{s: s}
+	return rs
 }
 
 type NetworksService struct {
 	s *Service
 }
 
+func NewProjectsService(s *Service) *ProjectsService {
+	rs := &ProjectsService{s: s}
+	return rs
+}
+
 type ProjectsService struct {
 	s *Service
+}
+
+func NewSnapshotsService(s *Service) *SnapshotsService {
+	rs := &SnapshotsService{s: s}
+	return rs
 }
 
 type SnapshotsService struct {
 	s *Service
 }
 
+func NewZoneOperationsService(s *Service) *ZoneOperationsService {
+	rs := &ZoneOperationsService{s: s}
+	return rs
+}
+
 type ZoneOperationsService struct {
 	s *Service
+}
+
+func NewZonesService(s *Service) *ZonesService {
+	rs := &ZonesService{s: s}
+	return rs
 }
 
 type ZonesService struct {
@@ -354,6 +414,7 @@ type FirewallAllowed struct {
 	// specify this for any protocol that isn't UDP or TCP. Each entry must
 	// be either an integer or a range. If not specified, connections
 	// through any port are allowed.
+	//
 	// Example inputs include: ["22"],
 	// ["80","443"] and ["12345-12349"].
 	Ports []string `json:"ports,omitempty"`
@@ -663,14 +724,14 @@ type MachineTypeList struct {
 	// Items: The machine type resources.
 	Items []*MachineType `json:"items,omitempty"`
 
-	// Kind: Type of resource.
+	// Kind: Type of the resource.
 	Kind string `json:"kind,omitempty"`
 
 	// NextPageToken: A token used to continue a truncated list request
 	// (output only).
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: Server defined URL for this resource (output only).
+	// SelfLink: Server defined URL for the resource (output only).
 	SelfLink string `json:"selfLink,omitempty"`
 }
 

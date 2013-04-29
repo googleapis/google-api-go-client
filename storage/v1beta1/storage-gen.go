@@ -53,10 +53,10 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
-	s.BucketAccessControls = &BucketAccessControlsService{s: s}
-	s.Buckets = &BucketsService{s: s}
-	s.ObjectAccessControls = &ObjectAccessControlsService{s: s}
-	s.Objects = &ObjectsService{s: s}
+	s.BucketAccessControls = NewBucketAccessControlsService(s)
+	s.Buckets = NewBucketsService(s)
+	s.ObjectAccessControls = NewObjectAccessControlsService(s)
+	s.Objects = NewObjectsService(s)
 	return s, nil
 }
 
@@ -72,16 +72,36 @@ type Service struct {
 	Objects *ObjectsService
 }
 
+func NewBucketAccessControlsService(s *Service) *BucketAccessControlsService {
+	rs := &BucketAccessControlsService{s: s}
+	return rs
+}
+
 type BucketAccessControlsService struct {
 	s *Service
+}
+
+func NewBucketsService(s *Service) *BucketsService {
+	rs := &BucketsService{s: s}
+	return rs
 }
 
 type BucketsService struct {
 	s *Service
 }
 
+func NewObjectAccessControlsService(s *Service) *ObjectAccessControlsService {
+	rs := &ObjectAccessControlsService{s: s}
+	return rs
+}
+
 type ObjectAccessControlsService struct {
 	s *Service
+}
+
+func NewObjectsService(s *Service) *ObjectsService {
+	rs := &ObjectsService{s: s}
+	return rs
 }
 
 type ObjectsService struct {

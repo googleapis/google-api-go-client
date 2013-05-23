@@ -488,7 +488,6 @@ func (a *API) GenerateCode() (outerr error) {
 		res.generateMethods()
 	}
 
-	pn("\nfunc cleanPathString(s string) string { return strings.Map(func(r rune) rune { if r >= 0x2d && r <= 0x7a || r == '~' { return r }; return -1 }, s) }")
 	return nil
 }
 
@@ -1137,9 +1136,6 @@ func (meth *Method) generateCode() {
 		pn(`params.Set("uploadType", "multipart")`)
 		pn("}")
 	}
-	for _, arg := range args.forLocation("path") {
-		p("\turls = strings.Replace(urls, \"{%s}\", %s, 1)\n", arg.apiname, arg.cleanExpr("c."))
-	}
 	pn("urls += \"?\" + params.Encode()")
 	if meth.supportsMedia() {
 		if !hasContentType { // Support mediaUpload but no ctype set.
@@ -1150,6 +1146,14 @@ func (meth *Method) generateCode() {
 		pn("contentLength_, hasMedia_ := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)")
 	}
 	pn("req, _ := http.NewRequest(%q, urls, body)", jstr(meth.m, "httpMethod"))
+	// Replace param values after NewRequest to avoid reencoding them.
+	// E.g. Cloud Storage API requires '%2F' in entity param to be kept, but url.Parse replaces it with '/'.
+	for _, arg := range args.forLocation("path") {
+		pn(`req.URL.Path = strings.Replace(req.URL.Path, "{%s}", %s, 1)`, arg.apiname, arg.cleanExpr("c."))
+	}
+	// Set opaque to avoid encoding of the parameters in the URL path.
+	pn(`req.URL.Opaque =  "//" + req.URL.Host + req.URL.Path`)
+
 	if meth.supportsMedia() {
 		pn("if hasMedia_ { req.ContentLength = contentLength_ }")
 	}
@@ -1322,9 +1326,9 @@ func (a *argument) cleanExpr(prefix string) string {
 	switch a.gotype {
 	case "[]string":
 		log.Printf("TODO(bradfitz): only including the first parameter in path query.")
-		return "cleanPathString(" + prefix + a.goname + "[0])"
+		return "url.QueryEscape(" + prefix + a.goname + "[0])"
 	case "string":
-		return "cleanPathString(" + prefix + a.goname + ")"
+		return "url.QueryEscape(" + prefix + a.goname + ")"
 	case "integer", "int64":
 		return "strconv.FormatInt(" + prefix + a.goname + ", 10)"
 	case "uint64":

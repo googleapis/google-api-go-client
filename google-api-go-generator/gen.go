@@ -434,6 +434,8 @@ func (a *API) GenerateCode() (outerr error) {
 		p("\t%q\n", pkg)
 	}
 	p(")\n\n")
+	pn("// Always reference these packages, just in case the auto-generated code")
+	pn("// below doesn't.")
 	pn("var _ = bytes.NewBuffer")
 	pn("var _ = strconv.Itoa")
 	pn("var _ = fmt.Sprintf")
@@ -442,6 +444,7 @@ func (a *API) GenerateCode() (outerr error) {
 	pn("var _ = url.Parse")
 	pn("var _ = googleapi.Version")
 	pn("var _ = errors.New")
+	pn("var _ = strings.Replace")
 	pn("")
 	pn("const apiId = %q", jstr(m, "id"))
 	pn("const apiName = %q", jstr(m, "name"))

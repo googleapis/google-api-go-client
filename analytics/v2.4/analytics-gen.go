@@ -22,6 +22,8 @@ import (
 	"strings"
 )
 
+// Always reference these packages, just in case the auto-generated code
+// below doesn't.
 var _ = bytes.NewBuffer
 var _ = strconv.Itoa
 var _ = fmt.Sprintf
@@ -30,6 +32,7 @@ var _ = io.Copy
 var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
+var _ = strings.Replace
 
 const apiId = "analytics:v2.4"
 const apiName = "analytics"
@@ -236,11 +239,13 @@ func (c *DataGetCall) Do() error {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v2.4/", "data")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -371,11 +376,13 @@ func (c *ManagementAccountsListCall) Do() error {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v2.4/", "management/accounts")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -453,16 +460,18 @@ func (c *ManagementGoalsListCall) Do() error {
 		params.Set("start-index", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v2.4/", "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/goals")
-	urls = strings.Replace(urls, "{accountId}", cleanPathString(c.accountId), 1)
-	urls = strings.Replace(urls, "{webPropertyId}", cleanPathString(c.webPropertyId), 1)
-	urls = strings.Replace(urls, "{profileId}", cleanPathString(c.profileId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{webPropertyId}", url.QueryEscape(c.webPropertyId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{profileId}", url.QueryEscape(c.profileId), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -561,15 +570,17 @@ func (c *ManagementProfilesListCall) Do() error {
 		params.Set("start-index", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v2.4/", "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles")
-	urls = strings.Replace(urls, "{accountId}", cleanPathString(c.accountId), 1)
-	urls = strings.Replace(urls, "{webPropertyId}", cleanPathString(c.webPropertyId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{webPropertyId}", url.QueryEscape(c.webPropertyId), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -659,11 +670,13 @@ func (c *ManagementSegmentsListCall) Do() error {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v2.4/", "management/segments")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -737,14 +750,16 @@ func (c *ManagementWebpropertiesListCall) Do() error {
 		params.Set("start-index", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v2.4/", "management/accounts/{accountId}/webproperties")
-	urls = strings.Replace(urls, "{accountId}", cleanPathString(c.accountId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -784,13 +799,4 @@ func (c *ManagementWebpropertiesListCall) Do() error {
 	//   ]
 	// }
 
-}
-
-func cleanPathString(s string) string {
-	return strings.Map(func(r rune) rune {
-		if r >= 0x2d && r <= 0x7a || r == '~' {
-			return r
-		}
-		return -1
-	}, s)
 }

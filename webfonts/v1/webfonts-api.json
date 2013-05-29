@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/1WzYt_qi7HSJHYzKbIDpdsLq_Jk\"",
+ "etag": "\"0kaFfN0xfjZjASExv-gUnrWhdto/i6XucJpuc_ZrfJutOTpxVBXkyAc\"",
  "discoveryVersion": "v1",
  "id": "webfonts:v1",
  "name": "webfonts",
@@ -8,6 +8,8 @@
  "revision": "20130404",
  "title": "Google Fonts Developer API",
  "description": "The Google Fonts Developer API.",
+ "ownerDomain": "google.com",
+ "ownerName": "Google",
  "icons": {
   "x16": "http://www.google.com/images/icons/feature/font_api-16.png",
   "x32": "http://www.google.com/images/icons/feature/font_api-32.gif"

@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/LvxKqfPQwgIcVWyVXMoRIXUq5CI\"",
+ "etag": "\"0kaFfN0xfjZjASExv-gUnrWhdto/KIxrtMUn5vSa-K7Pg9k5shyFQvo\"",
  "discoveryVersion": "v1",
  "id": "calendar:v3",
  "name": "calendar",
@@ -8,6 +8,8 @@
  "revision": "20130411",
  "title": "Calendar API",
  "description": "Lets you manipulate events and other calendar data.",
+ "ownerDomain": "google.com",
+ "ownerName": "Google",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/calendar-16.png",
   "x32": "http://www.google.com/images/icons/product/calendar-32.png"
@@ -983,54 +985,6 @@
      "type": "string",
      "description": "Type of the collection (\"calendar#settings\").",
      "default": "calendar#settings"
-    }
-   }
-  },
-  "Subscription": {
-   "id": "Subscription",
-   "type": "object",
-   "properties": {
-    "address": {
-     "type": "string",
-     "description": "The address of the receiving entity where notifications are delivered. Specific to the channel mechanism."
-    },
-    "channel": {
-     "type": "string",
-     "description": "The delivery channel mechanism to use for notifications"
-    },
-    "channelParams": {
-     "type": "object",
-     "description": "Additional parameters controlling delivery channel behavior",
-     "additionalProperties": {
-      "type": "string",
-      "description": "Declares a new parameter by name."
-     }
-    },
-    "clientToken": {
-     "type": "string",
-     "description": "An arbitrary string associated with the subscription that is delivered to the target address with each notification for this subscription."
-    },
-    "expiration": {
-     "type": "string",
-     "description": "The expiration instant for this subscription if it is defined.",
-     "format": "int64"
-    },
-    "id": {
-     "type": "string",
-     "description": "A UUID for the subscription"
-    },
-    "kind": {
-     "type": "string",
-     "description": "A subscription to an API resource",
-     "default": "api#subscription"
-    },
-    "topicId": {
-     "type": "string",
-     "description": "An opaque topic id that identifies the backend resource which has been subscribed to. Stable across different API versions"
-    },
-    "topicUri": {
-     "type": "string",
-     "description": "The canonicalized URI of the subscribed-to resource."
     }
    }
   },
@@ -2133,22 +2087,6 @@
      "description": "Returns all user settings for the authenticated user.",
      "response": {
       "$ref": "Settings"
-     },
-     "scopes": [
-      "https://www.googleapis.com/auth/calendar",
-      "https://www.googleapis.com/auth/calendar.readonly"
-     ]
-    }
-   }
-  },
-  "subscriptions": {
-   "methods": {
-    "unsubscribe": {
-     "id": "calendar.subscriptions.unsubscribe",
-     "path": "subscriptions/unsubscribe",
-     "httpMethod": "POST",
-     "request": {
-      "$ref": "Subscription"
      },
      "scopes": [
       "https://www.googleapis.com/auth/calendar",

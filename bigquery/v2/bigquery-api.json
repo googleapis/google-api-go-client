@@ -1,13 +1,15 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/emS2GNIl_c-LGa5TS3ajAbBWSVo\"",
+ "etag": "\"0kaFfN0xfjZjASExv-gUnrWhdto/pN5xVEkRC594jwbcL9z3hLM82W8\"",
  "discoveryVersion": "v1",
  "id": "bigquery:v2",
  "name": "bigquery",
  "version": "v2",
- "revision": "20130412",
+ "revision": "20130517",
  "title": "BigQuery API",
  "description": "A data platform for customers to create, manage, share and query data.",
+ "ownerDomain": "google.com",
+ "ownerName": "Google",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/search-16.gif",
   "x32": "http://www.google.com/images/icons/product/search-32.gif"
@@ -254,6 +256,10 @@
    "id": "GetQueryResultsResponse",
    "type": "object",
    "properties": {
+    "cacheHit": {
+     "type": "boolean",
+     "description": "Whether the query result was fetched from the query cache."
+    },
     "etag": {
      "type": "string",
      "description": "A hash of this response."
@@ -512,6 +518,10 @@
      "type": "string",
      "description": "[Required] BigQuery SQL query to execute."
     },
+    "useQueryCache": {
+     "type": "boolean",
+     "description": "[Optional] Whether to look for the result in the query cache. The query cache is a best-effort cache that will be flushed whenever tables in the query are modified. Moreover, the query cache is only available when a query does not have a destination table specified."
+    },
     "writeDisposition": {
      "type": "string",
      "description": "[Optional] Whether to overwrite an existing table (WRITE_TRUNCATE), append to an existing table (WRITE_APPEND), or require that the the table is empty (WRITE_EMPTY). Default is WRITE_EMPTY."
@@ -663,6 +673,10 @@
    "id": "JobStatistics2",
    "type": "object",
    "properties": {
+    "cacheHit": {
+     "type": "boolean",
+     "description": "[Output-only] Whether the query result was fetched from the query cache."
+    },
     "totalBytesProcessed": {
      "type": "string",
      "description": "[Output-only] Total bytes processed for this job.",
@@ -821,6 +835,10 @@
      "type": "integer",
      "description": "[Optional] How long to wait for the query to complete, in milliseconds, before returning. Default is to return immediately. If the timeout passes before the job completes, the request will fail with a TIMEOUT error.",
      "format": "uint32"
+    },
+    "useQueryCache": {
+     "type": "boolean",
+     "description": "[Optional] Whether to look for the result in the query cache. The query cache is a best-effort cache that will be flushed whenever tables in the query are modified."
     }
    }
   },
@@ -828,6 +846,10 @@
    "id": "QueryResponse",
    "type": "object",
    "properties": {
+    "cacheHit": {
+     "type": "boolean",
+     "description": "Whether the query result was fetched from the query cache."
+    },
     "jobComplete": {
      "type": "boolean",
      "description": "Whether the query has completed or not. If rows or totalRows are present, this will always be true. If this is false, totalRows will not be available."

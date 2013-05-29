@@ -22,6 +22,8 @@ import (
 	"strings"
 )
 
+// Always reference these packages, just in case the auto-generated code
+// below doesn't.
 var _ = bytes.NewBuffer
 var _ = strconv.Itoa
 var _ = fmt.Sprintf
@@ -30,6 +32,7 @@ var _ = io.Copy
 var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
+var _ = strings.Replace
 
 const apiId = "compute:v1beta13"
 const apiName = "compute"
@@ -1125,15 +1128,17 @@ func (c *DisksDeleteCall) Do() (*Operation, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/disks/{disk}")
-	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
-	urls = strings.Replace(urls, "{disk}", cleanPathString(c.disk), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{disk}", url.QueryEscape(c.disk), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1199,15 +1204,17 @@ func (c *DisksGetCall) Do() (*Disk, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/disks/{disk}")
-	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
-	urls = strings.Replace(urls, "{disk}", cleanPathString(c.disk), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{disk}", url.QueryEscape(c.disk), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1280,15 +1287,17 @@ func (c *DisksInsertCall) Do() (*Operation, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/disks")
-	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1379,14 +1388,16 @@ func (c *DisksListCall) Do() (*DiskList, error) {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/disks")
-	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1464,15 +1475,17 @@ func (c *FirewallsDeleteCall) Do() (*Operation, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/firewalls/{firewall}")
-	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
-	urls = strings.Replace(urls, "{firewall}", cleanPathString(c.firewall), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{firewall}", url.QueryEscape(c.firewall), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1538,15 +1551,17 @@ func (c *FirewallsGetCall) Do() (*Firewall, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/firewalls/{firewall}")
-	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
-	urls = strings.Replace(urls, "{firewall}", cleanPathString(c.firewall), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{firewall}", url.QueryEscape(c.firewall), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1619,15 +1634,17 @@ func (c *FirewallsInsertCall) Do() (*Operation, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/firewalls")
-	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1718,14 +1735,16 @@ func (c *FirewallsListCall) Do() (*FirewallList, error) {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/firewalls")
-	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1811,16 +1830,18 @@ func (c *FirewallsPatchCall) Do() (*Operation, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/firewalls/{firewall}")
-	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
-	urls = strings.Replace(urls, "{firewall}", cleanPathString(c.firewall), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{firewall}", url.QueryEscape(c.firewall), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1897,16 +1918,18 @@ func (c *FirewallsUpdateCall) Do() (*Operation, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/firewalls/{firewall}")
-	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
-	urls = strings.Replace(urls, "{firewall}", cleanPathString(c.firewall), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{firewall}", url.QueryEscape(c.firewall), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1975,15 +1998,17 @@ func (c *ImagesDeleteCall) Do() (*Operation, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/images/{image}")
-	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
-	urls = strings.Replace(urls, "{image}", cleanPathString(c.image), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{image}", url.QueryEscape(c.image), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2049,15 +2074,17 @@ func (c *ImagesGetCall) Do() (*Image, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/images/{image}")
-	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
-	urls = strings.Replace(urls, "{image}", cleanPathString(c.image), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{image}", url.QueryEscape(c.image), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2130,15 +2157,17 @@ func (c *ImagesInsertCall) Do() (*Operation, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/images")
-	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2230,14 +2259,16 @@ func (c *ImagesListCall) Do() (*ImageList, error) {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/images")
-	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2326,16 +2357,18 @@ func (c *InstancesAddAccessConfigCall) Do() (*Operation, error) {
 	params.Set("alt", "json")
 	params.Set("network_interface", fmt.Sprintf("%v", c.network_interface))
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/instances/{instance}/addAccessConfig")
-	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
-	urls = strings.Replace(urls, "{instance}", cleanPathString(c.instance), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{instance}", url.QueryEscape(c.instance), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2411,15 +2444,17 @@ func (c *InstancesDeleteCall) Do() (*Operation, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/instances/{instance}")
-	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
-	urls = strings.Replace(urls, "{instance}", cleanPathString(c.instance), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{instance}", url.QueryEscape(c.instance), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2492,15 +2527,17 @@ func (c *InstancesDeleteAccessConfigCall) Do() (*Operation, error) {
 	params.Set("access_config", fmt.Sprintf("%v", c.access_config))
 	params.Set("network_interface", fmt.Sprintf("%v", c.network_interface))
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/instances/{instance}/deleteAccessConfig")
-	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
-	urls = strings.Replace(urls, "{instance}", cleanPathString(c.instance), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{instance}", url.QueryEscape(c.instance), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2580,15 +2617,17 @@ func (c *InstancesGetCall) Do() (*Instance, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/instances/{instance}")
-	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
-	urls = strings.Replace(urls, "{instance}", cleanPathString(c.instance), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{instance}", url.QueryEscape(c.instance), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2656,15 +2695,17 @@ func (c *InstancesGetSerialPortOutputCall) Do() (*SerialPortOutput, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/instances/{instance}/serialPort")
-	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
-	urls = strings.Replace(urls, "{instance}", cleanPathString(c.instance), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{instance}", url.QueryEscape(c.instance), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2737,15 +2778,17 @@ func (c *InstancesInsertCall) Do() (*Operation, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/instances")
-	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2836,14 +2879,16 @@ func (c *InstancesListCall) Do() (*InstanceList, error) {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/instances")
-	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2921,15 +2966,17 @@ func (c *KernelsGetCall) Do() (*Kernel, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/kernels/{kernel}")
-	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
-	urls = strings.Replace(urls, "{kernel}", cleanPathString(c.kernel), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{kernel}", url.QueryEscape(c.kernel), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3026,14 +3073,16 @@ func (c *KernelsListCall) Do() (*KernelList, error) {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/kernels")
-	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3111,15 +3160,17 @@ func (c *MachineTypesGetCall) Do() (*MachineType, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/machineTypes/{machineType}")
-	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
-	urls = strings.Replace(urls, "{machineType}", cleanPathString(c.machineType), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{machineType}", url.QueryEscape(c.machineType), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3216,14 +3267,16 @@ func (c *MachineTypesListCall) Do() (*MachineTypeList, error) {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/machineTypes")
-	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3301,15 +3354,17 @@ func (c *NetworksDeleteCall) Do() (*Operation, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/networks/{network}")
-	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
-	urls = strings.Replace(urls, "{network}", cleanPathString(c.network), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{network}", url.QueryEscape(c.network), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3375,15 +3430,17 @@ func (c *NetworksGetCall) Do() (*Network, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/networks/{network}")
-	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
-	urls = strings.Replace(urls, "{network}", cleanPathString(c.network), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{network}", url.QueryEscape(c.network), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3456,15 +3513,17 @@ func (c *NetworksInsertCall) Do() (*Operation, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/networks")
-	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3555,14 +3614,16 @@ func (c *NetworksListCall) Do() (*NetworkList, error) {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/networks")
-	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3640,15 +3701,17 @@ func (c *OperationsDeleteCall) Do() error {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/operations/{operation}")
-	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
-	urls = strings.Replace(urls, "{operation}", cleanPathString(c.operation), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{operation}", url.QueryEscape(c.operation), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -3707,15 +3770,17 @@ func (c *OperationsGetCall) Do() (*Operation, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/operations/{operation}")
-	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
-	urls = strings.Replace(urls, "{operation}", cleanPathString(c.operation), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{operation}", url.QueryEscape(c.operation), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3812,14 +3877,16 @@ func (c *OperationsListCall) Do() (*OperationList, error) {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/operations")
-	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3895,14 +3962,16 @@ func (c *ProjectsGetCall) Do() (*Project, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}")
-	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3967,15 +4036,17 @@ func (c *ProjectsSetCommonInstanceMetadataCall) Do() (*Operation, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/setCommonInstanceMetadata")
-	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4036,15 +4107,17 @@ func (c *SnapshotsDeleteCall) Do() (*Operation, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/snapshots/{snapshot}")
-	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
-	urls = strings.Replace(urls, "{snapshot}", cleanPathString(c.snapshot), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{snapshot}", url.QueryEscape(c.snapshot), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4110,15 +4183,17 @@ func (c *SnapshotsGetCall) Do() (*Snapshot, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/snapshots/{snapshot}")
-	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
-	urls = strings.Replace(urls, "{snapshot}", cleanPathString(c.snapshot), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{snapshot}", url.QueryEscape(c.snapshot), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4191,15 +4266,17 @@ func (c *SnapshotsInsertCall) Do() (*Operation, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/snapshots")
-	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4290,14 +4367,16 @@ func (c *SnapshotsListCall) Do() (*SnapshotList, error) {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/snapshots")
-	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4375,15 +4454,17 @@ func (c *ZonesGetCall) Do() (*Zone, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/zones/{zone}")
-	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
-	urls = strings.Replace(urls, "{zone}", cleanPathString(c.zone), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{zone}", url.QueryEscape(c.zone), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4480,14 +4561,16 @@ func (c *ZonesListCall) Do() (*ZoneList, error) {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta13/projects/", "{project}/zones")
-	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4541,13 +4624,4 @@ func (c *ZonesListCall) Do() (*ZoneList, error) {
 	//   ]
 	// }
 
-}
-
-func cleanPathString(s string) string {
-	return strings.Map(func(r rune) rune {
-		if r >= 0x2d && r <= 0x7a || r == '~' {
-			return r
-		}
-		return -1
-	}, s)
 }

@@ -1,13 +1,15 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/RZz1s1ZlX5Ol7GBgHPQgqgiP88o\"",
+ "etag": "\"0kaFfN0xfjZjASExv-gUnrWhdto/Y-Fymv50UElWOIVZbRKd9ilTWDk\"",
  "discoveryVersion": "v1",
  "id": "compute:v1beta14",
  "name": "compute",
  "version": "v1beta14",
- "revision": "20130403",
+ "revision": "20130320",
  "title": "Compute Engine API",
  "description": "API for the Google Compute Engine service.",
+ "ownerDomain": "google.com",
+ "ownerName": "Google",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/compute_engine-16.png",
   "x32": "http://www.google.com/images/icons/product/compute_engine-32.png"
@@ -586,7 +588,7 @@
     },
     "selfLink": {
      "type": "string",
-     "description": "Server defined URL for the resource (output only)."
+     "description": "Server defined URL for this resource (output only)."
     },
     "serviceAccounts": {
      "type": "array",
@@ -1240,6 +1242,132 @@
      "type": "number",
      "description": "Current usage of this metric.",
      "format": "double"
+    }
+   }
+  },
+  "Route": {
+   "id": "Route",
+   "type": "object",
+   "description": "The route resource. A Route is a rule that specifies how certain packets should be handled by the virtual network. Routes are associated with VMs by tag and the set of Routes for a particular VM is called its routing table. For each packet leaving a VM, the system searches that VM's routing table for a single best matching Route. Routes match packets by destination IP address, preferring smaller or more specific ranges over larger ones. If there is a tie, the system selects the Route with the smallest priority value. If there is still a tie, it uses the layer three and four packet headers to select just one of the remaining matching Routes. The packet is then forwarded as specified by the next_hop field of the winning Route -- either to another VM destination, a VM gateway or a GCE operated gateway. Packets that do not match any Route in the sending VM's routing table will be dropped.",
+   "properties": {
+    "creationTimestamp": {
+     "type": "string",
+     "description": "Creation timestamp in RFC3339 text format (output only)."
+    },
+    "description": {
+     "type": "string",
+     "description": "An optional textual description of the resource; provided by the client when the resource is created."
+    },
+    "destRange": {
+     "type": "string",
+     "description": "Which packets does this route apply to?",
+     "annotations": {
+      "required": [
+       "compute.routes.insert"
+      ]
+     }
+    },
+    "id": {
+     "type": "string",
+     "description": "Unique identifier for the resource; defined by the server (output only).",
+     "format": "uint64"
+    },
+    "kind": {
+     "type": "string",
+     "description": "Type of the resource.",
+     "default": "compute#route"
+    },
+    "name": {
+     "type": "string",
+     "description": "Name of the resource; provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035.",
+     "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+     "annotations": {
+      "required": [
+       "compute.routes.insert"
+      ]
+     }
+    },
+    "network": {
+     "type": "string",
+     "description": "URL of the network to which this route is applied; provided by the client when the route is created.",
+     "annotations": {
+      "required": [
+       "compute.routes.insert"
+      ]
+     }
+    },
+    "nextHopGateway": {
+     "type": "string",
+     "description": "The URL to a gateway that should handle matching packets."
+    },
+    "nextHopInstance": {
+     "type": "string",
+     "description": "The URL to an instance that should handle matching packets."
+    },
+    "nextHopIp": {
+     "type": "string",
+     "description": "The network IP address of an instance that should handle matching packets."
+    },
+    "nextHopNetwork": {
+     "type": "string",
+     "description": "The URL of the local network if it should handle matching packets."
+    },
+    "priority": {
+     "type": "integer",
+     "description": "Breaks ties between Routes of equal specificity. Routes with smaller values win when tied with routes with larger values.",
+     "format": "uint32",
+     "annotations": {
+      "required": [
+       "compute.routes.insert"
+      ]
+     }
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "Server defined URL for the resource (output only)."
+    },
+    "tags": {
+     "type": "array",
+     "description": "A list of instance tags to which this route applies.",
+     "items": {
+      "type": "string"
+     },
+     "annotations": {
+      "required": [
+       "compute.routes.insert"
+      ]
+     }
+    }
+   }
+  },
+  "RouteList": {
+   "id": "RouteList",
+   "type": "object",
+   "description": "Contains a list of route resources.",
+   "properties": {
+    "id": {
+     "type": "string",
+     "description": "Unique identifier for the resource; defined by the server (output only)."
+    },
+    "items": {
+     "type": "array",
+     "description": "The route resources.",
+     "items": {
+      "$ref": "Route"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Type of resource.",
+     "default": "compute#routeList"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "A token used to continue a truncated list request (output only)."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "Server defined URL for this resource (output only)."
     }
    }
   },
@@ -3021,6 +3149,146 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/compute"
+     ]
+    }
+   }
+  },
+  "routes": {
+   "methods": {
+    "delete": {
+     "id": "compute.routes.delete",
+     "path": "{project}/global/routes/{route}",
+     "httpMethod": "DELETE",
+     "description": "Deletes the specified route resource.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "route": {
+       "type": "string",
+       "description": "Name of the route resource to delete.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "route"
+     ],
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "get": {
+     "id": "compute.routes.get",
+     "path": "{project}/global/routes/{route}",
+     "httpMethod": "GET",
+     "description": "Returns the specified route resource.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "route": {
+       "type": "string",
+       "description": "Name of the route resource to return.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "route"
+     ],
+     "response": {
+      "$ref": "Route"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "insert": {
+     "id": "compute.routes.insert",
+     "path": "{project}/global/routes",
+     "httpMethod": "POST",
+     "description": "Creates a route resource in the specified project using the data included in the request.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "request": {
+      "$ref": "Route"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "list": {
+     "id": "compute.routes.list",
+     "path": "{project}/global/routes",
+     "httpMethod": "GET",
+     "description": "Retrieves the list of route resources available to the specified project.",
+     "parameters": {
+      "filter": {
+       "type": "string",
+       "description": "Optional. Filter expression for filtering listed resources.",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+       "default": "100",
+       "format": "uint32",
+       "minimum": "0",
+       "maximum": "100",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "location": "query"
+      },
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "response": {
+      "$ref": "RouteList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
      ]
     }
    }

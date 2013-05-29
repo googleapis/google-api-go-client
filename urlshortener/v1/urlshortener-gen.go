@@ -22,6 +22,8 @@ import (
 	"strings"
 )
 
+// Always reference these packages, just in case the auto-generated code
+// below doesn't.
 var _ = bytes.NewBuffer
 var _ = strconv.Itoa
 var _ = fmt.Sprintf
@@ -30,6 +32,7 @@ var _ = io.Copy
 var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
+var _ = strings.Replace
 
 const apiId = "urlshortener:v1"
 const apiName = "urlshortener"
@@ -197,11 +200,13 @@ func (c *UrlGetCall) Do() (*Url, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/urlshortener/v1/", "url")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -275,12 +280,14 @@ func (c *UrlInsertCall) Do() (*Url, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/urlshortener/v1/", "url")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -347,11 +354,13 @@ func (c *UrlListCall) Do() (*UrlHistory, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/urlshortener/v1/", "url/history")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -393,13 +402,4 @@ func (c *UrlListCall) Do() (*UrlHistory, error) {
 	//   ]
 	// }
 
-}
-
-func cleanPathString(s string) string {
-	return strings.Map(func(r rune) rune {
-		if r >= 0x2d && r <= 0x7a || r == '~' {
-			return r
-		}
-		return -1
-	}, s)
 }

@@ -22,6 +22,8 @@ import (
 	"strings"
 )
 
+// Always reference these packages, just in case the auto-generated code
+// below doesn't.
 var _ = bytes.NewBuffer
 var _ = strconv.Itoa
 var _ = fmt.Sprintf
@@ -30,6 +32,7 @@ var _ = io.Copy
 var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
+var _ = strings.Replace
 
 const apiId = "civicinfo:us_v1"
 const apiName = "civicinfo"
@@ -418,11 +421,13 @@ func (c *ElectionsElectionQueryCall) Do() (*ElectionsQueryResponse, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/civicinfo/us_v1/", "elections")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -481,15 +486,17 @@ func (c *ElectionsVoterInfoQueryCall) Do() (*VoterInfoResponse, error) {
 		params.Set("officialOnly", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/civicinfo/us_v1/", "voterinfo/{electionId}/lookup")
-	urls = strings.Replace(urls, "{electionId}", strconv.FormatInt(c.electionId, 10), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{electionId}", strconv.FormatInt(c.electionId, 10), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -529,13 +536,4 @@ func (c *ElectionsVoterInfoQueryCall) Do() (*VoterInfoResponse, error) {
 	//   }
 	// }
 
-}
-
-func cleanPathString(s string) string {
-	return strings.Map(func(r rune) rune {
-		if r >= 0x2d && r <= 0x7a || r == '~' {
-			return r
-		}
-		return -1
-	}, s)
 }

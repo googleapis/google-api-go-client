@@ -1,13 +1,15 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/WBsBLTRFwKkAJXQZTwvXsRM2Tzs\"",
+ "etag": "\"0kaFfN0xfjZjASExv-gUnrWhdto/poW2BhYkJIuOUoKP2FzsLrqfkP4\"",
  "discoveryVersion": "v1",
  "id": "shopping:v1",
  "name": "shopping",
  "version": "v1",
- "revision": "20130411",
+ "revision": "20130516",
  "title": "Search API For Shopping",
  "description": "Lets you search over product data.",
+ "ownerDomain": "google.com",
+ "ownerName": "Google",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/search-16.gif",
   "x32": "http://www.google.com/images/icons/product/search-32.gif"

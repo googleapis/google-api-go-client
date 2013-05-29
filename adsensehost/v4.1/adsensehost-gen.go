@@ -22,6 +22,8 @@ import (
 	"strings"
 )
 
+// Always reference these packages, just in case the auto-generated code
+// below doesn't.
 var _ = bytes.NewBuffer
 var _ = strconv.Itoa
 var _ = fmt.Sprintf
@@ -30,6 +32,7 @@ var _ = io.Copy
 var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
+var _ = strings.Replace
 
 const apiId = "adsensehost:v4.1"
 const apiName = "adsensehost"
@@ -541,14 +544,16 @@ func (c *AccountsGetCall) Do() (*Account, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "accounts/{accountId}")
-	urls = strings.Replace(urls, "{accountId}", cleanPathString(c.accountId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -609,11 +614,13 @@ func (c *AccountsListCall) Do() (*Accounts, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "accounts")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -672,15 +679,17 @@ func (c *AccountsAdclientsGetCall) Do() (*AdClient, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "accounts/{accountId}/adclients/{adClientId}")
-	urls = strings.Replace(urls, "{accountId}", cleanPathString(c.accountId), 1)
-	urls = strings.Replace(urls, "{adClientId}", cleanPathString(c.adClientId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{adClientId}", url.QueryEscape(c.adClientId), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -764,14 +773,16 @@ func (c *AccountsAdclientsListCall) Do() (*AdClients, error) {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "accounts/{accountId}/adclients")
-	urls = strings.Replace(urls, "{accountId}", cleanPathString(c.accountId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -844,16 +855,18 @@ func (c *AccountsAdunitsDeleteCall) Do() (*AdUnit, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "accounts/{accountId}/adclients/{adClientId}/adunits/{adUnitId}")
-	urls = strings.Replace(urls, "{accountId}", cleanPathString(c.accountId), 1)
-	urls = strings.Replace(urls, "{adClientId}", cleanPathString(c.adClientId), 1)
-	urls = strings.Replace(urls, "{adUnitId}", cleanPathString(c.adUnitId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{adClientId}", url.QueryEscape(c.adClientId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{adUnitId}", url.QueryEscape(c.adUnitId), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -926,16 +939,18 @@ func (c *AccountsAdunitsGetCall) Do() (*AdUnit, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "accounts/{accountId}/adclients/{adClientId}/adunits/{adUnitId}")
-	urls = strings.Replace(urls, "{accountId}", cleanPathString(c.accountId), 1)
-	urls = strings.Replace(urls, "{adClientId}", cleanPathString(c.adClientId), 1)
-	urls = strings.Replace(urls, "{adUnitId}", cleanPathString(c.adUnitId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{adClientId}", url.QueryEscape(c.adClientId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{adUnitId}", url.QueryEscape(c.adUnitId), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1019,16 +1034,18 @@ func (c *AccountsAdunitsGetAdCodeCall) Do() (*AdCode, error) {
 		params.Set("hostCustomChannelId", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "accounts/{accountId}/adclients/{adClientId}/adunits/{adUnitId}/adcode")
-	urls = strings.Replace(urls, "{accountId}", cleanPathString(c.accountId), 1)
-	urls = strings.Replace(urls, "{adClientId}", cleanPathString(c.adClientId), 1)
-	urls = strings.Replace(urls, "{adUnitId}", cleanPathString(c.adUnitId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{adClientId}", url.QueryEscape(c.adClientId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{adUnitId}", url.QueryEscape(c.adUnitId), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1113,16 +1130,18 @@ func (c *AccountsAdunitsInsertCall) Do() (*AdUnit, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "accounts/{accountId}/adclients/{adClientId}/adunits")
-	urls = strings.Replace(urls, "{accountId}", cleanPathString(c.accountId), 1)
-	urls = strings.Replace(urls, "{adClientId}", cleanPathString(c.adClientId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{adClientId}", url.QueryEscape(c.adClientId), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1221,15 +1240,17 @@ func (c *AccountsAdunitsListCall) Do() (*AdUnits, error) {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "accounts/{accountId}/adclients/{adClientId}/adunits")
-	urls = strings.Replace(urls, "{accountId}", cleanPathString(c.accountId), 1)
-	urls = strings.Replace(urls, "{adClientId}", cleanPathString(c.adClientId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{adClientId}", url.QueryEscape(c.adClientId), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1322,16 +1343,18 @@ func (c *AccountsAdunitsPatchCall) Do() (*AdUnit, error) {
 	params.Set("alt", "json")
 	params.Set("adUnitId", fmt.Sprintf("%v", c.adUnitId))
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "accounts/{accountId}/adclients/{adClientId}/adunits")
-	urls = strings.Replace(urls, "{accountId}", cleanPathString(c.accountId), 1)
-	urls = strings.Replace(urls, "{adClientId}", cleanPathString(c.adClientId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{adClientId}", url.QueryEscape(c.adClientId), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1413,16 +1436,18 @@ func (c *AccountsAdunitsUpdateCall) Do() (*AdUnit, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "accounts/{accountId}/adclients/{adClientId}/adunits")
-	urls = strings.Replace(urls, "{accountId}", cleanPathString(c.accountId), 1)
-	urls = strings.Replace(urls, "{adClientId}", cleanPathString(c.adClientId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{adClientId}", url.QueryEscape(c.adClientId), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1568,14 +1593,16 @@ func (c *AccountsReportsGenerateCall) Do() (*Report, error) {
 		params.Set("startIndex", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "accounts/{accountId}/reports")
-	urls = strings.Replace(urls, "{accountId}", cleanPathString(c.accountId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1697,14 +1724,16 @@ func (c *AdclientsGetCall) Do() (*AdClient, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "adclients/{adClientId}")
-	urls = strings.Replace(urls, "{adClientId}", cleanPathString(c.adClientId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{adClientId}", url.QueryEscape(c.adClientId), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1781,11 +1810,13 @@ func (c *AdclientsListCall) Do() (*AdClients, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "adclients")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1873,11 +1904,13 @@ func (c *AssociationsessionsStartCall) Do() (*AssociationSession, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "associationsessions/start")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1968,11 +2001,13 @@ func (c *AssociationsessionsVerifyCall) Do() (*AssociationSession, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "associationsessions/verify")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2030,15 +2065,17 @@ func (c *CustomchannelsDeleteCall) Do() (*CustomChannel, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "adclients/{adClientId}/customchannels/{customChannelId}")
-	urls = strings.Replace(urls, "{adClientId}", cleanPathString(c.adClientId), 1)
-	urls = strings.Replace(urls, "{customChannelId}", cleanPathString(c.customChannelId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{adClientId}", url.QueryEscape(c.adClientId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{customChannelId}", url.QueryEscape(c.customChannelId), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2102,15 +2139,17 @@ func (c *CustomchannelsGetCall) Do() (*CustomChannel, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "adclients/{adClientId}/customchannels/{customChannelId}")
-	urls = strings.Replace(urls, "{adClientId}", cleanPathString(c.adClientId), 1)
-	urls = strings.Replace(urls, "{customChannelId}", cleanPathString(c.customChannelId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{adClientId}", url.QueryEscape(c.adClientId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{customChannelId}", url.QueryEscape(c.customChannelId), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2179,15 +2218,17 @@ func (c *CustomchannelsInsertCall) Do() (*CustomChannel, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "adclients/{adClientId}/customchannels")
-	urls = strings.Replace(urls, "{adClientId}", cleanPathString(c.adClientId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{adClientId}", url.QueryEscape(c.adClientId), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2268,14 +2309,16 @@ func (c *CustomchannelsListCall) Do() (*CustomChannels, error) {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "adclients/{adClientId}/customchannels")
-	urls = strings.Replace(urls, "{adClientId}", cleanPathString(c.adClientId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{adClientId}", url.QueryEscape(c.adClientId), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2354,15 +2397,17 @@ func (c *CustomchannelsPatchCall) Do() (*CustomChannel, error) {
 	params.Set("alt", "json")
 	params.Set("customChannelId", fmt.Sprintf("%v", c.customChannelId))
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "adclients/{adClientId}/customchannels")
-	urls = strings.Replace(urls, "{adClientId}", cleanPathString(c.adClientId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{adClientId}", url.QueryEscape(c.adClientId), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2434,15 +2479,17 @@ func (c *CustomchannelsUpdateCall) Do() (*CustomChannel, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "adclients/{adClientId}/customchannels")
-	urls = strings.Replace(urls, "{adClientId}", cleanPathString(c.adClientId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{adClientId}", url.QueryEscape(c.adClientId), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2581,11 +2628,13 @@ func (c *ReportsGenerateCall) Do() (*Report, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "reports")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2701,15 +2750,17 @@ func (c *UrlchannelsDeleteCall) Do() (*UrlChannel, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "adclients/{adClientId}/urlchannels/{urlChannelId}")
-	urls = strings.Replace(urls, "{adClientId}", cleanPathString(c.adClientId), 1)
-	urls = strings.Replace(urls, "{urlChannelId}", cleanPathString(c.urlChannelId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{adClientId}", url.QueryEscape(c.adClientId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{urlChannelId}", url.QueryEscape(c.urlChannelId), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2778,15 +2829,17 @@ func (c *UrlchannelsInsertCall) Do() (*UrlChannel, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "adclients/{adClientId}/urlchannels")
-	urls = strings.Replace(urls, "{adClientId}", cleanPathString(c.adClientId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{adClientId}", url.QueryEscape(c.adClientId), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2866,14 +2919,16 @@ func (c *UrlchannelsListCall) Do() (*UrlChannels, error) {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "adclients/{adClientId}/urlchannels")
-	urls = strings.Replace(urls, "{adClientId}", cleanPathString(c.adClientId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{adClientId}", url.QueryEscape(c.adClientId), 1)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2919,13 +2974,4 @@ func (c *UrlchannelsListCall) Do() (*UrlChannels, error) {
 	//   ]
 	// }
 
-}
-
-func cleanPathString(s string) string {
-	return strings.Map(func(r rune) rune {
-		if r >= 0x2d && r <= 0x7a || r == '~' {
-			return r
-		}
-		return -1
-	}, s)
 }

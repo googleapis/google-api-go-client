@@ -22,6 +22,8 @@ import (
 	"strings"
 )
 
+// Always reference these packages, just in case the auto-generated code
+// below doesn't.
 var _ = bytes.NewBuffer
 var _ = strconv.Itoa
 var _ = fmt.Sprintf
@@ -30,6 +32,7 @@ var _ = io.Copy
 var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
+var _ = strings.Replace
 
 const apiId = "youtube:v3"
 const apiName = "youtube"
@@ -57,15 +60,16 @@ func New(client *http.Client) (*Service, error) {
 	}
 	s := &Service{client: client}
 	s.Activities = NewActivitiesService(s)
+	s.ChannelBanners = NewChannelBannersService(s)
 	s.Channels = NewChannelsService(s)
 	s.GuideCategories = NewGuideCategoriesService(s)
 	s.LiveBroadcasts = NewLiveBroadcastsService(s)
 	s.LiveStreams = NewLiveStreamsService(s)
-	s.Players = NewPlayersService(s)
 	s.PlaylistItems = NewPlaylistItemsService(s)
 	s.Playlists = NewPlaylistsService(s)
 	s.Search = NewSearchService(s)
 	s.Subscriptions = NewSubscriptionsService(s)
+	s.Thumbnails = NewThumbnailsService(s)
 	s.VideoCategories = NewVideoCategoriesService(s)
 	s.Videos = NewVideosService(s)
 	return s, nil
@@ -76,6 +80,8 @@ type Service struct {
 
 	Activities *ActivitiesService
 
+	ChannelBanners *ChannelBannersService
+
 	Channels *ChannelsService
 
 	GuideCategories *GuideCategoriesService
@@ -84,8 +90,6 @@ type Service struct {
 
 	LiveStreams *LiveStreamsService
 
-	Players *PlayersService
-
 	PlaylistItems *PlaylistItemsService
 
 	Playlists *PlaylistsService
@@ -93,6 +97,8 @@ type Service struct {
 	Search *SearchService
 
 	Subscriptions *SubscriptionsService
+
+	Thumbnails *ThumbnailsService
 
 	VideoCategories *VideoCategoriesService
 
@@ -105,6 +111,15 @@ func NewActivitiesService(s *Service) *ActivitiesService {
 }
 
 type ActivitiesService struct {
+	s *Service
+}
+
+func NewChannelBannersService(s *Service) *ChannelBannersService {
+	rs := &ChannelBannersService{s: s}
+	return rs
+}
+
+type ChannelBannersService struct {
 	s *Service
 }
 
@@ -144,15 +159,6 @@ type LiveStreamsService struct {
 	s *Service
 }
 
-func NewPlayersService(s *Service) *PlayersService {
-	rs := &PlayersService{s: s}
-	return rs
-}
-
-type PlayersService struct {
-	s *Service
-}
-
 func NewPlaylistItemsService(s *Service) *PlaylistItemsService {
 	rs := &PlaylistItemsService{s: s}
 	return rs
@@ -186,6 +192,15 @@ func NewSubscriptionsService(s *Service) *SubscriptionsService {
 }
 
 type SubscriptionsService struct {
+	s *Service
+}
+
+func NewThumbnailsService(s *Service) *ThumbnailsService {
+	rs := &ThumbnailsService{s: s}
+	return rs
+}
+
+type ThumbnailsService struct {
 	s *Service
 }
 
@@ -349,6 +364,17 @@ type ActivityContentDetailsPromotedItem struct {
 	// user was shown this promoted item.
 	CreativeViewUrl string `json:"creativeViewUrl,omitempty"`
 
+	// CtaType: The type of call-to-action, a message to the user indicating
+	// action that can be taken.
+	CtaType string `json:"ctaType,omitempty"`
+
+	// DescriptionText: The text description to accompany the promoted item.
+	DescriptionText string `json:"descriptionText,omitempty"`
+
+	// DestinationUrl: The URL the client should direct the user to, if the
+	// user chooses to visit the advertiser's website.
+	DestinationUrl string `json:"destinationUrl,omitempty"`
+
 	// VideoId: The ID that YouTube uses to uniquely identify the promoted
 	// video.
 	VideoId string `json:"videoId,omitempty"`
@@ -400,6 +426,10 @@ type ActivityContentDetailsUpload struct {
 type ActivityListResponse struct {
 	// Etag: The ETag of the response.
 	Etag string `json:"etag,omitempty"`
+
+	// EventId: Serialized EventId of the request which produced this
+	// response.
+	EventId string `json:"eventId,omitempty"`
 
 	// Items: A list of activities, or events, that match the request
 	// criteria.
@@ -461,28 +491,6 @@ type ActivitySnippet struct {
 	Type string `json:"type,omitempty"`
 }
 
-type CallToAction struct {
-	CallToActionId string `json:"callToActionId,omitempty"`
-
-	Description1 string `json:"description1,omitempty"`
-
-	Description2 string `json:"description2,omitempty"`
-
-	DestinationUrl string `json:"destinationUrl,omitempty"`
-
-	DisplayUrl string `json:"displayUrl,omitempty"`
-
-	EndTimeMs int64 `json:"endTimeMs,omitempty,string"`
-
-	Headline string `json:"headline,omitempty"`
-
-	HideTimeMs int64 `json:"hideTimeMs,omitempty,string"`
-
-	ImageUrl string `json:"imageUrl,omitempty"`
-
-	StartTimeMs int64 `json:"startTimeMs,omitempty,string"`
-}
-
 type Channel struct {
 	// BrandingSettings: The brandingSettings object encapsulates
 	// information about the branding of the channel.
@@ -501,6 +509,10 @@ type Channel struct {
 
 	// Id: The ID that YouTube uses to uniquely identify the channel.
 	Id string `json:"id,omitempty"`
+
+	// InvideoPromotion: The invideoPromotion object encapsulates
+	// information about promotion campaign associated with the channel.
+	InvideoPromotion *InvideoPromotion `json:"invideoPromotion,omitempty"`
 
 	// Kind: The type of the API resource. For channel resources, the value
 	// will be youtube#channel.
@@ -521,6 +533,18 @@ type Channel struct {
 	// TopicDetails: The topicDetails object encapsulates information about
 	// Freebase topics associated with the channel.
 	TopicDetails *ChannelTopicDetails `json:"topicDetails,omitempty"`
+}
+
+type ChannelBannerInsertResponse struct {
+	// Etag: The ETag of the response.
+	Etag string `json:"etag,omitempty"`
+
+	// Kind: The type of the API response. For this operation, the value
+	// will be youtube#channelBannerInsertResponse.
+	Kind string `json:"kind,omitempty"`
+
+	// Url: The URL of this banner image.
+	Url string `json:"url,omitempty"`
 }
 
 type ChannelBrandingSettings struct {
@@ -601,6 +625,10 @@ type ChannelConversionPings struct {
 type ChannelListResponse struct {
 	// Etag: The ETag for the response.
 	Etag string `json:"etag,omitempty"`
+
+	// EventId: Serialized EventId of the request which produced this
+	// response.
+	EventId string `json:"eventId,omitempty"`
 
 	// Items: A list of channels that match the request criteria.
 	Items []*Channel `json:"items,omitempty"`
@@ -696,6 +724,11 @@ type ChannelStatistics struct {
 }
 
 type ChannelStatus struct {
+	// IsLinked: If true, then the user is linked to either a YouTube
+	// username or G+ account. Otherwise, the user doesn't have a public
+	// YouTube identity.
+	IsLinked bool `json:"isLinked,omitempty"`
+
 	// PrivacyStatus: Privacy status of the channel.
 	PrivacyStatus string `json:"privacyStatus,omitempty"`
 }
@@ -762,44 +795,6 @@ type ContentRating struct {
 	TvpgRating string `json:"tvpgRating,omitempty"`
 }
 
-type FeaturedChannel struct {
-	// ChannelId: External id of the featured channel.
-	ChannelId string `json:"channelId,omitempty"`
-
-	// ChannelSnippet: Contains further information about the featured
-	// channel.
-	ChannelSnippet *ChannelSnippet `json:"channelSnippet,omitempty"`
-
-	// EndTimeMs: Stop showing the feature at this playback time.
-	EndTimeMs int64 `json:"endTimeMs,omitempty,string"`
-
-	// FeatureId: Id of this feature (for logging).
-	FeatureId string `json:"featureId,omitempty"`
-
-	// StartTimeMs: Start showing the feature at this playback time.
-	StartTimeMs int64 `json:"startTimeMs,omitempty,string"`
-
-	// WatermarkUrl: URL of the default/custom image url.
-	WatermarkUrl string `json:"watermarkUrl,omitempty"`
-}
-
-type FeaturedVideo struct {
-	// EndTimeMs: Stop showing the feature at the playback time.
-	EndTimeMs int64 `json:"endTimeMs,omitempty,string"`
-
-	// FeatureId: Id of this feature (for logging).
-	FeatureId string `json:"featureId,omitempty"`
-
-	// StartTimeMs: Start showing the feature at this playback time.
-	StartTimeMs int64 `json:"startTimeMs,omitempty,string"`
-
-	// VideoId: The external id of the featured video.
-	VideoId string `json:"videoId,omitempty"`
-
-	// VideoSnippet: Contains further information about the featured video.
-	VideoSnippet *VideoSnippet `json:"videoSnippet,omitempty"`
-}
-
 type GeoPoint struct {
 	// Elevation: Altitude above the Earth, in meters.
 	Elevation float64 `json:"elevation,omitempty"`
@@ -831,6 +826,10 @@ type GuideCategoryListResponse struct {
 	// Etag: The ETag of the response.
 	Etag string `json:"etag,omitempty"`
 
+	// EventId: Serialized EventId of the request which produced this
+	// response.
+	EventId string `json:"eventId,omitempty"`
+
 	// Items: A list of categories that can be associated with YouTube
 	// channels. In this map, the category ID is the map key, and its value
 	// is the corresponding guideCategory resource.
@@ -855,6 +854,10 @@ type ImageSettings struct {
 	// video watch page. The image should be 1200px by 615px, with a maximum
 	// file size of 128k.
 	BackgroundImageUrl *LocalizedProperty `json:"backgroundImageUrl,omitempty"`
+
+	// BannerExternalUrl: This is used only in update requests; if it's set,
+	// we use this URL to generate all of the above banner URLs.
+	BannerExternalUrl string `json:"bannerExternalUrl,omitempty"`
 
 	// BannerImageUrl: Banner image. Desktop size (1060x175).
 	BannerImageUrl string `json:"bannerImageUrl,omitempty"`
@@ -924,16 +927,44 @@ type ImageSettings struct {
 	WatchIconImageUrl string `json:"watchIconImageUrl,omitempty"`
 }
 
-type InvideoFeature struct {
-	CallToAction *CallToAction `json:"callToAction,omitempty"`
+type InvideoPosition struct {
+	// CornerPosition: Describes in which corner of the video the visual
+	// widget will appear.
+	CornerPosition string `json:"cornerPosition,omitempty"`
 
-	// FeaturedChannel: If present, the playback should display a featured
-	// channel.
-	FeaturedChannel *FeaturedChannel `json:"featuredChannel,omitempty"`
+	// Type: Defines the position type.
+	Type string `json:"type,omitempty"`
+}
 
-	// FeaturedVideo: If present, the playback should display a featured
-	// video.
-	FeaturedVideo *FeaturedVideo `json:"featuredVideo,omitempty"`
+type InvideoPromotion struct {
+	// ChannelId: The YouTube ID of the channel to which this campaign
+	// belongs.
+	ChannelId string `json:"channelId,omitempty"`
+
+	// Items: List of promoted items in decreasing priority.
+	Items []*PromotedItemId `json:"items,omitempty"`
+
+	// Position: The spatial position within the video where the promoted
+	// item will be displayed.
+	Position *InvideoPosition `json:"position,omitempty"`
+
+	// Timing: The temporal position within the video where the promoted
+	// item will be displayed.
+	Timing *InvideoTiming `json:"timing,omitempty"`
+}
+
+type InvideoTiming struct {
+	// OffsetMs: Defines the time at which the promotion will appear.
+	// Depending on the value of type the value of the offsetMs field will
+	// represent a time offset from the start or from the end of the video,
+	// expressed in milliseconds.
+	OffsetMs uint64 `json:"offsetMs,omitempty,string"`
+
+	// Type: Describes a timing type. If the value is offsetFromStart, then
+	// the offsetMs field represents an offset from the start of the video.
+	// If the value is offsetFromEnd, then the offsetMs field represents an
+	// offset from the end of the video.
+	Type string `json:"type,omitempty"`
 }
 
 type LiveBroadcast struct {
@@ -1041,6 +1072,10 @@ type LiveBroadcastContentDetailsMonitorStream struct {
 type LiveBroadcastList struct {
 	// Etag: The ETag of the response.
 	Etag string `json:"etag,omitempty"`
+
+	// EventId: Serialized EventId of the request which produced this
+	// response.
+	EventId string `json:"eventId,omitempty"`
 
 	// Items: A list of broadcasts that match the request criteria.
 	Items []*LiveBroadcast `json:"items,omitempty"`
@@ -1193,6 +1228,10 @@ type LiveStreamList struct {
 	// Etag: The ETag of the response.
 	Etag string `json:"etag,omitempty"`
 
+	// EventId: Serialized EventId of the request which produced this
+	// response.
+	EventId string `json:"eventId,omitempty"`
+
 	// Items: A list of live streams that match the request criteria.
 	Items []*LiveStream `json:"items,omitempty"`
 
@@ -1258,73 +1297,6 @@ type PageInfo struct {
 
 	// TotalResults: The total number of results in the result set.
 	TotalResults int64 `json:"totalResults,omitempty"`
-}
-
-type Player struct {
-	// AdsPlaylist: The playlist of video ads to show for this playback.
-	AdsPlaylist *PlayerAdsPlaylist `json:"adsPlaylist,omitempty"`
-
-	// Etag: The ETag for the player resource.
-	Etag string `json:"etag,omitempty"`
-
-	// Id: The ID that YouTube uses to uniquely identify the resource.
-	Id *ResourceId `json:"id,omitempty"`
-
-	// InvideoFeature: The invideo features for the video.
-	InvideoFeature *InvideoFeature `json:"invideoFeature,omitempty"`
-
-	// Kind: The type of the API resource.
-	Kind string `json:"kind,omitempty"`
-
-	// VideoUrls: The videoUrls object either contains restriction
-	// information or URLs giving access to the content.
-	VideoUrls *PlayerVideoUrls `json:"videoUrls,omitempty"`
-}
-
-type PlayerAdsPlaylist struct {
-	// Vmap_xml: The VMAP XML document that describes where ads should be
-	// inserted and what ad formats should be used in those ad breaks. See
-	// http://www.iab.net/vmap.
-	Vmap_xml string `json:"vmap_xml,omitempty"`
-}
-
-type PlayerListResponse struct {
-	// Etag: The ETag of the response.
-	Etag string `json:"etag,omitempty"`
-
-	// Kind: The type of the API response. For this operation, the value
-	// will be youtube#playerListResponse.
-	Kind string `json:"kind,omitempty"`
-
-	// Players: A list of players that match the request criteria.
-	Players []*Player `json:"players,omitempty"`
-}
-
-type PlayerRestrictionDetails struct {
-	// Reason: Detailed information about the restriction
-	Reason string `json:"reason,omitempty"`
-
-	// Restricted: True iff the video can't be played.
-	Restricted bool `json:"restricted,omitempty"`
-
-	// Restriction: A code describing the restriction class.
-	Restriction string `json:"restriction,omitempty"`
-}
-
-type PlayerVideoUrl struct {
-	// Itag: itag of the video format.
-	Itag int64 `json:"itag,omitempty"`
-
-	// Url: Streamer URL serving the video.
-	Url string `json:"url,omitempty"`
-}
-
-type PlayerVideoUrls struct {
-	// Restriction: Possible restriction to the playability of the video.
-	Restriction *PlayerRestrictionDetails `json:"restriction,omitempty"`
-
-	// Url: URLs to the formats that are available to the caller.
-	Url []*PlayerVideoUrl `json:"url,omitempty"`
 }
 
 type Playlist struct {
@@ -1412,6 +1384,10 @@ type PlaylistItemListResponse struct {
 	// Etag: The ETag for the response.
 	Etag string `json:"etag,omitempty"`
 
+	// EventId: Serialized EventId of the request which produced this
+	// response.
+	EventId string `json:"eventId,omitempty"`
+
 	// Items: A list of playlist items that match the request criteria.
 	Items []*PlaylistItem `json:"items,omitempty"`
 
@@ -1482,6 +1458,10 @@ type PlaylistListResponse struct {
 	// Etag: The ETag of the response.
 	Etag string `json:"etag,omitempty"`
 
+	// EventId: Serialized EventId of the request which produced this
+	// response.
+	EventId string `json:"eventId,omitempty"`
+
 	// Items: A list of playlists that match the request criteria.
 	Items []*Playlist `json:"items,omitempty"`
 
@@ -1539,6 +1519,16 @@ type PlaylistStatus struct {
 	PrivacyStatus string `json:"privacyStatus,omitempty"`
 }
 
+type PromotedItemId struct {
+	// Type: Describes the type of the promoted item.
+	Type string `json:"type,omitempty"`
+
+	// VideoId: If the promoted item represents a video, this field
+	// represents the unique YouTube ID identifying it. This field will be
+	// present only if type has the value video.
+	VideoId string `json:"videoId,omitempty"`
+}
+
 type PropertyValue struct {
 	// Property: A property.
 	Property string `json:"property,omitempty"`
@@ -1570,6 +1560,10 @@ type ResourceId struct {
 type SearchListResponse struct {
 	// Etag: The ETag for the response.
 	Etag string `json:"etag,omitempty"`
+
+	// EventId: Serialized EventId of the request which produced this
+	// response.
+	EventId string `json:"eventId,omitempty"`
 
 	// Items: A list of results that match the search criteria.
 	Items []*SearchResult `json:"items,omitempty"`
@@ -1638,44 +1632,6 @@ type SearchResultSnippet struct {
 }
 
 type Subscription struct {
-	// Address: The address of the receiving entity where notifications are
-	// delivered. Specific to the channel mechanism.
-	Address string `json:"address,omitempty"`
-
-	// Channel: The delivery channel mechanism to use for notifications
-	Channel string `json:"channel,omitempty"`
-
-	// ChannelParams: Additional parameters controlling delivery channel
-	// behavior
-	ChannelParams *SubscriptionChannelParams `json:"channelParams,omitempty"`
-
-	// ClientToken: An arbitrary string associated with the subscription
-	// that is delivered to the target address with each notification for
-	// this subscription.
-	ClientToken string `json:"clientToken,omitempty"`
-
-	// Expiration: The expiration instant for this subscription if it is
-	// defined.
-	Expiration int64 `json:"expiration,omitempty,string"`
-
-	// Id: A UUID for the subscription
-	Id string `json:"id,omitempty"`
-
-	// Kind: A subscription to an API resource
-	Kind string `json:"kind,omitempty"`
-
-	// TopicId: An opaque topic id that identifies the backend resource
-	// which has been subscribed to. Stable across different API versions
-	TopicId string `json:"topicId,omitempty"`
-
-	// TopicUri: The canonicalized URI of the subscribed-to resource.
-	TopicUri string `json:"topicUri,omitempty"`
-}
-
-type SubscriptionChannelParams struct {
-}
-
-type Subscription2 struct {
 	// ContentDetails: The contentDetails object contains basic statistics
 	// about the subscription.
 	ContentDetails *SubscriptionContentDetails `json:"contentDetails,omitempty"`
@@ -1714,8 +1670,12 @@ type SubscriptionListResponse struct {
 	// Etag: The ETag of the response.
 	Etag string `json:"etag,omitempty"`
 
+	// EventId: Serialized EventId of the request which produced this
+	// response.
+	EventId string `json:"eventId,omitempty"`
+
 	// Items: A list of subscriptions that match the request criteria.
-	Items []*Subscription2 `json:"items,omitempty"`
+	Items []*Subscription `json:"items,omitempty"`
 
 	// Kind: The type of the API response. For this operation, the value
 	// will be youtube#subscriptionListResponse.
@@ -1804,6 +1764,18 @@ type ThumbnailDetails struct {
 
 	// Standard: The standard quality image for this resource.
 	Standard *Thumbnail `json:"standard,omitempty"`
+}
+
+type ThumbnailListResponse struct {
+	// Etag: The ETag of the response.
+	Etag string `json:"etag,omitempty"`
+
+	// Items: A list of thumbnails.
+	Items []*ThumbnailDetails `json:"items,omitempty"`
+
+	// Kind: The type of the API response. For this operation, the value
+	// will be youtube#thumbnailListResponse.
+	Kind string `json:"kind,omitempty"`
 }
 
 type Video struct {
@@ -1925,6 +1897,10 @@ type VideoCategory struct {
 type VideoCategoryListResponse struct {
 	// Etag: The ETag of the response.
 	Etag string `json:"etag,omitempty"`
+
+	// EventId: Serialized EventId of the request which produced this
+	// response.
+	EventId string `json:"eventId,omitempty"`
 
 	// Items: A list of video categories that can be associated with YouTube
 	// videos. In this map, the video category ID is the map key, and its
@@ -2137,12 +2113,28 @@ type VideoListResponse struct {
 	// Etag: The ETag of the response.
 	Etag string `json:"etag,omitempty"`
 
+	// EventId: Serialized EventId of the request which produced this
+	// response.
+	EventId string `json:"eventId,omitempty"`
+
 	// Items: A list of videos that match the request criteria.
 	Items []*Video `json:"items,omitempty"`
 
 	// Kind: The type of the API response. For this operation, the value
 	// will be youtube#videoListResponse.
 	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: The token that can be used as the value of the
+	// pageToken parameter to retrieve the next page in the result set.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// PageInfo: The pageInfo object encapsulates paging information for the
+	// result set.
+	PageInfo *PageInfo `json:"pageInfo,omitempty"`
+
+	// PrevPageToken: The token that can be used as the value of the
+	// pageToken parameter to retrieve the previous page in the result set.
+	PrevPageToken string `json:"prevPageToken,omitempty"`
 }
 
 type VideoMonetizationDetails struct {
@@ -2435,12 +2427,14 @@ func (c *ActivitiesInsertCall) Do() (*Activity, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "activities")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2587,11 +2581,13 @@ func (c *ActivitiesListCall) Do() (*ActivityListResponse, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "activities")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2664,6 +2660,100 @@ func (c *ActivitiesListCall) Do() (*ActivityListResponse, error) {
 	//     "https://www.googleapis.com/auth/youtube",
 	//     "https://www.googleapis.com/auth/youtube.readonly"
 	//   ]
+	// }
+
+}
+
+// method id "youtube.channelBanners.insert":
+
+type ChannelBannersInsertCall struct {
+	s                           *Service
+	channelbannerinsertresponse *ChannelBannerInsertResponse
+	opt_                        map[string]interface{}
+	media_                      io.Reader
+}
+
+// Insert: Uploads a channel banner to YouTube.
+func (r *ChannelBannersService) Insert(channelbannerinsertresponse *ChannelBannerInsertResponse) *ChannelBannersInsertCall {
+	c := &ChannelBannersInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.channelbannerinsertresponse = channelbannerinsertresponse
+	return c
+}
+func (c *ChannelBannersInsertCall) Media(r io.Reader) *ChannelBannersInsertCall {
+	c.media_ = r
+	return c
+}
+
+func (c *ChannelBannersInsertCall) Do() (*ChannelBannerInsertResponse, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channelbannerinsertresponse)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "channelBanners/insert")
+	if c.media_ != nil {
+		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
+		params.Set("uploadType", "multipart")
+	}
+	urls += "?" + params.Encode()
+	contentLength_, hasMedia_ := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
+	if hasMedia_ {
+		req.ContentLength = contentLength_
+	}
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(ChannelBannerInsertResponse)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Uploads a channel banner to YouTube.",
+	//   "httpMethod": "POST",
+	//   "id": "youtube.channelBanners.insert",
+	//   "mediaUpload": {
+	//     "accept": [
+	//       "application/octet-stream",
+	//       "image/jpeg",
+	//       "image/png"
+	//     ],
+	//     "maxSize": "6MB",
+	//     "protocols": {
+	//       "resumable": {
+	//         "multipart": true,
+	//         "path": "/resumable/upload/youtube/v3/channelBanners/insert"
+	//       },
+	//       "simple": {
+	//         "multipart": true,
+	//         "path": "/upload/youtube/v3/channelBanners/insert"
+	//       }
+	//     }
+	//   },
+	//   "path": "channelBanners/insert",
+	//   "request": {
+	//     "$ref": "ChannelBannerInsertResponse"
+	//   },
+	//   "response": {
+	//     "$ref": "ChannelBannerInsertResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.upload"
+	//   ],
+	//   "supportsMediaUpload": true
 	// }
 
 }
@@ -2792,11 +2882,13 @@ func (c *ChannelsListCall) Do() (*ChannelListResponse, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "channels")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2858,7 +2950,7 @@ func (c *ChannelsListCall) Do() (*ChannelListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "part": {
-	//       "description": "The part parameter specifies a comma-separated list of one or more channel resource properties that the API response will include. The part names that you can include in the parameter value are id, snippet, contentDetails, statistics, and topicDetails.\n\nIf the parameter identifies a property that contains child properties, the child properties will be included in the response. For example, in a channel resource, the contentDetails property contains other properties, such as the uploads properties. As such, if you set part=contentDetails, the API response will also contain all of those nested properties.",
+	//       "description": "The part parameter specifies a comma-separated list of one or more channel resource properties that the API response will include. The part names that you can include in the parameter value are id, snippet, contentDetails, statistics, topicDetails, and invideoPromotion.\n\nIf the parameter identifies a property that contains child properties, the child properties will be included in the response. For example, in a channel resource, the contentDetails property contains other properties, such as the uploads properties. As such, if you set part=contentDetails, the API response will also contain all of those nested properties.",
 	//       "location": "query",
 	//       "required": true,
 	//       "type": "string"
@@ -2871,6 +2963,82 @@ func (c *ChannelsListCall) Do() (*ChannelListResponse, error) {
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/youtube",
 	//     "https://www.googleapis.com/auth/youtube.readonly",
+	//     "https://www.googleapis.com/auth/youtubepartner"
+	//   ]
+	// }
+
+}
+
+// method id "youtube.channels.update":
+
+type ChannelsUpdateCall struct {
+	s       *Service
+	part    string
+	channel *Channel
+	opt_    map[string]interface{}
+}
+
+// Update: Updates a channel's metadata.
+func (r *ChannelsService) Update(part string, channel *Channel) *ChannelsUpdateCall {
+	c := &ChannelsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.part = part
+	c.channel = channel
+	return c
+}
+
+func (c *ChannelsUpdateCall) Do() (*Channel, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("part", fmt.Sprintf("%v", c.part))
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "channels")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Channel)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a channel's metadata.",
+	//   "httpMethod": "PUT",
+	//   "id": "youtube.channels.update",
+	//   "parameterOrder": [
+	//     "part"
+	//   ],
+	//   "parameters": {
+	//     "part": {
+	//       "description": "The part parameter serves two purposes in this operation. It identifies the properties that the write operation will set as well as the properties that the API response will include.\n\nThe part names that you can include in the parameter value are id and invideoPromotion.\n\nNote that this method will override the existing values for all of the mutable properties that are contained in any parts that the parameter value specifies.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "channels",
+	//   "request": {
+	//     "$ref": "Channel"
+	//   },
+	//   "response": {
+	//     "$ref": "Channel"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/youtube",
 	//     "https://www.googleapis.com/auth/youtubepartner"
 	//   ]
 	// }
@@ -2935,11 +3103,13 @@ func (c *GuideCategoriesListCall) Do() (*GuideCategoryListResponse, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "guideCategories")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3032,11 +3202,13 @@ func (c *LiveBroadcastsBindCall) Do() (*LiveBroadcast, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "liveBroadcasts/bind")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3141,11 +3313,13 @@ func (c *LiveBroadcastsControlCall) Do() (*LiveBroadcast, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "liveBroadcasts/control")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3221,11 +3395,13 @@ func (c *LiveBroadcastsDeleteCall) Do() error {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "liveBroadcasts")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -3283,12 +3459,14 @@ func (c *LiveBroadcastsInsertCall) Do() (*LiveBroadcast, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "liveBroadcasts")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3409,11 +3587,13 @@ func (c *LiveBroadcastsListCall) Do() (*LiveBroadcastList, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "liveBroadcasts")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3522,11 +3702,13 @@ func (c *LiveBroadcastsTransitionCall) Do() (*LiveBroadcast, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "liveBroadcasts/transition")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3617,12 +3799,14 @@ func (c *LiveBroadcastsUpdateCall) Do() (*LiveBroadcast, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "liveBroadcasts")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3683,11 +3867,13 @@ func (c *LiveStreamsDeleteCall) Do() error {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "liveStreams")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -3747,12 +3933,14 @@ func (c *LiveStreamsInsertCall) Do() (*LiveStream, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "liveStreams")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3862,11 +4050,13 @@ func (c *LiveStreamsListCall) Do() (*LiveStreamList, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "liveStreams")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3958,12 +4148,14 @@ func (c *LiveStreamsUpdateCall) Do() (*LiveStream, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "liveStreams")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4001,105 +4193,6 @@ func (c *LiveStreamsUpdateCall) Do() (*LiveStream, error) {
 
 }
 
-// method id "youtube.players.list":
-
-type PlayersListCall struct {
-	s    *Service
-	part string
-	opt_ map[string]interface{}
-}
-
-// List: Returns the data required to play the videos specified on the
-// request, or restriction information explaining why it can't be
-// played.
-func (r *PlayersService) List(part string) *PlayersListCall {
-	c := &PlayersListCall{s: r.s, opt_: make(map[string]interface{})}
-	c.part = part
-	return c
-}
-
-// Itag sets the optional parameter "itag": If specified, the itag
-// parameter specifies a comma-separated list of itags video formats the
-// client is interested in. The returned formats will be a subset of
-// those itags.
-func (c *PlayersListCall) Itag(itag string) *PlayersListCall {
-	c.opt_["itag"] = itag
-	return c
-}
-
-// VideoId sets the optional parameter "videoId": The videoId parameter
-// specifies a comma-separated list of the YouTube video ID(s) for the
-// resource(s) that are being retrieved.
-func (c *PlayersListCall) VideoId(videoId string) *PlayersListCall {
-	c.opt_["videoId"] = videoId
-	return c
-}
-
-func (c *PlayersListCall) Do() (*PlayerListResponse, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	params.Set("part", fmt.Sprintf("%v", c.part))
-	if v, ok := c.opt_["itag"]; ok {
-		params.Set("itag", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["videoId"]; ok {
-		params.Set("videoId", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "players")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(PlayerListResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Returns the data required to play the videos specified on the request, or restriction information explaining why it can't be played.",
-	//   "httpMethod": "GET",
-	//   "id": "youtube.players.list",
-	//   "parameterOrder": [
-	//     "part"
-	//   ],
-	//   "parameters": {
-	//     "itag": {
-	//       "description": "If specified, the itag parameter specifies a comma-separated list of itags video formats the client is interested in. The returned formats will be a subset of those itags.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "part": {
-	//       "description": "The part parameter specifies a comma-separated list of one or more player resource properties that the API response will include.",
-	//       "location": "query",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "videoId": {
-	//       "description": "The videoId parameter specifies a comma-separated list of the YouTube video ID(s) for the resource(s) that are being retrieved.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "players",
-	//   "response": {
-	//     "$ref": "PlayerListResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/youtube",
-	//     "https://www.googleapis.com/auth/youtube.readonly",
-	//     "https://www.googleapis.com/auth/youtubepartner"
-	//   ]
-	// }
-
-}
-
 // method id "youtube.playlistItems.delete":
 
 type PlaylistItemsDeleteCall struct {
@@ -4123,11 +4216,13 @@ func (c *PlaylistItemsDeleteCall) Do() error {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "playlistItems")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -4186,12 +4281,14 @@ func (c *PlaylistItemsInsertCall) Do() (*PlaylistItem, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "playlistItems")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4310,11 +4407,13 @@ func (c *PlaylistItemsListCall) Do() (*PlaylistItemListResponse, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "playlistItems")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4375,7 +4474,8 @@ func (c *PlaylistItemsListCall) Do() (*PlaylistItemListResponse, error) {
 	//     "https://www.googleapis.com/auth/youtube",
 	//     "https://www.googleapis.com/auth/youtube.readonly",
 	//     "https://www.googleapis.com/auth/youtubepartner"
-	//   ]
+	//   ],
+	//   "supportsSubscription": true
 	// }
 
 }
@@ -4411,12 +4511,14 @@ func (c *PlaylistItemsUpdateCall) Do() (*PlaylistItem, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "playlistItems")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4478,11 +4580,13 @@ func (c *PlaylistsDeleteCall) Do() error {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "playlists")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -4541,12 +4645,14 @@ func (c *PlaylistsInsertCall) Do() (*Playlist, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "playlists")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4665,11 +4771,13 @@ func (c *PlaylistsListCall) Do() (*PlaylistListResponse, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "playlists")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4766,12 +4874,14 @@ func (c *PlaylistsUpdateCall) Do() (*Playlist, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "playlists")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -5127,11 +5237,13 @@ func (c *SearchListCall) Do() (*SearchListResponse, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "search")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -5436,11 +5548,13 @@ func (c *SubscriptionsDeleteCall) Do() error {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "subscriptions")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -5472,23 +5586,23 @@ func (c *SubscriptionsDeleteCall) Do() error {
 // method id "youtube.subscriptions.insert":
 
 type SubscriptionsInsertCall struct {
-	s             *Service
-	part          string
-	subscription2 *Subscription2
-	opt_          map[string]interface{}
+	s            *Service
+	part         string
+	subscription *Subscription
+	opt_         map[string]interface{}
 }
 
 // Insert: Adds a subscription for the authenticated user's channel.
-func (r *SubscriptionsService) Insert(part string, subscription2 *Subscription2) *SubscriptionsInsertCall {
+func (r *SubscriptionsService) Insert(part string, subscription *Subscription) *SubscriptionsInsertCall {
 	c := &SubscriptionsInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.part = part
-	c.subscription2 = subscription2
+	c.subscription = subscription
 	return c
 }
 
-func (c *SubscriptionsInsertCall) Do() (*Subscription2, error) {
+func (c *SubscriptionsInsertCall) Do() (*Subscription, error) {
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.subscription2)
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.subscription)
 	if err != nil {
 		return nil, err
 	}
@@ -5499,16 +5613,18 @@ func (c *SubscriptionsInsertCall) Do() (*Subscription2, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "subscriptions")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Subscription2)
+	ret := new(Subscription)
 	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
 		return nil, err
 	}
@@ -5530,10 +5646,10 @@ func (c *SubscriptionsInsertCall) Do() (*Subscription2, error) {
 	//   },
 	//   "path": "subscriptions",
 	//   "request": {
-	//     "$ref": "Subscription2"
+	//     "$ref": "Subscription"
 	//   },
 	//   "response": {
-	//     "$ref": "Subscription2"
+	//     "$ref": "Subscription"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/youtube",
@@ -5599,6 +5715,14 @@ func (c *SubscriptionsListCall) Mine(mine bool) *SubscriptionsListCall {
 	return c
 }
 
+// MySubscribers sets the optional parameter "mySubscribers": Set this
+// parameter's value to true to retrieve a feed of the subscribers of
+// the authenticated user.
+func (c *SubscriptionsListCall) MySubscribers(mySubscribers bool) *SubscriptionsListCall {
+	c.opt_["mySubscribers"] = mySubscribers
+	return c
+}
+
 // Order sets the optional parameter "order": The order parameter
 // specifies the method that will be used to sort resources in the API
 // response.
@@ -5634,6 +5758,9 @@ func (c *SubscriptionsListCall) Do() (*SubscriptionListResponse, error) {
 	if v, ok := c.opt_["mine"]; ok {
 		params.Set("mine", fmt.Sprintf("%v", v))
 	}
+	if v, ok := c.opt_["mySubscribers"]; ok {
+		params.Set("mySubscribers", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["order"]; ok {
 		params.Set("order", fmt.Sprintf("%v", v))
 	}
@@ -5643,11 +5770,13 @@ func (c *SubscriptionsListCall) Do() (*SubscriptionListResponse, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "subscriptions")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -5693,6 +5822,11 @@ func (c *SubscriptionsListCall) Do() (*SubscriptionListResponse, error) {
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
+	//     "mySubscribers": {
+	//       "description": "Set this parameter's value to true to retrieve a feed of the subscribers of the authenticated user.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "order": {
 	//       "default": "SUBSCRIPTION_ORDER_RELEVANCE",
 	//       "description": "The order parameter specifies the method that will be used to sort resources in the API response.",
@@ -5734,55 +5868,104 @@ func (c *SubscriptionsListCall) Do() (*SubscriptionListResponse, error) {
 
 }
 
-// method id "youtube.subscriptions.unsubscribe":
+// method id "youtube.thumbnails.set":
 
-type SubscriptionsUnsubscribeCall struct {
-	s            *Service
-	subscription *Subscription
-	opt_         map[string]interface{}
+type ThumbnailsSetCall struct {
+	s       *Service
+	videoId string
+	opt_    map[string]interface{}
+	media_  io.Reader
 }
 
-// Unsubscribe:
-func (r *SubscriptionsService) Unsubscribe(subscription *Subscription) *SubscriptionsUnsubscribeCall {
-	c := &SubscriptionsUnsubscribeCall{s: r.s, opt_: make(map[string]interface{})}
-	c.subscription = subscription
+// Set: Uploads a custom video thumbnail to YouTube and sets it for a
+// video.
+func (r *ThumbnailsService) Set(videoId string) *ThumbnailsSetCall {
+	c := &ThumbnailsSetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.videoId = videoId
+	return c
+}
+func (c *ThumbnailsSetCall) Media(r io.Reader) *ThumbnailsSetCall {
+	c.media_ = r
 	return c
 }
 
-func (c *SubscriptionsUnsubscribeCall) Do() error {
+func (c *ThumbnailsSetCall) Do() (*ThumbnailListResponse, error) {
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.subscription)
-	if err != nil {
-		return err
-	}
-	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "subscriptions/unsubscribe")
+	params.Set("videoId", fmt.Sprintf("%v", c.videoId))
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "thumbnails/set")
+	if c.media_ != nil {
+		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
+		params.Set("uploadType", "multipart")
+	}
 	urls += "?" + params.Encode()
+	body = new(bytes.Buffer)
+	ctype := "application/json"
+	contentLength_, hasMedia_ := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
 	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
+	if hasMedia_ {
+		req.ContentLength = contentLength_
+	}
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return nil, err
 	}
-	return nil
+	ret := new(ThumbnailListResponse)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
 	// {
+	//   "description": "Uploads a custom video thumbnail to YouTube and sets it for a video.",
 	//   "httpMethod": "POST",
-	//   "id": "youtube.subscriptions.unsubscribe",
-	//   "path": "subscriptions/unsubscribe",
-	//   "request": {
-	//     "$ref": "Subscription"
+	//   "id": "youtube.thumbnails.set",
+	//   "mediaUpload": {
+	//     "accept": [
+	//       "application/octet-stream",
+	//       "image/jpeg",
+	//       "image/png"
+	//     ],
+	//     "maxSize": "2MB",
+	//     "protocols": {
+	//       "resumable": {
+	//         "multipart": true,
+	//         "path": "/resumable/upload/youtube/v3/thumbnails/set"
+	//       },
+	//       "simple": {
+	//         "multipart": true,
+	//         "path": "/upload/youtube/v3/thumbnails/set"
+	//       }
+	//     }
+	//   },
+	//   "parameterOrder": [
+	//     "videoId"
+	//   ],
+	//   "parameters": {
+	//     "videoId": {
+	//       "description": "The videoId parameter specifies a YouTube video ID for which the custom video thumbnail is being provided.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "thumbnails/set",
+	//   "response": {
+	//     "$ref": "ThumbnailListResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/youtube",
-	//     "https://www.googleapis.com/auth/youtube.readonly",
+	//     "https://www.googleapis.com/auth/youtube.upload",
 	//     "https://www.googleapis.com/auth/youtubepartner"
-	//   ]
+	//   ],
+	//   "supportsMediaUpload": true
 	// }
 
 }
@@ -5844,11 +6027,13 @@ func (c *VideoCategoriesListCall) Do() (*VideoCategoryListResponse, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "videoCategories")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -5924,11 +6109,13 @@ func (c *VideosDeleteCall) Do() error {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "videos")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -5980,11 +6167,13 @@ func (c *VideosGetRatingCall) Do() (*VideoGetRatingResponse, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "videos/getRating")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -6038,6 +6227,22 @@ func (r *VideosService) Insert(part string, video *Video) *VideosInsertCall {
 	c.video = video
 	return c
 }
+
+// AutoLevels sets the optional parameter "autoLevels": The autoLevels
+// parameter specifies whether the video should be auto-leveled by
+// YouTube.
+func (c *VideosInsertCall) AutoLevels(autoLevels bool) *VideosInsertCall {
+	c.opt_["autoLevels"] = autoLevels
+	return c
+}
+
+// Stabilize sets the optional parameter "stabilize": The stabilize
+// parameter specifies whether the video should be stabilized by
+// YouTube.
+func (c *VideosInsertCall) Stabilize(stabilize bool) *VideosInsertCall {
+	c.opt_["stabilize"] = stabilize
+	return c
+}
 func (c *VideosInsertCall) Media(r io.Reader) *VideosInsertCall {
 	c.media_ = r
 	return c
@@ -6053,6 +6258,12 @@ func (c *VideosInsertCall) Do() (*Video, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("part", fmt.Sprintf("%v", c.part))
+	if v, ok := c.opt_["autoLevels"]; ok {
+		params.Set("autoLevels", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["stabilize"]; ok {
+		params.Set("stabilize", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "videos")
 	if c.media_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
@@ -6061,6 +6272,7 @@ func (c *VideosInsertCall) Do() (*Video, error) {
 	urls += "?" + params.Encode()
 	contentLength_, hasMedia_ := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
 	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	if hasMedia_ {
 		req.ContentLength = contentLength_
 	}
@@ -6070,6 +6282,7 @@ func (c *VideosInsertCall) Do() (*Video, error) {
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -6103,11 +6316,21 @@ func (c *VideosInsertCall) Do() (*Video, error) {
 	//     "part"
 	//   ],
 	//   "parameters": {
+	//     "autoLevels": {
+	//       "description": "The autoLevels parameter specifies whether the video should be auto-leveled by YouTube.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "part": {
 	//       "description": "The part parameter serves two purposes in this operation. It identifies the properties that the write operation will set as well as the properties that the API response will include.\n\nThe part names that you can include in the parameter value are snippet, contentDetails, player, statistics, status, and topicDetails. However, not all of those parts contain properties that can be set when setting or updating a video's metadata. For example, the statistics object encapsulates statistics that YouTube calculates for a video and does not contain values that you can set or modify. If the parameter value specifies a part that does not contain mutable values, that part will still be included in the API response.",
 	//       "location": "query",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "stabilize": {
+	//       "description": "The stabilize parameter specifies whether the video should be stabilized by YouTube.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     }
 	//   },
 	//   "path": "videos",
@@ -6131,16 +6354,38 @@ func (c *VideosInsertCall) Do() (*Video, error) {
 
 type VideosListCall struct {
 	s    *Service
-	id   string
 	part string
 	opt_ map[string]interface{}
 }
 
 // List: Returns a list of videos that match the API request parameters.
-func (r *VideosService) List(id string, part string) *VideosListCall {
+func (r *VideosService) List(part string) *VideosListCall {
 	c := &VideosListCall{s: r.s, opt_: make(map[string]interface{})}
-	c.id = id
 	c.part = part
+	return c
+}
+
+// Id sets the optional parameter "id": The id parameter specifies a
+// comma-separated list of the YouTube video ID(s) for the resource(s)
+// that are being retrieved. In a video resource, the id property
+// specifies the video's ID.
+func (c *VideosListCall) Id(id string) *VideosListCall {
+	c.opt_["id"] = id
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": USE_DESCRIPTION
+// --- channels:list:maxResults
+func (c *VideosListCall) MaxResults(maxResults int64) *VideosListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// MyRating sets the optional parameter "myRating": Set this parameter's
+// value to like or dislike to instruct the API to only return videos
+// liked or disliked by the authenticated user.
+func (c *VideosListCall) MyRating(myRating string) *VideosListCall {
+	c.opt_["myRating"] = myRating
 	return c
 }
 
@@ -6159,23 +6404,43 @@ func (c *VideosListCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *
 	return c
 }
 
+// PageToken sets the optional parameter "pageToken": USE_DESCRIPTION
+// --- channels:list:pageToken
+func (c *VideosListCall) PageToken(pageToken string) *VideosListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
 func (c *VideosListCall) Do() (*VideoListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	params.Set("id", fmt.Sprintf("%v", c.id))
 	params.Set("part", fmt.Sprintf("%v", c.part))
+	if v, ok := c.opt_["id"]; ok {
+		params.Set("id", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["myRating"]; ok {
+		params.Set("myRating", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
 		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "videos")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -6189,18 +6454,42 @@ func (c *VideosListCall) Do() (*VideoListResponse, error) {
 	//   "httpMethod": "GET",
 	//   "id": "youtube.videos.list",
 	//   "parameterOrder": [
-	//     "id",
 	//     "part"
 	//   ],
 	//   "parameters": {
 	//     "id": {
 	//       "description": "The id parameter specifies a comma-separated list of the YouTube video ID(s) for the resource(s) that are being retrieved. In a video resource, the id property specifies the video's ID.",
 	//       "location": "query",
-	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "description": "USE_DESCRIPTION --- channels:list:maxResults",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "50",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     },
+	//     "myRating": {
+	//       "description": "Set this parameter's value to like or dislike to instruct the API to only return videos liked or disliked by the authenticated user.",
+	//       "enum": [
+	//         "dislike",
+	//         "like"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Returns only videos disliked by the authenticated user.",
+	//         "Returns only video liked by the authenticated user."
+	//       ],
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "onBehalfOfContentOwner": {
 	//       "description": "The onBehalfOfContentOwner parameter indicates that the authenticated user is acting on behalf of the content owner specified in the parameter value. This parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and get access to all their video and channel data, without having to provide authentication credentials for each individual channel. The actual CMS account that the user authenticates with needs to be linked to the specified YouTube content owner.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageToken": {
+	//       "description": "USE_DESCRIPTION --- channels:list:pageToken",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6250,11 +6539,13 @@ func (c *VideosRateCall) Do() error {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "videos/rate")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -6330,12 +6621,14 @@ func (c *VideosUpdateCall) Do() (*Video, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "videos")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
+	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -6372,13 +6665,4 @@ func (c *VideosUpdateCall) Do() (*Video, error) {
 	//   ]
 	// }
 
-}
-
-func cleanPathString(s string) string {
-	return strings.Map(func(r rune) rune {
-		if r >= 0x2d && r <= 0x7a || r == '~' {
-			return r
-		}
-		return -1
-	}, s)
 }

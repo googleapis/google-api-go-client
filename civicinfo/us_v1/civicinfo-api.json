@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/YuJiktLErFlXC2SwOVNqpA7Ot3I\"",
+ "etag": "\"0kaFfN0xfjZjASExv-gUnrWhdto/2yYAKWu3jXjPDbd-v4uGk_mYWjs\"",
  "discoveryVersion": "v1",
  "id": "civicinfo:us_v1",
  "name": "civicinfo",
@@ -9,6 +9,8 @@
  "revision": "20130103",
  "title": "Google Civic Information API",
  "description": "An API for accessing civic information.",
+ "ownerDomain": "google.com",
+ "ownerName": "Google",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/search-16.gif",
   "x32": "http://www.google.com/images/icons/product/search-32.gif"

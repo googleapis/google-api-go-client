@@ -61,18 +61,6 @@ type API struct {
 	pn func(format string, args ...interface{}) // print with indent and newline
 }
 
-// apiJSON is a type for decoding an API JSON file into.
-// TODO(bradfitz): remove this hack once golang.org/issue/4660 is fixed,
-// then we can just use the API type instead.
-type apiJSON struct {
-	ID            string `json:"id"`
-	Name          string `json:"name"`
-	Version       string `json:"version"`
-	Title         string `json:"title"`
-	DiscoveryLink string `json:"discoveryLink"` // relative
-	Preferred     bool   `json:"preferred"`
-}
-
 func (a *API) sortedSchemaNames() (names []string) {
 	for name := range a.schemas {
 		names = append(names, name)
@@ -206,14 +194,10 @@ func getAPIsFromFile() []*API {
 	a := &API{
 		forceJSON: jsonBytes,
 	}
-	aj := &apiJSON{}
-	err = json.Unmarshal(jsonBytes, aj)
+	err = json.Unmarshal(jsonBytes, a)
 	if err != nil {
 		log.Fatalf("Decoding JSON in %s: %v", *jsonFile, err)
 	}
-	a.ID = aj.ID
-	a.Name = aj.Name
-	a.Version = aj.Version
 	return []*API{a}
 }
 

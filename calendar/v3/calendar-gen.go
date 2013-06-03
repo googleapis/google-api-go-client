@@ -22,8 +22,6 @@ import (
 	"strings"
 )
 
-// Always reference these packages, just in case the auto-generated code
-// below doesn't.
 var _ = bytes.NewBuffer
 var _ = strconv.Itoa
 var _ = fmt.Sprintf
@@ -32,7 +30,6 @@ var _ = io.Copy
 var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
-var _ = strings.Replace
 
 const apiId = "calendar:v3"
 const apiName = "calendar"
@@ -60,6 +57,7 @@ func New(client *http.Client) (*Service, error) {
 	s.Events = NewEventsService(s)
 	s.Freebusy = NewFreebusyService(s)
 	s.Settings = NewSettingsService(s)
+	s.Subscriptions = NewSubscriptionsService(s)
 	return s, nil
 }
 
@@ -79,6 +77,8 @@ type Service struct {
 	Freebusy *FreebusyService
 
 	Settings *SettingsService
+
+	Subscriptions *SubscriptionsService
 }
 
 func NewAclService(s *Service) *AclService {
@@ -141,6 +141,15 @@ func NewSettingsService(s *Service) *SettingsService {
 }
 
 type SettingsService struct {
+	s *Service
+}
+
+func NewSubscriptionsService(s *Service) *SubscriptionsService {
+	rs := &SubscriptionsService{s: s}
+	return rs
+}
+
+type SubscriptionsService struct {
 	s *Service
 }
 
@@ -865,6 +874,44 @@ type Settings struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+type Subscription struct {
+	// Address: The address of the receiving entity where notifications are
+	// delivered. Specific to the channel mechanism.
+	Address string `json:"address,omitempty"`
+
+	// Channel: The delivery channel mechanism to use for notifications
+	Channel string `json:"channel,omitempty"`
+
+	// ChannelParams: Additional parameters controlling delivery channel
+	// behavior
+	ChannelParams *SubscriptionChannelParams `json:"channelParams,omitempty"`
+
+	// ClientToken: An arbitrary string associated with the subscription
+	// that is delivered to the target address with each notification for
+	// this subscription.
+	ClientToken string `json:"clientToken,omitempty"`
+
+	// Expiration: The expiration instant for this subscription if it is
+	// defined.
+	Expiration int64 `json:"expiration,omitempty,string"`
+
+	// Id: A UUID for the subscription
+	Id string `json:"id,omitempty"`
+
+	// Kind: A subscription to an API resource
+	Kind string `json:"kind,omitempty"`
+
+	// TopicId: An opaque topic id that identifies the backend resource
+	// which has been subscribed to. Stable across different API versions
+	TopicId string `json:"topicId,omitempty"`
+
+	// TopicUri: The canonicalized URI of the subscribed-to resource.
+	TopicUri string `json:"topicUri,omitempty"`
+}
+
+type SubscriptionChannelParams struct {
+}
+
 type TimePeriod struct {
 	// End: The (exclusive) end of the time period.
 	End string `json:"end,omitempty"`
@@ -895,17 +942,15 @@ func (c *AclDeleteCall) Do() error {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "calendars/{calendarId}/acl/{ruleId}")
+	urls = strings.Replace(urls, "{calendarId}", cleanPathString(c.calendarId), 1)
+	urls = strings.Replace(urls, "{ruleId}", cleanPathString(c.ruleId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{calendarId}", url.QueryEscape(c.calendarId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{ruleId}", url.QueryEscape(c.ruleId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -962,17 +1007,15 @@ func (c *AclGetCall) Do() (*AclRule, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "calendars/{calendarId}/acl/{ruleId}")
+	urls = strings.Replace(urls, "{calendarId}", cleanPathString(c.calendarId), 1)
+	urls = strings.Replace(urls, "{ruleId}", cleanPathString(c.ruleId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{calendarId}", url.QueryEscape(c.calendarId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{ruleId}", url.QueryEscape(c.ruleId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1042,17 +1085,15 @@ func (c *AclInsertCall) Do() (*AclRule, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "calendars/{calendarId}/acl")
+	urls = strings.Replace(urls, "{calendarId}", cleanPathString(c.calendarId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{calendarId}", url.QueryEscape(c.calendarId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1110,16 +1151,14 @@ func (c *AclListCall) Do() (*Acl, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "calendars/{calendarId}/acl")
+	urls = strings.Replace(urls, "{calendarId}", cleanPathString(c.calendarId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{calendarId}", url.QueryEscape(c.calendarId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1184,18 +1223,16 @@ func (c *AclPatchCall) Do() (*AclRule, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "calendars/{calendarId}/acl/{ruleId}")
+	urls = strings.Replace(urls, "{calendarId}", cleanPathString(c.calendarId), 1)
+	urls = strings.Replace(urls, "{ruleId}", cleanPathString(c.ruleId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{calendarId}", url.QueryEscape(c.calendarId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{ruleId}", url.QueryEscape(c.ruleId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1269,18 +1306,16 @@ func (c *AclUpdateCall) Do() (*AclRule, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "calendars/{calendarId}/acl/{ruleId}")
+	urls = strings.Replace(urls, "{calendarId}", cleanPathString(c.calendarId), 1)
+	urls = strings.Replace(urls, "{ruleId}", cleanPathString(c.ruleId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{calendarId}", url.QueryEscape(c.calendarId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{ruleId}", url.QueryEscape(c.ruleId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1345,16 +1380,14 @@ func (c *CalendarListDeleteCall) Do() error {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "users/me/calendarList/{calendarId}")
+	urls = strings.Replace(urls, "{calendarId}", cleanPathString(c.calendarId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{calendarId}", url.QueryEscape(c.calendarId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -1402,16 +1435,14 @@ func (c *CalendarListGetCall) Do() (*CalendarListEntry, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "users/me/calendarList/{calendarId}")
+	urls = strings.Replace(urls, "{calendarId}", cleanPathString(c.calendarId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{calendarId}", url.QueryEscape(c.calendarId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1487,14 +1518,12 @@ func (c *CalendarListInsertCall) Do() (*CalendarListEntry, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "users/me/calendarList")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1589,13 +1618,11 @@ func (c *CalendarListListCall) Do() (*CalendarList, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "users/me/calendarList")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1697,17 +1724,15 @@ func (c *CalendarListPatchCall) Do() (*CalendarListEntry, error) {
 		params.Set("colorRgbFormat", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "users/me/calendarList/{calendarId}")
+	urls = strings.Replace(urls, "{calendarId}", cleanPathString(c.calendarId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{calendarId}", url.QueryEscape(c.calendarId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1790,17 +1815,15 @@ func (c *CalendarListUpdateCall) Do() (*CalendarListEntry, error) {
 		params.Set("colorRgbFormat", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "users/me/calendarList/{calendarId}")
+	urls = strings.Replace(urls, "{calendarId}", cleanPathString(c.calendarId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{calendarId}", url.QueryEscape(c.calendarId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1865,16 +1888,14 @@ func (c *CalendarsClearCall) Do() error {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "calendars/{calendarId}/clear")
+	urls = strings.Replace(urls, "{calendarId}", cleanPathString(c.calendarId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{calendarId}", url.QueryEscape(c.calendarId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -1922,16 +1943,14 @@ func (c *CalendarsDeleteCall) Do() error {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "calendars/{calendarId}")
+	urls = strings.Replace(urls, "{calendarId}", cleanPathString(c.calendarId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{calendarId}", url.QueryEscape(c.calendarId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -1979,16 +1998,14 @@ func (c *CalendarsGetCall) Do() (*Calendar, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "calendars/{calendarId}")
+	urls = strings.Replace(urls, "{calendarId}", cleanPathString(c.calendarId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{calendarId}", url.QueryEscape(c.calendarId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2051,14 +2068,12 @@ func (c *CalendarsInsertCall) Do() (*Calendar, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "calendars")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2113,17 +2128,15 @@ func (c *CalendarsPatchCall) Do() (*Calendar, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "calendars/{calendarId}")
+	urls = strings.Replace(urls, "{calendarId}", cleanPathString(c.calendarId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{calendarId}", url.QueryEscape(c.calendarId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2188,17 +2201,15 @@ func (c *CalendarsUpdateCall) Do() (*Calendar, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "calendars/{calendarId}")
+	urls = strings.Replace(urls, "{calendarId}", cleanPathString(c.calendarId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{calendarId}", url.QueryEscape(c.calendarId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2256,13 +2267,11 @@ func (c *ColorsGetCall) Do() (*Colors, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "colors")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2320,17 +2329,15 @@ func (c *EventsDeleteCall) Do() error {
 		params.Set("sendNotifications", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "calendars/{calendarId}/events/{eventId}")
+	urls = strings.Replace(urls, "{calendarId}", cleanPathString(c.calendarId), 1)
+	urls = strings.Replace(urls, "{eventId}", cleanPathString(c.eventId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{calendarId}", url.QueryEscape(c.calendarId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{eventId}", url.QueryEscape(c.eventId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -2429,17 +2436,15 @@ func (c *EventsGetCall) Do() (*Event, error) {
 		params.Set("timeZone", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "calendars/{calendarId}/events/{eventId}")
+	urls = strings.Replace(urls, "{calendarId}", cleanPathString(c.calendarId), 1)
+	urls = strings.Replace(urls, "{eventId}", cleanPathString(c.eventId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{calendarId}", url.QueryEscape(c.calendarId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{eventId}", url.QueryEscape(c.eventId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2526,17 +2531,15 @@ func (c *EventsImportCall) Do() (*Event, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "calendars/{calendarId}/events/import")
+	urls = strings.Replace(urls, "{calendarId}", cleanPathString(c.calendarId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{calendarId}", url.QueryEscape(c.calendarId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2624,17 +2627,15 @@ func (c *EventsInsertCall) Do() (*Event, error) {
 		params.Set("sendNotifications", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "calendars/{calendarId}/events")
+	urls = strings.Replace(urls, "{calendarId}", cleanPathString(c.calendarId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{calendarId}", url.QueryEscape(c.calendarId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2807,17 +2808,15 @@ func (c *EventsInstancesCall) Do() (*Events, error) {
 		params.Set("timeZone", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "calendars/{calendarId}/events/{eventId}/instances")
+	urls = strings.Replace(urls, "{calendarId}", cleanPathString(c.calendarId), 1)
+	urls = strings.Replace(urls, "{eventId}", cleanPathString(c.eventId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{calendarId}", url.QueryEscape(c.calendarId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{eventId}", url.QueryEscape(c.eventId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3093,16 +3092,14 @@ func (c *EventsListCall) Do() (*Events, error) {
 		params.Set("updatedMin", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "calendars/{calendarId}/events")
+	urls = strings.Replace(urls, "{calendarId}", cleanPathString(c.calendarId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{calendarId}", url.QueryEscape(c.calendarId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3261,17 +3258,15 @@ func (c *EventsMoveCall) Do() (*Event, error) {
 		params.Set("sendNotifications", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "calendars/{calendarId}/events/{eventId}/move")
+	urls = strings.Replace(urls, "{calendarId}", cleanPathString(c.calendarId), 1)
+	urls = strings.Replace(urls, "{eventId}", cleanPathString(c.eventId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{calendarId}", url.QueryEscape(c.calendarId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{eventId}", url.QueryEscape(c.eventId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3392,18 +3387,16 @@ func (c *EventsPatchCall) Do() (*Event, error) {
 		params.Set("sendNotifications", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "calendars/{calendarId}/events/{eventId}")
+	urls = strings.Replace(urls, "{calendarId}", cleanPathString(c.calendarId), 1)
+	urls = strings.Replace(urls, "{eventId}", cleanPathString(c.eventId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{calendarId}", url.QueryEscape(c.calendarId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{eventId}", url.QueryEscape(c.eventId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3499,16 +3492,14 @@ func (c *EventsQuickAddCall) Do() (*Event, error) {
 		params.Set("sendNotifications", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "calendars/{calendarId}/events/quickAdd")
+	urls = strings.Replace(urls, "{calendarId}", cleanPathString(c.calendarId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{calendarId}", url.QueryEscape(c.calendarId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3622,18 +3613,16 @@ func (c *EventsUpdateCall) Do() (*Event, error) {
 		params.Set("sendNotifications", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "calendars/{calendarId}/events/{eventId}")
+	urls = strings.Replace(urls, "{calendarId}", cleanPathString(c.calendarId), 1)
+	urls = strings.Replace(urls, "{eventId}", cleanPathString(c.eventId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{calendarId}", url.QueryEscape(c.calendarId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{eventId}", url.QueryEscape(c.eventId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3722,14 +3711,12 @@ func (c *FreebusyQueryCall) Do() (*FreeBusyResponse, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "freeBusy")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3777,16 +3764,14 @@ func (c *SettingsGetCall) Do() (*Setting, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "users/me/settings/{setting}")
+	urls = strings.Replace(urls, "{setting}", cleanPathString(c.setting), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{setting}", url.QueryEscape(c.setting), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3842,13 +3827,11 @@ func (c *SettingsListCall) Do() (*Settings, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "users/me/settings")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3871,4 +3854,65 @@ func (c *SettingsListCall) Do() (*Settings, error) {
 	//   ]
 	// }
 
+}
+
+// method id "calendar.subscriptions.unsubscribe":
+
+type SubscriptionsUnsubscribeCall struct {
+	s            *Service
+	subscription *Subscription
+	opt_         map[string]interface{}
+}
+
+// Unsubscribe:
+func (r *SubscriptionsService) Unsubscribe(subscription *Subscription) *SubscriptionsUnsubscribeCall {
+	c := &SubscriptionsUnsubscribeCall{s: r.s, opt_: make(map[string]interface{})}
+	c.subscription = subscription
+	return c
+}
+
+func (c *SubscriptionsUnsubscribeCall) Do() error {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.subscription)
+	if err != nil {
+		return err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "subscriptions/unsubscribe")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "httpMethod": "POST",
+	//   "id": "calendar.subscriptions.unsubscribe",
+	//   "path": "subscriptions/unsubscribe",
+	//   "request": {
+	//     "$ref": "Subscription"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/calendar",
+	//     "https://www.googleapis.com/auth/calendar.readonly"
+	//   ]
+	// }
+
+}
+
+func cleanPathString(s string) string {
+	return strings.Map(func(r rune) rune {
+		if r >= 0x2d && r <= 0x7a || r == '~' {
+			return r
+		}
+		return -1
+	}, s)
 }

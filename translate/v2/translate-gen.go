@@ -22,8 +22,6 @@ import (
 	"strings"
 )
 
-// Always reference these packages, just in case the auto-generated code
-// below doesn't.
 var _ = bytes.NewBuffer
 var _ = strconv.Itoa
 var _ = fmt.Sprintf
@@ -32,7 +30,6 @@ var _ = io.Copy
 var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
-var _ = strings.Replace
 
 const apiId = "translate:v2"
 const apiName = "translate"
@@ -162,13 +159,11 @@ func (c *DetectionsListCall) Do() (*DetectionsListResponse, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/language/translate/", "v2/detect")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -231,13 +226,11 @@ func (c *LanguagesListCall) Do() (*LanguagesListResponse, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/language/translate/", "v2/languages")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -322,13 +315,11 @@ func (c *TranslationsListCall) Do() (*TranslationsListResponse, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/language/translate/", "v2")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -390,4 +381,13 @@ func (c *TranslationsListCall) Do() (*TranslationsListResponse, error) {
 	//   }
 	// }
 
+}
+
+func cleanPathString(s string) string {
+	return strings.Map(func(r rune) rune {
+		if r >= 0x2d && r <= 0x7a || r == '~' {
+			return r
+		}
+		return -1
+	}, s)
 }

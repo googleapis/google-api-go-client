@@ -22,8 +22,6 @@ import (
 	"strings"
 )
 
-// Always reference these packages, just in case the auto-generated code
-// below doesn't.
 var _ = bytes.NewBuffer
 var _ = strconv.Itoa
 var _ = fmt.Sprintf
@@ -32,7 +30,6 @@ var _ = io.Copy
 var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
-var _ = strings.Replace
 
 const apiId = "drive:v1"
 const apiName = "drive"
@@ -227,16 +224,14 @@ func (c *FilesGetCall) Do() (*File, error) {
 		params.Set("updateViewedDate", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v1/", "files/{id}")
+	urls = strings.Replace(urls, "{id}", cleanPathString(c.id), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -328,7 +323,6 @@ func (c *FilesInsertCall) Do() (*File, error) {
 	urls += "?" + params.Encode()
 	contentLength_, hasMedia_ := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	if hasMedia_ {
 		req.ContentLength = contentLength_
 	}
@@ -338,7 +332,6 @@ func (c *FilesInsertCall) Do() (*File, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -445,17 +438,15 @@ func (c *FilesPatchCall) Do() (*File, error) {
 		params.Set("updateViewedDate", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v1/", "files/{id}")
+	urls = strings.Replace(urls, "{id}", cleanPathString(c.id), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -582,11 +573,10 @@ func (c *FilesUpdateCall) Do() (*File, error) {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
 		params.Set("uploadType", "multipart")
 	}
+	urls = strings.Replace(urls, "{id}", cleanPathString(c.id), 1)
 	urls += "?" + params.Encode()
 	contentLength_, hasMedia_ := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
 	req, _ := http.NewRequest("PUT", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	if hasMedia_ {
 		req.ContentLength = contentLength_
 	}
@@ -596,7 +586,6 @@ func (c *FilesUpdateCall) Do() (*File, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -667,4 +656,13 @@ func (c *FilesUpdateCall) Do() (*File, error) {
 	//   "supportsMediaUpload": true
 	// }
 
+}
+
+func cleanPathString(s string) string {
+	return strings.Map(func(r rune) rune {
+		if r >= 0x2d && r <= 0x7a || r == '~' {
+			return r
+		}
+		return -1
+	}, s)
 }

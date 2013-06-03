@@ -22,8 +22,6 @@ import (
 	"strings"
 )
 
-// Always reference these packages, just in case the auto-generated code
-// below doesn't.
 var _ = bytes.NewBuffer
 var _ = strconv.Itoa
 var _ = fmt.Sprintf
@@ -32,7 +30,6 @@ var _ = io.Copy
 var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
-var _ = strings.Replace
 
 const apiId = "orkut:v2"
 const apiName = "orkut"
@@ -1079,17 +1076,15 @@ func (c *AclDeleteCall) Do() error {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "activities/{activityId}/acl/{userId}")
+	urls = strings.Replace(urls, "{activityId}", cleanPathString(c.activityId), 1)
+	urls = strings.Replace(urls, "{userId}", cleanPathString(c.userId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{activityId}", url.QueryEscape(c.activityId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{userId}", url.QueryEscape(c.userId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -1145,16 +1140,14 @@ func (c *ActivitiesDeleteCall) Do() error {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "activities/{activityId}")
+	urls = strings.Replace(urls, "{activityId}", cleanPathString(c.activityId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{activityId}", url.QueryEscape(c.activityId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -1234,17 +1227,15 @@ func (c *ActivitiesListCall) Do() (*ActivityList, error) {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "people/{userId}/activities/{collection}")
+	urls = strings.Replace(urls, "{userId}", cleanPathString(c.userId), 1)
+	urls = strings.Replace(urls, "{collection}", cleanPathString(c.collection), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{userId}", url.QueryEscape(c.userId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{collection}", url.QueryEscape(c.collection), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1335,16 +1326,14 @@ func (c *ActivityVisibilityGetCall) Do() (*Visibility, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "activities/{activityId}/visibility")
+	urls = strings.Replace(urls, "{activityId}", cleanPathString(c.activityId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{activityId}", url.QueryEscape(c.activityId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1408,17 +1397,15 @@ func (c *ActivityVisibilityPatchCall) Do() (*Visibility, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "activities/{activityId}/visibility")
+	urls = strings.Replace(urls, "{activityId}", cleanPathString(c.activityId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{activityId}", url.QueryEscape(c.activityId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1483,17 +1470,15 @@ func (c *ActivityVisibilityUpdateCall) Do() (*Visibility, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "activities/{activityId}/visibility")
+	urls = strings.Replace(urls, "{activityId}", cleanPathString(c.activityId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{activityId}", url.QueryEscape(c.activityId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1553,17 +1538,15 @@ func (c *BadgesGetCall) Do() (*Badge, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "people/{userId}/badges/{badgeId}")
+	urls = strings.Replace(urls, "{userId}", cleanPathString(c.userId), 1)
+	urls = strings.Replace(urls, "{badgeId}", strconv.FormatInt(c.badgeId, 10), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{userId}", url.QueryEscape(c.userId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{badgeId}", strconv.FormatInt(c.badgeId, 10), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1627,16 +1610,14 @@ func (c *BadgesListCall) Do() (*BadgeList, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "people/{userId}/badges")
+	urls = strings.Replace(urls, "{userId}", cleanPathString(c.userId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{userId}", url.QueryEscape(c.userId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1692,16 +1673,14 @@ func (c *CommentsDeleteCall) Do() error {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "comments/{commentId}")
+	urls = strings.Replace(urls, "{commentId}", cleanPathString(c.commentId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{commentId}", url.QueryEscape(c.commentId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -1759,16 +1738,14 @@ func (c *CommentsGetCall) Do() (*Comment, error) {
 		params.Set("hl", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "comments/{commentId}")
+	urls = strings.Replace(urls, "{commentId}", cleanPathString(c.commentId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{commentId}", url.QueryEscape(c.commentId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1836,17 +1813,15 @@ func (c *CommentsInsertCall) Do() (*Comment, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "activities/{activityId}/comments")
+	urls = strings.Replace(urls, "{activityId}", cleanPathString(c.activityId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{activityId}", url.QueryEscape(c.activityId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1943,16 +1918,14 @@ func (c *CommentsListCall) Do() (*CommentList, error) {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "activities/{activityId}/comments")
+	urls = strings.Replace(urls, "{activityId}", cleanPathString(c.activityId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{activityId}", url.QueryEscape(c.activityId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2049,16 +2022,14 @@ func (c *CommunitiesGetCall) Do() (*Community, error) {
 		params.Set("hl", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}")
+	urls = strings.Replace(urls, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2151,16 +2122,14 @@ func (c *CommunitiesListCall) Do() (*CommunityList, error) {
 		params.Set("orderBy", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "people/{userId}/communities")
+	urls = strings.Replace(urls, "{userId}", cleanPathString(c.userId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{userId}", url.QueryEscape(c.userId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2243,17 +2212,15 @@ func (c *CommunityFollowDeleteCall) Do() error {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}/followers/{userId}")
+	urls = strings.Replace(urls, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
+	urls = strings.Replace(urls, "{userId}", cleanPathString(c.userId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{userId}", url.QueryEscape(c.userId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -2311,17 +2278,15 @@ func (c *CommunityFollowInsertCall) Do() (*CommunityMembers, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}/followers/{userId}")
+	urls = strings.Replace(urls, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
+	urls = strings.Replace(urls, "{userId}", cleanPathString(c.userId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{userId}", url.QueryEscape(c.userId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2386,17 +2351,15 @@ func (c *CommunityMembersDeleteCall) Do() error {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}/members/{userId}")
+	urls = strings.Replace(urls, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
+	urls = strings.Replace(urls, "{userId}", cleanPathString(c.userId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{userId}", url.QueryEscape(c.userId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -2464,17 +2427,15 @@ func (c *CommunityMembersGetCall) Do() (*CommunityMembers, error) {
 		params.Set("hl", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}/members/{userId}")
+	urls = strings.Replace(urls, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
+	urls = strings.Replace(urls, "{userId}", cleanPathString(c.userId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{userId}", url.QueryEscape(c.userId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2545,17 +2506,15 @@ func (c *CommunityMembersInsertCall) Do() (*CommunityMembers, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}/members/{userId}")
+	urls = strings.Replace(urls, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
+	urls = strings.Replace(urls, "{userId}", cleanPathString(c.userId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{userId}", url.QueryEscape(c.userId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2661,16 +2620,14 @@ func (c *CommunityMembersListCall) Do() (*CommunityMembersList, error) {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}/members")
+	urls = strings.Replace(urls, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2753,18 +2710,16 @@ func (c *CommunityMessagesDeleteCall) Do() error {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}/topics/{topicId}/messages/{messageId}")
+	urls = strings.Replace(urls, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
+	urls = strings.Replace(urls, "{topicId}", strconv.FormatInt(c.topicId, 10), 1)
+	urls = strings.Replace(urls, "{messageId}", strconv.FormatInt(c.messageId, 10), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{topicId}", strconv.FormatInt(c.topicId, 10), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{messageId}", strconv.FormatInt(c.messageId, 10), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -2838,18 +2793,16 @@ func (c *CommunityMessagesInsertCall) Do() (*CommunityMessage, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}/topics/{topicId}/messages")
+	urls = strings.Replace(urls, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
+	urls = strings.Replace(urls, "{topicId}", strconv.FormatInt(c.topicId, 10), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{topicId}", strconv.FormatInt(c.topicId, 10), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2948,17 +2901,15 @@ func (c *CommunityMessagesListCall) Do() (*CommunityMessageList, error) {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}/topics/{topicId}/messages")
+	urls = strings.Replace(urls, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
+	urls = strings.Replace(urls, "{topicId}", strconv.FormatInt(c.topicId, 10), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{topicId}", strconv.FormatInt(c.topicId, 10), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3050,18 +3001,16 @@ func (c *CommunityPollCommentsInsertCall) Do() (*CommunityPollComment, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}/polls/{pollId}/comments")
+	urls = strings.Replace(urls, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
+	urls = strings.Replace(urls, "{pollId}", cleanPathString(c.pollId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{pollId}", url.QueryEscape(c.pollId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3159,17 +3108,15 @@ func (c *CommunityPollCommentsListCall) Do() (*CommunityPollCommentList, error) 
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}/polls/{pollId}/comments")
+	urls = strings.Replace(urls, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
+	urls = strings.Replace(urls, "{pollId}", cleanPathString(c.pollId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{pollId}", url.QueryEscape(c.pollId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3259,18 +3206,16 @@ func (c *CommunityPollVotesInsertCall) Do() (*CommunityPollVote, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}/polls/{pollId}/votes")
+	urls = strings.Replace(urls, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
+	urls = strings.Replace(urls, "{pollId}", cleanPathString(c.pollId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{pollId}", url.QueryEscape(c.pollId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3348,17 +3293,15 @@ func (c *CommunityPollsGetCall) Do() (*CommunityPoll, error) {
 		params.Set("hl", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}/polls/{pollId}")
+	urls = strings.Replace(urls, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
+	urls = strings.Replace(urls, "{pollId}", cleanPathString(c.pollId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{pollId}", url.QueryEscape(c.pollId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3457,16 +3400,14 @@ func (c *CommunityPollsListCall) Do() (*CommunityPollList, error) {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}/polls")
+	urls = strings.Replace(urls, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3550,16 +3491,14 @@ func (c *CommunityRelatedListCall) Do() (*CommunityList, error) {
 		params.Set("hl", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}/related")
+	urls = strings.Replace(urls, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3623,17 +3562,15 @@ func (c *CommunityTopicsDeleteCall) Do() error {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}/topics/{topicId}")
+	urls = strings.Replace(urls, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
+	urls = strings.Replace(urls, "{topicId}", strconv.FormatInt(c.topicId, 10), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{topicId}", strconv.FormatInt(c.topicId, 10), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -3702,17 +3639,15 @@ func (c *CommunityTopicsGetCall) Do() (*CommunityTopic, error) {
 		params.Set("hl", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}/topics/{topicId}")
+	urls = strings.Replace(urls, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
+	urls = strings.Replace(urls, "{topicId}", strconv.FormatInt(c.topicId, 10), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{topicId}", strconv.FormatInt(c.topicId, 10), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3799,17 +3734,15 @@ func (c *CommunityTopicsInsertCall) Do() (*CommunityTopic, error) {
 		params.Set("isShout", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}/topics")
+	urls = strings.Replace(urls, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3903,16 +3836,14 @@ func (c *CommunityTopicsListCall) Do() (*CommunityTopicList, error) {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}/topics")
+	urls = strings.Replace(urls, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3987,16 +3918,14 @@ func (c *CountersListCall) Do() (*Counters, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "people/{userId}/counters")
+	urls = strings.Replace(urls, "{userId}", cleanPathString(c.userId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{userId}", url.QueryEscape(c.userId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4059,14 +3988,12 @@ func (c *ScrapsInsertCall) Do() (*Activity, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "activities/scraps")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4091,4 +4018,13 @@ func (c *ScrapsInsertCall) Do() (*Activity, error) {
 	//   ]
 	// }
 
+}
+
+func cleanPathString(s string) string {
+	return strings.Map(func(r rune) rune {
+		if r >= 0x2d && r <= 0x7a || r == '~' {
+			return r
+		}
+		return -1
+	}, s)
 }

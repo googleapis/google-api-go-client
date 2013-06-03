@@ -1,15 +1,13 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"0kaFfN0xfjZjASExv-gUnrWhdto/fYjf9Qo7JXdA3Sc_eeaCcUROzF8\"",
+ "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/91Bv0kFY3qaTMJ7ejWDpXwf36R4\"",
  "discoveryVersion": "v1",
  "id": "drive:v2",
  "name": "drive",
  "version": "v2",
- "revision": "20130522",
+ "revision": "20130404",
  "title": "Drive API",
  "description": "The API to interact with Drive.",
- "ownerDomain": "google.com",
- "ownerName": "Google",
  "icons": {
   "x16": "https://ssl.gstatic.com/docs/doclist/images/drive_icon_16.png",
   "x32": "https://ssl.gstatic.com/docs/doclist/images/drive_icon_32.png"
@@ -330,10 +328,6 @@
      "type": "string",
      "description": "The type of object this app creates (e.g. Chart). If empty, the app name should be used instead."
     },
-    "openUrlTemplate": {
-     "type": "string",
-     "description": "The template url for opening files with this app. The template will contain {ids} and/or {exportIds} to be replaced by the actual file ids."
-    },
     "primaryFileExtensions": {
      "type": "array",
      "description": "The list of primary file extensions.",
@@ -348,13 +342,9 @@
       "type": "string"
      }
     },
-    "productId": {
-     "type": "string",
-     "description": "The ID of the product listing for this app."
-    },
     "productUrl": {
      "type": "string",
-     "description": "A link to the product listing for this app."
+     "description": "The product URL."
     },
     "secondaryFileExtensions": {
      "type": "array",
@@ -381,10 +371,6 @@
     "supportsImport": {
      "type": "boolean",
      "description": "Whether this app supports importing Google Docs."
-    },
-    "supportsMultiOpen": {
-     "type": "boolean",
-     "description": "Whether this app supports opening more than one file."
     },
     "useByDefault": {
      "type": "boolean",
@@ -1615,7 +1601,6 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/drive",
-      "https://www.googleapis.com/auth/drive.apps.readonly",
       "https://www.googleapis.com/auth/drive.file",
       "https://www.googleapis.com/auth/drive.metadata.readonly",
       "https://www.googleapis.com/auth/drive.readonly"
@@ -1664,7 +1649,6 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/drive",
-      "https://www.googleapis.com/auth/drive.apps.readonly",
       "https://www.googleapis.com/auth/drive.file",
       "https://www.googleapis.com/auth/drive.metadata.readonly",
       "https://www.googleapis.com/auth/drive.readonly"
@@ -2085,7 +2069,6 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/drive",
-      "https://www.googleapis.com/auth/drive.apps.readonly",
       "https://www.googleapis.com/auth/drive.file"
      ]
     },
@@ -2150,7 +2133,6 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/drive",
-      "https://www.googleapis.com/auth/drive.apps.readonly",
       "https://www.googleapis.com/auth/drive.file",
       "https://www.googleapis.com/auth/drive.metadata.readonly",
       "https://www.googleapis.com/auth/drive.readonly"
@@ -2211,7 +2193,6 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/drive",
-      "https://www.googleapis.com/auth/drive.apps.readonly",
       "https://www.googleapis.com/auth/drive.file"
      ],
      "supportsMediaUpload": true,
@@ -2276,7 +2257,6 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/drive",
-      "https://www.googleapis.com/auth/drive.apps.readonly",
       "https://www.googleapis.com/auth/drive.file",
       "https://www.googleapis.com/auth/drive.metadata.readonly",
       "https://www.googleapis.com/auth/drive.readonly"
@@ -2363,7 +2343,6 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/drive",
-      "https://www.googleapis.com/auth/drive.apps.readonly",
       "https://www.googleapis.com/auth/drive.file",
       "https://www.googleapis.com/auth/drive.scripts"
      ]
@@ -2389,7 +2368,6 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/drive",
-      "https://www.googleapis.com/auth/drive.apps.readonly",
       "https://www.googleapis.com/auth/drive.file"
      ]
     },
@@ -2414,7 +2392,6 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/drive",
-      "https://www.googleapis.com/auth/drive.apps.readonly",
       "https://www.googleapis.com/auth/drive.file"
      ]
     },
@@ -2439,7 +2416,6 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/drive",
-      "https://www.googleapis.com/auth/drive.apps.readonly",
       "https://www.googleapis.com/auth/drive.file"
      ]
     },
@@ -2524,7 +2500,6 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/drive",
-      "https://www.googleapis.com/auth/drive.apps.readonly",
       "https://www.googleapis.com/auth/drive.file",
       "https://www.googleapis.com/auth/drive.scripts"
      ],

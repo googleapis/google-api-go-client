@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"0kaFfN0xfjZjASExv-gUnrWhdto/mz-iuujrmc2HMKTkO4X5K9hqzSY\"",
+ "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/gY8K1j50GFJNtln0zFJAkvIOJNw\"",
  "discoveryVersion": "v1",
  "id": "translate:v2",
  "name": "translate",
@@ -8,8 +8,6 @@
  "revision": "20120112",
  "title": "Translate API",
  "description": "Lets you translate text from one language to another",
- "ownerDomain": "google.com",
- "ownerName": "Google",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/translate-16.png",
   "x32": "http://www.google.com/images/icons/product/translate-32.png"

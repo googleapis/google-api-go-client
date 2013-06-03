@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"0kaFfN0xfjZjASExv-gUnrWhdto/W5R2YAlwEZJxA4GeGXkzNrdKlvg\"",
+ "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/uZCmzQDE6V2uI2eL0FGkfgF1tAE\"",
  "discoveryVersion": "v1",
  "id": "compute:v1beta13",
  "name": "compute",
@@ -8,8 +8,6 @@
  "revision": "20130403",
  "title": "Compute Engine API",
  "description": "API for the Google Compute Engine service.",
- "ownerDomain": "google.com",
- "ownerName": "Google",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/compute_engine-16.png",
   "x32": "http://www.google.com/images/icons/product/compute_engine-32.png"

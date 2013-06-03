@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"0kaFfN0xfjZjASExv-gUnrWhdto/z1awUu0pSGFBQmu8riRPYN3Z4rQ\"",
+ "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/1pu0huYUKJy8LIeWkMn7AUodjl8\"",
  "discoveryVersion": "v1",
  "id": "groupsmigration:v1",
  "name": "groupsmigration",
@@ -9,8 +9,6 @@
  "revision": "20130121",
  "title": "Groups Migration API",
  "description": "Groups Migration Api.",
- "ownerDomain": "google.com",
- "ownerName": "Google",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/discussions-16.gif",
   "x32": "http://www.google.com/images/icons/product/discussions-32.gif"

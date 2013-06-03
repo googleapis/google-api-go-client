@@ -1,15 +1,13 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"0kaFfN0xfjZjASExv-gUnrWhdto/VtjIAIh0AiKwRphMJPlW5YhrfBw\"",
+ "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/mmD2e3rvoGxDQirJeNWdzi29lZg\"",
  "discoveryVersion": "v1",
  "id": "books:v1",
  "name": "books",
  "version": "v1",
- "revision": "20130507",
+ "revision": "20130409",
  "title": "Books API",
  "description": "Lets you search for books and manage your Google Books library.",
- "ownerDomain": "google.com",
- "ownerName": "Google",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/ebooks-16.png",
   "x32": "http://www.google.com/images/icons/product/ebooks-32.png"
@@ -1767,21 +1765,6 @@
      "scopes": [
       "https://www.googleapis.com/auth/books"
      ]
-    },
-    "updateBook": {
-     "id": "books.cloudloading.updateBook",
-     "path": "cloudloading/updateBook",
-     "httpMethod": "POST",
-     "description": "",
-     "request": {
-      "$ref": "BooksCloudloadingResource"
-     },
-     "response": {
-      "$ref": "BooksCloudloadingResource"
-     },
-     "scopes": [
-      "https://www.googleapis.com/auth/books"
-     ]
     }
    }
   },
@@ -3180,22 +3163,6 @@
          "maximum": "100",
          "location": "query"
         },
-        "processingState": {
-         "type": "string",
-         "description": "The processing state of the user uploaded volumes to be returned. Applicable only if the UPLOADED is specified in the acquireMethod.",
-         "enum": [
-          "COMPLETED_FAILED",
-          "COMPLETED_SUCCESS",
-          "RUNNING"
-         ],
-         "enumDescriptions": [
-          "The volume processing hase failed.",
-          "The volume processing was completed.",
-          "The volume processing is not completed."
-         ],
-         "repeated": true,
-         "location": "query"
-        },
         "source": {
          "type": "string",
          "description": "String to identify the originator of this request.",
@@ -3293,12 +3260,6 @@
          "description": "Index of the first result to return (starts at 0)",
          "format": "uint32",
          "minimum": "0",
-         "location": "query"
-        },
-        "volumeId": {
-         "type": "string",
-         "description": "The ids of the volumes to be returned. If not specified all that match the processingState are returned.",
-         "repeated": true,
          "location": "query"
         }
        },

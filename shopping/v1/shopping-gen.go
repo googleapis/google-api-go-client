@@ -22,8 +22,6 @@ import (
 	"strings"
 )
 
-// Always reference these packages, just in case the auto-generated code
-// below doesn't.
 var _ = bytes.NewBuffer
 var _ = strconv.Itoa
 var _ = fmt.Sprintf
@@ -32,7 +30,6 @@ var _ = io.Copy
 var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
-var _ = strings.Replace
 
 const apiId = "shopping:v1"
 const apiName = "shopping"
@@ -762,19 +759,17 @@ func (c *ProductsGetCall) Do() (*Product, error) {
 		params.Set("thumbnails", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/shopping/search/v1/", "{source}/products/{accountId}/{productIdType}/{productId}")
+	urls = strings.Replace(urls, "{source}", cleanPathString(c.source), 1)
+	urls = strings.Replace(urls, "{accountId}", strconv.FormatInt(c.accountId, 10), 1)
+	urls = strings.Replace(urls, "{productIdType}", cleanPathString(c.productIdType), 1)
+	urls = strings.Replace(urls, "{productId}", cleanPathString(c.productId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{source}", url.QueryEscape(c.source), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", strconv.FormatInt(c.accountId, 10), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{productIdType}", url.QueryEscape(c.productIdType), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{productId}", url.QueryEscape(c.productId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1369,16 +1364,14 @@ func (c *ProductsListCall) Do() (*Products, error) {
 		params.Set("useCase", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/shopping/search/v1/", "{source}/products")
+	urls = strings.Replace(urls, "{source}", cleanPathString(c.source), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{source}", url.QueryEscape(c.source), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1639,4 +1632,13 @@ func (c *ProductsListCall) Do() (*Products, error) {
 	//   ]
 	// }
 
+}
+
+func cleanPathString(s string) string {
+	return strings.Map(func(r rune) rune {
+		if r >= 0x2d && r <= 0x7a || r == '~' {
+			return r
+		}
+		return -1
+	}, s)
 }

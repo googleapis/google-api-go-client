@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"0kaFfN0xfjZjASExv-gUnrWhdto/UDsE7UjrxlHD-KfN0dYjER_FjQU\"",
+ "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/1fPEmvlGXsJXR9xUFYrcsF-eQt8\"",
  "discoveryVersion": "v1",
  "id": "licensing:v1",
  "name": "licensing",
@@ -8,8 +8,6 @@
  "revision": "20120724",
  "title": "Enterprise License Manager API",
  "description": "Licensing API to view and manage license for your domain.",
- "ownerDomain": "google.com",
- "ownerName": "Google",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/search-16.gif",
   "x32": "http://www.google.com/images/icons/product/search-32.gif"

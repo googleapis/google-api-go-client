@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"0kaFfN0xfjZjASExv-gUnrWhdto/SBUiHvY_omwVBCSErpnpITu6tVY\"",
+ "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/DR_yWjwnEWtBlFNS-iLjzY9140I\"",
  "discoveryVersion": "v1",
  "id": "latitude:v1",
  "name": "latitude",
@@ -8,8 +8,6 @@
  "revision": "20120710",
  "title": "Google Latitude API",
  "description": "Lets you read and update your current location and work with your location history",
- "ownerDomain": "google.com",
- "ownerName": "Google",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/search-16.gif",
   "x32": "http://www.google.com/images/icons/product/search-32.gif"

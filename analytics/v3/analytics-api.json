@@ -1,15 +1,13 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"0kaFfN0xfjZjASExv-gUnrWhdto/rf9nUTQVUfjDL16WiV_eh3gQJBA\"",
+ "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/T8OXFhyutidIsEPE3tLBNhfkGsE\"",
  "discoveryVersion": "v1",
  "id": "analytics:v3",
  "name": "analytics",
  "version": "v3",
- "revision": "20130516",
+ "revision": "20130404",
  "title": "Google Analytics API",
  "description": "View and manage your Google Analytics data",
- "ownerDomain": "google.com",
- "ownerName": "Google",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/analytics-16.png",
   "x32": "http://www.google.com/images/icons/product/analytics-32.png"
@@ -237,7 +235,6 @@
     },
     "profilesLinked": {
      "type": "array",
-     "description": "IDs of profiles linked to the custom data source.",
      "items": {
       "type": "string"
      }
@@ -362,12 +359,10 @@
       "type": "object",
       "properties": {
        "change": {
-        "type": "string",
-        "description": "The type of change: APPEND, RESET, or DELETE."
+        "type": "string"
        },
        "time": {
         "type": "string",
-        "description": "The time when the change occurred.",
         "format": "date-time"
        }
       }
@@ -1326,7 +1321,7 @@
     },
     "eCommerceTracking": {
      "type": "boolean",
-     "description": "Indicates whether ecommerce tracking is enabled for this profile."
+     "description": "E-commerce tracking parameter for this profile."
     },
     "excludeQueryParameters": {
      "type": "string",
@@ -1612,11 +1607,6 @@
      "type": "string",
      "description": "Web property ID of the form UA-XXXXX-YY."
     },
-    "industryVertical": {
-     "type": "string",
-     "description": "Industry vertical",
-     "readOnly": true
-    },
     "internalWebPropertyId": {
      "type": "string",
      "description": "Internal ID for this web property."
@@ -1625,10 +1615,6 @@
      "type": "string",
      "description": "Resource type for Analytics WebProperty.",
      "default": "analytics#webproperty"
-    },
-    "level": {
-     "type": "string",
-     "description": "Level for this web property. Possible values are STANDARD or PREMIUM."
     },
     "name": {
      "type": "string",

@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"0kaFfN0xfjZjASExv-gUnrWhdto/r8fgTR7qWwtahoLxWWLKQ5pQsJk\"",
+ "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/twoiFLU2RIw-u1ZxTvm401JmU7g\"",
  "discoveryVersion": "v1",
  "id": "adexchangebuyer:v1",
  "name": "adexchangebuyer",
@@ -8,8 +8,6 @@
  "revision": "20130213",
  "title": "Ad Exchange Buyer API",
  "description": "Lets you manage your Ad Exchange Buyer account.",
- "ownerDomain": "google.com",
- "ownerName": "Google",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/doubleclick-16.gif",
   "x32": "http://www.google.com/images/icons/product/doubleclick-32.gif"

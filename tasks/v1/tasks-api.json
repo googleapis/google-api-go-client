@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"0kaFfN0xfjZjASExv-gUnrWhdto/2OzpktTyb8G1n0lJqDrsLrojoIY\"",
+ "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/jHXhymrMzGkcywauZCRq1Lt4Vl0\"",
  "discoveryVersion": "v1",
  "id": "tasks:v1",
  "name": "tasks",
@@ -8,8 +8,6 @@
  "revision": "20130403",
  "title": "Tasks API",
  "description": "Lets you manage your tasks and task lists.",
- "ownerDomain": "google.com",
- "ownerName": "Google",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/tasks-16.png",
   "x32": "http://www.google.com/images/icons/product/tasks-32.png"

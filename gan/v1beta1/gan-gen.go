@@ -22,8 +22,6 @@ import (
 	"strings"
 )
 
-// Always reference these packages, just in case the auto-generated code
-// below doesn't.
 var _ = bytes.NewBuffer
 var _ = strconv.Itoa
 var _ = fmt.Sprintf
@@ -32,7 +30,6 @@ var _ = io.Copy
 var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
-var _ = strings.Replace
 
 const apiId = "gan:v1beta1"
 const apiName = "gan"
@@ -872,17 +869,15 @@ func (c *AdvertisersGetCall) Do() (*Advertiser, error) {
 		params.Set("advertiserId", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/gan/v1beta1/", "{role}/{roleId}/advertiser")
+	urls = strings.Replace(urls, "{role}", cleanPathString(c.role), 1)
+	urls = strings.Replace(urls, "{roleId}", cleanPathString(c.roleId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{role}", url.QueryEscape(c.role), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{roleId}", url.QueryEscape(c.roleId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1042,17 +1037,15 @@ func (c *AdvertisersListCall) Do() (*Advertisers, error) {
 		params.Set("relationshipStatus", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/gan/v1beta1/", "{role}/{roleId}/advertisers")
+	urls = strings.Replace(urls, "{role}", cleanPathString(c.role), 1)
+	urls = strings.Replace(urls, "{roleId}", cleanPathString(c.roleId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{role}", url.QueryEscape(c.role), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{roleId}", url.QueryEscape(c.roleId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1201,16 +1194,14 @@ func (c *CcOffersListCall) Do() (*CcOffers, error) {
 		params.Set("projection", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/gan/v1beta1/", "publishers/{publisher}/ccOffers")
+	urls = strings.Replace(urls, "{publisher}", cleanPathString(c.publisher), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{publisher}", url.QueryEscape(c.publisher), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1466,17 +1457,15 @@ func (c *EventsListCall) Do() (*Events, error) {
 		params.Set("type", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/gan/v1beta1/", "{role}/{roleId}/events")
+	urls = strings.Replace(urls, "{role}", cleanPathString(c.role), 1)
+	urls = strings.Replace(urls, "{roleId}", cleanPathString(c.roleId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{role}", url.QueryEscape(c.role), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{roleId}", url.QueryEscape(c.roleId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1671,18 +1660,16 @@ func (c *LinksGetCall) Do() (*Link, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/gan/v1beta1/", "{role}/{roleId}/link/{linkId}")
+	urls = strings.Replace(urls, "{role}", cleanPathString(c.role), 1)
+	urls = strings.Replace(urls, "{roleId}", cleanPathString(c.roleId), 1)
+	urls = strings.Replace(urls, "{linkId}", strconv.FormatInt(c.linkId, 10), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{role}", url.QueryEscape(c.role), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{roleId}", url.QueryEscape(c.roleId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{linkId}", strconv.FormatInt(c.linkId, 10), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1770,18 +1757,16 @@ func (c *LinksInsertCall) Do() (*Link, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/gan/v1beta1/", "{role}/{roleId}/link")
+	urls = strings.Replace(urls, "{role}", cleanPathString(c.role), 1)
+	urls = strings.Replace(urls, "{roleId}", cleanPathString(c.roleId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{role}", url.QueryEscape(c.role), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{roleId}", url.QueryEscape(c.roleId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1987,17 +1972,15 @@ func (c *LinksListCall) Do() (*Links, error) {
 		params.Set("startDateMin", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/gan/v1beta1/", "{role}/{roleId}/links")
+	urls = strings.Replace(urls, "{role}", cleanPathString(c.role), 1)
+	urls = strings.Replace(urls, "{roleId}", cleanPathString(c.roleId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{role}", url.QueryEscape(c.role), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{roleId}", url.QueryEscape(c.roleId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2193,17 +2176,15 @@ func (c *PublishersGetCall) Do() (*Publisher, error) {
 		params.Set("publisherId", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/gan/v1beta1/", "{role}/{roleId}/publisher")
+	urls = strings.Replace(urls, "{role}", cleanPathString(c.role), 1)
+	urls = strings.Replace(urls, "{roleId}", cleanPathString(c.roleId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{role}", url.QueryEscape(c.role), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{roleId}", url.QueryEscape(c.roleId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2363,17 +2344,15 @@ func (c *PublishersListCall) Do() (*Publishers, error) {
 		params.Set("relationshipStatus", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/gan/v1beta1/", "{role}/{roleId}/publishers")
+	urls = strings.Replace(urls, "{role}", cleanPathString(c.role), 1)
+	urls = strings.Replace(urls, "{roleId}", cleanPathString(c.roleId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{role}", url.QueryEscape(c.role), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{roleId}", url.QueryEscape(c.roleId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2619,18 +2598,16 @@ func (c *ReportsGetCall) Do() (*Report, error) {
 		params.Set("status", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/gan/v1beta1/", "{role}/{roleId}/report/{reportType}")
+	urls = strings.Replace(urls, "{role}", cleanPathString(c.role), 1)
+	urls = strings.Replace(urls, "{roleId}", cleanPathString(c.roleId), 1)
+	urls = strings.Replace(urls, "{reportType}", cleanPathString(c.reportType), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{role}", url.QueryEscape(c.role), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{roleId}", url.QueryEscape(c.roleId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{reportType}", url.QueryEscape(c.reportType), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2775,4 +2752,13 @@ func (c *ReportsGetCall) Do() (*Report, error) {
 	//   ]
 	// }
 
+}
+
+func cleanPathString(s string) string {
+	return strings.Map(func(r rune) rune {
+		if r >= 0x2d && r <= 0x7a || r == '~' {
+			return r
+		}
+		return -1
+	}, s)
 }

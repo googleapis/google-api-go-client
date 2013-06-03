@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"0kaFfN0xfjZjASExv-gUnrWhdto/pFw7MDyrO_AOc96_PhfOCrqFSg0\"",
+ "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/re3vWINLXKZMYrG_vD3gHJ8J5TQ\"",
  "discoveryVersion": "v1",
  "id": "gan:v1beta1",
  "name": "gan",
@@ -8,8 +8,6 @@
  "revision": "20130205",
  "title": "Google Affiliate Network API",
  "description": "Lets you have programmatic access to your Google Affiliate Network data.",
- "ownerDomain": "google.com",
- "ownerName": "Google",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/affiliatenetwork-16.png",
   "x32": "http://www.google.com/images/icons/product/affiliatenetwork-32.png"

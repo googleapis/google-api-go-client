@@ -22,8 +22,6 @@ import (
 	"strings"
 )
 
-// Always reference these packages, just in case the auto-generated code
-// below doesn't.
 var _ = bytes.NewBuffer
 var _ = strconv.Itoa
 var _ = fmt.Sprintf
@@ -32,7 +30,6 @@ var _ = io.Copy
 var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
-var _ = strings.Replace
 
 const apiId = "licensing:v1"
 const apiName = "licensing"
@@ -128,18 +125,16 @@ func (c *LicenseAssignmentsDeleteCall) Do() error {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/apps/licensing/v1/product/", "{productId}/sku/{skuId}/user/{userId}")
+	urls = strings.Replace(urls, "{productId}", cleanPathString(c.productId), 1)
+	urls = strings.Replace(urls, "{skuId}", cleanPathString(c.skuId), 1)
+	urls = strings.Replace(urls, "{userId}", cleanPathString(c.userId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{productId}", url.QueryEscape(c.productId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{skuId}", url.QueryEscape(c.skuId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{userId}", url.QueryEscape(c.userId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -203,18 +198,16 @@ func (c *LicenseAssignmentsGetCall) Do() (*LicenseAssignment, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/apps/licensing/v1/product/", "{productId}/sku/{skuId}/user/{userId}")
+	urls = strings.Replace(urls, "{productId}", cleanPathString(c.productId), 1)
+	urls = strings.Replace(urls, "{skuId}", cleanPathString(c.skuId), 1)
+	urls = strings.Replace(urls, "{userId}", cleanPathString(c.userId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{productId}", url.QueryEscape(c.productId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{skuId}", url.QueryEscape(c.skuId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{userId}", url.QueryEscape(c.userId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -289,18 +282,16 @@ func (c *LicenseAssignmentsInsertCall) Do() (*LicenseAssignment, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/apps/licensing/v1/product/", "{productId}/sku/{skuId}/user")
+	urls = strings.Replace(urls, "{productId}", cleanPathString(c.productId), 1)
+	urls = strings.Replace(urls, "{skuId}", cleanPathString(c.skuId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{productId}", url.QueryEscape(c.productId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{skuId}", url.QueryEscape(c.skuId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -387,16 +378,14 @@ func (c *LicenseAssignmentsListForProductCall) Do() (*LicenseAssignmentList, err
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/apps/licensing/v1/product/", "{productId}/users")
+	urls = strings.Replace(urls, "{productId}", cleanPathString(c.productId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{productId}", url.QueryEscape(c.productId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -497,17 +486,15 @@ func (c *LicenseAssignmentsListForProductAndSkuCall) Do() (*LicenseAssignmentLis
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/apps/licensing/v1/product/", "{productId}/sku/{skuId}/users")
+	urls = strings.Replace(urls, "{productId}", cleanPathString(c.productId), 1)
+	urls = strings.Replace(urls, "{skuId}", cleanPathString(c.skuId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{productId}", url.QueryEscape(c.productId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{skuId}", url.QueryEscape(c.skuId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -599,19 +586,17 @@ func (c *LicenseAssignmentsPatchCall) Do() (*LicenseAssignment, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/apps/licensing/v1/product/", "{productId}/sku/{skuId}/user/{userId}")
+	urls = strings.Replace(urls, "{productId}", cleanPathString(c.productId), 1)
+	urls = strings.Replace(urls, "{skuId}", cleanPathString(c.skuId), 1)
+	urls = strings.Replace(urls, "{userId}", cleanPathString(c.userId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{productId}", url.QueryEscape(c.productId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{skuId}", url.QueryEscape(c.skuId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{userId}", url.QueryEscape(c.userId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -691,19 +676,17 @@ func (c *LicenseAssignmentsUpdateCall) Do() (*LicenseAssignment, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/apps/licensing/v1/product/", "{productId}/sku/{skuId}/user/{userId}")
+	urls = strings.Replace(urls, "{productId}", cleanPathString(c.productId), 1)
+	urls = strings.Replace(urls, "{skuId}", cleanPathString(c.skuId), 1)
+	urls = strings.Replace(urls, "{userId}", cleanPathString(c.userId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{productId}", url.QueryEscape(c.productId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{skuId}", url.QueryEscape(c.skuId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{userId}", url.QueryEscape(c.userId), 1)
-	req.URL.Opaque = "//" + req.URL.Host + req.URL.Path
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -750,4 +733,13 @@ func (c *LicenseAssignmentsUpdateCall) Do() (*LicenseAssignment, error) {
 	//   }
 	// }
 
+}
+
+func cleanPathString(s string) string {
+	return strings.Map(func(r rune) rune {
+		if r >= 0x2d && r <= 0x7a || r == '~' {
+			return r
+		}
+		return -1
+	}, s)
 }

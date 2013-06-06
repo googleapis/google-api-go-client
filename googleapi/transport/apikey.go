@@ -30,13 +30,9 @@ func (t *APIKey) RoundTrip(req *http.Request) (*http.Response, error) {
 			return nil, errors.New("googleapi/transport: no Transport specified or available")
 		}
 	}
-	u := *req.URL
-	args := u.Query()
+	newReq := *req
+	args := newReq.URL.Query()
 	args.Set("key", t.Key)
-	u.RawQuery = args.Encode()
-	req2, err := http.NewRequest(req.Method, u.String(), req.Body)
-	if err != nil {
-		return nil, err
-	}
-	return rt.RoundTrip(req2)
+	newReq.URL.RawQuery = args.Encode()
+	return rt.RoundTrip(&newReq)
 }

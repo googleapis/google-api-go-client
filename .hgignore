@@ -1,6 +1,5 @@
 _obj
 _testmain.go
-_test
 clientid.dat
 clientsecret.dat
 google-api-go-generator/google-api-go-gen

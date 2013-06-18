@@ -1139,7 +1139,7 @@ func (meth *Method) generateCode() {
 		pn(`req.URL.Path = strings.Replace(req.URL.Path, "{%s}", %s, 1)`, arg.apiname, arg.cleanExpr("c."))
 	}
 	// Set opaque to avoid encoding of the parameters in the URL path.
-	pn(`req.URL.Opaque =  "//" + req.URL.Host + req.URL.Path`)
+	pn("googleapi.SetOpaque(req.URL)")
 
 	if meth.supportsMedia() {
 		pn("if hasMedia_ { req.ContentLength = contentLength_ }")

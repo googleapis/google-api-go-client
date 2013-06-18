@@ -238,3 +238,15 @@ func ResolveRelative(basestr, relstr string) string {
 	us = strings.Replace(us, "%7D", "}", -1)
 	return us
 }
+
+// isGo11 is set true by go11.go when we're at Go1.1 or later.
+var isGo11 bool
+
+// SetOpaque sets u.Opaque from u.Path such that HTTP requests to it
+// don't alter any hex-escaped characters in u.Path.
+func SetOpaque(u *url.URL) {
+	u.Opaque = "//" + u.Host + u.Path
+	if !isGo11 {
+		u.Opaque = u.Scheme + ":" + u.Opaque
+	}
+}

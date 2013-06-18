@@ -22,6 +22,8 @@ import (
 	"strings"
 )
 
+// Always reference these packages, just in case the auto-generated code
+// below doesn't.
 var _ = bytes.NewBuffer
 var _ = strconv.Itoa
 var _ = fmt.Sprintf
@@ -30,6 +32,7 @@ var _ = io.Copy
 var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
+var _ = strings.Replace
 
 const apiId = "shopping:v1"
 const apiName = "shopping"
@@ -658,28 +661,6 @@ func (c *ProductsGetCall) Location(location string) *ProductsGetCall {
 	return c
 }
 
-// PlusOneEnabled sets the optional parameter "plusOne.enabled": Whether
-// to return +1 button code
-func (c *ProductsGetCall) PlusOneEnabled(plusOneEnabled bool) *ProductsGetCall {
-	c.opt_["plusOne.enabled"] = plusOneEnabled
-	return c
-}
-
-// PlusOneStyles sets the optional parameter "plusOne.styles": +1 button
-// rendering styles
-func (c *ProductsGetCall) PlusOneStyles(plusOneStyles string) *ProductsGetCall {
-	c.opt_["plusOne.styles"] = plusOneStyles
-	return c
-}
-
-// PlusOneUseGcsConfig sets the optional parameter
-// "plusOne.useGcsConfig": Whether to use +1 button styles configured in
-// the GCS account
-func (c *ProductsGetCall) PlusOneUseGcsConfig(plusOneUseGcsConfig bool) *ProductsGetCall {
-	c.opt_["plusOne.useGcsConfig"] = plusOneUseGcsConfig
-	return c
-}
-
 // RecommendationsEnabled sets the optional parameter
 // "recommendations.enabled": Whether to return recommendation
 // information
@@ -734,15 +715,6 @@ func (c *ProductsGetCall) Do() (*Product, error) {
 	if v, ok := c.opt_["location"]; ok {
 		params.Set("location", fmt.Sprintf("%v", v))
 	}
-	if v, ok := c.opt_["plusOne.enabled"]; ok {
-		params.Set("plusOne.enabled", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["plusOne.styles"]; ok {
-		params.Set("plusOne.styles", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["plusOne.useGcsConfig"]; ok {
-		params.Set("plusOne.useGcsConfig", fmt.Sprintf("%v", v))
-	}
 	if v, ok := c.opt_["recommendations.enabled"]; ok {
 		params.Set("recommendations.enabled", fmt.Sprintf("%v", v))
 	}
@@ -759,17 +731,19 @@ func (c *ProductsGetCall) Do() (*Product, error) {
 		params.Set("thumbnails", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/shopping/search/v1/", "{source}/products/{accountId}/{productIdType}/{productId}")
-	urls = strings.Replace(urls, "{source}", cleanPathString(c.source), 1)
-	urls = strings.Replace(urls, "{accountId}", strconv.FormatInt(c.accountId, 10), 1)
-	urls = strings.Replace(urls, "{productIdType}", cleanPathString(c.productIdType), 1)
-	urls = strings.Replace(urls, "{productId}", cleanPathString(c.productId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{source}", url.QueryEscape(c.source), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", strconv.FormatInt(c.accountId, 10), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{productIdType}", url.QueryEscape(c.productIdType), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{productId}", url.QueryEscape(c.productId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -820,21 +794,6 @@ func (c *ProductsGetCall) Do() (*Product, error) {
 	//       "description": "Location used to determine tax and shipping",
 	//       "location": "query",
 	//       "type": "string"
-	//     },
-	//     "plusOne.enabled": {
-	//       "description": "Whether to return +1 button code",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "plusOne.styles": {
-	//       "description": "+1 button rendering styles",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "plusOne.useGcsConfig": {
-	//       "description": "Whether to use +1 button styles configured in the GCS account",
-	//       "location": "query",
-	//       "type": "boolean"
 	//     },
 	//     "productId": {
 	//       "description": "Id of product",
@@ -1091,28 +1050,6 @@ func (c *ProductsListCall) MaxVariants(maxVariants int64) *ProductsListCall {
 	return c
 }
 
-// PlusOneEnabled sets the optional parameter "plusOne.enabled": Whether
-// to return +1 button code
-func (c *ProductsListCall) PlusOneEnabled(plusOneEnabled bool) *ProductsListCall {
-	c.opt_["plusOne.enabled"] = plusOneEnabled
-	return c
-}
-
-// PlusOneStyles sets the optional parameter "plusOne.styles": +1 button
-// rendering styles
-func (c *ProductsListCall) PlusOneStyles(plusOneStyles string) *ProductsListCall {
-	c.opt_["plusOne.styles"] = plusOneStyles
-	return c
-}
-
-// PlusOneUseGcsConfig sets the optional parameter
-// "plusOne.useGcsConfig": Whether to use +1 button styles configured in
-// the GCS account
-func (c *ProductsListCall) PlusOneUseGcsConfig(plusOneUseGcsConfig bool) *ProductsListCall {
-	c.opt_["plusOne.useGcsConfig"] = plusOneUseGcsConfig
-	return c
-}
-
 // PromotionsEnabled sets the optional parameter "promotions.enabled":
 // Whether to return promotion information
 func (c *ProductsListCall) PromotionsEnabled(promotionsEnabled bool) *ProductsListCall {
@@ -1306,15 +1243,6 @@ func (c *ProductsListCall) Do() (*Products, error) {
 	if v, ok := c.opt_["maxVariants"]; ok {
 		params.Set("maxVariants", fmt.Sprintf("%v", v))
 	}
-	if v, ok := c.opt_["plusOne.enabled"]; ok {
-		params.Set("plusOne.enabled", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["plusOne.styles"]; ok {
-		params.Set("plusOne.styles", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["plusOne.useGcsConfig"]; ok {
-		params.Set("plusOne.useGcsConfig", fmt.Sprintf("%v", v))
-	}
 	if v, ok := c.opt_["promotions.enabled"]; ok {
 		params.Set("promotions.enabled", fmt.Sprintf("%v", v))
 	}
@@ -1364,14 +1292,16 @@ func (c *ProductsListCall) Do() (*Products, error) {
 		params.Set("useCase", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/shopping/search/v1/", "{source}/products")
-	urls = strings.Replace(urls, "{source}", cleanPathString(c.source), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{source}", url.QueryEscape(c.source), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1520,21 +1450,6 @@ func (c *ProductsListCall) Do() (*Products, error) {
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
-	//     "plusOne.enabled": {
-	//       "description": "Whether to return +1 button code",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "plusOne.styles": {
-	//       "description": "+1 button rendering styles",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "plusOne.useGcsConfig": {
-	//       "description": "Whether to use +1 button styles configured in the GCS account",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
 	//     "promotions.enabled": {
 	//       "description": "Whether to return promotion information",
 	//       "location": "query",
@@ -1632,13 +1547,4 @@ func (c *ProductsListCall) Do() (*Products, error) {
 	//   ]
 	// }
 
-}
-
-func cleanPathString(s string) string {
-	return strings.Map(func(r rune) rune {
-		if r >= 0x2d && r <= 0x7a || r == '~' {
-			return r
-		}
-		return -1
-	}, s)
 }

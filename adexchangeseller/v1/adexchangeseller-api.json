@@ -1,14 +1,16 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/ml4Buz_9MjvD_tExKw-NrpAQxDg\"",
+ "etag": "\"0kaFfN0xfjZjASExv-gUnrWhdto/KWECIOGXU4KJoVWBm_dcq-jjdz4\"",
  "discoveryVersion": "v1",
  "id": "adexchangeseller:v1",
  "name": "adexchangeseller",
  "canonicalName": "Ad Exchange Seller",
  "version": "v1",
- "revision": "20130411",
+ "revision": "20130605",
  "title": "Ad Exchange Seller API",
  "description": "Gives Ad Exchange seller users access to their inventory and the ability to generate reports",
+ "ownerDomain": "google.com",
+ "ownerName": "Google",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/doubleclick-16.gif",
   "x32": "http://www.google.com/images/icons/product/doubleclick-32.gif"

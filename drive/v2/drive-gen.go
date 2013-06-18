@@ -22,6 +22,8 @@ import (
 	"strings"
 )
 
+// Always reference these packages, just in case the auto-generated code
+// below doesn't.
 var _ = bytes.NewBuffer
 var _ = strconv.Itoa
 var _ = fmt.Sprintf
@@ -30,6 +32,7 @@ var _ = io.Copy
 var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
+var _ = strings.Replace
 
 const apiId = "drive:v2"
 const apiName = "drive"
@@ -347,13 +350,21 @@ type App struct {
 	// empty, the app name should be used instead.
 	ObjectType string `json:"objectType,omitempty"`
 
+	// OpenUrlTemplate: The template url for opening files with this app.
+	// The template will contain {ids} and/or {exportIds} to be replaced by
+	// the actual file ids.
+	OpenUrlTemplate string `json:"openUrlTemplate,omitempty"`
+
 	// PrimaryFileExtensions: The list of primary file extensions.
 	PrimaryFileExtensions []string `json:"primaryFileExtensions,omitempty"`
 
 	// PrimaryMimeTypes: The list of primary mime types.
 	PrimaryMimeTypes []string `json:"primaryMimeTypes,omitempty"`
 
-	// ProductUrl: The product URL.
+	// ProductId: The ID of the product listing for this app.
+	ProductId string `json:"productId,omitempty"`
+
+	// ProductUrl: A link to the product listing for this app.
 	ProductUrl string `json:"productUrl,omitempty"`
 
 	// SecondaryFileExtensions: The list of secondary file extensions.
@@ -370,6 +381,10 @@ type App struct {
 
 	// SupportsImport: Whether this app supports importing Google Docs.
 	SupportsImport bool `json:"supportsImport,omitempty"`
+
+	// SupportsMultiOpen: Whether this app supports opening more than one
+	// file.
+	SupportsMultiOpen bool `json:"supportsMultiOpen,omitempty"`
 
 	// UseByDefault: Whether the app is selected as the default handler for
 	// the types it supports.
@@ -1226,11 +1241,13 @@ func (c *AboutGetCall) Do() (*About, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "about")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1298,14 +1315,16 @@ func (c *AppsGetCall) Do() (*App, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "apps/{appId}")
-	urls = strings.Replace(urls, "{appId}", cleanPathString(c.appId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{appId}", url.QueryEscape(c.appId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1360,11 +1379,13 @@ func (c *AppsListCall) Do() (*AppList, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "apps")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1408,14 +1429,16 @@ func (c *ChangesGetCall) Do() (*Change, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "changes/{changeId}")
-	urls = strings.Replace(urls, "{changeId}", cleanPathString(c.changeId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{changeId}", url.QueryEscape(c.changeId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1445,6 +1468,7 @@ func (c *ChangesGetCall) Do() (*Change, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.apps.readonly",
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
@@ -1525,11 +1549,13 @@ func (c *ChangesListCall) Do() (*ChangeList, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "changes")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1581,6 +1607,7 @@ func (c *ChangesListCall) Do() (*ChangeList, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.apps.readonly",
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
@@ -1612,15 +1639,17 @@ func (c *ChildrenDeleteCall) Do() error {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{folderId}/children/{childId}")
-	urls = strings.Replace(urls, "{folderId}", cleanPathString(c.folderId), 1)
-	urls = strings.Replace(urls, "{childId}", cleanPathString(c.childId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{folderId}", url.QueryEscape(c.folderId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{childId}", url.QueryEscape(c.childId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -1678,15 +1707,17 @@ func (c *ChildrenGetCall) Do() (*ChildReference, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{folderId}/children/{childId}")
-	urls = strings.Replace(urls, "{folderId}", cleanPathString(c.folderId), 1)
-	urls = strings.Replace(urls, "{childId}", cleanPathString(c.childId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{folderId}", url.QueryEscape(c.folderId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{childId}", url.QueryEscape(c.childId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1758,15 +1789,17 @@ func (c *ChildrenInsertCall) Do() (*ChildReference, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{folderId}/children")
-	urls = strings.Replace(urls, "{folderId}", cleanPathString(c.folderId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{folderId}", url.QueryEscape(c.folderId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1855,14 +1888,16 @@ func (c *ChildrenListCall) Do() (*ChildList, error) {
 		params.Set("q", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{folderId}/children")
-	urls = strings.Replace(urls, "{folderId}", cleanPathString(c.folderId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{folderId}", url.QueryEscape(c.folderId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1940,15 +1975,17 @@ func (c *CommentsDeleteCall) Do() error {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/comments/{commentId}")
-	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
-	urls = strings.Replace(urls, "{commentId}", cleanPathString(c.commentId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{commentId}", url.QueryEscape(c.commentId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -2018,15 +2055,17 @@ func (c *CommentsGetCall) Do() (*Comment, error) {
 		params.Set("includeDeleted", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/comments/{commentId}")
-	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
-	urls = strings.Replace(urls, "{commentId}", cleanPathString(c.commentId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{commentId}", url.QueryEscape(c.commentId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2103,15 +2142,17 @@ func (c *CommentsInsertCall) Do() (*Comment, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/comments")
-	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2215,14 +2256,16 @@ func (c *CommentsListCall) Do() (*CommentList, error) {
 		params.Set("updatedMin", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/comments")
-	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2314,16 +2357,18 @@ func (c *CommentsPatchCall) Do() (*Comment, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/comments/{commentId}")
-	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
-	urls = strings.Replace(urls, "{commentId}", cleanPathString(c.commentId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{commentId}", url.QueryEscape(c.commentId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2398,16 +2443,18 @@ func (c *CommentsUpdateCall) Do() (*Comment, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/comments/{commentId}")
-	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
-	urls = strings.Replace(urls, "{commentId}", cleanPathString(c.commentId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{commentId}", url.QueryEscape(c.commentId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2540,15 +2587,17 @@ func (c *FilesCopyCall) Do() (*File, error) {
 		params.Set("timedTextTrackName", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/copy")
-	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2614,6 +2663,7 @@ func (c *FilesCopyCall) Do() (*File, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.apps.readonly",
 	//     "https://www.googleapis.com/auth/drive.file"
 	//   ]
 	// }
@@ -2640,14 +2690,16 @@ func (c *FilesDeleteCall) Do() error {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}")
-	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -2717,14 +2769,16 @@ func (c *FilesGetCall) Do() (*File, error) {
 		params.Set("updateViewedDate", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}")
-	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2773,6 +2827,7 @@ func (c *FilesGetCall) Do() (*File, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.apps.readonly",
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
@@ -2890,6 +2945,7 @@ func (c *FilesInsertCall) Do() (*File, error) {
 	urls += "?" + params.Encode()
 	contentLength_, hasMedia_ := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
 	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
 	if hasMedia_ {
 		req.ContentLength = contentLength_
 	}
@@ -2899,6 +2955,7 @@ func (c *FilesInsertCall) Do() (*File, error) {
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2977,6 +3034,7 @@ func (c *FilesInsertCall) Do() (*File, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.apps.readonly",
 	//     "https://www.googleapis.com/auth/drive.file"
 	//   ],
 	//   "supportsMediaUpload": true,
@@ -3044,11 +3102,13 @@ func (c *FilesListCall) Do() (*FileList, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3100,6 +3160,7 @@ func (c *FilesListCall) Do() (*FileList, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.apps.readonly",
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
@@ -3240,15 +3301,17 @@ func (c *FilesPatchCall) Do() (*File, error) {
 		params.Set("useContentAsIndexableText", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}")
-	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3338,6 +3401,7 @@ func (c *FilesPatchCall) Do() (*File, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.apps.readonly",
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.scripts"
 	//   ]
@@ -3365,14 +3429,16 @@ func (c *FilesTouchCall) Do() (*File, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/touch")
-	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3402,6 +3468,7 @@ func (c *FilesTouchCall) Do() (*File, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.apps.readonly",
 	//     "https://www.googleapis.com/auth/drive.file"
 	//   ]
 	// }
@@ -3428,14 +3495,16 @@ func (c *FilesTrashCall) Do() (*File, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/trash")
-	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3465,6 +3534,7 @@ func (c *FilesTrashCall) Do() (*File, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.apps.readonly",
 	//     "https://www.googleapis.com/auth/drive.file"
 	//   ]
 	// }
@@ -3491,14 +3561,16 @@ func (c *FilesUntrashCall) Do() (*File, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/untrash")
-	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3528,6 +3600,7 @@ func (c *FilesUntrashCall) Do() (*File, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.apps.readonly",
 	//     "https://www.googleapis.com/auth/drive.file"
 	//   ]
 	// }
@@ -3674,10 +3747,11 @@ func (c *FilesUpdateCall) Do() (*File, error) {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
 		params.Set("uploadType", "multipart")
 	}
-	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
 	urls += "?" + params.Encode()
 	contentLength_, hasMedia_ := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
 	req, _ := http.NewRequest("PUT", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
+	googleapi.SetOpaque(req.URL)
 	if hasMedia_ {
 		req.ContentLength = contentLength_
 	}
@@ -3687,6 +3761,7 @@ func (c *FilesUpdateCall) Do() (*File, error) {
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3792,6 +3867,7 @@ func (c *FilesUpdateCall) Do() (*File, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.apps.readonly",
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.scripts"
 	//   ],
@@ -3822,15 +3898,17 @@ func (c *ParentsDeleteCall) Do() error {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/parents/{parentId}")
-	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
-	urls = strings.Replace(urls, "{parentId}", cleanPathString(c.parentId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{parentId}", url.QueryEscape(c.parentId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -3888,15 +3966,17 @@ func (c *ParentsGetCall) Do() (*ParentReference, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/parents/{parentId}")
-	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
-	urls = strings.Replace(urls, "{parentId}", cleanPathString(c.parentId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{parentId}", url.QueryEscape(c.parentId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3968,15 +4048,17 @@ func (c *ParentsInsertCall) Do() (*ParentReference, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/parents")
-	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4035,14 +4117,16 @@ func (c *ParentsListCall) Do() (*ParentList, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/parents")
-	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4102,15 +4186,17 @@ func (c *PermissionsDeleteCall) Do() error {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/permissions/{permissionId}")
-	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
-	urls = strings.Replace(urls, "{permissionId}", cleanPathString(c.permissionId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{permissionId}", url.QueryEscape(c.permissionId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -4168,15 +4254,17 @@ func (c *PermissionsGetCall) Do() (*Permission, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/permissions/{permissionId}")
-	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
-	urls = strings.Replace(urls, "{permissionId}", cleanPathString(c.permissionId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{permissionId}", url.QueryEscape(c.permissionId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4269,15 +4357,17 @@ func (c *PermissionsInsertCall) Do() (*Permission, error) {
 		params.Set("sendNotificationEmails", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/permissions")
-	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4347,14 +4437,16 @@ func (c *PermissionsListCall) Do() (*PermissionList, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/permissions")
-	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4432,16 +4524,18 @@ func (c *PermissionsPatchCall) Do() (*Permission, error) {
 		params.Set("transferOwnership", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/permissions/{permissionId}")
-	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
-	urls = strings.Replace(urls, "{permissionId}", cleanPathString(c.permissionId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{permissionId}", url.QueryEscape(c.permissionId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4533,16 +4627,18 @@ func (c *PermissionsUpdateCall) Do() (*Permission, error) {
 		params.Set("transferOwnership", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/permissions/{permissionId}")
-	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
-	urls = strings.Replace(urls, "{permissionId}", cleanPathString(c.permissionId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{permissionId}", url.QueryEscape(c.permissionId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4626,15 +4722,17 @@ func (c *PropertiesDeleteCall) Do() error {
 		params.Set("visibility", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/properties/{propertyKey}")
-	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
-	urls = strings.Replace(urls, "{propertyKey}", cleanPathString(c.propertyKey), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{propertyKey}", url.QueryEscape(c.propertyKey), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -4708,15 +4806,17 @@ func (c *PropertiesGetCall) Do() (*Property, error) {
 		params.Set("visibility", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/properties/{propertyKey}")
-	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
-	urls = strings.Replace(urls, "{propertyKey}", cleanPathString(c.propertyKey), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{propertyKey}", url.QueryEscape(c.propertyKey), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4794,15 +4894,17 @@ func (c *PropertiesInsertCall) Do() (*Property, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/properties")
-	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4861,14 +4963,16 @@ func (c *PropertiesListCall) Do() (*PropertyList, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/properties")
-	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4945,16 +5049,18 @@ func (c *PropertiesPatchCall) Do() (*Property, error) {
 		params.Set("visibility", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/properties/{propertyKey}")
-	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
-	urls = strings.Replace(urls, "{propertyKey}", cleanPathString(c.propertyKey), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{propertyKey}", url.QueryEscape(c.propertyKey), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -5045,16 +5151,18 @@ func (c *PropertiesUpdateCall) Do() (*Property, error) {
 		params.Set("visibility", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/properties/{propertyKey}")
-	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
-	urls = strings.Replace(urls, "{propertyKey}", cleanPathString(c.propertyKey), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{propertyKey}", url.QueryEscape(c.propertyKey), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -5130,16 +5238,18 @@ func (c *RepliesDeleteCall) Do() error {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/comments/{commentId}/replies/{replyId}")
-	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
-	urls = strings.Replace(urls, "{commentId}", cleanPathString(c.commentId), 1)
-	urls = strings.Replace(urls, "{replyId}", cleanPathString(c.replyId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{commentId}", url.QueryEscape(c.commentId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{replyId}", url.QueryEscape(c.replyId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -5216,16 +5326,18 @@ func (c *RepliesGetCall) Do() (*CommentReply, error) {
 		params.Set("includeDeleted", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/comments/{commentId}/replies/{replyId}")
-	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
-	urls = strings.Replace(urls, "{commentId}", cleanPathString(c.commentId), 1)
-	urls = strings.Replace(urls, "{replyId}", cleanPathString(c.replyId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{commentId}", url.QueryEscape(c.commentId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{replyId}", url.QueryEscape(c.replyId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -5311,16 +5423,18 @@ func (c *RepliesInsertCall) Do() (*CommentReply, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/comments/{commentId}/replies")
-	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
-	urls = strings.Replace(urls, "{commentId}", cleanPathString(c.commentId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{commentId}", url.QueryEscape(c.commentId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -5421,15 +5535,17 @@ func (c *RepliesListCall) Do() (*CommentReplyList, error) {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/comments/{commentId}/replies")
-	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
-	urls = strings.Replace(urls, "{commentId}", cleanPathString(c.commentId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{commentId}", url.QueryEscape(c.commentId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -5525,17 +5641,19 @@ func (c *RepliesPatchCall) Do() (*CommentReply, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/comments/{commentId}/replies/{replyId}")
-	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
-	urls = strings.Replace(urls, "{commentId}", cleanPathString(c.commentId), 1)
-	urls = strings.Replace(urls, "{replyId}", cleanPathString(c.replyId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{commentId}", url.QueryEscape(c.commentId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{replyId}", url.QueryEscape(c.replyId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -5619,17 +5737,19 @@ func (c *RepliesUpdateCall) Do() (*CommentReply, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/comments/{commentId}/replies/{replyId}")
-	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
-	urls = strings.Replace(urls, "{commentId}", cleanPathString(c.commentId), 1)
-	urls = strings.Replace(urls, "{replyId}", cleanPathString(c.replyId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{commentId}", url.QueryEscape(c.commentId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{replyId}", url.QueryEscape(c.replyId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -5704,15 +5824,17 @@ func (c *RevisionsDeleteCall) Do() error {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/revisions/{revisionId}")
-	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
-	urls = strings.Replace(urls, "{revisionId}", cleanPathString(c.revisionId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{revisionId}", url.QueryEscape(c.revisionId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -5770,15 +5892,17 @@ func (c *RevisionsGetCall) Do() (*Revision, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/revisions/{revisionId}")
-	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
-	urls = strings.Replace(urls, "{revisionId}", cleanPathString(c.revisionId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{revisionId}", url.QueryEscape(c.revisionId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -5843,14 +5967,16 @@ func (c *RevisionsListCall) Do() (*RevisionList, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/revisions")
-	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -5917,16 +6043,18 @@ func (c *RevisionsPatchCall) Do() (*Revision, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/revisions/{revisionId}")
-	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
-	urls = strings.Replace(urls, "{revisionId}", cleanPathString(c.revisionId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{revisionId}", url.QueryEscape(c.revisionId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -6001,16 +6129,18 @@ func (c *RevisionsUpdateCall) Do() (*Revision, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/revisions/{revisionId}")
-	urls = strings.Replace(urls, "{fileId}", cleanPathString(c.fileId), 1)
-	urls = strings.Replace(urls, "{revisionId}", cleanPathString(c.revisionId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{revisionId}", url.QueryEscape(c.revisionId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -6054,13 +6184,4 @@ func (c *RevisionsUpdateCall) Do() (*Revision, error) {
 	//   ]
 	// }
 
-}
-
-func cleanPathString(s string) string {
-	return strings.Map(func(r rune) rune {
-		if r >= 0x2d && r <= 0x7a || r == '~' {
-			return r
-		}
-		return -1
-	}, s)
 }

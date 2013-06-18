@@ -1,13 +1,15 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/emS2GNIl_c-LGa5TS3ajAbBWSVo\"",
+ "etag": "\"0kaFfN0xfjZjASExv-gUnrWhdto/IQOfEDnWFAg_eI81by1rSHAw6oc\"",
  "discoveryVersion": "v1",
  "id": "bigquery:v2",
  "name": "bigquery",
  "version": "v2",
- "revision": "20130412",
+ "revision": "20130606",
  "title": "BigQuery API",
  "description": "A data platform for customers to create, manage, share and query data.",
+ "ownerDomain": "google.com",
+ "ownerName": "Google",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/search-16.gif",
   "x32": "http://www.google.com/images/icons/product/search-32.gif"
@@ -71,6 +73,9 @@
    "scopes": {
     "https://www.googleapis.com/auth/bigquery": {
      "description": "View and manage your data in Google BigQuery"
+    },
+    "https://www.googleapis.com/auth/cloud-platform": {
+     "description": "MESSAGE UNDER CONSTRUCTION View and manage your data across Google Cloud Platform services"
     },
     "https://www.googleapis.com/auth/devstorage.full_control": {
      "description": "Manage your data and permissions in Google Cloud Storage"
@@ -254,6 +259,10 @@
    "id": "GetQueryResultsResponse",
    "type": "object",
    "properties": {
+    "cacheHit": {
+     "type": "boolean",
+     "description": "Whether the query result was fetched from the query cache."
+    },
     "etag": {
      "type": "string",
      "description": "A hash of this response."
@@ -417,6 +426,10 @@
    "id": "JobConfigurationLoad",
    "type": "object",
    "properties": {
+    "allowJaggedRows": {
+     "type": "boolean",
+     "description": "[Optional] Accept rows that are missing trailing optional columns. The missing values are treated as nulls. Default is false which treats short rows as errors. Only applicable to CSV, ignored for other formats."
+    },
     "allowQuotedNewlines": {
      "type": "boolean",
      "description": "Indicates if BigQuery should allow quoted data sections that contain newline characters in a CSV file. The default value is false."
@@ -511,6 +524,10 @@
     "query": {
      "type": "string",
      "description": "[Required] BigQuery SQL query to execute."
+    },
+    "useQueryCache": {
+     "type": "boolean",
+     "description": "[Optional] Whether to look for the result in the query cache. The query cache is a best-effort cache that will be flushed whenever tables in the query are modified. Moreover, the query cache is only available when a query does not have a destination table specified."
     },
     "writeDisposition": {
      "type": "string",
@@ -663,6 +680,10 @@
    "id": "JobStatistics2",
    "type": "object",
    "properties": {
+    "cacheHit": {
+     "type": "boolean",
+     "description": "[Output-only] Whether the query result was fetched from the query cache."
+    },
     "totalBytesProcessed": {
      "type": "string",
      "description": "[Output-only] Total bytes processed for this job.",
@@ -821,6 +842,10 @@
      "type": "integer",
      "description": "[Optional] How long to wait for the query to complete, in milliseconds, before returning. Default is to return immediately. If the timeout passes before the job completes, the request will fail with a TIMEOUT error.",
      "format": "uint32"
+    },
+    "useQueryCache": {
+     "type": "boolean",
+     "description": "[Optional] Whether to look for the result in the query cache. The query cache is a best-effort cache that will be flushed whenever tables in the query are modified."
     }
    }
   },
@@ -828,6 +853,10 @@
    "id": "QueryResponse",
    "type": "object",
    "properties": {
+    "cacheHit": {
+     "type": "boolean",
+     "description": "Whether the query result was fetched from the query cache."
+    },
     "jobComplete": {
      "type": "boolean",
      "description": "Whether the query has completed or not. If rows or totalRows are present, this will always be true. If this is false, totalRows will not be available."
@@ -1410,6 +1439,7 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/bigquery",
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/devstorage.full_control",
       "https://www.googleapis.com/auth/devstorage.read_only",
       "https://www.googleapis.com/auth/devstorage.read_write"

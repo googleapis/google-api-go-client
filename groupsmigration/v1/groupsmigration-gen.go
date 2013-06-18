@@ -22,6 +22,8 @@ import (
 	"strings"
 )
 
+// Always reference these packages, just in case the auto-generated code
+// below doesn't.
 var _ = bytes.NewBuffer
 var _ = strconv.Itoa
 var _ = fmt.Sprintf
@@ -30,6 +32,7 @@ var _ = io.Copy
 var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
+var _ = strings.Replace
 
 const apiId = "groupsmigration:v1"
 const apiName = "groupsmigration"
@@ -97,12 +100,13 @@ func (c *ArchiveInsertCall) Do() (*Groups, error) {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
 		params.Set("uploadType", "multipart")
 	}
-	urls = strings.Replace(urls, "{groupId}", cleanPathString(c.groupId), 1)
 	urls += "?" + params.Encode()
 	body = new(bytes.Buffer)
 	ctype := "application/json"
 	contentLength_, hasMedia_ := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
 	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{groupId}", url.QueryEscape(c.groupId), 1)
+	googleapi.SetOpaque(req.URL)
 	if hasMedia_ {
 		req.ContentLength = contentLength_
 	}
@@ -112,6 +116,7 @@ func (c *ArchiveInsertCall) Do() (*Groups, error) {
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -158,13 +163,4 @@ func (c *ArchiveInsertCall) Do() (*Groups, error) {
 	//   "supportsMediaUpload": true
 	// }
 
-}
-
-func cleanPathString(s string) string {
-	return strings.Map(func(r rune) rune {
-		if r >= 0x2d && r <= 0x7a || r == '~' {
-			return r
-		}
-		return -1
-	}, s)
 }

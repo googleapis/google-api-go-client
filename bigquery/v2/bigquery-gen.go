@@ -22,6 +22,8 @@ import (
 	"strings"
 )
 
+// Always reference these packages, just in case the auto-generated code
+// below doesn't.
 var _ = bytes.NewBuffer
 var _ = strconv.Itoa
 var _ = fmt.Sprintf
@@ -30,6 +32,7 @@ var _ = io.Copy
 var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
+var _ = strings.Replace
 
 const apiId = "bigquery:v2"
 const apiName = "bigquery"
@@ -40,6 +43,10 @@ const basePath = "https://www.googleapis.com/bigquery/v2/"
 const (
 	// View and manage your data in Google BigQuery
 	BigqueryScope = "https://www.googleapis.com/auth/bigquery"
+
+	// MESSAGE UNDER CONSTRUCTION View and manage your data across Google
+	// Cloud Platform services
+	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
 	// Manage your data and permissions in Google Cloud Storage
 	DevstorageFull_controlScope = "https://www.googleapis.com/auth/devstorage.full_control"
@@ -272,6 +279,9 @@ type ErrorProto struct {
 }
 
 type GetQueryResultsResponse struct {
+	// CacheHit: Whether the query result was fetched from the query cache.
+	CacheHit bool `json:"cacheHit,omitempty"`
+
 	// Etag: A hash of this response.
 	Etag string `json:"etag,omitempty"`
 
@@ -406,6 +416,12 @@ type JobConfigurationLink struct {
 }
 
 type JobConfigurationLoad struct {
+	// AllowJaggedRows: [Optional] Accept rows that are missing trailing
+	// optional columns. The missing values are treated as nulls. Default is
+	// false which treats short rows as errors. Only applicable to CSV,
+	// ignored for other formats.
+	AllowJaggedRows bool `json:"allowJaggedRows,omitempty"`
+
 	// AllowQuotedNewlines: Indicates if BigQuery should allow quoted data
 	// sections that contain newline characters in a CSV file. The default
 	// value is false.
@@ -530,6 +546,13 @@ type JobConfigurationQuery struct {
 	// Query: [Required] BigQuery SQL query to execute.
 	Query string `json:"query,omitempty"`
 
+	// UseQueryCache: [Optional] Whether to look for the result in the query
+	// cache. The query cache is a best-effort cache that will be flushed
+	// whenever tables in the query are modified. Moreover, the query cache
+	// is only available when a query does not have a destination table
+	// specified.
+	UseQueryCache bool `json:"useQueryCache,omitempty"`
+
 	// WriteDisposition: [Optional] Whether to overwrite an existing table
 	// (WRITE_TRUNCATE), append to an existing table (WRITE_APPEND), or
 	// require that the the table is empty (WRITE_EMPTY). Default is
@@ -629,6 +652,10 @@ type JobStatistics struct {
 }
 
 type JobStatistics2 struct {
+	// CacheHit: [Output-only] Whether the query result was fetched from the
+	// query cache.
+	CacheHit bool `json:"cacheHit,omitempty"`
+
 	// TotalBytesProcessed: [Output-only] Total bytes processed for this
 	// job.
 	TotalBytesProcessed int64 `json:"totalBytesProcessed,omitempty,string"`
@@ -749,9 +776,17 @@ type QueryRequest struct {
 	// the timeout passes before the job completes, the request will fail
 	// with a TIMEOUT error.
 	TimeoutMs int64 `json:"timeoutMs,omitempty"`
+
+	// UseQueryCache: [Optional] Whether to look for the result in the query
+	// cache. The query cache is a best-effort cache that will be flushed
+	// whenever tables in the query are modified.
+	UseQueryCache bool `json:"useQueryCache,omitempty"`
 }
 
 type QueryResponse struct {
+	// CacheHit: Whether the query result was fetched from the query cache.
+	CacheHit bool `json:"cacheHit,omitempty"`
+
 	// JobComplete: Whether the query has completed or not. If rows or
 	// totalRows are present, this will always be true. If this is false,
 	// totalRows will not be available.
@@ -967,15 +1002,17 @@ func (c *DatasetsDeleteCall) Do() error {
 		params.Set("deleteContents", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2/", "projects/{projectId}/datasets/{datasetId}")
-	urls = strings.Replace(urls, "{projectId}", cleanPathString(c.projectId), 1)
-	urls = strings.Replace(urls, "{datasetId}", cleanPathString(c.datasetId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{projectId}", url.QueryEscape(c.projectId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{datasetId}", url.QueryEscape(c.datasetId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -1037,15 +1074,17 @@ func (c *DatasetsGetCall) Do() (*Dataset, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2/", "projects/{projectId}/datasets/{datasetId}")
-	urls = strings.Replace(urls, "{projectId}", cleanPathString(c.projectId), 1)
-	urls = strings.Replace(urls, "{datasetId}", cleanPathString(c.datasetId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{projectId}", url.QueryEscape(c.projectId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{datasetId}", url.QueryEscape(c.datasetId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1114,15 +1153,17 @@ func (c *DatasetsInsertCall) Do() (*Dataset, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2/", "projects/{projectId}/datasets")
-	urls = strings.Replace(urls, "{projectId}", cleanPathString(c.projectId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{projectId}", url.QueryEscape(c.projectId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1202,14 +1243,16 @@ func (c *DatasetsListCall) Do() (*DatasetList, error) {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2/", "projects/{projectId}/datasets")
-	urls = strings.Replace(urls, "{projectId}", cleanPathString(c.projectId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{projectId}", url.QueryEscape(c.projectId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1288,16 +1331,18 @@ func (c *DatasetsPatchCall) Do() (*Dataset, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2/", "projects/{projectId}/datasets/{datasetId}")
-	urls = strings.Replace(urls, "{projectId}", cleanPathString(c.projectId), 1)
-	urls = strings.Replace(urls, "{datasetId}", cleanPathString(c.datasetId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{projectId}", url.QueryEscape(c.projectId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{datasetId}", url.QueryEscape(c.datasetId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1375,16 +1420,18 @@ func (c *DatasetsUpdateCall) Do() (*Dataset, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2/", "projects/{projectId}/datasets/{datasetId}")
-	urls = strings.Replace(urls, "{projectId}", cleanPathString(c.projectId), 1)
-	urls = strings.Replace(urls, "{datasetId}", cleanPathString(c.datasetId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{projectId}", url.QueryEscape(c.projectId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{datasetId}", url.QueryEscape(c.datasetId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1451,15 +1498,17 @@ func (c *JobsGetCall) Do() (*Job, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2/", "projects/{projectId}/jobs/{jobId}")
-	urls = strings.Replace(urls, "{projectId}", cleanPathString(c.projectId), 1)
-	urls = strings.Replace(urls, "{jobId}", cleanPathString(c.jobId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{projectId}", url.QueryEscape(c.projectId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{jobId}", url.QueryEscape(c.jobId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1565,15 +1614,17 @@ func (c *JobsGetQueryResultsCall) Do() (*GetQueryResultsResponse, error) {
 		params.Set("timeoutMs", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2/", "projects/{projectId}/queries/{jobId}")
-	urls = strings.Replace(urls, "{projectId}", cleanPathString(c.projectId), 1)
-	urls = strings.Replace(urls, "{jobId}", cleanPathString(c.jobId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{projectId}", url.QueryEscape(c.projectId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{jobId}", url.QueryEscape(c.jobId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1674,10 +1725,11 @@ func (c *JobsInsertCall) Do() (*Job, error) {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
 		params.Set("uploadType", "multipart")
 	}
-	urls = strings.Replace(urls, "{projectId}", cleanPathString(c.projectId), 1)
 	urls += "?" + params.Encode()
 	contentLength_, hasMedia_ := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
 	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{projectId}", url.QueryEscape(c.projectId), 1)
+	googleapi.SetOpaque(req.URL)
 	if hasMedia_ {
 		req.ContentLength = contentLength_
 	}
@@ -1687,6 +1739,7 @@ func (c *JobsInsertCall) Do() (*Job, error) {
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1734,6 +1787,7 @@ func (c *JobsInsertCall) Do() (*Job, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/bigquery",
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/devstorage.full_control",
 	//     "https://www.googleapis.com/auth/devstorage.read_only",
 	//     "https://www.googleapis.com/auth/devstorage.read_write"
@@ -1814,14 +1868,16 @@ func (c *JobsListCall) Do() (*JobList, error) {
 		params.Set("stateFilter", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2/", "projects/{projectId}/jobs")
-	urls = strings.Replace(urls, "{projectId}", cleanPathString(c.projectId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{projectId}", url.QueryEscape(c.projectId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1929,15 +1985,17 @@ func (c *JobsQueryCall) Do() (*QueryResponse, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2/", "projects/{projectId}/queries")
-	urls = strings.Replace(urls, "{projectId}", cleanPathString(c.projectId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{projectId}", url.QueryEscape(c.projectId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2015,11 +2073,13 @@ func (c *ProjectsListCall) Do() (*ProjectList, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2/", "projects")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2110,16 +2170,18 @@ func (c *TabledataListCall) Do() (*TableDataList, error) {
 		params.Set("startIndex", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2/", "projects/{projectId}/datasets/{datasetId}/tables/{tableId}/data")
-	urls = strings.Replace(urls, "{projectId}", cleanPathString(c.projectId), 1)
-	urls = strings.Replace(urls, "{datasetId}", cleanPathString(c.datasetId), 1)
-	urls = strings.Replace(urls, "{tableId}", cleanPathString(c.tableId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{projectId}", url.QueryEscape(c.projectId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{datasetId}", url.QueryEscape(c.datasetId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{tableId}", url.QueryEscape(c.tableId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2210,16 +2272,18 @@ func (c *TablesDeleteCall) Do() error {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2/", "projects/{projectId}/datasets/{datasetId}/tables/{tableId}")
-	urls = strings.Replace(urls, "{projectId}", cleanPathString(c.projectId), 1)
-	urls = strings.Replace(urls, "{datasetId}", cleanPathString(c.datasetId), 1)
-	urls = strings.Replace(urls, "{tableId}", cleanPathString(c.tableId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{projectId}", url.QueryEscape(c.projectId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{datasetId}", url.QueryEscape(c.datasetId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{tableId}", url.QueryEscape(c.tableId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -2287,16 +2351,18 @@ func (c *TablesGetCall) Do() (*Table, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2/", "projects/{projectId}/datasets/{datasetId}/tables/{tableId}")
-	urls = strings.Replace(urls, "{projectId}", cleanPathString(c.projectId), 1)
-	urls = strings.Replace(urls, "{datasetId}", cleanPathString(c.datasetId), 1)
-	urls = strings.Replace(urls, "{tableId}", cleanPathString(c.tableId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{projectId}", url.QueryEscape(c.projectId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{datasetId}", url.QueryEscape(c.datasetId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{tableId}", url.QueryEscape(c.tableId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2374,16 +2440,18 @@ func (c *TablesInsertCall) Do() (*Table, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2/", "projects/{projectId}/datasets/{datasetId}/tables")
-	urls = strings.Replace(urls, "{projectId}", cleanPathString(c.projectId), 1)
-	urls = strings.Replace(urls, "{datasetId}", cleanPathString(c.datasetId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{projectId}", url.QueryEscape(c.projectId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{datasetId}", url.QueryEscape(c.datasetId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2470,15 +2538,17 @@ func (c *TablesListCall) Do() (*TableList, error) {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2/", "projects/{projectId}/datasets/{datasetId}/tables")
-	urls = strings.Replace(urls, "{projectId}", cleanPathString(c.projectId), 1)
-	urls = strings.Replace(urls, "{datasetId}", cleanPathString(c.datasetId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{projectId}", url.QueryEscape(c.projectId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{datasetId}", url.QueryEscape(c.datasetId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2563,17 +2633,19 @@ func (c *TablesPatchCall) Do() (*Table, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2/", "projects/{projectId}/datasets/{datasetId}/tables/{tableId}")
-	urls = strings.Replace(urls, "{projectId}", cleanPathString(c.projectId), 1)
-	urls = strings.Replace(urls, "{datasetId}", cleanPathString(c.datasetId), 1)
-	urls = strings.Replace(urls, "{tableId}", cleanPathString(c.tableId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{projectId}", url.QueryEscape(c.projectId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{datasetId}", url.QueryEscape(c.datasetId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{tableId}", url.QueryEscape(c.tableId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2657,17 +2729,19 @@ func (c *TablesUpdateCall) Do() (*Table, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2/", "projects/{projectId}/datasets/{datasetId}/tables/{tableId}")
-	urls = strings.Replace(urls, "{projectId}", cleanPathString(c.projectId), 1)
-	urls = strings.Replace(urls, "{datasetId}", cleanPathString(c.datasetId), 1)
-	urls = strings.Replace(urls, "{tableId}", cleanPathString(c.tableId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{projectId}", url.QueryEscape(c.projectId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{datasetId}", url.QueryEscape(c.datasetId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{tableId}", url.QueryEscape(c.tableId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2717,13 +2791,4 @@ func (c *TablesUpdateCall) Do() (*Table, error) {
 	//   ]
 	// }
 
-}
-
-func cleanPathString(s string) string {
-	return strings.Map(func(r rune) rune {
-		if r >= 0x2d && r <= 0x7a || r == '~' {
-			return r
-		}
-		return -1
-	}, s)
 }

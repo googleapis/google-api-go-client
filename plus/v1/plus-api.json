@@ -1,13 +1,15 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/fqDQJaCYcVMA5esBQjeVnm3e2lk\"",
+ "etag": "\"0kaFfN0xfjZjASExv-gUnrWhdto/r-ibhnPzi-5PSK_yoqHMzQXfRZQ\"",
  "discoveryVersion": "v1",
  "id": "plus:v1",
  "name": "plus",
  "version": "v1",
- "revision": "20130320",
+ "revision": "20130527",
  "title": "Google+ API",
  "description": "The Google+ API enables developers to build on top of the Google+ platform.",
+ "ownerDomain": "google.com",
+ "ownerName": "Google",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/gplus-16.png",
   "x32": "http://www.google.com/images/icons/product/gplus-32.png"
@@ -1310,7 +1312,7 @@
        },
        "type": {
         "type": "string",
-        "description": "The type of URL. Possible values are:  \n- \"otherProfile\" - URL for another profile. \n- \"contributor\" - URL for which this person is a contributor to. \n- \"website\" - URL for this +Page's primary website. \n- \"other\" - Other."
+        "description": "The type of URL. Possible values are:  \n- \"otherProfile\" - URL for another profile. \n- \"contributor\" - URL for which this person is a contributor to. \n- \"website\" - URL for this Google+ Page's primary website. \n- \"other\" - Other."
        },
        "value": {
         "type": "string",
@@ -1380,7 +1382,7 @@
     },
     "type": {
      "type": "string",
-     "description": "The type of entry describing to whom access is granted. Possible values are:  \n- \"person\" - Access to an individual. \n- \"circle\" - Access to members of a circle. \n- \"myCircles\" - Access to members of all the person's circles. \n- \"extendedCircles\" - Access to members of everyone in a person's circles, plus all of the people in their circles. \n- \"public\" - Access to anyone on the web."
+     "description": "The type of entry describing to whom access is granted. Possible values are:  \n- \"person\" - Access to an individual. \n- \"circle\" - Access to members of a circle. \n- \"myCircles\" - Access to members of all the person's circles. \n- \"extendedCircles\" - Access to members of everyone in a person's circles, plus all of the people in their circles. \n- \"domain\" - Access to members of the person's Google Apps domain. \n- \"public\" - Access to anyone on the web."
     }
    }
   }
@@ -1888,10 +1890,10 @@
       "maxResults": {
        "type": "integer",
        "description": "The maximum number of people to include in the response, which is used for paging. For any response, the actual number returned might be less than the specified maxResults.",
-       "default": "10",
+       "default": "25",
        "format": "uint32",
        "minimum": "1",
-       "maximum": "20",
+       "maximum": "50",
        "location": "query"
       },
       "pageToken": {

@@ -22,6 +22,8 @@ import (
 	"strings"
 )
 
+// Always reference these packages, just in case the auto-generated code
+// below doesn't.
 var _ = bytes.NewBuffer
 var _ = strconv.Itoa
 var _ = fmt.Sprintf
@@ -30,6 +32,7 @@ var _ = io.Copy
 var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
+var _ = strings.Replace
 
 const apiId = "adexchangebuyer:v1.1"
 const apiName = "adexchangebuyer"
@@ -281,14 +284,16 @@ func (c *AccountsGetCall) Do() (*Account, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1.1/", "accounts/{id}")
-	urls = strings.Replace(urls, "{id}", strconv.FormatInt(c.id, 10), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{id}", strconv.FormatInt(c.id, 10), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -344,11 +349,13 @@ func (c *AccountsListCall) Do() (*AccountsList, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1.1/", "accounts")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -400,15 +407,17 @@ func (c *AccountsPatchCall) Do() (*Account, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1.1/", "accounts/{id}")
-	urls = strings.Replace(urls, "{id}", strconv.FormatInt(c.id, 10), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{id}", strconv.FormatInt(c.id, 10), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -474,15 +483,17 @@ func (c *AccountsUpdateCall) Do() (*Account, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1.1/", "accounts/{id}")
-	urls = strings.Replace(urls, "{id}", strconv.FormatInt(c.id, 10), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{id}", strconv.FormatInt(c.id, 10), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -543,15 +554,17 @@ func (c *CreativesGetCall) Do() (*Creative, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1.1/", "creatives/{accountId}/{buyerCreativeId}")
-	urls = strings.Replace(urls, "{accountId}", strconv.FormatInt(c.accountId, 10), 1)
-	urls = strings.Replace(urls, "{buyerCreativeId}", cleanPathString(c.buyerCreativeId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", strconv.FormatInt(c.accountId, 10), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{buyerCreativeId}", url.QueryEscape(c.buyerCreativeId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -621,12 +634,14 @@ func (c *CreativesInsertCall) Do() (*Creative, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1.1/", "creatives")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -706,11 +721,13 @@ func (c *CreativesListCall) Do() (*CreativesList, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1.1/", "creatives")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -784,14 +801,16 @@ func (c *DirectDealsGetCall) Do() (*DirectDeal, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1.1/", "directdeals/{id}")
-	urls = strings.Replace(urls, "{id}", strconv.FormatInt(c.id, 10), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{id}", strconv.FormatInt(c.id, 10), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -847,11 +866,13 @@ func (c *DirectDealsListCall) Do() (*DirectDealsList, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1.1/", "directdeals")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -873,13 +894,4 @@ func (c *DirectDealsListCall) Do() (*DirectDealsList, error) {
 	//   ]
 	// }
 
-}
-
-func cleanPathString(s string) string {
-	return strings.Map(func(r rune) rune {
-		if r >= 0x2d && r <= 0x7a || r == '~' {
-			return r
-		}
-		return -1
-	}, s)
 }

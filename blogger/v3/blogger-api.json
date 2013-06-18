@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/4TzmHmCioW0Yj5cHXD-Z6OzkM6s\"",
+ "etag": "\"0kaFfN0xfjZjASExv-gUnrWhdto/JIw1ulqf0p0ExAXb3O32d8TmLjE\"",
  "discoveryVersion": "v1",
  "id": "blogger:v3",
  "name": "blogger",
@@ -8,6 +8,8 @@
  "revision": "20130122",
  "title": "Blogger API",
  "description": "API for access to the data within Blogger.",
+ "ownerDomain": "google.com",
+ "ownerName": "Google",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/blogger-16.png",
   "x32": "http://www.google.com/images/icons/product/blogger-32.png"

@@ -1,14 +1,16 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/jPUUAf0fbO472zp4iQcDTlekxzw\"",
+ "etag": "\"0kaFfN0xfjZjASExv-gUnrWhdto/Po2vXm4qf5nIA0ezXZo5C92dPyk\"",
  "discoveryVersion": "v1",
  "id": "adsense:v1.2",
  "name": "adsense",
  "canonicalName": "AdSense",
  "version": "v1.2",
- "revision": "20130411",
+ "revision": "20130605",
  "title": "AdSense Management API",
  "description": "Gives AdSense publishers access to their inventory and the ability to generate reports",
+ "ownerDomain": "google.com",
+ "ownerName": "Google",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/adsense-16.png",
   "x32": "http://www.google.com/images/icons/product/adsense-32.png"

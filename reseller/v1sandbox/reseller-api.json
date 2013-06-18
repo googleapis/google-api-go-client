@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"DsY8aw3zSOMYNAy_X4JnK21hrvA/il9Yp4f67cWmdSbk1hutBFbEcwY\"",
+ "etag": "\"0kaFfN0xfjZjASExv-gUnrWhdto/QC7HzCRx8BjDcHJprjwyumxDYSw\"",
  "discoveryVersion": "v1",
  "id": "reseller:v1sandbox",
  "name": "reseller",
  "version": "v1sandbox",
- "revision": "20130308",
+ "revision": "20130429",
  "title": "Enterprise Apps Reseller API",
  "description": "Lets you create and manage your customers and their subscriptions.",
  "ownerDomain": "google.com",
@@ -276,6 +276,10 @@
     "skuId": {
      "type": "string",
      "description": "Name of the sku for which this subscription is purchased."
+    },
+    "status": {
+     "type": "string",
+     "description": "Status of the subscription."
     },
     "subscriptionId": {
      "type": "string",

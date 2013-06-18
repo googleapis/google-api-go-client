@@ -22,6 +22,8 @@ import (
 	"strings"
 )
 
+// Always reference these packages, just in case the auto-generated code
+// below doesn't.
 var _ = bytes.NewBuffer
 var _ = strconv.Itoa
 var _ = fmt.Sprintf
@@ -30,6 +32,7 @@ var _ = io.Copy
 var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
+var _ = strings.Replace
 
 const apiId = "taskqueue:v1beta2"
 const apiName = "taskqueue"
@@ -211,15 +214,17 @@ func (c *TaskqueuesGetCall) Do() (*TaskQueue, error) {
 		params.Set("getStats", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/taskqueue/v1beta2/projects/", "{project}/taskqueues/{taskqueue}")
-	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
-	urls = strings.Replace(urls, "{taskqueue}", cleanPathString(c.taskqueue), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{taskqueue}", url.QueryEscape(c.taskqueue), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -291,16 +296,18 @@ func (c *TasksDeleteCall) Do() error {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/taskqueue/v1beta2/projects/", "{project}/taskqueues/{taskqueue}/tasks/{task}")
-	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
-	urls = strings.Replace(urls, "{taskqueue}", cleanPathString(c.taskqueue), 1)
-	urls = strings.Replace(urls, "{task}", cleanPathString(c.task), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{taskqueue}", url.QueryEscape(c.taskqueue), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{task}", url.QueryEscape(c.task), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -367,16 +374,18 @@ func (c *TasksGetCall) Do() (*Task, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/taskqueue/v1beta2/projects/", "{project}/taskqueues/{taskqueue}/tasks/{task}")
-	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
-	urls = strings.Replace(urls, "{taskqueue}", cleanPathString(c.taskqueue), 1)
-	urls = strings.Replace(urls, "{task}", cleanPathString(c.task), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{taskqueue}", url.QueryEscape(c.taskqueue), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{task}", url.QueryEscape(c.task), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -455,16 +464,18 @@ func (c *TasksInsertCall) Do() (*Task, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/taskqueue/v1beta2/projects/", "{project}/taskqueues/{taskqueue}/tasks")
-	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
-	urls = strings.Replace(urls, "{taskqueue}", cleanPathString(c.taskqueue), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{taskqueue}", url.QueryEscape(c.taskqueue), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -560,15 +571,17 @@ func (c *TasksLeaseCall) Do() (*Tasks, error) {
 		params.Set("tag", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/taskqueue/v1beta2/projects/", "{project}/taskqueues/{taskqueue}/tasks/lease")
-	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
-	urls = strings.Replace(urls, "{taskqueue}", cleanPathString(c.taskqueue), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{taskqueue}", url.QueryEscape(c.taskqueue), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -659,15 +672,17 @@ func (c *TasksListCall) Do() (*Tasks2, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/taskqueue/v1beta2/projects/", "{project}/taskqueues/{taskqueue}/tasks")
-	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
-	urls = strings.Replace(urls, "{taskqueue}", cleanPathString(c.taskqueue), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{taskqueue}", url.QueryEscape(c.taskqueue), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -745,17 +760,19 @@ func (c *TasksPatchCall) Do() (*Task, error) {
 	params.Set("alt", "json")
 	params.Set("newLeaseSeconds", fmt.Sprintf("%v", c.newLeaseSeconds))
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/taskqueue/v1beta2/projects/", "{project}/taskqueues/{taskqueue}/tasks/{task}")
-	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
-	urls = strings.Replace(urls, "{taskqueue}", cleanPathString(c.taskqueue), 1)
-	urls = strings.Replace(urls, "{task}", cleanPathString(c.task), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{taskqueue}", url.QueryEscape(c.taskqueue), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{task}", url.QueryEscape(c.task), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -848,17 +865,19 @@ func (c *TasksUpdateCall) Do() (*Task, error) {
 	params.Set("alt", "json")
 	params.Set("newLeaseSeconds", fmt.Sprintf("%v", c.newLeaseSeconds))
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/taskqueue/v1beta2/projects/", "{project}/taskqueues/{taskqueue}/tasks/{task}")
-	urls = strings.Replace(urls, "{project}", cleanPathString(c.project), 1)
-	urls = strings.Replace(urls, "{taskqueue}", cleanPathString(c.taskqueue), 1)
-	urls = strings.Replace(urls, "{task}", cleanPathString(c.task), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{taskqueue}", url.QueryEscape(c.taskqueue), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{task}", url.QueryEscape(c.task), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -915,13 +934,4 @@ func (c *TasksUpdateCall) Do() (*Task, error) {
 	//   ]
 	// }
 
-}
-
-func cleanPathString(s string) string {
-	return strings.Map(func(r rune) rune {
-		if r >= 0x2d && r <= 0x7a || r == '~' {
-			return r
-		}
-		return -1
-	}, s)
 }

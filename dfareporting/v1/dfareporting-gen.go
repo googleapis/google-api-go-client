@@ -22,6 +22,8 @@ import (
 	"strings"
 )
 
+// Always reference these packages, just in case the auto-generated code
+// below doesn't.
 var _ = bytes.NewBuffer
 var _ = strconv.Itoa
 var _ = fmt.Sprintf
@@ -30,6 +32,7 @@ var _ = io.Copy
 var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
+var _ = strings.Replace
 
 const apiId = "dfareporting:v1"
 const apiName = "dfareporting"
@@ -542,15 +545,17 @@ func (c *DimensionValuesQueryCall) Do() (*DimensionValueList, error) {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/dfareporting/v1/", "userprofiles/{profileId}/dimensionvalues/query")
-	urls = strings.Replace(urls, "{profileId}", strconv.FormatInt(c.profileId, 10), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{profileId}", strconv.FormatInt(c.profileId, 10), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -662,14 +667,16 @@ func (c *FilesListCall) Do() (*FileList, error) {
 		params.Set("sortOrder", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/dfareporting/v1/", "userprofiles/{profileId}/files")
-	urls = strings.Replace(urls, "{profileId}", strconv.FormatInt(c.profileId, 10), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{profileId}", strconv.FormatInt(c.profileId, 10), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -768,15 +775,17 @@ func (c *ReportsDeleteCall) Do() error {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/dfareporting/v1/", "userprofiles/{profileId}/reports/{reportId}")
-	urls = strings.Replace(urls, "{profileId}", strconv.FormatInt(c.profileId, 10), 1)
-	urls = strings.Replace(urls, "{reportId}", strconv.FormatInt(c.reportId, 10), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{profileId}", strconv.FormatInt(c.profileId, 10), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{reportId}", strconv.FormatInt(c.reportId, 10), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -835,15 +844,17 @@ func (c *ReportsGetCall) Do() (*Report, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/dfareporting/v1/", "userprofiles/{profileId}/reports/{reportId}")
-	urls = strings.Replace(urls, "{profileId}", strconv.FormatInt(c.profileId, 10), 1)
-	urls = strings.Replace(urls, "{reportId}", strconv.FormatInt(c.reportId, 10), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{profileId}", strconv.FormatInt(c.profileId, 10), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{reportId}", strconv.FormatInt(c.reportId, 10), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -914,15 +925,17 @@ func (c *ReportsInsertCall) Do() (*Report, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/dfareporting/v1/", "userprofiles/{profileId}/reports")
-	urls = strings.Replace(urls, "{profileId}", strconv.FormatInt(c.profileId, 10), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{profileId}", strconv.FormatInt(c.profileId, 10), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1021,14 +1034,16 @@ func (c *ReportsListCall) Do() (*ReportList, error) {
 		params.Set("sortOrder", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/dfareporting/v1/", "userprofiles/{profileId}/reports")
-	urls = strings.Replace(urls, "{profileId}", strconv.FormatInt(c.profileId, 10), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{profileId}", strconv.FormatInt(c.profileId, 10), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1136,16 +1151,18 @@ func (c *ReportsPatchCall) Do() (*Report, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/dfareporting/v1/", "userprofiles/{profileId}/reports/{reportId}")
-	urls = strings.Replace(urls, "{profileId}", strconv.FormatInt(c.profileId, 10), 1)
-	urls = strings.Replace(urls, "{reportId}", strconv.FormatInt(c.reportId, 10), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{profileId}", strconv.FormatInt(c.profileId, 10), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{reportId}", strconv.FormatInt(c.reportId, 10), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1224,15 +1241,17 @@ func (c *ReportsRunCall) Do() (*File, error) {
 		params.Set("synchronous", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/dfareporting/v1/", "userprofiles/{profileId}/reports/{reportId}/run")
-	urls = strings.Replace(urls, "{profileId}", strconv.FormatInt(c.profileId, 10), 1)
-	urls = strings.Replace(urls, "{reportId}", strconv.FormatInt(c.reportId, 10), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{profileId}", strconv.FormatInt(c.profileId, 10), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{reportId}", strconv.FormatInt(c.reportId, 10), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1310,16 +1329,18 @@ func (c *ReportsUpdateCall) Do() (*Report, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/dfareporting/v1/", "userprofiles/{profileId}/reports/{reportId}")
-	urls = strings.Replace(urls, "{profileId}", strconv.FormatInt(c.profileId, 10), 1)
-	urls = strings.Replace(urls, "{reportId}", strconv.FormatInt(c.reportId, 10), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{profileId}", strconv.FormatInt(c.profileId, 10), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{reportId}", strconv.FormatInt(c.reportId, 10), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1390,16 +1411,18 @@ func (c *ReportsFilesGetCall) Do() (*File, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/dfareporting/v1/", "userprofiles/{profileId}/reports/{reportId}/files/{fileId}")
-	urls = strings.Replace(urls, "{profileId}", strconv.FormatInt(c.profileId, 10), 1)
-	urls = strings.Replace(urls, "{reportId}", strconv.FormatInt(c.reportId, 10), 1)
-	urls = strings.Replace(urls, "{fileId}", strconv.FormatInt(c.fileId, 10), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{profileId}", strconv.FormatInt(c.profileId, 10), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{reportId}", strconv.FormatInt(c.reportId, 10), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", strconv.FormatInt(c.fileId, 10), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1513,15 +1536,17 @@ func (c *ReportsFilesListCall) Do() (*FileList, error) {
 		params.Set("sortOrder", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/dfareporting/v1/", "userprofiles/{profileId}/reports/{reportId}/files")
-	urls = strings.Replace(urls, "{profileId}", strconv.FormatInt(c.profileId, 10), 1)
-	urls = strings.Replace(urls, "{reportId}", strconv.FormatInt(c.reportId, 10), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{profileId}", strconv.FormatInt(c.profileId, 10), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{reportId}", strconv.FormatInt(c.reportId, 10), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1626,14 +1651,16 @@ func (c *UserProfilesGetCall) Do() (*UserProfile, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/dfareporting/v1/", "userprofiles/{profileId}")
-	urls = strings.Replace(urls, "{profileId}", strconv.FormatInt(c.profileId, 10), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{profileId}", strconv.FormatInt(c.profileId, 10), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1689,11 +1716,13 @@ func (c *UserProfilesListCall) Do() (*UserProfileList, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/dfareporting/v1/", "userprofiles")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1715,13 +1744,4 @@ func (c *UserProfilesListCall) Do() (*UserProfileList, error) {
 	//   ]
 	// }
 
-}
-
-func cleanPathString(s string) string {
-	return strings.Map(func(r rune) rune {
-		if r >= 0x2d && r <= 0x7a || r == '~' {
-			return r
-		}
-		return -1
-	}, s)
 }

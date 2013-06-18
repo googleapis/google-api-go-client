@@ -22,6 +22,8 @@ import (
 	"strings"
 )
 
+// Always reference these packages, just in case the auto-generated code
+// below doesn't.
 var _ = bytes.NewBuffer
 var _ = strconv.Itoa
 var _ = fmt.Sprintf
@@ -30,6 +32,7 @@ var _ = io.Copy
 var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
+var _ = strings.Replace
 
 const apiId = "oauth2:v1"
 const apiName = "oauth2"
@@ -227,11 +230,13 @@ func (c *TokeninfoCall) Do() (*Tokeninfo, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/", "oauth2/v1/tokeninfo")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -284,11 +289,13 @@ func (c *UserinfoGetCall) Do() (*Userinfo, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/", "oauth2/v1/userinfo")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -335,11 +342,13 @@ func (c *UserinfoV2MeGetCall) Do() (*Userinfo, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/", "userinfo/v2/me")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -364,13 +373,4 @@ func (c *UserinfoV2MeGetCall) Do() (*Userinfo, error) {
 	//   ]
 	// }
 
-}
-
-func cleanPathString(s string) string {
-	return strings.Map(func(r rune) rune {
-		if r >= 0x2d && r <= 0x7a || r == '~' {
-			return r
-		}
-		return -1
-	}, s)
 }

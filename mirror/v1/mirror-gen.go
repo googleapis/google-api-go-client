@@ -22,6 +22,8 @@ import (
 	"strings"
 )
 
+// Always reference these packages, just in case the auto-generated code
+// below doesn't.
 var _ = bytes.NewBuffer
 var _ = strconv.Itoa
 var _ = fmt.Sprintf
@@ -30,6 +32,7 @@ var _ = io.Copy
 var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
+var _ = strings.Replace
 
 const apiId = "mirror:v1"
 const apiName = "mirror"
@@ -377,6 +380,13 @@ type SubscriptionsListResponse struct {
 
 type TimelineItem struct {
 	// Attachments: A list of media attachments associated with this item.
+	// As a convenience, you can refer to attachments in your HTML payloads
+	// with the attachment or cid scheme. For example:
+	// - attachment: <img
+	// src="attachment:attachment_index"> where attachment_index is the
+	// 0-based index of this array.
+	// - cid: <img src="cid:attachment_id">
+	// where attachment_id is the ID of the attachment.
 	Attachments []*Attachment `json:"attachments,omitempty"`
 
 	// BundleId: The bundle ID for this item. Services can specify a
@@ -407,6 +417,34 @@ type TimelineItem struct {
 
 	// Html: HTML content for this item. If both text and html are provided
 	// for an item, the html will be rendered in the timeline.
+	// Allowed HTML
+	// elements - You can use these elements in your timeline cards.
+	//
+	// -
+	// Headers: h1, h2, h3, h4, h5, h6
+	// - Images: img
+	// - Lists: li, ol, ul
+	//
+	// - HTML5 semantics: article, aside, details, figure, figcaption,
+	// footer, header, nav, section, summary, time
+	// - Structural:
+	// blockquote, br, div, hr, p, span
+	// - Style: b, big, center, em, i, u,
+	// s, small, strike, strong, style, sub, sup
+	// - Tables: table, tbody,
+	// td, tfoot, th, thead, tr
+	// Blocked HTML elements: These elements and
+	// their contents are removed from HTML payloads.
+	//
+	// - Document headers:
+	// head, title
+	// - Embeds: audio, embed, object, source, video
+	// - Frames:
+	// frame, frameset
+	// - Scripting: applet, script
+	// Other elements: Any
+	// elements that aren't listed are removed, but their contents are
+	// preserved.
 	Html string `json:"html,omitempty"`
 
 	// HtmlPages: Additional pages of HTML content associated with this
@@ -449,7 +487,8 @@ type TimelineItem struct {
 	// IsPinned: When true, indicates this item is pinned, which means it's
 	// grouped alongside "active" items like navigation and hangouts, on the
 	// opposite side of the home screen from historical (non-pinned)
-	// timeline items.
+	// timeline items. You can allow the user to toggle the value of this
+	// property with the TOGGLE_PINNED built-in menu item.
 	IsPinned bool `json:"isPinned,omitempty"`
 
 	// Kind: The type of resource. This is always mirror#timelineItem.
@@ -486,7 +525,9 @@ type TimelineItem struct {
 	// SpeakableText: The speakable version of the content of this item.
 	// Along with the READ_ALOUD menu item, use this field to provide text
 	// that would be clearer when read aloud, or to provide extended
-	// information to what is displayed visually on Glass.
+	// information to what is displayed visually on Glass. If you specified
+	// html content, use this property instead of text to specify the text
+	// to read aloud.
 	SpeakableText string `json:"speakableText,omitempty"`
 
 	// Text: Text content of this item.
@@ -557,14 +598,16 @@ func (c *ContactsDeleteCall) Do() error {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/mirror/v1/", "contacts/{id}")
-	urls = strings.Replace(urls, "{id}", cleanPathString(c.id), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -609,14 +652,16 @@ func (c *ContactsGetCall) Do() (*Contact, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/mirror/v1/", "contacts/{id}")
-	urls = strings.Replace(urls, "{id}", cleanPathString(c.id), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -675,12 +720,14 @@ func (c *ContactsInsertCall) Do() (*Contact, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/mirror/v1/", "contacts")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -724,11 +771,13 @@ func (c *ContactsListCall) Do() (*ContactsListResponse, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/mirror/v1/", "contacts")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -777,15 +826,17 @@ func (c *ContactsPatchCall) Do() (*Contact, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/mirror/v1/", "contacts/{id}")
-	urls = strings.Replace(urls, "{id}", cleanPathString(c.id), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -847,15 +898,17 @@ func (c *ContactsUpdateCall) Do() (*Contact, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/mirror/v1/", "contacts/{id}")
-	urls = strings.Replace(urls, "{id}", cleanPathString(c.id), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -910,14 +963,16 @@ func (c *LocationsGetCall) Do() (*Location, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/mirror/v1/", "locations/{id}")
-	urls = strings.Replace(urls, "{id}", cleanPathString(c.id), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -969,11 +1024,13 @@ func (c *LocationsListCall) Do() (*LocationsListResponse, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/mirror/v1/", "locations")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1014,14 +1071,16 @@ func (c *SubscriptionsDeleteCall) Do() error {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/mirror/v1/", "subscriptions/{id}")
-	urls = strings.Replace(urls, "{id}", cleanPathString(c.id), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -1073,12 +1132,14 @@ func (c *SubscriptionsInsertCall) Do() (*Subscription, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/mirror/v1/", "subscriptions")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1123,11 +1184,13 @@ func (c *SubscriptionsListCall) Do() (*SubscriptionsListResponse, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/mirror/v1/", "subscriptions")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1175,15 +1238,17 @@ func (c *SubscriptionsUpdateCall) Do() (*Subscription, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/mirror/v1/", "subscriptions/{id}")
-	urls = strings.Replace(urls, "{id}", cleanPathString(c.id), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1238,14 +1303,16 @@ func (c *TimelineDeleteCall) Do() error {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/mirror/v1/", "timeline/{id}")
-	urls = strings.Replace(urls, "{id}", cleanPathString(c.id), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -1290,14 +1357,16 @@ func (c *TimelineGetCall) Do() (*TimelineItem, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/mirror/v1/", "timeline/{id}")
-	urls = strings.Replace(urls, "{id}", cleanPathString(c.id), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1366,6 +1435,7 @@ func (c *TimelineInsertCall) Do() (*TimelineItem, error) {
 	urls += "?" + params.Encode()
 	contentLength_, hasMedia_ := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
 	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
 	if hasMedia_ {
 		req.ContentLength = contentLength_
 	}
@@ -1375,6 +1445,7 @@ func (c *TimelineInsertCall) Do() (*TimelineItem, error) {
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1507,11 +1578,13 @@ func (c *TimelineListCall) Do() (*TimelineListResponse, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/mirror/v1/", "timeline")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1606,15 +1679,17 @@ func (c *TimelinePatchCall) Do() (*TimelineItem, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/mirror/v1/", "timeline/{id}")
-	urls = strings.Replace(urls, "{id}", cleanPathString(c.id), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1685,10 +1760,11 @@ func (c *TimelineUpdateCall) Do() (*TimelineItem, error) {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
 		params.Set("uploadType", "multipart")
 	}
-	urls = strings.Replace(urls, "{id}", cleanPathString(c.id), 1)
 	urls += "?" + params.Encode()
 	contentLength_, hasMedia_ := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
 	req, _ := http.NewRequest("PUT", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
+	googleapi.SetOpaque(req.URL)
 	if hasMedia_ {
 		req.ContentLength = contentLength_
 	}
@@ -1698,6 +1774,7 @@ func (c *TimelineUpdateCall) Do() (*TimelineItem, error) {
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1773,15 +1850,17 @@ func (c *TimelineAttachmentsDeleteCall) Do() error {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/mirror/v1/", "timeline/{itemId}/attachments/{attachmentId}")
-	urls = strings.Replace(urls, "{itemId}", cleanPathString(c.itemId), 1)
-	urls = strings.Replace(urls, "{attachmentId}", cleanPathString(c.attachmentId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{itemId}", url.QueryEscape(c.itemId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{attachmentId}", url.QueryEscape(c.attachmentId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -1836,15 +1915,17 @@ func (c *TimelineAttachmentsGetCall) Do() (*Attachment, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/mirror/v1/", "timeline/{itemId}/attachments/{attachmentId}")
-	urls = strings.Replace(urls, "{itemId}", cleanPathString(c.itemId), 1)
-	urls = strings.Replace(urls, "{attachmentId}", cleanPathString(c.attachmentId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{itemId}", url.QueryEscape(c.itemId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{attachmentId}", url.QueryEscape(c.attachmentId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1913,12 +1994,13 @@ func (c *TimelineAttachmentsInsertCall) Do() (*Attachment, error) {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
 		params.Set("uploadType", "multipart")
 	}
-	urls = strings.Replace(urls, "{itemId}", cleanPathString(c.itemId), 1)
 	urls += "?" + params.Encode()
 	body = new(bytes.Buffer)
 	ctype := "application/json"
 	contentLength_, hasMedia_ := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
 	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{itemId}", url.QueryEscape(c.itemId), 1)
+	googleapi.SetOpaque(req.URL)
 	if hasMedia_ {
 		req.ContentLength = contentLength_
 	}
@@ -1928,6 +2010,7 @@ func (c *TimelineAttachmentsInsertCall) Do() (*Attachment, error) {
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1998,14 +2081,16 @@ func (c *TimelineAttachmentsListCall) Do() (*AttachmentsListResponse, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/mirror/v1/", "timeline/{itemId}/attachments")
-	urls = strings.Replace(urls, "{itemId}", cleanPathString(c.itemId), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{itemId}", url.QueryEscape(c.itemId), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2035,13 +2120,4 @@ func (c *TimelineAttachmentsListCall) Do() (*AttachmentsListResponse, error) {
 	//   }
 	// }
 
-}
-
-func cleanPathString(s string) string {
-	return strings.Map(func(r rune) rune {
-		if r >= 0x2d && r <= 0x7a || r == '~' {
-			return r
-		}
-		return -1
-	}, s)
 }

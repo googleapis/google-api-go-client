@@ -1,14 +1,16 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/hnzfKbandlZWUkWL3SnuaQjIEdo\"",
+ "etag": "\"0kaFfN0xfjZjASExv-gUnrWhdto/-1uCDEEeXh5XSWC8RZwLjaFjouE\"",
  "discoveryVersion": "v1",
  "id": "youtube:v3",
  "name": "youtube",
  "canonicalName": "YouTube",
  "version": "v3",
- "revision": "20130422",
+ "revision": "20130613",
  "title": "YouTube Data API",
  "description": "Programmatic access to YouTube features.",
+ "ownerDomain": "google.com",
+ "ownerName": "Google",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/youtube-16.png",
   "x32": "http://www.google.com/images/icons/product/youtube-32.png"
@@ -219,6 +221,26 @@
        "type": "string",
        "description": "The URL the client should ping to indicate that the user was shown this promoted item."
       },
+      "ctaType": {
+       "type": "string",
+       "description": "The type of call-to-action, a message to the user indicating action that can be taken.",
+       "enum": [
+        "unspecified",
+        "visitAdvertiserSite"
+       ],
+       "enumDescriptions": [
+        "",
+        ""
+       ]
+      },
+      "descriptionText": {
+       "type": "string",
+       "description": "The text description to accompany the promoted item."
+      },
+      "destinationUrl": {
+       "type": "string",
+       "description": "The URL the client should direct the user to, if the user chooses to visit the advertiser's website."
+      },
       "videoId": {
        "type": "string",
        "description": "The ID that YouTube uses to uniquely identify the promoted video."
@@ -324,6 +346,10 @@
      "type": "string",
      "description": "The ETag of the response."
     },
+    "eventId": {
+     "type": "string",
+     "description": "Serialized EventId of the request which produced this response."
+    },
     "items": {
      "type": "array",
      "description": "A list of activities, or events, that match the request criteria.",
@@ -347,6 +373,10 @@
     "prevPageToken": {
      "type": "string",
      "description": "The token that can be used as the value of the pageToken parameter to retrieve the previous page in the result set."
+    },
+    "visitorId": {
+     "type": "string",
+     "description": "The visitorId identifies the visitor."
     }
    }
   },
@@ -421,46 +451,6 @@
     }
    }
   },
-  "CallToAction": {
-   "id": "CallToAction",
-   "type": "object",
-   "description": "Describes a call-to-action overlay.",
-   "properties": {
-    "callToActionId": {
-     "type": "string"
-    },
-    "description1": {
-     "type": "string"
-    },
-    "description2": {
-     "type": "string"
-    },
-    "destinationUrl": {
-     "type": "string"
-    },
-    "displayUrl": {
-     "type": "string"
-    },
-    "endTimeMs": {
-     "type": "string",
-     "format": "int64"
-    },
-    "headline": {
-     "type": "string"
-    },
-    "hideTimeMs": {
-     "type": "string",
-     "format": "int64"
-    },
-    "imageUrl": {
-     "type": "string"
-    },
-    "startTimeMs": {
-     "type": "string",
-     "format": "int64"
-    }
-   }
-  },
   "Channel": {
    "id": "Channel",
    "type": "object",
@@ -486,6 +476,10 @@
      "type": "string",
      "description": "The ID that YouTube uses to uniquely identify the channel."
     },
+    "invideoPromotion": {
+     "$ref": "InvideoPromotion",
+     "description": "The invideoPromotion object encapsulates information about promotion campaign associated with the channel."
+    },
     "kind": {
      "type": "string",
      "description": "The type of the API resource. For channel resources, the value will be youtube#channel.",
@@ -506,6 +500,26 @@
     "topicDetails": {
      "$ref": "ChannelTopicDetails",
      "description": "The topicDetails object encapsulates information about Freebase topics associated with the channel."
+    }
+   }
+  },
+  "ChannelBannerInsertResponse": {
+   "id": "ChannelBannerInsertResponse",
+   "type": "object",
+   "description": "A channel banner returned as the response to a channel_banner.insert call.",
+   "properties": {
+    "etag": {
+     "type": "string",
+     "description": "The ETag of the response."
+    },
+    "kind": {
+     "type": "string",
+     "description": "The type of the API response. For this operation, the value will be youtube#channelBannerInsertResponse.",
+     "default": "youtube#channelBannerInsertResponse"
+    },
+    "url": {
+     "type": "string",
+     "description": "The URL of this banner image."
     }
    }
   },
@@ -620,6 +634,10 @@
      "type": "string",
      "description": "The ETag for the response."
     },
+    "eventId": {
+     "type": "string",
+     "description": "Serialized EventId of the request which produced this response."
+    },
     "items": {
      "type": "array",
      "description": "A list of channels that match the request criteria.",
@@ -643,6 +661,10 @@
     "prevPageToken": {
      "type": "string",
      "description": "The token that can be used as the value of the pageToken parameter to retrieve the previous page in the result set."
+    },
+    "visitorId": {
+     "type": "string",
+     "description": "The visitorId identifies the visitor."
     }
    }
   },
@@ -677,6 +699,10 @@
     "moderateComments": {
      "type": "boolean",
      "description": "Whether user-submitted comments left on the channel page need to be approved by the channel owner to be publicly visible."
+    },
+    "profileColor": {
+     "type": "string",
+     "description": "A prominent color that can be rendered on this channel page."
     },
     "showBrowseView": {
      "type": "boolean",
@@ -756,6 +782,10 @@
    "type": "object",
    "description": "JSON template for the status part of a channel.",
    "properties": {
+    "isLinked": {
+     "type": "boolean",
+     "description": "If true, then the user is linked to either a YouTube username or G+ account. Otherwise, the user doesn't have a public YouTube identity."
+    },
     "privacyStatus": {
      "type": "string",
      "description": "Privacy status of the channel.",
@@ -787,7 +817,7 @@
   "ContentRating": {
    "id": "ContentRating",
    "type": "object",
-   "description": "Movie ratings schemes.",
+   "description": "Ratings schemes. The country-specific ratings are mostly for movies and shows.",
    "properties": {
     "acbRating": {
      "type": "string",
@@ -1080,68 +1110,20 @@
       "",
       ""
      ]
-    }
-   }
-  },
-  "FeaturedChannel": {
-   "id": "FeaturedChannel",
-   "type": "object",
-   "description": "Describes a featured channel.",
-   "properties": {
-    "channelId": {
-     "type": "string",
-     "description": "External id of the featured channel."
     },
-    "channelSnippet": {
-     "$ref": "ChannelSnippet",
-     "description": "Contains further information about the featured channel."
-    },
-    "endTimeMs": {
+    "ytRating": {
      "type": "string",
-     "description": "Stop showing the feature at this playback time.",
-     "format": "int64"
-    },
-    "featureId": {
-     "type": "string",
-     "description": "Id of this feature (for logging)."
-    },
-    "startTimeMs": {
-     "type": "string",
-     "description": "Start showing the feature at this playback time.",
-     "format": "int64"
-    },
-    "watermarkUrl": {
-     "type": "string",
-     "description": "URL of the default/custom image url."
-    }
-   }
-  },
-  "FeaturedVideo": {
-   "id": "FeaturedVideo",
-   "type": "object",
-   "description": "The representation of one featured video.",
-   "properties": {
-    "endTimeMs": {
-     "type": "string",
-     "description": "Stop showing the feature at the playback time.",
-     "format": "int64"
-    },
-    "featureId": {
-     "type": "string",
-     "description": "Id of this feature (for logging)."
-    },
-    "startTimeMs": {
-     "type": "string",
-     "description": "Start showing the feature at this playback time.",
-     "format": "int64"
-    },
-    "videoId": {
-     "type": "string",
-     "description": "The external id of the featured video."
-    },
-    "videoSnippet": {
-     "$ref": "VideoSnippet",
-     "description": "Contains further information about the featured video."
+     "description": "Internal YouTube rating.",
+     "enum": [
+      "yt17Plus",
+      "ytAllAudiences",
+      "ytRestricted"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      ""
+     ]
     }
    }
   },
@@ -1200,6 +1182,10 @@
      "type": "string",
      "description": "The ETag of the response."
     },
+    "eventId": {
+     "type": "string",
+     "description": "Serialized EventId of the request which produced this response."
+    },
     "items": {
      "type": "array",
      "description": "A list of categories that can be associated with YouTube channels. In this map, the category ID is the map key, and its value is the corresponding guideCategory resource.",
@@ -1211,6 +1197,10 @@
      "type": "string",
      "description": "The type of the API response. For this operation, the value will be youtube#guideCategoryListResponse.",
      "default": "youtube#guideCategoryListResponse"
+    },
+    "visitorId": {
+     "type": "string",
+     "description": "The visitorId identifies the visitor."
     }
    }
   },
@@ -1238,6 +1228,10 @@
     "backgroundImageUrl": {
      "$ref": "LocalizedProperty",
      "description": "The URL for the background image shown on the video watch page. The image should be 1200px by 615px, with a maximum file size of 128k."
+    },
+    "bannerExternalUrl": {
+     "type": "string",
+     "description": "This is used only in update requests; if it's set, we use this URL to generate all of the above banner URLs."
     },
     "bannerImageUrl": {
      "type": "string",
@@ -1309,21 +1303,82 @@
     }
    }
   },
-  "InvideoFeature": {
-   "id": "InvideoFeature",
+  "InvideoPosition": {
+   "id": "InvideoPosition",
    "type": "object",
-   "description": "A set of invideo features to display for a video playback.",
+   "description": "Describes the spatial position of a visual widget inside a video. It is a union of various position types, out of which only will be set one.",
    "properties": {
-    "callToAction": {
-     "$ref": "CallToAction"
+    "cornerPosition": {
+     "type": "string",
+     "description": "Describes in which corner of the video the visual widget will appear.",
+     "enum": [
+      "bottomLeft",
+      "bottomRight",
+      "topLeft",
+      "topRight"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      ""
+     ]
     },
-    "featuredChannel": {
-     "$ref": "FeaturedChannel",
-     "description": "If present, the playback should display a featured channel."
+    "type": {
+     "type": "string",
+     "description": "Defines the position type.",
+     "enum": [
+      "corner"
+     ],
+     "enumDescriptions": [
+      ""
+     ]
+    }
+   }
+  },
+  "InvideoPromotion": {
+   "id": "InvideoPromotion",
+   "type": "object",
+   "description": "Describes an invideo promotion campaign consisting of multiple promoted items. A campaign belongs to a single channel_id.",
+   "properties": {
+    "items": {
+     "type": "array",
+     "description": "List of promoted items in decreasing priority.",
+     "items": {
+      "$ref": "PromotedItemId"
+     }
     },
-    "featuredVideo": {
-     "$ref": "FeaturedVideo",
-     "description": "If present, the playback should display a featured video."
+    "position": {
+     "$ref": "InvideoPosition",
+     "description": "The spatial position within the video where the promoted item will be displayed."
+    },
+    "timing": {
+     "$ref": "InvideoTiming",
+     "description": "The temporal position within the video where the promoted item will be displayed."
+    }
+   }
+  },
+  "InvideoTiming": {
+   "id": "InvideoTiming",
+   "type": "object",
+   "description": "Describes a temporal position of a visual widget inside a video.",
+   "properties": {
+    "offsetMs": {
+     "type": "string",
+     "description": "Defines the time at which the promotion will appear. Depending on the value of type the value of the offsetMs field will represent a time offset from the start or from the end of the video, expressed in milliseconds.",
+     "format": "uint64"
+    },
+    "type": {
+     "type": "string",
+     "description": "Describes a timing type. If the value is offsetFromStart, then the offsetMs field represents an offset from the start of the video. If the value is offsetFromEnd, then the offsetMs field represents an offset from the end of the video.",
+     "enum": [
+      "offsetFromEnd",
+      "offsetFromStart"
+     ],
+     "enumDescriptions": [
+      "",
+      ""
+     ]
     }
    }
   },
@@ -1458,6 +1513,10 @@
      "type": "string",
      "description": "The ETag of the response."
     },
+    "eventId": {
+     "type": "string",
+     "description": "Serialized EventId of the request which produced this response."
+    },
     "items": {
      "type": "array",
      "description": "A list of broadcasts that match the request criteria.",
@@ -1481,6 +1540,10 @@
     "prevPageToken": {
      "type": "string",
      "description": "The token that can be used as the value of the pageToken parameter to retrieve the previous page in the result set."
+    },
+    "visitorId": {
+     "type": "string",
+     "description": "The visitorId identifies the visitor."
     }
    }
   },
@@ -1604,6 +1667,22 @@
        "youtube.liveBroadcasts.update"
       ]
      }
+    },
+    "recordingStatus": {
+     "type": "string",
+     "description": "The broadcast's recording status.",
+     "enum": [
+      "",
+      "not_recording",
+      "recorded",
+      "recording"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      ""
+     ]
     }
    }
   },
@@ -1709,6 +1788,10 @@
      "type": "string",
      "description": "The ETag of the response."
     },
+    "eventId": {
+     "type": "string",
+     "description": "Serialized EventId of the request which produced this response."
+    },
     "items": {
      "type": "array",
      "description": "A list of live streams that match the request criteria.",
@@ -1732,6 +1815,10 @@
     "prevPageToken": {
      "type": "string",
      "description": "The token that can be used as the value of the pageToken parameter to retrieve the previous page in the result set."
+    },
+    "visitorId": {
+     "type": "string",
+     "description": "The visitorId identifies the visitor."
     }
    }
   },
@@ -1837,137 +1924,6 @@
      "type": "integer",
      "description": "The total number of results in the result set.",
      "format": "int32"
-    }
-   }
-  },
-  "Player": {
-   "id": "Player",
-   "type": "object",
-   "description": "A player resource represents all the information needed to play a video.",
-   "properties": {
-    "adsPlaylist": {
-     "$ref": "PlayerAdsPlaylist",
-     "description": "The playlist of video ads to show for this playback."
-    },
-    "etag": {
-     "type": "string",
-     "description": "The ETag for the player resource."
-    },
-    "id": {
-     "$ref": "ResourceId",
-     "description": "The ID that YouTube uses to uniquely identify the resource."
-    },
-    "invideoFeature": {
-     "$ref": "InvideoFeature",
-     "description": "The invideo features for the video."
-    },
-    "kind": {
-     "type": "string",
-     "description": "The type of the API resource.",
-     "default": "youtube#player"
-    },
-    "videoUrls": {
-     "$ref": "PlayerVideoUrls",
-     "description": "The videoUrls object either contains restriction information or URLs giving access to the content."
-    }
-   }
-  },
-  "PlayerAdsPlaylist": {
-   "id": "PlayerAdsPlaylist",
-   "type": "object",
-   "description": "The playlist of ads which accompany the content video.",
-   "properties": {
-    "vmap_xml": {
-     "type": "string",
-     "description": "The VMAP XML document that describes where ads should be inserted and what ad formats should be used in those ad breaks. See http://www.iab.net/vmap."
-    }
-   }
-  },
-  "PlayerListResponse": {
-   "id": "PlayerListResponse",
-   "type": "object",
-   "description": "A list of players returned from a youtube.player.list call.",
-   "properties": {
-    "etag": {
-     "type": "string",
-     "description": "The ETag of the response."
-    },
-    "kind": {
-     "type": "string",
-     "description": "The type of the API response. For this operation, the value will be youtube#playerListResponse.",
-     "default": "youtube#playerListResponse"
-    },
-    "players": {
-     "type": "array",
-     "description": "A list of players that match the request criteria.",
-     "items": {
-      "$ref": "Player"
-     }
-    }
-   }
-  },
-  "PlayerRestrictionDetails": {
-   "id": "PlayerRestrictionDetails",
-   "type": "object",
-   "description": "Part describing if and why a video can't be played.",
-   "properties": {
-    "reason": {
-     "type": "string",
-     "description": "Detailed information about the restriction"
-    },
-    "restricted": {
-     "type": "boolean",
-     "description": "True iff the video can't be played."
-    },
-    "restriction": {
-     "type": "string",
-     "description": "A code describing the restriction class.",
-     "enum": [
-      "notAvailableInYourCountry",
-      "notAvailableOnYourPlatform",
-      "notPublished",
-      "notPurchased"
-     ],
-     "enumDescriptions": [
-      "",
-      "",
-      "",
-      ""
-     ]
-    }
-   }
-  },
-  "PlayerVideoUrl": {
-   "id": "PlayerVideoUrl",
-   "type": "object",
-   "description": "A single video format the user can access.",
-   "properties": {
-    "itag": {
-     "type": "integer",
-     "description": "itag of the video format.",
-     "format": "uint32"
-    },
-    "url": {
-     "type": "string",
-     "description": "Streamer URL serving the video."
-    }
-   }
-  },
-  "PlayerVideoUrls": {
-   "id": "PlayerVideoUrls",
-   "type": "object",
-   "description": "Part containing the URLs pointing to the video data.",
-   "properties": {
-    "restriction": {
-     "$ref": "PlayerRestrictionDetails",
-     "description": "Possible restriction to the playability of the video."
-    },
-    "url": {
-     "type": "array",
-     "description": "URLs to the formats that are available to the caller.",
-     "items": {
-      "$ref": "PlayerVideoUrl"
-     }
     }
    }
   },
@@ -2083,6 +2039,10 @@
      "type": "string",
      "description": "The ETag for the response."
     },
+    "eventId": {
+     "type": "string",
+     "description": "Serialized EventId of the request which produced this response."
+    },
     "items": {
      "type": "array",
      "description": "A list of playlist items that match the request criteria.",
@@ -2106,6 +2066,10 @@
     "prevPageToken": {
      "type": "string",
      "description": "A token that can be used as the value of the pageToken parameter to retrieve the previous page in the result set."
+    },
+    "visitorId": {
+     "type": "string",
+     "description": "The visitorId identifies the visitor."
     }
    }
   },
@@ -2196,6 +2160,10 @@
      "type": "string",
      "description": "The ETag of the response."
     },
+    "eventId": {
+     "type": "string",
+     "description": "Serialized EventId of the request which produced this response."
+    },
     "items": {
      "type": "array",
      "description": "A list of playlists that match the request criteria.",
@@ -2219,6 +2187,10 @@
     "prevPageToken": {
      "type": "string",
      "description": "The token that can be used as the value of the pageToken parameter to retrieve the previous page in the result set."
+    },
+    "visitorId": {
+     "type": "string",
+     "description": "The visitorId identifies the visitor."
     }
    }
   },
@@ -2255,6 +2227,12 @@
      "description": "The date and time that the playlist was created. The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.",
      "format": "date-time"
     },
+    "tags": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    },
     "thumbnails": {
      "$ref": "ThumbnailDetails",
      "description": "A map of thumbnail images associated with the playlist. For each object in the map, the key is the name of the thumbnail image, and the value is an object that contains other information about the thumbnail."
@@ -2287,6 +2265,27 @@
       "",
       ""
      ]
+    }
+   }
+  },
+  "PromotedItemId": {
+   "id": "PromotedItemId",
+   "type": "object",
+   "description": "Describes a single promoted item. It is a union of various possible types.",
+   "properties": {
+    "type": {
+     "type": "string",
+     "description": "Describes the type of the promoted item.",
+     "enum": [
+      "video"
+     ],
+     "enumDescriptions": [
+      ""
+     ]
+    },
+    "videoId": {
+     "type": "string",
+     "description": "If the promoted item represents a video, this field represents the unique YouTube ID identifying it. This field will be present only if type has the value video."
     }
    }
   },
@@ -2337,6 +2336,10 @@
      "type": "string",
      "description": "The ETag for the response."
     },
+    "eventId": {
+     "type": "string",
+     "description": "Serialized EventId of the request which produced this response."
+    },
     "items": {
      "type": "array",
      "description": "A list of results that match the search criteria.",
@@ -2360,6 +2363,10 @@
     "prevPageToken": {
      "type": "string",
      "description": "The token that can be used as the value of the pageToken parameter to retrieve the previous page in the result set."
+    },
+    "visitorId": {
+     "type": "string",
+     "description": "The visitorId identifies the visitor."
     }
    }
   },
@@ -2422,54 +2429,6 @@
   "Subscription": {
    "id": "Subscription",
    "type": "object",
-   "properties": {
-    "address": {
-     "type": "string",
-     "description": "The address of the receiving entity where notifications are delivered. Specific to the channel mechanism."
-    },
-    "channel": {
-     "type": "string",
-     "description": "The delivery channel mechanism to use for notifications"
-    },
-    "channelParams": {
-     "type": "object",
-     "description": "Additional parameters controlling delivery channel behavior",
-     "additionalProperties": {
-      "type": "string",
-      "description": "Declares a new parameter by name."
-     }
-    },
-    "clientToken": {
-     "type": "string",
-     "description": "An arbitrary string associated with the subscription that is delivered to the target address with each notification for this subscription."
-    },
-    "expiration": {
-     "type": "string",
-     "description": "The expiration instant for this subscription if it is defined.",
-     "format": "int64"
-    },
-    "id": {
-     "type": "string",
-     "description": "A UUID for the subscription"
-    },
-    "kind": {
-     "type": "string",
-     "description": "A subscription to an API resource",
-     "default": "api#subscription"
-    },
-    "topicId": {
-     "type": "string",
-     "description": "An opaque topic id that identifies the backend resource which has been subscribed to. Stable across different API versions"
-    },
-    "topicUri": {
-     "type": "string",
-     "description": "The canonicalized URI of the subscribed-to resource."
-    }
-   }
-  },
-  "Subscription2": {
-   "id": "Subscription2",
-   "type": "object",
    "description": "A subscription resource contains information about a YouTube user subscription. A subscription notifies a user when new videos are added to a channel or when another user takes one of several actions on YouTube, such as uploading a video, rating a video, or commenting on a video.",
    "properties": {
     "contentDetails": {
@@ -2525,11 +2484,15 @@
      "type": "string",
      "description": "The ETag of the response."
     },
+    "eventId": {
+     "type": "string",
+     "description": "Serialized EventId of the request which produced this response."
+    },
     "items": {
      "type": "array",
      "description": "A list of subscriptions that match the request criteria.",
      "items": {
-      "$ref": "Subscription2"
+      "$ref": "Subscription"
      }
     },
     "kind": {
@@ -2548,6 +2511,10 @@
     "prevPageToken": {
      "type": "string",
      "description": "The token that can be used as the value of the pageToken parameter to retrieve the previous page in the result set."
+    },
+    "visitorId": {
+     "type": "string",
+     "description": "The visitorId identifies the visitor."
     }
    }
   },
@@ -2660,6 +2627,33 @@
     "standard": {
      "$ref": "Thumbnail",
      "description": "The standard quality image for this resource."
+    }
+   }
+  },
+  "ThumbnailListResponse": {
+   "id": "ThumbnailListResponse",
+   "type": "object",
+   "description": "A list of thumbnails returned as the response to a thumbnails.set call.",
+   "properties": {
+    "etag": {
+     "type": "string",
+     "description": "The ETag of the response."
+    },
+    "items": {
+     "type": "array",
+     "description": "A list of thumbnails.",
+     "items": {
+      "$ref": "ThumbnailDetails"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "The type of the API response. For this operation, the value will be youtube#thumbnailListResponse.",
+     "default": "youtube#thumbnailListResponse"
+    },
+    "visitorId": {
+     "type": "string",
+     "description": "The visitorId identifies the visitor."
     }
    }
   },
@@ -2802,6 +2796,10 @@
      "type": "string",
      "description": "The ETag of the response."
     },
+    "eventId": {
+     "type": "string",
+     "description": "Serialized EventId of the request which produced this response."
+    },
     "items": {
      "type": "array",
      "description": "A list of video categories that can be associated with YouTube videos. In this map, the video category ID is the map key, and its value is the corresponding videoCategory resource.",
@@ -2813,6 +2811,10 @@
      "type": "string",
      "description": "The type of the API response. For this operation, the value will be youtube#videoCategoryListResponse.",
      "default": "youtube#videoCategoryListResponse"
+    },
+    "visitorId": {
+     "type": "string",
+     "description": "The visitorId identifies the visitor."
     }
    }
   },
@@ -3136,6 +3138,10 @@
      "type": "string",
      "description": "The ETag of the response."
     },
+    "eventId": {
+     "type": "string",
+     "description": "Serialized EventId of the request which produced this response."
+    },
     "items": {
      "type": "array",
      "description": "A list of videos that match the request criteria.",
@@ -3147,6 +3153,22 @@
      "type": "string",
      "description": "The type of the API response. For this operation, the value will be youtube#videoListResponse.",
      "default": "youtube#videoListResponse"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "The token that can be used as the value of the pageToken parameter to retrieve the next page in the result set."
+    },
+    "pageInfo": {
+     "$ref": "PageInfo",
+     "description": "The pageInfo object encapsulates paging information for the result set."
+    },
+    "prevPageToken": {
+     "type": "string",
+     "description": "The token that can be used as the value of the pageToken parameter to retrieve the previous page in the result set."
+    },
+    "visitorId": {
+     "type": "string",
+     "description": "The visitorId identifies the visitor."
     }
    }
   },
@@ -3687,7 +3709,7 @@
        "location": "query"
       },
       "home": {
-       "type": "string",
+       "type": "boolean",
        "description": "Set this parameter's value to true to retrieve the activity feed that displays on the YouTube home page for the currently authenticated user.",
        "location": "query"
       },
@@ -3727,6 +3749,11 @@
        "description": "The publishedBefore parameter specifies the date and time before which an activity must have occurred for that activity to be included in the API response. If the parameter value specifies a day, but not a time, then any activities that occurred that day will be excluded from the result set. The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.",
        "format": "date-time",
        "location": "query"
+      },
+      "regionCode": {
+       "type": "string",
+       "description": "The regionCode parameter instructs the API to return results for the specified country. The parameter value is an ISO 3166-1 alpha-2 country code.",
+       "location": "query"
       }
      },
      "parameterOrder": [
@@ -3742,6 +3769,52 @@
     }
    }
   },
+  "channelBanners": {
+   "methods": {
+    "insert": {
+     "id": "youtube.channelBanners.insert",
+     "path": "channelBanners/insert",
+     "httpMethod": "POST",
+     "description": "Uploads a channel banner to YouTube.",
+     "parameters": {
+      "onBehalfOfContentOwner": {
+       "type": "string",
+       "description": "USE_DESCRIPTION --- channels:list:onBehalfOfContentOwner",
+       "location": "query"
+      }
+     },
+     "request": {
+      "$ref": "ChannelBannerInsertResponse"
+     },
+     "response": {
+      "$ref": "ChannelBannerInsertResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/youtube",
+      "https://www.googleapis.com/auth/youtube.upload"
+     ],
+     "supportsMediaUpload": true,
+     "mediaUpload": {
+      "accept": [
+       "application/octet-stream",
+       "image/jpeg",
+       "image/png"
+      ],
+      "maxSize": "6MB",
+      "protocols": {
+       "simple": {
+        "multipart": true,
+        "path": "/upload/youtube/v3/channelBanners/insert"
+       },
+       "resumable": {
+        "multipart": true,
+        "path": "/resumable/upload/youtube/v3/channelBanners/insert"
+       }
+      }
+     }
+    }
+   }
+  },
   "channels": {
    "methods": {
     "list": {
@@ -3753,6 +3826,11 @@
       "categoryId": {
        "type": "string",
        "description": "The categoryId parameter specifies a YouTube guide category, thereby requesting YouTube channels associated with that category.",
+       "location": "query"
+      },
+      "forUsername": {
+       "type": "string",
+       "description": "The forUsername parameter specifies a YouTube username, thereby requesting the channel associated with that username.",
        "location": "query"
       },
       "id": {
@@ -3780,7 +3858,7 @@
        "location": "query"
       },
       "mySubscribers": {
-       "type": "string",
+       "type": "boolean",
        "description": "Set this parameter's value to true to retrieve a list of channels that subscribed to the authenticated user's channel.",
        "location": "query"
       },
@@ -3796,7 +3874,7 @@
       },
       "part": {
        "type": "string",
-       "description": "The part parameter specifies a comma-separated list of one or more channel resource properties that the API response will include. The part names that you can include in the parameter value are id, snippet, contentDetails, statistics, and topicDetails.\n\nIf the parameter identifies a property that contains child properties, the child properties will be included in the response. For example, in a channel resource, the contentDetails property contains other properties, such as the uploads properties. As such, if you set part=contentDetails, the API response will also contain all of those nested properties.",
+       "description": "The part parameter specifies a comma-separated list of one or more channel resource properties that the API response will include. The part names that you can include in the parameter value are id, snippet, contentDetails, statistics, topicDetails, and invideoPromotion.\n\nIf the parameter identifies a property that contains child properties, the child properties will be included in the response. For example, in a channel resource, the contentDetails property contains other properties, such as the uploads properties. As such, if you set part=contentDetails, the API response will also contain all of those nested properties.",
        "required": true,
        "location": "query"
       }
@@ -3810,6 +3888,33 @@
      "scopes": [
       "https://www.googleapis.com/auth/youtube",
       "https://www.googleapis.com/auth/youtube.readonly",
+      "https://www.googleapis.com/auth/youtubepartner"
+     ]
+    },
+    "update": {
+     "id": "youtube.channels.update",
+     "path": "channels",
+     "httpMethod": "PUT",
+     "description": "Updates a channel's metadata.",
+     "parameters": {
+      "part": {
+       "type": "string",
+       "description": "The part parameter serves two purposes in this operation. It identifies the properties that the write operation will set as well as the properties that the API response will include.\n\nThe part names that you can include in the parameter value are id and invideoPromotion.\n\nNote that this method will override the existing values for all of the mutable properties that are contained in any parts that the parameter value specifies.",
+       "required": true,
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "part"
+     ],
+     "request": {
+      "$ref": "Channel"
+     },
+     "response": {
+      "$ref": "Channel"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/youtube",
       "https://www.googleapis.com/auth/youtubepartner"
      ]
     }
@@ -3874,6 +3979,11 @@
        "required": true,
        "location": "query"
       },
+      "onBehalfOfContentOwner": {
+       "type": "string",
+       "description": "USE_DESCRIPTION --- channels:list:onBehalfOfContentOwner",
+       "location": "query"
+      },
       "part": {
        "type": "string",
        "description": "The part parameter specifies a comma-separated list of one or more liveBroadcast resource properties that the API response will include. The part names that you can include in the parameter value are id, snippet, contentDetails, and status.",
@@ -3920,6 +4030,11 @@
        "format": "uint64",
        "location": "query"
       },
+      "onBehalfOfContentOwner": {
+       "type": "string",
+       "description": "USE_DESCRIPTION --- channels:list:onBehalfOfContentOwner",
+       "location": "query"
+      },
       "part": {
        "type": "string",
        "description": "The part parameter specifies a comma-separated list of one or more liveBroadcast resource properties that the API response will include. The part names that you can include in the parameter value are id, snippet, contentDetails, and status.",
@@ -3949,6 +4064,11 @@
        "description": "The id parameter specifies the YouTube live broadcast ID for the resource that is being deleted.",
        "required": true,
        "location": "query"
+      },
+      "onBehalfOfContentOwner": {
+       "type": "string",
+       "description": "USE_DESCRIPTION --- channels:list:onBehalfOfContentOwner",
+       "location": "query"
       }
      },
      "parameterOrder": [
@@ -3964,6 +4084,11 @@
      "httpMethod": "POST",
      "description": "Creates a broadcast.",
      "parameters": {
+      "onBehalfOfContentOwner": {
+       "type": "string",
+       "description": "USE_DESCRIPTION --- channels:list:onBehalfOfContentOwner",
+       "location": "query"
+      },
       "part": {
        "type": "string",
        "description": "The part parameter serves two purposes in this operation. It identifies the properties that the write operation will set as well as the properties that the API response will include.\n\nThe part properties that you can include in the parameter value are id, snippet, contentDetails, and status.",
@@ -4077,6 +4202,11 @@
        "required": true,
        "location": "query"
       },
+      "onBehalfOfContentOwner": {
+       "type": "string",
+       "description": "USE_DESCRIPTION --- channels:list:onBehalfOfContentOwner",
+       "location": "query"
+      },
       "part": {
        "type": "string",
        "description": "The part parameter specifies a comma-separated list of one or more liveBroadcast resource properties that the API response will include. The part names that you can include in the parameter value are id, snippet, contentDetails, and status.",
@@ -4102,6 +4232,11 @@
      "httpMethod": "PUT",
      "description": "Updates a broadcast. For example, you could modify the broadcast settings defined in the liveBroadcast resource's contentDetails object.",
      "parameters": {
+      "onBehalfOfContentOwner": {
+       "type": "string",
+       "description": "USE_DESCRIPTION --- channels:list:onBehalfOfContentOwner",
+       "location": "query"
+      },
       "part": {
        "type": "string",
        "description": "The part parameter serves two purposes in this operation. It identifies the properties that the write operation will set as well as the properties that the API response will include.\n\nThe part properties that you can include in the parameter value are id, snippet, contentDetails, and status.\n\nNote that this method will override the existing values for all of the mutable properties that are contained in any parts that the parameter value specifies. For example, a broadcast's privacy status is defined in the status part. As such, if your request is updating a private or unlisted broadcast, and the request's part parameter value includes the status part, the broadcast's privacy setting will be updated to whatever value the request body specifies. If the request body does not specify a value, the existing privacy setting will be removed and the broadcast will revert to the default privacy setting.",
@@ -4248,45 +4383,6 @@
     }
    }
   },
-  "players": {
-   "methods": {
-    "list": {
-     "id": "youtube.players.list",
-     "path": "players",
-     "httpMethod": "GET",
-     "description": "Returns the data required to play the videos specified on the request, or restriction information explaining why it can't be played.",
-     "parameters": {
-      "itag": {
-       "type": "string",
-       "description": "If specified, the itag parameter specifies a comma-separated list of itags video formats the client is interested in. The returned formats will be a subset of those itags.",
-       "location": "query"
-      },
-      "part": {
-       "type": "string",
-       "description": "The part parameter specifies a comma-separated list of one or more player resource properties that the API response will include.",
-       "required": true,
-       "location": "query"
-      },
-      "videoId": {
-       "type": "string",
-       "description": "The videoId parameter specifies a comma-separated list of the YouTube video ID(s) for the resource(s) that are being retrieved.",
-       "location": "query"
-      }
-     },
-     "parameterOrder": [
-      "part"
-     ],
-     "response": {
-      "$ref": "PlayerListResponse"
-     },
-     "scopes": [
-      "https://www.googleapis.com/auth/youtube",
-      "https://www.googleapis.com/auth/youtube.readonly",
-      "https://www.googleapis.com/auth/youtubepartner"
-     ]
-    }
-   }
-  },
   "playlistItems": {
    "methods": {
     "delete": {
@@ -4389,7 +4485,8 @@
       "https://www.googleapis.com/auth/youtube",
       "https://www.googleapis.com/auth/youtube.readonly",
       "https://www.googleapis.com/auth/youtubepartner"
-     ]
+     ],
+     "supportsSubscription": true
     },
     "update": {
      "id": "youtube.playlistItems.update",
@@ -4600,7 +4697,7 @@
       },
       "onBehalfOfContentOwner": {
        "type": "string",
-       "description": "The onBehalfOfContentOwner parameter indicates that the authenticated user is acting on behalf of the content owner specified in the parameter value. This parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and get access to all their video and channel data, without having to provide authentication credentials for each individual channel. The actual CMS account that the user authenticates with needs to be linked to the specified YouTube content owner.",
+       "description": "USE_DESCRIPTION --- channels:list:onBehalfOfContentOwner",
        "location": "query"
       },
       "order": {
@@ -4867,10 +4964,10 @@
       "part"
      ],
      "request": {
-      "$ref": "Subscription2"
+      "$ref": "Subscription"
      },
      "response": {
-      "$ref": "Subscription2"
+      "$ref": "Subscription"
      },
      "scopes": [
       "https://www.googleapis.com/auth/youtube",
@@ -4912,6 +5009,11 @@
        "description": "Set this parameter's value to true to retrieve a feed of the authenticated user's subscriptions.",
        "location": "query"
       },
+      "mySubscribers": {
+       "type": "boolean",
+       "description": "Set this parameter's value to true to retrieve a feed of the subscribers of the authenticated user.",
+       "location": "query"
+      },
       "order": {
        "type": "string",
        "description": "The order parameter specifies the method that will be used to sort resources in the API response.",
@@ -4951,19 +5053,54 @@
       "https://www.googleapis.com/auth/youtube.readonly",
       "https://www.googleapis.com/auth/youtubepartner"
      ]
-    },
-    "unsubscribe": {
-     "id": "youtube.subscriptions.unsubscribe",
-     "path": "subscriptions/unsubscribe",
+    }
+   }
+  },
+  "thumbnails": {
+   "methods": {
+    "set": {
+     "id": "youtube.thumbnails.set",
+     "path": "thumbnails/set",
      "httpMethod": "POST",
-     "request": {
-      "$ref": "Subscription"
+     "description": "Uploads a custom video thumbnail to YouTube and sets it for a video.",
+     "parameters": {
+      "videoId": {
+       "type": "string",
+       "description": "The videoId parameter specifies a YouTube video ID for which the custom video thumbnail is being provided.",
+       "required": true,
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "videoId"
+     ],
+     "response": {
+      "$ref": "ThumbnailListResponse"
      },
      "scopes": [
       "https://www.googleapis.com/auth/youtube",
-      "https://www.googleapis.com/auth/youtube.readonly",
+      "https://www.googleapis.com/auth/youtube.upload",
       "https://www.googleapis.com/auth/youtubepartner"
-     ]
+     ],
+     "supportsMediaUpload": true,
+     "mediaUpload": {
+      "accept": [
+       "application/octet-stream",
+       "image/jpeg",
+       "image/png"
+      ],
+      "maxSize": "2MB",
+      "protocols": {
+       "simple": {
+        "multipart": true,
+        "path": "/upload/youtube/v3/thumbnails/set"
+       },
+       "resumable": {
+        "multipart": true,
+        "path": "/resumable/upload/youtube/v3/thumbnails/set"
+       }
+      }
+     }
     }
    }
   },
@@ -5025,6 +5162,11 @@
        "description": "The id parameter specifies the YouTube video ID for the resource that is being deleted. In a video resource, the id property specifies the video's ID.",
        "required": true,
        "location": "query"
+      },
+      "onBehalfOfContentOwner": {
+       "type": "string",
+       "description": "USE_DESCRIPTION --- channels:list:onBehalfOfContentOwner",
+       "location": "query"
       }
      },
      "parameterOrder": [
@@ -5046,6 +5188,11 @@
        "description": "The id parameter specifies a comma-separated list of the YouTube video ID(s) for the resource(s) that are being retrieved. In a video resource, the id property specifies the video's ID.",
        "required": true,
        "location": "query"
+      },
+      "onBehalfOfContentOwner": {
+       "type": "string",
+       "description": "USE_DESCRIPTION --- channels:list:onBehalfOfContentOwner",
+       "location": "query"
       }
      },
      "parameterOrder": [
@@ -5065,10 +5212,30 @@
      "httpMethod": "POST",
      "description": "Uploads a video to YouTube and optionally sets the video's metadata.",
      "parameters": {
+      "autoLevels": {
+       "type": "boolean",
+       "description": "The autoLevels parameter specifies whether the video should be auto-leveled by YouTube.",
+       "location": "query"
+      },
+      "onBehalfOfContentOwner": {
+       "type": "string",
+       "description": "USE_DESCRIPTION --- channels:list:onBehalfOfContentOwner",
+       "location": "query"
+      },
+      "onBehalfOfContentOwnerChannel": {
+       "type": "string",
+       "description": "This parameter can only be used in a properly authorized request. Note: This parameter is intended exclusively for YouTube content partners.\n\nThe onBehalfOfContentOwnerChannel parameter indicates that the request's authorization credentials identify a YouTube CMS user who is acting on behalf of the channel specified in the parameter value. This parameter must be used in conjunction with the onBehalfOfContentOwner parameter, and the user must be authenticated using a CMS account that is linked to the content owner that the onBehalfOfContentOwner parameter specifies. In addition, the channel that the onBehalfOfContentOwnerChannel parameter value specifies must be linked to the content owner that the onBehalfOfContentOwner parameter specifies.\n\nThis parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and perform actions on behalf of the channel specified in the parameter value, without having to provide authentication credentials for each separate channel.",
+       "location": "query"
+      },
       "part": {
        "type": "string",
        "description": "The part parameter serves two purposes in this operation. It identifies the properties that the write operation will set as well as the properties that the API response will include.\n\nThe part names that you can include in the parameter value are snippet, contentDetails, player, statistics, status, and topicDetails. However, not all of those parts contain properties that can be set when setting or updating a video's metadata. For example, the statistics object encapsulates statistics that YouTube calculates for a video and does not contain values that you can set or modify. If the parameter value specifies a part that does not contain mutable values, that part will still be included in the API response.",
        "required": true,
+       "location": "query"
+      },
+      "stabilize": {
+       "type": "boolean",
+       "description": "The stabilize parameter specifies whether the video should be stabilized by YouTube.",
        "location": "query"
       }
      },
@@ -5114,12 +5281,38 @@
       "id": {
        "type": "string",
        "description": "The id parameter specifies a comma-separated list of the YouTube video ID(s) for the resource(s) that are being retrieved. In a video resource, the id property specifies the video's ID.",
-       "required": true,
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "USE_DESCRIPTION --- channels:list:maxResults",
+       "default": "5",
+       "format": "uint32",
+       "minimum": "1",
+       "maximum": "50",
+       "location": "query"
+      },
+      "myRating": {
+       "type": "string",
+       "description": "Set this parameter's value to like or dislike to instruct the API to only return videos liked or disliked by the authenticated user.",
+       "enum": [
+        "dislike",
+        "like"
+       ],
+       "enumDescriptions": [
+        "Returns only videos disliked by the authenticated user.",
+        "Returns only video liked by the authenticated user."
+       ],
        "location": "query"
       },
       "onBehalfOfContentOwner": {
        "type": "string",
-       "description": "The onBehalfOfContentOwner parameter indicates that the authenticated user is acting on behalf of the content owner specified in the parameter value. This parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and get access to all their video and channel data, without having to provide authentication credentials for each individual channel. The actual CMS account that the user authenticates with needs to be linked to the specified YouTube content owner.",
+       "description": "USE_DESCRIPTION --- channels:list:onBehalfOfContentOwner",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "USE_DESCRIPTION --- channels:list:pageToken",
        "location": "query"
       },
       "part": {
@@ -5130,7 +5323,6 @@
       }
      },
      "parameterOrder": [
-      "id",
       "part"
      ],
      "response": {
@@ -5152,6 +5344,11 @@
        "type": "string",
        "description": "The id parameter specifies the YouTube video ID.",
        "required": true,
+       "location": "query"
+      },
+      "onBehalfOfContentOwner": {
+       "type": "string",
+       "description": "USE_DESCRIPTION --- channels:list:onBehalfOfContentOwner",
        "location": "query"
       },
       "rating": {
@@ -5186,6 +5383,11 @@
      "httpMethod": "PUT",
      "description": "Updates a video's metadata.",
      "parameters": {
+      "onBehalfOfContentOwner": {
+       "type": "string",
+       "description": "USE_DESCRIPTION --- channels:list:onBehalfOfContentOwner",
+       "location": "query"
+      },
       "part": {
        "type": "string",
        "description": "The part parameter serves two purposes in this operation. It identifies the properties that the write operation will set as well as the properties that the API response will include.\n\nThe part names that you can include in the parameter value are snippet, contentDetails, player, statistics, status, and topicDetails.\n\nNote that this method will override the existing values for all of the mutable properties that are contained in any parts that the parameter value specifies. For example, a video's privacy setting is contained in the status part. As such, if your request is updating a private video, and the request's part parameter value includes the status part, the video's privacy setting will be updated to whatever value the request body specifies. If the request body does not specify a value, the existing privacy setting will be removed and the video will revert to the default privacy setting.\n\nIn addition, not all of those parts contain properties that can be set when setting or updating a video's metadata. For example, the statistics object encapsulates statistics that YouTube calculates for a video and does not contain values that you can set or modify. If the parameter value specifies a part that does not contain mutable values, that part will still be included in the API response.",

@@ -1,13 +1,15 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/Sf3JCaeK5AsOg-flbpZrYCqycvI\"",
+ "etag": "\"0kaFfN0xfjZjASExv-gUnrWhdto/XXPYvQ7C4sSjsanSbYvihpmjoNE\"",
  "discoveryVersion": "v1",
  "id": "mirror:v1",
  "name": "mirror",
  "version": "v1",
- "revision": "20130329",
+ "revision": "20130614",
  "title": "Google Mirror API",
  "description": "API for interacting with Glass users via the timeline.",
+ "ownerDomain": "google.com",
+ "ownerName": "Google",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/search-16.gif",
   "x32": "http://www.google.com/images/icons/product/search-32.gif"
@@ -442,7 +444,7 @@
    "properties": {
     "attachments": {
      "type": "array",
-     "description": "A list of media attachments associated with this item.",
+     "description": "A list of media attachments associated with this item. As a convenience, you can refer to attachments in your HTML payloads with the attachment or cid scheme. For example:  \n- attachment: \u003cimg src=\"attachment:attachment_index\"\u003e where attachment_index is the 0-based index of this array. \n- cid: \u003cimg src=\"cid:attachment_id\"\u003e where attachment_id is the ID of the attachment.",
      "items": {
       "$ref": "Attachment"
      }
@@ -475,7 +477,7 @@
     },
     "html": {
      "type": "string",
-     "description": "HTML content for this item. If both text and html are provided for an item, the html will be rendered in the timeline."
+     "description": "HTML content for this item. If both text and html are provided for an item, the html will be rendered in the timeline.\nAllowed HTML elements - You can use these elements in your timeline cards.\n \n- Headers: h1, h2, h3, h4, h5, h6 \n- Images: img \n- Lists: li, ol, ul \n- HTML5 semantics: article, aside, details, figure, figcaption, footer, header, nav, section, summary, time \n- Structural: blockquote, br, div, hr, p, span \n- Style: b, big, center, em, i, u, s, small, strike, strong, style, sub, sup \n- Tables: table, tbody, td, tfoot, th, thead, tr  \nBlocked HTML elements: These elements and their contents are removed from HTML payloads.\n \n- Document headers: head, title \n- Embeds: audio, embed, object, source, video \n- Frames: frame, frameset \n- Scripting: applet, script  \nOther elements: Any elements that aren't listed are removed, but their contents are preserved."
     },
     "htmlPages": {
      "type": "array",
@@ -502,7 +504,7 @@
     },
     "isPinned": {
      "type": "boolean",
-     "description": "When true, indicates this item is pinned, which means it's grouped alongside \"active\" items like navigation and hangouts, on the opposite side of the home screen from historical (non-pinned) timeline items."
+     "description": "When true, indicates this item is pinned, which means it's grouped alongside \"active\" items like navigation and hangouts, on the opposite side of the home screen from historical (non-pinned) timeline items. You can allow the user to toggle the value of this property with the TOGGLE_PINNED built-in menu item."
     },
     "kind": {
      "type": "string",
@@ -546,7 +548,7 @@
     },
     "speakableText": {
      "type": "string",
-     "description": "The speakable version of the content of this item. Along with the READ_ALOUD menu item, use this field to provide text that would be clearer when read aloud, or to provide extended information to what is displayed visually on Glass."
+     "description": "The speakable version of the content of this item. Along with the READ_ALOUD menu item, use this field to provide text that would be clearer when read aloud, or to provide extended information to what is displayed visually on Glass. If you specified html content, use this property instead of text to specify the text to read aloud."
     },
     "text": {
      "type": "string",

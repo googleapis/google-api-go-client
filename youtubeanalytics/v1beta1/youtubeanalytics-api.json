@@ -1,14 +1,16 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/UIyAkv_5pk3lLRK5A-ipqJHG-Ic\"",
+ "etag": "\"0kaFfN0xfjZjASExv-gUnrWhdto/Z4tojzfRtZUe6xHuPHmuyLI0Onc\"",
  "discoveryVersion": "v1",
  "id": "youtubeAnalytics:v1beta1",
  "name": "youtubeAnalytics",
  "canonicalName": "YouTube Analytics",
  "version": "v1beta1",
- "revision": "20130308",
+ "revision": "20130422",
  "title": "YouTube Analytics API",
  "description": "Retrieve your YouTube Analytics reports.",
+ "ownerDomain": "google.com",
+ "ownerName": "Google",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/youtube-16.png",
   "x32": "http://www.google.com/images/icons/product/youtube-32.png"
@@ -178,7 +180,7 @@
       "sort": {
        "type": "string",
        "description": "A comma-separated list of dimensions or metrics that determine the sort order for YouTube Analytics data. By default the sort order is ascending. The '-' prefix causes descending sort order.",
-       "pattern": "(-)?[0-9a-zA-Z,]+",
+       "pattern": "[-0-9a-zA-Z,]+",
        "location": "query"
       },
       "start-date": {

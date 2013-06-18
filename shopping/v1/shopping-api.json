@@ -1,13 +1,15 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"95FJOuWe9QdOljMvtEYMArTvwNI/WBsBLTRFwKkAJXQZTwvXsRM2Tzs\"",
+ "etag": "\"0kaFfN0xfjZjASExv-gUnrWhdto/8h5zRwG8E182tUUu6UeRCYUBCfA\"",
  "discoveryVersion": "v1",
  "id": "shopping:v1",
  "name": "shopping",
  "version": "v1",
- "revision": "20130411",
+ "revision": "20130614",
  "title": "Search API For Shopping",
  "description": "Lets you search over product data.",
+ "ownerDomain": "google.com",
+ "ownerName": "Google",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/search-16.gif",
   "x32": "http://www.google.com/images/icons/product/search-32.gif"
@@ -938,21 +940,6 @@
        "description": "Location used to determine tax and shipping",
        "location": "query"
       },
-      "plusOne.enabled": {
-       "type": "boolean",
-       "description": "Whether to return +1 button code",
-       "location": "query"
-      },
-      "plusOne.styles": {
-       "type": "string",
-       "description": "+1 button rendering styles",
-       "location": "query"
-      },
-      "plusOne.useGcsConfig": {
-       "type": "boolean",
-       "description": "Whether to use +1 button styles configured in the GCS account",
-       "location": "query"
-      },
       "productId": {
        "type": "string",
        "description": "Id of product",
@@ -1146,21 +1133,6 @@
        "type": "integer",
        "description": "Maximum number of variant results to return per result",
        "format": "int32",
-       "location": "query"
-      },
-      "plusOne.enabled": {
-       "type": "boolean",
-       "description": "Whether to return +1 button code",
-       "location": "query"
-      },
-      "plusOne.styles": {
-       "type": "string",
-       "description": "+1 button rendering styles",
-       "location": "query"
-      },
-      "plusOne.useGcsConfig": {
-       "type": "boolean",
-       "description": "Whether to use +1 button styles configured in the GCS account",
        "location": "query"
       },
       "promotions.enabled": {

@@ -22,6 +22,8 @@ import (
 	"strings"
 )
 
+// Always reference these packages, just in case the auto-generated code
+// below doesn't.
 var _ = bytes.NewBuffer
 var _ = strconv.Itoa
 var _ = fmt.Sprintf
@@ -30,6 +32,7 @@ var _ = io.Copy
 var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
+var _ = strings.Replace
 
 const apiId = "storage:v1beta2"
 const apiName = "storage"
@@ -568,15 +571,17 @@ func (c *BucketAccessControlsDeleteCall) Do() error {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/storage/v1beta2/", "b/{bucket}/acl/{entity}")
-	urls = strings.Replace(urls, "{bucket}", cleanPathString(c.bucket), 1)
-	urls = strings.Replace(urls, "{entity}", cleanPathString(c.entity), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{bucket}", url.QueryEscape(c.bucket), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{entity}", url.QueryEscape(c.entity), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -634,15 +639,17 @@ func (c *BucketAccessControlsGetCall) Do() (*BucketAccessControl, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/storage/v1beta2/", "b/{bucket}/acl/{entity}")
-	urls = strings.Replace(urls, "{bucket}", cleanPathString(c.bucket), 1)
-	urls = strings.Replace(urls, "{entity}", cleanPathString(c.entity), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{bucket}", url.QueryEscape(c.bucket), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{entity}", url.QueryEscape(c.entity), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -711,15 +718,17 @@ func (c *BucketAccessControlsInsertCall) Do() (*BucketAccessControl, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/storage/v1beta2/", "b/{bucket}/acl")
-	urls = strings.Replace(urls, "{bucket}", cleanPathString(c.bucket), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{bucket}", url.QueryEscape(c.bucket), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -777,14 +786,16 @@ func (c *BucketAccessControlsListCall) Do() (*BucketAccessControls, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/storage/v1beta2/", "b/{bucket}/acl")
-	urls = strings.Replace(urls, "{bucket}", cleanPathString(c.bucket), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{bucket}", url.QueryEscape(c.bucket), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -849,16 +860,18 @@ func (c *BucketAccessControlsPatchCall) Do() (*BucketAccessControl, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/storage/v1beta2/", "b/{bucket}/acl/{entity}")
-	urls = strings.Replace(urls, "{bucket}", cleanPathString(c.bucket), 1)
-	urls = strings.Replace(urls, "{entity}", cleanPathString(c.entity), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{bucket}", url.QueryEscape(c.bucket), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{entity}", url.QueryEscape(c.entity), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -932,16 +945,18 @@ func (c *BucketAccessControlsUpdateCall) Do() (*BucketAccessControl, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/storage/v1beta2/", "b/{bucket}/acl/{entity}")
-	urls = strings.Replace(urls, "{bucket}", cleanPathString(c.bucket), 1)
-	urls = strings.Replace(urls, "{entity}", cleanPathString(c.entity), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{bucket}", url.QueryEscape(c.bucket), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{entity}", url.QueryEscape(c.entity), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1030,14 +1045,16 @@ func (c *BucketsDeleteCall) Do() error {
 		params.Set("ifMetagenerationNotMatch", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/storage/v1beta2/", "b/{bucket}")
-	urls = strings.Replace(urls, "{bucket}", cleanPathString(c.bucket), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{bucket}", url.QueryEscape(c.bucket), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -1132,14 +1149,16 @@ func (c *BucketsGetCall) Do() (*Bucket, error) {
 		params.Set("projection", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/storage/v1beta2/", "b/{bucket}")
-	urls = strings.Replace(urls, "{bucket}", cleanPathString(c.bucket), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{bucket}", url.QueryEscape(c.bucket), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1243,12 +1262,14 @@ func (c *BucketsInsertCall) Do() (*Bucket, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/storage/v1beta2/", "b")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1354,11 +1375,13 @@ func (c *BucketsListCall) Do() (*Buckets, error) {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/storage/v1beta2/", "b")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1481,15 +1504,17 @@ func (c *BucketsPatchCall) Do() (*Bucket, error) {
 		params.Set("projection", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/storage/v1beta2/", "b/{bucket}")
-	urls = strings.Replace(urls, "{bucket}", cleanPathString(c.bucket), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{bucket}", url.QueryEscape(c.bucket), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1614,15 +1639,17 @@ func (c *BucketsUpdateCall) Do() (*Bucket, error) {
 		params.Set("projection", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/storage/v1beta2/", "b/{bucket}")
-	urls = strings.Replace(urls, "{bucket}", cleanPathString(c.bucket), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{bucket}", url.QueryEscape(c.bucket), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1713,12 +1740,14 @@ func (c *ChannelsStopCall) Do() error {
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/storage/v1beta2/", "channels/stop")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -1762,15 +1791,17 @@ func (c *DefaultObjectAccessControlsDeleteCall) Do() error {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/storage/v1beta2/", "b/{bucket}/defaultObjectAcl/{entity}")
-	urls = strings.Replace(urls, "{bucket}", cleanPathString(c.bucket), 1)
-	urls = strings.Replace(urls, "{entity}", cleanPathString(c.entity), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{bucket}", url.QueryEscape(c.bucket), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{entity}", url.QueryEscape(c.entity), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -1828,15 +1859,17 @@ func (c *DefaultObjectAccessControlsGetCall) Do() (*ObjectAccessControl, error) 
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/storage/v1beta2/", "b/{bucket}/defaultObjectAcl/{entity}")
-	urls = strings.Replace(urls, "{bucket}", cleanPathString(c.bucket), 1)
-	urls = strings.Replace(urls, "{entity}", cleanPathString(c.entity), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{bucket}", url.QueryEscape(c.bucket), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{entity}", url.QueryEscape(c.entity), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1906,15 +1939,17 @@ func (c *DefaultObjectAccessControlsInsertCall) Do() (*ObjectAccessControl, erro
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/storage/v1beta2/", "b/{bucket}/defaultObjectAcl")
-	urls = strings.Replace(urls, "{bucket}", cleanPathString(c.bucket), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{bucket}", url.QueryEscape(c.bucket), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1972,14 +2007,16 @@ func (c *DefaultObjectAccessControlsListCall) Do() (*ObjectAccessControls, error
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/storage/v1beta2/", "b/{bucket}/defaultObjectAcl")
-	urls = strings.Replace(urls, "{bucket}", cleanPathString(c.bucket), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{bucket}", url.QueryEscape(c.bucket), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2044,16 +2081,18 @@ func (c *DefaultObjectAccessControlsPatchCall) Do() (*ObjectAccessControl, error
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/storage/v1beta2/", "b/{bucket}/defaultObjectAcl/{entity}")
-	urls = strings.Replace(urls, "{bucket}", cleanPathString(c.bucket), 1)
-	urls = strings.Replace(urls, "{entity}", cleanPathString(c.entity), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{bucket}", url.QueryEscape(c.bucket), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{entity}", url.QueryEscape(c.entity), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2127,16 +2166,18 @@ func (c *DefaultObjectAccessControlsUpdateCall) Do() (*ObjectAccessControl, erro
 	params := make(url.Values)
 	params.Set("alt", "json")
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/storage/v1beta2/", "b/{bucket}/defaultObjectAcl/{entity}")
-	urls = strings.Replace(urls, "{bucket}", cleanPathString(c.bucket), 1)
-	urls = strings.Replace(urls, "{entity}", cleanPathString(c.entity), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{bucket}", url.QueryEscape(c.bucket), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{entity}", url.QueryEscape(c.entity), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2217,16 +2258,18 @@ func (c *ObjectAccessControlsDeleteCall) Do() error {
 		params.Set("generation", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/storage/v1beta2/", "b/{bucket}/o/{object}/acl/{entity}")
-	urls = strings.Replace(urls, "{bucket}", cleanPathString(c.bucket), 1)
-	urls = strings.Replace(urls, "{object}", cleanPathString(c.object), 1)
-	urls = strings.Replace(urls, "{entity}", cleanPathString(c.entity), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{bucket}", url.QueryEscape(c.bucket), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{object}", url.QueryEscape(c.object), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{entity}", url.QueryEscape(c.entity), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -2310,16 +2353,18 @@ func (c *ObjectAccessControlsGetCall) Do() (*ObjectAccessControl, error) {
 		params.Set("generation", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/storage/v1beta2/", "b/{bucket}/o/{object}/acl/{entity}")
-	urls = strings.Replace(urls, "{bucket}", cleanPathString(c.bucket), 1)
-	urls = strings.Replace(urls, "{object}", cleanPathString(c.object), 1)
-	urls = strings.Replace(urls, "{entity}", cleanPathString(c.entity), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{bucket}", url.QueryEscape(c.bucket), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{object}", url.QueryEscape(c.object), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{entity}", url.QueryEscape(c.entity), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2414,16 +2459,18 @@ func (c *ObjectAccessControlsInsertCall) Do() (*ObjectAccessControl, error) {
 		params.Set("generation", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/storage/v1beta2/", "b/{bucket}/o/{object}/acl")
-	urls = strings.Replace(urls, "{bucket}", cleanPathString(c.bucket), 1)
-	urls = strings.Replace(urls, "{object}", cleanPathString(c.object), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{bucket}", url.QueryEscape(c.bucket), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{object}", url.QueryEscape(c.object), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2507,15 +2554,17 @@ func (c *ObjectAccessControlsListCall) Do() (*ObjectAccessControls, error) {
 		params.Set("generation", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/storage/v1beta2/", "b/{bucket}/o/{object}/acl")
-	urls = strings.Replace(urls, "{bucket}", cleanPathString(c.bucket), 1)
-	urls = strings.Replace(urls, "{object}", cleanPathString(c.object), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{bucket}", url.QueryEscape(c.bucket), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{object}", url.QueryEscape(c.object), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2606,17 +2655,19 @@ func (c *ObjectAccessControlsPatchCall) Do() (*ObjectAccessControl, error) {
 		params.Set("generation", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/storage/v1beta2/", "b/{bucket}/o/{object}/acl/{entity}")
-	urls = strings.Replace(urls, "{bucket}", cleanPathString(c.bucket), 1)
-	urls = strings.Replace(urls, "{object}", cleanPathString(c.object), 1)
-	urls = strings.Replace(urls, "{entity}", cleanPathString(c.entity), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{bucket}", url.QueryEscape(c.bucket), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{object}", url.QueryEscape(c.object), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{entity}", url.QueryEscape(c.entity), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2716,17 +2767,19 @@ func (c *ObjectAccessControlsUpdateCall) Do() (*ObjectAccessControl, error) {
 		params.Set("generation", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/storage/v1beta2/", "b/{bucket}/o/{object}/acl/{entity}")
-	urls = strings.Replace(urls, "{bucket}", cleanPathString(c.bucket), 1)
-	urls = strings.Replace(urls, "{object}", cleanPathString(c.object), 1)
-	urls = strings.Replace(urls, "{entity}", cleanPathString(c.entity), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{bucket}", url.QueryEscape(c.bucket), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{object}", url.QueryEscape(c.object), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{entity}", url.QueryEscape(c.entity), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2836,16 +2889,18 @@ func (c *ObjectsComposeCall) Do() (*Object, error) {
 		params.Set("ifMetagenerationMatch", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/storage/v1beta2/", "b/{destinationBucket}/o/{destinationObject}/compose")
-	urls = strings.Replace(urls, "{destinationBucket}", cleanPathString(c.destinationBucket), 1)
-	urls = strings.Replace(urls, "{destinationObject}", cleanPathString(c.destinationObject), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{destinationBucket}", url.QueryEscape(c.destinationBucket), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{destinationObject}", url.QueryEscape(c.destinationObject), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3054,18 +3109,20 @@ func (c *ObjectsCopyCall) Do() (*Object, error) {
 		params.Set("sourceGeneration", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/storage/v1beta2/", "b/{sourceBucket}/o/{sourceObject}/copyTo/b/{destinationBucket}/o/{destinationObject}")
-	urls = strings.Replace(urls, "{sourceBucket}", cleanPathString(c.sourceBucket), 1)
-	urls = strings.Replace(urls, "{sourceObject}", cleanPathString(c.sourceObject), 1)
-	urls = strings.Replace(urls, "{destinationBucket}", cleanPathString(c.destinationBucket), 1)
-	urls = strings.Replace(urls, "{destinationObject}", cleanPathString(c.destinationObject), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{sourceBucket}", url.QueryEscape(c.sourceBucket), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{sourceObject}", url.QueryEscape(c.sourceObject), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{destinationBucket}", url.QueryEscape(c.destinationBucket), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{destinationObject}", url.QueryEscape(c.destinationObject), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3273,15 +3330,17 @@ func (c *ObjectsDeleteCall) Do() error {
 		params.Set("ifMetagenerationNotMatch", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/storage/v1beta2/", "b/{bucket}/o/{object}")
-	urls = strings.Replace(urls, "{bucket}", cleanPathString(c.bucket), 1)
-	urls = strings.Replace(urls, "{object}", cleanPathString(c.object), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{bucket}", url.QueryEscape(c.bucket), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{object}", url.QueryEscape(c.object), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -3435,15 +3494,17 @@ func (c *ObjectsGetCall) Do() (*Object, error) {
 		params.Set("projection", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/storage/v1beta2/", "b/{bucket}/o/{object}")
-	urls = strings.Replace(urls, "{bucket}", cleanPathString(c.bucket), 1)
-	urls = strings.Replace(urls, "{object}", cleanPathString(c.object), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{bucket}", url.QueryEscape(c.bucket), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{object}", url.QueryEscape(c.object), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3634,10 +3695,11 @@ func (c *ObjectsInsertCall) Do() (*Object, error) {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
 		params.Set("uploadType", "multipart")
 	}
-	urls = strings.Replace(urls, "{bucket}", cleanPathString(c.bucket), 1)
 	urls += "?" + params.Encode()
 	contentLength_, hasMedia_ := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
 	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{bucket}", url.QueryEscape(c.bucket), 1)
+	googleapi.SetOpaque(req.URL)
 	if hasMedia_ {
 		req.ContentLength = contentLength_
 	}
@@ -3647,6 +3709,7 @@ func (c *ObjectsInsertCall) Do() (*Object, error) {
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3830,14 +3893,16 @@ func (c *ObjectsListCall) Do() (*Objects, error) {
 		params.Set("versions", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/storage/v1beta2/", "b/{bucket}/o")
-	urls = strings.Replace(urls, "{bucket}", cleanPathString(c.bucket), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{bucket}", url.QueryEscape(c.bucket), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4011,16 +4076,18 @@ func (c *ObjectsPatchCall) Do() (*Object, error) {
 		params.Set("projection", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/storage/v1beta2/", "b/{bucket}/o/{object}")
-	urls = strings.Replace(urls, "{bucket}", cleanPathString(c.bucket), 1)
-	urls = strings.Replace(urls, "{object}", cleanPathString(c.object), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{bucket}", url.QueryEscape(c.bucket), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{object}", url.QueryEscape(c.object), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4204,16 +4271,18 @@ func (c *ObjectsUpdateCall) Do() (*Object, error) {
 		params.Set("projection", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/storage/v1beta2/", "b/{bucket}/o/{object}")
-	urls = strings.Replace(urls, "{bucket}", cleanPathString(c.bucket), 1)
-	urls = strings.Replace(urls, "{object}", cleanPathString(c.object), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{bucket}", url.QueryEscape(c.bucket), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{object}", url.QueryEscape(c.object), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4396,15 +4465,17 @@ func (c *ObjectsWatchAllCall) Do() (*Channel, error) {
 		params.Set("versions", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/storage/v1beta2/", "b/{bucket}/o/watch")
-	urls = strings.Replace(urls, "{bucket}", cleanPathString(c.bucket), 1)
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{bucket}", url.QueryEscape(c.bucket), 1)
+	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4483,13 +4554,4 @@ func (c *ObjectsWatchAllCall) Do() (*Channel, error) {
 	//   "supportsSubscription": true
 	// }
 
-}
-
-func cleanPathString(s string) string {
-	return strings.Map(func(r rune) rune {
-		if r >= 0x2d && r <= 0x7a || r == '~' {
-			return r
-		}
-		return -1
-	}, s)
 }

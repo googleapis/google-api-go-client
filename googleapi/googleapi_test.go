@@ -9,11 +9,9 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"strings"
 	"testing"
 )
-
-// reqTmpl is used to match the output of writing an HTTP request.
-const reqTmpl = "GET %v HTTP/1.1\r\nHost: %v\r\nUser-Agent: %v\r\n\r\n"
 
 type SetOpaqueTest struct {
 	in             *url.URL
@@ -79,12 +77,11 @@ var setOpaqueTests = []SetOpaqueTest{
 	},
 }
 
-func TestSetOpaque(t *testing.T) {
-	userAgent := "Go http package"
-	if isGo11 {
-		userAgent = "Go 1.1 package http"
-	}
+// prefixTmpl is a template for the expected prefix of the output of writing
+// an HTTP request.
+const prefixTmpl = "GET %v HTTP/1.1\r\nHost: %v\r\n"
 
+func TestSetOpaque(t *testing.T) {
 	for _, test := range setOpaqueTests {
 		u := *test.in
 		SetOpaque(&u)
@@ -96,9 +93,9 @@ func TestSetOpaque(t *testing.T) {
 			continue
 		}
 
-		exp := fmt.Sprintf(reqTmpl, test.wantRequestURI, test.in.Host, userAgent)
-		if got := string(w.Bytes()); got != exp {
-			t.Errorf("got %q expected %q", got, exp)
+		prefix := fmt.Sprintf(prefixTmpl, test.wantRequestURI, test.in.Host)
+		if got := string(w.Bytes()); !strings.HasPrefix(got, prefix) {
+			t.Errorf("got %q expected prefix %q", got, prefix)
 		}
 	}
 }

@@ -239,14 +239,28 @@ func ResolveRelative(basestr, relstr string) string {
 	return us
 }
 
-// isGo11 is set true by go11.go when we're at Go1.1 or later.
-var isGo11 bool
+// has4860Fix is whether this Go environment contains the fix for
+// http://golang.org/issue/4860
+var has4860Fix bool
+
+// init initializes has4860Fix by checking the behavior of the net/http package.
+func init() {
+	r := http.Request{
+		URL: &url.URL{
+			Scheme: "http",
+			Opaque: "//opaque",
+		},
+	}
+	b := &bytes.Buffer{}
+	r.Write(b)
+	has4860Fix = bytes.HasPrefix(b.Bytes(), []byte("GET http"))
+}
 
 // SetOpaque sets u.Opaque from u.Path such that HTTP requests to it
 // don't alter any hex-escaped characters in u.Path.
 func SetOpaque(u *url.URL) {
 	u.Opaque = "//" + u.Host + u.Path
-	if !isGo11 {
+	if !has4860Fix {
 		u.Opaque = u.Scheme + ":" + u.Opaque
 	}
 }

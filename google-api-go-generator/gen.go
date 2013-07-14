@@ -38,7 +38,9 @@ var (
 
 	publicOnly = flag.Bool("publiconly", true, "Only build public, released APIs. Only applicable for Google employees.")
 
-	jsonFile = flag.String("api_json_file", "", "If non-empty, the path to a local file on disk containing the API to generate. Exclusive with setting --api.")
+	jsonFile     = flag.String("api_json_file", "", "If non-empty, the path to a local file on disk containing the API to generate. Exclusive with setting --api.")
+	output       = flag.String("output", "", "(optional) Path to source output file. If not specified, the API name and version are used to construct an output path (e.g. tasks/v1).")
+	googleAPIPkg = flag.String("googleapi_pkg", "code.google.com/p/google-api-go-client/googleapi", "Go package path of the 'googleapi' support package.")
 )
 
 // API represents an API to generate, as well as its state while it's
@@ -340,7 +342,10 @@ func (a *API) GenerateCode() (outerr error) {
 	pkg := a.Package()
 	writeFile(filepath.Join(outdir, a.Package()+"-api.json"), jsonBytes)
 
-	genfilename := filepath.Join(outdir, pkg+"-gen.go")
+	genfilename := *output
+	if genfilename == "" {
+		genfilename = filepath.Join(outdir, pkg+"-gen.go")
+	}
 
 	// Buffer the output in memory, for gofmt'ing later in the defer.
 	var buf bytes.Buffer
@@ -405,7 +410,7 @@ func (a *API) GenerateCode() (outerr error) {
 	p("import (\n")
 	for _, pkg := range []string{
 		"bytes",
-		"code.google.com/p/google-api-go-client/googleapi",
+		*googleAPIPkg,
 		"encoding/json",
 		"errors",
 		"fmt",

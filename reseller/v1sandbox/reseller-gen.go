@@ -142,6 +142,9 @@ type Customer struct {
 
 	// PostalAddress: The postal address of the customer.
 	PostalAddress *Address `json:"postalAddress,omitempty"`
+
+	// ResourceUiUrl: Ui url for customer resource.
+	ResourceUiUrl string `json:"resourceUiUrl,omitempty"`
 }
 
 type RenewalSettings struct {
@@ -186,6 +189,9 @@ type Subscription struct {
 	// RenewalSettings: Renewal settings of the subscription.
 	RenewalSettings *RenewalSettings `json:"renewalSettings,omitempty"`
 
+	// ResourceUiUrl: Ui url for subscription resource.
+	ResourceUiUrl string `json:"resourceUiUrl,omitempty"`
+
 	// Seats: Number/Limit of seats in the new plan.
 	Seats *Seats `json:"seats,omitempty"`
 
@@ -197,6 +203,9 @@ type Subscription struct {
 
 	// SubscriptionId: The id of the subscription.
 	SubscriptionId string `json:"subscriptionId,omitempty"`
+
+	// TransferInfo: Transfer related information for the subscription.
+	TransferInfo *SubscriptionTransferInfo `json:"transferInfo,omitempty"`
 
 	// TrialSettings: Trial Settings of the subscription.
 	TrialSettings *SubscriptionTrialSettings `json:"trialSettings,omitempty"`
@@ -222,6 +231,12 @@ type SubscriptionPlanCommitmentInterval struct {
 	// StartTime: Start time of the commitment interval in milliseconds
 	// since Unix epoch.
 	StartTime int64 `json:"startTime,omitempty,string"`
+}
+
+type SubscriptionTransferInfo struct {
+	// TransferabilityExpirationTime: Time when transfer token or intent to
+	// transfer will expire.
+	TransferabilityExpirationTime int64 `json:"transferabilityExpirationTime,omitempty,string"`
 }
 
 type SubscriptionTrialSettings struct {
@@ -1033,6 +1048,22 @@ func (r *SubscriptionsService) List() *SubscriptionsListCall {
 	return c
 }
 
+// CustomerAuthToken sets the optional parameter "customerAuthToken": An
+// auth token needed if the customer is not a resold customer of this
+// reseller. Can be generated at
+// https://www.google.com/a/cpanel/customer-domain/TransferToken.
+func (c *SubscriptionsListCall) CustomerAuthToken(customerAuthToken string) *SubscriptionsListCall {
+	c.opt_["customerAuthToken"] = customerAuthToken
+	return c
+}
+
+// CustomerId sets the optional parameter "customerId": Id of the
+// Customer
+func (c *SubscriptionsListCall) CustomerId(customerId string) *SubscriptionsListCall {
+	c.opt_["customerId"] = customerId
+	return c
+}
+
 // CustomerNamePrefix sets the optional parameter "customerNamePrefix":
 // Prefix of the customer's domain name by which the subscriptions
 // should be filtered. Optional
@@ -1059,6 +1090,12 @@ func (c *SubscriptionsListCall) Do() (*Subscriptions, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["customerAuthToken"]; ok {
+		params.Set("customerAuthToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["customerId"]; ok {
+		params.Set("customerId", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["customerNamePrefix"]; ok {
 		params.Set("customerNamePrefix", fmt.Sprintf("%v", v))
 	}
@@ -1091,6 +1128,16 @@ func (c *SubscriptionsListCall) Do() (*Subscriptions, error) {
 	//   "httpMethod": "GET",
 	//   "id": "reseller.subscriptions.list",
 	//   "parameters": {
+	//     "customerAuthToken": {
+	//       "description": "An auth token needed if the customer is not a resold customer of this reseller. Can be generated at https://www.google.com/a/cpanel/customer-domain/TransferToken.Optional.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "customerId": {
+	//       "description": "Id of the Customer",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "customerNamePrefix": {
 	//       "description": "Prefix of the customer's domain name by which the subscriptions should be filtered. Optional",
 	//       "location": "query",

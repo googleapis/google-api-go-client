@@ -525,10 +525,29 @@ type TimelineItem struct {
 	// SpeakableText: The speakable version of the content of this item.
 	// Along with the READ_ALOUD menu item, use this field to provide text
 	// that would be clearer when read aloud, or to provide extended
-	// information to what is displayed visually on Glass. If you specified
-	// html content, use this property instead of text to specify the text
-	// to read aloud.
+	// information to what is displayed visually on Glass.
+	//
+	// Glassware should
+	// also specify the speakableType field, which will be spoken before
+	// this text in cases where the additional context is useful, for
+	// example when the user requests that the item be read aloud following
+	// a notification.
 	SpeakableText string `json:"speakableText,omitempty"`
+
+	// SpeakableType: A speakable description of the type of this item. This
+	// will be announced to the user prior to reading the content of the
+	// item in cases where the additional context is useful, for example
+	// when the user requests that the item be read aloud following a
+	// notification.
+	//
+	// This should be a short, simple noun phrase such as
+	// "Email", "Text message", or "Daily Planet News Update".
+	//
+	// Glassware
+	// are encouraged to populate this field for every timeline item, even
+	// if the item does not contain speakableText or text so that the user
+	// can learn the type of the item without looking at the screen.
+	SpeakableType string `json:"speakableType,omitempty"`
 
 	// Text: Text content of this item.
 	Text string `json:"text,omitempty"`

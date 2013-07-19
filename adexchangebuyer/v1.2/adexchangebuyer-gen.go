@@ -53,6 +53,7 @@ func New(client *http.Client) (*Service, error) {
 	s.Accounts = NewAccountsService(s)
 	s.Creatives = NewCreativesService(s)
 	s.DirectDeals = NewDirectDealsService(s)
+	s.PerformanceReport = NewPerformanceReportService(s)
 	return s, nil
 }
 
@@ -64,6 +65,8 @@ type Service struct {
 	Creatives *CreativesService
 
 	DirectDeals *DirectDealsService
+
+	PerformanceReport *PerformanceReportService
 }
 
 func NewAccountsService(s *Service) *AccountsService {
@@ -90,6 +93,15 @@ func NewDirectDealsService(s *Service) *DirectDealsService {
 }
 
 type DirectDealsService struct {
+	s *Service
+}
+
+func NewPerformanceReportService(s *Service) *PerformanceReportService {
+	rs := &PerformanceReportService{s: s}
+	return rs
+}
+
+type PerformanceReportService struct {
 	s *Service
 }
 
@@ -281,6 +293,35 @@ type DirectDealsList struct {
 
 	// Kind: Resource type.
 	Kind string `json:"kind,omitempty"`
+}
+
+type PerformanceReportList struct {
+	// Kind: Resource type.
+	Kind string `json:"kind,omitempty"`
+
+	// Performance_report: A list of performance reports relevant for the
+	// account.
+	Performance_report []*PerformanceReportListPerformance_report `json:"performance_report,omitempty"`
+}
+
+type PerformanceReportListPerformance_report struct {
+	// Kind: Resource type.
+	Kind string `json:"kind,omitempty"`
+
+	// Latency50thPercentile: The Nth percentile round trip latency(ms) as
+	// perceived from Google servers for the duration period covered by the
+	// report.
+	Latency50thPercentile float64 `json:"latency50thPercentile,omitempty"`
+
+	Latency85thPercentile float64 `json:"latency85thPercentile,omitempty"`
+
+	Latency95thPercentile float64 `json:"latency95thPercentile,omitempty"`
+
+	// Region: The trading location of this data.
+	Region string `json:"region,omitempty"`
+
+	// Timestamp: Timestamp of the starting time of this performance data.
+	Timestamp int64 `json:"timestamp,omitempty,string"`
 }
 
 // method id "adexchangebuyer.accounts.get":
@@ -907,6 +948,93 @@ func (c *DirectDealsListCall) Do() (*DirectDealsList, error) {
 	//   "path": "directdeals",
 	//   "response": {
 	//     "$ref": "DirectDealsList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer.performanceReport.list":
+
+type PerformanceReportListCall struct {
+	s             *Service
+	accountId     int64
+	endDateTime   int64
+	startDateTime int64
+	opt_          map[string]interface{}
+}
+
+// List: Retrieves the authenticated user's list of performance metrics.
+func (r *PerformanceReportService) List(accountId int64, endDateTime int64, startDateTime int64) *PerformanceReportListCall {
+	c := &PerformanceReportListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.endDateTime = endDateTime
+	c.startDateTime = startDateTime
+	return c
+}
+
+func (c *PerformanceReportListCall) Do() (*PerformanceReportList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("accountId", fmt.Sprintf("%v", c.accountId))
+	params.Set("endDateTime", fmt.Sprintf("%v", c.endDateTime))
+	params.Set("startDateTime", fmt.Sprintf("%v", c.startDateTime))
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1.2/", "performancereport")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(PerformanceReportList)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the authenticated user's list of performance metrics.",
+	//   "httpMethod": "GET",
+	//   "id": "adexchangebuyer.performanceReport.list",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "endDateTime",
+	//     "startDateTime"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "The account id to get the reports for.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "endDateTime": {
+	//       "description": "The end time for the reports.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "startDateTime": {
+	//       "description": "The start time for the reports.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "performancereport",
+	//   "response": {
+	//     "$ref": "PerformanceReportList"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/adexchange.buyer"

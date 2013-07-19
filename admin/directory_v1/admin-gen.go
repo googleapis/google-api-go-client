@@ -3005,8 +3005,7 @@ func (c *OrgunitsDeleteCall) Do() error {
 	//   },
 	//   "path": "customer/{customerId}/orgunits{/orgUnitPath*}",
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/admin.directory.orgunit",
-	//     "https://www.googleapis.com/auth/admin.directory.user"
+	//     "https://www.googleapis.com/auth/admin.directory.orgunit"
 	//   ]
 	// }
 
@@ -3082,9 +3081,7 @@ func (c *OrgunitsGetCall) Do() (*OrgUnit, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/admin.directory.orgunit",
-	//     "https://www.googleapis.com/auth/admin.directory.orgunit.readonly",
-	//     "https://www.googleapis.com/auth/admin.directory.user",
-	//     "https://www.googleapis.com/auth/admin.directory.user.readonly"
+	//     "https://www.googleapis.com/auth/admin.directory.orgunit.readonly"
 	//   ]
 	// }
 
@@ -3159,8 +3156,7 @@ func (c *OrgunitsInsertCall) Do() (*OrgUnit, error) {
 	//     "$ref": "OrgUnit"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/admin.directory.orgunit",
-	//     "https://www.googleapis.com/auth/admin.directory.user"
+	//     "https://www.googleapis.com/auth/admin.directory.orgunit"
 	//   ]
 	// }
 
@@ -3264,9 +3260,7 @@ func (c *OrgunitsListCall) Do() (*OrgUnits, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/admin.directory.orgunit",
-	//     "https://www.googleapis.com/auth/admin.directory.orgunit.readonly",
-	//     "https://www.googleapis.com/auth/admin.directory.user",
-	//     "https://www.googleapis.com/auth/admin.directory.user.readonly"
+	//     "https://www.googleapis.com/auth/admin.directory.orgunit.readonly"
 	//   ]
 	// }
 
@@ -3353,8 +3347,7 @@ func (c *OrgunitsPatchCall) Do() (*OrgUnit, error) {
 	//     "$ref": "OrgUnit"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/admin.directory.orgunit",
-	//     "https://www.googleapis.com/auth/admin.directory.user"
+	//     "https://www.googleapis.com/auth/admin.directory.orgunit"
 	//   ]
 	// }
 
@@ -3440,8 +3433,7 @@ func (c *OrgunitsUpdateCall) Do() (*OrgUnit, error) {
 	//     "$ref": "OrgUnit"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/admin.directory.orgunit",
-	//     "https://www.googleapis.com/auth/admin.directory.user"
+	//     "https://www.googleapis.com/auth/admin.directory.orgunit"
 	//   ]
 	// }
 
@@ -3682,8 +3674,9 @@ func (c *UsersListCall) PageToken(pageToken string) *UsersListCall {
 }
 
 // Query sets the optional parameter "query": Query string for prefix
-// matching searches. Should be of the form "key:value" where key can be
-// "email", "firstName" or "lastName".
+// matching searches. Should be of the form "key:value*" where key can
+// be "email", "givenName" or "familyName". The asterisk is required,
+// for example: "givenName:Ann*" is a valid query.
 func (c *UsersListCall) Query(query string) *UsersListCall {
 	c.opt_["query"] = query
 	return c
@@ -3793,7 +3786,7 @@ func (c *UsersListCall) Do() (*Users, error) {
 	//       "type": "string"
 	//     },
 	//     "query": {
-	//       "description": "Query string for prefix matching searches. Should be of the form \"key:value\" where key can be \"email\", \"firstName\" or \"lastName\".",
+	//       "description": "Query string for prefix matching searches. Should be of the form \"key:value*\" where key can be \"email\", \"givenName\" or \"familyName\". The asterisk is required, for example: \"givenName:Ann*\" is a valid query.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

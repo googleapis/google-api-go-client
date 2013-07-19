@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"0kaFfN0xfjZjASExv-gUnrWhdto/VtjIAIh0AiKwRphMJPlW5YhrfBw\"",
+ "etag": "\"BgGnx7p-6wsAbOn4St99QhtBGbA/VKTPTinCiG_SY2p9IuvAqycHm80\"",
  "discoveryVersion": "v1",
  "id": "books:v1",
  "name": "books",
  "version": "v1",
- "revision": "20130507",
+ "revision": "20130703",
  "title": "Books API",
  "description": "Lets you search for books and manage your Google Books library.",
  "ownerDomain": "google.com",
@@ -170,6 +170,25 @@
      "type": "string",
      "description": "The layer this annotation is for."
     },
+    "layerSummary": {
+     "type": "object",
+     "properties": {
+      "allowedCharacterCount": {
+       "type": "integer",
+       "description": "Maximum allowed characters on this layer, especially for the \"copy\" layer.",
+       "format": "int32"
+      },
+      "limitType": {
+       "type": "string",
+       "description": "Type of limitation on this layer. \"limited\" or \"unlimited\" for the \"copy\" layer."
+      },
+      "remainingCharacterCount": {
+       "type": "integer",
+       "description": "Remaining allowed characters on this layer, especially for the \"copy\" layer.",
+       "format": "int32"
+      }
+     }
+    },
     "pageIds": {
      "type": "array",
      "description": "Pages that this annotation spans.",
@@ -264,6 +283,42 @@
      "type": "integer",
      "description": "Total number of annotations found. This may be greater than the number of notes returned in this response if results have been paginated.",
      "format": "int32"
+    }
+   }
+  },
+  "AnnotationsSummary": {
+   "id": "AnnotationsSummary",
+   "type": "object",
+   "properties": {
+    "kind": {
+     "type": "string",
+     "default": "books#annotationsSummary"
+    },
+    "layers": {
+     "type": "array",
+     "items": {
+      "type": "object",
+      "properties": {
+       "allowedCharacterCount": {
+        "type": "integer",
+        "format": "int32"
+       },
+       "layerId": {
+        "type": "string"
+       },
+       "limitType": {
+        "type": "string"
+       },
+       "remainingCharacterCount": {
+        "type": "integer",
+        "format": "int32"
+       },
+       "updated": {
+        "type": "string",
+        "format": "date-time"
+       }
+      }
+     }
     }
    }
   },
@@ -1212,6 +1267,59 @@
         }
        }
       },
+      "offers": {
+       "type": "array",
+       "description": "Offers available for this volume (sales and rentals).",
+       "items": {
+        "type": "object",
+        "properties": {
+         "finskyOfferType": {
+          "type": "integer",
+          "description": "The finsky offer type (e.g., PURCHASE=0 RENTAL=3)",
+          "format": "int32"
+         },
+         "listPrice": {
+          "type": "object",
+          "description": "Offer list (=undiscounted) price in Micros.",
+          "properties": {
+           "amountInMicros": {
+            "type": "number",
+            "format": "double"
+           },
+           "currencyCode": {
+            "type": "string"
+           }
+          }
+         },
+         "rentalDuration": {
+          "type": "object",
+          "description": "The rental duration (for rental offers only).",
+          "properties": {
+           "count": {
+            "type": "number",
+            "format": "double"
+           },
+           "unit": {
+            "type": "string"
+           }
+          }
+         },
+         "retailPrice": {
+          "type": "object",
+          "description": "Offer retail (=discounted) price in Micros",
+          "properties": {
+           "amountInMicros": {
+            "type": "number",
+            "format": "double"
+           },
+           "currencyCode": {
+            "type": "string"
+           }
+          }
+         }
+        }
+       }
+      },
       "onSaleDate": {
        "type": "string",
        "description": "The date on which this book is available for sale.",
@@ -1234,7 +1342,7 @@
       },
       "saleability": {
        "type": "string",
-       "description": "Whether or not this book is available for sale or offered for free in the Google eBookstore for the country listed above. Possible values are FOR_SALE, FREE, NOT_FOR_SALE, or FOR_PREORDER."
+       "description": "Whether or not this book is available for sale or offered for free in the Google eBookstore for the country listed above. Possible values are FOR_SALE, FOR_RENTAL_ONLY, FOR_SALE_AND_RENTAL, FREE, NOT_FOR_SALE, or FOR_PREORDER."
       }
      }
     },
@@ -1256,6 +1364,27 @@
      "type": "object",
      "description": "User specific information related to this volume. (e.g. page this user last read or whether they purchased this book)",
      "properties": {
+      "copy": {
+       "type": "object",
+       "description": "Copy/Paste accounting information.",
+       "properties": {
+        "allowedCharacterCount": {
+         "type": "integer",
+         "format": "int32"
+        },
+        "limitType": {
+         "type": "string"
+        },
+        "remainingCharacterCount": {
+         "type": "integer",
+         "format": "int32"
+        },
+        "updated": {
+         "type": "string",
+         "format": "date-time"
+        }
+       }
+      },
       "isInMyBooks": {
        "type": "boolean",
        "description": "Whether or not this volume is currently in \"my books.\""
@@ -1275,6 +1404,24 @@
       "readingPosition": {
        "$ref": "ReadingPosition",
        "description": "The user's current reading position in the volume, if one is available. (In LITE projection.)"
+      },
+      "rentalPeriod": {
+       "type": "object",
+       "description": "Period during this book is/was a valid rental.",
+       "properties": {
+        "endUtcSec": {
+         "type": "string",
+         "format": "int64"
+        },
+        "startUtcSec": {
+         "type": "string",
+         "format": "int64"
+        }
+       }
+      },
+      "rentalState": {
+       "type": "string",
+       "description": "Whether this book is an active or an expired rental."
       },
       "review": {
        "$ref": "Review",
@@ -2304,6 +2451,18 @@
        "required": true,
        "location": "query"
       },
+      "features": {
+       "type": "string",
+       "description": "List of features supported by the client, i.e., 'RENTALS'",
+       "enum": [
+        "RENTALS"
+       ],
+       "enumDescriptions": [
+        "Client supports rentals."
+       ],
+       "repeated": true,
+       "location": "query"
+      },
       "locale": {
        "type": "string",
        "description": "ISO-639-1, ISO-3166-1 codes for message localization, i.e. en_US.",
@@ -2410,6 +2569,11 @@
        "httpMethod": "POST",
        "description": "Inserts a new annotation.",
        "parameters": {
+        "showOnlySummaryInResponse": {
+         "type": "boolean",
+         "description": "Requests that only the summary of the specified layer be provided in the response.",
+         "location": "query"
+        },
         "source": {
          "type": "string",
          "description": "String to identify the originator of this request.",
@@ -2489,6 +2653,37 @@
        },
        "response": {
         "$ref": "Annotations"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/books"
+       ]
+      },
+      "summary": {
+       "id": "books.mylibrary.annotations.summary",
+       "path": "mylibrary/annotations/summary",
+       "httpMethod": "POST",
+       "description": "Gets the summary of specified layers.",
+       "parameters": {
+        "layerIds": {
+         "type": "string",
+         "description": "Array of layer IDs to get the summary for.",
+         "required": true,
+         "repeated": true,
+         "location": "query"
+        },
+        "volumeId": {
+         "type": "string",
+         "description": "Volume id to get the summary for.",
+         "required": true,
+         "location": "query"
+        }
+       },
+       "parameterOrder": [
+        "layerIds",
+        "volumeId"
+       ],
+       "response": {
+        "$ref": "AnnotationsSummary"
        },
        "scopes": [
         "https://www.googleapis.com/auth/books"
@@ -3152,15 +3347,19 @@
          "description": "How the book was aquired",
          "enum": [
           "PREORDERED",
+          "PREVIOUSLY_RENTED",
           "PUBLIC_DOMAIN",
           "PURCHASED",
+          "RENTED",
           "SAMPLE",
           "UPLOADED"
          ],
          "enumDescriptions": [
           "Preordered books (not yet available)",
+          "User-rented books past their expiration time",
           "Public domain books",
           "Purchased books",
+          "User-rented books",
           "Sample books",
           "User uploaded books"
          ],

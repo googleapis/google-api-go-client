@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"0kaFfN0xfjZjASExv-gUnrWhdto/XXPYvQ7C4sSjsanSbYvihpmjoNE\"",
+ "etag": "\"BgGnx7p-6wsAbOn4St99QhtBGbA/XMzQPpkKqTFsf0Mttu5nMuuctrw\"",
  "discoveryVersion": "v1",
  "id": "mirror:v1",
  "name": "mirror",
  "version": "v1",
- "revision": "20130614",
+ "revision": "20130712",
  "title": "Google Mirror API",
  "description": "API for interacting with Glass users via the timeline.",
  "ownerDomain": "google.com",
@@ -548,7 +548,11 @@
     },
     "speakableText": {
      "type": "string",
-     "description": "The speakable version of the content of this item. Along with the READ_ALOUD menu item, use this field to provide text that would be clearer when read aloud, or to provide extended information to what is displayed visually on Glass. If you specified html content, use this property instead of text to specify the text to read aloud."
+     "description": "The speakable version of the content of this item. Along with the READ_ALOUD menu item, use this field to provide text that would be clearer when read aloud, or to provide extended information to what is displayed visually on Glass.\n\nGlassware should also specify the speakableType field, which will be spoken before this text in cases where the additional context is useful, for example when the user requests that the item be read aloud following a notification."
+    },
+    "speakableType": {
+     "type": "string",
+     "description": "A speakable description of the type of this item. This will be announced to the user prior to reading the content of the item in cases where the additional context is useful, for example when the user requests that the item be read aloud following a notification.\n\nThis should be a short, simple noun phrase such as \"Email\", \"Text message\", or \"Daily Planet News Update\".\n\nGlassware are encouraged to populate this field for every timeline item, even if the item does not contain speakableText or text so that the user can learn the type of the item without looking at the screen."
     },
     "text": {
      "type": "string",

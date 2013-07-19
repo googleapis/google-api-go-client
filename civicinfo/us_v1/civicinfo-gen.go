@@ -45,7 +45,6 @@ func New(client *http.Client) (*Service, error) {
 	}
 	s := &Service{client: client}
 	s.Elections = NewElectionsService(s)
-	s.Representatives = NewRepresentativesService(s)
 	return s, nil
 }
 
@@ -53,8 +52,6 @@ type Service struct {
 	client *http.Client
 
 	Elections *ElectionsService
-
-	Representatives *RepresentativesService
 }
 
 func NewElectionsService(s *Service) *ElectionsService {
@@ -63,15 +60,6 @@ func NewElectionsService(s *Service) *ElectionsService {
 }
 
 type ElectionsService struct {
-	s *Service
-}
-
-func NewRepresentativesService(s *Service) *RepresentativesService {
-	rs := &RepresentativesService{s: s}
-	return rs
-}
-
-type RepresentativesService struct {
 	s *Service
 }
 
@@ -232,11 +220,11 @@ type Contest struct {
 	// is only populated for contests of type 'Referendum'.
 	ReferendumSubtitle string `json:"referendumSubtitle,omitempty"`
 
-	// ReferendumTitle: The title of the referendum. (e.g. 'Proposition 42')
+	// ReferendumTitle: The title of the referendum (e.g. 'Proposition 42').
 	// This field is only populated for contests of type 'Referendum'.
 	ReferendumTitle string `json:"referendumTitle,omitempty"`
 
-	// ReferendumUrl: A link the referendum. This field is only populated
+	// ReferendumUrl: A link to the referendum. This field is only populated
 	// for contests of type 'Referendum'.
 	ReferendumUrl string `json:"referendumUrl,omitempty"`
 
@@ -300,70 +288,11 @@ type ElectoralDistrict struct {
 	Name string `json:"name,omitempty"`
 
 	// Scope: The geographic scope of this district. If unspecified the
-	// district's geography is not known. One of: statewide, congressional,
-	// stateUpper, stateLower, countywide, judicial, schoolBoard, cityWide,
+	// district's geography is not known. One of: national, statewide,
+	// congressional, stateUpper, stateLower, countywide, judicial,
+	// schoolBoard, cityWide, township, countyCouncil, cityCouncil, ward,
 	// special
 	Scope string `json:"scope,omitempty"`
-}
-
-type GeographicDivision struct {
-	// Confidence: Numerical value between 0 and 1 that expresses level of
-	// confidence that a given district is relevant to the request.
-	Confidence float64 `json:"confidence,omitempty"`
-
-	// Name: The name of the division.
-	Name string `json:"name,omitempty"`
-
-	// OcdId: The unique Open Civic Data identifier for this division.
-	OcdId string `json:"ocdId,omitempty"`
-
-	// Offices: List of offices elected from this division.
-	Offices []*Office `json:"offices,omitempty"`
-
-	// Type: The type of this division. If unspecified the division's
-	// geography is not known.
-	Type string `json:"type,omitempty"`
-}
-
-type Office struct {
-	// Name: The human-readable name of the office.
-	Name string `json:"name,omitempty"`
-
-	// Officials: A list of people who presently hold the office.
-	Officials []*Official `json:"officials,omitempty"`
-
-	// Sources: A list of sources for this contest. If multiple sources are
-	// listed, the data has been aggregated from those sources.
-	Sources []*Source `json:"sources,omitempty"`
-}
-
-type Official struct {
-	// Address: Addresses at which to contact the official.
-	Address []*SimpleAddressType `json:"address,omitempty"`
-
-	// Channels: A list of known (social) media channels for this official.
-	Channels []*Channel `json:"channels,omitempty"`
-
-	// Emails: The direct email addresses for the official.
-	Emails []string `json:"emails,omitempty"`
-
-	// Id: A unique identifier for this official.
-	Id string `json:"id,omitempty"`
-
-	// Name: The official's name.
-	Name string `json:"name,omitempty"`
-
-	// Party: The full name of the party the official belongs to.
-	Party string `json:"party,omitempty"`
-
-	// Phones: The official's public contact phone numbers.
-	Phones []string `json:"phones,omitempty"`
-
-	// PhotoUrl: A URL for a photo of the official.
-	PhotoUrl string `json:"photoUrl,omitempty"`
-
-	// Urls: The official's public website URLs.
-	Urls []string `json:"urls,omitempty"`
 }
 
 type PollingLocation struct {
@@ -401,36 +330,6 @@ type PollingLocation struct {
 	// VoterServices: The services provided by this early vote site. This
 	// field is not populated for polling locations.
 	VoterServices string `json:"voterServices,omitempty"`
-}
-
-type RepresentativeInfoRequest struct {
-	Address string `json:"address,omitempty"`
-}
-
-type RepresentativeInfoResponse struct {
-	// Divisions: Political geographic divisions that contain the requested
-	// address.
-	Divisions []*GeographicDivision `json:"divisions,omitempty"`
-
-	// Kind: The kind, fixed to "civicinfo#representativeInfoResponse".
-	Kind string `json:"kind,omitempty"`
-
-	// NormalizedInput: The normalized version of the requested address
-	NormalizedInput *SimpleAddressType `json:"normalizedInput,omitempty"`
-
-	// Offices: Elected offices referenced by the divisions listed above.
-	// Will only be present if "offices" was true in the request.
-	Offices []*Office `json:"offices,omitempty"`
-
-	// Officials: Officials holding the offices listed above. Will only be
-	// present if "offices" was true in the request.
-	Officials []*Official `json:"officials,omitempty"`
-
-	// Status: The result of the request. One of: success,
-	// noStreetSegmentFound, addressUnparseable, noAddressParameter,
-	// multipleStreetSegmentsFound, electionOver, electionUnknown,
-	// internalLookupFailure
-	Status string `json:"status,omitempty"`
 }
 
 type SimpleAddressType struct {
@@ -635,84 +534,6 @@ func (c *ElectionsVoterInfoQueryCall) Do() (*VoterInfoResponse, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "VoterInfoResponse"
-	//   }
-	// }
-
-}
-
-// method id "civicinfo.representatives.representativeInfoQuery":
-
-type RepresentativesRepresentativeInfoQueryCall struct {
-	s                         *Service
-	representativeinforequest *RepresentativeInfoRequest
-	opt_                      map[string]interface{}
-}
-
-// RepresentativeInfoQuery: Looks up political geography and
-// (optionally) representative information based on an address.
-func (r *RepresentativesService) RepresentativeInfoQuery(representativeinforequest *RepresentativeInfoRequest) *RepresentativesRepresentativeInfoQueryCall {
-	c := &RepresentativesRepresentativeInfoQueryCall{s: r.s, opt_: make(map[string]interface{})}
-	c.representativeinforequest = representativeinforequest
-	return c
-}
-
-// IncludeOffices sets the optional parameter "includeOffices": Whether
-// to return information about offices and officials. If false, only the
-// top-level district information will be returned.
-func (c *RepresentativesRepresentativeInfoQueryCall) IncludeOffices(includeOffices bool) *RepresentativesRepresentativeInfoQueryCall {
-	c.opt_["includeOffices"] = includeOffices
-	return c
-}
-
-func (c *RepresentativesRepresentativeInfoQueryCall) Do() (*RepresentativeInfoResponse, error) {
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.representativeinforequest)
-	if err != nil {
-		return nil, err
-	}
-	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", "json")
-	if v, ok := c.opt_["includeOffices"]; ok {
-		params.Set("includeOffices", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/civicinfo/us_v1/", "representatives/lookup")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("POST", urls, body)
-	googleapi.SetOpaque(req.URL)
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	defer res.Body.Close()
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(RepresentativeInfoResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Looks up political geography and (optionally) representative information based on an address.",
-	//   "httpMethod": "POST",
-	//   "id": "civicinfo.representatives.representativeInfoQuery",
-	//   "parameters": {
-	//     "includeOffices": {
-	//       "default": "true",
-	//       "description": "Whether to return information about offices and officials. If false, only the top-level district information will be returned.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     }
-	//   },
-	//   "path": "representatives/lookup",
-	//   "request": {
-	//     "$ref": "RepresentativeInfoRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "RepresentativeInfoResponse"
 	//   }
 	// }
 

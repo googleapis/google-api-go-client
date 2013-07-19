@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"0kaFfN0xfjZjASExv-gUnrWhdto/-1uCDEEeXh5XSWC8RZwLjaFjouE\"",
+ "etag": "\"BgGnx7p-6wsAbOn4St99QhtBGbA/Z38pGlAPXeUxwIGdTsLTIoYZpOc\"",
  "discoveryVersion": "v1",
  "id": "youtube:v3",
  "name": "youtube",
  "canonicalName": "YouTube",
  "version": "v3",
- "revision": "20130613",
+ "revision": "20130707",
  "title": "YouTube Data API",
  "description": "Programmatic access to YouTube features.",
  "ownerDomain": "google.com",
@@ -107,7 +107,7 @@
   "Activity": {
    "id": "Activity",
    "type": "object",
-   "description": "An activity resource contains information about an action that a particular channel, or user, has taken on YouTube. The actions reported in activity feeds include rating a video, sharing a video, marking a video as a favorite, commenting on a video, uploading a video, and so forth. Each activity resource identifies the type of action, the channel associated with the action, and the resource(s) associated with the action, such as the video that was rated or uploaded.",
+   "description": "An activity resource contains information about an action that a particular channel, or user, has taken on YouTube.The actions reported in activity feeds include rating a video, sharing a video, marking a video as a favorite, commenting on a video, uploading a video, and so forth. Each activity resource identifies the type of action, the channel associated with the action, and the resource(s) associated with the action, such as the video that was rated or uploaded.",
    "properties": {
     "contentDetails": {
      "$ref": "ActivityContentDetails",
@@ -115,7 +115,7 @@
     },
     "etag": {
      "type": "string",
-     "description": "The ETag of the activity resource."
+     "description": "Etag of this resource."
     },
     "id": {
      "type": "string",
@@ -123,7 +123,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "The type of the API resource. For activity resources, the value will be youtube#activity.",
+     "description": "The kind, fixed to \"youtube#activity\".",
      "default": "youtube#activity"
     },
     "snippet": {
@@ -138,202 +138,257 @@
    "description": "Details about the content of an activity: the video that was shared, the channel that was subscribed to, etc.",
    "properties": {
     "bulletin": {
-     "type": "object",
-     "description": "The bulletin object contains details about a channel bulletin post. This object is only present if the snippet.type is bulletin.",
-     "properties": {
-      "resourceId": {
-       "$ref": "ResourceId",
-       "description": "The resourceId object contains information that identifies the resource associated with a bulletin post."
-      }
-     }
+     "$ref": "ActivityContentDetailsBulletin",
+     "description": "The bulletin object contains details about a channel bulletin post. This object is only present if the snippet.type is bulletin."
     },
     "channelItem": {
-     "type": "object",
-     "description": "The channelItem object contains details about a resource which was added to a channel. This property is only present if the snippet.type is channelItem.",
-     "properties": {
-      "resourceId": {
-       "$ref": "ResourceId",
-       "description": "The resourceId object contains information that identifies the resource that was added to the channel."
-      }
-     }
+     "$ref": "ActivityContentDetailsChannelItem",
+     "description": "The channelItem object contains details about a resource which was added to a channel. This property is only present if the snippet.type is channelItem."
     },
     "comment": {
-     "type": "object",
-     "description": "The comment object contains information about a resource that received a comment. This property is only present if the snippet.type is comment.",
-     "properties": {
-      "resourceId": {
-       "$ref": "ResourceId",
-       "description": "The resourceId object contains information that identifies the resource associated with the comment."
-      }
-     }
+     "$ref": "ActivityContentDetailsComment",
+     "description": "The comment object contains information about a resource that received a comment. This property is only present if the snippet.type is comment."
     },
     "favorite": {
-     "type": "object",
-     "description": "The favorite object contains information about a video that was marked as a favorite video. This property is only present if the snippet.type is favorite.",
-     "properties": {
-      "resourceId": {
-       "$ref": "ResourceId",
-       "description": "The resourceId object contains information that identifies the resource that was marked as a favorite."
-      }
-     }
+     "$ref": "ActivityContentDetailsFavorite",
+     "description": "The favorite object contains information about a video that was marked as a favorite video. This property is only present if the snippet.type is favorite."
     },
     "like": {
-     "type": "object",
-     "description": "The like object contains information about a resource that received a positive (like) rating. This property is only present if the snippet.type is like.",
-     "properties": {
-      "resourceId": {
-       "$ref": "ResourceId",
-       "description": "The resourceId object contains information that identifies the rated resource."
-      }
-     }
+     "$ref": "ActivityContentDetailsLike",
+     "description": "The like object contains information about a resource that received a positive (like) rating. This property is only present if the snippet.type is like."
     },
     "playlistItem": {
-     "type": "object",
-     "description": "The playlistItem object contains information about a new playlist item. This property is only present if the snippet.type is playlistItem.",
-     "properties": {
-      "playlistId": {
-       "type": "string",
-       "description": "The value that YouTube uses to uniquely identify the playlist."
-      },
-      "playlistItemId": {
-       "type": "string",
-       "description": "ID of the item within the playlist."
-      },
-      "resourceId": {
-       "$ref": "ResourceId",
-       "description": "The resourceId object contains information about the resource that was added to the playlist."
-      }
-     }
+     "$ref": "ActivityContentDetailsPlaylistItem",
+     "description": "The playlistItem object contains information about a new playlist item. This property is only present if the snippet.type is playlistItem."
     },
     "promotedItem": {
-     "type": "object",
-     "description": "The promotedItem object contains details about a resource which is being promoted. This property is only present if the snippet.type is promotedItem.",
-     "properties": {
-      "adTag": {
-       "type": "string",
-       "description": "The URL the client should fetch to request a promoted item."
-      },
-      "clickTrackingUrl": {
-       "type": "string",
-       "description": "The URL the client should ping to indicate that the user clicked through on this promoted item."
-      },
-      "creativeViewUrl": {
-       "type": "string",
-       "description": "The URL the client should ping to indicate that the user was shown this promoted item."
-      },
-      "ctaType": {
-       "type": "string",
-       "description": "The type of call-to-action, a message to the user indicating action that can be taken.",
-       "enum": [
-        "unspecified",
-        "visitAdvertiserSite"
-       ],
-       "enumDescriptions": [
-        "",
-        ""
-       ]
-      },
-      "descriptionText": {
-       "type": "string",
-       "description": "The text description to accompany the promoted item."
-      },
-      "destinationUrl": {
-       "type": "string",
-       "description": "The URL the client should direct the user to, if the user chooses to visit the advertiser's website."
-      },
-      "videoId": {
-       "type": "string",
-       "description": "The ID that YouTube uses to uniquely identify the promoted video."
-      }
-     }
+     "$ref": "ActivityContentDetailsPromotedItem",
+     "description": "The promotedItem object contains details about a resource which is being promoted. This property is only present if the snippet.type is promotedItem."
     },
     "recommendation": {
-     "type": "object",
-     "description": "The recommendation object contains information about a recommended resource. This property is only present if the snippet.type is recommendation.",
-     "properties": {
-      "reason": {
-       "type": "string",
-       "description": "The reason that the resource is recommended to the user.",
-       "enum": [
-        "unspecified",
-        "videoFavorited",
-        "videoLiked",
-        "videoWatched"
-       ],
-       "enumDescriptions": [
-        "",
-        "",
-        "",
-        ""
-       ]
-      },
-      "resourceId": {
-       "$ref": "ResourceId",
-       "description": "The resourceId object contains information that identifies the recommended resource."
-      },
-      "seedResourceId": {
-       "$ref": "ResourceId",
-       "description": "The seedResourceId object contains information about the resource that caused the recommendation."
-      }
-     }
+     "$ref": "ActivityContentDetailsRecommendation",
+     "description": "The recommendation object contains information about a recommended resource. This property is only present if the snippet.type is recommendation."
     },
     "social": {
-     "type": "object",
-     "description": "The social object contains details about a social network post. This property is only present if the snippet.type is social.",
-     "properties": {
-      "author": {
-       "type": "string",
-       "description": "The author of the social network post."
-      },
-      "imageUrl": {
-       "type": "string",
-       "description": "An image of the post's author."
-      },
-      "referenceUrl": {
-       "type": "string",
-       "description": "The URL of the social network post."
-      },
-      "resourceId": {
-       "$ref": "ResourceId",
-       "description": "The resourceId object encapsulates information that identifies the resource associated with a social network post."
-      },
-      "type": {
-       "type": "string",
-       "description": "The name of the social network.",
-       "enum": [
-        "facebook",
-        "googlePlus",
-        "twitter",
-        "unspecified"
-       ],
-       "enumDescriptions": [
-        "",
-        "",
-        "",
-        ""
-       ]
-      }
-     }
+     "$ref": "ActivityContentDetailsSocial",
+     "description": "The social object contains details about a social network post. This property is only present if the snippet.type is social."
     },
     "subscription": {
-     "type": "object",
-     "description": "The subscription object contains information about a channel that a user subscribed to. This property is only present if the snippet.type is subscription.",
-     "properties": {
-      "resourceId": {
-       "$ref": "ResourceId",
-       "description": "The resourceId object contains information that identifies the resource that the user subscribed to."
-      }
-     }
+     "$ref": "ActivityContentDetailsSubscription",
+     "description": "The subscription object contains information about a channel that a user subscribed to. This property is only present if the snippet.type is subscription."
     },
     "upload": {
-     "type": "object",
-     "description": "The upload object contains information about the uploaded video. This property is only present if the snippet.type is upload.",
-     "properties": {
-      "videoId": {
-       "type": "string",
-       "description": "The ID that YouTube uses to uniquely identify the uploaded video."
-      }
-     }
+     "$ref": "ActivityContentDetailsUpload",
+     "description": "The upload object contains information about the uploaded video. This property is only present if the snippet.type is upload."
+    }
+   }
+  },
+  "ActivityContentDetailsBulletin": {
+   "id": "ActivityContentDetailsBulletin",
+   "type": "object",
+   "description": "Details about a channel bulletin post.",
+   "properties": {
+    "resourceId": {
+     "$ref": "ResourceId",
+     "description": "The resourceId object contains information that identifies the resource associated with a bulletin post."
+    }
+   }
+  },
+  "ActivityContentDetailsChannelItem": {
+   "id": "ActivityContentDetailsChannelItem",
+   "type": "object",
+   "description": "Details about a resource which was added to a channel.",
+   "properties": {
+    "resourceId": {
+     "$ref": "ResourceId",
+     "description": "The resourceId object contains information that identifies the resource that was added to the channel."
+    }
+   }
+  },
+  "ActivityContentDetailsComment": {
+   "id": "ActivityContentDetailsComment",
+   "type": "object",
+   "description": "Information about a resource that received a comment.",
+   "properties": {
+    "resourceId": {
+     "$ref": "ResourceId",
+     "description": "The resourceId object contains information that identifies the resource associated with the comment."
+    }
+   }
+  },
+  "ActivityContentDetailsFavorite": {
+   "id": "ActivityContentDetailsFavorite",
+   "type": "object",
+   "description": "Information about a video that was marked as a favorite video.",
+   "properties": {
+    "resourceId": {
+     "$ref": "ResourceId",
+     "description": "The resourceId object contains information that identifies the resource that was marked as a favorite."
+    }
+   }
+  },
+  "ActivityContentDetailsLike": {
+   "id": "ActivityContentDetailsLike",
+   "type": "object",
+   "description": "Information about a resource that received a positive (like) rating.",
+   "properties": {
+    "resourceId": {
+     "$ref": "ResourceId",
+     "description": "The resourceId object contains information that identifies the rated resource."
+    }
+   }
+  },
+  "ActivityContentDetailsPlaylistItem": {
+   "id": "ActivityContentDetailsPlaylistItem",
+   "type": "object",
+   "description": "Information about a new playlist item.",
+   "properties": {
+    "playlistId": {
+     "type": "string",
+     "description": "The value that YouTube uses to uniquely identify the playlist."
+    },
+    "playlistItemId": {
+     "type": "string",
+     "description": "ID of the item within the playlist."
+    },
+    "resourceId": {
+     "$ref": "ResourceId",
+     "description": "The resourceId object contains information about the resource that was added to the playlist."
+    }
+   }
+  },
+  "ActivityContentDetailsPromotedItem": {
+   "id": "ActivityContentDetailsPromotedItem",
+   "type": "object",
+   "description": "Details about a resource which is being promoted.",
+   "properties": {
+    "adTag": {
+     "type": "string",
+     "description": "The URL the client should fetch to request a promoted item."
+    },
+    "clickTrackingUrl": {
+     "type": "string",
+     "description": "The URL the client should ping to indicate that the user clicked through on this promoted item."
+    },
+    "creativeViewUrl": {
+     "type": "string",
+     "description": "The URL the client should ping to indicate that the user was shown this promoted item."
+    },
+    "ctaType": {
+     "type": "string",
+     "description": "The type of call-to-action, a message to the user indicating action that can be taken.",
+     "enum": [
+      "unspecified",
+      "visitAdvertiserSite"
+     ],
+     "enumDescriptions": [
+      "",
+      ""
+     ]
+    },
+    "descriptionText": {
+     "type": "string",
+     "description": "The text description to accompany the promoted item."
+    },
+    "destinationUrl": {
+     "type": "string",
+     "description": "The URL the client should direct the user to, if the user chooses to visit the advertiser's website."
+    },
+    "videoId": {
+     "type": "string",
+     "description": "The ID that YouTube uses to uniquely identify the promoted video."
+    }
+   }
+  },
+  "ActivityContentDetailsRecommendation": {
+   "id": "ActivityContentDetailsRecommendation",
+   "type": "object",
+   "description": "Information that identifies the recommended resource.",
+   "properties": {
+    "reason": {
+     "type": "string",
+     "description": "The reason that the resource is recommended to the user.",
+     "enum": [
+      "unspecified",
+      "videoFavorited",
+      "videoLiked",
+      "videoWatched"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "resourceId": {
+     "$ref": "ResourceId",
+     "description": "The resourceId object contains information that identifies the recommended resource."
+    },
+    "seedResourceId": {
+     "$ref": "ResourceId",
+     "description": "The seedResourceId object contains information about the resource that caused the recommendation."
+    }
+   }
+  },
+  "ActivityContentDetailsSocial": {
+   "id": "ActivityContentDetailsSocial",
+   "type": "object",
+   "description": "Details about a social network post.",
+   "properties": {
+    "author": {
+     "type": "string",
+     "description": "The author of the social network post."
+    },
+    "imageUrl": {
+     "type": "string",
+     "description": "An image of the post's author."
+    },
+    "referenceUrl": {
+     "type": "string",
+     "description": "The URL of the social network post."
+    },
+    "resourceId": {
+     "$ref": "ResourceId",
+     "description": "The resourceId object encapsulates information that identifies the resource associated with a social network post."
+    },
+    "type": {
+     "type": "string",
+     "description": "The name of the social network.",
+     "enum": [
+      "facebook",
+      "googlePlus",
+      "twitter",
+      "unspecified"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      ""
+     ]
+    }
+   }
+  },
+  "ActivityContentDetailsSubscription": {
+   "id": "ActivityContentDetailsSubscription",
+   "type": "object",
+   "description": "Information about a channel that a user subscribed to.",
+   "properties": {
+    "resourceId": {
+     "$ref": "ResourceId",
+     "description": "The resourceId object contains information that identifies the resource that the user subscribed to."
+    }
+   }
+  },
+  "ActivityContentDetailsUpload": {
+   "id": "ActivityContentDetailsUpload",
+   "type": "object",
+   "description": "Information about the uploaded video.",
+   "properties": {
+    "videoId": {
+     "type": "string",
+     "description": "The ID that YouTube uses to uniquely identify the uploaded video."
     }
    }
   },
@@ -470,7 +525,7 @@
     },
     "etag": {
      "type": "string",
-     "description": "The ETag for the channel resource."
+     "description": "Etag of this resource."
     },
     "id": {
      "type": "string",
@@ -482,7 +537,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "The type of the API resource. For channel resources, the value will be youtube#channel.",
+     "description": "The kind, fixed to \"youtube#channel\".",
      "default": "youtube#channel"
     },
     "snippet": {
@@ -503,19 +558,19 @@
     }
    }
   },
-  "ChannelBannerInsertResponse": {
-   "id": "ChannelBannerInsertResponse",
+  "ChannelBannerResource": {
+   "id": "ChannelBannerResource",
    "type": "object",
    "description": "A channel banner returned as the response to a channel_banner.insert call.",
    "properties": {
     "etag": {
      "type": "string",
-     "description": "The ETag of the response."
+     "description": "Etag of this resource."
     },
     "kind": {
      "type": "string",
-     "description": "The type of the API response. For this operation, the value will be youtube#channelBannerInsertResponse.",
-     "default": "youtube#channelBannerInsertResponse"
+     "description": "The kind, fixed to \"youtube#channelBannerResource\".",
+     "default": "youtube#channelBannerResource"
     },
     "url": {
      "type": "string",
@@ -560,27 +615,26 @@
     },
     "relatedPlaylists": {
      "type": "object",
-     "description": "The relatedPlaylists object is a map that identifies playlists associated with the channel, such as the channel's uploaded videos or favorite videos. You can retrieve any of these playlists using the playlists.list method.",
      "properties": {
       "favorites": {
        "type": "string",
-       "description": "The ID of the playlist that contains the channel's favorite videos. Use the playlistItems.insert and playlistItems.delete to add or remove items from that list."
+       "description": "The ID of the playlist that contains the channel\"s favorite videos. Use the  playlistItems.insert and  playlistItems.delete to add or remove items from that list."
       },
       "likes": {
        "type": "string",
-       "description": "The ID of the playlist that contains the channel's liked videos. Use the playlistItems.insert and playlistItems.delete to add or remove items from that list."
+       "description": "The ID of the playlist that contains the channel\"s liked videos. Use the   playlistItems.insert and  playlistItems.delete to add or remove items from that list."
       },
       "uploads": {
        "type": "string",
-       "description": "The ID of the playlist that contains the channel's uploaded videos. Use the videos.insert method to upload new videos and the videos.delete method to delete previously uploaded videos."
+       "description": "The ID of the playlist that contains the channel\"s uploaded videos. Use the  videos.insert method to upload new videos and the videos.delete method to delete previously uploaded videos."
       },
       "watchHistory": {
        "type": "string",
-       "description": "The ID of the playlist that contains the channel's watch history. Use the playlistItems.insert and playlistItems.delete to add or remove items from that list."
+       "description": "The ID of the playlist that contains the channel\"s watch history. Use the  playlistItems.insert and  playlistItems.delete to add or remove items from that list."
       },
       "watchLater": {
        "type": "string",
-       "description": "The ID of the channel's watch later playlist. Use the playlistItems.insert and playlistItems.delete to add or remove items from that list."
+       "description": "The ID of the playlist that contains the channel\"s watch later playlist. Use the playlistItems.insert and  playlistItems.delete to add or remove items from that list."
       }
      }
     }
@@ -791,9 +845,11 @@
      "description": "Privacy status of the channel.",
      "enum": [
       "private",
-      "public"
+      "public",
+      "unlisted"
      ],
      "enumDescriptions": [
+      "",
       "",
       ""
      ]
@@ -1115,12 +1171,10 @@
      "type": "string",
      "description": "Internal YouTube rating.",
      "enum": [
-      "yt17Plus",
-      "ytAllAudiences",
-      "ytRestricted"
+      "",
+      "ytAgeRestricted"
      ],
      "enumDescriptions": [
-      "",
       "",
       ""
      ]
@@ -1130,11 +1184,11 @@
   "GeoPoint": {
    "id": "GeoPoint",
    "type": "object",
-   "description": "A geoPoint holds geo location information associated with a YouTube resource.",
+   "description": "Geographical coordinates of a point, in WGS84.",
    "properties": {
-    "elevation": {
+    "altitude": {
      "type": "number",
-     "description": "Altitude above the Earth, in meters.",
+     "description": "Altitude above the reference ellipsoid, in meters.",
      "format": "double"
     },
     "latitude": {
@@ -1156,7 +1210,7 @@
    "properties": {
     "etag": {
      "type": "string",
-     "description": "The ETag of the guideCategory resource."
+     "description": "Etag of this resource."
     },
     "id": {
      "type": "string",
@@ -1164,7 +1218,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "The type of the API resource. For guideCategory resources, the value will be youtube#guideCategory/code\u003e.",
+     "description": "The kind, fixed to \"youtube#guideCategory\".",
      "default": "youtube#guideCategory"
     },
     "snippet": {
@@ -1211,12 +1265,11 @@
    "properties": {
     "channelId": {
      "type": "string",
-     "description": "The ID that YouTube uses to uniquely identify the channel publishing the guide category.",
      "default": "UCBR8-60-B28hp2BmDPdntcQ"
     },
     "title": {
      "type": "string",
-     "description": "The category's title."
+     "description": "Description of the guide category."
     }
    }
   },
@@ -1300,6 +1353,25 @@
     "watchIconImageUrl": {
      "type": "string",
      "description": "The URL for the image that appears above the top-left corner of the video player. This is a 25-pixel-high image with a flexible width that cannot exceed 170 pixels."
+    }
+   }
+  },
+  "IngestionInfo": {
+   "id": "IngestionInfo",
+   "type": "object",
+   "description": "Describes information necessary for ingesting an RTMP or an HTTP stream.",
+   "properties": {
+    "backupIngestionAddress": {
+     "type": "string",
+     "description": "The backup ingestion URL that you should use to stream video to YouTube. You have the option of simultaneously streaming the content that you are sending to the ingestionAddress to this URL."
+    },
+    "ingestionAddress": {
+     "type": "string",
+     "description": "The primary ingestion URL that you should use to stream video to YouTube. You must stream video to this URL.\n\nDepending on which application or tool you use to encode your video stream, you may need to enter the stream URL and stream name separately or you may need to concatenate them in the following format:\n\nSTREAM_URL/STREAM_NAME"
+    },
+    "streamName": {
+     "type": "string",
+     "description": "The HTTP or RTMP stream name that YouTube assigns to the video stream."
     }
    }
   },
@@ -1393,7 +1465,7 @@
     },
     "etag": {
      "type": "string",
-     "description": "The ETag of the broadcast."
+     "description": "Etag of this resource."
     },
     "id": {
      "type": "string",
@@ -1406,7 +1478,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "The type of the API resource. For live broadcast resources, the value will be youtube#liveBroadcast.",
+     "description": "The kind, fixed to \"youtube#liveBroadcast\".",
      "default": "youtube#liveBroadcast"
     },
     "snippet": {
@@ -1439,7 +1511,7 @@
     },
     "enableDvr": {
      "type": "boolean",
-     "description": "This setting determines whether viewers can access DVR controls while watching the video. DVR controls enable the viewer to control the video playback experience by pausing, rewinding, or fast forwarding content. The default value for this property is true.\n\nImportant: You must set the value to true and also set the enableArchive property's value to true if you want to make playback available immediately after the broadcast ends.",
+     "description": "This setting determines whether viewers can access DVR controls while watching the video. DVR controls enable the viewer to control the video playback experience by pausing, rewinding, or fast forwarding content. The default value for this property is true.\n\n\n\nImportant: You must set the value to true and also set the enableArchive property's value to true if you want to make playback available immediately after the broadcast ends.",
      "annotations": {
       "required": [
        "youtube.liveBroadcasts.update"
@@ -1456,37 +1528,12 @@
      }
     },
     "monitorStream": {
-     "type": "object",
-     "description": "The monitorStream object contains information about the monitor stream, which the broadcaster can use to review the event content before the broadcast stream is shown publicly.",
-     "properties": {
-      "broadcastStreamDelayMs": {
-       "type": "integer",
-       "description": "If you have set the enableMonitorStream property to true, then this property determines the length of the live broadcast delay.",
-       "format": "uint32",
-       "annotations": {
-        "required": [
-         "youtube.liveBroadcasts.update"
-        ]
-       }
-      },
-      "embedHtml": {
-       "type": "string",
-       "description": "HTML code that embeds a player that plays the monitor stream."
-      },
-      "enableMonitorStream": {
-       "type": "boolean",
-       "description": "This value determines whether the monitor stream is enabled for the broadcast. If the monitor stream is enabled, then YouTube will broadcast the event content on a special stream intended only for the broadcaster's consumption. The broadcaster can use the stream to review the event content and also to identify the optimal times to insert cuepoints.\n\nYou need to set this value to true if you intend to have a broadcast delay for your event.\n\nNote: This property cannot be updated once the broadcast is in the testing or live state.",
-       "annotations": {
-        "required": [
-         "youtube.liveBroadcasts.update"
-        ]
-       }
-      }
-     }
+     "$ref": "MonitorStreamInfo",
+     "description": "The monitorStream object contains information about the monitor stream, which the broadcaster can use to review the event content before the broadcast stream is shown publicly."
     },
     "recordFromStart": {
      "type": "boolean",
-     "description": "Automatically start recording after the event goes live. The default value for this property is true.\n\nImportant: You must also set the enableDvr property's value to true if you want the playback to be available immediately after the broadcast ends. If you set this property's value to true but do not also set the enableDvr property to true, there may be a delay of around one day before the archived video will be available for playback.",
+     "description": "Automatically start recording after the event goes live. The default value for this property is true.\n\n\n\nImportant: You must also set the enableDvr property's value to true if you want the playback to be available immediately after the broadcast ends. If you set this property's value to true but do not also set the enableDvr property to true, there may be a delay of around one day before the archived video will be available for playback.",
      "annotations": {
       "required": [
        "youtube.liveBroadcasts.update"
@@ -1550,7 +1597,6 @@
   "LiveBroadcastSnippet": {
    "id": "LiveBroadcastSnippet",
    "type": "object",
-   "description": "Basic details about a live broadcast, including title, description and thumbnails.",
    "properties": {
     "actualEndTime": {
      "type": "string",
@@ -1616,7 +1662,6 @@
   "LiveBroadcastStatus": {
    "id": "LiveBroadcastStatus",
    "type": "object",
-   "description": "The status of a live broadcast.",
    "properties": {
     "lifeCycleStatus": {
      "type": "string",
@@ -1672,13 +1717,11 @@
      "type": "string",
      "description": "The broadcast's recording status.",
      "enum": [
-      "",
       "not_recording",
       "recorded",
       "recording"
      ],
      "enumDescriptions": [
-      "",
       "",
       "",
       ""
@@ -1739,7 +1782,7 @@
      }
     },
     "ingestionInfo": {
-     "$ref": "LiveStreamCdnIngestionInfo",
+     "$ref": "IngestionInfo",
      "description": "The ingestionInfo object contains information that YouTube provides that you need to transmit your RTMP or HTTP stream to YouTube."
     },
     "ingestionType": {
@@ -1757,25 +1800,6 @@
        "youtube.liveStreams.update"
       ]
      }
-    }
-   }
-  },
-  "LiveStreamCdnIngestionInfo": {
-   "id": "LiveStreamCdnIngestionInfo",
-   "type": "object",
-   "description": "Brief description of the live stream cdn settings.",
-   "properties": {
-    "backupIngestionAddress": {
-     "type": "string",
-     "description": "The backup ingestion URL that you should use to stream video to YouTube. You have the option of simultaneously streaming the content that you are sending to the ingestionAddress to this URL."
-    },
-    "ingestionAddress": {
-     "type": "string",
-     "description": "The primary ingestion URL that you should use to stream video to YouTube. You must stream video to this URL.\n\nDepending on which application or tool you use to encode your video stream, you may need to enter the stream URL and stream name separately or you may need to concatenate them in the following format:\n\nSTREAM_URL/STREAM_NAME"
-    },
-    "streamName": {
-     "type": "string",
-     "description": "The HTTP or RTMP stream name that YouTube assigns to the video stream."
     }
    }
   },
@@ -1825,7 +1849,6 @@
   "LiveStreamSnippet": {
    "id": "LiveStreamSnippet",
    "type": "object",
-   "description": "Basic details about a live stream, including title and description.",
    "properties": {
     "channelId": {
      "type": "string",
@@ -1859,7 +1882,6 @@
    "properties": {
     "streamStatus": {
      "type": "string",
-     "description": "The stream's status.",
      "enum": [
       "active",
       "created",
@@ -1910,6 +1932,36 @@
     }
    }
   },
+  "MonitorStreamInfo": {
+   "id": "MonitorStreamInfo",
+   "type": "object",
+   "description": "Settings and Info of the monitor stream",
+   "properties": {
+    "broadcastStreamDelayMs": {
+     "type": "integer",
+     "description": "If you have set the enableMonitorStream property to true, then this property determines the length of the live broadcast delay.",
+     "format": "uint32",
+     "annotations": {
+      "required": [
+       "youtube.liveBroadcasts.update"
+      ]
+     }
+    },
+    "embedHtml": {
+     "type": "string",
+     "description": "HTML code that embeds a player that plays the monitor stream."
+    },
+    "enableMonitorStream": {
+     "type": "boolean",
+     "description": "This value determines whether the monitor stream is enabled for the broadcast. If the monitor stream is enabled, then YouTube will broadcast the event content on a special stream intended only for the broadcaster's consumption. The broadcaster can use the stream to review the event content and also to identify the optimal times to insert cuepoints.\n\nYou need to set this value to true if you intend to have a broadcast delay for your event.\n\nNote: This property cannot be updated once the broadcast is in the testing or live state.",
+     "annotations": {
+      "required": [
+       "youtube.liveBroadcasts.update"
+      ]
+     }
+    }
+   }
+  },
   "PageInfo": {
    "id": "PageInfo",
    "type": "object",
@@ -1930,7 +1982,7 @@
   "Playlist": {
    "id": "Playlist",
    "type": "object",
-   "description": "A playlist resource represents a YouTube playlist. A playlist is a collection of videos that can be viewed sequentially and shared with other users. A playlist can contain up to 200 videos, and YouTube does not limit the number of playlists that each user creates. By default, playlists are publicly visible to other users, but playlists can be public or private.\n\nYouTube also uses playlists to identify special collections of videos for a channel, such as:  \n- uploaded videos \n- favorite videos \n- positively rated (liked) videos \n- watch history \n- watch later  To be more specific, these lists are associated with a channel, which is a collection of a person, group, or company's videos, playlists, and other YouTube information. You can retrieve the playlist IDs for each of these lists from the channel resource for a given channel.\n\nYou can then use the playlistItems.list method to retrieve any of those lists. You can also add or remove items from those lists by calling the playlistItems.insert and playlistItems.delete methods.",
+   "description": "A playlist resource represents a YouTube playlist. A playlist is a collection of videos that can be viewed sequentially and shared with other users. A playlist can contain up to 200 videos, and YouTube does not limit the number of playlists that each user creates. By default, playlists are publicly visible to other users, but playlists can be public or private.\n\nYouTube also uses playlists to identify special collections of videos for a channel, such as:  \n- uploaded videos \n- favorite videos \n- positively rated (liked) videos \n- watch history \n- watch later  To be more specific, these lists are associated with a channel, which is a collection of a person, group, or company's videos, playlists, and other YouTube information. You can retrieve the playlist IDs for each of these lists from the  channel resource for a given channel.\n\nYou can then use the   playlistItems.list method to retrieve any of those lists. You can also add or remove items from those lists by calling the   playlistItems.insert and   playlistItems.delete methods.",
    "properties": {
     "contentDetails": {
      "$ref": "PlaylistContentDetails",
@@ -1938,7 +1990,7 @@
     },
     "etag": {
      "type": "string",
-     "description": "The ETag for the playlist resource."
+     "description": "Etag of this resource."
     },
     "id": {
      "type": "string",
@@ -1946,7 +1998,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "The type of the API resource. For video resources, the value will be youtube#playlist.",
+     "description": "The kind, fixed to \"youtube#playlist\".",
      "default": "youtube#playlist"
     },
     "player": {
@@ -1966,7 +2018,6 @@
   "PlaylistContentDetails": {
    "id": "PlaylistContentDetails",
    "type": "object",
-   "description": "Details about the content of a playlist, such as the video count.",
    "properties": {
     "itemCount": {
      "type": "integer",
@@ -1978,7 +2029,7 @@
   "PlaylistItem": {
    "id": "PlaylistItem",
    "type": "object",
-   "description": "A playlistItem resource identifies another resource, such as a video, that is included in a playlist. In addition, the playlistItem resource contains details about the included resource that pertain specifically to how that resource is used in that playlist.\n\nYouTube uses playlists to identify special collections of videos for a channel, such as:  \n- uploaded videos \n- favorite videos \n- positively rated (liked) videos \n- watch history \n- watch later  To be more specific, these lists are associated with a channel, which is a collection of a person, group, or company's videos, playlists, and other YouTube information.\n\nYou can retrieve the playlist IDs for each of these lists from the channel resource for a given channel. You can then use the playlistItems.list method to retrieve any of those lists. You can also add or remove items from those lists by calling the playlistItems.insert and playlistItems.delete methods. For example, if a user gives a positive rating to a video, you would insert that video into the liked videos playlist for that user's channel.",
+   "description": "A playlistItem resource identifies another resource, such as a video, that is included in a playlist. In addition, the playlistItem  resource contains details about the included resource that pertain specifically to how that resource is used in that playlist.\n\nYouTube uses playlists to identify special collections of videos for a channel, such as:  \n- uploaded videos \n- favorite videos \n- positively rated (liked) videos \n- watch history \n- watch later  To be more specific, these lists are associated with a channel, which is a collection of a person, group, or company's videos, playlists, and other YouTube information.\n\nYou can retrieve the playlist IDs for each of these lists from the  channel resource  for a given channel. You can then use the   playlistItems.list method to retrieve any of those lists. You can also add or remove items from those lists by calling the   playlistItems.insert and   playlistItems.delete methods. For example, if a user gives a positive rating to a video, you would insert that video into the liked videos playlist for that user's channel.",
    "properties": {
     "contentDetails": {
      "$ref": "PlaylistItemContentDetails",
@@ -1986,7 +2037,7 @@
     },
     "etag": {
      "type": "string",
-     "description": "The ETag for the playlist item resource."
+     "description": "Etag of this resource."
     },
     "id": {
      "type": "string",
@@ -1994,7 +2045,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "The type of the API resource. For playlist item resources, the value will be youtube#playlistItem.",
+     "description": "The kind, fixed to \"youtube#playlistItem\".",
      "default": "youtube#playlistItem"
     },
     "snippet": {
@@ -2010,9 +2061,8 @@
   "PlaylistItemContentDetails": {
    "id": "PlaylistItemContentDetails",
    "type": "object",
-   "description": "Details about the content of a playlist item, such as the video or the video fragment start and end time included in the playlist.",
    "properties": {
-    "endAt": {
+    "endAtMs": {
      "type": "string",
      "description": "The time, measured in seconds from the start of the video, when the video should stop playing. (The playlist owner can specify the times when the video should start and stop playing when the video is played in the context of the playlist.) By default, assume that the video.endTime is the end of the video."
     },
@@ -2020,7 +2070,7 @@
      "type": "string",
      "description": "A user-generated note for this item."
     },
-    "startAt": {
+    "startAtMs": {
      "type": "string",
      "description": "The time, measured in seconds from the start of the video, when the video should start playing. (The playlist owner can specify the times when the video should start and stop playing when the video is played in the context of the playlist.) The default value is 0."
     },
@@ -2197,7 +2247,6 @@
   "PlaylistPlayer": {
    "id": "PlaylistPlayer",
    "type": "object",
-   "description": "Player to be used for a playlist playback.",
    "properties": {
     "embedHtml": {
      "type": "string",
@@ -2216,7 +2265,7 @@
     },
     "channelTitle": {
      "type": "string",
-     "description": "Channel title for the channel that the video belongs to."
+     "description": "The channel title of the channel that the video belongs to."
     },
     "description": {
      "type": "string",
@@ -2229,6 +2278,7 @@
     },
     "tags": {
      "type": "array",
+     "description": "Keyword tags associated with the playlist.",
      "items": {
       "type": "string"
      }
@@ -2252,16 +2302,17 @@
   "PlaylistStatus": {
    "id": "PlaylistStatus",
    "type": "object",
-   "description": "The status details of a playlist describes whether the playlist is private.",
    "properties": {
     "privacyStatus": {
      "type": "string",
      "description": "The playlist's privacy status.",
      "enum": [
       "private",
-      "public"
+      "public",
+      "unlisted"
      ],
      "enumDescriptions": [
+      "",
       "",
       ""
      ]
@@ -2437,7 +2488,7 @@
     },
     "etag": {
      "type": "string",
-     "description": "The ETag of the subscription resource."
+     "description": "Etag of this resource."
     },
     "id": {
      "type": "string",
@@ -2445,7 +2496,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "The type of the API resource. For subscription resources, the value will be youtube#subscription.",
+     "description": "The kind, fixed to \"youtube#subscription\".",
      "default": "youtube#subscription"
     },
     "snippet": {
@@ -2454,7 +2505,7 @@
     },
     "subscriberSnippet": {
      "$ref": "SubscriptionSubscriberSnippet",
-     "description": "The subscriberSnippet object contains basic details about the subscriber."
+     "description": "The subscriberSnippet object contains basic details about the sbuscriber."
     }
    }
   },
@@ -2463,6 +2514,18 @@
    "type": "object",
    "description": "Details about the content to witch a subscription refers.",
    "properties": {
+    "activityType": {
+     "type": "string",
+     "description": "The type of activity this subscription is for (only uploads, everything).",
+     "enum": [
+      "all",
+      "uploads"
+     ],
+     "enumDescriptions": [
+      "",
+      ""
+     ]
+    },
     "newItemCount": {
      "type": "integer",
      "description": "The number of new items in the subscription since its content was last read.",
@@ -2662,7 +2725,7 @@
    "type": "object",
    "description": "A video resource represents a YouTube video.",
    "properties": {
-    "ageGatingDetails": {
+    "ageGating": {
      "$ref": "VideoAgeGating",
      "description": "Age restriction details related to a video."
     },
@@ -2676,7 +2739,7 @@
     },
     "etag": {
      "type": "string",
-     "description": "The ETag of the video resource."
+     "description": "Etag of this resource."
     },
     "fileDetails": {
      "$ref": "VideoFileDetails",
@@ -2688,7 +2751,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "The type of the API resource. For video resources, the value will be youtube#video.",
+     "description": "The kind, fixed to \"youtube#video\".",
      "default": "youtube#video"
     },
     "monetizationDetails": {
@@ -2770,7 +2833,7 @@
    "properties": {
     "etag": {
      "type": "string",
-     "description": "The ETag of the videoCategory resource."
+     "description": "Etag of this resource."
     },
     "id": {
      "type": "string",
@@ -2778,7 +2841,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "The type of the API resource. For video category resources, the value will be youtube#videoCategory.",
+     "description": "The kind, fixed to \"youtube#videoCategory\".",
      "default": "youtube#videoCategory"
     },
     "snippet": {
@@ -3784,10 +3847,10 @@
       }
      },
      "request": {
-      "$ref": "ChannelBannerInsertResponse"
+      "$ref": "ChannelBannerResource"
      },
      "response": {
-      "$ref": "ChannelBannerInsertResponse"
+      "$ref": "ChannelBannerResource"
      },
      "scopes": [
       "https://www.googleapis.com/auth/youtube",
@@ -3897,6 +3960,11 @@
      "httpMethod": "PUT",
      "description": "Updates a channel's metadata.",
      "parameters": {
+      "onBehalfOfContentOwner": {
+       "type": "string",
+       "description": "The onBehalfOfContentOwner parameter indicates that the authenticated user is acting on behalf of the content owner specified in the parameter value. This parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and get access to all their video and channel data, without having to provide authentication credentials for each individual channel. The actual CMS account that the user authenticates with needs to be linked to the specified YouTube content owner.",
+       "location": "query"
+      },
       "part": {
        "type": "string",
        "description": "The part parameter serves two purposes in this operation. It identifies the properties that the write operation will set as well as the properties that the API response will include.\n\nThe part names that you can include in the parameter value are id and invideoPromotion.\n\nNote that this method will override the existing values for all of the mutable properties that are contained in any parts that the parameter value specifies.",
@@ -5278,9 +5346,26 @@
      "httpMethod": "GET",
      "description": "Returns a list of videos that match the API request parameters.",
      "parameters": {
+      "chart": {
+       "type": "string",
+       "description": "Set this parameter's value to mostPopular to instruct the API to return videos belonging to the chart of most popular videos.",
+       "enum": [
+        "mostPopular"
+       ],
+       "enumDescriptions": [
+        "Returns videos belonging to most popular video chart."
+       ],
+       "location": "query"
+      },
       "id": {
        "type": "string",
        "description": "The id parameter specifies a comma-separated list of the YouTube video ID(s) for the resource(s) that are being retrieved. In a video resource, the id property specifies the video's ID.",
+       "location": "query"
+      },
+      "locale": {
+       "type": "string",
+       "description": "The locale parameter selects a video chart available in the specified locale. If using this parameter, chart must also be set. The parameter value is an BCP 47 locale. Supported locales include ar_AE, ar_DZ, ar_EG, ar_JO, ar_MA, ar_SA, ar_TN, ar_YE, cs_CZ, de_DE, el_GR, en_AU, en_BE, en_CA, en_GB, en_GH, en_IE, en_IL, en_IN, en_KE, en_NG, en_NZ, en_SG, en_UG, en_US, en_ZA, es_AR, es_CL, es_CO, es_ES, es_MX, es_PE, fil_PH, fr_FR, hu_HU, id_ID, it_IT, ja_JP, ko_KR, ms_MY, nl_NL, pl_PL, pt_BR, ru_RU, sv_SE, tr_TR, zh_HK, zh_TW",
+       "default": "en_US",
        "location": "query"
       },
       "maxResults": {
@@ -5319,6 +5404,12 @@
        "type": "string",
        "description": "The part parameter specifies a comma-separated list of one or more video resource properties that the API response will include. The part names that you can include in the parameter value are id, snippet, contentDetails, player, statistics, status, and topicDetails.\n\nIf the parameter identifies a property that contains child properties, the child properties will be included in the response. For example, in a video resource, the snippet property contains the channelId, title, description, tags, and categoryId properties. As such, if you set part=snippet, the API response will contain all of those properties.",
        "required": true,
+       "location": "query"
+      },
+      "videoCategoryId": {
+       "type": "string",
+       "description": "The videoCategoryId parameter selects a video chart based on the category. If using this parameter, chart must also be set.",
+       "default": "0",
        "location": "query"
       }
      },

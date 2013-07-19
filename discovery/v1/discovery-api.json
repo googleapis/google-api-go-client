@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"0kaFfN0xfjZjASExv-gUnrWhdto/TAXbS3ndwF7SDaFThlHgSNrey8E\"",
+ "etag": "\"BgGnx7p-6wsAbOn4St99QhtBGbA/mtop81CuPwgfk3ZtflB16hs7nm0\"",
  "discoveryVersion": "v1",
  "id": "discovery:v1",
  "name": "discovery",
  "version": "v1",
- "revision": "20130411",
+ "revision": "20130626",
  "title": "APIs Discovery Service",
  "description": "Lets you discover information about other Google APIs, such as what APIs are available, the resource and method details for each API.",
  "ownerDomain": "google.com",
@@ -531,6 +531,10 @@
       "$ref": {
        "type": "string",
        "description": "Schema ID for the request schema."
+      },
+      "parameterName": {
+       "type": "string",
+       "description": "parameter name."
       }
      }
     },

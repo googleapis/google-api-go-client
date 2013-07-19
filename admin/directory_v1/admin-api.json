@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"0kaFfN0xfjZjASExv-gUnrWhdto/xg7aqD9gvkkoP6QuI93ciKDJHIA\"",
+ "etag": "\"BgGnx7p-6wsAbOn4St99QhtBGbA/_ICxUypzsDpwsaclpiinPL7H344\"",
  "discoveryVersion": "v1",
  "id": "admin:directory_v1",
  "name": "admin",
  "canonicalName": "directory",
  "version": "directory_v1",
- "revision": "20130610",
+ "revision": "20130516",
  "title": "Admin Directory API",
  "description": "Apps Directory API lets you view and manage enterprise resources like user, groups, OrgUnit, devices.",
  "ownerDomain": "google.com",
@@ -2025,8 +2025,7 @@
       "orgUnitPath"
      ],
      "scopes": [
-      "https://www.googleapis.com/auth/admin.directory.orgunit",
-      "https://www.googleapis.com/auth/admin.directory.user"
+      "https://www.googleapis.com/auth/admin.directory.orgunit"
      ]
     },
     "get": {
@@ -2058,9 +2057,7 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/admin.directory.orgunit",
-      "https://www.googleapis.com/auth/admin.directory.orgunit.readonly",
-      "https://www.googleapis.com/auth/admin.directory.user",
-      "https://www.googleapis.com/auth/admin.directory.user.readonly"
+      "https://www.googleapis.com/auth/admin.directory.orgunit.readonly"
      ]
     },
     "insert": {
@@ -2086,8 +2083,7 @@
       "$ref": "OrgUnit"
      },
      "scopes": [
-      "https://www.googleapis.com/auth/admin.directory.orgunit",
-      "https://www.googleapis.com/auth/admin.directory.user"
+      "https://www.googleapis.com/auth/admin.directory.orgunit"
      ]
     },
     "list": {
@@ -2130,9 +2126,7 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/admin.directory.orgunit",
-      "https://www.googleapis.com/auth/admin.directory.orgunit.readonly",
-      "https://www.googleapis.com/auth/admin.directory.user",
-      "https://www.googleapis.com/auth/admin.directory.user.readonly"
+      "https://www.googleapis.com/auth/admin.directory.orgunit.readonly"
      ]
     },
     "patch": {
@@ -2166,8 +2160,7 @@
       "$ref": "OrgUnit"
      },
      "scopes": [
-      "https://www.googleapis.com/auth/admin.directory.orgunit",
-      "https://www.googleapis.com/auth/admin.directory.user"
+      "https://www.googleapis.com/auth/admin.directory.orgunit"
      ]
     },
     "update": {
@@ -2201,8 +2194,7 @@
       "$ref": "OrgUnit"
      },
      "scopes": [
-      "https://www.googleapis.com/auth/admin.directory.orgunit",
-      "https://www.googleapis.com/auth/admin.directory.user"
+      "https://www.googleapis.com/auth/admin.directory.orgunit"
      ]
     }
    }
@@ -2314,7 +2306,7 @@
       },
       "query": {
        "type": "string",
-       "description": "Query string for prefix matching searches. Should be of the form \"key:value\" where key can be \"email\", \"firstName\" or \"lastName\".",
+       "description": "Query string for prefix matching searches. Should be of the form \"key:value*\" where key can be \"email\", \"givenName\" or \"familyName\". The asterisk is required, for example: \"givenName:Ann*\" is a valid query.",
        "location": "query"
       },
       "showDeleted": {

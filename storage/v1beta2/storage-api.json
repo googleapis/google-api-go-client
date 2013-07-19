@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"0kaFfN0xfjZjASExv-gUnrWhdto/Hn7Lwuw8NTExSZM0perrdPYiIys\"",
+ "etag": "\"BgGnx7p-6wsAbOn4St99QhtBGbA/uco99p5yKfqaGFq56fMdDRLhe6Q\"",
  "discoveryVersion": "v1",
  "id": "storage:v1beta2",
  "name": "storage",
  "version": "v1beta2",
- "revision": "20130612",
+ "revision": "20130712",
  "title": "Cloud Storage API",
  "description": "Lets you store and retrieve potentially-large, immutable data objects.",
  "ownerDomain": "google.com",
@@ -157,6 +157,56 @@
      "description": "The kind of item this is. For buckets, this is always storage#bucket.",
      "default": "storage#bucket"
     },
+    "lifecycle": {
+     "type": "object",
+     "description": "The bucket's lifecycle configuration. See object lifecycle management for more information.",
+     "properties": {
+      "rule": {
+       "type": "array",
+       "description": "A lifecycle management rule, which is made of an action to take and the condition(s) under which the action will be taken.",
+       "items": {
+        "type": "object",
+        "properties": {
+         "action": {
+          "type": "object",
+          "description": "The action to take.",
+          "properties": {
+           "type": {
+            "type": "string",
+            "description": "Type of the action, e.g. Delete."
+           }
+          }
+         },
+         "condition": {
+          "type": "object",
+          "description": "The condition(s) under which the action will be taken.",
+          "properties": {
+           "age": {
+            "type": "integer",
+            "description": "Age of an object (in days). This condition is satisfied when an object reaches the specified age.",
+            "format": "int32"
+           },
+           "createdBefore": {
+            "type": "string",
+            "description": "A date in RFC 3339 format with only the date part, e.g. \"2013-01-15\". This condition is satisfied when an object is created before midnight of the specified date in UTC.",
+            "format": "date"
+           },
+           "isLive": {
+            "type": "boolean",
+            "description": "Relevant only for versioned objects. If the value is true, this condition matches live objects; if the value is false, it matches archived objects."
+           },
+           "numNewerVersions": {
+            "type": "integer",
+            "description": "Relevant only for versioned objects. If the value is N, this condition is satisfied when there are at least N versions (including the live version) newer than this version of the object.",
+            "format": "int32"
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    },
     "location": {
      "type": "string",
      "description": "The location of the bucket. Object data for objects in the bucket resides in physical storage within this region. Typical values are US and EU. Defaults to US. See the developer's guide for the authoritative list."
@@ -209,7 +259,7 @@
     },
     "storageClass": {
      "type": "string",
-     "description": "The bucket's storage class. This defines how objects in the bucket will be stored and determines the SLA and the cost of storage. Can be STANDARD or DRA. Defaults to STANDARD."
+     "description": "The bucket's storage class. This defines how objects in the bucket will be stored and determines the SLA and the cost of storage. Typical values are STANDARD and DURABLE_REDUCED_AVAILABILITY. Defaults to STANDARD. See the developer's guide for the authoritative list."
     },
     "timeCreated": {
      "type": "string",

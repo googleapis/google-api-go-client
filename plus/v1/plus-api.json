@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"0kaFfN0xfjZjASExv-gUnrWhdto/r-ibhnPzi-5PSK_yoqHMzQXfRZQ\"",
+ "etag": "\"BgGnx7p-6wsAbOn4St99QhtBGbA/ojr8t92Ip1rN1AT3_5gxG-yv0ic\"",
  "discoveryVersion": "v1",
  "id": "plus:v1",
  "name": "plus",
  "version": "v1",
- "revision": "20130527",
+ "revision": "20130712",
  "title": "Google+ API",
  "description": "The Google+ API enables developers to build on top of the Google+ platform.",
  "ownerDomain": "google.com",
@@ -298,7 +298,7 @@
          },
          "objectType": {
           "type": "string",
-          "description": "The type of media object. Possible values are:  \n- \"photo\" - A photo. \n- \"album\" - A photo album. \n- \"video\" - A video. \n- \"article\" - An article, specified by a link."
+          "description": "The type of media object. Possible values include (but are not limited to):  \n- \"photo\" - A photo. \n- \"album\" - A photo album. \n- \"video\" - A video. \n- \"article\" - An article, specified by a link."
          },
          "thumbnails": {
           "type": "array",
@@ -358,7 +358,7 @@
       },
       "objectType": {
        "type": "string",
-       "description": "The type of the object. Possible values are:  \n- \"note\" - Textual content. \n- \"activity\" - A Google+ activity."
+       "description": "The type of the object. Possible values include (but are not limited to):  \n- \"note\" - Textual content. \n- \"activity\" - A Google+ activity."
       },
       "originalContent": {
        "type": "string",
@@ -457,7 +457,7 @@
     },
     "verb": {
      "type": "string",
-     "description": "This activity's verb, indicating what action was performed. Possible values are:  \n- \"post\" - Publish content to the stream. \n- \"share\" - Reshare an activity."
+     "description": "This activity's verb, indicating what action was performed. Possible values include (but are not limited to):  \n- \"post\" - Publish content to the stream. \n- \"share\" - Reshare an activity."
     }
    }
   },
@@ -1115,7 +1115,7 @@
       },
       "layout": {
        "type": "string",
-       "description": "The layout of the cover art. Possible values are:  \n- \"banner\" - One large image banner."
+       "description": "The layout of the cover art. Possible values include (but are not limited to):  \n- \"banner\" - One large image banner."
       }
      }
     },
@@ -1127,34 +1127,13 @@
      "type": "string",
      "description": "The name of this person, suitable for display."
     },
-    "emails": {
-     "type": "array",
-     "description": "A list of email addresses that this person has set to public on their Google+ profile. You can also use the userinfo.email scope to retrieve an authenticated user's email address.",
-     "items": {
-      "type": "object",
-      "properties": {
-       "primary": {
-        "type": "boolean",
-        "description": "If \"true\", indicates this email address is the person's primary one."
-       },
-       "type": {
-        "type": "string",
-        "description": "The type of address. Possible values are:  \n- \"home\" - Home email address. \n- \"work\" - Work email address. \n- \"other\" - Other."
-       },
-       "value": {
-        "type": "string",
-        "description": "The email address."
-       }
-      }
-     }
-    },
     "etag": {
      "type": "string",
      "description": "ETag of this response for caching purposes."
     },
     "gender": {
      "type": "string",
-     "description": "The person's gender. Possible values are:  \n- \"male\" - Male gender. \n- \"female\" - Female gender. \n- \"other\" - Other."
+     "description": "The person's gender. Possible values include (but are not limited to):  \n- \"male\" - Male gender. \n- \"female\" - Female gender. \n- \"other\" - Other."
     },
     "id": {
      "type": "string",
@@ -1219,7 +1198,7 @@
     },
     "objectType": {
      "type": "string",
-     "description": "Type of person within Google+. Possible values are:  \n- \"person\" - represents an actual person. \n- \"page\" - represents a page."
+     "description": "Type of person within Google+. Possible values include (but are not limited to):  \n- \"person\" - represents an actual person. \n- \"page\" - represents a page."
     },
     "organizations": {
      "type": "array",
@@ -1261,7 +1240,7 @@
        },
        "type": {
         "type": "string",
-        "description": "The type of organization. Possible values are:  \n- \"work\" - Work. \n- \"school\" - School."
+        "description": "The type of organization. Possible values include (but are not limited to):  \n- \"work\" - Work. \n- \"school\" - School."
        }
       }
      }
@@ -1290,7 +1269,7 @@
     },
     "relationshipStatus": {
      "type": "string",
-     "description": "The person's relationship status. Possible values are:  \n- \"single\" - Person is single. \n- \"in_a_relationship\" - Person is in a relationship. \n- \"engaged\" - Person is engaged. \n- \"married\" - Person is married. \n- \"its_complicated\" - The relationship is complicated. \n- \"open_relationship\" - Person is in an open relationship. \n- \"widowed\" - Person is widowed. \n- \"in_domestic_partnership\" - Person is in a domestic partnership. \n- \"in_civil_union\" - Person is in a civil union."
+     "description": "The person's relationship status. Possible values include (but are not limited to):  \n- \"single\" - Person is single. \n- \"in_a_relationship\" - Person is in a relationship. \n- \"engaged\" - Person is engaged. \n- \"married\" - Person is married. \n- \"its_complicated\" - The relationship is complicated. \n- \"open_relationship\" - Person is in an open relationship. \n- \"widowed\" - Person is widowed. \n- \"in_domestic_partnership\" - Person is in a domestic partnership. \n- \"in_civil_union\" - Person is in a civil union."
     },
     "tagline": {
      "type": "string",
@@ -1312,7 +1291,7 @@
        },
        "type": {
         "type": "string",
-        "description": "The type of URL. Possible values are:  \n- \"otherProfile\" - URL for another profile. \n- \"contributor\" - URL for which this person is a contributor to. \n- \"website\" - URL for this Google+ Page's primary website. \n- \"other\" - Other."
+        "description": "The type of URL. Possible values include (but are not limited to):  \n- \"otherProfile\" - URL for another profile. \n- \"contributor\" - URL for which this person is a contributor to. \n- \"website\" - URL for this Google+ Page's primary website. \n- \"other\" - Other."
        },
        "value": {
         "type": "string",

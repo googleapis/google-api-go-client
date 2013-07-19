@@ -53,6 +53,7 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
+	s.BlogUserInfos = NewBlogUserInfosService(s)
 	s.Blogs = NewBlogsService(s)
 	s.Comments = NewCommentsService(s)
 	s.Pages = NewPagesService(s)
@@ -64,6 +65,8 @@ func New(client *http.Client) (*Service, error) {
 type Service struct {
 	client *http.Client
 
+	BlogUserInfos *BlogUserInfosService
+
 	Blogs *BlogsService
 
 	Comments *CommentsService
@@ -73,6 +76,15 @@ type Service struct {
 	Posts *PostsService
 
 	Users *UsersService
+}
+
+func NewBlogUserInfosService(s *Service) *BlogUserInfosService {
+	rs := &BlogUserInfosService{s: s}
+	return rs
+}
+
+type BlogUserInfosService struct {
+	s *Service
 }
 
 func NewBlogsService(s *Service) *BlogsService {
@@ -196,6 +208,24 @@ type BlogList struct {
 
 	// Kind: The kind of this entity. Always blogger#blogList
 	Kind string `json:"kind,omitempty"`
+}
+
+type BlogPerUserInfo struct {
+	BlogId string `json:"blogId,omitempty"`
+
+	Kind string `json:"kind,omitempty"`
+
+	PhotosAlbumKey string `json:"photosAlbumKey,omitempty"`
+
+	UserId string `json:"userId,omitempty"`
+}
+
+type BlogUserInfo struct {
+	Blog *Blog `json:"blog,omitempty"`
+
+	Kind string `json:"kind,omitempty"`
+
+	User *BlogPerUserInfo `json:"user,omitempty"`
 }
 
 type Comment struct {
@@ -499,6 +529,97 @@ type UserLocale struct {
 
 	// Variant: The user's language variant setting.
 	Variant string `json:"variant,omitempty"`
+}
+
+// method id "blogger.blogUserInfos.get":
+
+type BlogUserInfosGetCall struct {
+	s      *Service
+	userId string
+	blogId string
+	opt_   map[string]interface{}
+}
+
+// Get: Gets one blog and user info pair by blogId and userId.
+func (r *BlogUserInfosService) Get(userId string, blogId string) *BlogUserInfosGetCall {
+	c := &BlogUserInfosGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.userId = userId
+	c.blogId = blogId
+	return c
+}
+
+// MaxPosts sets the optional parameter "maxPosts": Maximum number of
+// posts to pull back with the blog.
+func (c *BlogUserInfosGetCall) MaxPosts(maxPosts int64) *BlogUserInfosGetCall {
+	c.opt_["maxPosts"] = maxPosts
+	return c
+}
+
+func (c *BlogUserInfosGetCall) Do() (*BlogUserInfo, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["maxPosts"]; ok {
+		params.Set("maxPosts", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/blogger/v3/", "users/{userId}/blogs/{blogId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{userId}", url.QueryEscape(c.userId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{blogId}", url.QueryEscape(c.blogId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(BlogUserInfo)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets one blog and user info pair by blogId and userId.",
+	//   "httpMethod": "GET",
+	//   "id": "blogger.blogUserInfos.get",
+	//   "parameterOrder": [
+	//     "userId",
+	//     "blogId"
+	//   ],
+	//   "parameters": {
+	//     "blogId": {
+	//       "description": "The ID of the blog to get.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "maxPosts": {
+	//       "description": "Maximum number of posts to pull back with the blog.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "userId": {
+	//       "description": "ID of the user whose blogs are to be fetched. Either the word 'self' (sans quote marks) or the user's profile identifier.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "users/{userId}/blogs/{blogId}",
+	//   "response": {
+	//     "$ref": "BlogUserInfo"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/blogger",
+	//     "https://www.googleapis.com/auth/blogger.readonly"
+	//   ]
+	// }
+
 }
 
 // method id "blogger.blogs.get":
@@ -1409,7 +1530,7 @@ func (c *PostsInsertCall) Do() (*Post, error) {
 	//   ],
 	//   "parameters": {
 	//     "blogId": {
-	//       "description": "ID of the blog to fetch the post from.",
+	//       "description": "ID of the blog to add the post to.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"

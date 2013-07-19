@@ -135,18 +135,18 @@ type Dataset struct {
 	// assign the same role to multiple users, and assign multiple roles to
 	// the same user.
 	// Default values assigned to a new dataset are as
-	// follows: OWNER - Project owners, dataset creator READ - Project
-	// readers WRITE - Project writers
-	// See ACLs and Rights for a description
-	// of these rights. If you specify any of these roles when creating a
-	// dataset, the assigned roles will overwrite the defaults listed
-	// above.
-	// To revoke rights to a dataset, call datasets.update() and omit
-	// the names of anyone whose rights you wish to revoke. However, every
-	// dataset must have at least one entity granted OWNER role.
-	// Each access
-	// object can have only one of the following members: userByEmail,
-	// groupByEmail, domain, or allAuthenticatedUsers.
+	// follows: OWNER - Project owners, dataset creator READER - Project
+	// readers WRITER - Project writers
+	// See ACLs and Rights for a
+	// description of these rights. If you specify any of these roles when
+	// creating a dataset, the assigned roles will overwrite the defaults
+	// listed above.
+	// To revoke rights to a dataset, call datasets.update()
+	// and omit the names of anyone whose rights you wish to revoke.
+	// However, every dataset must have at least one entity granted OWNER
+	// role.
+	// Each access object can have only one of the following members:
+	// userByEmail, groupByEmail, domain, or allAuthenticatedUsers.
 	Access []*DatasetAccess `json:"access,omitempty"`
 
 	// CreationTime: [Output-only] The time when this dataset was created,
@@ -201,8 +201,8 @@ type DatasetAccess struct {
 
 	// Role: [Required] Describes the rights granted to the user specified
 	// by the other member of the access object. The following string values
-	// are supported: READ - User can call any list() or get() method on any
-	// collection or resource. WRITE - User can call any method on any
+	// are supported: READER - User can call any list() or get() method on
+	// any collection or resource. WRITER - User can call any method on any
 	// collection except for datasets, on which they can call list() and
 	// get(). OWNER - User can call any method. The dataset creator is
 	// granted this role by default.
@@ -221,35 +221,38 @@ type DatasetAccess struct {
 }
 
 type DatasetList struct {
-	// Datasets: An array of one or more summarized dataset resources.
-	// Absent when there are no datasets in the specified project.
+	// Datasets: An array of the dataset resources in the project. Each
+	// resource contains basic information. For full information about a
+	// particular dataset resource, use the Datasets: get method. This
+	// property is omitted when there are no datasets in the project.
 	Datasets []*DatasetListDatasets `json:"datasets,omitempty"`
 
-	// Etag: A hash of this page of results. See Paging Through Results in
-	// the developer's guide.
+	// Etag: A hash value of the results page. You can use this property to
+	// determine if the page has changed since the last request.
 	Etag string `json:"etag,omitempty"`
 
-	// Kind: The type of list.
+	// Kind: The list type. This property always returns the value
+	// "bigquery#datasetList".
 	Kind string `json:"kind,omitempty"`
 
-	// NextPageToken: A token to request the next page of results. Present
-	// only when there is more than one page of results.* See Paging Through
-	// Results in the developer's guide.
+	// NextPageToken: A token that can be used to request the next results
+	// page. This property is omitted on the final results page.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
 type DatasetListDatasets struct {
-	// DatasetReference: Reference identifying dataset.
+	// DatasetReference: The dataset reference. Use this property to access
+	// specific parts of the dataset's ID, such as project ID or dataset ID.
 	DatasetReference *DatasetReference `json:"datasetReference,omitempty"`
 
-	// FriendlyName: A descriptive name for this dataset, if one exists.
+	// FriendlyName: A descriptive name for the dataset, if one exists.
 	FriendlyName string `json:"friendlyName,omitempty"`
 
-	// Id: The fully-qualified unique name of this dataset in the format
-	// projectId:datasetId.
+	// Id: The fully-qualified, unique, opaque ID of the dataset.
 	Id string `json:"id,omitempty"`
 
-	// Kind: The resource type.
+	// Kind: The resource type. This property always returns the value
+	// "bigquery#dataset".
 	Kind string `json:"kind,omitempty"`
 }
 
@@ -263,18 +266,17 @@ type DatasetReference struct {
 }
 
 type ErrorProto struct {
-	// DebugInfo: Debugging information for the service, if present. Should
-	// be ignored.
+	// DebugInfo: Debugging information. This property is internal to Google
+	// and should not be used.
 	DebugInfo string `json:"debugInfo,omitempty"`
 
 	// Location: Specifies where the error occurred, if present.
 	Location string `json:"location,omitempty"`
 
-	// Message: A human readable explanation of the error.
+	// Message: A human-readable description of the error.
 	Message string `json:"message,omitempty"`
 
-	// Reason: Specifies the error reason. For example, reason will be
-	// "required" or "invalid" if some field was missing or malformed.
+	// Reason: A short error code that summarizes the error.
 	Reason string `json:"reason,omitempty"`
 }
 
@@ -531,6 +533,12 @@ type JobConfigurationQuery struct {
 	// to store the results.
 	DestinationTable *TableReference `json:"destinationTable,omitempty"`
 
+	// MinCompletionRatio: [Experimental] Specifies the the minimum fraction
+	// of data that must be scanned before a query returns. This should be
+	// specified as a value between 0.0 and 1.0 inclusive. The default value
+	// is 1.0.
+	MinCompletionRatio float64 `json:"minCompletionRatio,omitempty"`
+
 	// PreserveNulls: [Experimental] If set, preserve null values in table
 	// data, rather than mapping null values to the column's default value.
 	// This flag currently defaults to false, but the default will soon be
@@ -656,6 +664,11 @@ type JobStatistics2 struct {
 	// query cache.
 	CacheHit bool `json:"cacheHit,omitempty"`
 
+	// CompletionRatio: [Output-Only] Approximate fraction of data processed
+	// for this query. This will be 1.0 unless min_completion_ratio for the
+	// query was set to something other than 1.0.
+	CompletionRatio float64 `json:"completionRatio,omitempty"`
+
 	// TotalBytesProcessed: [Output-only] Total bytes processed for this
 	// job.
 	TotalBytesProcessed int64 `json:"totalBytesProcessed,omitempty,string"`
@@ -754,6 +767,12 @@ type QueryRequest struct {
 	// size for a single response, you will have to page through the
 	// results. Default is to return the maximum response size.
 	MaxResults int64 `json:"maxResults,omitempty"`
+
+	// MinCompletionRatio: [Experimental] Specifies the the minimum fraction
+	// of data that must be scanned before a query returns. This should be
+	// specified as a value between 0.0 and 1.0 inclusive. The default value
+	// is 1.0.
+	MinCompletionRatio float64 `json:"minCompletionRatio,omitempty"`
 
 	// PreserveNulls: [Experimental] If set, preserve null values in table
 	// data, rather than mapping null values to the column's default value.
@@ -910,7 +929,7 @@ type TableFieldSchema struct {
 
 	// Type: [Required] The field data type. Possible values include STRING,
 	// INTEGER, FLOAT, BOOLEAN, TIMESTAMP or RECORD (where RECORD indicates
-	// a nested schema).
+	// that the field contains a nested schema).
 	Type string `json:"type,omitempty"`
 }
 
@@ -1046,7 +1065,8 @@ func (c *DatasetsDeleteCall) Do() error {
 	//   },
 	//   "path": "projects/{projectId}/datasets/{datasetId}",
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery"
+	//     "https://www.googleapis.com/auth/bigquery",
+	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
 
@@ -1120,7 +1140,8 @@ func (c *DatasetsGetCall) Do() (*Dataset, error) {
 	//     "$ref": "Dataset"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery"
+	//     "https://www.googleapis.com/auth/bigquery",
+	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
 
@@ -1195,7 +1216,8 @@ func (c *DatasetsInsertCall) Do() (*Dataset, error) {
 	//     "$ref": "Dataset"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery"
+	//     "https://www.googleapis.com/auth/bigquery",
+	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
 
@@ -1292,7 +1314,8 @@ func (c *DatasetsListCall) Do() (*DatasetList, error) {
 	//     "$ref": "DatasetList"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery"
+	//     "https://www.googleapis.com/auth/bigquery",
+	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
 
@@ -1381,7 +1404,8 @@ func (c *DatasetsPatchCall) Do() (*Dataset, error) {
 	//     "$ref": "Dataset"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery"
+	//     "https://www.googleapis.com/auth/bigquery",
+	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
 
@@ -1470,7 +1494,8 @@ func (c *DatasetsUpdateCall) Do() (*Dataset, error) {
 	//     "$ref": "Dataset"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery"
+	//     "https://www.googleapis.com/auth/bigquery",
+	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
 
@@ -1544,7 +1569,8 @@ func (c *JobsGetCall) Do() (*Job, error) {
 	//     "$ref": "Job"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery"
+	//     "https://www.googleapis.com/auth/bigquery",
+	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
 
@@ -1683,7 +1709,8 @@ func (c *JobsGetQueryResultsCall) Do() (*GetQueryResultsResponse, error) {
 	//     "$ref": "GetQueryResultsResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery"
+	//     "https://www.googleapis.com/auth/bigquery",
+	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
 
@@ -1951,7 +1978,8 @@ func (c *JobsListCall) Do() (*JobList, error) {
 	//     "$ref": "JobList"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery"
+	//     "https://www.googleapis.com/auth/bigquery",
+	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
 
@@ -2027,7 +2055,8 @@ func (c *JobsQueryCall) Do() (*QueryResponse, error) {
 	//     "$ref": "QueryResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery"
+	//     "https://www.googleapis.com/auth/bigquery",
+	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
 
@@ -2110,7 +2139,8 @@ func (c *ProjectsListCall) Do() (*ProjectList, error) {
 	//     "$ref": "ProjectList"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery"
+	//     "https://www.googleapis.com/auth/bigquery",
+	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
 
@@ -2241,7 +2271,8 @@ func (c *TabledataListCall) Do() (*TableDataList, error) {
 	//     "$ref": "TableDataList"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery"
+	//     "https://www.googleapis.com/auth/bigquery",
+	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
 
@@ -2319,7 +2350,8 @@ func (c *TablesDeleteCall) Do() error {
 	//   },
 	//   "path": "projects/{projectId}/datasets/{datasetId}/tables/{tableId}",
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery"
+	//     "https://www.googleapis.com/auth/bigquery",
+	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
 
@@ -2405,7 +2437,8 @@ func (c *TablesGetCall) Do() (*Table, error) {
 	//     "$ref": "Table"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery"
+	//     "https://www.googleapis.com/auth/bigquery",
+	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
 
@@ -2490,7 +2523,8 @@ func (c *TablesInsertCall) Do() (*Table, error) {
 	//     "$ref": "Table"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery"
+	//     "https://www.googleapis.com/auth/bigquery",
+	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
 
@@ -2595,7 +2629,8 @@ func (c *TablesListCall) Do() (*TableList, error) {
 	//     "$ref": "TableList"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery"
+	//     "https://www.googleapis.com/auth/bigquery",
+	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
 
@@ -2691,7 +2726,8 @@ func (c *TablesPatchCall) Do() (*Table, error) {
 	//     "$ref": "Table"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery"
+	//     "https://www.googleapis.com/auth/bigquery",
+	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
 
@@ -2787,7 +2823,8 @@ func (c *TablesUpdateCall) Do() (*Table, error) {
 	//     "$ref": "Table"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery"
+	//     "https://www.googleapis.com/auth/bigquery",
+	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
 

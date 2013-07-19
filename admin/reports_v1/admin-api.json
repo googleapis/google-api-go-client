@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"0kaFfN0xfjZjASExv-gUnrWhdto/o3be_Yx028r4exv8nNbsutFtD94\"",
+ "etag": "\"BgGnx7p-6wsAbOn4St99QhtBGbA/WafDEr-1bY2hlcelBNr97iTLupg\"",
  "discoveryVersion": "v1",
  "id": "admin:reports_v1",
  "name": "admin",
  "canonicalName": "reports",
  "version": "reports_v1",
- "revision": "20130506",
+ "revision": "20130510",
  "title": "Admin Reports API",
  "description": "Allows the administrators of Google Apps customers to fetch reports about the usage, collaboration, security and risk for their users.",
  "ownerDomain": "google.com",
@@ -84,7 +84,7 @@
   "Activities": {
    "id": "Activities",
    "type": "object",
-   "description": "JSON template for a collection of activites. Author: prakhar@google.com (Prakhar Jain)",
+   "description": "JSON template for a collection of activites.",
    "properties": {
     "items": {
      "type": "array",
@@ -107,7 +107,7 @@
   "Activity": {
    "id": "Activity",
    "type": "object",
-   "description": "JSON template for the activity resource. Author: prakhar@google.com (Prakhar Jain)",
+   "description": "JSON template for the activity resource.",
    "properties": {
     "actor": {
      "type": "object",
@@ -216,7 +216,7 @@
   "UsageReport": {
    "id": "UsageReport",
    "type": "object",
-   "description": "JSON template for a usage report. Author: prakhar@google.com (Prakhar Jain)",
+   "description": "JSON template for a usage report.",
    "properties": {
     "date": {
      "type": "string",
@@ -285,7 +285,7 @@
   "UsageReports": {
    "id": "UsageReports",
    "type": "object",
-   "description": "JSON template for a collection of usage reports. Author: prakhar@google.com (Prakhar Jain)",
+   "description": "JSON template for a collection of usage reports.",
    "properties": {
     "kind": {
      "type": "string",

@@ -425,6 +425,9 @@ type RestMethodParameters struct {
 type RestMethodRequest struct {
 	// Ref: Schema ID for the request schema.
 	Ref string `json:"$ref,omitempty"`
+
+	// ParameterName: parameter name.
+	ParameterName string `json:"parameterName,omitempty"`
 }
 
 type RestMethodResponse struct {

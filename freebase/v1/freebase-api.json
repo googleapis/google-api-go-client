@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"0kaFfN0xfjZjASExv-gUnrWhdto/enTN-nwspL5qtzfL3-mgNVdv4II\"",
+ "etag": "\"BgGnx7p-6wsAbOn4St99QhtBGbA/O3yUjCX2rJxxKly6w7HAoRaaW34\"",
  "discoveryVersion": "v1",
  "id": "freebase:v1",
  "name": "freebase",
  "version": "v1",
- "revision": "20130514",
+ "revision": "20130627",
  "title": "Freebase API",
  "description": "Topic and MQL APIs provide you structured access to Freebase data.",
  "ownerDomain": "google.com",

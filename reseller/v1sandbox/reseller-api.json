@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"0kaFfN0xfjZjASExv-gUnrWhdto/QC7HzCRx8BjDcHJprjwyumxDYSw\"",
+ "etag": "\"BgGnx7p-6wsAbOn4St99QhtBGbA/Q1EJGa9Fvh6F5Bkbhsq_B6ceE7Q\"",
  "discoveryVersion": "v1",
  "id": "reseller:v1sandbox",
  "name": "reseller",
  "version": "v1sandbox",
- "revision": "20130429",
+ "revision": "20130610",
  "title": "Enterprise Apps Reseller API",
  "description": "Lets you create and manage your customers and their subscriptions.",
  "ownerDomain": "google.com",
@@ -171,6 +171,10 @@
     "postalAddress": {
      "$ref": "Address",
      "description": "The postal address of the customer."
+    },
+    "resourceUiUrl": {
+     "type": "string",
+     "description": "Ui url for customer resource."
     }
    }
   },
@@ -269,6 +273,10 @@
      "$ref": "RenewalSettings",
      "description": "Renewal settings of the subscription."
     },
+    "resourceUiUrl": {
+     "type": "string",
+     "description": "Ui url for subscription resource."
+    },
     "seats": {
      "$ref": "Seats",
      "description": "Number/Limit of seats in the new plan."
@@ -284,6 +292,17 @@
     "subscriptionId": {
      "type": "string",
      "description": "The id of the subscription."
+    },
+    "transferInfo": {
+     "type": "object",
+     "description": "Transfer related information for the subscription.",
+     "properties": {
+      "transferabilityExpirationTime": {
+       "type": "string",
+       "description": "Time when transfer token or intent to transfer will expire.",
+       "format": "int64"
+      }
+     }
     },
     "trialSettings": {
      "type": "object",
@@ -610,6 +629,16 @@
      "httpMethod": "GET",
      "description": "Lists subscriptions of a reseller, optionally filtered by a customer name prefix.",
      "parameters": {
+      "customerAuthToken": {
+       "type": "string",
+       "description": "An auth token needed if the customer is not a resold customer of this reseller. Can be generated at https://www.google.com/a/cpanel/customer-domain/TransferToken.Optional.",
+       "location": "query"
+      },
+      "customerId": {
+       "type": "string",
+       "description": "Id of the Customer",
+       "location": "query"
+      },
       "customerNamePrefix": {
        "type": "string",
        "description": "Prefix of the customer's domain name by which the subscriptions should be filtered. Optional",

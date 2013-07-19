@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"0kaFfN0xfjZjASExv-gUnrWhdto/-7_E6vfT2yuZ4bjaaQRx3DITqsU\"",
+ "etag": "\"BgGnx7p-6wsAbOn4St99QhtBGbA/KYXhhN-F9Hn-JZ2AP5CvBT01t-0\"",
  "discoveryVersion": "v1",
  "id": "coordinate:v1",
  "name": "coordinate",
  "version": "v1",
- "revision": "20130326",
+ "revision": "20130622",
  "title": "Google Maps Coordinate API",
  "description": "Lets you view and manage jobs in a Coordinate team.",
  "ownerDomain": "google.com",
@@ -386,6 +386,11 @@
     "allDay": {
      "type": "boolean",
      "description": "Whether the job is scheduled for the whole day. Time of day in start/end times is ignored if this is true."
+    },
+    "duration": {
+     "type": "string",
+     "description": "Job duration in milliseconds.",
+     "format": "uint64"
     },
     "endTime": {
      "type": "string",
@@ -949,6 +954,12 @@
        "description": "Whether the job is scheduled for the whole day. Time of day in start/end times is ignored if this is true.",
        "location": "query"
       },
+      "duration": {
+       "type": "string",
+       "description": "Job duration in milliseconds.",
+       "format": "uint64",
+       "location": "query"
+      },
       "endTime": {
        "type": "string",
        "description": "Scheduled end time in milliseconds since epoch.",
@@ -998,6 +1009,12 @@
       "allDay": {
        "type": "boolean",
        "description": "Whether the job is scheduled for the whole day. Time of day in start/end times is ignored if this is true.",
+       "location": "query"
+      },
+      "duration": {
+       "type": "string",
+       "description": "Job duration in milliseconds.",
+       "format": "uint64",
        "location": "query"
       },
       "endTime": {

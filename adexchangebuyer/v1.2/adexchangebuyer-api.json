@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"0kaFfN0xfjZjASExv-gUnrWhdto/pUWO6FADzD9ohUaGwdOprKcRF0E\"",
+ "etag": "\"BgGnx7p-6wsAbOn4St99QhtBGbA/rFkhrFeHrytrgC0e36VrYjXIcPE\"",
  "discoveryVersion": "v1",
  "id": "adexchangebuyer:v1.2",
  "name": "adexchangebuyer",
  "version": "v1.2",
- "revision": "20130525",
+ "revision": "20130709",
  "title": "Ad Exchange Buyer API",
  "description": "Lets you manage your Ad Exchange Buyer account.",
  "ownerDomain": "google.com",
@@ -391,6 +391,54 @@
      "default": "adexchangebuyer#directDealsList"
     }
    }
+  },
+  "PerformanceReportList": {
+   "id": "PerformanceReportList",
+   "type": "object",
+   "description": "The configuration data for an Ad Exchange performance report list. TODO(nathanbullock): need to add some release tests before releasing this. https://sites.google.com/a/google.com/adx-integration/Home/engineering/binary-releases/rtb-api-release https://cs.corp.google.com/#piper///depot/google3/contentads/adx/tools/rtb_api/adxrtb.py",
+   "properties": {
+    "kind": {
+     "type": "string",
+     "description": "Resource type.",
+     "default": "adexchangebuyer#performanceReportList"
+    },
+    "performance_report": {
+     "type": "array",
+     "description": "A list of performance reports relevant for the account.",
+     "items": {
+      "type": "object",
+      "properties": {
+       "kind": {
+        "type": "string",
+        "description": "Resource type.",
+        "default": "adexchangebuyer#performanceReport"
+       },
+       "latency50thPercentile": {
+        "type": "number",
+        "description": "The Nth percentile round trip latency(ms) as perceived from Google servers for the duration period covered by the report.",
+        "format": "double"
+       },
+       "latency85thPercentile": {
+        "type": "number",
+        "format": "double"
+       },
+       "latency95thPercentile": {
+        "type": "number",
+        "format": "double"
+       },
+       "region": {
+        "type": "string",
+        "description": "The trading location of this data."
+       },
+       "timestamp": {
+        "type": "string",
+        "description": "Timestamp of the starting time of this performance data.",
+        "format": "int64"
+       }
+      }
+     }
+    }
+   }
   }
  },
  "resources": {
@@ -613,6 +661,50 @@
      "description": "Retrieves the authenticated user's list of direct deals.",
      "response": {
       "$ref": "DirectDealsList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/adexchange.buyer"
+     ]
+    }
+   }
+  },
+  "performanceReport": {
+   "methods": {
+    "list": {
+     "id": "adexchangebuyer.performanceReport.list",
+     "path": "performancereport",
+     "httpMethod": "GET",
+     "description": "Retrieves the authenticated user's list of performance metrics.",
+     "parameters": {
+      "accountId": {
+       "type": "string",
+       "description": "The account id to get the reports for.",
+       "required": true,
+       "format": "int64",
+       "location": "query"
+      },
+      "endDateTime": {
+       "type": "string",
+       "description": "The end time for the reports.",
+       "required": true,
+       "format": "int64",
+       "location": "query"
+      },
+      "startDateTime": {
+       "type": "string",
+       "description": "The start time for the reports.",
+       "required": true,
+       "format": "int64",
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "accountId",
+      "endDateTime",
+      "startDateTime"
+     ],
+     "response": {
+      "$ref": "PerformanceReportList"
      },
      "scopes": [
       "https://www.googleapis.com/auth/adexchange.buyer"

@@ -44,6 +44,9 @@ const (
 	// View and manage the files and documents in your Google Drive
 	DriveScope = "https://www.googleapis.com/auth/drive"
 
+	// View and manage its own configuration data in your Google Drive
+	DriveAppdataScope = "https://www.googleapis.com/auth/drive.appdata"
+
 	// View your Google Drive apps
 	DriveAppsReadonlyScope = "https://www.googleapis.com/auth/drive.apps.readonly"
 
@@ -69,12 +72,14 @@ func New(client *http.Client) (*Service, error) {
 	s.About = NewAboutService(s)
 	s.Apps = NewAppsService(s)
 	s.Changes = NewChangesService(s)
+	s.Channels = NewChannelsService(s)
 	s.Children = NewChildrenService(s)
 	s.Comments = NewCommentsService(s)
 	s.Files = NewFilesService(s)
 	s.Parents = NewParentsService(s)
 	s.Permissions = NewPermissionsService(s)
 	s.Properties = NewPropertiesService(s)
+	s.Realtime = NewRealtimeService(s)
 	s.Replies = NewRepliesService(s)
 	s.Revisions = NewRevisionsService(s)
 	return s, nil
@@ -89,6 +94,8 @@ type Service struct {
 
 	Changes *ChangesService
 
+	Channels *ChannelsService
+
 	Children *ChildrenService
 
 	Comments *CommentsService
@@ -100,6 +107,8 @@ type Service struct {
 	Permissions *PermissionsService
 
 	Properties *PropertiesService
+
+	Realtime *RealtimeService
 
 	Replies *RepliesService
 
@@ -130,6 +139,15 @@ func NewChangesService(s *Service) *ChangesService {
 }
 
 type ChangesService struct {
+	s *Service
+}
+
+func NewChannelsService(s *Service) *ChannelsService {
+	rs := &ChannelsService{s: s}
+	return rs
+}
+
+type ChannelsService struct {
 	s *Service
 }
 
@@ -184,6 +202,15 @@ func NewPropertiesService(s *Service) *PropertiesService {
 }
 
 type PropertiesService struct {
+	s *Service
+}
+
+func NewRealtimeService(s *Service) *RealtimeService {
+	rs := &RealtimeService{s: s}
+	return rs
+}
+
+type RealtimeService struct {
 	s *Service
 }
 
@@ -467,6 +494,42 @@ type ChangeList struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
+type Channel struct {
+	// Address: The address of the receiving entity where events are
+	// delivered. Specific to the channel type.
+	Address string `json:"address,omitempty"`
+
+	// Expiration: The expiration instant for this channel if it is defined.
+	Expiration int64 `json:"expiration,omitempty,string"`
+
+	// Id: A UUID for the channel
+	Id string `json:"id,omitempty"`
+
+	// Kind: A channel watching an API resource
+	Kind string `json:"kind,omitempty"`
+
+	// Params: Additional parameters controlling delivery channel behavior
+	Params *ChannelParams `json:"params,omitempty"`
+
+	// ResourceId: An opaque id that identifies the resource that is being
+	// watched. Stable across different API versions
+	ResourceId string `json:"resourceId,omitempty"`
+
+	// ResourceUri: The canonicalized ID of the watched resource.
+	ResourceUri string `json:"resourceUri,omitempty"`
+
+	// Token: An arbitrary string associated with the channel that is
+	// delivered to the target address with each event delivered over this
+	// channel.
+	Token string `json:"token,omitempty"`
+
+	// Type: The type of delivery mechanism used by this channel
+	Type string `json:"type,omitempty"`
+}
+
+type ChannelParams struct {
+}
+
 type ChildList struct {
 	// Etag: The ETag of the list.
 	Etag string `json:"etag,omitempty"`
@@ -692,6 +755,10 @@ type File struct {
 	// FileSize: The size of the file in bytes. This is only populated for
 	// files with content stored in Drive.
 	FileSize int64 `json:"fileSize,omitempty,string"`
+
+	// HeadRevisionId: The ID of the file's head revision. This will only be
+	// populated for files with content stored in Drive.
+	HeadRevisionId string `json:"headRevisionId,omitempty"`
 
 	// IconLink: A link to the file's icon.
 	IconLink string `json:"iconLink,omitempty"`
@@ -1018,8 +1085,8 @@ type Permission struct {
 	// - anyone
 	Type string `json:"type,omitempty"`
 
-	// Value: The email address or domain name for the entity. This is not
-	// populated in responses.
+	// Value: The email address or domain name for the entity. This is used
+	// during inserts and is not populated in responses.
 	Value string `json:"value,omitempty"`
 
 	// WithLink: Whether the link is required for this permission.
@@ -1287,6 +1354,7 @@ func (c *AboutGetCall) Do() (*About, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.appdata",
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
@@ -1468,6 +1536,7 @@ func (c *ChangesGetCall) Do() (*Change, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.appdata",
 	//     "https://www.googleapis.com/auth/drive.apps.readonly",
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
@@ -1607,12 +1676,223 @@ func (c *ChangesListCall) Do() (*ChangeList, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.appdata",
 	//     "https://www.googleapis.com/auth/drive.apps.readonly",
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
 	//   ],
 	//   "supportsSubscription": true
+	// }
+
+}
+
+// method id "drive.changes.watch":
+
+type ChangesWatchCall struct {
+	s       *Service
+	channel *Channel
+	opt_    map[string]interface{}
+}
+
+// Watch: Subscribe to changes for a user.
+func (r *ChangesService) Watch(channel *Channel) *ChangesWatchCall {
+	c := &ChangesWatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.channel = channel
+	return c
+}
+
+// IncludeDeleted sets the optional parameter "includeDeleted": Whether
+// to include deleted items.
+func (c *ChangesWatchCall) IncludeDeleted(includeDeleted bool) *ChangesWatchCall {
+	c.opt_["includeDeleted"] = includeDeleted
+	return c
+}
+
+// IncludeSubscribed sets the optional parameter "includeSubscribed":
+// Whether to include shared files and public files the user has opened.
+// When set to false, the list will include owned files plus any shared
+// or public files the user has explictly added to a folder in Drive.
+func (c *ChangesWatchCall) IncludeSubscribed(includeSubscribed bool) *ChangesWatchCall {
+	c.opt_["includeSubscribed"] = includeSubscribed
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum number
+// of changes to return.
+func (c *ChangesWatchCall) MaxResults(maxResults int64) *ChangesWatchCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token for
+// changes.
+func (c *ChangesWatchCall) PageToken(pageToken string) *ChangesWatchCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+// StartChangeId sets the optional parameter "startChangeId": Change ID
+// to start listing changes from.
+func (c *ChangesWatchCall) StartChangeId(startChangeId int64) *ChangesWatchCall {
+	c.opt_["startChangeId"] = startChangeId
+	return c
+}
+
+func (c *ChangesWatchCall) Do() (*Channel, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["includeDeleted"]; ok {
+		params.Set("includeDeleted", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["includeSubscribed"]; ok {
+		params.Set("includeSubscribed", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["startChangeId"]; ok {
+		params.Set("startChangeId", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "changes/watch")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Channel)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Subscribe to changes for a user.",
+	//   "httpMethod": "POST",
+	//   "id": "drive.changes.watch",
+	//   "parameters": {
+	//     "includeDeleted": {
+	//       "default": "true",
+	//       "description": "Whether to include deleted items.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "includeSubscribed": {
+	//       "default": "true",
+	//       "description": "Whether to include shared files and public files the user has opened. When set to false, the list will include owned files plus any shared or public files the user has explictly added to a folder in Drive.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "maxResults": {
+	//       "default": "100",
+	//       "description": "Maximum number of changes to return.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Page token for changes.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "startChangeId": {
+	//       "description": "Change ID to start listing changes from.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "changes/watch",
+	//   "request": {
+	//     "$ref": "Channel"
+	//   },
+	//   "response": {
+	//     "$ref": "Channel"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.appdata",
+	//     "https://www.googleapis.com/auth/drive.apps.readonly",
+	//     "https://www.googleapis.com/auth/drive.file",
+	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
+	//     "https://www.googleapis.com/auth/drive.readonly"
+	//   ],
+	//   "supportsSubscription": true
+	// }
+
+}
+
+// method id "drive.channels.stop":
+
+type ChannelsStopCall struct {
+	s       *Service
+	channel *Channel
+	opt_    map[string]interface{}
+}
+
+// Stop:
+func (r *ChannelsService) Stop(channel *Channel) *ChannelsStopCall {
+	c := &ChannelsStopCall{s: r.s, opt_: make(map[string]interface{})}
+	c.channel = channel
+	return c
+}
+
+func (c *ChannelsStopCall) Do() error {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
+	if err != nil {
+		return err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "channels/stop")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "httpMethod": "POST",
+	//   "id": "drive.channels.stop",
+	//   "path": "channels/stop",
+	//   "request": {
+	//     "$ref": "Channel"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.appdata",
+	//     "https://www.googleapis.com/auth/drive.apps.readonly",
+	//     "https://www.googleapis.com/auth/drive.file",
+	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
+	//     "https://www.googleapis.com/auth/drive.readonly"
+	//   ]
 	// }
 
 }
@@ -1754,6 +2034,7 @@ func (c *ChildrenGetCall) Do() (*ChildReference, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.appdata",
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
@@ -1832,6 +2113,7 @@ func (c *ChildrenInsertCall) Do() (*ChildReference, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.appdata",
 	//     "https://www.googleapis.com/auth/drive.file"
 	//   ]
 	// }
@@ -1945,6 +2227,7 @@ func (c *ChildrenListCall) Do() (*ChildList, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.appdata",
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
@@ -2559,6 +2842,14 @@ func (c *FilesCopyCall) TimedTextTrackName(timedTextTrackName string) *FilesCopy
 	return c
 }
 
+// Visibility sets the optional parameter "visibility": The visibility
+// of the new file. This parameter is only relevant when the source is
+// not a native Google Doc and convert=false.
+func (c *FilesCopyCall) Visibility(visibility string) *FilesCopyCall {
+	c.opt_["visibility"] = visibility
+	return c
+}
+
 func (c *FilesCopyCall) Do() (*File, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.file)
@@ -2585,6 +2876,9 @@ func (c *FilesCopyCall) Do() (*File, error) {
 	}
 	if v, ok := c.opt_["timedTextTrackName"]; ok {
 		params.Set("timedTextTrackName", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["visibility"]; ok {
+		params.Set("visibility", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/copy")
 	urls += "?" + params.Encode()
@@ -2652,6 +2946,20 @@ func (c *FilesCopyCall) Do() (*File, error) {
 	//       "description": "The timed text track name.",
 	//       "location": "query",
 	//       "type": "string"
+	//     },
+	//     "visibility": {
+	//       "default": "DEFAULT",
+	//       "description": "The visibility of the new file. This parameter is only relevant when the source is not a native Google Doc and convert=false.",
+	//       "enum": [
+	//         "DEFAULT",
+	//         "PRIVATE"
+	//       ],
+	//       "enumDescriptions": [
+	//         "The visibility of the new file is determined by the user's default visibility/sharing policies.",
+	//         "The new file will be visible to only the owner."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "files/{fileId}/copy",
@@ -2663,6 +2971,7 @@ func (c *FilesCopyCall) Do() (*File, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.appdata",
 	//     "https://www.googleapis.com/auth/drive.apps.readonly",
 	//     "https://www.googleapis.com/auth/drive.file"
 	//   ]
@@ -2722,6 +3031,7 @@ func (c *FilesDeleteCall) Do() error {
 	//   "path": "files/{fileId}",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.appdata",
 	//     "https://www.googleapis.com/auth/drive.file"
 	//   ]
 	// }
@@ -2827,6 +3137,7 @@ func (c *FilesGetCall) Do() (*File, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.appdata",
 	//     "https://www.googleapis.com/auth/drive.apps.readonly",
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
@@ -2902,6 +3213,13 @@ func (c *FilesInsertCall) UseContentAsIndexableText(useContentAsIndexableText bo
 	c.opt_["useContentAsIndexableText"] = useContentAsIndexableText
 	return c
 }
+
+// Visibility sets the optional parameter "visibility": The visibility
+// of the new file. This parameter is only relevant when convert=false.
+func (c *FilesInsertCall) Visibility(visibility string) *FilesInsertCall {
+	c.opt_["visibility"] = visibility
+	return c
+}
 func (c *FilesInsertCall) Media(r io.Reader) *FilesInsertCall {
 	c.media_ = r
 	return c
@@ -2936,6 +3254,9 @@ func (c *FilesInsertCall) Do() (*File, error) {
 	}
 	if v, ok := c.opt_["useContentAsIndexableText"]; ok {
 		params.Set("useContentAsIndexableText", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["visibility"]; ok {
+		params.Set("visibility", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files")
 	if c.media_ != nil {
@@ -3023,6 +3344,20 @@ func (c *FilesInsertCall) Do() (*File, error) {
 	//       "description": "Whether to use the content as indexable text.",
 	//       "location": "query",
 	//       "type": "boolean"
+	//     },
+	//     "visibility": {
+	//       "default": "DEFAULT",
+	//       "description": "The visibility of the new file. This parameter is only relevant when convert=false.",
+	//       "enum": [
+	//         "DEFAULT",
+	//         "PRIVATE"
+	//       ],
+	//       "enumDescriptions": [
+	//         "The visibility of the new file is determined by the user's default visibility/sharing policies.",
+	//         "The new file will be visible to only the owner."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "files",
@@ -3034,6 +3369,7 @@ func (c *FilesInsertCall) Do() (*File, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.appdata",
 	//     "https://www.googleapis.com/auth/drive.apps.readonly",
 	//     "https://www.googleapis.com/auth/drive.file"
 	//   ],
@@ -3160,6 +3496,7 @@ func (c *FilesListCall) Do() (*FileList, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.appdata",
 	//     "https://www.googleapis.com/auth/drive.apps.readonly",
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
@@ -3401,6 +3738,7 @@ func (c *FilesPatchCall) Do() (*File, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.appdata",
 	//     "https://www.googleapis.com/auth/drive.apps.readonly",
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.scripts"
@@ -3468,6 +3806,7 @@ func (c *FilesTouchCall) Do() (*File, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.appdata",
 	//     "https://www.googleapis.com/auth/drive.apps.readonly",
 	//     "https://www.googleapis.com/auth/drive.file"
 	//   ]
@@ -3867,11 +4206,133 @@ func (c *FilesUpdateCall) Do() (*File, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.appdata",
 	//     "https://www.googleapis.com/auth/drive.apps.readonly",
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.scripts"
 	//   ],
 	//   "supportsMediaUpload": true
+	// }
+
+}
+
+// method id "drive.files.watch":
+
+type FilesWatchCall struct {
+	s       *Service
+	fileId  string
+	channel *Channel
+	opt_    map[string]interface{}
+}
+
+// Watch: Subscribe to changes on a file
+func (r *FilesService) Watch(fileId string, channel *Channel) *FilesWatchCall {
+	c := &FilesWatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.fileId = fileId
+	c.channel = channel
+	return c
+}
+
+// Projection sets the optional parameter "projection": This parameter
+// is deprecated and has no function.
+func (c *FilesWatchCall) Projection(projection string) *FilesWatchCall {
+	c.opt_["projection"] = projection
+	return c
+}
+
+// UpdateViewedDate sets the optional parameter "updateViewedDate":
+// Whether to update the view date after successfully retrieving the
+// file.
+func (c *FilesWatchCall) UpdateViewedDate(updateViewedDate bool) *FilesWatchCall {
+	c.opt_["updateViewedDate"] = updateViewedDate
+	return c
+}
+
+func (c *FilesWatchCall) Do() (*Channel, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["projection"]; ok {
+		params.Set("projection", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["updateViewedDate"]; ok {
+		params.Set("updateViewedDate", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/watch")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Channel)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Subscribe to changes on a file",
+	//   "httpMethod": "POST",
+	//   "id": "drive.files.watch",
+	//   "parameterOrder": [
+	//     "fileId"
+	//   ],
+	//   "parameters": {
+	//     "fileId": {
+	//       "description": "The ID for the file in question.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "projection": {
+	//       "description": "This parameter is deprecated and has no function.",
+	//       "enum": [
+	//         "BASIC",
+	//         "FULL"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Deprecated",
+	//         "Deprecated"
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "updateViewedDate": {
+	//       "default": "false",
+	//       "description": "Whether to update the view date after successfully retrieving the file.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "files/{fileId}/watch",
+	//   "request": {
+	//     "$ref": "Channel"
+	//   },
+	//   "response": {
+	//     "$ref": "Channel"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.appdata",
+	//     "https://www.googleapis.com/auth/drive.apps.readonly",
+	//     "https://www.googleapis.com/auth/drive.file",
+	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
+	//     "https://www.googleapis.com/auth/drive.readonly"
+	//   ],
+	//   "supportsSubscription": true
 	// }
 
 }
@@ -4013,6 +4474,7 @@ func (c *ParentsGetCall) Do() (*ParentReference, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.appdata",
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
@@ -4091,6 +4553,7 @@ func (c *ParentsInsertCall) Do() (*ParentReference, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.appdata",
 	//     "https://www.googleapis.com/auth/drive.file"
 	//   ]
 	// }
@@ -4156,6 +4619,7 @@ func (c *ParentsListCall) Do() (*ParentList, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.appdata",
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
@@ -4768,6 +5232,7 @@ func (c *PropertiesDeleteCall) Do() error {
 	//   "path": "files/{fileId}/properties/{propertyKey}",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.appdata",
 	//     "https://www.googleapis.com/auth/drive.file"
 	//   ]
 	// }
@@ -4859,6 +5324,7 @@ func (c *PropertiesGetCall) Do() (*Property, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.appdata",
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
@@ -4937,6 +5403,7 @@ func (c *PropertiesInsertCall) Do() (*Property, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.appdata",
 	//     "https://www.googleapis.com/auth/drive.file"
 	//   ]
 	// }
@@ -5002,6 +5469,7 @@ func (c *PropertiesListCall) Do() (*PropertyList, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.appdata",
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
@@ -5106,6 +5574,7 @@ func (c *PropertiesPatchCall) Do() (*Property, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.appdata",
 	//     "https://www.googleapis.com/auth/drive.file"
 	//   ]
 	// }
@@ -5208,8 +5677,70 @@ func (c *PropertiesUpdateCall) Do() (*Property, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.appdata",
 	//     "https://www.googleapis.com/auth/drive.file"
 	//   ]
+	// }
+
+}
+
+// method id "drive.realtime.get":
+
+type RealtimeGetCall struct {
+	s      *Service
+	fileId string
+	opt_   map[string]interface{}
+}
+
+// Get: Exports the contents of the Realtime API data model associated
+// with this file as JSON.
+func (r *RealtimeService) Get(fileId string) *RealtimeGetCall {
+	c := &RealtimeGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.fileId = fileId
+	return c
+}
+
+func (c *RealtimeGetCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/realtime")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Exports the contents of the Realtime API data model associated with this file as JSON.",
+	//   "httpMethod": "GET",
+	//   "id": "drive.realtime.get",
+	//   "parameterOrder": [
+	//     "fileId"
+	//   ],
+	//   "parameters": {
+	//     "fileId": {
+	//       "description": "The ID of the file that the Realtime API data model is associated with.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "files/{fileId}/realtime",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.file",
+	//     "https://www.googleapis.com/auth/drive.readonly"
+	//   ],
+	//   "supportsMediaDownload": true
 	// }
 
 }
@@ -5864,6 +6395,7 @@ func (c *RevisionsDeleteCall) Do() error {
 	//   "path": "files/{fileId}/revisions/{revisionId}",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.appdata",
 	//     "https://www.googleapis.com/auth/drive.file"
 	//   ]
 	// }
@@ -5939,6 +6471,7 @@ func (c *RevisionsGetCall) Do() (*Revision, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.appdata",
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
@@ -6006,6 +6539,7 @@ func (c *RevisionsListCall) Do() (*RevisionList, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.appdata",
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
@@ -6094,6 +6628,7 @@ func (c *RevisionsPatchCall) Do() (*Revision, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.appdata",
 	//     "https://www.googleapis.com/auth/drive.file"
 	//   ]
 	// }
@@ -6180,6 +6715,7 @@ func (c *RevisionsUpdateCall) Do() (*Revision, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.appdata",
 	//     "https://www.googleapis.com/auth/drive.file"
 	//   ]
 	// }

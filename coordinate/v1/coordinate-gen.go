@@ -286,6 +286,9 @@ type Schedule struct {
 	// in start/end times is ignored if this is true.
 	AllDay bool `json:"allDay,omitempty"`
 
+	// Duration: Job duration in milliseconds.
+	Duration uint64 `json:"duration,omitempty,string"`
+
 	// EndTime: Scheduled end time in milliseconds since epoch.
 	EndTime uint64 `json:"endTime,omitempty,string"`
 
@@ -1498,6 +1501,13 @@ func (c *SchedulePatchCall) AllDay(allDay bool) *SchedulePatchCall {
 	return c
 }
 
+// Duration sets the optional parameter "duration": Job duration in
+// milliseconds.
+func (c *SchedulePatchCall) Duration(duration uint64) *SchedulePatchCall {
+	c.opt_["duration"] = duration
+	return c
+}
+
 // EndTime sets the optional parameter "endTime": Scheduled end time in
 // milliseconds since epoch.
 func (c *SchedulePatchCall) EndTime(endTime uint64) *SchedulePatchCall {
@@ -1523,6 +1533,9 @@ func (c *SchedulePatchCall) Do() (*Schedule, error) {
 	params.Set("alt", "json")
 	if v, ok := c.opt_["allDay"]; ok {
 		params.Set("allDay", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["duration"]; ok {
+		params.Set("duration", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["endTime"]; ok {
 		params.Set("endTime", fmt.Sprintf("%v", v))
@@ -1564,6 +1577,12 @@ func (c *SchedulePatchCall) Do() (*Schedule, error) {
 	//       "description": "Whether the job is scheduled for the whole day. Time of day in start/end times is ignored if this is true.",
 	//       "location": "query",
 	//       "type": "boolean"
+	//     },
+	//     "duration": {
+	//       "description": "Job duration in milliseconds.",
+	//       "format": "uint64",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "endTime": {
 	//       "description": "Scheduled end time in milliseconds since epoch.",
@@ -1632,6 +1651,13 @@ func (c *ScheduleUpdateCall) AllDay(allDay bool) *ScheduleUpdateCall {
 	return c
 }
 
+// Duration sets the optional parameter "duration": Job duration in
+// milliseconds.
+func (c *ScheduleUpdateCall) Duration(duration uint64) *ScheduleUpdateCall {
+	c.opt_["duration"] = duration
+	return c
+}
+
 // EndTime sets the optional parameter "endTime": Scheduled end time in
 // milliseconds since epoch.
 func (c *ScheduleUpdateCall) EndTime(endTime uint64) *ScheduleUpdateCall {
@@ -1657,6 +1683,9 @@ func (c *ScheduleUpdateCall) Do() (*Schedule, error) {
 	params.Set("alt", "json")
 	if v, ok := c.opt_["allDay"]; ok {
 		params.Set("allDay", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["duration"]; ok {
+		params.Set("duration", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["endTime"]; ok {
 		params.Set("endTime", fmt.Sprintf("%v", v))
@@ -1698,6 +1727,12 @@ func (c *ScheduleUpdateCall) Do() (*Schedule, error) {
 	//       "description": "Whether the job is scheduled for the whole day. Time of day in start/end times is ignored if this is true.",
 	//       "location": "query",
 	//       "type": "boolean"
+	//     },
+	//     "duration": {
+	//       "description": "Job duration in milliseconds.",
+	//       "format": "uint64",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "endTime": {
 	//       "description": "Scheduled end time in milliseconds since epoch.",

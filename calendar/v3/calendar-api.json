@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"0kaFfN0xfjZjASExv-gUnrWhdto/N5koR8ISqSns0dUQqOHcL9QxkgM\"",
+ "etag": "\"BgGnx7p-6wsAbOn4St99QhtBGbA/4UwkMOdYZDbOC7E_RcXhRTAMV6Y\"",
  "discoveryVersion": "v1",
  "id": "calendar:v3",
  "name": "calendar",
  "version": "v3",
- "revision": "20130605",
+ "revision": "20130716",
  "title": "Calendar API",
  "description": "Lets you manipulate events and other calendar data.",
  "ownerDomain": "google.com",
@@ -299,6 +299,54 @@
     "timeZone": {
      "type": "string",
      "description": "The time zone of the calendar. Optional. Read-only."
+    }
+   }
+  },
+  "Channel": {
+   "id": "Channel",
+   "type": "object",
+   "properties": {
+    "address": {
+     "type": "string",
+     "description": "The address of the receiving entity where events are delivered. Specific to the channel type."
+    },
+    "expiration": {
+     "type": "string",
+     "description": "The expiration instant for this channel if it is defined.",
+     "format": "int64"
+    },
+    "id": {
+     "type": "string",
+     "description": "A UUID for the channel"
+    },
+    "kind": {
+     "type": "string",
+     "description": "A channel watching an API resource",
+     "default": "api#channel"
+    },
+    "params": {
+     "type": "object",
+     "description": "Additional parameters controlling delivery channel behavior",
+     "additionalProperties": {
+      "type": "string",
+      "description": "Declares a new parameter by name."
+     }
+    },
+    "resourceId": {
+     "type": "string",
+     "description": "An opaque id that identifies the resource that is being watched. Stable across different API versions"
+    },
+    "resourceUri": {
+     "type": "string",
+     "description": "The canonicalized ID of the watched resource."
+    },
+    "token": {
+     "type": "string",
+     "description": "An arbitrary string associated with the channel that is delivered to the target address with each event delivered over this channel."
+    },
+    "type": {
+     "type": "string",
+     "description": "The type of delivery mechanism used by this channel"
     }
    }
   },
@@ -1499,6 +1547,22 @@
     }
    }
   },
+  "channels": {
+   "methods": {
+    "stop": {
+     "id": "calendar.channels.stop",
+     "path": "channels/stop",
+     "httpMethod": "POST",
+     "request": {
+      "$ref": "Channel"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/calendar",
+      "https://www.googleapis.com/auth/calendar.readonly"
+     ]
+    }
+   }
+  },
   "colors": {
    "methods": {
     "get": {
@@ -1602,7 +1666,7 @@
      "id": "calendar.events.import",
      "path": "calendars/{calendarId}/events/import",
      "httpMethod": "POST",
-     "description": "Imports an event.",
+     "description": "Imports an event. This operation is used to add a private copy of an existing event to a calendar.",
      "parameters": {
       "calendarId": {
        "type": "string",
@@ -2031,6 +2095,119 @@
      "scopes": [
       "https://www.googleapis.com/auth/calendar"
      ]
+    },
+    "watch": {
+     "id": "calendar.events.watch",
+     "path": "calendars/{calendarId}/events/watch",
+     "httpMethod": "POST",
+     "description": "Subscribe to changes in events collection",
+     "parameters": {
+      "alwaysIncludeEmail": {
+       "type": "boolean",
+       "description": "Whether to always include a value in the \"email\" field for the organizer, creator and attendees, even if no real email is available (i.e. a generated, non-working value will be provided). The use of this option is discouraged and should only be used by clients which cannot handle the absence of an email address value in the mentioned places. Optional. The default is False.",
+       "location": "query"
+      },
+      "calendarId": {
+       "type": "string",
+       "description": "Calendar identifier.",
+       "required": true,
+       "location": "path"
+      },
+      "iCalUID": {
+       "type": "string",
+       "description": "Specifies iCalendar UID (iCalUID) of events to be included in the response. Optional.",
+       "location": "query"
+      },
+      "maxAttendees": {
+       "type": "integer",
+       "description": "The maximum number of attendees to include in the response. If there are more than the specified number of attendees, only the participant is returned. Optional.",
+       "format": "int32",
+       "minimum": "1",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "Maximum number of events returned on one result page. Optional.",
+       "format": "int32",
+       "minimum": "1",
+       "location": "query"
+      },
+      "orderBy": {
+       "type": "string",
+       "description": "The order of the events returned in the result. Optional. The default is an unspecified, stable order.",
+       "enum": [
+        "startTime",
+        "updated"
+       ],
+       "enumDescriptions": [
+        "Order by the start date/time (ascending). This is only available when querying single events (i.e. the parameter \"singleEvents\" is True)",
+        "Order by last modification time (ascending)."
+       ],
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Token specifying which result page to return. Optional.",
+       "location": "query"
+      },
+      "q": {
+       "type": "string",
+       "description": "Free text search terms to find events that match these terms in any field, except for extended properties. Optional.",
+       "location": "query"
+      },
+      "showDeleted": {
+       "type": "boolean",
+       "description": "Whether to include deleted events (with 'status' equals 'cancelled') in the result. Cancelled instances of recurring events (but not the underlying recurring event) will still be included if 'showDeleted' and 'singleEvents' are both False. If 'showDeleted' and 'singleEvents' are both True, only single instances of deleted events (but not the underlying recurring events) are returned. Optional. The default is False.",
+       "location": "query"
+      },
+      "showHiddenInvitations": {
+       "type": "boolean",
+       "description": "Whether to include hidden invitations in the result. Optional. The default is False.",
+       "location": "query"
+      },
+      "singleEvents": {
+       "type": "boolean",
+       "description": "Whether to expand recurring events into instances and only return single one-off events and instances of recurring events, but not the underlying recurring events themselves. Optional. The default is False.",
+       "location": "query"
+      },
+      "timeMax": {
+       "type": "string",
+       "description": "Upper bound (exclusive) for an event's start time to filter by. Optional. The default is not to filter by start time.",
+       "format": "date-time",
+       "location": "query"
+      },
+      "timeMin": {
+       "type": "string",
+       "description": "Lower bound (inclusive) for an event's end time to filter by. Optional. The default is not to filter by end time.",
+       "format": "date-time",
+       "location": "query"
+      },
+      "timeZone": {
+       "type": "string",
+       "description": "Time zone used in the response. Optional. The default is the time zone of the calendar.",
+       "location": "query"
+      },
+      "updatedMin": {
+       "type": "string",
+       "description": "Lower bound for an event's last modification time (as a RFC 3339 timestamp) to filter by. Optional. The default is not to filter by last modification time.",
+       "format": "date-time",
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "calendarId"
+     ],
+     "request": {
+      "$ref": "Channel"
+     },
+     "response": {
+      "$ref": "Channel"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/calendar",
+      "https://www.googleapis.com/auth/calendar.readonly"
+     ],
+     "supportsSubscription": true
     }
    }
   },

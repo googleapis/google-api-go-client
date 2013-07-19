@@ -157,6 +157,10 @@ type Bucket struct {
 	// storage#bucket.
 	Kind string `json:"kind,omitempty"`
 
+	// Lifecycle: The bucket's lifecycle configuration. See object lifecycle
+	// management for more information.
+	Lifecycle *BucketLifecycle `json:"lifecycle,omitempty"`
+
 	// Location: The location of the bucket. Object data for objects in the
 	// bucket resides in physical storage within this region. Typical values
 	// are US and EU. Defaults to US. See the developer's guide for the
@@ -183,7 +187,9 @@ type Bucket struct {
 
 	// StorageClass: The bucket's storage class. This defines how objects in
 	// the bucket will be stored and determines the SLA and the cost of
-	// storage. Can be STANDARD or DRA. Defaults to STANDARD.
+	// storage. Typical values are STANDARD and
+	// DURABLE_REDUCED_AVAILABILITY. Defaults to STANDARD. See the
+	// developer's guide for the authoritative list.
 	StorageClass string `json:"storageClass,omitempty"`
 
 	// TimeCreated: Creation time of the bucket in RFC 3339 format.
@@ -215,6 +221,46 @@ type BucketCors struct {
 	// response headers to give permission for the user-agent to share
 	// across domains.
 	ResponseHeader []string `json:"responseHeader,omitempty"`
+}
+
+type BucketLifecycle struct {
+	// Rule: A lifecycle management rule, which is made of an action to take
+	// and the condition(s) under which the action will be taken.
+	Rule []*BucketLifecycleRule `json:"rule,omitempty"`
+}
+
+type BucketLifecycleRule struct {
+	// Action: The action to take.
+	Action *BucketLifecycleRuleAction `json:"action,omitempty"`
+
+	// Condition: The condition(s) under which the action will be taken.
+	Condition *BucketLifecycleRuleCondition `json:"condition,omitempty"`
+}
+
+type BucketLifecycleRuleAction struct {
+	// Type: Type of the action, e.g. Delete.
+	Type string `json:"type,omitempty"`
+}
+
+type BucketLifecycleRuleCondition struct {
+	// Age: Age of an object (in days). This condition is satisfied when an
+	// object reaches the specified age.
+	Age int64 `json:"age,omitempty"`
+
+	// CreatedBefore: A date in RFC 3339 format with only the date part,
+	// e.g. "2013-01-15". This condition is satisfied when an object is
+	// created before midnight of the specified date in UTC.
+	CreatedBefore string `json:"createdBefore,omitempty"`
+
+	// IsLive: Relevant only for versioned objects. If the value is true,
+	// this condition matches live objects; if the value is false, it
+	// matches archived objects.
+	IsLive bool `json:"isLive,omitempty"`
+
+	// NumNewerVersions: Relevant only for versioned objects. If the value
+	// is N, this condition is satisfied when there are at least N versions
+	// (including the live version) newer than this version of the object.
+	NumNewerVersions int64 `json:"numNewerVersions,omitempty"`
 }
 
 type BucketLogging struct {

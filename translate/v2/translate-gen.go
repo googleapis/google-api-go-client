@@ -1,6 +1,6 @@
 // Package translate provides access to the Translate API.
 //
-// See http://code.google.com/apis/language/translate/v2/using_rest.html
+// See https://developers.google.com/translate/v2/using_rest
 //
 // Usage example:
 //

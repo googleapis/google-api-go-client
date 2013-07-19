@@ -239,14 +239,13 @@ type Activity struct {
 	// content identifies the rated video.
 	ContentDetails *ActivityContentDetails `json:"contentDetails,omitempty"`
 
-	// Etag: The ETag of the activity resource.
+	// Etag: Etag of this resource.
 	Etag string `json:"etag,omitempty"`
 
 	// Id: The ID that YouTube uses to uniquely identify the activity.
 	Id string `json:"id,omitempty"`
 
-	// Kind: The type of the API resource. For activity resources, the value
-	// will be youtube#activity.
+	// Kind: The kind, fixed to "youtube#activity".
 	Kind string `json:"kind,omitempty"`
 
 	// Snippet: The snippet object contains basic details about the
@@ -507,7 +506,7 @@ type Channel struct {
 	// about conversion pings that need to be respected by the channel.
 	ConversionPings *ChannelConversionPings `json:"conversionPings,omitempty"`
 
-	// Etag: The ETag for the channel resource.
+	// Etag: Etag of this resource.
 	Etag string `json:"etag,omitempty"`
 
 	// Id: The ID that YouTube uses to uniquely identify the channel.
@@ -517,8 +516,7 @@ type Channel struct {
 	// information about promotion campaign associated with the channel.
 	InvideoPromotion *InvideoPromotion `json:"invideoPromotion,omitempty"`
 
-	// Kind: The type of the API resource. For channel resources, the value
-	// will be youtube#channel.
+	// Kind: The kind, fixed to "youtube#channel".
 	Kind string `json:"kind,omitempty"`
 
 	// Snippet: The snippet object contains basic details about the channel,
@@ -538,12 +536,11 @@ type Channel struct {
 	TopicDetails *ChannelTopicDetails `json:"topicDetails,omitempty"`
 }
 
-type ChannelBannerInsertResponse struct {
-	// Etag: The ETag of the response.
+type ChannelBannerResource struct {
+	// Etag: Etag of this resource.
 	Etag string `json:"etag,omitempty"`
 
-	// Kind: The type of the API response. For this operation, the value
-	// will be youtube#channelBannerInsertResponse.
+	// Kind: The kind, fixed to "youtube#channelBannerResource".
 	Kind string `json:"kind,omitempty"`
 
 	// Url: The URL of this banner image.
@@ -569,37 +566,33 @@ type ChannelContentDetails struct {
 	// profile ID associated with this channel.
 	GooglePlusUserId string `json:"googlePlusUserId,omitempty"`
 
-	// RelatedPlaylists: The relatedPlaylists object is a map that
-	// identifies playlists associated with the channel, such as the
-	// channel's uploaded videos or favorite videos. You can retrieve any of
-	// these playlists using the playlists.list method.
 	RelatedPlaylists *ChannelContentDetailsRelatedPlaylists `json:"relatedPlaylists,omitempty"`
 }
 
 type ChannelContentDetailsRelatedPlaylists struct {
-	// Favorites: The ID of the playlist that contains the channel's
-	// favorite videos. Use the playlistItems.insert and
+	// Favorites: The ID of the playlist that contains the channel"s
+	// favorite videos. Use the  playlistItems.insert and
 	// playlistItems.delete to add or remove items from that list.
 	Favorites string `json:"favorites,omitempty"`
 
-	// Likes: The ID of the playlist that contains the channel's liked
-	// videos. Use the playlistItems.insert and playlistItems.delete to add
-	// or remove items from that list.
+	// Likes: The ID of the playlist that contains the channel"s liked
+	// videos. Use the   playlistItems.insert and  playlistItems.delete to
+	// add or remove items from that list.
 	Likes string `json:"likes,omitempty"`
 
-	// Uploads: The ID of the playlist that contains the channel's uploaded
-	// videos. Use the videos.insert method to upload new videos and the
+	// Uploads: The ID of the playlist that contains the channel"s uploaded
+	// videos. Use the  videos.insert method to upload new videos and the
 	// videos.delete method to delete previously uploaded videos.
 	Uploads string `json:"uploads,omitempty"`
 
-	// WatchHistory: The ID of the playlist that contains the channel's
-	// watch history. Use the playlistItems.insert and playlistItems.delete
-	// to add or remove items from that list.
+	// WatchHistory: The ID of the playlist that contains the channel"s
+	// watch history. Use the  playlistItems.insert and
+	// playlistItems.delete to add or remove items from that list.
 	WatchHistory string `json:"watchHistory,omitempty"`
 
-	// WatchLater: The ID of the channel's watch later playlist. Use the
-	// playlistItems.insert and playlistItems.delete to add or remove items
-	// from that list.
+	// WatchLater: The ID of the playlist that contains the channel"s watch
+	// later playlist. Use the playlistItems.insert and
+	// playlistItems.delete to add or remove items from that list.
 	WatchLater string `json:"watchLater,omitempty"`
 }
 
@@ -809,8 +802,8 @@ type ContentRating struct {
 }
 
 type GeoPoint struct {
-	// Elevation: Altitude above the Earth, in meters.
-	Elevation float64 `json:"elevation,omitempty"`
+	// Altitude: Altitude above the reference ellipsoid, in meters.
+	Altitude float64 `json:"altitude,omitempty"`
 
 	// Latitude: Latitude in degrees.
 	Latitude float64 `json:"latitude,omitempty"`
@@ -820,14 +813,13 @@ type GeoPoint struct {
 }
 
 type GuideCategory struct {
-	// Etag: The ETag of the guideCategory resource.
+	// Etag: Etag of this resource.
 	Etag string `json:"etag,omitempty"`
 
 	// Id: The ID that YouTube uses to uniquely identify the guide category.
 	Id string `json:"id,omitempty"`
 
-	// Kind: The type of the API resource. For guideCategory resources, the
-	// value will be youtube#guideCategory/code>.
+	// Kind: The kind, fixed to "youtube#guideCategory".
 	Kind string `json:"kind,omitempty"`
 
 	// Snippet: The snippet object contains basic details about the
@@ -857,11 +849,9 @@ type GuideCategoryListResponse struct {
 }
 
 type GuideCategorySnippet struct {
-	// ChannelId: The ID that YouTube uses to uniquely identify the channel
-	// publishing the guide category.
 	ChannelId string `json:"channelId,omitempty"`
 
-	// Title: The category's title.
+	// Title: Description of the guide category.
 	Title string `json:"title,omitempty"`
 }
 
@@ -943,6 +933,30 @@ type ImageSettings struct {
 	WatchIconImageUrl string `json:"watchIconImageUrl,omitempty"`
 }
 
+type IngestionInfo struct {
+	// BackupIngestionAddress: The backup ingestion URL that you should use
+	// to stream video to YouTube. You have the option of simultaneously
+	// streaming the content that you are sending to the ingestionAddress to
+	// this URL.
+	BackupIngestionAddress string `json:"backupIngestionAddress,omitempty"`
+
+	// IngestionAddress: The primary ingestion URL that you should use to
+	// stream video to YouTube. You must stream video to this
+	// URL.
+	//
+	// Depending on which application or tool you use to encode your
+	// video stream, you may need to enter the stream URL and stream name
+	// separately or you may need to concatenate them in the following
+	// format:
+	//
+	// STREAM_URL/STREAM_NAME
+	IngestionAddress string `json:"ingestionAddress,omitempty"`
+
+	// StreamName: The HTTP or RTMP stream name that YouTube assigns to the
+	// video stream.
+	StreamName string `json:"streamName,omitempty"`
+}
+
 type InvideoPosition struct {
 	// CornerPosition: Describes in which corner of the video the visual
 	// widget will appear.
@@ -986,14 +1000,13 @@ type LiveBroadcast struct {
 	// available for viewing after the event has concluded.
 	ContentDetails *LiveBroadcastContentDetails `json:"contentDetails,omitempty"`
 
-	// Etag: The ETag of the broadcast.
+	// Etag: Etag of this resource.
 	Etag string `json:"etag,omitempty"`
 
 	// Id: The ID that YouTube assigns to uniquely identify the broadcast.
 	Id string `json:"id,omitempty"`
 
-	// Kind: The type of the API resource. For live broadcast resources, the
-	// value will be youtube#liveBroadcast.
+	// Kind: The kind, fixed to "youtube#liveBroadcast".
 	Kind string `json:"kind,omitempty"`
 
 	// Snippet: The snippet object contains basic details about the event,
@@ -1020,6 +1033,8 @@ type LiveBroadcastContentDetails struct {
 	// forwarding content. The default value for this property is
 	// true.
 	//
+	//
+	//
 	// Important: You must set the value to true and also set the
 	// enableArchive property's value to true if you want to make playback
 	// available immediately after the broadcast ends.
@@ -1034,10 +1049,12 @@ type LiveBroadcastContentDetails struct {
 	// MonitorStream: The monitorStream object contains information about
 	// the monitor stream, which the broadcaster can use to review the event
 	// content before the broadcast stream is shown publicly.
-	MonitorStream *LiveBroadcastContentDetailsMonitorStream `json:"monitorStream,omitempty"`
+	MonitorStream *MonitorStreamInfo `json:"monitorStream,omitempty"`
 
 	// RecordFromStart: Automatically start recording after the event goes
 	// live. The default value for this property is true.
+	//
+	//
 	//
 	// Important: You
 	// must also set the enableDvr property's value to true if you want the
@@ -1054,31 +1071,6 @@ type LiveBroadcastContentDetails struct {
 	// eventState to end to remove the in-stream slate and make your
 	// broadcast stream visible to viewers.
 	StartWithSlate bool `json:"startWithSlate,omitempty"`
-}
-
-type LiveBroadcastContentDetailsMonitorStream struct {
-	// BroadcastStreamDelayMs: If you have set the enableMonitorStream
-	// property to true, then this property determines the length of the
-	// live broadcast delay.
-	BroadcastStreamDelayMs int64 `json:"broadcastStreamDelayMs,omitempty"`
-
-	// EmbedHtml: HTML code that embeds a player that plays the monitor
-	// stream.
-	EmbedHtml string `json:"embedHtml,omitempty"`
-
-	// EnableMonitorStream: This value determines whether the monitor stream
-	// is enabled for the broadcast. If the monitor stream is enabled, then
-	// YouTube will broadcast the event content on a special stream intended
-	// only for the broadcaster's consumption. The broadcaster can use the
-	// stream to review the event content and also to identify the optimal
-	// times to insert cuepoints.
-	//
-	// You need to set this value to true if you
-	// intend to have a broadcast delay for your event.
-	//
-	// Note: This property
-	// cannot be updated once the broadcast is in the testing or live state.
-	EnableMonitorStream bool `json:"enableMonitorStream,omitempty"`
 }
 
 type LiveBroadcastList struct {
@@ -1211,35 +1203,11 @@ type LiveStreamCdn struct {
 	// IngestionInfo: The ingestionInfo object contains information that
 	// YouTube provides that you need to transmit your RTMP or HTTP stream
 	// to YouTube.
-	IngestionInfo *LiveStreamCdnIngestionInfo `json:"ingestionInfo,omitempty"`
+	IngestionInfo *IngestionInfo `json:"ingestionInfo,omitempty"`
 
 	// IngestionType: The method or protocol used to transmit the video
 	// stream.
 	IngestionType string `json:"ingestionType,omitempty"`
-}
-
-type LiveStreamCdnIngestionInfo struct {
-	// BackupIngestionAddress: The backup ingestion URL that you should use
-	// to stream video to YouTube. You have the option of simultaneously
-	// streaming the content that you are sending to the ingestionAddress to
-	// this URL.
-	BackupIngestionAddress string `json:"backupIngestionAddress,omitempty"`
-
-	// IngestionAddress: The primary ingestion URL that you should use to
-	// stream video to YouTube. You must stream video to this
-	// URL.
-	//
-	// Depending on which application or tool you use to encode your
-	// video stream, you may need to enter the stream URL and stream name
-	// separately or you may need to concatenate them in the following
-	// format:
-	//
-	// STREAM_URL/STREAM_NAME
-	IngestionAddress string `json:"ingestionAddress,omitempty"`
-
-	// StreamName: The HTTP or RTMP stream name that YouTube assigns to the
-	// video stream.
-	StreamName string `json:"streamName,omitempty"`
 }
 
 type LiveStreamList struct {
@@ -1292,7 +1260,6 @@ type LiveStreamSnippet struct {
 }
 
 type LiveStreamStatus struct {
-	// StreamStatus: The stream's status.
 	StreamStatus string `json:"streamStatus,omitempty"`
 }
 
@@ -1312,6 +1279,31 @@ type LocalizedString struct {
 	Value string `json:"value,omitempty"`
 }
 
+type MonitorStreamInfo struct {
+	// BroadcastStreamDelayMs: If you have set the enableMonitorStream
+	// property to true, then this property determines the length of the
+	// live broadcast delay.
+	BroadcastStreamDelayMs int64 `json:"broadcastStreamDelayMs,omitempty"`
+
+	// EmbedHtml: HTML code that embeds a player that plays the monitor
+	// stream.
+	EmbedHtml string `json:"embedHtml,omitempty"`
+
+	// EnableMonitorStream: This value determines whether the monitor stream
+	// is enabled for the broadcast. If the monitor stream is enabled, then
+	// YouTube will broadcast the event content on a special stream intended
+	// only for the broadcaster's consumption. The broadcaster can use the
+	// stream to review the event content and also to identify the optimal
+	// times to insert cuepoints.
+	//
+	// You need to set this value to true if you
+	// intend to have a broadcast delay for your event.
+	//
+	// Note: This property
+	// cannot be updated once the broadcast is in the testing or live state.
+	EnableMonitorStream bool `json:"enableMonitorStream,omitempty"`
+}
+
 type PageInfo struct {
 	// ResultsPerPage: The number of results included in the API response.
 	ResultsPerPage int64 `json:"resultsPerPage,omitempty"`
@@ -1325,14 +1317,13 @@ type Playlist struct {
 	// video count.
 	ContentDetails *PlaylistContentDetails `json:"contentDetails,omitempty"`
 
-	// Etag: The ETag for the playlist resource.
+	// Etag: Etag of this resource.
 	Etag string `json:"etag,omitempty"`
 
 	// Id: The ID that YouTube uses to uniquely identify the playlist.
 	Id string `json:"id,omitempty"`
 
-	// Kind: The type of the API resource. For video resources, the value
-	// will be youtube#playlist.
+	// Kind: The kind, fixed to "youtube#playlist".
 	Kind string `json:"kind,omitempty"`
 
 	// Player: The player object contains information that you would use to
@@ -1359,14 +1350,13 @@ type PlaylistItem struct {
 	// additional information about the video.
 	ContentDetails *PlaylistItemContentDetails `json:"contentDetails,omitempty"`
 
-	// Etag: The ETag for the playlist item resource.
+	// Etag: Etag of this resource.
 	Etag string `json:"etag,omitempty"`
 
 	// Id: The ID that YouTube uses to uniquely identify the playlist item.
 	Id string `json:"id,omitempty"`
 
-	// Kind: The type of the API resource. For playlist item resources, the
-	// value will be youtube#playlistItem.
+	// Kind: The kind, fixed to "youtube#playlistItem".
 	Kind string `json:"kind,omitempty"`
 
 	// Snippet: The snippet object contains basic details about the playlist
@@ -1379,21 +1369,21 @@ type PlaylistItem struct {
 }
 
 type PlaylistItemContentDetails struct {
-	// EndAt: The time, measured in seconds from the start of the video,
+	// EndAtMs: The time, measured in seconds from the start of the video,
 	// when the video should stop playing. (The playlist owner can specify
 	// the times when the video should start and stop playing when the video
 	// is played in the context of the playlist.) By default, assume that
 	// the video.endTime is the end of the video.
-	EndAt string `json:"endAt,omitempty"`
+	EndAtMs string `json:"endAtMs,omitempty"`
 
 	// Note: A user-generated note for this item.
 	Note string `json:"note,omitempty"`
 
-	// StartAt: The time, measured in seconds from the start of the video,
+	// StartAtMs: The time, measured in seconds from the start of the video,
 	// when the video should start playing. (The playlist owner can specify
 	// the times when the video should start and stop playing when the video
 	// is played in the context of the playlist.) The default value is 0.
-	StartAt string `json:"startAt,omitempty"`
+	StartAtMs string `json:"startAtMs,omitempty"`
 
 	// VideoId: The ID that YouTube uses to uniquely identify a video. To
 	// retrieve the video resource, set the id query parameter to this value
@@ -1520,7 +1510,7 @@ type PlaylistSnippet struct {
 	// that published the playlist.
 	ChannelId string `json:"channelId,omitempty"`
 
-	// ChannelTitle: Channel title for the channel that the video belongs
+	// ChannelTitle: The channel title of the channel that the video belongs
 	// to.
 	ChannelTitle string `json:"channelTitle,omitempty"`
 
@@ -1531,6 +1521,7 @@ type PlaylistSnippet struct {
 	// value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.
 	PublishedAt string `json:"publishedAt,omitempty"`
 
+	// Tags: Keyword tags associated with the playlist.
 	Tags []string `json:"tags,omitempty"`
 
 	// Thumbnails: A map of thumbnail images associated with the playlist.
@@ -1668,14 +1659,13 @@ type Subscription struct {
 	// about the subscription.
 	ContentDetails *SubscriptionContentDetails `json:"contentDetails,omitempty"`
 
-	// Etag: The ETag of the subscription resource.
+	// Etag: Etag of this resource.
 	Etag string `json:"etag,omitempty"`
 
 	// Id: The ID that YouTube uses to uniquely identify the subscription.
 	Id string `json:"id,omitempty"`
 
-	// Kind: The type of the API resource. For subscription resources, the
-	// value will be youtube#subscription.
+	// Kind: The kind, fixed to "youtube#subscription".
 	Kind string `json:"kind,omitempty"`
 
 	// Snippet: The snippet object contains basic details about the
@@ -1684,11 +1674,15 @@ type Subscription struct {
 	Snippet *SubscriptionSnippet `json:"snippet,omitempty"`
 
 	// SubscriberSnippet: The subscriberSnippet object contains basic
-	// details about the subscriber.
+	// details about the sbuscriber.
 	SubscriberSnippet *SubscriptionSubscriberSnippet `json:"subscriberSnippet,omitempty"`
 }
 
 type SubscriptionContentDetails struct {
+	// ActivityType: The type of activity this subscription is for (only
+	// uploads, everything).
+	ActivityType string `json:"activityType,omitempty"`
+
 	// NewItemCount: The number of new items in the subscription since its
 	// content was last read.
 	NewItemCount int64 `json:"newItemCount,omitempty"`
@@ -1817,8 +1811,8 @@ type ThumbnailListResponse struct {
 }
 
 type Video struct {
-	// AgeGatingDetails: Age restriction details related to a video.
-	AgeGatingDetails *VideoAgeGating `json:"ageGatingDetails,omitempty"`
+	// AgeGating: Age restriction details related to a video.
+	AgeGating *VideoAgeGating `json:"ageGating,omitempty"`
 
 	// ContentDetails: The contentDetails object contains information about
 	// the video content, including the length of the video and its aspect
@@ -1830,7 +1824,7 @@ type Video struct {
 	// video contexts.
 	ConversionPings *VideoConversionPings `json:"conversionPings,omitempty"`
 
-	// Etag: The ETag of the video resource.
+	// Etag: Etag of this resource.
 	Etag string `json:"etag,omitempty"`
 
 	// FileDetails: The fileDetails object encapsulates information about
@@ -1842,8 +1836,7 @@ type Video struct {
 	// Id: The ID that YouTube uses to uniquely identify the video.
 	Id string `json:"id,omitempty"`
 
-	// Kind: The type of the API resource. For video resources, the value
-	// will be youtube#video.
+	// Kind: The kind, fixed to "youtube#video".
 	Kind string `json:"kind,omitempty"`
 
 	// MonetizationDetails: The monetizationDetails object encapsulates
@@ -1917,14 +1910,13 @@ type VideoAgeGating struct {
 }
 
 type VideoCategory struct {
-	// Etag: The ETag of the videoCategory resource.
+	// Etag: Etag of this resource.
 	Etag string `json:"etag,omitempty"`
 
 	// Id: The ID that YouTube uses to uniquely identify the video category.
 	Id string `json:"id,omitempty"`
 
-	// Kind: The type of the API resource. For video category resources, the
-	// value will be youtube#videoCategory.
+	// Kind: The kind, fixed to "youtube#videoCategory".
 	Kind string `json:"kind,omitempty"`
 
 	// Snippet: The snippet object contains basic details about the video
@@ -2727,16 +2719,16 @@ func (c *ActivitiesListCall) Do() (*ActivityListResponse, error) {
 // method id "youtube.channelBanners.insert":
 
 type ChannelBannersInsertCall struct {
-	s                           *Service
-	channelbannerinsertresponse *ChannelBannerInsertResponse
-	opt_                        map[string]interface{}
-	media_                      io.Reader
+	s                     *Service
+	channelbannerresource *ChannelBannerResource
+	opt_                  map[string]interface{}
+	media_                io.Reader
 }
 
 // Insert: Uploads a channel banner to YouTube.
-func (r *ChannelBannersService) Insert(channelbannerinsertresponse *ChannelBannerInsertResponse) *ChannelBannersInsertCall {
+func (r *ChannelBannersService) Insert(channelbannerresource *ChannelBannerResource) *ChannelBannersInsertCall {
 	c := &ChannelBannersInsertCall{s: r.s, opt_: make(map[string]interface{})}
-	c.channelbannerinsertresponse = channelbannerinsertresponse
+	c.channelbannerresource = channelbannerresource
 	return c
 }
 
@@ -2752,9 +2744,9 @@ func (c *ChannelBannersInsertCall) Media(r io.Reader) *ChannelBannersInsertCall 
 	return c
 }
 
-func (c *ChannelBannersInsertCall) Do() (*ChannelBannerInsertResponse, error) {
+func (c *ChannelBannersInsertCall) Do() (*ChannelBannerResource, error) {
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channelbannerinsertresponse)
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channelbannerresource)
 	if err != nil {
 		return nil, err
 	}
@@ -2786,7 +2778,7 @@ func (c *ChannelBannersInsertCall) Do() (*ChannelBannerInsertResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(ChannelBannerInsertResponse)
+	ret := new(ChannelBannerResource)
 	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
 		return nil, err
 	}
@@ -2822,10 +2814,10 @@ func (c *ChannelBannersInsertCall) Do() (*ChannelBannerInsertResponse, error) {
 	//   },
 	//   "path": "channelBanners/insert",
 	//   "request": {
-	//     "$ref": "ChannelBannerInsertResponse"
+	//     "$ref": "ChannelBannerResource"
 	//   },
 	//   "response": {
-	//     "$ref": "ChannelBannerInsertResponse"
+	//     "$ref": "ChannelBannerResource"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/youtube",
@@ -3080,6 +3072,21 @@ func (r *ChannelsService) Update(part string, channel *Channel) *ChannelsUpdateC
 	return c
 }
 
+// OnBehalfOfContentOwner sets the optional parameter
+// "onBehalfOfContentOwner": The onBehalfOfContentOwner parameter
+// indicates that the authenticated user is acting on behalf of the
+// content owner specified in the parameter value. This parameter is
+// intended for YouTube content partners that own and manage many
+// different YouTube channels. It allows content owners to authenticate
+// once and get access to all their video and channel data, without
+// having to provide authentication credentials for each individual
+// channel. The actual CMS account that the user authenticates with
+// needs to be linked to the specified YouTube content owner.
+func (c *ChannelsUpdateCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *ChannelsUpdateCall {
+	c.opt_["onBehalfOfContentOwner"] = onBehalfOfContentOwner
+	return c
+}
+
 func (c *ChannelsUpdateCall) Do() (*Channel, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
@@ -3090,6 +3097,9 @@ func (c *ChannelsUpdateCall) Do() (*Channel, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("part", fmt.Sprintf("%v", c.part))
+	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
+		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "channels")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
@@ -3117,6 +3127,11 @@ func (c *ChannelsUpdateCall) Do() (*Channel, error) {
 	//     "part"
 	//   ],
 	//   "parameters": {
+	//     "onBehalfOfContentOwner": {
+	//       "description": "The onBehalfOfContentOwner parameter indicates that the authenticated user is acting on behalf of the content owner specified in the parameter value. This parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and get access to all their video and channel data, without having to provide authentication credentials for each individual channel. The actual CMS account that the user authenticates with needs to be linked to the specified YouTube content owner.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "part": {
 	//       "description": "The part parameter serves two purposes in this operation. It identifies the properties that the write operation will set as well as the properties that the API response will include.\n\nThe part names that you can include in the parameter value are id and invideoPromotion.\n\nNote that this method will override the existing values for all of the mutable properties that are contained in any parts that the parameter value specifies.",
 	//       "location": "query",
@@ -6631,12 +6646,34 @@ func (r *VideosService) List(part string) *VideosListCall {
 	return c
 }
 
+// Chart sets the optional parameter "chart": Set this parameter's value
+// to mostPopular to instruct the API to return videos belonging to the
+// chart of most popular videos.
+func (c *VideosListCall) Chart(chart string) *VideosListCall {
+	c.opt_["chart"] = chart
+	return c
+}
+
 // Id sets the optional parameter "id": The id parameter specifies a
 // comma-separated list of the YouTube video ID(s) for the resource(s)
 // that are being retrieved. In a video resource, the id property
 // specifies the video's ID.
 func (c *VideosListCall) Id(id string) *VideosListCall {
 	c.opt_["id"] = id
+	return c
+}
+
+// Locale sets the optional parameter "locale": The locale parameter
+// selects a video chart available in the specified locale. If using
+// this parameter, chart must also be set. The parameter value is an BCP
+// 47 locale. Supported locales include ar_AE, ar_DZ, ar_EG, ar_JO,
+// ar_MA, ar_SA, ar_TN, ar_YE, cs_CZ, de_DE, el_GR, en_AU, en_BE, en_CA,
+// en_GB, en_GH, en_IE, en_IL, en_IN, en_KE, en_NG, en_NZ, en_SG, en_UG,
+// en_US, en_ZA, es_AR, es_CL, es_CO, es_ES, es_MX, es_PE, fil_PH,
+// fr_FR, hu_HU, id_ID, it_IT, ja_JP, ko_KR, ms_MY, nl_NL, pl_PL, pt_BR,
+// ru_RU, sv_SE, tr_TR, zh_HK, zh_TW
+func (c *VideosListCall) Locale(locale string) *VideosListCall {
+	c.opt_["locale"] = locale
 	return c
 }
 
@@ -6670,13 +6707,27 @@ func (c *VideosListCall) PageToken(pageToken string) *VideosListCall {
 	return c
 }
 
+// VideoCategoryId sets the optional parameter "videoCategoryId": The
+// videoCategoryId parameter selects a video chart based on the
+// category. If using this parameter, chart must also be set.
+func (c *VideosListCall) VideoCategoryId(videoCategoryId string) *VideosListCall {
+	c.opt_["videoCategoryId"] = videoCategoryId
+	return c
+}
+
 func (c *VideosListCall) Do() (*VideoListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("part", fmt.Sprintf("%v", c.part))
+	if v, ok := c.opt_["chart"]; ok {
+		params.Set("chart", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["id"]; ok {
 		params.Set("id", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["locale"]; ok {
+		params.Set("locale", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
@@ -6689,6 +6740,9 @@ func (c *VideosListCall) Do() (*VideoListResponse, error) {
 	}
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["videoCategoryId"]; ok {
+		params.Set("videoCategoryId", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "videos")
 	urls += "?" + params.Encode()
@@ -6716,8 +6770,25 @@ func (c *VideosListCall) Do() (*VideoListResponse, error) {
 	//     "part"
 	//   ],
 	//   "parameters": {
+	//     "chart": {
+	//       "description": "Set this parameter's value to mostPopular to instruct the API to return videos belonging to the chart of most popular videos.",
+	//       "enum": [
+	//         "mostPopular"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Returns videos belonging to most popular video chart."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "id": {
 	//       "description": "The id parameter specifies a comma-separated list of the YouTube video ID(s) for the resource(s) that are being retrieved. In a video resource, the id property specifies the video's ID.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "locale": {
+	//       "default": "en_US",
+	//       "description": "The locale parameter selects a video chart available in the specified locale. If using this parameter, chart must also be set. The parameter value is an BCP 47 locale. Supported locales include ar_AE, ar_DZ, ar_EG, ar_JO, ar_MA, ar_SA, ar_TN, ar_YE, cs_CZ, de_DE, el_GR, en_AU, en_BE, en_CA, en_GB, en_GH, en_IE, en_IL, en_IN, en_KE, en_NG, en_NZ, en_SG, en_UG, en_US, en_ZA, es_AR, es_CL, es_CO, es_ES, es_MX, es_PE, fil_PH, fr_FR, hu_HU, id_ID, it_IT, ja_JP, ko_KR, ms_MY, nl_NL, pl_PL, pt_BR, ru_RU, sv_SE, tr_TR, zh_HK, zh_TW",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6757,6 +6828,12 @@ func (c *VideosListCall) Do() (*VideoListResponse, error) {
 	//       "description": "The part parameter specifies a comma-separated list of one or more video resource properties that the API response will include. The part names that you can include in the parameter value are id, snippet, contentDetails, player, statistics, status, and topicDetails.\n\nIf the parameter identifies a property that contains child properties, the child properties will be included in the response. For example, in a video resource, the snippet property contains the channelId, title, description, tags, and categoryId properties. As such, if you set part=snippet, the API response will contain all of those properties.",
 	//       "location": "query",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "videoCategoryId": {
+	//       "default": "0",
+	//       "description": "The videoCategoryId parameter selects a video chart based on the category. If using this parameter, chart must also be set.",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },

@@ -189,10 +189,10 @@ type Activity struct {
 	Url string `json:"url,omitempty"`
 
 	// Verb: This activity's verb, indicating what action was performed.
-	// Possible values are:
-	// - "post" - Publish content to the stream.
-	// -
-	// "share" - Reshare an activity.
+	// Possible values include (but are not limited to):
+	// - "post" -
+	// Publish content to the stream.
+	// - "share" - Reshare an activity.
 	Verb string `json:"verb,omitempty"`
 }
 
@@ -244,10 +244,11 @@ type ActivityObject struct {
 	// of the activity being reshared.
 	Id string `json:"id,omitempty"`
 
-	// ObjectType: The type of the object. Possible values are:
-	// - "note" -
-	// Textual content.
-	// - "activity" - A Google+ activity.
+	// ObjectType: The type of the object. Possible values include (but are
+	// not limited to):
+	// - "note" - Textual content.
+	// - "activity" - A
+	// Google+ activity.
 	ObjectType string `json:"objectType,omitempty"`
 
 	// OriginalContent: The content (text) as provided by the author, stored
@@ -309,13 +310,14 @@ type ActivityObjectAttachments struct {
 	// Image: The preview image for photos or videos.
 	Image *ActivityObjectAttachmentsImage `json:"image,omitempty"`
 
-	// ObjectType: The type of media object. Possible values are:
-	// -
-	// "photo" - A photo.
-	// - "album" - A photo album.
+	// ObjectType: The type of media object. Possible values include (but
+	// are not limited to):
+	// - "photo" - A photo.
+	// - "album" - A photo
+	// album.
 	// - "video" - A video.
-	//
-	// - "article" - An article, specified by a link.
+	// - "article" - An article, specified by
+	// a link.
 	ObjectType string `json:"objectType,omitempty"`
 
 	// Thumbnails: If the attachment is an album, potential additional
@@ -885,18 +887,14 @@ type Person struct {
 	// DisplayName: The name of this person, suitable for display.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Emails: A list of email addresses that this person has set to public
-	// on their Google+ profile. You can also use the userinfo.email scope
-	// to retrieve an authenticated user's email address.
-	Emails []*PersonEmails `json:"emails,omitempty"`
-
 	// Etag: ETag of this response for caching purposes.
 	Etag string `json:"etag,omitempty"`
 
-	// Gender: The person's gender. Possible values are:
-	// - "male" - Male
-	// gender.
+	// Gender: The person's gender. Possible values include (but are not
+	// limited to):
+	// - "male" - Male gender.
 	// - "female" - Female gender.
+	//
 	// - "other" - Other.
 	Gender string `json:"gender,omitempty"`
 
@@ -922,11 +920,11 @@ type Person struct {
 	// Nickname: The nickname of this person.
 	Nickname string `json:"nickname,omitempty"`
 
-	// ObjectType: Type of person within Google+. Possible values are:
-	// -
-	// "person" - represents an actual person.
-	// - "page" - represents a
-	// page.
+	// ObjectType: Type of person within Google+. Possible values include
+	// (but are not limited to):
+	// - "person" - represents an actual person.
+	//
+	// - "page" - represents a page.
 	ObjectType string `json:"objectType,omitempty"`
 
 	// Organizations: A list of current or past organizations with which
@@ -941,22 +939,23 @@ type Person struct {
 	PlusOneCount int64 `json:"plusOneCount,omitempty"`
 
 	// RelationshipStatus: The person's relationship status. Possible values
-	// are:
+	// include (but are not limited to):
 	// - "single" - Person is single.
-	// - "in_a_relationship" - Person
-	// is in a relationship.
-	// - "engaged" - Person is engaged.
-	// - "married"
-	// - Person is married.
-	// - "its_complicated" - The relationship is
-	// complicated.
-	// - "open_relationship" - Person is in an open
-	// relationship.
-	// - "widowed" - Person is widowed.
 	// -
-	// "in_domestic_partnership" - Person is in a domestic partnership.
+	// "in_a_relationship" - Person is in a relationship.
+	// - "engaged" -
+	// Person is engaged.
+	// - "married" - Person is married.
 	// -
-	// "in_civil_union" - Person is in a civil union.
+	// "its_complicated" - The relationship is complicated.
+	// -
+	// "open_relationship" - Person is in an open relationship.
+	// - "widowed"
+	// - Person is widowed.
+	// - "in_domestic_partnership" - Person is in a
+	// domestic partnership.
+	// - "in_civil_union" - Person is in a civil
+	// union.
 	RelationshipStatus string `json:"relationshipStatus,omitempty"`
 
 	// Tagline: The brief description (tagline) of this person.
@@ -987,9 +986,9 @@ type PersonCover struct {
 	// CoverPhoto: The person's primary cover image.
 	CoverPhoto *PersonCoverCoverPhoto `json:"coverPhoto,omitempty"`
 
-	// Layout: The layout of the cover art. Possible values are:
-	// -
-	// "banner" - One large image banner.
+	// Layout: The layout of the cover art. Possible values include (but are
+	// not limited to):
+	// - "banner" - One large image banner.
 	Layout string `json:"layout,omitempty"`
 }
 
@@ -1014,22 +1013,6 @@ type PersonCoverCoverPhoto struct {
 
 	// Width: The width to the image.
 	Width int64 `json:"width,omitempty"`
-}
-
-type PersonEmails struct {
-	// Primary: If "true", indicates this email address is the person's
-	// primary one.
-	Primary bool `json:"primary,omitempty"`
-
-	// Type: The type of address. Possible values are:
-	// - "home" - Home
-	// email address.
-	// - "work" - Work email address.
-	// - "other" - Other.
-	Type string `json:"type,omitempty"`
-
-	// Value: The email address.
-	Value string `json:"value,omitempty"`
 }
 
 type PersonImage struct {
@@ -1089,9 +1072,9 @@ type PersonOrganizations struct {
 	// Title: The person's job title or role within the organization.
 	Title string `json:"title,omitempty"`
 
-	// Type: The type of organization. Possible values are:
-	// - "work" -
-	// Work.
+	// Type: The type of organization. Possible values include (but are not
+	// limited to):
+	// - "work" - Work.
 	// - "school" - School.
 	Type string `json:"type,omitempty"`
 }
@@ -1110,13 +1093,13 @@ type PersonUrls struct {
 	// Label: The label of the URL.
 	Label string `json:"label,omitempty"`
 
-	// Type: The type of URL. Possible values are:
-	// - "otherProfile" - URL
-	// for another profile.
-	// - "contributor" - URL for which this person is
-	// a contributor to.
-	// - "website" - URL for this Google+ Page's primary
-	// website.
+	// Type: The type of URL. Possible values include (but are not limited
+	// to):
+	// - "otherProfile" - URL for another profile.
+	// - "contributor" -
+	// URL for which this person is a contributor to.
+	// - "website" - URL for
+	// this Google+ Page's primary website.
 	// - "other" - Other.
 	Type string `json:"type,omitempty"`
 

@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"0kaFfN0xfjZjASExv-gUnrWhdto/JIw1ulqf0p0ExAXb3O32d8TmLjE\"",
+ "etag": "\"BgGnx7p-6wsAbOn4St99QhtBGbA/8RrZW9hrU7_jy4RSUzXSIb4KhRc\"",
  "discoveryVersion": "v1",
  "id": "blogger:v3",
  "name": "blogger",
  "version": "v3",
- "revision": "20130122",
+ "revision": "20130701",
  "title": "Blogger API",
  "description": "API for access to the data within Blogger.",
  "ownerDomain": "google.com",
@@ -197,6 +197,41 @@
      "type": "string",
      "description": "The kind of this entity. Always blogger#blogList",
      "default": "blogger#blogList"
+    }
+   }
+  },
+  "BlogPerUserInfo": {
+   "id": "BlogPerUserInfo",
+   "type": "object",
+   "properties": {
+    "blogId": {
+     "type": "string"
+    },
+    "kind": {
+     "type": "string",
+     "default": "blogger#blogPerUserInfo"
+    },
+    "photosAlbumKey": {
+     "type": "string"
+    },
+    "userId": {
+     "type": "string"
+    }
+   }
+  },
+  "BlogUserInfo": {
+   "id": "BlogUserInfo",
+   "type": "object",
+   "properties": {
+    "blog": {
+     "$ref": "Blog"
+    },
+    "kind": {
+     "type": "string",
+     "default": "blogger#blogUserInfo"
+    },
+    "user": {
+     "$ref": "BlogPerUserInfo"
     }
    }
   },
@@ -642,6 +677,47 @@
   }
  },
  "resources": {
+  "blogUserInfos": {
+   "methods": {
+    "get": {
+     "id": "blogger.blogUserInfos.get",
+     "path": "users/{userId}/blogs/{blogId}",
+     "httpMethod": "GET",
+     "description": "Gets one blog and user info pair by blogId and userId.",
+     "parameters": {
+      "blogId": {
+       "type": "string",
+       "description": "The ID of the blog to get.",
+       "required": true,
+       "location": "path"
+      },
+      "maxPosts": {
+       "type": "integer",
+       "description": "Maximum number of posts to pull back with the blog.",
+       "format": "uint32",
+       "location": "query"
+      },
+      "userId": {
+       "type": "string",
+       "description": "ID of the user whose blogs are to be fetched. Either the word 'self' (sans quote marks) or the user's profile identifier.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "userId",
+      "blogId"
+     ],
+     "response": {
+      "$ref": "BlogUserInfo"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/blogger",
+      "https://www.googleapis.com/auth/blogger.readonly"
+     ]
+    }
+   }
+  },
   "blogs": {
    "methods": {
     "get": {
@@ -1000,7 +1076,7 @@
      "parameters": {
       "blogId": {
        "type": "string",
-       "description": "ID of the blog to fetch the post from.",
+       "description": "ID of the blog to add the post to.",
        "required": true,
        "location": "path"
       }

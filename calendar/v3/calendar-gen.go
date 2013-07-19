@@ -56,6 +56,7 @@ func New(client *http.Client) (*Service, error) {
 	s.Acl = NewAclService(s)
 	s.CalendarList = NewCalendarListService(s)
 	s.Calendars = NewCalendarsService(s)
+	s.Channels = NewChannelsService(s)
 	s.Colors = NewColorsService(s)
 	s.Events = NewEventsService(s)
 	s.Freebusy = NewFreebusyService(s)
@@ -71,6 +72,8 @@ type Service struct {
 	CalendarList *CalendarListService
 
 	Calendars *CalendarsService
+
+	Channels *ChannelsService
 
 	Colors *ColorsService
 
@@ -105,6 +108,15 @@ func NewCalendarsService(s *Service) *CalendarsService {
 }
 
 type CalendarsService struct {
+	s *Service
+}
+
+func NewChannelsService(s *Service) *ChannelsService {
+	rs := &ChannelsService{s: s}
+	return rs
+}
+
+type ChannelsService struct {
 	s *Service
 }
 
@@ -319,6 +331,42 @@ type CalendarListEntry struct {
 
 	// TimeZone: The time zone of the calendar. Optional. Read-only.
 	TimeZone string `json:"timeZone,omitempty"`
+}
+
+type Channel struct {
+	// Address: The address of the receiving entity where events are
+	// delivered. Specific to the channel type.
+	Address string `json:"address,omitempty"`
+
+	// Expiration: The expiration instant for this channel if it is defined.
+	Expiration int64 `json:"expiration,omitempty,string"`
+
+	// Id: A UUID for the channel
+	Id string `json:"id,omitempty"`
+
+	// Kind: A channel watching an API resource
+	Kind string `json:"kind,omitempty"`
+
+	// Params: Additional parameters controlling delivery channel behavior
+	Params *ChannelParams `json:"params,omitempty"`
+
+	// ResourceId: An opaque id that identifies the resource that is being
+	// watched. Stable across different API versions
+	ResourceId string `json:"resourceId,omitempty"`
+
+	// ResourceUri: The canonicalized ID of the watched resource.
+	ResourceUri string `json:"resourceUri,omitempty"`
+
+	// Token: An arbitrary string associated with the channel that is
+	// delivered to the target address with each event delivered over this
+	// channel.
+	Token string `json:"token,omitempty"`
+
+	// Type: The type of delivery mechanism used by this channel
+	Type string `json:"type,omitempty"`
+}
+
+type ChannelParams struct {
 }
 
 type ColorDefinition struct {
@@ -2236,6 +2284,60 @@ func (c *CalendarsUpdateCall) Do() (*Calendar, error) {
 
 }
 
+// method id "calendar.channels.stop":
+
+type ChannelsStopCall struct {
+	s       *Service
+	channel *Channel
+	opt_    map[string]interface{}
+}
+
+// Stop:
+func (r *ChannelsService) Stop(channel *Channel) *ChannelsStopCall {
+	c := &ChannelsStopCall{s: r.s, opt_: make(map[string]interface{})}
+	c.channel = channel
+	return c
+}
+
+func (c *ChannelsStopCall) Do() error {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
+	if err != nil {
+		return err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "channels/stop")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "httpMethod": "POST",
+	//   "id": "calendar.channels.stop",
+	//   "path": "channels/stop",
+	//   "request": {
+	//     "$ref": "Channel"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/calendar",
+	//     "https://www.googleapis.com/auth/calendar.readonly"
+	//   ]
+	// }
+
+}
+
 // method id "calendar.colors.get":
 
 type ColorsGetCall struct {
@@ -2508,7 +2610,8 @@ type EventsImportCall struct {
 	opt_       map[string]interface{}
 }
 
-// Import: Imports an event.
+// Import: Imports an event. This operation is used to add a private
+// copy of an existing event to a calendar.
 func (r *EventsService) Import(calendarId string, event *Event) *EventsImportCall {
 	c := &EventsImportCall{s: r.s, opt_: make(map[string]interface{})}
 	c.calendarId = calendarId
@@ -2546,7 +2649,7 @@ func (c *EventsImportCall) Do() (*Event, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Imports an event.",
+	//   "description": "Imports an event. This operation is used to add a private copy of an existing event to a calendar.",
 	//   "httpMethod": "POST",
 	//   "id": "calendar.events.import",
 	//   "parameterOrder": [
@@ -3691,6 +3794,329 @@ func (c *EventsUpdateCall) Do() (*Event, error) {
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/calendar"
 	//   ]
+	// }
+
+}
+
+// method id "calendar.events.watch":
+
+type EventsWatchCall struct {
+	s          *Service
+	calendarId string
+	channel    *Channel
+	opt_       map[string]interface{}
+}
+
+// Watch: Subscribe to changes in events collection
+func (r *EventsService) Watch(calendarId string, channel *Channel) *EventsWatchCall {
+	c := &EventsWatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.calendarId = calendarId
+	c.channel = channel
+	return c
+}
+
+// AlwaysIncludeEmail sets the optional parameter "alwaysIncludeEmail":
+// Whether to always include a value in the "email" field for the
+// organizer, creator and attendees, even if no real email is available
+// (i.e. a generated, non-working value will be provided). The use of
+// this option is discouraged and should only be used by clients which
+// cannot handle the absence of an email address value in the mentioned
+// places.  The default is False.
+func (c *EventsWatchCall) AlwaysIncludeEmail(alwaysIncludeEmail bool) *EventsWatchCall {
+	c.opt_["alwaysIncludeEmail"] = alwaysIncludeEmail
+	return c
+}
+
+// ICalUID sets the optional parameter "iCalUID": Specifies iCalendar
+// UID (iCalUID) of events to be included in the response.
+func (c *EventsWatchCall) ICalUID(iCalUID string) *EventsWatchCall {
+	c.opt_["iCalUID"] = iCalUID
+	return c
+}
+
+// MaxAttendees sets the optional parameter "maxAttendees": The maximum
+// number of attendees to include in the response. If there are more
+// than the specified number of attendees, only the participant is
+// returned.
+func (c *EventsWatchCall) MaxAttendees(maxAttendees int64) *EventsWatchCall {
+	c.opt_["maxAttendees"] = maxAttendees
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum number
+// of events returned on one result page.
+func (c *EventsWatchCall) MaxResults(maxResults int64) *EventsWatchCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": The order of the
+// events returned in the result.  The default is an unspecified, stable
+// order.
+func (c *EventsWatchCall) OrderBy(orderBy string) *EventsWatchCall {
+	c.opt_["orderBy"] = orderBy
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Token specifying
+// which result page to return.
+func (c *EventsWatchCall) PageToken(pageToken string) *EventsWatchCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+// Q sets the optional parameter "q": Free text search terms to find
+// events that match these terms in any field, except for extended
+// properties.
+func (c *EventsWatchCall) Q(q string) *EventsWatchCall {
+	c.opt_["q"] = q
+	return c
+}
+
+// ShowDeleted sets the optional parameter "showDeleted": Whether to
+// include deleted events (with 'status' equals 'cancelled') in the
+// result. Cancelled instances of recurring events (but not the
+// underlying recurring event) will still be included if 'showDeleted'
+// and 'singleEvents' are both False. If 'showDeleted' and
+// 'singleEvents' are both True, only single instances of deleted events
+// (but not the underlying recurring events) are returned.  The default
+// is False.
+func (c *EventsWatchCall) ShowDeleted(showDeleted bool) *EventsWatchCall {
+	c.opt_["showDeleted"] = showDeleted
+	return c
+}
+
+// ShowHiddenInvitations sets the optional parameter
+// "showHiddenInvitations": Whether to include hidden invitations in the
+// result.  The default is False.
+func (c *EventsWatchCall) ShowHiddenInvitations(showHiddenInvitations bool) *EventsWatchCall {
+	c.opt_["showHiddenInvitations"] = showHiddenInvitations
+	return c
+}
+
+// SingleEvents sets the optional parameter "singleEvents": Whether to
+// expand recurring events into instances and only return single one-off
+// events and instances of recurring events, but not the underlying
+// recurring events themselves.  The default is False.
+func (c *EventsWatchCall) SingleEvents(singleEvents bool) *EventsWatchCall {
+	c.opt_["singleEvents"] = singleEvents
+	return c
+}
+
+// TimeMax sets the optional parameter "timeMax": Upper bound
+// (exclusive) for an event's start time to filter by.  The default is
+// not to filter by start time.
+func (c *EventsWatchCall) TimeMax(timeMax string) *EventsWatchCall {
+	c.opt_["timeMax"] = timeMax
+	return c
+}
+
+// TimeMin sets the optional parameter "timeMin": Lower bound
+// (inclusive) for an event's end time to filter by.  The default is not
+// to filter by end time.
+func (c *EventsWatchCall) TimeMin(timeMin string) *EventsWatchCall {
+	c.opt_["timeMin"] = timeMin
+	return c
+}
+
+// TimeZone sets the optional parameter "timeZone": Time zone used in
+// the response.  The default is the time zone of the calendar.
+func (c *EventsWatchCall) TimeZone(timeZone string) *EventsWatchCall {
+	c.opt_["timeZone"] = timeZone
+	return c
+}
+
+// UpdatedMin sets the optional parameter "updatedMin": Lower bound for
+// an event's last modification time (as a RFC 3339 timestamp) to filter
+// by.  The default is not to filter by last modification time.
+func (c *EventsWatchCall) UpdatedMin(updatedMin string) *EventsWatchCall {
+	c.opt_["updatedMin"] = updatedMin
+	return c
+}
+
+func (c *EventsWatchCall) Do() (*Channel, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["alwaysIncludeEmail"]; ok {
+		params.Set("alwaysIncludeEmail", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["iCalUID"]; ok {
+		params.Set("iCalUID", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxAttendees"]; ok {
+		params.Set("maxAttendees", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["orderBy"]; ok {
+		params.Set("orderBy", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["q"]; ok {
+		params.Set("q", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["showDeleted"]; ok {
+		params.Set("showDeleted", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["showHiddenInvitations"]; ok {
+		params.Set("showHiddenInvitations", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["singleEvents"]; ok {
+		params.Set("singleEvents", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["timeMax"]; ok {
+		params.Set("timeMax", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["timeMin"]; ok {
+		params.Set("timeMin", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["timeZone"]; ok {
+		params.Set("timeZone", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["updatedMin"]; ok {
+		params.Set("updatedMin", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/calendar/v3/", "calendars/{calendarId}/events/watch")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{calendarId}", url.QueryEscape(c.calendarId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Channel)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Subscribe to changes in events collection",
+	//   "httpMethod": "POST",
+	//   "id": "calendar.events.watch",
+	//   "parameterOrder": [
+	//     "calendarId"
+	//   ],
+	//   "parameters": {
+	//     "alwaysIncludeEmail": {
+	//       "description": "Whether to always include a value in the \"email\" field for the organizer, creator and attendees, even if no real email is available (i.e. a generated, non-working value will be provided). The use of this option is discouraged and should only be used by clients which cannot handle the absence of an email address value in the mentioned places. Optional. The default is False.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "calendarId": {
+	//       "description": "Calendar identifier.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "iCalUID": {
+	//       "description": "Specifies iCalendar UID (iCalUID) of events to be included in the response. Optional.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxAttendees": {
+	//       "description": "The maximum number of attendees to include in the response. If there are more than the specified number of attendees, only the participant is returned. Optional.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     },
+	//     "maxResults": {
+	//       "description": "Maximum number of events returned on one result page. Optional.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "The order of the events returned in the result. Optional. The default is an unspecified, stable order.",
+	//       "enum": [
+	//         "startTime",
+	//         "updated"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Order by the start date/time (ascending). This is only available when querying single events (i.e. the parameter \"singleEvents\" is True)",
+	//         "Order by last modification time (ascending)."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageToken": {
+	//       "description": "Token specifying which result page to return. Optional.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "q": {
+	//       "description": "Free text search terms to find events that match these terms in any field, except for extended properties. Optional.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "showDeleted": {
+	//       "description": "Whether to include deleted events (with 'status' equals 'cancelled') in the result. Cancelled instances of recurring events (but not the underlying recurring event) will still be included if 'showDeleted' and 'singleEvents' are both False. If 'showDeleted' and 'singleEvents' are both True, only single instances of deleted events (but not the underlying recurring events) are returned. Optional. The default is False.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "showHiddenInvitations": {
+	//       "description": "Whether to include hidden invitations in the result. Optional. The default is False.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "singleEvents": {
+	//       "description": "Whether to expand recurring events into instances and only return single one-off events and instances of recurring events, but not the underlying recurring events themselves. Optional. The default is False.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "timeMax": {
+	//       "description": "Upper bound (exclusive) for an event's start time to filter by. Optional. The default is not to filter by start time.",
+	//       "format": "date-time",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "timeMin": {
+	//       "description": "Lower bound (inclusive) for an event's end time to filter by. Optional. The default is not to filter by end time.",
+	//       "format": "date-time",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "timeZone": {
+	//       "description": "Time zone used in the response. Optional. The default is the time zone of the calendar.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "updatedMin": {
+	//       "description": "Lower bound for an event's last modification time (as a RFC 3339 timestamp) to filter by. Optional. The default is not to filter by last modification time.",
+	//       "format": "date-time",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "calendars/{calendarId}/events/watch",
+	//   "request": {
+	//     "$ref": "Channel"
+	//   },
+	//   "response": {
+	//     "$ref": "Channel"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/calendar",
+	//     "https://www.googleapis.com/auth/calendar.readonly"
+	//   ],
+	//   "supportsSubscription": true
 	// }
 
 }

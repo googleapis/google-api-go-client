@@ -300,6 +300,8 @@ type Annotation struct {
 	// LayerId: The layer this annotation is for.
 	LayerId string `json:"layerId,omitempty"`
 
+	LayerSummary *AnnotationLayerSummary `json:"layerSummary,omitempty"`
+
 	// PageIds: Pages that this annotation spans.
 	PageIds []string `json:"pageIds,omitempty"`
 
@@ -356,6 +358,20 @@ type AnnotationCurrentVersionRanges struct {
 	ImageCfiRange *BooksAnnotationsRange `json:"imageCfiRange,omitempty"`
 }
 
+type AnnotationLayerSummary struct {
+	// AllowedCharacterCount: Maximum allowed characters on this layer,
+	// especially for the "copy" layer.
+	AllowedCharacterCount int64 `json:"allowedCharacterCount,omitempty"`
+
+	// LimitType: Type of limitation on this layer. "limited" or "unlimited"
+	// for the "copy" layer.
+	LimitType string `json:"limitType,omitempty"`
+
+	// RemainingCharacterCount: Remaining allowed characters on this layer,
+	// especially for the "copy" layer.
+	RemainingCharacterCount int64 `json:"remainingCharacterCount,omitempty"`
+}
+
 type Annotationdata struct {
 	// AnnotationType: The type of annotation this data is for.
 	AnnotationType string `json:"annotationType,omitempty"`
@@ -400,6 +416,24 @@ type Annotations struct {
 	// than the number of notes returned in this response if results have
 	// been paginated.
 	TotalItems int64 `json:"totalItems,omitempty"`
+}
+
+type AnnotationsSummary struct {
+	Kind string `json:"kind,omitempty"`
+
+	Layers []*AnnotationsSummaryLayers `json:"layers,omitempty"`
+}
+
+type AnnotationsSummaryLayers struct {
+	AllowedCharacterCount int64 `json:"allowedCharacterCount,omitempty"`
+
+	LayerId string `json:"layerId,omitempty"`
+
+	LimitType string `json:"limitType,omitempty"`
+
+	RemainingCharacterCount int64 `json:"remainingCharacterCount,omitempty"`
+
+	Updated string `json:"updated,omitempty"`
 }
 
 type Annotationsdata struct {
@@ -1091,6 +1125,9 @@ type VolumeSaleInfo struct {
 	// ListPrice: Suggested retail price. (In LITE projection.)
 	ListPrice *VolumeSaleInfoListPrice `json:"listPrice,omitempty"`
 
+	// Offers: Offers available for this volume (sales and rentals).
+	Offers []*VolumeSaleInfoOffers `json:"offers,omitempty"`
+
 	// OnSaleDate: The date on which this book is available for sale.
 	OnSaleDate string `json:"onSaleDate,omitempty"`
 
@@ -1101,8 +1138,8 @@ type VolumeSaleInfo struct {
 
 	// Saleability: Whether or not this book is available for sale or
 	// offered for free in the Google eBookstore for the country listed
-	// above. Possible values are FOR_SALE, FREE, NOT_FOR_SALE, or
-	// FOR_PREORDER.
+	// above. Possible values are FOR_SALE, FOR_RENTAL_ONLY,
+	// FOR_SALE_AND_RENTAL, FREE, NOT_FOR_SALE, or FOR_PREORDER.
 	Saleability string `json:"saleability,omitempty"`
 }
 
@@ -1112,6 +1149,38 @@ type VolumeSaleInfoListPrice struct {
 
 	// CurrencyCode: An ISO 4217, three-letter currency code. (In LITE
 	// projection.)
+	CurrencyCode string `json:"currencyCode,omitempty"`
+}
+
+type VolumeSaleInfoOffers struct {
+	// FinskyOfferType: The finsky offer type (e.g., PURCHASE=0 RENTAL=3)
+	FinskyOfferType int64 `json:"finskyOfferType,omitempty"`
+
+	// ListPrice: Offer list (=undiscounted) price in Micros.
+	ListPrice *VolumeSaleInfoOffersListPrice `json:"listPrice,omitempty"`
+
+	// RentalDuration: The rental duration (for rental offers only).
+	RentalDuration *VolumeSaleInfoOffersRentalDuration `json:"rentalDuration,omitempty"`
+
+	// RetailPrice: Offer retail (=discounted) price in Micros
+	RetailPrice *VolumeSaleInfoOffersRetailPrice `json:"retailPrice,omitempty"`
+}
+
+type VolumeSaleInfoOffersListPrice struct {
+	AmountInMicros float64 `json:"amountInMicros,omitempty"`
+
+	CurrencyCode string `json:"currencyCode,omitempty"`
+}
+
+type VolumeSaleInfoOffersRentalDuration struct {
+	Count float64 `json:"count,omitempty"`
+
+	Unit string `json:"unit,omitempty"`
+}
+
+type VolumeSaleInfoOffersRetailPrice struct {
+	AmountInMicros float64 `json:"amountInMicros,omitempty"`
+
 	CurrencyCode string `json:"currencyCode,omitempty"`
 }
 
@@ -1130,6 +1199,9 @@ type VolumeSearchInfo struct {
 }
 
 type VolumeUserInfo struct {
+	// Copy: Copy/Paste accounting information.
+	Copy *VolumeUserInfoCopy `json:"copy,omitempty"`
+
 	// IsInMyBooks: Whether or not this volume is currently in "my books."
 	IsInMyBooks bool `json:"isInMyBooks,omitempty"`
 
@@ -1148,6 +1220,12 @@ type VolumeUserInfo struct {
 	// if one is available. (In LITE projection.)
 	ReadingPosition *ReadingPosition `json:"readingPosition,omitempty"`
 
+	// RentalPeriod: Period during this book is/was a valid rental.
+	RentalPeriod *VolumeUserInfoRentalPeriod `json:"rentalPeriod,omitempty"`
+
+	// RentalState: Whether this book is an active or an expired rental.
+	RentalState string `json:"rentalState,omitempty"`
+
 	// Review: This user's review of this volume, if one exists.
 	Review *Review `json:"review,omitempty"`
 
@@ -1157,6 +1235,22 @@ type VolumeUserInfo struct {
 	Updated string `json:"updated,omitempty"`
 
 	UserUploadedVolumeInfo *VolumeUserInfoUserUploadedVolumeInfo `json:"userUploadedVolumeInfo,omitempty"`
+}
+
+type VolumeUserInfoCopy struct {
+	AllowedCharacterCount int64 `json:"allowedCharacterCount,omitempty"`
+
+	LimitType string `json:"limitType,omitempty"`
+
+	RemainingCharacterCount int64 `json:"remainingCharacterCount,omitempty"`
+
+	Updated string `json:"updated,omitempty"`
+}
+
+type VolumeUserInfoRentalPeriod struct {
+	EndUtcSec int64 `json:"endUtcSec,omitempty,string"`
+
+	StartUtcSec int64 `json:"startUtcSec,omitempty,string"`
 }
 
 type VolumeUserInfoUserUploadedVolumeInfo struct {
@@ -3190,6 +3284,13 @@ func (r *MyconfigService) SyncVolumeLicenses(source string, nonce string, cpksve
 	return c
 }
 
+// Features sets the optional parameter "features": List of features
+// supported by the client, i.e., 'RENTALS'
+func (c *MyconfigSyncVolumeLicensesCall) Features(features string) *MyconfigSyncVolumeLicensesCall {
+	c.opt_["features"] = features
+	return c
+}
+
 // Locale sets the optional parameter "locale": ISO-639-1, ISO-3166-1
 // codes for message localization, i.e. en_US.
 func (c *MyconfigSyncVolumeLicensesCall) Locale(locale string) *MyconfigSyncVolumeLicensesCall {
@@ -3218,6 +3319,9 @@ func (c *MyconfigSyncVolumeLicensesCall) Do() (*Volumes, error) {
 	params.Set("cpksver", fmt.Sprintf("%v", c.cpksver))
 	params.Set("nonce", fmt.Sprintf("%v", c.nonce))
 	params.Set("source", fmt.Sprintf("%v", c.source))
+	if v, ok := c.opt_["features"]; ok {
+		params.Set("features", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["locale"]; ok {
 		params.Set("locale", fmt.Sprintf("%v", v))
 	}
@@ -3259,6 +3363,18 @@ func (c *MyconfigSyncVolumeLicensesCall) Do() (*Volumes, error) {
 	//       "description": "The device/version ID from which to release the restriction.",
 	//       "location": "query",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "features": {
+	//       "description": "List of features supported by the client, i.e., 'RENTALS'",
+	//       "enum": [
+	//         "RENTALS"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Client supports rentals."
+	//       ],
+	//       "location": "query",
+	//       "repeated": true,
 	//       "type": "string"
 	//     },
 	//     "locale": {
@@ -3467,6 +3583,14 @@ func (r *MylibraryAnnotationsService) Insert(annotation *Annotation) *MylibraryA
 	return c
 }
 
+// ShowOnlySummaryInResponse sets the optional parameter
+// "showOnlySummaryInResponse": Requests that only the summary of the
+// specified layer be provided in the response.
+func (c *MylibraryAnnotationsInsertCall) ShowOnlySummaryInResponse(showOnlySummaryInResponse bool) *MylibraryAnnotationsInsertCall {
+	c.opt_["showOnlySummaryInResponse"] = showOnlySummaryInResponse
+	return c
+}
+
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *MylibraryAnnotationsInsertCall) Source(source string) *MylibraryAnnotationsInsertCall {
@@ -3483,6 +3607,9 @@ func (c *MylibraryAnnotationsInsertCall) Do() (*Annotation, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["showOnlySummaryInResponse"]; ok {
+		params.Set("showOnlySummaryInResponse", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
 	}
@@ -3510,6 +3637,11 @@ func (c *MylibraryAnnotationsInsertCall) Do() (*Annotation, error) {
 	//   "httpMethod": "POST",
 	//   "id": "books.mylibrary.annotations.insert",
 	//   "parameters": {
+	//     "showOnlySummaryInResponse": {
+	//       "description": "Requests that only the summary of the specified layer be provided in the response.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "source": {
 	//       "description": "String to identify the originator of this request.",
 	//       "location": "query",
@@ -3731,6 +3863,83 @@ func (c *MylibraryAnnotationsListCall) Do() (*Annotations, error) {
 	//   "path": "mylibrary/annotations",
 	//   "response": {
 	//     "$ref": "Annotations"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/books"
+	//   ]
+	// }
+
+}
+
+// method id "books.mylibrary.annotations.summary":
+
+type MylibraryAnnotationsSummaryCall struct {
+	s        *Service
+	layerIds []string
+	volumeId string
+	opt_     map[string]interface{}
+}
+
+// Summary: Gets the summary of specified layers.
+func (r *MylibraryAnnotationsService) Summary(layerIds []string, volumeId string) *MylibraryAnnotationsSummaryCall {
+	c := &MylibraryAnnotationsSummaryCall{s: r.s, opt_: make(map[string]interface{})}
+	c.layerIds = layerIds
+	c.volumeId = volumeId
+	return c
+}
+
+func (c *MylibraryAnnotationsSummaryCall) Do() (*AnnotationsSummary, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("volumeId", fmt.Sprintf("%v", c.volumeId))
+	for _, v := range c.layerIds {
+		params.Add("layerIds", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "mylibrary/annotations/summary")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(AnnotationsSummary)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the summary of specified layers.",
+	//   "httpMethod": "POST",
+	//   "id": "books.mylibrary.annotations.summary",
+	//   "parameterOrder": [
+	//     "layerIds",
+	//     "volumeId"
+	//   ],
+	//   "parameters": {
+	//     "layerIds": {
+	//       "description": "Array of layer IDs to get the summary for.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "volumeId": {
+	//       "description": "Volume id to get the summary for.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "mylibrary/annotations/summary",
+	//   "response": {
+	//     "$ref": "AnnotationsSummary"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/books"
@@ -5391,15 +5600,19 @@ func (c *VolumesMybooksListCall) Do() (*Volumes, error) {
 	//       "description": "How the book was aquired",
 	//       "enum": [
 	//         "PREORDERED",
+	//         "PREVIOUSLY_RENTED",
 	//         "PUBLIC_DOMAIN",
 	//         "PURCHASED",
+	//         "RENTED",
 	//         "SAMPLE",
 	//         "UPLOADED"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Preordered books (not yet available)",
+	//         "User-rented books past their expiration time",
 	//         "Public domain books",
 	//         "Purchased books",
+	//         "User-rented books",
 	//         "Sample books",
 	//         "User uploaded books"
 	//       ],

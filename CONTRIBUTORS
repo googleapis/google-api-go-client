@@ -31,10 +31,11 @@
 
 # Please keep the list sorted.
 
-Andrew Gerrand <adg@golang.org>
 Alain Vongsouvanhalainv <alainv@google.com>
+Andrew Gerrand <adg@golang.org>
 Brad Fitzpatrick <bradfitz@golang.org>
 Francesc Campoy <campoy@golang.org>
-Nick Craig-Wood <nickcw@gmail.com>
+Garrick Evans <garrick@google.com>
 Jason Hall <jasonhall@google.com>
 Johan Euphrosine <proppy@google.com>
+Nick Craig-Wood <nickcw@gmail.com>

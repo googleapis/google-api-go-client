@@ -9,6 +9,7 @@ import (
 	"errors"
 	"flag"
 	"fmt"
+	"hash/fnv"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -97,8 +98,12 @@ func osUserCacheDir() string {
 }
 
 func tokenCacheFile(config *oauth.Config) string {
-	return filepath.Join(osUserCacheDir(), url.QueryEscape(
-		fmt.Sprintf("go-api-demo-%s-%s-%s", config.ClientId, config.ClientSecret, config.Scope)))
+	hash := fnv.New32a()
+	hash.Write([]byte(config.ClientId))
+	hash.Write([]byte(config.ClientSecret))
+	hash.Write([]byte(config.Scope))
+	fn := fmt.Sprintf("go-api-demo-tok%v", hash.Sum32())
+	return filepath.Join(osUserCacheDir(), url.QueryEscape(fn))
 }
 
 func tokenFromFile(file string) (*oauth.Token, error) {
@@ -151,7 +156,7 @@ func getOAuthClient(config *oauth.Config) *http.Client {
 
 func tokenFromWeb(config *oauth.Config) *oauth.Token {
 	ch := make(chan string)
-	randState := fmt.Sprintf("st%d", time.Now())
+	randState := fmt.Sprintf("st%d", time.Now().UnixNano())
 	ts := httptest.NewServer(http.HandlerFunc(func(rw http.ResponseWriter, req *http.Request) {
 		if req.URL.Path == "/favicon.ico" {
 			http.Error(rw, "", 404)

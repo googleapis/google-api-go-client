@@ -51,6 +51,8 @@ type API struct {
 	Version       string `json:"version"`
 	Title         string `json:"title"`
 	DiscoveryLink string `json:"discoveryLink"` // relative
+	RootURL       string `json:"rootUrl"`
+	ServicePath   string `json:"servicePath"`
 	Preferred     bool   `json:"preferred"`
 
 	m map[string]interface{}
@@ -305,6 +307,9 @@ func (a *API) GetName(preferred string) string {
 }
 
 func (a *API) apiBaseURL() string {
+	if a.RootURL != "" {
+		return a.RootURL + a.ServicePath
+	}
 	return resolveRelative(*apisURL, jstr(a.m, "basePath"))
 }
 

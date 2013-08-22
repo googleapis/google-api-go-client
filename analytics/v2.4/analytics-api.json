@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"BgGnx7p-6wsAbOn4St99QhtBGbA/RYAAPNa_Vymo8twbBuWBOFSRso8\"",
+ "etag": "\"wtgj9ZncHCe-ShJM8RewHb1DgWI/zIMEywnHFioQHQJBcLh-ZTnIRYw\"",
  "discoveryVersion": "v1",
  "id": "analytics:v2.4",
  "name": "analytics",
  "version": "v2.4",
- "revision": "20130708",
+ "revision": "20130817",
  "title": "Google Analytics API",
  "description": "View and manage your Google Analytics data",
  "ownerDomain": "google.com",
@@ -85,7 +85,7 @@
      "id": "analytics.data.get",
      "path": "data",
      "httpMethod": "GET",
-     "description": "Returns Analytics report data for a profile.",
+     "description": "Returns Analytics report data for a view (profile).",
      "parameters": {
       "dimensions": {
        "type": "string",
@@ -108,7 +108,7 @@
       },
       "ids": {
        "type": "string",
-       "description": "Unique table ID for retrieving report data. Table ID is of the form ga:XXXX, where XXXX is the Analytics profile ID.",
+       "description": "Unique table ID for retrieving report data. Table ID is of the form ga:XXXX, where XXXX is the Analytics view (profile) ID.",
        "required": true,
        "pattern": "ga:[0-9]+",
        "location": "query"
@@ -218,7 +218,7 @@
         },
         "profileId": {
          "type": "string",
-         "description": "Profile ID to retrieve goals for. Can either be a specific profile ID or '~all', which refers to all the profiles that user has access to.",
+         "description": "View (Profile) ID to retrieve goals for. Can either be a specific view (profile) ID or '~all', which refers to all the views (profiles) that user has access to.",
          "required": true,
          "location": "path"
         },
@@ -254,17 +254,17 @@
        "id": "analytics.management.profiles.list",
        "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles",
        "httpMethod": "GET",
-       "description": "Lists profiles to which the user has access.",
+       "description": "Lists views (profiles) to which the user has access.",
        "parameters": {
         "accountId": {
          "type": "string",
-         "description": "Account ID for the profiles to retrieve. Can either be a specific account ID or '~all', which refers to all the accounts to which the user has access.",
+         "description": "Account ID for the views (profiles) to retrieve. Can either be a specific account ID or '~all', which refers to all the accounts to which the user has access.",
          "required": true,
          "location": "path"
         },
         "max-results": {
          "type": "integer",
-         "description": "The maximum number of profiles to include in this response.",
+         "description": "The maximum number of views (profiles) to include in this response.",
          "format": "int32",
          "location": "query"
         },
@@ -277,7 +277,7 @@
         },
         "webPropertyId": {
          "type": "string",
-         "description": "Web property ID for the profiles to retrieve. Can either be a specific web property ID or '~all', which refers to all the web properties to which the user has access.",
+         "description": "Web property ID for the views (profiles) to retrieve. Can either be a specific web property ID or '~all', which refers to all the web properties to which the user has access.",
          "required": true,
          "location": "path"
         }

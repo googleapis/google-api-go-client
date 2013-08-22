@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"BgGnx7p-6wsAbOn4St99QhtBGbA/qwFbXMXKthqQggHQZAbxsQRx78U\"",
+ "etag": "\"wtgj9ZncHCe-ShJM8RewHb1DgWI/zbmL1UsP0_xndXHGtdmR53sXF64\"",
  "discoveryVersion": "v1",
  "id": "oauth2:v2",
  "name": "oauth2",
  "version": "v2",
- "revision": "20130617",
+ "revision": "20130813",
  "title": "Google OAuth2 API",
  "description": "Lets you access OAuth2 protocol related APIs.",
  "ownerDomain": "google.com",

@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"BgGnx7p-6wsAbOn4St99QhtBGbA/uco99p5yKfqaGFq56fMdDRLhe6Q\"",
+ "etag": "\"wtgj9ZncHCe-ShJM8RewHb1DgWI/SztORCSmKKyo5g10aLsm2q9xSVE\"",
  "discoveryVersion": "v1",
  "id": "storage:v1beta2",
  "name": "storage",
  "version": "v1beta2",
- "revision": "20130712",
+ "revision": "20130810",
  "title": "Cloud Storage API",
  "description": "Lets you store and retrieve potentially-large, immutable data objects.",
  "ownerDomain": "google.com",
@@ -311,7 +311,7 @@
     },
     "entity": {
      "type": "string",
-     "description": "The entity holding the permission, in one of the following forms: \n- user-userId \n- user-email \n- group-groupId \n- group-email \n- allUsers \n- allAuthenticatedUsers",
+     "description": "The entity holding the permission, in one of the following forms: \n- user-userId \n- user-email \n- group-groupId \n- group-email \n- domain-domain \n- allUsers \n- allAuthenticatedUsers Examples: \n- The user liz@example.com would be user-liz@example.com. \n- The group example@googlegroups.com would be group-example@googlegroups.com. \n- To refer to all members of the Google Apps for Business domain example.com, the entity would be domain-example.com.",
      "annotations": {
       "required": [
        "storage.bucketAccessControls.insert"
@@ -398,45 +398,49 @@
    "properties": {
     "address": {
      "type": "string",
-     "description": "The address of the receiving entity where events are delivered. Specific to the channel type."
+     "description": "The address where notifications are delivered for this channel."
     },
     "expiration": {
      "type": "string",
-     "description": "The expiration instant for this channel if it is defined.",
+     "description": "Date and time of notification channel expiration, expressed as a Unix timestamp, in milliseconds. Optional.",
      "format": "int64"
     },
     "id": {
      "type": "string",
-     "description": "A UUID for the channel"
+     "description": "A UUID or similar unique string that identifies this channel."
     },
     "kind": {
      "type": "string",
-     "description": "A channel watching an API resource",
+     "description": "Identifies this as a notification channel used to watch for changes to a resource. Value: the fixed string \"api#channel\".",
      "default": "api#channel"
     },
     "params": {
      "type": "object",
-     "description": "Additional parameters controlling delivery channel behavior",
+     "description": "Additional parameters controlling delivery channel behavior. Optional.",
      "additionalProperties": {
       "type": "string",
       "description": "Declares a new parameter by name."
      }
     },
+    "payload": {
+     "type": "boolean",
+     "description": "A Boolean value to indicate whether payload is wanted. Optional."
+    },
     "resourceId": {
      "type": "string",
-     "description": "An opaque id that identifies the resource that is being watched. Stable across different API versions"
+     "description": "An opaque ID that identifies the resource being watched on this channel. Stable across different API versions."
     },
     "resourceUri": {
      "type": "string",
-     "description": "The canonicalized ID of the watched resource."
+     "description": "A version-specific identifier for the watched resource."
     },
     "token": {
      "type": "string",
-     "description": "An arbitrary string associated with the channel that is delivered to the target address with each event delivered over this channel."
+     "description": "An arbitrary string delivered to the target address with each notification delivered over this channel. Optional."
     },
     "type": {
      "type": "string",
-     "description": "The type of delivery mechanism used by this channel"
+     "description": "The type of delivery mechanism used for this channel."
     }
    }
   },
@@ -646,7 +650,7 @@
     },
     "entity": {
      "type": "string",
-     "description": "The entity holding the permission, in one of the following forms: \n- user-userId \n- user-email \n- group-groupId \n- group-email \n- allUsers \n- allAuthenticatedUsers"
+     "description": "The entity holding the permission, in one of the following forms: \n- user-userId \n- user-email \n- group-groupId \n- group-email \n- domain-domain \n- allUsers \n- allAuthenticatedUsers Examples: \n- The user liz@example.com would be user-liz@example.com. \n- The group example@googlegroups.com would be group-example@googlegroups.com. \n- To refer to all members of the Google Apps for Business domain example.com, the entity would be domain-example.com."
     },
     "entityId": {
      "type": "string",
@@ -1198,8 +1202,10 @@
      "id": "storage.channels.stop",
      "path": "channels/stop",
      "httpMethod": "POST",
+     "description": "Stop watching resources through this channel",
      "request": {
-      "$ref": "Channel"
+      "$ref": "Channel",
+      "parameterName": "resource"
      },
      "scopes": [
       "https://www.googleapis.com/auth/devstorage.full_control",
@@ -2302,7 +2308,8 @@
       "bucket"
      ],
      "request": {
-      "$ref": "Channel"
+      "$ref": "Channel",
+      "parameterName": "resource"
      },
      "response": {
       "$ref": "Channel"

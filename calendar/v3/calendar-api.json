@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"BgGnx7p-6wsAbOn4St99QhtBGbA/4UwkMOdYZDbOC7E_RcXhRTAMV6Y\"",
+ "etag": "\"wtgj9ZncHCe-ShJM8RewHb1DgWI/mm73AOe2aQloA-_xFKTQO_VIif8\"",
  "discoveryVersion": "v1",
  "id": "calendar:v3",
  "name": "calendar",
  "version": "v3",
- "revision": "20130716",
+ "revision": "20130814",
  "title": "Calendar API",
  "description": "Lets you manipulate events and other calendar data.",
  "ownerDomain": "google.com",
@@ -260,7 +260,8 @@
     },
     "hidden": {
      "type": "boolean",
-     "description": "Whether the calendar has been hidden from the list. Optional. The default is False."
+     "description": "Whether the calendar has been hidden from the list. Optional. The default is False.",
+     "default": "false"
     },
     "id": {
      "type": "string",
@@ -282,11 +283,13 @@
     },
     "primary": {
      "type": "boolean",
-     "description": "Whether the calendar is the primary calendar of the authenticated user. Read-only. Optional. The default is False."
+     "description": "Whether the calendar is the primary calendar of the authenticated user. Read-only. Optional. The default is False.",
+     "default": "false"
     },
     "selected": {
      "type": "boolean",
-     "description": "Whether the calendar content shows up in the calendar UI. Optional. The default is False."
+     "description": "Whether the calendar content shows up in the calendar UI. Optional. The default is False.",
+     "default": "false"
     },
     "summary": {
      "type": "string",
@@ -308,45 +311,49 @@
    "properties": {
     "address": {
      "type": "string",
-     "description": "The address of the receiving entity where events are delivered. Specific to the channel type."
+     "description": "The address where notifications are delivered for this channel."
     },
     "expiration": {
      "type": "string",
-     "description": "The expiration instant for this channel if it is defined.",
+     "description": "Date and time of notification channel expiration, expressed as a Unix timestamp, in milliseconds. Optional.",
      "format": "int64"
     },
     "id": {
      "type": "string",
-     "description": "A UUID for the channel"
+     "description": "A UUID or similar unique string that identifies this channel."
     },
     "kind": {
      "type": "string",
-     "description": "A channel watching an API resource",
+     "description": "Identifies this as a notification channel used to watch for changes to a resource. Value: the fixed string \"api#channel\".",
      "default": "api#channel"
     },
     "params": {
      "type": "object",
-     "description": "Additional parameters controlling delivery channel behavior",
+     "description": "Additional parameters controlling delivery channel behavior. Optional.",
      "additionalProperties": {
       "type": "string",
       "description": "Declares a new parameter by name."
      }
     },
+    "payload": {
+     "type": "boolean",
+     "description": "A Boolean value to indicate whether payload is wanted. Optional."
+    },
     "resourceId": {
      "type": "string",
-     "description": "An opaque id that identifies the resource that is being watched. Stable across different API versions"
+     "description": "An opaque ID that identifies the resource being watched on this channel. Stable across different API versions."
     },
     "resourceUri": {
      "type": "string",
-     "description": "The canonicalized ID of the watched resource."
+     "description": "A version-specific identifier for the watched resource."
     },
     "token": {
      "type": "string",
-     "description": "An arbitrary string associated with the channel that is delivered to the target address with each event delivered over this channel."
+     "description": "An arbitrary string delivered to the target address with each notification delivered over this channel. Optional."
     },
     "type": {
      "type": "string",
-     "description": "The type of delivery mechanism used by this channel"
+     "description": "The type of delivery mechanism used for this channel."
     }
    }
   },
@@ -416,7 +423,8 @@
    "properties": {
     "anyoneCanAddSelf": {
      "type": "boolean",
-     "description": "Whether anyone can invite themselves to the event. Optional. The default is False."
+     "description": "Whether anyone can invite themselves to the event. Optional. The default is False.",
+     "default": "false"
     },
     "attendees": {
      "type": "array",
@@ -427,7 +435,8 @@
     },
     "attendeesOmitted": {
      "type": "boolean",
-     "description": "Whether attendees may have been omitted from the event's representation. When retrieving an event, this may be due to a restriction specified by the 'maxAttendee' query parameter. When updating an event, this can be used to only update the participant's response. Optional. The default is False."
+     "description": "Whether attendees may have been omitted from the event's representation. When retrieving an event, this may be due to a restriction specified by the 'maxAttendee' query parameter. When updating an event, this can be used to only update the participant's response. Optional. The default is False.",
+     "default": "false"
     },
     "colorId": {
      "type": "string",
@@ -456,7 +465,8 @@
       },
       "self": {
        "type": "boolean",
-       "description": "Whether the creator corresponds to the calendar on which this copy of the event appears. Read-only. The default is False."
+       "description": "Whether the creator corresponds to the calendar on which this copy of the event appears. Read-only. The default is False.",
+       "default": "false"
       }
      }
     },
@@ -477,7 +487,8 @@
     },
     "endTimeUnspecified": {
      "type": "boolean",
-     "description": "Whether the end time is actually unspecified. An end time is still provided for compatibility reasons, even if this attribute is set to True. The default is False."
+     "description": "Whether the end time is actually unspecified. An end time is still provided for compatibility reasons, even if this attribute is set to True. The default is False.",
+     "default": "false"
     },
     "etag": {
      "type": "string",
@@ -551,15 +562,18 @@
     },
     "guestsCanInviteOthers": {
      "type": "boolean",
-     "description": "Whether attendees other than the organizer can invite others to the event. Optional. The default is True."
+     "description": "Whether attendees other than the organizer can invite others to the event. Optional. The default is True.",
+     "default": "true"
     },
     "guestsCanModify": {
      "type": "boolean",
-     "description": "Whether attendees other than the organizer can modify the event. Optional. The default is False."
+     "description": "Whether attendees other than the organizer can modify the event. Optional. The default is False.",
+     "default": "false"
     },
     "guestsCanSeeOtherGuests": {
      "type": "boolean",
-     "description": "Whether attendees other than the organizer can see who the event's attendees are. Optional. The default is True."
+     "description": "Whether attendees other than the organizer can see who the event's attendees are. Optional. The default is True.",
+     "default": "true"
     },
     "hangoutLink": {
      "type": "string",
@@ -593,7 +607,8 @@
     },
     "locked": {
      "type": "boolean",
-     "description": "Whether this is a locked event copy where no changes can be made to the main event fields \"summary\", \"description\", \"location\", \"start\", \"end\" or \"recurrence\". The default is False. Read-Only."
+     "description": "Whether this is a locked event copy where no changes can be made to the main event fields \"summary\", \"description\", \"location\", \"start\", \"end\" or \"recurrence\". The default is False. Read-Only.",
+     "default": "false"
     },
     "organizer": {
      "type": "object",
@@ -613,7 +628,8 @@
       },
       "self": {
        "type": "boolean",
-       "description": "Whether the organizer corresponds to the calendar on which this copy of the event appears. Read-only. The default is False."
+       "description": "Whether the organizer corresponds to the calendar on which this copy of the event appears. Read-only. The default is False.",
+       "default": "false"
       }
      }
     },
@@ -623,7 +639,8 @@
     },
     "privateCopy": {
      "type": "boolean",
-     "description": "Whether this is a private event copy where changes are not shared with other copies on other calendars. Optional. Immutable. The default is False."
+     "description": "Whether this is a private event copy where changes are not shared with other copies on other calendars. Optional. Immutable. The default is False.",
+     "default": "false"
     },
     "recurrence": {
      "type": "array",
@@ -693,7 +710,8 @@
     },
     "transparency": {
      "type": "string",
-     "description": "Whether the event blocks time on the calendar. Optional. Possible values are:  \n- \"opaque\" - The event blocks time on the calendar. This is the default value. \n- \"transparent\" - The event does not block time on the calendar."
+     "description": "Whether the event blocks time on the calendar. Optional. Possible values are:  \n- \"opaque\" - The event blocks time on the calendar. This is the default value. \n- \"transparent\" - The event does not block time on the calendar.",
+     "default": "opaque"
     },
     "updated": {
      "type": "string",
@@ -702,7 +720,8 @@
     },
     "visibility": {
      "type": "string",
-     "description": "Visibility of the event. Optional. Possible values are:  \n- \"default\" - Uses the default visibility for events on the calendar. This is the default value. \n- \"public\" - The event is public and event details are visible to all readers of the calendar. \n- \"private\" - The event is private and only event attendees may view event details. \n- \"confidential\" - The event is private. This value is provided for compatibility reasons."
+     "description": "Visibility of the event. Optional. Possible values are:  \n- \"default\" - Uses the default visibility for events on the calendar. This is the default value. \n- \"public\" - The event is public and event details are visible to all readers of the calendar. \n- \"private\" - The event is private and only event attendees may view event details. \n- \"confidential\" - The event is private. This value is provided for compatibility reasons.",
+     "default": "default"
     }
    }
   },
@@ -940,7 +959,8 @@
     },
     "timeZone": {
      "type": "string",
-     "description": "Time zone used in the response. Optional. The default is UTC."
+     "description": "Time zone used in the response. Optional. The default is UTC.",
+     "default": "UTC"
     }
    }
   },
@@ -1553,8 +1573,10 @@
      "id": "calendar.channels.stop",
      "path": "channels/stop",
      "httpMethod": "POST",
+     "description": "Stop watching resources through this channel",
      "request": {
-      "$ref": "Channel"
+      "$ref": "Channel",
+      "parameterName": "resource"
      },
      "scopes": [
       "https://www.googleapis.com/auth/calendar",
@@ -2100,7 +2122,7 @@
      "id": "calendar.events.watch",
      "path": "calendars/{calendarId}/events/watch",
      "httpMethod": "POST",
-     "description": "Subscribe to changes in events collection",
+     "description": "Watch for changes to Events resources.",
      "parameters": {
       "alwaysIncludeEmail": {
        "type": "boolean",
@@ -2198,7 +2220,8 @@
       "calendarId"
      ],
      "request": {
-      "$ref": "Channel"
+      "$ref": "Channel",
+      "parameterName": "resource"
      },
      "response": {
       "$ref": "Channel"

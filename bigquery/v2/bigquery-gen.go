@@ -44,8 +44,7 @@ const (
 	// View and manage your data in Google BigQuery
 	BigqueryScope = "https://www.googleapis.com/auth/bigquery"
 
-	// MESSAGE UNDER CONSTRUCTION View and manage your data across Google
-	// Cloud Platform services
+	// View and manage your data across Google Cloud Platform services
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
 	// Manage your data and permissions in Google Cloud Storage
@@ -533,12 +532,6 @@ type JobConfigurationQuery struct {
 	// to store the results.
 	DestinationTable *TableReference `json:"destinationTable,omitempty"`
 
-	// MinCompletionRatio: [Experimental] Specifies the the minimum fraction
-	// of data that must be scanned before a query returns. This should be
-	// specified as a value between 0.0 and 1.0 inclusive. The default value
-	// is 1.0.
-	MinCompletionRatio float64 `json:"minCompletionRatio,omitempty"`
-
 	// PreserveNulls: [Experimental] If set, preserve null values in table
 	// data, rather than mapping null values to the column's default value.
 	// This flag currently defaults to false, but the default will soon be
@@ -664,11 +657,6 @@ type JobStatistics2 struct {
 	// query cache.
 	CacheHit bool `json:"cacheHit,omitempty"`
 
-	// CompletionRatio: [Output-Only] Approximate fraction of data processed
-	// for this query. This will be 1.0 unless min_completion_ratio for the
-	// query was set to something other than 1.0.
-	CompletionRatio float64 `json:"completionRatio,omitempty"`
-
 	// TotalBytesProcessed: [Output-only] Total bytes processed for this
 	// job.
 	TotalBytesProcessed int64 `json:"totalBytesProcessed,omitempty,string"`
@@ -767,12 +755,6 @@ type QueryRequest struct {
 	// size for a single response, you will have to page through the
 	// results. Default is to return the maximum response size.
 	MaxResults int64 `json:"maxResults,omitempty"`
-
-	// MinCompletionRatio: [Experimental] Specifies the the minimum fraction
-	// of data that must be scanned before a query returns. This should be
-	// specified as a value between 0.0 and 1.0 inclusive. The default value
-	// is 1.0.
-	MinCompletionRatio float64 `json:"minCompletionRatio,omitempty"`
 
 	// PreserveNulls: [Experimental] If set, preserve null values in table
 	// data, rather than mapping null values to the column's default value.

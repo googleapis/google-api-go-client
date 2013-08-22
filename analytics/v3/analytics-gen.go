@@ -55,6 +55,7 @@ func New(client *http.Client) (*Service, error) {
 	s := &Service{client: client}
 	s.Data = NewDataService(s)
 	s.Management = NewManagementService(s)
+	s.Metadata = NewMetadataService(s)
 	return s, nil
 }
 
@@ -64,12 +65,15 @@ type Service struct {
 	Data *DataService
 
 	Management *ManagementService
+
+	Metadata *MetadataService
 }
 
 func NewDataService(s *Service) *DataService {
 	rs := &DataService{s: s}
 	rs.Ga = NewDataGaService(s)
 	rs.Mcf = NewDataMcfService(s)
+	rs.Realtime = NewDataRealtimeService(s)
 	return rs
 }
 
@@ -79,6 +83,8 @@ type DataService struct {
 	Ga *DataGaService
 
 	Mcf *DataMcfService
+
+	Realtime *DataRealtimeService
 }
 
 func NewDataGaService(s *Service) *DataGaService {
@@ -96,6 +102,15 @@ func NewDataMcfService(s *Service) *DataMcfService {
 }
 
 type DataMcfService struct {
+	s *Service
+}
+
+func NewDataRealtimeService(s *Service) *DataRealtimeService {
+	rs := &DataRealtimeService{s: s}
+	return rs
+}
+
+type DataRealtimeService struct {
 	s *Service
 }
 
@@ -204,6 +219,27 @@ type ManagementWebpropertiesService struct {
 	s *Service
 }
 
+func NewMetadataService(s *Service) *MetadataService {
+	rs := &MetadataService{s: s}
+	rs.Columns = NewMetadataColumnsService(s)
+	return rs
+}
+
+type MetadataService struct {
+	s *Service
+
+	Columns *MetadataColumnsService
+}
+
+func NewMetadataColumnsService(s *Service) *MetadataColumnsService {
+	rs := &MetadataColumnsService{s: s}
+	return rs
+}
+
+type MetadataColumnsService struct {
+	s *Service
+}
+
 type Account struct {
 	// ChildLink: Child link for an account entry. Points to the list of web
 	// properties for this account.
@@ -267,12 +303,42 @@ type Accounts struct {
 	Username string `json:"username,omitempty"`
 }
 
+type Column struct {
+	// Attributes: Map of attribute name and value for this column.
+	Attributes *ColumnAttributes `json:"attributes,omitempty"`
+
+	// Id: Column id.
+	Id string `json:"id,omitempty"`
+
+	// Kind: Resource type for Analytics column.
+	Kind string `json:"kind,omitempty"`
+}
+
+type ColumnAttributes struct {
+}
+
+type Columns struct {
+	// AttributeNames: List of attributes names returned by columns.
+	AttributeNames []string `json:"attributeNames,omitempty"`
+
+	// Etag: Etag of collection. This etag can be compared with the last
+	// response etag to check if response has changed.
+	Etag string `json:"etag,omitempty"`
+
+	// Items: List of columns for a report type.
+	Items []*Column `json:"items,omitempty"`
+
+	// Kind: Collection type.
+	Kind string `json:"kind,omitempty"`
+
+	// TotalResults: Total number of columns returned in the response.
+	TotalResults int64 `json:"totalResults,omitempty"`
+}
+
 type CustomDataSource struct {
 	// AccountId: Account ID to which this custom data source belongs.
 	AccountId string `json:"accountId,omitempty"`
 
-	// ChildLink: Child link for this custom data source. Points to the list
-	// of daily uploads for this custom data source.
 	ChildLink *CustomDataSourceChildLink `json:"childLink,omitempty"`
 
 	// Created: Time this custom data source was created.
@@ -294,11 +360,15 @@ type CustomDataSource struct {
 	// web property to which this custom data source belongs.
 	ParentLink *CustomDataSourceParentLink `json:"parentLink,omitempty"`
 
-	// ProfilesLinked: IDs of profiles linked to the custom data source.
+	// ProfilesLinked: IDs of views (profiles) linked to the custom data
+	// source.
 	ProfilesLinked []string `json:"profilesLinked,omitempty"`
 
 	// SelfLink: Link for this Analytics custom data source.
 	SelfLink string `json:"selfLink,omitempty"`
+
+	// Type: Type of the custom data source.
+	Type string `json:"type,omitempty"`
 
 	// Updated: Time this custom data source was last modified.
 	Updated string `json:"updated,omitempty"`
@@ -310,9 +380,11 @@ type CustomDataSource struct {
 
 type CustomDataSourceChildLink struct {
 	// Href: Link to the list of daily uploads for this custom data source.
+	// Link to the list of uploads for this custom data source.
 	Href string `json:"href,omitempty"`
 
-	// Type: Value is "analytics#dailyUploads".
+	// Type: Value is "analytics#dailyUploads". Value is
+	// "analytics#uploads".
 	Type string `json:"type,omitempty"`
 }
 
@@ -522,12 +594,12 @@ type Experiment struct {
 	// modified when status is "RUNNING" or "ENDED".
 	OptimizationType string `json:"optimizationType,omitempty"`
 
-	// ParentLink: Parent link for an experiment. Points to the profile to
-	// which this experiment belongs.
+	// ParentLink: Parent link for an experiment. Points to the view
+	// (profile) to which this experiment belongs.
 	ParentLink *ExperimentParentLink `json:"parentLink,omitempty"`
 
-	// ProfileId: Profile ID to which this experiment belongs. This field is
-	// read-only.
+	// ProfileId: View (Profile) ID to which this experiment belongs. This
+	// field is read-only.
 	ProfileId string `json:"profileId,omitempty"`
 
 	// ReasonExperimentEnded: Why the experiment ended. Possible values:
@@ -607,8 +679,8 @@ type Experiment struct {
 }
 
 type ExperimentParentLink struct {
-	// Href: Link to the profile to which this experiment belongs. This
-	// field is read-only.
+	// Href: Link to the view (profile) to which this experiment belongs.
+	// This field is read-only.
 	Href string `json:"href,omitempty"`
 
 	// Type: Value is "analytics#profile". This field is read-only.
@@ -698,8 +770,8 @@ type GaData struct {
 	// PreviousLink: Link to previous page for this Analytics data query.
 	PreviousLink string `json:"previousLink,omitempty"`
 
-	// ProfileInfo: Information for the profile, for which the Analytics
-	// data was requested.
+	// ProfileInfo: Information for the view (profile), for which the
+	// Analytics data was requested.
 	ProfileInfo *GaDataProfileInfo `json:"profileInfo,omitempty"`
 
 	// Query: Analytics data request query parameters.
@@ -738,23 +810,23 @@ type GaDataColumnHeaders struct {
 }
 
 type GaDataProfileInfo struct {
-	// AccountId: Account ID to which this profile belongs.
+	// AccountId: Account ID to which this view (profile) belongs.
 	AccountId string `json:"accountId,omitempty"`
 
 	// InternalWebPropertyId: Internal ID for the web property to which this
-	// profile belongs.
+	// view (profile) belongs.
 	InternalWebPropertyId string `json:"internalWebPropertyId,omitempty"`
 
-	// ProfileId: Profile ID.
+	// ProfileId: View (Profile) ID.
 	ProfileId string `json:"profileId,omitempty"`
 
-	// ProfileName: Profile name.
+	// ProfileName: View (Profile) name.
 	ProfileName string `json:"profileName,omitempty"`
 
-	// TableId: Table ID for profile.
+	// TableId: Table ID for view (profile).
 	TableId string `json:"tableId,omitempty"`
 
-	// WebPropertyId: Web Property ID to which this profile belongs.
+	// WebPropertyId: Web Property ID to which this view (profile) belongs.
 	WebPropertyId string `json:"webPropertyId,omitempty"`
 }
 
@@ -820,11 +892,11 @@ type Goal struct {
 	// Name: Goal name.
 	Name string `json:"name,omitempty"`
 
-	// ParentLink: Parent link for a goal. Points to the profile to which
-	// this goal belongs.
+	// ParentLink: Parent link for a goal. Points to the view (profile) to
+	// which this goal belongs.
 	ParentLink *GoalParentLink `json:"parentLink,omitempty"`
 
-	// ProfileId: Profile ID to which this goal belongs.
+	// ProfileId: View (Profile) ID to which this goal belongs.
 	ProfileId string `json:"profileId,omitempty"`
 
 	// SelfLink: Link for this goal.
@@ -887,7 +959,7 @@ type GoalEventDetailsEventConditions struct {
 }
 
 type GoalParentLink struct {
-	// Href: Link to the profile to which this goal belongs.
+	// Href: Link to the view (profile) to which this goal belongs.
 	Href string `json:"href,omitempty"`
 
 	// Type: Value is "analytics#profile".
@@ -1002,8 +1074,8 @@ type McfData struct {
 	// PreviousLink: Link to previous page for this Analytics data query.
 	PreviousLink string `json:"previousLink,omitempty"`
 
-	// ProfileInfo: Information for the profile, for which the Analytics
-	// data was requested.
+	// ProfileInfo: Information for the view (profile), for which the
+	// Analytics data was requested.
 	ProfileInfo *McfDataProfileInfo `json:"profileInfo,omitempty"`
 
 	// Query: Analytics data request query parameters.
@@ -1041,23 +1113,23 @@ type McfDataColumnHeaders struct {
 }
 
 type McfDataProfileInfo struct {
-	// AccountId: Account ID to which this profile belongs.
+	// AccountId: Account ID to which this view (profile) belongs.
 	AccountId string `json:"accountId,omitempty"`
 
 	// InternalWebPropertyId: Internal ID for the web property to which this
-	// profile belongs.
+	// view (profile) belongs.
 	InternalWebPropertyId string `json:"internalWebPropertyId,omitempty"`
 
-	// ProfileId: Profile ID.
+	// ProfileId: View (Profile) ID.
 	ProfileId string `json:"profileId,omitempty"`
 
-	// ProfileName: Profile name.
+	// ProfileName: View (Profile) name.
 	ProfileName string `json:"profileName,omitempty"`
 
-	// TableId: Table ID for profile.
+	// TableId: Table ID for view (profile).
 	TableId string `json:"tableId,omitempty"`
 
-	// WebPropertyId: Web Property ID to which this profile belongs.
+	// WebPropertyId: Web Property ID to which this view (profile) belongs.
 	WebPropertyId string `json:"webPropertyId,omitempty"`
 }
 
@@ -1118,77 +1190,77 @@ type McfDataTotalsForAllResults struct {
 }
 
 type Profile struct {
-	// AccountId: Account ID to which this profile belongs.
+	// AccountId: Account ID to which this view (profile) belongs.
 	AccountId string `json:"accountId,omitempty"`
 
-	// ChildLink: Child link for this profile. Points to the list of goals
-	// for this profile.
+	// ChildLink: Child link for this view (profile). Points to the list of
+	// goals for this view (profile).
 	ChildLink *ProfileChildLink `json:"childLink,omitempty"`
 
-	// Created: Time this profile was created.
+	// Created: Time this view (profile) was created.
 	Created string `json:"created,omitempty"`
 
-	// Currency: The currency type associated with this profile.
+	// Currency: The currency type associated with this view (profile).
 	Currency string `json:"currency,omitempty"`
 
-	// DefaultPage: Default page for this profile.
+	// DefaultPage: Default page for this view (profile).
 	DefaultPage string `json:"defaultPage,omitempty"`
 
 	// ECommerceTracking: Indicates whether ecommerce tracking is enabled
-	// for this profile.
+	// for this view (profile).
 	ECommerceTracking bool `json:"eCommerceTracking,omitempty"`
 
 	// ExcludeQueryParameters: The query parameters that are excluded from
-	// this profile.
+	// this view (profile).
 	ExcludeQueryParameters string `json:"excludeQueryParameters,omitempty"`
 
-	// Id: Profile ID.
+	// Id: View (Profile) ID.
 	Id string `json:"id,omitempty"`
 
 	// InternalWebPropertyId: Internal ID for the web property to which this
-	// profile belongs.
+	// view (profile) belongs.
 	InternalWebPropertyId string `json:"internalWebPropertyId,omitempty"`
 
 	// Kind: Resource type for Analytics profile.
 	Kind string `json:"kind,omitempty"`
 
-	// Name: Name of this profile.
+	// Name: Name of this view (profile).
 	Name string `json:"name,omitempty"`
 
-	// ParentLink: Parent link for this profile. Points to the web property
-	// to which this profile belongs.
+	// ParentLink: Parent link for this view (profile). Points to the web
+	// property to which this view (profile) belongs.
 	ParentLink *ProfileParentLink `json:"parentLink,omitempty"`
 
-	// SelfLink: Link for this profile.
+	// SelfLink: Link for this view (profile).
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// SiteSearchCategoryParameters: Site search category parameters for
-	// this profile.
+	// this view (profile).
 	SiteSearchCategoryParameters string `json:"siteSearchCategoryParameters,omitempty"`
 
 	// SiteSearchQueryParameters: The site search query parameters for this
-	// profile.
+	// view (profile).
 	SiteSearchQueryParameters string `json:"siteSearchQueryParameters,omitempty"`
 
 	// Timezone: Time zone for which this profile has been configured.
 	Timezone string `json:"timezone,omitempty"`
 
-	// Type: Profile type. Supported types: WEB or APP.
+	// Type: View (Profile) type. Supported types: WEB or APP.
 	Type string `json:"type,omitempty"`
 
-	// Updated: Time this profile was last modified.
+	// Updated: Time this view (profile) was last modified.
 	Updated string `json:"updated,omitempty"`
 
 	// WebPropertyId: Web property ID of the form UA-XXXXX-YY to which this
-	// profile belongs.
+	// view (profile) belongs.
 	WebPropertyId string `json:"webPropertyId,omitempty"`
 
-	// WebsiteUrl: Website URL for this profile.
+	// WebsiteUrl: Website URL for this view (profile).
 	WebsiteUrl string `json:"websiteUrl,omitempty"`
 }
 
 type ProfileChildLink struct {
-	// Href: Link to the list of goals for this profile.
+	// Href: Link to the list of goals for this view (profile).
 	Href string `json:"href,omitempty"`
 
 	// Type: Value is "analytics#goals".
@@ -1196,7 +1268,7 @@ type ProfileChildLink struct {
 }
 
 type ProfileParentLink struct {
-	// Href: Link to the web property to which this profile belongs.
+	// Href: Link to the web property to which this view (profile) belongs.
 	Href string `json:"href,omitempty"`
 
 	// Type: Value is "analytics#webproperty".
@@ -1204,7 +1276,7 @@ type ProfileParentLink struct {
 }
 
 type Profiles struct {
-	// Items: A list of profiles.
+	// Items: A list of views (profiles).
 	Items []*Profile `json:"items,omitempty"`
 
 	// ItemsPerPage: The maximum number of resources the response can
@@ -1216,10 +1288,11 @@ type Profiles struct {
 	// Kind: Collection type.
 	Kind string `json:"kind,omitempty"`
 
-	// NextLink: Link to next page for this profile collection.
+	// NextLink: Link to next page for this view (profile) collection.
 	NextLink string `json:"nextLink,omitempty"`
 
-	// PreviousLink: Link to previous page for this profile collection.
+	// PreviousLink: Link to previous page for this view (profile)
+	// collection.
 	PreviousLink string `json:"previousLink,omitempty"`
 
 	// StartIndex: The starting index of the resources, which is 1 by
@@ -1232,6 +1305,102 @@ type Profiles struct {
 
 	// Username: Email ID of the authenticated user
 	Username string `json:"username,omitempty"`
+}
+
+type RealtimeData struct {
+	// ColumnHeaders: Column headers that list dimension names followed by
+	// the metric names. The order of dimensions and metrics is same as
+	// specified in the request.
+	ColumnHeaders []*RealtimeDataColumnHeaders `json:"columnHeaders,omitempty"`
+
+	// Id: Unique ID for this data response.
+	Id string `json:"id,omitempty"`
+
+	// Kind: Resource type.
+	Kind string `json:"kind,omitempty"`
+
+	// ProfileInfo: Information for the view (profile), for which the real
+	// time data was requested.
+	ProfileInfo *RealtimeDataProfileInfo `json:"profileInfo,omitempty"`
+
+	// Query: Real time data request query parameters.
+	Query *RealtimeDataQuery `json:"query,omitempty"`
+
+	// Rows: Real time data rows, where each row contains a list of
+	// dimension values followed by the metric values. The order of
+	// dimensions and metrics is same as specified in the request.
+	Rows [][]string `json:"rows,omitempty"`
+
+	// SelfLink: Link to this page.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// TotalResults: The total number of rows for the query, regardless of
+	// the number of rows in the response.
+	TotalResults int64 `json:"totalResults,omitempty"`
+
+	// TotalsForAllResults: Total values for the requested metrics over all
+	// the results, not just the results returned in this response. The
+	// order of the metric totals is same as the metric order specified in
+	// the request.
+	TotalsForAllResults *RealtimeDataTotalsForAllResults `json:"totalsForAllResults,omitempty"`
+}
+
+type RealtimeDataColumnHeaders struct {
+	// ColumnType: Column Type. Either DIMENSION or METRIC.
+	ColumnType string `json:"columnType,omitempty"`
+
+	// DataType: Data type. Dimension column headers have only STRING as the
+	// data type. Metric column headers have data types for metric values
+	// such as INTEGER, DOUBLE, CURRENCY etc.
+	DataType string `json:"dataType,omitempty"`
+
+	// Name: Column name.
+	Name string `json:"name,omitempty"`
+}
+
+type RealtimeDataProfileInfo struct {
+	// AccountId: Account ID to which this view (profile) belongs.
+	AccountId string `json:"accountId,omitempty"`
+
+	// InternalWebPropertyId: Internal ID for the web property to which this
+	// view (profile) belongs.
+	InternalWebPropertyId string `json:"internalWebPropertyId,omitempty"`
+
+	// ProfileId: View (Profile) ID.
+	ProfileId string `json:"profileId,omitempty"`
+
+	// ProfileName: View (Profile) name.
+	ProfileName string `json:"profileName,omitempty"`
+
+	// TableId: Table ID for view (profile).
+	TableId string `json:"tableId,omitempty"`
+
+	// WebPropertyId: Web Property ID to which this view (profile) belongs.
+	WebPropertyId string `json:"webPropertyId,omitempty"`
+}
+
+type RealtimeDataQuery struct {
+	// Dimensions: List of real time dimensions.
+	Dimensions string `json:"dimensions,omitempty"`
+
+	// Filters: Comma-separated list of dimension or metric filters.
+	Filters string `json:"filters,omitempty"`
+
+	// Ids: Unique table ID.
+	Ids string `json:"ids,omitempty"`
+
+	// MaxResults: Maximum results per page.
+	MaxResults int64 `json:"max-results,omitempty"`
+
+	// Metrics: List of real time metrics.
+	Metrics []string `json:"metrics,omitempty"`
+
+	// Sort: List of dimensions or metrics based on which real time data is
+	// sorted.
+	Sort []string `json:"sort,omitempty"`
+}
+
+type RealtimeDataTotalsForAllResults struct {
 }
 
 type Segment struct {
@@ -1329,7 +1498,7 @@ type Webproperty struct {
 	AccountId string `json:"accountId,omitempty"`
 
 	// ChildLink: Child link for this web property. Points to the list of
-	// profiles for this web property.
+	// views (profiles) for this web property.
 	ChildLink *WebpropertyChildLink `json:"childLink,omitempty"`
 
 	// Created: Time this web property was created.
@@ -1359,7 +1528,7 @@ type Webproperty struct {
 	// to which this web property belongs.
 	ParentLink *WebpropertyParentLink `json:"parentLink,omitempty"`
 
-	// ProfileCount: Profile count for this web property.
+	// ProfileCount: View (Profile) count for this web property.
 	ProfileCount int64 `json:"profileCount,omitempty"`
 
 	// SelfLink: Link for this web property.
@@ -1373,7 +1542,7 @@ type Webproperty struct {
 }
 
 type WebpropertyChildLink struct {
-	// Href: Link to the list of profiles for this web property.
+	// Href: Link to the list of views (profiles) for this web property.
 	Href string `json:"href,omitempty"`
 
 	// Type: Type of the parent link. Its value is "analytics#profiles".
@@ -1399,7 +1568,7 @@ type DataGaGetCall struct {
 	opt_      map[string]interface{}
 }
 
-// Get: Returns Analytics data for a profile.
+// Get: Returns Analytics data for a view (profile).
 func (r *DataGaService) Get(ids string, startDate string, endDate string, metrics string) *DataGaGetCall {
 	c := &DataGaGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.ids = ids
@@ -1499,7 +1668,7 @@ func (c *DataGaGetCall) Do() (*GaData, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns Analytics data for a profile.",
+	//   "description": "Returns Analytics data for a view (profile).",
 	//   "httpMethod": "GET",
 	//   "id": "analytics.data.ga.get",
 	//   "parameterOrder": [
@@ -1529,7 +1698,7 @@ func (c *DataGaGetCall) Do() (*GaData, error) {
 	//       "type": "string"
 	//     },
 	//     "ids": {
-	//       "description": "Unique table ID for retrieving Analytics data. Table ID is of the form ga:XXXX, where XXXX is the Analytics profile ID.",
+	//       "description": "Unique table ID for retrieving Analytics data. Table ID is of the form ga:XXXX, where XXXX is the Analytics view (profile) ID.",
 	//       "location": "query",
 	//       "pattern": "ga:[0-9]+",
 	//       "required": true,
@@ -1597,7 +1766,8 @@ type DataMcfGetCall struct {
 	opt_      map[string]interface{}
 }
 
-// Get: Returns Analytics Multi-Channel Funnels data for a profile.
+// Get: Returns Analytics Multi-Channel Funnels data for a view
+// (profile).
 func (r *DataMcfService) Get(ids string, startDate string, endDate string, metrics string) *DataMcfGetCall {
 	c := &DataMcfGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.ids = ids
@@ -1687,7 +1857,7 @@ func (c *DataMcfGetCall) Do() (*McfData, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns Analytics Multi-Channel Funnels data for a profile.",
+	//   "description": "Returns Analytics Multi-Channel Funnels data for a view (profile).",
 	//   "httpMethod": "GET",
 	//   "id": "analytics.data.mcf.get",
 	//   "parameterOrder": [
@@ -1717,7 +1887,7 @@ func (c *DataMcfGetCall) Do() (*McfData, error) {
 	//       "type": "string"
 	//     },
 	//     "ids": {
-	//       "description": "Unique table ID for retrieving Analytics data. Table ID is of the form ga:XXXX, where XXXX is the Analytics profile ID.",
+	//       "description": "Unique table ID for retrieving Analytics data. Table ID is of the form ga:XXXX, where XXXX is the Analytics view (profile) ID.",
 	//       "location": "query",
 	//       "pattern": "ga:[0-9]+",
 	//       "required": true,
@@ -1760,6 +1930,149 @@ func (c *DataMcfGetCall) Do() (*McfData, error) {
 	//   "path": "data/mcf",
 	//   "response": {
 	//     "$ref": "McfData"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.data.realtime.get":
+
+type DataRealtimeGetCall struct {
+	s       *Service
+	ids     string
+	metrics string
+	opt_    map[string]interface{}
+}
+
+// Get: Returns real time data for a view (profile).
+func (r *DataRealtimeService) Get(ids string, metrics string) *DataRealtimeGetCall {
+	c := &DataRealtimeGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.ids = ids
+	c.metrics = metrics
+	return c
+}
+
+// Dimensions sets the optional parameter "dimensions": A
+// comma-separated list of real time dimensions. E.g.,
+// 'ga:medium,ga:city'.
+func (c *DataRealtimeGetCall) Dimensions(dimensions string) *DataRealtimeGetCall {
+	c.opt_["dimensions"] = dimensions
+	return c
+}
+
+// Filters sets the optional parameter "filters": A comma-separated list
+// of dimension or metric filters to be applied to real time data.
+func (c *DataRealtimeGetCall) Filters(filters string) *DataRealtimeGetCall {
+	c.opt_["filters"] = filters
+	return c
+}
+
+// MaxResults sets the optional parameter "max-results": The maximum
+// number of entries to include in this feed.
+func (c *DataRealtimeGetCall) MaxResults(maxResults int64) *DataRealtimeGetCall {
+	c.opt_["max-results"] = maxResults
+	return c
+}
+
+// Sort sets the optional parameter "sort": A comma-separated list of
+// dimensions or metrics that determine the sort order for real time
+// data.
+func (c *DataRealtimeGetCall) Sort(sort string) *DataRealtimeGetCall {
+	c.opt_["sort"] = sort
+	return c
+}
+
+func (c *DataRealtimeGetCall) Do() (*RealtimeData, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("ids", fmt.Sprintf("%v", c.ids))
+	params.Set("metrics", fmt.Sprintf("%v", c.metrics))
+	if v, ok := c.opt_["dimensions"]; ok {
+		params.Set("dimensions", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["filters"]; ok {
+		params.Set("filters", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["max-results"]; ok {
+		params.Set("max-results", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["sort"]; ok {
+		params.Set("sort", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "data/realtime")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(RealtimeData)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns real time data for a view (profile).",
+	//   "httpMethod": "GET",
+	//   "id": "analytics.data.realtime.get",
+	//   "parameterOrder": [
+	//     "ids",
+	//     "metrics"
+	//   ],
+	//   "parameters": {
+	//     "dimensions": {
+	//       "description": "A comma-separated list of real time dimensions. E.g., 'ga:medium,ga:city'.",
+	//       "location": "query",
+	//       "pattern": "(ga:.+)?",
+	//       "type": "string"
+	//     },
+	//     "filters": {
+	//       "description": "A comma-separated list of dimension or metric filters to be applied to real time data.",
+	//       "location": "query",
+	//       "pattern": "ga:.+",
+	//       "type": "string"
+	//     },
+	//     "ids": {
+	//       "description": "Unique table ID for retrieving real time data. Table ID is of the form ga:XXXX, where XXXX is the Analytics view (profile) ID.",
+	//       "location": "query",
+	//       "pattern": "ga:[0-9]+",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "max-results": {
+	//       "description": "The maximum number of entries to include in this feed.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "metrics": {
+	//       "description": "A comma-separated list of real time metrics. E.g., 'ga:activeVisitors'. At least one metric must be specified.",
+	//       "location": "query",
+	//       "pattern": "ga:.+",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "sort": {
+	//       "description": "A comma-separated list of dimensions or metrics that determine the sort order for real time data.",
+	//       "location": "query",
+	//       "pattern": "(-)?ga:.+",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "data/realtime",
+	//   "response": {
+	//     "$ref": "RealtimeData"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/analytics",
@@ -2462,7 +2775,7 @@ func (c *ManagementExperimentsDeleteCall) Do() error {
 	//       "type": "string"
 	//     },
 	//     "profileId": {
-	//       "description": "Profile ID to which the experiment belongs",
+	//       "description": "View (Profile) ID to which the experiment belongs",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2553,7 +2866,7 @@ func (c *ManagementExperimentsGetCall) Do() (*Experiment, error) {
 	//       "type": "string"
 	//     },
 	//     "profileId": {
-	//       "description": "Profile ID to retrieve the experiment for.",
+	//       "description": "View (Profile) ID to retrieve the experiment for.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2646,7 +2959,7 @@ func (c *ManagementExperimentsInsertCall) Do() (*Experiment, error) {
 	//       "type": "string"
 	//     },
 	//     "profileId": {
-	//       "description": "Profile ID to create the experiment for.",
+	//       "description": "View (Profile) ID to create the experiment for.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2761,7 +3074,7 @@ func (c *ManagementExperimentsListCall) Do() (*Experiments, error) {
 	//       "type": "integer"
 	//     },
 	//     "profileId": {
-	//       "description": "Profile ID to retrieve experiments for.",
+	//       "description": "View (Profile) ID to retrieve experiments for.",
 	//       "location": "path",
 	//       "pattern": "\\d+",
 	//       "required": true,
@@ -2874,7 +3187,7 @@ func (c *ManagementExperimentsPatchCall) Do() (*Experiment, error) {
 	//       "type": "string"
 	//     },
 	//     "profileId": {
-	//       "description": "Profile ID of the experiment to update.",
+	//       "description": "View (Profile) ID of the experiment to update.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2979,7 +3292,7 @@ func (c *ManagementExperimentsUpdateCall) Do() (*Experiment, error) {
 	//       "type": "string"
 	//     },
 	//     "profileId": {
-	//       "description": "Profile ID of the experiment to update.",
+	//       "description": "View (Profile) ID of the experiment to update.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -3093,7 +3406,7 @@ func (c *ManagementGoalsListCall) Do() (*Goals, error) {
 	//       "type": "integer"
 	//     },
 	//     "profileId": {
-	//       "description": "Profile ID to retrieve goals for. Can either be a specific profile ID or '~all', which refers to all the profiles that user has access to.",
+	//       "description": "View (Profile) ID to retrieve goals for. Can either be a specific view (profile) ID or '~all', which refers to all the views (profiles) that user has access to.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -3133,7 +3446,7 @@ type ManagementProfilesListCall struct {
 	opt_          map[string]interface{}
 }
 
-// List: Lists profiles to which the user has access.
+// List: Lists views (profiles) to which the user has access.
 func (r *ManagementProfilesService) List(accountId string, webPropertyId string) *ManagementProfilesListCall {
 	c := &ManagementProfilesListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.accountId = accountId
@@ -3142,7 +3455,7 @@ func (r *ManagementProfilesService) List(accountId string, webPropertyId string)
 }
 
 // MaxResults sets the optional parameter "max-results": The maximum
-// number of profiles to include in this response.
+// number of views (profiles) to include in this response.
 func (c *ManagementProfilesListCall) MaxResults(maxResults int64) *ManagementProfilesListCall {
 	c.opt_["max-results"] = maxResults
 	return c
@@ -3187,7 +3500,7 @@ func (c *ManagementProfilesListCall) Do() (*Profiles, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists profiles to which the user has access.",
+	//   "description": "Lists views (profiles) to which the user has access.",
 	//   "httpMethod": "GET",
 	//   "id": "analytics.management.profiles.list",
 	//   "parameterOrder": [
@@ -3196,13 +3509,13 @@ func (c *ManagementProfilesListCall) Do() (*Profiles, error) {
 	//   ],
 	//   "parameters": {
 	//     "accountId": {
-	//       "description": "Account ID for the profiles to retrieve. Can either be a specific account ID or '~all', which refers to all the accounts to which the user has access.",
+	//       "description": "Account ID for the view (profiles) to retrieve. Can either be a specific account ID or '~all', which refers to all the accounts to which the user has access.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "max-results": {
-	//       "description": "The maximum number of profiles to include in this response.",
+	//       "description": "The maximum number of views (profiles) to include in this response.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -3215,7 +3528,7 @@ func (c *ManagementProfilesListCall) Do() (*Profiles, error) {
 	//       "type": "integer"
 	//     },
 	//     "webPropertyId": {
-	//       "description": "Web property ID for the profiles to retrieve. Can either be a specific web property ID or '~all', which refers to all the web properties to which the user has access.",
+	//       "description": "Web property ID for the views (profiles) to retrieve. Can either be a specific web property ID or '~all', which refers to all the web properties to which the user has access.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -3410,6 +3723,72 @@ func (c *ManagementWebpropertiesListCall) Do() (*Webproperties, error) {
 	//   "path": "management/accounts/{accountId}/webproperties",
 	//   "response": {
 	//     "$ref": "Webproperties"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.metadata.columns.list":
+
+type MetadataColumnsListCall struct {
+	s          *Service
+	reportType string
+	opt_       map[string]interface{}
+}
+
+// List: Lists all columns for a report type
+func (r *MetadataColumnsService) List(reportType string) *MetadataColumnsListCall {
+	c := &MetadataColumnsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.reportType = reportType
+	return c
+}
+
+func (c *MetadataColumnsListCall) Do() (*Columns, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "metadata/{reportType}/columns")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{reportType}", url.QueryEscape(c.reportType), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Columns)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all columns for a report type",
+	//   "httpMethod": "GET",
+	//   "id": "analytics.metadata.columns.list",
+	//   "parameterOrder": [
+	//     "reportType"
+	//   ],
+	//   "parameters": {
+	//     "reportType": {
+	//       "description": "Report type. Allowed Values: 'ga'. Where 'ga' corresponds to the Core Reporting API",
+	//       "location": "path",
+	//       "pattern": "ga",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "metadata/{reportType}/columns",
+	//   "response": {
+	//     "$ref": "Columns"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/analytics",

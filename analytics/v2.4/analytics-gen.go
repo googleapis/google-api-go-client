@@ -155,7 +155,7 @@ type DataGetCall struct {
 	opt_      map[string]interface{}
 }
 
-// Get: Returns Analytics report data for a profile.
+// Get: Returns Analytics report data for a view (profile).
 func (r *DataService) Get(ids string, startDate string, endDate string, metrics string) *DataGetCall {
 	c := &DataGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.ids = ids
@@ -251,7 +251,7 @@ func (c *DataGetCall) Do() error {
 	}
 	return nil
 	// {
-	//   "description": "Returns Analytics report data for a profile.",
+	//   "description": "Returns Analytics report data for a view (profile).",
 	//   "httpMethod": "GET",
 	//   "id": "analytics.data.get",
 	//   "parameterOrder": [
@@ -281,7 +281,7 @@ func (c *DataGetCall) Do() error {
 	//       "type": "string"
 	//     },
 	//     "ids": {
-	//       "description": "Unique table ID for retrieving report data. Table ID is of the form ga:XXXX, where XXXX is the Analytics profile ID.",
+	//       "description": "Unique table ID for retrieving report data. Table ID is of the form ga:XXXX, where XXXX is the Analytics view (profile) ID.",
 	//       "location": "query",
 	//       "pattern": "ga:[0-9]+",
 	//       "required": true,
@@ -499,7 +499,7 @@ func (c *ManagementGoalsListCall) Do() error {
 	//       "type": "integer"
 	//     },
 	//     "profileId": {
-	//       "description": "Profile ID to retrieve goals for. Can either be a specific profile ID or '~all', which refers to all the profiles that user has access to.",
+	//       "description": "View (Profile) ID to retrieve goals for. Can either be a specific view (profile) ID or '~all', which refers to all the views (profiles) that user has access to.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -536,7 +536,7 @@ type ManagementProfilesListCall struct {
 	opt_          map[string]interface{}
 }
 
-// List: Lists profiles to which the user has access.
+// List: Lists views (profiles) to which the user has access.
 func (r *ManagementProfilesService) List(accountId string, webPropertyId string) *ManagementProfilesListCall {
 	c := &ManagementProfilesListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.accountId = accountId
@@ -545,7 +545,7 @@ func (r *ManagementProfilesService) List(accountId string, webPropertyId string)
 }
 
 // MaxResults sets the optional parameter "max-results": The maximum
-// number of profiles to include in this response.
+// number of views (profiles) to include in this response.
 func (c *ManagementProfilesListCall) MaxResults(maxResults int64) *ManagementProfilesListCall {
 	c.opt_["max-results"] = maxResults
 	return c
@@ -586,7 +586,7 @@ func (c *ManagementProfilesListCall) Do() error {
 	}
 	return nil
 	// {
-	//   "description": "Lists profiles to which the user has access.",
+	//   "description": "Lists views (profiles) to which the user has access.",
 	//   "httpMethod": "GET",
 	//   "id": "analytics.management.profiles.list",
 	//   "parameterOrder": [
@@ -595,13 +595,13 @@ func (c *ManagementProfilesListCall) Do() error {
 	//   ],
 	//   "parameters": {
 	//     "accountId": {
-	//       "description": "Account ID for the profiles to retrieve. Can either be a specific account ID or '~all', which refers to all the accounts to which the user has access.",
+	//       "description": "Account ID for the views (profiles) to retrieve. Can either be a specific account ID or '~all', which refers to all the accounts to which the user has access.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "max-results": {
-	//       "description": "The maximum number of profiles to include in this response.",
+	//       "description": "The maximum number of views (profiles) to include in this response.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -614,7 +614,7 @@ func (c *ManagementProfilesListCall) Do() error {
 	//       "type": "integer"
 	//     },
 	//     "webPropertyId": {
-	//       "description": "Web property ID for the profiles to retrieve. Can either be a specific web property ID or '~all', which refers to all the web properties to which the user has access.",
+	//       "description": "Web property ID for the views (profiles) to retrieve. Can either be a specific web property ID or '~all', which refers to all the web properties to which the user has access.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"

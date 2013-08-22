@@ -215,8 +215,9 @@ type AchievementsResetCall struct {
 	opt_          map[string]interface{}
 }
 
-// Reset: Resets the achievement with the given ID. This method is only
-// accessible to whitelisted tester accounts for your application.
+// Reset: Resets the achievement with the given ID for the currently
+// authenticated player. This method is only accessible to whitelisted
+// tester accounts for your application.
 func (r *AchievementsService) Reset(achievementId string) *AchievementsResetCall {
 	c := &AchievementsResetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.achievementId = achievementId
@@ -247,7 +248,7 @@ func (c *AchievementsResetCall) Do() (*AchievementResetResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Resets the achievement with the given ID. This method is only accessible to whitelisted tester accounts for your application.",
+	//   "description": "Resets the achievement with the given ID for the currently authenticated player. This method is only accessible to whitelisted tester accounts for your application.",
 	//   "httpMethod": "POST",
 	//   "id": "gamesManagement.achievements.reset",
 	//   "parameterOrder": [
@@ -616,8 +617,8 @@ type ScoresResetCall struct {
 	opt_          map[string]interface{}
 }
 
-// Reset: Reset scores for the specified leaderboard, resetting the
-// leaderboard to empty. This method is only accessible to whitelisted
+// Reset: Reset scores for the specified leaderboard for the currently
+// authenticated player. This method is only accessible to whitelisted
 // tester accounts for your application.
 func (r *ScoresService) Reset(leaderboardId string) *ScoresResetCall {
 	c := &ScoresResetCall{s: r.s, opt_: make(map[string]interface{})}
@@ -649,7 +650,7 @@ func (c *ScoresResetCall) Do() (*PlayerScoreResetResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Reset scores for the specified leaderboard, resetting the leaderboard to empty. This method is only accessible to whitelisted tester accounts for your application.",
+	//   "description": "Reset scores for the specified leaderboard for the currently authenticated player. This method is only accessible to whitelisted tester accounts for your application.",
 	//   "httpMethod": "POST",
 	//   "id": "gamesManagement.scores.reset",
 	//   "parameterOrder": [

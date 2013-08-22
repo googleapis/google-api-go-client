@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"BgGnx7p-6wsAbOn4St99QhtBGbA/x__GFP2VVkvjLSAdAjOqcDu2gHY\"",
+ "etag": "\"wtgj9ZncHCe-ShJM8RewHb1DgWI/KPvD-H6TcMEqy6YrgKjj5oSsKH0\"",
  "discoveryVersion": "v1",
  "id": "shopping:v1",
  "name": "shopping",
  "version": "v1",
- "revision": "20130712",
+ "revision": "20130808",
  "title": "Search API For Shopping",
  "description": "Lets you search over product data.",
  "ownerDomain": "google.com",

@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"BgGnx7p-6wsAbOn4St99QhtBGbA/bQ_VdT9GUxXSpPJEbe4GxB7QX7I\"",
+ "etag": "\"wtgj9ZncHCe-ShJM8RewHb1DgWI/bQ_VdT9GUxXSpPJEbe4GxB7QX7I\"",
  "discoveryVersion": "v1",
  "id": "admin:email_migration_v2",
  "name": "admin",

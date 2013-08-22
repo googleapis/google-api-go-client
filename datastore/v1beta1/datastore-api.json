@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"BgGnx7p-6wsAbOn4St99QhtBGbA/paR1K2Q6CwwbZyLY9S3P-sOZwf4\"",
+ "etag": "\"wtgj9ZncHCe-ShJM8RewHb1DgWI/UGXzxGa9SZ2hjkpn14NNIUnXr2k\"",
  "discoveryVersion": "v1",
  "id": "datastore:v1beta1",
  "name": "datastore",
  "version": "v1beta1",
- "revision": "20130523",
+ "revision": "20130725",
  "title": "Google Cloud Datastore API",
  "description": "API for accessing Google Cloud Datastore.",
  "ownerDomain": "google.com",
@@ -81,7 +81,6 @@
   "AllocateIdsRequest": {
    "id": "AllocateIdsRequest",
    "type": "object",
-   "description": "The request for AllocateIds.",
    "properties": {
     "keys": {
      "type": "array",
@@ -95,26 +94,22 @@
   "AllocateIdsResponse": {
    "id": "AllocateIdsResponse",
    "type": "object",
-   "description": "The response for AllocateIds.",
    "properties": {
+    "header": {
+     "$ref": "ResponseHeader"
+    },
     "keys": {
      "type": "array",
      "description": "The keys specified in the request (in the same order), each with its key path completed with a newly allocated ID.",
      "items": {
       "$ref": "Key"
      }
-    },
-    "kind": {
-     "type": "string",
-     "description": "The kind, fixed to \"datastore#allocateIdsResponse\".",
-     "default": "datastore#allocateIdsResponse"
     }
    }
   },
   "BeginTransactionRequest": {
    "id": "BeginTransactionRequest",
    "type": "object",
-   "description": "The request for BeginTransaction.",
    "properties": {
     "isolationLevel": {
      "type": "string",
@@ -125,12 +120,9 @@
   "BeginTransactionResponse": {
    "id": "BeginTransactionResponse",
    "type": "object",
-   "description": "The response for BeginTransaction.",
    "properties": {
-    "kind": {
-     "type": "string",
-     "description": "The kind, fixed to \"datastore#beginTransactionResponse\".",
-     "default": "datastore#beginTransactionResponse"
+    "header": {
+     "$ref": "ResponseHeader"
     },
     "transaction": {
      "type": "string",
@@ -142,7 +134,6 @@
   "BlindWriteRequest": {
    "id": "BlindWriteRequest",
    "type": "object",
-   "description": "The request for BlindWrite.",
    "properties": {
     "mutation": {
      "$ref": "Mutation",
@@ -153,23 +144,19 @@
   "BlindWriteResponse": {
    "id": "BlindWriteResponse",
    "type": "object",
-   "description": "The response for BlindWrite.",
    "properties": {
-    "kind": {
-     "type": "string",
-     "description": "The kind, fixed to \"datastore#blindWriteResponse\".",
-     "default": "datastore#blindWriteResponse"
+    "header": {
+     "$ref": "ResponseHeader"
     },
     "mutationResult": {
      "$ref": "MutationResult",
-     "description": "The result of performing the mutation."
+     "description": "The result of performing the mutation (always present)."
     }
    }
   },
   "CommitRequest": {
    "id": "CommitRequest",
    "type": "object",
-   "description": "The request for Commit.",
    "properties": {
     "mutation": {
      "$ref": "Mutation",
@@ -185,12 +172,9 @@
   "CommitResponse": {
    "id": "CommitResponse",
    "type": "object",
-   "description": "The response for Commit.",
    "properties": {
-    "kind": {
-     "type": "string",
-     "description": "The kind, fixed to \"datastore#commitResponse\".",
-     "default": "datastore#commitResponse"
+    "header": {
+     "$ref": "ResponseHeader"
     },
     "mutationResult": {
      "$ref": "MutationResult",
@@ -201,7 +185,6 @@
   "CompositeFilter": {
    "id": "CompositeFilter",
    "type": "object",
-   "description": "A filter that merges the multiple other filters using the given operation.",
    "properties": {
     "filters": {
      "type": "array",
@@ -219,7 +202,6 @@
   "Entity": {
    "id": "Entity",
    "type": "object",
-   "description": "An entity.\n\nAn entity is limited to 1 megabyte when stored. That *roughly* corresponds to a limit of 1 megabyte for the serialized form of this message.",
    "properties": {
     "key": {
      "$ref": "Key",
@@ -238,7 +220,6 @@
   "EntityResult": {
    "id": "EntityResult",
    "type": "object",
-   "description": "The result of fetching an entity from the datastore.",
    "properties": {
     "entity": {
      "$ref": "Entity",
@@ -249,7 +230,6 @@
   "Filter": {
    "id": "Filter",
    "type": "object",
-   "description": "A holder for any type of filter. Exactly one field should be specified.",
    "properties": {
     "compositeFilter": {
      "$ref": "CompositeFilter",
@@ -261,14 +241,57 @@
     }
    }
   },
+  "GqlQuery": {
+   "id": "GqlQuery",
+   "type": "object",
+   "properties": {
+    "allowLiteral": {
+     "type": "boolean",
+     "description": "When false, the query string must not contain a literal."
+    },
+    "nameArgs": {
+     "type": "array",
+     "description": "A named argument must set field GqlQueryArg.name. No two named arguments may have the same name. For each non-reserved named binding site in the query string, there must be a named argument with that name, but not necessarily the inverse.",
+     "items": {
+      "$ref": "GqlQueryArg"
+     }
+    },
+    "numberArgs": {
+     "type": "array",
+     "description": "Numbered binding site @1 references the first numbered argument, effectively using 1-based indexing, rather than the usual 0. A numbered argument must NOT set field GqlQueryArg.name. For each binding site numbered i in query_string, there must be an ith numbered argument. The inverse must also be true.",
+     "items": {
+      "$ref": "GqlQueryArg"
+     }
+    },
+    "queryString": {
+     "type": "string"
+    }
+   }
+  },
+  "GqlQueryArg": {
+   "id": "GqlQueryArg",
+   "type": "object",
+   "properties": {
+    "cursor": {
+     "type": "string",
+     "format": "byte"
+    },
+    "name": {
+     "type": "string",
+     "description": "Must match regex \"[A-Za-z_$][A-Za-z_$0-9]*\". Must not match regex \"__.*__\". Must not be \"\"."
+    },
+    "value": {
+     "$ref": "Value"
+    }
+   }
+  },
   "Key": {
    "id": "Key",
    "type": "object",
-   "description": "A unique identifier for an entity. If a key's partition id or any of its path kinds or names are reserved/read-only, the key is reserved/read-only. A reserved/read-only key is forbidden in certain documented contexts.",
    "properties": {
     "partitionId": {
      "$ref": "PartitionId",
-     "description": "Entities are partitioned into subsets, identified by a dataset (usually implicitly specified by the project) and namespace ID. Queries are scoped to a single partition."
+     "description": "Entities are partitioned into subsets, currently identified by a dataset (usually implicitly specified by the project) and namespace ID. Queries are scoped to a single partition."
     },
     "path": {
      "type": "array",
@@ -302,7 +325,6 @@
   "KindExpression": {
    "id": "KindExpression",
    "type": "object",
-   "description": "A representation of a kind.",
    "properties": {
     "name": {
      "type": "string",
@@ -313,7 +335,6 @@
   "LookupRequest": {
    "id": "LookupRequest",
    "type": "object",
-   "description": "The request for Lookup.",
    "properties": {
     "keys": {
      "type": "array",
@@ -331,7 +352,6 @@
   "LookupResponse": {
    "id": "LookupResponse",
    "type": "object",
-   "description": "The response for Lookup.",
    "properties": {
     "deferred": {
      "type": "array",
@@ -347,10 +367,8 @@
       "$ref": "EntityResult"
      }
     },
-    "kind": {
-     "type": "string",
-     "description": "The kind, fixed to \"datastore#lookupResponse\".",
-     "default": "datastore#lookupResponse"
+    "header": {
+     "$ref": "ResponseHeader"
     },
     "missing": {
      "type": "array",
@@ -364,7 +382,6 @@
   "Mutation": {
    "id": "Mutation",
    "type": "object",
-   "description": "A set of changes to apply.\n\nNo entity in this message may have a reserved property name, not even a property in an entity in a value.\n\nIf entities with duplicate keys are present, an arbitrary choice will be made as to which is written.",
    "properties": {
     "delete": {
      "type": "array",
@@ -410,7 +427,6 @@
   "MutationResult": {
    "id": "MutationResult",
    "type": "object",
-   "description": "The result of applying a mutation.",
    "properties": {
     "indexUpdates": {
      "type": "integer",
@@ -429,7 +445,6 @@
   "PartitionId": {
    "id": "PartitionId",
    "type": "object",
-   "description": "An identifier for a particular subset of entities.\n\nEntities are partitioned into various subsets, each used by different datasets and different namespaces within a dataset and so forth.\n\nAll input partition IDs are normalized before use. A partition ID is normalized as follows: If the partition ID is unset, replace it with an empty partition ID. If the partition ID has no dataset ID, assign it the context dataset ID.\n\nPartition dimension: A dimension may be unset. A dimension's value must never contain \"!\". A dimension's value must never be \"\". If the value of any dimension matches regex \"__.*__\", the partition is reserved/read-only. A reserved/read-only partition ID is forbidden in certain documented contexts.",
    "properties": {
     "datasetId": {
      "type": "string",
@@ -444,7 +459,6 @@
   "Property": {
    "id": "Property",
    "type": "object",
-   "description": "An entity property.",
    "properties": {
     "multi": {
      "type": "boolean",
@@ -452,7 +466,7 @@
     },
     "values": {
      "type": "array",
-     "description": "The value(s) of the property. When multi is false there is always exactly one value. When multi is true there is always one or more values. Each value can have only one value property populated. For example, you cannot have a values list of { values: [ { integerValue: 22, stringValue: \"a\" } ] }, but you can have { multi: true, values: [ { integerValue: 22 }, { stringValue: \"a\" } ] }.",
+     "description": "The value(s) of the property. When multi is false there is always exactly one value. When multi is true there are always one or more values. Each value can have only one value property populated. For example, you cannot have a values list of { values: [ { integerValue: 22, stringValue: \"a\" } ] }, but you can have { multi: true, values: [ { integerValue: 22 }, { stringValue: \"a\" } ] }.",
      "items": {
       "$ref": "Value"
      }
@@ -462,7 +476,6 @@
   "PropertyExpression": {
    "id": "PropertyExpression",
    "type": "object",
-   "description": "A representation of a property in a projection.",
    "properties": {
     "aggregationFunction": {
      "type": "string",
@@ -477,7 +490,6 @@
   "PropertyFilter": {
    "id": "PropertyFilter",
    "type": "object",
-   "description": "A filter on a specific property.",
    "properties": {
     "operator": {
      "type": "string",
@@ -496,7 +508,6 @@
   "PropertyOrder": {
    "id": "PropertyOrder",
    "type": "object",
-   "description": "The desired order for a specific property.",
    "properties": {
     "direction": {
      "type": "string",
@@ -511,7 +522,6 @@
   "PropertyReference": {
    "id": "PropertyReference",
    "type": "object",
-   "description": "A reference to a property relative to the kind expressions.",
    "properties": {
     "name": {
      "type": "string",
@@ -522,7 +532,6 @@
   "Query": {
    "id": "Query",
    "type": "object",
-   "description": "A query.",
    "properties": {
     "endCursor": {
      "type": "string",
@@ -581,7 +590,6 @@
   "QueryResultBatch": {
    "id": "QueryResultBatch",
    "type": "object",
-   "description": "A batch of results produced by a query.",
    "properties": {
     "endCursor": {
      "type": "string",
@@ -613,7 +621,6 @@
   "ReadOptions": {
    "id": "ReadOptions",
    "type": "object",
-   "description": "Options shared by read requests.",
    "properties": {
     "readConsistency": {
      "type": "string",
@@ -626,10 +633,20 @@
     }
    }
   },
+  "ResponseHeader": {
+   "id": "ResponseHeader",
+   "type": "object",
+   "properties": {
+    "kind": {
+     "type": "string",
+     "description": "The kind, fixed to \"datastore#responseHeader\".",
+     "default": "datastore#responseHeader"
+    }
+   }
+  },
   "RollbackRequest": {
    "id": "RollbackRequest",
    "type": "object",
-   "description": "The request for Rollback.",
    "properties": {
     "transaction": {
      "type": "string",
@@ -641,27 +658,27 @@
   "RollbackResponse": {
    "id": "RollbackResponse",
    "type": "object",
-   "description": "The response for Rollback.",
    "properties": {
-    "kind": {
-     "type": "string",
-     "description": "The kind, fixed to \"datastore#rollbackResponse\".",
-     "default": "datastore#rollbackResponse"
+    "header": {
+     "$ref": "ResponseHeader"
     }
    }
   },
   "RunQueryRequest": {
    "id": "RunQueryRequest",
    "type": "object",
-   "description": "The request for RunQuery.",
    "properties": {
+    "gqlQuery": {
+     "$ref": "GqlQuery",
+     "description": "The GQL query to run. Either this field or field query must be set, but not both."
+    },
     "partitionId": {
      "$ref": "PartitionId",
      "description": "Entities are partitioned into subsets, identified by a dataset (usually implicitly specified by the project) and namespace ID. Queries are scoped to a single partition."
     },
     "query": {
      "$ref": "Query",
-     "description": "The query to run."
+     "description": "The query to run. Either this field or field gql_query must be set, but not both."
     },
     "readOptions": {
      "$ref": "ReadOptions",
@@ -672,23 +689,19 @@
   "RunQueryResponse": {
    "id": "RunQueryResponse",
    "type": "object",
-   "description": "The response for RunQuery.",
    "properties": {
     "batch": {
      "$ref": "QueryResultBatch",
      "description": "A batch of query results (always present)."
     },
-    "kind": {
-     "type": "string",
-     "description": "The kind, fixed to \"datastore#runQueryResponse\".",
-     "default": "datastore#runQueryResponse"
+    "header": {
+     "$ref": "ResponseHeader"
     }
    }
   },
   "Value": {
    "id": "Value",
    "type": "object",
-   "description": "A message that can hold any of the supported value types and associated metadata.\n\nAt most one of the Value fields may be set. If none are set the value is \"null\".",
    "properties": {
     "blobKeyValue": {
      "type": "string",
@@ -719,7 +732,7 @@
     },
     "indexed": {
      "type": "boolean",
-     "description": "If the value should be indexed.\n\nThe indexed property may be set to null. When indexed is true, stringValue is limited to 500 characters and the blob value is limited to 500 bytes. Input values by default have indexed set to true; however, you can explicitly set indexed to true if you want. (An output value never has indexed explicitly set to true.) If a value is itself an entity, it cannot have indexed set to true."
+     "description": "If the value should be indexed.\n\nThe indexed property may be set for a null value. When indexed is true, stringValue is limited to 500 characters and the blob value is limited to 500 bytes. Input values by default have indexed set to true; however, you can explicitly set indexed to true if you want. (An output value never has indexed explicitly set to true.) If a value is itself an entity, it cannot have indexed set to true."
     },
     "integerValue": {
      "type": "string",

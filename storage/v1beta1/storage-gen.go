@@ -183,8 +183,16 @@ type BucketAccessControl struct {
 	// - group-groupId
 	// - group-email
 	//
+	// - domain-domain
 	// - allUsers
-	// - allAuthenticatedUsers
+	// - allAuthenticatedUsers Examples:
+	// -
+	// The user liz@example.com would be user-liz@example.com.
+	// - The group
+	// example@googlegroups.com would be group-example@googlegroups.com.
+	// -
+	// To refer to all members of the Google Apps for Business domain
+	// example.com, the entity would be domain-example.com.
 	Entity string `json:"entity,omitempty"`
 
 	// EntityId: The ID for the entity, if any.
@@ -328,8 +336,16 @@ type ObjectAccessControl struct {
 	// - group-groupId
 	// - group-email
 	//
+	// - domain-domain
 	// - allUsers
-	// - allAuthenticatedUsers
+	// - allAuthenticatedUsers Examples:
+	// -
+	// The user liz@example.com would be user-liz@example.com.
+	// - The group
+	// example@googlegroups.com would be group-example@googlegroups.com.
+	// -
+	// To refer to all members of the Google Apps for Business domain
+	// example.com, the entity would be domain-example.com.
 	Entity string `json:"entity,omitempty"`
 
 	// EntityId: The ID for the entity, if any.

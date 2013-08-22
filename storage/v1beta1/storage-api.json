@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"BgGnx7p-6wsAbOn4St99QhtBGbA/bnegIpJw2WzYT0-E-XmhyAcbTJ8\"",
+ "etag": "\"wtgj9ZncHCe-ShJM8RewHb1DgWI/Lh143n5tG5CVrUGfzs0no-ghWsU\"",
  "discoveryVersion": "v1",
  "id": "storage:v1beta1",
  "name": "storage",
  "version": "v1beta1",
- "revision": "20130712",
+ "revision": "20130810",
  "title": "Cloud Storage API",
  "description": "Lets you store and retrieve potentially-large, immutable data objects.",
  "ownerDomain": "google.com",
@@ -195,7 +195,7 @@
     },
     "entity": {
      "type": "string",
-     "description": "The entity holding the permission, in one of the following forms: \n- user-userId \n- user-email \n- group-groupId \n- group-email \n- allUsers \n- allAuthenticatedUsers",
+     "description": "The entity holding the permission, in one of the following forms: \n- user-userId \n- user-email \n- group-groupId \n- group-email \n- domain-domain \n- allUsers \n- allAuthenticatedUsers Examples: \n- The user liz@example.com would be user-liz@example.com. \n- The group example@googlegroups.com would be group-example@googlegroups.com. \n- To refer to all members of the Google Apps for Business domain example.com, the entity would be domain-example.com.",
      "annotations": {
       "required": [
        "storage.bucketAccessControls.insert"
@@ -418,7 +418,7 @@
     },
     "entity": {
      "type": "string",
-     "description": "The entity holding the permission, in one of the following forms: \n- user-userId \n- user-email \n- group-groupId \n- group-email \n- allUsers \n- allAuthenticatedUsers",
+     "description": "The entity holding the permission, in one of the following forms: \n- user-userId \n- user-email \n- group-groupId \n- group-email \n- domain-domain \n- allUsers \n- allAuthenticatedUsers Examples: \n- The user liz@example.com would be user-liz@example.com. \n- The group example@googlegroups.com would be group-example@googlegroups.com. \n- To refer to all members of the Google Apps for Business domain example.com, the entity would be domain-example.com.",
      "annotations": {
       "required": [
        "storage.objectAccessControls.insert"

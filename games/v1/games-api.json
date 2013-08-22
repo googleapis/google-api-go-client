@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"BgGnx7p-6wsAbOn4St99QhtBGbA/3R7D_A64Rx6ouK7PxXF12zPWTUw\"",
+ "etag": "\"wtgj9ZncHCe-ShJM8RewHb1DgWI/Zk3UZ9CpL0JLOXTuhss-AmDs-w0\"",
  "discoveryVersion": "v1",
  "id": "games:v1",
  "name": "games",
  "version": "v1",
- "revision": "20130712",
+ "revision": "20130725",
  "title": "Google Play Game Services API",
  "description": "The API for Google Play Game Services.",
  "ownerDomain": "google.com",

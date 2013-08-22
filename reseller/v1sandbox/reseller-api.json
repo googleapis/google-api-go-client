@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"BgGnx7p-6wsAbOn4St99QhtBGbA/Q1EJGa9Fvh6F5Bkbhsq_B6ceE7Q\"",
+ "etag": "\"wtgj9ZncHCe-ShJM8RewHb1DgWI/JF6_thST4MJ4Cus6_qqKqiHtrSs\"",
  "discoveryVersion": "v1",
  "id": "reseller:v1sandbox",
  "name": "reseller",
  "version": "v1sandbox",
- "revision": "20130610",
+ "revision": "20130717",
  "title": "Enterprise Apps Reseller API",
  "description": "Lets you create and manage your customers and their subscriptions.",
  "ownerDomain": "google.com",
@@ -297,6 +297,10 @@
      "type": "object",
      "description": "Transfer related information for the subscription.",
      "properties": {
+      "minimumTransferableSeats": {
+       "type": "integer",
+       "format": "int32"
+      },
       "transferabilityExpirationTime": {
        "type": "string",
        "description": "Time when transfer token or intent to transfer will expire.",

@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"BgGnx7p-6wsAbOn4St99QhtBGbA/VKTPTinCiG_SY2p9IuvAqycHm80\"",
+ "etag": "\"wtgj9ZncHCe-ShJM8RewHb1DgWI/BhpbFaBFPqs1pfup94lEvllZnv0\"",
  "discoveryVersion": "v1",
  "id": "books:v1",
  "name": "books",
  "version": "v1",
- "revision": "20130703",
+ "revision": "20130809",
  "title": "Books API",
  "description": "Lets you search for books and manage your Google Books library.",
  "ownerDomain": "google.com",
@@ -389,8 +389,140 @@
     }
    }
   },
-  "BooksLayerDictData": {
-   "id": "BooksLayerDictData",
+  "BooksVolumesRecommendedRateResponse": {
+   "id": "BooksVolumesRecommendedRateResponse",
+   "type": "object",
+   "properties": {
+    "consistency_token": {
+     "type": "string"
+    }
+   }
+  },
+  "Bookshelf": {
+   "id": "Bookshelf",
+   "type": "object",
+   "properties": {
+    "access": {
+     "type": "string",
+     "description": "Whether this bookshelf is PUBLIC or PRIVATE."
+    },
+    "created": {
+     "type": "string",
+     "description": "Created time for this bookshelf (formatted UTC timestamp with millisecond resolution).",
+     "format": "date-time"
+    },
+    "description": {
+     "type": "string",
+     "description": "Description of this bookshelf."
+    },
+    "id": {
+     "type": "integer",
+     "description": "Id of this bookshelf, only unique by user.",
+     "format": "int32"
+    },
+    "kind": {
+     "type": "string",
+     "description": "Resource type for bookshelf metadata.",
+     "default": "books#bookshelf"
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "URL to this resource."
+    },
+    "title": {
+     "type": "string",
+     "description": "Title of this bookshelf."
+    },
+    "updated": {
+     "type": "string",
+     "description": "Last modified time of this bookshelf (formatted UTC timestamp with millisecond resolution).",
+     "format": "date-time"
+    },
+    "volumeCount": {
+     "type": "integer",
+     "description": "Number of volumes in this bookshelf.",
+     "format": "int32"
+    },
+    "volumesLastUpdated": {
+     "type": "string",
+     "description": "Last time a volume was added or removed from this bookshelf (formatted UTC timestamp with millisecond resolution).",
+     "format": "date-time"
+    }
+   }
+  },
+  "Bookshelves": {
+   "id": "Bookshelves",
+   "type": "object",
+   "properties": {
+    "items": {
+     "type": "array",
+     "description": "A list of bookshelves.",
+     "items": {
+      "$ref": "Bookshelf"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Resource type.",
+     "default": "books#bookshelves"
+    }
+   }
+  },
+  "ConcurrentAccessRestriction": {
+   "id": "ConcurrentAccessRestriction",
+   "type": "object",
+   "properties": {
+    "deviceAllowed": {
+     "type": "boolean",
+     "description": "Whether access is granted for this (user, device, volume)."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Resource type.",
+     "default": "books#concurrentAccessRestriction"
+    },
+    "maxConcurrentDevices": {
+     "type": "integer",
+     "description": "The maximum number of concurrent access licenses for this volume.",
+     "format": "int32"
+    },
+    "message": {
+     "type": "string",
+     "description": "Error/warning message."
+    },
+    "nonce": {
+     "type": "string",
+     "description": "Client nonce for verification. Download access and client-validation only."
+    },
+    "reasonCode": {
+     "type": "string",
+     "description": "Error/warning reason code."
+    },
+    "restricted": {
+     "type": "boolean",
+     "description": "Whether this volume has any concurrent access restrictions."
+    },
+    "signature": {
+     "type": "string",
+     "description": "Response signature."
+    },
+    "source": {
+     "type": "string",
+     "description": "Client app identifier for verification. Download access and client-validation only."
+    },
+    "timeWindowSeconds": {
+     "type": "integer",
+     "description": "Time in seconds for license auto-expiration.",
+     "format": "int32"
+    },
+    "volumeId": {
+     "type": "string",
+     "description": "Identifies the volume for which this entry applies."
+    }
+   }
+  },
+  "Dictlayerdata": {
+   "id": "Dictlayerdata",
    "type": "object",
    "properties": {
     "common": {
@@ -582,11 +714,90 @@
        }
       }
      }
+    },
+    "kind": {
+     "type": "string",
+     "default": "books#dictlayerdata"
     }
    }
   },
-  "BooksLayerGeoData": {
-   "id": "BooksLayerGeoData",
+  "DownloadAccessRestriction": {
+   "id": "DownloadAccessRestriction",
+   "type": "object",
+   "properties": {
+    "deviceAllowed": {
+     "type": "boolean",
+     "description": "If restricted, whether access is granted for this (user, device, volume)."
+    },
+    "downloadsAcquired": {
+     "type": "integer",
+     "description": "If restricted, the number of content download licenses already acquired (including the requesting client, if licensed).",
+     "format": "int32"
+    },
+    "justAcquired": {
+     "type": "boolean",
+     "description": "If deviceAllowed, whether access was just acquired with this request."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Resource type.",
+     "default": "books#downloadAccessRestriction"
+    },
+    "maxDownloadDevices": {
+     "type": "integer",
+     "description": "If restricted, the maximum number of content download licenses for this volume.",
+     "format": "int32"
+    },
+    "message": {
+     "type": "string",
+     "description": "Error/warning message."
+    },
+    "nonce": {
+     "type": "string",
+     "description": "Client nonce for verification. Download access and client-validation only."
+    },
+    "reasonCode": {
+     "type": "string",
+     "description": "Error/warning reason code. Additional codes may be added in the future. 0 OK 100 ACCESS_DENIED_PUBLISHER_LIMIT 101 ACCESS_DENIED_LIMIT 200 WARNING_USED_LAST_ACCESS"
+    },
+    "restricted": {
+     "type": "boolean",
+     "description": "Whether this volume has any download access restrictions."
+    },
+    "signature": {
+     "type": "string",
+     "description": "Response signature."
+    },
+    "source": {
+     "type": "string",
+     "description": "Client app identifier for verification. Download access and client-validation only."
+    },
+    "volumeId": {
+     "type": "string",
+     "description": "Identifies the volume for which this entry applies."
+    }
+   }
+  },
+  "DownloadAccesses": {
+   "id": "DownloadAccesses",
+   "type": "object",
+   "properties": {
+    "downloadAccessList": {
+     "type": "array",
+     "description": "A list of download access responses.",
+     "items": {
+      "$ref": "DownloadAccessRestriction"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Resource type.",
+     "default": "books#downloadAccesses"
+    }
+   }
+  },
+  "Geolayerdata": {
+   "id": "Geolayerdata",
    "type": "object",
    "properties": {
     "common": {
@@ -697,204 +908,10 @@
        "format": "int32"
       }
      }
-    }
-   }
-  },
-  "Bookshelf": {
-   "id": "Bookshelf",
-   "type": "object",
-   "properties": {
-    "access": {
-     "type": "string",
-     "description": "Whether this bookshelf is PUBLIC or PRIVATE."
-    },
-    "created": {
-     "type": "string",
-     "description": "Created time for this bookshelf (formatted UTC timestamp with millisecond resolution).",
-     "format": "date-time"
-    },
-    "description": {
-     "type": "string",
-     "description": "Description of this bookshelf."
-    },
-    "id": {
-     "type": "integer",
-     "description": "Id of this bookshelf, only unique by user.",
-     "format": "int32"
     },
     "kind": {
      "type": "string",
-     "description": "Resource type for bookshelf metadata.",
-     "default": "books#bookshelf"
-    },
-    "selfLink": {
-     "type": "string",
-     "description": "URL to this resource."
-    },
-    "title": {
-     "type": "string",
-     "description": "Title of this bookshelf."
-    },
-    "updated": {
-     "type": "string",
-     "description": "Last modified time of this bookshelf (formatted UTC timestamp with millisecond resolution).",
-     "format": "date-time"
-    },
-    "volumeCount": {
-     "type": "integer",
-     "description": "Number of volumes in this bookshelf.",
-     "format": "int32"
-    },
-    "volumesLastUpdated": {
-     "type": "string",
-     "description": "Last time a volume was added or removed from this bookshelf (formatted UTC timestamp with millisecond resolution).",
-     "format": "date-time"
-    }
-   }
-  },
-  "Bookshelves": {
-   "id": "Bookshelves",
-   "type": "object",
-   "properties": {
-    "items": {
-     "type": "array",
-     "description": "A list of bookshelves.",
-     "items": {
-      "$ref": "Bookshelf"
-     }
-    },
-    "kind": {
-     "type": "string",
-     "description": "Resource type.",
-     "default": "books#bookshelves"
-    }
-   }
-  },
-  "ConcurrentAccessRestriction": {
-   "id": "ConcurrentAccessRestriction",
-   "type": "object",
-   "properties": {
-    "deviceAllowed": {
-     "type": "boolean",
-     "description": "Whether access is granted for this (user, device, volume)."
-    },
-    "kind": {
-     "type": "string",
-     "description": "Resource type.",
-     "default": "books#concurrentAccessRestriction"
-    },
-    "maxConcurrentDevices": {
-     "type": "integer",
-     "description": "The maximum number of concurrent access licenses for this volume.",
-     "format": "int32"
-    },
-    "message": {
-     "type": "string",
-     "description": "Error/warning message."
-    },
-    "nonce": {
-     "type": "string",
-     "description": "Client nonce for verification. Download access and client-validation only."
-    },
-    "reasonCode": {
-     "type": "string",
-     "description": "Error/warning reason code."
-    },
-    "restricted": {
-     "type": "boolean",
-     "description": "Whether this volume has any concurrent access restrictions."
-    },
-    "signature": {
-     "type": "string",
-     "description": "Response signature."
-    },
-    "source": {
-     "type": "string",
-     "description": "Client app identifier for verification. Download access and client-validation only."
-    },
-    "timeWindowSeconds": {
-     "type": "integer",
-     "description": "Time in seconds for license auto-expiration.",
-     "format": "int32"
-    },
-    "volumeId": {
-     "type": "string",
-     "description": "Identifies the volume for which this entry applies."
-    }
-   }
-  },
-  "DownloadAccessRestriction": {
-   "id": "DownloadAccessRestriction",
-   "type": "object",
-   "properties": {
-    "deviceAllowed": {
-     "type": "boolean",
-     "description": "If restricted, whether access is granted for this (user, device, volume)."
-    },
-    "downloadsAcquired": {
-     "type": "integer",
-     "description": "If restricted, the number of content download licenses already acquired (including the requesting client, if licensed).",
-     "format": "int32"
-    },
-    "justAcquired": {
-     "type": "boolean",
-     "description": "If deviceAllowed, whether access was just acquired with this request."
-    },
-    "kind": {
-     "type": "string",
-     "description": "Resource type.",
-     "default": "books#downloadAccessRestriction"
-    },
-    "maxDownloadDevices": {
-     "type": "integer",
-     "description": "If restricted, the maximum number of content download licenses for this volume.",
-     "format": "int32"
-    },
-    "message": {
-     "type": "string",
-     "description": "Error/warning message."
-    },
-    "nonce": {
-     "type": "string",
-     "description": "Client nonce for verification. Download access and client-validation only."
-    },
-    "reasonCode": {
-     "type": "string",
-     "description": "Error/warning reason code. Additional codes may be added in the future. 0 OK 100 ACCESS_DENIED_PUBLISHER_LIMIT 101 ACCESS_DENIED_LIMIT 200 WARNING_USED_LAST_ACCESS"
-    },
-    "restricted": {
-     "type": "boolean",
-     "description": "Whether this volume has any download access restrictions."
-    },
-    "signature": {
-     "type": "string",
-     "description": "Response signature."
-    },
-    "source": {
-     "type": "string",
-     "description": "Client app identifier for verification. Download access and client-validation only."
-    },
-    "volumeId": {
-     "type": "string",
-     "description": "Identifies the volume for which this entry applies."
-    }
-   }
-  },
-  "DownloadAccesses": {
-   "id": "DownloadAccesses",
-   "type": "object",
-   "properties": {
-    "downloadAccessList": {
-     "type": "array",
-     "description": "A list of download access responses.",
-     "items": {
-      "$ref": "DownloadAccessRestriction"
-     }
-    },
-    "kind": {
-     "type": "string",
-     "description": "Resource type.",
-     "default": "books#downloadAccesses"
+     "default": "books#geolayerdata"
     }
    }
   },
@@ -3438,6 +3455,54 @@
        },
        "response": {
         "$ref": "Volumes"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/books"
+       ]
+      },
+      "rate": {
+       "id": "books.volumes.recommended.rate",
+       "path": "volumes/recommended/rate",
+       "httpMethod": "POST",
+       "description": "Rate a recommended book for the current user.",
+       "parameters": {
+        "locale": {
+         "type": "string",
+         "description": "ISO-639-1 language and ISO-3166-1 country code. Ex: 'en_US'. Used for generating recommendations.",
+         "location": "query"
+        },
+        "rating": {
+         "type": "string",
+         "description": "Rating to be given to the volume.",
+         "required": true,
+         "enum": [
+          "HAVE_IT",
+          "NOT_INTERESTED"
+         ],
+         "enumDescriptions": [
+          "Rating indicating a dismissal due to ownership.",
+          "Rating indicating a negative dismissal of a volume."
+         ],
+         "location": "query"
+        },
+        "source": {
+         "type": "string",
+         "description": "String to identify the originator of this request.",
+         "location": "query"
+        },
+        "volumeId": {
+         "type": "string",
+         "description": "ID of the source volume.",
+         "required": true,
+         "location": "query"
+        }
+       },
+       "parameterOrder": [
+        "rating",
+        "volumeId"
+       ],
+       "response": {
+        "$ref": "BooksVolumesRecommendedRateResponse"
        },
        "scopes": [
         "https://www.googleapis.com/auth/books"

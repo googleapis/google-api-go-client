@@ -234,6 +234,8 @@ type SubscriptionPlanCommitmentInterval struct {
 }
 
 type SubscriptionTransferInfo struct {
+	MinimumTransferableSeats int64 `json:"minimumTransferableSeats,omitempty"`
+
 	// TransferabilityExpirationTime: Time when transfer token or intent to
 	// transfer will expire.
 	TransferabilityExpirationTime int64 `json:"transferabilityExpirationTime,omitempty,string"`

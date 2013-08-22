@@ -49,6 +49,9 @@ const (
 
 	// View your data in Google Cloud Storage
 	DevstorageRead_onlyScope = "https://www.googleapis.com/auth/devstorage.read_only"
+
+	// Manage your data in Google Cloud Storage
+	DevstorageRead_writeScope = "https://www.googleapis.com/auth/devstorage.read_write"
 )
 
 func New(client *http.Client) (*Service, error) {
@@ -59,7 +62,9 @@ func New(client *http.Client) (*Service, error) {
 	s.Addresses = NewAddressesService(s)
 	s.Disks = NewDisksService(s)
 	s.Firewalls = NewFirewallsService(s)
+	s.ForwardingRules = NewForwardingRulesService(s)
 	s.GlobalOperations = NewGlobalOperationsService(s)
+	s.HttpHealthChecks = NewHttpHealthChecksService(s)
 	s.Images = NewImagesService(s)
 	s.Instances = NewInstancesService(s)
 	s.Kernels = NewKernelsService(s)
@@ -70,6 +75,7 @@ func New(client *http.Client) (*Service, error) {
 	s.Regions = NewRegionsService(s)
 	s.Routes = NewRoutesService(s)
 	s.Snapshots = NewSnapshotsService(s)
+	s.TargetPools = NewTargetPoolsService(s)
 	s.ZoneOperations = NewZoneOperationsService(s)
 	s.Zones = NewZonesService(s)
 	return s, nil
@@ -84,7 +90,11 @@ type Service struct {
 
 	Firewalls *FirewallsService
 
+	ForwardingRules *ForwardingRulesService
+
 	GlobalOperations *GlobalOperationsService
+
+	HttpHealthChecks *HttpHealthChecksService
 
 	Images *ImagesService
 
@@ -105,6 +115,8 @@ type Service struct {
 	Routes *RoutesService
 
 	Snapshots *SnapshotsService
+
+	TargetPools *TargetPoolsService
 
 	ZoneOperations *ZoneOperationsService
 
@@ -138,12 +150,30 @@ type FirewallsService struct {
 	s *Service
 }
 
+func NewForwardingRulesService(s *Service) *ForwardingRulesService {
+	rs := &ForwardingRulesService{s: s}
+	return rs
+}
+
+type ForwardingRulesService struct {
+	s *Service
+}
+
 func NewGlobalOperationsService(s *Service) *GlobalOperationsService {
 	rs := &GlobalOperationsService{s: s}
 	return rs
 }
 
 type GlobalOperationsService struct {
+	s *Service
+}
+
+func NewHttpHealthChecksService(s *Service) *HttpHealthChecksService {
+	rs := &HttpHealthChecksService{s: s}
+	return rs
+}
+
+type HttpHealthChecksService struct {
 	s *Service
 }
 
@@ -234,6 +264,15 @@ func NewSnapshotsService(s *Service) *SnapshotsService {
 }
 
 type SnapshotsService struct {
+	s *Service
+}
+
+func NewTargetPoolsService(s *Service) *TargetPoolsService {
+	rs := &TargetPoolsService{s: s}
+	return rs
+}
+
+type TargetPoolsService struct {
 	s *Service
 }
 
@@ -646,6 +685,213 @@ type FirewallList struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
+type ForwardingRule struct {
+	// IPAddress: Value of the reserved IP address that this forwarding rule
+	// is serving on behalf of. The address resource must live in the same
+	// region as the forwarding rule. If left empty (default value), an
+	// ephemeral IP will be assigned.
+	IPAddress string `json:"IPAddress,omitempty"`
+
+	// IPProtocol: The IP protocol to which this rule applies, can be either
+	// 'TCP' or 'UDP' (If left empty, will use TCP by default).
+	IPProtocol string `json:"IPProtocol,omitempty"`
+
+	// CreationTimestamp: Creation timestamp in RFC3339 text format (output
+	// only).
+	CreationTimestamp string `json:"creationTimestamp,omitempty"`
+
+	// Description: An optional textual description of the resource;
+	// provided by the client when the resource is created.
+	Description string `json:"description,omitempty"`
+
+	// Id: Unique identifier for the resource; defined by the server (output
+	// only).
+	Id uint64 `json:"id,omitempty,string"`
+
+	// Kind: Type of the resource.
+	Kind string `json:"kind,omitempty"`
+
+	// Name: Name of the resource; provided by the client when the resource
+	// is created. The name must be 1-63 characters long, and comply with
+	// RFC1035.
+	Name string `json:"name,omitempty"`
+
+	// PortRange: If 'IPProtocol' is 'TCP' or 'UDP', only packets addressed
+	// to ports in the specified range will be forwarded to 'target'. If
+	// left empty (default value), all ports are forwarded. Forwarding rules
+	// with the same [IPAddress, IPProtocol] pair must have disjoint port
+	// ranges.
+	PortRange string `json:"portRange,omitempty"`
+
+	// Region: URL of the region where the forwarding rule resides (output
+	// only).
+	Region string `json:"region,omitempty"`
+
+	// SelfLink: Server defined URL for the resource (output only).
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// Target: The URL of the target resource to receive the matched
+	// traffic. It must live in the same region as this forwarding rule.
+	Target string `json:"target,omitempty"`
+}
+
+type ForwardingRuleAggregatedList struct {
+	// Id: Unique identifier for the resource; defined by the server (output
+	// only).
+	Id string `json:"id,omitempty"`
+
+	// Items: A map of scoped forwarding rule lists.
+	Items *ForwardingRuleAggregatedListItems `json:"items,omitempty"`
+
+	// Kind: Type of resource.
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: A token used to continue a truncated list request
+	// (output only).
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SelfLink: Server defined URL for this resource (output only).
+	SelfLink string `json:"selfLink,omitempty"`
+}
+
+type ForwardingRuleAggregatedListItems struct {
+}
+
+type ForwardingRuleList struct {
+	// Id: Unique identifier for the resource; defined by the server (output
+	// only).
+	Id string `json:"id,omitempty"`
+
+	// Items: The ForwardingRule resources.
+	Items []*ForwardingRule `json:"items,omitempty"`
+
+	// Kind: Type of resource.
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: A token used to continue a truncated list request
+	// (output only).
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SelfLink: Server defined URL for this resource (output only).
+	SelfLink string `json:"selfLink,omitempty"`
+}
+
+type ForwardingRulesScopedList struct {
+	// ForwardingRules: List of forwarding rules contained in this scope.
+	ForwardingRules []*ForwardingRule `json:"forwardingRules,omitempty"`
+
+	// Warning: Informational warning which replaces the list of forwarding
+	// rules when the list is empty.
+	Warning *ForwardingRulesScopedListWarning `json:"warning,omitempty"`
+}
+
+type ForwardingRulesScopedListWarning struct {
+	// Code: The warning type identifier for this warning.
+	Code string `json:"code,omitempty"`
+
+	// Data: Metadata for this warning in 'key: value' format.
+	Data []*ForwardingRulesScopedListWarningData `json:"data,omitempty"`
+
+	// Message: Optional human-readable details for this warning.
+	Message string `json:"message,omitempty"`
+}
+
+type ForwardingRulesScopedListWarningData struct {
+	// Key: A key for the warning data.
+	Key string `json:"key,omitempty"`
+
+	// Value: A warning data value corresponding to the key.
+	Value string `json:"value,omitempty"`
+}
+
+type HealthCheckReference struct {
+	HealthCheck string `json:"healthCheck,omitempty"`
+}
+
+type HealthStatus struct {
+	// HealthState: Health state of the instance.
+	HealthState string `json:"healthState,omitempty"`
+
+	// Instance: URL of the instance resource.
+	Instance string `json:"instance,omitempty"`
+
+	// IpAddress: The IP address represented by this resource.
+	IpAddress string `json:"ipAddress,omitempty"`
+}
+
+type HttpHealthCheck struct {
+	// CheckIntervalSec: How often (in seconds) to send a health check. The
+	// default value is 5 seconds.
+	CheckIntervalSec int64 `json:"checkIntervalSec,omitempty"`
+
+	// CreationTimestamp: Creation timestamp in RFC3339 text format (output
+	// only).
+	CreationTimestamp string `json:"creationTimestamp,omitempty"`
+
+	// Description: An optional textual description of the resource;
+	// provided by the client when the resource is created.
+	Description string `json:"description,omitempty"`
+
+	// HealthyThreshold: A so-far unhealthy VM will be marked healthy after
+	// this many consecutive successes. The default value is 2.
+	HealthyThreshold int64 `json:"healthyThreshold,omitempty"`
+
+	// Host: The value of the host header in the HTTP health check request.
+	// If left empty (default value), the public IP on behalf of which this
+	// health check is performed will be used.
+	Host string `json:"host,omitempty"`
+
+	// Id: Unique identifier for the resource; defined by the server (output
+	// only).
+	Id uint64 `json:"id,omitempty,string"`
+
+	// Kind: Type of the resource.
+	Kind string `json:"kind,omitempty"`
+
+	// Name: Name of the resource; provided by the client when the resource
+	// is created. The name must be 1-63 characters long, and comply with
+	// RFC1035.
+	Name string `json:"name,omitempty"`
+
+	// Port: The TCP port number for the HTTP health check request. The
+	// default value is 80.
+	Port int64 `json:"port,omitempty"`
+
+	// RequestPath: The request path of the HTTP health check request. The
+	// default value is "/".
+	RequestPath string `json:"requestPath,omitempty"`
+
+	// SelfLink: Server defined URL for the resource (output only).
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// TimeoutSec: How long (in seconds) to wait before claiming failure.
+	// The default value is 5 seconds.
+	TimeoutSec int64 `json:"timeoutSec,omitempty"`
+
+	// UnhealthyThreshold: A so-far healthy VM will be marked unhealthy
+	// after this many consecutive failures. The default value is 2.
+	UnhealthyThreshold int64 `json:"unhealthyThreshold,omitempty"`
+}
+
+type HttpHealthCheckList struct {
+	// Id: Unique identifier for the resource; defined by the server (output
+	// only).
+	Id string `json:"id,omitempty"`
+
+	// Items: The HttpHealthCheck resources.
+	Items []*HttpHealthCheck `json:"items,omitempty"`
+
+	// Kind: Type of resource.
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: A token used to continue a truncated list request
+	// (output only).
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SelfLink: Server defined URL for this resource (output only).
+	SelfLink string `json:"selfLink,omitempty"`
+}
+
 type Image struct {
 	// CreationTimestamp: Creation timestamp in RFC3339 text format (output
 	// only).
@@ -858,6 +1104,10 @@ type InstanceList struct {
 
 	// SelfLink: Server defined URL for this resource (output only).
 	SelfLink string `json:"selfLink,omitempty"`
+}
+
+type InstanceReference struct {
+	Instance string `json:"instance,omitempty"`
 }
 
 type InstancesScopedList struct {
@@ -1638,6 +1888,126 @@ type Tags struct {
 	// Items: An array of tags. Each tag must be 1-63 characters long, and
 	// comply with RFC1035.
 	Items []string `json:"items,omitempty"`
+}
+
+type TargetPool struct {
+	// CreationTimestamp: Creation timestamp in RFC3339 text format (output
+	// only).
+	CreationTimestamp string `json:"creationTimestamp,omitempty"`
+
+	// Description: An optional textual description of the resource;
+	// provided by the client when the resource is created.
+	Description string `json:"description,omitempty"`
+
+	// HealthChecks: A list of URLs to the HttpHealthCheck resource. A
+	// member VM in this pool is considered healthy if and only if all
+	// specified health checks pass. An empty list means all member VMs will
+	// be considered healthy at all times.
+	HealthChecks []string `json:"healthChecks,omitempty"`
+
+	// Id: Unique identifier for the resource; defined by the server (output
+	// only).
+	Id uint64 `json:"id,omitempty,string"`
+
+	// Instances: A list of resource URLs to the member VMs serving this
+	// pool. They must live in zones contained in the same region as this
+	// pool.
+	Instances []string `json:"instances,omitempty"`
+
+	// Kind: Type of the resource.
+	Kind string `json:"kind,omitempty"`
+
+	// Name: Name of the resource; provided by the client when the resource
+	// is created. The name must be 1-63 characters long, and comply with
+	// RFC1035.
+	Name string `json:"name,omitempty"`
+
+	// Region: URL of the region where the target pool resides (output
+	// only).
+	Region string `json:"region,omitempty"`
+
+	// SelfLink: Server defined URL for the resource (output only).
+	SelfLink string `json:"selfLink,omitempty"`
+}
+
+type TargetPoolAggregatedList struct {
+	// Id: Unique identifier for the resource; defined by the server (output
+	// only).
+	Id string `json:"id,omitempty"`
+
+	// Items: A map of scoped target pool lists.
+	Items *TargetPoolAggregatedListItems `json:"items,omitempty"`
+
+	// Kind: Type of resource.
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: A token used to continue a truncated list request
+	// (output only).
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SelfLink: Server defined URL for this resource (output only).
+	SelfLink string `json:"selfLink,omitempty"`
+}
+
+type TargetPoolAggregatedListItems struct {
+}
+
+type TargetPoolInstanceHealth struct {
+	HealthStatus []*HealthStatus `json:"healthStatus,omitempty"`
+
+	// Kind: Type of resource.
+	Kind string `json:"kind,omitempty"`
+}
+
+type TargetPoolList struct {
+	// Id: Unique identifier for the resource; defined by the server (output
+	// only).
+	Id string `json:"id,omitempty"`
+
+	// Items: The TargetPool resources.
+	Items []*TargetPool `json:"items,omitempty"`
+
+	// Kind: Type of resource.
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: A token used to continue a truncated list request
+	// (output only).
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SelfLink: Server defined URL for this resource (output only).
+	SelfLink string `json:"selfLink,omitempty"`
+}
+
+type TargetPoolsScopedList struct {
+	// TargetPools: List of target pools contained in this scope.
+	TargetPools []*TargetPool `json:"targetPools,omitempty"`
+
+	// Warning: Informational warning which replaces the list of addresses
+	// when the list is empty.
+	Warning *TargetPoolsScopedListWarning `json:"warning,omitempty"`
+}
+
+type TargetPoolsScopedListWarning struct {
+	// Code: The warning type identifier for this warning.
+	Code string `json:"code,omitempty"`
+
+	// Data: Metadata for this warning in 'key: value' format.
+	Data []*TargetPoolsScopedListWarningData `json:"data,omitempty"`
+
+	// Message: Optional human-readable details for this warning.
+	Message string `json:"message,omitempty"`
+}
+
+type TargetPoolsScopedListWarningData struct {
+	// Key: A key for the warning data.
+	Key string `json:"key,omitempty"`
+
+	// Value: A warning data value corresponding to the key.
+	Value string `json:"value,omitempty"`
+}
+
+type TargetReference struct {
+	Target string `json:"target,omitempty"`
 }
 
 type Zone struct {
@@ -3362,6 +3732,612 @@ func (c *FirewallsUpdateCall) Do() (*Operation, error) {
 
 }
 
+// method id "compute.forwardingRules.aggregatedList":
+
+type ForwardingRulesAggregatedListCall struct {
+	s       *Service
+	project string
+	opt_    map[string]interface{}
+}
+
+// AggregatedList: Retrieves the list of forwarding rules grouped by
+// scope.
+func (r *ForwardingRulesService) AggregatedList(project string) *ForwardingRulesAggregatedListCall {
+	c := &ForwardingRulesAggregatedListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter expression for
+// filtering listed resources.
+func (c *ForwardingRulesAggregatedListCall) Filter(filter string) *ForwardingRulesAggregatedListCall {
+	c.opt_["filter"] = filter
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum count of
+// results to be returned. Maximum and default value is 100.
+func (c *ForwardingRulesAggregatedListCall) MaxResults(maxResults int64) *ForwardingRulesAggregatedListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Tag returned by a
+// previous list request truncated by maxResults. Used to continue a
+// previous list request.
+func (c *ForwardingRulesAggregatedListCall) PageToken(pageToken string) *ForwardingRulesAggregatedListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+func (c *ForwardingRulesAggregatedListCall) Do() (*ForwardingRuleAggregatedList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["filter"]; ok {
+		params.Set("filter", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta15/projects/", "{project}/aggregated/forwardingRules")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(ForwardingRuleAggregatedList)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the list of forwarding rules grouped by scope.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.forwardingRules.aggregatedList",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Filter expression for filtering listed resources.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "100",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "100",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/aggregated/forwardingRules",
+	//   "response": {
+	//     "$ref": "ForwardingRuleAggregatedList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.forwardingRules.delete":
+
+type ForwardingRulesDeleteCall struct {
+	s              *Service
+	project        string
+	region         string
+	forwardingRule string
+	opt_           map[string]interface{}
+}
+
+// Delete: Deletes the specified ForwardingRule resource.
+func (r *ForwardingRulesService) Delete(project string, region string, forwardingRule string) *ForwardingRulesDeleteCall {
+	c := &ForwardingRulesDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.region = region
+	c.forwardingRule = forwardingRule
+	return c
+}
+
+func (c *ForwardingRulesDeleteCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta15/projects/", "{project}/regions/{region}/forwardingRules/{forwardingRule}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{region}", url.QueryEscape(c.region), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{forwardingRule}", url.QueryEscape(c.forwardingRule), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Operation)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the specified ForwardingRule resource.",
+	//   "httpMethod": "DELETE",
+	//   "id": "compute.forwardingRules.delete",
+	//   "parameterOrder": [
+	//     "project",
+	//     "region",
+	//     "forwardingRule"
+	//   ],
+	//   "parameters": {
+	//     "forwardingRule": {
+	//       "description": "Name of the ForwardingRule resource to delete.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "region": {
+	//       "description": "Name of the region scoping this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/regions/{region}/forwardingRules/{forwardingRule}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.forwardingRules.get":
+
+type ForwardingRulesGetCall struct {
+	s              *Service
+	project        string
+	region         string
+	forwardingRule string
+	opt_           map[string]interface{}
+}
+
+// Get: Returns the specified ForwardingRule resource.
+func (r *ForwardingRulesService) Get(project string, region string, forwardingRule string) *ForwardingRulesGetCall {
+	c := &ForwardingRulesGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.region = region
+	c.forwardingRule = forwardingRule
+	return c
+}
+
+func (c *ForwardingRulesGetCall) Do() (*ForwardingRule, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta15/projects/", "{project}/regions/{region}/forwardingRules/{forwardingRule}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{region}", url.QueryEscape(c.region), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{forwardingRule}", url.QueryEscape(c.forwardingRule), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(ForwardingRule)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the specified ForwardingRule resource.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.forwardingRules.get",
+	//   "parameterOrder": [
+	//     "project",
+	//     "region",
+	//     "forwardingRule"
+	//   ],
+	//   "parameters": {
+	//     "forwardingRule": {
+	//       "description": "Name of the ForwardingRule resource to return.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "region": {
+	//       "description": "Name of the region scoping this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/regions/{region}/forwardingRules/{forwardingRule}",
+	//   "response": {
+	//     "$ref": "ForwardingRule"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.forwardingRules.insert":
+
+type ForwardingRulesInsertCall struct {
+	s              *Service
+	project        string
+	region         string
+	forwardingrule *ForwardingRule
+	opt_           map[string]interface{}
+}
+
+// Insert: Creates a ForwardingRule resource in the specified project
+// and region using the data included in the request.
+func (r *ForwardingRulesService) Insert(project string, region string, forwardingrule *ForwardingRule) *ForwardingRulesInsertCall {
+	c := &ForwardingRulesInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.region = region
+	c.forwardingrule = forwardingrule
+	return c
+}
+
+func (c *ForwardingRulesInsertCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.forwardingrule)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta15/projects/", "{project}/regions/{region}/forwardingRules")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{region}", url.QueryEscape(c.region), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Operation)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a ForwardingRule resource in the specified project and region using the data included in the request.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.forwardingRules.insert",
+	//   "parameterOrder": [
+	//     "project",
+	//     "region"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "region": {
+	//       "description": "Name of the region scoping this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/regions/{region}/forwardingRules",
+	//   "request": {
+	//     "$ref": "ForwardingRule"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.forwardingRules.list":
+
+type ForwardingRulesListCall struct {
+	s       *Service
+	project string
+	region  string
+	opt_    map[string]interface{}
+}
+
+// List: Retrieves the list of ForwardingRule resources available to the
+// specified project and region.
+func (r *ForwardingRulesService) List(project string, region string) *ForwardingRulesListCall {
+	c := &ForwardingRulesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.region = region
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter expression for
+// filtering listed resources.
+func (c *ForwardingRulesListCall) Filter(filter string) *ForwardingRulesListCall {
+	c.opt_["filter"] = filter
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum count of
+// results to be returned. Maximum and default value is 100.
+func (c *ForwardingRulesListCall) MaxResults(maxResults int64) *ForwardingRulesListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Tag returned by a
+// previous list request truncated by maxResults. Used to continue a
+// previous list request.
+func (c *ForwardingRulesListCall) PageToken(pageToken string) *ForwardingRulesListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+func (c *ForwardingRulesListCall) Do() (*ForwardingRuleList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["filter"]; ok {
+		params.Set("filter", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta15/projects/", "{project}/regions/{region}/forwardingRules")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{region}", url.QueryEscape(c.region), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(ForwardingRuleList)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the list of ForwardingRule resources available to the specified project and region.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.forwardingRules.list",
+	//   "parameterOrder": [
+	//     "project",
+	//     "region"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Filter expression for filtering listed resources.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "100",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "100",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "region": {
+	//       "description": "Name of the region scoping this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/regions/{region}/forwardingRules",
+	//   "response": {
+	//     "$ref": "ForwardingRuleList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.forwardingRules.setTarget":
+
+type ForwardingRulesSetTargetCall struct {
+	s               *Service
+	project         string
+	region          string
+	forwardingRule  string
+	targetreference *TargetReference
+	opt_            map[string]interface{}
+}
+
+// SetTarget: Changes target url for forwarding rule.
+func (r *ForwardingRulesService) SetTarget(project string, region string, forwardingRule string, targetreference *TargetReference) *ForwardingRulesSetTargetCall {
+	c := &ForwardingRulesSetTargetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.region = region
+	c.forwardingRule = forwardingRule
+	c.targetreference = targetreference
+	return c
+}
+
+func (c *ForwardingRulesSetTargetCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.targetreference)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta15/projects/", "{project}/regions/{region}/forwardingRules/{forwardingRule}/setTarget")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{region}", url.QueryEscape(c.region), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{forwardingRule}", url.QueryEscape(c.forwardingRule), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Operation)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Changes target url for forwarding rule.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.forwardingRules.setTarget",
+	//   "parameterOrder": [
+	//     "project",
+	//     "region",
+	//     "forwardingRule"
+	//   ],
+	//   "parameters": {
+	//     "forwardingRule": {
+	//       "description": "Name of the ForwardingRule resource in which target is to be set.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "region": {
+	//       "description": "Name of the region scoping this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/regions/{region}/forwardingRules/{forwardingRule}/setTarget",
+	//   "request": {
+	//     "$ref": "TargetReference"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
 // method id "compute.globalOperations.aggregatedList":
 
 type GlobalOperationsAggregatedListCall struct {
@@ -3742,6 +4718,530 @@ func (c *GlobalOperationsListCall) Do() (*OperationList, error) {
 
 }
 
+// method id "compute.httpHealthChecks.delete":
+
+type HttpHealthChecksDeleteCall struct {
+	s               *Service
+	project         string
+	httpHealthCheck string
+	opt_            map[string]interface{}
+}
+
+// Delete: Deletes the specified HttpHealthCheck resource.
+func (r *HttpHealthChecksService) Delete(project string, httpHealthCheck string) *HttpHealthChecksDeleteCall {
+	c := &HttpHealthChecksDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.httpHealthCheck = httpHealthCheck
+	return c
+}
+
+func (c *HttpHealthChecksDeleteCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta15/projects/", "{project}/global/httpHealthChecks/{httpHealthCheck}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{httpHealthCheck}", url.QueryEscape(c.httpHealthCheck), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Operation)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the specified HttpHealthCheck resource.",
+	//   "httpMethod": "DELETE",
+	//   "id": "compute.httpHealthChecks.delete",
+	//   "parameterOrder": [
+	//     "project",
+	//     "httpHealthCheck"
+	//   ],
+	//   "parameters": {
+	//     "httpHealthCheck": {
+	//       "description": "Name of the HttpHealthCheck resource to delete.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/httpHealthChecks/{httpHealthCheck}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.httpHealthChecks.get":
+
+type HttpHealthChecksGetCall struct {
+	s               *Service
+	project         string
+	httpHealthCheck string
+	opt_            map[string]interface{}
+}
+
+// Get: Returns the specified HttpHealthCheck resource.
+func (r *HttpHealthChecksService) Get(project string, httpHealthCheck string) *HttpHealthChecksGetCall {
+	c := &HttpHealthChecksGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.httpHealthCheck = httpHealthCheck
+	return c
+}
+
+func (c *HttpHealthChecksGetCall) Do() (*HttpHealthCheck, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta15/projects/", "{project}/global/httpHealthChecks/{httpHealthCheck}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{httpHealthCheck}", url.QueryEscape(c.httpHealthCheck), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(HttpHealthCheck)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the specified HttpHealthCheck resource.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.httpHealthChecks.get",
+	//   "parameterOrder": [
+	//     "project",
+	//     "httpHealthCheck"
+	//   ],
+	//   "parameters": {
+	//     "httpHealthCheck": {
+	//       "description": "Name of the HttpHealthCheck resource to return.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/httpHealthChecks/{httpHealthCheck}",
+	//   "response": {
+	//     "$ref": "HttpHealthCheck"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.httpHealthChecks.insert":
+
+type HttpHealthChecksInsertCall struct {
+	s               *Service
+	project         string
+	httphealthcheck *HttpHealthCheck
+	opt_            map[string]interface{}
+}
+
+// Insert: Creates a HttpHealthCheck resource in the specified project
+// using the data included in the request.
+func (r *HttpHealthChecksService) Insert(project string, httphealthcheck *HttpHealthCheck) *HttpHealthChecksInsertCall {
+	c := &HttpHealthChecksInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.httphealthcheck = httphealthcheck
+	return c
+}
+
+func (c *HttpHealthChecksInsertCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.httphealthcheck)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta15/projects/", "{project}/global/httpHealthChecks")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Operation)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a HttpHealthCheck resource in the specified project using the data included in the request.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.httpHealthChecks.insert",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/httpHealthChecks",
+	//   "request": {
+	//     "$ref": "HttpHealthCheck"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.httpHealthChecks.list":
+
+type HttpHealthChecksListCall struct {
+	s       *Service
+	project string
+	opt_    map[string]interface{}
+}
+
+// List: Retrieves the list of HttpHealthCheck resources available to
+// the specified project.
+func (r *HttpHealthChecksService) List(project string) *HttpHealthChecksListCall {
+	c := &HttpHealthChecksListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter expression for
+// filtering listed resources.
+func (c *HttpHealthChecksListCall) Filter(filter string) *HttpHealthChecksListCall {
+	c.opt_["filter"] = filter
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum count of
+// results to be returned. Maximum and default value is 100.
+func (c *HttpHealthChecksListCall) MaxResults(maxResults int64) *HttpHealthChecksListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Tag returned by a
+// previous list request truncated by maxResults. Used to continue a
+// previous list request.
+func (c *HttpHealthChecksListCall) PageToken(pageToken string) *HttpHealthChecksListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+func (c *HttpHealthChecksListCall) Do() (*HttpHealthCheckList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["filter"]; ok {
+		params.Set("filter", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta15/projects/", "{project}/global/httpHealthChecks")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(HttpHealthCheckList)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the list of HttpHealthCheck resources available to the specified project.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.httpHealthChecks.list",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Filter expression for filtering listed resources.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "100",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "100",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/httpHealthChecks",
+	//   "response": {
+	//     "$ref": "HttpHealthCheckList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.httpHealthChecks.patch":
+
+type HttpHealthChecksPatchCall struct {
+	s               *Service
+	project         string
+	httpHealthCheck string
+	httphealthcheck *HttpHealthCheck
+	opt_            map[string]interface{}
+}
+
+// Patch: Updates a HttpHealthCheck resource in the specified project
+// using the data included in the request. This method supports patch
+// semantics.
+func (r *HttpHealthChecksService) Patch(project string, httpHealthCheck string, httphealthcheck *HttpHealthCheck) *HttpHealthChecksPatchCall {
+	c := &HttpHealthChecksPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.httpHealthCheck = httpHealthCheck
+	c.httphealthcheck = httphealthcheck
+	return c
+}
+
+func (c *HttpHealthChecksPatchCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.httphealthcheck)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta15/projects/", "{project}/global/httpHealthChecks/{httpHealthCheck}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{httpHealthCheck}", url.QueryEscape(c.httpHealthCheck), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Operation)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a HttpHealthCheck resource in the specified project using the data included in the request. This method supports patch semantics.",
+	//   "httpMethod": "PATCH",
+	//   "id": "compute.httpHealthChecks.patch",
+	//   "parameterOrder": [
+	//     "project",
+	//     "httpHealthCheck"
+	//   ],
+	//   "parameters": {
+	//     "httpHealthCheck": {
+	//       "description": "Name of the HttpHealthCheck resource to update.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/httpHealthChecks/{httpHealthCheck}",
+	//   "request": {
+	//     "$ref": "HttpHealthCheck"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.httpHealthChecks.update":
+
+type HttpHealthChecksUpdateCall struct {
+	s               *Service
+	project         string
+	httpHealthCheck string
+	httphealthcheck *HttpHealthCheck
+	opt_            map[string]interface{}
+}
+
+// Update: Updates a HttpHealthCheck resource in the specified project
+// using the data included in the request.
+func (r *HttpHealthChecksService) Update(project string, httpHealthCheck string, httphealthcheck *HttpHealthCheck) *HttpHealthChecksUpdateCall {
+	c := &HttpHealthChecksUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.httpHealthCheck = httpHealthCheck
+	c.httphealthcheck = httphealthcheck
+	return c
+}
+
+func (c *HttpHealthChecksUpdateCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.httphealthcheck)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta15/projects/", "{project}/global/httpHealthChecks/{httpHealthCheck}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{httpHealthCheck}", url.QueryEscape(c.httpHealthCheck), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Operation)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a HttpHealthCheck resource in the specified project using the data included in the request.",
+	//   "httpMethod": "PUT",
+	//   "id": "compute.httpHealthChecks.update",
+	//   "parameterOrder": [
+	//     "project",
+	//     "httpHealthCheck"
+	//   ],
+	//   "parameters": {
+	//     "httpHealthCheck": {
+	//       "description": "Name of the HttpHealthCheck resource to update.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/httpHealthChecks/{httpHealthCheck}",
+	//   "request": {
+	//     "$ref": "HttpHealthCheck"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
 // method id "compute.images.delete":
 
 type ImagesDeleteCall struct {
@@ -4055,7 +5555,8 @@ func (c *ImagesInsertCall) Do() (*Operation, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/compute",
-	//     "https://www.googleapis.com/auth/devstorage.read_only"
+	//     "https://www.googleapis.com/auth/devstorage.read_only",
+	//     "https://www.googleapis.com/auth/devstorage.read_write"
 	//   ]
 	// }
 
@@ -7590,6 +9091,1005 @@ func (c *SnapshotsListCall) Do() (*SnapshotList, error) {
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.targetPools.addHealthCheck":
+
+type TargetPoolsAddHealthCheckCall struct {
+	s                    *Service
+	project              string
+	region               string
+	targetPool           string
+	healthcheckreference *HealthCheckReference
+	opt_                 map[string]interface{}
+}
+
+// AddHealthCheck: Adds health check URL to targetPool.
+func (r *TargetPoolsService) AddHealthCheck(project string, region string, targetPool string, healthcheckreference *HealthCheckReference) *TargetPoolsAddHealthCheckCall {
+	c := &TargetPoolsAddHealthCheckCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.region = region
+	c.targetPool = targetPool
+	c.healthcheckreference = healthcheckreference
+	return c
+}
+
+func (c *TargetPoolsAddHealthCheckCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.healthcheckreference)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta15/projects/", "{project}/regions/{region}/targetPools/{targetPool}/addHealthCheck")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{region}", url.QueryEscape(c.region), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{targetPool}", url.QueryEscape(c.targetPool), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Operation)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Adds health check URL to targetPool.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.targetPools.addHealthCheck",
+	//   "parameterOrder": [
+	//     "project",
+	//     "region",
+	//     "targetPool"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "region": {
+	//       "description": "Name of the region scoping this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "targetPool": {
+	//       "description": "Name of the TargetPool resource to which health_check_url is to be added.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/regions/{region}/targetPools/{targetPool}/addHealthCheck",
+	//   "request": {
+	//     "$ref": "HealthCheckReference"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.targetPools.addInstance":
+
+type TargetPoolsAddInstanceCall struct {
+	s                 *Service
+	project           string
+	region            string
+	targetPool        string
+	instancereference *InstanceReference
+	opt_              map[string]interface{}
+}
+
+// AddInstance: Adds instance url to targetPool.
+func (r *TargetPoolsService) AddInstance(project string, region string, targetPool string, instancereference *InstanceReference) *TargetPoolsAddInstanceCall {
+	c := &TargetPoolsAddInstanceCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.region = region
+	c.targetPool = targetPool
+	c.instancereference = instancereference
+	return c
+}
+
+func (c *TargetPoolsAddInstanceCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancereference)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta15/projects/", "{project}/regions/{region}/targetPools/{targetPool}/addInstance")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{region}", url.QueryEscape(c.region), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{targetPool}", url.QueryEscape(c.targetPool), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Operation)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Adds instance url to targetPool.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.targetPools.addInstance",
+	//   "parameterOrder": [
+	//     "project",
+	//     "region",
+	//     "targetPool"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "region": {
+	//       "description": "Name of the region scoping this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "targetPool": {
+	//       "description": "Name of the TargetPool resource to which instance_url is to be added.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/regions/{region}/targetPools/{targetPool}/addInstance",
+	//   "request": {
+	//     "$ref": "InstanceReference"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.targetPools.aggregatedList":
+
+type TargetPoolsAggregatedListCall struct {
+	s       *Service
+	project string
+	opt_    map[string]interface{}
+}
+
+// AggregatedList: Retrieves the list of target pools grouped by scope.
+func (r *TargetPoolsService) AggregatedList(project string) *TargetPoolsAggregatedListCall {
+	c := &TargetPoolsAggregatedListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter expression for
+// filtering listed resources.
+func (c *TargetPoolsAggregatedListCall) Filter(filter string) *TargetPoolsAggregatedListCall {
+	c.opt_["filter"] = filter
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum count of
+// results to be returned. Maximum and default value is 100.
+func (c *TargetPoolsAggregatedListCall) MaxResults(maxResults int64) *TargetPoolsAggregatedListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Tag returned by a
+// previous list request truncated by maxResults. Used to continue a
+// previous list request.
+func (c *TargetPoolsAggregatedListCall) PageToken(pageToken string) *TargetPoolsAggregatedListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+func (c *TargetPoolsAggregatedListCall) Do() (*TargetPoolAggregatedList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["filter"]; ok {
+		params.Set("filter", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta15/projects/", "{project}/aggregated/targetPools")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(TargetPoolAggregatedList)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the list of target pools grouped by scope.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.targetPools.aggregatedList",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Filter expression for filtering listed resources.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "100",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "100",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/aggregated/targetPools",
+	//   "response": {
+	//     "$ref": "TargetPoolAggregatedList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.targetPools.delete":
+
+type TargetPoolsDeleteCall struct {
+	s          *Service
+	project    string
+	region     string
+	targetPool string
+	opt_       map[string]interface{}
+}
+
+// Delete: Deletes the specified TargetPool resource.
+func (r *TargetPoolsService) Delete(project string, region string, targetPool string) *TargetPoolsDeleteCall {
+	c := &TargetPoolsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.region = region
+	c.targetPool = targetPool
+	return c
+}
+
+func (c *TargetPoolsDeleteCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta15/projects/", "{project}/regions/{region}/targetPools/{targetPool}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{region}", url.QueryEscape(c.region), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{targetPool}", url.QueryEscape(c.targetPool), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Operation)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the specified TargetPool resource.",
+	//   "httpMethod": "DELETE",
+	//   "id": "compute.targetPools.delete",
+	//   "parameterOrder": [
+	//     "project",
+	//     "region",
+	//     "targetPool"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "region": {
+	//       "description": "Name of the region scoping this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "targetPool": {
+	//       "description": "Name of the TargetPool resource to delete.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/regions/{region}/targetPools/{targetPool}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.targetPools.get":
+
+type TargetPoolsGetCall struct {
+	s          *Service
+	project    string
+	region     string
+	targetPool string
+	opt_       map[string]interface{}
+}
+
+// Get: Returns the specified TargetPool resource.
+func (r *TargetPoolsService) Get(project string, region string, targetPool string) *TargetPoolsGetCall {
+	c := &TargetPoolsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.region = region
+	c.targetPool = targetPool
+	return c
+}
+
+func (c *TargetPoolsGetCall) Do() (*TargetPool, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta15/projects/", "{project}/regions/{region}/targetPools/{targetPool}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{region}", url.QueryEscape(c.region), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{targetPool}", url.QueryEscape(c.targetPool), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(TargetPool)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the specified TargetPool resource.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.targetPools.get",
+	//   "parameterOrder": [
+	//     "project",
+	//     "region",
+	//     "targetPool"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "region": {
+	//       "description": "Name of the region scoping this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "targetPool": {
+	//       "description": "Name of the TargetPool resource to return.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/regions/{region}/targetPools/{targetPool}",
+	//   "response": {
+	//     "$ref": "TargetPool"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.targetPools.getHealth":
+
+type TargetPoolsGetHealthCall struct {
+	s                 *Service
+	project           string
+	region            string
+	targetPool        string
+	instancereference *InstanceReference
+	opt_              map[string]interface{}
+}
+
+// GetHealth: Gets the most recent health check results for each IP for
+// the given instance that is referenced by given TargetPool.
+func (r *TargetPoolsService) GetHealth(project string, region string, targetPool string, instancereference *InstanceReference) *TargetPoolsGetHealthCall {
+	c := &TargetPoolsGetHealthCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.region = region
+	c.targetPool = targetPool
+	c.instancereference = instancereference
+	return c
+}
+
+func (c *TargetPoolsGetHealthCall) Do() (*TargetPoolInstanceHealth, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancereference)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta15/projects/", "{project}/regions/{region}/targetPools/{targetPool}/getHealth")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{region}", url.QueryEscape(c.region), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{targetPool}", url.QueryEscape(c.targetPool), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(TargetPoolInstanceHealth)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the most recent health check results for each IP for the given instance that is referenced by given TargetPool.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.targetPools.getHealth",
+	//   "parameterOrder": [
+	//     "project",
+	//     "region",
+	//     "targetPool"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "region": {
+	//       "description": "Name of the region scoping this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "targetPool": {
+	//       "description": "Name of the TargetPool resource to which the queried instance belongs.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/regions/{region}/targetPools/{targetPool}/getHealth",
+	//   "request": {
+	//     "$ref": "InstanceReference"
+	//   },
+	//   "response": {
+	//     "$ref": "TargetPoolInstanceHealth"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.targetPools.insert":
+
+type TargetPoolsInsertCall struct {
+	s          *Service
+	project    string
+	region     string
+	targetpool *TargetPool
+	opt_       map[string]interface{}
+}
+
+// Insert: Creates a TargetPool resource in the specified project and
+// region using the data included in the request.
+func (r *TargetPoolsService) Insert(project string, region string, targetpool *TargetPool) *TargetPoolsInsertCall {
+	c := &TargetPoolsInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.region = region
+	c.targetpool = targetpool
+	return c
+}
+
+func (c *TargetPoolsInsertCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.targetpool)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta15/projects/", "{project}/regions/{region}/targetPools")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{region}", url.QueryEscape(c.region), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Operation)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a TargetPool resource in the specified project and region using the data included in the request.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.targetPools.insert",
+	//   "parameterOrder": [
+	//     "project",
+	//     "region"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "region": {
+	//       "description": "Name of the region scoping this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/regions/{region}/targetPools",
+	//   "request": {
+	//     "$ref": "TargetPool"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.targetPools.list":
+
+type TargetPoolsListCall struct {
+	s       *Service
+	project string
+	region  string
+	opt_    map[string]interface{}
+}
+
+// List: Retrieves the list of TargetPool resources available to the
+// specified project and region.
+func (r *TargetPoolsService) List(project string, region string) *TargetPoolsListCall {
+	c := &TargetPoolsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.region = region
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter expression for
+// filtering listed resources.
+func (c *TargetPoolsListCall) Filter(filter string) *TargetPoolsListCall {
+	c.opt_["filter"] = filter
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum count of
+// results to be returned. Maximum and default value is 100.
+func (c *TargetPoolsListCall) MaxResults(maxResults int64) *TargetPoolsListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Tag returned by a
+// previous list request truncated by maxResults. Used to continue a
+// previous list request.
+func (c *TargetPoolsListCall) PageToken(pageToken string) *TargetPoolsListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+func (c *TargetPoolsListCall) Do() (*TargetPoolList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["filter"]; ok {
+		params.Set("filter", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta15/projects/", "{project}/regions/{region}/targetPools")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{region}", url.QueryEscape(c.region), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(TargetPoolList)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the list of TargetPool resources available to the specified project and region.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.targetPools.list",
+	//   "parameterOrder": [
+	//     "project",
+	//     "region"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Filter expression for filtering listed resources.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "100",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "100",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "region": {
+	//       "description": "Name of the region scoping this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/regions/{region}/targetPools",
+	//   "response": {
+	//     "$ref": "TargetPoolList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.targetPools.removeHealthCheck":
+
+type TargetPoolsRemoveHealthCheckCall struct {
+	s                    *Service
+	project              string
+	region               string
+	targetPool           string
+	healthcheckreference *HealthCheckReference
+	opt_                 map[string]interface{}
+}
+
+// RemoveHealthCheck: Removes health check URL from targetPool.
+func (r *TargetPoolsService) RemoveHealthCheck(project string, region string, targetPool string, healthcheckreference *HealthCheckReference) *TargetPoolsRemoveHealthCheckCall {
+	c := &TargetPoolsRemoveHealthCheckCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.region = region
+	c.targetPool = targetPool
+	c.healthcheckreference = healthcheckreference
+	return c
+}
+
+func (c *TargetPoolsRemoveHealthCheckCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.healthcheckreference)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta15/projects/", "{project}/regions/{region}/targetPools/{targetPool}/removeHealthCheck")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{region}", url.QueryEscape(c.region), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{targetPool}", url.QueryEscape(c.targetPool), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Operation)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Removes health check URL from targetPool.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.targetPools.removeHealthCheck",
+	//   "parameterOrder": [
+	//     "project",
+	//     "region",
+	//     "targetPool"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "region": {
+	//       "description": "Name of the region scoping this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "targetPool": {
+	//       "description": "Name of the TargetPool resource to which health_check_url is to be removed.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/regions/{region}/targetPools/{targetPool}/removeHealthCheck",
+	//   "request": {
+	//     "$ref": "HealthCheckReference"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.targetPools.removeInstance":
+
+type TargetPoolsRemoveInstanceCall struct {
+	s                 *Service
+	project           string
+	region            string
+	targetPool        string
+	instancereference *InstanceReference
+	opt_              map[string]interface{}
+}
+
+// RemoveInstance: Removes instance URL from targetPool.
+func (r *TargetPoolsService) RemoveInstance(project string, region string, targetPool string, instancereference *InstanceReference) *TargetPoolsRemoveInstanceCall {
+	c := &TargetPoolsRemoveInstanceCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.region = region
+	c.targetPool = targetPool
+	c.instancereference = instancereference
+	return c
+}
+
+func (c *TargetPoolsRemoveInstanceCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancereference)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta15/projects/", "{project}/regions/{region}/targetPools/{targetPool}/removeInstance")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{region}", url.QueryEscape(c.region), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{targetPool}", url.QueryEscape(c.targetPool), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Operation)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Removes instance URL from targetPool.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.targetPools.removeInstance",
+	//   "parameterOrder": [
+	//     "project",
+	//     "region",
+	//     "targetPool"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "region": {
+	//       "description": "Name of the region scoping this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "targetPool": {
+	//       "description": "Name of the TargetPool resource to which instance_url is to be removed.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/regions/{region}/targetPools/{targetPool}/removeInstance",
+	//   "request": {
+	//     "$ref": "InstanceReference"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
 

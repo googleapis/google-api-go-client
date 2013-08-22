@@ -467,6 +467,9 @@ type Change struct {
 	// Kind: This is always drive#change.
 	Kind string `json:"kind,omitempty"`
 
+	// ModificationDate: The time of this modification.
+	ModificationDate string `json:"modificationDate,omitempty"`
+
 	// SelfLink: A link back to this change.
 	SelfLink string `json:"selfLink,omitempty"`
 }
@@ -495,35 +498,41 @@ type ChangeList struct {
 }
 
 type Channel struct {
-	// Address: The address of the receiving entity where events are
-	// delivered. Specific to the channel type.
+	// Address: The address where notifications are delivered for this
+	// channel.
 	Address string `json:"address,omitempty"`
 
-	// Expiration: The expiration instant for this channel if it is defined.
+	// Expiration: Date and time of notification channel expiration,
+	// expressed as a Unix timestamp, in milliseconds. Optional.
 	Expiration int64 `json:"expiration,omitempty,string"`
 
-	// Id: A UUID for the channel
+	// Id: A UUID or similar unique string that identifies this channel.
 	Id string `json:"id,omitempty"`
 
-	// Kind: A channel watching an API resource
+	// Kind: Identifies this as a notification channel used to watch for
+	// changes to a resource. Value: the fixed string "api#channel".
 	Kind string `json:"kind,omitempty"`
 
-	// Params: Additional parameters controlling delivery channel behavior
+	// Params: Additional parameters controlling delivery channel behavior.
+	// Optional.
 	Params *ChannelParams `json:"params,omitempty"`
 
-	// ResourceId: An opaque id that identifies the resource that is being
-	// watched. Stable across different API versions
+	// Payload: A Boolean value to indicate whether payload is wanted.
+	// Optional.
+	Payload bool `json:"payload,omitempty"`
+
+	// ResourceId: An opaque ID that identifies the resource being watched
+	// on this channel. Stable across different API versions.
 	ResourceId string `json:"resourceId,omitempty"`
 
-	// ResourceUri: The canonicalized ID of the watched resource.
+	// ResourceUri: A version-specific identifier for the watched resource.
 	ResourceUri string `json:"resourceUri,omitempty"`
 
-	// Token: An arbitrary string associated with the channel that is
-	// delivered to the target address with each event delivered over this
-	// channel.
+	// Token: An arbitrary string delivered to the target address with each
+	// notification delivered over this channel. Optional.
 	Token string `json:"token,omitempty"`
 
-	// Type: The type of delivery mechanism used by this channel
+	// Type: The type of delivery mechanism used for this channel.
 	Type string `json:"type,omitempty"`
 }
 
@@ -714,6 +723,9 @@ type File struct {
 	// AppDataContents: Whether this file is in the appdata folder.
 	AppDataContents bool `json:"appDataContents,omitempty"`
 
+	// Copyable: Whether the file can be copied by the current user.
+	Copyable bool `json:"copyable,omitempty"`
+
 	// CreatedDate: Create time for this file (formatted ISO8601 timestamp).
 	CreatedDate string `json:"createdDate,omitempty"`
 
@@ -834,6 +846,9 @@ type File struct {
 	// folders. On insert, if no folders are provided, the file will be
 	// placed in the default root folder.
 	Parents []*ParentReference `json:"parents,omitempty"`
+
+	// Properties: The list of properties.
+	Properties []*Property `json:"properties,omitempty"`
 
 	// QuotaBytesUsed: The number of quota bytes used by this file.
 	QuotaBytesUsed int64 `json:"quotaBytesUsed,omitempty,string"`
@@ -1052,6 +1067,17 @@ type Permission struct {
 	// AuthKey: The authkey parameter required for this permission.
 	AuthKey string `json:"authKey,omitempty"`
 
+	// Domain: The domain name of the entity this permission refers to. This
+	// is an output-only field which is populated when the permission type
+	// is "user", "group" or "domain".
+	Domain string `json:"domain,omitempty"`
+
+	// EmailAddress: The email address of the user this permission refers
+	// to. This is an output-only field which is populated when the
+	// permission type is "user" and the given user's Google+ profile
+	// privacy settings allow exposing their email address.
+	EmailAddress string `json:"emailAddress,omitempty"`
+
 	// Etag: The ETag of the permission.
 	Etag string `json:"etag,omitempty"`
 
@@ -1091,6 +1117,14 @@ type Permission struct {
 
 	// WithLink: Whether the link is required for this permission.
 	WithLink bool `json:"withLink,omitempty"`
+}
+
+type PermissionId struct {
+	// Id: The permission ID.
+	Id string `json:"id,omitempty"`
+
+	// Kind: This is always drive#permissionId.
+	Kind string `json:"kind,omitempty"`
 }
 
 type PermissionList struct {
@@ -1655,7 +1689,7 @@ func (c *ChangesListCall) Do() (*ChangeList, error) {
 	//       "description": "Maximum number of changes to return.",
 	//       "format": "int32",
 	//       "location": "query",
-	//       "minimum": "0",
+	//       "minimum": "1",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
@@ -1804,7 +1838,7 @@ func (c *ChangesWatchCall) Do() (*Channel, error) {
 	//       "description": "Maximum number of changes to return.",
 	//       "format": "int32",
 	//       "location": "query",
-	//       "minimum": "0",
+	//       "minimum": "1",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
@@ -1821,7 +1855,8 @@ func (c *ChangesWatchCall) Do() (*Channel, error) {
 	//   },
 	//   "path": "changes/watch",
 	//   "request": {
-	//     "$ref": "Channel"
+	//     "$ref": "Channel",
+	//     "parameterName": "resource"
 	//   },
 	//   "response": {
 	//     "$ref": "Channel"
@@ -1847,7 +1882,7 @@ type ChannelsStopCall struct {
 	opt_    map[string]interface{}
 }
 
-// Stop:
+// Stop: Stop watching resources through this channel
 func (r *ChannelsService) Stop(channel *Channel) *ChannelsStopCall {
 	c := &ChannelsStopCall{s: r.s, opt_: make(map[string]interface{})}
 	c.channel = channel
@@ -1879,11 +1914,13 @@ func (c *ChannelsStopCall) Do() error {
 	}
 	return nil
 	// {
+	//   "description": "Stop watching resources through this channel",
 	//   "httpMethod": "POST",
 	//   "id": "drive.channels.stop",
 	//   "path": "channels/stop",
 	//   "request": {
-	//     "$ref": "Channel"
+	//     "$ref": "Channel",
+	//     "parameterName": "resource"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
@@ -4319,7 +4356,8 @@ func (c *FilesWatchCall) Do() (*Channel, error) {
 	//   },
 	//   "path": "files/{fileId}/watch",
 	//   "request": {
-	//     "$ref": "Channel"
+	//     "$ref": "Channel",
+	//     "parameterName": "resource"
 	//   },
 	//   "response": {
 	//     "$ref": "Channel"
@@ -4765,6 +4803,75 @@ func (c *PermissionsGetCall) Do() (*Permission, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.file",
+	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
+	//     "https://www.googleapis.com/auth/drive.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "drive.permissions.getIdForEmail":
+
+type PermissionsGetIdForEmailCall struct {
+	s     *Service
+	email string
+	opt_  map[string]interface{}
+}
+
+// GetIdForEmail: Returns the permission ID for an email address.
+func (r *PermissionsService) GetIdForEmail(email string) *PermissionsGetIdForEmailCall {
+	c := &PermissionsGetIdForEmailCall{s: r.s, opt_: make(map[string]interface{})}
+	c.email = email
+	return c
+}
+
+func (c *PermissionsGetIdForEmailCall) Do() (*PermissionId, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "permissionIds/{email}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{email}", url.QueryEscape(c.email), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(PermissionId)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the permission ID for an email address.",
+	//   "httpMethod": "GET",
+	//   "id": "drive.permissions.getIdForEmail",
+	//   "parameterOrder": [
+	//     "email"
+	//   ],
+	//   "parameters": {
+	//     "email": {
+	//       "description": "The email address for which to return a permission ID",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "permissionIds/{email}",
+	//   "response": {
+	//     "$ref": "PermissionId"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.appdata",
+	//     "https://www.googleapis.com/auth/drive.apps.readonly",
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"

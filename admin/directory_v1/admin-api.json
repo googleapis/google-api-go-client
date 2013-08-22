@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"BgGnx7p-6wsAbOn4St99QhtBGbA/_ICxUypzsDpwsaclpiinPL7H344\"",
+ "etag": "\"wtgj9ZncHCe-ShJM8RewHb1DgWI/WUSFuYL5NdJtZkvh4wYYaCh3zs8\"",
  "discoveryVersion": "v1",
  "id": "admin:directory_v1",
  "name": "admin",
  "canonicalName": "directory",
  "version": "directory_v1",
- "revision": "20130516",
+ "revision": "20130718",
  "title": "Admin Directory API",
  "description": "Apps Directory API lets you view and manage enterprise resources like user, groups, OrgUnit, devices.",
  "ownerDomain": "google.com",
@@ -638,6 +638,10 @@
     "customerId": {
      "type": "string",
      "description": "CustomerId of User (Read-only)"
+    },
+    "deletionTime": {
+     "type": "string",
+     "format": "date-time"
     },
     "emails": {
      "type": "array",

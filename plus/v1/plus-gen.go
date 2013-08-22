@@ -113,6 +113,9 @@ type Acl struct {
 	// Description: Description of the access granted, suitable for display.
 	Description string `json:"description,omitempty"`
 
+	// DomainRestricted: Whether access is restricted to the domain.
+	DomainRestricted bool `json:"domainRestricted,omitempty"`
+
 	// Items: The list of access entries.
 	Items []*PlusAclentryResource `json:"items,omitempty"`
 
@@ -188,11 +191,12 @@ type Activity struct {
 	// Url: The link to this activity.
 	Url string `json:"url,omitempty"`
 
-	// Verb: This activity's verb, indicating what action was performed.
-	// Possible values include (but are not limited to):
-	// - "post" -
-	// Publish content to the stream.
-	// - "share" - Reshare an activity.
+	// Verb: This activity's verb, which indicates the action that was
+	// performed. Possible values include, but are not limited to, the
+	// following values:
+	// - "post" - Publish content to the stream.
+	// -
+	// "share" - Reshare an activity.
 	Verb string `json:"verb,omitempty"`
 }
 
@@ -200,7 +204,7 @@ type ActivityActor struct {
 	// DisplayName: The name of the actor, suitable for display.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Id: The ID of the actor's person resource.
+	// Id: The ID of the actor's Person resource.
 	Id string `json:"id,omitempty"`
 
 	// Image: The image representation of the actor.
@@ -214,46 +218,46 @@ type ActivityActor struct {
 }
 
 type ActivityActorImage struct {
-	// Url: The URL of the actor's profile photo. To re-size the image and
+	// Url: The URL of the actor's profile photo. To resize the image and
 	// crop it to a square, append the query string ?sz=x, where x is the
 	// dimension in pixels of each side.
 	Url string `json:"url,omitempty"`
 }
 
 type ActivityActorName struct {
-	// FamilyName: The family name (last name) of the actor.
+	// FamilyName: The family name ("last name") of the actor.
 	FamilyName string `json:"familyName,omitempty"`
 
-	// GivenName: The given name (first name) of the actor.
+	// GivenName: The given name ("first name") of the actor.
 	GivenName string `json:"givenName,omitempty"`
 }
 
 type ActivityObject struct {
-	// Actor: If this activity's object is itself another activity (for
-	// example, when a person reshares an activity), this property specifies
-	// the original activity's actor.
+	// Actor: If this activity's object is itself another activity, such as
+	// when a person reshares an activity, this property specifies the
+	// original activity's actor.
 	Actor *ActivityObjectActor `json:"actor,omitempty"`
 
 	// Attachments: The media objects attached to this activity.
 	Attachments []*ActivityObjectAttachments `json:"attachments,omitempty"`
 
-	// Content: The HTML-formatted content, suitable for display.
+	// Content: The HTML-formatted content, which is suitable for display.
 	Content string `json:"content,omitempty"`
 
 	// Id: The ID of the object. When resharing an activity, this is the ID
-	// of the activity being reshared.
+	// of the activity that is being reshared.
 	Id string `json:"id,omitempty"`
 
-	// ObjectType: The type of the object. Possible values include (but are
-	// not limited to):
+	// ObjectType: The type of the object. Possible values include, but are
+	// not limited to, the following values:
 	// - "note" - Textual content.
-	// - "activity" - A
-	// Google+ activity.
+	//
+	// - "activity" - A Google+ activity.
 	ObjectType string `json:"objectType,omitempty"`
 
-	// OriginalContent: The content (text) as provided by the author, stored
-	// without any HTML formatting. When creating or updating an activity,
-	// this value must be supplied as plain text in the request.
+	// OriginalContent: The content (text) as provided by the author, which
+	// is stored without any HTML formatting. When creating or updating an
+	// activity, this value must be supplied as plain text in the request.
 	OriginalContent string `json:"originalContent,omitempty"`
 
 	// Plusoners: People who +1'd this activity.
@@ -270,7 +274,8 @@ type ActivityObject struct {
 }
 
 type ActivityObjectActor struct {
-	// DisplayName: The original actor's name, suitable for display.
+	// DisplayName: The original actor's name, which is suitable for
+	// display.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Id: ID of the original actor.
@@ -294,8 +299,8 @@ type ActivityObjectAttachments struct {
 	// for other types.
 	Content string `json:"content,omitempty"`
 
-	// DisplayName: The title of the attachment (such as a photo caption or
-	// an article title).
+	// DisplayName: The title of the attachment, such as a photo caption or
+	// an article title.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Embed: If the attachment is a video, the embeddable link.
@@ -310,21 +315,21 @@ type ActivityObjectAttachments struct {
 	// Image: The preview image for photos or videos.
 	Image *ActivityObjectAttachmentsImage `json:"image,omitempty"`
 
-	// ObjectType: The type of media object. Possible values include (but
-	// are not limited to):
+	// ObjectType: The type of media object. Possible values include, but
+	// are not limited to, the following values:
 	// - "photo" - A photo.
-	// - "album" - A photo
-	// album.
+	// -
+	// "album" - A photo album.
 	// - "video" - A video.
-	// - "article" - An article, specified by
-	// a link.
+	// - "article" - An
+	// article, specified by a link.
 	ObjectType string `json:"objectType,omitempty"`
 
-	// Thumbnails: If the attachment is an album, potential additional
-	// thumbnails from the album.
+	// Thumbnails: If the attachment is an album, this property is a list of
+	// potential additional thumbnails from the album.
 	Thumbnails []*ActivityObjectAttachmentsThumbnails `json:"thumbnails,omitempty"`
 
-	// Url: The link to the attachment, should be of type text/html.
+	// Url: The link to the attachment; should be of type text/html.
 	Url string `json:"url,omitempty"`
 }
 
@@ -343,7 +348,7 @@ type ActivityObjectAttachmentsFullImage struct {
 	// Type: Media type of the link.
 	Type string `json:"type,omitempty"`
 
-	// Url: URL to the image.
+	// Url: URL of the image.
 	Url string `json:"url,omitempty"`
 
 	// Width: The width, in pixels, of the linked resource.
@@ -357,7 +362,7 @@ type ActivityObjectAttachmentsImage struct {
 	// Type: Media type of the link.
 	Type string `json:"type,omitempty"`
 
-	// Url: Image url.
+	// Url: Image URL.
 	Url string `json:"url,omitempty"`
 
 	// Width: The width, in pixels, of the linked resource.
@@ -371,7 +376,7 @@ type ActivityObjectAttachmentsThumbnails struct {
 	// Image: Image resource.
 	Image *ActivityObjectAttachmentsThumbnailsImage `json:"image,omitempty"`
 
-	// Url: URL to the webpage containing the image.
+	// Url: URL of the webpage containing the image.
 	Url string `json:"url,omitempty"`
 }
 
@@ -442,10 +447,11 @@ type ActivityFeed struct {
 	// return the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: Link to this activity resource.
+	// SelfLink: Link to this activities resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
-	// Title: The title of this collection of activities.
+	// Title: The title of this collection of activities, which is a
+	// truncated portion of the content.
 	Title string `json:"title,omitempty"`
 
 	// Updated: The time at which this collection of activities was last
@@ -502,12 +508,12 @@ type CommentActor struct {
 	// Image: The image representation of this actor.
 	Image *CommentActorImage `json:"image,omitempty"`
 
-	// Url: A link to the person resource for this actor.
+	// Url: A link to the Person resource for this actor.
 	Url string `json:"url,omitempty"`
 }
 
 type CommentActorImage struct {
-	// Url: The URL of the actor's profile photo. To re-size the image and
+	// Url: The URL of the actor's profile photo. To resize the image and
 	// crop it to a square, append the query string ?sz=x, where x is the
 	// dimension in pixels of each side.
 	Url string `json:"url,omitempty"`
@@ -884,17 +890,17 @@ type Person struct {
 	// CurrentLocation: The current location for this person.
 	CurrentLocation string `json:"currentLocation,omitempty"`
 
-	// DisplayName: The name of this person, suitable for display.
+	// DisplayName: The name of this person, which is suitable for display.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Etag: ETag of this response for caching purposes.
 	Etag string `json:"etag,omitempty"`
 
-	// Gender: The person's gender. Possible values include (but are not
-	// limited to):
+	// Gender: The person's gender. Possible values include, but are not
+	// limited to, the following values:
 	// - "male" - Male gender.
-	// - "female" - Female gender.
-	//
+	// -
+	// "female" - Female gender.
 	// - "other" - Other.
 	Gender string `json:"gender,omitempty"`
 
@@ -920,10 +926,10 @@ type Person struct {
 	// Nickname: The nickname of this person.
 	Nickname string `json:"nickname,omitempty"`
 
-	// ObjectType: Type of person within Google+. Possible values include
-	// (but are not limited to):
-	// - "person" - represents an actual person.
-	//
+	// ObjectType: Type of person within Google+. Possible values include,
+	// but are not limited to, the following values:
+	// - "person" -
+	// represents an actual person.
 	// - "page" - represents a page.
 	ObjectType string `json:"objectType,omitempty"`
 
@@ -934,28 +940,28 @@ type Person struct {
 	// PlacesLived: A list of places where this person has lived.
 	PlacesLived []*PersonPlacesLived `json:"placesLived,omitempty"`
 
-	// PlusOneCount: If a Google+ Page, the number of people who have +1'ed
+	// PlusOneCount: If a Google+ Page, the number of people who have +1'd
 	// this page.
 	PlusOneCount int64 `json:"plusOneCount,omitempty"`
 
 	// RelationshipStatus: The person's relationship status. Possible values
-	// include (but are not limited to):
-	// - "single" - Person is single.
+	// include, but are not limited to, the following values:
+	// - "single" -
+	// Person is single.
+	// - "in_a_relationship" - Person is in a
+	// relationship.
+	// - "engaged" - Person is engaged.
+	// - "married" - Person
+	// is married.
+	// - "its_complicated" - The relationship is complicated.
+	//
+	// - "open_relationship" - Person is in an open relationship.
 	// -
-	// "in_a_relationship" - Person is in a relationship.
-	// - "engaged" -
-	// Person is engaged.
-	// - "married" - Person is married.
-	// -
-	// "its_complicated" - The relationship is complicated.
-	// -
-	// "open_relationship" - Person is in an open relationship.
-	// - "widowed"
-	// - Person is widowed.
-	// - "in_domestic_partnership" - Person is in a
-	// domestic partnership.
-	// - "in_civil_union" - Person is in a civil
-	// union.
+	// "widowed" - Person is widowed.
+	// - "in_domestic_partnership" - Person
+	// is in a domestic partnership.
+	// - "in_civil_union" - Person is in a
+	// civil union.
 	RelationshipStatus string `json:"relationshipStatus,omitempty"`
 
 	// Tagline: The brief description (tagline) of this person.
@@ -986,37 +992,38 @@ type PersonCover struct {
 	// CoverPhoto: The person's primary cover image.
 	CoverPhoto *PersonCoverCoverPhoto `json:"coverPhoto,omitempty"`
 
-	// Layout: The layout of the cover art. Possible values include (but are
-	// not limited to):
-	// - "banner" - One large image banner.
+	// Layout: The layout of the cover art. Possible values include, but are
+	// not limited to, the following values:
+	// - "banner" - One large image
+	// banner.
 	Layout string `json:"layout,omitempty"`
 }
 
 type PersonCoverCoverInfo struct {
 	// LeftImageOffset: The difference between the left position of the
-	// image cover and the actual displayed cover image. Only valid for
-	// BANNER layout.
+	// cover image and the actual displayed cover image. Only valid for
+	// banner layout.
 	LeftImageOffset int64 `json:"leftImageOffset,omitempty"`
 
-	// TopImageOffset: The difference between the top position of the image
-	// cover and the actual displayed cover image. Only valid for BANNER
+	// TopImageOffset: The difference between the top position of the cover
+	// image and the actual displayed cover image. Only valid for banner
 	// layout.
 	TopImageOffset int64 `json:"topImageOffset,omitempty"`
 }
 
 type PersonCoverCoverPhoto struct {
-	// Height: The height to the image.
+	// Height: The height of the image.
 	Height int64 `json:"height,omitempty"`
 
-	// Url: The url to the image.
+	// Url: The URL of the image.
 	Url string `json:"url,omitempty"`
 
-	// Width: The width to the image.
+	// Width: The width of the image.
 	Width int64 `json:"width,omitempty"`
 }
 
 type PersonImage struct {
-	// Url: The URL of the person's profile photo. To re-size the image and
+	// Url: The URL of the person's profile photo. To resize the image and
 	// crop it to a square, append the query string ?sz=x, where x is the
 	// dimension in pixels of each side.
 	Url string `json:"url,omitempty"`
@@ -1053,7 +1060,7 @@ type PersonOrganizations struct {
 	// organization. Deprecated.
 	Description string `json:"description,omitempty"`
 
-	// EndDate: The date the person left this organization.
+	// EndDate: The date that the person left this organization.
 	EndDate string `json:"endDate,omitempty"`
 
 	// Location: The location of this organization. Deprecated.
@@ -1063,19 +1070,20 @@ type PersonOrganizations struct {
 	Name string `json:"name,omitempty"`
 
 	// Primary: If "true", indicates this organization is the person's
-	// primary one (typically interpreted as current one).
+	// primary one, which is typically interpreted as the current one.
 	Primary bool `json:"primary,omitempty"`
 
-	// StartDate: The date the person joined this organization.
+	// StartDate: The date that the person joined this organization.
 	StartDate string `json:"startDate,omitempty"`
 
 	// Title: The person's job title or role within the organization.
 	Title string `json:"title,omitempty"`
 
-	// Type: The type of organization. Possible values include (but are not
-	// limited to):
+	// Type: The type of organization. Possible values include, but are not
+	// limited to, the following values:
 	// - "work" - Work.
-	// - "school" - School.
+	// - "school" -
+	// School.
 	Type string `json:"type,omitempty"`
 }
 
@@ -1093,14 +1101,15 @@ type PersonUrls struct {
 	// Label: The label of the URL.
 	Label string `json:"label,omitempty"`
 
-	// Type: The type of URL. Possible values include (but are not limited
-	// to):
-	// - "otherProfile" - URL for another profile.
-	// - "contributor" -
-	// URL for which this person is a contributor to.
-	// - "website" - URL for
-	// this Google+ Page's primary website.
-	// - "other" - Other.
+	// Type: The type of URL. Possible values include, but are not limited
+	// to, the following values:
+	// - "otherProfile" - URL for another
+	// profile.
+	// - "contributor" - URL to a site for which this person is a
+	// contributor.
+	// - "website" - URL for this Google+ Page's primary
+	// website.
+	// - "other" - Other URL.
 	Type string `json:"type,omitempty"`
 
 	// Value: The URL value.
@@ -1151,10 +1160,10 @@ type PlusAclentryResource struct {
 	// - "myCircles" - Access to
 	// members of all the person's circles.
 	// - "extendedCircles" - Access to
-	// members of everyone in a person's circles, plus all of the people in
-	// their circles.
-	// - "domain" - Access to members of the person's Google
-	// Apps domain.
+	// members of all the person's circles, plus all of the people in their
+	// circles.
+	// - "domain" - Access to members of the person's Google Apps
+	// domain.
 	// - "public" - Access to anyone on the web.
 	Type string `json:"type,omitempty"`
 }

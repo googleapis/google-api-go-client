@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"BgGnx7p-6wsAbOn4St99QhtBGbA/blOEPd9XLaVQKZp7pexaIpilnaw\"",
+ "etag": "\"wtgj9ZncHCe-ShJM8RewHb1DgWI/grOWM_9ZOSeAE0jm1s5h3RFFyrU\"",
  "discoveryVersion": "v1",
  "id": "drive:v2",
  "name": "drive",
  "version": "v2",
- "revision": "20130624",
+ "revision": "20130819",
  "title": "Drive API",
  "description": "The API to interact with Drive.",
  "ownerDomain": "google.com",
@@ -449,6 +449,11 @@
      "description": "This is always drive#change.",
      "default": "drive#change"
     },
+    "modificationDate": {
+     "type": "string",
+     "description": "The time of this modification.",
+     "format": "date-time"
+    },
     "selfLink": {
      "type": "string",
      "description": "A link back to this change."
@@ -501,45 +506,49 @@
    "properties": {
     "address": {
      "type": "string",
-     "description": "The address of the receiving entity where events are delivered. Specific to the channel type."
+     "description": "The address where notifications are delivered for this channel."
     },
     "expiration": {
      "type": "string",
-     "description": "The expiration instant for this channel if it is defined.",
+     "description": "Date and time of notification channel expiration, expressed as a Unix timestamp, in milliseconds. Optional.",
      "format": "int64"
     },
     "id": {
      "type": "string",
-     "description": "A UUID for the channel"
+     "description": "A UUID or similar unique string that identifies this channel."
     },
     "kind": {
      "type": "string",
-     "description": "A channel watching an API resource",
+     "description": "Identifies this as a notification channel used to watch for changes to a resource. Value: the fixed string \"api#channel\".",
      "default": "api#channel"
     },
     "params": {
      "type": "object",
-     "description": "Additional parameters controlling delivery channel behavior",
+     "description": "Additional parameters controlling delivery channel behavior. Optional.",
      "additionalProperties": {
       "type": "string",
       "description": "Declares a new parameter by name."
      }
     },
+    "payload": {
+     "type": "boolean",
+     "description": "A Boolean value to indicate whether payload is wanted. Optional."
+    },
     "resourceId": {
      "type": "string",
-     "description": "An opaque id that identifies the resource that is being watched. Stable across different API versions"
+     "description": "An opaque ID that identifies the resource being watched on this channel. Stable across different API versions."
     },
     "resourceUri": {
      "type": "string",
-     "description": "The canonicalized ID of the watched resource."
+     "description": "A version-specific identifier for the watched resource."
     },
     "token": {
      "type": "string",
-     "description": "An arbitrary string associated with the channel that is delivered to the target address with each event delivered over this channel."
+     "description": "An arbitrary string delivered to the target address with each notification delivered over this channel. Optional."
     },
     "type": {
      "type": "string",
-     "description": "The type of delivery mechanism used by this channel"
+     "description": "The type of delivery mechanism used for this channel."
     }
    }
   },
@@ -821,6 +830,10 @@
     "appDataContents": {
      "type": "boolean",
      "description": "Whether this file is in the appdata folder."
+    },
+    "copyable": {
+     "type": "boolean",
+     "description": "Whether the file can be copied by the current user."
     },
     "createdDate": {
      "type": "string",
@@ -1105,6 +1118,13 @@
       "$ref": "ParentReference"
      }
     },
+    "properties": {
+     "type": "array",
+     "description": "The list of properties.",
+     "items": {
+      "$ref": "Property"
+     }
+    },
     "quotaBytesUsed": {
      "type": "string",
      "description": "The number of quota bytes used by this file.",
@@ -1275,6 +1295,14 @@
      "type": "string",
      "description": "The authkey parameter required for this permission."
     },
+    "domain": {
+     "type": "string",
+     "description": "The domain name of the entity this permission refers to. This is an output-only field which is populated when the permission type is \"user\", \"group\" or \"domain\"."
+    },
+    "emailAddress": {
+     "type": "string",
+     "description": "The email address of the user this permission refers to. This is an output-only field which is populated when the permission type is \"user\" and the given user's Google+ profile privacy settings allow exposing their email address."
+    },
     "etag": {
      "type": "string",
      "description": "The ETag of the permission."
@@ -1330,6 +1358,22 @@
     "withLink": {
      "type": "boolean",
      "description": "Whether the link is required for this permission."
+    }
+   }
+  },
+  "PermissionId": {
+   "id": "PermissionId",
+   "type": "object",
+   "description": "An ID for a user or group as seen in Permission items.",
+   "properties": {
+    "id": {
+     "type": "string",
+     "description": "The permission ID."
+    },
+    "kind": {
+     "type": "string",
+     "description": "This is always drive#permissionId.",
+     "default": "drive#permissionId"
     }
    }
   },
@@ -1701,7 +1745,7 @@
        "description": "Maximum number of changes to return.",
        "default": "100",
        "format": "int32",
-       "minimum": "0",
+       "minimum": "1",
        "location": "query"
       },
       "pageToken": {
@@ -1752,7 +1796,7 @@
        "description": "Maximum number of changes to return.",
        "default": "100",
        "format": "int32",
-       "minimum": "0",
+       "minimum": "1",
        "location": "query"
       },
       "pageToken": {
@@ -1768,7 +1812,8 @@
       }
      },
      "request": {
-      "$ref": "Channel"
+      "$ref": "Channel",
+      "parameterName": "resource"
      },
      "response": {
       "$ref": "Channel"
@@ -1791,8 +1836,10 @@
      "id": "drive.channels.stop",
      "path": "channels/stop",
      "httpMethod": "POST",
+     "description": "Stop watching resources through this channel",
      "request": {
-      "$ref": "Channel"
+      "$ref": "Channel",
+      "parameterName": "resource"
      },
      "scopes": [
       "https://www.googleapis.com/auth/drive",
@@ -2753,7 +2800,8 @@
       "fileId"
      ],
      "request": {
-      "$ref": "Channel"
+      "$ref": "Channel",
+      "parameterName": "resource"
      },
      "response": {
       "$ref": "Channel"
@@ -2949,6 +2997,34 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/drive",
+      "https://www.googleapis.com/auth/drive.file",
+      "https://www.googleapis.com/auth/drive.metadata.readonly",
+      "https://www.googleapis.com/auth/drive.readonly"
+     ]
+    },
+    "getIdForEmail": {
+     "id": "drive.permissions.getIdForEmail",
+     "path": "permissionIds/{email}",
+     "httpMethod": "GET",
+     "description": "Returns the permission ID for an email address.",
+     "parameters": {
+      "email": {
+       "type": "string",
+       "description": "The email address for which to return a permission ID",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "email"
+     ],
+     "response": {
+      "$ref": "PermissionId"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/drive",
+      "https://www.googleapis.com/auth/drive.appdata",
+      "https://www.googleapis.com/auth/drive.apps.readonly",
       "https://www.googleapis.com/auth/drive.file",
       "https://www.googleapis.com/auth/drive.metadata.readonly",
       "https://www.googleapis.com/auth/drive.readonly"

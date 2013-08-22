@@ -76,12 +76,11 @@ type AllocateIdsRequest struct {
 }
 
 type AllocateIdsResponse struct {
+	Header *ResponseHeader `json:"header,omitempty"`
+
 	// Keys: The keys specified in the request (in the same order), each
 	// with its key path completed with a newly allocated ID.
 	Keys []*Key `json:"keys,omitempty"`
-
-	// Kind: The kind, fixed to "datastore#allocateIdsResponse".
-	Kind string `json:"kind,omitempty"`
 }
 
 type BeginTransactionRequest struct {
@@ -96,8 +95,7 @@ type BeginTransactionRequest struct {
 }
 
 type BeginTransactionResponse struct {
-	// Kind: The kind, fixed to "datastore#beginTransactionResponse".
-	Kind string `json:"kind,omitempty"`
+	Header *ResponseHeader `json:"header,omitempty"`
 
 	// Transaction: The transaction identifier (always present).
 	Transaction string `json:"transaction,omitempty"`
@@ -109,10 +107,10 @@ type BlindWriteRequest struct {
 }
 
 type BlindWriteResponse struct {
-	// Kind: The kind, fixed to "datastore#blindWriteResponse".
-	Kind string `json:"kind,omitempty"`
+	Header *ResponseHeader `json:"header,omitempty"`
 
-	// MutationResult: The result of performing the mutation.
+	// MutationResult: The result of performing the mutation (always
+	// present).
 	MutationResult *MutationResult `json:"mutationResult,omitempty"`
 }
 
@@ -127,8 +125,7 @@ type CommitRequest struct {
 }
 
 type CommitResponse struct {
-	// Kind: The kind, fixed to "datastore#commitResponse".
-	Kind string `json:"kind,omitempty"`
+	Header *ResponseHeader `json:"header,omitempty"`
 
 	// MutationResult: The result of performing the mutation (if any).
 	MutationResult *MutationResult `json:"mutationResult,omitempty"`
@@ -173,10 +170,41 @@ type Filter struct {
 	PropertyFilter *PropertyFilter `json:"propertyFilter,omitempty"`
 }
 
+type GqlQuery struct {
+	// AllowLiteral: When false, the query string must not contain a
+	// literal.
+	AllowLiteral bool `json:"allowLiteral,omitempty"`
+
+	// NameArgs: A named argument must set field GqlQueryArg.name. No two
+	// named arguments may have the same name. For each non-reserved named
+	// binding site in the query string, there must be a named argument with
+	// that name, but not necessarily the inverse.
+	NameArgs []*GqlQueryArg `json:"nameArgs,omitempty"`
+
+	// NumberArgs: Numbered binding site @1 references the first numbered
+	// argument, effectively using 1-based indexing, rather than the usual
+	// 0. A numbered argument must NOT set field GqlQueryArg.name. For each
+	// binding site numbered i in query_string, there must be an ith
+	// numbered argument. The inverse must also be true.
+	NumberArgs []*GqlQueryArg `json:"numberArgs,omitempty"`
+
+	QueryString string `json:"queryString,omitempty"`
+}
+
+type GqlQueryArg struct {
+	Cursor string `json:"cursor,omitempty"`
+
+	// Name: Must match regex "[A-Za-z_$][A-Za-z_$0-9]*". Must not match
+	// regex "__.*__". Must not be "".
+	Name string `json:"name,omitempty"`
+
+	Value *Value `json:"value,omitempty"`
+}
+
 type Key struct {
-	// PartitionId: Entities are partitioned into subsets, identified by a
-	// dataset (usually implicitly specified by the project) and namespace
-	// ID. Queries are scoped to a single partition.
+	// PartitionId: Entities are partitioned into subsets, currently
+	// identified by a dataset (usually implicitly specified by the project)
+	// and namespace ID. Queries are scoped to a single partition.
 	PartitionId *PartitionId `json:"partitionId,omitempty"`
 
 	// Path: The entity path. An entity path consists of one or more
@@ -227,8 +255,7 @@ type LookupResponse struct {
 	// Found: Entities found.
 	Found []*EntityResult `json:"found,omitempty"`
 
-	// Kind: The kind, fixed to "datastore#lookupResponse".
-	Kind string `json:"kind,omitempty"`
+	Header *ResponseHeader `json:"header,omitempty"`
 
 	// Missing: Entities not found, with only the key populated.
 	Missing []*EntityResult `json:"missing,omitempty"`
@@ -284,7 +311,7 @@ type Property struct {
 	Multi bool `json:"multi,omitempty"`
 
 	// Values: The value(s) of the property. When multi is false there is
-	// always exactly one value. When multi is true there is always one or
+	// always exactly one value. When multi is true there are always one or
 	// more values. Each value can have only one value property populated.
 	// For example, you cannot have a values list of { values: [ {
 	// integerValue: 22, stringValue: "a" } ] }, but you can have { multi:
@@ -401,6 +428,11 @@ type ReadOptions struct {
 	Transaction string `json:"transaction,omitempty"`
 }
 
+type ResponseHeader struct {
+	// Kind: The kind, fixed to "datastore#responseHeader".
+	Kind string `json:"kind,omitempty"`
+}
+
 type RollbackRequest struct {
 	// Transaction: The transaction identifier, returned by a call to
 	// beginTransaction.
@@ -408,17 +440,21 @@ type RollbackRequest struct {
 }
 
 type RollbackResponse struct {
-	// Kind: The kind, fixed to "datastore#rollbackResponse".
-	Kind string `json:"kind,omitempty"`
+	Header *ResponseHeader `json:"header,omitempty"`
 }
 
 type RunQueryRequest struct {
+	// GqlQuery: The GQL query to run. Either this field or field query must
+	// be set, but not both.
+	GqlQuery *GqlQuery `json:"gqlQuery,omitempty"`
+
 	// PartitionId: Entities are partitioned into subsets, identified by a
 	// dataset (usually implicitly specified by the project) and namespace
 	// ID. Queries are scoped to a single partition.
 	PartitionId *PartitionId `json:"partitionId,omitempty"`
 
-	// Query: The query to run.
+	// Query: The query to run. Either this field or field gql_query must be
+	// set, but not both.
 	Query *Query `json:"query,omitempty"`
 
 	// ReadOptions: The options for this query.
@@ -429,8 +465,7 @@ type RunQueryResponse struct {
 	// Batch: A batch of query results (always present).
 	Batch *QueryResultBatch `json:"batch,omitempty"`
 
-	// Kind: The kind, fixed to "datastore#runQueryResponse".
-	Kind string `json:"kind,omitempty"`
+	Header *ResponseHeader `json:"header,omitempty"`
 }
 
 type Value struct {
@@ -456,12 +491,12 @@ type Value struct {
 	// Indexed: If the value should be indexed.
 	//
 	// The indexed property may be
-	// set to null. When indexed is true, stringValue is limited to 500
-	// characters and the blob value is limited to 500 bytes. Input values
-	// by default have indexed set to true; however, you can explicitly set
-	// indexed to true if you want. (An output value never has indexed
-	// explicitly set to true.) If a value is itself an entity, it cannot
-	// have indexed set to true.
+	// set for a null value. When indexed is true, stringValue is limited to
+	// 500 characters and the blob value is limited to 500 bytes. Input
+	// values by default have indexed set to true; however, you can
+	// explicitly set indexed to true if you want. (An output value never
+	// has indexed explicitly set to true.) If a value is itself an entity,
+	// it cannot have indexed set to true.
 	Indexed bool `json:"indexed,omitempty"`
 
 	// IntegerValue: An integer value.

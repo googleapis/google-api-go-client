@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"BgGnx7p-6wsAbOn4St99QhtBGbA/pN5eiJX1tBvR2NHpcI7y7hR3HXQ\"",
+ "etag": "\"wtgj9ZncHCe-ShJM8RewHb1DgWI/lTJWV60n5o_tnuHb4mkPt02YrjM\"",
  "discoveryVersion": "v1",
  "id": "pagespeedonline:v1",
  "name": "pagespeedonline",
  "version": "v1",
  "revision": "20130709",
- "title": "Page Speed Online API",
+ "title": "PageSpeed Insights API",
  "description": "Lets you analyze the performance of a web page and get tailored suggestions to make that page faster.",
  "ownerDomain": "google.com",
  "ownerName": "Google",
@@ -294,6 +294,21 @@
       }
      }
     },
+    "request": {
+     "type": "object",
+     "description": "Echo of certain request parameters.",
+     "properties": {
+      "filter_third_party_resources": {
+       "type": "string"
+      },
+      "strategy": {
+       "type": "string"
+      },
+      "url": {
+       "type": "string"
+      }
+     }
+    },
     "responseCode": {
      "type": "integer",
      "description": "Response code for the document. 200 indicates a normal page load. 4xx/5xx indicates an error.",
@@ -361,6 +376,12 @@
      "httpMethod": "GET",
      "description": "Runs Page Speed analysis on the page at the specified URL, and returns a Page Speed score, a list of suggestions to make that page faster, and other information.",
      "parameters": {
+      "filter_third_party_resources": {
+       "type": "boolean",
+       "description": "Indicates if third party resources should be filtered out before PageSpeed analysis.",
+       "default": "false",
+       "location": "query"
+      },
       "locale": {
        "type": "string",
        "description": "The locale used to localize formatted results",

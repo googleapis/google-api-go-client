@@ -475,214 +475,8 @@ type BooksCloudloadingResource struct {
 	VolumeId string `json:"volumeId,omitempty"`
 }
 
-type BooksLayerDictData struct {
-	Common *BooksLayerDictDataCommon `json:"common,omitempty"`
-
-	Dict *BooksLayerDictDataDict `json:"dict,omitempty"`
-}
-
-type BooksLayerDictDataCommon struct {
-	// Title: The display title and localized canonical name to use when
-	// searching for this entity on Google search.
-	Title string `json:"title,omitempty"`
-}
-
-type BooksLayerDictDataDict struct {
-	// Source: The source, url and attribution for this dictionary data.
-	Source *BooksLayerDictDataDictSource `json:"source,omitempty"`
-
-	Words []*BooksLayerDictDataDictWords `json:"words,omitempty"`
-}
-
-type BooksLayerDictDataDictSource struct {
-	Attribution string `json:"attribution,omitempty"`
-
-	Url string `json:"url,omitempty"`
-}
-
-type BooksLayerDictDataDictWords struct {
-	Derivatives []*BooksLayerDictDataDictWordsDerivatives `json:"derivatives,omitempty"`
-
-	Examples []*BooksLayerDictDataDictWordsExamples `json:"examples,omitempty"`
-
-	Senses []*BooksLayerDictDataDictWordsSenses `json:"senses,omitempty"`
-
-	// Source: The words with different meanings but not related words, e.g.
-	// "go" (game) and "go" (verb).
-	Source *BooksLayerDictDataDictWordsSource `json:"source,omitempty"`
-}
-
-type BooksLayerDictDataDictWordsDerivatives struct {
-	Source *BooksLayerDictDataDictWordsDerivativesSource `json:"source,omitempty"`
-
-	Text string `json:"text,omitempty"`
-}
-
-type BooksLayerDictDataDictWordsDerivativesSource struct {
-	Attribution string `json:"attribution,omitempty"`
-
-	Url string `json:"url,omitempty"`
-}
-
-type BooksLayerDictDataDictWordsExamples struct {
-	Source *BooksLayerDictDataDictWordsExamplesSource `json:"source,omitempty"`
-
-	Text string `json:"text,omitempty"`
-}
-
-type BooksLayerDictDataDictWordsExamplesSource struct {
-	Attribution string `json:"attribution,omitempty"`
-
-	Url string `json:"url,omitempty"`
-}
-
-type BooksLayerDictDataDictWordsSenses struct {
-	Conjugations []*BooksLayerDictDataDictWordsSensesConjugations `json:"conjugations,omitempty"`
-
-	Definitions []*BooksLayerDictDataDictWordsSensesDefinitions `json:"definitions,omitempty"`
-
-	PartOfSpeech string `json:"partOfSpeech,omitempty"`
-
-	Pronunciation string `json:"pronunciation,omitempty"`
-
-	PronunciationUrl string `json:"pronunciationUrl,omitempty"`
-
-	Source *BooksLayerDictDataDictWordsSensesSource `json:"source,omitempty"`
-
-	Syllabification string `json:"syllabification,omitempty"`
-
-	Synonyms []*BooksLayerDictDataDictWordsSensesSynonyms `json:"synonyms,omitempty"`
-}
-
-type BooksLayerDictDataDictWordsSensesConjugations struct {
-	Type string `json:"type,omitempty"`
-
-	Value string `json:"value,omitempty"`
-}
-
-type BooksLayerDictDataDictWordsSensesDefinitions struct {
-	Definition string `json:"definition,omitempty"`
-
-	Examples []*BooksLayerDictDataDictWordsSensesDefinitionsExamples `json:"examples,omitempty"`
-}
-
-type BooksLayerDictDataDictWordsSensesDefinitionsExamples struct {
-	Source *BooksLayerDictDataDictWordsSensesDefinitionsExamplesSource `json:"source,omitempty"`
-
-	Text string `json:"text,omitempty"`
-}
-
-type BooksLayerDictDataDictWordsSensesDefinitionsExamplesSource struct {
-	Attribution string `json:"attribution,omitempty"`
-
-	Url string `json:"url,omitempty"`
-}
-
-type BooksLayerDictDataDictWordsSensesSource struct {
-	Attribution string `json:"attribution,omitempty"`
-
-	Url string `json:"url,omitempty"`
-}
-
-type BooksLayerDictDataDictWordsSensesSynonyms struct {
-	Source *BooksLayerDictDataDictWordsSensesSynonymsSource `json:"source,omitempty"`
-
-	Text string `json:"text,omitempty"`
-}
-
-type BooksLayerDictDataDictWordsSensesSynonymsSource struct {
-	Attribution string `json:"attribution,omitempty"`
-
-	Url string `json:"url,omitempty"`
-}
-
-type BooksLayerDictDataDictWordsSource struct {
-	Attribution string `json:"attribution,omitempty"`
-
-	Url string `json:"url,omitempty"`
-}
-
-type BooksLayerGeoData struct {
-	Common *BooksLayerGeoDataCommon `json:"common,omitempty"`
-
-	Geo *BooksLayerGeoDataGeo `json:"geo,omitempty"`
-}
-
-type BooksLayerGeoDataCommon struct {
-	// Lang: The language of the information url and description.
-	Lang string `json:"lang,omitempty"`
-
-	// PreviewImageUrl: The URL for the preview image information.
-	PreviewImageUrl string `json:"previewImageUrl,omitempty"`
-
-	// Snippet: The description for this location.
-	Snippet string `json:"snippet,omitempty"`
-
-	// SnippetUrl: The URL for information for this location. Ex: wikipedia
-	// link.
-	SnippetUrl string `json:"snippetUrl,omitempty"`
-
-	// Title: The display title and localized canonical name to use when
-	// searching for this entity on Google search.
-	Title string `json:"title,omitempty"`
-}
-
-type BooksLayerGeoDataGeo struct {
-	// Boundary: The boundary of the location as a set of loops containing
-	// pairs of latitude, longitude coordinates.
-	Boundary [][]*BooksLayerGeoDataGeoBoundaryItem `json:"boundary,omitempty"`
-
-	// CachePolicy: The cache policy active for this data. EX: UNRESTRICTED,
-	// RESTRICTED, NEVER
-	CachePolicy string `json:"cachePolicy,omitempty"`
-
-	// CountryCode: The country code of the location.
-	CountryCode string `json:"countryCode,omitempty"`
-
-	// Latitude: The latitude of the location.
-	Latitude float64 `json:"latitude,omitempty"`
-
-	// Longitude: The longitude of the location.
-	Longitude float64 `json:"longitude,omitempty"`
-
-	// MapType: The type of map that should be used for this location. EX:
-	// HYBRID, ROADMAP, SATELLITE, TERRAIN
-	MapType string `json:"mapType,omitempty"`
-
-	// Viewport: The viewport for showing this location. This is a latitude,
-	// longitude rectangle.
-	Viewport *BooksLayerGeoDataGeoViewport `json:"viewport,omitempty"`
-
-	// Zoom: The Zoom level to use for the map. Zoom levels between 0 (the
-	// lowest zoom level, in which the entire world can be seen on one map)
-	// to 21+ (down to individual buildings). See:
-	// https://developers.google.com/maps/documentation/staticmaps/#Zoomlevel
-	// s
-	Zoom int64 `json:"zoom,omitempty"`
-}
-
-type BooksLayerGeoDataGeoBoundaryItem struct {
-	Latitude int64 `json:"latitude,omitempty"`
-
-	Longitude int64 `json:"longitude,omitempty"`
-}
-
-type BooksLayerGeoDataGeoViewport struct {
-	Hi *BooksLayerGeoDataGeoViewportHi `json:"hi,omitempty"`
-
-	Lo *BooksLayerGeoDataGeoViewportLo `json:"lo,omitempty"`
-}
-
-type BooksLayerGeoDataGeoViewportHi struct {
-	Latitude float64 `json:"latitude,omitempty"`
-
-	Longitude float64 `json:"longitude,omitempty"`
-}
-
-type BooksLayerGeoDataGeoViewportLo struct {
-	Latitude float64 `json:"latitude,omitempty"`
-
-	Longitude float64 `json:"longitude,omitempty"`
+type BooksVolumesRecommendedRateResponse struct {
+	Consistency_token string `json:"consistency_token,omitempty"`
 }
 
 type Bookshelf struct {
@@ -768,6 +562,135 @@ type ConcurrentAccessRestriction struct {
 	VolumeId string `json:"volumeId,omitempty"`
 }
 
+type Dictlayerdata struct {
+	Common *DictlayerdataCommon `json:"common,omitempty"`
+
+	Dict *DictlayerdataDict `json:"dict,omitempty"`
+
+	Kind string `json:"kind,omitempty"`
+}
+
+type DictlayerdataCommon struct {
+	// Title: The display title and localized canonical name to use when
+	// searching for this entity on Google search.
+	Title string `json:"title,omitempty"`
+}
+
+type DictlayerdataDict struct {
+	// Source: The source, url and attribution for this dictionary data.
+	Source *DictlayerdataDictSource `json:"source,omitempty"`
+
+	Words []*DictlayerdataDictWords `json:"words,omitempty"`
+}
+
+type DictlayerdataDictSource struct {
+	Attribution string `json:"attribution,omitempty"`
+
+	Url string `json:"url,omitempty"`
+}
+
+type DictlayerdataDictWords struct {
+	Derivatives []*DictlayerdataDictWordsDerivatives `json:"derivatives,omitempty"`
+
+	Examples []*DictlayerdataDictWordsExamples `json:"examples,omitempty"`
+
+	Senses []*DictlayerdataDictWordsSenses `json:"senses,omitempty"`
+
+	// Source: The words with different meanings but not related words, e.g.
+	// "go" (game) and "go" (verb).
+	Source *DictlayerdataDictWordsSource `json:"source,omitempty"`
+}
+
+type DictlayerdataDictWordsDerivatives struct {
+	Source *DictlayerdataDictWordsDerivativesSource `json:"source,omitempty"`
+
+	Text string `json:"text,omitempty"`
+}
+
+type DictlayerdataDictWordsDerivativesSource struct {
+	Attribution string `json:"attribution,omitempty"`
+
+	Url string `json:"url,omitempty"`
+}
+
+type DictlayerdataDictWordsExamples struct {
+	Source *DictlayerdataDictWordsExamplesSource `json:"source,omitempty"`
+
+	Text string `json:"text,omitempty"`
+}
+
+type DictlayerdataDictWordsExamplesSource struct {
+	Attribution string `json:"attribution,omitempty"`
+
+	Url string `json:"url,omitempty"`
+}
+
+type DictlayerdataDictWordsSenses struct {
+	Conjugations []*DictlayerdataDictWordsSensesConjugations `json:"conjugations,omitempty"`
+
+	Definitions []*DictlayerdataDictWordsSensesDefinitions `json:"definitions,omitempty"`
+
+	PartOfSpeech string `json:"partOfSpeech,omitempty"`
+
+	Pronunciation string `json:"pronunciation,omitempty"`
+
+	PronunciationUrl string `json:"pronunciationUrl,omitempty"`
+
+	Source *DictlayerdataDictWordsSensesSource `json:"source,omitempty"`
+
+	Syllabification string `json:"syllabification,omitempty"`
+
+	Synonyms []*DictlayerdataDictWordsSensesSynonyms `json:"synonyms,omitempty"`
+}
+
+type DictlayerdataDictWordsSensesConjugations struct {
+	Type string `json:"type,omitempty"`
+
+	Value string `json:"value,omitempty"`
+}
+
+type DictlayerdataDictWordsSensesDefinitions struct {
+	Definition string `json:"definition,omitempty"`
+
+	Examples []*DictlayerdataDictWordsSensesDefinitionsExamples `json:"examples,omitempty"`
+}
+
+type DictlayerdataDictWordsSensesDefinitionsExamples struct {
+	Source *DictlayerdataDictWordsSensesDefinitionsExamplesSource `json:"source,omitempty"`
+
+	Text string `json:"text,omitempty"`
+}
+
+type DictlayerdataDictWordsSensesDefinitionsExamplesSource struct {
+	Attribution string `json:"attribution,omitempty"`
+
+	Url string `json:"url,omitempty"`
+}
+
+type DictlayerdataDictWordsSensesSource struct {
+	Attribution string `json:"attribution,omitempty"`
+
+	Url string `json:"url,omitempty"`
+}
+
+type DictlayerdataDictWordsSensesSynonyms struct {
+	Source *DictlayerdataDictWordsSensesSynonymsSource `json:"source,omitempty"`
+
+	Text string `json:"text,omitempty"`
+}
+
+type DictlayerdataDictWordsSensesSynonymsSource struct {
+	Attribution string `json:"attribution,omitempty"`
+
+	Url string `json:"url,omitempty"`
+}
+
+type DictlayerdataDictWordsSource struct {
+	Attribution string `json:"attribution,omitempty"`
+
+	Url string `json:"url,omitempty"`
+}
+
 type DownloadAccessRestriction struct {
 	// DeviceAllowed: If restricted, whether access is granted for this
 	// (user, device, volume).
@@ -821,6 +744,91 @@ type DownloadAccesses struct {
 
 	// Kind: Resource type.
 	Kind string `json:"kind,omitempty"`
+}
+
+type Geolayerdata struct {
+	Common *GeolayerdataCommon `json:"common,omitempty"`
+
+	Geo *GeolayerdataGeo `json:"geo,omitempty"`
+
+	Kind string `json:"kind,omitempty"`
+}
+
+type GeolayerdataCommon struct {
+	// Lang: The language of the information url and description.
+	Lang string `json:"lang,omitempty"`
+
+	// PreviewImageUrl: The URL for the preview image information.
+	PreviewImageUrl string `json:"previewImageUrl,omitempty"`
+
+	// Snippet: The description for this location.
+	Snippet string `json:"snippet,omitempty"`
+
+	// SnippetUrl: The URL for information for this location. Ex: wikipedia
+	// link.
+	SnippetUrl string `json:"snippetUrl,omitempty"`
+
+	// Title: The display title and localized canonical name to use when
+	// searching for this entity on Google search.
+	Title string `json:"title,omitempty"`
+}
+
+type GeolayerdataGeo struct {
+	// Boundary: The boundary of the location as a set of loops containing
+	// pairs of latitude, longitude coordinates.
+	Boundary [][]*GeolayerdataGeoBoundaryItem `json:"boundary,omitempty"`
+
+	// CachePolicy: The cache policy active for this data. EX: UNRESTRICTED,
+	// RESTRICTED, NEVER
+	CachePolicy string `json:"cachePolicy,omitempty"`
+
+	// CountryCode: The country code of the location.
+	CountryCode string `json:"countryCode,omitempty"`
+
+	// Latitude: The latitude of the location.
+	Latitude float64 `json:"latitude,omitempty"`
+
+	// Longitude: The longitude of the location.
+	Longitude float64 `json:"longitude,omitempty"`
+
+	// MapType: The type of map that should be used for this location. EX:
+	// HYBRID, ROADMAP, SATELLITE, TERRAIN
+	MapType string `json:"mapType,omitempty"`
+
+	// Viewport: The viewport for showing this location. This is a latitude,
+	// longitude rectangle.
+	Viewport *GeolayerdataGeoViewport `json:"viewport,omitempty"`
+
+	// Zoom: The Zoom level to use for the map. Zoom levels between 0 (the
+	// lowest zoom level, in which the entire world can be seen on one map)
+	// to 21+ (down to individual buildings). See:
+	// https://developers.google.com/maps/documentation/staticmaps/#Zoomlevel
+	// s
+	Zoom int64 `json:"zoom,omitempty"`
+}
+
+type GeolayerdataGeoBoundaryItem struct {
+	Latitude int64 `json:"latitude,omitempty"`
+
+	Longitude int64 `json:"longitude,omitempty"`
+}
+
+type GeolayerdataGeoViewport struct {
+	Hi *GeolayerdataGeoViewportHi `json:"hi,omitempty"`
+
+	Lo *GeolayerdataGeoViewportLo `json:"lo,omitempty"`
+}
+
+type GeolayerdataGeoViewportHi struct {
+	Latitude float64 `json:"latitude,omitempty"`
+
+	Longitude float64 `json:"longitude,omitempty"`
+}
+
+type GeolayerdataGeoViewportLo struct {
+	Latitude float64 `json:"latitude,omitempty"`
+
+	Longitude float64 `json:"longitude,omitempty"`
 }
 
 type Layersummaries struct {
@@ -5748,6 +5756,119 @@ func (c *VolumesRecommendedListCall) Do() (*Volumes, error) {
 	//   "path": "volumes/recommended",
 	//   "response": {
 	//     "$ref": "Volumes"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/books"
+	//   ]
+	// }
+
+}
+
+// method id "books.volumes.recommended.rate":
+
+type VolumesRecommendedRateCall struct {
+	s        *Service
+	rating   string
+	volumeId string
+	opt_     map[string]interface{}
+}
+
+// Rate: Rate a recommended book for the current user.
+func (r *VolumesRecommendedService) Rate(rating string, volumeId string) *VolumesRecommendedRateCall {
+	c := &VolumesRecommendedRateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.rating = rating
+	c.volumeId = volumeId
+	return c
+}
+
+// Locale sets the optional parameter "locale": ISO-639-1 language and
+// ISO-3166-1 country code. Ex: 'en_US'. Used for generating
+// recommendations.
+func (c *VolumesRecommendedRateCall) Locale(locale string) *VolumesRecommendedRateCall {
+	c.opt_["locale"] = locale
+	return c
+}
+
+// Source sets the optional parameter "source": String to identify the
+// originator of this request.
+func (c *VolumesRecommendedRateCall) Source(source string) *VolumesRecommendedRateCall {
+	c.opt_["source"] = source
+	return c
+}
+
+func (c *VolumesRecommendedRateCall) Do() (*BooksVolumesRecommendedRateResponse, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("rating", fmt.Sprintf("%v", c.rating))
+	params.Set("volumeId", fmt.Sprintf("%v", c.volumeId))
+	if v, ok := c.opt_["locale"]; ok {
+		params.Set("locale", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "volumes/recommended/rate")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(BooksVolumesRecommendedRateResponse)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Rate a recommended book for the current user.",
+	//   "httpMethod": "POST",
+	//   "id": "books.volumes.recommended.rate",
+	//   "parameterOrder": [
+	//     "rating",
+	//     "volumeId"
+	//   ],
+	//   "parameters": {
+	//     "locale": {
+	//       "description": "ISO-639-1 language and ISO-3166-1 country code. Ex: 'en_US'. Used for generating recommendations.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "rating": {
+	//       "description": "Rating to be given to the volume.",
+	//       "enum": [
+	//         "HAVE_IT",
+	//         "NOT_INTERESTED"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Rating indicating a dismissal due to ownership.",
+	//         "Rating indicating a negative dismissal of a volume."
+	//       ],
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "source": {
+	//       "description": "String to identify the originator of this request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "volumeId": {
+	//       "description": "ID of the source volume.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "volumes/recommended/rate",
+	//   "response": {
+	//     "$ref": "BooksVolumesRecommendedRateResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/books"

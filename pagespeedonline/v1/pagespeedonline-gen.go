@@ -1,4 +1,4 @@
-// Package pagespeedonline provides access to the Page Speed Online API.
+// Package pagespeedonline provides access to the PageSpeed Insights API.
 //
 // See https://developers.google.com/speed/docs/insights/v1/getting_started
 //
@@ -84,6 +84,9 @@ type Result struct {
 	// JavaScript bytes, number of HTML bytes, etc.
 	PageStats *ResultPageStats `json:"pageStats,omitempty"`
 
+	// Request: Echo of certain request parameters.
+	Request *ResultRequest `json:"request,omitempty"`
+
 	// ResponseCode: Response code for the document. 200 indicates a normal
 	// page load. 4xx/5xx indicates an error.
 	ResponseCode int64 `json:"responseCode,omitempty"`
@@ -167,6 +170,14 @@ type ResultPageStats struct {
 	TotalRequestBytes int64 `json:"totalRequestBytes,omitempty,string"`
 }
 
+type ResultRequest struct {
+	Filter_third_party_resources string `json:"filter_third_party_resources,omitempty"`
+
+	Strategy string `json:"strategy,omitempty"`
+
+	Url string `json:"url,omitempty"`
+}
+
 type ResultScreenshot struct {
 	// Data: Image data base64 encoded.
 	Data string `json:"data,omitempty"`
@@ -208,6 +219,14 @@ func (r *PagespeedapiService) Runpagespeed(url string) *PagespeedapiRunpagespeed
 	return c
 }
 
+// Filter_third_party_resources sets the optional parameter
+// "filter_third_party_resources": Indicates if third party resources
+// should be filtered out before PageSpeed analysis.
+func (c *PagespeedapiRunpagespeedCall) Filter_third_party_resources(filter_third_party_resources bool) *PagespeedapiRunpagespeedCall {
+	c.opt_["filter_third_party_resources"] = filter_third_party_resources
+	return c
+}
+
 // Locale sets the optional parameter "locale": The locale used to
 // localize formatted results
 func (c *PagespeedapiRunpagespeedCall) Locale(locale string) *PagespeedapiRunpagespeedCall {
@@ -241,6 +260,9 @@ func (c *PagespeedapiRunpagespeedCall) Do() (*Result, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("url", fmt.Sprintf("%v", c.url))
+	if v, ok := c.opt_["filter_third_party_resources"]; ok {
+		params.Set("filter_third_party_resources", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["locale"]; ok {
 		params.Set("locale", fmt.Sprintf("%v", v))
 	}
@@ -279,6 +301,12 @@ func (c *PagespeedapiRunpagespeedCall) Do() (*Result, error) {
 	//     "url"
 	//   ],
 	//   "parameters": {
+	//     "filter_third_party_resources": {
+	//       "default": "false",
+	//       "description": "Indicates if third party resources should be filtered out before PageSpeed analysis.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "locale": {
 	//       "description": "The locale used to localize formatted results",
 	//       "location": "query",

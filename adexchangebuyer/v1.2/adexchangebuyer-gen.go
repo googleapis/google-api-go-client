@@ -295,16 +295,12 @@ type DirectDealsList struct {
 	Kind string `json:"kind,omitempty"`
 }
 
-type PerformanceReportList struct {
-	// Kind: Resource type.
-	Kind string `json:"kind,omitempty"`
+type PerformanceReport struct {
+	// QuotaConfiguredLimit: The quota limits for this account.
+	QuotaConfiguredLimit float64 `json:"QuotaConfiguredLimit,omitempty"`
 
-	// Performance_report: A list of performance reports relevant for the
-	// account.
-	Performance_report []*PerformanceReportListPerformance_report `json:"performance_report,omitempty"`
-}
+	QuotaThrottledLimit float64 `json:"QuotaThrottledLimit,omitempty"`
 
-type PerformanceReportListPerformance_report struct {
 	// Kind: Resource type.
 	Kind string `json:"kind,omitempty"`
 
@@ -317,11 +313,28 @@ type PerformanceReportListPerformance_report struct {
 
 	Latency95thPercentile float64 `json:"latency95thPercentile,omitempty"`
 
+	NoQuotaInRegion float64 `json:"noQuotaInRegion,omitempty"`
+
+	OutOfQuota float64 `json:"outOfQuota,omitempty"`
+
+	PixelMatchRequests float64 `json:"pixelMatchRequests,omitempty"`
+
+	PixelMatchResponses float64 `json:"pixelMatchResponses,omitempty"`
+
 	// Region: The trading location of this data.
 	Region string `json:"region,omitempty"`
 
 	// Timestamp: Timestamp of the starting time of this performance data.
 	Timestamp int64 `json:"timestamp,omitempty,string"`
+}
+
+type PerformanceReportList struct {
+	// Kind: Resource type.
+	Kind string `json:"kind,omitempty"`
+
+	// Performance_report: A list of performance reports relevant for the
+	// account.
+	Performance_report []*PerformanceReport `json:"performance_report,omitempty"`
 }
 
 // method id "adexchangebuyer.accounts.get":

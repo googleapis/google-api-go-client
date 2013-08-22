@@ -1071,7 +1071,7 @@ func (c *AdvertisersListCall) Do() (*Advertisers, error) {
 	//   ],
 	//   "parameters": {
 	//     "advertiserCategory": {
-	//       "description": "Caret(^) delimted list of advertiser categories. Valid categories are defined here: http://www.google.com/support/affiliatenetwork/advertiser/bin/answer.py?hl=en&answer=107581. Filters out all advertisers not in one of the given advertiser categories. Optional.",
+	//       "description": "Caret(^) delimted list of advertiser categories. Valid categories are defined here: http://www.google.com/support/affiliatenetwork/advertiser/bin/answer.py?hl=en\u0026answer=107581. Filters out all advertisers not in one of the given advertiser categories. Optional.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

@@ -506,6 +506,8 @@ type User struct {
 	// CustomerId: CustomerId of User (Read-only)
 	CustomerId string `json:"customerId,omitempty"`
 
+	DeletionTime string `json:"deletionTime,omitempty"`
+
 	// Emails: Emails of User
 	Emails []*UserEmail `json:"emails,omitempty"`
 
@@ -1075,7 +1077,7 @@ func (c *ChromeosdevicesListCall) Do() (*ChromeOsDevices, error) {
 	//       "type": "string"
 	//     },
 	//     "query": {
-	//       "description": "Search string in the format given at http://support.google.com/chromeos/a/bin/answer.py?hl=en&answer=1698333",
+	//       "description": "Search string in the format given at http://support.google.com/chromeos/a/bin/answer.py?hl=en\u0026answer=1698333",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2912,7 +2914,7 @@ func (c *MobiledevicesListCall) Do() (*MobileDevices, error) {
 	//       "type": "string"
 	//     },
 	//     "query": {
-	//       "description": "Search string in the format given at http://support.google.com/a/bin/answer.py?hl=en&answer=1408863#search",
+	//       "description": "Search string in the format given at http://support.google.com/a/bin/answer.py?hl=en\u0026answer=1408863#search",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"BgGnx7p-6wsAbOn4St99QhtBGbA/tqJ9IMbmqdfX1EO8l0NfFSejEG4\"",
+ "etag": "\"wtgj9ZncHCe-ShJM8RewHb1DgWI/SulKJnyUHngtgbe93ydXyDKANdw\"",
  "discoveryVersion": "v1",
  "id": "compute:v1beta15",
  "name": "compute",
@@ -15,9 +15,6 @@
   "x32": "http://www.google.com/images/icons/product/compute_engine-32.png"
  },
  "documentationLink": "https://developers.google.com/compute/docs/reference/v1beta15",
- "labels": [
-  "limited_availability"
- ],
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/compute/v1beta15/projects/",
  "basePath": "/compute/v1beta15/projects/",
@@ -80,6 +77,9 @@
     },
     "https://www.googleapis.com/auth/devstorage.read_only": {
      "description": "View your data in Google Cloud Storage"
+    },
+    "https://www.googleapis.com/auth/devstorage.read_write": {
+     "description": "Manage your data in Google Cloud Storage"
     }
    }
   }
@@ -632,6 +632,291 @@
     }
    }
   },
+  "ForwardingRule": {
+   "id": "ForwardingRule",
+   "type": "object",
+   "description": "A ForwardingRule resource. A ForwardingRule resource specifies which pool of target VMs to forward a packet to if it matches the given [IPAddress, IPProtocol, portRange] tuple.",
+   "properties": {
+    "IPAddress": {
+     "type": "string",
+     "description": "Value of the reserved IP address that this forwarding rule is serving on behalf of. The address resource must live in the same region as the forwarding rule. If left empty (default value), an ephemeral IP will be assigned."
+    },
+    "IPProtocol": {
+     "type": "string",
+     "description": "The IP protocol to which this rule applies, can be either 'TCP' or 'UDP' (If left empty, will use TCP by default)."
+    },
+    "creationTimestamp": {
+     "type": "string",
+     "description": "Creation timestamp in RFC3339 text format (output only)."
+    },
+    "description": {
+     "type": "string",
+     "description": "An optional textual description of the resource; provided by the client when the resource is created."
+    },
+    "id": {
+     "type": "string",
+     "description": "Unique identifier for the resource; defined by the server (output only).",
+     "format": "uint64"
+    },
+    "kind": {
+     "type": "string",
+     "description": "Type of the resource.",
+     "default": "compute#forwardingRule"
+    },
+    "name": {
+     "type": "string",
+     "description": "Name of the resource; provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035.",
+     "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?"
+    },
+    "portRange": {
+     "type": "string",
+     "description": "If 'IPProtocol' is 'TCP' or 'UDP', only packets addressed to ports in the specified range will be forwarded to 'target'. If left empty (default value), all ports are forwarded. Forwarding rules with the same [IPAddress, IPProtocol] pair must have disjoint port ranges."
+    },
+    "region": {
+     "type": "string",
+     "description": "URL of the region where the forwarding rule resides (output only)."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "Server defined URL for the resource (output only)."
+    },
+    "target": {
+     "type": "string",
+     "description": "The URL of the target resource to receive the matched traffic. It must live in the same region as this forwarding rule."
+    }
+   }
+  },
+  "ForwardingRuleAggregatedList": {
+   "id": "ForwardingRuleAggregatedList",
+   "type": "object",
+   "properties": {
+    "id": {
+     "type": "string",
+     "description": "Unique identifier for the resource; defined by the server (output only)."
+    },
+    "items": {
+     "type": "object",
+     "description": "A map of scoped forwarding rule lists.",
+     "additionalProperties": {
+      "$ref": "ForwardingRulesScopedList",
+      "description": "Name of the scope containing this set of addresses."
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Type of resource.",
+     "default": "compute#forwardingRuleAggregatedList"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "A token used to continue a truncated list request (output only)."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "Server defined URL for this resource (output only)."
+    }
+   }
+  },
+  "ForwardingRuleList": {
+   "id": "ForwardingRuleList",
+   "type": "object",
+   "description": "Contains a list of ForwardingRule resources.",
+   "properties": {
+    "id": {
+     "type": "string",
+     "description": "Unique identifier for the resource; defined by the server (output only)."
+    },
+    "items": {
+     "type": "array",
+     "description": "The ForwardingRule resources.",
+     "items": {
+      "$ref": "ForwardingRule"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Type of resource.",
+     "default": "compute#forwardingRuleList"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "A token used to continue a truncated list request (output only)."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "Server defined URL for this resource (output only)."
+    }
+   }
+  },
+  "ForwardingRulesScopedList": {
+   "id": "ForwardingRulesScopedList",
+   "type": "object",
+   "properties": {
+    "forwardingRules": {
+     "type": "array",
+     "description": "List of forwarding rules contained in this scope.",
+     "items": {
+      "$ref": "ForwardingRule"
+     }
+    },
+    "warning": {
+     "type": "object",
+     "description": "Informational warning which replaces the list of forwarding rules when the list is empty.",
+     "properties": {
+      "code": {
+       "type": "string",
+       "description": "The warning type identifier for this warning."
+      },
+      "data": {
+       "type": "array",
+       "description": "Metadata for this warning in 'key: value' format.",
+       "items": {
+        "type": "object",
+        "properties": {
+         "key": {
+          "type": "string",
+          "description": "A key for the warning data."
+         },
+         "value": {
+          "type": "string",
+          "description": "A warning data value corresponding to the key."
+         }
+        }
+       }
+      },
+      "message": {
+       "type": "string",
+       "description": "Optional human-readable details for this warning."
+      }
+     }
+    }
+   }
+  },
+  "HealthCheckReference": {
+   "id": "HealthCheckReference",
+   "type": "object",
+   "properties": {
+    "healthCheck": {
+     "type": "string"
+    }
+   }
+  },
+  "HealthStatus": {
+   "id": "HealthStatus",
+   "type": "object",
+   "properties": {
+    "healthState": {
+     "type": "string",
+     "description": "Health state of the instance."
+    },
+    "instance": {
+     "type": "string",
+     "description": "URL of the instance resource."
+    },
+    "ipAddress": {
+     "type": "string",
+     "description": "The IP address represented by this resource."
+    }
+   }
+  },
+  "HttpHealthCheck": {
+   "id": "HttpHealthCheck",
+   "type": "object",
+   "description": "An HttpHealthCheck resource. This resource defines a template for how individual VMs should be checked for health, via HTTP.",
+   "properties": {
+    "checkIntervalSec": {
+     "type": "integer",
+     "description": "How often (in seconds) to send a health check. The default value is 5 seconds.",
+     "format": "int32"
+    },
+    "creationTimestamp": {
+     "type": "string",
+     "description": "Creation timestamp in RFC3339 text format (output only)."
+    },
+    "description": {
+     "type": "string",
+     "description": "An optional textual description of the resource; provided by the client when the resource is created."
+    },
+    "healthyThreshold": {
+     "type": "integer",
+     "description": "A so-far unhealthy VM will be marked healthy after this many consecutive successes. The default value is 2.",
+     "format": "int32"
+    },
+    "host": {
+     "type": "string",
+     "description": "The value of the host header in the HTTP health check request. If left empty (default value), the public IP on behalf of which this health check is performed will be used."
+    },
+    "id": {
+     "type": "string",
+     "description": "Unique identifier for the resource; defined by the server (output only).",
+     "format": "uint64"
+    },
+    "kind": {
+     "type": "string",
+     "description": "Type of the resource.",
+     "default": "compute#httpHealthCheck"
+    },
+    "name": {
+     "type": "string",
+     "description": "Name of the resource; provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035.",
+     "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?"
+    },
+    "port": {
+     "type": "integer",
+     "description": "The TCP port number for the HTTP health check request. The default value is 80.",
+     "format": "int32"
+    },
+    "requestPath": {
+     "type": "string",
+     "description": "The request path of the HTTP health check request. The default value is \"/\"."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "Server defined URL for the resource (output only)."
+    },
+    "timeoutSec": {
+     "type": "integer",
+     "description": "How long (in seconds) to wait before claiming failure. The default value is 5 seconds.",
+     "format": "int32"
+    },
+    "unhealthyThreshold": {
+     "type": "integer",
+     "description": "A so-far healthy VM will be marked unhealthy after this many consecutive failures. The default value is 2.",
+     "format": "int32"
+    }
+   }
+  },
+  "HttpHealthCheckList": {
+   "id": "HttpHealthCheckList",
+   "type": "object",
+   "description": "Contains a list of HttpHealthCheck resources.",
+   "properties": {
+    "id": {
+     "type": "string",
+     "description": "Unique identifier for the resource; defined by the server (output only)."
+    },
+    "items": {
+     "type": "array",
+     "description": "The HttpHealthCheck resources.",
+     "items": {
+      "$ref": "HttpHealthCheck"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Type of resource.",
+     "default": "compute#httpHealthCheckList"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "A token used to continue a truncated list request (output only)."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "Server defined URL for this resource (output only)."
+    }
+   }
+  },
   "Image": {
    "id": "Image",
    "type": "object",
@@ -914,6 +1199,15 @@
     "selfLink": {
      "type": "string",
      "description": "Server defined URL for this resource (output only)."
+    }
+   }
+  },
+  "InstanceReference": {
+   "id": "InstanceReference",
+   "type": "object",
+   "properties": {
+    "instance": {
+     "type": "string"
     }
    }
   },
@@ -2089,6 +2383,190 @@
     }
    }
   },
+  "TargetPool": {
+   "id": "TargetPool",
+   "type": "object",
+   "description": "A TargetPool resource. This resource defines a pool of VMs and the associated HttpHealthCheck resources.",
+   "properties": {
+    "creationTimestamp": {
+     "type": "string",
+     "description": "Creation timestamp in RFC3339 text format (output only)."
+    },
+    "description": {
+     "type": "string",
+     "description": "An optional textual description of the resource; provided by the client when the resource is created."
+    },
+    "healthChecks": {
+     "type": "array",
+     "description": "A list of URLs to the HttpHealthCheck resource. A member VM in this pool is considered healthy if and only if all specified health checks pass. An empty list means all member VMs will be considered healthy at all times.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "id": {
+     "type": "string",
+     "description": "Unique identifier for the resource; defined by the server (output only).",
+     "format": "uint64"
+    },
+    "instances": {
+     "type": "array",
+     "description": "A list of resource URLs to the member VMs serving this pool. They must live in zones contained in the same region as this pool.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Type of the resource.",
+     "default": "compute#targetPool"
+    },
+    "name": {
+     "type": "string",
+     "description": "Name of the resource; provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035.",
+     "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?"
+    },
+    "region": {
+     "type": "string",
+     "description": "URL of the region where the target pool resides (output only)."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "Server defined URL for the resource (output only)."
+    }
+   }
+  },
+  "TargetPoolAggregatedList": {
+   "id": "TargetPoolAggregatedList",
+   "type": "object",
+   "properties": {
+    "id": {
+     "type": "string",
+     "description": "Unique identifier for the resource; defined by the server (output only)."
+    },
+    "items": {
+     "type": "object",
+     "description": "A map of scoped target pool lists.",
+     "additionalProperties": {
+      "$ref": "TargetPoolsScopedList",
+      "description": "Name of the scope containing this set of target pools."
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Type of resource.",
+     "default": "compute#targetPoolAggregatedList"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "A token used to continue a truncated list request (output only)."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "Server defined URL for this resource (output only)."
+    }
+   }
+  },
+  "TargetPoolInstanceHealth": {
+   "id": "TargetPoolInstanceHealth",
+   "type": "object",
+   "properties": {
+    "healthStatus": {
+     "type": "array",
+     "items": {
+      "$ref": "HealthStatus"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Type of resource.",
+     "default": "compute#targetPoolInstanceHealth"
+    }
+   }
+  },
+  "TargetPoolList": {
+   "id": "TargetPoolList",
+   "type": "object",
+   "description": "Contains a list of TargetPool resources.",
+   "properties": {
+    "id": {
+     "type": "string",
+     "description": "Unique identifier for the resource; defined by the server (output only)."
+    },
+    "items": {
+     "type": "array",
+     "description": "The TargetPool resources.",
+     "items": {
+      "$ref": "TargetPool"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Type of resource.",
+     "default": "compute#targetPoolList"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "A token used to continue a truncated list request (output only)."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "Server defined URL for this resource (output only)."
+    }
+   }
+  },
+  "TargetPoolsScopedList": {
+   "id": "TargetPoolsScopedList",
+   "type": "object",
+   "properties": {
+    "targetPools": {
+     "type": "array",
+     "description": "List of target pools contained in this scope.",
+     "items": {
+      "$ref": "TargetPool"
+     }
+    },
+    "warning": {
+     "type": "object",
+     "description": "Informational warning which replaces the list of addresses when the list is empty.",
+     "properties": {
+      "code": {
+       "type": "string",
+       "description": "The warning type identifier for this warning."
+      },
+      "data": {
+       "type": "array",
+       "description": "Metadata for this warning in 'key: value' format.",
+       "items": {
+        "type": "object",
+        "properties": {
+         "key": {
+          "type": "string",
+          "description": "A key for the warning data."
+         },
+         "value": {
+          "type": "string",
+          "description": "A warning data value corresponding to the key."
+         }
+        }
+       }
+      },
+      "message": {
+       "type": "string",
+       "description": "Optional human-readable details for this warning."
+      }
+     }
+    }
+   }
+  },
+  "TargetReference": {
+   "id": "TargetReference",
+   "type": "object",
+   "properties": {
+    "target": {
+     "type": "string"
+    }
+   }
+  },
   "Zone": {
    "id": "Zone",
    "type": "object",
@@ -2888,6 +3366,265 @@
     }
    }
   },
+  "forwardingRules": {
+   "methods": {
+    "aggregatedList": {
+     "id": "compute.forwardingRules.aggregatedList",
+     "path": "{project}/aggregated/forwardingRules",
+     "httpMethod": "GET",
+     "description": "Retrieves the list of forwarding rules grouped by scope.",
+     "parameters": {
+      "filter": {
+       "type": "string",
+       "description": "Optional. Filter expression for filtering listed resources.",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+       "default": "100",
+       "format": "uint32",
+       "minimum": "0",
+       "maximum": "100",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "location": "query"
+      },
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "response": {
+      "$ref": "ForwardingRuleAggregatedList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "delete": {
+     "id": "compute.forwardingRules.delete",
+     "path": "{project}/regions/{region}/forwardingRules/{forwardingRule}",
+     "httpMethod": "DELETE",
+     "description": "Deletes the specified ForwardingRule resource.",
+     "parameters": {
+      "forwardingRule": {
+       "type": "string",
+       "description": "Name of the ForwardingRule resource to delete.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "Name of the region scoping this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region",
+      "forwardingRule"
+     ],
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "get": {
+     "id": "compute.forwardingRules.get",
+     "path": "{project}/regions/{region}/forwardingRules/{forwardingRule}",
+     "httpMethod": "GET",
+     "description": "Returns the specified ForwardingRule resource.",
+     "parameters": {
+      "forwardingRule": {
+       "type": "string",
+       "description": "Name of the ForwardingRule resource to return.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "Name of the region scoping this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region",
+      "forwardingRule"
+     ],
+     "response": {
+      "$ref": "ForwardingRule"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "insert": {
+     "id": "compute.forwardingRules.insert",
+     "path": "{project}/regions/{region}/forwardingRules",
+     "httpMethod": "POST",
+     "description": "Creates a ForwardingRule resource in the specified project and region using the data included in the request.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "Name of the region scoping this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region"
+     ],
+     "request": {
+      "$ref": "ForwardingRule"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "list": {
+     "id": "compute.forwardingRules.list",
+     "path": "{project}/regions/{region}/forwardingRules",
+     "httpMethod": "GET",
+     "description": "Retrieves the list of ForwardingRule resources available to the specified project and region.",
+     "parameters": {
+      "filter": {
+       "type": "string",
+       "description": "Optional. Filter expression for filtering listed resources.",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+       "default": "100",
+       "format": "uint32",
+       "minimum": "0",
+       "maximum": "100",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "location": "query"
+      },
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "Name of the region scoping this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region"
+     ],
+     "response": {
+      "$ref": "ForwardingRuleList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "setTarget": {
+     "id": "compute.forwardingRules.setTarget",
+     "path": "{project}/regions/{region}/forwardingRules/{forwardingRule}/setTarget",
+     "httpMethod": "POST",
+     "description": "Changes target url for forwarding rule.",
+     "parameters": {
+      "forwardingRule": {
+       "type": "string",
+       "description": "Name of the ForwardingRule resource in which target is to be set.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "Name of the region scoping this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region",
+      "forwardingRule"
+     ],
+     "request": {
+      "$ref": "TargetReference"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute"
+     ]
+    }
+   }
+  },
   "globalOperations": {
    "methods": {
     "aggregatedList": {
@@ -3042,6 +3779,216 @@
     }
    }
   },
+  "httpHealthChecks": {
+   "methods": {
+    "delete": {
+     "id": "compute.httpHealthChecks.delete",
+     "path": "{project}/global/httpHealthChecks/{httpHealthCheck}",
+     "httpMethod": "DELETE",
+     "description": "Deletes the specified HttpHealthCheck resource.",
+     "parameters": {
+      "httpHealthCheck": {
+       "type": "string",
+       "description": "Name of the HttpHealthCheck resource to delete.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "httpHealthCheck"
+     ],
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "get": {
+     "id": "compute.httpHealthChecks.get",
+     "path": "{project}/global/httpHealthChecks/{httpHealthCheck}",
+     "httpMethod": "GET",
+     "description": "Returns the specified HttpHealthCheck resource.",
+     "parameters": {
+      "httpHealthCheck": {
+       "type": "string",
+       "description": "Name of the HttpHealthCheck resource to return.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "httpHealthCheck"
+     ],
+     "response": {
+      "$ref": "HttpHealthCheck"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "insert": {
+     "id": "compute.httpHealthChecks.insert",
+     "path": "{project}/global/httpHealthChecks",
+     "httpMethod": "POST",
+     "description": "Creates a HttpHealthCheck resource in the specified project using the data included in the request.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "request": {
+      "$ref": "HttpHealthCheck"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "list": {
+     "id": "compute.httpHealthChecks.list",
+     "path": "{project}/global/httpHealthChecks",
+     "httpMethod": "GET",
+     "description": "Retrieves the list of HttpHealthCheck resources available to the specified project.",
+     "parameters": {
+      "filter": {
+       "type": "string",
+       "description": "Optional. Filter expression for filtering listed resources.",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+       "default": "100",
+       "format": "uint32",
+       "minimum": "0",
+       "maximum": "100",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "location": "query"
+      },
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "response": {
+      "$ref": "HttpHealthCheckList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "patch": {
+     "id": "compute.httpHealthChecks.patch",
+     "path": "{project}/global/httpHealthChecks/{httpHealthCheck}",
+     "httpMethod": "PATCH",
+     "description": "Updates a HttpHealthCheck resource in the specified project using the data included in the request. This method supports patch semantics.",
+     "parameters": {
+      "httpHealthCheck": {
+       "type": "string",
+       "description": "Name of the HttpHealthCheck resource to update.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "httpHealthCheck"
+     ],
+     "request": {
+      "$ref": "HttpHealthCheck"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "update": {
+     "id": "compute.httpHealthChecks.update",
+     "path": "{project}/global/httpHealthChecks/{httpHealthCheck}",
+     "httpMethod": "PUT",
+     "description": "Updates a HttpHealthCheck resource in the specified project using the data included in the request.",
+     "parameters": {
+      "httpHealthCheck": {
+       "type": "string",
+       "description": "Name of the HttpHealthCheck resource to update.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "httpHealthCheck"
+     ],
+     "request": {
+      "$ref": "HttpHealthCheck"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute"
+     ]
+    }
+   }
+  },
   "images": {
    "methods": {
     "delete": {
@@ -3169,7 +4116,8 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/compute",
-      "https://www.googleapis.com/auth/devstorage.read_only"
+      "https://www.googleapis.com/auth/devstorage.read_only",
+      "https://www.googleapis.com/auth/devstorage.read_write"
      ]
     },
     "list": {
@@ -4677,6 +5625,438 @@
      "scopes": [
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    }
+   }
+  },
+  "targetPools": {
+   "methods": {
+    "addHealthCheck": {
+     "id": "compute.targetPools.addHealthCheck",
+     "path": "{project}/regions/{region}/targetPools/{targetPool}/addHealthCheck",
+     "httpMethod": "POST",
+     "description": "Adds health check URL to targetPool.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "Name of the region scoping this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "targetPool": {
+       "type": "string",
+       "description": "Name of the TargetPool resource to which health_check_url is to be added.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region",
+      "targetPool"
+     ],
+     "request": {
+      "$ref": "HealthCheckReference"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "addInstance": {
+     "id": "compute.targetPools.addInstance",
+     "path": "{project}/regions/{region}/targetPools/{targetPool}/addInstance",
+     "httpMethod": "POST",
+     "description": "Adds instance url to targetPool.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "Name of the region scoping this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "targetPool": {
+       "type": "string",
+       "description": "Name of the TargetPool resource to which instance_url is to be added.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region",
+      "targetPool"
+     ],
+     "request": {
+      "$ref": "InstanceReference"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "aggregatedList": {
+     "id": "compute.targetPools.aggregatedList",
+     "path": "{project}/aggregated/targetPools",
+     "httpMethod": "GET",
+     "description": "Retrieves the list of target pools grouped by scope.",
+     "parameters": {
+      "filter": {
+       "type": "string",
+       "description": "Optional. Filter expression for filtering listed resources.",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+       "default": "100",
+       "format": "uint32",
+       "minimum": "0",
+       "maximum": "100",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "location": "query"
+      },
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "response": {
+      "$ref": "TargetPoolAggregatedList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "delete": {
+     "id": "compute.targetPools.delete",
+     "path": "{project}/regions/{region}/targetPools/{targetPool}",
+     "httpMethod": "DELETE",
+     "description": "Deletes the specified TargetPool resource.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "Name of the region scoping this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "targetPool": {
+       "type": "string",
+       "description": "Name of the TargetPool resource to delete.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region",
+      "targetPool"
+     ],
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "get": {
+     "id": "compute.targetPools.get",
+     "path": "{project}/regions/{region}/targetPools/{targetPool}",
+     "httpMethod": "GET",
+     "description": "Returns the specified TargetPool resource.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "Name of the region scoping this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "targetPool": {
+       "type": "string",
+       "description": "Name of the TargetPool resource to return.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region",
+      "targetPool"
+     ],
+     "response": {
+      "$ref": "TargetPool"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "getHealth": {
+     "id": "compute.targetPools.getHealth",
+     "path": "{project}/regions/{region}/targetPools/{targetPool}/getHealth",
+     "httpMethod": "POST",
+     "description": "Gets the most recent health check results for each IP for the given instance that is referenced by given TargetPool.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "Name of the region scoping this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "targetPool": {
+       "type": "string",
+       "description": "Name of the TargetPool resource to which the queried instance belongs.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region",
+      "targetPool"
+     ],
+     "request": {
+      "$ref": "InstanceReference"
+     },
+     "response": {
+      "$ref": "TargetPoolInstanceHealth"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "insert": {
+     "id": "compute.targetPools.insert",
+     "path": "{project}/regions/{region}/targetPools",
+     "httpMethod": "POST",
+     "description": "Creates a TargetPool resource in the specified project and region using the data included in the request.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "Name of the region scoping this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region"
+     ],
+     "request": {
+      "$ref": "TargetPool"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "list": {
+     "id": "compute.targetPools.list",
+     "path": "{project}/regions/{region}/targetPools",
+     "httpMethod": "GET",
+     "description": "Retrieves the list of TargetPool resources available to the specified project and region.",
+     "parameters": {
+      "filter": {
+       "type": "string",
+       "description": "Optional. Filter expression for filtering listed resources.",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+       "default": "100",
+       "format": "uint32",
+       "minimum": "0",
+       "maximum": "100",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "location": "query"
+      },
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "Name of the region scoping this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region"
+     ],
+     "response": {
+      "$ref": "TargetPoolList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "removeHealthCheck": {
+     "id": "compute.targetPools.removeHealthCheck",
+     "path": "{project}/regions/{region}/targetPools/{targetPool}/removeHealthCheck",
+     "httpMethod": "POST",
+     "description": "Removes health check URL from targetPool.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "Name of the region scoping this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "targetPool": {
+       "type": "string",
+       "description": "Name of the TargetPool resource to which health_check_url is to be removed.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region",
+      "targetPool"
+     ],
+     "request": {
+      "$ref": "HealthCheckReference"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "removeInstance": {
+     "id": "compute.targetPools.removeInstance",
+     "path": "{project}/regions/{region}/targetPools/{targetPool}/removeInstance",
+     "httpMethod": "POST",
+     "description": "Removes instance URL from targetPool.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "Name of the region scoping this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "targetPool": {
+       "type": "string",
+       "description": "Name of the TargetPool resource to which instance_url is to be removed.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region",
+      "targetPool"
+     ],
+     "request": {
+      "$ref": "InstanceReference"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute"
      ]
     }
    }

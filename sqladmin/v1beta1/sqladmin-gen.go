@@ -41,8 +41,7 @@ const basePath = "https://www.googleapis.com/sql/v1beta1/"
 
 // OAuth2 scopes used by this API.
 const (
-	// MESSAGE UNDER CONSTRUCTION View and manage your data across Google
-	// Cloud Platform services
+	// View and manage your data across Google Cloud Platform services
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
 	// Manage your Google SQL Service instances

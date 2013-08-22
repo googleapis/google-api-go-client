@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"BgGnx7p-6wsAbOn4St99QhtBGbA/Aj7kyX0QuNAVtDIVx7B-3_DxqvQ\"",
+ "etag": "\"wtgj9ZncHCe-ShJM8RewHb1DgWI/6kZAVRdl_KZg0pAAQDIN0UNgOQg\"",
  "discoveryVersion": "v1",
  "id": "bigquery:v2",
  "name": "bigquery",
  "version": "v2",
- "revision": "20130716",
+ "revision": "20130818",
  "title": "BigQuery API",
  "description": "A data platform for customers to create, manage, share and query data.",
  "ownerDomain": "google.com",
@@ -75,7 +75,7 @@
      "description": "View and manage your data in Google BigQuery"
     },
     "https://www.googleapis.com/auth/cloud-platform": {
-     "description": "MESSAGE UNDER CONSTRUCTION View and manage your data across Google Cloud Platform services"
+     "description": "View and manage your data across Google Cloud Platform services"
     },
     "https://www.googleapis.com/auth/devstorage.full_control": {
      "description": "Manage your data and permissions in Google Cloud Storage"
@@ -513,11 +513,6 @@
      "$ref": "TableReference",
      "description": "[Optional] Describes the table where the query results should be stored. If not present, a new table will be created to store the results."
     },
-    "minCompletionRatio": {
-     "type": "number",
-     "description": "[Experimental] Specifies the the minimum fraction of data that must be scanned before a query returns. This should be specified as a value between 0.0 and 1.0 inclusive. The default value is 1.0.",
-     "format": "double"
-    },
     "preserveNulls": {
      "type": "boolean",
      "description": "[Experimental] If set, preserve null values in table data, rather than mapping null values to the column's default value. This flag currently defaults to false, but the default will soon be changed to true. Shortly afterward, this flag will be removed completely. Please specify true if possible, and false only if you need to force the old behavior while updating client code."
@@ -689,11 +684,6 @@
      "type": "boolean",
      "description": "[Output-only] Whether the query result was fetched from the query cache."
     },
-    "completionRatio": {
-     "type": "number",
-     "description": "[Output-Only] Approximate fraction of data processed for this query. This will be 1.0 unless min_completion_ratio for the query was set to something other than 1.0.",
-     "format": "double"
-    },
     "totalBytesProcessed": {
      "type": "string",
      "description": "[Output-only] Total bytes processed for this job.",
@@ -834,11 +824,6 @@
      "type": "integer",
      "description": "[Optional] The maximum number of results to return per page of results. If the response list exceeds the maximum response size for a single response, you will have to page through the results. Default is to return the maximum response size.",
      "format": "uint32"
-    },
-    "minCompletionRatio": {
-     "type": "number",
-     "description": "[Experimental] Specifies the the minimum fraction of data that must be scanned before a query returns. This should be specified as a value between 0.0 and 1.0 inclusive. The default value is 1.0.",
-     "format": "double"
     },
     "preserveNulls": {
      "type": "boolean",

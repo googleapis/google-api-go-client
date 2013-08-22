@@ -313,8 +313,16 @@ type BucketAccessControl struct {
 	// - group-groupId
 	// - group-email
 	//
+	// - domain-domain
 	// - allUsers
-	// - allAuthenticatedUsers
+	// - allAuthenticatedUsers Examples:
+	// -
+	// The user liz@example.com would be user-liz@example.com.
+	// - The group
+	// example@googlegroups.com would be group-example@googlegroups.com.
+	// -
+	// To refer to all members of the Google Apps for Business domain
+	// example.com, the entity would be domain-example.com.
 	Entity string `json:"entity,omitempty"`
 
 	// EntityId: The ID for the entity, if any.
@@ -362,35 +370,41 @@ type Buckets struct {
 }
 
 type Channel struct {
-	// Address: The address of the receiving entity where events are
-	// delivered. Specific to the channel type.
+	// Address: The address where notifications are delivered for this
+	// channel.
 	Address string `json:"address,omitempty"`
 
-	// Expiration: The expiration instant for this channel if it is defined.
+	// Expiration: Date and time of notification channel expiration,
+	// expressed as a Unix timestamp, in milliseconds. Optional.
 	Expiration int64 `json:"expiration,omitempty,string"`
 
-	// Id: A UUID for the channel
+	// Id: A UUID or similar unique string that identifies this channel.
 	Id string `json:"id,omitempty"`
 
-	// Kind: A channel watching an API resource
+	// Kind: Identifies this as a notification channel used to watch for
+	// changes to a resource. Value: the fixed string "api#channel".
 	Kind string `json:"kind,omitempty"`
 
-	// Params: Additional parameters controlling delivery channel behavior
+	// Params: Additional parameters controlling delivery channel behavior.
+	// Optional.
 	Params *ChannelParams `json:"params,omitempty"`
 
-	// ResourceId: An opaque id that identifies the resource that is being
-	// watched. Stable across different API versions
+	// Payload: A Boolean value to indicate whether payload is wanted.
+	// Optional.
+	Payload bool `json:"payload,omitempty"`
+
+	// ResourceId: An opaque ID that identifies the resource being watched
+	// on this channel. Stable across different API versions.
 	ResourceId string `json:"resourceId,omitempty"`
 
-	// ResourceUri: The canonicalized ID of the watched resource.
+	// ResourceUri: A version-specific identifier for the watched resource.
 	ResourceUri string `json:"resourceUri,omitempty"`
 
-	// Token: An arbitrary string associated with the channel that is
-	// delivered to the target address with each event delivered over this
-	// channel.
+	// Token: An arbitrary string delivered to the target address with each
+	// notification delivered over this channel. Optional.
 	Token string `json:"token,omitempty"`
 
-	// Type: The type of delivery mechanism used by this channel
+	// Type: The type of delivery mechanism used for this channel.
 	Type string `json:"type,omitempty"`
 }
 
@@ -537,8 +551,16 @@ type ObjectAccessControl struct {
 	// - group-groupId
 	// - group-email
 	//
+	// - domain-domain
 	// - allUsers
-	// - allAuthenticatedUsers
+	// - allAuthenticatedUsers Examples:
+	// -
+	// The user liz@example.com would be user-liz@example.com.
+	// - The group
+	// example@googlegroups.com would be group-example@googlegroups.com.
+	// -
+	// To refer to all members of the Google Apps for Business domain
+	// example.com, the entity would be domain-example.com.
 	Entity string `json:"entity,omitempty"`
 
 	// EntityId: The ID for the entity, if any.
@@ -1767,7 +1789,7 @@ type ChannelsStopCall struct {
 	opt_    map[string]interface{}
 }
 
-// Stop:
+// Stop: Stop watching resources through this channel
 func (r *ChannelsService) Stop(channel *Channel) *ChannelsStopCall {
 	c := &ChannelsStopCall{s: r.s, opt_: make(map[string]interface{})}
 	c.channel = channel
@@ -1799,11 +1821,13 @@ func (c *ChannelsStopCall) Do() error {
 	}
 	return nil
 	// {
+	//   "description": "Stop watching resources through this channel",
 	//   "httpMethod": "POST",
 	//   "id": "storage.channels.stop",
 	//   "path": "channels/stop",
 	//   "request": {
-	//     "$ref": "Channel"
+	//     "$ref": "Channel",
+	//     "parameterName": "resource"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/devstorage.full_control",
@@ -4587,7 +4611,8 @@ func (c *ObjectsWatchAllCall) Do() (*Channel, error) {
 	//   },
 	//   "path": "b/{bucket}/o/watch",
 	//   "request": {
-	//     "$ref": "Channel"
+	//     "$ref": "Channel",
+	//     "parameterName": "resource"
 	//   },
 	//   "response": {
 	//     "$ref": "Channel"

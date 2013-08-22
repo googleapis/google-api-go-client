@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"BgGnx7p-6wsAbOn4St99QhtBGbA/ZKM-X-n5VxN-RR9ylAWzLifbe0A\"",
+ "etag": "\"wtgj9ZncHCe-ShJM8RewHb1DgWI/e9HBqaggs6IocNxCo84LkfRbqA4\"",
  "discoveryVersion": "v1",
  "id": "analytics:v3",
  "name": "analytics",
  "version": "v3",
- "revision": "20130708",
+ "revision": "20130817",
  "title": "Google Analytics API",
  "description": "View and manage your Google Analytics data",
  "ownerDomain": "google.com",
@@ -174,6 +174,65 @@
     }
    }
   },
+  "Column": {
+   "id": "Column",
+   "type": "object",
+   "description": "JSON template for a metadata column.",
+   "properties": {
+    "attributes": {
+     "type": "object",
+     "description": "Map of attribute name and value for this column.",
+     "additionalProperties": {
+      "type": "string",
+      "description": "Name and value of an attribute."
+     }
+    },
+    "id": {
+     "type": "string",
+     "description": "Column id."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Resource type for Analytics column.",
+     "default": "analytics#column"
+    }
+   }
+  },
+  "Columns": {
+   "id": "Columns",
+   "type": "object",
+   "description": "Lists columns (dimensions and metrics) for a particular report type.",
+   "properties": {
+    "attributeNames": {
+     "type": "array",
+     "description": "List of attributes names returned by columns.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "etag": {
+     "type": "string",
+     "description": "Etag of collection. This etag can be compared with the last response etag to check if response has changed."
+    },
+    "items": {
+     "type": "array",
+     "description": "List of columns for a report type.",
+     "items": {
+      "$ref": "Column"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Collection type.",
+     "default": "analytics#columns"
+    },
+    "totalResults": {
+     "type": "integer",
+     "description": "Total number of columns returned in the response.",
+     "format": "int32"
+    }
+   }
+  },
   "CustomDataSource": {
    "id": "CustomDataSource",
    "type": "object",
@@ -185,16 +244,14 @@
     },
     "childLink": {
      "type": "object",
-     "description": "Child link for this custom data source. Points to the list of daily uploads for this custom data source.",
      "properties": {
       "href": {
        "type": "string",
-       "description": "Link to the list of daily uploads for this custom data source."
+       "description": "Link to the list of daily uploads for this custom data source. Link to the list of uploads for this custom data source."
       },
       "type": {
        "type": "string",
-       "description": "Value is \"analytics#dailyUploads\".",
-       "default": "analytics#dailyUploads"
+       "description": "Value is \"analytics#dailyUploads\". Value is \"analytics#uploads\"."
       }
      }
     },
@@ -237,7 +294,7 @@
     },
     "profilesLinked": {
      "type": "array",
-     "description": "IDs of profiles linked to the custom data source.",
+     "description": "IDs of views (profiles) linked to the custom data source.",
      "items": {
       "type": "string"
      }
@@ -245,6 +302,10 @@
     "selfLink": {
      "type": "string",
      "description": "Link for this Analytics custom data source."
+    },
+    "type": {
+     "type": "string",
+     "description": "Type of the custom data source."
     },
     "updated": {
      "type": "string",
@@ -536,11 +597,11 @@
     },
     "parentLink": {
      "type": "object",
-     "description": "Parent link for an experiment. Points to the profile to which this experiment belongs.",
+     "description": "Parent link for an experiment. Points to the view (profile) to which this experiment belongs.",
      "properties": {
       "href": {
        "type": "string",
-       "description": "Link to the profile to which this experiment belongs. This field is read-only."
+       "description": "Link to the view (profile) to which this experiment belongs. This field is read-only."
       },
       "type": {
        "type": "string",
@@ -551,7 +612,7 @@
     },
     "profileId": {
      "type": "string",
-     "description": "Profile ID to which this experiment belongs. This field is read-only."
+     "description": "View (Profile) ID to which this experiment belongs. This field is read-only."
     },
     "reasonExperimentEnded": {
      "type": "string",
@@ -652,7 +713,7 @@
   "Experiments": {
    "id": "Experiments",
    "type": "object",
-   "description": "An experiment collection lists Analytics experiments to which the user has access. Each profile can have a set of experiments. Each resource in the Experiment collection corresponds to a single Analytics experiment.",
+   "description": "An experiment collection lists Analytics experiments to which the user has access. Each view (profile) can have a set of experiments. Each resource in the Experiment collection corresponds to a single Analytics experiment.",
    "properties": {
     "items": {
      "type": "array",
@@ -698,7 +759,7 @@
   "GaData": {
    "id": "GaData",
    "type": "object",
-   "description": "Analytics data for a given profile.",
+   "description": "Analytics data for a given view (profile).",
    "properties": {
     "columnHeaders": {
      "type": "array",
@@ -749,31 +810,31 @@
     },
     "profileInfo": {
      "type": "object",
-     "description": "Information for the profile, for which the Analytics data was requested.",
+     "description": "Information for the view (profile), for which the Analytics data was requested.",
      "properties": {
       "accountId": {
        "type": "string",
-       "description": "Account ID to which this profile belongs."
+       "description": "Account ID to which this view (profile) belongs."
       },
       "internalWebPropertyId": {
        "type": "string",
-       "description": "Internal ID for the web property to which this profile belongs."
+       "description": "Internal ID for the web property to which this view (profile) belongs."
       },
       "profileId": {
        "type": "string",
-       "description": "Profile ID."
+       "description": "View (Profile) ID."
       },
       "profileName": {
        "type": "string",
-       "description": "Profile name."
+       "description": "View (Profile) name."
       },
       "tableId": {
        "type": "string",
-       "description": "Table ID for profile."
+       "description": "Table ID for view (profile)."
       },
       "webPropertyId": {
        "type": "string",
-       "description": "Web Property ID to which this profile belongs."
+       "description": "Web Property ID to which this view (profile) belongs."
       }
      }
     },
@@ -937,11 +998,11 @@
     },
     "parentLink": {
      "type": "object",
-     "description": "Parent link for a goal. Points to the profile to which this goal belongs.",
+     "description": "Parent link for a goal. Points to the view (profile) to which this goal belongs.",
      "properties": {
       "href": {
        "type": "string",
-       "description": "Link to the profile to which this goal belongs."
+       "description": "Link to the view (profile) to which this goal belongs."
       },
       "type": {
        "type": "string",
@@ -952,7 +1013,7 @@
     },
     "profileId": {
      "type": "string",
-     "description": "Profile ID to which this goal belongs."
+     "description": "View (Profile) ID to which this goal belongs."
     },
     "selfLink": {
      "type": "string",
@@ -1055,7 +1116,7 @@
   "Goals": {
    "id": "Goals",
    "type": "object",
-   "description": "A goal collection lists Analytics goals to which the user has access. Each profile can have a set of goals. Each resource in the Goal collection corresponds to a single Analytics goal.",
+   "description": "A goal collection lists Analytics goals to which the user has access. Each view (profile) can have a set of goals. Each resource in the Goal collection corresponds to a single Analytics goal.",
    "properties": {
     "items": {
      "type": "array",
@@ -1101,7 +1162,7 @@
   "McfData": {
    "id": "McfData",
    "type": "object",
-   "description": "Multi-Channel Funnels data for a given profile.",
+   "description": "Multi-Channel Funnels data for a given view (profile).",
    "properties": {
     "columnHeaders": {
      "type": "array",
@@ -1152,31 +1213,31 @@
     },
     "profileInfo": {
      "type": "object",
-     "description": "Information for the profile, for which the Analytics data was requested.",
+     "description": "Information for the view (profile), for which the Analytics data was requested.",
      "properties": {
       "accountId": {
        "type": "string",
-       "description": "Account ID to which this profile belongs."
+       "description": "Account ID to which this view (profile) belongs."
       },
       "internalWebPropertyId": {
        "type": "string",
-       "description": "Internal ID for the web property to which this profile belongs."
+       "description": "Internal ID for the web property to which this view (profile) belongs."
       },
       "profileId": {
        "type": "string",
-       "description": "Profile ID."
+       "description": "View (Profile) ID."
       },
       "profileName": {
        "type": "string",
-       "description": "Profile name."
+       "description": "View (Profile) name."
       },
       "tableId": {
        "type": "string",
-       "description": "Table ID for profile."
+       "description": "Table ID for view (profile)."
       },
       "webPropertyId": {
        "type": "string",
-       "description": "Web Property ID to which this profile belongs."
+       "description": "Web Property ID to which this view (profile) belongs."
       }
      }
     },
@@ -1290,19 +1351,19 @@
   "Profile": {
    "id": "Profile",
    "type": "object",
-   "description": "JSON template for an Analytics profile.",
+   "description": "JSON template for an Analytics view (profile).",
    "properties": {
     "accountId": {
      "type": "string",
-     "description": "Account ID to which this profile belongs."
+     "description": "Account ID to which this view (profile) belongs."
     },
     "childLink": {
      "type": "object",
-     "description": "Child link for this profile. Points to the list of goals for this profile.",
+     "description": "Child link for this view (profile). Points to the list of goals for this view (profile).",
      "properties": {
       "href": {
        "type": "string",
-       "description": "Link to the list of goals for this profile."
+       "description": "Link to the list of goals for this view (profile)."
       },
       "type": {
        "type": "string",
@@ -1313,32 +1374,32 @@
     },
     "created": {
      "type": "string",
-     "description": "Time this profile was created.",
+     "description": "Time this view (profile) was created.",
      "format": "date-time"
     },
     "currency": {
      "type": "string",
-     "description": "The currency type associated with this profile."
+     "description": "The currency type associated with this view (profile)."
     },
     "defaultPage": {
      "type": "string",
-     "description": "Default page for this profile."
+     "description": "Default page for this view (profile)."
     },
     "eCommerceTracking": {
      "type": "boolean",
-     "description": "Indicates whether ecommerce tracking is enabled for this profile."
+     "description": "Indicates whether ecommerce tracking is enabled for this view (profile)."
     },
     "excludeQueryParameters": {
      "type": "string",
-     "description": "The query parameters that are excluded from this profile."
+     "description": "The query parameters that are excluded from this view (profile)."
     },
     "id": {
      "type": "string",
-     "description": "Profile ID."
+     "description": "View (Profile) ID."
     },
     "internalWebPropertyId": {
      "type": "string",
-     "description": "Internal ID for the web property to which this profile belongs."
+     "description": "Internal ID for the web property to which this view (profile) belongs."
     },
     "kind": {
      "type": "string",
@@ -1347,15 +1408,15 @@
     },
     "name": {
      "type": "string",
-     "description": "Name of this profile."
+     "description": "Name of this view (profile)."
     },
     "parentLink": {
      "type": "object",
-     "description": "Parent link for this profile. Points to the web property to which this profile belongs.",
+     "description": "Parent link for this view (profile). Points to the web property to which this view (profile) belongs.",
      "properties": {
       "href": {
        "type": "string",
-       "description": "Link to the web property to which this profile belongs."
+       "description": "Link to the web property to which this view (profile) belongs."
       },
       "type": {
        "type": "string",
@@ -1366,15 +1427,15 @@
     },
     "selfLink": {
      "type": "string",
-     "description": "Link for this profile."
+     "description": "Link for this view (profile)."
     },
     "siteSearchCategoryParameters": {
      "type": "string",
-     "description": "Site search category parameters for this profile."
+     "description": "Site search category parameters for this view (profile)."
     },
     "siteSearchQueryParameters": {
      "type": "string",
-     "description": "The site search query parameters for this profile."
+     "description": "The site search query parameters for this view (profile)."
     },
     "timezone": {
      "type": "string",
@@ -1382,31 +1443,31 @@
     },
     "type": {
      "type": "string",
-     "description": "Profile type. Supported types: WEB or APP."
+     "description": "View (Profile) type. Supported types: WEB or APP."
     },
     "updated": {
      "type": "string",
-     "description": "Time this profile was last modified.",
+     "description": "Time this view (profile) was last modified.",
      "format": "date-time"
     },
     "webPropertyId": {
      "type": "string",
-     "description": "Web property ID of the form UA-XXXXX-YY to which this profile belongs."
+     "description": "Web property ID of the form UA-XXXXX-YY to which this view (profile) belongs."
     },
     "websiteUrl": {
      "type": "string",
-     "description": "Website URL for this profile."
+     "description": "Website URL for this view (profile)."
     }
    }
   },
   "Profiles": {
    "id": "Profiles",
    "type": "object",
-   "description": "A profile collection lists Analytics profiles to which the user has access. Each resource in the collection corresponds to a single Analytics profile.",
+   "description": "A view (profile) collection lists Analytics views (profiles) to which the user has access. Each resource in the collection corresponds to a single Analytics view (profile).",
    "properties": {
     "items": {
      "type": "array",
-     "description": "A list of profiles.",
+     "description": "A list of views (profiles).",
      "items": {
       "$ref": "Profile"
      }
@@ -1423,11 +1484,11 @@
     },
     "nextLink": {
      "type": "string",
-     "description": "Link to next page for this profile collection."
+     "description": "Link to next page for this view (profile) collection."
     },
     "previousLink": {
      "type": "string",
-     "description": "Link to previous page for this profile collection."
+     "description": "Link to previous page for this view (profile) collection."
     },
     "startIndex": {
      "type": "integer",
@@ -1442,6 +1503,137 @@
     "username": {
      "type": "string",
      "description": "Email ID of the authenticated user"
+    }
+   }
+  },
+  "RealtimeData": {
+   "id": "RealtimeData",
+   "type": "object",
+   "description": "Real time data for a given view (profile).",
+   "properties": {
+    "columnHeaders": {
+     "type": "array",
+     "description": "Column headers that list dimension names followed by the metric names. The order of dimensions and metrics is same as specified in the request.",
+     "items": {
+      "type": "object",
+      "properties": {
+       "columnType": {
+        "type": "string",
+        "description": "Column Type. Either DIMENSION or METRIC."
+       },
+       "dataType": {
+        "type": "string",
+        "description": "Data type. Dimension column headers have only STRING as the data type. Metric column headers have data types for metric values such as INTEGER, DOUBLE, CURRENCY etc."
+       },
+       "name": {
+        "type": "string",
+        "description": "Column name."
+       }
+      }
+     }
+    },
+    "id": {
+     "type": "string",
+     "description": "Unique ID for this data response."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Resource type.",
+     "default": "analytics#realtimeData"
+    },
+    "profileInfo": {
+     "type": "object",
+     "description": "Information for the view (profile), for which the real time data was requested.",
+     "properties": {
+      "accountId": {
+       "type": "string",
+       "description": "Account ID to which this view (profile) belongs."
+      },
+      "internalWebPropertyId": {
+       "type": "string",
+       "description": "Internal ID for the web property to which this view (profile) belongs."
+      },
+      "profileId": {
+       "type": "string",
+       "description": "View (Profile) ID."
+      },
+      "profileName": {
+       "type": "string",
+       "description": "View (Profile) name."
+      },
+      "tableId": {
+       "type": "string",
+       "description": "Table ID for view (profile)."
+      },
+      "webPropertyId": {
+       "type": "string",
+       "description": "Web Property ID to which this view (profile) belongs."
+      }
+     }
+    },
+    "query": {
+     "type": "object",
+     "description": "Real time data request query parameters.",
+     "properties": {
+      "dimensions": {
+       "type": "string",
+       "description": "List of real time dimensions."
+      },
+      "filters": {
+       "type": "string",
+       "description": "Comma-separated list of dimension or metric filters."
+      },
+      "ids": {
+       "type": "string",
+       "description": "Unique table ID."
+      },
+      "max-results": {
+       "type": "integer",
+       "description": "Maximum results per page.",
+       "format": "int32"
+      },
+      "metrics": {
+       "type": "array",
+       "description": "List of real time metrics.",
+       "items": {
+        "type": "string"
+       }
+      },
+      "sort": {
+       "type": "array",
+       "description": "List of dimensions or metrics based on which real time data is sorted.",
+       "items": {
+        "type": "string"
+       }
+      }
+     }
+    },
+    "rows": {
+     "type": "array",
+     "description": "Real time data rows, where each row contains a list of dimension values followed by the metric values. The order of dimensions and metrics is same as specified in the request.",
+     "items": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      }
+     }
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "Link to this page."
+    },
+    "totalResults": {
+     "type": "integer",
+     "description": "The total number of rows for the query, regardless of the number of rows in the response.",
+     "format": "int32"
+    },
+    "totalsForAllResults": {
+     "type": "object",
+     "description": "Total values for the requested metrics over all the results, not just the results returned in this response. The order of the metric totals is same as the metric order specified in the request.",
+     "additionalProperties": {
+      "type": "string",
+      "description": "Key-value pair for the total value of a metric. Key is the metric name and the value is the total value for that metric."
+     }
     }
    }
   },
@@ -1590,11 +1782,11 @@
     },
     "childLink": {
      "type": "object",
-     "description": "Child link for this web property. Points to the list of profiles for this web property.",
+     "description": "Child link for this web property. Points to the list of views (profiles) for this web property.",
      "properties": {
       "href": {
        "type": "string",
-       "description": "Link to the list of profiles for this web property."
+       "description": "Link to the list of views (profiles) for this web property."
       },
       "type": {
        "type": "string",
@@ -1651,7 +1843,7 @@
     },
     "profileCount": {
      "type": "integer",
-     "description": "Profile count for this web property.",
+     "description": "View (Profile) count for this web property.",
      "format": "int32",
      "readOnly": true
     },
@@ -1680,7 +1872,7 @@
        "id": "analytics.data.ga.get",
        "path": "data/ga",
        "httpMethod": "GET",
-       "description": "Returns Analytics data for a profile.",
+       "description": "Returns Analytics data for a view (profile).",
        "parameters": {
         "dimensions": {
          "type": "string",
@@ -1703,7 +1895,7 @@
         },
         "ids": {
          "type": "string",
-         "description": "Unique table ID for retrieving Analytics data. Table ID is of the form ga:XXXX, where XXXX is the Analytics profile ID.",
+         "description": "Unique table ID for retrieving Analytics data. Table ID is of the form ga:XXXX, where XXXX is the Analytics view (profile) ID.",
          "required": true,
          "pattern": "ga:[0-9]+",
          "location": "query"
@@ -1769,7 +1961,7 @@
        "id": "analytics.data.mcf.get",
        "path": "data/mcf",
        "httpMethod": "GET",
-       "description": "Returns Analytics Multi-Channel Funnels data for a profile.",
+       "description": "Returns Analytics Multi-Channel Funnels data for a view (profile).",
        "parameters": {
         "dimensions": {
          "type": "string",
@@ -1792,7 +1984,7 @@
         },
         "ids": {
          "type": "string",
-         "description": "Unique table ID for retrieving Analytics data. Table ID is of the form ga:XXXX, where XXXX is the Analytics profile ID.",
+         "description": "Unique table ID for retrieving Analytics data. Table ID is of the form ga:XXXX, where XXXX is the Analytics view (profile) ID.",
          "required": true,
          "pattern": "ga:[0-9]+",
          "location": "query"
@@ -1839,6 +2031,67 @@
        ],
        "response": {
         "$ref": "McfData"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics",
+        "https://www.googleapis.com/auth/analytics.readonly"
+       ]
+      }
+     }
+    },
+    "realtime": {
+     "methods": {
+      "get": {
+       "id": "analytics.data.realtime.get",
+       "path": "data/realtime",
+       "httpMethod": "GET",
+       "description": "Returns real time data for a view (profile).",
+       "parameters": {
+        "dimensions": {
+         "type": "string",
+         "description": "A comma-separated list of real time dimensions. E.g., 'ga:medium,ga:city'.",
+         "pattern": "(ga:.+)?",
+         "location": "query"
+        },
+        "filters": {
+         "type": "string",
+         "description": "A comma-separated list of dimension or metric filters to be applied to real time data.",
+         "pattern": "ga:.+",
+         "location": "query"
+        },
+        "ids": {
+         "type": "string",
+         "description": "Unique table ID for retrieving real time data. Table ID is of the form ga:XXXX, where XXXX is the Analytics view (profile) ID.",
+         "required": true,
+         "pattern": "ga:[0-9]+",
+         "location": "query"
+        },
+        "max-results": {
+         "type": "integer",
+         "description": "The maximum number of entries to include in this feed.",
+         "format": "int32",
+         "location": "query"
+        },
+        "metrics": {
+         "type": "string",
+         "description": "A comma-separated list of real time metrics. E.g., 'ga:activeVisitors'. At least one metric must be specified.",
+         "required": true,
+         "pattern": "ga:.+",
+         "location": "query"
+        },
+        "sort": {
+         "type": "string",
+         "description": "A comma-separated list of dimensions or metrics that determine the sort order for real time data.",
+         "pattern": "(-)?ga:.+",
+         "location": "query"
+        }
+       },
+       "parameterOrder": [
+        "ids",
+        "metrics"
+       ],
+       "response": {
+        "$ref": "RealtimeData"
        },
        "scopes": [
         "https://www.googleapis.com/auth/analytics",
@@ -2181,7 +2434,7 @@
         },
         "profileId": {
          "type": "string",
-         "description": "Profile ID to which the experiment belongs",
+         "description": "View (Profile) ID to which the experiment belongs",
          "required": true,
          "location": "path"
         },
@@ -2222,7 +2475,7 @@
         },
         "profileId": {
          "type": "string",
-         "description": "Profile ID to retrieve the experiment for.",
+         "description": "View (Profile) ID to retrieve the experiment for.",
          "required": true,
          "location": "path"
         },
@@ -2261,7 +2514,7 @@
         },
         "profileId": {
          "type": "string",
-         "description": "Profile ID to create the experiment for.",
+         "description": "View (Profile) ID to create the experiment for.",
          "required": true,
          "location": "path"
         },
@@ -2308,7 +2561,7 @@
         },
         "profileId": {
          "type": "string",
-         "description": "Profile ID to retrieve experiments for.",
+         "description": "View (Profile) ID to retrieve experiments for.",
          "required": true,
          "pattern": "\\d+",
          "location": "path"
@@ -2361,7 +2614,7 @@
         },
         "profileId": {
          "type": "string",
-         "description": "Profile ID of the experiment to update.",
+         "description": "View (Profile) ID of the experiment to update.",
          "required": true,
          "location": "path"
         },
@@ -2408,7 +2661,7 @@
         },
         "profileId": {
          "type": "string",
-         "description": "Profile ID of the experiment to update.",
+         "description": "View (Profile) ID of the experiment to update.",
          "required": true,
          "location": "path"
         },
@@ -2459,7 +2712,7 @@
         },
         "profileId": {
          "type": "string",
-         "description": "Profile ID to retrieve goals for. Can either be a specific profile ID or '~all', which refers to all the profiles that user has access to.",
+         "description": "View (Profile) ID to retrieve goals for. Can either be a specific view (profile) ID or '~all', which refers to all the views (profiles) that user has access to.",
          "required": true,
          "location": "path"
         },
@@ -2498,17 +2751,17 @@
        "id": "analytics.management.profiles.list",
        "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles",
        "httpMethod": "GET",
-       "description": "Lists profiles to which the user has access.",
+       "description": "Lists views (profiles) to which the user has access.",
        "parameters": {
         "accountId": {
          "type": "string",
-         "description": "Account ID for the profiles to retrieve. Can either be a specific account ID or '~all', which refers to all the accounts to which the user has access.",
+         "description": "Account ID for the view (profiles) to retrieve. Can either be a specific account ID or '~all', which refers to all the accounts to which the user has access.",
          "required": true,
          "location": "path"
         },
         "max-results": {
          "type": "integer",
-         "description": "The maximum number of profiles to include in this response.",
+         "description": "The maximum number of views (profiles) to include in this response.",
          "format": "int32",
          "location": "query"
         },
@@ -2521,7 +2774,7 @@
         },
         "webPropertyId": {
          "type": "string",
-         "description": "Web property ID for the profiles to retrieve. Can either be a specific web property ID or '~all', which refers to all the web properties to which the user has access.",
+         "description": "Web property ID for the views (profiles) to retrieve. Can either be a specific web property ID or '~all', which refers to all the web properties to which the user has access.",
          "required": true,
          "location": "path"
         }
@@ -2605,6 +2858,39 @@
        ],
        "response": {
         "$ref": "Webproperties"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics",
+        "https://www.googleapis.com/auth/analytics.readonly"
+       ]
+      }
+     }
+    }
+   }
+  },
+  "metadata": {
+   "resources": {
+    "columns": {
+     "methods": {
+      "list": {
+       "id": "analytics.metadata.columns.list",
+       "path": "metadata/{reportType}/columns",
+       "httpMethod": "GET",
+       "description": "Lists all columns for a report type",
+       "parameters": {
+        "reportType": {
+         "type": "string",
+         "description": "Report type. Allowed Values: 'ga'. Where 'ga' corresponds to the Core Reporting API",
+         "required": true,
+         "pattern": "ga",
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "reportType"
+       ],
+       "response": {
+        "$ref": "Columns"
        },
        "scopes": [
         "https://www.googleapis.com/auth/analytics",

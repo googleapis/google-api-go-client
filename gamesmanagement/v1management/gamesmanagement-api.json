@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"BgGnx7p-6wsAbOn4St99QhtBGbA/HjNGhQYtxJFwauct4wiUA-aFGxs\"",
+ "etag": "\"wtgj9ZncHCe-ShJM8RewHb1DgWI/HdDDa79mvKXL6_0Pv7PO0jez5BE\"",
  "discoveryVersion": "v1",
  "id": "gamesManagement:v1management",
  "name": "gamesManagement",
  "canonicalName": "Games Management",
  "version": "v1management",
- "revision": "20130712",
+ "revision": "20130725",
  "title": "Google Play Game Services Management API",
  "description": "The Management API for Google Play Game Services.",
  "ownerDomain": "google.com",
@@ -215,7 +215,7 @@
      "id": "gamesManagement.achievements.reset",
      "path": "achievements/{achievementId}/reset",
      "httpMethod": "POST",
-     "description": "Resets the achievement with the given ID. This method is only accessible to whitelisted tester accounts for your application.",
+     "description": "Resets the achievement with the given ID for the currently authenticated player. This method is only accessible to whitelisted tester accounts for your application.",
      "parameters": {
       "achievementId": {
        "type": "string",
@@ -365,7 +365,7 @@
      "id": "gamesManagement.scores.reset",
      "path": "leaderboards/{leaderboardId}/scores/reset",
      "httpMethod": "POST",
-     "description": "Reset scores for the specified leaderboard, resetting the leaderboard to empty. This method is only accessible to whitelisted tester accounts for your application.",
+     "description": "Reset scores for the specified leaderboard for the currently authenticated player. This method is only accessible to whitelisted tester accounts for your application.",
      "parameters": {
       "leaderboardId": {
        "type": "string",

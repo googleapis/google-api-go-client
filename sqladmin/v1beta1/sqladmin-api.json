@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"BgGnx7p-6wsAbOn4St99QhtBGbA/z8RXmU79UwCvuLVEvj9O1__KRi0\"",
+ "etag": "\"wtgj9ZncHCe-ShJM8RewHb1DgWI/OAmCgMUtm3EZrU65dn423frjfC0\"",
  "discoveryVersion": "v1",
  "id": "sqladmin:v1beta1",
  "name": "sqladmin",
  "canonicalName": "SQL Admin",
  "version": "v1beta1",
- "revision": "20130525",
+ "revision": "20130710",
  "title": "Cloud SQL Administration API",
  "description": "API for Cloud SQL database instance management.",
  "ownerDomain": "google.com",
@@ -71,7 +71,7 @@
   "oauth2": {
    "scopes": {
     "https://www.googleapis.com/auth/cloud-platform": {
-     "description": "MESSAGE UNDER CONSTRUCTION View and manage your data across Google Cloud Platform services"
+     "description": "View and manage your data across Google Cloud Platform services"
     },
     "https://www.googleapis.com/auth/sqlservice.admin": {
      "description": "Manage your Google SQL Service instances"

@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"BgGnx7p-6wsAbOn4St99QhtBGbA/TVvujFmukJT_VSZip1V_XT36KbE\"",
+ "etag": "\"wtgj9ZncHCe-ShJM8RewHb1DgWI/rrS0bXxeuc6ZnqrHW5G1FQX-ifQ\"",
  "discoveryVersion": "v1",
  "id": "compute:v1beta14",
  "name": "compute",
@@ -16,7 +16,7 @@
  },
  "documentationLink": "https://developers.google.com/compute/docs/reference/v1beta14",
  "labels": [
-  "limited_availability"
+  "deprecated"
  ],
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/compute/v1beta14/projects/",
@@ -80,6 +80,9 @@
     },
     "https://www.googleapis.com/auth/devstorage.read_only": {
      "description": "View your data in Google Cloud Storage"
+    },
+    "https://www.googleapis.com/auth/devstorage.read_write": {
+     "description": "Manage your data in Google Cloud Storage"
     }
    }
   }
@@ -2252,7 +2255,8 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/compute",
-      "https://www.googleapis.com/auth/devstorage.read_only"
+      "https://www.googleapis.com/auth/devstorage.read_only",
+      "https://www.googleapis.com/auth/devstorage.read_write"
      ]
     },
     "list": {

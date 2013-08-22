@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"BgGnx7p-6wsAbOn4St99QhtBGbA/ojr8t92Ip1rN1AT3_5gxG-yv0ic\"",
+ "etag": "\"wtgj9ZncHCe-ShJM8RewHb1DgWI/cadAujORit7xgn2IF-hB2thXQ5k\"",
  "discoveryVersion": "v1",
  "id": "plus:v1",
  "name": "plus",
  "version": "v1",
- "revision": "20130712",
+ "revision": "20130726",
  "title": "Google+ API",
  "description": "The Google+ API enables developers to build on top of the Google+ platform.",
  "ownerDomain": "google.com",
@@ -87,6 +87,10 @@
      "type": "string",
      "description": "Description of the access granted, suitable for display."
     },
+    "domainRestricted": {
+     "type": "boolean",
+     "description": "Whether access is restricted to the domain."
+    },
     "items": {
      "type": "array",
      "description": "The list of access entries.",
@@ -119,7 +123,7 @@
       },
       "id": {
        "type": "string",
-       "description": "The ID of the actor's person resource."
+       "description": "The ID of the actor's Person resource."
       },
       "image": {
        "type": "object",
@@ -127,7 +131,7 @@
        "properties": {
         "url": {
          "type": "string",
-         "description": "The URL of the actor's profile photo. To re-size the image and crop it to a square, append the query string ?sz=x, where x is the dimension in pixels of each side."
+         "description": "The URL of the actor's profile photo. To resize the image and crop it to a square, append the query string ?sz=x, where x is the dimension in pixels of each side."
         }
        }
       },
@@ -137,11 +141,11 @@
        "properties": {
         "familyName": {
          "type": "string",
-         "description": "The family name (last name) of the actor."
+         "description": "The family name (\"last name\") of the actor."
         },
         "givenName": {
          "type": "string",
-         "description": "The given name (first name) of the actor."
+         "description": "The given name (\"first name\") of the actor."
         }
        }
       },
@@ -190,11 +194,11 @@
      "properties": {
       "actor": {
        "type": "object",
-       "description": "If this activity's object is itself another activity (for example, when a person reshares an activity), this property specifies the original activity's actor.",
+       "description": "If this activity's object is itself another activity, such as when a person reshares an activity, this property specifies the original activity's actor.",
        "properties": {
         "displayName": {
          "type": "string",
-         "description": "The original actor's name, suitable for display."
+         "description": "The original actor's name, which is suitable for display."
         },
         "id": {
          "type": "string",
@@ -228,7 +232,7 @@
          },
          "displayName": {
           "type": "string",
-          "description": "The title of the attachment (such as a photo caption or an article title)."
+          "description": "The title of the attachment, such as a photo caption or an article title."
          },
          "embed": {
           "type": "object",
@@ -259,7 +263,7 @@
            },
            "url": {
             "type": "string",
-            "description": "URL to the image."
+            "description": "URL of the image."
            },
            "width": {
             "type": "integer",
@@ -287,7 +291,7 @@
            },
            "url": {
             "type": "string",
-            "description": "Image url."
+            "description": "Image URL."
            },
            "width": {
             "type": "integer",
@@ -298,11 +302,11 @@
          },
          "objectType": {
           "type": "string",
-          "description": "The type of media object. Possible values include (but are not limited to):  \n- \"photo\" - A photo. \n- \"album\" - A photo album. \n- \"video\" - A video. \n- \"article\" - An article, specified by a link."
+          "description": "The type of media object. Possible values include, but are not limited to, the following values:  \n- \"photo\" - A photo. \n- \"album\" - A photo album. \n- \"video\" - A video. \n- \"article\" - An article, specified by a link."
          },
          "thumbnails": {
           "type": "array",
-          "description": "If the attachment is an album, potential additional thumbnails from the album.",
+          "description": "If the attachment is an album, this property is a list of potential additional thumbnails from the album.",
           "items": {
            "type": "object",
            "properties": {
@@ -336,33 +340,33 @@
             },
             "url": {
              "type": "string",
-             "description": "URL to the webpage containing the image."
+             "description": "URL of the webpage containing the image."
             }
            }
           }
          },
          "url": {
           "type": "string",
-          "description": "The link to the attachment, should be of type text/html."
+          "description": "The link to the attachment; should be of type text/html."
          }
         }
        }
       },
       "content": {
        "type": "string",
-       "description": "The HTML-formatted content, suitable for display."
+       "description": "The HTML-formatted content, which is suitable for display."
       },
       "id": {
        "type": "string",
-       "description": "The ID of the object. When resharing an activity, this is the ID of the activity being reshared."
+       "description": "The ID of the object. When resharing an activity, this is the ID of the activity that is being reshared."
       },
       "objectType": {
        "type": "string",
-       "description": "The type of the object. Possible values include (but are not limited to):  \n- \"note\" - Textual content. \n- \"activity\" - A Google+ activity."
+       "description": "The type of the object. Possible values include, but are not limited to, the following values:  \n- \"note\" - Textual content. \n- \"activity\" - A Google+ activity."
       },
       "originalContent": {
        "type": "string",
-       "description": "The content (text) as provided by the author, stored without any HTML formatting. When creating or updating an activity, this value must be supplied as plain text in the request."
+       "description": "The content (text) as provided by the author, which is stored without any HTML formatting. When creating or updating an activity, this value must be supplied as plain text in the request."
       },
       "plusoners": {
        "type": "object",
@@ -457,7 +461,7 @@
     },
     "verb": {
      "type": "string",
-     "description": "This activity's verb, indicating what action was performed. Possible values include (but are not limited to):  \n- \"post\" - Publish content to the stream. \n- \"share\" - Reshare an activity."
+     "description": "This activity's verb, which indicates the action that was performed. Possible values include, but are not limited to, the following values:  \n- \"post\" - Publish content to the stream. \n- \"share\" - Reshare an activity."
     }
    }
   },
@@ -495,11 +499,11 @@
     },
     "selfLink": {
      "type": "string",
-     "description": "Link to this activity resource."
+     "description": "Link to this activities resource."
     },
     "title": {
      "type": "string",
-     "description": "The title of this collection of activities."
+     "description": "The title of this collection of activities, which is a truncated portion of the content."
     },
     "updated": {
      "type": "string",
@@ -530,13 +534,13 @@
        "properties": {
         "url": {
          "type": "string",
-         "description": "The URL of the actor's profile photo. To re-size the image and crop it to a square, append the query string ?sz=x, where x is the dimension in pixels of each side."
+         "description": "The URL of the actor's profile photo. To resize the image and crop it to a square, append the query string ?sz=x, where x is the dimension in pixels of each side."
         }
        }
       },
       "url": {
        "type": "string",
-       "description": "A link to the person resource for this actor."
+       "description": "A link to the Person resource for this actor."
       }
      }
     },
@@ -1083,12 +1087,12 @@
        "properties": {
         "leftImageOffset": {
          "type": "integer",
-         "description": "The difference between the left position of the image cover and the actual displayed cover image. Only valid for BANNER layout.",
+         "description": "The difference between the left position of the cover image and the actual displayed cover image. Only valid for banner layout.",
          "format": "int32"
         },
         "topImageOffset": {
          "type": "integer",
-         "description": "The difference between the top position of the image cover and the actual displayed cover image. Only valid for BANNER layout.",
+         "description": "The difference between the top position of the cover image and the actual displayed cover image. Only valid for banner layout.",
          "format": "int32"
         }
        }
@@ -1099,23 +1103,23 @@
        "properties": {
         "height": {
          "type": "integer",
-         "description": "The height to the image.",
+         "description": "The height of the image.",
          "format": "int32"
         },
         "url": {
          "type": "string",
-         "description": "The url to the image."
+         "description": "The URL of the image."
         },
         "width": {
          "type": "integer",
-         "description": "The width to the image.",
+         "description": "The width of the image.",
          "format": "int32"
         }
        }
       },
       "layout": {
        "type": "string",
-       "description": "The layout of the cover art. Possible values include (but are not limited to):  \n- \"banner\" - One large image banner."
+       "description": "The layout of the cover art. Possible values include, but are not limited to, the following values:  \n- \"banner\" - One large image banner."
       }
      }
     },
@@ -1125,7 +1129,7 @@
     },
     "displayName": {
      "type": "string",
-     "description": "The name of this person, suitable for display."
+     "description": "The name of this person, which is suitable for display."
     },
     "etag": {
      "type": "string",
@@ -1133,7 +1137,7 @@
     },
     "gender": {
      "type": "string",
-     "description": "The person's gender. Possible values include (but are not limited to):  \n- \"male\" - Male gender. \n- \"female\" - Female gender. \n- \"other\" - Other."
+     "description": "The person's gender. Possible values include, but are not limited to, the following values:  \n- \"male\" - Male gender. \n- \"female\" - Female gender. \n- \"other\" - Other."
     },
     "id": {
      "type": "string",
@@ -1145,7 +1149,7 @@
      "properties": {
       "url": {
        "type": "string",
-       "description": "The URL of the person's profile photo. To re-size the image and crop it to a square, append the query string ?sz=x, where x is the dimension in pixels of each side."
+       "description": "The URL of the person's profile photo. To resize the image and crop it to a square, append the query string ?sz=x, where x is the dimension in pixels of each side."
       }
      }
     },
@@ -1198,7 +1202,7 @@
     },
     "objectType": {
      "type": "string",
-     "description": "Type of person within Google+. Possible values include (but are not limited to):  \n- \"person\" - represents an actual person. \n- \"page\" - represents a page."
+     "description": "Type of person within Google+. Possible values include, but are not limited to, the following values:  \n- \"person\" - represents an actual person. \n- \"page\" - represents a page."
     },
     "organizations": {
      "type": "array",
@@ -1216,7 +1220,7 @@
        },
        "endDate": {
         "type": "string",
-        "description": "The date the person left this organization."
+        "description": "The date that the person left this organization."
        },
        "location": {
         "type": "string",
@@ -1228,11 +1232,11 @@
        },
        "primary": {
         "type": "boolean",
-        "description": "If \"true\", indicates this organization is the person's primary one (typically interpreted as current one)."
+        "description": "If \"true\", indicates this organization is the person's primary one, which is typically interpreted as the current one."
        },
        "startDate": {
         "type": "string",
-        "description": "The date the person joined this organization."
+        "description": "The date that the person joined this organization."
        },
        "title": {
         "type": "string",
@@ -1240,7 +1244,7 @@
        },
        "type": {
         "type": "string",
-        "description": "The type of organization. Possible values include (but are not limited to):  \n- \"work\" - Work. \n- \"school\" - School."
+        "description": "The type of organization. Possible values include, but are not limited to, the following values:  \n- \"work\" - Work. \n- \"school\" - School."
        }
       }
      }
@@ -1264,12 +1268,12 @@
     },
     "plusOneCount": {
      "type": "integer",
-     "description": "If a Google+ Page, the number of people who have +1'ed this page.",
+     "description": "If a Google+ Page, the number of people who have +1'd this page.",
      "format": "int32"
     },
     "relationshipStatus": {
      "type": "string",
-     "description": "The person's relationship status. Possible values include (but are not limited to):  \n- \"single\" - Person is single. \n- \"in_a_relationship\" - Person is in a relationship. \n- \"engaged\" - Person is engaged. \n- \"married\" - Person is married. \n- \"its_complicated\" - The relationship is complicated. \n- \"open_relationship\" - Person is in an open relationship. \n- \"widowed\" - Person is widowed. \n- \"in_domestic_partnership\" - Person is in a domestic partnership. \n- \"in_civil_union\" - Person is in a civil union."
+     "description": "The person's relationship status. Possible values include, but are not limited to, the following values:  \n- \"single\" - Person is single. \n- \"in_a_relationship\" - Person is in a relationship. \n- \"engaged\" - Person is engaged. \n- \"married\" - Person is married. \n- \"its_complicated\" - The relationship is complicated. \n- \"open_relationship\" - Person is in an open relationship. \n- \"widowed\" - Person is widowed. \n- \"in_domestic_partnership\" - Person is in a domestic partnership. \n- \"in_civil_union\" - Person is in a civil union."
     },
     "tagline": {
      "type": "string",
@@ -1291,7 +1295,7 @@
        },
        "type": {
         "type": "string",
-        "description": "The type of URL. Possible values include (but are not limited to):  \n- \"otherProfile\" - URL for another profile. \n- \"contributor\" - URL for which this person is a contributor to. \n- \"website\" - URL for this Google+ Page's primary website. \n- \"other\" - Other."
+        "description": "The type of URL. Possible values include, but are not limited to, the following values:  \n- \"otherProfile\" - URL for another profile. \n- \"contributor\" - URL to a site for which this person is a contributor. \n- \"website\" - URL for this Google+ Page's primary website. \n- \"other\" - Other URL."
        },
        "value": {
         "type": "string",
@@ -1361,7 +1365,7 @@
     },
     "type": {
      "type": "string",
-     "description": "The type of entry describing to whom access is granted. Possible values are:  \n- \"person\" - Access to an individual. \n- \"circle\" - Access to members of a circle. \n- \"myCircles\" - Access to members of all the person's circles. \n- \"extendedCircles\" - Access to members of everyone in a person's circles, plus all of the people in their circles. \n- \"domain\" - Access to members of the person's Google Apps domain. \n- \"public\" - Access to anyone on the web."
+     "description": "The type of entry describing to whom access is granted. Possible values are:  \n- \"person\" - Access to an individual. \n- \"circle\" - Access to members of a circle. \n- \"myCircles\" - Access to members of all the person's circles. \n- \"extendedCircles\" - Access to members of all the person's circles, plus all of the people in their circles. \n- \"domain\" - Access to members of the person's Google Apps domain. \n- \"public\" - Access to anyone on the web."
     }
    }
   }

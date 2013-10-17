@@ -10,9 +10,7 @@ import (
 	"errors"
 	"flag"
 	"fmt"
-	"go/parser"
-	"go/printer"
-	"go/token"
+	"go/format"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -114,7 +112,7 @@ func main() {
 		}
 		matches = append(matches, api)
 		log.Printf("Generating API %s", api.ID)
-		err := api.GenerateCode()
+		err := api.WriteGeneratedCode()
 		if err != nil {
 			errors = append(errors, &generateError{api, err})
 			continue
@@ -191,18 +189,25 @@ func getAPIsFromFile() []*API {
 	if !*publicOnly {
 		log.Fatalf("Can't set --publiconly with --api_json_file.")
 	}
-	jsonBytes, err := ioutil.ReadFile(*jsonFile)
+	a, err := apiFromFile(*jsonFile)
 	if err != nil {
-		log.Fatalf("Error reading %s: %v", *jsonFile, err)
+		log.Fatal(err)
+	}
+	return []*API{a}
+}
+
+func apiFromFile(file string) (*API, error) {
+	jsonBytes, err := ioutil.ReadFile(file)
+	if err != nil {
+		return nil, fmt.Errorf("Error reading %s: %v", file, err)
 	}
 	a := &API{
 		forceJSON: jsonBytes,
 	}
-	err = json.Unmarshal(jsonBytes, a)
-	if err != nil {
-		log.Fatalf("Decoding JSON in %s: %v", *jsonFile, err)
+	if err := json.Unmarshal(jsonBytes, a); err != nil {
+		return nil, fmt.Errorf("Decoding JSON in %s: %v", file, err)
 	}
-	return []*API{a}
+	return a, nil
 }
 
 func writeFile(file string, contents []byte) error {
@@ -329,27 +334,38 @@ func (a *API) jsonBytes() []byte {
 	return slurpURL(a.DiscoveryURL())
 }
 
-func (a *API) GenerateCode() (outerr error) {
-	a.m = make(map[string]interface{})
-	m := a.m
-	jsonBytes := a.jsonBytes()
-	err := json.Unmarshal(jsonBytes, &a.m)
-	if err != nil {
-		return err
-	}
-
+func (a *API) WriteGeneratedCode() error {
 	outdir := a.SourceDir()
-	err = os.MkdirAll(outdir, 0755)
+	err := os.MkdirAll(outdir, 0755)
 	if err != nil {
 		return fmt.Errorf("failed to Mkdir %s: %v", outdir, err)
 	}
 
 	pkg := a.Package()
-	writeFile(filepath.Join(outdir, a.Package()+"-api.json"), jsonBytes)
+	writeFile(filepath.Join(outdir, a.Package()+"-api.json"), a.jsonBytes())
 
 	genfilename := *output
 	if genfilename == "" {
 		genfilename = filepath.Join(outdir, pkg+"-gen.go")
+	}
+
+	code, err := a.GenerateCode()
+	errw := writeFile(genfilename, code)
+	if err == nil {
+		err = errw
+	}
+	return err
+}
+
+func (a *API) GenerateCode() ([]byte, error) {
+	pkg := a.Package()
+
+	a.m = make(map[string]interface{})
+	m := a.m
+	jsonBytes := a.jsonBytes()
+	err := json.Unmarshal(jsonBytes, &a.m)
+	if err != nil {
+		return nil, err
 	}
 
 	// Buffer the output in memory, for gofmt'ing later in the defer.
@@ -357,46 +373,14 @@ func (a *API) GenerateCode() (outerr error) {
 	a.p = func(format string, args ...interface{}) {
 		_, err := fmt.Fprintf(&buf, format, args...)
 		if err != nil {
-			log.Fatalf("Error writing to %s: %v", genfilename, err)
+			panic(err)
 		}
 	}
 	a.pn = func(format string, args ...interface{}) {
 		a.p(format+"\n", args...)
 	}
 
-	// Write the file out after running gofmt on it.
-	defer func() {
-		if outerr != nil {
-			writeFile(genfilename, buf.Bytes())
-			return
-		}
-
-		fset := token.NewFileSet()
-		ast, err := parser.ParseFile(fset, "", buf.Bytes(), parser.ParseComments)
-		if err != nil {
-			writeFile(genfilename, buf.Bytes())
-			outerr = err
-			return
-		}
-
-		var clean bytes.Buffer
-		config := &printer.Config{
-			Mode:     printer.TabIndent | printer.UseSpaces,
-			Tabwidth: 8,
-		}
-		err = config.Fprint(&clean, fset, ast)
-		if err != nil {
-			outerr = err
-			writeFile(genfilename, buf.Bytes())
-			return
-		}
-		if err := writeFile(genfilename, clean.Bytes()); err != nil {
-			outerr = err
-		}
-	}()
-
 	p, pn := a.p, a.pn
-
 	reslist := a.Resources(a.m, "")
 
 	p("// Package %s provides access to the %s.\n", pkg, jstr(m, "title"))
@@ -485,7 +469,11 @@ func (a *API) GenerateCode() (outerr error) {
 		res.generateMethods()
 	}
 
-	return nil
+	clean, err := format.Source(buf.Bytes())
+	if err != nil {
+		return buf.Bytes(), err
+	}
+	return clean, nil
 }
 
 func (a *API) generateScopeConstants() {
@@ -1486,8 +1474,12 @@ func initialCap(ident string) string {
 func validGoIdentifer(ident string) string {
 	id := depunct(ident, false)
 	switch id {
-	case "type":
-		return "type_"
+	case "break", "default", "func", "interface", "select",
+		"case", "defer", "go", "map", "struct",
+		"chan", "else", "goto", "package", "switch",
+		"const", "fallthrough", "if", "range", "type",
+		"continue", "for", "import", "return", "var":
+		return id + "_"
 	}
 	return id
 }

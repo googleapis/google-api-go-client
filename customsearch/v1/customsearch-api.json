@@ -1,11 +1,10 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"wtgj9ZncHCe-ShJM8RewHb1DgWI/b1dtc1yhDWXnR1kikJvUipd0LOU\"",
+ "etag": "\"DGgqtFnjgu83tuwvvVNNUhOiHWk/5fAOCCT-EMDzKZ0hPKCYdJUAc9k\"",
  "discoveryVersion": "v1",
  "id": "customsearch:v1",
  "name": "customsearch",
  "version": "v1",
- "revision": "20130625",
  "title": "CustomSearch API",
  "description": "Lets you search over a website or collection of websites",
  "ownerDomain": "google.com",
@@ -84,6 +83,9 @@
          "type": "string"
         },
         "label": {
+         "type": "string"
+        },
+        "label_with_op": {
          "type": "string"
         }
        }
@@ -336,6 +338,9 @@
       "type": "object",
       "properties": {
        "displayName": {
+        "type": "string"
+       },
+       "label_with_op": {
         "type": "string"
        },
        "name": {

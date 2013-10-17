@@ -1,11 +1,10 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"wtgj9ZncHCe-ShJM8RewHb1DgWI/zbmL1UsP0_xndXHGtdmR53sXF64\"",
+ "etag": "\"DGgqtFnjgu83tuwvvVNNUhOiHWk/610kr4ZlL53w3blZCnftCmKVFqI\"",
  "discoveryVersion": "v1",
  "id": "oauth2:v2",
  "name": "oauth2",
  "version": "v2",
- "revision": "20130813",
  "title": "Google OAuth2 API",
  "description": "Lets you access OAuth2 protocol related APIs.",
  "ownerDomain": "google.com",
@@ -70,7 +69,7 @@
   "oauth2": {
    "scopes": {
     "https://www.googleapis.com/auth/plus.login": {
-     "description": "Know your name, basic info, and list of people you're connected to on Google+"
+     "description": "Know your basic profile info and list of people in your circles."
     },
     "https://www.googleapis.com/auth/plus.me": {
      "description": "Know who you are on Google"
@@ -128,10 +127,6 @@
    "id": "Userinfo",
    "type": "object",
    "properties": {
-    "birthday": {
-     "type": "string",
-     "description": "The user's birthday. The year is not present."
-    },
     "email": {
      "type": "string",
      "description": "The user's email address."

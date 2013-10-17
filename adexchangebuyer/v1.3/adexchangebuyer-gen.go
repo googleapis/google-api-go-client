@@ -185,6 +185,10 @@ type Creative struct {
 	// ClickThroughUrl: The set of destination urls for the snippet.
 	ClickThroughUrl []string `json:"clickThroughUrl,omitempty"`
 
+	// Corrections: Shows any corrections that were applied to this
+	// creative. Read-only. This field should not be set in requests.
+	Corrections []*CreativeCorrections `json:"corrections,omitempty"`
+
 	// DisapprovalReasons: The reasons for disapproval, if any. Note that
 	// not all disapproval reasons may be categorized, so it is possible for
 	// the creative to have a status of DISAPPROVED with an empty list for
@@ -192,6 +196,10 @@ type Creative struct {
 	// help debug the issue. Read-only. This field should not be set in
 	// requests.
 	DisapprovalReasons []*CreativeDisapprovalReasons `json:"disapprovalReasons,omitempty"`
+
+	// FilteringReasons: The filtering reasons for the creative. Read-only.
+	// This field should not be set in requests.
+	FilteringReasons *CreativeFilteringReasons `json:"filteringReasons,omitempty"`
 
 	// Height: Ad height.
 	Height int64 `json:"height,omitempty"`
@@ -223,12 +231,41 @@ type Creative struct {
 	Width int64 `json:"width,omitempty"`
 }
 
+type CreativeCorrections struct {
+	// Details: Additional details about the correction.
+	Details []string `json:"details,omitempty"`
+
+	// Reason: The type of correction that was applied to the creative.
+	Reason string `json:"reason,omitempty"`
+}
+
 type CreativeDisapprovalReasons struct {
 	// Details: Additional details about the reason for disapproval.
 	Details []string `json:"details,omitempty"`
 
 	// Reason: The categorized reason for disapproval.
 	Reason string `json:"reason,omitempty"`
+}
+
+type CreativeFilteringReasons struct {
+	// Date: The date in ISO 8601 format for the data. The data is collected
+	// from 00:00:00 to 23:59:59 in PST.
+	Date string `json:"date,omitempty"`
+
+	// Reasons: The filtering reasons.
+	Reasons []*CreativeFilteringReasonsReasons `json:"reasons,omitempty"`
+}
+
+type CreativeFilteringReasonsReasons struct {
+	// FilteringCount: The number of times the creative was filtered for the
+	// status. The count is aggregated across all publishers on the
+	// exchange.
+	FilteringCount int64 `json:"filteringCount,omitempty,string"`
+
+	// FilteringStatus: The filtering status code. Please refer to
+	// "creative-status-codes.txt" in the Downloads section for the status
+	// codes.
+	FilteringStatus int64 `json:"filteringStatus,omitempty"`
 }
 
 type CreativesList struct {
@@ -296,35 +333,62 @@ type DirectDealsList struct {
 }
 
 type PerformanceReport struct {
-	// QuotaConfiguredLimit: The quota limits for this account.
-	QuotaConfiguredLimit float64 `json:"QuotaConfiguredLimit,omitempty"`
+	// CalloutStatusRate: Rate of various prefiltering statuses per match.
+	CalloutStatusRate []interface{} `json:"calloutStatusRate,omitempty"`
 
-	QuotaThrottledLimit float64 `json:"QuotaThrottledLimit,omitempty"`
+	// CookieMatcherStatusRate: Average QPS for cookie matcher operations.
+	CookieMatcherStatusRate []interface{} `json:"cookieMatcherStatusRate,omitempty"`
+
+	// CreativeStatusRate: Rate of ads with a given status.
+	CreativeStatusRate []interface{} `json:"creativeStatusRate,omitempty"`
+
+	// HostedMatchStatusRate: Average QPS for hosted match operations.
+	HostedMatchStatusRate []interface{} `json:"hostedMatchStatusRate,omitempty"`
 
 	// Kind: Resource type.
 	Kind string `json:"kind,omitempty"`
 
-	// Latency50thPercentile: The Nth percentile round trip latency(ms) as
+	// Latency50thPercentile: The 50th percentile round trip latency(ms) as
 	// perceived from Google servers for the duration period covered by the
 	// report.
 	Latency50thPercentile float64 `json:"latency50thPercentile,omitempty"`
 
+	// Latency85thPercentile: The 85th percentile round trip latency(ms) as
+	// perceived from Google servers for the duration period covered by the
+	// report.
 	Latency85thPercentile float64 `json:"latency85thPercentile,omitempty"`
 
+	// Latency95thPercentile: The 95th percentile round trip latency(ms) as
+	// perceived from Google servers for the duration period covered by the
+	// report.
 	Latency95thPercentile float64 `json:"latency95thPercentile,omitempty"`
 
+	// NoQuotaInRegion: Rate of various quota account statuses per quota
+	// check.
 	NoQuotaInRegion float64 `json:"noQuotaInRegion,omitempty"`
 
+	// OutOfQuota: Rate of various quota account statuses per quota check.
 	OutOfQuota float64 `json:"outOfQuota,omitempty"`
 
+	// PixelMatchRequests: Average QPS for pixel match requests from
+	// clients.
 	PixelMatchRequests float64 `json:"pixelMatchRequests,omitempty"`
 
+	// PixelMatchResponses: Average QPS for pixel match responses from
+	// clients.
 	PixelMatchResponses float64 `json:"pixelMatchResponses,omitempty"`
+
+	// QuotaConfiguredLimit: The configured quota limits for this account.
+	QuotaConfiguredLimit float64 `json:"quotaConfiguredLimit,omitempty"`
+
+	// QuotaThrottledLimit: The throttled quota limits for this account.
+	QuotaThrottledLimit float64 `json:"quotaThrottledLimit,omitempty"`
 
 	// Region: The trading location of this data.
 	Region string `json:"region,omitempty"`
 
-	// Timestamp: Timestamp of the starting time of this performance data.
+	// Timestamp: The unix timestamp of the starting time of this
+	// performance data.
 	Timestamp int64 `json:"timestamp,omitempty,string"`
 }
 
@@ -332,9 +396,9 @@ type PerformanceReportList struct {
 	// Kind: Resource type.
 	Kind string `json:"kind,omitempty"`
 
-	// Performance_report: A list of performance reports relevant for the
+	// PerformanceReport: A list of performance reports relevant for the
 	// account.
-	Performance_report []*PerformanceReport `json:"performance_report,omitempty"`
+	PerformanceReport []*PerformanceReport `json:"performanceReport,omitempty"`
 }
 
 // method id "adexchangebuyer.accounts.get":
@@ -974,17 +1038,34 @@ func (c *DirectDealsListCall) Do() (*DirectDealsList, error) {
 type PerformanceReportListCall struct {
 	s             *Service
 	accountId     int64
-	endDateTime   int64
-	startDateTime int64
+	endDateTime   string
+	startDateTime string
 	opt_          map[string]interface{}
 }
 
 // List: Retrieves the authenticated user's list of performance metrics.
-func (r *PerformanceReportService) List(accountId int64, endDateTime int64, startDateTime int64) *PerformanceReportListCall {
+func (r *PerformanceReportService) List(accountId int64, endDateTime string, startDateTime string) *PerformanceReportListCall {
 	c := &PerformanceReportListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.accountId = accountId
 	c.endDateTime = endDateTime
 	c.startDateTime = startDateTime
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum number
+// of entries returned on one result page. If not set, the default is
+// 100.
+func (c *PerformanceReportListCall) MaxResults(maxResults int64) *PerformanceReportListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A continuation
+// token, used to page through performance reports. To retrieve the next
+// page, set this parameter to the value of "nextPageToken" from the
+// previous response.
+func (c *PerformanceReportListCall) PageToken(pageToken string) *PerformanceReportListCall {
+	c.opt_["pageToken"] = pageToken
 	return c
 }
 
@@ -995,6 +1076,12 @@ func (c *PerformanceReportListCall) Do() (*PerformanceReportList, error) {
 	params.Set("accountId", fmt.Sprintf("%v", c.accountId))
 	params.Set("endDateTime", fmt.Sprintf("%v", c.endDateTime))
 	params.Set("startDateTime", fmt.Sprintf("%v", c.startDateTime))
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1.3/", "performancereport")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -1024,22 +1111,33 @@ func (c *PerformanceReportListCall) Do() (*PerformanceReportList, error) {
 	//   ],
 	//   "parameters": {
 	//     "accountId": {
-	//       "description": "The account id to get the reports for.",
+	//       "description": "The account id to get the reports.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "endDateTime": {
-	//       "description": "The end time for the reports.",
-	//       "format": "int64",
+	//       "description": "The end time of the report in ISO 8601 timestamp format using UTC.",
 	//       "location": "query",
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "maxResults": {
+	//       "description": "Maximum number of entries returned on one result page. If not set, the default is 100. Optional.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "1000",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A continuation token, used to page through performance reports. To retrieve the next page, set this parameter to the value of \"nextPageToken\" from the previous response. Optional.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "startDateTime": {
-	//       "description": "The start time for the reports.",
-	//       "format": "int64",
+	//       "description": "The start time of the report in ISO 8601 timestamp format using UTC.",
 	//       "location": "query",
 	//       "required": true,
 	//       "type": "string"

@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"wtgj9ZncHCe-ShJM8RewHb1DgWI/T4bB77XUfbpGWn7xKXxC7yFKgeE\"",
+ "etag": "\"DGgqtFnjgu83tuwvvVNNUhOiHWk/T4bB77XUfbpGWn7xKXxC7yFKgeE\"",
  "discoveryVersion": "v1",
  "id": "urlshortener:v1",
  "name": "urlshortener",

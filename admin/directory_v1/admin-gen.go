@@ -211,6 +211,9 @@ type Alias struct {
 	// Alias: A alias email
 	Alias string `json:"alias,omitempty"`
 
+	// Etag: ETag of the resource.
+	Etag string `json:"etag,omitempty"`
+
 	// Id: Unique id of the group (Read-only) Unique id of the user
 	// (Read-only)
 	Id string `json:"id,omitempty"`
@@ -226,6 +229,9 @@ type Alias struct {
 type Aliases struct {
 	// Aliases: List of alias objects.
 	Aliases []*Alias `json:"aliases,omitempty"`
+
+	// Etag: ETag of the resource.
+	Etag string `json:"etag,omitempty"`
 
 	// Kind: Kind of resource this is.
 	Kind string `json:"kind,omitempty"`
@@ -244,6 +250,9 @@ type ChromeOsDevice struct {
 
 	// DeviceId: Unique identifier of Chrome OS Device (Read-only)
 	DeviceId string `json:"deviceId,omitempty"`
+
+	// Etag: ETag of the resource.
+	Etag string `json:"etag,omitempty"`
 
 	// FirmwareVersion: Chromebook firmware version (Read-only)
 	FirmwareVersion string `json:"firmwareVersion,omitempty"`
@@ -303,6 +312,9 @@ type ChromeOsDevices struct {
 	// Chromeosdevices: List of Chrome OS Device objects.
 	Chromeosdevices []*ChromeOsDevice `json:"chromeosdevices,omitempty"`
 
+	// Etag: ETag of the resource.
+	Etag string `json:"etag,omitempty"`
+
 	// Kind: Kind of resource this is.
 	Kind string `json:"kind,omitempty"`
 
@@ -320,8 +332,14 @@ type Group struct {
 	// Description: Description of the group
 	Description string `json:"description,omitempty"`
 
+	// DirectMembersCount: Group direct members count
+	DirectMembersCount int64 `json:"directMembersCount,omitempty,string"`
+
 	// Email: Email of Group
 	Email string `json:"email,omitempty"`
+
+	// Etag: ETag of the resource.
+	Etag string `json:"etag,omitempty"`
 
 	// Id: Unique identifier of Group (Read-only)
 	Id string `json:"id,omitempty"`
@@ -337,6 +355,9 @@ type Group struct {
 }
 
 type Groups struct {
+	// Etag: ETag of the resource.
+	Etag string `json:"etag,omitempty"`
+
 	// Groups: List of group objects.
 	Groups []*Group `json:"groups,omitempty"`
 
@@ -350,6 +371,9 @@ type Groups struct {
 type Member struct {
 	// Email: Email of member (Read-only)
 	Email string `json:"email,omitempty"`
+
+	// Etag: ETag of the resource.
+	Etag string `json:"etag,omitempty"`
 
 	// Id: Unique identifier of customer member (Read-only) Unique
 	// identifier of group (Read-only) Unique identifier of member
@@ -367,6 +391,9 @@ type Member struct {
 }
 
 type Members struct {
+	// Etag: ETag of the resource.
+	Etag string `json:"etag,omitempty"`
+
 	// Kind: Kind of resource this is.
 	Kind string `json:"kind,omitempty"`
 
@@ -386,6 +413,9 @@ type MobileDevice struct {
 
 	// Email: List of owner user's email addresses (Read-only)
 	Email []string `json:"email,omitempty"`
+
+	// Etag: ETag of the resource.
+	Etag string `json:"etag,omitempty"`
 
 	// FirstSync: Date and time the device was first synchronized with the
 	// policy settings in the Google Apps administrator control panel
@@ -448,6 +478,9 @@ type MobileDeviceAction struct {
 }
 
 type MobileDevices struct {
+	// Etag: ETag of the resource.
+	Etag string `json:"etag,omitempty"`
+
 	// Kind: Kind of resource this is.
 	Kind string `json:"kind,omitempty"`
 
@@ -465,6 +498,9 @@ type OrgUnit struct {
 	// Description: Description of OrgUnit
 	Description string `json:"description,omitempty"`
 
+	// Etag: ETag of the resource.
+	Etag string `json:"etag,omitempty"`
+
 	// Kind: Kind of resource this is.
 	Kind string `json:"kind,omitempty"`
 
@@ -479,6 +515,9 @@ type OrgUnit struct {
 }
 
 type OrgUnits struct {
+	// Etag: ETag of the resource.
+	Etag string `json:"etag,omitempty"`
+
 	// Kind: Kind of resource this is.
 	Kind string `json:"kind,omitempty"`
 
@@ -510,6 +549,9 @@ type User struct {
 
 	// Emails: Emails of User
 	Emails []*UserEmail `json:"emails,omitempty"`
+
+	// Etag: ETag of the resource.
+	Etag string `json:"etag,omitempty"`
 
 	// ExternalIds: The external Ids of User *
 	ExternalIds []*UserExternalId `json:"externalIds,omitempty"`
@@ -761,6 +803,9 @@ type UserPhone struct {
 }
 
 type UserPhoto struct {
+	// Etag: ETag of the resource.
+	Etag string `json:"etag,omitempty"`
+
 	// Height: Height in pixels of the photo
 	Height int64 `json:"height,omitempty"`
 
@@ -801,6 +846,9 @@ type UserUndelete struct {
 }
 
 type Users struct {
+	// Etag: ETag of the resource.
+	Etag string `json:"etag,omitempty"`
+
 	// Kind: Kind of resource this is.
 	Kind string `json:"kind,omitempty"`
 
@@ -1077,7 +1125,7 @@ func (c *ChromeosdevicesListCall) Do() (*ChromeOsDevices, error) {
 	//       "type": "string"
 	//     },
 	//     "query": {
-	//       "description": "Search string in the format given at http://support.google.com/chromeos/a/bin/answer.py?hl=en\u0026answer=1698333",
+	//       "description": "Search string in the format given at http://support.google.com/chromeos/a/bin/answer.py?hl=en&answer=1698333",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2914,7 +2962,7 @@ func (c *MobiledevicesListCall) Do() (*MobileDevices, error) {
 	//       "type": "string"
 	//     },
 	//     "query": {
-	//       "description": "Search string in the format given at http://support.google.com/a/bin/answer.py?hl=en\u0026answer=1408863#search",
+	//       "description": "Search string in the format given at http://support.google.com/a/bin/answer.py?hl=en&answer=1408863#search",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

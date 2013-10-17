@@ -1,12 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"wtgj9ZncHCe-ShJM8RewHb1DgWI/HdDDa79mvKXL6_0Pv7PO0jez5BE\"",
+ "etag": "\"DGgqtFnjgu83tuwvvVNNUhOiHWk/6BKryY7xXCfpi_SWyFmbgtFDNRs\"",
  "discoveryVersion": "v1",
  "id": "gamesManagement:v1management",
  "name": "gamesManagement",
  "canonicalName": "Games Management",
  "version": "v1management",
- "revision": "20130725",
  "title": "Google Play Game Services Management API",
  "description": "The Management API for Google Play Game Services.",
  "ownerDomain": "google.com",
@@ -70,8 +69,11 @@
  "auth": {
   "oauth2": {
    "scopes": {
+    "https://www.googleapis.com/auth/games": {
+     "description": "View and manage your game activity"
+    },
     "https://www.googleapis.com/auth/plus.login": {
-     "description": "Know your name, basic info, and list of people you're connected to on Google+"
+     "description": "Know your basic profile info and list of people in your circles."
     }
    }
   }
@@ -231,6 +233,7 @@
       "$ref": "AchievementResetResponse"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/games",
       "https://www.googleapis.com/auth/plus.login"
      ]
     },
@@ -243,6 +246,7 @@
       "$ref": "AchievementResetAllResponse"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/games",
       "https://www.googleapis.com/auth/plus.login"
      ]
     }
@@ -283,6 +287,7 @@
       "$ref": "HiddenPlayerList"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/games",
       "https://www.googleapis.com/auth/plus.login"
      ]
     }
@@ -314,6 +319,7 @@
       "playerId"
      ],
      "scopes": [
+      "https://www.googleapis.com/auth/games",
       "https://www.googleapis.com/auth/plus.login"
      ]
     },
@@ -341,6 +347,7 @@
       "playerId"
      ],
      "scopes": [
+      "https://www.googleapis.com/auth/games",
       "https://www.googleapis.com/auth/plus.login"
      ]
     }
@@ -354,6 +361,7 @@
      "httpMethod": "POST",
      "description": "Reset all rooms for the currently authenticated player for your application. This method is only accessible to whitelisted tester accounts for your application.",
      "scopes": [
+      "https://www.googleapis.com/auth/games",
       "https://www.googleapis.com/auth/plus.login"
      ]
     }
@@ -381,6 +389,7 @@
       "$ref": "PlayerScoreResetResponse"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/games",
       "https://www.googleapis.com/auth/plus.login"
      ]
     }

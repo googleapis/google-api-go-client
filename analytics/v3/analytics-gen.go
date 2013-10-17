@@ -44,6 +44,12 @@ const (
 	// View and manage your Google Analytics data
 	AnalyticsScope = "https://www.googleapis.com/auth/analytics"
 
+	// New service: https://www.googleapis.com/auth/analytics.edit
+	AnalyticsEditScope = "https://www.googleapis.com/auth/analytics.edit"
+
+	// Manage Google Analytics Account users by email address
+	AnalyticsManageUsersScope = "https://www.googleapis.com/auth/analytics.manage.users"
+
 	// View your Google Analytics data
 	AnalyticsReadonlyScope = "https://www.googleapis.com/auth/analytics.readonly"
 )
@@ -116,19 +122,25 @@ type DataRealtimeService struct {
 
 func NewManagementService(s *Service) *ManagementService {
 	rs := &ManagementService{s: s}
+	rs.AccountUserLinks = NewManagementAccountUserLinksService(s)
 	rs.Accounts = NewManagementAccountsService(s)
 	rs.CustomDataSources = NewManagementCustomDataSourcesService(s)
 	rs.DailyUploads = NewManagementDailyUploadsService(s)
 	rs.Experiments = NewManagementExperimentsService(s)
 	rs.Goals = NewManagementGoalsService(s)
+	rs.ProfileUserLinks = NewManagementProfileUserLinksService(s)
 	rs.Profiles = NewManagementProfilesService(s)
 	rs.Segments = NewManagementSegmentsService(s)
+	rs.Uploads = NewManagementUploadsService(s)
 	rs.Webproperties = NewManagementWebpropertiesService(s)
+	rs.WebpropertyUserLinks = NewManagementWebpropertyUserLinksService(s)
 	return rs
 }
 
 type ManagementService struct {
 	s *Service
+
+	AccountUserLinks *ManagementAccountUserLinksService
 
 	Accounts *ManagementAccountsService
 
@@ -140,11 +152,26 @@ type ManagementService struct {
 
 	Goals *ManagementGoalsService
 
+	ProfileUserLinks *ManagementProfileUserLinksService
+
 	Profiles *ManagementProfilesService
 
 	Segments *ManagementSegmentsService
 
+	Uploads *ManagementUploadsService
+
 	Webproperties *ManagementWebpropertiesService
+
+	WebpropertyUserLinks *ManagementWebpropertyUserLinksService
+}
+
+func NewManagementAccountUserLinksService(s *Service) *ManagementAccountUserLinksService {
+	rs := &ManagementAccountUserLinksService{s: s}
+	return rs
+}
+
+type ManagementAccountUserLinksService struct {
+	s *Service
 }
 
 func NewManagementAccountsService(s *Service) *ManagementAccountsService {
@@ -192,6 +219,15 @@ type ManagementGoalsService struct {
 	s *Service
 }
 
+func NewManagementProfileUserLinksService(s *Service) *ManagementProfileUserLinksService {
+	rs := &ManagementProfileUserLinksService{s: s}
+	return rs
+}
+
+type ManagementProfileUserLinksService struct {
+	s *Service
+}
+
 func NewManagementProfilesService(s *Service) *ManagementProfilesService {
 	rs := &ManagementProfilesService{s: s}
 	return rs
@@ -210,12 +246,30 @@ type ManagementSegmentsService struct {
 	s *Service
 }
 
+func NewManagementUploadsService(s *Service) *ManagementUploadsService {
+	rs := &ManagementUploadsService{s: s}
+	return rs
+}
+
+type ManagementUploadsService struct {
+	s *Service
+}
+
 func NewManagementWebpropertiesService(s *Service) *ManagementWebpropertiesService {
 	rs := &ManagementWebpropertiesService{s: s}
 	return rs
 }
 
 type ManagementWebpropertiesService struct {
+	s *Service
+}
+
+func NewManagementWebpropertyUserLinksService(s *Service) *ManagementWebpropertyUserLinksService {
+	rs := &ManagementWebpropertyUserLinksService{s: s}
+	return rs
+}
+
+type ManagementWebpropertyUserLinksService struct {
 	s *Service
 }
 
@@ -257,6 +311,9 @@ type Account struct {
 	// Name: Account name.
 	Name string `json:"name,omitempty"`
 
+	// Permissions: Permissions the user has for this account.
+	Permissions *AccountPermissions `json:"permissions,omitempty"`
+
 	// SelfLink: Link for this account.
 	SelfLink string `json:"selfLink,omitempty"`
 
@@ -270,6 +327,26 @@ type AccountChildLink struct {
 
 	// Type: Type of the child link. Its value is "analytics#webproperties".
 	Type string `json:"type,omitempty"`
+}
+
+type AccountPermissions struct {
+	// Effective: All the permissions that the user has for this account.
+	// These include any implied permissions (e.g., EDIT implies VIEW).
+	Effective []string `json:"effective,omitempty"`
+}
+
+type AccountRef struct {
+	// Href: Link for this account.
+	Href string `json:"href,omitempty"`
+
+	// Id: Account ID.
+	Id string `json:"id,omitempty"`
+
+	// Kind: Analytics account reference.
+	Kind string `json:"kind,omitempty"`
+
+	// Name: Account name.
+	Name string `json:"name,omitempty"`
 }
 
 type Accounts struct {
@@ -301,6 +378,11 @@ type Accounts struct {
 
 	// Username: Email ID of the authenticated user
 	Username string `json:"username,omitempty"`
+}
+
+type AnalyticsDataimportDeleteUploadDataRequest struct {
+	// CustomDataImportUids: A list of upload UIDs.
+	CustomDataImportUids []string `json:"customDataImportUids,omitempty"`
 }
 
 type Column struct {
@@ -539,6 +621,79 @@ type DailyUploads struct {
 	Username string `json:"username,omitempty"`
 }
 
+type EntityUserLink struct {
+	// Entity: Entity for this link. It can be an account, a web property,
+	// or a view (profile).
+	Entity *EntityUserLinkEntity `json:"entity,omitempty"`
+
+	// Id: Entity user link ID
+	Id string `json:"id,omitempty"`
+
+	// Kind: Resource type for entity user link.
+	Kind string `json:"kind,omitempty"`
+
+	// Permissions: Permissions the user has for this entity.
+	Permissions *EntityUserLinkPermissions `json:"permissions,omitempty"`
+
+	// SelfLink: Self link for this resource.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// UserRef: User reference.
+	UserRef *UserRef `json:"userRef,omitempty"`
+}
+
+type EntityUserLinkEntity struct {
+	// AccountRef: Account for this link.
+	AccountRef *AccountRef `json:"accountRef,omitempty"`
+
+	// ProfileRef: View (Profile) for this link.
+	ProfileRef *ProfileRef `json:"profileRef,omitempty"`
+
+	// WebPropertyRef: Web property for this link.
+	WebPropertyRef *WebPropertyRef `json:"webPropertyRef,omitempty"`
+}
+
+type EntityUserLinkPermissions struct {
+	// Effective: Effective permissions represent all the permissions that a
+	// user has for this entity. These include any implied permissions
+	// (e.g., EDIT implies VIEW) or inherited permissions from the parent
+	// entity. Effective permissions are read-only.
+	Effective []string `json:"effective,omitempty"`
+
+	// Local: Permissions that a user has been assigned at this very level.
+	// Does not include any implied or inherited permissions. Local
+	// permissions are modifiable.
+	Local []string `json:"local,omitempty"`
+}
+
+type EntityUserLinks struct {
+	// Items: A list of entity user links.
+	Items []*EntityUserLink `json:"items,omitempty"`
+
+	// ItemsPerPage: The maximum number of entries the response can contain,
+	// regardless of the actual number of entries returned. Its value ranges
+	// from 1 to 1000 with a value of 1000 by default, or otherwise
+	// specified by the max-results query parameter.
+	ItemsPerPage int64 `json:"itemsPerPage,omitempty"`
+
+	// Kind: Collection type.
+	Kind string `json:"kind,omitempty"`
+
+	// NextLink: Next link for this account collection.
+	NextLink string `json:"nextLink,omitempty"`
+
+	// PreviousLink: Previous link for this account collection.
+	PreviousLink string `json:"previousLink,omitempty"`
+
+	// StartIndex: The starting index of the entries, which is 1 by default
+	// or otherwise specified by the start-index query parameter.
+	StartIndex int64 `json:"startIndex,omitempty"`
+
+	// TotalResults: The total number of results for the query, regardless
+	// of the number of results in the response.
+	TotalResults int64 `json:"totalResults,omitempty"`
+}
+
 type Experiment struct {
 	// AccountId: Account ID to which this experiment belongs. This field is
 	// read-only.
@@ -558,6 +713,14 @@ type Experiment struct {
 	// changed from RUNNING to ENDED). This field is present only if the
 	// experiment has ended. This field is read-only.
 	EndTime string `json:"endTime,omitempty"`
+
+	// EqualWeighting: Boolean specifying whether to distribute traffic
+	// evenly across all variations. If the value is False, content
+	// experiments follows the default behavior of adjusting traffic
+	// dynamically based on variation performance. Optional -- defaults to
+	// False. This field may not be changed for an experiment whose status
+	// is ENDED.
+	EqualWeighting bool `json:"equalWeighting,omitempty"`
 
 	// Id: Experiment ID. Required for patch and update. Disallowed for
 	// create.
@@ -782,6 +945,13 @@ type GaData struct {
 	// dimensions and metrics is same as specified in the request.
 	Rows [][]string `json:"rows,omitempty"`
 
+	// SampleSize: The number of samples used to calculate the result.
+	SampleSize int64 `json:"sampleSize,omitempty,string"`
+
+	// SampleSpace: Total size of the sample space from which the samples
+	// were selected.
+	SampleSpace int64 `json:"sampleSpace,omitempty,string"`
+
 	// SelfLink: Link to this page.
 	SelfLink string `json:"selfLink,omitempty"`
 
@@ -848,6 +1018,9 @@ type GaDataQuery struct {
 
 	// Metrics: List of analytics metrics.
 	Metrics []string `json:"metrics,omitempty"`
+
+	// SamplingLevel: Desired sampling level
+	SamplingLevel string `json:"samplingLevel,omitempty"`
 
 	// Segment: Analytics advanced segment.
 	Segment string `json:"segment,omitempty"`
@@ -1086,6 +1259,13 @@ type McfData struct {
 	// dimensions and metrics is same as specified in the request.
 	Rows [][]*McfDataRowsItem `json:"rows,omitempty"`
 
+	// SampleSize: The number of samples used to calculate the result.
+	SampleSize int64 `json:"sampleSize,omitempty,string"`
+
+	// SampleSpace: Total size of the sample space from which the samples
+	// were selected.
+	SampleSpace int64 `json:"sampleSpace,omitempty,string"`
+
 	// SelfLink: Link to this page.
 	SelfLink string `json:"selfLink,omitempty"`
 
@@ -1152,6 +1332,9 @@ type McfDataQuery struct {
 	// Metrics: List of analytics metrics.
 	Metrics []string `json:"metrics,omitempty"`
 
+	// SamplingLevel: Desired sampling level
+	SamplingLevel string `json:"samplingLevel,omitempty"`
+
 	// Segment: Analytics advanced segment.
 	Segment string `json:"segment,omitempty"`
 
@@ -1200,7 +1383,11 @@ type Profile struct {
 	// Created: Time this view (profile) was created.
 	Created string `json:"created,omitempty"`
 
-	// Currency: The currency type associated with this view (profile).
+	// Currency: The currency type associated with this view (profile). The
+	// supported values are:
+	// ARS, AUD, BGN, BRL, CAD, CHF, CNY, CZK, DKK,
+	// EUR, GBP, HKD, HUF, IDR, INR, JPY, KRW, LTL, MXN, NOK, NZD, PHP, PLN,
+	// RUB, SEK, THB, TRY, TWD, USD, VND, ZAR
 	Currency string `json:"currency,omitempty"`
 
 	// DefaultPage: Default page for this view (profile).
@@ -1221,7 +1408,7 @@ type Profile struct {
 	// view (profile) belongs.
 	InternalWebPropertyId string `json:"internalWebPropertyId,omitempty"`
 
-	// Kind: Resource type for Analytics profile.
+	// Kind: Resource type for Analytics view (profile).
 	Kind string `json:"kind,omitempty"`
 
 	// Name: Name of this view (profile).
@@ -1230,6 +1417,9 @@ type Profile struct {
 	// ParentLink: Parent link for this view (profile). Points to the web
 	// property to which this view (profile) belongs.
 	ParentLink *ProfileParentLink `json:"parentLink,omitempty"`
+
+	// Permissions: Permissions the user has for this view (profile).
+	Permissions *ProfilePermissions `json:"permissions,omitempty"`
 
 	// SelfLink: Link for this view (profile).
 	SelfLink string `json:"selfLink,omitempty"`
@@ -1242,7 +1432,9 @@ type Profile struct {
 	// view (profile).
 	SiteSearchQueryParameters string `json:"siteSearchQueryParameters,omitempty"`
 
-	// Timezone: Time zone for which this profile has been configured.
+	// Timezone: Time zone for which this view (profile) has been
+	// configured. Time zones are identified by strings from the TZ
+	// database.
 	Timezone string `json:"timezone,omitempty"`
 
 	// Type: View (Profile) type. Supported types: WEB or APP.
@@ -1273,6 +1465,38 @@ type ProfileParentLink struct {
 
 	// Type: Value is "analytics#webproperty".
 	Type string `json:"type,omitempty"`
+}
+
+type ProfilePermissions struct {
+	// Effective: All the permissions that the user has for this view
+	// (profile). These include any implied permissions (e.g., EDIT implies
+	// VIEW) or inherited permissions from the parent web property.
+	Effective []string `json:"effective,omitempty"`
+}
+
+type ProfileRef struct {
+	// AccountId: Account ID to which this view (profile) belongs.
+	AccountId string `json:"accountId,omitempty"`
+
+	// Href: Link for this view (profile).
+	Href string `json:"href,omitempty"`
+
+	// Id: View (Profile) ID.
+	Id string `json:"id,omitempty"`
+
+	// InternalWebPropertyId: Internal ID for the web property to which this
+	// view (profile) belongs.
+	InternalWebPropertyId string `json:"internalWebPropertyId,omitempty"`
+
+	// Kind: Analytics view (profile) reference.
+	Kind string `json:"kind,omitempty"`
+
+	// Name: Name of this view (profile).
+	Name string `json:"name,omitempty"`
+
+	// WebPropertyId: Web property ID of the form UA-XXXXX-YY to which this
+	// view (profile) belongs.
+	WebPropertyId string `json:"webPropertyId,omitempty"`
 }
 
 type Profiles struct {
@@ -1462,6 +1686,86 @@ type Segments struct {
 	Username string `json:"username,omitempty"`
 }
 
+type Upload struct {
+	// AccountId: Account Id to which this upload belongs.
+	AccountId int64 `json:"accountId,omitempty,string"`
+
+	// CustomDataSourceId: Custom data source Id to which this data import
+	// belongs.
+	CustomDataSourceId string `json:"customDataSourceId,omitempty"`
+
+	// Errors: Data import errors collection.
+	Errors []string `json:"errors,omitempty"`
+
+	// Id: A unique ID for this upload.
+	Id string `json:"id,omitempty"`
+
+	// Kind: Resource type for Analytics upload.
+	Kind string `json:"kind,omitempty"`
+
+	// Status: Upload status. Possible values: PENDING, COMPLETED, FAILED,
+	// DELETING, DELETED.
+	Status string `json:"status,omitempty"`
+}
+
+type Uploads struct {
+	// Items: A list of uploads.
+	Items []*Upload `json:"items,omitempty"`
+
+	// ItemsPerPage: The maximum number of resources the response can
+	// contain, regardless of the actual number of resources returned. Its
+	// value ranges from 1 to 1000 with a value of 1000 by default, or
+	// otherwise specified by the max-results query parameter.
+	ItemsPerPage int64 `json:"itemsPerPage,omitempty"`
+
+	// Kind: Collection type.
+	Kind string `json:"kind,omitempty"`
+
+	// NextLink: Link to next page for this upload collection.
+	NextLink string `json:"nextLink,omitempty"`
+
+	// PreviousLink: Link to previous page for this upload collection.
+	PreviousLink string `json:"previousLink,omitempty"`
+
+	// StartIndex: The starting index of the resources, which is 1 by
+	// default or otherwise specified by the start-index query parameter.
+	StartIndex int64 `json:"startIndex,omitempty"`
+
+	// TotalResults: The total number of results for the query, regardless
+	// of the number of resources in the result.
+	TotalResults int64 `json:"totalResults,omitempty"`
+}
+
+type UserRef struct {
+	// Email: Email ID of this user.
+	Email string `json:"email,omitempty"`
+
+	// Id: User ID.
+	Id string `json:"id,omitempty"`
+
+	Kind string `json:"kind,omitempty"`
+}
+
+type WebPropertyRef struct {
+	// AccountId: Account ID to which this web property belongs.
+	AccountId string `json:"accountId,omitempty"`
+
+	// Href: Link for this web property.
+	Href string `json:"href,omitempty"`
+
+	// Id: Web property ID of the form UA-XXXXX-YY.
+	Id string `json:"id,omitempty"`
+
+	// InternalWebPropertyId: Internal ID for this web property.
+	InternalWebPropertyId string `json:"internalWebPropertyId,omitempty"`
+
+	// Kind: Analytics web property reference.
+	Kind string `json:"kind,omitempty"`
+
+	// Name: Name of this web property.
+	Name string `json:"name,omitempty"`
+}
+
 type Webproperties struct {
 	// Items: A list of web properties.
 	Items []*Webproperty `json:"items,omitempty"`
@@ -1504,11 +1808,50 @@ type Webproperty struct {
 	// Created: Time this web property was created.
 	Created string `json:"created,omitempty"`
 
+	// DefaultProfileId: Default view (profile) ID.
+	DefaultProfileId int64 `json:"defaultProfileId,omitempty,string"`
+
 	// Id: Web property ID of the form UA-XXXXX-YY.
 	Id string `json:"id,omitempty"`
 
 	// IndustryVertical: The industry vertical/category selected for this
-	// web property.
+	// web property. If this field is set, the correct values are:
+	// -
+	// UNSPECIFIED
+	// - ARTS_AND_ENTERTAINMENT
+	// - AUTOMOTIVE
+	// -
+	// BEAUTY_AND_FITNESS
+	// - BOOKS_AND_LITERATURE
+	// -
+	// BUSINESS_AND_INDUSTRIAL_MARKETS
+	// - COMPUTERS_AND_ELECTRONICS
+	// -
+	// FINANCE
+	// - FOOD_AND_DRINK
+	// - GAMES
+	// - HEALTHCARE
+	// -
+	// HOBBIES_AND_LEISURE
+	// - HOME_AND_GARDEN
+	// - INTERNET_AND_TELECOM
+	// -
+	// JOBS_AND_EDUCATION
+	// - LAW_AND_GOVERNMENT
+	// - NEWS
+	// -
+	// ONLINE_COMMUNITIES
+	// - OTHER
+	// - PEOPLE_AND_SOCIETY
+	// -
+	// PETS_AND_ANIMALS
+	// - REAL_ESTATE
+	// - REFERENCE
+	// - SCIENCE
+	// -
+	// SHOPPING
+	// - SPORTS
+	// - TRAVEL
 	IndustryVertical string `json:"industryVertical,omitempty"`
 
 	// InternalWebPropertyId: Internal ID for this web property.
@@ -1527,6 +1870,9 @@ type Webproperty struct {
 	// ParentLink: Parent link for this web property. Points to the account
 	// to which this web property belongs.
 	ParentLink *WebpropertyParentLink `json:"parentLink,omitempty"`
+
+	// Permissions: Permissions the user has for this web property.
+	Permissions *WebpropertyPermissions `json:"permissions,omitempty"`
 
 	// ProfileCount: View (Profile) count for this web property.
 	ProfileCount int64 `json:"profileCount,omitempty"`
@@ -1555,6 +1901,13 @@ type WebpropertyParentLink struct {
 
 	// Type: Type of the parent link. Its value is "analytics#account".
 	Type string `json:"type,omitempty"`
+}
+
+type WebpropertyPermissions struct {
+	// Effective: All the permissions that the user has for this web
+	// property. These include any implied permissions (e.g., EDIT implies
+	// VIEW) or inherited permissions from the parent account.
+	Effective []string `json:"effective,omitempty"`
 }
 
 // method id "analytics.data.ga.get":
@@ -1600,6 +1953,13 @@ func (c *DataGaGetCall) MaxResults(maxResults int64) *DataGaGetCall {
 	return c
 }
 
+// SamplingLevel sets the optional parameter "samplingLevel": The
+// desired sampling level.
+func (c *DataGaGetCall) SamplingLevel(samplingLevel string) *DataGaGetCall {
+	c.opt_["samplingLevel"] = samplingLevel
+	return c
+}
+
 // Segment sets the optional parameter "segment": An Analytics advanced
 // segment to be applied to data.
 func (c *DataGaGetCall) Segment(segment string) *DataGaGetCall {
@@ -1639,6 +1999,9 @@ func (c *DataGaGetCall) Do() (*GaData, error) {
 	}
 	if v, ok := c.opt_["max-results"]; ok {
 		params.Set("max-results", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["samplingLevel"]; ok {
+		params.Set("samplingLevel", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["segment"]; ok {
 		params.Set("segment", fmt.Sprintf("%v", v))
@@ -1685,9 +2048,9 @@ func (c *DataGaGetCall) Do() (*GaData, error) {
 	//       "type": "string"
 	//     },
 	//     "end-date": {
-	//       "description": "End date for fetching Analytics data. All requests should specify an end date formatted as YYYY-MM-DD.",
+	//       "description": "End date for fetching Analytics data. Request can should specify an end date formatted as YYYY-MM-DD, or as a relative date (e.g., today, yesterday, or 7daysAgo). The default value is yesterday.",
 	//       "location": "query",
-	//       "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2}",
+	//       "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2}|today|yesterday|[0-9]+(daysAgo)",
 	//       "required": true,
 	//       "type": "string"
 	//     },
@@ -1717,6 +2080,21 @@ func (c *DataGaGetCall) Do() (*GaData, error) {
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "samplingLevel": {
+	//       "description": "The desired sampling level.",
+	//       "enum": [
+	//         "DEFAULT",
+	//         "FASTER",
+	//         "HIGHER_PRECISION"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Returns response with a sample size that balances speed and accuracy.",
+	//         "Returns a fast response with a smaller sample size.",
+	//         "Returns a more accurate response using a large sample size, but this may result in the response being slower."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "segment": {
 	//       "description": "An Analytics advanced segment to be applied to data.",
 	//       "location": "query",
@@ -1729,9 +2107,9 @@ func (c *DataGaGetCall) Do() (*GaData, error) {
 	//       "type": "string"
 	//     },
 	//     "start-date": {
-	//       "description": "Start date for fetching Analytics data. All requests should specify a start date formatted as YYYY-MM-DD.",
+	//       "description": "Start date for fetching Analytics data. Requests can specify a start date formatted as YYYY-MM-DD, or as a relative date (e.g., today, yesterday, or 7daysAgo). The default value is 7daysAgo.",
 	//       "location": "query",
-	//       "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2}",
+	//       "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2}|today|yesterday|[0-9]+(daysAgo)",
 	//       "required": true,
 	//       "type": "string"
 	//     },
@@ -1799,6 +2177,13 @@ func (c *DataMcfGetCall) MaxResults(maxResults int64) *DataMcfGetCall {
 	return c
 }
 
+// SamplingLevel sets the optional parameter "samplingLevel": The
+// desired sampling level.
+func (c *DataMcfGetCall) SamplingLevel(samplingLevel string) *DataMcfGetCall {
+	c.opt_["samplingLevel"] = samplingLevel
+	return c
+}
+
 // Sort sets the optional parameter "sort": A comma-separated list of
 // dimensions or metrics that determine the sort order for the Analytics
 // data.
@@ -1831,6 +2216,9 @@ func (c *DataMcfGetCall) Do() (*McfData, error) {
 	}
 	if v, ok := c.opt_["max-results"]; ok {
 		params.Set("max-results", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["samplingLevel"]; ok {
+		params.Set("samplingLevel", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["sort"]; ok {
 		params.Set("sort", fmt.Sprintf("%v", v))
@@ -1874,9 +2262,9 @@ func (c *DataMcfGetCall) Do() (*McfData, error) {
 	//       "type": "string"
 	//     },
 	//     "end-date": {
-	//       "description": "End date for fetching Analytics data. All requests should specify an end date formatted as YYYY-MM-DD.",
+	//       "description": "End date for fetching Analytics data. Requests can specify a start date formatted as YYYY-MM-DD, or as a relative date (e.g., today, yesterday, or 7daysAgo). The default value is 7daysAgo.",
 	//       "location": "query",
-	//       "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2}",
+	//       "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2}|today|yesterday|[0-9]+(daysAgo)",
 	//       "required": true,
 	//       "type": "string"
 	//     },
@@ -1906,6 +2294,21 @@ func (c *DataMcfGetCall) Do() (*McfData, error) {
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "samplingLevel": {
+	//       "description": "The desired sampling level.",
+	//       "enum": [
+	//         "DEFAULT",
+	//         "FASTER",
+	//         "HIGHER_PRECISION"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Returns response with a sample size that balances speed and accuracy.",
+	//         "Returns a fast response with a smaller sample size.",
+	//         "Returns a more accurate response using a large sample size, but this may result in the response being slower."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "sort": {
 	//       "description": "A comma-separated list of dimensions or metrics that determine the sort order for the Analytics data.",
 	//       "location": "query",
@@ -1913,9 +2316,9 @@ func (c *DataMcfGetCall) Do() (*McfData, error) {
 	//       "type": "string"
 	//     },
 	//     "start-date": {
-	//       "description": "Start date for fetching Analytics data. All requests should specify a start date formatted as YYYY-MM-DD.",
+	//       "description": "Start date for fetching Analytics data. Requests can specify a start date formatted as YYYY-MM-DD, or as a relative date (e.g., today, yesterday, or 7daysAgo). The default value is 7daysAgo.",
 	//       "location": "query",
-	//       "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2}",
+	//       "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2}|today|yesterday|[0-9]+(daysAgo)",
 	//       "required": true,
 	//       "type": "string"
 	//     },
@@ -2082,6 +2485,332 @@ func (c *DataRealtimeGetCall) Do() (*RealtimeData, error) {
 
 }
 
+// method id "analytics.management.accountUserLinks.delete":
+
+type ManagementAccountUserLinksDeleteCall struct {
+	s         *Service
+	accountId string
+	linkId    string
+	opt_      map[string]interface{}
+}
+
+// Delete: Removes a user from the given account.
+func (r *ManagementAccountUserLinksService) Delete(accountId string, linkId string) *ManagementAccountUserLinksDeleteCall {
+	c := &ManagementAccountUserLinksDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.linkId = linkId
+	return c
+}
+
+func (c *ManagementAccountUserLinksDeleteCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/entityUserLinks/{linkId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{linkId}", url.QueryEscape(c.linkId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Removes a user from the given account.",
+	//   "httpMethod": "DELETE",
+	//   "id": "analytics.management.accountUserLinks.delete",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "linkId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account ID to delete the user link for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "linkId": {
+	//       "description": "Link ID to delete the user link for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/entityUserLinks/{linkId}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.manage.users"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.accountUserLinks.insert":
+
+type ManagementAccountUserLinksInsertCall struct {
+	s              *Service
+	accountId      string
+	entityuserlink *EntityUserLink
+	opt_           map[string]interface{}
+}
+
+// Insert: Adds a new user to the given account.
+func (r *ManagementAccountUserLinksService) Insert(accountId string, entityuserlink *EntityUserLink) *ManagementAccountUserLinksInsertCall {
+	c := &ManagementAccountUserLinksInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.entityuserlink = entityuserlink
+	return c
+}
+
+func (c *ManagementAccountUserLinksInsertCall) Do() (*EntityUserLink, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.entityuserlink)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/entityUserLinks")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(EntityUserLink)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Adds a new user to the given account.",
+	//   "httpMethod": "POST",
+	//   "id": "analytics.management.accountUserLinks.insert",
+	//   "parameterOrder": [
+	//     "accountId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account ID to create the user link for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/entityUserLinks",
+	//   "request": {
+	//     "$ref": "EntityUserLink"
+	//   },
+	//   "response": {
+	//     "$ref": "EntityUserLink"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.manage.users"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.accountUserLinks.list":
+
+type ManagementAccountUserLinksListCall struct {
+	s         *Service
+	accountId string
+	opt_      map[string]interface{}
+}
+
+// List: Lists account-user links for a given account.
+func (r *ManagementAccountUserLinksService) List(accountId string) *ManagementAccountUserLinksListCall {
+	c := &ManagementAccountUserLinksListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	return c
+}
+
+// MaxResults sets the optional parameter "max-results": The maximum
+// number of account-user links to include in this response.
+func (c *ManagementAccountUserLinksListCall) MaxResults(maxResults int64) *ManagementAccountUserLinksListCall {
+	c.opt_["max-results"] = maxResults
+	return c
+}
+
+// StartIndex sets the optional parameter "start-index": An index of the
+// first account-user link to retrieve. Use this parameter as a
+// pagination mechanism along with the max-results parameter.
+func (c *ManagementAccountUserLinksListCall) StartIndex(startIndex int64) *ManagementAccountUserLinksListCall {
+	c.opt_["start-index"] = startIndex
+	return c
+}
+
+func (c *ManagementAccountUserLinksListCall) Do() (*EntityUserLinks, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["max-results"]; ok {
+		params.Set("max-results", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["start-index"]; ok {
+		params.Set("start-index", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/entityUserLinks")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(EntityUserLinks)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists account-user links for a given account.",
+	//   "httpMethod": "GET",
+	//   "id": "analytics.management.accountUserLinks.list",
+	//   "parameterOrder": [
+	//     "accountId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account ID to retrieve the user links for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "max-results": {
+	//       "description": "The maximum number of account-user links to include in this response.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "start-index": {
+	//       "description": "An index of the first account-user link to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/entityUserLinks",
+	//   "response": {
+	//     "$ref": "EntityUserLinks"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.manage.users"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.accountUserLinks.update":
+
+type ManagementAccountUserLinksUpdateCall struct {
+	s              *Service
+	accountId      string
+	linkId         string
+	entityuserlink *EntityUserLink
+	opt_           map[string]interface{}
+}
+
+// Update: Updates permissions for an existing user on the given
+// account.
+func (r *ManagementAccountUserLinksService) Update(accountId string, linkId string, entityuserlink *EntityUserLink) *ManagementAccountUserLinksUpdateCall {
+	c := &ManagementAccountUserLinksUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.linkId = linkId
+	c.entityuserlink = entityuserlink
+	return c
+}
+
+func (c *ManagementAccountUserLinksUpdateCall) Do() (*EntityUserLink, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.entityuserlink)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/entityUserLinks/{linkId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{linkId}", url.QueryEscape(c.linkId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(EntityUserLink)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates permissions for an existing user on the given account.",
+	//   "httpMethod": "PUT",
+	//   "id": "analytics.management.accountUserLinks.update",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "linkId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account ID to update the account-user link for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "linkId": {
+	//       "description": "Link ID to update the account-user link for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/entityUserLinks/{linkId}",
+	//   "request": {
+	//     "$ref": "EntityUserLink"
+	//   },
+	//   "response": {
+	//     "$ref": "EntityUserLink"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.manage.users"
+	//   ]
+	// }
+
+}
+
 // method id "analytics.management.accounts.list":
 
 type ManagementAccountsListCall struct {
@@ -2163,6 +2892,7 @@ func (c *ManagementAccountsListCall) Do() (*Accounts, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/analytics",
+	//     "https://www.googleapis.com/auth/analytics.edit",
 	//     "https://www.googleapis.com/auth/analytics.readonly"
 	//   ]
 	// }
@@ -2275,6 +3005,7 @@ func (c *ManagementCustomDataSourcesListCall) Do() (*CustomDataSources, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/analytics",
+	//     "https://www.googleapis.com/auth/analytics.edit",
 	//     "https://www.googleapis.com/auth/analytics.readonly"
 	//   ]
 	// }
@@ -2381,7 +3112,8 @@ func (c *ManagementDailyUploadsDeleteCall) Do() error {
 	//   },
 	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/dailyUploads/{date}",
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics"
+	//     "https://www.googleapis.com/auth/analytics",
+	//     "https://www.googleapis.com/auth/analytics.edit"
 	//   ]
 	// }
 
@@ -2701,7 +3433,8 @@ func (c *ManagementDailyUploadsUploadCall) Do() (*DailyUploadAppend, error) {
 	//     "$ref": "DailyUploadAppend"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics"
+	//     "https://www.googleapis.com/auth/analytics",
+	//     "https://www.googleapis.com/auth/analytics.edit"
 	//   ],
 	//   "supportsMediaUpload": true
 	// }
@@ -2789,7 +3522,8 @@ func (c *ManagementExperimentsDeleteCall) Do() error {
 	//   },
 	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/experiments/{experimentId}",
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics"
+	//     "https://www.googleapis.com/auth/analytics",
+	//     "https://www.googleapis.com/auth/analytics.edit"
 	//   ]
 	// }
 
@@ -2884,6 +3618,7 @@ func (c *ManagementExperimentsGetCall) Do() (*Experiment, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/analytics",
+	//     "https://www.googleapis.com/auth/analytics.edit",
 	//     "https://www.googleapis.com/auth/analytics.readonly"
 	//   ]
 	// }
@@ -2979,7 +3714,8 @@ func (c *ManagementExperimentsInsertCall) Do() (*Experiment, error) {
 	//     "$ref": "Experiment"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics"
+	//     "https://www.googleapis.com/auth/analytics",
+	//     "https://www.googleapis.com/auth/analytics.edit"
 	//   ]
 	// }
 
@@ -3101,6 +3837,7 @@ func (c *ManagementExperimentsListCall) Do() (*Experiments, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/analytics",
+	//     "https://www.googleapis.com/auth/analytics.edit",
 	//     "https://www.googleapis.com/auth/analytics.readonly"
 	//   ]
 	// }
@@ -3207,7 +3944,8 @@ func (c *ManagementExperimentsPatchCall) Do() (*Experiment, error) {
 	//     "$ref": "Experiment"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics"
+	//     "https://www.googleapis.com/auth/analytics",
+	//     "https://www.googleapis.com/auth/analytics.edit"
 	//   ]
 	// }
 
@@ -3312,7 +4050,198 @@ func (c *ManagementExperimentsUpdateCall) Do() (*Experiment, error) {
 	//     "$ref": "Experiment"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics"
+	//     "https://www.googleapis.com/auth/analytics",
+	//     "https://www.googleapis.com/auth/analytics.edit"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.goals.get":
+
+type ManagementGoalsGetCall struct {
+	s             *Service
+	accountId     string
+	webPropertyId string
+	profileId     string
+	goalId        string
+	opt_          map[string]interface{}
+}
+
+// Get: Gets a goal to which the user has access.
+func (r *ManagementGoalsService) Get(accountId string, webPropertyId string, profileId string, goalId string) *ManagementGoalsGetCall {
+	c := &ManagementGoalsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.webPropertyId = webPropertyId
+	c.profileId = profileId
+	c.goalId = goalId
+	return c
+}
+
+func (c *ManagementGoalsGetCall) Do() (*Goal, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/goals/{goalId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{webPropertyId}", url.QueryEscape(c.webPropertyId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{profileId}", url.QueryEscape(c.profileId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{goalId}", url.QueryEscape(c.goalId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Goal)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a goal to which the user has access.",
+	//   "httpMethod": "GET",
+	//   "id": "analytics.management.goals.get",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "webPropertyId",
+	//     "profileId",
+	//     "goalId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account ID to retrieve the goal for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "goalId": {
+	//       "description": "Goal ID to retrieve the goal for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "profileId": {
+	//       "description": "View (Profile) ID to retrieve the goal for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "webPropertyId": {
+	//       "description": "Web property ID to retrieve the goal for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/goals/{goalId}",
+	//   "response": {
+	//     "$ref": "Goal"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.goals.insert":
+
+type ManagementGoalsInsertCall struct {
+	s             *Service
+	accountId     string
+	webPropertyId string
+	profileId     string
+	goal          *Goal
+	opt_          map[string]interface{}
+}
+
+// Insert: Create a new goal.
+func (r *ManagementGoalsService) Insert(accountId string, webPropertyId string, profileId string, goal *Goal) *ManagementGoalsInsertCall {
+	c := &ManagementGoalsInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.webPropertyId = webPropertyId
+	c.profileId = profileId
+	c.goal = goal
+	return c
+}
+
+func (c *ManagementGoalsInsertCall) Do() (*Goal, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.goal)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/goals")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{webPropertyId}", url.QueryEscape(c.webPropertyId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{profileId}", url.QueryEscape(c.profileId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Goal)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Create a new goal.",
+	//   "httpMethod": "POST",
+	//   "id": "analytics.management.goals.insert",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "webPropertyId",
+	//     "profileId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account ID to create the goal for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "profileId": {
+	//       "description": "View (Profile) ID to create the goal for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "webPropertyId": {
+	//       "description": "Web property ID to create the goal for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/goals",
+	//   "request": {
+	//     "$ref": "Goal"
+	//   },
+	//   "response": {
+	//     "$ref": "Goal"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit"
 	//   ]
 	// }
 
@@ -3431,7 +4360,875 @@ func (c *ManagementGoalsListCall) Do() (*Goals, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/analytics",
+	//     "https://www.googleapis.com/auth/analytics.edit",
 	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.goals.patch":
+
+type ManagementGoalsPatchCall struct {
+	s             *Service
+	accountId     string
+	webPropertyId string
+	profileId     string
+	goalId        string
+	goal          *Goal
+	opt_          map[string]interface{}
+}
+
+// Patch: Updates an existing view (profile). This method supports patch
+// semantics.
+func (r *ManagementGoalsService) Patch(accountId string, webPropertyId string, profileId string, goalId string, goal *Goal) *ManagementGoalsPatchCall {
+	c := &ManagementGoalsPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.webPropertyId = webPropertyId
+	c.profileId = profileId
+	c.goalId = goalId
+	c.goal = goal
+	return c
+}
+
+func (c *ManagementGoalsPatchCall) Do() (*Goal, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.goal)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/goals/{goalId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{webPropertyId}", url.QueryEscape(c.webPropertyId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{profileId}", url.QueryEscape(c.profileId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{goalId}", url.QueryEscape(c.goalId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Goal)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an existing view (profile). This method supports patch semantics.",
+	//   "httpMethod": "PATCH",
+	//   "id": "analytics.management.goals.patch",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "webPropertyId",
+	//     "profileId",
+	//     "goalId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account ID to update the goal.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "goalId": {
+	//       "description": "Index of the goal to be updated.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "profileId": {
+	//       "description": "View (Profile) ID to update the goal.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "webPropertyId": {
+	//       "description": "Web property ID to update the goal.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/goals/{goalId}",
+	//   "request": {
+	//     "$ref": "Goal"
+	//   },
+	//   "response": {
+	//     "$ref": "Goal"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.goals.update":
+
+type ManagementGoalsUpdateCall struct {
+	s             *Service
+	accountId     string
+	webPropertyId string
+	profileId     string
+	goalId        string
+	goal          *Goal
+	opt_          map[string]interface{}
+}
+
+// Update: Updates an existing view (profile).
+func (r *ManagementGoalsService) Update(accountId string, webPropertyId string, profileId string, goalId string, goal *Goal) *ManagementGoalsUpdateCall {
+	c := &ManagementGoalsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.webPropertyId = webPropertyId
+	c.profileId = profileId
+	c.goalId = goalId
+	c.goal = goal
+	return c
+}
+
+func (c *ManagementGoalsUpdateCall) Do() (*Goal, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.goal)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/goals/{goalId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{webPropertyId}", url.QueryEscape(c.webPropertyId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{profileId}", url.QueryEscape(c.profileId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{goalId}", url.QueryEscape(c.goalId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Goal)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an existing view (profile).",
+	//   "httpMethod": "PUT",
+	//   "id": "analytics.management.goals.update",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "webPropertyId",
+	//     "profileId",
+	//     "goalId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account ID to update the goal.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "goalId": {
+	//       "description": "Index of the goal to be updated.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "profileId": {
+	//       "description": "View (Profile) ID to update the goal.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "webPropertyId": {
+	//       "description": "Web property ID to update the goal.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/goals/{goalId}",
+	//   "request": {
+	//     "$ref": "Goal"
+	//   },
+	//   "response": {
+	//     "$ref": "Goal"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.profileUserLinks.delete":
+
+type ManagementProfileUserLinksDeleteCall struct {
+	s             *Service
+	accountId     string
+	webPropertyId string
+	profileId     string
+	linkId        string
+	opt_          map[string]interface{}
+}
+
+// Delete: Removes a user from the given view (profile).
+func (r *ManagementProfileUserLinksService) Delete(accountId string, webPropertyId string, profileId string, linkId string) *ManagementProfileUserLinksDeleteCall {
+	c := &ManagementProfileUserLinksDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.webPropertyId = webPropertyId
+	c.profileId = profileId
+	c.linkId = linkId
+	return c
+}
+
+func (c *ManagementProfileUserLinksDeleteCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/entityUserLinks/{linkId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{webPropertyId}", url.QueryEscape(c.webPropertyId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{profileId}", url.QueryEscape(c.profileId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{linkId}", url.QueryEscape(c.linkId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Removes a user from the given view (profile).",
+	//   "httpMethod": "DELETE",
+	//   "id": "analytics.management.profileUserLinks.delete",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "webPropertyId",
+	//     "profileId",
+	//     "linkId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account ID to delete the user link for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "linkId": {
+	//       "description": "Link ID to delete the user link for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "profileId": {
+	//       "description": "View (Profile) ID to delete the user link for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "webPropertyId": {
+	//       "description": "Web Property ID to delete the user link for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/entityUserLinks/{linkId}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.manage.users"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.profileUserLinks.insert":
+
+type ManagementProfileUserLinksInsertCall struct {
+	s              *Service
+	accountId      string
+	webPropertyId  string
+	profileId      string
+	entityuserlink *EntityUserLink
+	opt_           map[string]interface{}
+}
+
+// Insert: Adds a new user to the given view (profile).
+func (r *ManagementProfileUserLinksService) Insert(accountId string, webPropertyId string, profileId string, entityuserlink *EntityUserLink) *ManagementProfileUserLinksInsertCall {
+	c := &ManagementProfileUserLinksInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.webPropertyId = webPropertyId
+	c.profileId = profileId
+	c.entityuserlink = entityuserlink
+	return c
+}
+
+func (c *ManagementProfileUserLinksInsertCall) Do() (*EntityUserLink, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.entityuserlink)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/entityUserLinks")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{webPropertyId}", url.QueryEscape(c.webPropertyId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{profileId}", url.QueryEscape(c.profileId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(EntityUserLink)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Adds a new user to the given view (profile).",
+	//   "httpMethod": "POST",
+	//   "id": "analytics.management.profileUserLinks.insert",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "webPropertyId",
+	//     "profileId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account ID to create the user link for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "profileId": {
+	//       "description": "View (Profile) ID to create the user link for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "webPropertyId": {
+	//       "description": "Web Property ID to create the user link for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/entityUserLinks",
+	//   "request": {
+	//     "$ref": "EntityUserLink"
+	//   },
+	//   "response": {
+	//     "$ref": "EntityUserLink"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.manage.users"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.profileUserLinks.list":
+
+type ManagementProfileUserLinksListCall struct {
+	s             *Service
+	accountId     string
+	webPropertyId string
+	profileId     string
+	opt_          map[string]interface{}
+}
+
+// List: Lists profile-user links for a given view (profile).
+func (r *ManagementProfileUserLinksService) List(accountId string, webPropertyId string, profileId string) *ManagementProfileUserLinksListCall {
+	c := &ManagementProfileUserLinksListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.webPropertyId = webPropertyId
+	c.profileId = profileId
+	return c
+}
+
+// MaxResults sets the optional parameter "max-results": The maximum
+// number of profile-user links to include in this response.
+func (c *ManagementProfileUserLinksListCall) MaxResults(maxResults int64) *ManagementProfileUserLinksListCall {
+	c.opt_["max-results"] = maxResults
+	return c
+}
+
+// StartIndex sets the optional parameter "start-index": An index of the
+// first profile-user link to retrieve. Use this parameter as a
+// pagination mechanism along with the max-results parameter.
+func (c *ManagementProfileUserLinksListCall) StartIndex(startIndex int64) *ManagementProfileUserLinksListCall {
+	c.opt_["start-index"] = startIndex
+	return c
+}
+
+func (c *ManagementProfileUserLinksListCall) Do() (*EntityUserLinks, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["max-results"]; ok {
+		params.Set("max-results", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["start-index"]; ok {
+		params.Set("start-index", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/entityUserLinks")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{webPropertyId}", url.QueryEscape(c.webPropertyId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{profileId}", url.QueryEscape(c.profileId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(EntityUserLinks)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists profile-user links for a given view (profile).",
+	//   "httpMethod": "GET",
+	//   "id": "analytics.management.profileUserLinks.list",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "webPropertyId",
+	//     "profileId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account ID which the given view (profile) belongs to.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "max-results": {
+	//       "description": "The maximum number of profile-user links to include in this response.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "profileId": {
+	//       "description": "View (Profile) ID to retrieve the profile-user links for",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "start-index": {
+	//       "description": "An index of the first profile-user link to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     },
+	//     "webPropertyId": {
+	//       "description": "Web Property ID which the given view (profile) belongs to.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/entityUserLinks",
+	//   "response": {
+	//     "$ref": "EntityUserLinks"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.manage.users"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.profileUserLinks.update":
+
+type ManagementProfileUserLinksUpdateCall struct {
+	s              *Service
+	accountId      string
+	webPropertyId  string
+	profileId      string
+	linkId         string
+	entityuserlink *EntityUserLink
+	opt_           map[string]interface{}
+}
+
+// Update: Updates permissions for an existing user on the given view
+// (profile).
+func (r *ManagementProfileUserLinksService) Update(accountId string, webPropertyId string, profileId string, linkId string, entityuserlink *EntityUserLink) *ManagementProfileUserLinksUpdateCall {
+	c := &ManagementProfileUserLinksUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.webPropertyId = webPropertyId
+	c.profileId = profileId
+	c.linkId = linkId
+	c.entityuserlink = entityuserlink
+	return c
+}
+
+func (c *ManagementProfileUserLinksUpdateCall) Do() (*EntityUserLink, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.entityuserlink)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/entityUserLinks/{linkId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{webPropertyId}", url.QueryEscape(c.webPropertyId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{profileId}", url.QueryEscape(c.profileId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{linkId}", url.QueryEscape(c.linkId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(EntityUserLink)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates permissions for an existing user on the given view (profile).",
+	//   "httpMethod": "PUT",
+	//   "id": "analytics.management.profileUserLinks.update",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "webPropertyId",
+	//     "profileId",
+	//     "linkId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account ID to update the user link for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "linkId": {
+	//       "description": "Link ID to update the user link for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "profileId": {
+	//       "description": "View (Profile ID) to update the user link for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "webPropertyId": {
+	//       "description": "Web Property ID to update the user link for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/entityUserLinks/{linkId}",
+	//   "request": {
+	//     "$ref": "EntityUserLink"
+	//   },
+	//   "response": {
+	//     "$ref": "EntityUserLink"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.manage.users"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.profiles.delete":
+
+type ManagementProfilesDeleteCall struct {
+	s             *Service
+	accountId     string
+	webPropertyId string
+	profileId     string
+	opt_          map[string]interface{}
+}
+
+// Delete: Deletes a view (profile).
+func (r *ManagementProfilesService) Delete(accountId string, webPropertyId string, profileId string) *ManagementProfilesDeleteCall {
+	c := &ManagementProfilesDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.webPropertyId = webPropertyId
+	c.profileId = profileId
+	return c
+}
+
+func (c *ManagementProfilesDeleteCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{webPropertyId}", url.QueryEscape(c.webPropertyId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{profileId}", url.QueryEscape(c.profileId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Deletes a view (profile).",
+	//   "httpMethod": "DELETE",
+	//   "id": "analytics.management.profiles.delete",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "webPropertyId",
+	//     "profileId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account ID to delete the view (profile) for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "profileId": {
+	//       "description": "ID of the view (profile) to be deleted.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "webPropertyId": {
+	//       "description": "Web property ID to delete the view (profile) for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.profiles.get":
+
+type ManagementProfilesGetCall struct {
+	s             *Service
+	accountId     string
+	webPropertyId string
+	profileId     string
+	opt_          map[string]interface{}
+}
+
+// Get: Gets a view (profile) to which the user has access.
+func (r *ManagementProfilesService) Get(accountId string, webPropertyId string, profileId string) *ManagementProfilesGetCall {
+	c := &ManagementProfilesGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.webPropertyId = webPropertyId
+	c.profileId = profileId
+	return c
+}
+
+func (c *ManagementProfilesGetCall) Do() (*Profile, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{webPropertyId}", url.QueryEscape(c.webPropertyId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{profileId}", url.QueryEscape(c.profileId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Profile)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a view (profile) to which the user has access.",
+	//   "httpMethod": "GET",
+	//   "id": "analytics.management.profiles.get",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "webPropertyId",
+	//     "profileId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account ID to retrieve the goal for.",
+	//       "location": "path",
+	//       "pattern": "[0-9]+",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "profileId": {
+	//       "description": "View (Profile) ID to retrieve the goal for.",
+	//       "location": "path",
+	//       "pattern": "[0-9]+",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "webPropertyId": {
+	//       "description": "Web property ID to retrieve the goal for.",
+	//       "location": "path",
+	//       "pattern": "UA-[0-9]+-[0-9]+",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}",
+	//   "response": {
+	//     "$ref": "Profile"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.profiles.insert":
+
+type ManagementProfilesInsertCall struct {
+	s             *Service
+	accountId     string
+	webPropertyId string
+	profile       *Profile
+	opt_          map[string]interface{}
+}
+
+// Insert: Create a new view (profile).
+func (r *ManagementProfilesService) Insert(accountId string, webPropertyId string, profile *Profile) *ManagementProfilesInsertCall {
+	c := &ManagementProfilesInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.webPropertyId = webPropertyId
+	c.profile = profile
+	return c
+}
+
+func (c *ManagementProfilesInsertCall) Do() (*Profile, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.profile)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{webPropertyId}", url.QueryEscape(c.webPropertyId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Profile)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Create a new view (profile).",
+	//   "httpMethod": "POST",
+	//   "id": "analytics.management.profiles.insert",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "webPropertyId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account ID to create the view (profile) for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "webPropertyId": {
+	//       "description": "Web property ID to create the view (profile) for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles",
+	//   "request": {
+	//     "$ref": "Profile"
+	//   },
+	//   "response": {
+	//     "$ref": "Profile"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit"
 	//   ]
 	// }
 
@@ -3540,7 +5337,199 @@ func (c *ManagementProfilesListCall) Do() (*Profiles, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/analytics",
+	//     "https://www.googleapis.com/auth/analytics.edit",
 	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.profiles.patch":
+
+type ManagementProfilesPatchCall struct {
+	s             *Service
+	accountId     string
+	webPropertyId string
+	profileId     string
+	profile       *Profile
+	opt_          map[string]interface{}
+}
+
+// Patch: Updates an existing view (profile). This method supports patch
+// semantics.
+func (r *ManagementProfilesService) Patch(accountId string, webPropertyId string, profileId string, profile *Profile) *ManagementProfilesPatchCall {
+	c := &ManagementProfilesPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.webPropertyId = webPropertyId
+	c.profileId = profileId
+	c.profile = profile
+	return c
+}
+
+func (c *ManagementProfilesPatchCall) Do() (*Profile, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.profile)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{webPropertyId}", url.QueryEscape(c.webPropertyId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{profileId}", url.QueryEscape(c.profileId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Profile)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an existing view (profile). This method supports patch semantics.",
+	//   "httpMethod": "PATCH",
+	//   "id": "analytics.management.profiles.patch",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "webPropertyId",
+	//     "profileId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account ID to which the view (profile) belongs",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "profileId": {
+	//       "description": "ID of the view (profile) to be updated.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "webPropertyId": {
+	//       "description": "Web property ID to which the view (profile) belongs",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}",
+	//   "request": {
+	//     "$ref": "Profile"
+	//   },
+	//   "response": {
+	//     "$ref": "Profile"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.profiles.update":
+
+type ManagementProfilesUpdateCall struct {
+	s             *Service
+	accountId     string
+	webPropertyId string
+	profileId     string
+	profile       *Profile
+	opt_          map[string]interface{}
+}
+
+// Update: Updates an existing view (profile).
+func (r *ManagementProfilesService) Update(accountId string, webPropertyId string, profileId string, profile *Profile) *ManagementProfilesUpdateCall {
+	c := &ManagementProfilesUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.webPropertyId = webPropertyId
+	c.profileId = profileId
+	c.profile = profile
+	return c
+}
+
+func (c *ManagementProfilesUpdateCall) Do() (*Profile, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.profile)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{webPropertyId}", url.QueryEscape(c.webPropertyId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{profileId}", url.QueryEscape(c.profileId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Profile)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an existing view (profile).",
+	//   "httpMethod": "PUT",
+	//   "id": "analytics.management.profiles.update",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "webPropertyId",
+	//     "profileId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account ID to which the view (profile) belongs",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "profileId": {
+	//       "description": "ID of the view (profile) to be updated.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "webPropertyId": {
+	//       "description": "Web property ID to which the view (profile) belongs",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}",
+	//   "request": {
+	//     "$ref": "Profile"
+	//   },
+	//   "response": {
+	//     "$ref": "Profile"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit"
 	//   ]
 	// }
 
@@ -3627,7 +5616,597 @@ func (c *ManagementSegmentsListCall) Do() (*Segments, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/analytics",
+	//     "https://www.googleapis.com/auth/analytics.edit",
 	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.uploads.deleteUploadData":
+
+type ManagementUploadsDeleteUploadDataCall struct {
+	s                                          *Service
+	accountId                                  string
+	webPropertyId                              string
+	customDataSourceId                         string
+	analyticsdataimportdeleteuploaddatarequest *AnalyticsDataimportDeleteUploadDataRequest
+	opt_                                       map[string]interface{}
+}
+
+// DeleteUploadData: Delete data associated with a previous upload.
+func (r *ManagementUploadsService) DeleteUploadData(accountId string, webPropertyId string, customDataSourceId string, analyticsdataimportdeleteuploaddatarequest *AnalyticsDataimportDeleteUploadDataRequest) *ManagementUploadsDeleteUploadDataCall {
+	c := &ManagementUploadsDeleteUploadDataCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.webPropertyId = webPropertyId
+	c.customDataSourceId = customDataSourceId
+	c.analyticsdataimportdeleteuploaddatarequest = analyticsdataimportdeleteuploaddatarequest
+	return c
+}
+
+func (c *ManagementUploadsDeleteUploadDataCall) Do() error {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.analyticsdataimportdeleteuploaddatarequest)
+	if err != nil {
+		return err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/deleteUploadData")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{webPropertyId}", url.QueryEscape(c.webPropertyId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{customDataSourceId}", url.QueryEscape(c.customDataSourceId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Delete data associated with a previous upload.",
+	//   "httpMethod": "POST",
+	//   "id": "analytics.management.uploads.deleteUploadData",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "webPropertyId",
+	//     "customDataSourceId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account Id for the uploads to be deleted.",
+	//       "location": "path",
+	//       "pattern": "\\d+",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "customDataSourceId": {
+	//       "description": "Custom data source Id for the uploads to be deleted.",
+	//       "location": "path",
+	//       "pattern": ".{22}",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "webPropertyId": {
+	//       "description": "Web property Id for the uploads to be deleted.",
+	//       "location": "path",
+	//       "pattern": "UA-(\\d+)-(\\d+)",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/deleteUploadData",
+	//   "request": {
+	//     "$ref": "AnalyticsDataimportDeleteUploadDataRequest"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics",
+	//     "https://www.googleapis.com/auth/analytics.edit"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.uploads.get":
+
+type ManagementUploadsGetCall struct {
+	s                  *Service
+	accountId          string
+	webPropertyId      string
+	customDataSourceId string
+	uploadId           string
+	opt_               map[string]interface{}
+}
+
+// Get: List uploads to which the user has access.
+func (r *ManagementUploadsService) Get(accountId string, webPropertyId string, customDataSourceId string, uploadId string) *ManagementUploadsGetCall {
+	c := &ManagementUploadsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.webPropertyId = webPropertyId
+	c.customDataSourceId = customDataSourceId
+	c.uploadId = uploadId
+	return c
+}
+
+func (c *ManagementUploadsGetCall) Do() (*Upload, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/uploads/{uploadId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{webPropertyId}", url.QueryEscape(c.webPropertyId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{customDataSourceId}", url.QueryEscape(c.customDataSourceId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{uploadId}", url.QueryEscape(c.uploadId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Upload)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List uploads to which the user has access.",
+	//   "httpMethod": "GET",
+	//   "id": "analytics.management.uploads.get",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "webPropertyId",
+	//     "customDataSourceId",
+	//     "uploadId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account Id for the upload to retrieve.",
+	//       "location": "path",
+	//       "pattern": "\\d+",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "customDataSourceId": {
+	//       "description": "Custom data source Id for upload to retrieve.",
+	//       "location": "path",
+	//       "pattern": ".{22}",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "uploadId": {
+	//       "description": "Upload Id to retrieve.",
+	//       "location": "path",
+	//       "pattern": ".{22}",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "webPropertyId": {
+	//       "description": "Web property Id for the upload to retrieve.",
+	//       "location": "path",
+	//       "pattern": "UA-(\\d+)-(\\d+)",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/uploads/{uploadId}",
+	//   "response": {
+	//     "$ref": "Upload"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics",
+	//     "https://www.googleapis.com/auth/analytics.edit",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.uploads.list":
+
+type ManagementUploadsListCall struct {
+	s                  *Service
+	accountId          string
+	webPropertyId      string
+	customDataSourceId string
+	opt_               map[string]interface{}
+}
+
+// List: List uploads to which the user has access.
+func (r *ManagementUploadsService) List(accountId string, webPropertyId string, customDataSourceId string) *ManagementUploadsListCall {
+	c := &ManagementUploadsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.webPropertyId = webPropertyId
+	c.customDataSourceId = customDataSourceId
+	return c
+}
+
+// MaxResults sets the optional parameter "max-results": The maximum
+// number of uploads to include in this response.
+func (c *ManagementUploadsListCall) MaxResults(maxResults int64) *ManagementUploadsListCall {
+	c.opt_["max-results"] = maxResults
+	return c
+}
+
+// StartIndex sets the optional parameter "start-index": A 1-based index
+// of the first upload to retrieve. Use this parameter as a pagination
+// mechanism along with the max-results parameter.
+func (c *ManagementUploadsListCall) StartIndex(startIndex int64) *ManagementUploadsListCall {
+	c.opt_["start-index"] = startIndex
+	return c
+}
+
+func (c *ManagementUploadsListCall) Do() (*Uploads, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["max-results"]; ok {
+		params.Set("max-results", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["start-index"]; ok {
+		params.Set("start-index", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/uploads")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{webPropertyId}", url.QueryEscape(c.webPropertyId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{customDataSourceId}", url.QueryEscape(c.customDataSourceId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Uploads)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List uploads to which the user has access.",
+	//   "httpMethod": "GET",
+	//   "id": "analytics.management.uploads.list",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "webPropertyId",
+	//     "customDataSourceId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account Id for the uploads to retrieve.",
+	//       "location": "path",
+	//       "pattern": "\\d+",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "customDataSourceId": {
+	//       "description": "Custom data source Id for uploads to retrieve.",
+	//       "location": "path",
+	//       "pattern": ".{22}",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "max-results": {
+	//       "description": "The maximum number of uploads to include in this response.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     },
+	//     "start-index": {
+	//       "description": "A 1-based index of the first upload to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     },
+	//     "webPropertyId": {
+	//       "description": "Web property Id for the uploads to retrieve.",
+	//       "location": "path",
+	//       "pattern": "UA-(\\d+)-(\\d+)",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/uploads",
+	//   "response": {
+	//     "$ref": "Uploads"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics",
+	//     "https://www.googleapis.com/auth/analytics.edit",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.uploads.uploadData":
+
+type ManagementUploadsUploadDataCall struct {
+	s                  *Service
+	accountId          string
+	webPropertyId      string
+	customDataSourceId string
+	opt_               map[string]interface{}
+	media_             io.Reader
+}
+
+// UploadData: Upload/Overwrite data for a custom data source.
+func (r *ManagementUploadsService) UploadData(accountId string, webPropertyId string, customDataSourceId string) *ManagementUploadsUploadDataCall {
+	c := &ManagementUploadsUploadDataCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.webPropertyId = webPropertyId
+	c.customDataSourceId = customDataSourceId
+	return c
+}
+func (c *ManagementUploadsUploadDataCall) Media(r io.Reader) *ManagementUploadsUploadDataCall {
+	c.media_ = r
+	return c
+}
+
+func (c *ManagementUploadsUploadDataCall) Do() (*Upload, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/uploads")
+	if c.media_ != nil {
+		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
+		params.Set("uploadType", "multipart")
+	}
+	urls += "?" + params.Encode()
+	body = new(bytes.Buffer)
+	ctype := "application/json"
+	contentLength_, hasMedia_ := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{webPropertyId}", url.QueryEscape(c.webPropertyId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{customDataSourceId}", url.QueryEscape(c.customDataSourceId), 1)
+	googleapi.SetOpaque(req.URL)
+	if hasMedia_ {
+		req.ContentLength = contentLength_
+	}
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Upload)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Upload/Overwrite data for a custom data source.",
+	//   "httpMethod": "POST",
+	//   "id": "analytics.management.uploads.uploadData",
+	//   "mediaUpload": {
+	//     "accept": [
+	//       "application/octet-stream"
+	//     ],
+	//     "maxSize": "1GB",
+	//     "protocols": {
+	//       "resumable": {
+	//         "multipart": true,
+	//         "path": "/resumable/upload/analytics/v3/management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/uploads"
+	//       },
+	//       "simple": {
+	//         "multipart": true,
+	//         "path": "/upload/analytics/v3/management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/uploads"
+	//       }
+	//     }
+	//   },
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "webPropertyId",
+	//     "customDataSourceId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account Id associated with the upload.",
+	//       "location": "path",
+	//       "pattern": "\\d+",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "customDataSourceId": {
+	//       "description": "Custom data source Id to which the data being uploaded belongs.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "webPropertyId": {
+	//       "description": "Web property UA-string associated with the upload.",
+	//       "location": "path",
+	//       "pattern": "UA-\\d+-\\d+",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/uploads",
+	//   "response": {
+	//     "$ref": "Upload"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics",
+	//     "https://www.googleapis.com/auth/analytics.edit"
+	//   ],
+	//   "supportsMediaUpload": true
+	// }
+
+}
+
+// method id "analytics.management.webproperties.get":
+
+type ManagementWebpropertiesGetCall struct {
+	s             *Service
+	accountId     string
+	webPropertyId string
+	opt_          map[string]interface{}
+}
+
+// Get: Gets a web property to which the user has access.
+func (r *ManagementWebpropertiesService) Get(accountId string, webPropertyId string) *ManagementWebpropertiesGetCall {
+	c := &ManagementWebpropertiesGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.webPropertyId = webPropertyId
+	return c
+}
+
+func (c *ManagementWebpropertiesGetCall) Do() (*Webproperty, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{webPropertyId}", url.QueryEscape(c.webPropertyId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Webproperty)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a web property to which the user has access.",
+	//   "httpMethod": "GET",
+	//   "id": "analytics.management.webproperties.get",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "webPropertyId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account ID to retrieve the web property for.",
+	//       "location": "path",
+	//       "pattern": "[0-9]+",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "webPropertyId": {
+	//       "description": "ID to retrieve the web property for.",
+	//       "location": "path",
+	//       "pattern": "UA-[0-9]+-[0-9]+",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}",
+	//   "response": {
+	//     "$ref": "Webproperty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.webproperties.insert":
+
+type ManagementWebpropertiesInsertCall struct {
+	s           *Service
+	accountId   string
+	webproperty *Webproperty
+	opt_        map[string]interface{}
+}
+
+// Insert: Create a new property if the account has fewer than 20
+// properties.
+func (r *ManagementWebpropertiesService) Insert(accountId string, webproperty *Webproperty) *ManagementWebpropertiesInsertCall {
+	c := &ManagementWebpropertiesInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.webproperty = webproperty
+	return c
+}
+
+func (c *ManagementWebpropertiesInsertCall) Do() (*Webproperty, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.webproperty)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Webproperty)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Create a new property if the account has fewer than 20 properties.",
+	//   "httpMethod": "POST",
+	//   "id": "analytics.management.webproperties.insert",
+	//   "parameterOrder": [
+	//     "accountId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account ID to create the web property for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/webproperties",
+	//   "request": {
+	//     "$ref": "Webproperty"
+	//   },
+	//   "response": {
+	//     "$ref": "Webproperty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit"
 	//   ]
 	// }
 
@@ -3726,7 +6305,545 @@ func (c *ManagementWebpropertiesListCall) Do() (*Webproperties, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/analytics",
+	//     "https://www.googleapis.com/auth/analytics.edit",
 	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.webproperties.patch":
+
+type ManagementWebpropertiesPatchCall struct {
+	s             *Service
+	accountId     string
+	webPropertyId string
+	webproperty   *Webproperty
+	opt_          map[string]interface{}
+}
+
+// Patch: Updates an existing web property. This method supports patch
+// semantics.
+func (r *ManagementWebpropertiesService) Patch(accountId string, webPropertyId string, webproperty *Webproperty) *ManagementWebpropertiesPatchCall {
+	c := &ManagementWebpropertiesPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.webPropertyId = webPropertyId
+	c.webproperty = webproperty
+	return c
+}
+
+func (c *ManagementWebpropertiesPatchCall) Do() (*Webproperty, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.webproperty)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{webPropertyId}", url.QueryEscape(c.webPropertyId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Webproperty)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an existing web property. This method supports patch semantics.",
+	//   "httpMethod": "PATCH",
+	//   "id": "analytics.management.webproperties.patch",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "webPropertyId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account ID to which the web property belongs",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "webPropertyId": {
+	//       "description": "Web property ID",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}",
+	//   "request": {
+	//     "$ref": "Webproperty"
+	//   },
+	//   "response": {
+	//     "$ref": "Webproperty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.webproperties.update":
+
+type ManagementWebpropertiesUpdateCall struct {
+	s             *Service
+	accountId     string
+	webPropertyId string
+	webproperty   *Webproperty
+	opt_          map[string]interface{}
+}
+
+// Update: Updates an existing web property.
+func (r *ManagementWebpropertiesService) Update(accountId string, webPropertyId string, webproperty *Webproperty) *ManagementWebpropertiesUpdateCall {
+	c := &ManagementWebpropertiesUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.webPropertyId = webPropertyId
+	c.webproperty = webproperty
+	return c
+}
+
+func (c *ManagementWebpropertiesUpdateCall) Do() (*Webproperty, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.webproperty)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{webPropertyId}", url.QueryEscape(c.webPropertyId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Webproperty)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an existing web property.",
+	//   "httpMethod": "PUT",
+	//   "id": "analytics.management.webproperties.update",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "webPropertyId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account ID to which the web property belongs",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "webPropertyId": {
+	//       "description": "Web property ID",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}",
+	//   "request": {
+	//     "$ref": "Webproperty"
+	//   },
+	//   "response": {
+	//     "$ref": "Webproperty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.webpropertyUserLinks.delete":
+
+type ManagementWebpropertyUserLinksDeleteCall struct {
+	s             *Service
+	accountId     string
+	webPropertyId string
+	linkId        string
+	opt_          map[string]interface{}
+}
+
+// Delete: Removes a user from the given web property.
+func (r *ManagementWebpropertyUserLinksService) Delete(accountId string, webPropertyId string, linkId string) *ManagementWebpropertyUserLinksDeleteCall {
+	c := &ManagementWebpropertyUserLinksDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.webPropertyId = webPropertyId
+	c.linkId = linkId
+	return c
+}
+
+func (c *ManagementWebpropertyUserLinksDeleteCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/entityUserLinks/{linkId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{webPropertyId}", url.QueryEscape(c.webPropertyId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{linkId}", url.QueryEscape(c.linkId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Removes a user from the given web property.",
+	//   "httpMethod": "DELETE",
+	//   "id": "analytics.management.webpropertyUserLinks.delete",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "webPropertyId",
+	//     "linkId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account ID to delete the user link for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "linkId": {
+	//       "description": "Link ID to delete the user link for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "webPropertyId": {
+	//       "description": "Web Property ID to delete the user link for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/entityUserLinks/{linkId}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.manage.users"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.webpropertyUserLinks.insert":
+
+type ManagementWebpropertyUserLinksInsertCall struct {
+	s              *Service
+	accountId      string
+	webPropertyId  string
+	entityuserlink *EntityUserLink
+	opt_           map[string]interface{}
+}
+
+// Insert: Adds a new user to the given web property.
+func (r *ManagementWebpropertyUserLinksService) Insert(accountId string, webPropertyId string, entityuserlink *EntityUserLink) *ManagementWebpropertyUserLinksInsertCall {
+	c := &ManagementWebpropertyUserLinksInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.webPropertyId = webPropertyId
+	c.entityuserlink = entityuserlink
+	return c
+}
+
+func (c *ManagementWebpropertyUserLinksInsertCall) Do() (*EntityUserLink, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.entityuserlink)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/entityUserLinks")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{webPropertyId}", url.QueryEscape(c.webPropertyId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(EntityUserLink)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Adds a new user to the given web property.",
+	//   "httpMethod": "POST",
+	//   "id": "analytics.management.webpropertyUserLinks.insert",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "webPropertyId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account ID to create the user link for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "webPropertyId": {
+	//       "description": "Web Property ID to create the user link for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/entityUserLinks",
+	//   "request": {
+	//     "$ref": "EntityUserLink"
+	//   },
+	//   "response": {
+	//     "$ref": "EntityUserLink"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.manage.users"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.webpropertyUserLinks.list":
+
+type ManagementWebpropertyUserLinksListCall struct {
+	s             *Service
+	accountId     string
+	webPropertyId string
+	opt_          map[string]interface{}
+}
+
+// List: Lists webProperty-user links for a given web property.
+func (r *ManagementWebpropertyUserLinksService) List(accountId string, webPropertyId string) *ManagementWebpropertyUserLinksListCall {
+	c := &ManagementWebpropertyUserLinksListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.webPropertyId = webPropertyId
+	return c
+}
+
+// MaxResults sets the optional parameter "max-results": The maximum
+// number of webProperty-user Links to include in this response.
+func (c *ManagementWebpropertyUserLinksListCall) MaxResults(maxResults int64) *ManagementWebpropertyUserLinksListCall {
+	c.opt_["max-results"] = maxResults
+	return c
+}
+
+// StartIndex sets the optional parameter "start-index": An index of the
+// first webProperty-user link to retrieve. Use this parameter as a
+// pagination mechanism along with the max-results parameter.
+func (c *ManagementWebpropertyUserLinksListCall) StartIndex(startIndex int64) *ManagementWebpropertyUserLinksListCall {
+	c.opt_["start-index"] = startIndex
+	return c
+}
+
+func (c *ManagementWebpropertyUserLinksListCall) Do() (*EntityUserLinks, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["max-results"]; ok {
+		params.Set("max-results", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["start-index"]; ok {
+		params.Set("start-index", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/entityUserLinks")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{webPropertyId}", url.QueryEscape(c.webPropertyId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(EntityUserLinks)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists webProperty-user links for a given web property.",
+	//   "httpMethod": "GET",
+	//   "id": "analytics.management.webpropertyUserLinks.list",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "webPropertyId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account ID which the given web property belongs to.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "max-results": {
+	//       "description": "The maximum number of webProperty-user Links to include in this response.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "start-index": {
+	//       "description": "An index of the first webProperty-user link to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     },
+	//     "webPropertyId": {
+	//       "description": "Web Property ID for the webProperty-user links to retrieve.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/entityUserLinks",
+	//   "response": {
+	//     "$ref": "EntityUserLinks"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.manage.users"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.webpropertyUserLinks.update":
+
+type ManagementWebpropertyUserLinksUpdateCall struct {
+	s              *Service
+	accountId      string
+	webPropertyId  string
+	linkId         string
+	entityuserlink *EntityUserLink
+	opt_           map[string]interface{}
+}
+
+// Update: Updates permissions for an existing user on the given web
+// property.
+func (r *ManagementWebpropertyUserLinksService) Update(accountId string, webPropertyId string, linkId string, entityuserlink *EntityUserLink) *ManagementWebpropertyUserLinksUpdateCall {
+	c := &ManagementWebpropertyUserLinksUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.webPropertyId = webPropertyId
+	c.linkId = linkId
+	c.entityuserlink = entityuserlink
+	return c
+}
+
+func (c *ManagementWebpropertyUserLinksUpdateCall) Do() (*EntityUserLink, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.entityuserlink)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/entityUserLinks/{linkId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{webPropertyId}", url.QueryEscape(c.webPropertyId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{linkId}", url.QueryEscape(c.linkId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(EntityUserLink)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates permissions for an existing user on the given web property.",
+	//   "httpMethod": "PUT",
+	//   "id": "analytics.management.webpropertyUserLinks.update",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "webPropertyId",
+	//     "linkId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account ID to update the account-user link for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "linkId": {
+	//       "description": "Link ID to update the account-user link for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "webPropertyId": {
+	//       "description": "Web property ID to update the account-user link for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/entityUserLinks/{linkId}",
+	//   "request": {
+	//     "$ref": "EntityUserLink"
+	//   },
+	//   "response": {
+	//     "$ref": "EntityUserLink"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.manage.users"
 	//   ]
 	// }
 
@@ -3792,6 +6909,7 @@ func (c *MetadataColumnsListCall) Do() (*Columns, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/analytics",
+	//     "https://www.googleapis.com/auth/analytics.edit",
 	//     "https://www.googleapis.com/auth/analytics.readonly"
 	//   ]
 	// }

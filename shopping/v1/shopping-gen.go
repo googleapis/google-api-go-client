@@ -595,8 +595,9 @@ type ShoppingModelRecommendationsJsonV1 struct {
 
 	// Type: Type of recommendation list (for offer-based recommendations,
 	// one of: all, purchaseToPurchase, visitToVisit, visitToPurchase,
-	// relatedItems; for category-based recommendations, one of: all,
-	// categoryMostVisited, categoryBestSeller).
+	// relatedItems, visuallySimilarItems; for category-based
+	// recommendations, one of: all, categoryMostVisited,
+	// categoryBestSeller).
 	Type string `json:"type,omitempty"`
 }
 

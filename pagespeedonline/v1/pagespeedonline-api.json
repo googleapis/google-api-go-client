@@ -1,11 +1,10 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"wtgj9ZncHCe-ShJM8RewHb1DgWI/lTJWV60n5o_tnuHb4mkPt02YrjM\"",
+ "etag": "\"DGgqtFnjgu83tuwvvVNNUhOiHWk/ewJSghUqJkC7pZG1bHbl30ND5JQ\"",
  "discoveryVersion": "v1",
  "id": "pagespeedonline:v1",
  "name": "pagespeedonline",
  "version": "v1",
- "revision": "20130709",
  "title": "PageSpeed Insights API",
  "description": "Lets you analyze the performance of a web page and get tailored suggestions to make that page faster.",
  "ownerDomain": "google.com",
@@ -398,6 +397,12 @@
       "screenshot": {
        "type": "boolean",
        "description": "Indicates if binary data containing a screenshot should be included",
+       "default": "false",
+       "location": "query"
+      },
+      "snapshots": {
+       "type": "boolean",
+       "description": "Indicates if binary data containing snapshot images should be included",
        "default": "false",
        "location": "query"
       },

@@ -1,11 +1,10 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"wtgj9ZncHCe-ShJM8RewHb1DgWI/6kZAVRdl_KZg0pAAQDIN0UNgOQg\"",
+ "etag": "\"DGgqtFnjgu83tuwvvVNNUhOiHWk/JD9FB7iv8kKN81JcUTjacJleqmo\"",
  "discoveryVersion": "v1",
  "id": "bigquery:v2",
  "name": "bigquery",
  "version": "v2",
- "revision": "20130818",
  "title": "BigQuery API",
  "description": "A data platform for customers to create, manage, share and query data.",
  "ownerDomain": "google.com",
@@ -651,9 +650,14 @@
    "id": "JobStatistics",
    "type": "object",
    "properties": {
+    "creationTime": {
+     "type": "string",
+     "description": "[Output-only] Creation time of this job, in milliseconds since the epoch. This field will be present on all jobs.",
+     "format": "int64"
+    },
     "endTime": {
      "type": "string",
-     "description": "[Output-only] End time of this job, in milliseconds since the epoch.",
+     "description": "[Output-only] End time of this job, in milliseconds since the epoch. This field will be present whenever a job is in the DONE state.",
      "format": "int64"
     },
     "load": {
@@ -666,7 +670,7 @@
     },
     "startTime": {
      "type": "string",
-     "description": "[Output-only] Start time of this job, in milliseconds since the epoch.",
+     "description": "[Output-only] Start time of this job, in milliseconds since the epoch. This field will be present when the job transitions from the PENDING state to either RUNNING or DONE.",
      "format": "int64"
     },
     "totalBytesProcessed": {
@@ -737,6 +741,18 @@
      "description": "[Output-only] Running state of the job."
     }
    }
+  },
+  "JsonObject": {
+   "id": "JsonObject",
+   "type": "object",
+   "description": "Represents a single JSON object.",
+   "additionalProperties": {
+    "$ref": "JsonValue"
+   }
+  },
+  "JsonValue": {
+   "id": "JsonValue",
+   "type": "any"
   },
   "ProjectList": {
    "id": "ProjectList",
@@ -809,11 +825,11 @@
    "properties": {
     "defaultDataset": {
      "$ref": "DatasetReference",
-     "description": "[Optional] Specifies the default datasetId and projectId to assume for any unqualified table names in the query. If not set, all table names in the query string must be fully-qualified in the format projectId:datasetId.tableid."
+     "description": "[Optional] Specifies the default datasetId and projectId to assume for any unqualified table names in the query. If not set, all table names in the query string must be qualified in the format 'datasetId.tableId'."
     },
     "dryRun": {
      "type": "boolean",
-     "description": "[Optional] If set, don't actually run the query. A valid query will return an empty response, while an invalid query will return the same error it would if it wasn't a dry run."
+     "description": "[Optional] If set, don't actually run the query. A valid query will return an empty response, while an invalid query will return the same error it would if it wasn't a dry run. The default value is false."
     },
     "kind": {
      "type": "string",
@@ -822,16 +838,16 @@
     },
     "maxResults": {
      "type": "integer",
-     "description": "[Optional] The maximum number of results to return per page of results. If the response list exceeds the maximum response size for a single response, you will have to page through the results. Default is to return the maximum response size.",
+     "description": "[Optional] The maximum number of rows of data to return per page of results. Setting this flag to a small value such as 1000 and then paging through results might improve reliability when the query result set is large. In addition to this limit, responses are also limited to 10 MB. By default, there is no maximum row count, and only the byte limit applies.",
      "format": "uint32"
     },
     "preserveNulls": {
      "type": "boolean",
-     "description": "[Experimental] If set, preserve null values in table data, rather than mapping null values to the column's default value. This flag currently defaults to false, but the default will soon be changed to true. Shortly afterward, this flag will be removed completely. Please specify true if possible, and false only if you need to force the old behavior while updating client code."
+     "description": "[Deprecated] If set to false, maps null values in the query response to the column's default value. Only specify if you have older code that can not handle null values in the query response. The default value is true. This flag is deprecated and will be ignored in a future version of BigQuery."
     },
     "query": {
      "type": "string",
-     "description": "[Required] A query string, following the BigQuery query syntax of the query to execute. Table names should be qualified by dataset name in the format projectId:datasetId.tableId unless you specify the defaultDataset value. If the table is in the same project as the job, you can omit the project ID. Example: SELECT f1 FROM myProjectId:myDatasetId.myTableId.",
+     "description": "[Required] A query string, following the BigQuery query syntax, of the query to execute. Example: \"SELECT count(f1) FROM [myProjectId:myDatasetId.myTableId]\".",
      "annotations": {
       "required": [
        "bigquery.jobs.query"
@@ -840,12 +856,12 @@
     },
     "timeoutMs": {
      "type": "integer",
-     "description": "[Optional] How long to wait for the query to complete, in milliseconds, before returning. Default is to return immediately. If the timeout passes before the job completes, the request will fail with a TIMEOUT error.",
+     "description": "[Optional] How long to wait for the query to complete, in milliseconds, before the request times out and returns. Note that this is only a timeout for the request, not the query. If the query takes longer to run than the timeout value, the call returns without any results and with the 'jobComplete' flag set to false. You can call GetQueryResults() to wait for the query to complete and read the results. The default value is 10000 milliseconds (10 seconds).",
      "format": "uint32"
     },
     "useQueryCache": {
      "type": "boolean",
-     "description": "[Optional] Whether to look for the result in the query cache. The query cache is a best-effort cache that will be flushed whenever tables in the query are modified."
+     "description": "[Optional] Whether to look for the result in the query cache. The query cache is a best-effort cache that will be flushed whenever tables in the query are modified. The default value is true."
     }
    }
   },
@@ -968,6 +984,66 @@
    "properties": {
     "v": {
      "type": "any"
+    }
+   }
+  },
+  "TableDataInsertAllRequest": {
+   "id": "TableDataInsertAllRequest",
+   "type": "object",
+   "properties": {
+    "kind": {
+     "type": "string",
+     "description": "The resource type of the response.",
+     "default": "bigquery#tableDataInsertAllRequest"
+    },
+    "rows": {
+     "type": "array",
+     "description": "The rows to insert.",
+     "items": {
+      "type": "object",
+      "properties": {
+       "insertId": {
+        "type": "string",
+        "description": "[Optional] A unique ID for each row. BigQuery uses this property to detect duplicate insertion requests on a best-effort basis."
+       },
+       "json": {
+        "$ref": "JsonObject",
+        "description": "[Required] A JSON object that contains a row of data. The object's properties and values must match the destination table's schema."
+       }
+      }
+     }
+    }
+   }
+  },
+  "TableDataInsertAllResponse": {
+   "id": "TableDataInsertAllResponse",
+   "type": "object",
+   "properties": {
+    "insertErrors": {
+     "type": "array",
+     "description": "An array of errors for rows that were not inserted.",
+     "items": {
+      "type": "object",
+      "properties": {
+       "errors": {
+        "type": "array",
+        "description": "Error information for the row indicated by the index property.",
+        "items": {
+         "$ref": "ErrorProto"
+        }
+       },
+       "index": {
+        "type": "integer",
+        "description": "The index of the row that error applies to.",
+        "format": "uint32"
+       }
+      }
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "The resource type of the response.",
+     "default": "bigquery#tableDataInsertAllResponse"
     }
    }
   },
@@ -1144,7 +1220,7 @@
      "id": "bigquery.datasets.delete",
      "path": "projects/{projectId}/datasets/{datasetId}",
      "httpMethod": "DELETE",
-     "description": "Deletes the dataset specified by datasetId value. Before you can delete a dataset, you must delete all its tables, either manually or by specifying deleteContents. Immediately after deletion, you can create another dataset with the same name.",
+     "description": "Deletes the dataset specified by the datasetId value. Before you can delete a dataset, you must delete all its tables, either manually or by specifying deleteContents. Immediately after deletion, you can create another dataset with the same name.",
      "parameters": {
       "datasetId": {
        "type": "string",
@@ -1237,6 +1313,11 @@
      "httpMethod": "GET",
      "description": "Lists all the datasets in the specified project to which the caller has read access; however, a project owner can list (but not necessarily get) all datasets in his project.",
      "parameters": {
+      "all": {
+       "type": "boolean",
+       "description": "Whether to list all datasets, including hidden ones",
+       "location": "query"
+      },
       "maxResults": {
        "type": "integer",
        "description": "The maximum number of results to return",
@@ -1270,7 +1351,7 @@
      "id": "bigquery.datasets.patch",
      "path": "projects/{projectId}/datasets/{datasetId}",
      "httpMethod": "PATCH",
-     "description": "Updates information in an existing dataset, specified by datasetId. Properties not included in the submitted resource will not be changed. If you include the access property without any values assigned, the request will fail as you must specify at least one owner for a dataset. This method supports patch semantics.",
+     "description": "Updates information in an existing dataset. The update method replaces the entire dataset resource, whereas the patch method only replaces fields that are provided in the submitted dataset resource. This method supports patch semantics.",
      "parameters": {
       "datasetId": {
        "type": "string",
@@ -1304,7 +1385,7 @@
      "id": "bigquery.datasets.update",
      "path": "projects/{projectId}/datasets/{datasetId}",
      "httpMethod": "PUT",
-     "description": "Updates information in an existing dataset, specified by datasetId. Properties not included in the submitted resource will not be changed. If you include the access property without any values assigned, the request will fail as you must specify at least one owner for a dataset.",
+     "description": "Updates information in an existing dataset. The update method replaces the entire dataset resource, whereas the patch method only replaces fields that are provided in the submitted dataset resource.",
      "parameters": {
       "datasetId": {
        "type": "string",
@@ -1455,7 +1536,8 @@
      "supportsMediaUpload": true,
      "mediaUpload": {
       "accept": [
-       "application/octet-stream"
+       "application/octet-stream",
+       "text/csv"
       ],
       "protocols": {
        "simple": {
@@ -1599,6 +1681,47 @@
   },
   "tabledata": {
    "methods": {
+    "insertAll": {
+     "id": "bigquery.tabledata.insertAll",
+     "path": "projects/{projectId}/datasets/{datasetId}/tables/{tableId}/insertAll",
+     "httpMethod": "POST",
+     "description": "Inserts the supplied rows into the table.",
+     "parameters": {
+      "datasetId": {
+       "type": "string",
+       "description": "Dataset ID of the destination table.",
+       "required": true,
+       "location": "path"
+      },
+      "projectId": {
+       "type": "string",
+       "description": "Project ID of the destination table.",
+       "required": true,
+       "location": "path"
+      },
+      "tableId": {
+       "type": "string",
+       "description": "Table ID of the destination table.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "projectId",
+      "datasetId",
+      "tableId"
+     ],
+     "request": {
+      "$ref": "TableDataInsertAllRequest"
+     },
+     "response": {
+      "$ref": "TableDataInsertAllResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/bigquery",
+      "https://www.googleapis.com/auth/cloud-platform"
+     ]
+    },
     "list": {
      "id": "bigquery.tabledata.list",
      "path": "projects/{projectId}/datasets/{datasetId}/tables/{tableId}/data",
@@ -1811,7 +1934,7 @@
      "id": "bigquery.tables.patch",
      "path": "projects/{projectId}/datasets/{datasetId}/tables/{tableId}",
      "httpMethod": "PATCH",
-     "description": "Updates information in an existing table, specified by tableId. This method supports patch semantics.",
+     "description": "Updates information in an existing table. The update method replaces the entire table resource, whereas the patch method only replaces fields that are provided in the submitted table resource. This method supports patch semantics.",
      "parameters": {
       "datasetId": {
        "type": "string",
@@ -1852,7 +1975,7 @@
      "id": "bigquery.tables.update",
      "path": "projects/{projectId}/datasets/{datasetId}/tables/{tableId}",
      "httpMethod": "PUT",
-     "description": "Updates information in an existing table, specified by tableId.",
+     "description": "Updates information in an existing table. The update method replaces the entire table resource, whereas the patch method only replaces fields that are provided in the submitted table resource.",
      "parameters": {
       "datasetId": {
        "type": "string",

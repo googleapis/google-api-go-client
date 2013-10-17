@@ -70,6 +70,9 @@ type CreateAuthUriResponse struct {
 	// Kind: The fixed string identitytoolkit#CreateAuthUriResponse".
 	Kind string `json:"kind,omitempty"`
 
+	// ProviderId: The provider ID of the auth URI.
+	ProviderId string `json:"providerId,omitempty"`
+
 	// Providers: Existing IDP's for the user.
 	Providers []string `json:"providers,omitempty"`
 
@@ -81,6 +84,18 @@ type CreateAuthUriResponse struct {
 type DeleteAccountResponse struct {
 	// Kind: The fixed string "identitytoolkit#DeleteAccountResponse".
 	Kind string `json:"kind,omitempty"`
+}
+
+type DownloadAccountResponse struct {
+	// Accounts: The user accounts data.
+	Accounts []interface{} `json:"accounts,omitempty"`
+
+	// Kind: The fixed string "identitytoolkit#DownloadAccountResponse".
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: The next page token. To be used in a subsequent
+	// request to return the next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
 type GetAccountInfoResponse struct {
@@ -112,7 +127,7 @@ type GetAccountInfoResponseUsers struct {
 	Password string `json:"password,omitempty"`
 
 	// PasswordUpdatedAt: The timestamp when the password was last updated.
-	PasswordUpdatedAt int64 `json:"passwordUpdatedAt,omitempty,string"`
+	PasswordUpdatedAt float64 `json:"passwordUpdatedAt,omitempty"`
 
 	// PhotoUrl: The URL of the user profile photo.
 	PhotoUrl string `json:"photoUrl,omitempty"`
@@ -153,6 +168,10 @@ type GetOobConfirmationCodeResponse struct {
 }
 
 type IdentitytoolkitRelyingpartyCreateAuthUriRequest struct {
+	// AppId: The app ID of the mobile app, base64(CERT_SHA1):PACKAGE_NAME
+	// for Android, BUNDLE_ID for iOS.
+	AppId string `json:"appId,omitempty"`
+
 	// ClientId: The relying party OAuth client ID.
 	ClientId string `json:"clientId,omitempty"`
 
@@ -172,6 +191,9 @@ type IdentitytoolkitRelyingpartyCreateAuthUriRequest struct {
 	// not set.
 	OpenidRealm string `json:"openidRealm,omitempty"`
 
+	// OtaApp: The native app package for OTA installation.
+	OtaApp string `json:"otaApp,omitempty"`
+
 	// ProviderId: The IdP ID. For white listed IdPs it's a short domain
 	// name e.g. google.com, aol.com, live.net and yahoo.com. For other
 	// OpenID IdPs it's the OP identifier.
@@ -181,6 +203,15 @@ type IdentitytoolkitRelyingpartyCreateAuthUriRequest struct {
 type IdentitytoolkitRelyingpartyDeleteAccountRequest struct {
 	// LocalId: The local ID of the user.
 	LocalId string `json:"localId,omitempty"`
+}
+
+type IdentitytoolkitRelyingpartyDownloadAccountRequest struct {
+	// MaxResults: The max number of results to return in the response.
+	MaxResults int64 `json:"maxResults,omitempty"`
+
+	// NextPageToken: The token for the next page. This should be taken from
+	// the previous response.
+	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
 type IdentitytoolkitRelyingpartyGetAccountInfoRequest struct {
@@ -324,8 +355,21 @@ type SetAccountInfoResponse struct {
 	// Kind: The fixed string "identitytoolkit#SetAccountInfoResponse".
 	Kind string `json:"kind,omitempty"`
 
-	// Provider: The associated IDPs of the user.
-	Provider []string `json:"provider,omitempty"`
+	// ProviderUserInfo: The user's profiles at the associated IdPs.
+	ProviderUserInfo []*SetAccountInfoResponseProviderUserInfo `json:"providerUserInfo,omitempty"`
+}
+
+type SetAccountInfoResponseProviderUserInfo struct {
+	// DisplayName: The user's display name at the IDP.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// PhotoUrl: The user's photo url at the IDP.
+	PhotoUrl string `json:"photoUrl,omitempty"`
+
+	// ProviderId: The IdP ID. For whitelisted IdPs it's a short domain
+	// name, e.g., google.com, aol.com, live.net and yahoo.com. For other
+	// OpenID IdPs it's the OP identifier.
+	ProviderId string `json:"providerId,omitempty"`
 }
 
 type UploadAccountResponse struct {
@@ -364,6 +408,12 @@ type Userinfo struct {
 type VerifyAssertionResponse struct {
 	// Action: The action code.
 	Action string `json:"action,omitempty"`
+
+	// AppInstallationUrl: URL for OTA app installation.
+	AppInstallationUrl string `json:"appInstallationUrl,omitempty"`
+
+	// AppScheme: The custom scheme used by mobile app.
+	AppScheme string `json:"appScheme,omitempty"`
 
 	// Context: The opaque value used by the client to maintain context info
 	// between the authentication request and the IDP callback.
@@ -415,6 +465,10 @@ type VerifyAssertionResponse struct {
 	// LocalId: The RP local ID if it's already been mapped to the IdP
 	// account identified by the federated ID.
 	LocalId string `json:"localId,omitempty"`
+
+	// NeedConfirmation: Whether the assertion is from a non-trusted IDP and
+	// need account linking confirmation.
+	NeedConfirmation bool `json:"needConfirmation,omitempty"`
 
 	// NickName: The nick name of the user.
 	NickName string `json:"nickName,omitempty"`
@@ -583,6 +637,64 @@ func (c *RelyingpartyDeleteAccountCall) Do() (*DeleteAccountResponse, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "DeleteAccountResponse"
+	//   }
+	// }
+
+}
+
+// method id "identitytoolkit.relyingparty.downloadAccount":
+
+type RelyingpartyDownloadAccountCall struct {
+	s                                                 *Service
+	identitytoolkitrelyingpartydownloadaccountrequest *IdentitytoolkitRelyingpartyDownloadAccountRequest
+	opt_                                              map[string]interface{}
+}
+
+// DownloadAccount: Batch download user accounts.
+func (r *RelyingpartyService) DownloadAccount(identitytoolkitrelyingpartydownloadaccountrequest *IdentitytoolkitRelyingpartyDownloadAccountRequest) *RelyingpartyDownloadAccountCall {
+	c := &RelyingpartyDownloadAccountCall{s: r.s, opt_: make(map[string]interface{})}
+	c.identitytoolkitrelyingpartydownloadaccountrequest = identitytoolkitrelyingpartydownloadaccountrequest
+	return c
+}
+
+func (c *RelyingpartyDownloadAccountCall) Do() (*DownloadAccountResponse, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.identitytoolkitrelyingpartydownloadaccountrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/identitytoolkit/v3/relyingparty/", "downloadAccount")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(DownloadAccountResponse)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Batch download user accounts.",
+	//   "httpMethod": "POST",
+	//   "id": "identitytoolkit.relyingparty.downloadAccount",
+	//   "path": "downloadAccount",
+	//   "request": {
+	//     "$ref": "IdentitytoolkitRelyingpartyDownloadAccountRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "DownloadAccountResponse"
 	//   }
 	// }
 

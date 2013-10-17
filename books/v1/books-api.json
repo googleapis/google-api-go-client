@@ -1,11 +1,10 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"wtgj9ZncHCe-ShJM8RewHb1DgWI/BhpbFaBFPqs1pfup94lEvllZnv0\"",
+ "etag": "\"DGgqtFnjgu83tuwvvVNNUhOiHWk/lKQvoyQ9jVAixOyz9qwZmCcUu-Q\"",
  "discoveryVersion": "v1",
  "id": "books:v1",
  "name": "books",
  "version": "v1",
- "revision": "20130809",
  "title": "Books API",
  "description": "Lets you search for books and manage your Google Books library.",
  "ownerDomain": "google.com",
@@ -1166,6 +1165,10 @@
          "description": "Is a flowing text epub available either as public domain or for purchase. (In LITE projection.)"
         }
        }
+      },
+      "explicitOfflineLicenseManagement": {
+       "type": "boolean",
+       "description": "Whether this volume requires that the client explicitly request offline download license rather than have it done automatically when loading the content, if the client supports it."
       },
       "pdf": {
        "type": "object",
@@ -2417,6 +2420,21 @@
        "type": "string",
        "description": "The device/version ID from which to request the restrictions.",
        "required": true,
+       "location": "query"
+      },
+      "licenseTypes": {
+       "type": "string",
+       "description": "The type of access license to request. If not specified, the default is BOTH.",
+       "enum": [
+        "BOTH",
+        "CONCURRENT",
+        "DOWNLOAD"
+       ],
+       "enumDescriptions": [
+        "Both concurrent and download licenses.",
+        "Concurrent access license.",
+        "Offline download access license."
+       ],
        "location": "query"
       },
       "locale": {

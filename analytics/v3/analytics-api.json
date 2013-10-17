@@ -1,11 +1,10 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"wtgj9ZncHCe-ShJM8RewHb1DgWI/e9HBqaggs6IocNxCo84LkfRbqA4\"",
+ "etag": "\"DGgqtFnjgu83tuwvvVNNUhOiHWk/ZzLfvhn8YaxUZ9ssb3cdYypOzK0\"",
  "discoveryVersion": "v1",
  "id": "analytics:v3",
  "name": "analytics",
  "version": "v3",
- "revision": "20130817",
  "title": "Google Analytics API",
  "description": "View and manage your Google Analytics data",
  "ownerDomain": "google.com",
@@ -72,6 +71,12 @@
     "https://www.googleapis.com/auth/analytics": {
      "description": "View and manage your Google Analytics data"
     },
+    "https://www.googleapis.com/auth/analytics.edit": {
+     "description": "New service: https://www.googleapis.com/auth/analytics.edit"
+    },
+    "https://www.googleapis.com/auth/analytics.manage.users": {
+     "description": "Manage Google Analytics Account users by email address"
+    },
     "https://www.googleapis.com/auth/analytics.readonly": {
      "description": "View your Google Analytics data"
     }
@@ -117,6 +122,20 @@
      "type": "string",
      "description": "Account name."
     },
+    "permissions": {
+     "type": "object",
+     "description": "Permissions the user has for this account.",
+     "properties": {
+      "effective": {
+       "type": "array",
+       "description": "All the permissions that the user has for this account. These include any implied permissions (e.g., EDIT implies VIEW).",
+       "readOnly": true,
+       "items": {
+        "type": "string"
+       }
+      }
+     }
+    },
     "selfLink": {
      "type": "string",
      "description": "Link for this account."
@@ -125,6 +144,30 @@
      "type": "string",
      "description": "Time the account was last modified.",
      "format": "date-time"
+    }
+   }
+  },
+  "AccountRef": {
+   "id": "AccountRef",
+   "type": "object",
+   "description": "JSON template for a linked account.",
+   "properties": {
+    "href": {
+     "type": "string",
+     "description": "Link for this account."
+    },
+    "id": {
+     "type": "string",
+     "description": "Account ID."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Analytics account reference.",
+     "default": "analytics#accountRef"
+    },
+    "name": {
+     "type": "string",
+     "description": "Account name."
     }
    }
   },
@@ -171,6 +214,20 @@
     "username": {
      "type": "string",
      "description": "Email ID of the authenticated user"
+    }
+   }
+  },
+  "AnalyticsDataimportDeleteUploadDataRequest": {
+   "id": "AnalyticsDataimportDeleteUploadDataRequest",
+   "type": "object",
+   "description": "Request template for the delete upload data request.",
+   "properties": {
+    "customDataImportUids": {
+     "type": "array",
+     "description": "A list of upload UIDs.",
+     "items": {
+      "type": "string"
+     }
     }
    }
   },
@@ -526,6 +583,111 @@
     }
    }
   },
+  "EntityUserLink": {
+   "id": "EntityUserLink",
+   "type": "object",
+   "description": "JSON template for an Analytics Entity-User Link. Returns permissions that a user has for an entity.",
+   "properties": {
+    "entity": {
+     "type": "object",
+     "description": "Entity for this link. It can be an account, a web property, or a view (profile).",
+     "properties": {
+      "accountRef": {
+       "$ref": "AccountRef",
+       "description": "Account for this link."
+      },
+      "profileRef": {
+       "$ref": "ProfileRef",
+       "description": "View (Profile) for this link."
+      },
+      "webPropertyRef": {
+       "$ref": "WebPropertyRef",
+       "description": "Web property for this link."
+      }
+     }
+    },
+    "id": {
+     "type": "string",
+     "description": "Entity user link ID"
+    },
+    "kind": {
+     "type": "string",
+     "description": "Resource type for entity user link.",
+     "default": "analytics#entityUserLink"
+    },
+    "permissions": {
+     "type": "object",
+     "description": "Permissions the user has for this entity.",
+     "properties": {
+      "effective": {
+       "type": "array",
+       "description": "Effective permissions represent all the permissions that a user has for this entity. These include any implied permissions (e.g., EDIT implies VIEW) or inherited permissions from the parent entity. Effective permissions are read-only.",
+       "readOnly": true,
+       "items": {
+        "type": "string"
+       }
+      },
+      "local": {
+       "type": "array",
+       "description": "Permissions that a user has been assigned at this very level. Does not include any implied or inherited permissions. Local permissions are modifiable.",
+       "items": {
+        "type": "string"
+       }
+      }
+     }
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "Self link for this resource."
+    },
+    "userRef": {
+     "$ref": "UserRef",
+     "description": "User reference."
+    }
+   }
+  },
+  "EntityUserLinks": {
+   "id": "EntityUserLinks",
+   "type": "object",
+   "description": "An entity user link collection provides a list of Analytics ACL links Each resource in this collection corresponds to a single link.",
+   "properties": {
+    "items": {
+     "type": "array",
+     "description": "A list of entity user links.",
+     "items": {
+      "$ref": "EntityUserLink"
+     }
+    },
+    "itemsPerPage": {
+     "type": "integer",
+     "description": "The maximum number of entries the response can contain, regardless of the actual number of entries returned. Its value ranges from 1 to 1000 with a value of 1000 by default, or otherwise specified by the max-results query parameter.",
+     "format": "int32"
+    },
+    "kind": {
+     "type": "string",
+     "description": "Collection type.",
+     "default": "analytics#entityUserLinks"
+    },
+    "nextLink": {
+     "type": "string",
+     "description": "Next link for this account collection."
+    },
+    "previousLink": {
+     "type": "string",
+     "description": "Previous link for this account collection."
+    },
+    "startIndex": {
+     "type": "integer",
+     "description": "The starting index of the entries, which is 1 by default or otherwise specified by the start-index query parameter.",
+     "format": "int32"
+    },
+    "totalResults": {
+     "type": "integer",
+     "description": "The total number of results for the query, regardless of the number of results in the response.",
+     "format": "int32"
+    }
+   }
+  },
   "Experiment": {
    "id": "Experiment",
    "type": "object",
@@ -552,6 +714,10 @@
      "type": "string",
      "description": "The ending time of the experiment (the time the status changed from RUNNING to ENDED). This field is present only if the experiment has ended. This field is read-only.",
      "format": "date-time"
+    },
+    "equalWeighting": {
+     "type": "boolean",
+     "description": "Boolean specifying whether to distribute traffic evenly across all variations. If the value is False, content experiments follows the default behavior of adjusting traffic dynamically based on variation performance. Optional -- defaults to False. This field may not be changed for an experiment whose status is ENDED."
     },
     "id": {
      "type": "string",
@@ -870,6 +1036,10 @@
         "type": "string"
        }
       },
+      "samplingLevel": {
+       "type": "string",
+       "description": "Desired sampling level"
+      },
       "segment": {
        "type": "string",
        "description": "Analytics advanced segment."
@@ -901,6 +1071,16 @@
        "type": "string"
       }
      }
+    },
+    "sampleSize": {
+     "type": "string",
+     "description": "The number of samples used to calculate the result.",
+     "format": "int64"
+    },
+    "sampleSpace": {
+     "type": "string",
+     "description": "Total size of the sample space from which the samples were selected.",
+     "format": "int64"
     },
     "selfLink": {
      "type": "string",
@@ -1273,6 +1453,10 @@
         "type": "string"
        }
       },
+      "samplingLevel": {
+       "type": "string",
+       "description": "Desired sampling level"
+      },
       "segment": {
        "type": "string",
        "description": "Analytics advanced segment."
@@ -1329,6 +1513,16 @@
       }
      }
     },
+    "sampleSize": {
+     "type": "string",
+     "description": "The number of samples used to calculate the result.",
+     "format": "int64"
+    },
+    "sampleSpace": {
+     "type": "string",
+     "description": "Total size of the sample space from which the samples were selected.",
+     "format": "int64"
+    },
     "selfLink": {
      "type": "string",
      "description": "Link to this page."
@@ -1375,11 +1569,12 @@
     "created": {
      "type": "string",
      "description": "Time this view (profile) was created.",
-     "format": "date-time"
+     "format": "date-time",
+     "readOnly": true
     },
     "currency": {
      "type": "string",
-     "description": "The currency type associated with this view (profile)."
+     "description": "The currency type associated with this view (profile). The supported values are:\nARS, AUD, BGN, BRL, CAD, CHF, CNY, CZK, DKK, EUR, GBP, HKD, HUF, IDR, INR, JPY, KRW, LTL, MXN, NOK, NZD, PHP, PLN, RUB, SEK, THB, TRY, TWD, USD, VND, ZAR"
     },
     "defaultPage": {
      "type": "string",
@@ -1399,12 +1594,14 @@
     },
     "internalWebPropertyId": {
      "type": "string",
-     "description": "Internal ID for the web property to which this view (profile) belongs."
+     "description": "Internal ID for the web property to which this view (profile) belongs.",
+     "readOnly": true
     },
     "kind": {
      "type": "string",
-     "description": "Resource type for Analytics profile.",
-     "default": "analytics#profile"
+     "description": "Resource type for Analytics view (profile).",
+     "default": "analytics#profile",
+     "readOnly": true
     },
     "name": {
      "type": "string",
@@ -1425,9 +1622,24 @@
       }
      }
     },
+    "permissions": {
+     "type": "object",
+     "description": "Permissions the user has for this view (profile).",
+     "properties": {
+      "effective": {
+       "type": "array",
+       "description": "All the permissions that the user has for this view (profile). These include any implied permissions (e.g., EDIT implies VIEW) or inherited permissions from the parent web property.",
+       "readOnly": true,
+       "items": {
+        "type": "string"
+       }
+      }
+     }
+    },
     "selfLink": {
      "type": "string",
-     "description": "Link for this view (profile)."
+     "description": "Link for this view (profile).",
+     "readOnly": true
     },
     "siteSearchCategoryParameters": {
      "type": "string",
@@ -1439,7 +1651,7 @@
     },
     "timezone": {
      "type": "string",
-     "description": "Time zone for which this profile has been configured."
+     "description": "Time zone for which this view (profile) has been configured. Time zones are identified by strings from the TZ database."
     },
     "type": {
      "type": "string",
@@ -1448,15 +1660,53 @@
     "updated": {
      "type": "string",
      "description": "Time this view (profile) was last modified.",
-     "format": "date-time"
+     "format": "date-time",
+     "readOnly": true
     },
     "webPropertyId": {
      "type": "string",
-     "description": "Web property ID of the form UA-XXXXX-YY to which this view (profile) belongs."
+     "description": "Web property ID of the form UA-XXXXX-YY to which this view (profile) belongs.",
+     "readOnly": true
     },
     "websiteUrl": {
      "type": "string",
      "description": "Website URL for this view (profile)."
+    }
+   }
+  },
+  "ProfileRef": {
+   "id": "ProfileRef",
+   "type": "object",
+   "description": "JSON template for a linked view (profile).",
+   "properties": {
+    "accountId": {
+     "type": "string",
+     "description": "Account ID to which this view (profile) belongs."
+    },
+    "href": {
+     "type": "string",
+     "description": "Link for this view (profile)."
+    },
+    "id": {
+     "type": "string",
+     "description": "View (Profile) ID."
+    },
+    "internalWebPropertyId": {
+     "type": "string",
+     "description": "Internal ID for the web property to which this view (profile) belongs."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Analytics view (profile) reference.",
+     "default": "analytics#profileRef"
+    },
+    "name": {
+     "type": "string",
+     "description": "Name of this view (profile)."
+    },
+    "webPropertyId": {
+     "type": "string",
+     "description": "Web property ID of the form UA-XXXXX-YY to which this view (profile) belongs."
     }
    }
   },
@@ -1725,6 +1975,135 @@
     }
    }
   },
+  "Upload": {
+   "id": "Upload",
+   "type": "object",
+   "description": "Metadata returned for an upload operation.",
+   "properties": {
+    "accountId": {
+     "type": "string",
+     "description": "Account Id to which this upload belongs.",
+     "format": "int64"
+    },
+    "customDataSourceId": {
+     "type": "string",
+     "description": "Custom data source Id to which this data import belongs."
+    },
+    "errors": {
+     "type": "array",
+     "description": "Data import errors collection.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "id": {
+     "type": "string",
+     "description": "A unique ID for this upload."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Resource type for Analytics upload.",
+     "default": "analytics#upload"
+    },
+    "status": {
+     "type": "string",
+     "description": "Upload status. Possible values: PENDING, COMPLETED, FAILED, DELETING, DELETED."
+    }
+   }
+  },
+  "Uploads": {
+   "id": "Uploads",
+   "type": "object",
+   "description": "Upload collection lists Analytics uploads to which the user has access. Each custom data source can have a set of uploads. Each resource in the upload collection corresponds to a single Analytics data upload.",
+   "properties": {
+    "items": {
+     "type": "array",
+     "description": "A list of uploads.",
+     "items": {
+      "$ref": "Upload"
+     }
+    },
+    "itemsPerPage": {
+     "type": "integer",
+     "description": "The maximum number of resources the response can contain, regardless of the actual number of resources returned. Its value ranges from 1 to 1000 with a value of 1000 by default, or otherwise specified by the max-results query parameter.",
+     "format": "int32"
+    },
+    "kind": {
+     "type": "string",
+     "description": "Collection type.",
+     "default": "analytics#uploads"
+    },
+    "nextLink": {
+     "type": "string",
+     "description": "Link to next page for this upload collection."
+    },
+    "previousLink": {
+     "type": "string",
+     "description": "Link to previous page for this upload collection."
+    },
+    "startIndex": {
+     "type": "integer",
+     "description": "The starting index of the resources, which is 1 by default or otherwise specified by the start-index query parameter.",
+     "format": "int32"
+    },
+    "totalResults": {
+     "type": "integer",
+     "description": "The total number of results for the query, regardless of the number of resources in the result.",
+     "format": "int32"
+    }
+   }
+  },
+  "UserRef": {
+   "id": "UserRef",
+   "type": "object",
+   "description": "JSON template for a user reference.",
+   "properties": {
+    "email": {
+     "type": "string",
+     "description": "Email ID of this user."
+    },
+    "id": {
+     "type": "string",
+     "description": "User ID."
+    },
+    "kind": {
+     "type": "string",
+     "default": "analytics#userRef"
+    }
+   }
+  },
+  "WebPropertyRef": {
+   "id": "WebPropertyRef",
+   "type": "object",
+   "description": "JSON template for a web property reference.",
+   "properties": {
+    "accountId": {
+     "type": "string",
+     "description": "Account ID to which this web property belongs."
+    },
+    "href": {
+     "type": "string",
+     "description": "Link for this web property."
+    },
+    "id": {
+     "type": "string",
+     "description": "Web property ID of the form UA-XXXXX-YY."
+    },
+    "internalWebPropertyId": {
+     "type": "string",
+     "description": "Internal ID for this web property."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Analytics web property reference.",
+     "default": "analytics#webPropertyRef"
+    },
+    "name": {
+     "type": "string",
+     "description": "Name of this web property."
+    }
+   }
+  },
   "Webproperties": {
    "id": "Webproperties",
    "type": "object",
@@ -1798,7 +2177,13 @@
     "created": {
      "type": "string",
      "description": "Time this web property was created.",
-     "format": "date-time"
+     "format": "date-time",
+     "readOnly": true
+    },
+    "defaultProfileId": {
+     "type": "string",
+     "description": "Default view (profile) ID.",
+     "format": "int64"
     },
     "id": {
      "type": "string",
@@ -1806,21 +2191,23 @@
     },
     "industryVertical": {
      "type": "string",
-     "description": "The industry vertical/category selected for this web property.",
-     "readOnly": true
+     "description": "The industry vertical/category selected for this web property. If this field is set, the correct values are:  \n- UNSPECIFIED  \n- ARTS_AND_ENTERTAINMENT  \n- AUTOMOTIVE  \n- BEAUTY_AND_FITNESS  \n- BOOKS_AND_LITERATURE  \n- BUSINESS_AND_INDUSTRIAL_MARKETS  \n- COMPUTERS_AND_ELECTRONICS  \n- FINANCE  \n- FOOD_AND_DRINK  \n- GAMES  \n- HEALTHCARE  \n- HOBBIES_AND_LEISURE  \n- HOME_AND_GARDEN  \n- INTERNET_AND_TELECOM  \n- JOBS_AND_EDUCATION  \n- LAW_AND_GOVERNMENT  \n- NEWS  \n- ONLINE_COMMUNITIES  \n- OTHER  \n- PEOPLE_AND_SOCIETY  \n- PETS_AND_ANIMALS  \n- REAL_ESTATE  \n- REFERENCE  \n- SCIENCE  \n- SHOPPING  \n- SPORTS  \n- TRAVEL"
     },
     "internalWebPropertyId": {
      "type": "string",
-     "description": "Internal ID for this web property."
+     "description": "Internal ID for this web property.",
+     "readOnly": true
     },
     "kind": {
      "type": "string",
      "description": "Resource type for Analytics WebProperty.",
-     "default": "analytics#webproperty"
+     "default": "analytics#webproperty",
+     "readOnly": true
     },
     "level": {
      "type": "string",
-     "description": "Level for this web property. Possible values are STANDARD or PREMIUM."
+     "description": "Level for this web property. Possible values are STANDARD or PREMIUM.",
+     "readOnly": true
     },
     "name": {
      "type": "string",
@@ -1841,6 +2228,20 @@
       }
      }
     },
+    "permissions": {
+     "type": "object",
+     "description": "Permissions the user has for this web property.",
+     "properties": {
+      "effective": {
+       "type": "array",
+       "description": "All the permissions that the user has for this web property. These include any implied permissions (e.g., EDIT implies VIEW) or inherited permissions from the parent account.",
+       "readOnly": true,
+       "items": {
+        "type": "string"
+       }
+      }
+     }
+    },
     "profileCount": {
      "type": "integer",
      "description": "View (Profile) count for this web property.",
@@ -1849,12 +2250,14 @@
     },
     "selfLink": {
      "type": "string",
-     "description": "Link for this web property."
+     "description": "Link for this web property.",
+     "readOnly": true
     },
     "updated": {
      "type": "string",
      "description": "Time this web property was last modified.",
-     "format": "date-time"
+     "format": "date-time",
+     "readOnly": true
     },
     "websiteUrl": {
      "type": "string",
@@ -1882,9 +2285,9 @@
         },
         "end-date": {
          "type": "string",
-         "description": "End date for fetching Analytics data. All requests should specify an end date formatted as YYYY-MM-DD.",
+         "description": "End date for fetching Analytics data. Request can should specify an end date formatted as YYYY-MM-DD, or as a relative date (e.g., today, yesterday, or 7daysAgo). The default value is yesterday.",
          "required": true,
-         "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2}",
+         "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2}|today|yesterday|[0-9]+(daysAgo)",
          "location": "query"
         },
         "filters": {
@@ -1913,6 +2316,21 @@
          "pattern": "ga:.+",
          "location": "query"
         },
+        "samplingLevel": {
+         "type": "string",
+         "description": "The desired sampling level.",
+         "enum": [
+          "DEFAULT",
+          "FASTER",
+          "HIGHER_PRECISION"
+         ],
+         "enumDescriptions": [
+          "Returns response with a sample size that balances speed and accuracy.",
+          "Returns a fast response with a smaller sample size.",
+          "Returns a more accurate response using a large sample size, but this may result in the response being slower."
+         ],
+         "location": "query"
+        },
         "segment": {
          "type": "string",
          "description": "An Analytics advanced segment to be applied to data.",
@@ -1926,9 +2344,9 @@
         },
         "start-date": {
          "type": "string",
-         "description": "Start date for fetching Analytics data. All requests should specify a start date formatted as YYYY-MM-DD.",
+         "description": "Start date for fetching Analytics data. Requests can specify a start date formatted as YYYY-MM-DD, or as a relative date (e.g., today, yesterday, or 7daysAgo). The default value is 7daysAgo.",
          "required": true,
-         "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2}",
+         "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2}|today|yesterday|[0-9]+(daysAgo)",
          "location": "query"
         },
         "start-index": {
@@ -1971,9 +2389,9 @@
         },
         "end-date": {
          "type": "string",
-         "description": "End date for fetching Analytics data. All requests should specify an end date formatted as YYYY-MM-DD.",
+         "description": "End date for fetching Analytics data. Requests can specify a start date formatted as YYYY-MM-DD, or as a relative date (e.g., today, yesterday, or 7daysAgo). The default value is 7daysAgo.",
          "required": true,
-         "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2}",
+         "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2}|today|yesterday|[0-9]+(daysAgo)",
          "location": "query"
         },
         "filters": {
@@ -2002,6 +2420,21 @@
          "pattern": "mcf:.+",
          "location": "query"
         },
+        "samplingLevel": {
+         "type": "string",
+         "description": "The desired sampling level.",
+         "enum": [
+          "DEFAULT",
+          "FASTER",
+          "HIGHER_PRECISION"
+         ],
+         "enumDescriptions": [
+          "Returns response with a sample size that balances speed and accuracy.",
+          "Returns a fast response with a smaller sample size.",
+          "Returns a more accurate response using a large sample size, but this may result in the response being slower."
+         ],
+         "location": "query"
+        },
         "sort": {
          "type": "string",
          "description": "A comma-separated list of dimensions or metrics that determine the sort order for the Analytics data.",
@@ -2010,9 +2443,9 @@
         },
         "start-date": {
          "type": "string",
-         "description": "Start date for fetching Analytics data. All requests should specify a start date formatted as YYYY-MM-DD.",
+         "description": "Start date for fetching Analytics data. Requests can specify a start date formatted as YYYY-MM-DD, or as a relative date (e.g., today, yesterday, or 7daysAgo). The default value is 7daysAgo.",
          "required": true,
-         "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2}",
+         "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2}|today|yesterday|[0-9]+(daysAgo)",
          "location": "query"
         },
         "start-index": {
@@ -2104,6 +2537,132 @@
   },
   "management": {
    "resources": {
+    "accountUserLinks": {
+     "methods": {
+      "delete": {
+       "id": "analytics.management.accountUserLinks.delete",
+       "path": "management/accounts/{accountId}/entityUserLinks/{linkId}",
+       "httpMethod": "DELETE",
+       "description": "Removes a user from the given account.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account ID to delete the user link for.",
+         "required": true,
+         "location": "path"
+        },
+        "linkId": {
+         "type": "string",
+         "description": "Link ID to delete the user link for.",
+         "required": true,
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "linkId"
+       ],
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics.manage.users"
+       ]
+      },
+      "insert": {
+       "id": "analytics.management.accountUserLinks.insert",
+       "path": "management/accounts/{accountId}/entityUserLinks",
+       "httpMethod": "POST",
+       "description": "Adds a new user to the given account.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account ID to create the user link for.",
+         "required": true,
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId"
+       ],
+       "request": {
+        "$ref": "EntityUserLink"
+       },
+       "response": {
+        "$ref": "EntityUserLink"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics.manage.users"
+       ]
+      },
+      "list": {
+       "id": "analytics.management.accountUserLinks.list",
+       "path": "management/accounts/{accountId}/entityUserLinks",
+       "httpMethod": "GET",
+       "description": "Lists account-user links for a given account.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account ID to retrieve the user links for.",
+         "required": true,
+         "location": "path"
+        },
+        "max-results": {
+         "type": "integer",
+         "description": "The maximum number of account-user links to include in this response.",
+         "format": "int32",
+         "location": "query"
+        },
+        "start-index": {
+         "type": "integer",
+         "description": "An index of the first account-user link to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.",
+         "format": "int32",
+         "minimum": "1",
+         "location": "query"
+        }
+       },
+       "parameterOrder": [
+        "accountId"
+       ],
+       "response": {
+        "$ref": "EntityUserLinks"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics.manage.users"
+       ]
+      },
+      "update": {
+       "id": "analytics.management.accountUserLinks.update",
+       "path": "management/accounts/{accountId}/entityUserLinks/{linkId}",
+       "httpMethod": "PUT",
+       "description": "Updates permissions for an existing user on the given account.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account ID to update the account-user link for.",
+         "required": true,
+         "location": "path"
+        },
+        "linkId": {
+         "type": "string",
+         "description": "Link ID to update the account-user link for.",
+         "required": true,
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "linkId"
+       ],
+       "request": {
+        "$ref": "EntityUserLink"
+       },
+       "response": {
+        "$ref": "EntityUserLink"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics.manage.users"
+       ]
+      }
+     }
+    },
     "accounts": {
      "methods": {
       "list": {
@@ -2131,6 +2690,7 @@
        },
        "scopes": [
         "https://www.googleapis.com/auth/analytics",
+        "https://www.googleapis.com/auth/analytics.edit",
         "https://www.googleapis.com/auth/analytics.readonly"
        ]
       }
@@ -2182,6 +2742,7 @@
        },
        "scopes": [
         "https://www.googleapis.com/auth/analytics",
+        "https://www.googleapis.com/auth/analytics.edit",
         "https://www.googleapis.com/auth/analytics.readonly"
        ]
       }
@@ -2243,7 +2804,8 @@
         "type"
        ],
        "scopes": [
-        "https://www.googleapis.com/auth/analytics"
+        "https://www.googleapis.com/auth/analytics",
+        "https://www.googleapis.com/auth/analytics.edit"
        ]
       },
       "list": {
@@ -2390,7 +2952,8 @@
         "$ref": "DailyUploadAppend"
        },
        "scopes": [
-        "https://www.googleapis.com/auth/analytics"
+        "https://www.googleapis.com/auth/analytics",
+        "https://www.googleapis.com/auth/analytics.edit"
        ],
        "supportsMediaUpload": true,
        "mediaUpload": {
@@ -2452,7 +3015,8 @@
         "experimentId"
        ],
        "scopes": [
-        "https://www.googleapis.com/auth/analytics"
+        "https://www.googleapis.com/auth/analytics",
+        "https://www.googleapis.com/auth/analytics.edit"
        ]
       },
       "get": {
@@ -2497,6 +3061,7 @@
        },
        "scopes": [
         "https://www.googleapis.com/auth/analytics",
+        "https://www.googleapis.com/auth/analytics.edit",
         "https://www.googleapis.com/auth/analytics.readonly"
        ]
       },
@@ -2537,7 +3102,8 @@
         "$ref": "Experiment"
        },
        "scopes": [
-        "https://www.googleapis.com/auth/analytics"
+        "https://www.googleapis.com/auth/analytics",
+        "https://www.googleapis.com/auth/analytics.edit"
        ]
       },
       "list": {
@@ -2591,6 +3157,7 @@
        },
        "scopes": [
         "https://www.googleapis.com/auth/analytics",
+        "https://www.googleapis.com/auth/analytics.edit",
         "https://www.googleapis.com/auth/analytics.readonly"
        ]
       },
@@ -2638,7 +3205,8 @@
         "$ref": "Experiment"
        },
        "scopes": [
-        "https://www.googleapis.com/auth/analytics"
+        "https://www.googleapis.com/auth/analytics",
+        "https://www.googleapis.com/auth/analytics.edit"
        ]
       },
       "update": {
@@ -2685,13 +3253,99 @@
         "$ref": "Experiment"
        },
        "scopes": [
-        "https://www.googleapis.com/auth/analytics"
+        "https://www.googleapis.com/auth/analytics",
+        "https://www.googleapis.com/auth/analytics.edit"
        ]
       }
      }
     },
     "goals": {
      "methods": {
+      "get": {
+       "id": "analytics.management.goals.get",
+       "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/goals/{goalId}",
+       "httpMethod": "GET",
+       "description": "Gets a goal to which the user has access.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account ID to retrieve the goal for.",
+         "required": true,
+         "location": "path"
+        },
+        "goalId": {
+         "type": "string",
+         "description": "Goal ID to retrieve the goal for.",
+         "required": true,
+         "location": "path"
+        },
+        "profileId": {
+         "type": "string",
+         "description": "View (Profile) ID to retrieve the goal for.",
+         "required": true,
+         "location": "path"
+        },
+        "webPropertyId": {
+         "type": "string",
+         "description": "Web property ID to retrieve the goal for.",
+         "required": true,
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "webPropertyId",
+        "profileId",
+        "goalId"
+       ],
+       "response": {
+        "$ref": "Goal"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics.edit",
+        "https://www.googleapis.com/auth/analytics.readonly"
+       ]
+      },
+      "insert": {
+       "id": "analytics.management.goals.insert",
+       "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/goals",
+       "httpMethod": "POST",
+       "description": "Create a new goal.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account ID to create the goal for.",
+         "required": true,
+         "location": "path"
+        },
+        "profileId": {
+         "type": "string",
+         "description": "View (Profile) ID to create the goal for.",
+         "required": true,
+         "location": "path"
+        },
+        "webPropertyId": {
+         "type": "string",
+         "description": "Web property ID to create the goal for.",
+         "required": true,
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "webPropertyId",
+        "profileId"
+       ],
+       "request": {
+        "$ref": "Goal"
+       },
+       "response": {
+        "$ref": "Goal"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics.edit"
+       ]
+      },
       "list": {
        "id": "analytics.management.goals.list",
        "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/goals",
@@ -2740,13 +3394,398 @@
        },
        "scopes": [
         "https://www.googleapis.com/auth/analytics",
+        "https://www.googleapis.com/auth/analytics.edit",
         "https://www.googleapis.com/auth/analytics.readonly"
+       ]
+      },
+      "patch": {
+       "id": "analytics.management.goals.patch",
+       "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/goals/{goalId}",
+       "httpMethod": "PATCH",
+       "description": "Updates an existing view (profile). This method supports patch semantics.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account ID to update the goal.",
+         "required": true,
+         "location": "path"
+        },
+        "goalId": {
+         "type": "string",
+         "description": "Index of the goal to be updated.",
+         "required": true,
+         "location": "path"
+        },
+        "profileId": {
+         "type": "string",
+         "description": "View (Profile) ID to update the goal.",
+         "required": true,
+         "location": "path"
+        },
+        "webPropertyId": {
+         "type": "string",
+         "description": "Web property ID to update the goal.",
+         "required": true,
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "webPropertyId",
+        "profileId",
+        "goalId"
+       ],
+       "request": {
+        "$ref": "Goal"
+       },
+       "response": {
+        "$ref": "Goal"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics.edit"
+       ]
+      },
+      "update": {
+       "id": "analytics.management.goals.update",
+       "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/goals/{goalId}",
+       "httpMethod": "PUT",
+       "description": "Updates an existing view (profile).",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account ID to update the goal.",
+         "required": true,
+         "location": "path"
+        },
+        "goalId": {
+         "type": "string",
+         "description": "Index of the goal to be updated.",
+         "required": true,
+         "location": "path"
+        },
+        "profileId": {
+         "type": "string",
+         "description": "View (Profile) ID to update the goal.",
+         "required": true,
+         "location": "path"
+        },
+        "webPropertyId": {
+         "type": "string",
+         "description": "Web property ID to update the goal.",
+         "required": true,
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "webPropertyId",
+        "profileId",
+        "goalId"
+       ],
+       "request": {
+        "$ref": "Goal"
+       },
+       "response": {
+        "$ref": "Goal"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics.edit"
+       ]
+      }
+     }
+    },
+    "profileUserLinks": {
+     "methods": {
+      "delete": {
+       "id": "analytics.management.profileUserLinks.delete",
+       "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/entityUserLinks/{linkId}",
+       "httpMethod": "DELETE",
+       "description": "Removes a user from the given view (profile).",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account ID to delete the user link for.",
+         "required": true,
+         "location": "path"
+        },
+        "linkId": {
+         "type": "string",
+         "description": "Link ID to delete the user link for.",
+         "required": true,
+         "location": "path"
+        },
+        "profileId": {
+         "type": "string",
+         "description": "View (Profile) ID to delete the user link for.",
+         "required": true,
+         "location": "path"
+        },
+        "webPropertyId": {
+         "type": "string",
+         "description": "Web Property ID to delete the user link for.",
+         "required": true,
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "webPropertyId",
+        "profileId",
+        "linkId"
+       ],
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics.manage.users"
+       ]
+      },
+      "insert": {
+       "id": "analytics.management.profileUserLinks.insert",
+       "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/entityUserLinks",
+       "httpMethod": "POST",
+       "description": "Adds a new user to the given view (profile).",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account ID to create the user link for.",
+         "required": true,
+         "location": "path"
+        },
+        "profileId": {
+         "type": "string",
+         "description": "View (Profile) ID to create the user link for.",
+         "required": true,
+         "location": "path"
+        },
+        "webPropertyId": {
+         "type": "string",
+         "description": "Web Property ID to create the user link for.",
+         "required": true,
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "webPropertyId",
+        "profileId"
+       ],
+       "request": {
+        "$ref": "EntityUserLink"
+       },
+       "response": {
+        "$ref": "EntityUserLink"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics.manage.users"
+       ]
+      },
+      "list": {
+       "id": "analytics.management.profileUserLinks.list",
+       "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/entityUserLinks",
+       "httpMethod": "GET",
+       "description": "Lists profile-user links for a given view (profile).",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account ID which the given view (profile) belongs to.",
+         "required": true,
+         "location": "path"
+        },
+        "max-results": {
+         "type": "integer",
+         "description": "The maximum number of profile-user links to include in this response.",
+         "format": "int32",
+         "location": "query"
+        },
+        "profileId": {
+         "type": "string",
+         "description": "View (Profile) ID to retrieve the profile-user links for",
+         "required": true,
+         "location": "path"
+        },
+        "start-index": {
+         "type": "integer",
+         "description": "An index of the first profile-user link to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.",
+         "format": "int32",
+         "minimum": "1",
+         "location": "query"
+        },
+        "webPropertyId": {
+         "type": "string",
+         "description": "Web Property ID which the given view (profile) belongs to.",
+         "required": true,
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "webPropertyId",
+        "profileId"
+       ],
+       "response": {
+        "$ref": "EntityUserLinks"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics.manage.users"
+       ]
+      },
+      "update": {
+       "id": "analytics.management.profileUserLinks.update",
+       "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/entityUserLinks/{linkId}",
+       "httpMethod": "PUT",
+       "description": "Updates permissions for an existing user on the given view (profile).",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account ID to update the user link for.",
+         "required": true,
+         "location": "path"
+        },
+        "linkId": {
+         "type": "string",
+         "description": "Link ID to update the user link for.",
+         "required": true,
+         "location": "path"
+        },
+        "profileId": {
+         "type": "string",
+         "description": "View (Profile ID) to update the user link for.",
+         "required": true,
+         "location": "path"
+        },
+        "webPropertyId": {
+         "type": "string",
+         "description": "Web Property ID to update the user link for.",
+         "required": true,
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "webPropertyId",
+        "profileId",
+        "linkId"
+       ],
+       "request": {
+        "$ref": "EntityUserLink"
+       },
+       "response": {
+        "$ref": "EntityUserLink"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics.manage.users"
        ]
       }
      }
     },
     "profiles": {
      "methods": {
+      "delete": {
+       "id": "analytics.management.profiles.delete",
+       "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}",
+       "httpMethod": "DELETE",
+       "description": "Deletes a view (profile).",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account ID to delete the view (profile) for.",
+         "required": true,
+         "location": "path"
+        },
+        "profileId": {
+         "type": "string",
+         "description": "ID of the view (profile) to be deleted.",
+         "required": true,
+         "location": "path"
+        },
+        "webPropertyId": {
+         "type": "string",
+         "description": "Web property ID to delete the view (profile) for.",
+         "required": true,
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "webPropertyId",
+        "profileId"
+       ],
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics.edit"
+       ]
+      },
+      "get": {
+       "id": "analytics.management.profiles.get",
+       "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}",
+       "httpMethod": "GET",
+       "description": "Gets a view (profile) to which the user has access.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account ID to retrieve the goal for.",
+         "required": true,
+         "pattern": "[0-9]+",
+         "location": "path"
+        },
+        "profileId": {
+         "type": "string",
+         "description": "View (Profile) ID to retrieve the goal for.",
+         "required": true,
+         "pattern": "[0-9]+",
+         "location": "path"
+        },
+        "webPropertyId": {
+         "type": "string",
+         "description": "Web property ID to retrieve the goal for.",
+         "required": true,
+         "pattern": "UA-[0-9]+-[0-9]+",
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "webPropertyId",
+        "profileId"
+       ],
+       "response": {
+        "$ref": "Profile"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics.edit",
+        "https://www.googleapis.com/auth/analytics.readonly"
+       ]
+      },
+      "insert": {
+       "id": "analytics.management.profiles.insert",
+       "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles",
+       "httpMethod": "POST",
+       "description": "Create a new view (profile).",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account ID to create the view (profile) for.",
+         "required": true,
+         "location": "path"
+        },
+        "webPropertyId": {
+         "type": "string",
+         "description": "Web property ID to create the view (profile) for.",
+         "required": true,
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "webPropertyId"
+       ],
+       "request": {
+        "$ref": "Profile"
+       },
+       "response": {
+        "$ref": "Profile"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics.edit"
+       ]
+      },
       "list": {
        "id": "analytics.management.profiles.list",
        "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles",
@@ -2788,7 +3827,88 @@
        },
        "scopes": [
         "https://www.googleapis.com/auth/analytics",
+        "https://www.googleapis.com/auth/analytics.edit",
         "https://www.googleapis.com/auth/analytics.readonly"
+       ]
+      },
+      "patch": {
+       "id": "analytics.management.profiles.patch",
+       "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}",
+       "httpMethod": "PATCH",
+       "description": "Updates an existing view (profile). This method supports patch semantics.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account ID to which the view (profile) belongs",
+         "required": true,
+         "location": "path"
+        },
+        "profileId": {
+         "type": "string",
+         "description": "ID of the view (profile) to be updated.",
+         "required": true,
+         "location": "path"
+        },
+        "webPropertyId": {
+         "type": "string",
+         "description": "Web property ID to which the view (profile) belongs",
+         "required": true,
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "webPropertyId",
+        "profileId"
+       ],
+       "request": {
+        "$ref": "Profile"
+       },
+       "response": {
+        "$ref": "Profile"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics.edit"
+       ]
+      },
+      "update": {
+       "id": "analytics.management.profiles.update",
+       "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}",
+       "httpMethod": "PUT",
+       "description": "Updates an existing view (profile).",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account ID to which the view (profile) belongs",
+         "required": true,
+         "location": "path"
+        },
+        "profileId": {
+         "type": "string",
+         "description": "ID of the view (profile) to be updated.",
+         "required": true,
+         "location": "path"
+        },
+        "webPropertyId": {
+         "type": "string",
+         "description": "Web property ID to which the view (profile) belongs",
+         "required": true,
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "webPropertyId",
+        "profileId"
+       ],
+       "request": {
+        "$ref": "Profile"
+       },
+       "response": {
+        "$ref": "Profile"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics.edit"
        ]
       }
      }
@@ -2820,13 +3940,281 @@
        },
        "scopes": [
         "https://www.googleapis.com/auth/analytics",
+        "https://www.googleapis.com/auth/analytics.edit",
         "https://www.googleapis.com/auth/analytics.readonly"
        ]
       }
      }
     },
+    "uploads": {
+     "methods": {
+      "deleteUploadData": {
+       "id": "analytics.management.uploads.deleteUploadData",
+       "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/deleteUploadData",
+       "httpMethod": "POST",
+       "description": "Delete data associated with a previous upload.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account Id for the uploads to be deleted.",
+         "required": true,
+         "pattern": "\\d+",
+         "location": "path"
+        },
+        "customDataSourceId": {
+         "type": "string",
+         "description": "Custom data source Id for the uploads to be deleted.",
+         "required": true,
+         "pattern": ".{22}",
+         "location": "path"
+        },
+        "webPropertyId": {
+         "type": "string",
+         "description": "Web property Id for the uploads to be deleted.",
+         "required": true,
+         "pattern": "UA-(\\d+)-(\\d+)",
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "webPropertyId",
+        "customDataSourceId"
+       ],
+       "request": {
+        "$ref": "AnalyticsDataimportDeleteUploadDataRequest"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics",
+        "https://www.googleapis.com/auth/analytics.edit"
+       ]
+      },
+      "get": {
+       "id": "analytics.management.uploads.get",
+       "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/uploads/{uploadId}",
+       "httpMethod": "GET",
+       "description": "List uploads to which the user has access.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account Id for the upload to retrieve.",
+         "required": true,
+         "pattern": "\\d+",
+         "location": "path"
+        },
+        "customDataSourceId": {
+         "type": "string",
+         "description": "Custom data source Id for upload to retrieve.",
+         "required": true,
+         "pattern": ".{22}",
+         "location": "path"
+        },
+        "uploadId": {
+         "type": "string",
+         "description": "Upload Id to retrieve.",
+         "required": true,
+         "pattern": ".{22}",
+         "location": "path"
+        },
+        "webPropertyId": {
+         "type": "string",
+         "description": "Web property Id for the upload to retrieve.",
+         "required": true,
+         "pattern": "UA-(\\d+)-(\\d+)",
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "webPropertyId",
+        "customDataSourceId",
+        "uploadId"
+       ],
+       "response": {
+        "$ref": "Upload"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics",
+        "https://www.googleapis.com/auth/analytics.edit",
+        "https://www.googleapis.com/auth/analytics.readonly"
+       ]
+      },
+      "list": {
+       "id": "analytics.management.uploads.list",
+       "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/uploads",
+       "httpMethod": "GET",
+       "description": "List uploads to which the user has access.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account Id for the uploads to retrieve.",
+         "required": true,
+         "pattern": "\\d+",
+         "location": "path"
+        },
+        "customDataSourceId": {
+         "type": "string",
+         "description": "Custom data source Id for uploads to retrieve.",
+         "required": true,
+         "pattern": ".{22}",
+         "location": "path"
+        },
+        "max-results": {
+         "type": "integer",
+         "description": "The maximum number of uploads to include in this response.",
+         "format": "int32",
+         "minimum": "1",
+         "location": "query"
+        },
+        "start-index": {
+         "type": "integer",
+         "description": "A 1-based index of the first upload to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.",
+         "format": "int32",
+         "minimum": "1",
+         "location": "query"
+        },
+        "webPropertyId": {
+         "type": "string",
+         "description": "Web property Id for the uploads to retrieve.",
+         "required": true,
+         "pattern": "UA-(\\d+)-(\\d+)",
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "webPropertyId",
+        "customDataSourceId"
+       ],
+       "response": {
+        "$ref": "Uploads"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics",
+        "https://www.googleapis.com/auth/analytics.edit",
+        "https://www.googleapis.com/auth/analytics.readonly"
+       ]
+      },
+      "uploadData": {
+       "id": "analytics.management.uploads.uploadData",
+       "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/uploads",
+       "httpMethod": "POST",
+       "description": "Upload/Overwrite data for a custom data source.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account Id associated with the upload.",
+         "required": true,
+         "pattern": "\\d+",
+         "location": "path"
+        },
+        "customDataSourceId": {
+         "type": "string",
+         "description": "Custom data source Id to which the data being uploaded belongs.",
+         "required": true,
+         "location": "path"
+        },
+        "webPropertyId": {
+         "type": "string",
+         "description": "Web property UA-string associated with the upload.",
+         "required": true,
+         "pattern": "UA-\\d+-\\d+",
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "webPropertyId",
+        "customDataSourceId"
+       ],
+       "response": {
+        "$ref": "Upload"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics",
+        "https://www.googleapis.com/auth/analytics.edit"
+       ],
+       "supportsMediaUpload": true,
+       "mediaUpload": {
+        "accept": [
+         "application/octet-stream"
+        ],
+        "maxSize": "1GB",
+        "protocols": {
+         "simple": {
+          "multipart": true,
+          "path": "/upload/analytics/v3/management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/uploads"
+         },
+         "resumable": {
+          "multipart": true,
+          "path": "/resumable/upload/analytics/v3/management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/uploads"
+         }
+        }
+       }
+      }
+     }
+    },
     "webproperties": {
      "methods": {
+      "get": {
+       "id": "analytics.management.webproperties.get",
+       "path": "management/accounts/{accountId}/webproperties/{webPropertyId}",
+       "httpMethod": "GET",
+       "description": "Gets a web property to which the user has access.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account ID to retrieve the web property for.",
+         "required": true,
+         "pattern": "[0-9]+",
+         "location": "path"
+        },
+        "webPropertyId": {
+         "type": "string",
+         "description": "ID to retrieve the web property for.",
+         "required": true,
+         "pattern": "UA-[0-9]+-[0-9]+",
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "webPropertyId"
+       ],
+       "response": {
+        "$ref": "Webproperty"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics.edit",
+        "https://www.googleapis.com/auth/analytics.readonly"
+       ]
+      },
+      "insert": {
+       "id": "analytics.management.webproperties.insert",
+       "path": "management/accounts/{accountId}/webproperties",
+       "httpMethod": "POST",
+       "description": "Create a new property if the account has fewer than 20 properties.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account ID to create the web property for.",
+         "required": true,
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId"
+       ],
+       "request": {
+        "$ref": "Webproperty"
+       },
+       "response": {
+        "$ref": "Webproperty"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics.edit"
+       ]
+      },
       "list": {
        "id": "analytics.management.webproperties.list",
        "path": "management/accounts/{accountId}/webproperties",
@@ -2861,7 +4249,228 @@
        },
        "scopes": [
         "https://www.googleapis.com/auth/analytics",
+        "https://www.googleapis.com/auth/analytics.edit",
         "https://www.googleapis.com/auth/analytics.readonly"
+       ]
+      },
+      "patch": {
+       "id": "analytics.management.webproperties.patch",
+       "path": "management/accounts/{accountId}/webproperties/{webPropertyId}",
+       "httpMethod": "PATCH",
+       "description": "Updates an existing web property. This method supports patch semantics.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account ID to which the web property belongs",
+         "required": true,
+         "location": "path"
+        },
+        "webPropertyId": {
+         "type": "string",
+         "description": "Web property ID",
+         "required": true,
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "webPropertyId"
+       ],
+       "request": {
+        "$ref": "Webproperty"
+       },
+       "response": {
+        "$ref": "Webproperty"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics.edit"
+       ]
+      },
+      "update": {
+       "id": "analytics.management.webproperties.update",
+       "path": "management/accounts/{accountId}/webproperties/{webPropertyId}",
+       "httpMethod": "PUT",
+       "description": "Updates an existing web property.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account ID to which the web property belongs",
+         "required": true,
+         "location": "path"
+        },
+        "webPropertyId": {
+         "type": "string",
+         "description": "Web property ID",
+         "required": true,
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "webPropertyId"
+       ],
+       "request": {
+        "$ref": "Webproperty"
+       },
+       "response": {
+        "$ref": "Webproperty"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics.edit"
+       ]
+      }
+     }
+    },
+    "webpropertyUserLinks": {
+     "methods": {
+      "delete": {
+       "id": "analytics.management.webpropertyUserLinks.delete",
+       "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/entityUserLinks/{linkId}",
+       "httpMethod": "DELETE",
+       "description": "Removes a user from the given web property.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account ID to delete the user link for.",
+         "required": true,
+         "location": "path"
+        },
+        "linkId": {
+         "type": "string",
+         "description": "Link ID to delete the user link for.",
+         "required": true,
+         "location": "path"
+        },
+        "webPropertyId": {
+         "type": "string",
+         "description": "Web Property ID to delete the user link for.",
+         "required": true,
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "webPropertyId",
+        "linkId"
+       ],
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics.manage.users"
+       ]
+      },
+      "insert": {
+       "id": "analytics.management.webpropertyUserLinks.insert",
+       "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/entityUserLinks",
+       "httpMethod": "POST",
+       "description": "Adds a new user to the given web property.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account ID to create the user link for.",
+         "required": true,
+         "location": "path"
+        },
+        "webPropertyId": {
+         "type": "string",
+         "description": "Web Property ID to create the user link for.",
+         "required": true,
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "webPropertyId"
+       ],
+       "request": {
+        "$ref": "EntityUserLink"
+       },
+       "response": {
+        "$ref": "EntityUserLink"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics.manage.users"
+       ]
+      },
+      "list": {
+       "id": "analytics.management.webpropertyUserLinks.list",
+       "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/entityUserLinks",
+       "httpMethod": "GET",
+       "description": "Lists webProperty-user links for a given web property.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account ID which the given web property belongs to.",
+         "required": true,
+         "location": "path"
+        },
+        "max-results": {
+         "type": "integer",
+         "description": "The maximum number of webProperty-user Links to include in this response.",
+         "format": "int32",
+         "location": "query"
+        },
+        "start-index": {
+         "type": "integer",
+         "description": "An index of the first webProperty-user link to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.",
+         "format": "int32",
+         "minimum": "1",
+         "location": "query"
+        },
+        "webPropertyId": {
+         "type": "string",
+         "description": "Web Property ID for the webProperty-user links to retrieve.",
+         "required": true,
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "webPropertyId"
+       ],
+       "response": {
+        "$ref": "EntityUserLinks"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics.manage.users"
+       ]
+      },
+      "update": {
+       "id": "analytics.management.webpropertyUserLinks.update",
+       "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/entityUserLinks/{linkId}",
+       "httpMethod": "PUT",
+       "description": "Updates permissions for an existing user on the given web property.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account ID to update the account-user link for.",
+         "required": true,
+         "location": "path"
+        },
+        "linkId": {
+         "type": "string",
+         "description": "Link ID to update the account-user link for.",
+         "required": true,
+         "location": "path"
+        },
+        "webPropertyId": {
+         "type": "string",
+         "description": "Web property ID to update the account-user link for.",
+         "required": true,
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "webPropertyId",
+        "linkId"
+       ],
+       "request": {
+        "$ref": "EntityUserLink"
+       },
+       "response": {
+        "$ref": "EntityUserLink"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics.manage.users"
        ]
       }
      }
@@ -2894,6 +4503,7 @@
        },
        "scopes": [
         "https://www.googleapis.com/auth/analytics",
+        "https://www.googleapis.com/auth/analytics.edit",
         "https://www.googleapis.com/auth/analytics.readonly"
        ]
       }

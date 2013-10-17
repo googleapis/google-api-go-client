@@ -41,8 +41,7 @@ const basePath = "https://www.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// Know your name, basic info, and list of people you're connected to on
-	// Google+
+	// Know your basic profile info and list of people in your circles.
 	PlusLoginScope = "https://www.googleapis.com/auth/plus.login"
 
 	// Know who you are on Google
@@ -136,9 +135,6 @@ type Tokeninfo struct {
 }
 
 type Userinfo struct {
-	// Birthday: The user's birthday. The year is not present.
-	Birthday string `json:"birthday,omitempty"`
-
 	// Email: The user's email address.
 	Email string `json:"email,omitempty"`
 

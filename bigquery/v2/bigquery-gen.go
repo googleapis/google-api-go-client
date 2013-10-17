@@ -633,8 +633,13 @@ type JobReference struct {
 }
 
 type JobStatistics struct {
+	// CreationTime: [Output-only] Creation time of this job, in
+	// milliseconds since the epoch. This field will be present on all jobs.
+	CreationTime int64 `json:"creationTime,omitempty,string"`
+
 	// EndTime: [Output-only] End time of this job, in milliseconds since
-	// the epoch.
+	// the epoch. This field will be present whenever a job is in the DONE
+	// state.
 	EndTime int64 `json:"endTime,omitempty,string"`
 
 	// Load: [Output-only] Statistics for a load job.
@@ -644,7 +649,8 @@ type JobStatistics struct {
 	Query *JobStatistics2 `json:"query,omitempty"`
 
 	// StartTime: [Output-only] Start time of this job, in milliseconds
-	// since the epoch.
+	// since the epoch. This field will be present when the job transitions
+	// from the PENDING state to either RUNNING or DONE.
 	StartTime int64 `json:"startTime,omitempty,string"`
 
 	// TotalBytesProcessed: [Output-only] [Deprecated] Use the bytes
@@ -695,6 +701,9 @@ type JobStatus struct {
 	State string `json:"state,omitempty"`
 }
 
+type JsonObject struct {
+}
+
 type ProjectList struct {
 	// Etag: A hash of the page of results
 	Etag string `json:"etag,omitempty"`
@@ -738,49 +747,51 @@ type ProjectReference struct {
 type QueryRequest struct {
 	// DefaultDataset: [Optional] Specifies the default datasetId and
 	// projectId to assume for any unqualified table names in the query. If
-	// not set, all table names in the query string must be fully-qualified
-	// in the format projectId:datasetId.tableid.
+	// not set, all table names in the query string must be qualified in the
+	// format 'datasetId.tableId'.
 	DefaultDataset *DatasetReference `json:"defaultDataset,omitempty"`
 
 	// DryRun: [Optional] If set, don't actually run the query. A valid
 	// query will return an empty response, while an invalid query will
-	// return the same error it would if it wasn't a dry run.
+	// return the same error it would if it wasn't a dry run. The default
+	// value is false.
 	DryRun bool `json:"dryRun,omitempty"`
 
 	// Kind: The resource type of the request.
 	Kind string `json:"kind,omitempty"`
 
-	// MaxResults: [Optional] The maximum number of results to return per
-	// page of results. If the response list exceeds the maximum response
-	// size for a single response, you will have to page through the
-	// results. Default is to return the maximum response size.
+	// MaxResults: [Optional] The maximum number of rows of data to return
+	// per page of results. Setting this flag to a small value such as 1000
+	// and then paging through results might improve reliability when the
+	// query result set is large. In addition to this limit, responses are
+	// also limited to 10 MB. By default, there is no maximum row count, and
+	// only the byte limit applies.
 	MaxResults int64 `json:"maxResults,omitempty"`
 
-	// PreserveNulls: [Experimental] If set, preserve null values in table
-	// data, rather than mapping null values to the column's default value.
-	// This flag currently defaults to false, but the default will soon be
-	// changed to true. Shortly afterward, this flag will be removed
-	// completely. Please specify true if possible, and false only if you
-	// need to force the old behavior while updating client code.
+	// PreserveNulls: [Deprecated] If set to false, maps null values in the
+	// query response to the column's default value. Only specify if you
+	// have older code that can not handle null values in the query
+	// response. The default value is true. This flag is deprecated and will
+	// be ignored in a future version of BigQuery.
 	PreserveNulls bool `json:"preserveNulls,omitempty"`
 
-	// Query: [Required] A query string, following the BigQuery query syntax
-	// of the query to execute. Table names should be qualified by dataset
-	// name in the format projectId:datasetId.tableId unless you specify the
-	// defaultDataset value. If the table is in the same project as the job,
-	// you can omit the project ID. Example: SELECT f1 FROM
-	// myProjectId:myDatasetId.myTableId.
+	// Query: [Required] A query string, following the BigQuery query
+	// syntax, of the query to execute. Example: "SELECT count(f1) FROM
+	// [myProjectId:myDatasetId.myTableId]".
 	Query string `json:"query,omitempty"`
 
 	// TimeoutMs: [Optional] How long to wait for the query to complete, in
-	// milliseconds, before returning. Default is to return immediately. If
-	// the timeout passes before the job completes, the request will fail
-	// with a TIMEOUT error.
+	// milliseconds, before the request times out and returns. Note that
+	// this is only a timeout for the request, not the query. If the query
+	// takes longer to run than the timeout value, the call returns without
+	// any results and with the 'jobComplete' flag set to false. You can
+	// call GetQueryResults() to wait for the query to complete and read the
+	// results. The default value is 10000 milliseconds (10 seconds).
 	TimeoutMs int64 `json:"timeoutMs,omitempty"`
 
 	// UseQueryCache: [Optional] Whether to look for the result in the query
 	// cache. The query cache is a best-effort cache that will be flushed
-	// whenever tables in the query are modified.
+	// whenever tables in the query are modified. The default value is true.
 	UseQueryCache bool `json:"useQueryCache,omitempty"`
 }
 
@@ -876,6 +887,43 @@ type Table struct {
 
 type TableCell struct {
 	V interface{} `json:"v,omitempty"`
+}
+
+type TableDataInsertAllRequest struct {
+	// Kind: The resource type of the response.
+	Kind string `json:"kind,omitempty"`
+
+	// Rows: The rows to insert.
+	Rows []*TableDataInsertAllRequestRows `json:"rows,omitempty"`
+}
+
+type TableDataInsertAllRequestRows struct {
+	// InsertId: [Optional] A unique ID for each row. BigQuery uses this
+	// property to detect duplicate insertion requests on a best-effort
+	// basis.
+	InsertId string `json:"insertId,omitempty"`
+
+	// Json: [Required] A JSON object that contains a row of data. The
+	// object's properties and values must match the destination table's
+	// schema.
+	Json *JsonObject `json:"json,omitempty"`
+}
+
+type TableDataInsertAllResponse struct {
+	// InsertErrors: An array of errors for rows that were not inserted.
+	InsertErrors []*TableDataInsertAllResponseInsertErrors `json:"insertErrors,omitempty"`
+
+	// Kind: The resource type of the response.
+	Kind string `json:"kind,omitempty"`
+}
+
+type TableDataInsertAllResponseInsertErrors struct {
+	// Errors: Error information for the row indicated by the index
+	// property.
+	Errors []*ErrorProto `json:"errors,omitempty"`
+
+	// Index: The index of the row that error applies to.
+	Index int64 `json:"index,omitempty"`
 }
 
 type TableDataList struct {
@@ -976,10 +1024,10 @@ type DatasetsDeleteCall struct {
 	opt_      map[string]interface{}
 }
 
-// Delete: Deletes the dataset specified by datasetId value. Before you
-// can delete a dataset, you must delete all its tables, either manually
-// or by specifying deleteContents. Immediately after deletion, you can
-// create another dataset with the same name.
+// Delete: Deletes the dataset specified by the datasetId value. Before
+// you can delete a dataset, you must delete all its tables, either
+// manually or by specifying deleteContents. Immediately after deletion,
+// you can create another dataset with the same name.
 func (r *DatasetsService) Delete(projectId string, datasetId string) *DatasetsDeleteCall {
 	c := &DatasetsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectId = projectId
@@ -1019,7 +1067,7 @@ func (c *DatasetsDeleteCall) Do() error {
 	}
 	return nil
 	// {
-	//   "description": "Deletes the dataset specified by datasetId value. Before you can delete a dataset, you must delete all its tables, either manually or by specifying deleteContents. Immediately after deletion, you can create another dataset with the same name.",
+	//   "description": "Deletes the dataset specified by the datasetId value. Before you can delete a dataset, you must delete all its tables, either manually or by specifying deleteContents. Immediately after deletion, you can create another dataset with the same name.",
 	//   "httpMethod": "DELETE",
 	//   "id": "bigquery.datasets.delete",
 	//   "parameterOrder": [
@@ -1222,6 +1270,13 @@ func (r *DatasetsService) List(projectId string) *DatasetsListCall {
 	return c
 }
 
+// All sets the optional parameter "all": Whether to list all datasets,
+// including hidden ones
+func (c *DatasetsListCall) All(all bool) *DatasetsListCall {
+	c.opt_["all"] = all
+	return c
+}
+
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of results to return
 func (c *DatasetsListCall) MaxResults(maxResults int64) *DatasetsListCall {
@@ -1240,6 +1295,9 @@ func (c *DatasetsListCall) Do() (*DatasetList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["all"]; ok {
+		params.Set("all", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
@@ -1273,6 +1331,11 @@ func (c *DatasetsListCall) Do() (*DatasetList, error) {
 	//     "projectId"
 	//   ],
 	//   "parameters": {
+	//     "all": {
+	//       "description": "Whether to list all datasets, including hidden ones",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "maxResults": {
 	//       "description": "The maximum number of results to return",
 	//       "format": "uint32",
@@ -1313,11 +1376,10 @@ type DatasetsPatchCall struct {
 	opt_      map[string]interface{}
 }
 
-// Patch: Updates information in an existing dataset, specified by
-// datasetId. Properties not included in the submitted resource will not
-// be changed. If you include the access property without any values
-// assigned, the request will fail as you must specify at least one
-// owner for a dataset. This method supports patch semantics.
+// Patch: Updates information in an existing dataset. The update method
+// replaces the entire dataset resource, whereas the patch method only
+// replaces fields that are provided in the submitted dataset resource.
+// This method supports patch semantics.
 func (r *DatasetsService) Patch(projectId string, datasetId string, dataset *Dataset) *DatasetsPatchCall {
 	c := &DatasetsPatchCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectId = projectId
@@ -1357,7 +1419,7 @@ func (c *DatasetsPatchCall) Do() (*Dataset, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates information in an existing dataset, specified by datasetId. Properties not included in the submitted resource will not be changed. If you include the access property without any values assigned, the request will fail as you must specify at least one owner for a dataset. This method supports patch semantics.",
+	//   "description": "Updates information in an existing dataset. The update method replaces the entire dataset resource, whereas the patch method only replaces fields that are provided in the submitted dataset resource. This method supports patch semantics.",
 	//   "httpMethod": "PATCH",
 	//   "id": "bigquery.datasets.patch",
 	//   "parameterOrder": [
@@ -1403,11 +1465,9 @@ type DatasetsUpdateCall struct {
 	opt_      map[string]interface{}
 }
 
-// Update: Updates information in an existing dataset, specified by
-// datasetId. Properties not included in the submitted resource will not
-// be changed. If you include the access property without any values
-// assigned, the request will fail as you must specify at least one
-// owner for a dataset.
+// Update: Updates information in an existing dataset. The update method
+// replaces the entire dataset resource, whereas the patch method only
+// replaces fields that are provided in the submitted dataset resource.
 func (r *DatasetsService) Update(projectId string, datasetId string, dataset *Dataset) *DatasetsUpdateCall {
 	c := &DatasetsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectId = projectId
@@ -1447,7 +1507,7 @@ func (c *DatasetsUpdateCall) Do() (*Dataset, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates information in an existing dataset, specified by datasetId. Properties not included in the submitted resource will not be changed. If you include the access property without any values assigned, the request will fail as you must specify at least one owner for a dataset.",
+	//   "description": "Updates information in an existing dataset. The update method replaces the entire dataset resource, whereas the patch method only replaces fields that are provided in the submitted dataset resource.",
 	//   "httpMethod": "PUT",
 	//   "id": "bigquery.datasets.update",
 	//   "parameterOrder": [
@@ -1763,7 +1823,8 @@ func (c *JobsInsertCall) Do() (*Job, error) {
 	//   "id": "bigquery.jobs.insert",
 	//   "mediaUpload": {
 	//     "accept": [
-	//       "application/octet-stream"
+	//       "application/octet-stream",
+	//       "text/csv"
 	//     ],
 	//     "protocols": {
 	//       "resumable": {
@@ -2119,6 +2180,102 @@ func (c *ProjectsListCall) Do() (*ProjectList, error) {
 	//   "path": "projects",
 	//   "response": {
 	//     "$ref": "ProjectList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigquery",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "bigquery.tabledata.insertAll":
+
+type TabledataInsertAllCall struct {
+	s                         *Service
+	projectId                 string
+	datasetId                 string
+	tableId                   string
+	tabledatainsertallrequest *TableDataInsertAllRequest
+	opt_                      map[string]interface{}
+}
+
+// InsertAll: Inserts the supplied rows into the table.
+func (r *TabledataService) InsertAll(projectId string, datasetId string, tableId string, tabledatainsertallrequest *TableDataInsertAllRequest) *TabledataInsertAllCall {
+	c := &TabledataInsertAllCall{s: r.s, opt_: make(map[string]interface{})}
+	c.projectId = projectId
+	c.datasetId = datasetId
+	c.tableId = tableId
+	c.tabledatainsertallrequest = tabledatainsertallrequest
+	return c
+}
+
+func (c *TabledataInsertAllCall) Do() (*TableDataInsertAllResponse, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.tabledatainsertallrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2/", "projects/{projectId}/datasets/{datasetId}/tables/{tableId}/insertAll")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{projectId}", url.QueryEscape(c.projectId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{datasetId}", url.QueryEscape(c.datasetId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{tableId}", url.QueryEscape(c.tableId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(TableDataInsertAllResponse)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Inserts the supplied rows into the table.",
+	//   "httpMethod": "POST",
+	//   "id": "bigquery.tabledata.insertAll",
+	//   "parameterOrder": [
+	//     "projectId",
+	//     "datasetId",
+	//     "tableId"
+	//   ],
+	//   "parameters": {
+	//     "datasetId": {
+	//       "description": "Dataset ID of the destination table.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "projectId": {
+	//       "description": "Project ID of the destination table.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "tableId": {
+	//       "description": "Table ID of the destination table.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "projects/{projectId}/datasets/{datasetId}/tables/{tableId}/insertAll",
+	//   "request": {
+	//     "$ref": "TableDataInsertAllRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "TableDataInsertAllResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/bigquery",
@@ -2629,8 +2786,10 @@ type TablesPatchCall struct {
 	opt_      map[string]interface{}
 }
 
-// Patch: Updates information in an existing table, specified by
-// tableId. This method supports patch semantics.
+// Patch: Updates information in an existing table. The update method
+// replaces the entire table resource, whereas the patch method only
+// replaces fields that are provided in the submitted table resource.
+// This method supports patch semantics.
 func (r *TablesService) Patch(projectId string, datasetId string, tableId string, table *Table) *TablesPatchCall {
 	c := &TablesPatchCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectId = projectId
@@ -2672,7 +2831,7 @@ func (c *TablesPatchCall) Do() (*Table, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates information in an existing table, specified by tableId. This method supports patch semantics.",
+	//   "description": "Updates information in an existing table. The update method replaces the entire table resource, whereas the patch method only replaces fields that are provided in the submitted table resource. This method supports patch semantics.",
 	//   "httpMethod": "PATCH",
 	//   "id": "bigquery.tables.patch",
 	//   "parameterOrder": [
@@ -2726,8 +2885,9 @@ type TablesUpdateCall struct {
 	opt_      map[string]interface{}
 }
 
-// Update: Updates information in an existing table, specified by
-// tableId.
+// Update: Updates information in an existing table. The update method
+// replaces the entire table resource, whereas the patch method only
+// replaces fields that are provided in the submitted table resource.
 func (r *TablesService) Update(projectId string, datasetId string, tableId string, table *Table) *TablesUpdateCall {
 	c := &TablesUpdateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectId = projectId
@@ -2769,7 +2929,7 @@ func (c *TablesUpdateCall) Do() (*Table, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates information in an existing table, specified by tableId.",
+	//   "description": "Updates information in an existing table. The update method replaces the entire table resource, whereas the patch method only replaces fields that are provided in the submitted table resource.",
 	//   "httpMethod": "PUT",
 	//   "id": "bigquery.tables.update",
 	//   "parameterOrder": [

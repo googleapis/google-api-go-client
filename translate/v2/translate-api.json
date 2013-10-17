@@ -1,11 +1,10 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"wtgj9ZncHCe-ShJM8RewHb1DgWI/Heg4db2T9Q59IR43KLVY5NSilqo\"",
+ "etag": "\"DGgqtFnjgu83tuwvvVNNUhOiHWk/4Ip-FKZqF7Vovq8mU1yMUQ2gvUM\"",
  "discoveryVersion": "v1",
  "id": "translate:v2",
  "name": "translate",
  "version": "v2",
- "revision": "20130627",
  "title": "Translate API",
  "description": "Lets you translate text from one language to another",
  "ownerDomain": "google.com",

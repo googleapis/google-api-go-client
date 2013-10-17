@@ -1040,6 +1040,12 @@ type VolumeAccessInfo struct {
 	// Epub: Information about epub content. (In LITE projection.)
 	Epub *VolumeAccessInfoEpub `json:"epub,omitempty"`
 
+	// ExplicitOfflineLicenseManagement: Whether this volume requires that
+	// the client explicitly request offline download license rather than
+	// have it done automatically when loading the content, if the client
+	// supports it.
+	ExplicitOfflineLicenseManagement bool `json:"explicitOfflineLicenseManagement,omitempty"`
+
 	// Pdf: Information about pdf content. (In LITE projection.)
 	Pdf *VolumeAccessInfoPdf `json:"pdf,omitempty"`
 
@@ -3184,6 +3190,13 @@ func (r *MyconfigService) RequestAccess(source string, volumeId string, nonce st
 	return c
 }
 
+// LicenseTypes sets the optional parameter "licenseTypes": The type of
+// access license to request. If not specified, the default is BOTH.
+func (c *MyconfigRequestAccessCall) LicenseTypes(licenseTypes string) *MyconfigRequestAccessCall {
+	c.opt_["licenseTypes"] = licenseTypes
+	return c
+}
+
 // Locale sets the optional parameter "locale": ISO-639-1, ISO-3166-1
 // codes for message localization, i.e. en_US.
 func (c *MyconfigRequestAccessCall) Locale(locale string) *MyconfigRequestAccessCall {
@@ -3199,6 +3212,9 @@ func (c *MyconfigRequestAccessCall) Do() (*RequestAccess, error) {
 	params.Set("nonce", fmt.Sprintf("%v", c.nonce))
 	params.Set("source", fmt.Sprintf("%v", c.source))
 	params.Set("volumeId", fmt.Sprintf("%v", c.volumeId))
+	if v, ok := c.opt_["licenseTypes"]; ok {
+		params.Set("licenseTypes", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["locale"]; ok {
 		params.Set("locale", fmt.Sprintf("%v", v))
 	}
@@ -3235,6 +3251,21 @@ func (c *MyconfigRequestAccessCall) Do() (*RequestAccess, error) {
 	//       "description": "The device/version ID from which to request the restrictions.",
 	//       "location": "query",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "licenseTypes": {
+	//       "description": "The type of access license to request. If not specified, the default is BOTH.",
+	//       "enum": [
+	//         "BOTH",
+	//         "CONCURRENT",
+	//         "DOWNLOAD"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Both concurrent and download licenses.",
+	//         "Concurrent access license.",
+	//         "Offline download access license."
+	//       ],
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "locale": {

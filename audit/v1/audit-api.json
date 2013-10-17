@@ -1,11 +1,10 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"wtgj9ZncHCe-ShJM8RewHb1DgWI/WETM6oPOB_u6tVJCuBP1DDIWlEg\"",
+ "etag": "\"DGgqtFnjgu83tuwvvVNNUhOiHWk/FnodQzLqRh_xHIkICK4PBBoHaLA\"",
  "discoveryVersion": "v1",
  "id": "audit:v1",
  "name": "audit",
  "version": "v1",
- "revision": "20130108",
  "title": "Enterprise Audit API",
  "description": "Lets you access user activities in your enterprise made through various applications.",
  "ownerDomain": "google.com",

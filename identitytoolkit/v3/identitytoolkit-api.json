@@ -1,12 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"wtgj9ZncHCe-ShJM8RewHb1DgWI/ydiWF7ryNkjf-SXRcBv2J0I7rYk\"",
+ "etag": "\"DGgqtFnjgu83tuwvvVNNUhOiHWk/5XO3LWHuKyhXxKxz2XO3IM-j3F4\"",
  "discoveryVersion": "v1",
  "id": "identitytoolkit:v3",
  "name": "identitytoolkit",
  "canonicalName": "Identity Toolkit",
  "version": "v3",
- "revision": "20130819",
  "title": "Google Identity Toolkit API",
  "description": "Help the third party sites to implement federated login.",
  "ownerDomain": "google.com",
@@ -82,6 +81,10 @@
      "description": "The fixed string identitytoolkit#CreateAuthUriResponse\".",
      "default": "identitytoolkit#CreateAuthUriResponse"
     },
+    "providerId": {
+     "type": "string",
+     "description": "The provider ID of the auth URI."
+    },
     "providers": {
      "type": "array",
      "description": "Existing IDP's for the user.",
@@ -104,6 +107,29 @@
      "type": "string",
      "description": "The fixed string \"identitytoolkit#DeleteAccountResponse\".",
      "default": "identitytoolkit#DeleteAccountResponse"
+    }
+   }
+  },
+  "DownloadAccountResponse": {
+   "id": "DownloadAccountResponse",
+   "type": "object",
+   "description": "Respone of downloading accounts in batch.",
+   "properties": {
+    "accounts": {
+     "type": "array",
+     "description": "The user accounts data.",
+     "items": {
+      "type": "any"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "The fixed string \"identitytoolkit#DownloadAccountResponse\".",
+     "default": "identitytoolkit#DownloadAccountResponse"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "The next page token. To be used in a subsequent request to return the next page of results."
     }
    }
   },
@@ -149,9 +175,9 @@
         "format": "byte"
        },
        "passwordUpdatedAt": {
-        "type": "string",
+        "type": "number",
         "description": "The timestamp when the password was last updated.",
-        "format": "int64"
+        "format": "double"
        },
        "photoUrl": {
         "type": "string",
@@ -218,6 +244,10 @@
    "type": "object",
    "description": "Request to get the IDP authentication URL.",
    "properties": {
+    "appId": {
+     "type": "string",
+     "description": "The app ID of the mobile app, base64(CERT_SHA1):PACKAGE_NAME for Android, BUNDLE_ID for iOS."
+    },
     "clientId": {
      "type": "string",
      "description": "The relying party OAuth client ID."
@@ -238,6 +268,10 @@
      "type": "string",
      "description": "Optional realm for OpenID protocol. The sub string \"scheme://domain:port\" of the param \"continueUri\" is used if this is not set."
     },
+    "otaApp": {
+     "type": "string",
+     "description": "The native app package for OTA installation."
+    },
     "providerId": {
      "type": "string",
      "description": "The IdP ID. For white listed IdPs it's a short domain name e.g. google.com, aol.com, live.net and yahoo.com. For other OpenID IdPs it's the OP identifier."
@@ -252,6 +286,22 @@
     "localId": {
      "type": "string",
      "description": "The local ID of the user."
+    }
+   }
+  },
+  "IdentitytoolkitRelyingpartyDownloadAccountRequest": {
+   "id": "IdentitytoolkitRelyingpartyDownloadAccountRequest",
+   "type": "object",
+   "description": "Request to download user account in batch.",
+   "properties": {
+    "maxResults": {
+     "type": "integer",
+     "description": "The max number of results to return in the response.",
+     "format": "uint32"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "The token for the next page. This should be taken from the previous response."
     }
    }
   },
@@ -498,11 +548,25 @@
      "description": "The fixed string \"identitytoolkit#SetAccountInfoResponse\".",
      "default": "identitytoolkit#SetAccountInfoResponse"
     },
-    "provider": {
+    "providerUserInfo": {
      "type": "array",
-     "description": "The associated IDPs of the user.",
+     "description": "The user's profiles at the associated IdPs.",
      "items": {
-      "type": "string"
+      "type": "object",
+      "properties": {
+       "displayName": {
+        "type": "string",
+        "description": "The user's display name at the IDP."
+       },
+       "photoUrl": {
+        "type": "string",
+        "description": "The user's photo url at the IDP."
+       },
+       "providerId": {
+        "type": "string",
+        "description": "The IdP ID. For whitelisted IdPs it's a short domain name, e.g., google.com, aol.com, live.net and yahoo.com. For other OpenID IdPs it's the OP identifier."
+       }
+      }
      }
     }
    }
@@ -576,6 +640,14 @@
      "type": "string",
      "description": "The action code."
     },
+    "appInstallationUrl": {
+     "type": "string",
+     "description": "URL for OTA app installation."
+    },
+    "appScheme": {
+     "type": "string",
+     "description": "The custom scheme used by mobile app."
+    },
     "context": {
      "type": "string",
      "description": "The opaque value used by the client to maintain context info between the authentication request and the IDP callback."
@@ -636,6 +708,10 @@
     "localId": {
      "type": "string",
      "description": "The RP local ID if it's already been mapped to the IdP account identified by the federated ID."
+    },
+    "needConfirmation": {
+     "type": "boolean",
+     "description": "Whether the assertion is from a non-trusted IDP and need account linking confirmation."
     },
     "nickName": {
      "type": "string",
@@ -732,6 +808,18 @@
      },
      "response": {
       "$ref": "DeleteAccountResponse"
+     }
+    },
+    "downloadAccount": {
+     "id": "identitytoolkit.relyingparty.downloadAccount",
+     "path": "downloadAccount",
+     "httpMethod": "POST",
+     "description": "Batch download user accounts.",
+     "request": {
+      "$ref": "IdentitytoolkitRelyingpartyDownloadAccountRequest"
+     },
+     "response": {
+      "$ref": "DownloadAccountResponse"
      }
     },
     "getAccountInfo": {

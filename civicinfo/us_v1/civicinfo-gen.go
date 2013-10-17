@@ -515,7 +515,7 @@ func (c *ElectionsVoterInfoQueryCall) Do() (*VoterInfoResponse, error) {
 	//   ],
 	//   "parameters": {
 	//     "electionId": {
-	//       "description": "The unique ID of the election to look up. A list of election IDs can be obtained at.https://www.googleapis.com/civicinfo/{version}/elections",
+	//       "description": "The unique ID of the election to look up. A list of election IDs can be obtained at https://www.googleapis.com/civicinfo/{version}/elections",
 	//       "format": "int64",
 	//       "location": "path",
 	//       "required": true,

@@ -41,8 +41,7 @@ const basePath = "https://www.googleapis.com/plus/v1/"
 
 // OAuth2 scopes used by this API.
 const (
-	// Know your name, basic info, and list of people you're connected to on
-	// Google+
+	// Know your basic profile info and list of people in your circles.
 	PlusLoginScope = "https://www.googleapis.com/auth/plus.login"
 
 	// Know who you are on Google
@@ -112,9 +111,6 @@ type PeopleService struct {
 type Acl struct {
 	// Description: Description of the access granted, suitable for display.
 	Description string `json:"description,omitempty"`
-
-	// DomainRestricted: Whether access is restricted to the domain.
-	DomainRestricted bool `json:"domainRestricted,omitempty"`
 
 	// Items: The list of access entries.
 	Items []*PlusAclentryResource `json:"items,omitempty"`
@@ -329,7 +325,7 @@ type ActivityObjectAttachments struct {
 	// potential additional thumbnails from the album.
 	Thumbnails []*ActivityObjectAttachmentsThumbnails `json:"thumbnails,omitempty"`
 
-	// Url: The link to the attachment; should be of type text/html.
+	// Url: The link to the attachment, which should be of type text/html.
 	Url string `json:"url,omitempty"`
 }
 
@@ -447,7 +443,7 @@ type ActivityFeed struct {
 	// return the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: Link to this activities resource.
+	// SelfLink: Link to this activity resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// Title: The title of this collection of activities, which is a

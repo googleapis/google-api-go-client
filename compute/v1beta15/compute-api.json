@@ -1,11 +1,10 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"wtgj9ZncHCe-ShJM8RewHb1DgWI/SulKJnyUHngtgbe93ydXyDKANdw\"",
+ "etag": "\"DGgqtFnjgu83tuwvvVNNUhOiHWk/RP3nDtHMfyUU6MKqT0SVz6kAIfc\"",
  "discoveryVersion": "v1",
  "id": "compute:v1beta15",
  "name": "compute",
  "version": "v1beta15",
- "revision": "20130525",
  "title": "Compute Engine API",
  "description": "API for the Google Compute Engine service.",
  "ownerDomain": "google.com",
@@ -74,6 +73,9 @@
     },
     "https://www.googleapis.com/auth/compute.readonly": {
      "description": "View your Google Compute Engine resources"
+    },
+    "https://www.googleapis.com/auth/devstorage.full_control": {
+     "description": "Manage your data and permissions in Google Cloud Storage"
     },
     "https://www.googleapis.com/auth/devstorage.read_only": {
      "description": "View your data in Google Cloud Storage"
@@ -160,8 +162,7 @@
      "description": "The status of the address (output only)."
     },
     "user": {
-     "type": "string",
-     "description": "URL of the resource currently using this address (output only)."
+     "type": "string"
     }
    }
   },
@@ -922,6 +923,11 @@
    "type": "object",
    "description": "A disk image resource.",
    "properties": {
+    "archiveSizeBytes": {
+     "type": "string",
+     "description": "Size of the image tar.gz archive stored in BigStore (in bytes).",
+     "format": "int64"
+    },
     "creationTimestamp": {
      "type": "string",
      "description": "Creation timestamp in RFC3339 text format (output only)."
@@ -2386,8 +2392,12 @@
   "TargetPool": {
    "id": "TargetPool",
    "type": "object",
-   "description": "A TargetPool resource. This resource defines a pool of VMs and the associated HttpHealthCheck resources.",
+   "description": "A TargetPool resource. This resource defines a pool of VMs, associated HttpHealthCheck resources, and the fallback TargetPool.",
    "properties": {
+    "backupPool": {
+     "type": "string",
+     "description": "This field is applicable only when the containing target pool is serving a forwarding rule as the primary pool, and its 'failoverRatio' field is properly set to a value between [0, 1].\n\n'backupPool' and 'failoverRatio' together define the fallback behavior of the primary target pool: if the ratio of the healthy VMs in the primary pool is at or below 'failoverRatio', traffic arriving at the load-balanced IP will be directed to the backup pool.\n\nIn case where 'failoverRatio' and 'backupPool' are not set, or all the VMs in the backup pool are unhealthy, the traffic will be directed back to the primary pool in the \"force\" mode, where traffic will be spread to the healthy VMs with the best effort, or to all VMs when no VM is healthy."
+    },
     "creationTimestamp": {
      "type": "string",
      "description": "Creation timestamp in RFC3339 text format (output only)."
@@ -2395,6 +2405,11 @@
     "description": {
      "type": "string",
      "description": "An optional textual description of the resource; provided by the client when the resource is created."
+    },
+    "failoverRatio": {
+     "type": "number",
+     "description": "This field is applicable only when the containing target pool is serving a forwarding rule as the primary pool (i.e., not as a backup pool to some other target pool). The value of the field must be in [0, 1].\n\nIf set, 'backupPool' must also be set. They together define the fallback behavior of the primary target pool: if the ratio of the healthy VMs in the primary pool is at or below this number, traffic arriving at the load-balanced IP will be directed to the backup pool.\n\nIn case where 'failoverRatio' is not set or all the VMs in the backup pool are unhealthy, the traffic will be directed back to the primary pool in the \"force\" mode, where traffic will be spread to the healthy VMs with the best effort, or to all VMs when no VM is healthy.",
+     "format": "float"
     },
     "healthChecks": {
      "type": "array",
@@ -2432,6 +2447,10 @@
     "selfLink": {
      "type": "string",
      "description": "Server defined URL for the resource (output only)."
+    },
+    "sessionAffinity": {
+     "type": "string",
+     "description": "Sesssion affinity option, must be one of the following values: 'NONE': Connections from the same client IP may go to any VM in the pool; 'CLIENT_IP': Connections from the same client IP will go to the same VM in the pool while that VM remains healthy. 'CLIENT_IP_PROTO': Connections from the same client IP with the same IP protocol will go to the same VM in the pool while that VM remains healthy."
     }
    }
   },
@@ -4116,6 +4135,7 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/devstorage.full_control",
       "https://www.googleapis.com/auth/devstorage.read_only",
       "https://www.googleapis.com/auth/devstorage.read_write"
      ]
@@ -6051,6 +6071,55 @@
      ],
      "request": {
       "$ref": "InstanceReference"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "setBackup": {
+     "id": "compute.targetPools.setBackup",
+     "path": "{project}/regions/{region}/targetPools/{targetPool}/setBackup",
+     "httpMethod": "POST",
+     "description": "Changes backup pool configurations.",
+     "parameters": {
+      "failoverRatio": {
+       "type": "number",
+       "description": "New failoverRatio value for the containing target pool.",
+       "format": "float",
+       "location": "query"
+      },
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "Name of the region scoping this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "targetPool": {
+       "type": "string",
+       "description": "Name of the TargetPool resource for which the backup is to be set.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region",
+      "targetPool"
+     ],
+     "request": {
+      "$ref": "TargetReference"
      },
      "response": {
       "$ref": "Operation"

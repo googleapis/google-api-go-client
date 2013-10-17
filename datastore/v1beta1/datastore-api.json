@@ -1,11 +1,10 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"wtgj9ZncHCe-ShJM8RewHb1DgWI/UGXzxGa9SZ2hjkpn14NNIUnXr2k\"",
+ "etag": "\"DGgqtFnjgu83tuwvvVNNUhOiHWk/YrLZoq09n__afr7YsPCxL5HrUUs\"",
  "discoveryVersion": "v1",
  "id": "datastore:v1beta1",
  "name": "datastore",
  "version": "v1beta1",
- "revision": "20130725",
  "title": "Google Cloud Datastore API",
  "description": "API for accessing Google Cloud Datastore.",
  "ownerDomain": "google.com",
@@ -71,6 +70,9 @@
  "auth": {
   "oauth2": {
    "scopes": {
+    "https://www.googleapis.com/auth/datastore": {
+     "description": "View and manage your Google Cloud Datastore data"
+    },
     "https://www.googleapis.com/auth/userinfo.email": {
      "description": "View your email address"
     }
@@ -160,11 +162,11 @@
    "properties": {
     "mutation": {
      "$ref": "Mutation",
-     "description": "The mutation to perform as part of this transaction. Optional."
+     "description": "The mutation to perform. Optional."
     },
     "transaction": {
      "type": "string",
-     "description": "The transaction identifier, returned by a call to beginTransaction.",
+     "description": "The transaction identifier, returned by a call to beginTransaction. Must be set when mode is TRANSACTIONAL.",
      "format": "byte"
     }
    }
@@ -781,6 +783,7 @@
       "$ref": "AllocateIdsResponse"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/datastore",
       "https://www.googleapis.com/auth/userinfo.email"
      ]
     },
@@ -807,6 +810,7 @@
       "$ref": "BeginTransactionResponse"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/datastore",
       "https://www.googleapis.com/auth/userinfo.email"
      ]
     },
@@ -833,6 +837,7 @@
       "$ref": "BlindWriteResponse"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/datastore",
       "https://www.googleapis.com/auth/userinfo.email"
      ]
     },
@@ -859,6 +864,7 @@
       "$ref": "CommitResponse"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/datastore",
       "https://www.googleapis.com/auth/userinfo.email"
      ]
     },
@@ -885,6 +891,7 @@
       "$ref": "LookupResponse"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/datastore",
       "https://www.googleapis.com/auth/userinfo.email"
      ]
     },
@@ -911,6 +918,7 @@
       "$ref": "RollbackResponse"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/datastore",
       "https://www.googleapis.com/auth/userinfo.email"
      ]
     },
@@ -937,6 +945,7 @@
       "$ref": "RunQueryResponse"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/datastore",
       "https://www.googleapis.com/auth/userinfo.email"
      ]
     }

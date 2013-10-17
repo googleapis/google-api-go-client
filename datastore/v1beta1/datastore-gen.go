@@ -41,6 +41,9 @@ const basePath = "https://www.googleapis.com/datastore/v1beta1/datasets/"
 
 // OAuth2 scopes used by this API.
 const (
+	// View and manage your Google Cloud Datastore data
+	DatastoreScope = "https://www.googleapis.com/auth/datastore"
+
 	// View your email address
 	UserinfoEmailScope = "https://www.googleapis.com/auth/userinfo.email"
 )
@@ -115,12 +118,11 @@ type BlindWriteResponse struct {
 }
 
 type CommitRequest struct {
-	// Mutation: The mutation to perform as part of this transaction.
-	// Optional.
+	// Mutation: The mutation to perform. Optional.
 	Mutation *Mutation `json:"mutation,omitempty"`
 
 	// Transaction: The transaction identifier, returned by a call to
-	// beginTransaction.
+	// beginTransaction. Must be set when mode is TRANSACTIONAL.
 	Transaction string `json:"transaction,omitempty"`
 }
 
@@ -582,6 +584,7 @@ func (c *DatasetsAllocateIdsCall) Do() (*AllocateIdsResponse, error) {
 	//     "$ref": "AllocateIdsResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/datastore",
 	//     "https://www.googleapis.com/auth/userinfo.email"
 	//   ]
 	// }
@@ -657,6 +660,7 @@ func (c *DatasetsBeginTransactionCall) Do() (*BeginTransactionResponse, error) {
 	//     "$ref": "BeginTransactionResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/datastore",
 	//     "https://www.googleapis.com/auth/userinfo.email"
 	//   ]
 	// }
@@ -733,6 +737,7 @@ func (c *DatasetsBlindWriteCall) Do() (*BlindWriteResponse, error) {
 	//     "$ref": "BlindWriteResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/datastore",
 	//     "https://www.googleapis.com/auth/userinfo.email"
 	//   ]
 	// }
@@ -809,6 +814,7 @@ func (c *DatasetsCommitCall) Do() (*CommitResponse, error) {
 	//     "$ref": "CommitResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/datastore",
 	//     "https://www.googleapis.com/auth/userinfo.email"
 	//   ]
 	// }
@@ -884,6 +890,7 @@ func (c *DatasetsLookupCall) Do() (*LookupResponse, error) {
 	//     "$ref": "LookupResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/datastore",
 	//     "https://www.googleapis.com/auth/userinfo.email"
 	//   ]
 	// }
@@ -959,6 +966,7 @@ func (c *DatasetsRollbackCall) Do() (*RollbackResponse, error) {
 	//     "$ref": "RollbackResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/datastore",
 	//     "https://www.googleapis.com/auth/userinfo.email"
 	//   ]
 	// }
@@ -1034,6 +1042,7 @@ func (c *DatasetsRunQueryCall) Do() (*RunQueryResponse, error) {
 	//     "$ref": "RunQueryResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/datastore",
 	//     "https://www.googleapis.com/auth/userinfo.email"
 	//   ]
 	// }

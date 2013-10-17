@@ -56,7 +56,9 @@ func New(client *http.Client) (*Service, error) {
 	s.BlogUserInfos = NewBlogUserInfosService(s)
 	s.Blogs = NewBlogsService(s)
 	s.Comments = NewCommentsService(s)
+	s.PageViews = NewPageViewsService(s)
 	s.Pages = NewPagesService(s)
+	s.PostUserInfos = NewPostUserInfosService(s)
 	s.Posts = NewPostsService(s)
 	s.Users = NewUsersService(s)
 	return s, nil
@@ -71,7 +73,11 @@ type Service struct {
 
 	Comments *CommentsService
 
+	PageViews *PageViewsService
+
 	Pages *PagesService
+
+	PostUserInfos *PostUserInfosService
 
 	Posts *PostsService
 
@@ -105,12 +111,30 @@ type CommentsService struct {
 	s *Service
 }
 
+func NewPageViewsService(s *Service) *PageViewsService {
+	rs := &PageViewsService{s: s}
+	return rs
+}
+
+type PageViewsService struct {
+	s *Service
+}
+
 func NewPagesService(s *Service) *PagesService {
 	rs := &PagesService{s: s}
 	return rs
 }
 
 type PagesService struct {
+	s *Service
+}
+
+func NewPostUserInfosService(s *Service) *PostUserInfosService {
+	rs := &PostUserInfosService{s: s}
+	return rs
+}
+
+type PostUserInfosService struct {
 	s *Service
 }
 
@@ -202,6 +226,9 @@ type BlogPosts struct {
 }
 
 type BlogList struct {
+	// BlogUserInfos: Admin level list of blog per-user information
+	BlogUserInfos []*BlogUserInfo `json:"blogUserInfos,omitempty"`
+
 	// Items: The list of Blogs this user has Authorship or Admin rights
 	// over.
 	Items []*Blog `json:"items,omitempty"`
@@ -211,21 +238,32 @@ type BlogList struct {
 }
 
 type BlogPerUserInfo struct {
+	// BlogId: ID of the Blog resource
 	BlogId string `json:"blogId,omitempty"`
 
+	// HasAdminAccess: True if the user has Admin level access to the blog.
+	HasAdminAccess bool `json:"hasAdminAccess,omitempty"`
+
+	// Kind: The kind of this entity. Always blogger#blogPerUserInfo
 	Kind string `json:"kind,omitempty"`
 
+	// PhotosAlbumKey: The Photo Album Key for the user when adding photos
+	// to the blog
 	PhotosAlbumKey string `json:"photosAlbumKey,omitempty"`
 
+	// UserId: ID of the User
 	UserId string `json:"userId,omitempty"`
 }
 
 type BlogUserInfo struct {
+	// Blog: The Blog resource.
 	Blog *Blog `json:"blog,omitempty"`
 
-	Kind string `json:"kind,omitempty"`
+	// Blog_user_info: Information about a User for the Blog.
+	Blog_user_info *BlogPerUserInfo `json:"blog_user_info,omitempty"`
 
-	User *BlogPerUserInfo `json:"user,omitempty"`
+	// Kind: The kind of this entity. Always blogger#blogUserInfo
+	Kind string `json:"kind,omitempty"`
 }
 
 type Comment struct {
@@ -255,6 +293,9 @@ type Comment struct {
 
 	// SelfLink: The API REST URL to fetch this resource from.
 	SelfLink string `json:"selfLink,omitempty"`
+
+	// Status: The status of the comment (only populated for admin users)
+	Status string `json:"status,omitempty"`
 
 	// Updated: RFC 3339 date-time when this comment was last updated.
 	Updated string `json:"updated,omitempty"`
@@ -332,6 +373,10 @@ type Page struct {
 	// SelfLink: The API REST URL to fetch this resource from.
 	SelfLink string `json:"selfLink,omitempty"`
 
+	// Status: The status of the page for admin resources (either LIVE or
+	// DRAFT).
+	Status string `json:"status,omitempty"`
+
 	// Title: The title of this entity. This is the name displayed in the
 	// Admin user interface.
 	Title string `json:"title,omitempty"`
@@ -375,6 +420,25 @@ type PageList struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+type Pageviews struct {
+	// BlogId: Blog Id
+	BlogId int64 `json:"blogId,omitempty,string"`
+
+	// Counts: The container of posts in this blog.
+	Counts []*PageviewsCounts `json:"counts,omitempty"`
+
+	// Kind: The kind of this entry. Always blogger#page_views
+	Kind string `json:"kind,omitempty"`
+}
+
+type PageviewsCounts struct {
+	// Count: Count of page views for the given time range
+	Count int64 `json:"count,omitempty,string"`
+
+	// TimeRange: Time range the given count applies to
+	TimeRange string `json:"timeRange,omitempty"`
+}
+
 type Post struct {
 	// Author: The author of this Post.
 	Author *PostAuthor `json:"author,omitempty"`
@@ -390,6 +454,9 @@ type Post struct {
 
 	// Id: The identifier of this Post.
 	Id string `json:"id,omitempty"`
+
+	// Images: Display image for the Post.
+	Images []*PostImages `json:"images,omitempty"`
 
 	// Kind: The kind of this entity. Always blogger#post
 	Kind string `json:"kind,omitempty"`
@@ -409,8 +476,14 @@ type Post struct {
 	// SelfLink: The API REST URL to fetch this resource from.
 	SelfLink string `json:"selfLink,omitempty"`
 
+	// Status: Status of the post. Only set for admin-level requests
+	Status string `json:"status,omitempty"`
+
 	// Title: The title of the Post.
 	Title string `json:"title,omitempty"`
+
+	// TitleLink: The title link URL, similar to atom's related link.
+	TitleLink string `json:"titleLink,omitempty"`
 
 	// Updated: RFC 3339 date-time when this Post was last updated.
 	Updated string `json:"updated,omitempty"`
@@ -441,6 +514,10 @@ type PostAuthorImage struct {
 type PostBlog struct {
 	// Id: The identifier of the Blog that contains this Post.
 	Id string `json:"id,omitempty"`
+}
+
+type PostImages struct {
+	Url string `json:"url,omitempty"`
 }
 
 type PostLocation struct {
@@ -479,10 +556,47 @@ type PostList struct {
 	// NextPageToken: Pagination token to fetch the next page, if one
 	// exists.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+}
 
-	// PrevPageToken: Pagination token to fetch the previous page, if one
+type PostPerUserInfo struct {
+	// BlogId: ID of the Blog that the post resource belongs to.
+	BlogId string `json:"blogId,omitempty"`
+
+	// HasEditAccess: True if the user has Author level access to the post.
+	HasEditAccess bool `json:"hasEditAccess,omitempty"`
+
+	// Kind: The kind of this entity. Always blogger#postPerUserInfo
+	Kind string `json:"kind,omitempty"`
+
+	// PostId: ID of the Post resource.
+	PostId string `json:"postId,omitempty"`
+
+	// UserId: ID of the User.
+	UserId string `json:"userId,omitempty"`
+}
+
+type PostUserInfo struct {
+	// Kind: The kind of this entity. Always blogger#postUserInfo
+	Kind string `json:"kind,omitempty"`
+
+	// Post: The Post resource.
+	Post *Post `json:"post,omitempty"`
+
+	// Post_user_info: Information about a User for the Post.
+	Post_user_info *PostPerUserInfo `json:"post_user_info,omitempty"`
+}
+
+type PostUserInfosList struct {
+	// Items: The list of Posts with User information for the post, for this
+	// Blog.
+	Items []*PostUserInfo `json:"items,omitempty"`
+
+	// Kind: The kind of this entity. Always blogger#postList
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: Pagination token to fetch the next page, if one
 	// exists.
-	PrevPageToken string `json:"prevPageToken,omitempty"`
+	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
 type User struct {
@@ -783,10 +897,30 @@ func (r *BlogsService) ListByUser(userId string) *BlogsListByUserCall {
 	return c
 }
 
+// FetchUserInfo sets the optional parameter "fetchUserInfo": Whether
+// the response is a list of blogs with per-user information instead of
+// just blogs.
+func (c *BlogsListByUserCall) FetchUserInfo(fetchUserInfo bool) *BlogsListByUserCall {
+	c.opt_["fetchUserInfo"] = fetchUserInfo
+	return c
+}
+
+// View sets the optional parameter "view":
+func (c *BlogsListByUserCall) View(view string) *BlogsListByUserCall {
+	c.opt_["view"] = view
+	return c
+}
+
 func (c *BlogsListByUserCall) Do() (*BlogList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fetchUserInfo"]; ok {
+		params.Set("fetchUserInfo", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["view"]; ok {
+		params.Set("view", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/blogger/v3/", "users/{userId}/blogs")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -814,10 +948,29 @@ func (c *BlogsListByUserCall) Do() (*BlogList, error) {
 	//     "userId"
 	//   ],
 	//   "parameters": {
+	//     "fetchUserInfo": {
+	//       "description": "Whether the response is a list of blogs with per-user information instead of just blogs.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "userId": {
 	//       "description": "ID of the user whose blogs are to be fetched. Either the word 'self' (sans quote marks) or the user's profile identifier.",
 	//       "location": "path",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "enum": [
+	//         "ADMIN",
+	//         "AUTHOR",
+	//         "READER"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Admin level detail",
+	//         "Author level detail",
+	//         "Admin level detail"
+	//       ],
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -828,6 +981,167 @@ func (c *BlogsListByUserCall) Do() (*BlogList, error) {
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/blogger",
 	//     "https://www.googleapis.com/auth/blogger.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "blogger.comments.approve":
+
+type CommentsApproveCall struct {
+	s         *Service
+	blogId    string
+	postId    string
+	commentId string
+	opt_      map[string]interface{}
+}
+
+// Approve: Marks a comment as not spam.
+func (r *CommentsService) Approve(blogId string, postId string, commentId string) *CommentsApproveCall {
+	c := &CommentsApproveCall{s: r.s, opt_: make(map[string]interface{})}
+	c.blogId = blogId
+	c.postId = postId
+	c.commentId = commentId
+	return c
+}
+
+func (c *CommentsApproveCall) Do() (*Comment, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/blogger/v3/", "blogs/{blogId}/posts/{postId}/comments/{commentId}/approve")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{blogId}", url.QueryEscape(c.blogId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{postId}", url.QueryEscape(c.postId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{commentId}", url.QueryEscape(c.commentId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Comment)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Marks a comment as not spam.",
+	//   "httpMethod": "POST",
+	//   "id": "blogger.comments.approve",
+	//   "parameterOrder": [
+	//     "blogId",
+	//     "postId",
+	//     "commentId"
+	//   ],
+	//   "parameters": {
+	//     "blogId": {
+	//       "description": "The Id of the Blog.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "commentId": {
+	//       "description": "The ID of the comment to mark as not spam.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "postId": {
+	//       "description": "The ID of the Post.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "blogs/{blogId}/posts/{postId}/comments/{commentId}/approve",
+	//   "response": {
+	//     "$ref": "Comment"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/blogger"
+	//   ]
+	// }
+
+}
+
+// method id "blogger.comments.delete":
+
+type CommentsDeleteCall struct {
+	s         *Service
+	blogId    string
+	postId    string
+	commentId string
+	opt_      map[string]interface{}
+}
+
+// Delete: Delete a comment by id.
+func (r *CommentsService) Delete(blogId string, postId string, commentId string) *CommentsDeleteCall {
+	c := &CommentsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.blogId = blogId
+	c.postId = postId
+	c.commentId = commentId
+	return c
+}
+
+func (c *CommentsDeleteCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/blogger/v3/", "blogs/{blogId}/posts/{postId}/comments/{commentId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{blogId}", url.QueryEscape(c.blogId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{postId}", url.QueryEscape(c.postId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{commentId}", url.QueryEscape(c.commentId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Delete a comment by id.",
+	//   "httpMethod": "DELETE",
+	//   "id": "blogger.comments.delete",
+	//   "parameterOrder": [
+	//     "blogId",
+	//     "postId",
+	//     "commentId"
+	//   ],
+	//   "parameters": {
+	//     "blogId": {
+	//       "description": "The Id of the Blog.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "commentId": {
+	//       "description": "The ID of the comment to delete.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "postId": {
+	//       "description": "The ID of the Post.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "blogs/{blogId}/posts/{postId}/comments/{commentId}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/blogger"
 	//   ]
 	// }
 
@@ -927,7 +1241,7 @@ type CommentsListCall struct {
 	opt_   map[string]interface{}
 }
 
-// List: Retrieves the comments for a blog, possibly filtered.
+// List: Retrieves the comments for a post, possibly filtered.
 func (r *CommentsService) List(blogId string, postId string) *CommentsListCall {
 	c := &CommentsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.blogId = blogId
@@ -970,6 +1284,18 @@ func (c *CommentsListCall) StartDate(startDate string) *CommentsListCall {
 	return c
 }
 
+// Statuses sets the optional parameter "statuses":
+func (c *CommentsListCall) Statuses(statuses string) *CommentsListCall {
+	c.opt_["statuses"] = statuses
+	return c
+}
+
+// View sets the optional parameter "view":
+func (c *CommentsListCall) View(view string) *CommentsListCall {
+	c.opt_["view"] = view
+	return c
+}
+
 func (c *CommentsListCall) Do() (*CommentList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -988,6 +1314,12 @@ func (c *CommentsListCall) Do() (*CommentList, error) {
 	}
 	if v, ok := c.opt_["startDate"]; ok {
 		params.Set("startDate", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["statuses"]; ok {
+		params.Set("statuses", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["view"]; ok {
+		params.Set("view", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/blogger/v3/", "blogs/{blogId}/posts/{postId}/comments")
 	urls += "?" + params.Encode()
@@ -1010,7 +1342,7 @@ func (c *CommentsListCall) Do() (*CommentList, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves the comments for a blog, possibly filtered.",
+	//   "description": "Retrieves the comments for a post, possibly filtered.",
 	//   "httpMethod": "GET",
 	//   "id": "blogger.comments.list",
 	//   "parameterOrder": [
@@ -1057,6 +1389,37 @@ func (c *CommentsListCall) Do() (*CommentList, error) {
 	//       "format": "date-time",
 	//       "location": "query",
 	//       "type": "string"
+	//     },
+	//     "statuses": {
+	//       "enum": [
+	//         "emptied",
+	//         "live",
+	//         "pending",
+	//         "spam"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Comments that have had their content removed",
+	//         "Comments that are publicly visible",
+	//         "Comments that are awaiting administrator approval",
+	//         "Comments marked as spam by the administrator"
+	//       ],
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "enum": [
+	//         "ADMIN",
+	//         "AUTHOR",
+	//         "READER"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Admin level detail",
+	//         "Author level detail",
+	//         "Admin level detail"
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "blogs/{blogId}/posts/{postId}/comments",
@@ -1066,6 +1429,473 @@ func (c *CommentsListCall) Do() (*CommentList, error) {
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/blogger",
 	//     "https://www.googleapis.com/auth/blogger.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "blogger.comments.listByBlog":
+
+type CommentsListByBlogCall struct {
+	s      *Service
+	blogId string
+	opt_   map[string]interface{}
+}
+
+// ListByBlog: Retrieves the comments for a blog, across all posts,
+// possibly filtered.
+func (r *CommentsService) ListByBlog(blogId string) *CommentsListByBlogCall {
+	c := &CommentsListByBlogCall{s: r.s, opt_: make(map[string]interface{})}
+	c.blogId = blogId
+	return c
+}
+
+// EndDate sets the optional parameter "endDate": Latest date of comment
+// to fetch, a date-time with RFC 3339 formatting.
+func (c *CommentsListByBlogCall) EndDate(endDate string) *CommentsListByBlogCall {
+	c.opt_["endDate"] = endDate
+	return c
+}
+
+// FetchBodies sets the optional parameter "fetchBodies": Whether the
+// body content of the comments is included.
+func (c *CommentsListByBlogCall) FetchBodies(fetchBodies bool) *CommentsListByBlogCall {
+	c.opt_["fetchBodies"] = fetchBodies
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum number
+// of comments to include in the result.
+func (c *CommentsListByBlogCall) MaxResults(maxResults int64) *CommentsListByBlogCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Continuation token
+// if request is paged.
+func (c *CommentsListByBlogCall) PageToken(pageToken string) *CommentsListByBlogCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+// StartDate sets the optional parameter "startDate": Earliest date of
+// comment to fetch, a date-time with RFC 3339 formatting.
+func (c *CommentsListByBlogCall) StartDate(startDate string) *CommentsListByBlogCall {
+	c.opt_["startDate"] = startDate
+	return c
+}
+
+func (c *CommentsListByBlogCall) Do() (*CommentList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["endDate"]; ok {
+		params.Set("endDate", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fetchBodies"]; ok {
+		params.Set("fetchBodies", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["startDate"]; ok {
+		params.Set("startDate", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/blogger/v3/", "blogs/{blogId}/comments")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{blogId}", url.QueryEscape(c.blogId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(CommentList)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the comments for a blog, across all posts, possibly filtered.",
+	//   "httpMethod": "GET",
+	//   "id": "blogger.comments.listByBlog",
+	//   "parameterOrder": [
+	//     "blogId"
+	//   ],
+	//   "parameters": {
+	//     "blogId": {
+	//       "description": "ID of the blog to fetch comments from.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "endDate": {
+	//       "description": "Latest date of comment to fetch, a date-time with RFC 3339 formatting.",
+	//       "format": "date-time",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "fetchBodies": {
+	//       "description": "Whether the body content of the comments is included.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "maxResults": {
+	//       "description": "Maximum number of comments to include in the result.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Continuation token if request is paged.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "startDate": {
+	//       "description": "Earliest date of comment to fetch, a date-time with RFC 3339 formatting.",
+	//       "format": "date-time",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "blogs/{blogId}/comments",
+	//   "response": {
+	//     "$ref": "CommentList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/blogger",
+	//     "https://www.googleapis.com/auth/blogger.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "blogger.comments.markAsSpam":
+
+type CommentsMarkAsSpamCall struct {
+	s         *Service
+	blogId    string
+	postId    string
+	commentId string
+	opt_      map[string]interface{}
+}
+
+// MarkAsSpam: Marks a comment as spam.
+func (r *CommentsService) MarkAsSpam(blogId string, postId string, commentId string) *CommentsMarkAsSpamCall {
+	c := &CommentsMarkAsSpamCall{s: r.s, opt_: make(map[string]interface{})}
+	c.blogId = blogId
+	c.postId = postId
+	c.commentId = commentId
+	return c
+}
+
+func (c *CommentsMarkAsSpamCall) Do() (*Comment, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/blogger/v3/", "blogs/{blogId}/posts/{postId}/comments/{commentId}/spam")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{blogId}", url.QueryEscape(c.blogId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{postId}", url.QueryEscape(c.postId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{commentId}", url.QueryEscape(c.commentId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Comment)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Marks a comment as spam.",
+	//   "httpMethod": "POST",
+	//   "id": "blogger.comments.markAsSpam",
+	//   "parameterOrder": [
+	//     "blogId",
+	//     "postId",
+	//     "commentId"
+	//   ],
+	//   "parameters": {
+	//     "blogId": {
+	//       "description": "The Id of the Blog.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "commentId": {
+	//       "description": "The ID of the comment to mark as spam.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "postId": {
+	//       "description": "The ID of the Post.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "blogs/{blogId}/posts/{postId}/comments/{commentId}/spam",
+	//   "response": {
+	//     "$ref": "Comment"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/blogger"
+	//   ]
+	// }
+
+}
+
+// method id "blogger.comments.removeContent":
+
+type CommentsRemoveContentCall struct {
+	s         *Service
+	blogId    string
+	postId    string
+	commentId string
+	opt_      map[string]interface{}
+}
+
+// RemoveContent: Removes the content of a comment.
+func (r *CommentsService) RemoveContent(blogId string, postId string, commentId string) *CommentsRemoveContentCall {
+	c := &CommentsRemoveContentCall{s: r.s, opt_: make(map[string]interface{})}
+	c.blogId = blogId
+	c.postId = postId
+	c.commentId = commentId
+	return c
+}
+
+func (c *CommentsRemoveContentCall) Do() (*Comment, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/blogger/v3/", "blogs/{blogId}/posts/{postId}/comments/{commentId}/removecontent")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{blogId}", url.QueryEscape(c.blogId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{postId}", url.QueryEscape(c.postId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{commentId}", url.QueryEscape(c.commentId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Comment)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Removes the content of a comment.",
+	//   "httpMethod": "POST",
+	//   "id": "blogger.comments.removeContent",
+	//   "parameterOrder": [
+	//     "blogId",
+	//     "postId",
+	//     "commentId"
+	//   ],
+	//   "parameters": {
+	//     "blogId": {
+	//       "description": "The Id of the Blog.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "commentId": {
+	//       "description": "The ID of the comment to delete content from.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "postId": {
+	//       "description": "The ID of the Post.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "blogs/{blogId}/posts/{postId}/comments/{commentId}/removecontent",
+	//   "response": {
+	//     "$ref": "Comment"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/blogger"
+	//   ]
+	// }
+
+}
+
+// method id "blogger.pageViews.get":
+
+type PageViewsGetCall struct {
+	s      *Service
+	blogId string
+	opt_   map[string]interface{}
+}
+
+// Get: Retrieve pageview stats for a Blog.
+func (r *PageViewsService) Get(blogId string) *PageViewsGetCall {
+	c := &PageViewsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.blogId = blogId
+	return c
+}
+
+// Range sets the optional parameter "range":
+func (c *PageViewsGetCall) Range(range_ string) *PageViewsGetCall {
+	c.opt_["range"] = range_
+	return c
+}
+
+func (c *PageViewsGetCall) Do() (*Pageviews, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["range"]; ok {
+		params.Set("range", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/blogger/v3/", "blogs/{blogId}/pageviews")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{blogId}", url.QueryEscape(c.blogId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Pageviews)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieve pageview stats for a Blog.",
+	//   "httpMethod": "GET",
+	//   "id": "blogger.pageViews.get",
+	//   "parameterOrder": [
+	//     "blogId"
+	//   ],
+	//   "parameters": {
+	//     "blogId": {
+	//       "description": "The ID of the blog to get.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "range": {
+	//       "enum": [
+	//         "30DAYS",
+	//         "7DAYS",
+	//         "all"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Page view counts from the last thirty days.",
+	//         "Page view counts from the last seven days.",
+	//         "Total page view counts from all time."
+	//       ],
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "blogs/{blogId}/pageviews",
+	//   "response": {
+	//     "$ref": "Pageviews"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/blogger"
+	//   ]
+	// }
+
+}
+
+// method id "blogger.pages.delete":
+
+type PagesDeleteCall struct {
+	s      *Service
+	blogId string
+	pageId string
+	opt_   map[string]interface{}
+}
+
+// Delete: Delete a page by id.
+func (r *PagesService) Delete(blogId string, pageId string) *PagesDeleteCall {
+	c := &PagesDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.blogId = blogId
+	c.pageId = pageId
+	return c
+}
+
+func (c *PagesDeleteCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/blogger/v3/", "blogs/{blogId}/pages/{pageId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{blogId}", url.QueryEscape(c.blogId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{pageId}", url.QueryEscape(c.pageId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Delete a page by id.",
+	//   "httpMethod": "DELETE",
+	//   "id": "blogger.pages.delete",
+	//   "parameterOrder": [
+	//     "blogId",
+	//     "pageId"
+	//   ],
+	//   "parameters": {
+	//     "blogId": {
+	//       "description": "The Id of the Blog.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageId": {
+	//       "description": "The ID of the Page.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "blogs/{blogId}/pages/{pageId}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/blogger"
 	//   ]
 	// }
 
@@ -1088,10 +1918,19 @@ func (r *PagesService) Get(blogId string, pageId string) *PagesGetCall {
 	return c
 }
 
+// View sets the optional parameter "view":
+func (c *PagesGetCall) View(view string) *PagesGetCall {
+	c.opt_["view"] = view
+	return c
+}
+
 func (c *PagesGetCall) Do() (*Page, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["view"]; ok {
+		params.Set("view", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/blogger/v3/", "blogs/{blogId}/pages/{pageId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -1132,6 +1971,20 @@ func (c *PagesGetCall) Do() (*Page, error) {
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "enum": [
+	//         "ADMIN",
+	//         "AUTHOR",
+	//         "READER"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Admin level detail",
+	//         "Author level detail",
+	//         "Admin level detail"
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "blogs/{blogId}/pages/{pageId}",
@@ -1146,6 +1999,81 @@ func (c *PagesGetCall) Do() (*Page, error) {
 
 }
 
+// method id "blogger.pages.insert":
+
+type PagesInsertCall struct {
+	s      *Service
+	blogId string
+	page   *Page
+	opt_   map[string]interface{}
+}
+
+// Insert: Add a page.
+func (r *PagesService) Insert(blogId string, page *Page) *PagesInsertCall {
+	c := &PagesInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.blogId = blogId
+	c.page = page
+	return c
+}
+
+func (c *PagesInsertCall) Do() (*Page, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.page)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/blogger/v3/", "blogs/{blogId}/pages")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{blogId}", url.QueryEscape(c.blogId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Page)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Add a page.",
+	//   "httpMethod": "POST",
+	//   "id": "blogger.pages.insert",
+	//   "parameterOrder": [
+	//     "blogId"
+	//   ],
+	//   "parameters": {
+	//     "blogId": {
+	//       "description": "ID of the blog to add the page to.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "blogs/{blogId}/pages",
+	//   "request": {
+	//     "$ref": "Page"
+	//   },
+	//   "response": {
+	//     "$ref": "Page"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/blogger"
+	//   ]
+	// }
+
+}
+
 // method id "blogger.pages.list":
 
 type PagesListCall struct {
@@ -1154,7 +2082,8 @@ type PagesListCall struct {
 	opt_   map[string]interface{}
 }
 
-// List: Retrieves pages for a blog, possibly filtered.
+// List: Retrieves the pages for a blog, optionally including non-LIVE
+// statuses.
 func (r *PagesService) List(blogId string) *PagesListCall {
 	c := &PagesListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.blogId = blogId
@@ -1168,12 +2097,30 @@ func (c *PagesListCall) FetchBodies(fetchBodies bool) *PagesListCall {
 	return c
 }
 
+// Statuses sets the optional parameter "statuses":
+func (c *PagesListCall) Statuses(statuses string) *PagesListCall {
+	c.opt_["statuses"] = statuses
+	return c
+}
+
+// View sets the optional parameter "view":
+func (c *PagesListCall) View(view string) *PagesListCall {
+	c.opt_["view"] = view
+	return c
+}
+
 func (c *PagesListCall) Do() (*PageList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	if v, ok := c.opt_["fetchBodies"]; ok {
 		params.Set("fetchBodies", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["statuses"]; ok {
+		params.Set("statuses", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["view"]; ok {
+		params.Set("view", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/blogger/v3/", "blogs/{blogId}/pages")
 	urls += "?" + params.Encode()
@@ -1195,7 +2142,7 @@ func (c *PagesListCall) Do() (*PageList, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves pages for a blog, possibly filtered.",
+	//   "description": "Retrieves the pages for a blog, optionally including non-LIVE statuses.",
 	//   "httpMethod": "GET",
 	//   "id": "blogger.pages.list",
 	//   "parameterOrder": [
@@ -1212,11 +2159,550 @@ func (c *PagesListCall) Do() (*PageList, error) {
 	//       "description": "Whether to retrieve the Page bodies.",
 	//       "location": "query",
 	//       "type": "boolean"
+	//     },
+	//     "statuses": {
+	//       "enum": [
+	//         "draft",
+	//         "imported",
+	//         "live"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Draft (unpublished) Pages",
+	//         "Pages that have had their content removed",
+	//         "Pages that are publicly visible"
+	//       ],
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "enum": [
+	//         "ADMIN",
+	//         "AUTHOR",
+	//         "READER"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Admin level detail",
+	//         "Author level detail",
+	//         "Admin level detail"
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "blogs/{blogId}/pages",
 	//   "response": {
 	//     "$ref": "PageList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/blogger",
+	//     "https://www.googleapis.com/auth/blogger.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "blogger.pages.patch":
+
+type PagesPatchCall struct {
+	s      *Service
+	blogId string
+	pageId string
+	page   *Page
+	opt_   map[string]interface{}
+}
+
+// Patch: Update a page. This method supports patch semantics.
+func (r *PagesService) Patch(blogId string, pageId string, page *Page) *PagesPatchCall {
+	c := &PagesPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.blogId = blogId
+	c.pageId = pageId
+	c.page = page
+	return c
+}
+
+func (c *PagesPatchCall) Do() (*Page, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.page)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/blogger/v3/", "blogs/{blogId}/pages/{pageId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{blogId}", url.QueryEscape(c.blogId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{pageId}", url.QueryEscape(c.pageId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Page)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Update a page. This method supports patch semantics.",
+	//   "httpMethod": "PATCH",
+	//   "id": "blogger.pages.patch",
+	//   "parameterOrder": [
+	//     "blogId",
+	//     "pageId"
+	//   ],
+	//   "parameters": {
+	//     "blogId": {
+	//       "description": "The ID of the Blog.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageId": {
+	//       "description": "The ID of the Page.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "blogs/{blogId}/pages/{pageId}",
+	//   "request": {
+	//     "$ref": "Page"
+	//   },
+	//   "response": {
+	//     "$ref": "Page"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/blogger"
+	//   ]
+	// }
+
+}
+
+// method id "blogger.pages.update":
+
+type PagesUpdateCall struct {
+	s      *Service
+	blogId string
+	pageId string
+	page   *Page
+	opt_   map[string]interface{}
+}
+
+// Update: Update a page.
+func (r *PagesService) Update(blogId string, pageId string, page *Page) *PagesUpdateCall {
+	c := &PagesUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.blogId = blogId
+	c.pageId = pageId
+	c.page = page
+	return c
+}
+
+func (c *PagesUpdateCall) Do() (*Page, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.page)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/blogger/v3/", "blogs/{blogId}/pages/{pageId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{blogId}", url.QueryEscape(c.blogId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{pageId}", url.QueryEscape(c.pageId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Page)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Update a page.",
+	//   "httpMethod": "PUT",
+	//   "id": "blogger.pages.update",
+	//   "parameterOrder": [
+	//     "blogId",
+	//     "pageId"
+	//   ],
+	//   "parameters": {
+	//     "blogId": {
+	//       "description": "The ID of the Blog.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageId": {
+	//       "description": "The ID of the Page.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "blogs/{blogId}/pages/{pageId}",
+	//   "request": {
+	//     "$ref": "Page"
+	//   },
+	//   "response": {
+	//     "$ref": "Page"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/blogger"
+	//   ]
+	// }
+
+}
+
+// method id "blogger.postUserInfos.get":
+
+type PostUserInfosGetCall struct {
+	s      *Service
+	userId string
+	blogId string
+	postId string
+	opt_   map[string]interface{}
+}
+
+// Get: Gets one post and user info pair by postId and userId.
+func (r *PostUserInfosService) Get(userId string, blogId string, postId string) *PostUserInfosGetCall {
+	c := &PostUserInfosGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.userId = userId
+	c.blogId = blogId
+	c.postId = postId
+	return c
+}
+
+// MaxComments sets the optional parameter "maxComments": Maximum number
+// of comments to pull back on a post.
+func (c *PostUserInfosGetCall) MaxComments(maxComments int64) *PostUserInfosGetCall {
+	c.opt_["maxComments"] = maxComments
+	return c
+}
+
+func (c *PostUserInfosGetCall) Do() (*PostUserInfo, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["maxComments"]; ok {
+		params.Set("maxComments", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/blogger/v3/", "users/{userId}/blogs/{blogId}/posts/{postId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{userId}", url.QueryEscape(c.userId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{blogId}", url.QueryEscape(c.blogId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{postId}", url.QueryEscape(c.postId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(PostUserInfo)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets one post and user info pair by postId and userId.",
+	//   "httpMethod": "GET",
+	//   "id": "blogger.postUserInfos.get",
+	//   "parameterOrder": [
+	//     "userId",
+	//     "blogId",
+	//     "postId"
+	//   ],
+	//   "parameters": {
+	//     "blogId": {
+	//       "description": "The ID of the blog.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "maxComments": {
+	//       "description": "Maximum number of comments to pull back on a post.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "postId": {
+	//       "description": "The ID of the post to get.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "userId": {
+	//       "description": "ID of the user for the per-user information to be fetched. Either the word 'self' (sans quote marks) or the user's profile identifier.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "users/{userId}/blogs/{blogId}/posts/{postId}",
+	//   "response": {
+	//     "$ref": "PostUserInfo"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/blogger",
+	//     "https://www.googleapis.com/auth/blogger.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "blogger.postUserInfos.list":
+
+type PostUserInfosListCall struct {
+	s      *Service
+	userId string
+	blogId string
+	opt_   map[string]interface{}
+}
+
+// List: Retrieves a list of post and user info pairs, possibly
+// filtered.
+func (r *PostUserInfosService) List(userId string, blogId string) *PostUserInfosListCall {
+	c := &PostUserInfosListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.userId = userId
+	c.blogId = blogId
+	return c
+}
+
+// EndDate sets the optional parameter "endDate": Latest post date to
+// fetch, a date-time with RFC 3339 formatting.
+func (c *PostUserInfosListCall) EndDate(endDate string) *PostUserInfosListCall {
+	c.opt_["endDate"] = endDate
+	return c
+}
+
+// FetchBodies sets the optional parameter "fetchBodies": Whether the
+// body content of posts is included.
+func (c *PostUserInfosListCall) FetchBodies(fetchBodies bool) *PostUserInfosListCall {
+	c.opt_["fetchBodies"] = fetchBodies
+	return c
+}
+
+// Labels sets the optional parameter "labels": Comma-separated list of
+// labels to search for.
+func (c *PostUserInfosListCall) Labels(labels string) *PostUserInfosListCall {
+	c.opt_["labels"] = labels
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum number
+// of posts to fetch.
+func (c *PostUserInfosListCall) MaxResults(maxResults int64) *PostUserInfosListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sort search results
+func (c *PostUserInfosListCall) OrderBy(orderBy string) *PostUserInfosListCall {
+	c.opt_["orderBy"] = orderBy
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Continuation token
+// if the request is paged.
+func (c *PostUserInfosListCall) PageToken(pageToken string) *PostUserInfosListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+// StartDate sets the optional parameter "startDate": Earliest post date
+// to fetch, a date-time with RFC 3339 formatting.
+func (c *PostUserInfosListCall) StartDate(startDate string) *PostUserInfosListCall {
+	c.opt_["startDate"] = startDate
+	return c
+}
+
+// Statuses sets the optional parameter "statuses":
+func (c *PostUserInfosListCall) Statuses(statuses string) *PostUserInfosListCall {
+	c.opt_["statuses"] = statuses
+	return c
+}
+
+// View sets the optional parameter "view":
+func (c *PostUserInfosListCall) View(view string) *PostUserInfosListCall {
+	c.opt_["view"] = view
+	return c
+}
+
+func (c *PostUserInfosListCall) Do() (*PostUserInfosList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["endDate"]; ok {
+		params.Set("endDate", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fetchBodies"]; ok {
+		params.Set("fetchBodies", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["labels"]; ok {
+		params.Set("labels", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["orderBy"]; ok {
+		params.Set("orderBy", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["startDate"]; ok {
+		params.Set("startDate", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["statuses"]; ok {
+		params.Set("statuses", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["view"]; ok {
+		params.Set("view", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/blogger/v3/", "users/{userId}/blogs/{blogId}/posts")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{userId}", url.QueryEscape(c.userId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{blogId}", url.QueryEscape(c.blogId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(PostUserInfosList)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a list of post and user info pairs, possibly filtered.",
+	//   "httpMethod": "GET",
+	//   "id": "blogger.postUserInfos.list",
+	//   "parameterOrder": [
+	//     "userId",
+	//     "blogId"
+	//   ],
+	//   "parameters": {
+	//     "blogId": {
+	//       "description": "ID of the blog to fetch posts from.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "endDate": {
+	//       "description": "Latest post date to fetch, a date-time with RFC 3339 formatting.",
+	//       "format": "date-time",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "fetchBodies": {
+	//       "description": "Whether the body content of posts is included.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "labels": {
+	//       "description": "Comma-separated list of labels to search for.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "description": "Maximum number of posts to fetch.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "default": "PUBLISHED",
+	//       "description": "Sort search results",
+	//       "enum": [
+	//         "published",
+	//         "updated"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Order by the date the post was published",
+	//         "Order by the date the post was last updated"
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageToken": {
+	//       "description": "Continuation token if the request is paged.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "startDate": {
+	//       "description": "Earliest post date to fetch, a date-time with RFC 3339 formatting.",
+	//       "format": "date-time",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "statuses": {
+	//       "enum": [
+	//         "draft",
+	//         "live",
+	//         "scheduled"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Draft posts",
+	//         "Published posts",
+	//         "Posts that are scheduled to publish in future."
+	//       ],
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "userId": {
+	//       "description": "ID of the user for the per-user information to be fetched. Either the word 'self' (sans quote marks) or the user's profile identifier.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "enum": [
+	//         "ADMIN",
+	//         "AUTHOR",
+	//         "READER"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Admin level detail",
+	//         "Author level detail",
+	//         "Reader level detail"
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "users/{userId}/blogs/{blogId}/posts",
+	//   "response": {
+	//     "$ref": "PostUserInfosList"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/blogger",
@@ -1317,12 +2803,21 @@ func (c *PostsGetCall) MaxComments(maxComments int64) *PostsGetCall {
 	return c
 }
 
+// View sets the optional parameter "view":
+func (c *PostsGetCall) View(view string) *PostsGetCall {
+	c.opt_["view"] = view
+	return c
+}
+
 func (c *PostsGetCall) Do() (*Post, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	if v, ok := c.opt_["maxComments"]; ok {
 		params.Set("maxComments", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["view"]; ok {
+		params.Set("view", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/blogger/v3/", "blogs/{blogId}/posts/{postId}")
 	urls += "?" + params.Encode()
@@ -1370,6 +2865,20 @@ func (c *PostsGetCall) Do() (*Post, error) {
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "enum": [
+	//         "ADMIN",
+	//         "AUTHOR",
+	//         "READER"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Admin level detail",
+	//         "Author level detail",
+	//         "Admin level detail"
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "blogs/{blogId}/posts/{postId}",
@@ -1408,6 +2917,12 @@ func (c *PostsGetByPathCall) MaxComments(maxComments int64) *PostsGetByPathCall 
 	return c
 }
 
+// View sets the optional parameter "view":
+func (c *PostsGetByPathCall) View(view string) *PostsGetByPathCall {
+	c.opt_["view"] = view
+	return c
+}
+
 func (c *PostsGetByPathCall) Do() (*Post, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1415,6 +2930,9 @@ func (c *PostsGetByPathCall) Do() (*Post, error) {
 	params.Set("path", fmt.Sprintf("%v", c.path))
 	if v, ok := c.opt_["maxComments"]; ok {
 		params.Set("maxComments", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["view"]; ok {
+		params.Set("view", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/blogger/v3/", "blogs/{blogId}/posts/bypath")
 	urls += "?" + params.Encode()
@@ -1461,6 +2979,20 @@ func (c *PostsGetByPathCall) Do() (*Post, error) {
 	//       "location": "query",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "enum": [
+	//         "ADMIN",
+	//         "AUTHOR",
+	//         "READER"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Admin level detail",
+	//         "Author level detail",
+	//         "Admin level detail"
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "blogs/{blogId}/posts/bypath",
@@ -1492,6 +3024,13 @@ func (r *PostsService) Insert(blogId string, post *Post) *PostsInsertCall {
 	return c
 }
 
+// IsDraft sets the optional parameter "isDraft": Whether to create the
+// post as a draft
+func (c *PostsInsertCall) IsDraft(isDraft bool) *PostsInsertCall {
+	c.opt_["isDraft"] = isDraft
+	return c
+}
+
 func (c *PostsInsertCall) Do() (*Post, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.post)
@@ -1501,6 +3040,9 @@ func (c *PostsInsertCall) Do() (*Post, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["isDraft"]; ok {
+		params.Set("isDraft", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/blogger/v3/", "blogs/{blogId}/posts")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -1534,6 +3076,11 @@ func (c *PostsInsertCall) Do() (*Post, error) {
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "isDraft": {
+	//       "description": "Whether to create the post as a draft",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     }
 	//   },
 	//   "path": "blogs/{blogId}/posts",
@@ -1573,9 +3120,18 @@ func (c *PostsListCall) EndDate(endDate string) *PostsListCall {
 }
 
 // FetchBodies sets the optional parameter "fetchBodies": Whether the
-// body content of posts is included.
+// body content of posts is included (default: true). This should be set
+// to false when the post bodies are not required, to help minimize
+// traffic.
 func (c *PostsListCall) FetchBodies(fetchBodies bool) *PostsListCall {
 	c.opt_["fetchBodies"] = fetchBodies
+	return c
+}
+
+// FetchImages sets the optional parameter "fetchImages": Whether image
+// URL metadata for each post is included.
+func (c *PostsListCall) FetchImages(fetchImages bool) *PostsListCall {
+	c.opt_["fetchImages"] = fetchImages
 	return c
 }
 
@@ -1593,6 +3149,12 @@ func (c *PostsListCall) MaxResults(maxResults int64) *PostsListCall {
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Sort search results
+func (c *PostsListCall) OrderBy(orderBy string) *PostsListCall {
+	c.opt_["orderBy"] = orderBy
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": Continuation token
 // if the request is paged.
 func (c *PostsListCall) PageToken(pageToken string) *PostsListCall {
@@ -1607,6 +3169,18 @@ func (c *PostsListCall) StartDate(startDate string) *PostsListCall {
 	return c
 }
 
+// Statuses sets the optional parameter "statuses":
+func (c *PostsListCall) Statuses(statuses string) *PostsListCall {
+	c.opt_["statuses"] = statuses
+	return c
+}
+
+// View sets the optional parameter "view":
+func (c *PostsListCall) View(view string) *PostsListCall {
+	c.opt_["view"] = view
+	return c
+}
+
 func (c *PostsListCall) Do() (*PostList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1617,17 +3191,29 @@ func (c *PostsListCall) Do() (*PostList, error) {
 	if v, ok := c.opt_["fetchBodies"]; ok {
 		params.Set("fetchBodies", fmt.Sprintf("%v", v))
 	}
+	if v, ok := c.opt_["fetchImages"]; ok {
+		params.Set("fetchImages", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["labels"]; ok {
 		params.Set("labels", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
+	if v, ok := c.opt_["orderBy"]; ok {
+		params.Set("orderBy", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["startDate"]; ok {
 		params.Set("startDate", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["statuses"]; ok {
+		params.Set("statuses", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["view"]; ok {
+		params.Set("view", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/blogger/v3/", "blogs/{blogId}/posts")
 	urls += "?" + params.Encode()
@@ -1669,7 +3255,13 @@ func (c *PostsListCall) Do() (*PostList, error) {
 	//       "type": "string"
 	//     },
 	//     "fetchBodies": {
-	//       "description": "Whether the body content of posts is included.",
+	//       "default": "true",
+	//       "description": "Whether the body content of posts is included (default: true). This should be set to false when the post bodies are not required, to help minimize traffic.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "fetchImages": {
+	//       "description": "Whether image URL metadata for each post is included.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -1684,6 +3276,20 @@ func (c *PostsListCall) Do() (*PostList, error) {
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
+	//     "orderBy": {
+	//       "default": "PUBLISHED",
+	//       "description": "Sort search results",
+	//       "enum": [
+	//         "published",
+	//         "updated"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Order by the date the post was published",
+	//         "Order by the date the post was last updated"
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageToken": {
 	//       "description": "Continuation token if the request is paged.",
 	//       "location": "query",
@@ -1692,6 +3298,35 @@ func (c *PostsListCall) Do() (*PostList, error) {
 	//     "startDate": {
 	//       "description": "Earliest post date to fetch, a date-time with RFC 3339 formatting.",
 	//       "format": "date-time",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "statuses": {
+	//       "enum": [
+	//         "draft",
+	//         "live",
+	//         "scheduled"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Draft posts",
+	//         "Published posts",
+	//         "Posts that are scheduled to publish in future."
+	//       ],
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "enum": [
+	//         "ADMIN",
+	//         "AUTHOR",
+	//         "READER"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Admin level detail",
+	//         "Author level detail",
+	//         "Reader level detail"
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -1793,6 +3428,170 @@ func (c *PostsPatchCall) Do() (*Post, error) {
 
 }
 
+// method id "blogger.posts.publish":
+
+type PostsPublishCall struct {
+	s      *Service
+	blogId string
+	postId string
+	opt_   map[string]interface{}
+}
+
+// Publish: Publish a draft post.
+func (r *PostsService) Publish(blogId string, postId string) *PostsPublishCall {
+	c := &PostsPublishCall{s: r.s, opt_: make(map[string]interface{})}
+	c.blogId = blogId
+	c.postId = postId
+	return c
+}
+
+// PublishDate sets the optional parameter "publishDate": The date and
+// time to schedule the publishing of the Blog.
+func (c *PostsPublishCall) PublishDate(publishDate string) *PostsPublishCall {
+	c.opt_["publishDate"] = publishDate
+	return c
+}
+
+func (c *PostsPublishCall) Do() (*Post, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["publishDate"]; ok {
+		params.Set("publishDate", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/blogger/v3/", "blogs/{blogId}/posts/{postId}/publish")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{blogId}", url.QueryEscape(c.blogId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{postId}", url.QueryEscape(c.postId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Post)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Publish a draft post.",
+	//   "httpMethod": "POST",
+	//   "id": "blogger.posts.publish",
+	//   "parameterOrder": [
+	//     "blogId",
+	//     "postId"
+	//   ],
+	//   "parameters": {
+	//     "blogId": {
+	//       "description": "The ID of the Blog.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "postId": {
+	//       "description": "The ID of the Post.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "publishDate": {
+	//       "description": "The date and time to schedule the publishing of the Blog.",
+	//       "format": "date-time",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "blogs/{blogId}/posts/{postId}/publish",
+	//   "response": {
+	//     "$ref": "Post"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/blogger"
+	//   ]
+	// }
+
+}
+
+// method id "blogger.posts.revert":
+
+type PostsRevertCall struct {
+	s      *Service
+	blogId string
+	postId string
+	opt_   map[string]interface{}
+}
+
+// Revert: Revert a published or scheduled post to draft state.
+func (r *PostsService) Revert(blogId string, postId string) *PostsRevertCall {
+	c := &PostsRevertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.blogId = blogId
+	c.postId = postId
+	return c
+}
+
+func (c *PostsRevertCall) Do() (*Post, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/blogger/v3/", "blogs/{blogId}/posts/{postId}/revert")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{blogId}", url.QueryEscape(c.blogId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{postId}", url.QueryEscape(c.postId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Post)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Revert a published or scheduled post to draft state.",
+	//   "httpMethod": "POST",
+	//   "id": "blogger.posts.revert",
+	//   "parameterOrder": [
+	//     "blogId",
+	//     "postId"
+	//   ],
+	//   "parameters": {
+	//     "blogId": {
+	//       "description": "The ID of the Blog.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "postId": {
+	//       "description": "The ID of the Post.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "blogs/{blogId}/posts/{postId}/revert",
+	//   "response": {
+	//     "$ref": "Post"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/blogger"
+	//   ]
+	// }
+
+}
+
 // method id "blogger.posts.search":
 
 type PostsSearchCall struct {
@@ -1810,11 +3609,32 @@ func (r *PostsService) Search(blogId string, q string) *PostsSearchCall {
 	return c
 }
 
+// FetchBodies sets the optional parameter "fetchBodies": Whether the
+// body content of posts is included (default: true). This should be set
+// to false when the post bodies are not required, to help minimize
+// traffic.
+func (c *PostsSearchCall) FetchBodies(fetchBodies bool) *PostsSearchCall {
+	c.opt_["fetchBodies"] = fetchBodies
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sort search results
+func (c *PostsSearchCall) OrderBy(orderBy string) *PostsSearchCall {
+	c.opt_["orderBy"] = orderBy
+	return c
+}
+
 func (c *PostsSearchCall) Do() (*PostList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("q", fmt.Sprintf("%v", c.q))
+	if v, ok := c.opt_["fetchBodies"]; ok {
+		params.Set("fetchBodies", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["orderBy"]; ok {
+		params.Set("orderBy", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/blogger/v3/", "blogs/{blogId}/posts/search")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -1847,6 +3667,26 @@ func (c *PostsSearchCall) Do() (*PostList, error) {
 	//       "description": "ID of the blog to fetch the post from.",
 	//       "location": "path",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "fetchBodies": {
+	//       "default": "true",
+	//       "description": "Whether the body content of posts is included (default: true). This should be set to false when the post bodies are not required, to help minimize traffic.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "orderBy": {
+	//       "default": "PUBLISHED",
+	//       "description": "Sort search results",
+	//       "enum": [
+	//         "published",
+	//         "updated"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Order by the date the post was published",
+	//         "Order by the date the post was last updated"
+	//       ],
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "q": {

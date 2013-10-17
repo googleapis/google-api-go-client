@@ -1,12 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"wtgj9ZncHCe-ShJM8RewHb1DgWI/WUSFuYL5NdJtZkvh4wYYaCh3zs8\"",
+ "etag": "\"DGgqtFnjgu83tuwvvVNNUhOiHWk/L5o_B_5kDsa-PgAadzS19oUK1yk\"",
  "discoveryVersion": "v1",
  "id": "admin:directory_v1",
  "name": "admin",
  "canonicalName": "directory",
  "version": "directory_v1",
- "revision": "20130718",
  "title": "Admin Directory API",
  "description": "Apps Directory API lets you view and manage enterprise resources like user, groups, OrgUnit, devices.",
  "ownerDomain": "google.com",
@@ -129,6 +128,10 @@
      "type": "string",
      "description": "A alias email"
     },
+    "etag": {
+     "type": "string",
+     "description": "ETag of the resource."
+    },
     "id": {
      "type": "string",
      "description": "Unique id of the group (Read-only) Unique id of the user (Read-only)"
@@ -155,6 +158,10 @@
      "items": {
       "$ref": "Alias"
      }
+    },
+    "etag": {
+     "type": "string",
+     "description": "ETag of the resource."
     },
     "kind": {
      "type": "string",
@@ -183,6 +190,10 @@
     "deviceId": {
      "type": "string",
      "description": "Unique identifier of Chrome OS Device (Read-only)"
+    },
+    "etag": {
+     "type": "string",
+     "description": "ETag of the resource."
     },
     "firmwareVersion": {
      "type": "string",
@@ -266,6 +277,10 @@
       "$ref": "ChromeOsDevice"
      }
     },
+    "etag": {
+     "type": "string",
+     "description": "ETag of the resource."
+    },
     "kind": {
      "type": "string",
      "description": "Kind of resource this is.",
@@ -297,6 +312,11 @@
      "type": "string",
      "description": "Description of the group"
     },
+    "directMembersCount": {
+     "type": "string",
+     "description": "Group direct members count",
+     "format": "int64"
+    },
     "email": {
      "type": "string",
      "description": "Email of Group",
@@ -305,6 +325,10 @@
        "directory.groups.insert"
       ]
      }
+    },
+    "etag": {
+     "type": "string",
+     "description": "ETag of the resource."
     },
     "id": {
      "type": "string",
@@ -333,6 +357,10 @@
    "type": "object",
    "description": "JSON response template for List Groups operation in Apps Directory API.",
    "properties": {
+    "etag": {
+     "type": "string",
+     "description": "ETag of the resource."
+    },
     "groups": {
      "type": "array",
      "description": "List of group objects.",
@@ -360,6 +388,10 @@
      "type": "string",
      "description": "Email of member (Read-only)"
     },
+    "etag": {
+     "type": "string",
+     "description": "ETag of the resource."
+    },
     "id": {
      "type": "string",
      "description": "Unique identifier of customer member (Read-only) Unique identifier of group (Read-only) Unique identifier of member (Read-only)"
@@ -384,6 +416,10 @@
    "type": "object",
    "description": "JSON response template for List Members operation in Apps Directory API.",
    "properties": {
+    "etag": {
+     "type": "string",
+     "description": "ETag of the resource."
+    },
     "kind": {
      "type": "string",
      "description": "Kind of resource this is.",
@@ -450,6 +486,10 @@
      "items": {
       "type": "string"
      }
+    },
+    "etag": {
+     "type": "string",
+     "description": "ETag of the resource."
     },
     "firstSync": {
      "type": "string",
@@ -524,6 +564,10 @@
    "type": "object",
    "description": "JSON response template for List Mobile Devices operation in Apps Directory API.",
    "properties": {
+    "etag": {
+     "type": "string",
+     "description": "ETag of the resource."
+    },
     "kind": {
      "type": "string",
      "description": "Kind of resource this is.",
@@ -554,6 +598,10 @@
     "description": {
      "type": "string",
      "description": "Description of OrgUnit"
+    },
+    "etag": {
+     "type": "string",
+     "description": "ETag of the resource."
     },
     "kind": {
      "type": "string",
@@ -589,6 +637,10 @@
    "type": "object",
    "description": "JSON response template for List Organization Units operation in Apps Directory API.",
    "properties": {
+    "etag": {
+     "type": "string",
+     "description": "ETag of the resource."
+    },
     "kind": {
      "type": "string",
      "description": "Kind of resource this is.",
@@ -649,6 +701,10 @@
      "items": {
       "$ref": "UserEmail"
      }
+    },
+    "etag": {
+     "type": "string",
+     "description": "ETag of the resource."
     },
     "externalIds": {
      "type": "array",
@@ -1031,6 +1087,10 @@
    "type": "object",
    "description": "JSON template for Photo object in Apps Directory API.",
    "properties": {
+    "etag": {
+     "type": "string",
+     "description": "ETag of the resource."
+    },
     "height": {
      "type": "integer",
      "description": "Height in pixels of the photo",
@@ -1105,6 +1165,10 @@
    "type": "object",
    "description": "JSON response template for List Users operation in Apps Directory API.",
    "properties": {
+    "etag": {
+     "type": "string",
+     "description": "ETag of the resource."
+    },
     "kind": {
      "type": "string",
      "description": "Kind of resource this is.",

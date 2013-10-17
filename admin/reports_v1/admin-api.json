@@ -1,12 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"wtgj9ZncHCe-ShJM8RewHb1DgWI/pLQP8IPFmSGfhZ8Izc5G6PtnaJI\"",
+ "etag": "\"DGgqtFnjgu83tuwvvVNNUhOiHWk/6FzIjb3cw0Qsdcp3XA94i-UbOwo\"",
  "discoveryVersion": "v1",
  "id": "admin:reports_v1",
  "name": "admin",
  "canonicalName": "reports",
  "version": "reports_v1",
- "revision": "20130711",
  "title": "Admin Reports API",
  "description": "Allows the administrators of Google Apps customers to fetch reports about the usage, collaboration, security and risk for their users.",
  "ownerDomain": "google.com",
@@ -86,6 +85,10 @@
    "type": "object",
    "description": "JSON template for a collection of activites.",
    "properties": {
+    "etag": {
+     "type": "string",
+     "description": "ETag of the resource."
+    },
     "items": {
      "type": "array",
      "description": "Each record in read response.",
@@ -130,6 +133,10 @@
        "description": "Obfuscated user id of the user."
       }
      }
+    },
+    "etag": {
+     "type": "string",
+     "description": "ETag of the entry."
     },
     "events": {
      "type": "array",
@@ -220,29 +227,39 @@
    "properties": {
     "date": {
      "type": "string",
-     "description": "The date to which the record belongs."
+     "description": "The date to which the record belongs.",
+     "readOnly": true
     },
     "entity": {
      "type": "object",
      "description": "Information about the type of the item.",
+     "readOnly": true,
      "properties": {
       "customerId": {
        "type": "string",
-       "description": "Obfuscated customer id for the record."
+       "description": "Obfuscated customer id for the record.",
+       "readOnly": true
       },
       "profileId": {
        "type": "string",
-       "description": "Obfuscated user id for the record."
+       "description": "Obfuscated user id for the record.",
+       "readOnly": true
       },
       "type": {
        "type": "string",
-       "description": "The type of item, can be a customer or user."
+       "description": "The type of item, can be a customer or user.",
+       "readOnly": true
       },
       "userEmail": {
        "type": "string",
-       "description": "user's email."
+       "description": "user's email.",
+       "readOnly": true
       }
      }
+    },
+    "etag": {
+     "type": "string",
+     "description": "ETag of the resource."
     },
     "kind": {
      "type": "string",
@@ -252,22 +269,37 @@
     "parameters": {
      "type": "array",
      "description": "Parameter value pairs for various applications.",
+     "readOnly": true,
      "items": {
       "type": "object",
       "properties": {
        "boolValue": {
         "type": "boolean",
-        "description": "Boolean value of the parameter."
+        "description": "Boolean value of the parameter.",
+        "readOnly": true
        },
        "datetimeValue": {
         "type": "string",
         "description": "RFC 3339 formatted value of the parameter.",
-        "format": "date-time"
+        "format": "date-time",
+        "readOnly": true
        },
        "intValue": {
         "type": "string",
         "description": "Integral value of the parameter.",
-        "format": "int64"
+        "format": "int64",
+        "readOnly": true
+       },
+       "msgValue": {
+        "type": "array",
+        "description": "Nested message value of the parameter.",
+        "readOnly": true,
+        "items": {
+         "type": "object",
+         "additionalProperties": {
+          "type": "any"
+         }
+        }
        },
        "name": {
         "type": "string",
@@ -275,7 +307,8 @@
        },
        "stringValue": {
         "type": "string",
-        "description": "String value of the parameter."
+        "description": "String value of the parameter.",
+        "readOnly": true
        }
       }
      }
@@ -287,6 +320,10 @@
    "type": "object",
    "description": "JSON template for a collection of usage reports.",
    "properties": {
+    "etag": {
+     "type": "string",
+     "description": "ETag of the resource."
+    },
     "kind": {
      "type": "string",
      "description": "The kind of object.",
@@ -358,7 +395,7 @@
        "type": "string",
        "description": "Application name for which the events are to be retrieved.",
        "required": true,
-       "pattern": "(admin)|(docs)",
+       "pattern": "(admin)|(docs)|(login)",
        "location": "path"
       },
       "endTime": {
@@ -440,7 +477,7 @@
       "parameters": {
        "type": "string",
        "description": "Represents the application name, parameter name pairs to fetch in csv as app_name1:param_name1, app_name2:param_name2.",
-       "pattern": "(((accounts)|(gmail)|(calendar)|(docs)):.+,)*(((accounts)|(gmail)|(calendar)|(docs)):.+)",
+       "pattern": "(((accounts)|(gmail)|(calendar)|(docs)|(gplus)):.+,)*(((accounts)|(gmail)|(calendar)|(docs)|(gplus)):.+)",
        "location": "query"
       }
      },
@@ -474,7 +511,7 @@
       "filters": {
        "type": "string",
        "description": "Represents the set of filters including parameter operator value.",
-       "pattern": "(((accounts)|(gmail)|(calendar)|(docs)):.+[\u003c,\u003c=,==,\u003e=,\u003e,!=].+,)*(((accounts)|(gmail)|(calendar)|(docs)):.+[\u003c,\u003c=,==,\u003e=,\u003e,!=].+)",
+       "pattern": "(((accounts)|(gmail)|(calendar)|(docs)|(gplus)):.+[\u003c,\u003c=,==,\u003e=,\u003e,!=].+,)*(((accounts)|(gmail)|(calendar)|(docs)|(gplus)):.+[\u003c,\u003c=,==,\u003e=,\u003e,!=].+)",
        "location": "query"
       },
       "maxResults": {
@@ -492,7 +529,7 @@
       "parameters": {
        "type": "string",
        "description": "Represents the application name, parameter name pairs to fetch in csv as app_name1:param_name1, app_name2:param_name2.",
-       "pattern": "(((accounts)|(gmail)|(calendar)|(docs)):.+,)*(((accounts)|(gmail)|(calendar)|(docs)):.+)",
+       "pattern": "(((accounts)|(gmail)|(calendar)|(docs)|(gplus)):.+,)*(((accounts)|(gmail)|(calendar)|(docs)|(gplus)):.+)",
        "location": "query"
       },
       "userKey": {

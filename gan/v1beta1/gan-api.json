@@ -1,11 +1,10 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"wtgj9ZncHCe-ShJM8RewHb1DgWI/pFw7MDyrO_AOc96_PhfOCrqFSg0\"",
+ "etag": "\"DGgqtFnjgu83tuwvvVNNUhOiHWk/jwtjOFqKKHJzL2rsaKQ8X5cVxho\"",
  "discoveryVersion": "v1",
  "id": "gan:v1beta1",
  "name": "gan",
  "version": "v1beta1",
- "revision": "20130205",
  "title": "Google Affiliate Network API",
  "description": "Lets you have programmatic access to your Google Affiliate Network data.",
  "ownerDomain": "google.com",

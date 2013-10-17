@@ -981,7 +981,7 @@ type FileIndexableText struct {
 }
 
 type FileLabels struct {
-	// Hidden: Whether this file is hidden from the user.
+	// Hidden: Deprecated.
 	Hidden bool `json:"hidden,omitempty"`
 
 	// Restricted: Whether viewers are prevented from downloading this file.
@@ -5848,6 +5848,117 @@ func (c *RealtimeGetCall) Do() error {
 	//     "https://www.googleapis.com/auth/drive.readonly"
 	//   ],
 	//   "supportsMediaDownload": true
+	// }
+
+}
+
+// method id "drive.realtime.update":
+
+type RealtimeUpdateCall struct {
+	s      *Service
+	fileId string
+	opt_   map[string]interface{}
+	media_ io.Reader
+}
+
+// Update: Overwrites the Realtime API data model associated with this
+// file with the provided JSON data model.
+func (r *RealtimeService) Update(fileId string) *RealtimeUpdateCall {
+	c := &RealtimeUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.fileId = fileId
+	return c
+}
+
+// BaseRevision sets the optional parameter "baseRevision": The revision
+// of the model to diff the uploaded model against. If set, the uploaded
+// model is diffed against the provided revision and those differences
+// are merged with any changes made to the model after the provided
+// revision. If not set, the uploaded model replaces the current model
+// on the server.
+func (c *RealtimeUpdateCall) BaseRevision(baseRevision string) *RealtimeUpdateCall {
+	c.opt_["baseRevision"] = baseRevision
+	return c
+}
+func (c *RealtimeUpdateCall) Media(r io.Reader) *RealtimeUpdateCall {
+	c.media_ = r
+	return c
+}
+
+func (c *RealtimeUpdateCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["baseRevision"]; ok {
+		params.Set("baseRevision", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v2/", "files/{fileId}/realtime")
+	if c.media_ != nil {
+		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
+		params.Set("uploadType", "multipart")
+	}
+	urls += "?" + params.Encode()
+	body = new(bytes.Buffer)
+	ctype := "application/json"
+	contentLength_, hasMedia_ := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+	req, _ := http.NewRequest("PUT", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
+	googleapi.SetOpaque(req.URL)
+	if hasMedia_ {
+		req.ContentLength = contentLength_
+	}
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Overwrites the Realtime API data model associated with this file with the provided JSON data model.",
+	//   "httpMethod": "PUT",
+	//   "id": "drive.realtime.update",
+	//   "mediaUpload": {
+	//     "accept": [
+	//       "*/*"
+	//     ],
+	//     "maxSize": "10MB",
+	//     "protocols": {
+	//       "resumable": {
+	//         "multipart": true,
+	//         "path": "/resumable/upload/drive/v2/files/{fileId}/realtime"
+	//       },
+	//       "simple": {
+	//         "multipart": true,
+	//         "path": "/upload/drive/v2/files/{fileId}/realtime"
+	//       }
+	//     }
+	//   },
+	//   "parameterOrder": [
+	//     "fileId"
+	//   ],
+	//   "parameters": {
+	//     "baseRevision": {
+	//       "description": "The revision of the model to diff the uploaded model against. If set, the uploaded model is diffed against the provided revision and those differences are merged with any changes made to the model after the provided revision. If not set, the uploaded model replaces the current model on the server.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "fileId": {
+	//       "description": "The ID of the file that the Realtime API data model is associated with.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "files/{fileId}/realtime",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.file"
+	//   ],
+	//   "supportsMediaUpload": true
 	// }
 
 }

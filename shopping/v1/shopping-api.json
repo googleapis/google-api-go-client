@@ -1,11 +1,10 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"wtgj9ZncHCe-ShJM8RewHb1DgWI/KPvD-H6TcMEqy6YrgKjj5oSsKH0\"",
+ "etag": "\"DGgqtFnjgu83tuwvvVNNUhOiHWk/CO6ob9R1rU0741WpW7wTq9Ju-zg\"",
  "discoveryVersion": "v1",
  "id": "shopping:v1",
  "name": "shopping",
  "version": "v1",
- "revision": "20130808",
  "title": "Search API For Shopping",
  "description": "Lets you search over product data.",
  "ownerDomain": "google.com",
@@ -894,7 +893,7 @@
     },
     "type": {
      "type": "string",
-     "description": "Type of recommendation list (for offer-based recommendations, one of: all, purchaseToPurchase, visitToVisit, visitToPurchase, relatedItems; for category-based recommendations, one of: all, categoryMostVisited, categoryBestSeller)."
+     "description": "Type of recommendation list (for offer-based recommendations, one of: all, purchaseToPurchase, visitToVisit, visitToPurchase, relatedItems, visuallySimilarItems; for category-based recommendations, one of: all, categoryMostVisited, categoryBestSeller)."
     }
    }
   }

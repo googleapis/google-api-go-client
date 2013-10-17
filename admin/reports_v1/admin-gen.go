@@ -97,6 +97,9 @@ type UserUsageReportService struct {
 }
 
 type Activities struct {
+	// Etag: ETag of the resource.
+	Etag string `json:"etag,omitempty"`
+
 	// Items: Each record in read response.
 	Items []*Activity `json:"items,omitempty"`
 
@@ -110,6 +113,9 @@ type Activities struct {
 type Activity struct {
 	// Actor: User doing the action.
 	Actor *ActivityActor `json:"actor,omitempty"`
+
+	// Etag: ETag of the entry.
+	Etag string `json:"etag,omitempty"`
 
 	// Events: Activity events.
 	Events []*ActivityEvents `json:"events,omitempty"`
@@ -188,6 +194,9 @@ type UsageReport struct {
 	// Entity: Information about the type of the item.
 	Entity *UsageReportEntity `json:"entity,omitempty"`
 
+	// Etag: ETag of the resource.
+	Etag string `json:"etag,omitempty"`
+
 	// Kind: The kind of object.
 	Kind string `json:"kind,omitempty"`
 
@@ -219,6 +228,9 @@ type UsageReportParameters struct {
 	// IntValue: Integral value of the parameter.
 	IntValue int64 `json:"intValue,omitempty,string"`
 
+	// MsgValue: Nested message value of the parameter.
+	MsgValue []*UsageReportParametersMsgValue `json:"msgValue,omitempty"`
+
 	// Name: The name of the parameter.
 	Name string `json:"name,omitempty"`
 
@@ -226,7 +238,13 @@ type UsageReportParameters struct {
 	StringValue string `json:"stringValue,omitempty"`
 }
 
+type UsageReportParametersMsgValue struct {
+}
+
 type UsageReports struct {
+	// Etag: ETag of the resource.
+	Etag string `json:"etag,omitempty"`
+
 	// Kind: The kind of object.
 	Kind string `json:"kind,omitempty"`
 
@@ -392,7 +410,7 @@ func (c *ActivitiesListCall) Do() (*Activities, error) {
 	//     "applicationName": {
 	//       "description": "Application name for which the events are to be retrieved.",
 	//       "location": "path",
-	//       "pattern": "(admin)|(docs)",
+	//       "pattern": "(admin)|(docs)|(login)",
 	//       "required": true,
 	//       "type": "string"
 	//     },
@@ -533,7 +551,7 @@ func (c *CustomerUsageReportsGetCall) Do() (*UsageReports, error) {
 	//     "parameters": {
 	//       "description": "Represents the application name, parameter name pairs to fetch in csv as app_name1:param_name1, app_name2:param_name2.",
 	//       "location": "query",
-	//       "pattern": "(((accounts)|(gmail)|(calendar)|(docs)):.+,)*(((accounts)|(gmail)|(calendar)|(docs)):.+)",
+	//       "pattern": "(((accounts)|(gmail)|(calendar)|(docs)|(gplus)):.+,)*(((accounts)|(gmail)|(calendar)|(docs)|(gplus)):.+)",
 	//       "type": "string"
 	//     }
 	//   },
@@ -650,7 +668,7 @@ func (c *UserUsageReportGetCall) Do() (*UsageReports, error) {
 	//     "filters": {
 	//       "description": "Represents the set of filters including parameter operator value.",
 	//       "location": "query",
-	//       "pattern": "(((accounts)|(gmail)|(calendar)|(docs)):.+[\u003c,\u003c=,==,\u003e=,\u003e,!=].+,)*(((accounts)|(gmail)|(calendar)|(docs)):.+[\u003c,\u003c=,==,\u003e=,\u003e,!=].+)",
+	//       "pattern": "(((accounts)|(gmail)|(calendar)|(docs)|(gplus)):.+[\u003c,\u003c=,==,\u003e=,\u003e,!=].+,)*(((accounts)|(gmail)|(calendar)|(docs)|(gplus)):.+[\u003c,\u003c=,==,\u003e=,\u003e,!=].+)",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
@@ -668,7 +686,7 @@ func (c *UserUsageReportGetCall) Do() (*UsageReports, error) {
 	//     "parameters": {
 	//       "description": "Represents the application name, parameter name pairs to fetch in csv as app_name1:param_name1, app_name2:param_name2.",
 	//       "location": "query",
-	//       "pattern": "(((accounts)|(gmail)|(calendar)|(docs)):.+,)*(((accounts)|(gmail)|(calendar)|(docs)):.+)",
+	//       "pattern": "(((accounts)|(gmail)|(calendar)|(docs)|(gplus)):.+,)*(((accounts)|(gmail)|(calendar)|(docs)|(gplus)):.+)",
 	//       "type": "string"
 	//     },
 	//     "userKey": {

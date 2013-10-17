@@ -1,11 +1,10 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"wtgj9ZncHCe-ShJM8RewHb1DgWI/cadAujORit7xgn2IF-hB2thXQ5k\"",
+ "etag": "\"DGgqtFnjgu83tuwvvVNNUhOiHWk/DMGlXi8jhJTMEmr-VAaiIhmcCGI\"",
  "discoveryVersion": "v1",
  "id": "plus:v1",
  "name": "plus",
  "version": "v1",
- "revision": "20130726",
  "title": "Google+ API",
  "description": "The Google+ API enables developers to build on top of the Google+ platform.",
  "ownerDomain": "google.com",
@@ -70,7 +69,7 @@
   "oauth2": {
    "scopes": {
     "https://www.googleapis.com/auth/plus.login": {
-     "description": "Know your name, basic info, and list of people you're connected to on Google+"
+     "description": "Know your basic profile info and list of people in your circles."
     },
     "https://www.googleapis.com/auth/plus.me": {
      "description": "Know who you are on Google"
@@ -86,10 +85,6 @@
     "description": {
      "type": "string",
      "description": "Description of the access granted, suitable for display."
-    },
-    "domainRestricted": {
-     "type": "boolean",
-     "description": "Whether access is restricted to the domain."
     },
     "items": {
      "type": "array",
@@ -347,7 +342,7 @@
          },
          "url": {
           "type": "string",
-          "description": "The link to the attachment; should be of type text/html."
+          "description": "The link to the attachment, which should be of type text/html."
          }
         }
        }
@@ -499,7 +494,7 @@
     },
     "selfLink": {
      "type": "string",
-     "description": "Link to this activities resource."
+     "description": "Link to this activity resource."
     },
     "title": {
      "type": "string",

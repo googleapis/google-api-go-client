@@ -41,8 +41,10 @@ const basePath = "https://www.googleapis.com/games/v1management/"
 
 // OAuth2 scopes used by this API.
 const (
-	// Know your name, basic info, and list of people you're connected to on
-	// Google+
+	// View and manage your game activity
+	GamesScope = "https://www.googleapis.com/auth/games"
+
+	// Know your basic profile info and list of people in your circles.
 	PlusLoginScope = "https://www.googleapis.com/auth/plus.login"
 )
 
@@ -267,6 +269,7 @@ func (c *AchievementsResetCall) Do() (*AchievementResetResponse, error) {
 	//     "$ref": "AchievementResetResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
 	//     "https://www.googleapis.com/auth/plus.login"
 	//   ]
 	// }
@@ -319,6 +322,7 @@ func (c *AchievementsResetAllCall) Do() (*AchievementResetAllResponse, error) {
 	//     "$ref": "AchievementResetAllResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
 	//     "https://www.googleapis.com/auth/plus.login"
 	//   ]
 	// }
@@ -420,6 +424,7 @@ func (c *ApplicationsListHiddenCall) Do() (*HiddenPlayerList, error) {
 	//     "$ref": "HiddenPlayerList"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
 	//     "https://www.googleapis.com/auth/plus.login"
 	//   ]
 	// }
@@ -489,6 +494,7 @@ func (c *PlayersHideCall) Do() error {
 	//   },
 	//   "path": "applications/{applicationId}/players/hidden/{playerId}",
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
 	//     "https://www.googleapis.com/auth/plus.login"
 	//   ]
 	// }
@@ -558,6 +564,7 @@ func (c *PlayersUnhideCall) Do() error {
 	//   },
 	//   "path": "applications/{applicationId}/players/hidden/{playerId}",
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
 	//     "https://www.googleapis.com/auth/plus.login"
 	//   ]
 	// }
@@ -603,6 +610,7 @@ func (c *RoomsResetCall) Do() error {
 	//   "id": "gamesManagement.rooms.reset",
 	//   "path": "rooms/reset",
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
 	//     "https://www.googleapis.com/auth/plus.login"
 	//   ]
 	// }
@@ -669,6 +677,7 @@ func (c *ScoresResetCall) Do() (*PlayerScoreResetResponse, error) {
 	//     "$ref": "PlayerScoreResetResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
 	//     "https://www.googleapis.com/auth/plus.login"
 	//   ]
 	// }

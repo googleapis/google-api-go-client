@@ -1,11 +1,10 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"wtgj9ZncHCe-ShJM8RewHb1DgWI/L6mB2qTFEOYcnlYuxp4qV0jT_3Q\"",
+ "etag": "\"DGgqtFnjgu83tuwvvVNNUhOiHWk/p8yUXl6ie_9KHW92VpcNTEqxovM\"",
  "discoveryVersion": "v1",
  "id": "adexchangebuyer:v1.1",
  "name": "adexchangebuyer",
  "version": "v1.1",
- "revision": "20130502",
  "title": "Ad Exchange Buyer API",
  "description": "Lets you manage your Ad Exchange Buyer account.",
  "ownerDomain": "google.com",

@@ -1,11 +1,10 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"wtgj9ZncHCe-ShJM8RewHb1DgWI/mm73AOe2aQloA-_xFKTQO_VIif8\"",
+ "etag": "\"DGgqtFnjgu83tuwvvVNNUhOiHWk/CprmxbC_n4VJOa4m78gYggaU4m4\"",
  "discoveryVersion": "v1",
  "id": "calendar:v3",
  "name": "calendar",
  "version": "v3",
- "revision": "20130814",
  "title": "Calendar API",
  "description": "Lets you manipulate events and other calendar data.",
  "ownerDomain": "google.com",
@@ -1021,7 +1020,7 @@
     },
     "id": {
      "type": "string",
-     "description": "Name of the user setting."
+     "description": "The id of the user setting."
     },
     "kind": {
      "type": "string",
@@ -1030,7 +1029,7 @@
     },
     "value": {
      "type": "string",
-     "description": "Value of the user setting. The format of the value depends on the ID of the setting."
+     "description": "Value of the user setting. The format of the value depends on the ID of the setting. It must always be any UTF-8 string of length up to 1024 characters."
     }
    }
   },
@@ -2264,7 +2263,7 @@
      "parameters": {
       "setting": {
        "type": "string",
-       "description": "Name of the user setting.",
+       "description": "The id of the user setting.",
        "required": true,
        "location": "path"
       }

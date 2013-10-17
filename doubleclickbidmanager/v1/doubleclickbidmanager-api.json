@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"wtgj9ZncHCe-ShJM8RewHb1DgWI/v8_9uAMOwc2xkyyWb4z28R88eF8\"",
+ "etag": "\"DGgqtFnjgu83tuwvvVNNUhOiHWk/boMHB08kZ6q795gOqaVisEQDjHU\"",
  "discoveryVersion": "v1",
  "id": "doubleclickbidmanager:v1",
  "name": "doubleclickbidmanager",
+ "canonicalName": "DoubleClick Bid Manager",
  "version": "v1",
- "revision": "20130721",
  "title": "DoubleClick Bid Manager API",
  "description": "API for viewing and managing your reports in DoubleClick Bid Manager.",
  "ownerDomain": "google.com",
@@ -14,7 +14,10 @@
   "x16": "http://www.google.com/images/icons/product/search-16.gif",
   "x32": "http://www.google.com/images/icons/product/search-32.gif"
  },
- "documentationLink": "https://devsite.googleplex.com/bid-manager/",
+ "documentationLink": "https://developers.google.com/bid-manager/",
+ "labels": [
+  "limited_availability"
+ ],
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/doubleclickbidmanager/v1/",
  "basePath": "/doubleclickbidmanager/v1/",
@@ -67,6 +70,56 @@
   }
  },
  "schemas": {
+  "DownloadLineItemsRequest": {
+   "id": "DownloadLineItemsRequest",
+   "type": "object",
+   "description": "Request to fetch stored line items.",
+   "properties": {
+    "filterIds": {
+     "type": "array",
+     "description": "Ids of the specified filter type used to filter line items to fetch. If omitted, all the line items will be returned.",
+     "items": {
+      "type": "string",
+      "format": "int64"
+     }
+    },
+    "filterType": {
+     "type": "string",
+     "description": "Filter type used to filter line items to fetch.",
+     "enum": [
+      "ADVERTISER_ID",
+      "INSERTION_ORDER_ID",
+      "LINE_ITEM_ID"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      ""
+     ]
+    },
+    "format": {
+     "type": "string",
+     "description": "Format in which the line items will be returned. Default to CSV.",
+     "enum": [
+      "CSV"
+     ],
+     "enumDescriptions": [
+      ""
+     ]
+    }
+   }
+  },
+  "DownloadLineItemsResponse": {
+   "id": "DownloadLineItemsResponse",
+   "type": "object",
+   "description": "Download line items response.",
+   "properties": {
+    "lineItems": {
+     "type": "string",
+     "description": "Retrieved line items in CSV format. Refer to  Entity Write File Format for more information on file format."
+    }
+   }
+  },
   "FilterPair": {
    "id": "FilterPair",
    "type": "object",
@@ -106,7 +159,6 @@
       "FILTER_LINE_ITEM_DAILY_FREQUENCY",
       "FILTER_LINE_ITEM_LIFETIME_FREQUENCY",
       "FILTER_LINE_ITEM_TYPE",
-      "FILTER_MACHINE_LEARNING",
       "FILTER_MOBILE_DEVICE_MAKE",
       "FILTER_MOBILE_DEVICE_MAKE_MODEL",
       "FILTER_MOBILE_DEVICE_TYPE",
@@ -134,7 +186,6 @@
       "FILTER_ZIP_CODE"
      ],
      "enumDescriptions": [
-      "",
       "",
       "",
       "",
@@ -284,7 +335,6 @@
        "FILTER_LINE_ITEM_DAILY_FREQUENCY",
        "FILTER_LINE_ITEM_LIFETIME_FREQUENCY",
        "FILTER_LINE_ITEM_TYPE",
-       "FILTER_MACHINE_LEARNING",
        "FILTER_MOBILE_DEVICE_MAKE",
        "FILTER_MOBILE_DEVICE_MAKE_MODEL",
        "FILTER_MOBILE_DEVICE_TYPE",
@@ -312,7 +362,6 @@
        "FILTER_ZIP_CODE"
       ],
       "enumDescriptions": [
-       "",
        "",
        "",
        "",
@@ -629,6 +678,7 @@
       "TYPE_AUDIENCE_COMPOSITION",
       "TYPE_AUDIENCE_PERFORMANCE",
       "TYPE_CLIENT_SAFE",
+      "TYPE_CROSS_FEE",
       "TYPE_CROSS_PARTNER",
       "TYPE_CROSS_PARTNER_THIRD_PARTY_DATA_PROVIDER",
       "TYPE_FEE",
@@ -641,6 +691,7 @@
       "TYPE_THIRD_PARTY_DATA_PROVIDER"
      ],
      "enumDescriptions": [
+      "",
       "",
       "",
       "",
@@ -810,7 +861,7 @@
    "properties": {
     "endTimeMs": {
      "type": "string",
-     "description": "Run the query periodically until the specified time.",
+     "description": "Datetime to periodically run the query until.",
      "format": "int64"
     },
     "frequency": {
@@ -832,6 +883,15 @@
       "",
       ""
      ]
+    },
+    "nextRunMinuteOfDay": {
+     "type": "integer",
+     "description": "Time of day at which a new report will be generated, represented as minutes past midnight Range is 0 to 1439. Only applies to scheduled reports.",
+     "format": "int32"
+    },
+    "nextRunTimezoneCode": {
+     "type": "string",
+     "description": "Timezone in which a new report will be generated."
     }
    }
   },
@@ -989,6 +1049,42 @@
     }
    }
   },
+  "RowStatus": {
+   "id": "RowStatus",
+   "type": "object",
+   "description": "Represents the upload status of a row in the request.",
+   "properties": {
+    "changed": {
+     "type": "boolean",
+     "description": "Whether the stored entity is changed as a result of upload."
+    },
+    "entityId": {
+     "type": "string",
+     "description": "Entity Id.",
+     "format": "int64"
+    },
+    "entityName": {
+     "type": "string",
+     "description": "Entity name."
+    },
+    "errors": {
+     "type": "array",
+     "description": "Reasons why the entity can't be uploaded.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "persisted": {
+     "type": "boolean",
+     "description": "Whether the entity is persisted."
+    },
+    "rowNumber": {
+     "type": "integer",
+     "description": "Row number.",
+     "format": "int32"
+    }
+   }
+  },
   "RunQueryRequest": {
    "id": "RunQueryRequest",
    "type": "object",
@@ -1053,9 +1149,94 @@
      "description": "Canonical timezone code for report data time. Defaults to America/New_York."
     }
    }
+  },
+  "UploadLineItemsRequest": {
+   "id": "UploadLineItemsRequest",
+   "type": "object",
+   "description": "Request to upload line items.",
+   "properties": {
+    "dryRun": {
+     "type": "boolean",
+     "description": "Set to true to get upload status without actually persisting the line items."
+    },
+    "format": {
+     "type": "string",
+     "description": "Format the line items are in. Default to CSV.",
+     "enum": [
+      "CSV"
+     ],
+     "enumDescriptions": [
+      ""
+     ]
+    },
+    "lineItems": {
+     "type": "string",
+     "description": "Line items in CSV to upload. Refer to  Entity Write File Format for more information on file format."
+    }
+   }
+  },
+  "UploadLineItemsResponse": {
+   "id": "UploadLineItemsResponse",
+   "type": "object",
+   "description": "Upload line items response.",
+   "properties": {
+    "uploadStatus": {
+     "$ref": "UploadStatus",
+     "description": "Status of upload."
+    }
+   }
+  },
+  "UploadStatus": {
+   "id": "UploadStatus",
+   "type": "object",
+   "description": "Represents the status of upload.",
+   "properties": {
+    "errors": {
+     "type": "array",
+     "description": "Reasons why upload can't be completed.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "rowStatus": {
+     "type": "array",
+     "description": "Per-row upload status.",
+     "items": {
+      "$ref": "RowStatus"
+     }
+    }
+   }
   }
  },
  "resources": {
+  "lineitems": {
+   "methods": {
+    "downloadlineitems": {
+     "id": "doubleclickbidmanager.lineitems.downloadlineitems",
+     "path": "lineitems/downloadlineitems",
+     "httpMethod": "POST",
+     "description": "Retrieves line items in CSV format.",
+     "request": {
+      "$ref": "DownloadLineItemsRequest"
+     },
+     "response": {
+      "$ref": "DownloadLineItemsResponse"
+     }
+    },
+    "uploadlineitems": {
+     "id": "doubleclickbidmanager.lineitems.uploadlineitems",
+     "path": "lineitems/uploadlineitems",
+     "httpMethod": "POST",
+     "description": "Uploads line items in CSV format.",
+     "request": {
+      "$ref": "UploadLineItemsRequest"
+     },
+     "response": {
+      "$ref": "UploadLineItemsResponse"
+     }
+    }
+   }
+  },
   "queries": {
    "methods": {
     "createquery": {

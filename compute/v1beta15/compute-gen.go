@@ -47,6 +47,9 @@ const (
 	// View your Google Compute Engine resources
 	ComputeReadonlyScope = "https://www.googleapis.com/auth/compute.readonly"
 
+	// Manage your data and permissions in Google Cloud Storage
+	DevstorageFull_controlScope = "https://www.googleapis.com/auth/devstorage.full_control"
+
 	// View your data in Google Cloud Storage
 	DevstorageRead_onlyScope = "https://www.googleapis.com/auth/devstorage.read_only"
 
@@ -345,7 +348,6 @@ type Address struct {
 	// Status: The status of the address (output only).
 	Status string `json:"status,omitempty"`
 
-	// User: URL of the resource currently using this address (output only).
 	User string `json:"user,omitempty"`
 }
 
@@ -893,6 +895,10 @@ type HttpHealthCheckList struct {
 }
 
 type Image struct {
+	// ArchiveSizeBytes: Size of the image tar.gz archive stored in BigStore
+	// (in bytes).
+	ArchiveSizeBytes int64 `json:"archiveSizeBytes,omitempty,string"`
+
 	// CreationTimestamp: Creation timestamp in RFC3339 text format (output
 	// only).
 	CreationTimestamp string `json:"creationTimestamp,omitempty"`
@@ -1891,6 +1897,24 @@ type Tags struct {
 }
 
 type TargetPool struct {
+	// BackupPool: This field is applicable only when the containing target
+	// pool is serving a forwarding rule as the primary pool, and its
+	// 'failoverRatio' field is properly set to a value between [0,
+	// 1].
+	//
+	// 'backupPool' and 'failoverRatio' together define the fallback
+	// behavior of the primary target pool: if the ratio of the healthy VMs
+	// in the primary pool is at or below 'failoverRatio', traffic arriving
+	// at the load-balanced IP will be directed to the backup pool.
+	//
+	// In case
+	// where 'failoverRatio' and 'backupPool' are not set, or all the VMs in
+	// the backup pool are unhealthy, the traffic will be directed back to
+	// the primary pool in the "force" mode, where traffic will be spread to
+	// the healthy VMs with the best effort, or to all VMs when no VM is
+	// healthy.
+	BackupPool string `json:"backupPool,omitempty"`
+
 	// CreationTimestamp: Creation timestamp in RFC3339 text format (output
 	// only).
 	CreationTimestamp string `json:"creationTimestamp,omitempty"`
@@ -1898,6 +1922,24 @@ type TargetPool struct {
 	// Description: An optional textual description of the resource;
 	// provided by the client when the resource is created.
 	Description string `json:"description,omitempty"`
+
+	// FailoverRatio: This field is applicable only when the containing
+	// target pool is serving a forwarding rule as the primary pool (i.e.,
+	// not as a backup pool to some other target pool). The value of the
+	// field must be in [0, 1].
+	//
+	// If set, 'backupPool' must also be set. They
+	// together define the fallback behavior of the primary target pool: if
+	// the ratio of the healthy VMs in the primary pool is at or below this
+	// number, traffic arriving at the load-balanced IP will be directed to
+	// the backup pool.
+	//
+	// In case where 'failoverRatio' is not set or all the
+	// VMs in the backup pool are unhealthy, the traffic will be directed
+	// back to the primary pool in the "force" mode, where traffic will be
+	// spread to the healthy VMs with the best effort, or to all VMs when no
+	// VM is healthy.
+	FailoverRatio float64 `json:"failoverRatio,omitempty"`
 
 	// HealthChecks: A list of URLs to the HttpHealthCheck resource. A
 	// member VM in this pool is considered healthy if and only if all
@@ -1928,6 +1970,15 @@ type TargetPool struct {
 
 	// SelfLink: Server defined URL for the resource (output only).
 	SelfLink string `json:"selfLink,omitempty"`
+
+	// SessionAffinity: Sesssion affinity option, must be one of the
+	// following values: 'NONE': Connections from the same client IP may go
+	// to any VM in the pool; 'CLIENT_IP': Connections from the same client
+	// IP will go to the same VM in the pool while that VM remains healthy.
+	// 'CLIENT_IP_PROTO': Connections from the same client IP with the same
+	// IP protocol will go to the same VM in the pool while that VM remains
+	// healthy.
+	SessionAffinity string `json:"sessionAffinity,omitempty"`
 }
 
 type TargetPoolAggregatedList struct {
@@ -5555,6 +5606,7 @@ func (c *ImagesInsertCall) Do() (*Operation, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/devstorage.full_control",
 	//     "https://www.googleapis.com/auth/devstorage.read_only",
 	//     "https://www.googleapis.com/auth/devstorage.read_write"
 	//   ]
@@ -10084,6 +10136,120 @@ func (c *TargetPoolsRemoveInstanceCall) Do() (*Operation, error) {
 	//   "path": "{project}/regions/{region}/targetPools/{targetPool}/removeInstance",
 	//   "request": {
 	//     "$ref": "InstanceReference"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.targetPools.setBackup":
+
+type TargetPoolsSetBackupCall struct {
+	s               *Service
+	project         string
+	region          string
+	targetPool      string
+	targetreference *TargetReference
+	opt_            map[string]interface{}
+}
+
+// SetBackup: Changes backup pool configurations.
+func (r *TargetPoolsService) SetBackup(project string, region string, targetPool string, targetreference *TargetReference) *TargetPoolsSetBackupCall {
+	c := &TargetPoolsSetBackupCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.region = region
+	c.targetPool = targetPool
+	c.targetreference = targetreference
+	return c
+}
+
+// FailoverRatio sets the optional parameter "failoverRatio": New
+// failoverRatio value for the containing target pool.
+func (c *TargetPoolsSetBackupCall) FailoverRatio(failoverRatio float64) *TargetPoolsSetBackupCall {
+	c.opt_["failoverRatio"] = failoverRatio
+	return c
+}
+
+func (c *TargetPoolsSetBackupCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.targetreference)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["failoverRatio"]; ok {
+		params.Set("failoverRatio", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1beta15/projects/", "{project}/regions/{region}/targetPools/{targetPool}/setBackup")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{region}", url.QueryEscape(c.region), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{targetPool}", url.QueryEscape(c.targetPool), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Operation)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Changes backup pool configurations.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.targetPools.setBackup",
+	//   "parameterOrder": [
+	//     "project",
+	//     "region",
+	//     "targetPool"
+	//   ],
+	//   "parameters": {
+	//     "failoverRatio": {
+	//       "description": "New failoverRatio value for the containing target pool.",
+	//       "format": "float",
+	//       "location": "query",
+	//       "type": "number"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "region": {
+	//       "description": "Name of the region scoping this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "targetPool": {
+	//       "description": "Name of the TargetPool resource for which the backup is to be set.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/regions/{region}/targetPools/{targetPool}/setBackup",
+	//   "request": {
+	//     "$ref": "TargetReference"
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"

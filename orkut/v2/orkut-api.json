@@ -1,11 +1,10 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"wtgj9ZncHCe-ShJM8RewHb1DgWI/qCYcIF9SU9Hl8Qg-et4yd-nbiwI\"",
+ "etag": "\"DGgqtFnjgu83tuwvvVNNUhOiHWk/xiMdcGrwm4vNaftUqbcmg_X46_0\"",
  "discoveryVersion": "v1",
  "id": "orkut:v2",
  "name": "orkut",
  "version": "v2",
- "revision": "20120223",
  "title": "Orkut API",
  "description": "Lets you manage activities, comments and badges in Orkut. More stuff coming in time.",
  "ownerDomain": "google.com",

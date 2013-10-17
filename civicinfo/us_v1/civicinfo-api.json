@@ -1,12 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"wtgj9ZncHCe-ShJM8RewHb1DgWI/iIhG7IB9a5KPGzmcq2JPVBAErYU\"",
+ "etag": "\"DGgqtFnjgu83tuwvvVNNUhOiHWk/iVqjd-HwY_rWVg6n9kNX13GcQao\"",
  "discoveryVersion": "v1",
  "id": "civicinfo:us_v1",
  "name": "civicinfo",
  "canonicalName": "Civic Info",
  "version": "us_v1",
- "revision": "20130513",
  "title": "Google Civic Information API",
  "description": "An API for accessing civic information.",
  "ownerDomain": "google.com",
@@ -566,7 +565,7 @@
      "parameters": {
       "electionId": {
        "type": "string",
-       "description": "The unique ID of the election to look up. A list of election IDs can be obtained at.https://www.googleapis.com/civicinfo/{version}/elections",
+       "description": "The unique ID of the election to look up. A list of election IDs can be obtained at https://www.googleapis.com/civicinfo/{version}/elections",
        "required": true,
        "format": "int64",
        "location": "path"

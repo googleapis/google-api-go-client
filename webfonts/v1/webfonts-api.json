@@ -1,11 +1,10 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"wtgj9ZncHCe-ShJM8RewHb1DgWI/BkmJT_krx7QiG8ilUz8USxc8AlI\"",
+ "etag": "\"DGgqtFnjgu83tuwvvVNNUhOiHWk/Yx9k0sPKwAEHIXkjsQIZVeMr9po\"",
  "discoveryVersion": "v1",
  "id": "webfonts:v1",
  "name": "webfonts",
  "version": "v1",
- "revision": "20130525",
  "title": "Google Fonts Developer API",
  "description": "The Google Fonts Developer API.",
  "ownerDomain": "google.com",

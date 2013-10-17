@@ -1,11 +1,10 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"wtgj9ZncHCe-ShJM8RewHb1DgWI/grOWM_9ZOSeAE0jm1s5h3RFFyrU\"",
+ "etag": "\"DGgqtFnjgu83tuwvvVNNUhOiHWk/AFnpisGyT0XxOrZz7gMWdR5PpRg\"",
  "discoveryVersion": "v1",
  "id": "drive:v2",
  "name": "drive",
  "version": "v2",
- "revision": "20130819",
  "title": "Drive API",
  "description": "The API to interact with Drive.",
  "ownerDomain": "google.com",
@@ -1035,7 +1034,7 @@
      "properties": {
       "hidden": {
        "type": "boolean",
-       "description": "Whether this file is hidden from the user."
+       "description": "Deprecated."
       },
       "restricted": {
        "type": "boolean",
@@ -3416,6 +3415,49 @@
       "https://www.googleapis.com/auth/drive.readonly"
      ],
      "supportsMediaDownload": true
+    },
+    "update": {
+     "id": "drive.realtime.update",
+     "path": "files/{fileId}/realtime",
+     "httpMethod": "PUT",
+     "description": "Overwrites the Realtime API data model associated with this file with the provided JSON data model.",
+     "parameters": {
+      "baseRevision": {
+       "type": "string",
+       "description": "The revision of the model to diff the uploaded model against. If set, the uploaded model is diffed against the provided revision and those differences are merged with any changes made to the model after the provided revision. If not set, the uploaded model replaces the current model on the server.",
+       "location": "query"
+      },
+      "fileId": {
+       "type": "string",
+       "description": "The ID of the file that the Realtime API data model is associated with.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "fileId"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/drive",
+      "https://www.googleapis.com/auth/drive.file"
+     ],
+     "supportsMediaUpload": true,
+     "mediaUpload": {
+      "accept": [
+       "*/*"
+      ],
+      "maxSize": "10MB",
+      "protocols": {
+       "simple": {
+        "multipart": true,
+        "path": "/upload/drive/v2/files/{fileId}/realtime"
+       },
+       "resumable": {
+        "multipart": true,
+        "path": "/resumable/upload/drive/v2/files/{fileId}/realtime"
+       }
+      }
+     }
     }
    }
   },

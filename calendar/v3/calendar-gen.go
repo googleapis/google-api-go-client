@@ -897,14 +897,15 @@ type Setting struct {
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
 
-	// Id: Name of the user setting.
+	// Id: The id of the user setting.
 	Id string `json:"id,omitempty"`
 
 	// Kind: Type of the resource ("calendar#setting").
 	Kind string `json:"kind,omitempty"`
 
 	// Value: Value of the user setting. The format of the value depends on
-	// the ID of the setting.
+	// the ID of the setting. It must always be any UTF-8 string of length
+	// up to 1024 characters.
 	Value string `json:"value,omitempty"`
 }
 
@@ -4239,7 +4240,7 @@ func (c *SettingsGetCall) Do() (*Setting, error) {
 	//   ],
 	//   "parameters": {
 	//     "setting": {
-	//       "description": "Name of the user setting.",
+	//       "description": "The id of the user setting.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"

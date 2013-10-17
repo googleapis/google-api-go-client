@@ -1,11 +1,10 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"wtgj9ZncHCe-ShJM8RewHb1DgWI/Zk3UZ9CpL0JLOXTuhss-AmDs-w0\"",
+ "etag": "\"DGgqtFnjgu83tuwvvVNNUhOiHWk/Fv7vACHdCcGdY_nhHAAW_ODWfDQ\"",
  "discoveryVersion": "v1",
  "id": "games:v1",
  "name": "games",
  "version": "v1",
- "revision": "20130725",
  "title": "Google Play Game Services API",
  "description": "The API for Google Play Game Services.",
  "ownerDomain": "google.com",
@@ -69,8 +68,11 @@
  "auth": {
   "oauth2": {
    "scopes": {
+    "https://www.googleapis.com/auth/games": {
+     "description": "View and manage your game activity"
+    },
     "https://www.googleapis.com/auth/plus.login": {
-     "description": "Know your name, basic info, and list of people you're connected to on Google+"
+     "description": "Know your basic profile info and list of people in your circles."
     }
    }
   }
@@ -1034,7 +1036,7 @@
     },
     "autoMatchingStatus": {
      "$ref": "RoomAutoMatchStatus",
-     "description": "Auto-matching status for this room. Not set if the room is not currently in the automatching status."
+     "description": "Auto-matching status for this room. Not set if the room is not currently in the auto-matching queue."
     },
     "creationDetails": {
      "$ref": "RoomModification",
@@ -1092,7 +1094,7 @@
     },
     "waitEstimateSeconds": {
      "type": "integer",
-     "description": "An estimate for the amount of time that automatching is expected to take to complete.",
+     "description": "An estimate for the amount of time (in seconds) that auto-matching is expected to take to complete.",
      "format": "int32"
     }
    }
@@ -1501,6 +1503,7 @@
       "$ref": "AchievementDefinitionsListResponse"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/games",
       "https://www.googleapis.com/auth/plus.login"
      ]
     }
@@ -1522,7 +1525,7 @@
       },
       "requestId": {
        "type": "string",
-       "description": "A randomly generated numeric ID for each request specified by the caller. This number is used at the server to ensure that the increment is performed correctly across retries.",
+       "description": "A randomly generated numeric ID for each request specified by the caller. This number is used at the server to ensure that the request is handled correctly across retries.",
        "format": "int64",
        "location": "query"
       },
@@ -1543,6 +1546,7 @@
       "$ref": "AchievementIncrementResponse"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/games",
       "https://www.googleapis.com/auth/plus.login"
      ]
     },
@@ -1601,6 +1605,7 @@
       "$ref": "PlayerAchievementListResponse"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/games",
       "https://www.googleapis.com/auth/plus.login"
      ]
     },
@@ -1624,6 +1629,7 @@
       "$ref": "AchievementRevealResponse"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/games",
       "https://www.googleapis.com/auth/plus.login"
      ]
     },
@@ -1647,6 +1653,7 @@
       "$ref": "AchievementUnlockResponse"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/games",
       "https://www.googleapis.com/auth/plus.login"
      ]
     }
@@ -1694,6 +1701,7 @@
       "$ref": "Application"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/games",
       "https://www.googleapis.com/auth/plus.login"
      ]
     },
@@ -1703,6 +1711,7 @@
      "httpMethod": "POST",
      "description": "Indicate that the the currently authenticated user is playing your application.",
      "scopes": [
+      "https://www.googleapis.com/auth/games",
       "https://www.googleapis.com/auth/plus.login"
      ]
     }
@@ -1735,6 +1744,7 @@
       "$ref": "Leaderboard"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/games",
       "https://www.googleapis.com/auth/plus.login"
      ]
     },
@@ -1767,6 +1777,7 @@
       "$ref": "LeaderboardListResponse"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/games",
       "https://www.googleapis.com/auth/plus.login"
      ]
     }
@@ -1794,6 +1805,7 @@
       "$ref": "Player"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/games",
       "https://www.googleapis.com/auth/plus.login"
      ]
     }
@@ -1821,6 +1833,7 @@
       "$ref": "RevisionCheckResponse"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/games",
       "https://www.googleapis.com/auth/plus.login"
      ]
     }
@@ -1847,6 +1860,7 @@
       "$ref": "Room"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/games",
       "https://www.googleapis.com/auth/plus.login"
      ]
     },
@@ -1870,6 +1884,7 @@
       "$ref": "Room"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/games",
       "https://www.googleapis.com/auth/plus.login"
      ]
     },
@@ -1890,6 +1905,7 @@
       "roomId"
      ],
      "scopes": [
+      "https://www.googleapis.com/auth/games",
       "https://www.googleapis.com/auth/plus.login"
      ]
     },
@@ -1918,6 +1934,7 @@
       "$ref": "Room"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/games",
       "https://www.googleapis.com/auth/plus.login"
      ]
     },
@@ -1944,6 +1961,7 @@
       "$ref": "Room"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/games",
       "https://www.googleapis.com/auth/plus.login"
      ]
     },
@@ -1970,6 +1988,7 @@
       "$ref": "Room"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/games",
       "https://www.googleapis.com/auth/plus.login"
      ]
     },
@@ -2002,6 +2021,7 @@
       "$ref": "RoomList"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/games",
       "https://www.googleapis.com/auth/plus.login"
      ]
     },
@@ -2028,6 +2048,7 @@
       "$ref": "RoomStatus"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/games",
       "https://www.googleapis.com/auth/plus.login"
      ]
     }
@@ -2039,7 +2060,7 @@
      "id": "games.scores.get",
      "path": "players/{playerId}/leaderboards/{leaderboardId}/scores/{timeSpan}",
      "httpMethod": "GET",
-     "description": "Get high scores and optionally, ranks in leaderboards for the currently authenticated player. For a specific time span, leaderboardId can be set to ALL to retrieve data for all leaderboards in a given time span.",
+     "description": "Get high scores, and optionally ranks, in leaderboards for the currently authenticated player. For a specific time span, leaderboardId can be set to ALL to retrieve data for all leaderboards in a given time span.\nNOTE: You cannot ask for 'ALL' leaderboards and 'ALL' timeSpans in the same request; only one parameter may be set to 'ALL'.",
      "parameters": {
       "includeRankType": {
        "type": "string",
@@ -2063,7 +2084,7 @@
       },
       "leaderboardId": {
        "type": "string",
-       "description": "The ID of the leaderboard.",
+       "description": "The ID of the leaderboard. Can be set to 'ALL' to retrieve data for all leaderboards for this application.",
        "required": true,
        "location": "path"
       },
@@ -2114,6 +2135,7 @@
       "$ref": "PlayerLeaderboardScoreListResponse"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/games",
       "https://www.googleapis.com/auth/plus.login"
      ]
     },
@@ -2187,6 +2209,7 @@
       "$ref": "LeaderboardScores"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/games",
       "https://www.googleapis.com/auth/plus.login"
      ]
     },
@@ -2271,6 +2294,7 @@
       "$ref": "LeaderboardScores"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/games",
       "https://www.googleapis.com/auth/plus.login"
      ]
     },
@@ -2307,6 +2331,7 @@
       "$ref": "PlayerScoreResponse"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/games",
       "https://www.googleapis.com/auth/plus.login"
      ]
     },
@@ -2329,6 +2354,7 @@
       "$ref": "PlayerScoreListResponse"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/games",
       "https://www.googleapis.com/auth/plus.login"
      ]
     }

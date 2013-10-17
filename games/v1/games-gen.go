@@ -41,8 +41,10 @@ const basePath = "https://www.googleapis.com/games/v1/"
 
 // OAuth2 scopes used by this API.
 const (
-	// Know your name, basic info, and list of people you're connected to on
-	// Google+
+	// View and manage your game activity
+	GamesScope = "https://www.googleapis.com/auth/games"
+
+	// Know your basic profile info and list of people in your circles.
 	PlusLoginScope = "https://www.googleapis.com/auth/plus.login"
 )
 
@@ -834,7 +836,7 @@ type Room struct {
 	AutoMatchingCriteria *RoomAutoMatchingCriteria `json:"autoMatchingCriteria,omitempty"`
 
 	// AutoMatchingStatus: Auto-matching status for this room. Not set if
-	// the room is not currently in the automatching status.
+	// the room is not currently in the auto-matching queue.
 	AutoMatchingStatus *RoomAutoMatchStatus `json:"autoMatchingStatus,omitempty"`
 
 	// CreationDetails: Details about the room creation.
@@ -894,8 +896,8 @@ type RoomAutoMatchStatus struct {
 	// the fixed string games#roomAutoMatchStatus.
 	Kind string `json:"kind,omitempty"`
 
-	// WaitEstimateSeconds: An estimate for the amount of time that
-	// automatching is expected to take to complete.
+	// WaitEstimateSeconds: An estimate for the amount of time (in seconds)
+	// that auto-matching is expected to take to complete.
 	WaitEstimateSeconds int64 `json:"waitEstimateSeconds,omitempty"`
 }
 
@@ -1317,6 +1319,7 @@ func (c *AchievementDefinitionsListCall) Do() (*AchievementDefinitionsListRespon
 	//     "$ref": "AchievementDefinitionsListResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
 	//     "https://www.googleapis.com/auth/plus.login"
 	//   ]
 	// }
@@ -1343,8 +1346,8 @@ func (r *AchievementsService) Increment(achievementId string, stepsToIncrement i
 
 // RequestId sets the optional parameter "requestId": A randomly
 // generated numeric ID for each request specified by the caller. This
-// number is used at the server to ensure that the increment is
-// performed correctly across retries.
+// number is used at the server to ensure that the request is handled
+// correctly across retries.
 func (c *AchievementsIncrementCall) RequestId(requestId int64) *AchievementsIncrementCall {
 	c.opt_["requestId"] = requestId
 	return c
@@ -1393,7 +1396,7 @@ func (c *AchievementsIncrementCall) Do() (*AchievementIncrementResponse, error) 
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "A randomly generated numeric ID for each request specified by the caller. This number is used at the server to ensure that the increment is performed correctly across retries.",
+	//       "description": "A randomly generated numeric ID for each request specified by the caller. This number is used at the server to ensure that the request is handled correctly across retries.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
@@ -1412,6 +1415,7 @@ func (c *AchievementsIncrementCall) Do() (*AchievementIncrementResponse, error) 
 	//     "$ref": "AchievementIncrementResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
 	//     "https://www.googleapis.com/auth/plus.login"
 	//   ]
 	// }
@@ -1555,6 +1559,7 @@ func (c *AchievementsListCall) Do() (*PlayerAchievementListResponse, error) {
 	//     "$ref": "PlayerAchievementListResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
 	//     "https://www.googleapis.com/auth/plus.login"
 	//   ]
 	// }
@@ -1620,6 +1625,7 @@ func (c *AchievementsRevealCall) Do() (*AchievementRevealResponse, error) {
 	//     "$ref": "AchievementRevealResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
 	//     "https://www.googleapis.com/auth/plus.login"
 	//   ]
 	// }
@@ -1685,6 +1691,7 @@ func (c *AchievementsUnlockCall) Do() (*AchievementUnlockResponse, error) {
 	//     "$ref": "AchievementUnlockResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
 	//     "https://www.googleapis.com/auth/plus.login"
 	//   ]
 	// }
@@ -1792,6 +1799,7 @@ func (c *ApplicationsGetCall) Do() (*Application, error) {
 	//     "$ref": "Application"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
 	//     "https://www.googleapis.com/auth/plus.login"
 	//   ]
 	// }
@@ -1836,6 +1844,7 @@ func (c *ApplicationsPlayedCall) Do() error {
 	//   "id": "games.applications.played",
 	//   "path": "applications/played",
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
 	//     "https://www.googleapis.com/auth/plus.login"
 	//   ]
 	// }
@@ -1915,6 +1924,7 @@ func (c *LeaderboardsGetCall) Do() (*Leaderboard, error) {
 	//     "$ref": "Leaderboard"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
 	//     "https://www.googleapis.com/auth/plus.login"
 	//   ]
 	// }
@@ -2017,6 +2027,7 @@ func (c *LeaderboardsListCall) Do() (*LeaderboardListResponse, error) {
 	//     "$ref": "LeaderboardListResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
 	//     "https://www.googleapis.com/auth/plus.login"
 	//   ]
 	// }
@@ -2082,6 +2093,7 @@ func (c *PlayersGetCall) Do() (*Player, error) {
 	//     "$ref": "Player"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
 	//     "https://www.googleapis.com/auth/plus.login"
 	//   ]
 	// }
@@ -2146,6 +2158,7 @@ func (c *RevisionsCheckCall) Do() (*RevisionCheckResponse, error) {
 	//     "$ref": "RevisionCheckResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
 	//     "https://www.googleapis.com/auth/plus.login"
 	//   ]
 	// }
@@ -2225,6 +2238,7 @@ func (c *RoomsCreateCall) Do() (*Room, error) {
 	//     "$ref": "Room"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
 	//     "https://www.googleapis.com/auth/plus.login"
 	//   ]
 	// }
@@ -2290,6 +2304,7 @@ func (c *RoomsDeclineCall) Do() (*Room, error) {
 	//     "$ref": "Room"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
 	//     "https://www.googleapis.com/auth/plus.login"
 	//   ]
 	// }
@@ -2348,6 +2363,7 @@ func (c *RoomsDismissCall) Do() error {
 	//   },
 	//   "path": "rooms/{roomId}/dismiss",
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
 	//     "https://www.googleapis.com/auth/plus.login"
 	//   ]
 	// }
@@ -2427,6 +2443,7 @@ func (c *RoomsGetCall) Do() (*Room, error) {
 	//     "$ref": "Room"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
 	//     "https://www.googleapis.com/auth/plus.login"
 	//   ]
 	// }
@@ -2503,6 +2520,7 @@ func (c *RoomsJoinCall) Do() (*Room, error) {
 	//     "$ref": "Room"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
 	//     "https://www.googleapis.com/auth/plus.login"
 	//   ]
 	// }
@@ -2579,6 +2597,7 @@ func (c *RoomsLeaveCall) Do() (*Room, error) {
 	//     "$ref": "Room"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
 	//     "https://www.googleapis.com/auth/plus.login"
 	//   ]
 	// }
@@ -2681,6 +2700,7 @@ func (c *RoomsListCall) Do() (*RoomList, error) {
 	//     "$ref": "RoomList"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
 	//     "https://www.googleapis.com/auth/plus.login"
 	//   ]
 	// }
@@ -2758,6 +2778,7 @@ func (c *RoomsReportStatusCall) Do() (*RoomStatus, error) {
 	//     "$ref": "RoomStatus"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
 	//     "https://www.googleapis.com/auth/plus.login"
 	//   ]
 	// }
@@ -2774,10 +2795,13 @@ type ScoresGetCall struct {
 	opt_          map[string]interface{}
 }
 
-// Get: Get high scores and optionally, ranks in leaderboards for the
+// Get: Get high scores, and optionally ranks, in leaderboards for the
 // currently authenticated player. For a specific time span,
 // leaderboardId can be set to ALL to retrieve data for all leaderboards
 // in a given time span.
+// NOTE: You cannot ask for 'ALL' leaderboards and
+// 'ALL' timeSpans in the same request; only one parameter may be set to
+// 'ALL'.
 func (r *ScoresService) Get(playerId string, leaderboardId string, timeSpan string) *ScoresGetCall {
 	c := &ScoresGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.playerId = playerId
@@ -2855,7 +2879,7 @@ func (c *ScoresGetCall) Do() (*PlayerLeaderboardScoreListResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Get high scores and optionally, ranks in leaderboards for the currently authenticated player. For a specific time span, leaderboardId can be set to ALL to retrieve data for all leaderboards in a given time span.",
+	//   "description": "Get high scores, and optionally ranks, in leaderboards for the currently authenticated player. For a specific time span, leaderboardId can be set to ALL to retrieve data for all leaderboards in a given time span.\nNOTE: You cannot ask for 'ALL' leaderboards and 'ALL' timeSpans in the same request; only one parameter may be set to 'ALL'.",
 	//   "httpMethod": "GET",
 	//   "id": "games.scores.get",
 	//   "parameterOrder": [
@@ -2885,7 +2909,7 @@ func (c *ScoresGetCall) Do() (*PlayerLeaderboardScoreListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "leaderboardId": {
-	//       "description": "The ID of the leaderboard.",
+	//       "description": "The ID of the leaderboard. Can be set to 'ALL' to retrieve data for all leaderboards for this application.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2933,6 +2957,7 @@ func (c *ScoresGetCall) Do() (*PlayerLeaderboardScoreListResponse, error) {
 	//     "$ref": "PlayerLeaderboardScoreListResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
 	//     "https://www.googleapis.com/auth/plus.login"
 	//   ]
 	// }
@@ -3085,6 +3110,7 @@ func (c *ScoresListCall) Do() (*LeaderboardScores, error) {
 	//     "$ref": "LeaderboardScores"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
 	//     "https://www.googleapis.com/auth/plus.login"
 	//   ]
 	// }
@@ -3273,6 +3299,7 @@ func (c *ScoresListWindowCall) Do() (*LeaderboardScores, error) {
 	//     "$ref": "LeaderboardScores"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
 	//     "https://www.googleapis.com/auth/plus.login"
 	//   ]
 	// }
@@ -3363,6 +3390,7 @@ func (c *ScoresSubmitCall) Do() (*PlayerScoreResponse, error) {
 	//     "$ref": "PlayerScoreResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
 	//     "https://www.googleapis.com/auth/plus.login"
 	//   ]
 	// }
@@ -3441,6 +3469,7 @@ func (c *ScoresSubmitMultipleCall) Do() (*PlayerScoreListResponse, error) {
 	//     "$ref": "PlayerScoreListResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
 	//     "https://www.googleapis.com/auth/plus.login"
 	//   ]
 	// }

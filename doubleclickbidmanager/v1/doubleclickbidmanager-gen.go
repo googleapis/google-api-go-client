@@ -1,6 +1,6 @@
 // Package doubleclickbidmanager provides access to the DoubleClick Bid Manager API.
 //
-// See https://devsite.googleplex.com/bid-manager/
+// See https://developers.google.com/bid-manager/
 //
 // Usage example:
 //
@@ -44,6 +44,7 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
+	s.Lineitems = NewLineitemsService(s)
 	s.Queries = NewQueriesService(s)
 	s.Reports = NewReportsService(s)
 	return s, nil
@@ -52,9 +53,20 @@ func New(client *http.Client) (*Service, error) {
 type Service struct {
 	client *http.Client
 
+	Lineitems *LineitemsService
+
 	Queries *QueriesService
 
 	Reports *ReportsService
+}
+
+func NewLineitemsService(s *Service) *LineitemsService {
+	rs := &LineitemsService{s: s}
+	return rs
+}
+
+type LineitemsService struct {
+	s *Service
 }
 
 func NewQueriesService(s *Service) *QueriesService {
@@ -73,6 +85,25 @@ func NewReportsService(s *Service) *ReportsService {
 
 type ReportsService struct {
 	s *Service
+}
+
+type DownloadLineItemsRequest struct {
+	// FilterIds: Ids of the specified filter type used to filter line items
+	// to fetch. If omitted, all the line items will be returned.
+	FilterIds []int64 `json:"filterIds,omitempty"`
+
+	// FilterType: Filter type used to filter line items to fetch.
+	FilterType string `json:"filterType,omitempty"`
+
+	// Format: Format in which the line items will be returned. Default to
+	// CSV.
+	Format string `json:"format,omitempty"`
+}
+
+type DownloadLineItemsResponse struct {
+	// LineItems: Retrieved line items in CSV format. Refer to  Entity Write
+	// File Format for more information on file format.
+	LineItems string `json:"lineItems,omitempty"`
 }
 
 type FilterPair struct {
@@ -188,11 +219,20 @@ type QueryMetadata struct {
 }
 
 type QuerySchedule struct {
-	// EndTimeMs: Run the query periodically until the specified time.
+	// EndTimeMs: Datetime to periodically run the query until.
 	EndTimeMs int64 `json:"endTimeMs,omitempty,string"`
 
 	// Frequency: How often the query is run.
 	Frequency string `json:"frequency,omitempty"`
+
+	// NextRunMinuteOfDay: Time of day at which a new report will be
+	// generated, represented as minutes past midnight Range is 0 to 1439.
+	// Only applies to scheduled reports.
+	NextRunMinuteOfDay int64 `json:"nextRunMinuteOfDay,omitempty"`
+
+	// NextRunTimezoneCode: Timezone in which a new report will be
+	// generated.
+	NextRunTimezoneCode string `json:"nextRunTimezoneCode,omitempty"`
 }
 
 type Report struct {
@@ -251,6 +291,26 @@ type ReportStatus struct {
 	State string `json:"state,omitempty"`
 }
 
+type RowStatus struct {
+	// Changed: Whether the stored entity is changed as a result of upload.
+	Changed bool `json:"changed,omitempty"`
+
+	// EntityId: Entity Id.
+	EntityId int64 `json:"entityId,omitempty,string"`
+
+	// EntityName: Entity name.
+	EntityName string `json:"entityName,omitempty"`
+
+	// Errors: Reasons why the entity can't be uploaded.
+	Errors []string `json:"errors,omitempty"`
+
+	// Persisted: Whether the entity is persisted.
+	Persisted bool `json:"persisted,omitempty"`
+
+	// RowNumber: Row number.
+	RowNumber int64 `json:"rowNumber,omitempty"`
+}
+
 type RunQueryRequest struct {
 	// DataRange: Report data range used to generate the report.
 	DataRange string `json:"dataRange,omitempty"`
@@ -268,6 +328,148 @@ type RunQueryRequest struct {
 	// TimezoneCode: Canonical timezone code for report data time. Defaults
 	// to America/New_York.
 	TimezoneCode string `json:"timezoneCode,omitempty"`
+}
+
+type UploadLineItemsRequest struct {
+	// DryRun: Set to true to get upload status without actually persisting
+	// the line items.
+	DryRun bool `json:"dryRun,omitempty"`
+
+	// Format: Format the line items are in. Default to CSV.
+	Format string `json:"format,omitempty"`
+
+	// LineItems: Line items in CSV to upload. Refer to  Entity Write File
+	// Format for more information on file format.
+	LineItems string `json:"lineItems,omitempty"`
+}
+
+type UploadLineItemsResponse struct {
+	// UploadStatus: Status of upload.
+	UploadStatus *UploadStatus `json:"uploadStatus,omitempty"`
+}
+
+type UploadStatus struct {
+	// Errors: Reasons why upload can't be completed.
+	Errors []string `json:"errors,omitempty"`
+
+	// RowStatus: Per-row upload status.
+	RowStatus []*RowStatus `json:"rowStatus,omitempty"`
+}
+
+// method id "doubleclickbidmanager.lineitems.downloadlineitems":
+
+type LineitemsDownloadlineitemsCall struct {
+	s                        *Service
+	downloadlineitemsrequest *DownloadLineItemsRequest
+	opt_                     map[string]interface{}
+}
+
+// Downloadlineitems: Retrieves line items in CSV format.
+func (r *LineitemsService) Downloadlineitems(downloadlineitemsrequest *DownloadLineItemsRequest) *LineitemsDownloadlineitemsCall {
+	c := &LineitemsDownloadlineitemsCall{s: r.s, opt_: make(map[string]interface{})}
+	c.downloadlineitemsrequest = downloadlineitemsrequest
+	return c
+}
+
+func (c *LineitemsDownloadlineitemsCall) Do() (*DownloadLineItemsResponse, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.downloadlineitemsrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/doubleclickbidmanager/v1/", "lineitems/downloadlineitems")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(DownloadLineItemsResponse)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves line items in CSV format.",
+	//   "httpMethod": "POST",
+	//   "id": "doubleclickbidmanager.lineitems.downloadlineitems",
+	//   "path": "lineitems/downloadlineitems",
+	//   "request": {
+	//     "$ref": "DownloadLineItemsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "DownloadLineItemsResponse"
+	//   }
+	// }
+
+}
+
+// method id "doubleclickbidmanager.lineitems.uploadlineitems":
+
+type LineitemsUploadlineitemsCall struct {
+	s                      *Service
+	uploadlineitemsrequest *UploadLineItemsRequest
+	opt_                   map[string]interface{}
+}
+
+// Uploadlineitems: Uploads line items in CSV format.
+func (r *LineitemsService) Uploadlineitems(uploadlineitemsrequest *UploadLineItemsRequest) *LineitemsUploadlineitemsCall {
+	c := &LineitemsUploadlineitemsCall{s: r.s, opt_: make(map[string]interface{})}
+	c.uploadlineitemsrequest = uploadlineitemsrequest
+	return c
+}
+
+func (c *LineitemsUploadlineitemsCall) Do() (*UploadLineItemsResponse, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.uploadlineitemsrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/doubleclickbidmanager/v1/", "lineitems/uploadlineitems")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(UploadLineItemsResponse)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Uploads line items in CSV format.",
+	//   "httpMethod": "POST",
+	//   "id": "doubleclickbidmanager.lineitems.uploadlineitems",
+	//   "path": "lineitems/uploadlineitems",
+	//   "request": {
+	//     "$ref": "UploadLineItemsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "UploadLineItemsResponse"
+	//   }
+	// }
+
 }
 
 // method id "doubleclickbidmanager.queries.createquery":

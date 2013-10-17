@@ -52,6 +52,10 @@ const (
 
 	// View and manage your assets and associated content on YouTube
 	YoutubepartnerScope = "https://www.googleapis.com/auth/youtubepartner"
+
+	// View private information of your YouTube channel relevant during the
+	// audit process with a YouTube partner
+	YoutubepartnerChannelAuditScope = "https://www.googleapis.com/auth/youtubepartner-channel-audit"
 )
 
 func New(client *http.Client) (*Service, error) {
@@ -72,6 +76,7 @@ func New(client *http.Client) (*Service, error) {
 	s.Thumbnails = NewThumbnailsService(s)
 	s.VideoCategories = NewVideoCategoriesService(s)
 	s.Videos = NewVideosService(s)
+	s.Watermarks = NewWatermarksService(s)
 	return s, nil
 }
 
@@ -103,6 +108,8 @@ type Service struct {
 	VideoCategories *VideoCategoriesService
 
 	Videos *VideosService
+
+	Watermarks *WatermarksService
 }
 
 func NewActivitiesService(s *Service) *ActivitiesService {
@@ -219,6 +226,15 @@ func NewVideosService(s *Service) *VideosService {
 }
 
 type VideosService struct {
+	s *Service
+}
+
+func NewWatermarksService(s *Service) *WatermarksService {
+	rs := &WatermarksService{s: s}
+	return rs
+}
+
+type WatermarksService struct {
 	s *Service
 }
 
@@ -367,12 +383,21 @@ type ActivityContentDetailsPromotedItem struct {
 	// action that can be taken.
 	CtaType string `json:"ctaType,omitempty"`
 
+	// CustomCtaButtonText: The custom call-to-action button text. If
+	// specified, it will override the default button text for the cta_type.
+	CustomCtaButtonText string `json:"customCtaButtonText,omitempty"`
+
 	// DescriptionText: The text description to accompany the promoted item.
 	DescriptionText string `json:"descriptionText,omitempty"`
 
 	// DestinationUrl: The URL the client should direct the user to, if the
 	// user chooses to visit the advertiser's website.
 	DestinationUrl string `json:"destinationUrl,omitempty"`
+
+	// ForecastingUrls: The list of forecasting URLs. The client should ping
+	// all of these URLs when a promoted item is not available, to indicate
+	// that a promoted item could have been shown.
+	ForecastingUrls []string `json:"forecastingUrls,omitempty"`
 
 	// ImpressionUrls: The list of impression URLs. The client should ping
 	// all of these URLs to indicate that the user was shown this promoted
@@ -513,6 +538,10 @@ type CdnSettings struct {
 }
 
 type Channel struct {
+	// AuditDetails: The auditionDetails object encapsulates channel data
+	// that is relevant for YouTube Partners during the audition process.
+	AuditDetails *ChannelAuditDetails `json:"auditDetails,omitempty"`
+
 	// BrandingSettings: The brandingSettings object encapsulates
 	// information about the branding of the channel.
 	BrandingSettings *ChannelBrandingSettings `json:"brandingSettings,omitempty"`
@@ -553,6 +582,28 @@ type Channel struct {
 	// TopicDetails: The topicDetails object encapsulates information about
 	// Freebase topics associated with the channel.
 	TopicDetails *ChannelTopicDetails `json:"topicDetails,omitempty"`
+}
+
+type ChannelAuditDetails struct {
+	// CommunityGuidelinesGoodStanding: Whether or not the channel respects
+	// the community guidelines.
+	CommunityGuidelinesGoodStanding bool `json:"communityGuidelinesGoodStanding,omitempty"`
+
+	// ContentIdClaimsGoodStanding: Whether or not the channel has any
+	// unresolved claims.
+	ContentIdClaimsGoodStanding bool `json:"contentIdClaimsGoodStanding,omitempty"`
+
+	// CopyrightStrikesGoodStanding: Whether or not the channel has any
+	// copyright strikes.
+	CopyrightStrikesGoodStanding bool `json:"copyrightStrikesGoodStanding,omitempty"`
+
+	// OverallGoodStanding: Describes the general state of the channel. This
+	// field will always show if there are any issues whatsoever with the
+	// channel. Currently this field represents the result of the logical
+	// and operation over the community guidelines good standing, the
+	// copyright strikes good standing and the content ID claims good
+	// standing, but this may change in the future.
+	OverallGoodStanding bool `json:"overallGoodStanding,omitempty"`
 }
 
 type ChannelBannerResource struct {
@@ -801,6 +852,10 @@ type ContentRating struct {
 	// KmrbRating: Rating system in South Korea - Korea Media Rating Board
 	KmrbRating string `json:"kmrbRating,omitempty"`
 
+	// MibacRating: Rating system in Italy - Ministero dei Beni e delle
+	// Attivita Culturali e del Turismo
+	MibacRating string `json:"mibacRating,omitempty"`
+
 	// MpaaRating: Motion Picture Association of America rating for the
 	// content.
 	MpaaRating string `json:"mpaaRating,omitempty"`
@@ -935,8 +990,20 @@ type ImageSettings struct {
 	// (1138x188).
 	BannerTabletLowImageUrl string `json:"bannerTabletLowImageUrl,omitempty"`
 
-	// BannerTvImageUrl: Banner image. TV size (2120x1192).
+	// BannerTvHighImageUrl: Banner image. TV size high resolution
+	// (1920x1080).
+	BannerTvHighImageUrl string `json:"bannerTvHighImageUrl,omitempty"`
+
+	// BannerTvImageUrl: Banner image. TV size extra high resolution
+	// (2120x1192).
 	BannerTvImageUrl string `json:"bannerTvImageUrl,omitempty"`
+
+	// BannerTvLowImageUrl: Banner image. TV size low resolution (854x480).
+	BannerTvLowImageUrl string `json:"bannerTvLowImageUrl,omitempty"`
+
+	// BannerTvMediumImageUrl: Banner image. TV size medium resolution
+	// (1280x720).
+	BannerTvMediumImageUrl string `json:"bannerTvMediumImageUrl,omitempty"`
 
 	// LargeBrandedBannerImageImapScript: The image map script for the large
 	// banner image.
@@ -988,6 +1055,18 @@ type IngestionInfo struct {
 	// StreamName: The HTTP or RTMP stream name that YouTube assigns to the
 	// video stream.
 	StreamName string `json:"streamName,omitempty"`
+}
+
+type InvideoBranding struct {
+	ImageBytes string `json:"imageBytes,omitempty"`
+
+	ImageUrl string `json:"imageUrl,omitempty"`
+
+	Position *InvideoPosition `json:"position,omitempty"`
+
+	TargetChannelId string `json:"targetChannelId,omitempty"`
+
+	Timing *InvideoTiming `json:"timing,omitempty"`
 }
 
 type InvideoPosition struct {
@@ -1581,12 +1660,23 @@ type PromotedItem struct {
 	// Id: Identifies the promoted item.
 	Id *PromotedItemId `json:"id,omitempty"`
 
+	// PromotedByContentOwner: If true, the content owner's name will be
+	// used when displaying the promotion. This field can only be set when
+	// the update is made on behalf of the content owner.
+	PromotedByContentOwner bool `json:"promotedByContentOwner,omitempty"`
+
 	// Timing: The temporal position within the video where the promoted
 	// item will be displayed. If present, it overrides the default timing.
 	Timing *InvideoTiming `json:"timing,omitempty"`
 }
 
 type PromotedItemId struct {
+	// RecentlyUploadedBy: If type is recentUpload, this field identifies
+	// the channel from which to take the recent upload. If missing, the
+	// channel is assumed to be the same channel for which the
+	// invideoPromotion is set.
+	RecentlyUploadedBy string `json:"recentlyUploadedBy,omitempty"`
+
 	// Type: Describes the type of the promoted item.
 	Type string `json:"type,omitempty"`
 
@@ -1689,6 +1779,11 @@ type SearchResultSnippet struct {
 
 	// Description: A description of the search result.
 	Description string `json:"description,omitempty"`
+
+	// LiveBroadcastContent: It indicates if the resource (video or channel)
+	// has upcoming/active live broadcast content. Or it's "none" if there
+	// is not any upcoming/active live broadcasts.
+	LiveBroadcastContent string `json:"liveBroadcastContent,omitempty"`
 
 	// PublishedAt: The creation date and time of the resource that the
 	// search result identifies. The value is specified in ISO 8601
@@ -1864,9 +1959,6 @@ type ThumbnailSetResponse struct {
 }
 
 type TokenPagination struct {
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	PreviousPageToken string `json:"previousPageToken,omitempty"`
 }
 
 type Video struct {
@@ -1897,6 +1989,10 @@ type Video struct {
 
 	// Kind: The kind, fixed to "youtube#video".
 	Kind string `json:"kind,omitempty"`
+
+	// LiveStreamingDetails: The liveStreamingDetails object contains
+	// information regarding the livestream
+	LiveStreamingDetails *VideoLiveStreamingDetails `json:"liveStreamingDetails,omitempty"`
 
 	// MonetizationDetails: The monetizationDetails object encapsulates
 	// information about the monetization status of the video.
@@ -2016,6 +2112,8 @@ type VideoCategoryListResponse struct {
 }
 
 type VideoCategorySnippet struct {
+	Assignable bool `json:"assignable,omitempty"`
+
 	// ChannelId: The YouTube channel that created the video category.
 	ChannelId string `json:"channelId,omitempty"`
 
@@ -2241,6 +2339,27 @@ type VideoListResponse struct {
 	VisitorId string `json:"visitorId,omitempty"`
 }
 
+type VideoLiveStreamingDetails struct {
+	// ActualEndTimeMs: The time in milliseconds since the epoch when the
+	// livestream actually ended.
+	ActualEndTimeMs uint64 `json:"actualEndTimeMs,omitempty,string"`
+
+	// ActualStartTimeMs: The time in milliseconds since the epoch when the
+	// livestream actually started.
+	ActualStartTimeMs uint64 `json:"actualStartTimeMs,omitempty,string"`
+
+	// ConcurrentViewers: Number of viewers currently watch the livestream.
+	ConcurrentViewers uint64 `json:"concurrentViewers,omitempty,string"`
+
+	// ScheduledEndTimeMs: The time in milliseconds since the epoch when the
+	// livestream is scheduled to end.
+	ScheduledEndTimeMs uint64 `json:"scheduledEndTimeMs,omitempty,string"`
+
+	// ScheduledStartTimeMs: The time in milliseconds since the epoch when
+	// the livestream is scheduled to start.
+	ScheduledStartTimeMs uint64 `json:"scheduledStartTimeMs,omitempty,string"`
+}
+
 type VideoMonetizationDetails struct {
 	// Access: The value of access indicates whether the video can be
 	// monetized or not.
@@ -2365,6 +2484,11 @@ type VideoSnippet struct {
 
 	// Description: The video's description.
 	Description string `json:"description,omitempty"`
+
+	// LiveBroadcastContent: Indicates if the video is an upcoming/active
+	// live broadcast. Or it's "none" if the video is not an upcoming/active
+	// live broadcast.
+	LiveBroadcastContent string `json:"liveBroadcastContent,omitempty"`
 
 	// PublishedAt: The date and time that the video was uploaded. The value
 	// is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.
@@ -3160,7 +3284,8 @@ func (c *ChannelsListCall) Do() (*ChannelListResponse, error) {
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/youtube",
 	//     "https://www.googleapis.com/auth/youtube.readonly",
-	//     "https://www.googleapis.com/auth/youtubepartner"
+	//     "https://www.googleapis.com/auth/youtubepartner",
+	//     "https://www.googleapis.com/auth/youtubepartner-channel-audit"
 	//   ]
 	// }
 
@@ -4963,11 +5088,22 @@ func (r *PlaylistsService) Delete(id string) *PlaylistsDeleteCall {
 	return c
 }
 
+// OnBehalfOfContentOwner sets the optional parameter
+// "onBehalfOfContentOwner": USE_DESCRIPTION ---
+// videos:insert:onBehalfOfContentOwner
+func (c *PlaylistsDeleteCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *PlaylistsDeleteCall {
+	c.opt_["onBehalfOfContentOwner"] = onBehalfOfContentOwner
+	return c
+}
+
 func (c *PlaylistsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("id", fmt.Sprintf("%v", c.id))
+	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
+		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "playlists")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
@@ -4994,6 +5130,11 @@ func (c *PlaylistsDeleteCall) Do() error {
 	//       "description": "The id parameter specifies the YouTube playlist ID for the playlist that is being deleted. In a playlist resource, the id property specifies the playlist's ID.",
 	//       "location": "query",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "onBehalfOfContentOwner": {
+	//       "description": "USE_DESCRIPTION --- videos:insert:onBehalfOfContentOwner",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -5023,6 +5164,22 @@ func (r *PlaylistsService) Insert(part string, playlist *Playlist) *PlaylistsIns
 	return c
 }
 
+// OnBehalfOfContentOwner sets the optional parameter
+// "onBehalfOfContentOwner": USE_DESCRIPTION ---
+// videos:insert:onBehalfOfContentOwner
+func (c *PlaylistsInsertCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *PlaylistsInsertCall {
+	c.opt_["onBehalfOfContentOwner"] = onBehalfOfContentOwner
+	return c
+}
+
+// OnBehalfOfContentOwnerChannel sets the optional parameter
+// "onBehalfOfContentOwnerChannel": USE_DESCRIPTION ---
+// videos:insert:onBehalfOfContentOwnerChannel
+func (c *PlaylistsInsertCall) OnBehalfOfContentOwnerChannel(onBehalfOfContentOwnerChannel string) *PlaylistsInsertCall {
+	c.opt_["onBehalfOfContentOwnerChannel"] = onBehalfOfContentOwnerChannel
+	return c
+}
+
 func (c *PlaylistsInsertCall) Do() (*Playlist, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.playlist)
@@ -5033,6 +5190,12 @@ func (c *PlaylistsInsertCall) Do() (*Playlist, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("part", fmt.Sprintf("%v", c.part))
+	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
+		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["onBehalfOfContentOwnerChannel"]; ok {
+		params.Set("onBehalfOfContentOwnerChannel", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "playlists")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -5060,6 +5223,16 @@ func (c *PlaylistsInsertCall) Do() (*Playlist, error) {
 	//     "part"
 	//   ],
 	//   "parameters": {
+	//     "onBehalfOfContentOwner": {
+	//       "description": "USE_DESCRIPTION --- videos:insert:onBehalfOfContentOwner",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "onBehalfOfContentOwnerChannel": {
+	//       "description": "USE_DESCRIPTION --- videos:insert:onBehalfOfContentOwnerChannel",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "part": {
 	//       "description": "The part parameter serves two purposes in this operation. It identifies the properties that the write operation will set as well as the properties that the API response will include.\n\nThe part names that you can include in the parameter value are snippet and status.",
 	//       "location": "query",
@@ -5133,6 +5306,22 @@ func (c *PlaylistsListCall) Mine(mine bool) *PlaylistsListCall {
 	return c
 }
 
+// OnBehalfOfContentOwner sets the optional parameter
+// "onBehalfOfContentOwner": USE_DESCRIPTION ---
+// videos:insert:onBehalfOfContentOwner
+func (c *PlaylistsListCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *PlaylistsListCall {
+	c.opt_["onBehalfOfContentOwner"] = onBehalfOfContentOwner
+	return c
+}
+
+// OnBehalfOfContentOwnerChannel sets the optional parameter
+// "onBehalfOfContentOwnerChannel": USE_DESCRIPTION ---
+// videos:insert:onBehalfOfContentOwnerChannel
+func (c *PlaylistsListCall) OnBehalfOfContentOwnerChannel(onBehalfOfContentOwnerChannel string) *PlaylistsListCall {
+	c.opt_["onBehalfOfContentOwnerChannel"] = onBehalfOfContentOwnerChannel
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": The pageToken
 // parameter identifies a specific page in the result set that should be
 // returned. In an API response, the nextPageToken and prevPageToken
@@ -5158,6 +5347,12 @@ func (c *PlaylistsListCall) Do() (*PlaylistListResponse, error) {
 	}
 	if v, ok := c.opt_["mine"]; ok {
 		params.Set("mine", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
+		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["onBehalfOfContentOwnerChannel"]; ok {
+		params.Set("onBehalfOfContentOwnerChannel", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
@@ -5212,6 +5407,16 @@ func (c *PlaylistsListCall) Do() (*PlaylistListResponse, error) {
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
+	//     "onBehalfOfContentOwner": {
+	//       "description": "USE_DESCRIPTION --- videos:insert:onBehalfOfContentOwner",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "onBehalfOfContentOwnerChannel": {
+	//       "description": "USE_DESCRIPTION --- videos:insert:onBehalfOfContentOwnerChannel",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageToken": {
 	//       "description": "The pageToken parameter identifies a specific page in the result set that should be returned. In an API response, the nextPageToken and prevPageToken properties identify other pages that could be retrieved.",
 	//       "location": "query",
@@ -5255,6 +5460,14 @@ func (r *PlaylistsService) Update(part string, playlist *Playlist) *PlaylistsUpd
 	return c
 }
 
+// OnBehalfOfContentOwner sets the optional parameter
+// "onBehalfOfContentOwner": USE_DESCRIPTION ---
+// videos:insert:onBehalfOfContentOwner
+func (c *PlaylistsUpdateCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *PlaylistsUpdateCall {
+	c.opt_["onBehalfOfContentOwner"] = onBehalfOfContentOwner
+	return c
+}
+
 func (c *PlaylistsUpdateCall) Do() (*Playlist, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.playlist)
@@ -5265,6 +5478,9 @@ func (c *PlaylistsUpdateCall) Do() (*Playlist, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("part", fmt.Sprintf("%v", c.part))
+	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
+		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "playlists")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
@@ -5292,6 +5508,11 @@ func (c *PlaylistsUpdateCall) Do() (*Playlist, error) {
 	//     "part"
 	//   ],
 	//   "parameters": {
+	//     "onBehalfOfContentOwner": {
+	//       "description": "USE_DESCRIPTION --- videos:insert:onBehalfOfContentOwner",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "part": {
 	//       "description": "The part parameter serves two purposes in this operation. It identifies the properties that the write operation will set as well as the properties that the API response will include.\n\nThe part names that you can include in the parameter value are snippet and status.\n\nNote that this method will override the existing values for all of the mutable properties that are contained in any parts that the parameter value specifies. For example, a playlist's privacy setting is contained in the status part. As such, if your request is updating a private playlist, and the request's part parameter value includes the status part, the playlist's privacy setting will be updated to whatever value the request body specifies. If the request body does not specify a value, the existing privacy setting will be removed and the playlist will revert to the default privacy setting.",
 	//       "location": "query",
@@ -5346,6 +5567,13 @@ func (c *SearchListCall) ChannelId(channelId string) *SearchListCall {
 // of channel.
 func (c *SearchListCall) ChannelType(channelType string) *SearchListCall {
 	c.opt_["channelType"] = channelType
+	return c
+}
+
+// EventType sets the optional parameter "eventType": The eventType
+// parameter restricts a search to broadcast events.
+func (c *SearchListCall) EventType(eventType string) *SearchListCall {
+	c.opt_["eventType"] = eventType
 	return c
 }
 
@@ -5571,6 +5799,9 @@ func (c *SearchListCall) Do() (*SearchListResponse, error) {
 	if v, ok := c.opt_["channelType"]; ok {
 		params.Set("channelType", fmt.Sprintf("%v", v))
 	}
+	if v, ok := c.opt_["eventType"]; ok {
+		params.Set("eventType", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["forContentOwner"]; ok {
 		params.Set("forContentOwner", fmt.Sprintf("%v", v))
 	}
@@ -5680,6 +5911,21 @@ func (c *SearchListCall) Do() (*SearchListResponse, error) {
 	//       "enumDescriptions": [
 	//         "Return all channels.",
 	//         "Only retrieve shows."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "eventType": {
+	//       "description": "The eventType parameter restricts a search to broadcast events.",
+	//       "enum": [
+	//         "completed",
+	//         "live",
+	//         "upcoming"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Only include completed broadcasts.",
+	//         "Only include active broadcasts.",
+	//         "Only include upcoming broadcasts."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -6336,6 +6582,14 @@ func (r *ThumbnailsService) Set(videoId string) *ThumbnailsSetCall {
 	c.videoId = videoId
 	return c
 }
+
+// OnBehalfOfContentOwner sets the optional parameter
+// "onBehalfOfContentOwner": USE_DESCRIPTION ---
+// channels:list:onBehalfOfContentOwner
+func (c *ThumbnailsSetCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *ThumbnailsSetCall {
+	c.opt_["onBehalfOfContentOwner"] = onBehalfOfContentOwner
+	return c
+}
 func (c *ThumbnailsSetCall) Media(r io.Reader) *ThumbnailsSetCall {
 	c.media_ = r
 	return c
@@ -6346,6 +6600,9 @@ func (c *ThumbnailsSetCall) Do() (*ThumbnailSetResponse, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("videoId", fmt.Sprintf("%v", c.videoId))
+	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
+		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "thumbnails/set")
 	if c.media_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
@@ -6401,6 +6658,11 @@ func (c *ThumbnailsSetCall) Do() (*ThumbnailSetResponse, error) {
 	//     "videoId"
 	//   ],
 	//   "parameters": {
+	//     "onBehalfOfContentOwner": {
+	//       "description": "USE_DESCRIPTION --- channels:list:onBehalfOfContentOwner",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "videoId": {
 	//       "description": "The videoId parameter specifies a YouTube video ID for which the custom video thumbnail is being provided.",
 	//       "location": "query",
@@ -6743,6 +7005,14 @@ func (c *VideosInsertCall) AutoLevels(autoLevels bool) *VideosInsertCall {
 	return c
 }
 
+// NotifySubscribers sets the optional parameter "notifySubscribers":
+// The notifySubscribers parameter indicates whether YouTube should send
+// notification to subscribers about the inserted video.
+func (c *VideosInsertCall) NotifySubscribers(notifySubscribers bool) *VideosInsertCall {
+	c.opt_["notifySubscribers"] = notifySubscribers
+	return c
+}
+
 // OnBehalfOfContentOwner sets the optional parameter
 // "onBehalfOfContentOwner": Note: This parameter is intended
 // exclusively for YouTube content partners.
@@ -6815,6 +7085,9 @@ func (c *VideosInsertCall) Do() (*Video, error) {
 	if v, ok := c.opt_["autoLevels"]; ok {
 		params.Set("autoLevels", fmt.Sprintf("%v", v))
 	}
+	if v, ok := c.opt_["notifySubscribers"]; ok {
+		params.Set("notifySubscribers", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
 		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
 	}
@@ -6878,6 +7151,12 @@ func (c *VideosInsertCall) Do() (*Video, error) {
 	//   "parameters": {
 	//     "autoLevels": {
 	//       "description": "The autoLevels parameter indicates whether YouTube should automatically enhance the video's lighting and color.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "notifySubscribers": {
+	//       "default": "true",
+	//       "description": "The notifySubscribers parameter indicates whether YouTube should send notification to subscribers about the inserted video.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -7372,6 +7651,198 @@ func (c *VideosUpdateCall) Do() (*Video, error) {
 	//   "response": {
 	//     "$ref": "Video"
 	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtubepartner"
+	//   ]
+	// }
+
+}
+
+// method id "youtube.watermarks.set":
+
+type WatermarksSetCall struct {
+	s               *Service
+	channelId       string
+	invideobranding *InvideoBranding
+	opt_            map[string]interface{}
+	media_          io.Reader
+}
+
+// Set: Uploads a watermark image to YouTube and sets it for a channel.
+func (r *WatermarksService) Set(channelId string, invideobranding *InvideoBranding) *WatermarksSetCall {
+	c := &WatermarksSetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.channelId = channelId
+	c.invideobranding = invideobranding
+	return c
+}
+
+// OnBehalfOfContentOwner sets the optional parameter
+// "onBehalfOfContentOwner": USE_DESCRIPTION ---
+// channels:list:onBehalfOfContentOwner
+func (c *WatermarksSetCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *WatermarksSetCall {
+	c.opt_["onBehalfOfContentOwner"] = onBehalfOfContentOwner
+	return c
+}
+func (c *WatermarksSetCall) Media(r io.Reader) *WatermarksSetCall {
+	c.media_ = r
+	return c
+}
+
+func (c *WatermarksSetCall) Do() error {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.invideobranding)
+	if err != nil {
+		return err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("channelId", fmt.Sprintf("%v", c.channelId))
+	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
+		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "watermarks/set")
+	if c.media_ != nil {
+		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
+		params.Set("uploadType", "multipart")
+	}
+	urls += "?" + params.Encode()
+	contentLength_, hasMedia_ := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	if hasMedia_ {
+		req.ContentLength = contentLength_
+	}
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Uploads a watermark image to YouTube and sets it for a channel.",
+	//   "httpMethod": "POST",
+	//   "id": "youtube.watermarks.set",
+	//   "mediaUpload": {
+	//     "accept": [
+	//       "application/octet-stream",
+	//       "image/jpeg",
+	//       "image/png"
+	//     ],
+	//     "maxSize": "10MB",
+	//     "protocols": {
+	//       "resumable": {
+	//         "multipart": true,
+	//         "path": "/resumable/upload/youtube/v3/watermarks/set"
+	//       },
+	//       "simple": {
+	//         "multipart": true,
+	//         "path": "/upload/youtube/v3/watermarks/set"
+	//       }
+	//     }
+	//   },
+	//   "parameterOrder": [
+	//     "channelId"
+	//   ],
+	//   "parameters": {
+	//     "channelId": {
+	//       "description": "The channelId parameter specifies a YouTube channel ID for which the watermark is being provided.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "onBehalfOfContentOwner": {
+	//       "description": "USE_DESCRIPTION --- channels:list:onBehalfOfContentOwner",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "watermarks/set",
+	//   "request": {
+	//     "$ref": "InvideoBranding"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.upload",
+	//     "https://www.googleapis.com/auth/youtubepartner"
+	//   ],
+	//   "supportsMediaUpload": true
+	// }
+
+}
+
+// method id "youtube.watermarks.unset":
+
+type WatermarksUnsetCall struct {
+	s         *Service
+	channelId string
+	opt_      map[string]interface{}
+}
+
+// Unset: Deletes a watermark.
+func (r *WatermarksService) Unset(channelId string) *WatermarksUnsetCall {
+	c := &WatermarksUnsetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.channelId = channelId
+	return c
+}
+
+// OnBehalfOfContentOwner sets the optional parameter
+// "onBehalfOfContentOwner": USE_DESCRIPTION ---
+// channels:list:onBehalfOfContentOwner
+func (c *WatermarksUnsetCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *WatermarksUnsetCall {
+	c.opt_["onBehalfOfContentOwner"] = onBehalfOfContentOwner
+	return c
+}
+
+func (c *WatermarksUnsetCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("channelId", fmt.Sprintf("%v", c.channelId))
+	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
+		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/v3/", "watermarks/unset")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Deletes a watermark.",
+	//   "httpMethod": "POST",
+	//   "id": "youtube.watermarks.unset",
+	//   "parameterOrder": [
+	//     "channelId"
+	//   ],
+	//   "parameters": {
+	//     "channelId": {
+	//       "description": "The channelId parameter specifies a YouTube channel ID for which the watermark is being unset.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "onBehalfOfContentOwner": {
+	//       "description": "USE_DESCRIPTION --- channels:list:onBehalfOfContentOwner",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "watermarks/unset",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/youtube",
 	//     "https://www.googleapis.com/auth/youtubepartner"

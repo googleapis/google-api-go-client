@@ -248,6 +248,13 @@ func (c *PagespeedapiRunpagespeedCall) Screenshot(screenshot bool) *Pagespeedapi
 	return c
 }
 
+// Snapshots sets the optional parameter "snapshots": Indicates if
+// binary data containing snapshot images should be included
+func (c *PagespeedapiRunpagespeedCall) Snapshots(snapshots bool) *PagespeedapiRunpagespeedCall {
+	c.opt_["snapshots"] = snapshots
+	return c
+}
+
 // Strategy sets the optional parameter "strategy": The analysis
 // strategy to use
 func (c *PagespeedapiRunpagespeedCall) Strategy(strategy string) *PagespeedapiRunpagespeedCall {
@@ -271,6 +278,9 @@ func (c *PagespeedapiRunpagespeedCall) Do() (*Result, error) {
 	}
 	if v, ok := c.opt_["screenshot"]; ok {
 		params.Set("screenshot", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["snapshots"]; ok {
+		params.Set("snapshots", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["strategy"]; ok {
 		params.Set("strategy", fmt.Sprintf("%v", v))
@@ -323,6 +333,12 @@ func (c *PagespeedapiRunpagespeedCall) Do() (*Result, error) {
 	//     "screenshot": {
 	//       "default": "false",
 	//       "description": "Indicates if binary data containing a screenshot should be included",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "snapshots": {
+	//       "default": "false",
+	//       "description": "Indicates if binary data containing snapshot images should be included",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },

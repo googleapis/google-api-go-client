@@ -1,4 +1,4 @@
-// Package freebase provides access to the Freebase API.
+// Package freebase provides access to the Freebase Search.
 //
 // See https://developers.google.com/freebase/
 //
@@ -39,776 +39,150 @@ const apiName = "freebase"
 const apiVersion = "v1sandbox"
 const basePath = "https://www.googleapis.com/freebase/v1sandbox/"
 
-// OAuth2 scopes used by this API.
-const (
-	// Sign in to Freebase with your account
-	FreebaseScope = "https://www.googleapis.com/auth/freebase"
-)
-
 func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
-	s.Text = NewTextService(s)
-	s.Topic = NewTopicService(s)
 	return s, nil
 }
 
 type Service struct {
 	client *http.Client
-
-	Text *TextService
-
-	Topic *TopicService
 }
 
-func NewTextService(s *Service) *TextService {
-	rs := &TextService{s: s}
-	return rs
-}
+type ReconcileCandidate struct {
+	// Confidence: Percentage likelihood that this candidate is the unique
+	// matching entity. Value will be between 0.0 and 1.0
+	Confidence float64 `json:"confidence,omitempty"`
 
-type TextService struct {
-	s *Service
-}
-
-func NewTopicService(s *Service) *TopicService {
-	rs := &TopicService{s: s}
-	return rs
-}
-
-type TopicService struct {
-	s *Service
-}
-
-type ContentserviceGet struct {
-	// Result: The text requested.
-	Result string `json:"result,omitempty"`
-}
-
-type TopicLookup struct {
-	Id string `json:"id,omitempty"`
-
-	Property *TopicLookupProperty `json:"property,omitempty"`
-}
-
-type TopicLookupProperty struct {
-	FreebaseObject_profileLinkcount *TopicStatslinkcount `json:"/freebase/object_profile/linkcount,omitempty"`
-}
-
-type TopicPropertyvalue struct {
-	Count float64 `json:"count,omitempty"`
-
-	Status string `json:"status,omitempty"`
-
-	Values []*TopicValue `json:"values,omitempty"`
-
-	Valuetype string `json:"valuetype,omitempty"`
-}
-
-type TopicStatslinkcount struct {
-	Type string `json:"type,omitempty"`
-
-	Values []*TopicStatslinkcountValues `json:"values,omitempty"`
-}
-
-type TopicStatslinkcountValues struct {
-	Count int64 `json:"count,omitempty"`
-
-	Id string `json:"id,omitempty"`
-
-	Values []*TopicStatslinkcountValuesValues `json:"values,omitempty"`
-}
-
-type TopicStatslinkcountValuesValues struct {
-	Count int64 `json:"count,omitempty"`
-
-	Id string `json:"id,omitempty"`
-
-	Values []*TopicStatslinkcountValuesValuesValues `json:"values,omitempty"`
-}
-
-type TopicStatslinkcountValuesValuesValues struct {
-	Count int64 `json:"count,omitempty"`
-
-	Id string `json:"id,omitempty"`
-}
-
-type TopicValue struct {
-	Citation *TopicValueCitation `json:"citation,omitempty"`
-
-	Creator string `json:"creator,omitempty"`
-
-	Dataset string `json:"dataset,omitempty"`
-
-	Id string `json:"id,omitempty"`
-
+	// Lang: Language code that candidate and notable names are displayed
+	// in.
 	Lang string `json:"lang,omitempty"`
 
-	Project string `json:"project,omitempty"`
+	// Mid: Freebase MID of candidate entity.
+	Mid string `json:"mid,omitempty"`
 
-	Property *TopicValueProperty `json:"property,omitempty"`
+	// Name: Freebase name of matching entity in specified language.
+	Name string `json:"name,omitempty"`
 
-	Text string `json:"text,omitempty"`
-
-	Timestamp string `json:"timestamp,omitempty"`
-
-	Value interface{} `json:"value,omitempty"`
+	// Notable: Type or profession the candidate is notable for.
+	Notable *ReconcileCandidateNotable `json:"notable,omitempty"`
 }
 
-type TopicValueCitation struct {
-	Provider string `json:"provider,omitempty"`
+type ReconcileCandidateNotable struct {
+	// Id: MID of notable category.
+	Id string `json:"id,omitempty"`
 
-	Statement string `json:"statement,omitempty"`
-
-	Uri string `json:"uri,omitempty"`
+	// Name: Name of notable category in specified language.
+	Name string `json:"name,omitempty"`
 }
 
-type TopicValueProperty struct {
+type ReconcileGet struct {
+	// Candidate: If filled, then the listed candidates are potential
+	// matches, and such should be evaluated by a more discerning algorithm
+	// or human. The matches are ordered by confidence.
+	Candidate []*ReconcileCandidate `json:"candidate,omitempty"`
+
+	// Costs: Server costs for reconciling.
+	Costs *ReconcileGetCosts `json:"costs,omitempty"`
+
+	// Match: If filled, this entity is guaranteed to match at requested
+	// confidence probability (default 99%).
+	Match *ReconcileCandidate `json:"match,omitempty"`
+
+	// Warning: If filled, then there were recoverable problems that
+	// affected the request. For example, some of the properties were
+	// ignored because they either are not valid Freebase predicates or are
+	// not indexed for reconciliation. The candidates returned should be
+	// considered valid results, with the caveat that sections of the
+	// request were ignored as specified by the warning text.
+	Warning []*ReconcileGetWarning `json:"warning,omitempty"`
 }
 
-// method id "freebase.image":
+type ReconcileGetCosts struct {
+	// Hits: Total number of hits found.
+	Hits int64 `json:"hits,omitempty"`
 
-type ImageCall struct {
+	// Ms: Total milliseconds spent.
+	Ms int64 `json:"ms,omitempty"`
+}
+
+type ReconcileGetWarning struct {
+	// Location: Location of warning in the request e.g. invalid predicate.
+	Location string `json:"location,omitempty"`
+
+	// Message: Warning message to display to the user.
+	Message string `json:"message,omitempty"`
+
+	// Reason: Code for identifying classes of warnings.
+	Reason string `json:"reason,omitempty"`
+}
+
+// method id "freebase.reconcile":
+
+type ReconcileCall struct {
 	s    *Service
-	id   []string
 	opt_ map[string]interface{}
 }
 
-// Image: Returns the scaled/cropped image attached to a freebase node.
-func (s *Service) Image(id []string) *ImageCall {
-	c := &ImageCall{s: s, opt_: make(map[string]interface{})}
-	c.id = id
+// Reconcile: Reconcile entities to Freebase open data.
+func (s *Service) Reconcile() *ReconcileCall {
+	c := &ReconcileCall{s: s, opt_: make(map[string]interface{})}
 	return c
 }
 
-// Fallbackid sets the optional parameter "fallbackid": Use the image
-// associated with this secondary id if no image is associated with the
-// primary id.
-func (c *ImageCall) Fallbackid(fallbackid string) *ImageCall {
-	c.opt_["fallbackid"] = fallbackid
+// Confidence sets the optional parameter "confidence": Required
+// confidence for a candidate to match. Must be between .5 and 1.0
+func (c *ReconcileCall) Confidence(confidence float64) *ReconcileCall {
+	c.opt_["confidence"] = confidence
 	return c
 }
 
-// Maxheight sets the optional parameter "maxheight": Maximum height in
-// pixels for resulting image.
-func (c *ImageCall) Maxheight(maxheight int64) *ImageCall {
-	c.opt_["maxheight"] = maxheight
+// Kind sets the optional parameter "kind": Classifications of entity
+// e.g. type, category, title.
+func (c *ReconcileCall) Kind(kind string) *ReconcileCall {
+	c.opt_["kind"] = kind
 	return c
 }
 
-// Maxwidth sets the optional parameter "maxwidth": Maximum width in
-// pixels for resulting image.
-func (c *ImageCall) Maxwidth(maxwidth int64) *ImageCall {
-	c.opt_["maxwidth"] = maxwidth
-	return c
-}
-
-// Mode sets the optional parameter "mode": Method used to scale or crop
-// image.
-func (c *ImageCall) Mode(mode string) *ImageCall {
-	c.opt_["mode"] = mode
-	return c
-}
-
-// Pad sets the optional parameter "pad": A boolean specifying whether
-// the resulting image should be padded up to the requested dimensions.
-func (c *ImageCall) Pad(pad bool) *ImageCall {
-	c.opt_["pad"] = pad
-	return c
-}
-
-func (c *ImageCall) Do() error {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	if v, ok := c.opt_["fallbackid"]; ok {
-		params.Set("fallbackid", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["maxheight"]; ok {
-		params.Set("maxheight", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["maxwidth"]; ok {
-		params.Set("maxwidth", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["mode"]; ok {
-		params.Set("mode", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pad"]; ok {
-		params.Set("pad", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/freebase/v1sandbox/", "image{/id*}")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id[0]), 1)
-	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return err
-	}
-	defer res.Body.Close()
-	if err := googleapi.CheckResponse(res); err != nil {
-		return err
-	}
-	return nil
-	// {
-	//   "description": "Returns the scaled/cropped image attached to a freebase node.",
-	//   "httpMethod": "GET",
-	//   "id": "freebase.image",
-	//   "parameterOrder": [
-	//     "id"
-	//   ],
-	//   "parameters": {
-	//     "fallbackid": {
-	//       "default": "/freebase/no_image_png",
-	//       "description": "Use the image associated with this secondary id if no image is associated with the primary id.",
-	//       "location": "query",
-	//       "pattern": "/[^.]*$",
-	//       "type": "string"
-	//     },
-	//     "id": {
-	//       "description": "Freebase entity or content id, mid, or guid.",
-	//       "location": "path",
-	//       "repeated": true,
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "maxheight": {
-	//       "description": "Maximum height in pixels for resulting image.",
-	//       "format": "uint32",
-	//       "location": "query",
-	//       "maximum": "4096",
-	//       "type": "integer"
-	//     },
-	//     "maxwidth": {
-	//       "description": "Maximum width in pixels for resulting image.",
-	//       "format": "uint32",
-	//       "location": "query",
-	//       "maximum": "4096",
-	//       "type": "integer"
-	//     },
-	//     "mode": {
-	//       "default": "fit",
-	//       "description": "Method used to scale or crop image.",
-	//       "enum": [
-	//         "fill",
-	//         "fillcrop",
-	//         "fillcropmid",
-	//         "fit"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Fill rectangle completely with image, relax constraint on one dimension if necessary.",
-	//         "Fill rectangle with image, crop image to maintain rectangle dimensions.",
-	//         "Fill rectangle with image, center horizontally, crop left and right.",
-	//         "Fit image inside rectangle, leave empty space in one dimension if necessary."
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pad": {
-	//       "default": "false",
-	//       "description": "A boolean specifying whether the resulting image should be padded up to the requested dimensions.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     }
-	//   },
-	//   "path": "image{/id*}",
-	//   "supportsMediaDownload": true
-	// }
-
-}
-
-// method id "freebase.mqlread":
-
-type MqlreadCall struct {
-	s     *Service
-	query string
-	opt_  map[string]interface{}
-}
-
-// Mqlread: Performs MQL Queries.
-func (s *Service) Mqlread(query string) *MqlreadCall {
-	c := &MqlreadCall{s: s, opt_: make(map[string]interface{})}
-	c.query = query
-	return c
-}
-
-// As_of_time sets the optional parameter "as_of_time": Run the query as
-// it would've been run at the specified point in time.
-func (c *MqlreadCall) As_of_time(as_of_time string) *MqlreadCall {
-	c.opt_["as_of_time"] = as_of_time
-	return c
-}
-
-// Callback sets the optional parameter "callback": JS method name for
-// JSONP callbacks.
-func (c *MqlreadCall) Callback(callback string) *MqlreadCall {
-	c.opt_["callback"] = callback
-	return c
-}
-
-// Cost sets the optional parameter "cost": Show the costs or not.
-func (c *MqlreadCall) Cost(cost bool) *MqlreadCall {
-	c.opt_["cost"] = cost
-	return c
-}
-
-// Cursor sets the optional parameter "cursor": The mql cursor.
-func (c *MqlreadCall) Cursor(cursor string) *MqlreadCall {
-	c.opt_["cursor"] = cursor
-	return c
-}
-
-// Dateline sets the optional parameter "dateline": The dateline that
-// you get in a mqlwrite response to ensure consistent results.
-func (c *MqlreadCall) Dateline(dateline string) *MqlreadCall {
-	c.opt_["dateline"] = dateline
-	return c
-}
-
-// Html_escape sets the optional parameter "html_escape": Whether or not
-// to escape entities.
-func (c *MqlreadCall) Html_escape(html_escape bool) *MqlreadCall {
-	c.opt_["html_escape"] = html_escape
-	return c
-}
-
-// Indent sets the optional parameter "indent": How many spaces to
-// indent the json.
-func (c *MqlreadCall) Indent(indent int64) *MqlreadCall {
-	c.opt_["indent"] = indent
-	return c
-}
-
-// Lang sets the optional parameter "lang": The language of the results
-// - an id of a /type/lang object.
-func (c *MqlreadCall) Lang(lang string) *MqlreadCall {
+// Lang sets the optional parameter "lang": Languages for names and
+// values. First language is used for display. Default is 'en'.
+func (c *ReconcileCall) Lang(lang string) *ReconcileCall {
 	c.opt_["lang"] = lang
 	return c
 }
 
-// Uniqueness_failure sets the optional parameter "uniqueness_failure":
-// How MQL responds to uniqueness failures.
-func (c *MqlreadCall) Uniqueness_failure(uniqueness_failure string) *MqlreadCall {
-	c.opt_["uniqueness_failure"] = uniqueness_failure
-	return c
-}
-
-func (c *MqlreadCall) Do() error {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	params.Set("query", fmt.Sprintf("%v", c.query))
-	if v, ok := c.opt_["as_of_time"]; ok {
-		params.Set("as_of_time", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["callback"]; ok {
-		params.Set("callback", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["cost"]; ok {
-		params.Set("cost", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["cursor"]; ok {
-		params.Set("cursor", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["dateline"]; ok {
-		params.Set("dateline", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["html_escape"]; ok {
-		params.Set("html_escape", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["indent"]; ok {
-		params.Set("indent", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["lang"]; ok {
-		params.Set("lang", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["uniqueness_failure"]; ok {
-		params.Set("uniqueness_failure", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/freebase/v1sandbox/", "mqlread")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return err
-	}
-	defer res.Body.Close()
-	if err := googleapi.CheckResponse(res); err != nil {
-		return err
-	}
-	return nil
-	// {
-	//   "description": "Performs MQL Queries.",
-	//   "httpMethod": "GET",
-	//   "id": "freebase.mqlread",
-	//   "parameterOrder": [
-	//     "query"
-	//   ],
-	//   "parameters": {
-	//     "as_of_time": {
-	//       "description": "Run the query as it would've been run at the specified point in time.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "callback": {
-	//       "description": "JS method name for JSONP callbacks.",
-	//       "location": "query",
-	//       "pattern": "([A-Za-z0-9_$.]|\\[|\\])+",
-	//       "type": "string"
-	//     },
-	//     "cost": {
-	//       "default": "false",
-	//       "description": "Show the costs or not.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "cursor": {
-	//       "description": "The mql cursor.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "dateline": {
-	//       "description": "The dateline that you get in a mqlwrite response to ensure consistent results.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "html_escape": {
-	//       "default": "true",
-	//       "description": "Whether or not to escape entities.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "indent": {
-	//       "default": "0",
-	//       "description": "How many spaces to indent the json.",
-	//       "format": "uint32",
-	//       "location": "query",
-	//       "maximum": "10",
-	//       "type": "integer"
-	//     },
-	//     "lang": {
-	//       "default": "/lang/en",
-	//       "description": "The language of the results - an id of a /type/lang object.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "query": {
-	//       "description": "An envelope containing a single MQL query.",
-	//       "location": "query",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "uniqueness_failure": {
-	//       "default": "hard",
-	//       "description": "How MQL responds to uniqueness failures.",
-	//       "enum": [
-	//         "hard",
-	//         "soft"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Be strict - throw an error.",
-	//         "Just return the first encountered object."
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "mqlread",
-	//   "supportsMediaDownload": true
-	// }
-
-}
-
-// method id "freebase.mqlwrite":
-
-type MqlwriteCall struct {
-	s     *Service
-	query string
-	opt_  map[string]interface{}
-}
-
-// Mqlwrite: Performs MQL Write Operations.
-func (s *Service) Mqlwrite(query string) *MqlwriteCall {
-	c := &MqlwriteCall{s: s, opt_: make(map[string]interface{})}
-	c.query = query
-	return c
-}
-
-// Callback sets the optional parameter "callback": JS method name for
-// JSONP callbacks.
-func (c *MqlwriteCall) Callback(callback string) *MqlwriteCall {
-	c.opt_["callback"] = callback
-	return c
-}
-
-// Dateline sets the optional parameter "dateline": The dateline that
-// you get in a mqlwrite response to ensure consistent results.
-func (c *MqlwriteCall) Dateline(dateline string) *MqlwriteCall {
-	c.opt_["dateline"] = dateline
-	return c
-}
-
-// Indent sets the optional parameter "indent": How many spaces to
-// indent the json.
-func (c *MqlwriteCall) Indent(indent int64) *MqlwriteCall {
-	c.opt_["indent"] = indent
-	return c
-}
-
-// Use_permission_of sets the optional parameter "use_permission_of":
-// Use the same permission node of the object with the specified id.
-func (c *MqlwriteCall) Use_permission_of(use_permission_of string) *MqlwriteCall {
-	c.opt_["use_permission_of"] = use_permission_of
-	return c
-}
-
-func (c *MqlwriteCall) Do() error {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	params.Set("query", fmt.Sprintf("%v", c.query))
-	if v, ok := c.opt_["callback"]; ok {
-		params.Set("callback", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["dateline"]; ok {
-		params.Set("dateline", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["indent"]; ok {
-		params.Set("indent", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["use_permission_of"]; ok {
-		params.Set("use_permission_of", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/freebase/v1sandbox/", "mqlwrite")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return err
-	}
-	defer res.Body.Close()
-	if err := googleapi.CheckResponse(res); err != nil {
-		return err
-	}
-	return nil
-	// {
-	//   "description": "Performs MQL Write Operations.",
-	//   "httpMethod": "GET",
-	//   "id": "freebase.mqlwrite",
-	//   "parameterOrder": [
-	//     "query"
-	//   ],
-	//   "parameters": {
-	//     "callback": {
-	//       "description": "JS method name for JSONP callbacks.",
-	//       "location": "query",
-	//       "pattern": "([A-Za-z0-9_$.]|\\[|\\])+",
-	//       "type": "string"
-	//     },
-	//     "dateline": {
-	//       "description": "The dateline that you get in a mqlwrite response to ensure consistent results.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "indent": {
-	//       "default": "0",
-	//       "description": "How many spaces to indent the json.",
-	//       "format": "uint32",
-	//       "location": "query",
-	//       "maximum": "10",
-	//       "type": "integer"
-	//     },
-	//     "query": {
-	//       "description": "An MQL query with write directives.",
-	//       "location": "query",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "use_permission_of": {
-	//       "description": "Use the same permission node of the object with the specified id.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "mqlwrite",
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/freebase"
-	//   ],
-	//   "supportsMediaDownload": true
-	// }
-
-}
-
-// method id "freebase.text.get":
-
-type TextGetCall struct {
-	s    *Service
-	id   []string
-	opt_ map[string]interface{}
-}
-
-// Get: Returns blob attached to node at specified id as HTML
-func (r *TextService) Get(id []string) *TextGetCall {
-	c := &TextGetCall{s: r.s, opt_: make(map[string]interface{})}
-	c.id = id
-	return c
-}
-
-// Format sets the optional parameter "format": Sanitizing
-// transformation.
-func (c *TextGetCall) Format(format string) *TextGetCall {
-	c.opt_["format"] = format
-	return c
-}
-
-// Maxlength sets the optional parameter "maxlength": The max number of
-// characters to return. Valid only for 'plain' format.
-func (c *TextGetCall) Maxlength(maxlength int64) *TextGetCall {
-	c.opt_["maxlength"] = maxlength
-	return c
-}
-
-func (c *TextGetCall) Do() (*ContentserviceGet, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	if v, ok := c.opt_["format"]; ok {
-		params.Set("format", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["maxlength"]; ok {
-		params.Set("maxlength", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/freebase/v1sandbox/", "text{/id*}")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id[0]), 1)
-	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	defer res.Body.Close()
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(ContentserviceGet)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Returns blob attached to node at specified id as HTML",
-	//   "httpMethod": "GET",
-	//   "id": "freebase.text.get",
-	//   "parameterOrder": [
-	//     "id"
-	//   ],
-	//   "parameters": {
-	//     "format": {
-	//       "default": "plain",
-	//       "description": "Sanitizing transformation.",
-	//       "enum": [
-	//         "html",
-	//         "plain",
-	//         "raw"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Return valid, sanitized html.",
-	//         "Return plain text - strip html tags.",
-	//         "Return the entire content as-is."
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "id": {
-	//       "description": "The id of the item that you want data about",
-	//       "location": "path",
-	//       "repeated": true,
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "maxlength": {
-	//       "description": "The max number of characters to return. Valid only for 'plain' format.",
-	//       "format": "uint32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     }
-	//   },
-	//   "path": "text{/id*}",
-	//   "response": {
-	//     "$ref": "ContentserviceGet"
-	//   }
-	// }
-
-}
-
-// method id "freebase.topic.lookup":
-
-type TopicLookupCall struct {
-	s    *Service
-	id   []string
-	opt_ map[string]interface{}
-}
-
-// Lookup: Get properties and meta-data about a topic.
-func (r *TopicService) Lookup(id []string) *TopicLookupCall {
-	c := &TopicLookupCall{s: r.s, opt_: make(map[string]interface{})}
-	c.id = id
-	return c
-}
-
-// Dateline sets the optional parameter "dateline": Determines how
-// up-to-date the data returned is. A unix epoch time, a guid or a 'now'
-func (c *TopicLookupCall) Dateline(dateline string) *TopicLookupCall {
-	c.opt_["dateline"] = dateline
-	return c
-}
-
-// Filter sets the optional parameter "filter": A frebase domain, type
-// or property id, 'suggest', 'commons', or 'all'. Filter the results
-// and returns only appropriate properties.
-func (c *TopicLookupCall) Filter(filter string) *TopicLookupCall {
-	c.opt_["filter"] = filter
-	return c
-}
-
-// Lang sets the optional parameter "lang": The language you 'd like the
-// content in - a freebase /type/lang language key.
-func (c *TopicLookupCall) Lang(lang string) *TopicLookupCall {
-	c.opt_["lang"] = lang
-	return c
-}
-
-// Limit sets the optional parameter "limit": The maximum number of
-// property values to return for each property.
-func (c *TopicLookupCall) Limit(limit int64) *TopicLookupCall {
+// Limit sets the optional parameter "limit": Maximum number of
+// candidates to return.
+func (c *ReconcileCall) Limit(limit int64) *ReconcileCall {
 	c.opt_["limit"] = limit
 	return c
 }
 
-// Raw sets the optional parameter "raw": Do not apply any constraints,
-// or get any names.
-func (c *TopicLookupCall) Raw(raw bool) *TopicLookupCall {
-	c.opt_["raw"] = raw
+// Name sets the optional parameter "name": Name of entity.
+func (c *ReconcileCall) Name(name string) *ReconcileCall {
+	c.opt_["name"] = name
 	return c
 }
 
-func (c *TopicLookupCall) Do() (*TopicLookup, error) {
+// Prop sets the optional parameter "prop": Property values for entity
+// formatted as
+// :
+func (c *ReconcileCall) Prop(prop string) *ReconcileCall {
+	c.opt_["prop"] = prop
+	return c
+}
+
+func (c *ReconcileCall) Do() (*ReconcileGet, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	if v, ok := c.opt_["dateline"]; ok {
-		params.Set("dateline", fmt.Sprintf("%v", v))
+	if v, ok := c.opt_["confidence"]; ok {
+		params.Set("confidence", fmt.Sprintf("%v", v))
 	}
-	if v, ok := c.opt_["filter"]; ok {
-		params.Set("filter", fmt.Sprintf("%v", v))
+	if v, ok := c.opt_["kind"]; ok {
+		params.Set("kind", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["lang"]; ok {
 		params.Set("lang", fmt.Sprintf("%v", v))
@@ -816,13 +190,15 @@ func (c *TopicLookupCall) Do() (*TopicLookup, error) {
 	if v, ok := c.opt_["limit"]; ok {
 		params.Set("limit", fmt.Sprintf("%v", v))
 	}
-	if v, ok := c.opt_["raw"]; ok {
-		params.Set("raw", fmt.Sprintf("%v", v))
+	if v, ok := c.opt_["name"]; ok {
+		params.Set("name", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/freebase/v1sandbox/", "topic{/id*}")
+	if v, ok := c.opt_["prop"]; ok {
+		params.Set("prop", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/freebase/v1sandbox/", "reconcile")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id[0]), 1)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -833,61 +209,520 @@ func (c *TopicLookupCall) Do() (*TopicLookup, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(TopicLookup)
+	ret := new(ReconcileGet)
 	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Get properties and meta-data about a topic.",
+	//   "description": "Reconcile entities to Freebase open data.",
 	//   "httpMethod": "GET",
-	//   "id": "freebase.topic.lookup",
-	//   "parameterOrder": [
-	//     "id"
-	//   ],
+	//   "id": "freebase.reconcile",
 	//   "parameters": {
-	//     "dateline": {
-	//       "description": "Determines how up-to-date the data returned is. A unix epoch time, a guid or a 'now'",
+	//     "confidence": {
+	//       "default": "0.99",
+	//       "description": "Required confidence for a candidate to match. Must be between .5 and 1.0",
+	//       "format": "float",
 	//       "location": "query",
-	//       "type": "string"
+	//       "maximum": "1.0",
+	//       "minimum": "0.0",
+	//       "type": "number"
 	//     },
-	//     "filter": {
-	//       "description": "A frebase domain, type or property id, 'suggest', 'commons', or 'all'. Filter the results and returns only appropriate properties.",
+	//     "kind": {
+	//       "description": "Classifications of entity e.g. type, category, title.",
 	//       "location": "query",
 	//       "repeated": true,
-	//       "type": "string"
-	//     },
-	//     "id": {
-	//       "description": "The id of the item that you want data about.",
-	//       "location": "path",
-	//       "repeated": true,
-	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "lang": {
-	//       "default": "en",
-	//       "description": "The language you 'd like the content in - a freebase /type/lang language key.",
+	//       "description": "Languages for names and values. First language is used for display. Default is 'en'.",
 	//       "location": "query",
+	//       "repeated": true,
 	//       "type": "string"
 	//     },
 	//     "limit": {
-	//       "default": "10",
-	//       "description": "The maximum number of property values to return for each property.",
-	//       "format": "uint32",
+	//       "default": "3",
+	//       "description": "Maximum number of candidates to return.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "maximum": "25",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "name": {
+	//       "description": "Name of entity.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "prop": {
+	//       "description": "Property values for entity formatted as\n:",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "reconcile",
+	//   "response": {
+	//     "$ref": "ReconcileGet"
+	//   }
+	// }
+
+}
+
+// method id "freebase.search":
+
+type SearchCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// Search: Search Freebase open data.
+func (s *Service) Search() *SearchCall {
+	c := &SearchCall{s: s, opt_: make(map[string]interface{})}
+	return c
+}
+
+// As_of_time sets the optional parameter "as_of_time": A mql as_of_time
+// value to use with mql_output queries.
+func (c *SearchCall) As_of_time(as_of_time string) *SearchCall {
+	c.opt_["as_of_time"] = as_of_time
+	return c
+}
+
+// Callback sets the optional parameter "callback": JS method name for
+// JSONP callbacks.
+func (c *SearchCall) Callback(callback string) *SearchCall {
+	c.opt_["callback"] = callback
+	return c
+}
+
+// Cursor sets the optional parameter "cursor": The cursor value to use
+// for the next page of results.
+func (c *SearchCall) Cursor(cursor int64) *SearchCall {
+	c.opt_["cursor"] = cursor
+	return c
+}
+
+// Domain sets the optional parameter "domain": Restrict to topics with
+// this Freebase domain id.
+func (c *SearchCall) Domain(domain string) *SearchCall {
+	c.opt_["domain"] = domain
+	return c
+}
+
+// Encode sets the optional parameter "encode": The encoding of the
+// response. You can use this parameter to enable html encoding.
+func (c *SearchCall) Encode(encode string) *SearchCall {
+	c.opt_["encode"] = encode
+	return c
+}
+
+// Exact sets the optional parameter "exact": Query on exact name and
+// keys only.
+func (c *SearchCall) Exact(exact bool) *SearchCall {
+	c.opt_["exact"] = exact
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter to apply to the
+// query.
+func (c *SearchCall) Filter(filter string) *SearchCall {
+	c.opt_["filter"] = filter
+	return c
+}
+
+// Format sets the optional parameter "format": Structural format of the
+// json response.
+func (c *SearchCall) Format(format string) *SearchCall {
+	c.opt_["format"] = format
+	return c
+}
+
+// Help sets the optional parameter "help": The keyword to request help
+// on.
+func (c *SearchCall) Help(help string) *SearchCall {
+	c.opt_["help"] = help
+	return c
+}
+
+// Indent sets the optional parameter "indent": Whether to indent the
+// json results or not.
+func (c *SearchCall) Indent(indent bool) *SearchCall {
+	c.opt_["indent"] = indent
+	return c
+}
+
+// Lang sets the optional parameter "lang": The code of the language to
+// run the query with. Default is 'en'.
+func (c *SearchCall) Lang(lang string) *SearchCall {
+	c.opt_["lang"] = lang
+	return c
+}
+
+// Limit sets the optional parameter "limit": Maximum number of results
+// to return.
+func (c *SearchCall) Limit(limit int64) *SearchCall {
+	c.opt_["limit"] = limit
+	return c
+}
+
+// Mid sets the optional parameter "mid": A mid to use instead of a
+// query.
+func (c *SearchCall) Mid(mid string) *SearchCall {
+	c.opt_["mid"] = mid
+	return c
+}
+
+// Mql_output sets the optional parameter "mql_output": The MQL query to
+// run againist the results to extract more data.
+func (c *SearchCall) Mql_output(mql_output string) *SearchCall {
+	c.opt_["mql_output"] = mql_output
+	return c
+}
+
+// Output sets the optional parameter "output": An output expression to
+// request data from matches.
+func (c *SearchCall) Output(output string) *SearchCall {
+	c.opt_["output"] = output
+	return c
+}
+
+// Prefixed sets the optional parameter "prefixed": Prefix match against
+// names and aliases.
+func (c *SearchCall) Prefixed(prefixed bool) *SearchCall {
+	c.opt_["prefixed"] = prefixed
+	return c
+}
+
+// Query sets the optional parameter "query": Query term to search for.
+func (c *SearchCall) Query(query string) *SearchCall {
+	c.opt_["query"] = query
+	return c
+}
+
+// Scoring sets the optional parameter "scoring": Relevance scoring
+// algorithm to use.
+func (c *SearchCall) Scoring(scoring string) *SearchCall {
+	c.opt_["scoring"] = scoring
+	return c
+}
+
+// Spell sets the optional parameter "spell": Request 'did you mean'
+// suggestions
+func (c *SearchCall) Spell(spell string) *SearchCall {
+	c.opt_["spell"] = spell
+	return c
+}
+
+// Stemmed sets the optional parameter "stemmed": Query on stemmed names
+// and aliases. May not be used with prefixed.
+func (c *SearchCall) Stemmed(stemmed bool) *SearchCall {
+	c.opt_["stemmed"] = stemmed
+	return c
+}
+
+// Type sets the optional parameter "type": Restrict to topics with this
+// Freebase type id.
+func (c *SearchCall) Type(type_ string) *SearchCall {
+	c.opt_["type"] = type_
+	return c
+}
+
+// With sets the optional parameter "with": A rule to match against.
+func (c *SearchCall) With(with string) *SearchCall {
+	c.opt_["with"] = with
+	return c
+}
+
+// Without sets the optional parameter "without": A rule to not match
+// against.
+func (c *SearchCall) Without(without string) *SearchCall {
+	c.opt_["without"] = without
+	return c
+}
+
+func (c *SearchCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["as_of_time"]; ok {
+		params.Set("as_of_time", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["callback"]; ok {
+		params.Set("callback", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["cursor"]; ok {
+		params.Set("cursor", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["domain"]; ok {
+		params.Set("domain", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["encode"]; ok {
+		params.Set("encode", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["exact"]; ok {
+		params.Set("exact", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["filter"]; ok {
+		params.Set("filter", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["format"]; ok {
+		params.Set("format", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["help"]; ok {
+		params.Set("help", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["indent"]; ok {
+		params.Set("indent", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["lang"]; ok {
+		params.Set("lang", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["limit"]; ok {
+		params.Set("limit", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["mid"]; ok {
+		params.Set("mid", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["mql_output"]; ok {
+		params.Set("mql_output", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["output"]; ok {
+		params.Set("output", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["prefixed"]; ok {
+		params.Set("prefixed", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["query"]; ok {
+		params.Set("query", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["scoring"]; ok {
+		params.Set("scoring", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["spell"]; ok {
+		params.Set("spell", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["stemmed"]; ok {
+		params.Set("stemmed", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["type"]; ok {
+		params.Set("type", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["with"]; ok {
+		params.Set("with", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["without"]; ok {
+		params.Set("without", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/freebase/v1sandbox/", "search")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Search Freebase open data.",
+	//   "httpMethod": "GET",
+	//   "id": "freebase.search",
+	//   "parameters": {
+	//     "as_of_time": {
+	//       "description": "A mql as_of_time value to use with mql_output queries.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "callback": {
+	//       "description": "JS method name for JSONP callbacks.",
+	//       "location": "query",
+	//       "pattern": "([A-Za-z0-9_$.]|\\[|\\])+",
+	//       "type": "string"
+	//     },
+	//     "cursor": {
+	//       "description": "The cursor value to use for the next page of results.",
+	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
-	//     "raw": {
-	//       "default": "false",
-	//       "description": "Do not apply any constraints, or get any names.",
+	//     "domain": {
+	//       "description": "Restrict to topics with this Freebase domain id.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "encode": {
+	//       "default": "off",
+	//       "description": "The encoding of the response. You can use this parameter to enable html encoding.",
+	//       "enum": [
+	//         "html",
+	//         "off"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Encode certain characters in the response (such as tags and ambersands) using html encoding.",
+	//         "No encoding of the response. You should not print the results directly on an web page without html-escaping the content first."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "exact": {
+	//       "description": "Query on exact name and keys only.",
 	//       "location": "query",
 	//       "type": "boolean"
+	//     },
+	//     "filter": {
+	//       "description": "A filter to apply to the query.",
+	//       "location": "query",
+	//       "pattern": "^\\(.*\\)$",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "format": {
+	//       "default": "entity",
+	//       "description": "Structural format of the json response.",
+	//       "enum": [
+	//         "ac",
+	//         "classic",
+	//         "entity",
+	//         "guids",
+	//         "ids",
+	//         "mids"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Compact format useful for autocomplete/suggest UIs.",
+	//         "[DEPRECATED] Same format as was returned by api.freebase.com.",
+	//         "Basic information about the entities.",
+	//         "[DEPRECATED] Ordered list of a freebase guids.",
+	//         "Ordered list of freebase ids.",
+	//         "Ordered list of freebase mids."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "help": {
+	//       "description": "The keyword to request help on.",
+	//       "enum": [
+	//         "langs",
+	//         "mappings",
+	//         "predicates"
+	//       ],
+	//       "enumDescriptions": [
+	//         "The language codes served by the service.",
+	//         "The property/path mappings supported by the filter and output request parameters.",
+	//         "The predicates and path-terminating properties supported by the filter and output request parameters."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "indent": {
+	//       "description": "Whether to indent the json results or not.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "lang": {
+	//       "description": "The code of the language to run the query with. Default is 'en'.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "limit": {
+	//       "default": "20",
+	//       "description": "Maximum number of results to return.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "mid": {
+	//       "description": "A mid to use instead of a query.",
+	//       "location": "query",
+	//       "pattern": "^/[mgtx]/[0-2][0-9bcdfghjklmnpqrstvwxyz_]{1,24}$",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "mql_output": {
+	//       "description": "The MQL query to run againist the results to extract more data.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "output": {
+	//       "description": "An output expression to request data from matches.",
+	//       "location": "query",
+	//       "pattern": "^\\(.*\\)$",
+	//       "type": "string"
+	//     },
+	//     "prefixed": {
+	//       "description": "Prefix match against names and aliases.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "query": {
+	//       "description": "Query term to search for.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "scoring": {
+	//       "default": "entity",
+	//       "description": "Relevance scoring algorithm to use.",
+	//       "enum": [
+	//         "entity",
+	//         "freebase",
+	//         "schema"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Use freebase and popularity entity ranking.",
+	//         "Use freebase entity ranking.",
+	//         "Use schema ranking for properties and types."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "spell": {
+	//       "default": "no_spelling",
+	//       "description": "Request 'did you mean' suggestions",
+	//       "enum": [
+	//         "always",
+	//         "no_results",
+	//         "no_spelling"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Request spelling suggestions for any query at least three characters long.",
+	//         "Request spelling suggestions if no results were found.",
+	//         "Don't request spelling suggestions."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "stemmed": {
+	//       "description": "Query on stemmed names and aliases. May not be used with prefixed.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "type": {
+	//       "description": "Restrict to topics with this Freebase type id.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "with": {
+	//       "description": "A rule to match against.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "without": {
+	//       "description": "A rule to not match against.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "topic{/id*}",
-	//   "response": {
-	//     "$ref": "TopicLookup"
-	//   }
+	//   "path": "search",
+	//   "supportsMediaDownload": true
 	// }
 
 }

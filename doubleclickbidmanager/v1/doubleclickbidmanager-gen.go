@@ -90,7 +90,7 @@ type ReportsService struct {
 type DownloadLineItemsRequest struct {
 	// FilterIds: Ids of the specified filter type used to filter line items
 	// to fetch. If omitted, all the line items will be returned.
-	FilterIds []int64 `json:"filterIds,omitempty"`
+	FilterIds googleapi.Int64s `json:"filterIds,omitempty"`
 
 	// FilterType: Filter type used to filter line items to fetch.
 	FilterType string `json:"filterType,omitempty"`

@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"DGgqtFnjgu83tuwvvVNNUhOiHWk/_nmQdm_o26NFqIc4C7McNAGJsSQ\"",
+ "etag": "\"DGgqtFnjgu83tuwvvVNNUhOiHWk/RGhRKxO_GjBXj5TYzl087SnSEic\"",
  "discoveryVersion": "v1",
  "id": "doubleclicksearch:v2",
  "name": "doubleclicksearch",
@@ -279,7 +279,7 @@
        },
        "endDate": {
         "type": "string",
-        "description": "Inclusive day in YYYY-MM-DD format to end the stat scan. When provided, this overrides the time range of overall report for this column only. Must be provided together with startDate."
+        "description": "Inclusive day in YYYY-MM-DD format. When provided, this overrides the overall time range of the report for this column only. Must be provided together with startDate."
        },
        "groupByColumn": {
         "type": "boolean",
@@ -296,7 +296,7 @@
        },
        "startDate": {
         "type": "string",
-        "description": "Inclusive day in YYYY-MM-DD format to start the stat scan. When provided, this overrides the time range of overall report for this column only. Must be provided together with endDate."
+        "description": "Inclusive date in YYYY-MM-DD format. When provided, this overrides the overall time range of the report for this column only. Must be provided together with endDate."
        }
       }
      }
@@ -351,9 +351,9 @@
     },
     "maxRowsPerFile": {
      "type": "integer",
-     "description": "Asynchronous report only. The maximum number of rows per report file. A large report is split into many files based on this field. Acceptable values are 5000000 to 100000000, inclusive.",
+     "description": "Asynchronous report only. The maximum number of rows per report file. A large report is split into many files based on this field. Acceptable values are 1000000 to 100000000, inclusive.",
      "format": "int32",
-     "minimum": "5000000",
+     "minimum": "1000000",
      "maximum": "100000000",
      "annotations": {
       "required": [
@@ -477,7 +477,7 @@
     },
     "timeRange": {
      "type": "object",
-     "description": "If stats are requested in a report, this argument will be used to restrict the stats to a specific time range.",
+     "description": "If metrics are requested in a report, this argument will be used to restrict the metrics to a specific time range.",
      "properties": {
       "changedAttributesSinceTimestamp": {
        "type": "string",
@@ -491,11 +491,11 @@
       },
       "endDate": {
        "type": "string",
-       "description": "Inclusive date in YYYY-MM-DD format to end the stat scan."
+       "description": "Inclusive date in YYYY-MM-DD format."
       },
       "startDate": {
        "type": "string",
-       "description": "Inclusive date in YYYY-MM-DD format to start the stat scan."
+       "description": "Inclusive date in YYYY-MM-DD format."
       }
      }
     },

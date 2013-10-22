@@ -186,7 +186,7 @@ type DatabaseInstance struct {
 	// passed in an 'If-Match' http header for use in optimistic locking.
 	Etag string `json:"etag,omitempty"`
 
-	// Instance: Name of the database instance. This does not include the
+	// Instance: Name of the Cloud SQL instance. This does not include the
 	// project ID.
 	Instance string `json:"instance,omitempty"`
 
@@ -196,9 +196,8 @@ type DatabaseInstance struct {
 	// MaxDiskSize: The maximum disk size of the instance in bytes.
 	MaxDiskSize int64 `json:"maxDiskSize,omitempty,string"`
 
-	// Project: The project ID of the project containing the database
-	// instance. The Google apps domain is prefixed if applicable. You can
-	// find this on the project summary page of the Google APIs Console.
+	// Project: The project ID of the project containing the Cloud SQL
+	// instance. The Google apps domain is prefixed if applicable.
 	Project string `json:"project,omitempty"`
 
 	// Region: The geographical region. Can be us-east1 or europe-west1.
@@ -209,7 +208,7 @@ type DatabaseInstance struct {
 	// Settings: The user settings.
 	Settings *Settings `json:"settings,omitempty"`
 
-	// State: The current serving state of the database instance. This can
+	// State: The current serving state of the Cloud SQL instance. This can
 	// be one of the following.
 	// RUNNABLE: The instance is running, or is
 	// ready to run when accessed.
@@ -552,13 +551,13 @@ func (c *BackupRunsGetCall) Do() (*BackupRun, error) {
 	//       "type": "string"
 	//     },
 	//     "instance": {
-	//       "description": "Database instance ID. This does not include the project ID.",
+	//       "description": "Cloud SQL instance ID. This does not include the project ID.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "project": {
-	//       "description": "Project ID of the project that contains the instance. You can find this on the project summary page of the Google APIs Console.",
+	//       "description": "Project ID of the project that contains the instance.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -659,7 +658,7 @@ func (c *BackupRunsListCall) Do() (*BackupRunsListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "instance": {
-	//       "description": "Database instance ID. This does not include the project ID.",
+	//       "description": "Cloud SQL instance ID. This does not include the project ID.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -676,7 +675,7 @@ func (c *BackupRunsListCall) Do() (*BackupRunsListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "project": {
-	//       "description": "Project ID of the project that contains the instance. You can find this on the project summary page of the Google APIs Console.",
+	//       "description": "Project ID of the project that contains the instance.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -702,7 +701,7 @@ type InstancesDeleteCall struct {
 	opt_     map[string]interface{}
 }
 
-// Delete: Deletes a database instance.
+// Delete: Deletes a Cloud SQL instance.
 func (r *InstancesService) Delete(project string, instance string) *InstancesDeleteCall {
 	c := &InstancesDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -735,7 +734,7 @@ func (c *InstancesDeleteCall) Do() (*InstancesDeleteResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a database instance.",
+	//   "description": "Deletes a Cloud SQL instance.",
 	//   "httpMethod": "DELETE",
 	//   "id": "sql.instances.delete",
 	//   "parameterOrder": [
@@ -744,13 +743,13 @@ func (c *InstancesDeleteCall) Do() (*InstancesDeleteResponse, error) {
 	//   ],
 	//   "parameters": {
 	//     "instance": {
-	//       "description": "Database instance ID. This does not include the project ID.",
+	//       "description": "Cloud SQL instance ID. This does not include the project ID.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "project": {
-	//       "description": "Project ID of the project that contains the instance to be deleted. You can find this on the project summary page of the Google APIs Console.",
+	//       "description": "Project ID of the project that contains the instance to be deleted.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -777,7 +776,7 @@ type InstancesExportCall struct {
 	opt_                   map[string]interface{}
 }
 
-// Export: Exports data from a database instance to a Google Cloud
+// Export: Exports data from a Cloud SQL instance to a Google Cloud
 // Storage bucket as a MySQL dump file.
 func (r *InstancesService) Export(project string, instance string, instancesexportrequest *InstancesExportRequest) *InstancesExportCall {
 	c := &InstancesExportCall{s: r.s, opt_: make(map[string]interface{})}
@@ -818,7 +817,7 @@ func (c *InstancesExportCall) Do() (*InstancesExportResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Exports data from a database instance to a Google Cloud Storage bucket as a MySQL dump file.",
+	//   "description": "Exports data from a Cloud SQL instance to a Google Cloud Storage bucket as a MySQL dump file.",
 	//   "httpMethod": "POST",
 	//   "id": "sql.instances.export",
 	//   "parameterOrder": [
@@ -827,13 +826,13 @@ func (c *InstancesExportCall) Do() (*InstancesExportResponse, error) {
 	//   ],
 	//   "parameters": {
 	//     "instance": {
-	//       "description": "Database instance ID. This does not include the project ID.",
+	//       "description": "Cloud SQL instance ID. This does not include the project ID.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "project": {
-	//       "description": "Project ID of the project that contains the instance to be exported. You can find this on the project summary page of the Google APIs Console.",
+	//       "description": "Project ID of the project that contains the instance to be exported.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -862,7 +861,7 @@ type InstancesGetCall struct {
 	opt_     map[string]interface{}
 }
 
-// Get: Retrieves a resource containing information about a database
+// Get: Retrieves a resource containing information about a Cloud SQL
 // instance.
 func (r *InstancesService) Get(project string, instance string) *InstancesGetCall {
 	c := &InstancesGetCall{s: r.s, opt_: make(map[string]interface{})}
@@ -896,7 +895,7 @@ func (c *InstancesGetCall) Do() (*DatabaseInstance, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves a resource containing information about a database instance.",
+	//   "description": "Retrieves a resource containing information about a Cloud SQL instance.",
 	//   "httpMethod": "GET",
 	//   "id": "sql.instances.get",
 	//   "parameterOrder": [
@@ -905,13 +904,13 @@ func (c *InstancesGetCall) Do() (*DatabaseInstance, error) {
 	//   ],
 	//   "parameters": {
 	//     "instance": {
-	//       "description": "Database instance ID. This does not include the project ID.",
+	//       "description": "Cloud SQL instance ID. This does not include the project ID.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "project": {
-	//       "description": "Project ID of the project that contains the instance. You can find this on the project summary page of the Google APIs Console.",
+	//       "description": "Project ID of the project that contains the instance.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -938,7 +937,7 @@ type InstancesImportCall struct {
 	opt_                   map[string]interface{}
 }
 
-// Import: Imports data into a database instance from a MySQL dump file
+// Import: Imports data into a Cloud SQL instance from a MySQL dump file
 // in Google Cloud Storage.
 func (r *InstancesService) Import(project string, instance string, instancesimportrequest *InstancesImportRequest) *InstancesImportCall {
 	c := &InstancesImportCall{s: r.s, opt_: make(map[string]interface{})}
@@ -979,7 +978,7 @@ func (c *InstancesImportCall) Do() (*InstancesImportResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Imports data into a database instance from a MySQL dump file in Google Cloud Storage.",
+	//   "description": "Imports data into a Cloud SQL instance from a MySQL dump file in Google Cloud Storage.",
 	//   "httpMethod": "POST",
 	//   "id": "sql.instances.import",
 	//   "parameterOrder": [
@@ -988,13 +987,13 @@ func (c *InstancesImportCall) Do() (*InstancesImportResponse, error) {
 	//   ],
 	//   "parameters": {
 	//     "instance": {
-	//       "description": "Database instance ID. This does not include the project ID.",
+	//       "description": "Cloud SQL instance ID. This does not include the project ID.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "project": {
-	//       "description": "Project ID of the project that contains the instance. You can find this on the project summary page of the Google APIs Console.",
+	//       "description": "Project ID of the project that contains the instance.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1023,7 +1022,7 @@ type InstancesInsertCall struct {
 	opt_             map[string]interface{}
 }
 
-// Insert: Creates a new database instance.
+// Insert: Creates a new Cloud SQL instance.
 func (r *InstancesService) Insert(project string, databaseinstance *DatabaseInstance) *InstancesInsertCall {
 	c := &InstancesInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -1061,7 +1060,7 @@ func (c *InstancesInsertCall) Do() (*InstancesInsertResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new database instance.",
+	//   "description": "Creates a new Cloud SQL instance.",
 	//   "httpMethod": "POST",
 	//   "id": "sql.instances.insert",
 	//   "parameterOrder": [
@@ -1069,7 +1068,7 @@ func (c *InstancesInsertCall) Do() (*InstancesInsertResponse, error) {
 	//   ],
 	//   "parameters": {
 	//     "project": {
-	//       "description": "Project ID of the project to which the newly created database instances should belong. You can find this on the project summary page of the Google APIs Console.",
+	//       "description": "Project ID of the project to which the newly created Cloud SQL instances should belong.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1169,7 +1168,7 @@ func (c *InstancesListCall) Do() (*InstancesListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "project": {
-	//       "description": "Project ID of the project for which to list database instances. You can find this on the project summary page of the Google APIs Console.",
+	//       "description": "Project ID of the project for which to list Cloud SQL instances.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1196,7 +1195,7 @@ type InstancesPatchCall struct {
 	opt_             map[string]interface{}
 }
 
-// Patch: Updates settings of a database instance. Caution: This is not
+// Patch: Updates settings of a Cloud SQL instance. Caution: This is not
 // a partial update, so you must include values for all the settings
 // that you want to retain. For partial updates, use patch.. This method
 // supports patch semantics.
@@ -1239,7 +1238,7 @@ func (c *InstancesPatchCall) Do() (*InstancesUpdateResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates settings of a database instance. Caution: This is not a partial update, so you must include values for all the settings that you want to retain. For partial updates, use patch.. This method supports patch semantics.",
+	//   "description": "Updates settings of a Cloud SQL instance. Caution: This is not a partial update, so you must include values for all the settings that you want to retain. For partial updates, use patch.. This method supports patch semantics.",
 	//   "httpMethod": "PATCH",
 	//   "id": "sql.instances.patch",
 	//   "parameterOrder": [
@@ -1248,13 +1247,13 @@ func (c *InstancesPatchCall) Do() (*InstancesUpdateResponse, error) {
 	//   ],
 	//   "parameters": {
 	//     "instance": {
-	//       "description": "Database instance ID. This does not include the project ID.",
+	//       "description": "Cloud SQL instance ID. This does not include the project ID.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "project": {
-	//       "description": "Project ID of the project that contains the instance. You can find this on the project summary page of the Google APIs Console.",
+	//       "description": "Project ID of the project that contains the instance.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1283,7 +1282,7 @@ type InstancesRestartCall struct {
 	opt_     map[string]interface{}
 }
 
-// Restart: Restarts a database instance.
+// Restart: Restarts a Cloud SQL instance.
 func (r *InstancesService) Restart(project string, instance string) *InstancesRestartCall {
 	c := &InstancesRestartCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -1316,7 +1315,7 @@ func (c *InstancesRestartCall) Do() (*InstancesRestartResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Restarts a database instance.",
+	//   "description": "Restarts a Cloud SQL instance.",
 	//   "httpMethod": "POST",
 	//   "id": "sql.instances.restart",
 	//   "parameterOrder": [
@@ -1325,13 +1324,13 @@ func (c *InstancesRestartCall) Do() (*InstancesRestartResponse, error) {
 	//   ],
 	//   "parameters": {
 	//     "instance": {
-	//       "description": "Database instance ID. This does not include the project ID.",
+	//       "description": "Cloud SQL instance ID. This does not include the project ID.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "project": {
-	//       "description": "Project ID of the project that contains the instance to be restarted. You can find this on the project summary page of the Google APIs Console.",
+	//       "description": "Project ID of the project that contains the instance to be restarted.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1359,7 +1358,7 @@ type InstancesRestoreBackupCall struct {
 	opt_                  map[string]interface{}
 }
 
-// RestoreBackup: Restores a backup of a database instance.
+// RestoreBackup: Restores a backup of a Cloud SQL instance.
 func (r *InstancesService) RestoreBackup(project string, instance string, backupConfigurationid string, dueTime string) *InstancesRestoreBackupCall {
 	c := &InstancesRestoreBackupCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -1396,7 +1395,7 @@ func (c *InstancesRestoreBackupCall) Do() (*InstancesRestoreBackupResponse, erro
 	}
 	return ret, nil
 	// {
-	//   "description": "Restores a backup of a database instance.",
+	//   "description": "Restores a backup of a Cloud SQL instance.",
 	//   "httpMethod": "POST",
 	//   "id": "sql.instances.restoreBackup",
 	//   "parameterOrder": [
@@ -1419,13 +1418,13 @@ func (c *InstancesRestoreBackupCall) Do() (*InstancesRestoreBackupResponse, erro
 	//       "type": "string"
 	//     },
 	//     "instance": {
-	//       "description": "Database instance ID. This does not include the project ID.",
+	//       "description": "Cloud SQL instance ID. This does not include the project ID.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "project": {
-	//       "description": "Project ID of the project that contains the instance. You can find this on the project summary page of the Google APIs Console.",
+	//       "description": "Project ID of the project that contains the instance.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1452,8 +1451,8 @@ type InstancesUpdateCall struct {
 	opt_             map[string]interface{}
 }
 
-// Update: Updates settings of a database instance. Caution: This is not
-// a partial update, so you must include values for all the settings
+// Update: Updates settings of a Cloud SQL instance. Caution: This is
+// not a partial update, so you must include values for all the settings
 // that you want to retain. For partial updates, use patch.
 func (r *InstancesService) Update(project string, instance string, databaseinstance *DatabaseInstance) *InstancesUpdateCall {
 	c := &InstancesUpdateCall{s: r.s, opt_: make(map[string]interface{})}
@@ -1494,7 +1493,7 @@ func (c *InstancesUpdateCall) Do() (*InstancesUpdateResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates settings of a database instance. Caution: This is not a partial update, so you must include values for all the settings that you want to retain. For partial updates, use patch.",
+	//   "description": "Updates settings of a Cloud SQL instance. Caution: This is not a partial update, so you must include values for all the settings that you want to retain. For partial updates, use patch.",
 	//   "etagRequired": true,
 	//   "httpMethod": "PUT",
 	//   "id": "sql.instances.update",
@@ -1504,13 +1503,13 @@ func (c *InstancesUpdateCall) Do() (*InstancesUpdateResponse, error) {
 	//   ],
 	//   "parameters": {
 	//     "instance": {
-	//       "description": "Database instance ID. This does not include the project ID.",
+	//       "description": "Cloud SQL instance ID. This does not include the project ID.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "project": {
-	//       "description": "Project ID of the project that contains the instance. You can find this on the project summary page of the Google APIs Console.",
+	//       "description": "Project ID of the project that contains the instance.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1586,7 +1585,7 @@ func (c *OperationsGetCall) Do() (*InstanceOperation, error) {
 	//   ],
 	//   "parameters": {
 	//     "instance": {
-	//       "description": "Database instance ID. This does not include the project ID.",
+	//       "description": "Cloud SQL instance ID. This does not include the project ID.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1598,7 +1597,7 @@ func (c *OperationsGetCall) Do() (*InstanceOperation, error) {
 	//       "type": "string"
 	//     },
 	//     "project": {
-	//       "description": "Project ID of the project that contains the instance. You can find this on the project summary page of the Google APIs Console.",
+	//       "description": "Project ID of the project that contains the instance.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1625,7 +1624,7 @@ type OperationsListCall struct {
 }
 
 // List: Lists all instance operations that have been performed on the
-// given database instance in the reverse chronological order of the
+// given Cloud SQL instance in the reverse chronological order of the
 // start time.
 func (r *OperationsService) List(project string, instance string) *OperationsListCall {
 	c := &OperationsListCall{s: r.s, opt_: make(map[string]interface{})}
@@ -1680,7 +1679,7 @@ func (c *OperationsListCall) Do() (*OperationsListResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists all instance operations that have been performed on the given database instance in the reverse chronological order of the start time.",
+	//   "description": "Lists all instance operations that have been performed on the given Cloud SQL instance in the reverse chronological order of the start time.",
 	//   "httpMethod": "GET",
 	//   "id": "sql.operations.list",
 	//   "parameterOrder": [
@@ -1689,7 +1688,7 @@ func (c *OperationsListCall) Do() (*OperationsListResponse, error) {
 	//   ],
 	//   "parameters": {
 	//     "instance": {
-	//       "description": "Database instance ID. This does not include the project ID.",
+	//       "description": "Cloud SQL instance ID. This does not include the project ID.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1706,7 +1705,7 @@ func (c *OperationsListCall) Do() (*OperationsListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "project": {
-	//       "description": "Project ID of the project that contains the instance. You can find this on the project summary page of the Google APIs Console.",
+	//       "description": "Project ID of the project that contains the instance.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"

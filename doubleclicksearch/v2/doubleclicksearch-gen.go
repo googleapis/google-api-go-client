@@ -229,7 +229,7 @@ type ReportRequest struct {
 
 	// MaxRowsPerFile: Asynchronous report only. The maximum number of rows
 	// per report file. A large report is split into many files based on
-	// this field. Acceptable values are 5000000 to 100000000, inclusive.
+	// this field. Acceptable values are 1000000 to 100000000, inclusive.
 	MaxRowsPerFile int64 `json:"maxRowsPerFile,omitempty"`
 
 	// OrderBy: Synchronous report only. A list of columns and directions
@@ -265,8 +265,8 @@ type ReportRequest struct {
 	// to engine account or lower).
 	StatisticsCurrency string `json:"statisticsCurrency,omitempty"`
 
-	// TimeRange: If stats are requested in a report, this argument will be
-	// used to restrict the stats to a specific time range.
+	// TimeRange: If metrics are requested in a report, this argument will
+	// be used to restrict the metrics to a specific time range.
 	TimeRange *ReportRequestTimeRange `json:"timeRange,omitempty"`
 
 	// VerifySingleTimeZone: If true, the report would only be created if
@@ -280,9 +280,9 @@ type ReportRequestColumns struct {
 	// report.
 	ColumnName string `json:"columnName,omitempty"`
 
-	// EndDate: Inclusive day in YYYY-MM-DD format to end the stat scan.
-	// When provided, this overrides the time range of overall report for
-	// this column only. Must be provided together with startDate.
+	// EndDate: Inclusive day in YYYY-MM-DD format. When provided, this
+	// overrides the overall time range of the report for this column only.
+	// Must be provided together with startDate.
 	EndDate string `json:"endDate,omitempty"`
 
 	// GroupByColumn: Synchronous report only. Set to true to group by this
@@ -299,9 +299,9 @@ type ReportRequestColumns struct {
 	// must already be created in the DoubleClick Search UI.
 	SavedColumnName string `json:"savedColumnName,omitempty"`
 
-	// StartDate: Inclusive day in YYYY-MM-DD format to start the stat scan.
-	// When provided, this overrides the time range of overall report for
-	// this column only. Must be provided together with endDate.
+	// StartDate: Inclusive date in YYYY-MM-DD format. When provided, this
+	// overrides the overall time range of the report for this column only.
+	// Must be provided together with endDate.
 	StartDate string `json:"startDate,omitempty"`
 }
 
@@ -378,11 +378,10 @@ type ReportRequestTimeRange struct {
 	// changed metrics reports work.
 	ChangedMetricsSinceTimestamp string `json:"changedMetricsSinceTimestamp,omitempty"`
 
-	// EndDate: Inclusive date in YYYY-MM-DD format to end the stat scan.
+	// EndDate: Inclusive date in YYYY-MM-DD format.
 	EndDate string `json:"endDate,omitempty"`
 
-	// StartDate: Inclusive date in YYYY-MM-DD format to start the stat
-	// scan.
+	// StartDate: Inclusive date in YYYY-MM-DD format.
 	StartDate string `json:"startDate,omitempty"`
 }
 

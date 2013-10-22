@@ -165,7 +165,7 @@ type Creative struct {
 
 	// AdvertiserId: Detected advertiser id, if any. Read-only. This field
 	// should not be set in requests.
-	AdvertiserId []int64 `json:"advertiserId,omitempty"`
+	AdvertiserId googleapi.Int64s `json:"advertiserId,omitempty"`
 
 	// AdvertiserName: The name of the company being advertised in the
 	// creative.
@@ -210,6 +210,10 @@ type Creative struct {
 	// ProductCategories: Detected product categories, if any. Read-only.
 	// This field should not be set in requests.
 	ProductCategories []int64 `json:"productCategories,omitempty"`
+
+	// RestrictedCategories: All restricted categories for the ads that may
+	// be shown from this snippet.
+	RestrictedCategories []int64 `json:"restrictedCategories,omitempty"`
 
 	// SensitiveCategories: Detected sensitive categories, if any.
 	// Read-only. This field should not be set in requests.

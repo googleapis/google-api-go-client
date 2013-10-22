@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"DGgqtFnjgu83tuwvvVNNUhOiHWk/p8yUXl6ie_9KHW92VpcNTEqxovM\"",
+ "etag": "\"DGgqtFnjgu83tuwvvVNNUhOiHWk/1UCG4CqfTBrxPN0MRjUm7GaLJ7Y\"",
  "discoveryVersion": "v1",
  "id": "adexchangebuyer:v1.1",
  "name": "adexchangebuyer",
@@ -236,6 +236,14 @@
     "productCategories": {
      "type": "array",
      "description": "Detected product categories, if any. Read-only. This field should not be set in requests.",
+     "items": {
+      "type": "integer",
+      "format": "int32"
+     }
+    },
+    "restrictedCategories": {
+     "type": "array",
+     "description": "All restricted categories for the ads that may be shown from this snippet.",
      "items": {
       "type": "integer",
       "format": "int32"

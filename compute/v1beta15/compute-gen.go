@@ -895,8 +895,8 @@ type HttpHealthCheckList struct {
 }
 
 type Image struct {
-	// ArchiveSizeBytes: Size of the image tar.gz archive stored in BigStore
-	// (in bytes).
+	// ArchiveSizeBytes: Size of the image tar.gz archive stored in Google
+	// Cloud Storage (in bytes).
 	ArchiveSizeBytes int64 `json:"archiveSizeBytes,omitempty,string"`
 
 	// CreationTimestamp: Creation timestamp in RFC3339 text format (output
@@ -2221,7 +2221,7 @@ func (c *AddressesAggregatedListCall) Do() (*AddressAggregatedList, error) {
 	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "100",
+	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -2605,7 +2605,7 @@ func (c *AddressesListCall) Do() (*AddressList, error) {
 	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "100",
+	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -2728,7 +2728,7 @@ func (c *DisksAggregatedListCall) Do() (*DiskAggregatedList, error) {
 	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "100",
+	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -3224,7 +3224,7 @@ func (c *DisksListCall) Do() (*DiskList, error) {
 	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "100",
+	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -3578,7 +3578,7 @@ func (c *FirewallsListCall) Do() (*FirewallList, error) {
 	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "100",
+	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -3871,7 +3871,7 @@ func (c *ForwardingRulesAggregatedListCall) Do() (*ForwardingRuleAggregatedList,
 	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "100",
+	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -4255,7 +4255,7 @@ func (c *ForwardingRulesListCall) Do() (*ForwardingRuleList, error) {
 	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "100",
+	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -4477,7 +4477,7 @@ func (c *GlobalOperationsAggregatedListCall) Do() (*OperationAggregatedList, err
 	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "100",
+	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -4740,7 +4740,7 @@ func (c *GlobalOperationsListCall) Do() (*OperationList, error) {
 	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "100",
+	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -5087,7 +5087,7 @@ func (c *HttpHealthChecksListCall) Do() (*HttpHealthCheckList, error) {
 	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "100",
+	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -5702,7 +5702,7 @@ func (c *ImagesListCall) Do() (*ImageList, error) {
 	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "100",
+	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -5926,7 +5926,7 @@ func (c *InstancesAggregatedListCall) Do() (*InstanceAggregatedList, error) {
 	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "100",
+	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -6703,7 +6703,7 @@ func (c *InstancesListCall) Do() (*InstanceList, error) {
 	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "100",
+	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -7189,7 +7189,7 @@ func (c *KernelsListCall) Do() (*KernelList, error) {
 	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "100",
+	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -7306,7 +7306,7 @@ func (c *MachineTypesAggregatedListCall) Do() (*MachineTypeAggregatedList, error
 	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "100",
+	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -7515,7 +7515,7 @@ func (c *MachineTypesListCall) Do() (*MachineTypeList, error) {
 	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "100",
+	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -7869,7 +7869,7 @@ func (c *NetworksListCall) Do() (*NetworkList, error) {
 	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "100",
+	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -8301,7 +8301,7 @@ func (c *RegionOperationsListCall) Do() (*OperationList, error) {
 	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "100",
+	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -8502,7 +8502,7 @@ func (c *RegionsListCall) Do() (*RegionList, error) {
 	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "100",
+	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -8849,7 +8849,7 @@ func (c *RoutesListCall) Do() (*RouteList, error) {
 	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "100",
+	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -9119,7 +9119,7 @@ func (c *SnapshotsListCall) Do() (*SnapshotList, error) {
 	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "100",
+	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -9431,7 +9431,7 @@ func (c *TargetPoolsAggregatedListCall) Do() (*TargetPoolAggregatedList, error) 
 	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "100",
+	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -9915,7 +9915,7 @@ func (c *TargetPoolsListCall) Do() (*TargetPoolList, error) {
 	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "100",
+	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -10521,7 +10521,7 @@ func (c *ZoneOperationsListCall) Do() (*OperationList, error) {
 	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "100",
+	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -10722,7 +10722,7 @@ func (c *ZonesListCall) Do() (*ZoneList, error) {
 	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "100",
+	//       "maximum": "500",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },

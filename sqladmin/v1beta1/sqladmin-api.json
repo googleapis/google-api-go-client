@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"DGgqtFnjgu83tuwvvVNNUhOiHWk/xPUV1lfwChwslrUynpGRvFO3Hlw\"",
+ "etag": "\"DGgqtFnjgu83tuwvvVNNUhOiHWk/l_KrHzpmNoVI1p-SJTCs7tKdyWM\"",
  "discoveryVersion": "v1",
  "id": "sqladmin:v1beta1",
  "name": "sqladmin",
@@ -177,7 +177,7 @@
   "DatabaseInstance": {
    "id": "DatabaseInstance",
    "type": "object",
-   "description": "A database instance resource.",
+   "description": "A Cloud SQL instance resource.",
    "properties": {
     "currentDiskSize": {
      "type": "string",
@@ -199,7 +199,7 @@
     },
     "instance": {
      "type": "string",
-     "description": "Name of the database instance. This does not include the project ID.",
+     "description": "Name of the Cloud SQL instance. This does not include the project ID.",
      "annotations": {
       "required": [
        "sql.instances.insert",
@@ -219,7 +219,7 @@
     },
     "project": {
      "type": "string",
-     "description": "The project ID of the project containing the database instance. The Google apps domain is prefixed if applicable. You can find this on the project summary page of the Google APIs Console.",
+     "description": "The project ID of the project containing the Cloud SQL instance. The Google apps domain is prefixed if applicable.",
      "annotations": {
       "required": [
        "sql.instances.insert",
@@ -237,7 +237,7 @@
     },
     "state": {
      "type": "string",
-     "description": "The current serving state of the database instance. This can be one of the following.\nRUNNABLE: The instance is running, or is ready to run when accessed.\nSUSPENDED: The instance is not available, for example due to problems with billing.\nPENDING_CREATE: The instance is being created.\nMAINTENANCE: The instance is down for maintenance.\nUNKNOWN_STATE: The state of the instance is unknown."
+     "description": "The current serving state of the Cloud SQL instance. This can be one of the following.\nRUNNABLE: The instance is running, or is ready to run when accessed.\nSUSPENDED: The instance is not available, for example due to problems with billing.\nPENDING_CREATE: The instance is being created.\nMAINTENANCE: The instance is down for maintenance.\nUNKNOWN_STATE: The state of the instance is unknown."
     }
    }
   },
@@ -676,13 +676,13 @@
       },
       "instance": {
        "type": "string",
-       "description": "Database instance ID. This does not include the project ID.",
+       "description": "Cloud SQL instance ID. This does not include the project ID.",
        "required": true,
        "location": "path"
       },
       "project": {
        "type": "string",
-       "description": "Project ID of the project that contains the instance. You can find this on the project summary page of the Google APIs Console.",
+       "description": "Project ID of the project that contains the instance.",
        "required": true,
        "location": "path"
       }
@@ -714,7 +714,7 @@
       },
       "instance": {
        "type": "string",
-       "description": "Database instance ID. This does not include the project ID.",
+       "description": "Cloud SQL instance ID. This does not include the project ID.",
        "required": true,
        "location": "path"
       },
@@ -731,7 +731,7 @@
       },
       "project": {
        "type": "string",
-       "description": "Project ID of the project that contains the instance. You can find this on the project summary page of the Google APIs Console.",
+       "description": "Project ID of the project that contains the instance.",
        "required": true,
        "location": "path"
       }
@@ -756,17 +756,17 @@
      "id": "sql.instances.delete",
      "path": "projects/{project}/instances/{instance}",
      "httpMethod": "DELETE",
-     "description": "Deletes a database instance.",
+     "description": "Deletes a Cloud SQL instance.",
      "parameters": {
       "instance": {
        "type": "string",
-       "description": "Database instance ID. This does not include the project ID.",
+       "description": "Cloud SQL instance ID. This does not include the project ID.",
        "required": true,
        "location": "path"
       },
       "project": {
        "type": "string",
-       "description": "Project ID of the project that contains the instance to be deleted. You can find this on the project summary page of the Google APIs Console.",
+       "description": "Project ID of the project that contains the instance to be deleted.",
        "required": true,
        "location": "path"
       }
@@ -786,17 +786,17 @@
      "id": "sql.instances.export",
      "path": "projects/{project}/instances/{instance}/export",
      "httpMethod": "POST",
-     "description": "Exports data from a database instance to a Google Cloud Storage bucket as a MySQL dump file.",
+     "description": "Exports data from a Cloud SQL instance to a Google Cloud Storage bucket as a MySQL dump file.",
      "parameters": {
       "instance": {
        "type": "string",
-       "description": "Database instance ID. This does not include the project ID.",
+       "description": "Cloud SQL instance ID. This does not include the project ID.",
        "required": true,
        "location": "path"
       },
       "project": {
        "type": "string",
-       "description": "Project ID of the project that contains the instance to be exported. You can find this on the project summary page of the Google APIs Console.",
+       "description": "Project ID of the project that contains the instance to be exported.",
        "required": true,
        "location": "path"
       }
@@ -819,17 +819,17 @@
      "id": "sql.instances.get",
      "path": "projects/{project}/instances/{instance}",
      "httpMethod": "GET",
-     "description": "Retrieves a resource containing information about a database instance.",
+     "description": "Retrieves a resource containing information about a Cloud SQL instance.",
      "parameters": {
       "instance": {
        "type": "string",
-       "description": "Database instance ID. This does not include the project ID.",
+       "description": "Cloud SQL instance ID. This does not include the project ID.",
        "required": true,
        "location": "path"
       },
       "project": {
        "type": "string",
-       "description": "Project ID of the project that contains the instance. You can find this on the project summary page of the Google APIs Console.",
+       "description": "Project ID of the project that contains the instance.",
        "required": true,
        "location": "path"
       }
@@ -849,17 +849,17 @@
      "id": "sql.instances.import",
      "path": "projects/{project}/instances/{instance}/import",
      "httpMethod": "POST",
-     "description": "Imports data into a database instance from a MySQL dump file in Google Cloud Storage.",
+     "description": "Imports data into a Cloud SQL instance from a MySQL dump file in Google Cloud Storage.",
      "parameters": {
       "instance": {
        "type": "string",
-       "description": "Database instance ID. This does not include the project ID.",
+       "description": "Cloud SQL instance ID. This does not include the project ID.",
        "required": true,
        "location": "path"
       },
       "project": {
        "type": "string",
-       "description": "Project ID of the project that contains the instance. You can find this on the project summary page of the Google APIs Console.",
+       "description": "Project ID of the project that contains the instance.",
        "required": true,
        "location": "path"
       }
@@ -882,11 +882,11 @@
      "id": "sql.instances.insert",
      "path": "projects/{project}/instances",
      "httpMethod": "POST",
-     "description": "Creates a new database instance.",
+     "description": "Creates a new Cloud SQL instance.",
      "parameters": {
       "project": {
        "type": "string",
-       "description": "Project ID of the project to which the newly created database instances should belong. You can find this on the project summary page of the Google APIs Console.",
+       "description": "Project ID of the project to which the newly created Cloud SQL instances should belong.",
        "required": true,
        "location": "path"
       }
@@ -923,7 +923,7 @@
       },
       "project": {
        "type": "string",
-       "description": "Project ID of the project for which to list database instances. You can find this on the project summary page of the Google APIs Console.",
+       "description": "Project ID of the project for which to list Cloud SQL instances.",
        "required": true,
        "location": "path"
       }
@@ -942,17 +942,17 @@
      "id": "sql.instances.patch",
      "path": "projects/{project}/instances/{instance}",
      "httpMethod": "PATCH",
-     "description": "Updates settings of a database instance. Caution: This is not a partial update, so you must include values for all the settings that you want to retain. For partial updates, use patch.. This method supports patch semantics.",
+     "description": "Updates settings of a Cloud SQL instance. Caution: This is not a partial update, so you must include values for all the settings that you want to retain. For partial updates, use patch.. This method supports patch semantics.",
      "parameters": {
       "instance": {
        "type": "string",
-       "description": "Database instance ID. This does not include the project ID.",
+       "description": "Cloud SQL instance ID. This does not include the project ID.",
        "required": true,
        "location": "path"
       },
       "project": {
        "type": "string",
-       "description": "Project ID of the project that contains the instance. You can find this on the project summary page of the Google APIs Console.",
+       "description": "Project ID of the project that contains the instance.",
        "required": true,
        "location": "path"
       }
@@ -975,17 +975,17 @@
      "id": "sql.instances.restart",
      "path": "projects/{project}/instances/{instance}/restart",
      "httpMethod": "POST",
-     "description": "Restarts a database instance.",
+     "description": "Restarts a Cloud SQL instance.",
      "parameters": {
       "instance": {
        "type": "string",
-       "description": "Database instance ID. This does not include the project ID.",
+       "description": "Cloud SQL instance ID. This does not include the project ID.",
        "required": true,
        "location": "path"
       },
       "project": {
        "type": "string",
-       "description": "Project ID of the project that contains the instance to be restarted. You can find this on the project summary page of the Google APIs Console.",
+       "description": "Project ID of the project that contains the instance to be restarted.",
        "required": true,
        "location": "path"
       }
@@ -1005,7 +1005,7 @@
      "id": "sql.instances.restoreBackup",
      "path": "projects/{project}/instances/{instance}/restoreBackup",
      "httpMethod": "POST",
-     "description": "Restores a backup of a database instance.",
+     "description": "Restores a backup of a Cloud SQL instance.",
      "parameters": {
       "backupConfiguration": {
        "type": "string",
@@ -1021,13 +1021,13 @@
       },
       "instance": {
        "type": "string",
-       "description": "Database instance ID. This does not include the project ID.",
+       "description": "Cloud SQL instance ID. This does not include the project ID.",
        "required": true,
        "location": "path"
       },
       "project": {
        "type": "string",
-       "description": "Project ID of the project that contains the instance. You can find this on the project summary page of the Google APIs Console.",
+       "description": "Project ID of the project that contains the instance.",
        "required": true,
        "location": "path"
       }
@@ -1049,17 +1049,17 @@
      "id": "sql.instances.update",
      "path": "projects/{project}/instances/{instance}",
      "httpMethod": "PUT",
-     "description": "Updates settings of a database instance. Caution: This is not a partial update, so you must include values for all the settings that you want to retain. For partial updates, use patch.",
+     "description": "Updates settings of a Cloud SQL instance. Caution: This is not a partial update, so you must include values for all the settings that you want to retain. For partial updates, use patch.",
      "parameters": {
       "instance": {
        "type": "string",
-       "description": "Database instance ID. This does not include the project ID.",
+       "description": "Cloud SQL instance ID. This does not include the project ID.",
        "required": true,
        "location": "path"
       },
       "project": {
        "type": "string",
-       "description": "Project ID of the project that contains the instance. You can find this on the project summary page of the Google APIs Console.",
+       "description": "Project ID of the project that contains the instance.",
        "required": true,
        "location": "path"
       }
@@ -1091,7 +1091,7 @@
      "parameters": {
       "instance": {
        "type": "string",
-       "description": "Database instance ID. This does not include the project ID.",
+       "description": "Cloud SQL instance ID. This does not include the project ID.",
        "required": true,
        "location": "path"
       },
@@ -1103,7 +1103,7 @@
       },
       "project": {
        "type": "string",
-       "description": "Project ID of the project that contains the instance. You can find this on the project summary page of the Google APIs Console.",
+       "description": "Project ID of the project that contains the instance.",
        "required": true,
        "location": "path"
       }
@@ -1124,11 +1124,11 @@
      "id": "sql.operations.list",
      "path": "projects/{project}/instances/{instance}/operations",
      "httpMethod": "GET",
-     "description": "Lists all instance operations that have been performed on the given database instance in the reverse chronological order of the start time.",
+     "description": "Lists all instance operations that have been performed on the given Cloud SQL instance in the reverse chronological order of the start time.",
      "parameters": {
       "instance": {
        "type": "string",
-       "description": "Database instance ID. This does not include the project ID.",
+       "description": "Cloud SQL instance ID. This does not include the project ID.",
        "required": true,
        "location": "path"
       },
@@ -1145,7 +1145,7 @@
       },
       "project": {
        "type": "string",
-       "description": "Project ID of the project that contains the instance. You can find this on the project summary page of the Google APIs Console.",
+       "description": "Project ID of the project that contains the instance.",
        "required": true,
        "location": "path"
       }

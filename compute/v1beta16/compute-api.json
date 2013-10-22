@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"DGgqtFnjgu83tuwvvVNNUhOiHWk/d1I8Az6Abr5gAeNnwiFikkDw-cs\"",
+ "etag": "\"DGgqtFnjgu83tuwvvVNNUhOiHWk/6aE-0Ql1Qk6jNIkf5xhRS0iH-7M\"",
  "discoveryVersion": "v1",
  "id": "compute:v1beta16",
  "name": "compute",
@@ -1043,7 +1043,7 @@
    "properties": {
     "archiveSizeBytes": {
      "type": "string",
-     "description": "Size of the image tar.gz archive stored in BigStore (in bytes).",
+     "description": "Size of the image tar.gz archive stored in Google Cloud Storage (in bytes).",
      "format": "int64"
     },
     "creationTimestamp": {
@@ -3125,7 +3125,7 @@
        "default": "100",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "100",
+       "maximum": "500",
        "location": "query"
       },
       "pageToken": {
@@ -3285,7 +3285,7 @@
        "default": "100",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "100",
+       "maximum": "500",
        "location": "query"
       },
       "pageToken": {
@@ -3341,7 +3341,7 @@
        "default": "100",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "100",
+       "maximum": "500",
        "location": "query"
       },
       "pageToken": {
@@ -3548,7 +3548,7 @@
        "default": "100",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "100",
+       "maximum": "500",
        "location": "query"
       },
       "pageToken": {
@@ -3696,7 +3696,7 @@
        "default": "100",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "100",
+       "maximum": "500",
        "location": "query"
       },
       "pageToken": {
@@ -3814,7 +3814,7 @@
        "default": "100",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "100",
+       "maximum": "500",
        "location": "query"
       },
       "pageToken": {
@@ -3974,7 +3974,7 @@
        "default": "100",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "100",
+       "maximum": "500",
        "location": "query"
       },
       "pageToken": {
@@ -4073,7 +4073,7 @@
        "default": "100",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "100",
+       "maximum": "500",
        "location": "query"
       },
       "pageToken": {
@@ -4179,7 +4179,7 @@
        "default": "100",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "100",
+       "maximum": "500",
        "location": "query"
       },
       "pageToken": {
@@ -4319,7 +4319,7 @@
        "default": "100",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "100",
+       "maximum": "500",
        "location": "query"
       },
       "pageToken": {
@@ -4567,7 +4567,7 @@
        "default": "100",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "100",
+       "maximum": "500",
        "location": "query"
       },
       "pageToken": {
@@ -4664,7 +4664,7 @@
        "default": "100",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "100",
+       "maximum": "500",
        "location": "query"
       },
       "pageToken": {
@@ -5010,7 +5010,7 @@
        "default": "100",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "100",
+       "maximum": "500",
        "location": "query"
       },
       "pageToken": {
@@ -5225,7 +5225,7 @@
        "default": "100",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "100",
+       "maximum": "500",
        "location": "query"
       },
       "pageToken": {
@@ -5273,7 +5273,7 @@
        "default": "100",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "100",
+       "maximum": "500",
        "location": "query"
       },
       "pageToken": {
@@ -5358,7 +5358,7 @@
        "default": "100",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "100",
+       "maximum": "500",
        "location": "query"
       },
       "pageToken": {
@@ -5506,7 +5506,7 @@
        "default": "100",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "100",
+       "maximum": "500",
        "location": "query"
       },
       "pageToken": {
@@ -5688,7 +5688,7 @@
        "default": "100",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "100",
+       "maximum": "500",
        "location": "query"
       },
       "pageToken": {
@@ -5777,7 +5777,7 @@
        "default": "100",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "100",
+       "maximum": "500",
        "location": "query"
       },
       "pageToken": {
@@ -5917,7 +5917,7 @@
        "default": "100",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "100",
+       "maximum": "500",
        "location": "query"
       },
       "pageToken": {
@@ -6030,7 +6030,7 @@
        "default": "100",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "100",
+       "maximum": "500",
        "location": "query"
       },
       "pageToken": {
@@ -6164,7 +6164,7 @@
        "default": "100",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "100",
+       "maximum": "500",
        "location": "query"
       },
       "pageToken": {
@@ -6368,7 +6368,7 @@
        "default": "100",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "100",
+       "maximum": "500",
        "location": "query"
       },
       "pageToken": {
@@ -6637,7 +6637,7 @@
        "default": "100",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "100",
+       "maximum": "500",
        "location": "query"
       },
       "pageToken": {
@@ -6726,7 +6726,7 @@
        "default": "100",
        "format": "uint32",
        "minimum": "0",
-       "maximum": "100",
+       "maximum": "500",
        "location": "query"
       },
       "pageToken": {

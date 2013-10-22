@@ -591,6 +591,22 @@ func (t *Type) AsGo() string {
 		return t
 	}
 	if at, ok := t.ArrayType(); ok {
+		if at.apiType() == "string" {
+			switch at.apiTypeFormat() {
+			case "int64":
+				return "googleapi.Int64s"
+			case "uint64":
+				return "googleapi.Uint64s"
+			case "int32":
+				return "googleapi.Int32s"
+			case "uint32":
+				return "googleapi.Uint32s"
+			case "float64":
+				return "googleapi.Float64s"
+			default:
+				return "[]" + at.AsGo()
+			}
+		}
 		return "[]" + at.AsGo()
 	}
 	if ref, ok := t.Reference(); ok {

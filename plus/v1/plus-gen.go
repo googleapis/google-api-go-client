@@ -46,6 +46,12 @@ const (
 
 	// Know who you are on Google
 	PlusMeScope = "https://www.googleapis.com/auth/plus.me"
+
+	// View your email address
+	UserinfoEmailScope = "https://www.googleapis.com/auth/userinfo.email"
+
+	// View basic information about your account
+	UserinfoProfileScope = "https://www.googleapis.com/auth/userinfo.profile"
 )
 
 func New(client *http.Client) (*Service, error) {
@@ -867,7 +873,9 @@ type Person struct {
 	// AboutMe: A short biography for this person.
 	AboutMe string `json:"aboutMe,omitempty"`
 
-	// AgeRange: The age range of the person.
+	// AgeRange: The age range of the person. Valid ranges are 17 or
+	// younger, 18 to 20, and 21 or older. Age is determined from the user's
+	// birthday using Western age reckoning.
 	AgeRange *PersonAgeRange `json:"ageRange,omitempty"`
 
 	// Birthday: The person's date of birth, represented as YYYY-MM-DD.
@@ -888,6 +896,18 @@ type Person struct {
 
 	// DisplayName: The name of this person, which is suitable for display.
 	DisplayName string `json:"displayName,omitempty"`
+
+	// Domain: The hosted domain name for the user's Google Apps account.
+	// For instance, example.com. The plus.profile.emails.read or email
+	// scope is needed to get this domain name.
+	Domain string `json:"domain,omitempty"`
+
+	// Emails: A list of email addresses that this person has, including
+	// their Google account email address, and the public verified email
+	// addresses on their Google+ profile. The plus.profile.emails.read
+	// scope is needed to retrieve these email addresses, or the email scope
+	// can be used to retrieve just the Google account email address.
+	Emails []*PersonEmails `json:"emails,omitempty"`
 
 	// Etag: ETag of this response for caching purposes.
 	Etag string `json:"etag,omitempty"`
@@ -929,6 +949,9 @@ type Person struct {
 	// - "page" - represents a page.
 	ObjectType string `json:"objectType,omitempty"`
 
+	// Occupation: The occupation of this person.
+	Occupation string `json:"occupation,omitempty"`
+
 	// Organizations: A list of current or past organizations with which
 	// this person is associated.
 	Organizations []*PersonOrganizations `json:"organizations,omitempty"`
@@ -960,6 +983,9 @@ type Person struct {
 	// civil union.
 	RelationshipStatus string `json:"relationshipStatus,omitempty"`
 
+	// Skills: The person's skills.
+	Skills string `json:"skills,omitempty"`
+
 	// Tagline: The brief description (tagline) of this person.
 	Tagline string `json:"tagline,omitempty"`
 
@@ -974,10 +1000,18 @@ type Person struct {
 }
 
 type PersonAgeRange struct {
-	// Max: The age range's upper bound, if any.
+	// Max: The age range's upper bound, if any. Possible values include,
+	// but are not limited to, the following:
+	// - "17" - for age 17
+	// - "20"
+	// - for age 20
 	Max int64 `json:"max,omitempty"`
 
-	// Min: The age range's lower bound, if any.
+	// Min: The age range's lower bound, if any. Possible values include,
+	// but are not limited to, the following:
+	// - "21" - for age 21
+	// - "18"
+	// - for age 18
 	Min int64 `json:"min,omitempty"`
 }
 
@@ -1016,6 +1050,21 @@ type PersonCoverCoverPhoto struct {
 
 	// Width: The width of the image.
 	Width int64 `json:"width,omitempty"`
+}
+
+type PersonEmails struct {
+	// Type: The type of address. Possible values include, but are not
+	// limited to, the following values:
+	// - "account" - Google account
+	// email address.
+	// - "home" - Home email address.
+	// - "work" - Work email
+	// address.
+	// - "other" - Other.
+	Type string `json:"type,omitempty"`
+
+	// Value: The email address.
+	Value string `json:"value,omitempty"`
 }
 
 type PersonImage struct {
@@ -1787,7 +1836,8 @@ func (c *MomentsInsertCall) Do() (*Moment, error) {
 	//     "$ref": "Moment"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/plus.login"
+	//     "https://www.googleapis.com/auth/plus.login",
+	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
 
@@ -1935,7 +1985,8 @@ func (c *MomentsListCall) Do() (*MomentsFeed, error) {
 	//     "$ref": "MomentsFeed"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/plus.login"
+	//     "https://www.googleapis.com/auth/plus.login",
+	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
 
@@ -2059,7 +2110,9 @@ func (c *PeopleGetCall) Do() (*Person, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/plus.login",
-	//     "https://www.googleapis.com/auth/plus.me"
+	//     "https://www.googleapis.com/auth/plus.me",
+	//     "https://www.googleapis.com/auth/userinfo.email",
+	//     "https://www.googleapis.com/auth/userinfo.profile"
 	//   ]
 	// }
 
@@ -2152,9 +2205,11 @@ func (c *PeopleListCall) Do() (*PeopleFeed, error) {
 	//     "collection": {
 	//       "description": "The collection of people to list.",
 	//       "enum": [
+	//         "connected",
 	//         "visible"
 	//       ],
 	//       "enumDescriptions": [
+	//         "The list of visible people in the authenticated user's circles who also use the requesting app. This list is limited to users who made their app activities visible to the authenticated user.",
 	//         "The list of people who this user has added to one or more circles, limited to the circles visible to the requesting application."
 	//       ],
 	//       "location": "path",
@@ -2200,7 +2255,8 @@ func (c *PeopleListCall) Do() (*PeopleFeed, error) {
 	//     "$ref": "PeopleFeed"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/plus.login"
+	//     "https://www.googleapis.com/auth/plus.login",
+	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
 

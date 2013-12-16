@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"DGgqtFnjgu83tuwvvVNNUhOiHWk/lKQvoyQ9jVAixOyz9qwZmCcUu-Q\"",
+ "etag": "\"qMhxoRFWKZK4K3KdZJuqms1o3fc/_kJQrsC49uCIVjQXyjfnVM-Qka8\"",
  "discoveryVersion": "v1",
  "id": "books:v1",
  "name": "books",
@@ -1192,6 +1192,10 @@
        "type": "boolean",
        "description": "Whether or not this book is public domain in the country listed above."
       },
+      "quoteSharingAllowed": {
+       "type": "boolean",
+       "description": "Whether quote sharing is allowed for this volume."
+      },
       "textToSpeechPermission": {
        "type": "string",
        "description": "Whether text-to-speech is permitted for this volume. Values can be ALLOWED, ALLOWED_FOR_ACCESSIBILITY, or NOT_ALLOWED."
@@ -1576,7 +1580,7 @@
       },
       "pageCount": {
        "type": "integer",
-       "description": "Total number of pages.",
+       "description": "Total number of pages as per publisher metadata.",
        "format": "int32"
       },
       "previewLink": {
@@ -1586,6 +1590,11 @@
       "printType": {
        "type": "string",
        "description": "Type of publication of this volume. Possible values are BOOK or MAGAZINE."
+      },
+      "printedPageCount": {
+       "type": "integer",
+       "description": "Total number of printed pages in generated pdf representation.",
+       "format": "int32"
       },
       "publishedDate": {
        "type": "string",
@@ -2050,6 +2059,11 @@
        "httpMethod": "GET",
        "description": "Gets the annotation data.",
        "parameters": {
+        "allowWebDefinitions": {
+         "type": "boolean",
+         "description": "For the dictionary layer. Whether or not to allow web definitions.",
+         "location": "query"
+        },
         "annotationDataId": {
          "type": "string",
          "description": "The ID of the annotation data to retrieve.",
@@ -2639,6 +2653,12 @@
         "layerId": {
          "type": "string",
          "description": "The layer ID to limit annotation by.",
+         "location": "query"
+        },
+        "layerIds": {
+         "type": "string",
+         "description": "The layer ID(s) to limit annotation by.",
+         "repeated": true,
          "location": "query"
         },
         "maxResults": {

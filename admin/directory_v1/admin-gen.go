@@ -68,6 +68,9 @@ const (
 	// View groups on your domain
 	AdminDirectoryGroupReadonlyScope = "https://www.googleapis.com/auth/admin.directory.group.readonly"
 
+	// View and manage notifications received on your domain
+	AdminDirectoryNotificationsScope = "https://www.googleapis.com/auth/admin.directory.notifications"
+
 	// View and manage organization units on your domain
 	AdminDirectoryOrgunitScope = "https://www.googleapis.com/auth/admin.directory.orgunit"
 
@@ -85,6 +88,9 @@ const (
 
 	// View users on your domain
 	AdminDirectoryUserReadonlyScope = "https://www.googleapis.com/auth/admin.directory.user.readonly"
+
+	// Manage data access permissions for users on your domain
+	AdminDirectoryUserSecurityScope = "https://www.googleapis.com/auth/admin.directory.user.security"
 )
 
 func New(client *http.Client) (*Service, error) {
@@ -92,17 +98,23 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client}
+	s.Asps = NewAspsService(s)
 	s.Chromeosdevices = NewChromeosdevicesService(s)
 	s.Groups = NewGroupsService(s)
 	s.Members = NewMembersService(s)
 	s.Mobiledevices = NewMobiledevicesService(s)
+	s.Notifications = NewNotificationsService(s)
 	s.Orgunits = NewOrgunitsService(s)
+	s.Tokens = NewTokensService(s)
 	s.Users = NewUsersService(s)
+	s.VerificationCodes = NewVerificationCodesService(s)
 	return s, nil
 }
 
 type Service struct {
 	client *http.Client
+
+	Asps *AspsService
 
 	Chromeosdevices *ChromeosdevicesService
 
@@ -112,9 +124,24 @@ type Service struct {
 
 	Mobiledevices *MobiledevicesService
 
+	Notifications *NotificationsService
+
 	Orgunits *OrgunitsService
 
+	Tokens *TokensService
+
 	Users *UsersService
+
+	VerificationCodes *VerificationCodesService
+}
+
+func NewAspsService(s *Service) *AspsService {
+	rs := &AspsService{s: s}
+	return rs
+}
+
+type AspsService struct {
+	s *Service
 }
 
 func NewChromeosdevicesService(s *Service) *ChromeosdevicesService {
@@ -165,12 +192,30 @@ type MobiledevicesService struct {
 	s *Service
 }
 
+func NewNotificationsService(s *Service) *NotificationsService {
+	rs := &NotificationsService{s: s}
+	return rs
+}
+
+type NotificationsService struct {
+	s *Service
+}
+
 func NewOrgunitsService(s *Service) *OrgunitsService {
 	rs := &OrgunitsService{s: s}
 	return rs
 }
 
 type OrgunitsService struct {
+	s *Service
+}
+
+func NewTokensService(s *Service) *TokensService {
+	rs := &TokensService{s: s}
+	return rs
+}
+
+type TokensService struct {
 	s *Service
 }
 
@@ -207,6 +252,15 @@ type UsersPhotosService struct {
 	s *Service
 }
 
+func NewVerificationCodesService(s *Service) *VerificationCodesService {
+	rs := &VerificationCodesService{s: s}
+	return rs
+}
+
+type VerificationCodesService struct {
+	s *Service
+}
+
 type Alias struct {
 	// Alias: A alias email
 	Alias string `json:"alias,omitempty"`
@@ -234,6 +288,40 @@ type Aliases struct {
 	Etag string `json:"etag,omitempty"`
 
 	// Kind: Kind of resource this is.
+	Kind string `json:"kind,omitempty"`
+}
+
+type Asp struct {
+	// CodeId: Code Id of the Access code.
+	CodeId int64 `json:"codeId,omitempty"`
+
+	// CreationTime: Time when the ASP was created.
+	CreationTime int64 `json:"creationTime,omitempty,string"`
+
+	// Etag: ETag of the resource.
+	Etag string `json:"etag,omitempty"`
+
+	// Kind: The type of the resource.
+	Kind string `json:"kind,omitempty"`
+
+	// LastTimeUsed: Time when the ASP was last used.
+	LastTimeUsed int64 `json:"lastTimeUsed,omitempty,string"`
+
+	// Name: Name of the application.
+	Name string `json:"name,omitempty"`
+
+	// UserKey: User who has issued the ASP.
+	UserKey string `json:"userKey,omitempty"`
+}
+
+type Asps struct {
+	// Etag: ETag of the resource.
+	Etag string `json:"etag,omitempty"`
+
+	// Items: Asps resource.
+	Items []*Asp `json:"items,omitempty"`
+
+	// Kind: The type of the resource.
 	Kind string `json:"kind,omitempty"`
 }
 
@@ -491,6 +579,51 @@ type MobileDevices struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+type Notification struct {
+	// Body: Body of the notification (Read-only)
+	Body string `json:"body,omitempty"`
+
+	// Etag: ETag of the resource.
+	Etag string `json:"etag,omitempty"`
+
+	// FromAddress: Address from which the notification is received
+	// (Read-only)
+	FromAddress string `json:"fromAddress,omitempty"`
+
+	// IsUnread: Boolean indicating whether the notification is unread or
+	// not.
+	IsUnread bool `json:"isUnread,omitempty"`
+
+	// Kind: The type of the resource.
+	Kind string `json:"kind,omitempty"`
+
+	NotificationId string `json:"notificationId,omitempty"`
+
+	// SendTime: Time at which notification was sent (Read-only)
+	SendTime string `json:"sendTime,omitempty"`
+
+	// Subject: Subject of the notification (Read-only)
+	Subject string `json:"subject,omitempty"`
+}
+
+type Notifications struct {
+	// Etag: ETag of the resource.
+	Etag string `json:"etag,omitempty"`
+
+	// Items: List of notifications in this page.
+	Items []*Notification `json:"items,omitempty"`
+
+	// Kind: The type of the resource.
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: Token for fetching the next page of notifications.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// UnreadNotificationsCount: Number of unread notification for the
+	// domain.
+	UnreadNotificationsCount int64 `json:"unreadNotificationsCount,omitempty"`
+}
+
 type OrgUnit struct {
 	// BlockInheritance: Should block inheritance
 	BlockInheritance bool `json:"blockInheritance,omitempty"`
@@ -523,6 +656,43 @@ type OrgUnits struct {
 
 	// OrganizationUnits: List of user objects.
 	OrganizationUnits []*OrgUnit `json:"organizationUnits,omitempty"`
+}
+
+type Token struct {
+	// Anonymous: Is the token anonymous?
+	Anonymous bool `json:"anonymous,omitempty"`
+
+	// ClientId: Domain to which the token is issued.
+	ClientId string `json:"clientId,omitempty"`
+
+	// DisplayText: Displayable name of Domain to which the token is issued.
+	DisplayText string `json:"displayText,omitempty"`
+
+	// Etag: ETag of the resource.
+	Etag string `json:"etag,omitempty"`
+
+	// Kind: The type of the resource.
+	Kind string `json:"kind,omitempty"`
+
+	// NativeApp: Is the token for native app?
+	NativeApp bool `json:"nativeApp,omitempty"`
+
+	// Scopes: List of scopes.
+	Scopes []string `json:"scopes,omitempty"`
+
+	// UserKey: Obfuscated user_id of the user who has issued the token.
+	UserKey string `json:"userKey,omitempty"`
+}
+
+type Tokens struct {
+	// Etag: ETag of the resource.
+	Etag string `json:"etag,omitempty"`
+
+	// Items: Tokens resource.
+	Items []*Token `json:"items,omitempty"`
+
+	// Kind: The type of the resource.
+	Kind string `json:"kind,omitempty"`
 }
 
 type User struct {
@@ -861,6 +1031,240 @@ type Users struct {
 
 	// Users: List of user objects.
 	Users []*User `json:"users,omitempty"`
+}
+
+type VerificationCode struct {
+	// Etag: ETag of the resource.
+	Etag string `json:"etag,omitempty"`
+
+	// Kind: The type of the resource.
+	Kind string `json:"kind,omitempty"`
+
+	// UserId: Obfuscated user_id of the account holder.
+	UserId string `json:"userId,omitempty"`
+
+	// VerificationCode: A verification code for that user
+	VerificationCode string `json:"verificationCode,omitempty"`
+}
+
+type VerificationCodes struct {
+	// Etag: ETag of the resource.
+	Etag string `json:"etag,omitempty"`
+
+	// Items: verification codes resource.
+	Items []*VerificationCode `json:"items,omitempty"`
+
+	// Kind: The type of the resource.
+	Kind string `json:"kind,omitempty"`
+}
+
+// method id "directory.asps.delete":
+
+type AspsDeleteCall struct {
+	s       *Service
+	userKey string
+	codeId  int64
+	opt_    map[string]interface{}
+}
+
+// Delete: Delete the application specific password issued by the user
+// for a codeId.
+func (r *AspsService) Delete(userKey string, codeId int64) *AspsDeleteCall {
+	c := &AspsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.userKey = userKey
+	c.codeId = codeId
+	return c
+}
+
+func (c *AspsDeleteCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/admin/directory/v1/", "users/{userKey}/asps/{codeId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{userKey}", url.QueryEscape(c.userKey), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{codeId}", strconv.FormatInt(c.codeId, 10), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Delete the application specific password issued by the user for a codeId.",
+	//   "httpMethod": "DELETE",
+	//   "id": "directory.asps.delete",
+	//   "parameterOrder": [
+	//     "userKey",
+	//     "codeId"
+	//   ],
+	//   "parameters": {
+	//     "codeId": {
+	//       "description": "The codeId.",
+	//       "format": "int32",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "integer"
+	//     },
+	//     "userKey": {
+	//       "description": "Email or immutable Id of the user",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "users/{userKey}/asps/{codeId}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.directory.user.security"
+	//   ]
+	// }
+
+}
+
+// method id "directory.asps.get":
+
+type AspsGetCall struct {
+	s       *Service
+	userKey string
+	codeId  int64
+	opt_    map[string]interface{}
+}
+
+// Get: Get the application specific password issued by the user for a
+// codeId.
+func (r *AspsService) Get(userKey string, codeId int64) *AspsGetCall {
+	c := &AspsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.userKey = userKey
+	c.codeId = codeId
+	return c
+}
+
+func (c *AspsGetCall) Do() (*Asp, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/admin/directory/v1/", "users/{userKey}/asps/{codeId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{userKey}", url.QueryEscape(c.userKey), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{codeId}", strconv.FormatInt(c.codeId, 10), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Asp)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get the application specific password issued by the user for a codeId.",
+	//   "httpMethod": "GET",
+	//   "id": "directory.asps.get",
+	//   "parameterOrder": [
+	//     "userKey",
+	//     "codeId"
+	//   ],
+	//   "parameters": {
+	//     "codeId": {
+	//       "description": "The codeid.",
+	//       "format": "int32",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "integer"
+	//     },
+	//     "userKey": {
+	//       "description": "Email or immutable Id of the user",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "users/{userKey}/asps/{codeId}",
+	//   "response": {
+	//     "$ref": "Asp"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.directory.user.security"
+	//   ]
+	// }
+
+}
+
+// method id "directory.asps.list":
+
+type AspsListCall struct {
+	s       *Service
+	userKey string
+	opt_    map[string]interface{}
+}
+
+// List: List the application specific passwords issued by the user.
+func (r *AspsService) List(userKey string) *AspsListCall {
+	c := &AspsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.userKey = userKey
+	return c
+}
+
+func (c *AspsListCall) Do() (*Asps, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/admin/directory/v1/", "users/{userKey}/asps")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{userKey}", url.QueryEscape(c.userKey), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Asps)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List the application specific passwords issued by the user.",
+	//   "httpMethod": "GET",
+	//   "id": "directory.asps.list",
+	//   "parameterOrder": [
+	//     "userKey"
+	//   ],
+	//   "parameters": {
+	//     "userKey": {
+	//       "description": "Email or immutable Id of the user",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "users/{userKey}/asps",
+	//   "response": {
+	//     "$ref": "Asps"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.directory.user.security"
+	//   ]
+	// }
+
 }
 
 // method id "directory.chromeosdevices.get":
@@ -2993,6 +3397,428 @@ func (c *MobiledevicesListCall) Do() (*MobileDevices, error) {
 
 }
 
+// method id "directory.notifications.delete":
+
+type NotificationsDeleteCall struct {
+	s              *Service
+	customer       string
+	notificationId string
+	opt_           map[string]interface{}
+}
+
+// Delete: Deletes a notification
+func (r *NotificationsService) Delete(customer string, notificationId string) *NotificationsDeleteCall {
+	c := &NotificationsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.customer = customer
+	c.notificationId = notificationId
+	return c
+}
+
+func (c *NotificationsDeleteCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/admin/directory/v1/", "customer/{customer}/notifications/{notificationId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{customer}", url.QueryEscape(c.customer), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{notificationId}", url.QueryEscape(c.notificationId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Deletes a notification",
+	//   "httpMethod": "DELETE",
+	//   "id": "directory.notifications.delete",
+	//   "parameterOrder": [
+	//     "customer",
+	//     "notificationId"
+	//   ],
+	//   "parameters": {
+	//     "customer": {
+	//       "description": "Obfuscated customer ID of the domain for which notification is to be deleted",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "notificationId": {
+	//       "description": "Id of the notification to be deleted.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "customer/{customer}/notifications/{notificationId}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.directory.notifications"
+	//   ]
+	// }
+
+}
+
+// method id "directory.notifications.get":
+
+type NotificationsGetCall struct {
+	s              *Service
+	customer       string
+	notificationId string
+	opt_           map[string]interface{}
+}
+
+// Get: Retrieves a notification
+func (r *NotificationsService) Get(customer string, notificationId string) *NotificationsGetCall {
+	c := &NotificationsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.customer = customer
+	c.notificationId = notificationId
+	return c
+}
+
+func (c *NotificationsGetCall) Do() (*Notification, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/admin/directory/v1/", "customer/{customer}/notifications/{notificationId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{customer}", url.QueryEscape(c.customer), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{notificationId}", url.QueryEscape(c.notificationId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Notification)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a notification",
+	//   "httpMethod": "GET",
+	//   "id": "directory.notifications.get",
+	//   "parameterOrder": [
+	//     "customer",
+	//     "notificationId"
+	//   ],
+	//   "parameters": {
+	//     "customer": {
+	//       "description": "Obfuscated customer ID of the domain for which notification is to be retrieved",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "notificationId": {
+	//       "description": "Id of the notification to be retrieved.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "customer/{customer}/notifications/{notificationId}",
+	//   "response": {
+	//     "$ref": "Notification"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.directory.notifications"
+	//   ]
+	// }
+
+}
+
+// method id "directory.notifications.list":
+
+type NotificationsListCall struct {
+	s        *Service
+	customer string
+	opt_     map[string]interface{}
+}
+
+// List: Retrieves a list of notifications.
+func (r *NotificationsService) List(customer string) *NotificationsListCall {
+	c := &NotificationsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.customer = customer
+	return c
+}
+
+// Language sets the optional parameter "language": Code of the language
+// in which the notifications are to be retrieved. Notifications will be
+// returned in English by default
+func (c *NotificationsListCall) Language(language string) *NotificationsListCall {
+	c.opt_["language"] = language
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Number of
+// notifications to be retrieved. Default is 100
+func (c *NotificationsListCall) MaxResults(maxResults int64) *NotificationsListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Token for the page
+// to be retrieved
+func (c *NotificationsListCall) PageToken(pageToken string) *NotificationsListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+func (c *NotificationsListCall) Do() (*Notifications, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["language"]; ok {
+		params.Set("language", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/admin/directory/v1/", "customer/{customer}/notifications")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{customer}", url.QueryEscape(c.customer), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Notifications)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a list of notifications.",
+	//   "httpMethod": "GET",
+	//   "id": "directory.notifications.list",
+	//   "parameterOrder": [
+	//     "customer"
+	//   ],
+	//   "parameters": {
+	//     "customer": {
+	//       "description": "Obfuscated customer ID of the domain for which notifications are to be retrieved",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "language": {
+	//       "description": "Code of the language in which the notifications are to be retrieved. Notifications will be returned in English by default",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "description": "Number of notifications to be retrieved. Default is 100",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Token for the page to be retrieved",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "customer/{customer}/notifications",
+	//   "response": {
+	//     "$ref": "Notifications"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.directory.notifications"
+	//   ]
+	// }
+
+}
+
+// method id "directory.notifications.patch":
+
+type NotificationsPatchCall struct {
+	s              *Service
+	customer       string
+	notificationId string
+	notification   *Notification
+	opt_           map[string]interface{}
+}
+
+// Patch: Updates a notification. This method supports patch semantics.
+func (r *NotificationsService) Patch(customer string, notificationId string, notification *Notification) *NotificationsPatchCall {
+	c := &NotificationsPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.customer = customer
+	c.notificationId = notificationId
+	c.notification = notification
+	return c
+}
+
+func (c *NotificationsPatchCall) Do() (*Notification, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.notification)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/admin/directory/v1/", "customer/{customer}/notifications/{notificationId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{customer}", url.QueryEscape(c.customer), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{notificationId}", url.QueryEscape(c.notificationId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Notification)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a notification. This method supports patch semantics.",
+	//   "httpMethod": "PATCH",
+	//   "id": "directory.notifications.patch",
+	//   "parameterOrder": [
+	//     "customer",
+	//     "notificationId"
+	//   ],
+	//   "parameters": {
+	//     "customer": {
+	//       "description": "Obfuscated customer ID of the domain for which notification is to be updated",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "notificationId": {
+	//       "description": "Id of the notification to be updated.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "customer/{customer}/notifications/{notificationId}",
+	//   "request": {
+	//     "$ref": "Notification"
+	//   },
+	//   "response": {
+	//     "$ref": "Notification"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.directory.notifications"
+	//   ]
+	// }
+
+}
+
+// method id "directory.notifications.update":
+
+type NotificationsUpdateCall struct {
+	s              *Service
+	customer       string
+	notificationId string
+	notification   *Notification
+	opt_           map[string]interface{}
+}
+
+// Update: Updates a notification
+func (r *NotificationsService) Update(customer string, notificationId string, notification *Notification) *NotificationsUpdateCall {
+	c := &NotificationsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.customer = customer
+	c.notificationId = notificationId
+	c.notification = notification
+	return c
+}
+
+func (c *NotificationsUpdateCall) Do() (*Notification, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.notification)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/admin/directory/v1/", "customer/{customer}/notifications/{notificationId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{customer}", url.QueryEscape(c.customer), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{notificationId}", url.QueryEscape(c.notificationId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Notification)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a notification",
+	//   "httpMethod": "PUT",
+	//   "id": "directory.notifications.update",
+	//   "parameterOrder": [
+	//     "customer",
+	//     "notificationId"
+	//   ],
+	//   "parameters": {
+	//     "customer": {
+	//       "description": "Obfuscated customer ID of the domain for which notification is to be updated",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "notificationId": {
+	//       "description": "Id of the notification to be updated.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "customer/{customer}/notifications/{notificationId}",
+	//   "request": {
+	//     "$ref": "Notification"
+	//   },
+	//   "response": {
+	//     "$ref": "Notification"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.directory.notifications"
+	//   ]
+	// }
+
+}
+
 // method id "directory.orgunits.delete":
 
 type OrgunitsDeleteCall struct {
@@ -3484,6 +4310,211 @@ func (c *OrgunitsUpdateCall) Do() (*OrgUnit, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/admin.directory.orgunit"
+	//   ]
+	// }
+
+}
+
+// method id "directory.tokens.delete":
+
+type TokensDeleteCall struct {
+	s        *Service
+	userKey  string
+	clientId string
+	opt_     map[string]interface{}
+}
+
+// Delete: Delete all OAuth tokens issued by the user for an app domain.
+func (r *TokensService) Delete(userKey string, clientId string) *TokensDeleteCall {
+	c := &TokensDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.userKey = userKey
+	c.clientId = clientId
+	return c
+}
+
+func (c *TokensDeleteCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/admin/directory/v1/", "users/{userKey}/tokens/{clientId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{userKey}", url.QueryEscape(c.userKey), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{clientId}", url.QueryEscape(c.clientId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Delete all OAuth tokens issued by the user for an app domain.",
+	//   "httpMethod": "DELETE",
+	//   "id": "directory.tokens.delete",
+	//   "parameterOrder": [
+	//     "userKey",
+	//     "clientId"
+	//   ],
+	//   "parameters": {
+	//     "clientId": {
+	//       "description": "The app domain.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "userKey": {
+	//       "description": "Email or immutable Id of the user",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "users/{userKey}/tokens/{clientId}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.directory.user.security"
+	//   ]
+	// }
+
+}
+
+// method id "directory.tokens.get":
+
+type TokensGetCall struct {
+	s        *Service
+	userKey  string
+	clientId string
+	opt_     map[string]interface{}
+}
+
+// Get: Get the OAuth token issued by the user for an app domain.
+func (r *TokensService) Get(userKey string, clientId string) *TokensGetCall {
+	c := &TokensGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.userKey = userKey
+	c.clientId = clientId
+	return c
+}
+
+func (c *TokensGetCall) Do() (*Token, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/admin/directory/v1/", "users/{userKey}/tokens/{clientId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{userKey}", url.QueryEscape(c.userKey), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{clientId}", url.QueryEscape(c.clientId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Token)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get the OAuth token issued by the user for an app domain.",
+	//   "httpMethod": "GET",
+	//   "id": "directory.tokens.get",
+	//   "parameterOrder": [
+	//     "userKey",
+	//     "clientId"
+	//   ],
+	//   "parameters": {
+	//     "clientId": {
+	//       "description": "The app domain.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "userKey": {
+	//       "description": "Email or immutable Id of the user",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "users/{userKey}/tokens/{clientId}",
+	//   "response": {
+	//     "$ref": "Token"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.directory.user.security"
+	//   ]
+	// }
+
+}
+
+// method id "directory.tokens.list":
+
+type TokensListCall struct {
+	s       *Service
+	userKey string
+	opt_    map[string]interface{}
+}
+
+// List: List the OAuth tokens issued by the user.
+func (r *TokensService) List(userKey string) *TokensListCall {
+	c := &TokensListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.userKey = userKey
+	return c
+}
+
+func (c *TokensListCall) Do() (*Tokens, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/admin/directory/v1/", "users/{userKey}/tokens")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{userKey}", url.QueryEscape(c.userKey), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Tokens)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List the OAuth tokens issued by the user.",
+	//   "httpMethod": "GET",
+	//   "id": "directory.tokens.list",
+	//   "parameterOrder": [
+	//     "userKey"
+	//   ],
+	//   "parameters": {
+	//     "userKey": {
+	//       "description": "Email or immutable Id of the user",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "users/{userKey}/tokens",
+	//   "response": {
+	//     "$ref": "Tokens"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.directory.user.security"
 	//   ]
 	// }
 
@@ -4636,6 +5667,184 @@ func (c *UsersPhotosUpdateCall) Do() (*UserPhoto, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/admin.directory.user"
+	//   ]
+	// }
+
+}
+
+// method id "directory.verificationCodes.generate":
+
+type VerificationCodesGenerateCall struct {
+	s       *Service
+	userKey string
+	opt_    map[string]interface{}
+}
+
+// Generate: Generate new backup verification codes for the user.
+func (r *VerificationCodesService) Generate(userKey string) *VerificationCodesGenerateCall {
+	c := &VerificationCodesGenerateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.userKey = userKey
+	return c
+}
+
+func (c *VerificationCodesGenerateCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/admin/directory/v1/", "users/{userKey}/verificationCodes/generate")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{userKey}", url.QueryEscape(c.userKey), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Generate new backup verification codes for the user.",
+	//   "httpMethod": "POST",
+	//   "id": "directory.verificationCodes.generate",
+	//   "parameterOrder": [
+	//     "userKey"
+	//   ],
+	//   "parameters": {
+	//     "userKey": {
+	//       "description": "Email or immutable Id of the user",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "users/{userKey}/verificationCodes/generate",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.directory.user.security"
+	//   ]
+	// }
+
+}
+
+// method id "directory.verificationCodes.invalidate":
+
+type VerificationCodesInvalidateCall struct {
+	s       *Service
+	userKey string
+	opt_    map[string]interface{}
+}
+
+// Invalidate: Invalidate the backup verification codes for the user.
+func (r *VerificationCodesService) Invalidate(userKey string) *VerificationCodesInvalidateCall {
+	c := &VerificationCodesInvalidateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.userKey = userKey
+	return c
+}
+
+func (c *VerificationCodesInvalidateCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/admin/directory/v1/", "users/{userKey}/verificationCodes/invalidate")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{userKey}", url.QueryEscape(c.userKey), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Invalidate the backup verification codes for the user.",
+	//   "httpMethod": "POST",
+	//   "id": "directory.verificationCodes.invalidate",
+	//   "parameterOrder": [
+	//     "userKey"
+	//   ],
+	//   "parameters": {
+	//     "userKey": {
+	//       "description": "Email or immutable Id of the user",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "users/{userKey}/verificationCodes/invalidate",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.directory.user.security"
+	//   ]
+	// }
+
+}
+
+// method id "directory.verificationCodes.list":
+
+type VerificationCodesListCall struct {
+	s       *Service
+	userKey string
+	opt_    map[string]interface{}
+}
+
+// List: List the backup verification codes for the user.
+func (r *VerificationCodesService) List(userKey string) *VerificationCodesListCall {
+	c := &VerificationCodesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.userKey = userKey
+	return c
+}
+
+func (c *VerificationCodesListCall) Do() (*VerificationCodes, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/admin/directory/v1/", "users/{userKey}/verificationCodes")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{userKey}", url.QueryEscape(c.userKey), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(VerificationCodes)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List the backup verification codes for the user.",
+	//   "httpMethod": "GET",
+	//   "id": "directory.verificationCodes.list",
+	//   "parameterOrder": [
+	//     "userKey"
+	//   ],
+	//   "parameters": {
+	//     "userKey": {
+	//       "description": "Email or immutable Id of the user",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "users/{userKey}/verificationCodes",
+	//   "response": {
+	//     "$ref": "VerificationCodes"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.directory.user.security"
 	//   ]
 	// }
 

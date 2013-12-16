@@ -305,6 +305,13 @@ func (c *ActivitiesListCall) ActorIpAddress(actorIpAddress string) *ActivitiesLi
 	return c
 }
 
+// CustomerId sets the optional parameter "customerId": Represents the
+// customer for which the data is to be fetched.
+func (c *ActivitiesListCall) CustomerId(customerId string) *ActivitiesListCall {
+	c.opt_["customerId"] = customerId
+	return c
+}
+
 // EndTime sets the optional parameter "endTime": Return events which
 // occured at or before this time.
 func (c *ActivitiesListCall) EndTime(endTime string) *ActivitiesListCall {
@@ -354,6 +361,9 @@ func (c *ActivitiesListCall) Do() (*Activities, error) {
 	params.Set("alt", "json")
 	if v, ok := c.opt_["actorIpAddress"]; ok {
 		params.Set("actorIpAddress", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["customerId"]; ok {
+		params.Set("customerId", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["endTime"]; ok {
 		params.Set("endTime", fmt.Sprintf("%v", v))
@@ -412,6 +422,12 @@ func (c *ActivitiesListCall) Do() (*Activities, error) {
 	//       "location": "path",
 	//       "pattern": "(admin)|(docs)|(login)",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "customerId": {
+	//       "description": "Represents the customer for which the data is to be fetched.",
+	//       "location": "query",
+	//       "pattern": "C.+",
 	//       "type": "string"
 	//     },
 	//     "endTime": {
@@ -484,6 +500,13 @@ func (r *CustomerUsageReportsService) Get(date string) *CustomerUsageReportsGetC
 	return c
 }
 
+// CustomerId sets the optional parameter "customerId": Represents the
+// customer for which the data is to be fetched.
+func (c *CustomerUsageReportsGetCall) CustomerId(customerId string) *CustomerUsageReportsGetCall {
+	c.opt_["customerId"] = customerId
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": Token to specify
 // next page.
 func (c *CustomerUsageReportsGetCall) PageToken(pageToken string) *CustomerUsageReportsGetCall {
@@ -503,6 +526,9 @@ func (c *CustomerUsageReportsGetCall) Do() (*UsageReports, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["customerId"]; ok {
+		params.Set("customerId", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
@@ -536,6 +562,12 @@ func (c *CustomerUsageReportsGetCall) Do() (*UsageReports, error) {
 	//     "date"
 	//   ],
 	//   "parameters": {
+	//     "customerId": {
+	//       "description": "Represents the customer for which the data is to be fetched.",
+	//       "location": "query",
+	//       "pattern": "C.+",
+	//       "type": "string"
+	//     },
 	//     "date": {
 	//       "description": "Represents the date in yyyy-mm-dd format for which the data is to be fetched.",
 	//       "location": "path",
@@ -584,6 +616,13 @@ func (r *UserUsageReportService) Get(userKey string, date string) *UserUsageRepo
 	return c
 }
 
+// CustomerId sets the optional parameter "customerId": Represents the
+// customer for which the data is to be fetched.
+func (c *UserUsageReportGetCall) CustomerId(customerId string) *UserUsageReportGetCall {
+	c.opt_["customerId"] = customerId
+	return c
+}
+
 // Filters sets the optional parameter "filters": Represents the set of
 // filters including parameter operator value.
 func (c *UserUsageReportGetCall) Filters(filters string) *UserUsageReportGetCall {
@@ -617,6 +656,9 @@ func (c *UserUsageReportGetCall) Do() (*UsageReports, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["customerId"]; ok {
+		params.Set("customerId", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["filters"]; ok {
 		params.Set("filters", fmt.Sprintf("%v", v))
 	}
@@ -658,6 +700,12 @@ func (c *UserUsageReportGetCall) Do() (*UsageReports, error) {
 	//     "date"
 	//   ],
 	//   "parameters": {
+	//     "customerId": {
+	//       "description": "Represents the customer for which the data is to be fetched.",
+	//       "location": "query",
+	//       "pattern": "C.+",
+	//       "type": "string"
+	//     },
 	//     "date": {
 	//       "description": "Represents the date in yyyy-mm-dd format for which the data is to be fetched.",
 	//       "location": "path",

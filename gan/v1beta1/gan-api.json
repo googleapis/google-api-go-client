@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"DGgqtFnjgu83tuwvvVNNUhOiHWk/jwtjOFqKKHJzL2rsaKQ8X5cVxho\"",
+ "etag": "\"qMhxoRFWKZK4K3KdZJuqms1o3fc/0f7uRmJraUnv6U9LmngxWGiEMV0\"",
  "discoveryVersion": "v1",
  "id": "gan:v1beta1",
  "name": "gan",
@@ -63,18 +63,6 @@
    "type": "string",
    "description": "IP address of the site where the request originates. Use this if you want to enforce per-user limits.",
    "location": "query"
-  }
- },
- "auth": {
-  "oauth2": {
-   "scopes": {
-    "https://www.googleapis.com/auth/gan": {
-     "description": "Manage your GAN data"
-    },
-    "https://www.googleapis.com/auth/gan.readonly": {
-     "description": "View your GAN data"
-    }
-   }
   }
  },
  "schemas": {
@@ -1071,11 +1059,7 @@
      ],
      "response": {
       "$ref": "Advertiser"
-     },
-     "scopes": [
-      "https://www.googleapis.com/auth/gan",
-      "https://www.googleapis.com/auth/gan.readonly"
-     ]
+     }
     },
     "list": {
      "id": "gan.advertisers.list",
@@ -1167,11 +1151,7 @@
      ],
      "response": {
       "$ref": "Advertisers"
-     },
-     "scopes": [
-      "https://www.googleapis.com/auth/gan",
-      "https://www.googleapis.com/auth/gan.readonly"
-     ]
+     }
     }
    }
   },
@@ -1214,11 +1194,7 @@
      ],
      "response": {
       "$ref": "CcOffers"
-     },
-     "scopes": [
-      "https://www.googleapis.com/auth/gan",
-      "https://www.googleapis.com/auth/gan.readonly"
-     ]
+     }
     }
    }
   },
@@ -1374,11 +1350,7 @@
      ],
      "response": {
       "$ref": "Events"
-     },
-     "scopes": [
-      "https://www.googleapis.com/auth/gan",
-      "https://www.googleapis.com/auth/gan.readonly"
-     ]
+     }
     }
    }
   },
@@ -1425,11 +1397,7 @@
      ],
      "response": {
       "$ref": "Link"
-     },
-     "scopes": [
-      "https://www.googleapis.com/auth/gan",
-      "https://www.googleapis.com/auth/gan.readonly"
-     ]
+     }
     },
     "insert": {
      "id": "gan.links.insert",
@@ -1467,10 +1435,7 @@
      },
      "response": {
       "$ref": "Link"
-     },
-     "scopes": [
-      "https://www.googleapis.com/auth/gan"
-     ]
+     }
     },
     "list": {
      "id": "gan.links.list",
@@ -1615,11 +1580,7 @@
      ],
      "response": {
       "$ref": "Links"
-     },
-     "scopes": [
-      "https://www.googleapis.com/auth/gan",
-      "https://www.googleapis.com/auth/gan.readonly"
-     ]
+     }
     }
    }
   },
@@ -1663,11 +1624,7 @@
      ],
      "response": {
       "$ref": "Publisher"
-     },
-     "scopes": [
-      "https://www.googleapis.com/auth/gan",
-      "https://www.googleapis.com/auth/gan.readonly"
-     ]
+     }
     },
     "list": {
      "id": "gan.publishers.list",
@@ -1759,11 +1716,7 @@
      ],
      "response": {
       "$ref": "Publishers"
-     },
-     "scopes": [
-      "https://www.googleapis.com/auth/gan",
-      "https://www.googleapis.com/auth/gan.readonly"
-     ]
+     }
     }
    }
   },
@@ -1898,11 +1851,7 @@
      ],
      "response": {
       "$ref": "Report"
-     },
-     "scopes": [
-      "https://www.googleapis.com/auth/gan",
-      "https://www.googleapis.com/auth/gan.readonly"
-     ]
+     }
     }
    }
   }

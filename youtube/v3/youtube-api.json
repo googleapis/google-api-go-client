@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"DGgqtFnjgu83tuwvvVNNUhOiHWk/5vMq1yAGX7IG4_ezxaSlqyQFgNI\"",
+ "etag": "\"_UU0hweWJUeoapnMzW_8ULttsqM/yBAS7E9j0Hk6xooGiHdbXGVAPUc\"",
  "discoveryVersion": "v1",
  "id": "youtube:v3",
  "name": "youtube",
@@ -125,7 +125,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "The kind, fixed to \"youtube#activity\".",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"youtube#activity\".",
      "default": "youtube#activity"
     },
     "snippet": {
@@ -300,14 +300,14 @@
      "type": "string",
      "description": "The URL the client should direct the user to, if the user chooses to visit the advertiser's website."
     },
-    "forecastingUrls": {
+    "forecastingUrl": {
      "type": "array",
      "description": "The list of forecasting URLs. The client should ping all of these URLs when a promoted item is not available, to indicate that a promoted item could have been shown.",
      "items": {
       "type": "string"
      }
     },
-    "impressionUrls": {
+    "impressionUrl": {
      "type": "array",
      "description": "The list of impression URLs. The client should ping all of these URLs to indicate that the user was shown this promoted item.",
      "items": {
@@ -433,7 +433,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "The kind, fixed to \"youtube#activityListResponse\".",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"youtube#activityListResponse\".",
      "default": "youtube#activityListResponse"
     },
     "nextPageToken": {
@@ -599,7 +599,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "The kind, fixed to \"youtube#channel\".",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"youtube#channel\".",
      "default": "youtube#channel"
     },
     "snippet": {
@@ -654,7 +654,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "The kind, fixed to \"youtube#channelBannerResource\".",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"youtube#channelBannerResource\".",
      "default": "youtube#channelBannerResource"
     },
     "url": {
@@ -785,7 +785,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "The kind, fixed to \"youtube#channelListResponse\".",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"youtube#channelListResponse\".",
      "default": "youtube#channelListResponse"
     },
     "nextPageToken": {
@@ -969,15 +969,19 @@
      "type": "string",
      "description": "Rating system in Australia - Australian Classification Board",
      "enum": [
+      "acbC",
       "acbE",
       "acbG",
       "acbM",
       "acbMa15plus",
+      "acbP",
       "acbPg",
       "acbR18plus",
       "acbUnrated"
      ],
      "enumDescriptions": [
+      "",
+      "",
       "",
       "",
       "",
@@ -1003,6 +1007,48 @@
      "enumDescriptions": [
       "",
       "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "catvRating": {
+     "type": "string",
+     "description": "Rating system for Canadian TV - Canadian TV Classification System",
+     "enum": [
+      "catv14plus",
+      "catv18plus",
+      "catvC",
+      "catvC8",
+      "catvG",
+      "catvPg",
+      "catvUnrated"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "catvfrRating": {
+     "type": "string",
+     "description": "Rating system for French Canadian TV - Regie du cinema",
+     "enum": [
+      "catvfr13plus",
+      "catvfr16plus",
+      "catvfr18plus",
+      "catvfr8plus",
+      "catvfrG",
+      "catvfrUnrated"
+     ],
+     "enumDescriptions": [
       "",
       "",
       "",
@@ -1356,7 +1402,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "The kind, fixed to \"youtube#guideCategory\".",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"youtube#guideCategory\".",
      "default": "youtube#guideCategory"
     },
     "snippet": {
@@ -1386,7 +1432,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "The kind, fixed to \"youtube#guideCategoryListResponse\".",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"youtube#guideCategoryListResponse\".",
      "default": "youtube#guideCategoryListResponse"
     },
     "nextPageToken": {
@@ -1668,7 +1714,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "The kind, fixed to \"youtube#liveBroadcast\".",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"youtube#liveBroadcast\".",
      "default": "youtube#liveBroadcast"
     },
     "snippet": {
@@ -1766,7 +1812,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "The kind, fixed to \"youtube#liveBroadcastListResponse\".",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"youtube#liveBroadcastListResponse\".",
      "default": "youtube#liveBroadcastListResponse"
     },
     "nextPageToken": {
@@ -1952,7 +1998,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "The kind, fixed to \"youtube#liveStream\".",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"youtube#liveStream\".",
      "default": "youtube#liveStream"
     },
     "snippet": {
@@ -1997,7 +2043,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "The kind, fixed to \"youtube#liveStreamListResponse\".",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"youtube#liveStreamListResponse\".",
      "default": "youtube#liveStreamListResponse"
     },
     "nextPageToken": {
@@ -2172,7 +2218,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "The kind, fixed to \"youtube#playlist\".",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"youtube#playlist\".",
      "default": "youtube#playlist"
     },
     "player": {
@@ -2219,7 +2265,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "The kind, fixed to \"youtube#playlistItem\".",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"youtube#playlistItem\".",
      "default": "youtube#playlistItem"
     },
     "snippet": {
@@ -2275,7 +2321,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "The kind, fixed to \"youtube#playlistItemListResponse\".",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"youtube#playlistItemListResponse\".",
      "default": "youtube#playlistItemListResponse"
     },
     "nextPageToken": {
@@ -2397,7 +2443,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "The kind, fixed to \"youtube#playlistListResponse\".",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"youtube#playlistListResponse\".",
      "default": "youtube#playlistListResponse"
     },
     "nextPageToken": {
@@ -2610,7 +2656,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "The kind, fixed to \"youtube#searchListResponse\".",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"youtube#searchListResponse\".",
      "default": "youtube#searchListResponse"
     },
     "nextPageToken": {
@@ -2648,7 +2694,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "The kind, fixed to \"youtube#searchResult\".",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"youtube#searchResult\".",
      "default": "youtube#searchResult"
     },
     "snippet": {
@@ -2722,7 +2768,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "The kind, fixed to \"youtube#subscription\".",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"youtube#subscription\".",
      "default": "youtube#subscription"
     },
     "snippet": {
@@ -2785,7 +2831,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "The kind, fixed to \"youtube#subscriptionListResponse\".",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"youtube#subscriptionListResponse\".",
      "default": "youtube#subscriptionListResponse"
     },
     "nextPageToken": {
@@ -2941,7 +2987,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "The kind, fixed to \"youtube#thumbnailSetResponse\".",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"youtube#thumbnailSetResponse\".",
      "default": "youtube#thumbnailSetResponse"
     },
     "visitorId": {
@@ -2982,16 +3028,21 @@
     },
     "id": {
      "type": "string",
-     "description": "The ID that YouTube uses to uniquely identify the video."
+     "description": "The ID that YouTube uses to uniquely identify the video.",
+     "annotations": {
+      "required": [
+       "youtube.videos.update"
+      ]
+     }
     },
     "kind": {
      "type": "string",
-     "description": "The kind, fixed to \"youtube#video\".",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"youtube#video\".",
      "default": "youtube#video"
     },
     "liveStreamingDetails": {
      "$ref": "VideoLiveStreamingDetails",
-     "description": "The liveStreamingDetails object contains information regarding the livestream"
+     "description": "The liveStreamingDetails object contains metadata about a live video broadcast. The object will only be present in a video resource if the video is an upcoming, live, or completed live broadcast."
     },
     "monetizationDetails": {
      "$ref": "VideoMonetizationDetails",
@@ -3080,7 +3131,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "The kind, fixed to \"youtube#videoCategory\".",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"youtube#videoCategory\".",
      "default": "youtube#videoCategory"
     },
     "snippet": {
@@ -3110,7 +3161,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "The kind, fixed to \"youtube#videoCategoryListResponse\".",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"youtube#videoCategoryListResponse\".",
      "default": "youtube#videoCategoryListResponse"
     },
     "nextPageToken": {
@@ -3441,7 +3492,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "The kind, fixed to \"youtube#videoGetRatingResponse\".",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"youtube#videoGetRatingResponse\".",
      "default": "youtube#videoGetRatingResponse"
     }
    }
@@ -3467,7 +3518,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "The kind, fixed to \"youtube#videoListResponse\".",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"youtube#videoListResponse\".",
      "default": "youtube#videoListResponse"
     },
     "nextPageToken": {
@@ -3495,30 +3546,30 @@
    "type": "object",
    "description": "Details about the live streaming metadata.",
    "properties": {
-    "actualEndTimeMs": {
+    "actualEndTime": {
      "type": "string",
-     "description": "The time in milliseconds since the epoch when the livestream actually ended.",
-     "format": "uint64"
+     "description": "The time that the broadcast actually ended. The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format. This value will not be available until the broadcast is over.",
+     "format": "date-time"
     },
-    "actualStartTimeMs": {
+    "actualStartTime": {
      "type": "string",
-     "description": "The time in milliseconds since the epoch when the livestream actually started.",
-     "format": "uint64"
+     "description": "The time that the broadcast actually started. The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format. This value will not be available until the broadcast begins.",
+     "format": "date-time"
     },
     "concurrentViewers": {
      "type": "string",
-     "description": "Number of viewers currently watch the livestream.",
+     "description": "The number of viewers currently watching the broadcast. The property and its value will be present if the broadcast has current viewers and the broadcast owner has not hidden the viewcount for the video. Note that YouTube stops tracking the number of concurrent viewers for a broadcast when the broadcast ends. So, this property would not identify the number of viewers watching an archived video of a live broadcast that already ended.",
      "format": "uint64"
     },
-    "scheduledEndTimeMs": {
+    "scheduledEndTime": {
      "type": "string",
-     "description": "The time in milliseconds since the epoch when the livestream is scheduled to end.",
-     "format": "uint64"
+     "description": "The time that the broadcast is scheduled to end. The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format. If the value is empty or the property is not present, then the broadcast is scheduled to continue indefinitely.",
+     "format": "date-time"
     },
-    "scheduledStartTimeMs": {
+    "scheduledStartTime": {
      "type": "string",
-     "description": "The time in milliseconds since the epoch when the livestream is scheduled to start.",
-     "format": "uint64"
+     "description": "The time that the broadcast is scheduled to begin. The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.",
+     "format": "date-time"
     }
    }
   },
@@ -4414,6 +4465,12 @@
        "description": "The part parameter specifies a comma-separated list of one or more liveBroadcast resource properties that the API response will include. The part names that you can include in the parameter value are id, snippet, contentDetails, and status.",
        "required": true,
        "location": "query"
+      },
+      "walltime": {
+       "type": "string",
+       "description": "The walltime parameter specifies the wall clock time at which the specified slate change will occur.",
+       "format": "date-time",
+       "location": "query"
       }
      },
      "parameterOrder": [
@@ -4786,6 +4843,11 @@
      "httpMethod": "POST",
      "description": "Adds a resource to a playlist.",
      "parameters": {
+      "onBehalfOfContentOwner": {
+       "type": "string",
+       "description": "Note: This parameter is intended exclusively for YouTube content partners.\n\nThe onBehalfOfContentOwner parameter indicates that the request's authorization credentials identify a YouTube CMS user who is acting on behalf of the content owner specified in the parameter value. This parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and get access to all their video and channel data, without having to provide authentication credentials for each individual channel. The CMS account that the user authenticates with must be linked to the specified YouTube content owner.",
+       "location": "query"
+      },
       "part": {
        "type": "string",
        "description": "The part parameter serves two purposes in this operation. It identifies the properties that the write operation will set as well as the properties that the API response will include.\n\nThe part names that you can include in the parameter value are snippet, contentDetails, and status.",
@@ -4825,6 +4887,11 @@
        "format": "uint32",
        "minimum": "0",
        "maximum": "50",
+       "location": "query"
+      },
+      "onBehalfOfContentOwner": {
+       "type": "string",
+       "description": "Note: This parameter is intended exclusively for YouTube content partners.\n\nThe onBehalfOfContentOwner parameter indicates that the request's authorization credentials identify a YouTube CMS user who is acting on behalf of the content owner specified in the parameter value. This parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and get access to all their video and channel data, without having to provide authentication credentials for each individual channel. The CMS account that the user authenticates with must be linked to the specified YouTube content owner.",
        "location": "query"
       },
       "pageToken": {
@@ -4907,7 +4974,7 @@
       },
       "onBehalfOfContentOwner": {
        "type": "string",
-       "description": "USE_DESCRIPTION --- videos:insert:onBehalfOfContentOwner",
+       "description": "Note: This parameter is intended exclusively for YouTube content partners.\n\nThe onBehalfOfContentOwner parameter indicates that the request's authorization credentials identify a YouTube CMS user who is acting on behalf of the content owner specified in the parameter value. This parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and get access to all their video and channel data, without having to provide authentication credentials for each individual channel. The CMS account that the user authenticates with must be linked to the specified YouTube content owner.",
        "location": "query"
       }
      },
@@ -4927,12 +4994,12 @@
      "parameters": {
       "onBehalfOfContentOwner": {
        "type": "string",
-       "description": "USE_DESCRIPTION --- videos:insert:onBehalfOfContentOwner",
+       "description": "Note: This parameter is intended exclusively for YouTube content partners.\n\nThe onBehalfOfContentOwner parameter indicates that the request's authorization credentials identify a YouTube CMS user who is acting on behalf of the content owner specified in the parameter value. This parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and get access to all their video and channel data, without having to provide authentication credentials for each individual channel. The CMS account that the user authenticates with must be linked to the specified YouTube content owner.",
        "location": "query"
       },
       "onBehalfOfContentOwnerChannel": {
        "type": "string",
-       "description": "USE_DESCRIPTION --- videos:insert:onBehalfOfContentOwnerChannel",
+       "description": "This parameter can only be used in a properly authorized request. Note: This parameter is intended exclusively for YouTube content partners.\n\nThe onBehalfOfContentOwnerChannel parameter specifies the YouTube channel ID of the channel to which a video is being added. This parameter is required when a request specifies a value for the onBehalfOfContentOwner parameter, and it can only be used in conjunction with that parameter. In addition, the request must be authorized using a CMS account that is linked to the content owner that the onBehalfOfContentOwner parameter specifies. Finally, the channel that the onBehalfOfContentOwnerChannel parameter value specifies must be linked to the content owner that the onBehalfOfContentOwner parameter specifies.\n\nThis parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and perform actions on behalf of the channel specified in the parameter value, without having to provide authentication credentials for each separate channel.",
        "location": "query"
       },
       "part": {
@@ -4988,12 +5055,12 @@
       },
       "onBehalfOfContentOwner": {
        "type": "string",
-       "description": "USE_DESCRIPTION --- videos:insert:onBehalfOfContentOwner",
+       "description": "Note: This parameter is intended exclusively for YouTube content partners.\n\nThe onBehalfOfContentOwner parameter indicates that the request's authorization credentials identify a YouTube CMS user who is acting on behalf of the content owner specified in the parameter value. This parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and get access to all their video and channel data, without having to provide authentication credentials for each individual channel. The CMS account that the user authenticates with must be linked to the specified YouTube content owner.",
        "location": "query"
       },
       "onBehalfOfContentOwnerChannel": {
        "type": "string",
-       "description": "USE_DESCRIPTION --- videos:insert:onBehalfOfContentOwnerChannel",
+       "description": "This parameter can only be used in a properly authorized request. Note: This parameter is intended exclusively for YouTube content partners.\n\nThe onBehalfOfContentOwnerChannel parameter specifies the YouTube channel ID of the channel to which a video is being added. This parameter is required when a request specifies a value for the onBehalfOfContentOwner parameter, and it can only be used in conjunction with that parameter. In addition, the request must be authorized using a CMS account that is linked to the content owner that the onBehalfOfContentOwner parameter specifies. Finally, the channel that the onBehalfOfContentOwnerChannel parameter value specifies must be linked to the content owner that the onBehalfOfContentOwner parameter specifies.\n\nThis parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and perform actions on behalf of the channel specified in the parameter value, without having to provide authentication credentials for each separate channel.",
        "location": "query"
       },
       "pageToken": {
@@ -5028,7 +5095,7 @@
      "parameters": {
       "onBehalfOfContentOwner": {
        "type": "string",
-       "description": "USE_DESCRIPTION --- videos:insert:onBehalfOfContentOwner",
+       "description": "Note: This parameter is intended exclusively for YouTube content partners.\n\nThe onBehalfOfContentOwner parameter indicates that the request's authorization credentials identify a YouTube CMS user who is acting on behalf of the content owner specified in the parameter value. This parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and get access to all their video and channel data, without having to provide authentication credentials for each individual channel. The CMS account that the user authenticates with must be linked to the specified YouTube content owner.",
        "location": "query"
       },
       "part": {
@@ -5440,7 +5507,7 @@
       },
       "onBehalfOfContentOwnerChannel": {
        "type": "string",
-       "description": "USE_DESCRIPTION --- videos:insert:onBehalfOfContentOwnerChannel",
+       "description": "This parameter can only be used in a properly authorized request. Note: This parameter is intended exclusively for YouTube content partners.\n\nThe onBehalfOfContentOwnerChannel parameter specifies the YouTube channel ID of the channel to which a video is being added. This parameter is required when a request specifies a value for the onBehalfOfContentOwner parameter, and it can only be used in conjunction with that parameter. In addition, the request must be authorized using a CMS account that is linked to the content owner that the onBehalfOfContentOwner parameter specifies. Finally, the channel that the onBehalfOfContentOwnerChannel parameter value specifies must be linked to the content owner that the onBehalfOfContentOwner parameter specifies.\n\nThis parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and perform actions on behalf of the channel specified in the parameter value, without having to provide authentication credentials for each separate channel.",
        "location": "query"
       },
       "order": {
@@ -5495,7 +5562,7 @@
      "parameters": {
       "onBehalfOfContentOwner": {
        "type": "string",
-       "description": "USE_DESCRIPTION --- channels:list:onBehalfOfContentOwner",
+       "description": "The onBehalfOfContentOwner parameter indicates that the authenticated user is acting on behalf of the content owner specified in the parameter value. This parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and get access to all their video and channel data, without having to provide authentication credentials for each individual channel. The actual CMS account that the user authenticates with needs to be linked to the specified YouTube content owner.",
        "location": "query"
       },
       "videoId": {
@@ -5669,7 +5736,7 @@
       },
       "part": {
        "type": "string",
-       "description": "The part parameter serves two purposes in this operation. It identifies the properties that the write operation will set as well as the properties that the API response will include.\n\nThe part names that you can include in the parameter value are snippet, contentDetails, fileDetails, player, processingDetails, recordingDetails, statistics, status, suggestions, and topicDetails. However, not all of those parts contain properties that can be set when setting or updating a video's metadata. For example, the statistics object encapsulates statistics that YouTube calculates for a video and does not contain values that you can set or modify. If the parameter value specifies a part that does not contain mutable values, that part will still be included in the API response.",
+       "description": "The part parameter serves two purposes in this operation. It identifies the properties that the write operation will set as well as the properties that the API response will include.\n\nThe part names that you can include in the parameter value are snippet, contentDetails, fileDetails, liveStreamingDetails, player, processingDetails, recordingDetails, statistics, status, suggestions, and topicDetails. However, not all of those parts contain properties that can be set when setting or updating a video's metadata. For example, the statistics object encapsulates statistics that YouTube calculates for a video and does not contain values that you can set or modify. If the parameter value specifies a part that does not contain mutable values, that part will still be included in the API response.",
        "required": true,
        "location": "query"
       },
@@ -5773,13 +5840,13 @@
       },
       "part": {
        "type": "string",
-       "description": "The part parameter specifies a comma-separated list of one or more video resource properties that the API response will include. The part names that you can include in the parameter value are id, snippet, contentDetails, fileDetails, player, processingDetails, recordingDetails, statistics, status, suggestions, and topicDetails.\n\nIf the parameter identifies a property that contains child properties, the child properties will be included in the response. For example, in a video resource, the snippet property contains the channelId, title, description, tags, and categoryId properties. As such, if you set part=snippet, the API response will contain all of those properties.",
+       "description": "The part parameter specifies a comma-separated list of one or more video resource properties that the API response will include. The part names that you can include in the parameter value are id, snippet, contentDetails, fileDetails, liveStreamingDetails, player, processingDetails, recordingDetails, statistics, status, suggestions, and topicDetails.\n\nIf the parameter identifies a property that contains child properties, the child properties will be included in the response. For example, in a video resource, the snippet property contains the channelId, title, description, tags, and categoryId properties. As such, if you set part=snippet, the API response will contain all of those properties.",
        "required": true,
        "location": "query"
       },
       "regionCode": {
        "type": "string",
-       "description": "The regionCode parameter instructs the API to select a video chart available in the specified region. If using this parameter, chart must also be set. The parameter value is an ISO 3166-1 alpha-2 country code.",
+       "description": "The regionCode parameter instructs the API to select a video chart available in the specified region. This parameter can only be used in conjunction with the chart parameter. The parameter value is an ISO 3166-1 alpha-2 country code.",
        "location": "query"
       },
       "videoCategoryId": {
@@ -5857,7 +5924,7 @@
       },
       "part": {
        "type": "string",
-       "description": "The part parameter serves two purposes in this operation. It identifies the properties that the write operation will set as well as the properties that the API response will include.\n\nThe part names that you can include in the parameter value are snippet, contentDetails, fileDetails, player, processingDetails, recordingDetails, statistics, status, suggestions, and topicDetails.\n\nNote that this method will override the existing values for all of the mutable properties that are contained in any parts that the parameter value specifies. For example, a video's privacy setting is contained in the status part. As such, if your request is updating a private video, and the request's part parameter value includes the status part, the video's privacy setting will be updated to whatever value the request body specifies. If the request body does not specify a value, the existing privacy setting will be removed and the video will revert to the default privacy setting.\n\nIn addition, not all of those parts contain properties that can be set when setting or updating a video's metadata. For example, the statistics object encapsulates statistics that YouTube calculates for a video and does not contain values that you can set or modify. If the parameter value specifies a part that does not contain mutable values, that part will still be included in the API response.",
+       "description": "The part parameter serves two purposes in this operation. It identifies the properties that the write operation will set as well as the properties that the API response will include.\n\nThe part names that you can include in the parameter value are snippet, contentDetails, fileDetails, liveStreamingDetails, player, processingDetails, recordingDetails, statistics, status, suggestions, and topicDetails.\n\nNote that this method will override the existing values for all of the mutable properties that are contained in any parts that the parameter value specifies. For example, a video's privacy setting is contained in the status part. As such, if your request is updating a private video, and the request's part parameter value includes the status part, the video's privacy setting will be updated to whatever value the request body specifies. If the request body does not specify a value, the existing privacy setting will be removed and the video will revert to the default privacy setting.\n\nIn addition, not all of those parts contain properties that can be set when setting or updating a video's metadata. For example, the statistics object encapsulates statistics that YouTube calculates for a video and does not contain values that you can set or modify. If the parameter value specifies a part that does not contain mutable values, that part will still be included in the API response.",
        "required": true,
        "location": "query"
       }
@@ -5894,7 +5961,7 @@
       },
       "onBehalfOfContentOwner": {
        "type": "string",
-       "description": "USE_DESCRIPTION --- channels:list:onBehalfOfContentOwner",
+       "description": "The onBehalfOfContentOwner parameter indicates that the authenticated user is acting on behalf of the content owner specified in the parameter value. This parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and get access to all their video and channel data, without having to provide authentication credentials for each individual channel. The actual CMS account that the user authenticates with needs to be linked to the specified YouTube content owner.",
        "location": "query"
       }
      },
@@ -5943,7 +6010,7 @@
       },
       "onBehalfOfContentOwner": {
        "type": "string",
-       "description": "USE_DESCRIPTION --- channels:list:onBehalfOfContentOwner",
+       "description": "The onBehalfOfContentOwner parameter indicates that the authenticated user is acting on behalf of the content owner specified in the parameter value. This parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and get access to all their video and channel data, without having to provide authentication credentials for each individual channel. The actual CMS account that the user authenticates with needs to be linked to the specified YouTube content owner.",
        "location": "query"
       }
      },

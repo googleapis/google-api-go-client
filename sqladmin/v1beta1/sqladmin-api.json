@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"DGgqtFnjgu83tuwvvVNNUhOiHWk/l_KrHzpmNoVI1p-SJTCs7tKdyWM\"",
+ "etag": "\"qMhxoRFWKZK4K3KdZJuqms1o3fc/rzbC1mbXRnaKYIRTl-o1XFsAXnM\"",
  "discoveryVersion": "v1",
  "id": "sqladmin:v1beta1",
  "name": "sqladmin",
@@ -229,7 +229,7 @@
     },
     "region": {
      "type": "string",
-     "description": "The geographical region. Can be us-east1 or europe-west1. Defaults to us-east1. The region can not be changed after instance creation."
+     "description": "The geographical region. Can be us-east1, us-central or europe-west1. Defaults to us-central. The region can not be changed after instance creation."
     },
     "settings": {
      "$ref": "Settings",

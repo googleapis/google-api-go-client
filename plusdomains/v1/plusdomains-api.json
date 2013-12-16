@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"DGgqtFnjgu83tuwvvVNNUhOiHWk/1SYNRqKEaVTALhb3i7j_Y_K70js\"",
+ "etag": "\"qMhxoRFWKZK4K3KdZJuqms1o3fc/YrdEaGy03tV2BNsqBq5fSw9csZ8\"",
  "discoveryVersion": "v1",
  "id": "plusDomains:v1",
  "name": "plusDomains",
@@ -91,6 +91,12 @@
     },
     "https://www.googleapis.com/auth/plus.stream.write": {
      "description": "Manage your Google+ posts, comments, and stream"
+    },
+    "https://www.googleapis.com/auth/userinfo.email": {
+     "description": "View your email address"
+    },
+    "https://www.googleapis.com/auth/userinfo.profile": {
+     "description": "View basic information about your account"
     }
    }
   }
@@ -924,6 +930,11 @@
      "description": "The type of resource.",
      "default": "plus#media"
     },
+    "mediaCreatedTime": {
+     "type": "string",
+     "description": "The time at which this media was originally created in UTC. Formatted as an RFC 3339 timestamp that matches this example: 2010-11-25T14:30:27.655Z",
+     "format": "date-time"
+    },
     "mediaUrl": {
      "type": "string",
      "description": "The URL of this photo or video's still image."
@@ -1088,6 +1099,27 @@
      "type": "string",
      "description": "The name of this person, which is suitable for display."
     },
+    "domain": {
+     "type": "string",
+     "description": "The hosted domain name for the user's Google Apps account. For instance, example.com. The plus.profile.emails.read or email scope is needed to get this domain name."
+    },
+    "emails": {
+     "type": "array",
+     "description": "A list of email addresses that this person has, including their Google account email address, and the public verified email addresses on their Google+ profile. The plus.profile.emails.read scope is needed to retrieve these email addresses, or the email scope can be used to retrieve just the Google account email address.",
+     "items": {
+      "type": "object",
+      "properties": {
+       "type": {
+        "type": "string",
+        "description": "The type of address. Possible values include, but are not limited to, the following values:  \n- \"account\" - Google account email address. \n- \"home\" - Home email address. \n- \"work\" - Work email address. \n- \"other\" - Other."
+       },
+       "value": {
+        "type": "string",
+        "description": "The email address."
+       }
+      }
+     }
+    },
     "etag": {
      "type": "string",
      "description": "ETag of this response for caching purposes."
@@ -1156,6 +1188,10 @@
     "objectType": {
      "type": "string",
      "description": "Type of person within Google+. Possible values include, but are not limited to, the following values:  \n- \"person\" - represents an actual person. \n- \"page\" - represents a page."
+    },
+    "occupation": {
+     "type": "string",
+     "description": "The occupation of this person."
     },
     "organizations": {
      "type": "array",
@@ -1227,6 +1263,10 @@
     "relationshipStatus": {
      "type": "string",
      "description": "The person's relationship status. Possible values include, but are not limited to, the following values:  \n- \"single\" - Person is single. \n- \"in_a_relationship\" - Person is in a relationship. \n- \"engaged\" - Person is engaged. \n- \"married\" - Person is married. \n- \"its_complicated\" - The relationship is complicated. \n- \"open_relationship\" - Person is in an open relationship. \n- \"widowed\" - Person is widowed. \n- \"in_domestic_partnership\" - Person is in a domestic partnership. \n- \"in_civil_union\" - Person is in a civil union."
+    },
+    "skills": {
+     "type": "string",
+     "description": "The person's skills."
     },
     "tagline": {
      "type": "string",
@@ -1935,7 +1975,9 @@
      "scopes": [
       "https://www.googleapis.com/auth/plus.login",
       "https://www.googleapis.com/auth/plus.me",
-      "https://www.googleapis.com/auth/plus.profiles.read"
+      "https://www.googleapis.com/auth/plus.profiles.read",
+      "https://www.googleapis.com/auth/userinfo.email",
+      "https://www.googleapis.com/auth/userinfo.profile"
      ]
     },
     "list": {

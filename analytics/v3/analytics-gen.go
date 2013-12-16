@@ -44,7 +44,7 @@ const (
 	// View and manage your Google Analytics data
 	AnalyticsScope = "https://www.googleapis.com/auth/analytics"
 
-	// New service: https://www.googleapis.com/auth/analytics.edit
+	// Edit Google Analytics management entities
 	AnalyticsEditScope = "https://www.googleapis.com/auth/analytics.edit"
 
 	// Manage Google Analytics Account users by email address
@@ -707,7 +707,7 @@ type Experiment struct {
 
 	// EditableInGaUi: If true, the end user will be able to edit the
 	// experiment via the Google Analytics user interface.
-	EditableInGaUi interface{} `json:"editableInGaUi,omitempty"`
+	EditableInGaUi bool `json:"editableInGaUi,omitempty"`
 
 	// EndTime: The ending time of the experiment (the time the status
 	// changed from RUNNING to ENDED). This field is present only if the
@@ -794,7 +794,7 @@ type Experiment struct {
 	// EXTERNAL: The variations will be served externally and the chosen
 	// variation reported to Google Analytics. The caller is responsible for
 	// serving the selected variation and evaluating the results.
-	ServingFramework interface{} `json:"servingFramework,omitempty"`
+	ServingFramework string `json:"servingFramework,omitempty"`
 
 	// Snippet: The snippet of code to include on the control page(s). This
 	// field is read-only.
@@ -915,6 +915,8 @@ type GaData struct {
 	// ContainsSampledData: Determines if Analytics data contains samples.
 	ContainsSampledData bool `json:"containsSampledData,omitempty"`
 
+	DataTable *GaDataDataTable `json:"dataTable,omitempty"`
+
 	// Id: Unique ID for this data response.
 	Id string `json:"id,omitempty"`
 
@@ -977,6 +979,28 @@ type GaDataColumnHeaders struct {
 
 	// Name: Column name.
 	Name string `json:"name,omitempty"`
+}
+
+type GaDataDataTable struct {
+	Cols []*GaDataDataTableCols `json:"cols,omitempty"`
+
+	Rows []*GaDataDataTableRows `json:"rows,omitempty"`
+}
+
+type GaDataDataTableCols struct {
+	Id string `json:"id,omitempty"`
+
+	Label string `json:"label,omitempty"`
+
+	Type string `json:"type,omitempty"`
+}
+
+type GaDataDataTableRows struct {
+	C []*GaDataDataTableRowsC `json:"c,omitempty"`
+}
+
+type GaDataDataTableRowsC struct {
+	V string `json:"v,omitempty"`
 }
 
 type GaDataProfileInfo struct {
@@ -1815,43 +1839,7 @@ type Webproperty struct {
 	Id string `json:"id,omitempty"`
 
 	// IndustryVertical: The industry vertical/category selected for this
-	// web property. If this field is set, the correct values are:
-	// -
-	// UNSPECIFIED
-	// - ARTS_AND_ENTERTAINMENT
-	// - AUTOMOTIVE
-	// -
-	// BEAUTY_AND_FITNESS
-	// - BOOKS_AND_LITERATURE
-	// -
-	// BUSINESS_AND_INDUSTRIAL_MARKETS
-	// - COMPUTERS_AND_ELECTRONICS
-	// -
-	// FINANCE
-	// - FOOD_AND_DRINK
-	// - GAMES
-	// - HEALTHCARE
-	// -
-	// HOBBIES_AND_LEISURE
-	// - HOME_AND_GARDEN
-	// - INTERNET_AND_TELECOM
-	// -
-	// JOBS_AND_EDUCATION
-	// - LAW_AND_GOVERNMENT
-	// - NEWS
-	// -
-	// ONLINE_COMMUNITIES
-	// - OTHER
-	// - PEOPLE_AND_SOCIETY
-	// -
-	// PETS_AND_ANIMALS
-	// - REAL_ESTATE
-	// - REFERENCE
-	// - SCIENCE
-	// -
-	// SHOPPING
-	// - SPORTS
-	// - TRAVEL
+	// web property.
 	IndustryVertical string `json:"industryVertical,omitempty"`
 
 	// InternalWebPropertyId: Internal ID for this web property.
@@ -1953,6 +1941,13 @@ func (c *DataGaGetCall) MaxResults(maxResults int64) *DataGaGetCall {
 	return c
 }
 
+// Output sets the optional parameter "output": The selected format for
+// the response. Default format is JSON.
+func (c *DataGaGetCall) Output(output string) *DataGaGetCall {
+	c.opt_["output"] = output
+	return c
+}
+
 // SamplingLevel sets the optional parameter "samplingLevel": The
 // desired sampling level.
 func (c *DataGaGetCall) SamplingLevel(samplingLevel string) *DataGaGetCall {
@@ -1999,6 +1994,9 @@ func (c *DataGaGetCall) Do() (*GaData, error) {
 	}
 	if v, ok := c.opt_["max-results"]; ok {
 		params.Set("max-results", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["output"]; ok {
+		params.Set("output", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["samplingLevel"]; ok {
 		params.Set("samplingLevel", fmt.Sprintf("%v", v))
@@ -2078,6 +2076,19 @@ func (c *DataGaGetCall) Do() (*GaData, error) {
 	//       "location": "query",
 	//       "pattern": "ga:.+",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "output": {
+	//       "description": "The selected format for the response. Default format is JSON.",
+	//       "enum": [
+	//         "dataTable",
+	//         "json"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Returns the response in Google Charts Data Table format. This is useful in creating visualization using Google Charts.",
+	//         "Returns the response in standard JSON format."
+	//       ],
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "samplingLevel": {
@@ -5950,7 +5961,7 @@ type ManagementUploadsUploadDataCall struct {
 	media_             io.Reader
 }
 
-// UploadData: Upload/Overwrite data for a custom data source.
+// UploadData: Upload data for a custom data source.
 func (r *ManagementUploadsService) UploadData(accountId string, webPropertyId string, customDataSourceId string) *ManagementUploadsUploadDataCall {
 	c := &ManagementUploadsUploadDataCall{s: r.s, opt_: make(map[string]interface{})}
 	c.accountId = accountId
@@ -6000,7 +6011,7 @@ func (c *ManagementUploadsUploadDataCall) Do() (*Upload, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Upload/Overwrite data for a custom data source.",
+	//   "description": "Upload data for a custom data source.",
 	//   "httpMethod": "POST",
 	//   "id": "analytics.management.uploads.uploadData",
 	//   "mediaUpload": {
@@ -6146,7 +6157,8 @@ type ManagementWebpropertiesInsertCall struct {
 }
 
 // Insert: Create a new property if the account has fewer than 20
-// properties.
+// properties. Web properties are visible in the Google Analytics
+// interface only if they have at least one profile.
 func (r *ManagementWebpropertiesService) Insert(accountId string, webproperty *Webproperty) *ManagementWebpropertiesInsertCall {
 	c := &ManagementWebpropertiesInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.accountId = accountId
@@ -6184,7 +6196,7 @@ func (c *ManagementWebpropertiesInsertCall) Do() (*Webproperty, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Create a new property if the account has fewer than 20 properties.",
+	//   "description": "Create a new property if the account has fewer than 20 properties. Web properties are visible in the Google Analytics interface only if they have at least one profile.",
 	//   "httpMethod": "POST",
 	//   "id": "analytics.management.webproperties.insert",
 	//   "parameterOrder": [

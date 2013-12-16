@@ -250,6 +250,20 @@ type AchievementRevealResponse struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+type AchievementSetStepsAtLeastResponse struct {
+	// CurrentSteps: The current steps recorded for this incremental
+	// achievement.
+	CurrentSteps int64 `json:"currentSteps,omitempty"`
+
+	// Kind: Uniquely identifies the type of this resource. Value is always
+	// the fixed string games#achievementSetStepsAtLeastResponse.
+	Kind string `json:"kind,omitempty"`
+
+	// NewlyUnlocked: Whether the the current steps for the achievement has
+	// reached the number of steps required to unlock.
+	NewlyUnlocked bool `json:"newlyUnlocked,omitempty"`
+}
+
 type AchievementUnlockResponse struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string games#achievementUnlockResponse.
@@ -259,6 +273,84 @@ type AchievementUnlockResponse struct {
 	// whether the unlock request for the achievement was the first for the
 	// player).
 	NewlyUnlocked bool `json:"newlyUnlocked,omitempty"`
+}
+
+type AchievementUpdateMultipleRequest struct {
+	// Kind: Uniquely identifies the type of this resource. Value is always
+	// the fixed string games#achievementUpdateMultipleRequest.
+	Kind string `json:"kind,omitempty"`
+
+	// Updates: The individual achievement update requests.
+	Updates []*AchievementUpdateRequest `json:"updates,omitempty"`
+}
+
+type AchievementUpdateMultipleResponse struct {
+	// Kind: Uniquely identifies the type of this resource. Value is always
+	// the fixed string games#achievementUpdateListResponse.
+	Kind string `json:"kind,omitempty"`
+
+	// UpdatedAchievements: The updated state of the achievements.
+	UpdatedAchievements []*AchievementUpdateResponse `json:"updatedAchievements,omitempty"`
+}
+
+type AchievementUpdateRequest struct {
+	// AchievementId: The achievement this update is being applied to.
+	AchievementId string `json:"achievementId,omitempty"`
+
+	// IncrementPayload: The payload if an update of type INCREMENT was
+	// requested for the achievement.
+	IncrementPayload *GamesAchievementIncrement `json:"incrementPayload,omitempty"`
+
+	// Kind: Uniquely identifies the type of this resource. Value is always
+	// the fixed string games#achievementUpdateRequest.
+	Kind string `json:"kind,omitempty"`
+
+	// SetStepsAtLeastPayload: The payload if an update of type
+	// SET_STEPS_AT_LEAST was requested for the achievement.
+	SetStepsAtLeastPayload *GamesAchievementSetStepsAtLeast `json:"setStepsAtLeastPayload,omitempty"`
+
+	// UpdateType: The type of update being applied.
+	// Possible values are:
+	//
+	// - "REVEAL" - Achievement is revealed.
+	// - "UNLOCK" - Achievement is
+	// unlocked.
+	// - "INCREMENT" - Achievement is incremented.
+	// -
+	// "SET_STEPS_AT_LEAST" - Achievement progress is set to at least the
+	// passed value.
+	UpdateType string `json:"updateType,omitempty"`
+}
+
+type AchievementUpdateResponse struct {
+	// AchievementId: The achievement this update is was applied to.
+	AchievementId string `json:"achievementId,omitempty"`
+
+	// CurrentState: The current state of the achievement.
+	// Possible values
+	// are:
+	// - "HIDDEN" - Achievement is hidden.
+	// - "REVEALED" -
+	// Achievement is revealed.
+	// - "UNLOCKED" - Achievement is unlocked.
+	CurrentState string `json:"currentState,omitempty"`
+
+	// CurrentSteps: The current steps recorded for this achievement if it
+	// is incremental.
+	CurrentSteps int64 `json:"currentSteps,omitempty"`
+
+	// Kind: Uniquely identifies the type of this resource. Value is always
+	// the fixed string games#achievementUpdateResponse.
+	Kind string `json:"kind,omitempty"`
+
+	// NewlyUnlocked: Whether this achievement was newly unlocked (that is,
+	// whether the unlock request for the achievement was the first for the
+	// player).
+	NewlyUnlocked bool `json:"newlyUnlocked,omitempty"`
+
+	// UpdateOccurred: Whether the requested updates actually affected the
+	// achievement.
+	UpdateOccurred bool `json:"updateOccurred,omitempty"`
 }
 
 type AggregateStats struct {
@@ -341,6 +433,28 @@ type ApplicationCategory struct {
 
 	// Secondary: The secondary category.
 	Secondary string `json:"secondary,omitempty"`
+}
+
+type GamesAchievementIncrement struct {
+	// Kind: Uniquely identifies the type of this resource. Value is always
+	// the fixed string games#GamesAchievementIncrement.
+	Kind string `json:"kind,omitempty"`
+
+	// RequestId: The requestId associated with an increment to an
+	// achievement.
+	RequestId int64 `json:"requestId,omitempty,string"`
+
+	// Steps: The number of steps to be incremented.
+	Steps int64 `json:"steps,omitempty"`
+}
+
+type GamesAchievementSetStepsAtLeast struct {
+	// Kind: Uniquely identifies the type of this resource. Value is always
+	// the fixed string games#GamesAchievementSetStepsAtLeast.
+	Kind string `json:"kind,omitempty"`
+
+	// Steps: The minimum number of steps for the achievement to be set to.
+	Steps int64 `json:"steps,omitempty"`
 }
 
 type ImageAsset struct {
@@ -502,6 +616,11 @@ type LeaderboardEntry struct {
 
 	// ScoreRank: The rank of this score for this leaderboard.
 	ScoreRank int64 `json:"scoreRank,omitempty,string"`
+
+	// ScoreTag: Additional information about the score. Values must contain
+	// no more than 64 URI-safe characters as defined by section 2.3 of RFC
+	// 3986.
+	ScoreTag string `json:"scoreTag,omitempty"`
 
 	// ScoreValue: The numerical value of this score.
 	ScoreValue int64 `json:"scoreValue,omitempty,string"`
@@ -711,6 +830,11 @@ type PlayerLeaderboardScore struct {
 	// ScoreString: The formatted value of this score.
 	ScoreString string `json:"scoreString,omitempty"`
 
+	// ScoreTag: Additional information about the score. Values must contain
+	// no more than 64 URI-safe characters as defined by section 2.3 of RFC
+	// 3986.
+	ScoreTag string `json:"scoreTag,omitempty"`
+
 	// ScoreValue: The numerical value of this score.
 	ScoreValue int64 `json:"scoreValue,omitempty,string"`
 
@@ -741,6 +865,9 @@ type PlayerLeaderboardScoreListResponse struct {
 
 	// NextPageToken: The pagination token for the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Player: The Player resources for the owner of this score.
+	Player *Player `json:"player,omitempty"`
 }
 
 type PlayerScore struct {
@@ -753,6 +880,11 @@ type PlayerScore struct {
 
 	// Score: The numerical value for this player score.
 	Score int64 `json:"score,omitempty,string"`
+
+	// ScoreTag: Additional information about this score. Values will
+	// contain no more than 64 URI-safe characters as defined by section 2.3
+	// of RFC 3986.
+	ScoreTag string `json:"scoreTag,omitempty"`
 
 	// TimeSpan: The time span for this player score.
 	// Possible values are:
@@ -794,6 +926,11 @@ type PlayerScoreResponse struct {
 	// LeaderboardId: The leaderboard ID that this score was submitted to.
 	LeaderboardId string `json:"leaderboardId,omitempty"`
 
+	// ScoreTag: Additional information about this score. Values will
+	// contain no more than 64 URI-safe characters as defined by section 2.3
+	// of RFC 3986.
+	ScoreTag string `json:"scoreTag,omitempty"`
+
 	// UnbeatenScores: The scores in time spans that have not been beaten.
 	// As an example, the submitted score may be better than the player's
 	// DAILY score, but not better than the player's scores for the WEEKLY
@@ -811,6 +948,10 @@ type PlayerScoreSubmissionList struct {
 }
 
 type RevisionCheckResponse struct {
+	// ApiVersion: The version of the API this client revision should use
+	// when calling API methods.
+	ApiVersion string `json:"apiVersion,omitempty"`
+
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string games#revisionCheckResponse.
 	Kind string `json:"kind,omitempty"`
@@ -1107,8 +1248,8 @@ type RoomP2PStatuses struct {
 
 type RoomParticipant struct {
 	// AutoMatchedPlayer: Information about a player that has been
-	// auto-matched against the requesting player. (Either player or
-	// autoMatchedPlayer will be set.)
+	// anonymously auto-matched against the requesting player. (Either
+	// player or autoMatchedPlayer will be set.)
 	AutoMatchedPlayer *AnonymousPlayer `json:"autoMatchedPlayer,omitempty"`
 
 	// Capabilities: The capabilities which can be used when communicating
@@ -1153,8 +1294,8 @@ type RoomParticipant struct {
 	LeaveReason string `json:"leaveReason,omitempty"`
 
 	// Player: Information about the player. Not populated if this player
-	// was auto-matched against the requesting player. (Either player or
-	// autoMatchedPlayer will be set.)
+	// was anonymously auto-matched against the requesting player. (Either
+	// player or autoMatchedPlayer will be set.)
 	Player *Player `json:"player,omitempty"`
 
 	// Status: The status of the participant with respect to the
@@ -1221,6 +1362,11 @@ type ScoreSubmission struct {
 
 	// Score: The new score being submitted.
 	Score int64 `json:"score,omitempty,string"`
+
+	// ScoreTag: Additional information about this score. Values will
+	// contain no more than 64 URI-safe characters as defined by section 2.3
+	// of RFC 3986.
+	ScoreTag string `json:"scoreTag,omitempty"`
 }
 
 // method id "games.achievementDefinitions.list":
@@ -1632,6 +1778,86 @@ func (c *AchievementsRevealCall) Do() (*AchievementRevealResponse, error) {
 
 }
 
+// method id "games.achievements.setStepsAtLeast":
+
+type AchievementsSetStepsAtLeastCall struct {
+	s             *Service
+	achievementId string
+	steps         int64
+	opt_          map[string]interface{}
+}
+
+// SetStepsAtLeast: Sets the steps for the currently authenticated
+// player towards unlocking an achievement. If the steps parameter is
+// less than the current number of steps that the player already gained
+// for the achievement, the achievement is not modified.
+func (r *AchievementsService) SetStepsAtLeast(achievementId string, steps int64) *AchievementsSetStepsAtLeastCall {
+	c := &AchievementsSetStepsAtLeastCall{s: r.s, opt_: make(map[string]interface{})}
+	c.achievementId = achievementId
+	c.steps = steps
+	return c
+}
+
+func (c *AchievementsSetStepsAtLeastCall) Do() (*AchievementSetStepsAtLeastResponse, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("steps", fmt.Sprintf("%v", c.steps))
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1/", "achievements/{achievementId}/setStepsAtLeast")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{achievementId}", url.QueryEscape(c.achievementId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(AchievementSetStepsAtLeastResponse)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Sets the steps for the currently authenticated player towards unlocking an achievement. If the steps parameter is less than the current number of steps that the player already gained for the achievement, the achievement is not modified.",
+	//   "httpMethod": "POST",
+	//   "id": "games.achievements.setStepsAtLeast",
+	//   "parameterOrder": [
+	//     "achievementId",
+	//     "steps"
+	//   ],
+	//   "parameters": {
+	//     "achievementId": {
+	//       "description": "The ID of the achievement used by this method.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "steps": {
+	//       "description": "The minimum value to set the steps to.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "minimum": "1",
+	//       "required": true,
+	//       "type": "integer"
+	//     }
+	//   },
+	//   "path": "achievements/{achievementId}/setStepsAtLeast",
+	//   "response": {
+	//     "$ref": "AchievementSetStepsAtLeastResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.login"
+	//   ]
+	// }
+
+}
+
 // method id "games.achievements.unlock":
 
 type AchievementsUnlockCall struct {
@@ -1689,6 +1915,69 @@ func (c *AchievementsUnlockCall) Do() (*AchievementUnlockResponse, error) {
 	//   "path": "achievements/{achievementId}/unlock",
 	//   "response": {
 	//     "$ref": "AchievementUnlockResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.login"
+	//   ]
+	// }
+
+}
+
+// method id "games.achievements.updateMultiple":
+
+type AchievementsUpdateMultipleCall struct {
+	s                                *Service
+	achievementupdatemultiplerequest *AchievementUpdateMultipleRequest
+	opt_                             map[string]interface{}
+}
+
+// UpdateMultiple: Updates multiple achievements for the currently
+// authenticated player.
+func (r *AchievementsService) UpdateMultiple(achievementupdatemultiplerequest *AchievementUpdateMultipleRequest) *AchievementsUpdateMultipleCall {
+	c := &AchievementsUpdateMultipleCall{s: r.s, opt_: make(map[string]interface{})}
+	c.achievementupdatemultiplerequest = achievementupdatemultiplerequest
+	return c
+}
+
+func (c *AchievementsUpdateMultipleCall) Do() (*AchievementUpdateMultipleResponse, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.achievementupdatemultiplerequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1/", "achievements/updateMultiple")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(AchievementUpdateMultipleResponse)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates multiple achievements for the currently authenticated player.",
+	//   "httpMethod": "POST",
+	//   "id": "games.achievements.updateMultiple",
+	//   "path": "achievements/updateMultiple",
+	//   "request": {
+	//     "$ref": "AchievementUpdateMultipleRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "AchievementUpdateMultipleResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/games",
@@ -2147,7 +2436,7 @@ func (c *RevisionsCheckCall) Do() (*RevisionCheckResponse, error) {
 	//   ],
 	//   "parameters": {
 	//     "clientRevision": {
-	//       "description": "The revision of the client SDK used by your application.",
+	//       "description": "The revision of the client SDK used by your application. Format:\n[PLATFORM_TYPE]:[VERSION_NUMBER]. Possible values of PLATFORM_TYPE are:\n \n- \"ANDROID\" - Client is running the Android SDK. \n- \"IOS\" - Client is running the iOS SDK. \n- \"WEB_APP\" - Client is running as a Web App.",
 	//       "location": "query",
 	//       "required": true,
 	//       "type": "string"
@@ -3330,6 +3619,15 @@ func (c *ScoresSubmitCall) Language(language string) *ScoresSubmitCall {
 	return c
 }
 
+// ScoreTag sets the optional parameter "scoreTag": Additional
+// information about the score you're submitting. Values must contain no
+// more than 64 URI-safe characters as defined by section 2.3 of RFC
+// 3986.
+func (c *ScoresSubmitCall) ScoreTag(scoreTag string) *ScoresSubmitCall {
+	c.opt_["scoreTag"] = scoreTag
+	return c
+}
+
 func (c *ScoresSubmitCall) Do() (*PlayerScoreResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3337,6 +3635,9 @@ func (c *ScoresSubmitCall) Do() (*PlayerScoreResponse, error) {
 	params.Set("score", fmt.Sprintf("%v", c.score))
 	if v, ok := c.opt_["language"]; ok {
 		params.Set("language", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["scoreTag"]; ok {
+		params.Set("scoreTag", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1/", "leaderboards/{leaderboardId}/scores")
 	urls += "?" + params.Encode()
@@ -3382,6 +3683,12 @@ func (c *ScoresSubmitCall) Do() (*PlayerScoreResponse, error) {
 	//       "format": "int64",
 	//       "location": "query",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "scoreTag": {
+	//       "description": "Additional information about the score you're submitting. Values must contain no more than 64 URI-safe characters as defined by section 2.3 of RFC 3986.",
+	//       "location": "query",
+	//       "pattern": "[a-zA-Z0-9-._~]{0,64}",
 	//       "type": "string"
 	//     }
 	//   },

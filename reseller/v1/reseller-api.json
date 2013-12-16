@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"DGgqtFnjgu83tuwvvVNNUhOiHWk/4IzNaFm7TYB6eJZscTcmpsBKk-0\"",
+ "etag": "\"_UU0hweWJUeoapnMzW_8ULttsqM/Qaw4O4xIZ1X1A6NR-C3D43AiI0M\"",
  "discoveryVersion": "v1",
  "id": "reseller:v1",
  "name": "reseller",
@@ -66,6 +66,18 @@
    "type": "string",
    "description": "IP address of the site where the request originates. Use this if you want to enforce per-user limits.",
    "location": "query"
+  }
+ },
+ "auth": {
+  "oauth2": {
+   "scopes": {
+    "https://www.googleapis.com/auth/apps.order": {
+     "description": "Manage users on your domain"
+    },
+    "https://www.googleapis.com/auth/apps.order.readonly": {
+     "description": "Manage users on your domain"
+    }
+   }
   }
  },
  "schemas": {
@@ -369,7 +381,11 @@
      ],
      "response": {
       "$ref": "Customer"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/apps.order",
+      "https://www.googleapis.com/auth/apps.order.readonly"
+     ]
     },
     "insert": {
      "id": "reseller.customers.insert",
@@ -388,7 +404,10 @@
      },
      "response": {
       "$ref": "Customer"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/apps.order"
+     ]
     },
     "patch": {
      "id": "reseller.customers.patch",
@@ -411,7 +430,10 @@
      },
      "response": {
       "$ref": "Customer"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/apps.order"
+     ]
     },
     "update": {
      "id": "reseller.customers.update",
@@ -434,7 +456,10 @@
      },
      "response": {
       "$ref": "Customer"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/apps.order"
+     ]
     }
    }
   },
@@ -468,7 +493,10 @@
      },
      "response": {
       "$ref": "Subscription"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/apps.order"
+     ]
     },
     "changeRenewalSettings": {
      "id": "reseller.subscriptions.changeRenewalSettings",
@@ -498,7 +526,10 @@
      },
      "response": {
       "$ref": "Subscription"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/apps.order"
+     ]
     },
     "changeSeats": {
      "id": "reseller.subscriptions.changeSeats",
@@ -528,7 +559,10 @@
      },
      "response": {
       "$ref": "Subscription"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/apps.order"
+     ]
     },
     "delete": {
      "id": "reseller.subscriptions.delete",
@@ -569,6 +603,9 @@
       "customerId",
       "subscriptionId",
       "deletionType"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/apps.order"
      ]
     },
     "get": {
@@ -596,7 +633,11 @@
      ],
      "response": {
       "$ref": "Subscription"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/apps.order",
+      "https://www.googleapis.com/auth/apps.order.readonly"
+     ]
     },
     "insert": {
      "id": "reseller.subscriptions.insert",
@@ -624,7 +665,10 @@
      },
      "response": {
       "$ref": "Subscription"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/apps.order"
+     ]
     },
     "list": {
      "id": "reseller.subscriptions.list",
@@ -663,7 +707,11 @@
      },
      "response": {
       "$ref": "Subscriptions"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/apps.order",
+      "https://www.googleapis.com/auth/apps.order.readonly"
+     ]
     },
     "startPaidService": {
      "id": "reseller.subscriptions.startPaidService",
@@ -690,7 +738,10 @@
      ],
      "response": {
       "$ref": "Subscription"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/apps.order"
+     ]
     }
    }
   }

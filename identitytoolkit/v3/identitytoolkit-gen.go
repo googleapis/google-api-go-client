@@ -149,6 +149,9 @@ type GetAccountInfoResponseUsersProviderUserInfo struct {
 	// DisplayName: The user's display name at the IDP.
 	DisplayName string `json:"displayName,omitempty"`
 
+	// FederatedId: User's identifier at IDP.
+	FederatedId string `json:"federatedId,omitempty"`
+
 	// PhotoUrl: The user's photo url at the IDP.
 	PhotoUrl string `json:"photoUrl,omitempty"`
 
@@ -297,6 +300,12 @@ type IdentitytoolkitRelyingpartyVerifyAssertionRequest struct {
 }
 
 type IdentitytoolkitRelyingpartyVerifyPasswordRequest struct {
+	// CaptchaChallenge: The captcha challenge.
+	CaptchaChallenge string `json:"captchaChallenge,omitempty"`
+
+	// CaptchaResponse: Response to the captcha.
+	CaptchaResponse string `json:"captchaResponse,omitempty"`
+
 	// Email: The email of the user.
 	Email string `json:"email,omitempty"`
 
@@ -520,6 +529,9 @@ type VerifyPasswordResponse struct {
 	// LocalId: The RP local ID if it's already been mapped to the IdP
 	// account identified by the federated ID.
 	LocalId string `json:"localId,omitempty"`
+
+	// PhotoUrl: The URI of the user's photo at IdP
+	PhotoUrl string `json:"photoUrl,omitempty"`
 
 	// Registered: Whether the email is registered.
 	Registered bool `json:"registered,omitempty"`

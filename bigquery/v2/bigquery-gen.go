@@ -513,9 +513,9 @@ type JobConfigurationLoad struct {
 }
 
 type JobConfigurationQuery struct {
-	// AllowLargeResults: [Experimental] If true, allows >128M results to be
-	// materialized in the destination table. Requires destination_table to
-	// be set.
+	// AllowLargeResults: If true, allows the query to produce arbitrarily
+	// large result tables at a slight cost in performance. Requires
+	// destination_table to be set.
 	AllowLargeResults bool `json:"allowLargeResults,omitempty"`
 
 	// CreateDisposition: [Optional] Whether to create the table if it
@@ -622,6 +622,9 @@ type JobListJobs struct {
 
 	// Status: [Full-projection-only] Describes the state of the job.
 	Status *JobStatus `json:"status,omitempty"`
+
+	// User_email: [Full-projection-only] User who ran the job.
+	User_email string `json:"user_email,omitempty"`
 }
 
 type JobReference struct {
@@ -946,6 +949,9 @@ type TableDataList struct {
 }
 
 type TableFieldSchema struct {
+	// Description: [Optional] The field description.
+	Description string `json:"description,omitempty"`
+
 	// Fields: [Optional] Describes the nested schema fields if the type
 	// property is set to RECORD.
 	Fields []*TableFieldSchema `json:"fields,omitempty"`
@@ -1823,8 +1829,7 @@ func (c *JobsInsertCall) Do() (*Job, error) {
 	//   "id": "bigquery.jobs.insert",
 	//   "mediaUpload": {
 	//     "accept": [
-	//       "application/octet-stream",
-	//       "text/csv"
+	//       "*/*"
 	//     ],
 	//     "protocols": {
 	//       "resumable": {

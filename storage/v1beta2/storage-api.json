@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"DGgqtFnjgu83tuwvvVNNUhOiHWk/Y6_4vhFiXkgoLZDkwHAXc3CkOK0\"",
+ "etag": "\"_UU0hweWJUeoapnMzW_8ULttsqM/Y6_4vhFiXkgoLZDkwHAXc3CkOK0\"",
  "discoveryVersion": "v1",
  "id": "storage:v1beta2",
  "name": "storage",

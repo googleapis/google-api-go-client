@@ -1,9 +1,10 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"DGgqtFnjgu83tuwvvVNNUhOiHWk/Fv7vACHdCcGdY_nhHAAW_ODWfDQ\"",
+ "etag": "\"qMhxoRFWKZK4K3KdZJuqms1o3fc/jKO4sSDWQHdq9guVUNuYuRRGT2M\"",
  "discoveryVersion": "v1",
  "id": "games:v1",
  "name": "games",
+ "canonicalName": "Games",
  "version": "v1",
  "title": "Google Play Game Services API",
  "description": "The API for Google Play Game Services.",
@@ -195,6 +196,27 @@
     }
    }
   },
+  "AchievementSetStepsAtLeastResponse": {
+   "id": "AchievementSetStepsAtLeastResponse",
+   "type": "object",
+   "description": "This is a JSON template for an achievement set steps at least response.",
+   "properties": {
+    "currentSteps": {
+     "type": "integer",
+     "description": "The current steps recorded for this incremental achievement.",
+     "format": "int32"
+    },
+    "kind": {
+     "type": "string",
+     "description": "Uniquely identifies the type of this resource. Value is always the fixed string games#achievementSetStepsAtLeastResponse.",
+     "default": "games#achievementSetStepsAtLeastResponse"
+    },
+    "newlyUnlocked": {
+     "type": "boolean",
+     "description": "Whether the the current steps for the achievement has reached the number of steps required to unlock."
+    }
+   }
+  },
   "AchievementUnlockResponse": {
    "id": "AchievementUnlockResponse",
    "type": "object",
@@ -208,6 +230,105 @@
     "newlyUnlocked": {
      "type": "boolean",
      "description": "Whether this achievement was newly unlocked (that is, whether the unlock request for the achievement was the first for the player)."
+    }
+   }
+  },
+  "AchievementUpdateMultipleRequest": {
+   "id": "AchievementUpdateMultipleRequest",
+   "type": "object",
+   "description": "This is a JSON template for a list of achievement update requests.",
+   "properties": {
+    "kind": {
+     "type": "string",
+     "description": "Uniquely identifies the type of this resource. Value is always the fixed string games#achievementUpdateMultipleRequest.",
+     "default": "games#achievementUpdateMultipleRequest"
+    },
+    "updates": {
+     "type": "array",
+     "description": "The individual achievement update requests.",
+     "items": {
+      "$ref": "AchievementUpdateRequest"
+     }
+    }
+   }
+  },
+  "AchievementUpdateMultipleResponse": {
+   "id": "AchievementUpdateMultipleResponse",
+   "type": "object",
+   "description": "This is a JSON template for an achievement unlock response.",
+   "properties": {
+    "kind": {
+     "type": "string",
+     "description": "Uniquely identifies the type of this resource. Value is always the fixed string games#achievementUpdateListResponse.",
+     "default": "games#achievementUpdateMultipleResponse"
+    },
+    "updatedAchievements": {
+     "type": "array",
+     "description": "The updated state of the achievements.",
+     "items": {
+      "$ref": "AchievementUpdateResponse"
+     }
+    }
+   }
+  },
+  "AchievementUpdateRequest": {
+   "id": "AchievementUpdateRequest",
+   "type": "object",
+   "description": "This is a JSON template for a request to update an achievement.",
+   "properties": {
+    "achievementId": {
+     "type": "string",
+     "description": "The achievement this update is being applied to."
+    },
+    "incrementPayload": {
+     "$ref": "GamesAchievementIncrement",
+     "description": "The payload if an update of type INCREMENT was requested for the achievement."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Uniquely identifies the type of this resource. Value is always the fixed string games#achievementUpdateRequest.",
+     "default": "games#achievementUpdateRequest"
+    },
+    "setStepsAtLeastPayload": {
+     "$ref": "GamesAchievementSetStepsAtLeast",
+     "description": "The payload if an update of type SET_STEPS_AT_LEAST was requested for the achievement."
+    },
+    "updateType": {
+     "type": "string",
+     "description": "The type of update being applied.\nPossible values are:  \n- \"REVEAL\" - Achievement is revealed. \n- \"UNLOCK\" - Achievement is unlocked. \n- \"INCREMENT\" - Achievement is incremented. \n- \"SET_STEPS_AT_LEAST\" - Achievement progress is set to at least the passed value."
+    }
+   }
+  },
+  "AchievementUpdateResponse": {
+   "id": "AchievementUpdateResponse",
+   "type": "object",
+   "description": "This is a JSON template for an achievement update response.",
+   "properties": {
+    "achievementId": {
+     "type": "string",
+     "description": "The achievement this update is was applied to."
+    },
+    "currentState": {
+     "type": "string",
+     "description": "The current state of the achievement.\nPossible values are:  \n- \"HIDDEN\" - Achievement is hidden. \n- \"REVEALED\" - Achievement is revealed. \n- \"UNLOCKED\" - Achievement is unlocked."
+    },
+    "currentSteps": {
+     "type": "integer",
+     "description": "The current steps recorded for this achievement if it is incremental.",
+     "format": "int32"
+    },
+    "kind": {
+     "type": "string",
+     "description": "Uniquely identifies the type of this resource. Value is always the fixed string games#achievementUpdateResponse.",
+     "default": "games#achievementUpdateResponse"
+    },
+    "newlyUnlocked": {
+     "type": "boolean",
+     "description": "Whether this achievement was newly unlocked (that is, whether the unlock request for the achievement was the first for the player)."
+    },
+    "updateOccurred": {
+     "type": "boolean",
+     "description": "Whether the requested updates actually affected the achievement."
     }
    }
   },
@@ -341,6 +462,45 @@
     "secondary": {
      "type": "string",
      "description": "The secondary category."
+    }
+   }
+  },
+  "GamesAchievementIncrement": {
+   "id": "GamesAchievementIncrement",
+   "type": "object",
+   "description": "This is a JSON template for the payload to request to increment an achievement.",
+   "properties": {
+    "kind": {
+     "type": "string",
+     "description": "Uniquely identifies the type of this resource. Value is always the fixed string games#GamesAchievementIncrement.",
+     "default": "games#GamesAchievementIncrement"
+    },
+    "requestId": {
+     "type": "string",
+     "description": "The requestId associated with an increment to an achievement.",
+     "format": "int64"
+    },
+    "steps": {
+     "type": "integer",
+     "description": "The number of steps to be incremented.",
+     "format": "int32"
+    }
+   }
+  },
+  "GamesAchievementSetStepsAtLeast": {
+   "id": "GamesAchievementSetStepsAtLeast",
+   "type": "object",
+   "description": "This is a JSON template for the payload to request to increment an achievement.",
+   "properties": {
+    "kind": {
+     "type": "string",
+     "description": "Uniquely identifies the type of this resource. Value is always the fixed string games#GamesAchievementSetStepsAtLeast.",
+     "default": "games#GamesAchievementSetStepsAtLeast"
+    },
+    "steps": {
+     "type": "integer",
+     "description": "The minimum number of steps for the achievement to be set to.",
+     "format": "int32"
     }
    }
   },
@@ -556,6 +716,10 @@
      "type": "string",
      "description": "The rank of this score for this leaderboard.",
      "format": "int64"
+    },
+    "scoreTag": {
+     "type": "string",
+     "description": "Additional information about the score. Values must contain no more than 64 URI-safe characters as defined by section 2.3 of RFC 3986."
     },
     "scoreValue": {
      "type": "string",
@@ -865,6 +1029,10 @@
      "type": "string",
      "description": "The formatted value of this score."
     },
+    "scoreTag": {
+     "type": "string",
+     "description": "Additional information about the score. Values must contain no more than 64 URI-safe characters as defined by section 2.3 of RFC 3986."
+    },
     "scoreValue": {
      "type": "string",
      "description": "The numerical value of this score.",
@@ -905,6 +1073,10 @@
     "nextPageToken": {
      "type": "string",
      "description": "The pagination token for the next page of results."
+    },
+    "player": {
+     "$ref": "Player",
+     "description": "The Player resources for the owner of this score."
     }
    }
   },
@@ -926,6 +1098,10 @@
      "type": "string",
      "description": "The numerical value for this player score.",
      "format": "int64"
+    },
+    "scoreTag": {
+     "type": "string",
+     "description": "Additional information about this score. Values will contain no more than 64 URI-safe characters as defined by section 2.3 of RFC 3986."
     },
     "timeSpan": {
      "type": "string",
@@ -977,6 +1153,10 @@
      "type": "string",
      "description": "The leaderboard ID that this score was submitted to."
     },
+    "scoreTag": {
+     "type": "string",
+     "description": "Additional information about this score. Values will contain no more than 64 URI-safe characters as defined by section 2.3 of RFC 3986."
+    },
     "unbeatenScores": {
      "type": "array",
      "description": "The scores in time spans that have not been beaten. As an example, the submitted score may be better than the player's DAILY score, but not better than the player's scores for the WEEKLY or ALL_TIME time spans.",
@@ -1010,6 +1190,10 @@
    "type": "object",
    "description": "This is a JSON template for the result of checking a revision.",
    "properties": {
+    "apiVersion": {
+     "type": "string",
+     "description": "The version of the API this client revision should use when calling API methods."
+    },
     "kind": {
      "type": "string",
      "description": "Uniquely identifies the type of this resource. Value is always the fixed string games#revisionCheckResponse.",
@@ -1373,7 +1557,7 @@
    "properties": {
     "autoMatchedPlayer": {
      "$ref": "AnonymousPlayer",
-     "description": "Information about a player that has been auto-matched against the requesting player. (Either player or autoMatchedPlayer will be set.)"
+     "description": "Information about a player that has been anonymously auto-matched against the requesting player. (Either player or autoMatchedPlayer will be set.)"
     },
     "capabilities": {
      "type": "array",
@@ -1405,7 +1589,7 @@
     },
     "player": {
      "$ref": "Player",
-     "description": "Information about the player. Not populated if this player was auto-matched against the requesting player. (Either player or autoMatchedPlayer will be set.)"
+     "description": "Information about the player. Not populated if this player was anonymously auto-matched against the requesting player. (Either player or autoMatchedPlayer will be set.)"
     },
     "status": {
      "type": "string",
@@ -1467,6 +1651,11 @@
      "type": "string",
      "description": "The new score being submitted.",
      "format": "int64"
+    },
+    "scoreTag": {
+     "type": "string",
+     "description": "Additional information about this score. Values will contain no more than 64 URI-safe characters as defined by section 2.3 of RFC 3986.",
+     "pattern": "[a-zA-Z0-9-._~]{0,64}"
     }
    }
   }
@@ -1633,6 +1822,39 @@
       "https://www.googleapis.com/auth/plus.login"
      ]
     },
+    "setStepsAtLeast": {
+     "id": "games.achievements.setStepsAtLeast",
+     "path": "achievements/{achievementId}/setStepsAtLeast",
+     "httpMethod": "POST",
+     "description": "Sets the steps for the currently authenticated player towards unlocking an achievement. If the steps parameter is less than the current number of steps that the player already gained for the achievement, the achievement is not modified.",
+     "parameters": {
+      "achievementId": {
+       "type": "string",
+       "description": "The ID of the achievement used by this method.",
+       "required": true,
+       "location": "path"
+      },
+      "steps": {
+       "type": "integer",
+       "description": "The minimum value to set the steps to.",
+       "required": true,
+       "format": "int32",
+       "minimum": "1",
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "achievementId",
+      "steps"
+     ],
+     "response": {
+      "$ref": "AchievementSetStepsAtLeastResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/games",
+      "https://www.googleapis.com/auth/plus.login"
+     ]
+    },
     "unlock": {
      "id": "games.achievements.unlock",
      "path": "achievements/{achievementId}/unlock",
@@ -1651,6 +1873,22 @@
      ],
      "response": {
       "$ref": "AchievementUnlockResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/games",
+      "https://www.googleapis.com/auth/plus.login"
+     ]
+    },
+    "updateMultiple": {
+     "id": "games.achievements.updateMultiple",
+     "path": "achievements/updateMultiple",
+     "httpMethod": "POST",
+     "description": "Updates multiple achievements for the currently authenticated player.",
+     "request": {
+      "$ref": "AchievementUpdateMultipleRequest"
+     },
+     "response": {
+      "$ref": "AchievementUpdateMultipleResponse"
      },
      "scopes": [
       "https://www.googleapis.com/auth/games",
@@ -1821,7 +2059,7 @@
      "parameters": {
       "clientRevision": {
        "type": "string",
-       "description": "The revision of the client SDK used by your application.",
+       "description": "The revision of the client SDK used by your application. Format:\n[PLATFORM_TYPE]:[VERSION_NUMBER]. Possible values of PLATFORM_TYPE are:\n \n- \"ANDROID\" - Client is running the Android SDK. \n- \"IOS\" - Client is running the iOS SDK. \n- \"WEB_APP\" - Client is running as a Web App.",
        "required": true,
        "location": "query"
       }
@@ -2320,6 +2558,12 @@
        "description": "The score you're submitting. The submitted score is ignored if it is worse than a previously submitted score, where worse depends on the leaderboard sort order. The meaning of the score value depends on the leaderboard format type. For fixed-point, the score represents the raw value. For time, the score represents elapsed time in milliseconds. For currency, the score represents a value in micro units.",
        "required": true,
        "format": "int64",
+       "location": "query"
+      },
+      "scoreTag": {
+       "type": "string",
+       "description": "Additional information about the score you're submitting. Values must contain no more than 64 URI-safe characters as defined by section 2.3 of RFC 3986.",
+       "pattern": "[a-zA-Z0-9-._~]{0,64}",
        "location": "query"
       }
      },

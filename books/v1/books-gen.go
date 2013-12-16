@@ -1053,6 +1053,10 @@ type VolumeAccessInfo struct {
 	// country listed above.
 	PublicDomain bool `json:"publicDomain,omitempty"`
 
+	// QuoteSharingAllowed: Whether quote sharing is allowed for this
+	// volume.
+	QuoteSharingAllowed bool `json:"quoteSharingAllowed,omitempty"`
+
 	// TextToSpeechPermission: Whether text-to-speech is permitted for this
 	// volume. Values can be ALLOWED, ALLOWED_FOR_ACCESSIBILITY, or
 	// NOT_ALLOWED.
@@ -1320,7 +1324,7 @@ type VolumeVolumeInfo struct {
 	// highest weight.
 	MainCategory string `json:"mainCategory,omitempty"`
 
-	// PageCount: Total number of pages.
+	// PageCount: Total number of pages as per publisher metadata.
 	PageCount int64 `json:"pageCount,omitempty"`
 
 	// PreviewLink: URL to preview this volume on the Google Books site.
@@ -1329,6 +1333,10 @@ type VolumeVolumeInfo struct {
 	// PrintType: Type of publication of this volume. Possible values are
 	// BOOK or MAGAZINE.
 	PrintType string `json:"printType,omitempty"`
+
+	// PrintedPageCount: Total number of printed pages in generated pdf
+	// representation.
+	PrintedPageCount int64 `json:"printedPageCount,omitempty"`
 
 	// PublishedDate: Date of publication. (In LITE projection.)
 	PublishedDate string `json:"publishedDate,omitempty"`
@@ -2276,6 +2284,14 @@ func (r *LayersAnnotationDataService) Get(volumeId string, layerId string, annot
 	return c
 }
 
+// AllowWebDefinitions sets the optional parameter
+// "allowWebDefinitions": For the dictionary layer. Whether or not to
+// allow web definitions.
+func (c *LayersAnnotationDataGetCall) AllowWebDefinitions(allowWebDefinitions bool) *LayersAnnotationDataGetCall {
+	c.opt_["allowWebDefinitions"] = allowWebDefinitions
+	return c
+}
+
 // H sets the optional parameter "h": The requested pixel height for any
 // images. If height is provided width must also be provided.
 func (c *LayersAnnotationDataGetCall) H(h int64) *LayersAnnotationDataGetCall {
@@ -2317,6 +2333,9 @@ func (c *LayersAnnotationDataGetCall) Do() (*Annotationdata, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("contentVersion", fmt.Sprintf("%v", c.contentVersion))
+	if v, ok := c.opt_["allowWebDefinitions"]; ok {
+		params.Set("allowWebDefinitions", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["h"]; ok {
 		params.Set("h", fmt.Sprintf("%v", v))
 	}
@@ -2364,6 +2383,11 @@ func (c *LayersAnnotationDataGetCall) Do() (*Annotationdata, error) {
 	//     "contentVersion"
 	//   ],
 	//   "parameters": {
+	//     "allowWebDefinitions": {
+	//       "description": "For the dictionary layer. Whether or not to allow web definitions.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "annotationDataId": {
 	//       "description": "The ID of the annotation data to retrieve.",
 	//       "location": "path",
@@ -3728,6 +3752,13 @@ func (c *MylibraryAnnotationsListCall) LayerId(layerId string) *MylibraryAnnotat
 	return c
 }
 
+// LayerIds sets the optional parameter "layerIds": The layer ID(s) to
+// limit annotation by.
+func (c *MylibraryAnnotationsListCall) LayerIds(layerIds string) *MylibraryAnnotationsListCall {
+	c.opt_["layerIds"] = layerIds
+	return c
+}
+
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to return
 func (c *MylibraryAnnotationsListCall) MaxResults(maxResults int64) *MylibraryAnnotationsListCall {
@@ -3797,6 +3828,9 @@ func (c *MylibraryAnnotationsListCall) Do() (*Annotations, error) {
 	if v, ok := c.opt_["layerId"]; ok {
 		params.Set("layerId", fmt.Sprintf("%v", v))
 	}
+	if v, ok := c.opt_["layerIds"]; ok {
+		params.Set("layerIds", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
@@ -3852,6 +3886,12 @@ func (c *MylibraryAnnotationsListCall) Do() (*Annotations, error) {
 	//     "layerId": {
 	//       "description": "The layer ID to limit annotation by.",
 	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "layerIds": {
+	//       "description": "The layer ID(s) to limit annotation by.",
+	//       "location": "query",
+	//       "repeated": true,
 	//       "type": "string"
 	//     },
 	//     "maxResults": {

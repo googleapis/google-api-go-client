@@ -1,13 +1,13 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"DGgqtFnjgu83tuwvvVNNUhOiHWk/L5o_B_5kDsa-PgAadzS19oUK1yk\"",
+ "etag": "\"qMhxoRFWKZK4K3KdZJuqms1o3fc/5P1YmzFHnPBs8JGSWb_ROKPzJTc\"",
  "discoveryVersion": "v1",
  "id": "admin:directory_v1",
  "name": "admin",
  "canonicalName": "directory",
  "version": "directory_v1",
  "title": "Admin Directory API",
- "description": "Apps Directory API lets you view and manage enterprise resources like user, groups, OrgUnit, devices.",
+ "description": "Apps Directory API lets you view and manage enterprise resources like user, groups, OrgUnit, devices, tokens, asps, verification codes.",
  "ownerDomain": "google.com",
  "ownerName": "Google",
  "packagePath": "admin",
@@ -97,6 +97,9 @@
     "https://www.googleapis.com/auth/admin.directory.group.readonly": {
      "description": "View groups on your domain"
     },
+    "https://www.googleapis.com/auth/admin.directory.notifications": {
+     "description": "View and manage notifications received on your domain"
+    },
     "https://www.googleapis.com/auth/admin.directory.orgunit": {
      "description": "View and manage organization units on your domain"
     },
@@ -114,6 +117,9 @@
     },
     "https://www.googleapis.com/auth/admin.directory.user.readonly": {
      "description": "View users on your domain"
+    },
+    "https://www.googleapis.com/auth/admin.directory.user.security": {
+     "description": "Manage data access permissions for users on your domain"
     }
    }
   }
@@ -167,6 +173,67 @@
      "type": "string",
      "description": "Kind of resource this is.",
      "default": "admin#directory#aliases"
+    }
+   }
+  },
+  "Asp": {
+   "id": "Asp",
+   "type": "object",
+   "description": "The template that returns individual ASP (Access Code) data.",
+   "properties": {
+    "codeId": {
+     "type": "integer",
+     "description": "Code Id of the Access code.",
+     "format": "int32"
+    },
+    "creationTime": {
+     "type": "string",
+     "description": "Time when the ASP was created.",
+     "format": "int64"
+    },
+    "etag": {
+     "type": "string",
+     "description": "ETag of the resource."
+    },
+    "kind": {
+     "type": "string",
+     "description": "The type of the resource.",
+     "default": "admin#directory#asp"
+    },
+    "lastTimeUsed": {
+     "type": "string",
+     "description": "Time when the ASP was last used.",
+     "format": "int64"
+    },
+    "name": {
+     "type": "string",
+     "description": "Name of the application."
+    },
+    "userKey": {
+     "type": "string",
+     "description": "User who has issued the ASP."
+    }
+   }
+  },
+  "Asps": {
+   "id": "Asps",
+   "type": "object",
+   "properties": {
+    "etag": {
+     "type": "string",
+     "description": "ETag of the resource."
+    },
+    "items": {
+     "type": "array",
+     "description": "Asps resource.",
+     "items": {
+      "$ref": "Asp"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "The type of the resource.",
+     "default": "admin#directory#aspList"
     }
    }
   },
@@ -586,6 +653,78 @@
     }
    }
   },
+  "Notification": {
+   "id": "Notification",
+   "type": "object",
+   "description": "Template for a notification resource.",
+   "properties": {
+    "body": {
+     "type": "string",
+     "description": "Body of the notification (Read-only)"
+    },
+    "etag": {
+     "type": "string",
+     "description": "ETag of the resource."
+    },
+    "fromAddress": {
+     "type": "string",
+     "description": "Address from which the notification is received (Read-only)"
+    },
+    "isUnread": {
+     "type": "boolean",
+     "description": "Boolean indicating whether the notification is unread or not."
+    },
+    "kind": {
+     "type": "string",
+     "description": "The type of the resource.",
+     "default": "admin#directory#notification"
+    },
+    "notificationId": {
+     "type": "string"
+    },
+    "sendTime": {
+     "type": "string",
+     "description": "Time at which notification was sent (Read-only)",
+     "format": "date-time"
+    },
+    "subject": {
+     "type": "string",
+     "description": "Subject of the notification (Read-only)"
+    }
+   }
+  },
+  "Notifications": {
+   "id": "Notifications",
+   "type": "object",
+   "description": "Template for notifications list response.",
+   "properties": {
+    "etag": {
+     "type": "string",
+     "description": "ETag of the resource."
+    },
+    "items": {
+     "type": "array",
+     "description": "List of notifications in this page.",
+     "items": {
+      "$ref": "Notification"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "The type of the resource.",
+     "default": "admin#directory#notifications"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "Token for fetching the next page of notifications."
+    },
+    "unreadNotificationsCount": {
+     "type": "integer",
+     "description": "Number of unread notification for the domain.",
+     "format": "int32"
+    }
+   }
+  },
   "OrgUnit": {
    "id": "OrgUnit",
    "type": "object",
@@ -652,6 +791,72 @@
      "items": {
       "$ref": "OrgUnit"
      }
+    }
+   }
+  },
+  "Token": {
+   "id": "Token",
+   "type": "object",
+   "description": "JSON template for token resource in Apps Directory API.",
+   "properties": {
+    "anonymous": {
+     "type": "boolean",
+     "description": "Is the token anonymous?"
+    },
+    "clientId": {
+     "type": "string",
+     "description": "Domain to which the token is issued."
+    },
+    "displayText": {
+     "type": "string",
+     "description": "Displayable name of Domain to which the token is issued."
+    },
+    "etag": {
+     "type": "string",
+     "description": "ETag of the resource."
+    },
+    "kind": {
+     "type": "string",
+     "description": "The type of the resource.",
+     "default": "admin#directory#token"
+    },
+    "nativeApp": {
+     "type": "boolean",
+     "description": "Is the token for native app?"
+    },
+    "scopes": {
+     "type": "array",
+     "description": "List of scopes.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "userKey": {
+     "type": "string",
+     "description": "Obfuscated user_id of the user who has issued the token."
+    }
+   }
+  },
+  "Tokens": {
+   "id": "Tokens",
+   "type": "object",
+   "description": "JSON response template for List tokens operation in Apps Directory API.",
+   "properties": {
+    "etag": {
+     "type": "string",
+     "description": "ETag of the resource."
+    },
+    "items": {
+     "type": "array",
+     "description": "Tokens resource.",
+     "items": {
+      "$ref": "Token"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "The type of the resource.",
+     "default": "admin#directory#tokenList"
     }
    }
   },
@@ -1190,9 +1395,142 @@
      }
     }
    }
+  },
+  "VerificationCode": {
+   "id": "VerificationCode",
+   "type": "object",
+   "description": "JSON template for verification codes in Apps Directory API.",
+   "properties": {
+    "etag": {
+     "type": "string",
+     "description": "ETag of the resource."
+    },
+    "kind": {
+     "type": "string",
+     "description": "The type of the resource.",
+     "default": "admin#directory#verificationCode"
+    },
+    "userId": {
+     "type": "string",
+     "description": "Obfuscated user_id of the account holder."
+    },
+    "verificationCode": {
+     "type": "string",
+     "description": "A verification code for that user"
+    }
+   }
+  },
+  "VerificationCodes": {
+   "id": "VerificationCodes",
+   "type": "object",
+   "description": "JSON response template for List verification codes operation in Apps Directory API.",
+   "properties": {
+    "etag": {
+     "type": "string",
+     "description": "ETag of the resource."
+    },
+    "items": {
+     "type": "array",
+     "description": "verification codes resource.",
+     "items": {
+      "$ref": "VerificationCode"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "The type of the resource.",
+     "default": "admin#directory#verificationCodesList"
+    }
+   }
   }
  },
  "resources": {
+  "asps": {
+   "methods": {
+    "delete": {
+     "id": "directory.asps.delete",
+     "path": "users/{userKey}/asps/{codeId}",
+     "httpMethod": "DELETE",
+     "description": "Delete the application specific password issued by the user for a codeId.",
+     "parameters": {
+      "codeId": {
+       "type": "integer",
+       "description": "The codeId.",
+       "required": true,
+       "format": "int32",
+       "location": "path"
+      },
+      "userKey": {
+       "type": "string",
+       "description": "Email or immutable Id of the user",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "userKey",
+      "codeId"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/admin.directory.user.security"
+     ]
+    },
+    "get": {
+     "id": "directory.asps.get",
+     "path": "users/{userKey}/asps/{codeId}",
+     "httpMethod": "GET",
+     "description": "Get the application specific password issued by the user for a codeId.",
+     "parameters": {
+      "codeId": {
+       "type": "integer",
+       "description": "The codeid.",
+       "required": true,
+       "format": "int32",
+       "location": "path"
+      },
+      "userKey": {
+       "type": "string",
+       "description": "Email or immutable Id of the user",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "userKey",
+      "codeId"
+     ],
+     "response": {
+      "$ref": "Asp"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/admin.directory.user.security"
+     ]
+    },
+    "list": {
+     "id": "directory.asps.list",
+     "path": "users/{userKey}/asps",
+     "httpMethod": "GET",
+     "description": "List the application specific passwords issued by the user.",
+     "parameters": {
+      "userKey": {
+       "type": "string",
+       "description": "Email or immutable Id of the user",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "userKey"
+     ],
+     "response": {
+      "$ref": "Asps"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/admin.directory.user.security"
+     ]
+    }
+   }
+  },
   "chromeosdevices": {
    "methods": {
     "get": {
@@ -2066,6 +2404,172 @@
     }
    }
   },
+  "notifications": {
+   "methods": {
+    "delete": {
+     "id": "directory.notifications.delete",
+     "path": "customer/{customer}/notifications/{notificationId}",
+     "httpMethod": "DELETE",
+     "description": "Deletes a notification",
+     "parameters": {
+      "customer": {
+       "type": "string",
+       "description": "Obfuscated customer ID of the domain for which notification is to be deleted",
+       "required": true,
+       "location": "path"
+      },
+      "notificationId": {
+       "type": "string",
+       "description": "Id of the notification to be deleted.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "customer",
+      "notificationId"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/admin.directory.notifications"
+     ]
+    },
+    "get": {
+     "id": "directory.notifications.get",
+     "path": "customer/{customer}/notifications/{notificationId}",
+     "httpMethod": "GET",
+     "description": "Retrieves a notification",
+     "parameters": {
+      "customer": {
+       "type": "string",
+       "description": "Obfuscated customer ID of the domain for which notification is to be retrieved",
+       "required": true,
+       "location": "path"
+      },
+      "notificationId": {
+       "type": "string",
+       "description": "Id of the notification to be retrieved.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "customer",
+      "notificationId"
+     ],
+     "response": {
+      "$ref": "Notification"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/admin.directory.notifications"
+     ]
+    },
+    "list": {
+     "id": "directory.notifications.list",
+     "path": "customer/{customer}/notifications",
+     "httpMethod": "GET",
+     "description": "Retrieves a list of notifications.",
+     "parameters": {
+      "customer": {
+       "type": "string",
+       "description": "Obfuscated customer ID of the domain for which notifications are to be retrieved",
+       "required": true,
+       "location": "path"
+      },
+      "language": {
+       "type": "string",
+       "description": "Code of the language in which the notifications are to be retrieved. Notifications will be returned in English by default",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "Number of notifications to be retrieved. Default is 100",
+       "format": "uint32",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Token for the page to be retrieved",
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "customer"
+     ],
+     "response": {
+      "$ref": "Notifications"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/admin.directory.notifications"
+     ]
+    },
+    "patch": {
+     "id": "directory.notifications.patch",
+     "path": "customer/{customer}/notifications/{notificationId}",
+     "httpMethod": "PATCH",
+     "description": "Updates a notification. This method supports patch semantics.",
+     "parameters": {
+      "customer": {
+       "type": "string",
+       "description": "Obfuscated customer ID of the domain for which notification is to be updated",
+       "required": true,
+       "location": "path"
+      },
+      "notificationId": {
+       "type": "string",
+       "description": "Id of the notification to be updated.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "customer",
+      "notificationId"
+     ],
+     "request": {
+      "$ref": "Notification"
+     },
+     "response": {
+      "$ref": "Notification"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/admin.directory.notifications"
+     ]
+    },
+    "update": {
+     "id": "directory.notifications.update",
+     "path": "customer/{customer}/notifications/{notificationId}",
+     "httpMethod": "PUT",
+     "description": "Updates a notification",
+     "parameters": {
+      "customer": {
+       "type": "string",
+       "description": "Obfuscated customer ID of the domain for which notification is to be updated",
+       "required": true,
+       "location": "path"
+      },
+      "notificationId": {
+       "type": "string",
+       "description": "Id of the notification to be updated.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "customer",
+      "notificationId"
+     ],
+     "request": {
+      "$ref": "Notification"
+     },
+     "response": {
+      "$ref": "Notification"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/admin.directory.notifications"
+     ]
+    }
+   }
+  },
   "orgunits": {
    "methods": {
     "delete": {
@@ -2263,6 +2767,90 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/admin.directory.orgunit"
+     ]
+    }
+   }
+  },
+  "tokens": {
+   "methods": {
+    "delete": {
+     "id": "directory.tokens.delete",
+     "path": "users/{userKey}/tokens/{clientId}",
+     "httpMethod": "DELETE",
+     "description": "Delete all OAuth tokens issued by the user for an app domain.",
+     "parameters": {
+      "clientId": {
+       "type": "string",
+       "description": "The app domain.",
+       "required": true,
+       "location": "path"
+      },
+      "userKey": {
+       "type": "string",
+       "description": "Email or immutable Id of the user",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "userKey",
+      "clientId"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/admin.directory.user.security"
+     ]
+    },
+    "get": {
+     "id": "directory.tokens.get",
+     "path": "users/{userKey}/tokens/{clientId}",
+     "httpMethod": "GET",
+     "description": "Get the OAuth token issued by the user for an app domain.",
+     "parameters": {
+      "clientId": {
+       "type": "string",
+       "description": "The app domain.",
+       "required": true,
+       "location": "path"
+      },
+      "userKey": {
+       "type": "string",
+       "description": "Email or immutable Id of the user",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "userKey",
+      "clientId"
+     ],
+     "response": {
+      "$ref": "Token"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/admin.directory.user.security"
+     ]
+    },
+    "list": {
+     "id": "directory.tokens.list",
+     "path": "users/{userKey}/tokens",
+     "httpMethod": "GET",
+     "description": "List the OAuth tokens issued by the user.",
+     "parameters": {
+      "userKey": {
+       "type": "string",
+       "description": "Email or immutable Id of the user",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "userKey"
+     ],
+     "response": {
+      "$ref": "Tokens"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/admin.directory.user.security"
      ]
     }
    }
@@ -2688,6 +3276,73 @@
        ]
       }
      }
+    }
+   }
+  },
+  "verificationCodes": {
+   "methods": {
+    "generate": {
+     "id": "directory.verificationCodes.generate",
+     "path": "users/{userKey}/verificationCodes/generate",
+     "httpMethod": "POST",
+     "description": "Generate new backup verification codes for the user.",
+     "parameters": {
+      "userKey": {
+       "type": "string",
+       "description": "Email or immutable Id of the user",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "userKey"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/admin.directory.user.security"
+     ]
+    },
+    "invalidate": {
+     "id": "directory.verificationCodes.invalidate",
+     "path": "users/{userKey}/verificationCodes/invalidate",
+     "httpMethod": "POST",
+     "description": "Invalidate the backup verification codes for the user.",
+     "parameters": {
+      "userKey": {
+       "type": "string",
+       "description": "Email or immutable Id of the user",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "userKey"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/admin.directory.user.security"
+     ]
+    },
+    "list": {
+     "id": "directory.verificationCodes.list",
+     "path": "users/{userKey}/verificationCodes",
+     "httpMethod": "GET",
+     "description": "List the backup verification codes for the user.",
+     "parameters": {
+      "userKey": {
+       "type": "string",
+       "description": "Email or immutable Id of the user",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "userKey"
+     ],
+     "response": {
+      "$ref": "VerificationCodes"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/admin.directory.user.security"
+     ]
     }
    }
   }

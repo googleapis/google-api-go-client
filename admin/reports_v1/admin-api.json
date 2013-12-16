@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"DGgqtFnjgu83tuwvvVNNUhOiHWk/6FzIjb3cw0Qsdcp3XA94i-UbOwo\"",
+ "etag": "\"_UU0hweWJUeoapnMzW_8ULttsqM/mEYgw6O3EBvI53Fi0qdjFR-O7ck\"",
  "discoveryVersion": "v1",
  "id": "admin:reports_v1",
  "name": "admin",
@@ -398,6 +398,12 @@
        "pattern": "(admin)|(docs)|(login)",
        "location": "path"
       },
+      "customerId": {
+       "type": "string",
+       "description": "Represents the customer for which the data is to be fetched.",
+       "pattern": "C.+",
+       "location": "query"
+      },
       "endTime": {
        "type": "string",
        "description": "Return events which occured at or before this time.",
@@ -462,6 +468,12 @@
      "httpMethod": "GET",
      "description": "Retrieves a report which is a collection of properties / statistics for a specific customer.",
      "parameters": {
+      "customerId": {
+       "type": "string",
+       "description": "Represents the customer for which the data is to be fetched.",
+       "pattern": "C.+",
+       "location": "query"
+      },
       "date": {
        "type": "string",
        "description": "Represents the date in yyyy-mm-dd format for which the data is to be fetched.",
@@ -501,6 +513,12 @@
      "httpMethod": "GET",
      "description": "Retrieves a report which is a collection of properties / statistics for a set of users.",
      "parameters": {
+      "customerId": {
+       "type": "string",
+       "description": "Represents the customer for which the data is to be fetched.",
+       "pattern": "C.+",
+       "location": "query"
+      },
       "date": {
        "type": "string",
        "description": "Represents the date in yyyy-mm-dd format for which the data is to be fetched.",

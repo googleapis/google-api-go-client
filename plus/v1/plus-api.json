@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"DGgqtFnjgu83tuwvvVNNUhOiHWk/DMGlXi8jhJTMEmr-VAaiIhmcCGI\"",
+ "etag": "\"_UU0hweWJUeoapnMzW_8ULttsqM/uTNUsIyrlXE3F_OAnzONFFhzkso\"",
  "discoveryVersion": "v1",
  "id": "plus:v1",
  "name": "plus",
@@ -73,6 +73,12 @@
     },
     "https://www.googleapis.com/auth/plus.me": {
      "description": "Know who you are on Google"
+    },
+    "https://www.googleapis.com/auth/userinfo.email": {
+     "description": "View your email address"
+    },
+    "https://www.googleapis.com/auth/userinfo.profile": {
+     "description": "View basic information about your account"
     }
    }
   }
@@ -1045,16 +1051,16 @@
     },
     "ageRange": {
      "type": "object",
-     "description": "The age range of the person.",
+     "description": "The age range of the person. Valid ranges are 17 or younger, 18 to 20, and 21 or older. Age is determined from the user's birthday using Western age reckoning.",
      "properties": {
       "max": {
        "type": "integer",
-       "description": "The age range's upper bound, if any.",
+       "description": "The age range's upper bound, if any. Possible values include, but are not limited to, the following:  \n- \"17\" - for age 17 \n- \"20\" - for age 20",
        "format": "int32"
       },
       "min": {
        "type": "integer",
-       "description": "The age range's lower bound, if any.",
+       "description": "The age range's lower bound, if any. Possible values include, but are not limited to, the following:  \n- \"21\" - for age 21 \n- \"18\" - for age 18",
        "format": "int32"
       }
      }
@@ -1125,6 +1131,27 @@
     "displayName": {
      "type": "string",
      "description": "The name of this person, which is suitable for display."
+    },
+    "domain": {
+     "type": "string",
+     "description": "The hosted domain name for the user's Google Apps account. For instance, example.com. The plus.profile.emails.read or email scope is needed to get this domain name."
+    },
+    "emails": {
+     "type": "array",
+     "description": "A list of email addresses that this person has, including their Google account email address, and the public verified email addresses on their Google+ profile. The plus.profile.emails.read scope is needed to retrieve these email addresses, or the email scope can be used to retrieve just the Google account email address.",
+     "items": {
+      "type": "object",
+      "properties": {
+       "type": {
+        "type": "string",
+        "description": "The type of address. Possible values include, but are not limited to, the following values:  \n- \"account\" - Google account email address. \n- \"home\" - Home email address. \n- \"work\" - Work email address. \n- \"other\" - Other."
+       },
+       "value": {
+        "type": "string",
+        "description": "The email address."
+       }
+      }
+     }
     },
     "etag": {
      "type": "string",
@@ -1199,6 +1226,10 @@
      "type": "string",
      "description": "Type of person within Google+. Possible values include, but are not limited to, the following values:  \n- \"person\" - represents an actual person. \n- \"page\" - represents a page."
     },
+    "occupation": {
+     "type": "string",
+     "description": "The occupation of this person."
+    },
     "organizations": {
      "type": "array",
      "description": "A list of current or past organizations with which this person is associated.",
@@ -1269,6 +1300,10 @@
     "relationshipStatus": {
      "type": "string",
      "description": "The person's relationship status. Possible values include, but are not limited to, the following values:  \n- \"single\" - Person is single. \n- \"in_a_relationship\" - Person is in a relationship. \n- \"engaged\" - Person is engaged. \n- \"married\" - Person is married. \n- \"its_complicated\" - The relationship is complicated. \n- \"open_relationship\" - Person is in an open relationship. \n- \"widowed\" - Person is widowed. \n- \"in_domestic_partnership\" - Person is in a domestic partnership. \n- \"in_civil_union\" - Person is in a civil union."
+    },
+    "skills": {
+     "type": "string",
+     "description": "The person's skills."
     },
     "tagline": {
      "type": "string",
@@ -1626,7 +1661,8 @@
       "$ref": "Moment"
      },
      "scopes": [
-      "https://www.googleapis.com/auth/plus.login"
+      "https://www.googleapis.com/auth/plus.login",
+      "https://www.googleapis.com/auth/plus.me"
      ]
     },
     "list": {
@@ -1686,7 +1722,8 @@
       "$ref": "MomentsFeed"
      },
      "scopes": [
-      "https://www.googleapis.com/auth/plus.login"
+      "https://www.googleapis.com/auth/plus.login",
+      "https://www.googleapis.com/auth/plus.me"
      ]
     },
     "remove": {
@@ -1734,7 +1771,9 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/plus.login",
-      "https://www.googleapis.com/auth/plus.me"
+      "https://www.googleapis.com/auth/plus.me",
+      "https://www.googleapis.com/auth/userinfo.email",
+      "https://www.googleapis.com/auth/userinfo.profile"
      ]
     },
     "list": {
@@ -1748,9 +1787,11 @@
        "description": "The collection of people to list.",
        "required": true,
        "enum": [
+        "connected",
         "visible"
        ],
        "enumDescriptions": [
+        "The list of visible people in the authenticated user's circles who also use the requesting app. This list is limited to users who made their app activities visible to the authenticated user.",
         "The list of people who this user has added to one or more circles, limited to the circles visible to the requesting application."
        ],
        "location": "path"
@@ -1797,7 +1838,8 @@
       "$ref": "PeopleFeed"
      },
      "scopes": [
-      "https://www.googleapis.com/auth/plus.login"
+      "https://www.googleapis.com/auth/plus.login",
+      "https://www.googleapis.com/auth/plus.me"
      ]
     },
     "listByActivity": {

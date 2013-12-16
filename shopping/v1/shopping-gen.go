@@ -143,9 +143,6 @@ type Products struct {
 	// Redirects: Redirects.
 	Redirects []string `json:"redirects,omitempty"`
 
-	// RelatedQueries: Related queries.
-	RelatedQueries []string `json:"relatedQueries,omitempty"`
-
 	// RequestId: Unique identifier for this request.
 	RequestId string `json:"requestId,omitempty"`
 
@@ -1093,20 +1090,6 @@ func (c *ProductsListCall) RedirectsUseGcsConfig(redirectsUseGcsConfig bool) *Pr
 	return c
 }
 
-// RelatedQueriesEnabled sets the optional parameter
-// "relatedQueries.enabled": Whether to return related queries
-func (c *ProductsListCall) RelatedQueriesEnabled(relatedQueriesEnabled bool) *ProductsListCall {
-	c.opt_["relatedQueries.enabled"] = relatedQueriesEnabled
-	return c
-}
-
-// RelatedQueriesUseGcsConfig sets the optional parameter
-// "relatedQueries.useGcsConfig": This parameter is currently ignored
-func (c *ProductsListCall) RelatedQueriesUseGcsConfig(relatedQueriesUseGcsConfig bool) *ProductsListCall {
-	c.opt_["relatedQueries.useGcsConfig"] = relatedQueriesUseGcsConfig
-	return c
-}
-
 // RestrictBy sets the optional parameter "restrictBy": Restriction
 // specification
 func (c *ProductsListCall) RestrictBy(restrictBy string) *ProductsListCall {
@@ -1261,12 +1244,6 @@ func (c *ProductsListCall) Do() (*Products, error) {
 	}
 	if v, ok := c.opt_["redirects.useGcsConfig"]; ok {
 		params.Set("redirects.useGcsConfig", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["relatedQueries.enabled"]; ok {
-		params.Set("relatedQueries.enabled", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["relatedQueries.useGcsConfig"]; ok {
-		params.Set("relatedQueries.useGcsConfig", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["restrictBy"]; ok {
 		params.Set("restrictBy", fmt.Sprintf("%v", v))
@@ -1478,16 +1455,6 @@ func (c *ProductsListCall) Do() (*Products, error) {
 	//     },
 	//     "redirects.useGcsConfig": {
 	//       "description": "Whether to return redirect information as configured in the GCS account",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "relatedQueries.enabled": {
-	//       "description": "Whether to return related queries",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "relatedQueries.useGcsConfig": {
-	//       "description": "This parameter is currently ignored",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },

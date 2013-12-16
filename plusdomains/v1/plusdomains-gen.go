@@ -65,6 +65,12 @@ const (
 
 	// Manage your Google+ posts, comments, and stream
 	PlusStreamWriteScope = "https://www.googleapis.com/auth/plus.stream.write"
+
+	// View your email address
+	UserinfoEmailScope = "https://www.googleapis.com/auth/userinfo.email"
+
+	// View basic information about your account
+	UserinfoProfileScope = "https://www.googleapis.com/auth/userinfo.profile"
 )
 
 func New(client *http.Client) (*Service, error) {
@@ -770,6 +776,11 @@ type Media struct {
 	// Kind: The type of resource.
 	Kind string `json:"kind,omitempty"`
 
+	// MediaCreatedTime: The time at which this media was originally created
+	// in UTC. Formatted as an RFC 3339 timestamp that matches this example:
+	// 2010-11-25T14:30:27.655Z
+	MediaCreatedTime string `json:"mediaCreatedTime,omitempty"`
+
 	// MediaUrl: The URL of this photo or video's still image.
 	MediaUrl string `json:"mediaUrl,omitempty"`
 
@@ -892,6 +903,18 @@ type Person struct {
 	// DisplayName: The name of this person, which is suitable for display.
 	DisplayName string `json:"displayName,omitempty"`
 
+	// Domain: The hosted domain name for the user's Google Apps account.
+	// For instance, example.com. The plus.profile.emails.read or email
+	// scope is needed to get this domain name.
+	Domain string `json:"domain,omitempty"`
+
+	// Emails: A list of email addresses that this person has, including
+	// their Google account email address, and the public verified email
+	// addresses on their Google+ profile. The plus.profile.emails.read
+	// scope is needed to retrieve these email addresses, or the email scope
+	// can be used to retrieve just the Google account email address.
+	Emails []*PersonEmails `json:"emails,omitempty"`
+
 	// Etag: ETag of this response for caching purposes.
 	Etag string `json:"etag,omitempty"`
 
@@ -929,6 +952,9 @@ type Person struct {
 	// - "page" - represents a page.
 	ObjectType string `json:"objectType,omitempty"`
 
+	// Occupation: The occupation of this person.
+	Occupation string `json:"occupation,omitempty"`
+
 	// Organizations: A list of current or past organizations with which
 	// this person is associated.
 	Organizations []*PersonOrganizations `json:"organizations,omitempty"`
@@ -959,6 +985,9 @@ type Person struct {
 	// - "in_civil_union" - Person is in a
 	// civil union.
 	RelationshipStatus string `json:"relationshipStatus,omitempty"`
+
+	// Skills: The person's skills.
+	Skills string `json:"skills,omitempty"`
 
 	// Tagline: The brief description (tagline) of this person.
 	Tagline string `json:"tagline,omitempty"`
@@ -1008,6 +1037,21 @@ type PersonCoverCoverPhoto struct {
 
 	// Width: The width of the image.
 	Width int64 `json:"width,omitempty"`
+}
+
+type PersonEmails struct {
+	// Type: The type of address. Possible values include, but are not
+	// limited to, the following values:
+	// - "account" - Google account
+	// email address.
+	// - "home" - Home email address.
+	// - "work" - Work email
+	// address.
+	// - "other" - Other.
+	Type string `json:"type,omitempty"`
+
+	// Value: The email address.
+	Value string `json:"value,omitempty"`
 }
 
 type PersonImage struct {
@@ -2652,7 +2696,9 @@ func (c *PeopleGetCall) Do() (*Person, error) {
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/plus.login",
 	//     "https://www.googleapis.com/auth/plus.me",
-	//     "https://www.googleapis.com/auth/plus.profiles.read"
+	//     "https://www.googleapis.com/auth/plus.profiles.read",
+	//     "https://www.googleapis.com/auth/userinfo.email",
+	//     "https://www.googleapis.com/auth/userinfo.profile"
 	//   ]
 	// }
 

@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"DGgqtFnjgu83tuwvvVNNUhOiHWk/ZzLfvhn8YaxUZ9ssb3cdYypOzK0\"",
+ "etag": "\"_UU0hweWJUeoapnMzW_8ULttsqM/9Mb__zWkdivLUYRry6KufGQ683g\"",
  "discoveryVersion": "v1",
  "id": "analytics:v3",
  "name": "analytics",
@@ -72,7 +72,7 @@
      "description": "View and manage your Google Analytics data"
     },
     "https://www.googleapis.com/auth/analytics.edit": {
-     "description": "New service: https://www.googleapis.com/auth/analytics.edit"
+     "description": "Edit Google Analytics management entities"
     },
     "https://www.googleapis.com/auth/analytics.manage.users": {
      "description": "Manage Google Analytics Account users by email address"
@@ -241,7 +241,7 @@
      "description": "Map of attribute name and value for this column.",
      "additionalProperties": {
       "type": "string",
-      "description": "Name and value of an attribute."
+      "description": "The name of the attribute."
      }
     },
     "id": {
@@ -707,7 +707,7 @@
      "description": "Notes about this experiment."
     },
     "editableInGaUi": {
-     "type": "any",
+     "type": "boolean",
      "description": "If true, the end user will be able to edit the experiment via the Google Analytics user interface."
     },
     "endTime": {
@@ -793,7 +793,7 @@
      "description": "Link for this experiment. This field is read-only."
     },
     "servingFramework": {
-     "type": "any",
+     "type": "string",
      "description": "The framework used to serve the experiment variations and evaluate the results. One of:  \n- REDIRECT: Google Analytics redirects traffic to different variation pages, reports the chosen variation and evaluates the results.\n- API: Google Analytics chooses and reports the variation to serve and evaluates the results; the caller is responsible for serving the selected variation.\n- EXTERNAL: The variations will be served externally and the chosen variation reported to Google Analytics. The caller is responsible for serving the selected variation and evaluating the results."
     },
     "snippet": {
@@ -951,6 +951,47 @@
     "containsSampledData": {
      "type": "boolean",
      "description": "Determines if Analytics data contains samples."
+    },
+    "dataTable": {
+     "type": "object",
+     "properties": {
+      "cols": {
+       "type": "array",
+       "items": {
+        "type": "object",
+        "properties": {
+         "id": {
+          "type": "string"
+         },
+         "label": {
+          "type": "string"
+         },
+         "type": {
+          "type": "string"
+         }
+        }
+       }
+      },
+      "rows": {
+       "type": "array",
+       "items": {
+        "type": "object",
+        "properties": {
+         "c": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "v": {
+             "type": "string"
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
     },
     "id": {
      "type": "string",
@@ -2191,7 +2232,7 @@
     },
     "industryVertical": {
      "type": "string",
-     "description": "The industry vertical/category selected for this web property. If this field is set, the correct values are:  \n- UNSPECIFIED  \n- ARTS_AND_ENTERTAINMENT  \n- AUTOMOTIVE  \n- BEAUTY_AND_FITNESS  \n- BOOKS_AND_LITERATURE  \n- BUSINESS_AND_INDUSTRIAL_MARKETS  \n- COMPUTERS_AND_ELECTRONICS  \n- FINANCE  \n- FOOD_AND_DRINK  \n- GAMES  \n- HEALTHCARE  \n- HOBBIES_AND_LEISURE  \n- HOME_AND_GARDEN  \n- INTERNET_AND_TELECOM  \n- JOBS_AND_EDUCATION  \n- LAW_AND_GOVERNMENT  \n- NEWS  \n- ONLINE_COMMUNITIES  \n- OTHER  \n- PEOPLE_AND_SOCIETY  \n- PETS_AND_ANIMALS  \n- REAL_ESTATE  \n- REFERENCE  \n- SCIENCE  \n- SHOPPING  \n- SPORTS  \n- TRAVEL"
+     "description": "The industry vertical/category selected for this web property."
     },
     "internalWebPropertyId": {
      "type": "string",
@@ -2314,6 +2355,19 @@
          "description": "A comma-separated list of Analytics metrics. E.g., 'ga:visits,ga:pageviews'. At least one metric must be specified.",
          "required": true,
          "pattern": "ga:.+",
+         "location": "query"
+        },
+        "output": {
+         "type": "string",
+         "description": "The selected format for the response. Default format is JSON.",
+         "enum": [
+          "dataTable",
+          "json"
+         ],
+         "enumDescriptions": [
+          "Returns the response in Google Charts Data Table format. This is useful in creating visualization using Google Charts.",
+          "Returns the response in standard JSON format."
+         ],
          "location": "query"
         },
         "samplingLevel": {
@@ -4099,7 +4153,7 @@
        "id": "analytics.management.uploads.uploadData",
        "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/uploads",
        "httpMethod": "POST",
-       "description": "Upload/Overwrite data for a custom data source.",
+       "description": "Upload data for a custom data source.",
        "parameters": {
         "accountId": {
          "type": "string",
@@ -4193,7 +4247,7 @@
        "id": "analytics.management.webproperties.insert",
        "path": "management/accounts/{accountId}/webproperties",
        "httpMethod": "POST",
-       "description": "Create a new property if the account has fewer than 20 properties.",
+       "description": "Create a new property if the account has fewer than 20 properties. Web properties are visible in the Google Analytics interface only if they have at least one profile.",
        "parameters": {
         "accountId": {
          "type": "string",

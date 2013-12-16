@@ -512,6 +512,16 @@ type Disk struct {
 	// otherwise it is required.
 	SizeGb int64 `json:"sizeGb,omitempty,string"`
 
+	// SourceImage: The source image used to create this disk. Once the
+	// source image has been deleted from the system, this field will not be
+	// set, even if an image with the same name has been re-created.
+	SourceImage string `json:"sourceImage,omitempty"`
+
+	// SourceImageId: The 'id' value of the image used to create this disk.
+	// This value may be used to determine whether the disk was created from
+	// the current or a previous instance of a given image.
+	SourceImageId string `json:"sourceImageId,omitempty"`
+
 	// SourceSnapshot: The source snapshot used to create this disk. Once
 	// the source snapshot has been deleted from the system, this field will
 	// be cleared, and will not be set even if a snapshot with the same name
@@ -2157,7 +2167,8 @@ func (c *AddressesAggregatedListCall) Filter(filter string) *AddressesAggregated
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum and default value is 100.
+// results to be returned. Maximum value is 500 and default value is
+// 100.
 func (c *AddressesAggregatedListCall) MaxResults(maxResults int64) *AddressesAggregatedListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -2218,7 +2229,7 @@ func (c *AddressesAggregatedListCall) Do() (*AddressAggregatedList, error) {
 	//     },
 	//     "maxResults": {
 	//       "default": "100",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -2539,7 +2550,8 @@ func (c *AddressesListCall) Filter(filter string) *AddressesListCall {
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum and default value is 100.
+// results to be returned. Maximum value is 500 and default value is
+// 100.
 func (c *AddressesListCall) MaxResults(maxResults int64) *AddressesListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -2602,7 +2614,7 @@ func (c *AddressesListCall) Do() (*AddressList, error) {
 	//     },
 	//     "maxResults": {
 	//       "default": "100",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -2664,7 +2676,8 @@ func (c *DisksAggregatedListCall) Filter(filter string) *DisksAggregatedListCall
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum and default value is 100.
+// results to be returned. Maximum value is 500 and default value is
+// 100.
 func (c *DisksAggregatedListCall) MaxResults(maxResults int64) *DisksAggregatedListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -2725,7 +2738,7 @@ func (c *DisksAggregatedListCall) Do() (*DiskAggregatedList, error) {
 	//     },
 	//     "maxResults": {
 	//       "default": "100",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -3158,7 +3171,8 @@ func (c *DisksListCall) Filter(filter string) *DisksListCall {
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum and default value is 100.
+// results to be returned. Maximum value is 500 and default value is
+// 100.
 func (c *DisksListCall) MaxResults(maxResults int64) *DisksListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -3221,7 +3235,7 @@ func (c *DisksListCall) Do() (*DiskList, error) {
 	//     },
 	//     "maxResults": {
 	//       "default": "100",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -3514,7 +3528,8 @@ func (c *FirewallsListCall) Filter(filter string) *FirewallsListCall {
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum and default value is 100.
+// results to be returned. Maximum value is 500 and default value is
+// 100.
 func (c *FirewallsListCall) MaxResults(maxResults int64) *FirewallsListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -3575,7 +3590,7 @@ func (c *FirewallsListCall) Do() (*FirewallList, error) {
 	//     },
 	//     "maxResults": {
 	//       "default": "100",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -3807,7 +3822,8 @@ func (c *ForwardingRulesAggregatedListCall) Filter(filter string) *ForwardingRul
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum and default value is 100.
+// results to be returned. Maximum value is 500 and default value is
+// 100.
 func (c *ForwardingRulesAggregatedListCall) MaxResults(maxResults int64) *ForwardingRulesAggregatedListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -3868,7 +3884,7 @@ func (c *ForwardingRulesAggregatedListCall) Do() (*ForwardingRuleAggregatedList,
 	//     },
 	//     "maxResults": {
 	//       "default": "100",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -4189,7 +4205,8 @@ func (c *ForwardingRulesListCall) Filter(filter string) *ForwardingRulesListCall
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum and default value is 100.
+// results to be returned. Maximum value is 500 and default value is
+// 100.
 func (c *ForwardingRulesListCall) MaxResults(maxResults int64) *ForwardingRulesListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -4252,7 +4269,7 @@ func (c *ForwardingRulesListCall) Do() (*ForwardingRuleList, error) {
 	//     },
 	//     "maxResults": {
 	//       "default": "100",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -4413,7 +4430,8 @@ func (c *GlobalOperationsAggregatedListCall) Filter(filter string) *GlobalOperat
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum and default value is 100.
+// results to be returned. Maximum value is 500 and default value is
+// 100.
 func (c *GlobalOperationsAggregatedListCall) MaxResults(maxResults int64) *GlobalOperationsAggregatedListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -4474,7 +4492,7 @@ func (c *GlobalOperationsAggregatedListCall) Do() (*OperationAggregatedList, err
 	//     },
 	//     "maxResults": {
 	//       "default": "100",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -4676,7 +4694,8 @@ func (c *GlobalOperationsListCall) Filter(filter string) *GlobalOperationsListCa
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum and default value is 100.
+// results to be returned. Maximum value is 500 and default value is
+// 100.
 func (c *GlobalOperationsListCall) MaxResults(maxResults int64) *GlobalOperationsListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -4737,7 +4756,7 @@ func (c *GlobalOperationsListCall) Do() (*OperationList, error) {
 	//     },
 	//     "maxResults": {
 	//       "default": "100",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -5023,7 +5042,8 @@ func (c *HttpHealthChecksListCall) Filter(filter string) *HttpHealthChecksListCa
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum and default value is 100.
+// results to be returned. Maximum value is 500 and default value is
+// 100.
 func (c *HttpHealthChecksListCall) MaxResults(maxResults int64) *HttpHealthChecksListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -5084,7 +5104,7 @@ func (c *HttpHealthChecksListCall) Do() (*HttpHealthCheckList, error) {
 	//     },
 	//     "maxResults": {
 	//       "default": "100",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -5638,7 +5658,8 @@ func (c *ImagesListCall) Filter(filter string) *ImagesListCall {
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum and default value is 100.
+// results to be returned. Maximum value is 500 and default value is
+// 100.
 func (c *ImagesListCall) MaxResults(maxResults int64) *ImagesListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -5699,7 +5720,7 @@ func (c *ImagesListCall) Do() (*ImageList, error) {
 	//     },
 	//     "maxResults": {
 	//       "default": "100",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -5863,7 +5884,8 @@ func (c *InstancesAggregatedListCall) Filter(filter string) *InstancesAggregated
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum and default value is 100.
+// results to be returned. Maximum value is 500 and default value is
+// 100.
 func (c *InstancesAggregatedListCall) MaxResults(maxResults int64) *InstancesAggregatedListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -5923,7 +5945,7 @@ func (c *InstancesAggregatedListCall) Do() (*InstanceAggregatedList, error) {
 	//     },
 	//     "maxResults": {
 	//       "default": "100",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -6637,7 +6659,8 @@ func (c *InstancesListCall) Filter(filter string) *InstancesListCall {
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum and default value is 100.
+// results to be returned. Maximum value is 500 and default value is
+// 100.
 func (c *InstancesListCall) MaxResults(maxResults int64) *InstancesListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -6700,7 +6723,7 @@ func (c *InstancesListCall) Do() (*InstanceList, error) {
 	//     },
 	//     "maxResults": {
 	//       "default": "100",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -7125,7 +7148,8 @@ func (c *KernelsListCall) Filter(filter string) *KernelsListCall {
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum and default value is 100.
+// results to be returned. Maximum value is 500 and default value is
+// 100.
 func (c *KernelsListCall) MaxResults(maxResults int64) *KernelsListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -7186,7 +7210,7 @@ func (c *KernelsListCall) Do() (*KernelList, error) {
 	//     },
 	//     "maxResults": {
 	//       "default": "100",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -7242,7 +7266,8 @@ func (c *MachineTypesAggregatedListCall) Filter(filter string) *MachineTypesAggr
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum and default value is 100.
+// results to be returned. Maximum value is 500 and default value is
+// 100.
 func (c *MachineTypesAggregatedListCall) MaxResults(maxResults int64) *MachineTypesAggregatedListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -7303,7 +7328,7 @@ func (c *MachineTypesAggregatedListCall) Do() (*MachineTypeAggregatedList, error
 	//     },
 	//     "maxResults": {
 	//       "default": "100",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -7449,7 +7474,8 @@ func (c *MachineTypesListCall) Filter(filter string) *MachineTypesListCall {
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum and default value is 100.
+// results to be returned. Maximum value is 500 and default value is
+// 100.
 func (c *MachineTypesListCall) MaxResults(maxResults int64) *MachineTypesListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -7512,7 +7538,7 @@ func (c *MachineTypesListCall) Do() (*MachineTypeList, error) {
 	//     },
 	//     "maxResults": {
 	//       "default": "100",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -7805,7 +7831,8 @@ func (c *NetworksListCall) Filter(filter string) *NetworksListCall {
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum and default value is 100.
+// results to be returned. Maximum value is 500 and default value is
+// 100.
 func (c *NetworksListCall) MaxResults(maxResults int64) *NetworksListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -7866,7 +7893,7 @@ func (c *NetworksListCall) Do() (*NetworkList, error) {
 	//     },
 	//     "maxResults": {
 	//       "default": "100",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -8235,7 +8262,8 @@ func (c *RegionOperationsListCall) Filter(filter string) *RegionOperationsListCa
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum and default value is 100.
+// results to be returned. Maximum value is 500 and default value is
+// 100.
 func (c *RegionOperationsListCall) MaxResults(maxResults int64) *RegionOperationsListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -8298,7 +8326,7 @@ func (c *RegionOperationsListCall) Do() (*OperationList, error) {
 	//     },
 	//     "maxResults": {
 	//       "default": "100",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -8438,7 +8466,8 @@ func (c *RegionsListCall) Filter(filter string) *RegionsListCall {
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum and default value is 100.
+// results to be returned. Maximum value is 500 and default value is
+// 100.
 func (c *RegionsListCall) MaxResults(maxResults int64) *RegionsListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -8499,7 +8528,7 @@ func (c *RegionsListCall) Do() (*RegionList, error) {
 	//     },
 	//     "maxResults": {
 	//       "default": "100",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -8785,7 +8814,8 @@ func (c *RoutesListCall) Filter(filter string) *RoutesListCall {
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum and default value is 100.
+// results to be returned. Maximum value is 500 and default value is
+// 100.
 func (c *RoutesListCall) MaxResults(maxResults int64) *RoutesListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -8846,7 +8876,7 @@ func (c *RoutesListCall) Do() (*RouteList, error) {
 	//     },
 	//     "maxResults": {
 	//       "default": "100",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -9055,7 +9085,8 @@ func (c *SnapshotsListCall) Filter(filter string) *SnapshotsListCall {
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum and default value is 100.
+// results to be returned. Maximum value is 500 and default value is
+// 100.
 func (c *SnapshotsListCall) MaxResults(maxResults int64) *SnapshotsListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -9116,7 +9147,7 @@ func (c *SnapshotsListCall) Do() (*SnapshotList, error) {
 	//     },
 	//     "maxResults": {
 	//       "default": "100",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -9367,7 +9398,8 @@ func (c *TargetPoolsAggregatedListCall) Filter(filter string) *TargetPoolsAggreg
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum and default value is 100.
+// results to be returned. Maximum value is 500 and default value is
+// 100.
 func (c *TargetPoolsAggregatedListCall) MaxResults(maxResults int64) *TargetPoolsAggregatedListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -9428,7 +9460,7 @@ func (c *TargetPoolsAggregatedListCall) Do() (*TargetPoolAggregatedList, error) 
 	//     },
 	//     "maxResults": {
 	//       "default": "100",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -9849,7 +9881,8 @@ func (c *TargetPoolsListCall) Filter(filter string) *TargetPoolsListCall {
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum and default value is 100.
+// results to be returned. Maximum value is 500 and default value is
+// 100.
 func (c *TargetPoolsListCall) MaxResults(maxResults int64) *TargetPoolsListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -9912,7 +9945,7 @@ func (c *TargetPoolsListCall) Do() (*TargetPoolList, error) {
 	//     },
 	//     "maxResults": {
 	//       "default": "100",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -10455,7 +10488,8 @@ func (c *ZoneOperationsListCall) Filter(filter string) *ZoneOperationsListCall {
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum and default value is 100.
+// results to be returned. Maximum value is 500 and default value is
+// 100.
 func (c *ZoneOperationsListCall) MaxResults(maxResults int64) *ZoneOperationsListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -10518,7 +10552,7 @@ func (c *ZoneOperationsListCall) Do() (*OperationList, error) {
 	//     },
 	//     "maxResults": {
 	//       "default": "100",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -10658,7 +10692,8 @@ func (c *ZonesListCall) Filter(filter string) *ZonesListCall {
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum and default value is 100.
+// results to be returned. Maximum value is 500 and default value is
+// 100.
 func (c *ZonesListCall) MaxResults(maxResults int64) *ZonesListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -10719,7 +10754,7 @@ func (c *ZonesListCall) Do() (*ZoneList, error) {
 	//     },
 	//     "maxResults": {
 	//       "default": "100",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",

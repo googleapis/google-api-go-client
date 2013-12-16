@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"DGgqtFnjgu83tuwvvVNNUhOiHWk/BKZEraeTG_UbClCUMdkKci-Mt0c\"",
+ "etag": "\"qMhxoRFWKZK4K3KdZJuqms1o3fc/rxVbU8eh1vQD-6UeVy5fvAHaxjo\"",
  "discoveryVersion": "v1",
  "id": "drive:v1",
  "name": "drive",
@@ -320,7 +320,7 @@
       },
       "newRevision": {
        "type": "boolean",
-       "description": "Whether a blob upload should create a new revision. If not set or false, the blob data in the current head revision will be replaced.",
+       "description": "Whether a blob upload should create a new revision. If false, the blob data in the current head revision is replaced. If not set or true, a new blob is created as head revision, and previous revisions are preserved (causing increased use of the user's data storage quota).",
        "default": "true",
        "location": "query"
       },
@@ -364,7 +364,7 @@
       },
       "newRevision": {
        "type": "boolean",
-       "description": "Whether a blob upload should create a new revision. If not set or false, the blob data in the current head revision will be replaced.",
+       "description": "Whether a blob upload should create a new revision. If false, the blob data in the current head revision is replaced. If not set or true, a new blob is created as head revision, and previous revisions are preserved (causing increased use of the user's data storage quota).",
        "default": "true",
        "location": "query"
       },

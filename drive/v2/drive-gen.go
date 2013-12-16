@@ -355,6 +355,14 @@ type App struct {
 	// user's Drive.
 	Authorized bool `json:"authorized,omitempty"`
 
+	// CreateInFolderTemplate: The template url to create a new file with
+	// this app in a given folder. The template will contain {folderId} to
+	// be replaced by the folder to create the new file in.
+	CreateInFolderTemplate string `json:"createInFolderTemplate,omitempty"`
+
+	// CreateUrl: The url to create a new file with this app.
+	CreateUrl string `json:"createUrl,omitempty"`
+
 	// Icons: The various icons for the app.
 	Icons []*AppIcons `json:"icons,omitempty"`
 
@@ -847,7 +855,7 @@ type File struct {
 	// placed in the default root folder.
 	Parents []*ParentReference `json:"parents,omitempty"`
 
-	// Properties: The list of properties.
+	// Properties: The list of properties. This is a write-only field.
 	Properties []*Property `json:"properties,omitempty"`
 
 	// QuotaBytesUsed: The number of quota bytes used by this file.
@@ -1455,7 +1463,12 @@ func (c *AppsGetCall) Do() (*App, error) {
 	//     "$ref": "App"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/drive.apps.readonly"
+	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.appdata",
+	//     "https://www.googleapis.com/auth/drive.apps.readonly",
+	//     "https://www.googleapis.com/auth/drive.file",
+	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
+	//     "https://www.googleapis.com/auth/drive.readonly"
 	//   ]
 	// }
 
@@ -3569,8 +3582,8 @@ func (c *FilesPatchCall) Convert(convert bool) *FilesPatchCall {
 }
 
 // NewRevision sets the optional parameter "newRevision": Whether a blob
-// upload should create a new revision. If not set or false, the blob
-// data in the current head revision is replaced. If true, a new blob is
+// upload should create a new revision. If false, the blob data in the
+// current head revision is replaced. If not set or true, a new blob is
 // created as head revision, and previous revisions are preserved
 // (causing increased use of the user's data storage quota).
 func (c *FilesPatchCall) NewRevision(newRevision bool) *FilesPatchCall {
@@ -3716,7 +3729,7 @@ func (c *FilesPatchCall) Do() (*File, error) {
 	//     },
 	//     "newRevision": {
 	//       "default": "true",
-	//       "description": "Whether a blob upload should create a new revision. If not set or false, the blob data in the current head revision is replaced. If true, a new blob is created as head revision, and previous revisions are preserved (causing increased use of the user's data storage quota).",
+	//       "description": "Whether a blob upload should create a new revision. If false, the blob data in the current head revision is replaced. If not set or true, a new blob is created as head revision, and previous revisions are preserved (causing increased use of the user's data storage quota).",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -4009,8 +4022,8 @@ func (c *FilesUpdateCall) Convert(convert bool) *FilesUpdateCall {
 }
 
 // NewRevision sets the optional parameter "newRevision": Whether a blob
-// upload should create a new revision. If not set or false, the blob
-// data in the current head revision is replaced. If true, a new blob is
+// upload should create a new revision. If false, the blob data in the
+// current head revision is replaced. If not set or true, a new blob is
 // created as head revision, and previous revisions are preserved
 // (causing increased use of the user's data storage quota).
 func (c *FilesUpdateCall) NewRevision(newRevision bool) *FilesUpdateCall {
@@ -4184,7 +4197,7 @@ func (c *FilesUpdateCall) Do() (*File, error) {
 	//     },
 	//     "newRevision": {
 	//       "default": "true",
-	//       "description": "Whether a blob upload should create a new revision. If not set or false, the blob data in the current head revision is replaced. If true, a new blob is created as head revision, and previous revisions are preserved (causing increased use of the user's data storage quota).",
+	//       "description": "Whether a blob upload should create a new revision. If false, the blob data in the current head revision is replaced. If not set or true, a new blob is created as head revision, and previous revisions are preserved (causing increased use of the user's data storage quota).",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },

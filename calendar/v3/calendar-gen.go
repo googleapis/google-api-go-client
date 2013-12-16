@@ -904,8 +904,8 @@ type Setting struct {
 	Kind string `json:"kind,omitempty"`
 
 	// Value: Value of the user setting. The format of the value depends on
-	// the ID of the setting. It must always be any UTF-8 string of length
-	// up to 1024 characters.
+	// the ID of the setting. It must always be a UTF-8 string of length up
+	// to 1024 characters.
 	Value string `json:"value,omitempty"`
 }
 
@@ -1204,7 +1204,8 @@ func (c *AclListCall) Do() (*Acl, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/calendar"
-	//   ]
+	//   ],
+	//   "supportsSubscription": true
 	// }
 
 }
@@ -3089,11 +3090,31 @@ func (c *EventsListCall) PageToken(pageToken string) *EventsListCall {
 	return c
 }
 
+// PrivateExtendedProperty sets the optional parameter
+// "privateExtendedProperty": Extended properties constraint specified
+// as propertyName=value. Matches only private properties. This
+// parameter might be repeated multiple times to return events that
+// match all given constraints.
+func (c *EventsListCall) PrivateExtendedProperty(privateExtendedProperty string) *EventsListCall {
+	c.opt_["privateExtendedProperty"] = privateExtendedProperty
+	return c
+}
+
 // Q sets the optional parameter "q": Free text search terms to find
 // events that match these terms in any field, except for extended
 // properties.
 func (c *EventsListCall) Q(q string) *EventsListCall {
 	c.opt_["q"] = q
+	return c
+}
+
+// SharedExtendedProperty sets the optional parameter
+// "sharedExtendedProperty": Extended properties constraint specified as
+// propertyName=value. Matches only shared properties. This parameter
+// might be repeated multiple times to return events that match all
+// given constraints.
+func (c *EventsListCall) SharedExtendedProperty(sharedExtendedProperty string) *EventsListCall {
+	c.opt_["sharedExtendedProperty"] = sharedExtendedProperty
 	return c
 }
 
@@ -3180,8 +3201,14 @@ func (c *EventsListCall) Do() (*Events, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
+	if v, ok := c.opt_["privateExtendedProperty"]; ok {
+		params.Set("privateExtendedProperty", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["q"]; ok {
 		params.Set("q", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["sharedExtendedProperty"]; ok {
+		params.Set("sharedExtendedProperty", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["showDeleted"]; ok {
 		params.Set("showDeleted", fmt.Sprintf("%v", v))
@@ -3279,9 +3306,21 @@ func (c *EventsListCall) Do() (*Events, error) {
 	//       "location": "query",
 	//       "type": "string"
 	//     },
+	//     "privateExtendedProperty": {
+	//       "description": "Extended properties constraint specified as propertyName=value. Matches only private properties. This parameter might be repeated multiple times to return events that match all given constraints.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
 	//     "q": {
 	//       "description": "Free text search terms to find events that match these terms in any field, except for extended properties. Optional.",
 	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "sharedExtendedProperty": {
+	//       "description": "Extended properties constraint specified as propertyName=value. Matches only shared properties. This parameter might be repeated multiple times to return events that match all given constraints.",
+	//       "location": "query",
+	//       "repeated": true,
 	//       "type": "string"
 	//     },
 	//     "showDeleted": {
@@ -3874,11 +3913,31 @@ func (c *EventsWatchCall) PageToken(pageToken string) *EventsWatchCall {
 	return c
 }
 
+// PrivateExtendedProperty sets the optional parameter
+// "privateExtendedProperty": Extended properties constraint specified
+// as propertyName=value. Matches only private properties. This
+// parameter might be repeated multiple times to return events that
+// match all given constraints.
+func (c *EventsWatchCall) PrivateExtendedProperty(privateExtendedProperty string) *EventsWatchCall {
+	c.opt_["privateExtendedProperty"] = privateExtendedProperty
+	return c
+}
+
 // Q sets the optional parameter "q": Free text search terms to find
 // events that match these terms in any field, except for extended
 // properties.
 func (c *EventsWatchCall) Q(q string) *EventsWatchCall {
 	c.opt_["q"] = q
+	return c
+}
+
+// SharedExtendedProperty sets the optional parameter
+// "sharedExtendedProperty": Extended properties constraint specified as
+// propertyName=value. Matches only shared properties. This parameter
+// might be repeated multiple times to return events that match all
+// given constraints.
+func (c *EventsWatchCall) SharedExtendedProperty(sharedExtendedProperty string) *EventsWatchCall {
+	c.opt_["sharedExtendedProperty"] = sharedExtendedProperty
 	return c
 }
 
@@ -3970,8 +4029,14 @@ func (c *EventsWatchCall) Do() (*Channel, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
+	if v, ok := c.opt_["privateExtendedProperty"]; ok {
+		params.Set("privateExtendedProperty", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["q"]; ok {
 		params.Set("q", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["sharedExtendedProperty"]; ok {
+		params.Set("sharedExtendedProperty", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["showDeleted"]; ok {
 		params.Set("showDeleted", fmt.Sprintf("%v", v))
@@ -4070,9 +4135,21 @@ func (c *EventsWatchCall) Do() (*Channel, error) {
 	//       "location": "query",
 	//       "type": "string"
 	//     },
+	//     "privateExtendedProperty": {
+	//       "description": "Extended properties constraint specified as propertyName=value. Matches only private properties. This parameter might be repeated multiple times to return events that match all given constraints.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
 	//     "q": {
 	//       "description": "Free text search terms to find events that match these terms in any field, except for extended properties. Optional.",
 	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "sharedExtendedProperty": {
+	//       "description": "Extended properties constraint specified as propertyName=value. Matches only shared properties. This parameter might be repeated multiple times to return events that match all given constraints.",
+	//       "location": "query",
+	//       "repeated": true,
 	//       "type": "string"
 	//     },
 	//     "showDeleted": {

@@ -39,6 +39,15 @@ const apiName = "mirror"
 const apiVersion = "v1"
 const basePath = "https://www.googleapis.com/mirror/v1/"
 
+// OAuth2 scopes used by this API.
+const (
+	// View your location
+	GlassLocationScope = "https://www.googleapis.com/auth/glass.location"
+
+	// View and manage your Glass timeline
+	GlassTimelineScope = "https://www.googleapis.com/auth/glass.timeline"
+)
+
 func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
@@ -685,7 +694,10 @@ func (c *ContactsDeleteCall) Do() error {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "contacts/{id}"
+	//   "path": "contacts/{id}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/glass.timeline"
+	//   ]
 	// }
 
 }
@@ -746,7 +758,10 @@ func (c *ContactsGetCall) Do() (*Contact, error) {
 	//   "path": "contacts/{id}",
 	//   "response": {
 	//     "$ref": "Contact"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/glass.timeline"
+	//   ]
 	// }
 
 }
@@ -804,7 +819,10 @@ func (c *ContactsInsertCall) Do() (*Contact, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "Contact"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/glass.timeline"
+	//   ]
 	// }
 
 }
@@ -851,7 +869,10 @@ func (c *ContactsListCall) Do() (*ContactsListResponse, error) {
 	//   "path": "contacts",
 	//   "response": {
 	//     "$ref": "ContactsListResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/glass.timeline"
+	//   ]
 	// }
 
 }
@@ -924,7 +945,10 @@ func (c *ContactsPatchCall) Do() (*Contact, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "Contact"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/glass.timeline"
+	//   ]
 	// }
 
 }
@@ -996,7 +1020,10 @@ func (c *ContactsUpdateCall) Do() (*Contact, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "Contact"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/glass.timeline"
+	//   ]
 	// }
 
 }
@@ -1057,7 +1084,11 @@ func (c *LocationsGetCall) Do() (*Location, error) {
 	//   "path": "locations/{id}",
 	//   "response": {
 	//     "$ref": "Location"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/glass.location",
+	//     "https://www.googleapis.com/auth/glass.timeline"
+	//   ]
 	// }
 
 }
@@ -1104,7 +1135,11 @@ func (c *LocationsListCall) Do() (*LocationsListResponse, error) {
 	//   "path": "locations",
 	//   "response": {
 	//     "$ref": "LocationsListResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/glass.location",
+	//     "https://www.googleapis.com/auth/glass.timeline"
+	//   ]
 	// }
 
 }
@@ -1158,7 +1193,10 @@ func (c *SubscriptionsDeleteCall) Do() error {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "subscriptions/{id}"
+	//   "path": "subscriptions/{id}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/glass.timeline"
+	//   ]
 	// }
 
 }
@@ -1216,7 +1254,10 @@ func (c *SubscriptionsInsertCall) Do() (*Subscription, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "Subscription"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/glass.timeline"
+	//   ]
 	// }
 
 }
@@ -1264,7 +1305,10 @@ func (c *SubscriptionsListCall) Do() (*SubscriptionsListResponse, error) {
 	//   "path": "subscriptions",
 	//   "response": {
 	//     "$ref": "SubscriptionsListResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/glass.timeline"
+	//   ]
 	// }
 
 }
@@ -1336,7 +1380,10 @@ func (c *SubscriptionsUpdateCall) Do() (*Subscription, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "Subscription"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/glass.timeline"
+	//   ]
 	// }
 
 }
@@ -1390,7 +1437,11 @@ func (c *TimelineDeleteCall) Do() error {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "timeline/{id}"
+	//   "path": "timeline/{id}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/glass.location",
+	//     "https://www.googleapis.com/auth/glass.timeline"
+	//   ]
 	// }
 
 }
@@ -1451,7 +1502,11 @@ func (c *TimelineGetCall) Do() (*TimelineItem, error) {
 	//   "path": "timeline/{id}",
 	//   "response": {
 	//     "$ref": "TimelineItem"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/glass.location",
+	//     "https://www.googleapis.com/auth/glass.timeline"
+	//   ]
 	// }
 
 }
@@ -1541,6 +1596,10 @@ func (c *TimelineInsertCall) Do() (*TimelineItem, error) {
 	//   "response": {
 	//     "$ref": "TimelineItem"
 	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/glass.location",
+	//     "https://www.googleapis.com/auth/glass.timeline"
+	//   ],
 	//   "supportsMediaUpload": true
 	// }
 
@@ -1704,7 +1763,11 @@ func (c *TimelineListCall) Do() (*TimelineListResponse, error) {
 	//   "path": "timeline",
 	//   "response": {
 	//     "$ref": "TimelineListResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/glass.location",
+	//     "https://www.googleapis.com/auth/glass.timeline"
+	//   ]
 	// }
 
 }
@@ -1777,7 +1840,11 @@ func (c *TimelinePatchCall) Do() (*TimelineItem, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "TimelineItem"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/glass.location",
+	//     "https://www.googleapis.com/auth/glass.timeline"
+	//   ]
 	// }
 
 }
@@ -1881,6 +1948,10 @@ func (c *TimelineUpdateCall) Do() (*TimelineItem, error) {
 	//   "response": {
 	//     "$ref": "TimelineItem"
 	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/glass.location",
+	//     "https://www.googleapis.com/auth/glass.timeline"
+	//   ],
 	//   "supportsMediaUpload": true
 	// }
 
@@ -1945,7 +2016,10 @@ func (c *TimelineAttachmentsDeleteCall) Do() error {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "timeline/{itemId}/attachments/{attachmentId}"
+	//   "path": "timeline/{itemId}/attachments/{attachmentId}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/glass.timeline"
+	//   ]
 	// }
 
 }
@@ -2018,6 +2092,9 @@ func (c *TimelineAttachmentsGetCall) Do() (*Attachment, error) {
 	//   "response": {
 	//     "$ref": "Attachment"
 	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/glass.timeline"
+	//   ],
 	//   "supportsMediaDownload": true
 	// }
 
@@ -2114,6 +2191,9 @@ func (c *TimelineAttachmentsInsertCall) Do() (*Attachment, error) {
 	//   "response": {
 	//     "$ref": "Attachment"
 	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/glass.timeline"
+	//   ],
 	//   "supportsMediaUpload": true
 	// }
 
@@ -2175,7 +2255,10 @@ func (c *TimelineAttachmentsListCall) Do() (*AttachmentsListResponse, error) {
 	//   "path": "timeline/{itemId}/attachments",
 	//   "response": {
 	//     "$ref": "AttachmentsListResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/glass.timeline"
+	//   ]
 	// }
 
 }

@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"DGgqtFnjgu83tuwvvVNNUhOiHWk/CprmxbC_n4VJOa4m78gYggaU4m4\"",
+ "etag": "\"_UU0hweWJUeoapnMzW_8ULttsqM/7bHhm7vCoG5YbslN6b0grHMC-oY\"",
  "discoveryVersion": "v1",
  "id": "calendar:v3",
  "name": "calendar",
@@ -1029,7 +1029,7 @@
     },
     "value": {
      "type": "string",
-     "description": "Value of the user setting. The format of the value depends on the ID of the setting. It must always be any UTF-8 string of length up to 1024 characters."
+     "description": "Value of the user setting. The format of the value depends on the ID of the setting. It must always be a UTF-8 string of length up to 1024 characters."
     }
    }
   },
@@ -1180,7 +1180,8 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/calendar"
-     ]
+     ],
+     "supportsSubscription": true
     },
     "patch": {
      "id": "calendar.acl.patch",
@@ -1884,9 +1885,21 @@
        "description": "Token specifying which result page to return. Optional.",
        "location": "query"
       },
+      "privateExtendedProperty": {
+       "type": "string",
+       "description": "Extended properties constraint specified as propertyName=value. Matches only private properties. This parameter might be repeated multiple times to return events that match all given constraints.",
+       "repeated": true,
+       "location": "query"
+      },
       "q": {
        "type": "string",
        "description": "Free text search terms to find events that match these terms in any field, except for extended properties. Optional.",
+       "location": "query"
+      },
+      "sharedExtendedProperty": {
+       "type": "string",
+       "description": "Extended properties constraint specified as propertyName=value. Matches only shared properties. This parameter might be repeated multiple times to return events that match all given constraints.",
+       "repeated": true,
        "location": "query"
       },
       "showDeleted": {
@@ -2171,9 +2184,21 @@
        "description": "Token specifying which result page to return. Optional.",
        "location": "query"
       },
+      "privateExtendedProperty": {
+       "type": "string",
+       "description": "Extended properties constraint specified as propertyName=value. Matches only private properties. This parameter might be repeated multiple times to return events that match all given constraints.",
+       "repeated": true,
+       "location": "query"
+      },
       "q": {
        "type": "string",
        "description": "Free text search terms to find events that match these terms in any field, except for extended properties. Optional.",
+       "location": "query"
+      },
+      "sharedExtendedProperty": {
+       "type": "string",
+       "description": "Extended properties constraint specified as propertyName=value. Matches only shared properties. This parameter might be repeated multiple times to return events that match all given constraints.",
+       "repeated": true,
        "location": "query"
       },
       "showDeleted": {

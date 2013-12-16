@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"DGgqtFnjgu83tuwvvVNNUhOiHWk/JD9FB7iv8kKN81JcUTjacJleqmo\"",
+ "etag": "\"_UU0hweWJUeoapnMzW_8ULttsqM/Kv0rhP9unqs8S9LiqPR3dzZNvDk\"",
  "discoveryVersion": "v1",
  "id": "bigquery:v2",
  "name": "bigquery",
@@ -498,7 +498,7 @@
    "properties": {
     "allowLargeResults": {
      "type": "boolean",
-     "description": "[Experimental] If true, allows \u003e128M results to be materialized in the destination table. Requires destination_table to be set."
+     "description": "If true, allows the query to produce arbitrarily large result tables at a slight cost in performance. Requires destination_table to be set."
     },
     "createDisposition": {
      "type": "string",
@@ -602,6 +602,10 @@
        "status": {
         "$ref": "JobStatus",
         "description": "[Full-projection-only] Describes the state of the job."
+       },
+       "user_email": {
+        "type": "string",
+        "description": "[Full-projection-only] User who ran the job."
        }
       }
      }
@@ -1082,6 +1086,10 @@
    "id": "TableFieldSchema",
    "type": "object",
    "properties": {
+    "description": {
+     "type": "string",
+     "description": "[Optional] The field description."
+    },
     "fields": {
      "type": "array",
      "description": "[Optional] Describes the nested schema fields if the type property is set to RECORD.",
@@ -1536,8 +1544,7 @@
      "supportsMediaUpload": true,
      "mediaUpload": {
       "accept": [
-       "application/octet-stream",
-       "text/csv"
+       "*/*"
       ],
       "protocols": {
        "simple": {

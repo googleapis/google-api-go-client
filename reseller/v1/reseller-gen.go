@@ -39,6 +39,15 @@ const apiName = "reseller"
 const apiVersion = "v1"
 const basePath = "https://www.googleapis.com/apps/reseller/v1/"
 
+// OAuth2 scopes used by this API.
+const (
+	// Manage users on your domain
+	AppsOrderScope = "https://www.googleapis.com/auth/apps.order"
+
+	// Manage users on your domain
+	AppsOrderReadonlyScope = "https://www.googleapis.com/auth/apps.order.readonly"
+)
+
 func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
@@ -319,7 +328,11 @@ func (c *CustomersGetCall) Do() (*Customer, error) {
 	//   "path": "customers/{customerId}",
 	//   "response": {
 	//     "$ref": "Customer"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/apps.order",
+	//     "https://www.googleapis.com/auth/apps.order.readonly"
+	//   ]
 	// }
 
 }
@@ -396,7 +409,10 @@ func (c *CustomersInsertCall) Do() (*Customer, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "Customer"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/apps.order"
+	//   ]
 	// }
 
 }
@@ -469,7 +485,10 @@ func (c *CustomersPatchCall) Do() (*Customer, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "Customer"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/apps.order"
+	//   ]
 	// }
 
 }
@@ -542,7 +561,10 @@ func (c *CustomersUpdateCall) Do() (*Customer, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "Customer"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/apps.order"
+	//   ]
 	// }
 
 }
@@ -624,7 +646,10 @@ func (c *SubscriptionsChangePlanCall) Do() (*Subscription, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "Subscription"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/apps.order"
+	//   ]
 	// }
 
 }
@@ -706,7 +731,10 @@ func (c *SubscriptionsChangeRenewalSettingsCall) Do() (*Subscription, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "Subscription"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/apps.order"
+	//   ]
 	// }
 
 }
@@ -788,7 +816,10 @@ func (c *SubscriptionsChangeSeatsCall) Do() (*Subscription, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "Subscription"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/apps.order"
+	//   ]
 	// }
 
 }
@@ -872,7 +903,10 @@ func (c *SubscriptionsDeleteCall) Do() error {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "customers/{customerId}/subscriptions/{subscriptionId}"
+	//   "path": "customers/{customerId}/subscriptions/{subscriptionId}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/apps.order"
+	//   ]
 	// }
 
 }
@@ -943,7 +977,11 @@ func (c *SubscriptionsGetCall) Do() (*Subscription, error) {
 	//   "path": "customers/{customerId}/subscriptions/{subscriptionId}",
 	//   "response": {
 	//     "$ref": "Subscription"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/apps.order",
+	//     "https://www.googleapis.com/auth/apps.order.readonly"
+	//   ]
 	// }
 
 }
@@ -1031,7 +1069,10 @@ func (c *SubscriptionsInsertCall) Do() (*Subscription, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "Subscription"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/apps.order"
+	//   ]
 	// }
 
 }
@@ -1162,7 +1203,11 @@ func (c *SubscriptionsListCall) Do() (*Subscriptions, error) {
 	//   "path": "subscriptions",
 	//   "response": {
 	//     "$ref": "Subscriptions"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/apps.order",
+	//     "https://www.googleapis.com/auth/apps.order.readonly"
+	//   ]
 	// }
 
 }
@@ -1233,7 +1278,10 @@ func (c *SubscriptionsStartPaidServiceCall) Do() (*Subscription, error) {
 	//   "path": "customers/{customerId}/subscriptions/{subscriptionId}/startPaidService",
 	//   "response": {
 	//     "$ref": "Subscription"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/apps.order"
+	//   ]
 	// }
 
 }

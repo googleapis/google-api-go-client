@@ -401,8 +401,10 @@ func (r *FilesService) Patch(id string, file *File) *FilesPatchCall {
 }
 
 // NewRevision sets the optional parameter "newRevision": Whether a blob
-// upload should create a new revision. If not set or false, the blob
-// data in the current head revision will be replaced.
+// upload should create a new revision. If false, the blob data in the
+// current head revision is replaced. If not set or true, a new blob is
+// created as head revision, and previous revisions are preserved
+// (causing increased use of the user's data storage quota).
 func (c *FilesPatchCall) NewRevision(newRevision bool) *FilesPatchCall {
 	c.opt_["newRevision"] = newRevision
 	return c
@@ -480,7 +482,7 @@ func (c *FilesPatchCall) Do() (*File, error) {
 	//     },
 	//     "newRevision": {
 	//       "default": "true",
-	//       "description": "Whether a blob upload should create a new revision. If not set or false, the blob data in the current head revision will be replaced.",
+	//       "description": "Whether a blob upload should create a new revision. If false, the blob data in the current head revision is replaced. If not set or true, a new blob is created as head revision, and previous revisions are preserved (causing increased use of the user's data storage quota).",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -530,8 +532,10 @@ func (r *FilesService) Update(id string, file *File) *FilesUpdateCall {
 }
 
 // NewRevision sets the optional parameter "newRevision": Whether a blob
-// upload should create a new revision. If not set or false, the blob
-// data in the current head revision will be replaced.
+// upload should create a new revision. If false, the blob data in the
+// current head revision is replaced. If not set or true, a new blob is
+// created as head revision, and previous revisions are preserved
+// (causing increased use of the user's data storage quota).
 func (c *FilesUpdateCall) NewRevision(newRevision bool) *FilesUpdateCall {
 	c.opt_["newRevision"] = newRevision
 	return c
@@ -637,7 +641,7 @@ func (c *FilesUpdateCall) Do() (*File, error) {
 	//     },
 	//     "newRevision": {
 	//       "default": "true",
-	//       "description": "Whether a blob upload should create a new revision. If not set or false, the blob data in the current head revision will be replaced.",
+	//       "description": "Whether a blob upload should create a new revision. If false, the blob data in the current head revision is replaced. If not set or true, a new blob is created as head revision, and previous revisions are preserved (causing increased use of the user's data storage quota).",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },

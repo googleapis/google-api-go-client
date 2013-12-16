@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"DGgqtFnjgu83tuwvvVNNUhOiHWk/09e1Ml5Gun7YuEJCdDnZKGXCSr8\"",
+ "etag": "\"_UU0hweWJUeoapnMzW_8ULttsqM/09e1Ml5Gun7YuEJCdDnZKGXCSr8\"",
  "discoveryVersion": "v1",
  "id": "prediction:v1.2",
  "name": "prediction",

@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"DGgqtFnjgu83tuwvvVNNUhOiHWk/TkhJ1-ITz0PDJP0q_6cuyPtPfFM\"",
+ "etag": "\"_UU0hweWJUeoapnMzW_8ULttsqM/1x_xvRB-bzhRNpCB1wSs_0KfWIA\"",
  "discoveryVersion": "v1",
  "id": "mirror:v1",
  "name": "mirror",
@@ -68,6 +68,18 @@
    "location": "query"
   }
  },
+ "auth": {
+  "oauth2": {
+   "scopes": {
+    "https://www.googleapis.com/auth/glass.location": {
+     "description": "View your location"
+    },
+    "https://www.googleapis.com/auth/glass.timeline": {
+     "description": "View and manage your Glass timeline"
+    }
+   }
+  }
+ },
  "schemas": {
   "Attachment": {
    "id": "Attachment",
@@ -118,7 +130,13 @@
    "properties": {
     "type": {
      "type": "string",
-     "description": "The type of operation this command corresponds to. Allowed values are:  \n- TAKE_A_NOTE - Shares a timeline item with the transcription of user speech from the \"Take a note\" voice menu command.  \n- POST_AN_UPDATE - Shares a timeline item with the transcription of user speech from the \"Post an update\" voice menu command."
+     "description": "The type of operation this command corresponds to. Allowed values are:  \n- TAKE_A_NOTE - Shares a timeline item with the transcription of user speech from the \"Take a note\" voice menu command.  \n- POST_AN_UPDATE - Shares a timeline item with the transcription of user speech from the \"Post an update\" voice menu command.",
+     "annotations": {
+      "required": [
+       "mirror.contacts.insert",
+       "mirror.contacts.update"
+      ]
+     }
     }
    }
   },
@@ -651,6 +669,9 @@
      },
      "parameterOrder": [
       "id"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/glass.timeline"
      ]
     },
     "get": {
@@ -671,7 +692,10 @@
      ],
      "response": {
       "$ref": "Contact"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/glass.timeline"
+     ]
     },
     "insert": {
      "id": "mirror.contacts.insert",
@@ -683,7 +707,10 @@
      },
      "response": {
       "$ref": "Contact"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/glass.timeline"
+     ]
     },
     "list": {
      "id": "mirror.contacts.list",
@@ -692,7 +719,10 @@
      "description": "Retrieves a list of contacts for the authenticated user.",
      "response": {
       "$ref": "ContactsListResponse"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/glass.timeline"
+     ]
     },
     "patch": {
      "id": "mirror.contacts.patch",
@@ -715,7 +745,10 @@
      },
      "response": {
       "$ref": "Contact"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/glass.timeline"
+     ]
     },
     "update": {
      "id": "mirror.contacts.update",
@@ -738,7 +771,10 @@
      },
      "response": {
       "$ref": "Contact"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/glass.timeline"
+     ]
     }
    }
   },
@@ -762,7 +798,11 @@
      ],
      "response": {
       "$ref": "Location"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/glass.location",
+      "https://www.googleapis.com/auth/glass.timeline"
+     ]
     },
     "list": {
      "id": "mirror.locations.list",
@@ -771,7 +811,11 @@
      "description": "Retrieves a list of locations for the user.",
      "response": {
       "$ref": "LocationsListResponse"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/glass.location",
+      "https://www.googleapis.com/auth/glass.timeline"
+     ]
     }
    }
   },
@@ -792,6 +836,9 @@
      },
      "parameterOrder": [
       "id"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/glass.timeline"
      ]
     },
     "insert": {
@@ -804,7 +851,10 @@
      },
      "response": {
       "$ref": "Subscription"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/glass.timeline"
+     ]
     },
     "list": {
      "id": "mirror.subscriptions.list",
@@ -813,7 +863,10 @@
      "description": "Retrieves a list of subscriptions for the authenticated user and service.",
      "response": {
       "$ref": "SubscriptionsListResponse"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/glass.timeline"
+     ]
     },
     "update": {
      "id": "mirror.subscriptions.update",
@@ -836,7 +889,10 @@
      },
      "response": {
       "$ref": "Subscription"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/glass.timeline"
+     ]
     }
    }
   },
@@ -857,6 +913,10 @@
      },
      "parameterOrder": [
       "id"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/glass.location",
+      "https://www.googleapis.com/auth/glass.timeline"
      ]
     },
     "get": {
@@ -877,7 +937,11 @@
      ],
      "response": {
       "$ref": "TimelineItem"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/glass.location",
+      "https://www.googleapis.com/auth/glass.timeline"
+     ]
     },
     "insert": {
      "id": "mirror.timeline.insert",
@@ -890,6 +954,10 @@
      "response": {
       "$ref": "TimelineItem"
      },
+     "scopes": [
+      "https://www.googleapis.com/auth/glass.location",
+      "https://www.googleapis.com/auth/glass.timeline"
+     ],
      "supportsMediaUpload": true,
      "mediaUpload": {
       "accept": [
@@ -963,7 +1031,11 @@
      },
      "response": {
       "$ref": "TimelineListResponse"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/glass.location",
+      "https://www.googleapis.com/auth/glass.timeline"
+     ]
     },
     "patch": {
      "id": "mirror.timeline.patch",
@@ -986,7 +1058,11 @@
      },
      "response": {
       "$ref": "TimelineItem"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/glass.location",
+      "https://www.googleapis.com/auth/glass.timeline"
+     ]
     },
     "update": {
      "id": "mirror.timeline.update",
@@ -1010,6 +1086,10 @@
      "response": {
       "$ref": "TimelineItem"
      },
+     "scopes": [
+      "https://www.googleapis.com/auth/glass.location",
+      "https://www.googleapis.com/auth/glass.timeline"
+     ],
      "supportsMediaUpload": true,
      "mediaUpload": {
       "accept": [
@@ -1056,6 +1136,9 @@
        "parameterOrder": [
         "itemId",
         "attachmentId"
+       ],
+       "scopes": [
+        "https://www.googleapis.com/auth/glass.timeline"
        ]
       },
       "get": {
@@ -1084,6 +1167,9 @@
        "response": {
         "$ref": "Attachment"
        },
+       "scopes": [
+        "https://www.googleapis.com/auth/glass.timeline"
+       ],
        "supportsMediaDownload": true
       },
       "insert": {
@@ -1105,6 +1191,9 @@
        "response": {
         "$ref": "Attachment"
        },
+       "scopes": [
+        "https://www.googleapis.com/auth/glass.timeline"
+       ],
        "supportsMediaUpload": true,
        "mediaUpload": {
         "accept": [
@@ -1143,7 +1232,10 @@
        ],
        "response": {
         "$ref": "AttachmentsListResponse"
-       }
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/glass.timeline"
+       ]
       }
      }
     }

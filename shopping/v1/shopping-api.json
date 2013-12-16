@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"DGgqtFnjgu83tuwvvVNNUhOiHWk/CO6ob9R1rU0741WpW7wTq9Ju-zg\"",
+ "etag": "\"qMhxoRFWKZK4K3KdZJuqms1o3fc/eYPSUUittvTUsdwxdJRMVIUXPek\"",
  "discoveryVersion": "v1",
  "id": "shopping:v1",
  "name": "shopping",
@@ -312,13 +312,6 @@
     "redirects": {
      "type": "array",
      "description": "Redirects.",
-     "items": {
-      "type": "string"
-     }
-    },
-    "relatedQueries": {
-     "type": "array",
-     "description": "Related queries.",
      "items": {
       "type": "string"
      }
@@ -1162,16 +1155,6 @@
       "redirects.useGcsConfig": {
        "type": "boolean",
        "description": "Whether to return redirect information as configured in the GCS account",
-       "location": "query"
-      },
-      "relatedQueries.enabled": {
-       "type": "boolean",
-       "description": "Whether to return related queries",
-       "location": "query"
-      },
-      "relatedQueries.useGcsConfig": {
-       "type": "boolean",
-       "description": "This parameter is currently ignored",
        "location": "query"
       },
       "restrictBy": {

@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"DGgqtFnjgu83tuwvvVNNUhOiHWk/5XO3LWHuKyhXxKxz2XO3IM-j3F4\"",
+ "etag": "\"_UU0hweWJUeoapnMzW_8ULttsqM/EHeFV5mCu-X5cQeRCxRTTM7NMJo\"",
  "discoveryVersion": "v1",
  "id": "identitytoolkit:v3",
  "name": "identitytoolkit",
@@ -192,6 +192,10 @@
           "displayName": {
            "type": "string",
            "description": "The user's display name at the IDP."
+          },
+          "federatedId": {
+           "type": "string",
+           "description": "User's identifier at IDP."
           },
           "photoUrl": {
            "type": "string",
@@ -456,6 +460,14 @@
    "type": "object",
    "description": "Request to verify the password.",
    "properties": {
+    "captchaChallenge": {
+     "type": "string",
+     "description": "The captcha challenge."
+    },
+    "captchaResponse": {
+     "type": "string",
+     "description": "Response to the captcha."
+    },
     "email": {
      "type": "string",
      "description": "The email of the user."
@@ -775,6 +787,10 @@
     "localId": {
      "type": "string",
      "description": "The RP local ID if it's already been mapped to the IdP account identified by the federated ID."
+    },
+    "photoUrl": {
+     "type": "string",
+     "description": "The URI of the user's photo at IdP"
     },
     "registered": {
      "type": "boolean",

@@ -39,15 +39,6 @@ const apiName = "gan"
 const apiVersion = "v1beta1"
 const basePath = "https://www.googleapis.com/gan/v1beta1/"
 
-// OAuth2 scopes used by this API.
-const (
-	// Manage your GAN data
-	GanScope = "https://www.googleapis.com/auth/gan"
-
-	// View your GAN data
-	GanReadonlyScope = "https://www.googleapis.com/auth/gan.readonly"
-)
-
 func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
@@ -929,11 +920,7 @@ func (c *AdvertisersGetCall) Do() (*Advertiser, error) {
 	//   "path": "{role}/{roleId}/advertiser",
 	//   "response": {
 	//     "$ref": "Advertiser"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/gan",
-	//     "https://www.googleapis.com/auth/gan.readonly"
-	//   ]
+	//   }
 	// }
 
 }
@@ -1151,11 +1138,7 @@ func (c *AdvertisersListCall) Do() (*Advertisers, error) {
 	//   "path": "{role}/{roleId}/advertisers",
 	//   "response": {
 	//     "$ref": "Advertisers"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/gan",
-	//     "https://www.googleapis.com/auth/gan.readonly"
-	//   ]
+	//   }
 	// }
 
 }
@@ -1256,11 +1239,7 @@ func (c *CcOffersListCall) Do() (*CcOffers, error) {
 	//   "path": "publishers/{publisher}/ccOffers",
 	//   "response": {
 	//     "$ref": "CcOffers"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/gan",
-	//     "https://www.googleapis.com/auth/gan.readonly"
-	//   ]
+	//   }
 	// }
 
 }
@@ -1635,11 +1614,7 @@ func (c *EventsListCall) Do() (*Events, error) {
 	//   "path": "{role}/{roleId}/events",
 	//   "response": {
 	//     "$ref": "Events"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/gan",
-	//     "https://www.googleapis.com/auth/gan.readonly"
-	//   ]
+	//   }
 	// }
 
 }
@@ -1732,11 +1707,7 @@ func (c *LinksGetCall) Do() (*Link, error) {
 	//   "path": "{role}/{roleId}/link/{linkId}",
 	//   "response": {
 	//     "$ref": "Link"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/gan",
-	//     "https://www.googleapis.com/auth/gan.readonly"
-	//   ]
+	//   }
 	// }
 
 }
@@ -1826,10 +1797,7 @@ func (c *LinksInsertCall) Do() (*Link, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "Link"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/gan"
-	//   ]
+	//   }
 	// }
 
 }
@@ -2149,11 +2117,7 @@ func (c *LinksListCall) Do() (*Links, error) {
 	//   "path": "{role}/{roleId}/links",
 	//   "response": {
 	//     "$ref": "Links"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/gan",
-	//     "https://www.googleapis.com/auth/gan.readonly"
-	//   ]
+	//   }
 	// }
 
 }
@@ -2250,11 +2214,7 @@ func (c *PublishersGetCall) Do() (*Publisher, error) {
 	//   "path": "{role}/{roleId}/publisher",
 	//   "response": {
 	//     "$ref": "Publisher"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/gan",
-	//     "https://www.googleapis.com/auth/gan.readonly"
-	//   ]
+	//   }
 	// }
 
 }
@@ -2472,11 +2432,7 @@ func (c *PublishersListCall) Do() (*Publishers, error) {
 	//   "path": "{role}/{roleId}/publishers",
 	//   "response": {
 	//     "$ref": "Publishers"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/gan",
-	//     "https://www.googleapis.com/auth/gan.readonly"
-	//   ]
+	//   }
 	// }
 
 }
@@ -2768,11 +2724,7 @@ func (c *ReportsGetCall) Do() (*Report, error) {
 	//   "path": "{role}/{roleId}/report/{reportType}",
 	//   "response": {
 	//     "$ref": "Report"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/gan",
-	//     "https://www.googleapis.com/auth/gan.readonly"
-	//   ]
+	//   }
 	// }
 
 }

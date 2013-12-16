@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"DGgqtFnjgu83tuwvvVNNUhOiHWk/AFnpisGyT0XxOrZz7gMWdR5PpRg\"",
+ "etag": "\"_UU0hweWJUeoapnMzW_8ULttsqM/wC5CIevsGN3DREvDOOaUSmrkhxI\"",
  "discoveryVersion": "v1",
  "id": "drive:v2",
  "name": "drive",
@@ -284,6 +284,14 @@
     "authorized": {
      "type": "boolean",
      "description": "Whether the app is authorized to access data on the user's Drive."
+    },
+    "createInFolderTemplate": {
+     "type": "string",
+     "description": "The template url to create a new file with this app in a given folder. The template will contain {folderId} to be replaced by the folder to create the new file in."
+    },
+    "createUrl": {
+     "type": "string",
+     "description": "The url to create a new file with this app."
     },
     "icons": {
      "type": "array",
@@ -1119,7 +1127,7 @@
     },
     "properties": {
      "type": "array",
-     "description": "The list of properties.",
+     "description": "The list of properties. This is a write-only field.",
      "items": {
       "$ref": "Property"
      }
@@ -1674,7 +1682,12 @@
       "$ref": "App"
      },
      "scopes": [
-      "https://www.googleapis.com/auth/drive.apps.readonly"
+      "https://www.googleapis.com/auth/drive",
+      "https://www.googleapis.com/auth/drive.appdata",
+      "https://www.googleapis.com/auth/drive.apps.readonly",
+      "https://www.googleapis.com/auth/drive.file",
+      "https://www.googleapis.com/auth/drive.metadata.readonly",
+      "https://www.googleapis.com/auth/drive.readonly"
      ]
     },
     "list": {
@@ -2516,7 +2529,7 @@
       },
       "newRevision": {
        "type": "boolean",
-       "description": "Whether a blob upload should create a new revision. If not set or false, the blob data in the current head revision is replaced. If true, a new blob is created as head revision, and previous revisions are preserved (causing increased use of the user's data storage quota).",
+       "description": "Whether a blob upload should create a new revision. If false, the blob data in the current head revision is replaced. If not set or true, a new blob is created as head revision, and previous revisions are preserved (causing increased use of the user's data storage quota).",
        "default": "true",
        "location": "query"
       },
@@ -2679,7 +2692,7 @@
       },
       "newRevision": {
        "type": "boolean",
-       "description": "Whether a blob upload should create a new revision. If not set or false, the blob data in the current head revision is replaced. If true, a new blob is created as head revision, and previous revisions are preserved (causing increased use of the user's data storage quota).",
+       "description": "Whether a blob upload should create a new revision. If false, the blob data in the current head revision is replaced. If not set or true, a new blob is created as head revision, and previous revisions are preserved (causing increased use of the user's data storage quota).",
        "default": "true",
        "location": "query"
       },

@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"DGgqtFnjgu83tuwvvVNNUhOiHWk/iVqjd-HwY_rWVg6n9kNX13GcQao\"",
+ "etag": "\"qMhxoRFWKZK4K3KdZJuqms1o3fc/gs0lH8i9LWaJL9JhZymkI8TMC-A\"",
  "discoveryVersion": "v1",
  "id": "civicinfo:us_v1",
  "name": "civicinfo",
@@ -361,7 +361,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "The kind, fixed to \"civicinfo#electionsQueryResponse\".",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"civicinfo#electionsQueryResponse\".",
      "default": "civicinfo#electionsQueryResponse"
     }
    }
@@ -382,6 +382,110 @@
     "scope": {
      "type": "string",
      "description": "The geographic scope of this district. If unspecified the district's geography is not known. One of: national, statewide, congressional, stateUpper, stateLower, countywide, judicial, schoolBoard, cityWide, township, countyCouncil, cityCouncil, ward, special"
+    }
+   }
+  },
+  "GeographicDivision": {
+   "id": "GeographicDivision",
+   "type": "object",
+   "description": "Describes a political geography.",
+   "properties": {
+    "name": {
+     "type": "string",
+     "description": "The name of the division."
+    },
+    "officeIds": {
+     "type": "array",
+     "description": "List of keys in the offices object, one for each office elected from this division. Will only be present if includeOffices was true (or absent) in the request.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "scope": {
+     "type": "string",
+     "description": "The geographic scope of the division. If unspecified, the division's geography is not known. One of: national, statewide, congressional, stateUpper, stateLower, countywide, judicial, schoolBoard, cityWide, township, countyCouncil, cityCouncil, ward, special"
+    }
+   }
+  },
+  "Office": {
+   "id": "Office",
+   "type": "object",
+   "properties": {
+    "level": {
+     "type": "string",
+     "description": "The level of this elected office. One of: federal, state, county, city, other"
+    },
+    "name": {
+     "type": "string",
+     "description": "The human-readable name of the office."
+    },
+    "officialIds": {
+     "type": "array",
+     "description": "List of people who presently hold the office.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "sources": {
+     "type": "array",
+     "description": "A list of sources for this office. If multiple sources are listed, the data has been aggregated from those sources.",
+     "items": {
+      "$ref": "Source"
+     }
+    }
+   }
+  },
+  "Official": {
+   "id": "Official",
+   "type": "object",
+   "description": "Information about a official holding an elected office.",
+   "properties": {
+    "address": {
+     "type": "array",
+     "description": "Addresses at which to contact the official.",
+     "items": {
+      "$ref": "SimpleAddressType"
+     }
+    },
+    "channels": {
+     "type": "array",
+     "description": "A list of known (social) media channels for this official.",
+     "items": {
+      "$ref": "Channel"
+     }
+    },
+    "emails": {
+     "type": "array",
+     "description": "The direct email addresses for the official.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "name": {
+     "type": "string",
+     "description": "The official's name."
+    },
+    "party": {
+     "type": "string",
+     "description": "The full name of the party the official belongs to."
+    },
+    "phones": {
+     "type": "array",
+     "description": "The official's public contact phone numbers.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "photoUrl": {
+     "type": "string",
+     "description": "A URL for a photo of the official."
+    },
+    "urls": {
+     "type": "array",
+     "description": "The official's public website URLs.",
+     "items": {
+      "type": "string"
+     }
     }
    }
   },
@@ -428,6 +532,60 @@
     "voterServices": {
      "type": "string",
      "description": "The services provided by this early vote site. This field is not populated for polling locations."
+    }
+   }
+  },
+  "RepresentativeInfoRequest": {
+   "id": "RepresentativeInfoRequest",
+   "type": "object",
+   "description": "A request for political geography and representative information for an address.",
+   "properties": {
+    "address": {
+     "type": "string"
+    }
+   }
+  },
+  "RepresentativeInfoResponse": {
+   "id": "RepresentativeInfoResponse",
+   "type": "object",
+   "description": "The result of a representative info lookup query.",
+   "properties": {
+    "divisions": {
+     "type": "object",
+     "description": "Political geographic divisions that contain the requested address.",
+     "additionalProperties": {
+      "$ref": "GeographicDivision",
+      "description": "The unique Open Civic Data identifier for this division."
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"civicinfo#representativeInfoResponse\".",
+     "default": "civicinfo#representativeInfoResponse"
+    },
+    "normalizedInput": {
+     "$ref": "SimpleAddressType",
+     "description": "The normalized version of the requested address"
+    },
+    "offices": {
+     "type": "object",
+     "description": "Elected offices referenced by the divisions listed above. Will only be present if includeOffices was true in the request.",
+     "additionalProperties": {
+      "$ref": "Office",
+      "description": "A unique identifier for this office, within the context of this request. Identifiers are *not* long-lived: the same office may get different IDs on different requests."
+     }
+    },
+    "officials": {
+     "type": "object",
+     "description": "Officials holding the offices listed above. Will only be present if includeOffices was true in the request.",
+     "additionalProperties": {
+      "$ref": "Official",
+      "description": "A unique identifier for this official, within the context of this request. Identifiers are *not* long-lived: the same official may get different IDs on different requests."
+     }
+    },
+    "status": {
+     "type": "string",
+     "description": "The result of the request. One of: success, noStreetSegmentFound, addressUnparseable, noAddressParameter, multipleStreetSegmentsFound, electionOver, electionUnknown, internalLookupFailure"
     }
    }
   },
@@ -517,7 +675,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "The kind, fixed to \"civicinfo#voterInfoResponse\".",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"civicinfo#voterInfoResponse\".",
      "default": "civicinfo#voterInfoResponse"
     },
     "normalizedInput": {
@@ -585,6 +743,30 @@
      },
      "response": {
       "$ref": "VoterInfoResponse"
+     }
+    }
+   }
+  },
+  "representatives": {
+   "methods": {
+    "representativeInfoQuery": {
+     "id": "civicinfo.representatives.representativeInfoQuery",
+     "path": "representatives/lookup",
+     "httpMethod": "POST",
+     "description": "Looks up political geography and (optionally) representative information based on an address.",
+     "parameters": {
+      "includeOffices": {
+       "type": "boolean",
+       "description": "Whether to return information about offices and officials. If false, only the top-level district information will be returned.",
+       "default": "true",
+       "location": "query"
+      }
+     },
+     "request": {
+      "$ref": "RepresentativeInfoRequest"
+     },
+     "response": {
+      "$ref": "RepresentativeInfoResponse"
      }
     }
    }

@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"DGgqtFnjgu83tuwvvVNNUhOiHWk/xt9hrN8ueU47r3vEuR90bsifdnQ\"",
+ "etag": "\"_UU0hweWJUeoapnMzW_8ULttsqM/1b42mTNhp-IHR0jf9o6NABcHCFc\"",
  "discoveryVersion": "v1",
  "id": "compute:v1beta15",
  "name": "compute",
@@ -386,6 +386,14 @@
      "type": "string",
      "description": "Size of the persistent disk, specified in GB. This parameter is optional when creating a disk from a disk image or a snapshot, otherwise it is required.",
      "format": "int64"
+    },
+    "sourceImage": {
+     "type": "string",
+     "description": "The source image used to create this disk. Once the source image has been deleted from the system, this field will not be set, even if an image with the same name has been re-created."
+    },
+    "sourceImageId": {
+     "type": "string",
+     "description": "The 'id' value of the image used to create this disk. This value may be used to determine whether the disk was created from the current or a previous instance of a given image."
     },
     "sourceSnapshot": {
      "type": "string",
@@ -2711,7 +2719,7 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
        "default": "100",
        "format": "uint32",
        "minimum": "0",
@@ -2871,7 +2879,7 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
        "default": "100",
        "format": "uint32",
        "minimum": "0",
@@ -2927,7 +2935,7 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
        "default": "100",
        "format": "uint32",
        "minimum": "0",
@@ -3134,7 +3142,7 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
        "default": "100",
        "format": "uint32",
        "minimum": "0",
@@ -3282,7 +3290,7 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
        "default": "100",
        "format": "uint32",
        "minimum": "0",
@@ -3400,7 +3408,7 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
        "default": "100",
        "format": "uint32",
        "minimum": "0",
@@ -3560,7 +3568,7 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
        "default": "100",
        "format": "uint32",
        "minimum": "0",
@@ -3659,7 +3667,7 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
        "default": "100",
        "format": "uint32",
        "minimum": "0",
@@ -3765,7 +3773,7 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
        "default": "100",
        "format": "uint32",
        "minimum": "0",
@@ -3905,7 +3913,7 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
        "default": "100",
        "format": "uint32",
        "minimum": "0",
@@ -4153,7 +4161,7 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
        "default": "100",
        "format": "uint32",
        "minimum": "0",
@@ -4250,7 +4258,7 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
        "default": "100",
        "format": "uint32",
        "minimum": "0",
@@ -4596,7 +4604,7 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
        "default": "100",
        "format": "uint32",
        "minimum": "0",
@@ -4811,7 +4819,7 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
        "default": "100",
        "format": "uint32",
        "minimum": "0",
@@ -4859,7 +4867,7 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
        "default": "100",
        "format": "uint32",
        "minimum": "0",
@@ -4944,7 +4952,7 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
        "default": "100",
        "format": "uint32",
        "minimum": "0",
@@ -5092,7 +5100,7 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
        "default": "100",
        "format": "uint32",
        "minimum": "0",
@@ -5274,7 +5282,7 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
        "default": "100",
        "format": "uint32",
        "minimum": "0",
@@ -5363,7 +5371,7 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
        "default": "100",
        "format": "uint32",
        "minimum": "0",
@@ -5503,7 +5511,7 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
        "default": "100",
        "format": "uint32",
        "minimum": "0",
@@ -5616,7 +5624,7 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
        "default": "100",
        "format": "uint32",
        "minimum": "0",
@@ -5750,7 +5758,7 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
        "default": "100",
        "format": "uint32",
        "minimum": "0",
@@ -5954,7 +5962,7 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
        "default": "100",
        "format": "uint32",
        "minimum": "0",
@@ -6223,7 +6231,7 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
        "default": "100",
        "format": "uint32",
        "minimum": "0",
@@ -6312,7 +6320,7 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum and default value is 100.",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
        "default": "100",
        "format": "uint32",
        "minimum": "0",

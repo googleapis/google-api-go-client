@@ -1025,7 +1025,7 @@ func (meth *Method) generateCode() {
 
 	pn("\n// method id %q:", meth.Id())
 
-	retTypeComma := responseType(meth.m)
+	retTypeComma := responseType(a, meth.m)
 	if retTypeComma != "" {
 		retTypeComma += ", "
 	}
@@ -1169,7 +1169,7 @@ func (meth *Method) generateCode() {
 	if retTypeComma == "" {
 		pn("return nil")
 	} else {
-		pn("ret := new(%s)", responseType(meth.m)[1:])
+		pn("ret := new(%s)", responseType(a, meth.m)[1:])
 		pn("if err := json.NewDecoder(res.Body).Decode(ret); err != nil { return nil, err }")
 		pn("return ret, nil")
 	}
@@ -1468,10 +1468,13 @@ func (a *API) goTypeOfJsonObject(outerName, memberName string, m map[string]inte
 	return mustSimpleTypeConvert(apitype, jstr(m, "format")), nil
 }
 
-func responseType(m map[string]interface{}) string {
+func responseType(api *API, m map[string]interface{}) string {
 	ro := jobj(m, "response")
 	if ro != nil {
 		if ref := jstr(ro, "$ref"); ref != "" {
+			if s := api.schemas[ref]; s != nil {
+				return "*" + s.GoName()
+			}
 			return "*" + ref
 		}
 	}

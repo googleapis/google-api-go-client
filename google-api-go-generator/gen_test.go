@@ -11,7 +11,11 @@ import (
 var updateGolden = flag.Bool("update_golden", false, "If true, causes TestAPIs to update golden files")
 
 func TestAPIs(t *testing.T) {
-	names := []string{"blogger-3", "quotednum"}
+	names := []string{
+		"blogger-3",
+		"quotednum",
+		"resource-named-service", // blogger/v3/blogger-api.json + s/BlogUserInfo/Service/
+	}
 	for _, name := range names {
 		api, err := apiFromFile(filepath.Join("testdata", name+".json"))
 		if err != nil {

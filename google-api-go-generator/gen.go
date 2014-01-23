@@ -435,7 +435,7 @@ func (a *API) GenerateCode() ([]byte, error) {
 	a.GetName("New") // ignore return value; we're the first caller
 	pn("func New(client *http.Client) (*Service, error) {")
 	pn("if client == nil { return nil, errors.New(\"client is nil\") }")
-	pn("s := &Service{client: client}")
+	pn("s := &Service{client: client, BasePath: basePath}")
 	for _, res := range reslist { // add top level resources.
 		pn("s.%s = New%s(s)", res.GoField(), res.GoType())
 	}
@@ -445,6 +445,7 @@ func (a *API) GenerateCode() ([]byte, error) {
 	a.GetName("Service") // ignore return value; no user-defined names yet
 	p("\ntype Service struct {\n")
 	p("\tclient *http.Client\n")
+	p("\tBasePath string // API endpoint base URL\n")
 
 	for _, res := range reslist {
 		p("\n\t%s\t*%s\n", res.GoField(), res.GoType())
@@ -1124,10 +1125,7 @@ func (meth *Method) generateCode() {
 			p.name, p.name)
 	}
 
-	urlStr := resolveRelative(a.apiBaseURL(), jstr(meth.m, "path"))
-	urlStr = strings.Replace(urlStr, "%7B", "{", -1)
-	urlStr = strings.Replace(urlStr, "%7D", "}", -1)
-	p("urls := googleapi.ResolveRelative(%q, %q)\n", a.apiBaseURL(), jstr(meth.m, "path"))
+	p("urls := googleapi.ResolveRelative(c.s.BasePath, %q)\n", jstr(meth.m, "path"))
 	if meth.supportsMedia() {
 		pn("if c.media_ != nil {")
 		// Hack guess, since we get a 404 otherwise:

@@ -139,7 +139,7 @@ func (c *LicenseAssignmentsDeleteCall) Do() error {
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -214,7 +214,7 @@ func (c *LicenseAssignmentsGetCall) Do() (*LicenseAssignment, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -300,7 +300,7 @@ func (c *LicenseAssignmentsInsertCall) Do() (*LicenseAssignment, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -396,7 +396,7 @@ func (c *LicenseAssignmentsListForProductCall) Do() (*LicenseAssignmentList, err
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -507,7 +507,7 @@ func (c *LicenseAssignmentsListForProductAndSkuCall) Do() (*LicenseAssignmentLis
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -611,7 +611,7 @@ func (c *LicenseAssignmentsPatchCall) Do() (*LicenseAssignment, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -703,7 +703,7 @@ func (c *LicenseAssignmentsUpdateCall) Do() (*LicenseAssignment, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}

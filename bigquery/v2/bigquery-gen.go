@@ -1067,7 +1067,7 @@ func (c *DatasetsDeleteCall) Do() error {
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -1140,7 +1140,7 @@ func (c *DatasetsGetCall) Do() (*Dataset, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1220,7 +1220,7 @@ func (c *DatasetsInsertCall) Do() (*Dataset, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1320,7 +1320,7 @@ func (c *DatasetsListCall) Do() (*DatasetList, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1415,7 +1415,7 @@ func (c *DatasetsPatchCall) Do() (*Dataset, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1503,7 +1503,7 @@ func (c *DatasetsUpdateCall) Do() (*Dataset, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1581,7 +1581,7 @@ func (c *JobsGetCall) Do() (*Job, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1698,7 +1698,7 @@ func (c *JobsGetQueryResultsCall) Do() (*GetQueryResultsResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1814,7 +1814,7 @@ func (c *JobsInsertCall) Do() (*Job, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1952,7 +1952,7 @@ func (c *JobsListCall) Do() (*JobList, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2071,7 +2071,7 @@ func (c *JobsQueryCall) Do() (*QueryResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2156,7 +2156,7 @@ func (c *ProjectsListCall) Do() (*ProjectList, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2237,7 +2237,7 @@ func (c *TabledataInsertAllCall) Do() (*TableDataInsertAllResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2355,7 +2355,7 @@ func (c *TabledataListCall) Do() (*TableDataList, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2458,7 +2458,7 @@ func (c *TablesDeleteCall) Do() error {
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -2538,7 +2538,7 @@ func (c *TablesGetCall) Do() (*Table, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2628,7 +2628,7 @@ func (c *TablesInsertCall) Do() (*Table, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2726,7 +2726,7 @@ func (c *TablesListCall) Do() (*TableList, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2826,7 +2826,7 @@ func (c *TablesPatchCall) Do() (*Table, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2924,7 +2924,7 @@ func (c *TablesUpdateCall) Do() (*Table, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}

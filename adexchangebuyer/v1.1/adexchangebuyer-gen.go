@@ -297,7 +297,7 @@ func (c *AccountsGetCall) Do() (*Account, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -359,7 +359,7 @@ func (c *AccountsListCall) Do() (*AccountsList, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -421,7 +421,7 @@ func (c *AccountsPatchCall) Do() (*Account, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -497,7 +497,7 @@ func (c *AccountsUpdateCall) Do() (*Account, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -568,7 +568,7 @@ func (c *CreativesGetCall) Do() (*Creative, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -645,7 +645,7 @@ func (c *CreativesInsertCall) Do() (*Creative, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -731,7 +731,7 @@ func (c *CreativesListCall) Do() (*CreativesList, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -814,7 +814,7 @@ func (c *DirectDealsGetCall) Do() (*DirectDeal, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -876,7 +876,7 @@ func (c *DirectDealsListCall) Do() (*DirectDealsList, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}

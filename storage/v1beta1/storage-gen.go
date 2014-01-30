@@ -428,7 +428,7 @@ func (c *BucketAccessControlsDeleteCall) Do() error {
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -449,7 +449,7 @@ func (c *BucketAccessControlsDeleteCall) Do() error {
 	//       "type": "string"
 	//     },
 	//     "entity": {
-	//       "description": "The entity holding the permission. Can be user-userId, group-groupId, allUsers, or allAuthenticatedUsers.",
+	//       "description": "The entity holding the permission. Can be user-userId, user-emailAddress, group-groupId, group-emailAddress, allUsers, or allAuthenticatedUsers.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -496,7 +496,7 @@ func (c *BucketAccessControlsGetCall) Do() (*BucketAccessControl, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -521,7 +521,7 @@ func (c *BucketAccessControlsGetCall) Do() (*BucketAccessControl, error) {
 	//       "type": "string"
 	//     },
 	//     "entity": {
-	//       "description": "The entity holding the permission. Can be user-userId, group-groupId, allUsers, or allAuthenticatedUsers.",
+	//       "description": "The entity holding the permission. Can be user-userId, user-emailAddress, group-groupId, group-emailAddress, allUsers, or allAuthenticatedUsers.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -575,7 +575,7 @@ func (c *BucketAccessControlsInsertCall) Do() (*BucketAccessControl, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -642,7 +642,7 @@ func (c *BucketAccessControlsListCall) Do() (*BucketAccessControls, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -718,7 +718,7 @@ func (c *BucketAccessControlsPatchCall) Do() (*BucketAccessControl, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -743,7 +743,7 @@ func (c *BucketAccessControlsPatchCall) Do() (*BucketAccessControl, error) {
 	//       "type": "string"
 	//     },
 	//     "entity": {
-	//       "description": "The entity holding the permission. Can be user-userId, group-groupId, allUsers, or allAuthenticatedUsers.",
+	//       "description": "The entity holding the permission. Can be user-userId, user-emailAddress, group-groupId, group-emailAddress, allUsers, or allAuthenticatedUsers.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -803,7 +803,7 @@ func (c *BucketAccessControlsUpdateCall) Do() (*BucketAccessControl, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -828,7 +828,7 @@ func (c *BucketAccessControlsUpdateCall) Do() (*BucketAccessControl, error) {
 	//       "type": "string"
 	//     },
 	//     "entity": {
-	//       "description": "The entity holding the permission. Can be user-userId, group-groupId, allUsers, or allAuthenticatedUsers.",
+	//       "description": "The entity holding the permission. Can be user-userId, user-emailAddress, group-groupId, group-emailAddress, allUsers, or allAuthenticatedUsers.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -877,7 +877,7 @@ func (c *BucketsDeleteCall) Do() error {
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -945,7 +945,7 @@ func (c *BucketsGetCall) Do() (*Bucket, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1041,7 +1041,7 @@ func (c *BucketsInsertCall) Do() (*Bucket, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1144,7 +1144,7 @@ func (c *BucketsListCall) Do() (*Buckets, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1254,7 +1254,7 @@ func (c *BucketsPatchCall) Do() (*Bucket, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1353,7 +1353,7 @@ func (c *BucketsUpdateCall) Do() (*Bucket, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1441,7 +1441,7 @@ func (c *ObjectAccessControlsDeleteCall) Do() error {
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -1463,7 +1463,7 @@ func (c *ObjectAccessControlsDeleteCall) Do() error {
 	//       "type": "string"
 	//     },
 	//     "entity": {
-	//       "description": "The entity holding the permission. Can be user-userId, group-groupId, allUsers, or allAuthenticatedUsers.",
+	//       "description": "The entity holding the permission. Can be user-userId, user-emailAddress, group-groupId, group-emailAddress, allUsers, or allAuthenticatedUsers.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1519,7 +1519,7 @@ func (c *ObjectAccessControlsGetCall) Do() (*ObjectAccessControl, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1545,7 +1545,7 @@ func (c *ObjectAccessControlsGetCall) Do() (*ObjectAccessControl, error) {
 	//       "type": "string"
 	//     },
 	//     "entity": {
-	//       "description": "The entity holding the permission. Can be user-userId, group-groupId, allUsers, or allAuthenticatedUsers.",
+	//       "description": "The entity holding the permission. Can be user-userId, user-emailAddress, group-groupId, group-emailAddress, allUsers, or allAuthenticatedUsers.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1608,7 +1608,7 @@ func (c *ObjectAccessControlsInsertCall) Do() (*ObjectAccessControl, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1685,7 +1685,7 @@ func (c *ObjectAccessControlsListCall) Do() (*ObjectAccessControls, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1771,7 +1771,7 @@ func (c *ObjectAccessControlsPatchCall) Do() (*ObjectAccessControl, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1797,7 +1797,7 @@ func (c *ObjectAccessControlsPatchCall) Do() (*ObjectAccessControl, error) {
 	//       "type": "string"
 	//     },
 	//     "entity": {
-	//       "description": "The entity holding the permission. Can be user-userId, group-groupId, allUsers, or allAuthenticatedUsers.",
+	//       "description": "The entity holding the permission. Can be user-userId, user-emailAddress, group-groupId, group-emailAddress, allUsers, or allAuthenticatedUsers.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1866,7 +1866,7 @@ func (c *ObjectAccessControlsUpdateCall) Do() (*ObjectAccessControl, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1892,7 +1892,7 @@ func (c *ObjectAccessControlsUpdateCall) Do() (*ObjectAccessControl, error) {
 	//       "type": "string"
 	//     },
 	//     "entity": {
-	//       "description": "The entity holding the permission. Can be user-userId, group-groupId, allUsers, or allAuthenticatedUsers.",
+	//       "description": "The entity holding the permission. Can be user-userId, user-emailAddress, group-groupId, group-emailAddress, allUsers, or allAuthenticatedUsers.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1950,7 +1950,7 @@ func (c *ObjectsDeleteCall) Do() error {
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -2028,7 +2028,7 @@ func (c *ObjectsGetCall) Do() (*Object, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2158,7 +2158,7 @@ func (c *ObjectsInsertCall) Do() (*Object, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2317,7 +2317,7 @@ func (c *ObjectsListCall) Do() (*Objects, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2441,7 +2441,7 @@ func (c *ObjectsPatchCall) Do() (*Object, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2550,7 +2550,7 @@ func (c *ObjectsUpdateCall) Do() (*Object, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}

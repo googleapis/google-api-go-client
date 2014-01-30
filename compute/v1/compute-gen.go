@@ -2257,7 +2257,7 @@ func (c *AddressesAggregatedListCall) Filter(filter string) *AddressesAggregated
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned. Maximum value is 500 and default value is
-// 100.
+// 500.
 func (c *AddressesAggregatedListCall) MaxResults(maxResults int64) *AddressesAggregatedListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -2294,7 +2294,7 @@ func (c *AddressesAggregatedListCall) Do() (*AddressAggregatedList, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2317,8 +2317,8 @@ func (c *AddressesAggregatedListCall) Do() (*AddressAggregatedList, error) {
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "default": "100",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
+	//       "default": "500",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -2385,7 +2385,7 @@ func (c *AddressesDeleteCall) Do() (*Operation, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2472,7 +2472,7 @@ func (c *AddressesGetCall) Do() (*Address, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2566,7 +2566,7 @@ func (c *AddressesInsertCall) Do() (*Operation, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2640,7 +2640,7 @@ func (c *AddressesListCall) Filter(filter string) *AddressesListCall {
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned. Maximum value is 500 and default value is
-// 100.
+// 500.
 func (c *AddressesListCall) MaxResults(maxResults int64) *AddressesListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -2678,7 +2678,7 @@ func (c *AddressesListCall) Do() (*AddressList, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2702,8 +2702,8 @@ func (c *AddressesListCall) Do() (*AddressList, error) {
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "default": "100",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
+	//       "default": "500",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -2766,7 +2766,7 @@ func (c *DisksAggregatedListCall) Filter(filter string) *DisksAggregatedListCall
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned. Maximum value is 500 and default value is
-// 100.
+// 500.
 func (c *DisksAggregatedListCall) MaxResults(maxResults int64) *DisksAggregatedListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -2803,7 +2803,7 @@ func (c *DisksAggregatedListCall) Do() (*DiskAggregatedList, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2826,8 +2826,8 @@ func (c *DisksAggregatedListCall) Do() (*DiskAggregatedList, error) {
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "default": "100",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
+	//       "default": "500",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -2902,7 +2902,7 @@ func (c *DisksCreateSnapshotCall) Do() (*Operation, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2921,7 +2921,7 @@ func (c *DisksCreateSnapshotCall) Do() (*Operation, error) {
 	//   ],
 	//   "parameters": {
 	//     "disk": {
-	//       "description": "Name of the persistent disk resource to delete.",
+	//       "description": "Name of the persistent disk resource to snapshot.",
 	//       "location": "path",
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
@@ -2991,7 +2991,7 @@ func (c *DisksDeleteCall) Do() (*Operation, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3078,7 +3078,7 @@ func (c *DisksGetCall) Do() (*Disk, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3182,7 +3182,7 @@ func (c *DisksInsertCall) Do() (*Operation, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3261,7 +3261,7 @@ func (c *DisksListCall) Filter(filter string) *DisksListCall {
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned. Maximum value is 500 and default value is
-// 100.
+// 500.
 func (c *DisksListCall) MaxResults(maxResults int64) *DisksListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -3299,7 +3299,7 @@ func (c *DisksListCall) Do() (*DiskList, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3323,8 +3323,8 @@ func (c *DisksListCall) Do() (*DiskList, error) {
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "default": "100",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
+	//       "default": "500",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -3395,7 +3395,7 @@ func (c *FirewallsDeleteCall) Do() (*Operation, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3471,7 +3471,7 @@ func (c *FirewallsGetCall) Do() (*Firewall, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3554,7 +3554,7 @@ func (c *FirewallsInsertCall) Do() (*Operation, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3618,7 +3618,7 @@ func (c *FirewallsListCall) Filter(filter string) *FirewallsListCall {
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned. Maximum value is 500 and default value is
-// 100.
+// 500.
 func (c *FirewallsListCall) MaxResults(maxResults int64) *FirewallsListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -3655,7 +3655,7 @@ func (c *FirewallsListCall) Do() (*FirewallList, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3678,8 +3678,8 @@ func (c *FirewallsListCall) Do() (*FirewallList, error) {
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "default": "100",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
+	//       "default": "500",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -3752,7 +3752,7 @@ func (c *FirewallsPatchCall) Do() (*Operation, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3840,7 +3840,7 @@ func (c *FirewallsUpdateCall) Do() (*Operation, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3912,7 +3912,7 @@ func (c *ForwardingRulesAggregatedListCall) Filter(filter string) *ForwardingRul
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned. Maximum value is 500 and default value is
-// 100.
+// 500.
 func (c *ForwardingRulesAggregatedListCall) MaxResults(maxResults int64) *ForwardingRulesAggregatedListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -3949,7 +3949,7 @@ func (c *ForwardingRulesAggregatedListCall) Do() (*ForwardingRuleAggregatedList,
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3972,8 +3972,8 @@ func (c *ForwardingRulesAggregatedListCall) Do() (*ForwardingRuleAggregatedList,
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "default": "100",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
+	//       "default": "500",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -4040,7 +4040,7 @@ func (c *ForwardingRulesDeleteCall) Do() (*Operation, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4127,7 +4127,7 @@ func (c *ForwardingRulesGetCall) Do() (*ForwardingRule, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4221,7 +4221,7 @@ func (c *ForwardingRulesInsertCall) Do() (*Operation, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4295,7 +4295,7 @@ func (c *ForwardingRulesListCall) Filter(filter string) *ForwardingRulesListCall
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned. Maximum value is 500 and default value is
-// 100.
+// 500.
 func (c *ForwardingRulesListCall) MaxResults(maxResults int64) *ForwardingRulesListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -4333,7 +4333,7 @@ func (c *ForwardingRulesListCall) Do() (*ForwardingRuleList, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4357,8 +4357,8 @@ func (c *ForwardingRulesListCall) Do() (*ForwardingRuleList, error) {
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "default": "100",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
+	//       "default": "500",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -4440,7 +4440,7 @@ func (c *ForwardingRulesSetTargetCall) Do() (*Operation, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4520,7 +4520,7 @@ func (c *GlobalOperationsAggregatedListCall) Filter(filter string) *GlobalOperat
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned. Maximum value is 500 and default value is
-// 100.
+// 500.
 func (c *GlobalOperationsAggregatedListCall) MaxResults(maxResults int64) *GlobalOperationsAggregatedListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -4557,7 +4557,7 @@ func (c *GlobalOperationsAggregatedListCall) Do() (*OperationAggregatedList, err
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4580,8 +4580,8 @@ func (c *GlobalOperationsAggregatedListCall) Do() (*OperationAggregatedList, err
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "default": "100",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
+	//       "default": "500",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -4645,7 +4645,7 @@ func (c *GlobalOperationsDeleteCall) Do() error {
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -4714,7 +4714,7 @@ func (c *GlobalOperationsGetCall) Do() (*Operation, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4784,7 +4784,7 @@ func (c *GlobalOperationsListCall) Filter(filter string) *GlobalOperationsListCa
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned. Maximum value is 500 and default value is
-// 100.
+// 500.
 func (c *GlobalOperationsListCall) MaxResults(maxResults int64) *GlobalOperationsListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -4821,7 +4821,7 @@ func (c *GlobalOperationsListCall) Do() (*OperationList, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4844,8 +4844,8 @@ func (c *GlobalOperationsListCall) Do() (*OperationList, error) {
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "default": "100",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
+	//       "default": "500",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -4909,7 +4909,7 @@ func (c *HttpHealthChecksDeleteCall) Do() (*Operation, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4985,7 +4985,7 @@ func (c *HttpHealthChecksGetCall) Do() (*HttpHealthCheck, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -5068,7 +5068,7 @@ func (c *HttpHealthChecksInsertCall) Do() (*Operation, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -5132,7 +5132,7 @@ func (c *HttpHealthChecksListCall) Filter(filter string) *HttpHealthChecksListCa
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned. Maximum value is 500 and default value is
-// 100.
+// 500.
 func (c *HttpHealthChecksListCall) MaxResults(maxResults int64) *HttpHealthChecksListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -5169,7 +5169,7 @@ func (c *HttpHealthChecksListCall) Do() (*HttpHealthCheckList, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -5192,8 +5192,8 @@ func (c *HttpHealthChecksListCall) Do() (*HttpHealthCheckList, error) {
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "default": "100",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
+	//       "default": "500",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -5267,7 +5267,7 @@ func (c *HttpHealthChecksPatchCall) Do() (*Operation, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -5355,7 +5355,7 @@ func (c *HttpHealthChecksUpdateCall) Do() (*Operation, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -5434,7 +5434,7 @@ func (c *ImagesDeleteCall) Do() (*Operation, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -5519,7 +5519,7 @@ func (c *ImagesDeprecateCall) Do() (*Operation, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -5598,7 +5598,7 @@ func (c *ImagesGetCall) Do() (*Image, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -5681,7 +5681,7 @@ func (c *ImagesInsertCall) Do() (*Operation, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -5748,7 +5748,7 @@ func (c *ImagesListCall) Filter(filter string) *ImagesListCall {
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned. Maximum value is 500 and default value is
-// 100.
+// 500.
 func (c *ImagesListCall) MaxResults(maxResults int64) *ImagesListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -5785,7 +5785,7 @@ func (c *ImagesListCall) Do() (*ImageList, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -5808,8 +5808,8 @@ func (c *ImagesListCall) Do() (*ImageList, error) {
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "default": "100",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
+	//       "default": "500",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -5888,7 +5888,7 @@ func (c *InstancesAddAccessConfigCall) Do() (*Operation, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -5974,7 +5974,7 @@ func (c *InstancesAggregatedListCall) Filter(filter string) *InstancesAggregated
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned. Maximum value is 500 and default value is
-// 100.
+// 500.
 func (c *InstancesAggregatedListCall) MaxResults(maxResults int64) *InstancesAggregatedListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -6011,7 +6011,7 @@ func (c *InstancesAggregatedListCall) Do() (*InstanceAggregatedList, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -6033,8 +6033,8 @@ func (c *InstancesAggregatedListCall) Do() (*InstanceAggregatedList, error) {
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "default": "100",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
+	//       "default": "500",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -6109,7 +6109,7 @@ func (c *InstancesAttachDiskCall) Do() (*Operation, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -6199,7 +6199,7 @@ func (c *InstancesDeleteCall) Do() (*Operation, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -6293,7 +6293,7 @@ func (c *InstancesDeleteAccessConfigCall) Do() (*Operation, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -6397,7 +6397,7 @@ func (c *InstancesDetachDiskCall) Do() (*Operation, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -6492,7 +6492,7 @@ func (c *InstancesGetCall) Do() (*Instance, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -6581,7 +6581,7 @@ func (c *InstancesGetSerialPortOutputCall) Do() (*SerialPortOutput, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -6675,7 +6675,7 @@ func (c *InstancesInsertCall) Do() (*Operation, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -6749,7 +6749,7 @@ func (c *InstancesListCall) Filter(filter string) *InstancesListCall {
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned. Maximum value is 500 and default value is
-// 100.
+// 500.
 func (c *InstancesListCall) MaxResults(maxResults int64) *InstancesListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -6787,7 +6787,7 @@ func (c *InstancesListCall) Do() (*InstanceList, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -6811,8 +6811,8 @@ func (c *InstancesListCall) Do() (*InstanceList, error) {
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "default": "100",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
+	//       "default": "500",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -6886,7 +6886,7 @@ func (c *InstancesResetCall) Do() (*Operation, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -6982,7 +6982,7 @@ func (c *InstancesSetMetadataCall) Do() (*Operation, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -7080,7 +7080,7 @@ func (c *InstancesSetSchedulingCall) Do() (*Operation, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -7179,7 +7179,7 @@ func (c *InstancesSetTagsCall) Do() (*Operation, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -7259,7 +7259,7 @@ func (c *MachineTypesAggregatedListCall) Filter(filter string) *MachineTypesAggr
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned. Maximum value is 500 and default value is
-// 100.
+// 500.
 func (c *MachineTypesAggregatedListCall) MaxResults(maxResults int64) *MachineTypesAggregatedListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -7296,7 +7296,7 @@ func (c *MachineTypesAggregatedListCall) Do() (*MachineTypeAggregatedList, error
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -7319,8 +7319,8 @@ func (c *MachineTypesAggregatedListCall) Do() (*MachineTypeAggregatedList, error
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "default": "100",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
+	//       "default": "500",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -7387,7 +7387,7 @@ func (c *MachineTypesGetCall) Do() (*MachineType, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -7467,7 +7467,7 @@ func (c *MachineTypesListCall) Filter(filter string) *MachineTypesListCall {
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned. Maximum value is 500 and default value is
-// 100.
+// 500.
 func (c *MachineTypesListCall) MaxResults(maxResults int64) *MachineTypesListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -7505,7 +7505,7 @@ func (c *MachineTypesListCall) Do() (*MachineTypeList, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -7529,8 +7529,8 @@ func (c *MachineTypesListCall) Do() (*MachineTypeList, error) {
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "default": "100",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
+	//       "default": "500",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -7601,7 +7601,7 @@ func (c *NetworksDeleteCall) Do() (*Operation, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -7677,7 +7677,7 @@ func (c *NetworksGetCall) Do() (*Network, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -7760,7 +7760,7 @@ func (c *NetworksInsertCall) Do() (*Operation, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -7824,7 +7824,7 @@ func (c *NetworksListCall) Filter(filter string) *NetworksListCall {
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned. Maximum value is 500 and default value is
-// 100.
+// 500.
 func (c *NetworksListCall) MaxResults(maxResults int64) *NetworksListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -7861,7 +7861,7 @@ func (c *NetworksListCall) Do() (*NetworkList, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -7884,8 +7884,8 @@ func (c *NetworksListCall) Do() (*NetworkList, error) {
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "default": "100",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
+	//       "default": "500",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -7946,7 +7946,7 @@ func (c *ProjectsGetCall) Do() (*Project, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -8021,7 +8021,7 @@ func (c *ProjectsSetCommonInstanceMetadataCall) Do() (*Operation, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -8095,7 +8095,7 @@ func (c *RegionOperationsDeleteCall) Do() error {
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -8175,7 +8175,7 @@ func (c *RegionOperationsGetCall) Do() (*Operation, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -8255,7 +8255,7 @@ func (c *RegionOperationsListCall) Filter(filter string) *RegionOperationsListCa
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned. Maximum value is 500 and default value is
-// 100.
+// 500.
 func (c *RegionOperationsListCall) MaxResults(maxResults int64) *RegionOperationsListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -8293,7 +8293,7 @@ func (c *RegionOperationsListCall) Do() (*OperationList, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -8317,8 +8317,8 @@ func (c *RegionOperationsListCall) Do() (*OperationList, error) {
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "default": "100",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
+	//       "default": "500",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -8389,7 +8389,7 @@ func (c *RegionsGetCall) Do() (*Region, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -8459,7 +8459,7 @@ func (c *RegionsListCall) Filter(filter string) *RegionsListCall {
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned. Maximum value is 500 and default value is
-// 100.
+// 500.
 func (c *RegionsListCall) MaxResults(maxResults int64) *RegionsListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -8496,7 +8496,7 @@ func (c *RegionsListCall) Do() (*RegionList, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -8519,8 +8519,8 @@ func (c *RegionsListCall) Do() (*RegionList, error) {
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "default": "100",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
+	//       "default": "500",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -8584,7 +8584,7 @@ func (c *RoutesDeleteCall) Do() (*Operation, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -8660,7 +8660,7 @@ func (c *RoutesGetCall) Do() (*Route, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -8743,7 +8743,7 @@ func (c *RoutesInsertCall) Do() (*Operation, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -8807,7 +8807,7 @@ func (c *RoutesListCall) Filter(filter string) *RoutesListCall {
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned. Maximum value is 500 and default value is
-// 100.
+// 500.
 func (c *RoutesListCall) MaxResults(maxResults int64) *RoutesListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -8844,7 +8844,7 @@ func (c *RoutesListCall) Do() (*RouteList, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -8867,8 +8867,8 @@ func (c *RoutesListCall) Do() (*RouteList, error) {
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "default": "100",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
+	//       "default": "500",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -8932,7 +8932,7 @@ func (c *SnapshotsDeleteCall) Do() (*Operation, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -9008,7 +9008,7 @@ func (c *SnapshotsGetCall) Do() (*Snapshot, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -9078,7 +9078,7 @@ func (c *SnapshotsListCall) Filter(filter string) *SnapshotsListCall {
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned. Maximum value is 500 and default value is
-// 100.
+// 500.
 func (c *SnapshotsListCall) MaxResults(maxResults int64) *SnapshotsListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -9115,7 +9115,7 @@ func (c *SnapshotsListCall) Do() (*SnapshotList, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -9138,8 +9138,8 @@ func (c *SnapshotsListCall) Do() (*SnapshotList, error) {
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "default": "100",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
+	//       "default": "500",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -9196,7 +9196,7 @@ func (c *TargetInstancesAggregatedListCall) Filter(filter string) *TargetInstanc
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned. Maximum value is 500 and default value is
-// 100.
+// 500.
 func (c *TargetInstancesAggregatedListCall) MaxResults(maxResults int64) *TargetInstancesAggregatedListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -9233,7 +9233,7 @@ func (c *TargetInstancesAggregatedListCall) Do() (*TargetInstanceAggregatedList,
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -9256,8 +9256,8 @@ func (c *TargetInstancesAggregatedListCall) Do() (*TargetInstanceAggregatedList,
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "default": "100",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
+	//       "default": "500",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -9324,7 +9324,7 @@ func (c *TargetInstancesDeleteCall) Do() (*Operation, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -9411,7 +9411,7 @@ func (c *TargetInstancesGetCall) Do() (*TargetInstance, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -9505,7 +9505,7 @@ func (c *TargetInstancesInsertCall) Do() (*Operation, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -9579,7 +9579,7 @@ func (c *TargetInstancesListCall) Filter(filter string) *TargetInstancesListCall
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned. Maximum value is 500 and default value is
-// 100.
+// 500.
 func (c *TargetInstancesListCall) MaxResults(maxResults int64) *TargetInstancesListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -9617,7 +9617,7 @@ func (c *TargetInstancesListCall) Do() (*TargetInstanceList, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -9641,8 +9641,8 @@ func (c *TargetInstancesListCall) Do() (*TargetInstanceList, error) {
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "default": "100",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
+	//       "default": "500",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -9724,7 +9724,7 @@ func (c *TargetPoolsAddHealthCheckCall) Do() (*Operation, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -9822,7 +9822,7 @@ func (c *TargetPoolsAddInstanceCall) Do() (*Operation, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -9901,7 +9901,7 @@ func (c *TargetPoolsAggregatedListCall) Filter(filter string) *TargetPoolsAggreg
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned. Maximum value is 500 and default value is
-// 100.
+// 500.
 func (c *TargetPoolsAggregatedListCall) MaxResults(maxResults int64) *TargetPoolsAggregatedListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -9938,7 +9938,7 @@ func (c *TargetPoolsAggregatedListCall) Do() (*TargetPoolAggregatedList, error) 
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -9961,8 +9961,8 @@ func (c *TargetPoolsAggregatedListCall) Do() (*TargetPoolAggregatedList, error) 
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "default": "100",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
+	//       "default": "500",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -10029,7 +10029,7 @@ func (c *TargetPoolsDeleteCall) Do() (*Operation, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -10116,7 +10116,7 @@ func (c *TargetPoolsGetCall) Do() (*TargetPool, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -10213,7 +10213,7 @@ func (c *TargetPoolsGetHealthCall) Do() (*TargetPoolInstanceHealth, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -10310,7 +10310,7 @@ func (c *TargetPoolsInsertCall) Do() (*Operation, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -10384,7 +10384,7 @@ func (c *TargetPoolsListCall) Filter(filter string) *TargetPoolsListCall {
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned. Maximum value is 500 and default value is
-// 100.
+// 500.
 func (c *TargetPoolsListCall) MaxResults(maxResults int64) *TargetPoolsListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -10422,7 +10422,7 @@ func (c *TargetPoolsListCall) Do() (*TargetPoolList, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -10446,8 +10446,8 @@ func (c *TargetPoolsListCall) Do() (*TargetPoolList, error) {
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "default": "100",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
+	//       "default": "500",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -10529,7 +10529,7 @@ func (c *TargetPoolsRemoveHealthCheckCall) Do() (*Operation, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -10627,7 +10627,7 @@ func (c *TargetPoolsRemoveInstanceCall) Do() (*Operation, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -10735,7 +10735,7 @@ func (c *TargetPoolsSetBackupCall) Do() (*Operation, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -10831,7 +10831,7 @@ func (c *ZoneOperationsDeleteCall) Do() error {
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -10911,7 +10911,7 @@ func (c *ZoneOperationsGetCall) Do() (*Operation, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -10991,7 +10991,7 @@ func (c *ZoneOperationsListCall) Filter(filter string) *ZoneOperationsListCall {
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned. Maximum value is 500 and default value is
-// 100.
+// 500.
 func (c *ZoneOperationsListCall) MaxResults(maxResults int64) *ZoneOperationsListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -11029,7 +11029,7 @@ func (c *ZoneOperationsListCall) Do() (*OperationList, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -11053,8 +11053,8 @@ func (c *ZoneOperationsListCall) Do() (*OperationList, error) {
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "default": "100",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
+	//       "default": "500",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -11125,7 +11125,7 @@ func (c *ZonesGetCall) Do() (*Zone, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -11195,7 +11195,7 @@ func (c *ZonesListCall) Filter(filter string) *ZonesListCall {
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned. Maximum value is 500 and default value is
-// 100.
+// 500.
 func (c *ZonesListCall) MaxResults(maxResults int64) *ZonesListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -11232,7 +11232,7 @@ func (c *ZonesListCall) Do() (*ZoneList, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -11255,8 +11255,8 @@ func (c *ZonesListCall) Do() (*ZoneList, error) {
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "default": "100",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
+	//       "default": "500",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",

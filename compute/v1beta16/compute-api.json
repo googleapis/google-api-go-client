@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"qMhxoRFWKZK4K3KdZJuqms1o3fc/JD0bItbGNCln4h0qGgdLTo7sRwI\"",
+ "etag": "\"R6H4aXXmd1SZaWpEcGSkC2StmNw/YUolxkzL_8Ggy-XySmNJLv4Q5RQ\"",
  "discoveryVersion": "v1",
  "id": "compute:v1beta16",
  "name": "compute",
@@ -266,6 +266,7 @@
        "description": "The warning type identifier for this warning.",
        "enum": [
         "DEPRECATED_RESOURCE_USED",
+        "DISK_SIZE_LARGER_THAN_IMAGE_SIZE",
         "INJECTED_KERNELS_DEPRECATED",
         "NEXT_HOP_ADDRESS_NOT_ASSIGNED",
         "NEXT_HOP_CANNOT_IP_FORWARD",
@@ -277,6 +278,7 @@
         "UNREACHABLE"
        ],
        "enumDescriptions": [
+        "",
         "",
         "",
         "",
@@ -575,6 +577,7 @@
        "description": "The warning type identifier for this warning.",
        "enum": [
         "DEPRECATED_RESOURCE_USED",
+        "DISK_SIZE_LARGER_THAN_IMAGE_SIZE",
         "INJECTED_KERNELS_DEPRECATED",
         "NEXT_HOP_ADDRESS_NOT_ASSIGNED",
         "NEXT_HOP_CANNOT_IP_FORWARD",
@@ -586,6 +589,7 @@
         "UNREACHABLE"
        ],
        "enumDescriptions": [
+        "",
         "",
         "",
         "",
@@ -889,6 +893,7 @@
        "description": "The warning type identifier for this warning.",
        "enum": [
         "DEPRECATED_RESOURCE_USED",
+        "DISK_SIZE_LARGER_THAN_IMAGE_SIZE",
         "INJECTED_KERNELS_DEPRECATED",
         "NEXT_HOP_ADDRESS_NOT_ASSIGNED",
         "NEXT_HOP_CANNOT_IP_FORWARD",
@@ -900,6 +905,7 @@
         "UNREACHABLE"
        ],
        "enumDescriptions": [
+        "",
         "",
         "",
         "",
@@ -1425,6 +1431,7 @@
        "description": "The warning type identifier for this warning.",
        "enum": [
         "DEPRECATED_RESOURCE_USED",
+        "DISK_SIZE_LARGER_THAN_IMAGE_SIZE",
         "INJECTED_KERNELS_DEPRECATED",
         "NEXT_HOP_ADDRESS_NOT_ASSIGNED",
         "NEXT_HOP_CANNOT_IP_FORWARD",
@@ -1436,6 +1443,7 @@
         "UNREACHABLE"
        ],
        "enumDescriptions": [
+        "",
         "",
         "",
         "",
@@ -1705,6 +1713,7 @@
        "description": "The warning type identifier for this warning.",
        "enum": [
         "DEPRECATED_RESOURCE_USED",
+        "DISK_SIZE_LARGER_THAN_IMAGE_SIZE",
         "INJECTED_KERNELS_DEPRECATED",
         "NEXT_HOP_ADDRESS_NOT_ASSIGNED",
         "NEXT_HOP_CANNOT_IP_FORWARD",
@@ -1716,6 +1725,7 @@
         "UNREACHABLE"
        ],
        "enumDescriptions": [
+        "",
         "",
         "",
         "",
@@ -2050,6 +2060,7 @@
         "description": "The warning type identifier for this warning.",
         "enum": [
          "DEPRECATED_RESOURCE_USED",
+         "DISK_SIZE_LARGER_THAN_IMAGE_SIZE",
          "INJECTED_KERNELS_DEPRECATED",
          "NEXT_HOP_ADDRESS_NOT_ASSIGNED",
          "NEXT_HOP_CANNOT_IP_FORWARD",
@@ -2061,6 +2072,7 @@
          "UNREACHABLE"
         ],
         "enumDescriptions": [
+         "",
          "",
          "",
          "",
@@ -2185,6 +2197,7 @@
        "description": "The warning type identifier for this warning.",
        "enum": [
         "DEPRECATED_RESOURCE_USED",
+        "DISK_SIZE_LARGER_THAN_IMAGE_SIZE",
         "INJECTED_KERNELS_DEPRECATED",
         "NEXT_HOP_ADDRESS_NOT_ASSIGNED",
         "NEXT_HOP_CANNOT_IP_FORWARD",
@@ -2196,6 +2209,7 @@
         "UNREACHABLE"
        ],
        "enumDescriptions": [
+        "",
         "",
         "",
         "",
@@ -2538,6 +2552,7 @@
         "description": "The warning type identifier for this warning.",
         "enum": [
          "DEPRECATED_RESOURCE_USED",
+         "DISK_SIZE_LARGER_THAN_IMAGE_SIZE",
          "INJECTED_KERNELS_DEPRECATED",
          "NEXT_HOP_ADDRESS_NOT_ASSIGNED",
          "NEXT_HOP_CANNOT_IP_FORWARD",
@@ -2549,6 +2564,7 @@
          "UNREACHABLE"
         ],
         "enumDescriptions": [
+         "",
          "",
          "",
          "",
@@ -3037,6 +3053,7 @@
        "description": "The warning type identifier for this warning.",
        "enum": [
         "DEPRECATED_RESOURCE_USED",
+        "DISK_SIZE_LARGER_THAN_IMAGE_SIZE",
         "INJECTED_KERNELS_DEPRECATED",
         "NEXT_HOP_ADDRESS_NOT_ASSIGNED",
         "NEXT_HOP_CANNOT_IP_FORWARD",
@@ -3048,6 +3065,7 @@
         "UNREACHABLE"
        ],
        "enumDescriptions": [
+        "",
         "",
         "",
         "",
@@ -3220,8 +3238,8 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
-       "default": "100",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "default": "500",
        "format": "uint32",
        "minimum": "0",
        "maximum": "500",
@@ -3380,8 +3398,8 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
-       "default": "100",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "default": "500",
        "format": "uint32",
        "minimum": "0",
        "maximum": "500",
@@ -3436,8 +3454,8 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
-       "default": "100",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "default": "500",
        "format": "uint32",
        "minimum": "0",
        "maximum": "500",
@@ -3474,7 +3492,7 @@
      "parameters": {
       "disk": {
        "type": "string",
-       "description": "Name of the persistent disk resource to delete.",
+       "description": "Name of the persistent disk resource to snapshot.",
        "required": true,
        "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
        "location": "path"
@@ -3643,8 +3661,8 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
-       "default": "100",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "default": "500",
        "format": "uint32",
        "minimum": "0",
        "maximum": "500",
@@ -3791,8 +3809,8 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
-       "default": "100",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "default": "500",
        "format": "uint32",
        "minimum": "0",
        "maximum": "500",
@@ -3909,8 +3927,8 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
-       "default": "100",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "default": "500",
        "format": "uint32",
        "minimum": "0",
        "maximum": "500",
@@ -4069,8 +4087,8 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
-       "default": "100",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "default": "500",
        "format": "uint32",
        "minimum": "0",
        "maximum": "500",
@@ -4168,8 +4186,8 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
-       "default": "100",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "default": "500",
        "format": "uint32",
        "minimum": "0",
        "maximum": "500",
@@ -4274,8 +4292,8 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
-       "default": "100",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "default": "500",
        "format": "uint32",
        "minimum": "0",
        "maximum": "500",
@@ -4414,8 +4432,8 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
-       "default": "100",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "default": "500",
        "format": "uint32",
        "minimum": "0",
        "maximum": "500",
@@ -4662,8 +4680,8 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
-       "default": "100",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "default": "500",
        "format": "uint32",
        "minimum": "0",
        "maximum": "500",
@@ -4759,8 +4777,8 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
-       "default": "100",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "default": "500",
        "format": "uint32",
        "minimum": "0",
        "maximum": "500",
@@ -5105,8 +5123,8 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
-       "default": "100",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "default": "500",
        "format": "uint32",
        "minimum": "0",
        "maximum": "500",
@@ -5363,8 +5381,8 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
-       "default": "100",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "default": "500",
        "format": "uint32",
        "minimum": "0",
        "maximum": "500",
@@ -5411,8 +5429,8 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
-       "default": "100",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "default": "500",
        "format": "uint32",
        "minimum": "0",
        "maximum": "500",
@@ -5496,8 +5514,8 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
-       "default": "100",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "default": "500",
        "format": "uint32",
        "minimum": "0",
        "maximum": "500",
@@ -5644,8 +5662,8 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
-       "default": "100",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "default": "500",
        "format": "uint32",
        "minimum": "0",
        "maximum": "500",
@@ -5826,8 +5844,8 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
-       "default": "100",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "default": "500",
        "format": "uint32",
        "minimum": "0",
        "maximum": "500",
@@ -5915,8 +5933,8 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
-       "default": "100",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "default": "500",
        "format": "uint32",
        "minimum": "0",
        "maximum": "500",
@@ -6055,8 +6073,8 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
-       "default": "100",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "default": "500",
        "format": "uint32",
        "minimum": "0",
        "maximum": "500",
@@ -6168,8 +6186,8 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
-       "default": "100",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "default": "500",
        "format": "uint32",
        "minimum": "0",
        "maximum": "500",
@@ -6302,8 +6320,8 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
-       "default": "100",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "default": "500",
        "format": "uint32",
        "minimum": "0",
        "maximum": "500",
@@ -6506,8 +6524,8 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
-       "default": "100",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "default": "500",
        "format": "uint32",
        "minimum": "0",
        "maximum": "500",
@@ -6775,8 +6793,8 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
-       "default": "100",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "default": "500",
        "format": "uint32",
        "minimum": "0",
        "maximum": "500",
@@ -6864,8 +6882,8 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 100.",
-       "default": "100",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "default": "500",
        "format": "uint32",
        "minimum": "0",
        "maximum": "500",

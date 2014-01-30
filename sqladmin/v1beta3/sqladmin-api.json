@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"_UU0hweWJUeoapnMzW_8ULttsqM/URh81wKNn5zQmrIhHLk7urTvYt8\"",
+ "etag": "\"R6H4aXXmd1SZaWpEcGSkC2StmNw/IDoOMQcdCXbs-r4-e9r1yLsOZZ8\"",
  "discoveryVersion": "v1",
  "id": "sqladmin:v1beta3",
  "name": "sqladmin",
@@ -769,6 +769,7 @@
     },
     "expirationTime": {
      "type": "string",
+     "description": "Time when the certificate expires.",
      "format": "date-time"
     },
     "instance": {

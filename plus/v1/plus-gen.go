@@ -884,8 +884,8 @@ type Person struct {
 	// BraggingRights: The "bragging rights" line of this person.
 	BraggingRights string `json:"braggingRights,omitempty"`
 
-	// CircledByCount: If a Google+ Page and for followers who are visible,
-	// the number of people who have added this page to a circle.
+	// CircledByCount: For followers who are visible, the number of people
+	// who have added this person or page to a circle.
 	CircledByCount int64 `json:"circledByCount,omitempty"`
 
 	// Cover: The cover photo content.
@@ -1242,7 +1242,7 @@ func (c *ActivitiesGetCall) Do() (*Activity, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1335,7 +1335,7 @@ func (c *ActivitiesListCall) Do() (*ActivityFeed, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1473,7 +1473,7 @@ func (c *ActivitiesSearchCall) Do() (*ActivityFeed, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1572,7 +1572,7 @@ func (c *CommentsGetCall) Do() (*Comment, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1671,7 +1671,7 @@ func (c *CommentsListCall) Do() (*CommentFeed, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1786,7 +1786,7 @@ func (c *MomentsInsertCall) Do() (*Moment, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1919,7 +1919,7 @@ func (c *MomentsListCall) Do() (*MomentsFeed, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2021,7 +2021,7 @@ func (c *MomentsRemoveCall) Do() error {
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -2080,7 +2080,7 @@ func (c *PeopleGetCall) Do() (*Person, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2184,7 +2184,7 @@ func (c *PeopleListCall) Do() (*PeopleFeed, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2319,7 +2319,7 @@ func (c *PeopleListByActivityCall) Do() (*PeopleFeed, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2449,7 +2449,7 @@ func (c *PeopleSearchCall) Do() (*PeopleFeed, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}

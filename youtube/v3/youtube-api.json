@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"_UU0hweWJUeoapnMzW_8ULttsqM/yBAS7E9j0Hk6xooGiHdbXGVAPUc\"",
+ "etag": "\"R6H4aXXmd1SZaWpEcGSkC2StmNw/SdqX7DLA7xZK3QMQbYGzGWKYEZA\"",
  "discoveryVersion": "v1",
  "id": "youtube:v3",
  "name": "youtube",
@@ -581,6 +581,10 @@
      "$ref": "ChannelContentDetails",
      "description": "The contentDetails object encapsulates information about the channel's content."
     },
+    "contentOwnerDetails": {
+     "$ref": "ChannelContentOwnerDetails",
+     "description": "The contentOwnerDetails object encapsulates channel data that is relevant for YouTube Partners linked with the channel."
+    },
     "conversionPings": {
      "$ref": "ChannelConversionPings",
      "description": "The conversionPings object encapsulates information about conversion pings that need to be respected by the channel."
@@ -722,6 +726,22 @@
        "description": "The ID of the playlist that contains the channel\"s watch later playlist. Use the playlistItems.insert and  playlistItems.delete to add or remove items from that list."
       }
      }
+    }
+   }
+  },
+  "ChannelContentOwnerDetails": {
+   "id": "ChannelContentOwnerDetails",
+   "type": "object",
+   "description": "The contentOwnerDetails object encapsulates channel data that is relevant for YouTube Partners linked with the channel.",
+   "properties": {
+    "contentOwner": {
+     "type": "string",
+     "description": "The ID of the content owner linked to the channel."
+    },
+    "timeLinked": {
+     "type": "string",
+     "description": "The date and time of when the channel was linked to the content owner. The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.",
+     "format": "date-time"
     }
    }
   },

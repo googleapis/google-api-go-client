@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"qMhxoRFWKZK4K3KdZJuqms1o3fc/eYPSUUittvTUsdwxdJRMVIUXPek\"",
+ "etag": "\"R6H4aXXmd1SZaWpEcGSkC2StmNw/ALLsz63BjCgWbD_pUtK6JxVYi8Y\"",
  "discoveryVersion": "v1",
  "id": "shopping:v1",
  "name": "shopping",
@@ -638,39 +638,6 @@
       }
      }
     },
-    "internal1": {
-     "type": "array",
-     "description": "Google Internal.",
-     "items": {
-      "type": "string"
-     }
-    },
-    "internal10": {
-     "type": "array",
-     "description": "Google Internal.",
-     "items": {
-      "type": "string"
-     }
-    },
-    "internal12": {
-     "type": "string",
-     "description": "Google Internal."
-    },
-    "internal13": {
-     "type": "number",
-     "description": "Google Internal.",
-     "format": "double"
-    },
-    "internal14": {
-     "type": "number",
-     "description": "Google Internal.",
-     "format": "double"
-    },
-    "internal15": {
-     "type": "number",
-     "description": "Google Internal.",
-     "format": "double"
-    },
     "internal16": {
      "type": "object",
      "description": "Google Internal. Attribute names are deliberately vague.",
@@ -687,44 +654,6 @@
        "type": "string",
        "format": "int64"
       }
-     }
-    },
-    "internal3": {
-     "type": "string",
-     "description": "Google Internal."
-    },
-    "internal4": {
-     "type": "array",
-     "description": "Google Internal.",
-     "items": {
-      "type": "object",
-      "properties": {
-       "confidence": {
-        "type": "number",
-        "description": "Google Internal.",
-        "format": "double"
-       },
-       "node": {
-        "type": "integer",
-        "description": "Google Internal.",
-        "format": "int32"
-       }
-      }
-     }
-    },
-    "internal6": {
-     "type": "string",
-     "description": "Google Internal."
-    },
-    "internal7": {
-     "type": "boolean",
-     "description": "Google Internal."
-    },
-    "internal8": {
-     "type": "array",
-     "description": "Google Internal.",
-     "items": {
-      "type": "string"
      }
     },
     "inventories": {
@@ -825,10 +754,6 @@
      "items": {
       "type": "string"
      }
-    },
-    "plusOne": {
-     "type": "string",
-     "description": "Code to add to the page to render the +1 content."
     },
     "providedId": {
      "type": "string",
@@ -1160,11 +1085,6 @@
       "restrictBy": {
        "type": "string",
        "description": "Restriction specification",
-       "location": "query"
-      },
-      "safe": {
-       "type": "boolean",
-       "description": "Whether safe search is enabled. Default: true",
        "location": "query"
       },
       "source": {

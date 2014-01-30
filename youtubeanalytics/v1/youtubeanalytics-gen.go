@@ -215,7 +215,7 @@ func (c *ReportsQueryCall) Do() (*ResultTable, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}

@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"_UU0hweWJUeoapnMzW_8ULttsqM/6BKryY7xXCfpi_SWyFmbgtFDNRs\"",
+ "etag": "\"R6H4aXXmd1SZaWpEcGSkC2StmNw/ov44EoOftUAJSJNvA3rrfvGfPuU\"",
  "discoveryVersion": "v1",
  "id": "gamesManagement:v1management",
  "name": "gamesManagement",
@@ -70,7 +70,7 @@
   "oauth2": {
    "scopes": {
     "https://www.googleapis.com/auth/games": {
-     "description": "View and manage your game activity"
+     "description": "Share your Google+ profile information and view and manage your game activity"
     },
     "https://www.googleapis.com/auth/plus.login": {
      "description": "Know your basic profile info and list of people in your circles."
@@ -119,6 +119,22 @@
     "updateOccurred": {
      "type": "boolean",
      "description": "Flag to indicate if the requested update actually occurred."
+    }
+   }
+  },
+  "GamesPlayedResource": {
+   "id": "GamesPlayedResource",
+   "type": "object",
+   "description": "This is a JSON template for 3P metadata about a player playing a game.",
+   "properties": {
+    "autoMatched": {
+     "type": "boolean",
+     "description": "True if the player was auto-matched with the currently authenticated user."
+    },
+    "timeMillis": {
+     "type": "string",
+     "description": "The last time the player played the game in milliseconds since the epoch in UTC.",
+     "format": "int64"
     }
    }
   },
@@ -183,6 +199,10 @@
      "type": "string",
      "description": "Uniquely identifies the type of this resource. Value is always the fixed string gamesManagement#player.",
      "default": "gamesManagement#player"
+    },
+    "lastPlayedWith": {
+     "$ref": "GamesPlayedResource",
+     "description": "Details about the last time this player played a multiplayer game with the currently authenticated player. Populated for PLAYED_WITH player collection members."
     },
     "playerId": {
      "type": "string",
@@ -388,6 +408,20 @@
      "response": {
       "$ref": "PlayerScoreResetResponse"
      },
+     "scopes": [
+      "https://www.googleapis.com/auth/games",
+      "https://www.googleapis.com/auth/plus.login"
+     ]
+    }
+   }
+  },
+  "turnBasedMatches": {
+   "methods": {
+    "reset": {
+     "id": "gamesManagement.turnBasedMatches.reset",
+     "path": "turnbasedmatches/reset",
+     "httpMethod": "POST",
+     "description": "Reset all turn-based match data for a user. This method is only accessible to whitelisted tester accounts for your application.",
      "scopes": [
       "https://www.googleapis.com/auth/games",
       "https://www.googleapis.com/auth/plus.login"

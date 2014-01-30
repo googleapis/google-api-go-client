@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"_UU0hweWJUeoapnMzW_8ULttsqM/HqXrvEeuZV7fVbX7lTgVYLdSy_g\"",
+ "etag": "\"R6H4aXXmd1SZaWpEcGSkC2StmNw/TO0nvlGiFkC4eBcMUbWL9BiW0xc\"",
  "discoveryVersion": "v1",
  "id": "blogger:v3",
  "name": "blogger",
@@ -226,6 +226,10 @@
     "photosAlbumKey": {
      "type": "string",
      "description": "The Photo Album Key for the user when adding photos to the blog"
+    },
+    "role": {
+     "type": "string",
+     "description": "Access permissions that the user has for the blog (ADMIN, AUTHOR, or READER)."
     },
     "userId": {
      "type": "string",
@@ -880,6 +884,21 @@
        "description": "Maximum number of posts to pull back with the blog.",
        "format": "uint32",
        "location": "query"
+      },
+      "view": {
+       "type": "string",
+       "description": "Access level with which to view the blogs. Note that some fields require elevated access.",
+       "enum": [
+        "ADMIN",
+        "AUTHOR",
+        "READER"
+       ],
+       "enumDescriptions": [
+        "Admin level detail",
+        "Author level detail",
+        "Reader level detail"
+       ],
+       "location": "query"
       }
      },
      "parameterOrder": [
@@ -903,6 +922,21 @@
        "type": "string",
        "description": "The URL of the blog to retrieve.",
        "required": true,
+       "location": "query"
+      },
+      "view": {
+       "type": "string",
+       "description": "Access level with which to view the blogs. Note that some fields require elevated access.",
+       "enum": [
+        "ADMIN",
+        "AUTHOR",
+        "READER"
+       ],
+       "enumDescriptions": [
+        "Admin level detail",
+        "Author level detail",
+        "Reader level detail"
+       ],
        "location": "query"
       }
      },
@@ -928,6 +962,22 @@
        "description": "Whether the response is a list of blogs with per-user information instead of just blogs.",
        "location": "query"
       },
+      "role": {
+       "type": "string",
+       "description": "User access types for blogs to include in the results, e.g. AUTHOR will return blogs where the user has author level access. If no roles are specified, defaults to ADMIN and AUTHOR roles.",
+       "enum": [
+        "ADMIN",
+        "AUTHOR",
+        "READER"
+       ],
+       "enumDescriptions": [
+        "Admin role - User has Admin level access.",
+        "Author role - User has Author level access.",
+        "Reader role - User has Reader level access."
+       ],
+       "repeated": true,
+       "location": "query"
+      },
       "userId": {
        "type": "string",
        "description": "ID of the user whose blogs are to be fetched. Either the word 'self' (sans quote marks) or the user's profile identifier.",
@@ -936,6 +986,7 @@
       },
       "view": {
        "type": "string",
+       "description": "Access level with which to view the blogs. Note that some fields require elevated access.",
        "enum": [
         "ADMIN",
         "AUTHOR",
@@ -944,7 +995,7 @@
        "enumDescriptions": [
         "Admin level detail",
         "Author level detail",
-        "Admin level detail"
+        "Reader level detail"
        ],
        "location": "query"
       }
@@ -1058,6 +1109,21 @@
        "description": "ID of the post to fetch posts from.",
        "required": true,
        "location": "path"
+      },
+      "view": {
+       "type": "string",
+       "description": "Access level for the requested comment (default: READER). Note that some comments will require elevated permissions, for example comments where the parent posts which is in a draft state, or comments that are pending moderation.",
+       "enum": [
+        "ADMIN",
+        "AUTHOR",
+        "READER"
+       ],
+       "enumDescriptions": [
+        "Admin level detail",
+        "Author level detail",
+        "Admin level detail"
+       ],
+       "location": "query"
       }
      },
      "parameterOrder": [
@@ -1119,7 +1185,7 @@
        "format": "date-time",
        "location": "query"
       },
-      "statuses": {
+      "status": {
        "type": "string",
        "enum": [
         "emptied",
@@ -1138,6 +1204,7 @@
       },
       "view": {
        "type": "string",
+       "description": "Access level with which to view the returned result. Note that some fields require elevated access.",
        "enum": [
         "ADMIN",
         "AUTHOR",
@@ -1146,7 +1213,7 @@
        "enumDescriptions": [
         "Admin level detail",
         "Author level detail",
-        "Admin level detail"
+        "Reader level detail"
        ],
        "location": "query"
       }
@@ -1390,7 +1457,7 @@
        "enumDescriptions": [
         "Admin level detail",
         "Author level detail",
-        "Admin level detail"
+        "Reader level detail"
        ],
        "location": "query"
       }
@@ -1450,16 +1517,14 @@
        "description": "Whether to retrieve the Page bodies.",
        "location": "query"
       },
-      "statuses": {
+      "status": {
        "type": "string",
        "enum": [
         "draft",
-        "imported",
         "live"
        ],
        "enumDescriptions": [
         "Draft (unpublished) Pages",
-        "Pages that have had their content removed",
         "Pages that are publicly visible"
        ],
        "repeated": true,
@@ -1467,6 +1532,7 @@
       },
       "view": {
        "type": "string",
+       "description": "Access level with which to view the returned result. Note that some fields require elevated access.",
        "enum": [
         "ADMIN",
         "AUTHOR",
@@ -1475,7 +1541,7 @@
        "enumDescriptions": [
         "Admin level detail",
         "Author level detail",
-        "Admin level detail"
+        "Reader level detail"
        ],
        "location": "query"
       }
@@ -1565,7 +1631,7 @@
      "id": "blogger.postUserInfos.get",
      "path": "users/{userId}/blogs/{blogId}/posts/{postId}",
      "httpMethod": "GET",
-     "description": "Gets one post and user info pair by postId and userId.",
+     "description": "Gets one post and user info pair, by post id and user id. The post user info contains per-user information about the post, such as access rights, specific to the user.",
      "parameters": {
       "blogId": {
        "type": "string",
@@ -1609,7 +1675,7 @@
      "id": "blogger.postUserInfos.list",
      "path": "users/{userId}/blogs/{blogId}/posts",
      "httpMethod": "GET",
-     "description": "Retrieves a list of post and user info pairs, possibly filtered.",
+     "description": "Retrieves a list of post and post user info pairs, possibly filtered. The post user info contains per-user information about the post, such as access rights, specific to the user.",
      "parameters": {
       "blogId": {
        "type": "string",
@@ -1625,7 +1691,8 @@
       },
       "fetchBodies": {
        "type": "boolean",
-       "description": "Whether the body content of posts is included.",
+       "description": "Whether the body content of posts is included. Default is false.",
+       "default": "false",
        "location": "query"
       },
       "labels": {
@@ -1641,7 +1708,7 @@
       },
       "orderBy": {
        "type": "string",
-       "description": "Sort search results",
+       "description": "Sort order applied to search results. Default is published.",
        "default": "PUBLISHED",
        "enum": [
         "published",
@@ -1664,7 +1731,7 @@
        "format": "date-time",
        "location": "query"
       },
-      "statuses": {
+      "status": {
        "type": "string",
        "enum": [
         "draft",
@@ -1687,6 +1754,7 @@
       },
       "view": {
        "type": "string",
+       "description": "Access level with which to view the returned result. Note that some fields require elevated access.",
        "enum": [
         "ADMIN",
         "AUTHOR",
@@ -1755,6 +1823,17 @@
        "required": true,
        "location": "path"
       },
+      "fetchBody": {
+       "type": "boolean",
+       "description": "Whether the body content of the post is included (default: true). This should be set to false when the post bodies are not required, to help minimize traffic.",
+       "default": "true",
+       "location": "query"
+      },
+      "fetchImages": {
+       "type": "boolean",
+       "description": "Whether image URL metadata for each post is included (default: false).",
+       "location": "query"
+      },
       "maxComments": {
        "type": "integer",
        "description": "Maximum number of comments to pull back on a post.",
@@ -1769,6 +1848,7 @@
       },
       "view": {
        "type": "string",
+       "description": "Access level with which to view the returned result. Note that some fields require elevated access.",
        "enum": [
         "ADMIN",
         "AUTHOR",
@@ -1777,7 +1857,7 @@
        "enumDescriptions": [
         "Admin level detail",
         "Author level detail",
-        "Admin level detail"
+        "Reader level detail"
        ],
        "location": "query"
       }
@@ -1820,6 +1900,7 @@
       },
       "view": {
        "type": "string",
+       "description": "Access level with which to view the returned result. Note that some fields require elevated access.",
        "enum": [
         "ADMIN",
         "AUTHOR",
@@ -1828,7 +1909,7 @@
        "enumDescriptions": [
         "Admin level detail",
         "Author level detail",
-        "Admin level detail"
+        "Reader level detail"
        ],
        "location": "query"
       }
@@ -1857,9 +1938,20 @@
        "required": true,
        "location": "path"
       },
+      "fetchBody": {
+       "type": "boolean",
+       "description": "Whether the body content of the post is included with the result (default: true).",
+       "default": "true",
+       "location": "query"
+      },
+      "fetchImages": {
+       "type": "boolean",
+       "description": "Whether image URL metadata for each post is included in the returned result (default: false).",
+       "location": "query"
+      },
       "isDraft": {
        "type": "boolean",
-       "description": "Whether to create the post as a draft",
+       "description": "Whether to create the post as a draft (default: false).",
        "location": "query"
       }
      },
@@ -1941,23 +2033,25 @@
        "format": "date-time",
        "location": "query"
       },
-      "statuses": {
+      "status": {
        "type": "string",
+       "description": "Statuses to include in the results.",
        "enum": [
         "draft",
         "live",
         "scheduled"
        ],
        "enumDescriptions": [
-        "Draft posts",
+        "Draft (non-published) posts.",
         "Published posts",
-        "Posts that are scheduled to publish in future."
+        "Posts that are scheduled to publish in the future."
        ],
        "repeated": true,
        "location": "query"
       },
       "view": {
        "type": "string",
+       "description": "Access level with which to view the returned result. Note that some fields require escalated access.",
        "enum": [
         "ADMIN",
         "AUTHOR",
@@ -1994,11 +2088,38 @@
        "required": true,
        "location": "path"
       },
+      "fetchBody": {
+       "type": "boolean",
+       "description": "Whether the body content of the post is included with the result (default: true).",
+       "default": "true",
+       "location": "query"
+      },
+      "fetchImages": {
+       "type": "boolean",
+       "description": "Whether image URL metadata for each post is included in the returned result (default: false).",
+       "location": "query"
+      },
+      "maxComments": {
+       "type": "integer",
+       "description": "Maximum number of comments to retrieve with the returned post.",
+       "format": "uint32",
+       "location": "query"
+      },
       "postId": {
        "type": "string",
        "description": "The ID of the Post.",
        "required": true,
        "location": "path"
+      },
+      "publish": {
+       "type": "boolean",
+       "description": "Whether a publish action should be performed when the post is updated (default: false).",
+       "location": "query"
+      },
+      "revert": {
+       "type": "boolean",
+       "description": "Whether a revert action should be performed when the post is updated (default: false).",
+       "location": "query"
       }
      },
      "parameterOrder": [
@@ -2144,11 +2265,38 @@
        "required": true,
        "location": "path"
       },
+      "fetchBody": {
+       "type": "boolean",
+       "description": "Whether the body content of the post is included with the result (default: true).",
+       "default": "true",
+       "location": "query"
+      },
+      "fetchImages": {
+       "type": "boolean",
+       "description": "Whether image URL metadata for each post is included in the returned result (default: false).",
+       "location": "query"
+      },
+      "maxComments": {
+       "type": "integer",
+       "description": "Maximum number of comments to retrieve with the returned post.",
+       "format": "uint32",
+       "location": "query"
+      },
       "postId": {
        "type": "string",
        "description": "The ID of the Post.",
        "required": true,
        "location": "path"
+      },
+      "publish": {
+       "type": "boolean",
+       "description": "Whether a publish action should be performed when the post is updated (default: false).",
+       "location": "query"
+      },
+      "revert": {
+       "type": "boolean",
+       "description": "Whether a revert action should be performed when the post is updated (default: false).",
+       "location": "query"
       }
      },
      "parameterOrder": [

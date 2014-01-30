@@ -99,6 +99,7 @@ func New(client *http.Client) (*Service, error) {
 	}
 	s := &Service{client: client}
 	s.Asps = NewAspsService(s)
+	s.Channels = NewChannelsService(s)
 	s.Chromeosdevices = NewChromeosdevicesService(s)
 	s.Groups = NewGroupsService(s)
 	s.Members = NewMembersService(s)
@@ -115,6 +116,8 @@ type Service struct {
 	client *http.Client
 
 	Asps *AspsService
+
+	Channels *ChannelsService
 
 	Chromeosdevices *ChromeosdevicesService
 
@@ -141,6 +144,15 @@ func NewAspsService(s *Service) *AspsService {
 }
 
 type AspsService struct {
+	s *Service
+}
+
+func NewChannelsService(s *Service) *ChannelsService {
+	rs := &ChannelsService{s: s}
+	return rs
+}
+
+type ChannelsService struct {
 	s *Service
 }
 
@@ -292,25 +304,29 @@ type Aliases struct {
 }
 
 type Asp struct {
-	// CodeId: Code Id of the Access code.
+	// CodeId: The unique ID of the ASP.
 	CodeId int64 `json:"codeId,omitempty"`
 
-	// CreationTime: Time when the ASP was created.
+	// CreationTime: The time when the ASP was created. Expressed in Unix
+	// time format.
 	CreationTime int64 `json:"creationTime,omitempty,string"`
 
-	// Etag: ETag of the resource.
+	// Etag: ETag of the ASP.
 	Etag string `json:"etag,omitempty"`
 
-	// Kind: The type of the resource.
+	// Kind: The type of the API resource. This is always
+	// admin#directory#asp.
 	Kind string `json:"kind,omitempty"`
 
-	// LastTimeUsed: Time when the ASP was last used.
+	// LastTimeUsed: The time when the ASP was last used. Expressed in Unix
+	// time format.
 	LastTimeUsed int64 `json:"lastTimeUsed,omitempty,string"`
 
-	// Name: Name of the application.
+	// Name: The name of the application that the user, represented by their
+	// userId, entered when the ASP was created.
 	Name string `json:"name,omitempty"`
 
-	// UserKey: User who has issued the ASP.
+	// UserKey: The unique ID of the user who issued the ASP.
 	UserKey string `json:"userKey,omitempty"`
 }
 
@@ -318,11 +334,54 @@ type Asps struct {
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
 
-	// Items: Asps resource.
+	// Items: A list of ASP resources.
 	Items []*Asp `json:"items,omitempty"`
 
-	// Kind: The type of the resource.
+	// Kind: The type of the API resource. This is always
+	// admin#directory#aspList.
 	Kind string `json:"kind,omitempty"`
+}
+
+type Channel struct {
+	// Address: The address where notifications are delivered for this
+	// channel.
+	Address string `json:"address,omitempty"`
+
+	// Expiration: Date and time of notification channel expiration,
+	// expressed as a Unix timestamp, in milliseconds. Optional.
+	Expiration int64 `json:"expiration,omitempty,string"`
+
+	// Id: A UUID or similar unique string that identifies this channel.
+	Id string `json:"id,omitempty"`
+
+	// Kind: Identifies this as a notification channel used to watch for
+	// changes to a resource. Value: the fixed string "api#channel".
+	Kind string `json:"kind,omitempty"`
+
+	// Params: Additional parameters controlling delivery channel behavior.
+	// Optional.
+	Params *ChannelParams `json:"params,omitempty"`
+
+	// Payload: A Boolean value to indicate whether payload is wanted.
+	// Optional.
+	Payload bool `json:"payload,omitempty"`
+
+	// ResourceId: An opaque ID that identifies the resource being watched
+	// on this channel. Stable across different API versions.
+	ResourceId string `json:"resourceId,omitempty"`
+
+	// ResourceUri: A version-specific identifier for the watched resource.
+	ResourceUri string `json:"resourceUri,omitempty"`
+
+	// Token: An arbitrary string delivered to the target address with each
+	// notification delivered over this channel. Optional.
+	Token string `json:"token,omitempty"`
+
+	// Type: The type of delivery mechanism used for this channel.
+	Type string `json:"type,omitempty"`
+}
+
+type ChannelParams struct {
 }
 
 type ChromeOsDevice struct {
@@ -659,28 +718,33 @@ type OrgUnits struct {
 }
 
 type Token struct {
-	// Anonymous: Is the token anonymous?
+	// Anonymous: Whether the application is registered with Google. The
+	// value is true if the application has an anonymous Client ID.
 	Anonymous bool `json:"anonymous,omitempty"`
 
-	// ClientId: Domain to which the token is issued.
+	// ClientId: The Client ID of the application the token is issued to.
 	ClientId string `json:"clientId,omitempty"`
 
-	// DisplayText: Displayable name of Domain to which the token is issued.
+	// DisplayText: The displayable name of the application the token is
+	// issued to.
 	DisplayText string `json:"displayText,omitempty"`
 
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
 
-	// Kind: The type of the resource.
+	// Kind: The type of the API resource. This is always
+	// admin#directory#token.
 	Kind string `json:"kind,omitempty"`
 
-	// NativeApp: Is the token for native app?
+	// NativeApp: Whether the token is issued to an installed application.
+	// The value is true if the application is installed to a desktop or
+	// mobile device.
 	NativeApp bool `json:"nativeApp,omitempty"`
 
-	// Scopes: List of scopes.
+	// Scopes: A list of authorization scopes the application is granted.
 	Scopes []string `json:"scopes,omitempty"`
 
-	// UserKey: Obfuscated user_id of the user who has issued the token.
+	// UserKey: The unique ID of the user that issued the token.
 	UserKey string `json:"userKey,omitempty"`
 }
 
@@ -688,10 +752,11 @@ type Tokens struct {
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
 
-	// Items: Tokens resource.
+	// Items: A list of Token resources.
 	Items []*Token `json:"items,omitempty"`
 
-	// Kind: The type of the resource.
+	// Kind: The type of the API resource. This is always
+	// admin#directory#tokenList.
 	Kind string `json:"kind,omitempty"`
 }
 
@@ -1037,13 +1102,16 @@ type VerificationCode struct {
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
 
-	// Kind: The type of the resource.
+	// Kind: The type of the resource. This is always
+	// admin#directory#verificationCode.
 	Kind string `json:"kind,omitempty"`
 
-	// UserId: Obfuscated user_id of the account holder.
+	// UserId: The obfuscated unique ID of the user.
 	UserId string `json:"userId,omitempty"`
 
-	// VerificationCode: A verification code for that user
+	// VerificationCode: A current verification code for the user.
+	// Invalidated or used verification codes are not returned as part of
+	// the result.
 	VerificationCode string `json:"verificationCode,omitempty"`
 }
 
@@ -1051,10 +1119,11 @@ type VerificationCodes struct {
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
 
-	// Items: verification codes resource.
+	// Items: A list of verification code resources.
 	Items []*VerificationCode `json:"items,omitempty"`
 
-	// Kind: The type of the resource.
+	// Kind: The type of the resource. This is always
+	// admin#directory#verificationCodesList.
 	Kind string `json:"kind,omitempty"`
 }
 
@@ -1067,8 +1136,7 @@ type AspsDeleteCall struct {
 	opt_    map[string]interface{}
 }
 
-// Delete: Delete the application specific password issued by the user
-// for a codeId.
+// Delete: Delete an ASP issued by a user.
 func (r *AspsService) Delete(userKey string, codeId int64) *AspsDeleteCall {
 	c := &AspsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userKey = userKey
@@ -1091,13 +1159,13 @@ func (c *AspsDeleteCall) Do() error {
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
 	return nil
 	// {
-	//   "description": "Delete the application specific password issued by the user for a codeId.",
+	//   "description": "Delete an ASP issued by a user.",
 	//   "httpMethod": "DELETE",
 	//   "id": "directory.asps.delete",
 	//   "parameterOrder": [
@@ -1106,14 +1174,14 @@ func (c *AspsDeleteCall) Do() error {
 	//   ],
 	//   "parameters": {
 	//     "codeId": {
-	//       "description": "The codeId.",
+	//       "description": "The unique ID of the ASP to be deleted.",
 	//       "format": "int32",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "integer"
 	//     },
 	//     "userKey": {
-	//       "description": "Email or immutable Id of the user",
+	//       "description": "Identifies the user in the API request. The value can be the user's primary email address, alias email address, or unique user ID.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1136,8 +1204,7 @@ type AspsGetCall struct {
 	opt_    map[string]interface{}
 }
 
-// Get: Get the application specific password issued by the user for a
-// codeId.
+// Get: Get information about an ASP issued by a user.
 func (r *AspsService) Get(userKey string, codeId int64) *AspsGetCall {
 	c := &AspsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userKey = userKey
@@ -1160,7 +1227,7 @@ func (c *AspsGetCall) Do() (*Asp, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1170,7 +1237,7 @@ func (c *AspsGetCall) Do() (*Asp, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Get the application specific password issued by the user for a codeId.",
+	//   "description": "Get information about an ASP issued by a user.",
 	//   "httpMethod": "GET",
 	//   "id": "directory.asps.get",
 	//   "parameterOrder": [
@@ -1179,14 +1246,14 @@ func (c *AspsGetCall) Do() (*Asp, error) {
 	//   ],
 	//   "parameters": {
 	//     "codeId": {
-	//       "description": "The codeid.",
+	//       "description": "The unique ID of the ASP.",
 	//       "format": "int32",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "integer"
 	//     },
 	//     "userKey": {
-	//       "description": "Email or immutable Id of the user",
+	//       "description": "Identifies the user in the API request. The value can be the user's primary email address, alias email address, or unique user ID.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1211,7 +1278,7 @@ type AspsListCall struct {
 	opt_    map[string]interface{}
 }
 
-// List: List the application specific passwords issued by the user.
+// List: List the ASPs issued by a user.
 func (r *AspsService) List(userKey string) *AspsListCall {
 	c := &AspsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userKey = userKey
@@ -1232,7 +1299,7 @@ func (c *AspsListCall) Do() (*Asps, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1242,7 +1309,7 @@ func (c *AspsListCall) Do() (*Asps, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "List the application specific passwords issued by the user.",
+	//   "description": "List the ASPs issued by a user.",
 	//   "httpMethod": "GET",
 	//   "id": "directory.asps.list",
 	//   "parameterOrder": [
@@ -1250,7 +1317,7 @@ func (c *AspsListCall) Do() (*Asps, error) {
 	//   ],
 	//   "parameters": {
 	//     "userKey": {
-	//       "description": "Email or immutable Id of the user",
+	//       "description": "Identifies the user in the API request. The value can be the user's primary email address, alias email address, or unique user ID.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1262,6 +1329,64 @@ func (c *AspsListCall) Do() (*Asps, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/admin.directory.user.security"
+	//   ]
+	// }
+
+}
+
+// method id "admin.channels.stop":
+
+type ChannelsStopCall struct {
+	s       *Service
+	channel *Channel
+	opt_    map[string]interface{}
+}
+
+// Stop: Stop watching resources through this channel
+func (r *ChannelsService) Stop(channel *Channel) *ChannelsStopCall {
+	c := &ChannelsStopCall{s: r.s, opt_: make(map[string]interface{})}
+	c.channel = channel
+	return c
+}
+
+func (c *ChannelsStopCall) Do() error {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
+	if err != nil {
+		return err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/admin/directory/v1/", "/admin/directory_v1/channels/stop")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Stop watching resources through this channel",
+	//   "httpMethod": "POST",
+	//   "id": "admin.channels.stop",
+	//   "path": "/admin/directory_v1/channels/stop",
+	//   "request": {
+	//     "$ref": "Channel",
+	//     "parameterName": "resource"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.directory.user",
+	//     "https://www.googleapis.com/auth/admin.directory.user.alias",
+	//     "https://www.googleapis.com/auth/admin.directory.user.alias.readonly",
+	//     "https://www.googleapis.com/auth/admin.directory.user.readonly"
 	//   ]
 	// }
 
@@ -1309,7 +1434,7 @@ func (c *ChromeosdevicesGetCall) Do() (*ChromeOsDevice, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1457,7 +1582,7 @@ func (c *ChromeosdevicesListCall) Do() (*ChromeOsDevices, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1609,7 +1734,7 @@ func (c *ChromeosdevicesPatchCall) Do() (*ChromeOsDevice, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1717,7 +1842,7 @@ func (c *ChromeosdevicesUpdateCall) Do() (*ChromeOsDevice, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1804,7 +1929,7 @@ func (c *GroupsDeleteCall) Do() error {
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -1861,7 +1986,7 @@ func (c *GroupsGetCall) Do() (*Group, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1931,7 +2056,7 @@ func (c *GroupsInsertCall) Do() (*Group, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2037,7 +2162,7 @@ func (c *GroupsListCall) Do() (*Groups, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2128,7 +2253,7 @@ func (c *GroupsPatchCall) Do() (*Group, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2203,7 +2328,7 @@ func (c *GroupsUpdateCall) Do() (*Group, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2273,7 +2398,7 @@ func (c *GroupsAliasesDeleteCall) Do() error {
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -2345,7 +2470,7 @@ func (c *GroupsAliasesInsertCall) Do() (*Alias, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2412,7 +2537,7 @@ func (c *GroupsAliasesListCall) Do() (*Aliases, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2443,7 +2568,8 @@ func (c *GroupsAliasesListCall) Do() (*Aliases, error) {
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/admin.directory.group",
 	//     "https://www.googleapis.com/auth/admin.directory.group.readonly"
-	//   ]
+	//   ],
+	//   "supportsSubscription": true
 	// }
 
 }
@@ -2480,7 +2606,7 @@ func (c *MembersDeleteCall) Do() error {
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -2548,7 +2674,7 @@ func (c *MembersGetCall) Do() (*Member, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2630,7 +2756,7 @@ func (c *MembersInsertCall) Do() (*Member, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2728,7 +2854,7 @@ func (c *MembersListCall) Do() (*Members, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2824,7 +2950,7 @@ func (c *MembersPatchCall) Do() (*Member, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2910,7 +3036,7 @@ func (c *MembersUpdateCall) Do() (*Member, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2996,7 +3122,7 @@ func (c *MobiledevicesActionCall) Do() error {
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -3067,7 +3193,7 @@ func (c *MobiledevicesDeleteCall) Do() error {
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -3144,7 +3270,7 @@ func (c *MobiledevicesGetCall) Do() (*MobileDevice, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3292,7 +3418,7 @@ func (c *MobiledevicesListCall) Do() (*MobileDevices, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3429,7 +3555,7 @@ func (c *NotificationsDeleteCall) Do() error {
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -3444,13 +3570,13 @@ func (c *NotificationsDeleteCall) Do() error {
 	//   ],
 	//   "parameters": {
 	//     "customer": {
-	//       "description": "Obfuscated customer ID of the domain for which notification is to be deleted",
+	//       "description": "The unique ID for the customer's Google account. The customerId is also returned as part of the Users resource.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "notificationId": {
-	//       "description": "Id of the notification to be deleted.",
+	//       "description": "The unique ID of the notification.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -3473,7 +3599,7 @@ type NotificationsGetCall struct {
 	opt_           map[string]interface{}
 }
 
-// Get: Retrieves a notification
+// Get: Retrieves a notification.
 func (r *NotificationsService) Get(customer string, notificationId string) *NotificationsGetCall {
 	c := &NotificationsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.customer = customer
@@ -3496,7 +3622,7 @@ func (c *NotificationsGetCall) Do() (*Notification, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3506,7 +3632,7 @@ func (c *NotificationsGetCall) Do() (*Notification, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves a notification",
+	//   "description": "Retrieves a notification.",
 	//   "httpMethod": "GET",
 	//   "id": "directory.notifications.get",
 	//   "parameterOrder": [
@@ -3515,13 +3641,13 @@ func (c *NotificationsGetCall) Do() (*Notification, error) {
 	//   ],
 	//   "parameters": {
 	//     "customer": {
-	//       "description": "Obfuscated customer ID of the domain for which notification is to be retrieved",
+	//       "description": "The unique ID for the customer's Google account. The customerId is also returned as part of the Users resource.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "notificationId": {
-	//       "description": "Id of the notification to be retrieved.",
+	//       "description": "The unique ID of the notification.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -3553,23 +3679,23 @@ func (r *NotificationsService) List(customer string) *NotificationsListCall {
 	return c
 }
 
-// Language sets the optional parameter "language": Code of the language
-// in which the notifications are to be retrieved. Notifications will be
-// returned in English by default
+// Language sets the optional parameter "language": The ISO 639-1 code
+// of the language notifications are returned in. The default is English
+// (en).
 func (c *NotificationsListCall) Language(language string) *NotificationsListCall {
 	c.opt_["language"] = language
 	return c
 }
 
-// MaxResults sets the optional parameter "maxResults": Number of
-// notifications to be retrieved. Default is 100
+// MaxResults sets the optional parameter "maxResults": Maximum number
+// of notifications to return per page. The default is 100.
 func (c *NotificationsListCall) MaxResults(maxResults int64) *NotificationsListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Token for the page
-// to be retrieved
+// PageToken sets the optional parameter "pageToken": The token to
+// specify the page of results to retrieve.
 func (c *NotificationsListCall) PageToken(pageToken string) *NotificationsListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -3598,7 +3724,7 @@ func (c *NotificationsListCall) Do() (*Notifications, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3616,24 +3742,24 @@ func (c *NotificationsListCall) Do() (*Notifications, error) {
 	//   ],
 	//   "parameters": {
 	//     "customer": {
-	//       "description": "Obfuscated customer ID of the domain for which notifications are to be retrieved",
+	//       "description": "The unique ID for the customer's Google account.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "language": {
-	//       "description": "Code of the language in which the notifications are to be retrieved. Notifications will be returned in English by default",
+	//       "description": "The ISO 639-1 code of the language notifications are returned in. The default is English (en).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "description": "Number of notifications to be retrieved. Default is 100",
+	//       "description": "Maximum number of notifications to return per page. The default is 100.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Token for the page to be retrieved",
+	//       "description": "The token to specify the page of results to retrieve.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -3689,7 +3815,7 @@ func (c *NotificationsPatchCall) Do() (*Notification, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3708,13 +3834,13 @@ func (c *NotificationsPatchCall) Do() (*Notification, error) {
 	//   ],
 	//   "parameters": {
 	//     "customer": {
-	//       "description": "Obfuscated customer ID of the domain for which notification is to be updated",
+	//       "description": "The unique ID for the customer's Google account.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "notificationId": {
-	//       "description": "Id of the notification to be updated.",
+	//       "description": "The unique ID of the notification.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -3744,7 +3870,7 @@ type NotificationsUpdateCall struct {
 	opt_           map[string]interface{}
 }
 
-// Update: Updates a notification
+// Update: Updates a notification.
 func (r *NotificationsService) Update(customer string, notificationId string, notification *Notification) *NotificationsUpdateCall {
 	c := &NotificationsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.customer = customer
@@ -3774,7 +3900,7 @@ func (c *NotificationsUpdateCall) Do() (*Notification, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3784,7 +3910,7 @@ func (c *NotificationsUpdateCall) Do() (*Notification, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a notification",
+	//   "description": "Updates a notification.",
 	//   "httpMethod": "PUT",
 	//   "id": "directory.notifications.update",
 	//   "parameterOrder": [
@@ -3793,13 +3919,13 @@ func (c *NotificationsUpdateCall) Do() (*Notification, error) {
 	//   ],
 	//   "parameters": {
 	//     "customer": {
-	//       "description": "Obfuscated customer ID of the domain for which notification is to be updated",
+	//       "description": "The unique ID for the customer's Google account.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "notificationId": {
-	//       "description": "Id of the notification to be updated.",
+	//       "description": "The unique ID of the notification.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -3851,7 +3977,7 @@ func (c *OrgunitsDeleteCall) Do() error {
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -3919,7 +4045,7 @@ func (c *OrgunitsGetCall) Do() (*OrgUnit, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4000,7 +4126,7 @@ func (c *OrgunitsInsertCall) Do() (*OrgUnit, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4087,7 +4213,7 @@ func (c *OrgunitsListCall) Do() (*OrgUnits, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4183,7 +4309,7 @@ func (c *OrgunitsPatchCall) Do() (*OrgUnit, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4269,7 +4395,7 @@ func (c *OrgunitsUpdateCall) Do() (*OrgUnit, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4324,7 +4450,7 @@ type TokensDeleteCall struct {
 	opt_     map[string]interface{}
 }
 
-// Delete: Delete all OAuth tokens issued by the user for an app domain.
+// Delete: Delete all access tokens issued by a user for an application.
 func (r *TokensService) Delete(userKey string, clientId string) *TokensDeleteCall {
 	c := &TokensDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userKey = userKey
@@ -4347,13 +4473,13 @@ func (c *TokensDeleteCall) Do() error {
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
 	return nil
 	// {
-	//   "description": "Delete all OAuth tokens issued by the user for an app domain.",
+	//   "description": "Delete all access tokens issued by a user for an application.",
 	//   "httpMethod": "DELETE",
 	//   "id": "directory.tokens.delete",
 	//   "parameterOrder": [
@@ -4362,13 +4488,13 @@ func (c *TokensDeleteCall) Do() error {
 	//   ],
 	//   "parameters": {
 	//     "clientId": {
-	//       "description": "The app domain.",
+	//       "description": "The Client ID of the application the token is issued to.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "userKey": {
-	//       "description": "Email or immutable Id of the user",
+	//       "description": "Identifies the user in the API request. The value can be the user's primary email address, alias email address, or unique user ID.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -4391,7 +4517,7 @@ type TokensGetCall struct {
 	opt_     map[string]interface{}
 }
 
-// Get: Get the OAuth token issued by the user for an app domain.
+// Get: Get information about an access token issued by a user.
 func (r *TokensService) Get(userKey string, clientId string) *TokensGetCall {
 	c := &TokensGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userKey = userKey
@@ -4414,7 +4540,7 @@ func (c *TokensGetCall) Do() (*Token, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4424,7 +4550,7 @@ func (c *TokensGetCall) Do() (*Token, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Get the OAuth token issued by the user for an app domain.",
+	//   "description": "Get information about an access token issued by a user.",
 	//   "httpMethod": "GET",
 	//   "id": "directory.tokens.get",
 	//   "parameterOrder": [
@@ -4433,13 +4559,13 @@ func (c *TokensGetCall) Do() (*Token, error) {
 	//   ],
 	//   "parameters": {
 	//     "clientId": {
-	//       "description": "The app domain.",
+	//       "description": "The Client ID of the application the token is issued to.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "userKey": {
-	//       "description": "Email or immutable Id of the user",
+	//       "description": "Identifies the user in the API request. The value can be the user's primary email address, alias email address, or unique user ID.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -4464,7 +4590,8 @@ type TokensListCall struct {
 	opt_    map[string]interface{}
 }
 
-// List: List the OAuth tokens issued by the user.
+// List: Returns the set of current, valid verification codes for the
+// specified user.
 func (r *TokensService) List(userKey string) *TokensListCall {
 	c := &TokensListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userKey = userKey
@@ -4485,7 +4612,7 @@ func (c *TokensListCall) Do() (*Tokens, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4495,7 +4622,7 @@ func (c *TokensListCall) Do() (*Tokens, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "List the OAuth tokens issued by the user.",
+	//   "description": "Returns the set of current, valid verification codes for the specified user.",
 	//   "httpMethod": "GET",
 	//   "id": "directory.tokens.list",
 	//   "parameterOrder": [
@@ -4503,7 +4630,7 @@ func (c *TokensListCall) Do() (*Tokens, error) {
 	//   ],
 	//   "parameters": {
 	//     "userKey": {
-	//       "description": "Email or immutable Id of the user",
+	//       "description": "Identifies the user in the API request. The value can be the user's primary email address, alias email address, or unique user ID.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -4549,7 +4676,7 @@ func (c *UsersDeleteCall) Do() error {
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -4606,7 +4733,7 @@ func (c *UsersGetCall) Do() (*User, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4676,7 +4803,7 @@ func (c *UsersInsertCall) Do() (*User, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4730,6 +4857,13 @@ func (c *UsersListCall) Customer(customer string) *UsersListCall {
 // a multi-domain fill customer field instead.
 func (c *UsersListCall) Domain(domain string) *UsersListCall {
 	c.opt_["domain"] = domain
+	return c
+}
+
+// Event sets the optional parameter "event": Event on which
+// subscription is intended (if subscribing)
+func (c *UsersListCall) Event(event string) *UsersListCall {
+	c.opt_["event"] = event
 	return c
 }
 
@@ -4787,6 +4921,9 @@ func (c *UsersListCall) Do() (*Users, error) {
 	if v, ok := c.opt_["domain"]; ok {
 		params.Set("domain", fmt.Sprintf("%v", v))
 	}
+	if v, ok := c.opt_["event"]; ok {
+		params.Set("event", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
@@ -4814,7 +4951,7 @@ func (c *UsersListCall) Do() (*Users, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4835,6 +4972,25 @@ func (c *UsersListCall) Do() (*Users, error) {
 	//     },
 	//     "domain": {
 	//       "description": "Name of the domain. Fill this field to get users from only this domain. To return all users in a multi-domain fill customer field instead.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "event": {
+	//       "description": "Event on which subscription is intended (if subscribing)",
+	//       "enum": [
+	//         "add",
+	//         "delete",
+	//         "makeAdmin",
+	//         "undelete",
+	//         "update"
+	//       ],
+	//       "enumDescriptions": [
+	//         "User Created Event",
+	//         "User Deleted Event",
+	//         "User Admin Status Change Event",
+	//         "User Undeleted Event",
+	//         "User Updated Event"
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4897,7 +5053,8 @@ func (c *UsersListCall) Do() (*Users, error) {
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/admin.directory.user",
 	//     "https://www.googleapis.com/auth/admin.directory.user.readonly"
-	//   ]
+	//   ],
+	//   "supportsSubscription": true
 	// }
 
 }
@@ -4939,7 +5096,7 @@ func (c *UsersMakeAdminCall) Do() error {
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -5007,7 +5164,7 @@ func (c *UsersPatchCall) Do() (*User, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -5082,7 +5239,7 @@ func (c *UsersUndeleteCall) Do() error {
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -5150,7 +5307,7 @@ func (c *UsersUpdateCall) Do() (*User, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -5188,6 +5345,246 @@ func (c *UsersUpdateCall) Do() (*User, error) {
 
 }
 
+// method id "directory.users.watch":
+
+type UsersWatchCall struct {
+	s       *Service
+	channel *Channel
+	opt_    map[string]interface{}
+}
+
+// Watch: Watch for changes in users list
+func (r *UsersService) Watch(channel *Channel) *UsersWatchCall {
+	c := &UsersWatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.channel = channel
+	return c
+}
+
+// Customer sets the optional parameter "customer": Immutable id of the
+// Google Apps account. In case of multi-domain, to fetch all users for
+// a customer, fill this field instead of domain.
+func (c *UsersWatchCall) Customer(customer string) *UsersWatchCall {
+	c.opt_["customer"] = customer
+	return c
+}
+
+// Domain sets the optional parameter "domain": Name of the domain. Fill
+// this field to get users from only this domain. To return all users in
+// a multi-domain fill customer field instead.
+func (c *UsersWatchCall) Domain(domain string) *UsersWatchCall {
+	c.opt_["domain"] = domain
+	return c
+}
+
+// Event sets the optional parameter "event": Event on which
+// subscription is intended (if subscribing)
+func (c *UsersWatchCall) Event(event string) *UsersWatchCall {
+	c.opt_["event"] = event
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum number
+// of results to return. Default is 100. Max allowed is 500
+func (c *UsersWatchCall) MaxResults(maxResults int64) *UsersWatchCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Column to use for
+// sorting results
+func (c *UsersWatchCall) OrderBy(orderBy string) *UsersWatchCall {
+	c.opt_["orderBy"] = orderBy
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Token to specify
+// next page in the list
+func (c *UsersWatchCall) PageToken(pageToken string) *UsersWatchCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+// Query sets the optional parameter "query": Query string for prefix
+// matching searches. Should be of the form "key:value*" where key can
+// be "email", "givenName" or "familyName". The asterisk is required,
+// for example: "givenName:Ann*" is a valid query.
+func (c *UsersWatchCall) Query(query string) *UsersWatchCall {
+	c.opt_["query"] = query
+	return c
+}
+
+// ShowDeleted sets the optional parameter "showDeleted": If set to true
+// retrieves the list of deleted users. Default is false
+func (c *UsersWatchCall) ShowDeleted(showDeleted string) *UsersWatchCall {
+	c.opt_["showDeleted"] = showDeleted
+	return c
+}
+
+// SortOrder sets the optional parameter "sortOrder": Whether to return
+// results in ascending or descending order.
+func (c *UsersWatchCall) SortOrder(sortOrder string) *UsersWatchCall {
+	c.opt_["sortOrder"] = sortOrder
+	return c
+}
+
+func (c *UsersWatchCall) Do() (*Channel, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["customer"]; ok {
+		params.Set("customer", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["domain"]; ok {
+		params.Set("domain", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["event"]; ok {
+		params.Set("event", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["orderBy"]; ok {
+		params.Set("orderBy", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["query"]; ok {
+		params.Set("query", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["showDeleted"]; ok {
+		params.Set("showDeleted", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["sortOrder"]; ok {
+		params.Set("sortOrder", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/admin/directory/v1/", "users/watch")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Channel)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Watch for changes in users list",
+	//   "httpMethod": "POST",
+	//   "id": "directory.users.watch",
+	//   "parameters": {
+	//     "customer": {
+	//       "description": "Immutable id of the Google Apps account. In case of multi-domain, to fetch all users for a customer, fill this field instead of domain.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "domain": {
+	//       "description": "Name of the domain. Fill this field to get users from only this domain. To return all users in a multi-domain fill customer field instead.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "event": {
+	//       "description": "Event on which subscription is intended (if subscribing)",
+	//       "enum": [
+	//         "add",
+	//         "delete",
+	//         "makeAdmin",
+	//         "undelete",
+	//         "update"
+	//       ],
+	//       "enumDescriptions": [
+	//         "User Created Event",
+	//         "User Deleted Event",
+	//         "User Admin Status Change Event",
+	//         "User Undeleted Event",
+	//         "User Updated Event"
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "description": "Maximum number of results to return. Default is 100. Max allowed is 500",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "maximum": "500",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Column to use for sorting results",
+	//       "enum": [
+	//         "email",
+	//         "familyName",
+	//         "givenName"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Primary email of the user.",
+	//         "User's family name.",
+	//         "User's given name."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageToken": {
+	//       "description": "Token to specify next page in the list",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "query": {
+	//       "description": "Query string for prefix matching searches. Should be of the form \"key:value*\" where key can be \"email\", \"givenName\" or \"familyName\". The asterisk is required, for example: \"givenName:Ann*\" is a valid query.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "showDeleted": {
+	//       "description": "If set to true retrieves the list of deleted users. Default is false",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "sortOrder": {
+	//       "description": "Whether to return results in ascending or descending order.",
+	//       "enum": [
+	//         "ASCENDING",
+	//         "DESCENDING"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Ascending order.",
+	//         "Descending order."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "users/watch",
+	//   "request": {
+	//     "$ref": "Channel",
+	//     "parameterName": "resource"
+	//   },
+	//   "response": {
+	//     "$ref": "Channel"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.directory.user",
+	//     "https://www.googleapis.com/auth/admin.directory.user.readonly"
+	//   ],
+	//   "supportsSubscription": true
+	// }
+
+}
+
 // method id "directory.users.aliases.delete":
 
 type UsersAliasesDeleteCall struct {
@@ -5220,7 +5617,7 @@ func (c *UsersAliasesDeleteCall) Do() error {
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -5293,7 +5690,7 @@ func (c *UsersAliasesInsertCall) Do() (*Alias, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -5347,10 +5744,20 @@ func (r *UsersAliasesService) List(userKey string) *UsersAliasesListCall {
 	return c
 }
 
+// Event sets the optional parameter "event": Event on which
+// subscription is intended (if subscribing)
+func (c *UsersAliasesListCall) Event(event string) *UsersAliasesListCall {
+	c.opt_["event"] = event
+	return c
+}
+
 func (c *UsersAliasesListCall) Do() (*Aliases, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["event"]; ok {
+		params.Set("event", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/admin/directory/v1/", "users/{userKey}/aliases")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -5361,7 +5768,7 @@ func (c *UsersAliasesListCall) Do() (*Aliases, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -5378,6 +5785,19 @@ func (c *UsersAliasesListCall) Do() (*Aliases, error) {
 	//     "userKey"
 	//   ],
 	//   "parameters": {
+	//     "event": {
+	//       "description": "Event on which subscription is intended (if subscribing)",
+	//       "enum": [
+	//         "add",
+	//         "delete"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Alias Created Event",
+	//         "Alias Deleted Event"
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "userKey": {
 	//       "description": "Email or immutable Id of the user",
 	//       "location": "path",
@@ -5394,7 +5814,111 @@ func (c *UsersAliasesListCall) Do() (*Aliases, error) {
 	//     "https://www.googleapis.com/auth/admin.directory.user.alias",
 	//     "https://www.googleapis.com/auth/admin.directory.user.alias.readonly",
 	//     "https://www.googleapis.com/auth/admin.directory.user.readonly"
-	//   ]
+	//   ],
+	//   "supportsSubscription": true
+	// }
+
+}
+
+// method id "directory.users.aliases.watch":
+
+type UsersAliasesWatchCall struct {
+	s       *Service
+	userKey string
+	channel *Channel
+	opt_    map[string]interface{}
+}
+
+// Watch: Watch for changes in user aliases list
+func (r *UsersAliasesService) Watch(userKey string, channel *Channel) *UsersAliasesWatchCall {
+	c := &UsersAliasesWatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.userKey = userKey
+	c.channel = channel
+	return c
+}
+
+// Event sets the optional parameter "event": Event on which
+// subscription is intended (if subscribing)
+func (c *UsersAliasesWatchCall) Event(event string) *UsersAliasesWatchCall {
+	c.opt_["event"] = event
+	return c
+}
+
+func (c *UsersAliasesWatchCall) Do() (*Channel, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["event"]; ok {
+		params.Set("event", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/admin/directory/v1/", "users/{userKey}/aliases/watch")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{userKey}", url.QueryEscape(c.userKey), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Channel)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Watch for changes in user aliases list",
+	//   "httpMethod": "POST",
+	//   "id": "directory.users.aliases.watch",
+	//   "parameterOrder": [
+	//     "userKey"
+	//   ],
+	//   "parameters": {
+	//     "event": {
+	//       "description": "Event on which subscription is intended (if subscribing)",
+	//       "enum": [
+	//         "add",
+	//         "delete"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Alias Created Event",
+	//         "Alias Deleted Event"
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "userKey": {
+	//       "description": "Email or immutable Id of the user",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "users/{userKey}/aliases/watch",
+	//   "request": {
+	//     "$ref": "Channel",
+	//     "parameterName": "resource"
+	//   },
+	//   "response": {
+	//     "$ref": "Channel"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.directory.user",
+	//     "https://www.googleapis.com/auth/admin.directory.user.alias",
+	//     "https://www.googleapis.com/auth/admin.directory.user.alias.readonly",
+	//     "https://www.googleapis.com/auth/admin.directory.user.readonly"
+	//   ],
+	//   "supportsSubscription": true
 	// }
 
 }
@@ -5428,7 +5952,7 @@ func (c *UsersPhotosDeleteCall) Do() error {
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -5485,7 +6009,7 @@ func (c *UsersPhotosGetCall) Do() (*UserPhoto, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -5559,7 +6083,7 @@ func (c *UsersPhotosPatchCall) Do() (*UserPhoto, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -5634,7 +6158,7 @@ func (c *UsersPhotosUpdateCall) Do() (*UserPhoto, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -5701,7 +6225,7 @@ func (c *VerificationCodesGenerateCall) Do() error {
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -5737,7 +6261,8 @@ type VerificationCodesInvalidateCall struct {
 	opt_    map[string]interface{}
 }
 
-// Invalidate: Invalidate the backup verification codes for the user.
+// Invalidate: Invalidate the current backup verification codes for the
+// user.
 func (r *VerificationCodesService) Invalidate(userKey string) *VerificationCodesInvalidateCall {
 	c := &VerificationCodesInvalidateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userKey = userKey
@@ -5758,13 +6283,13 @@ func (c *VerificationCodesInvalidateCall) Do() error {
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
 	return nil
 	// {
-	//   "description": "Invalidate the backup verification codes for the user.",
+	//   "description": "Invalidate the current backup verification codes for the user.",
 	//   "httpMethod": "POST",
 	//   "id": "directory.verificationCodes.invalidate",
 	//   "parameterOrder": [
@@ -5794,7 +6319,8 @@ type VerificationCodesListCall struct {
 	opt_    map[string]interface{}
 }
 
-// List: List the backup verification codes for the user.
+// List: Returns the current set of valid backup verification codes for
+// the specified user.
 func (r *VerificationCodesService) List(userKey string) *VerificationCodesListCall {
 	c := &VerificationCodesListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userKey = userKey
@@ -5815,7 +6341,7 @@ func (c *VerificationCodesListCall) Do() (*VerificationCodes, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -5825,7 +6351,7 @@ func (c *VerificationCodesListCall) Do() (*VerificationCodes, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "List the backup verification codes for the user.",
+	//   "description": "Returns the current set of valid backup verification codes for the specified user.",
 	//   "httpMethod": "GET",
 	//   "id": "directory.verificationCodes.list",
 	//   "parameterOrder": [
@@ -5833,7 +6359,7 @@ func (c *VerificationCodesListCall) Do() (*VerificationCodes, error) {
 	//   ],
 	//   "parameters": {
 	//     "userKey": {
-	//       "description": "Email or immutable Id of the user",
+	//       "description": "Identifies the user in the API request. The value can be the user's primary email address, alias email address, or unique user ID.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"

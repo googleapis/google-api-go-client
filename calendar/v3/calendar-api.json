@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"_UU0hweWJUeoapnMzW_8ULttsqM/7bHhm7vCoG5YbslN6b0grHMC-oY\"",
+ "etag": "\"R6H4aXXmd1SZaWpEcGSkC2StmNw/OgHOffEZEbipjEYwOiiUGnl1HUs\"",
  "discoveryVersion": "v1",
  "id": "calendar:v3",
  "name": "calendar",
@@ -1366,7 +1366,8 @@
      "scopes": [
       "https://www.googleapis.com/auth/calendar",
       "https://www.googleapis.com/auth/calendar.readonly"
-     ]
+     ],
+     "supportsSubscription": true
     },
     "patch": {
      "id": "calendar.calendarList.patch",

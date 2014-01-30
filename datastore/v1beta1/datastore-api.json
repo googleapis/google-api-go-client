@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"qMhxoRFWKZK4K3KdZJuqms1o3fc/YrLZoq09n__afr7YsPCxL5HrUUs\"",
+ "etag": "\"R6H4aXXmd1SZaWpEcGSkC2StmNw/YrLZoq09n__afr7YsPCxL5HrUUs\"",
  "discoveryVersion": "v1",
  "id": "datastore:v1beta1",
  "name": "datastore",

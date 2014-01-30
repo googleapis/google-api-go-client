@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"_UU0hweWJUeoapnMzW_8ULttsqM/uTNUsIyrlXE3F_OAnzONFFhzkso\"",
+ "etag": "\"R6H4aXXmd1SZaWpEcGSkC2StmNw/dAIcmWtYiRHJopm0A2BwwF4VxsY\"",
  "discoveryVersion": "v1",
  "id": "plus:v1",
  "name": "plus",
@@ -1075,7 +1075,7 @@
     },
     "circledByCount": {
      "type": "integer",
-     "description": "If a Google+ Page and for followers who are visible, the number of people who have added this page to a circle.",
+     "description": "For followers who are visible, the number of people who have added this person or page to a circle.",
      "format": "int32"
     },
     "cover": {

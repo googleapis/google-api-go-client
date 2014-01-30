@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"qMhxoRFWKZK4K3KdZJuqms1o3fc/kKXdL3Avm27TtiLuZmE30FPL3LY\"",
+ "etag": "\"R6H4aXXmd1SZaWpEcGSkC2StmNw/IpR4V709mf4kvv_yPnB7Gmo_IHU\"",
  "discoveryVersion": "v1",
  "id": "storage:v1beta1",
  "name": "storage",
@@ -523,7 +523,7 @@
       },
       "entity": {
        "type": "string",
-       "description": "The entity holding the permission. Can be user-userId, group-groupId, allUsers, or allAuthenticatedUsers.",
+       "description": "The entity holding the permission. Can be user-userId, user-emailAddress, group-groupId, group-emailAddress, allUsers, or allAuthenticatedUsers.",
        "required": true,
        "location": "path"
       }
@@ -550,7 +550,7 @@
       },
       "entity": {
        "type": "string",
-       "description": "The entity holding the permission. Can be user-userId, group-groupId, allUsers, or allAuthenticatedUsers.",
+       "description": "The entity holding the permission. Can be user-userId, user-emailAddress, group-groupId, group-emailAddress, allUsers, or allAuthenticatedUsers.",
        "required": true,
        "location": "path"
       }
@@ -629,7 +629,7 @@
       },
       "entity": {
        "type": "string",
-       "description": "The entity holding the permission. Can be user-userId, group-groupId, allUsers, or allAuthenticatedUsers.",
+       "description": "The entity holding the permission. Can be user-userId, user-emailAddress, group-groupId, group-emailAddress, allUsers, or allAuthenticatedUsers.",
        "required": true,
        "location": "path"
       }
@@ -662,7 +662,7 @@
       },
       "entity": {
        "type": "string",
-       "description": "The entity holding the permission. Can be user-userId, group-groupId, allUsers, or allAuthenticatedUsers.",
+       "description": "The entity holding the permission. Can be user-userId, user-emailAddress, group-groupId, group-emailAddress, allUsers, or allAuthenticatedUsers.",
        "required": true,
        "location": "path"
       }
@@ -924,7 +924,7 @@
       },
       "entity": {
        "type": "string",
-       "description": "The entity holding the permission. Can be user-userId, group-groupId, allUsers, or allAuthenticatedUsers.",
+       "description": "The entity holding the permission. Can be user-userId, user-emailAddress, group-groupId, group-emailAddress, allUsers, or allAuthenticatedUsers.",
        "required": true,
        "location": "path"
       },
@@ -958,7 +958,7 @@
       },
       "entity": {
        "type": "string",
-       "description": "The entity holding the permission. Can be user-userId, group-groupId, allUsers, or allAuthenticatedUsers.",
+       "description": "The entity holding the permission. Can be user-userId, user-emailAddress, group-groupId, group-emailAddress, allUsers, or allAuthenticatedUsers.",
        "required": true,
        "location": "path"
       },
@@ -1058,7 +1058,7 @@
       },
       "entity": {
        "type": "string",
-       "description": "The entity holding the permission. Can be user-userId, group-groupId, allUsers, or allAuthenticatedUsers.",
+       "description": "The entity holding the permission. Can be user-userId, user-emailAddress, group-groupId, group-emailAddress, allUsers, or allAuthenticatedUsers.",
        "required": true,
        "location": "path"
       },
@@ -1098,7 +1098,7 @@
       },
       "entity": {
        "type": "string",
-       "description": "The entity holding the permission. Can be user-userId, group-groupId, allUsers, or allAuthenticatedUsers.",
+       "description": "The entity holding the permission. Can be user-userId, user-emailAddress, group-groupId, group-emailAddress, allUsers, or allAuthenticatedUsers.",
        "required": true,
        "location": "path"
       },

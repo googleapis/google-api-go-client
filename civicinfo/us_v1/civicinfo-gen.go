@@ -405,6 +405,8 @@ type PollingLocation struct {
 }
 
 type RepresentativeInfoRequest struct {
+	// Address: The address to look up. May only be specified if the field
+	// ocdId is not given in the URL.
 	Address string `json:"address,omitempty"`
 }
 
@@ -541,7 +543,7 @@ func (c *ElectionsElectionQueryCall) Do() (*ElectionsQueryResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -610,7 +612,7 @@ func (c *ElectionsVoterInfoQueryCall) Do() (*VoterInfoResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -676,6 +678,14 @@ func (c *RepresentativesRepresentativeInfoQueryCall) IncludeOffices(includeOffic
 	return c
 }
 
+// OcdId sets the optional parameter "ocdId": The division to look up.
+// May only be specified if the address field is not given in the
+// request body.
+func (c *RepresentativesRepresentativeInfoQueryCall) OcdId(ocdId string) *RepresentativesRepresentativeInfoQueryCall {
+	c.opt_["ocdId"] = ocdId
+	return c
+}
+
 func (c *RepresentativesRepresentativeInfoQueryCall) Do() (*RepresentativeInfoResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.representativeinforequest)
@@ -688,6 +698,9 @@ func (c *RepresentativesRepresentativeInfoQueryCall) Do() (*RepresentativeInfoRe
 	if v, ok := c.opt_["includeOffices"]; ok {
 		params.Set("includeOffices", fmt.Sprintf("%v", v))
 	}
+	if v, ok := c.opt_["ocdId"]; ok {
+		params.Set("ocdId", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/civicinfo/us_v1/", "representatives/lookup")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -698,7 +711,7 @@ func (c *RepresentativesRepresentativeInfoQueryCall) Do() (*RepresentativeInfoRe
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -717,6 +730,11 @@ func (c *RepresentativesRepresentativeInfoQueryCall) Do() (*RepresentativeInfoRe
 	//       "description": "Whether to return information about offices and officials. If false, only the top-level district information will be returned.",
 	//       "location": "query",
 	//       "type": "boolean"
+	//     },
+	//     "ocdId": {
+	//       "description": "The division to look up. May only be specified if the address field is not given in the request body.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "representatives/lookup",

@@ -2019,7 +2019,7 @@ func (c *DataGaGetCall) Do() (*GaData, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2246,7 +2246,7 @@ func (c *DataMcfGetCall) Do() (*McfData, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2372,7 +2372,7 @@ func (r *DataRealtimeService) Get(ids string, metrics string) *DataRealtimeGetCa
 
 // Dimensions sets the optional parameter "dimensions": A
 // comma-separated list of real time dimensions. E.g.,
-// 'ga:medium,ga:city'.
+// 'rt:medium,rt:city'.
 func (c *DataRealtimeGetCall) Dimensions(dimensions string) *DataRealtimeGetCall {
 	c.opt_["dimensions"] = dimensions
 	return c
@@ -2427,7 +2427,7 @@ func (c *DataRealtimeGetCall) Do() (*RealtimeData, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2446,15 +2446,15 @@ func (c *DataRealtimeGetCall) Do() (*RealtimeData, error) {
 	//   ],
 	//   "parameters": {
 	//     "dimensions": {
-	//       "description": "A comma-separated list of real time dimensions. E.g., 'ga:medium,ga:city'.",
+	//       "description": "A comma-separated list of real time dimensions. E.g., 'rt:medium,rt:city'.",
 	//       "location": "query",
-	//       "pattern": "(ga:.+)?",
+	//       "pattern": "(ga:.+)|(rt:.+)",
 	//       "type": "string"
 	//     },
 	//     "filters": {
 	//       "description": "A comma-separated list of dimension or metric filters to be applied to real time data.",
 	//       "location": "query",
-	//       "pattern": "ga:.+",
+	//       "pattern": "(ga:.+)|(rt:.+)",
 	//       "type": "string"
 	//     },
 	//     "ids": {
@@ -2471,16 +2471,16 @@ func (c *DataRealtimeGetCall) Do() (*RealtimeData, error) {
 	//       "type": "integer"
 	//     },
 	//     "metrics": {
-	//       "description": "A comma-separated list of real time metrics. E.g., 'ga:activeVisitors'. At least one metric must be specified.",
+	//       "description": "A comma-separated list of real time metrics. E.g., 'rt:activeVisitors'. At least one metric must be specified.",
 	//       "location": "query",
-	//       "pattern": "ga:.+",
+	//       "pattern": "(ga:.+)|(rt:.+)",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "sort": {
 	//       "description": "A comma-separated list of dimensions or metrics that determine the sort order for real time data.",
 	//       "location": "query",
-	//       "pattern": "(-)?ga:.+",
+	//       "pattern": "(-)?((ga:.+)|(rt:.+))",
 	//       "type": "string"
 	//     }
 	//   },
@@ -2528,7 +2528,7 @@ func (c *ManagementAccountUserLinksDeleteCall) Do() error {
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -2600,7 +2600,7 @@ func (c *ManagementAccountUserLinksInsertCall) Do() (*EntityUserLink, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2688,7 +2688,7 @@ func (c *ManagementAccountUserLinksListCall) Do() (*EntityUserLinks, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2777,7 +2777,7 @@ func (c *ManagementAccountUserLinksUpdateCall) Do() (*EntityUserLink, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2869,7 +2869,7 @@ func (c *ManagementAccountsListCall) Do() (*Accounts, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2963,7 +2963,7 @@ func (c *ManagementCustomDataSourcesListCall) Do() (*CustomDataSources, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3064,7 +3064,7 @@ func (c *ManagementDailyUploadsDeleteCall) Do() error {
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -3192,7 +3192,7 @@ func (c *ManagementDailyUploadsListCall) Do() (*DailyUploads, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3346,7 +3346,7 @@ func (c *ManagementDailyUploadsUploadCall) Do() (*DailyUploadAppend, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3490,7 +3490,7 @@ func (c *ManagementExperimentsDeleteCall) Do() error {
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -3578,7 +3578,7 @@ func (c *ManagementExperimentsGetCall) Do() (*Experiment, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3679,7 +3679,7 @@ func (c *ManagementExperimentsInsertCall) Do() (*Experiment, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3788,7 +3788,7 @@ func (c *ManagementExperimentsListCall) Do() (*Experiments, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3902,7 +3902,7 @@ func (c *ManagementExperimentsPatchCall) Do() (*Experiment, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4008,7 +4008,7 @@ func (c *ManagementExperimentsUpdateCall) Do() (*Experiment, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4106,7 +4106,7 @@ func (c *ManagementGoalsGetCall) Do() (*Goal, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4206,7 +4206,7 @@ func (c *ManagementGoalsInsertCall) Do() (*Goal, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4314,7 +4314,7 @@ func (c *ManagementGoalsListCall) Do() (*Goals, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4425,7 +4425,7 @@ func (c *ManagementGoalsPatchCall) Do() (*Goal, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4530,7 +4530,7 @@ func (c *ManagementGoalsUpdateCall) Do() (*Goal, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4627,7 +4627,7 @@ func (c *ManagementProfileUserLinksDeleteCall) Do() error {
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -4719,7 +4719,7 @@ func (c *ManagementProfileUserLinksInsertCall) Do() (*EntityUserLink, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4827,7 +4827,7 @@ func (c *ManagementProfileUserLinksListCall) Do() (*EntityUserLinks, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4936,7 +4936,7 @@ func (c *ManagementProfileUserLinksUpdateCall) Do() (*EntityUserLink, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -5030,7 +5030,7 @@ func (c *ManagementProfilesDeleteCall) Do() error {
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -5107,7 +5107,7 @@ func (c *ManagementProfilesGetCall) Do() (*Profile, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -5200,7 +5200,7 @@ func (c *ManagementProfilesInsertCall) Do() (*Profile, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -5298,7 +5298,7 @@ func (c *ManagementProfilesListCall) Do() (*Profiles, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -5399,7 +5399,7 @@ func (c *ManagementProfilesPatchCall) Do() (*Profile, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -5494,7 +5494,7 @@ func (c *ManagementProfilesUpdateCall) Do() (*Profile, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -5593,7 +5593,7 @@ func (c *ManagementSegmentsListCall) Do() (*Segments, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -5677,7 +5677,7 @@ func (c *ManagementUploadsDeleteUploadDataCall) Do() error {
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -5764,7 +5764,7 @@ func (c *ManagementUploadsGetCall) Do() (*Upload, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -5882,7 +5882,7 @@ func (c *ManagementUploadsListCall) Do() (*Uploads, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -6001,7 +6001,7 @@ func (c *ManagementUploadsUploadDataCall) Do() (*Upload, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -6102,7 +6102,7 @@ func (c *ManagementWebpropertiesGetCall) Do() (*Webproperty, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -6186,7 +6186,7 @@ func (c *ManagementWebpropertiesInsertCall) Do() (*Webproperty, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -6274,7 +6274,7 @@ func (c *ManagementWebpropertiesListCall) Do() (*Webproperties, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -6365,7 +6365,7 @@ func (c *ManagementWebpropertiesPatchCall) Do() (*Webproperty, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -6450,7 +6450,7 @@ func (c *ManagementWebpropertiesUpdateCall) Do() (*Webproperty, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -6530,7 +6530,7 @@ func (c *ManagementWebpropertyUserLinksDeleteCall) Do() error {
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -6612,7 +6612,7 @@ func (c *ManagementWebpropertyUserLinksInsertCall) Do() (*EntityUserLink, error)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -6710,7 +6710,7 @@ func (c *ManagementWebpropertyUserLinksListCall) Do() (*EntityUserLinks, error) 
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -6809,7 +6809,7 @@ func (c *ManagementWebpropertyUserLinksUpdateCall) Do() (*EntityUserLink, error)
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -6890,7 +6890,7 @@ func (c *MetadataColumnsListCall) Do() (*Columns, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}

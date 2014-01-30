@@ -1,13 +1,13 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"qMhxoRFWKZK4K3KdZJuqms1o3fc/5P1YmzFHnPBs8JGSWb_ROKPzJTc\"",
+ "etag": "\"R6H4aXXmd1SZaWpEcGSkC2StmNw/YFPxU7eaEFYPNqG8FdTGUu1zyfQ\"",
  "discoveryVersion": "v1",
  "id": "admin:directory_v1",
  "name": "admin",
  "canonicalName": "directory",
  "version": "directory_v1",
  "title": "Admin Directory API",
- "description": "Apps Directory API lets you view and manage enterprise resources like user, groups, OrgUnit, devices, tokens, asps, verification codes.",
+ "description": "The Admin SDK Directory API lets you view and manage enterprise resources such as users and groups, administrative notifications, security features, and more.",
  "ownerDomain": "google.com",
  "ownerName": "Google",
  "packagePath": "admin",
@@ -183,35 +183,35 @@
    "properties": {
     "codeId": {
      "type": "integer",
-     "description": "Code Id of the Access code.",
+     "description": "The unique ID of the ASP.",
      "format": "int32"
     },
     "creationTime": {
      "type": "string",
-     "description": "Time when the ASP was created.",
+     "description": "The time when the ASP was created. Expressed in Unix time format.",
      "format": "int64"
     },
     "etag": {
      "type": "string",
-     "description": "ETag of the resource."
+     "description": "ETag of the ASP."
     },
     "kind": {
      "type": "string",
-     "description": "The type of the resource.",
+     "description": "The type of the API resource. This is always admin#directory#asp.",
      "default": "admin#directory#asp"
     },
     "lastTimeUsed": {
      "type": "string",
-     "description": "Time when the ASP was last used.",
+     "description": "The time when the ASP was last used. Expressed in Unix time format.",
      "format": "int64"
     },
     "name": {
      "type": "string",
-     "description": "Name of the application."
+     "description": "The name of the application that the user, represented by their userId, entered when the ASP was created."
     },
     "userKey": {
      "type": "string",
-     "description": "User who has issued the ASP."
+     "description": "The unique ID of the user who issued the ASP."
     }
    }
   },
@@ -225,15 +225,68 @@
     },
     "items": {
      "type": "array",
-     "description": "Asps resource.",
+     "description": "A list of ASP resources.",
      "items": {
       "$ref": "Asp"
      }
     },
     "kind": {
      "type": "string",
-     "description": "The type of the resource.",
+     "description": "The type of the API resource. This is always admin#directory#aspList.",
      "default": "admin#directory#aspList"
+    }
+   }
+  },
+  "Channel": {
+   "id": "Channel",
+   "type": "object",
+   "description": "An notification channel used to watch for resource changes.",
+   "properties": {
+    "address": {
+     "type": "string",
+     "description": "The address where notifications are delivered for this channel."
+    },
+    "expiration": {
+     "type": "string",
+     "description": "Date and time of notification channel expiration, expressed as a Unix timestamp, in milliseconds. Optional.",
+     "format": "int64"
+    },
+    "id": {
+     "type": "string",
+     "description": "A UUID or similar unique string that identifies this channel."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies this as a notification channel used to watch for changes to a resource. Value: the fixed string \"api#channel\".",
+     "default": "api#channel"
+    },
+    "params": {
+     "type": "object",
+     "description": "Additional parameters controlling delivery channel behavior. Optional.",
+     "additionalProperties": {
+      "type": "string",
+      "description": "Declares a new parameter by name."
+     }
+    },
+    "payload": {
+     "type": "boolean",
+     "description": "A Boolean value to indicate whether payload is wanted. Optional."
+    },
+    "resourceId": {
+     "type": "string",
+     "description": "An opaque ID that identifies the resource being watched on this channel. Stable across different API versions."
+    },
+    "resourceUri": {
+     "type": "string",
+     "description": "A version-specific identifier for the watched resource."
+    },
+    "token": {
+     "type": "string",
+     "description": "An arbitrary string delivered to the target address with each notification delivered over this channel. Optional."
+    },
+    "type": {
+     "type": "string",
+     "description": "The type of delivery mechanism used for this channel."
     }
    }
   },
@@ -801,15 +854,15 @@
    "properties": {
     "anonymous": {
      "type": "boolean",
-     "description": "Is the token anonymous?"
+     "description": "Whether the application is registered with Google. The value is true if the application has an anonymous Client ID."
     },
     "clientId": {
      "type": "string",
-     "description": "Domain to which the token is issued."
+     "description": "The Client ID of the application the token is issued to."
     },
     "displayText": {
      "type": "string",
-     "description": "Displayable name of Domain to which the token is issued."
+     "description": "The displayable name of the application the token is issued to."
     },
     "etag": {
      "type": "string",
@@ -817,23 +870,23 @@
     },
     "kind": {
      "type": "string",
-     "description": "The type of the resource.",
+     "description": "The type of the API resource. This is always admin#directory#token.",
      "default": "admin#directory#token"
     },
     "nativeApp": {
      "type": "boolean",
-     "description": "Is the token for native app?"
+     "description": "Whether the token is issued to an installed application. The value is true if the application is installed to a desktop or mobile device."
     },
     "scopes": {
      "type": "array",
-     "description": "List of scopes.",
+     "description": "A list of authorization scopes the application is granted.",
      "items": {
       "type": "string"
      }
     },
     "userKey": {
      "type": "string",
-     "description": "Obfuscated user_id of the user who has issued the token."
+     "description": "The unique ID of the user that issued the token."
     }
    }
   },
@@ -848,14 +901,14 @@
     },
     "items": {
      "type": "array",
-     "description": "Tokens resource.",
+     "description": "A list of Token resources.",
      "items": {
       "$ref": "Token"
      }
     },
     "kind": {
      "type": "string",
-     "description": "The type of the resource.",
+     "description": "The type of the API resource. This is always admin#directory#tokenList.",
      "default": "admin#directory#tokenList"
     }
    }
@@ -1407,16 +1460,16 @@
     },
     "kind": {
      "type": "string",
-     "description": "The type of the resource.",
+     "description": "The type of the resource. This is always admin#directory#verificationCode.",
      "default": "admin#directory#verificationCode"
     },
     "userId": {
      "type": "string",
-     "description": "Obfuscated user_id of the account holder."
+     "description": "The obfuscated unique ID of the user."
     },
     "verificationCode": {
      "type": "string",
-     "description": "A verification code for that user"
+     "description": "A current verification code for the user. Invalidated or used verification codes are not returned as part of the result."
     }
    }
   },
@@ -1431,14 +1484,14 @@
     },
     "items": {
      "type": "array",
-     "description": "verification codes resource.",
+     "description": "A list of verification code resources.",
      "items": {
       "$ref": "VerificationCode"
      }
     },
     "kind": {
      "type": "string",
-     "description": "The type of the resource.",
+     "description": "The type of the resource. This is always admin#directory#verificationCodesList.",
      "default": "admin#directory#verificationCodesList"
     }
    }
@@ -1451,18 +1504,18 @@
      "id": "directory.asps.delete",
      "path": "users/{userKey}/asps/{codeId}",
      "httpMethod": "DELETE",
-     "description": "Delete the application specific password issued by the user for a codeId.",
+     "description": "Delete an ASP issued by a user.",
      "parameters": {
       "codeId": {
        "type": "integer",
-       "description": "The codeId.",
+       "description": "The unique ID of the ASP to be deleted.",
        "required": true,
        "format": "int32",
        "location": "path"
       },
       "userKey": {
        "type": "string",
-       "description": "Email or immutable Id of the user",
+       "description": "Identifies the user in the API request. The value can be the user's primary email address, alias email address, or unique user ID.",
        "required": true,
        "location": "path"
       }
@@ -1479,18 +1532,18 @@
      "id": "directory.asps.get",
      "path": "users/{userKey}/asps/{codeId}",
      "httpMethod": "GET",
-     "description": "Get the application specific password issued by the user for a codeId.",
+     "description": "Get information about an ASP issued by a user.",
      "parameters": {
       "codeId": {
        "type": "integer",
-       "description": "The codeid.",
+       "description": "The unique ID of the ASP.",
        "required": true,
        "format": "int32",
        "location": "path"
       },
       "userKey": {
        "type": "string",
-       "description": "Email or immutable Id of the user",
+       "description": "Identifies the user in the API request. The value can be the user's primary email address, alias email address, or unique user ID.",
        "required": true,
        "location": "path"
       }
@@ -1510,11 +1563,11 @@
      "id": "directory.asps.list",
      "path": "users/{userKey}/asps",
      "httpMethod": "GET",
-     "description": "List the application specific passwords issued by the user.",
+     "description": "List the ASPs issued by a user.",
      "parameters": {
       "userKey": {
        "type": "string",
-       "description": "Email or immutable Id of the user",
+       "description": "Identifies the user in the API request. The value can be the user's primary email address, alias email address, or unique user ID.",
        "required": true,
        "location": "path"
       }
@@ -1527,6 +1580,26 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/admin.directory.user.security"
+     ]
+    }
+   }
+  },
+  "channels": {
+   "methods": {
+    "stop": {
+     "id": "admin.channels.stop",
+     "path": "/admin/directory_v1/channels/stop",
+     "httpMethod": "POST",
+     "description": "Stop watching resources through this channel",
+     "request": {
+      "$ref": "Channel",
+      "parameterName": "resource"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/admin.directory.user",
+      "https://www.googleapis.com/auth/admin.directory.user.alias",
+      "https://www.googleapis.com/auth/admin.directory.user.alias.readonly",
+      "https://www.googleapis.com/auth/admin.directory.user.readonly"
      ]
     }
    }
@@ -1995,7 +2068,8 @@
        "scopes": [
         "https://www.googleapis.com/auth/admin.directory.group",
         "https://www.googleapis.com/auth/admin.directory.group.readonly"
-       ]
+       ],
+       "supportsSubscription": true
       }
      }
     }
@@ -2414,13 +2488,13 @@
      "parameters": {
       "customer": {
        "type": "string",
-       "description": "Obfuscated customer ID of the domain for which notification is to be deleted",
+       "description": "The unique ID for the customer's Google account. The customerId is also returned as part of the Users resource.",
        "required": true,
        "location": "path"
       },
       "notificationId": {
        "type": "string",
-       "description": "Id of the notification to be deleted.",
+       "description": "The unique ID of the notification.",
        "required": true,
        "location": "path"
       }
@@ -2437,17 +2511,17 @@
      "id": "directory.notifications.get",
      "path": "customer/{customer}/notifications/{notificationId}",
      "httpMethod": "GET",
-     "description": "Retrieves a notification",
+     "description": "Retrieves a notification.",
      "parameters": {
       "customer": {
        "type": "string",
-       "description": "Obfuscated customer ID of the domain for which notification is to be retrieved",
+       "description": "The unique ID for the customer's Google account. The customerId is also returned as part of the Users resource.",
        "required": true,
        "location": "path"
       },
       "notificationId": {
        "type": "string",
-       "description": "Id of the notification to be retrieved.",
+       "description": "The unique ID of the notification.",
        "required": true,
        "location": "path"
       }
@@ -2471,24 +2545,24 @@
      "parameters": {
       "customer": {
        "type": "string",
-       "description": "Obfuscated customer ID of the domain for which notifications are to be retrieved",
+       "description": "The unique ID for the customer's Google account.",
        "required": true,
        "location": "path"
       },
       "language": {
        "type": "string",
-       "description": "Code of the language in which the notifications are to be retrieved. Notifications will be returned in English by default",
+       "description": "The ISO 639-1 code of the language notifications are returned in. The default is English (en).",
        "location": "query"
       },
       "maxResults": {
        "type": "integer",
-       "description": "Number of notifications to be retrieved. Default is 100",
+       "description": "Maximum number of notifications to return per page. The default is 100.",
        "format": "uint32",
        "location": "query"
       },
       "pageToken": {
        "type": "string",
-       "description": "Token for the page to be retrieved",
+       "description": "The token to specify the page of results to retrieve.",
        "location": "query"
       }
      },
@@ -2510,13 +2584,13 @@
      "parameters": {
       "customer": {
        "type": "string",
-       "description": "Obfuscated customer ID of the domain for which notification is to be updated",
+       "description": "The unique ID for the customer's Google account.",
        "required": true,
        "location": "path"
       },
       "notificationId": {
        "type": "string",
-       "description": "Id of the notification to be updated.",
+       "description": "The unique ID of the notification.",
        "required": true,
        "location": "path"
       }
@@ -2539,17 +2613,17 @@
      "id": "directory.notifications.update",
      "path": "customer/{customer}/notifications/{notificationId}",
      "httpMethod": "PUT",
-     "description": "Updates a notification",
+     "description": "Updates a notification.",
      "parameters": {
       "customer": {
        "type": "string",
-       "description": "Obfuscated customer ID of the domain for which notification is to be updated",
+       "description": "The unique ID for the customer's Google account.",
        "required": true,
        "location": "path"
       },
       "notificationId": {
        "type": "string",
-       "description": "Id of the notification to be updated.",
+       "description": "The unique ID of the notification.",
        "required": true,
        "location": "path"
       }
@@ -2777,17 +2851,17 @@
      "id": "directory.tokens.delete",
      "path": "users/{userKey}/tokens/{clientId}",
      "httpMethod": "DELETE",
-     "description": "Delete all OAuth tokens issued by the user for an app domain.",
+     "description": "Delete all access tokens issued by a user for an application.",
      "parameters": {
       "clientId": {
        "type": "string",
-       "description": "The app domain.",
+       "description": "The Client ID of the application the token is issued to.",
        "required": true,
        "location": "path"
       },
       "userKey": {
        "type": "string",
-       "description": "Email or immutable Id of the user",
+       "description": "Identifies the user in the API request. The value can be the user's primary email address, alias email address, or unique user ID.",
        "required": true,
        "location": "path"
       }
@@ -2804,17 +2878,17 @@
      "id": "directory.tokens.get",
      "path": "users/{userKey}/tokens/{clientId}",
      "httpMethod": "GET",
-     "description": "Get the OAuth token issued by the user for an app domain.",
+     "description": "Get information about an access token issued by a user.",
      "parameters": {
       "clientId": {
        "type": "string",
-       "description": "The app domain.",
+       "description": "The Client ID of the application the token is issued to.",
        "required": true,
        "location": "path"
       },
       "userKey": {
        "type": "string",
-       "description": "Email or immutable Id of the user",
+       "description": "Identifies the user in the API request. The value can be the user's primary email address, alias email address, or unique user ID.",
        "required": true,
        "location": "path"
       }
@@ -2834,11 +2908,11 @@
      "id": "directory.tokens.list",
      "path": "users/{userKey}/tokens",
      "httpMethod": "GET",
-     "description": "List the OAuth tokens issued by the user.",
+     "description": "Returns the set of current, valid verification codes for the specified user.",
      "parameters": {
       "userKey": {
        "type": "string",
-       "description": "Email or immutable Id of the user",
+       "description": "Identifies the user in the API request. The value can be the user's primary email address, alias email address, or unique user ID.",
        "required": true,
        "location": "path"
       }
@@ -2932,6 +3006,25 @@
        "description": "Name of the domain. Fill this field to get users from only this domain. To return all users in a multi-domain fill customer field instead.",
        "location": "query"
       },
+      "event": {
+       "type": "string",
+       "description": "Event on which subscription is intended (if subscribing)",
+       "enum": [
+        "add",
+        "delete",
+        "makeAdmin",
+        "undelete",
+        "update"
+       ],
+       "enumDescriptions": [
+        "User Created Event",
+        "User Deleted Event",
+        "User Admin Status Change Event",
+        "User Undeleted Event",
+        "User Updated Event"
+       ],
+       "location": "query"
+      },
       "maxResults": {
        "type": "integer",
        "description": "Maximum number of results to return. Default is 100. Max allowed is 500",
@@ -2990,7 +3083,8 @@
      "scopes": [
       "https://www.googleapis.com/auth/admin.directory.user",
       "https://www.googleapis.com/auth/admin.directory.user.readonly"
-     ]
+     ],
+     "supportsSubscription": true
     },
     "makeAdmin": {
      "id": "directory.users.makeAdmin",
@@ -3089,6 +3183,106 @@
      "scopes": [
       "https://www.googleapis.com/auth/admin.directory.user"
      ]
+    },
+    "watch": {
+     "id": "directory.users.watch",
+     "path": "users/watch",
+     "httpMethod": "POST",
+     "description": "Watch for changes in users list",
+     "parameters": {
+      "customer": {
+       "type": "string",
+       "description": "Immutable id of the Google Apps account. In case of multi-domain, to fetch all users for a customer, fill this field instead of domain.",
+       "location": "query"
+      },
+      "domain": {
+       "type": "string",
+       "description": "Name of the domain. Fill this field to get users from only this domain. To return all users in a multi-domain fill customer field instead.",
+       "location": "query"
+      },
+      "event": {
+       "type": "string",
+       "description": "Event on which subscription is intended (if subscribing)",
+       "enum": [
+        "add",
+        "delete",
+        "makeAdmin",
+        "undelete",
+        "update"
+       ],
+       "enumDescriptions": [
+        "User Created Event",
+        "User Deleted Event",
+        "User Admin Status Change Event",
+        "User Undeleted Event",
+        "User Updated Event"
+       ],
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "Maximum number of results to return. Default is 100. Max allowed is 500",
+       "format": "int32",
+       "minimum": "1",
+       "maximum": "500",
+       "location": "query"
+      },
+      "orderBy": {
+       "type": "string",
+       "description": "Column to use for sorting results",
+       "enum": [
+        "email",
+        "familyName",
+        "givenName"
+       ],
+       "enumDescriptions": [
+        "Primary email of the user.",
+        "User's family name.",
+        "User's given name."
+       ],
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Token to specify next page in the list",
+       "location": "query"
+      },
+      "query": {
+       "type": "string",
+       "description": "Query string for prefix matching searches. Should be of the form \"key:value*\" where key can be \"email\", \"givenName\" or \"familyName\". The asterisk is required, for example: \"givenName:Ann*\" is a valid query.",
+       "location": "query"
+      },
+      "showDeleted": {
+       "type": "string",
+       "description": "If set to true retrieves the list of deleted users. Default is false",
+       "location": "query"
+      },
+      "sortOrder": {
+       "type": "string",
+       "description": "Whether to return results in ascending or descending order.",
+       "enum": [
+        "ASCENDING",
+        "DESCENDING"
+       ],
+       "enumDescriptions": [
+        "Ascending order.",
+        "Descending order."
+       ],
+       "location": "query"
+      }
+     },
+     "request": {
+      "$ref": "Channel",
+      "parameterName": "resource"
+     },
+     "response": {
+      "$ref": "Channel"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/admin.directory.user",
+      "https://www.googleapis.com/auth/admin.directory.user.readonly"
+     ],
+     "supportsSubscription": true
     }
    },
    "resources": {
@@ -3155,6 +3349,19 @@
        "httpMethod": "GET",
        "description": "List all aliases for a user",
        "parameters": {
+        "event": {
+         "type": "string",
+         "description": "Event on which subscription is intended (if subscribing)",
+         "enum": [
+          "add",
+          "delete"
+         ],
+         "enumDescriptions": [
+          "Alias Created Event",
+          "Alias Deleted Event"
+         ],
+         "location": "query"
+        },
         "userKey": {
          "type": "string",
          "description": "Email or immutable Id of the user",
@@ -3173,7 +3380,52 @@
         "https://www.googleapis.com/auth/admin.directory.user.alias",
         "https://www.googleapis.com/auth/admin.directory.user.alias.readonly",
         "https://www.googleapis.com/auth/admin.directory.user.readonly"
-       ]
+       ],
+       "supportsSubscription": true
+      },
+      "watch": {
+       "id": "directory.users.aliases.watch",
+       "path": "users/{userKey}/aliases/watch",
+       "httpMethod": "POST",
+       "description": "Watch for changes in user aliases list",
+       "parameters": {
+        "event": {
+         "type": "string",
+         "description": "Event on which subscription is intended (if subscribing)",
+         "enum": [
+          "add",
+          "delete"
+         ],
+         "enumDescriptions": [
+          "Alias Created Event",
+          "Alias Deleted Event"
+         ],
+         "location": "query"
+        },
+        "userKey": {
+         "type": "string",
+         "description": "Email or immutable Id of the user",
+         "required": true,
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "userKey"
+       ],
+       "request": {
+        "$ref": "Channel",
+        "parameterName": "resource"
+       },
+       "response": {
+        "$ref": "Channel"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/admin.directory.user",
+        "https://www.googleapis.com/auth/admin.directory.user.alias",
+        "https://www.googleapis.com/auth/admin.directory.user.alias.readonly",
+        "https://www.googleapis.com/auth/admin.directory.user.readonly"
+       ],
+       "supportsSubscription": true
       }
      }
     },
@@ -3305,7 +3557,7 @@
      "id": "directory.verificationCodes.invalidate",
      "path": "users/{userKey}/verificationCodes/invalidate",
      "httpMethod": "POST",
-     "description": "Invalidate the backup verification codes for the user.",
+     "description": "Invalidate the current backup verification codes for the user.",
      "parameters": {
       "userKey": {
        "type": "string",
@@ -3325,11 +3577,11 @@
      "id": "directory.verificationCodes.list",
      "path": "users/{userKey}/verificationCodes",
      "httpMethod": "GET",
-     "description": "List the backup verification codes for the user.",
+     "description": "Returns the current set of valid backup verification codes for the specified user.",
      "parameters": {
       "userKey": {
        "type": "string",
-       "description": "Email or immutable Id of the user",
+       "description": "Identifies the user in the API request. The value can be the user's primary email address, alias email address, or unique user ID.",
        "required": true,
        "location": "path"
       }

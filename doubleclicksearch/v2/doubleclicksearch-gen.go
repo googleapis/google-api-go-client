@@ -113,11 +113,21 @@ type Conversion struct {
 	// 4217 alphabetic (3-char) format.
 	CurrencyCode string `json:"currencyCode,omitempty"`
 
+	// CustomDimension: The custom dimension values for the conversion.
+	CustomDimension []*CustomDimension `json:"customDimension,omitempty"`
+
+	// CustomMetric: The custom metric values for the conversion.
+	CustomMetric []*CustomMetric `json:"customMetric,omitempty"`
+
 	// DsConversionId: DS conversion ID.
 	DsConversionId int64 `json:"dsConversionId,omitempty,string"`
 
 	// EngineAccountId: DS engine account ID.
 	EngineAccountId int64 `json:"engineAccountId,omitempty,string"`
+
+	// FloodlightOrderId: The advertiser provided order id for the
+	// conversion.
+	FloodlightOrderId string `json:"floodlightOrderId,omitempty"`
 
 	// QuantityMillis: The quantity of this conversion, in millis.
 	QuantityMillis int64 `json:"quantityMillis,omitempty,string"`
@@ -158,6 +168,22 @@ type ConversionList struct {
 	// Kind: Identifies this as a ConversionList resource. Value: the fixed
 	// string doubleclicksearch#conversionList.
 	Kind string `json:"kind,omitempty"`
+}
+
+type CustomDimension struct {
+	// Name: Custom dimension name.
+	Name string `json:"name,omitempty"`
+
+	// Value: Custom dimension value.
+	Value string `json:"value,omitempty"`
+}
+
+type CustomMetric struct {
+	// Name: Custom metric name.
+	Name string `json:"name,omitempty"`
+
+	// Value: Custom metric numeric value.
+	Value float64 `json:"value,omitempty"`
 }
 
 type Report struct {
@@ -475,7 +501,7 @@ func (c *ConversionGetCall) Do() (*ConversionList, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -620,7 +646,7 @@ func (c *ConversionInsertCall) Do() (*ConversionList, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -700,7 +726,7 @@ func (c *ConversionPatchCall) Do() (*ConversionList, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -824,7 +850,7 @@ func (c *ConversionUpdateCall) Do() (*ConversionList, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -882,7 +908,7 @@ func (c *ReportsGenerateCall) Do() (*Report, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -936,7 +962,7 @@ func (c *ReportsGetCall) Do() (*Report, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1000,7 +1026,7 @@ func (c *ReportsGetFileCall) Do() error {
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -1069,7 +1095,7 @@ func (c *ReportsRequestCall) Do() (*Report, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}

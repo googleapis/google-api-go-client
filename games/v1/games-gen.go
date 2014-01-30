@@ -41,7 +41,8 @@ const basePath = "https://www.googleapis.com/games/v1/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your game activity
+	// Share your Google+ profile information and view and manage your game
+	// activity
 	GamesScope = "https://www.googleapis.com/auth/games"
 
 	// Know your basic profile info and list of people in your circles.
@@ -61,6 +62,7 @@ func New(client *http.Client) (*Service, error) {
 	s.Revisions = NewRevisionsService(s)
 	s.Rooms = NewRoomsService(s)
 	s.Scores = NewScoresService(s)
+	s.TurnBasedMatches = NewTurnBasedMatchesService(s)
 	return s, nil
 }
 
@@ -82,6 +84,8 @@ type Service struct {
 	Rooms *RoomsService
 
 	Scores *ScoresService
+
+	TurnBasedMatches *TurnBasedMatchesService
 }
 
 func NewAchievementDefinitionsService(s *Service) *AchievementDefinitionsService {
@@ -153,6 +157,15 @@ func NewScoresService(s *Service) *ScoresService {
 }
 
 type ScoresService struct {
+	s *Service
+}
+
+func NewTurnBasedMatchesService(s *Service) *TurnBasedMatchesService {
+	rs := &TurnBasedMatchesService{s: s}
+	return rs
+}
+
+type TurnBasedMatchesService struct {
 	s *Service
 }
 
@@ -712,6 +725,39 @@ type NetworkDiagnostics struct {
 	RegistrationLatencyMillis int64 `json:"registrationLatencyMillis,omitempty"`
 }
 
+type ParticipantResult struct {
+	// Kind: Uniquely identifies the type of this resource. Value is always
+	// the fixed string games#participantResult.
+	Kind string `json:"kind,omitempty"`
+
+	// ParticipantId: The ID of the participant.
+	ParticipantId string `json:"participantId,omitempty"`
+
+	// Placing: The placement or ranking of the participant in the match
+	// results; a number from one to the number of participants in the
+	// match. Multiple participants may have the same placing value in case
+	// of a type.
+	Placing int64 `json:"placing,omitempty"`
+
+	// Result: The result of the participant for this match.
+	// Possible values
+	// are:
+	// - "MATCH_RESULT_WIN" - The participant won the match.
+	// -
+	// "MATCH_RESULT_LOSS" - The participant lost the match.
+	// -
+	// "MATCH_RESULT_TIE" - The participant tied the match.
+	// -
+	// "MATCH_RESULT_NONE" - There was no winner for the match (nobody wins
+	// or loses this kind of game.)
+	// - "MATCH_RESULT_DISCONNECT" - The
+	// participant disconnected / left during the match.
+	// -
+	// "MATCH_RESULT_DISAGREED" - Different clients reported different
+	// results for this participant.
+	Result string `json:"result,omitempty"`
+}
+
 type PeerChannelDiagnostics struct {
 	// BytesReceived: Number of bytes received.
 	BytesReceived *AggregateStats `json:"bytesReceived,omitempty"`
@@ -757,6 +803,20 @@ type PeerSessionDiagnostics struct {
 	UnreliableChannel *PeerChannelDiagnostics `json:"unreliableChannel,omitempty"`
 }
 
+type Played struct {
+	// AutoMatched: True if the player was auto-matched with the currently
+	// authenticated user.
+	AutoMatched bool `json:"autoMatched,omitempty"`
+
+	// Kind: Uniquely identifies the type of this resource. Value is always
+	// the fixed string games#played.
+	Kind string `json:"kind,omitempty"`
+
+	// TimeMillis: The last time the player played the game in milliseconds
+	// since the epoch in UTC.
+	TimeMillis int64 `json:"timeMillis,omitempty,string"`
+}
+
 type Player struct {
 	// AvatarImageUrl: The base URL for the image that represents the
 	// player.
@@ -768,6 +828,11 @@ type Player struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string games#player.
 	Kind string `json:"kind,omitempty"`
+
+	// LastPlayedWith: Details about the last time this player played a
+	// multiplayer game with the currently authenticated player. Populated
+	// for PLAYED_WITH player collection members.
+	LastPlayedWith *Played `json:"lastPlayedWith,omitempty"`
 
 	// PlayerId: The ID of the player.
 	PlayerId string `json:"playerId,omitempty"`
@@ -868,6 +933,18 @@ type PlayerLeaderboardScoreListResponse struct {
 
 	// Player: The Player resources for the owner of this score.
 	Player *Player `json:"player,omitempty"`
+}
+
+type PlayerListResponse struct {
+	// Items: The players.
+	Items []*Player `json:"items,omitempty"`
+
+	// Kind: Uniquely identifies the type of this resource. Value is always
+	// the fixed string games#playerListResponse.
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: Token corresponding to the next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
 type PlayerScore struct {
@@ -1094,6 +1171,11 @@ type RoomCreateRequest struct {
 	// room.
 	NetworkDiagnostics *NetworkDiagnostics `json:"networkDiagnostics,omitempty"`
 
+	// RequestId: A randomly generated numeric ID. This number is used at
+	// the server to ensure that the request is handled correctly across
+	// retries.
+	RequestId int64 `json:"requestId,omitempty,string"`
+
 	// Variant: The variant / mode of the application to be played. This can
 	// be any integer value, or left blank. You should use a small number of
 	// variants to keep the auto-matching pool as large as possible.
@@ -1247,6 +1329,10 @@ type RoomP2PStatuses struct {
 }
 
 type RoomParticipant struct {
+	// AutoMatched: True if this participant was auto-matched with the
+	// requesting player.
+	AutoMatched bool `json:"autoMatched,omitempty"`
+
 	// AutoMatchedPlayer: Information about a player that has been
 	// anonymously auto-matched against the requesting player. (Either
 	// player or autoMatchedPlayer will be set.)
@@ -1369,6 +1455,305 @@ type ScoreSubmission struct {
 	ScoreTag string `json:"scoreTag,omitempty"`
 }
 
+type TurnBasedAutoMatchingCriteria struct {
+	// ExclusiveBitmask: A bitmask indicating when auto-matches are valid.
+	// When ANDed with other exclusive bitmasks, the result must be zero.
+	// Can be used to support exclusive roles within a game.
+	ExclusiveBitmask int64 `json:"exclusiveBitmask,omitempty,string"`
+
+	// Kind: Uniquely identifies the type of this resource. Value is always
+	// the fixed string games#turnBasedAutoMatchingCriteria.
+	Kind string `json:"kind,omitempty"`
+
+	// MaxAutoMatchingPlayers: The maximum number of players that should be
+	// added to the match by auto-matching.
+	MaxAutoMatchingPlayers int64 `json:"maxAutoMatchingPlayers,omitempty"`
+
+	// MinAutoMatchingPlayers: The minimum number of players that should be
+	// added to the match by auto-matching.
+	MinAutoMatchingPlayers int64 `json:"minAutoMatchingPlayers,omitempty"`
+}
+
+type TurnBasedMatch struct {
+	// ApplicationId: The ID of the application being played.
+	ApplicationId string `json:"applicationId,omitempty"`
+
+	// AutoMatchingCriteria: Criteria for auto-matching players into this
+	// match.
+	AutoMatchingCriteria *TurnBasedAutoMatchingCriteria `json:"autoMatchingCriteria,omitempty"`
+
+	// CreationDetails: Details about the match creation.
+	CreationDetails *TurnBasedMatchModification `json:"creationDetails,omitempty"`
+
+	// Data: The data / game state for this match.
+	Data *TurnBasedMatchData `json:"data,omitempty"`
+
+	// Kind: Uniquely identifies the type of this resource. Value is always
+	// the fixed string games#turnBasedMatch.
+	Kind string `json:"kind,omitempty"`
+
+	// LastUpdateDetails: Details about the last update to the match.
+	LastUpdateDetails *TurnBasedMatchModification `json:"lastUpdateDetails,omitempty"`
+
+	// MatchId: Globally unique ID for a turn-based match.
+	MatchId string `json:"matchId,omitempty"`
+
+	// MatchNumber: The number of the match in a chain of rematches. Will be
+	// set to 1 for the first match and incremented by 1 for each rematch.
+	MatchNumber int64 `json:"matchNumber,omitempty"`
+
+	// MatchVersion: The version of this match: an increasing counter, used
+	// to avoid out-of-date updates to the match.
+	MatchVersion int64 `json:"matchVersion,omitempty"`
+
+	// Participants: The participants involved in the match, along with
+	// their statuses. Includes participants who have left or declined
+	// invitations.
+	Participants []*TurnBasedMatchParticipant `json:"participants,omitempty"`
+
+	// PendingParticipantId: The ID of the participant that is taking a
+	// turn.
+	PendingParticipantId string `json:"pendingParticipantId,omitempty"`
+
+	// PreviousMatchData: The data / game state for the previous match; set
+	// for the first turn of rematches only.
+	PreviousMatchData *TurnBasedMatchData `json:"previousMatchData,omitempty"`
+
+	// RematchId: The ID of a rematch of this match. Only set for completed
+	// matches that have been rematched.
+	RematchId string `json:"rematchId,omitempty"`
+
+	// Results: The results reported for this match.
+	Results []*ParticipantResult `json:"results,omitempty"`
+
+	// Status: The status of the match.
+	// Possible values are:
+	// -
+	// "MATCH_AUTO_MATCHING" - One or more slots need to be filled by
+	// auto-matching; the match cannot be established until they are filled.
+	//
+	// - "MATCH_ACTIVE" - The match has started.
+	// - "MATCH_COMPLETE" - The
+	// match has finished.
+	// - "MATCH_CANCELED" - The match was canceled.
+	// -
+	// "MATCH_EXPIRED" - The match expired due to inactivity.
+	// -
+	// "MATCH_DELETED" - The match should no longer be shown on the client.
+	// Returned only for tombstones for matches when sync is called.
+	Status string `json:"status,omitempty"`
+
+	// UserMatchStatus: The status of the current user in the match. Derived
+	// from the match type, match status, the user's participant status, and
+	// the pending participant for the match.
+	// Possible values are:
+	// -
+	// "USER_INVITED" - The user has been invited to join the match and has
+	// not responded yet.
+	// - "USER_AWAITING_TURN" - The user is waiting for
+	// their turn.
+	// - "USER_TURN" - The user has an action to take in the
+	// match.
+	// - "USER_MATCH_COMPLETED" - The match has ended (it is
+	// completed, canceled, or expired.)
+	UserMatchStatus string `json:"userMatchStatus,omitempty"`
+
+	// Variant: The variant / mode of the application being played; can be
+	// any integer value, or left blank.
+	Variant int64 `json:"variant,omitempty"`
+}
+
+type TurnBasedMatchCreateRequest struct {
+	// AutoMatchingCriteria: Criteria for auto-matching players into this
+	// match.
+	AutoMatchingCriteria *TurnBasedAutoMatchingCriteria `json:"autoMatchingCriteria,omitempty"`
+
+	// InvitedPlayerIds: The player ids to invite to the match.
+	InvitedPlayerIds []string `json:"invitedPlayerIds,omitempty"`
+
+	// Kind: Uniquely identifies the type of this resource. Value is always
+	// the fixed string games#turnBasedMatchCreateRequest.
+	Kind string `json:"kind,omitempty"`
+
+	// RequestId: A randomly generated numeric ID. This number is used at
+	// the server to ensure that the request is handled correctly across
+	// retries.
+	RequestId int64 `json:"requestId,omitempty,string"`
+
+	// Variant: The variant / mode of the application to be played. This can
+	// be any integer value, or left blank. You should use a small number of
+	// variants to keep the auto-matching pool as large as possible.
+	Variant int64 `json:"variant,omitempty"`
+}
+
+type TurnBasedMatchData struct {
+	// Data: The byte representation of the data (limited to 128 kB), as a
+	// Base64-encoded string with the URL_SAFE encoding option.
+	Data string `json:"data,omitempty"`
+
+	// DataAvailable: True if this match has data available but it wasn't
+	// returned in a list response; fetching the match individually will
+	// retrieve this data.
+	DataAvailable bool `json:"dataAvailable,omitempty"`
+
+	// Kind: Uniquely identifies the type of this resource. Value is always
+	// the fixed string games#turnBasedMatchData.
+	Kind string `json:"kind,omitempty"`
+}
+
+type TurnBasedMatchDataRequest struct {
+	// Data: The byte representation of the data (limited to 128 kB), as a
+	// Base64-encoded string with the URL_SAFE encoding option.
+	Data string `json:"data,omitempty"`
+
+	// Kind: Uniquely identifies the type of this resource. Value is always
+	// the fixed string games#turnBasedMatchDataRequest.
+	Kind string `json:"kind,omitempty"`
+}
+
+type TurnBasedMatchList struct {
+	// Items: The matches.
+	Items []*TurnBasedMatch `json:"items,omitempty"`
+
+	// Kind: Uniquely identifies the type of this resource. Value is always
+	// the fixed string games#turnBasedMatchList.
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: The pagination token for the next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+}
+
+type TurnBasedMatchModification struct {
+	// Kind: Uniquely identifies the type of this resource. Value is always
+	// the fixed string games#turnBasedMatchModification.
+	Kind string `json:"kind,omitempty"`
+
+	// ModifiedTimestampMillis: The timestamp at which they modified the
+	// match, in milliseconds since the epoch in UTC.
+	ModifiedTimestampMillis int64 `json:"modifiedTimestampMillis,omitempty,string"`
+
+	// ParticipantId: The ID of the participant that modified the match.
+	ParticipantId string `json:"participantId,omitempty"`
+}
+
+type TurnBasedMatchParticipant struct {
+	// AutoMatched: True if this participant was auto-matched with the
+	// requesting player.
+	AutoMatched bool `json:"autoMatched,omitempty"`
+
+	// AutoMatchedPlayer: Information about a player that has been
+	// anonymously auto-matched against the requesting player. (Either
+	// player or autoMatchedPlayer will be set.)
+	AutoMatchedPlayer *AnonymousPlayer `json:"autoMatchedPlayer,omitempty"`
+
+	// Id: An identifier for the participant in the scope of the match.
+	// Cannot be used to identify a player across matches or in other
+	// contexts.
+	Id string `json:"id,omitempty"`
+
+	// Kind: Uniquely identifies the type of this resource. Value is always
+	// the fixed string games#turnBasedMatchParticipant.
+	Kind string `json:"kind,omitempty"`
+
+	// Player: Information about the player. Not populated if this player
+	// was anonymously auto-matched against the requesting player. (Either
+	// player or autoMatchedPlayer will be set.)
+	Player *Player `json:"player,omitempty"`
+
+	// Status: The status of the participant with respect to the
+	// match.
+	// Possible values are:
+	// - "PARTICIPANT_NOT_INVITED_YET" - The
+	// participant is slated to be invited to the match, but the invitation
+	// has not been sent; the invite will be sent when it becomes their
+	// turn.
+	// - "PARTICIPANT_INVITED" - The participant has been invited to
+	// join the match, but has not yet responded.
+	// - "PARTICIPANT_JOINED" -
+	// The participant has joined the match (either after creating it or
+	// accepting an invitation.)
+	// - "PARTICIPANT_DECLINED" - The participant
+	// declined an invitation to join the match.
+	// - "PARTICIPANT_LEFT" - The
+	// participant joined the match and then left it.
+	// -
+	// "PARTICIPANT_FINISHED" - The participant finished playing in the
+	// match.
+	// - "PARTICIPANT_UNRESPONSIVE" - The participant did not take
+	// their turn in the allotted time.
+	Status string `json:"status,omitempty"`
+}
+
+type TurnBasedMatchRematch struct {
+	// Kind: Uniquely identifies the type of this resource. Value is always
+	// the fixed string games#turnBasedMatchRematch.
+	Kind string `json:"kind,omitempty"`
+
+	// PreviousMatch: The old match that the rematch was created from; will
+	// be updated such that the rematchId field will point at the new match.
+	PreviousMatch *TurnBasedMatch `json:"previousMatch,omitempty"`
+
+	// Rematch: The newly created match; a rematch of the old match with the
+	// same participants.
+	Rematch *TurnBasedMatch `json:"rematch,omitempty"`
+}
+
+type TurnBasedMatchResults struct {
+	// Data: The final match data.
+	Data *TurnBasedMatchDataRequest `json:"data,omitempty"`
+
+	// Kind: Uniquely identifies the type of this resource. Value is always
+	// the fixed string games#turnBasedMatchResults.
+	Kind string `json:"kind,omitempty"`
+
+	// MatchVersion: The version of the match being updated.
+	MatchVersion int64 `json:"matchVersion,omitempty"`
+
+	// Results: The match results for the participants in the match.
+	Results []*ParticipantResult `json:"results,omitempty"`
+}
+
+type TurnBasedMatchSync struct {
+	// Items: The matches.
+	Items []*TurnBasedMatch `json:"items,omitempty"`
+
+	// Kind: Uniquely identifies the type of this resource. Value is always
+	// the fixed string games#turnBasedMatchSync.
+	Kind string `json:"kind,omitempty"`
+
+	// MoreAvailable: True if there were more matches available to fetch at
+	// the time the response was generated (which were not returned due to
+	// page size limits.)
+	MoreAvailable bool `json:"moreAvailable,omitempty"`
+
+	// NextPageToken: The pagination token for the next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+}
+
+type TurnBasedMatchTurn struct {
+	// Data: The shared game state data after the turn is over.
+	Data *TurnBasedMatchDataRequest `json:"data,omitempty"`
+
+	// Kind: Uniquely identifies the type of this resource. Value is always
+	// the fixed string games#turnBasedMatchTurn.
+	Kind string `json:"kind,omitempty"`
+
+	// MatchVersion: The version of this match: an increasing counter, used
+	// to avoid out-of-date updates to the match.
+	MatchVersion int64 `json:"matchVersion,omitempty"`
+
+	// PendingParticipantId: The ID of the participant who should take their
+	// turn next. May be set to the current player's participant ID to
+	// update match state without changing the turn. If not set, the match
+	// will wait for other player(s) to join via automatching; this is only
+	// valid if automatch criteria is set on the match with remaining slots
+	// for automatched players.
+	PendingParticipantId string `json:"pendingParticipantId,omitempty"`
+
+	// Results: The match results for the participants in the match.
+	Results []*ParticipantResult `json:"results,omitempty"`
+}
+
 // method id "games.achievementDefinitions.list":
 
 type AchievementDefinitionsListCall struct {
@@ -1427,7 +1812,7 @@ func (c *AchievementDefinitionsListCall) Do() (*AchievementDefinitionsListRespon
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1517,7 +1902,7 @@ func (c *AchievementsIncrementCall) Do() (*AchievementIncrementResponse, error) 
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1641,7 +2026,7 @@ func (c *AchievementsListCall) Do() (*PlayerAchievementListResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1742,7 +2127,7 @@ func (c *AchievementsRevealCall) Do() (*AchievementRevealResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1813,7 +2198,7 @@ func (c *AchievementsSetStepsAtLeastCall) Do() (*AchievementSetStepsAtLeastRespo
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1888,7 +2273,7 @@ func (c *AchievementsUnlockCall) Do() (*AchievementUnlockResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1959,7 +2344,7 @@ func (c *AchievementsUpdateMultipleCall) Do() (*AchievementUpdateMultipleRespons
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2039,7 +2424,7 @@ func (c *ApplicationsGetCall) Do() (*Application, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2122,7 +2507,7 @@ func (c *ApplicationsPlayedCall) Do() error {
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -2179,7 +2564,7 @@ func (c *LeaderboardsGetCall) Do() (*Leaderboard, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2278,7 +2663,7 @@ func (c *LeaderboardsListCall) Do() (*LeaderboardListResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2353,7 +2738,7 @@ func (c *PlayersGetCall) Do() (*Player, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2380,6 +2765,113 @@ func (c *PlayersGetCall) Do() (*Player, error) {
 	//   "path": "players/{playerId}",
 	//   "response": {
 	//     "$ref": "Player"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.login"
+	//   ]
+	// }
+
+}
+
+// method id "games.players.list":
+
+type PlayersListCall struct {
+	s          *Service
+	collection string
+	opt_       map[string]interface{}
+}
+
+// List: Get the collection of players for the currently authenticated
+// user.
+func (r *PlayersService) List(collection string) *PlayersListCall {
+	c := &PlayersListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.collection = collection
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of player resources to return in the response, used for
+// paging. For any response, the actual number of player resources
+// returned may be less than the specified maxResults.
+func (c *PlayersListCall) MaxResults(maxResults int64) *PlayersListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The token returned
+// by the previous request.
+func (c *PlayersListCall) PageToken(pageToken string) *PlayersListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+func (c *PlayersListCall) Do() (*PlayerListResponse, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1/", "players/me/players/{collection}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{collection}", url.QueryEscape(c.collection), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(PlayerListResponse)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get the collection of players for the currently authenticated user.",
+	//   "httpMethod": "GET",
+	//   "id": "games.players.list",
+	//   "parameterOrder": [
+	//     "collection"
+	//   ],
+	//   "parameters": {
+	//     "collection": {
+	//       "description": "Collection of players being retrieved",
+	//       "enum": [
+	//         "playedWith"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Retrieve a list of players you have played a multiplayer game (realtime or turn-based) with recently."
+	//       ],
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "description": "The maximum number of player resources to return in the response, used for paging. For any response, the actual number of player resources returned may be less than the specified maxResults.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "maximum": "15",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The token returned by the previous request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "players/me/players/{collection}",
+	//   "response": {
+	//     "$ref": "PlayerListResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/games",
@@ -2418,7 +2910,7 @@ func (c *RevisionsCheckCall) Do() (*RevisionCheckResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2499,7 +2991,7 @@ func (c *RoomsCreateCall) Do() (*Room, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2564,7 +3056,7 @@ func (c *RoomsDeclineCall) Do() (*Room, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2630,7 +3122,7 @@ func (c *RoomsDismissCall) Do() error {
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -2698,7 +3190,7 @@ func (c *RoomsGetCall) Do() (*Room, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2777,7 +3269,7 @@ func (c *RoomsJoinCall) Do() (*Room, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2854,7 +3346,7 @@ func (c *RoomsLeaveCall) Do() (*Room, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2951,7 +3443,7 @@ func (c *RoomsListCall) Do() (*RoomList, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3035,7 +3527,7 @@ func (c *RoomsReportStatusCall) Do() (*RoomStatus, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3158,7 +3650,7 @@ func (c *ScoresGetCall) Do() (*PlayerLeaderboardScoreListResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3320,7 +3812,7 @@ func (c *ScoresListCall) Do() (*LeaderboardScores, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3498,7 +3990,7 @@ func (c *ScoresListWindowCall) Do() (*LeaderboardScores, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3649,7 +4141,7 @@ func (c *ScoresSubmitCall) Do() (*PlayerScoreResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3748,7 +4240,7 @@ func (c *ScoresSubmitMultipleCall) Do() (*PlayerScoreListResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3774,6 +4266,1221 @@ func (c *ScoresSubmitMultipleCall) Do() (*PlayerScoreListResponse, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "PlayerScoreListResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.login"
+	//   ]
+	// }
+
+}
+
+// method id "games.turnBasedMatches.cancel":
+
+type TurnBasedMatchesCancelCall struct {
+	s       *Service
+	matchId string
+	opt_    map[string]interface{}
+}
+
+// Cancel: Cancel a turn-based match.
+func (r *TurnBasedMatchesService) Cancel(matchId string) *TurnBasedMatchesCancelCall {
+	c := &TurnBasedMatchesCancelCall{s: r.s, opt_: make(map[string]interface{})}
+	c.matchId = matchId
+	return c
+}
+
+func (c *TurnBasedMatchesCancelCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1/", "turnbasedmatches/{matchId}/cancel")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{matchId}", url.QueryEscape(c.matchId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Cancel a turn-based match.",
+	//   "httpMethod": "PUT",
+	//   "id": "games.turnBasedMatches.cancel",
+	//   "parameterOrder": [
+	//     "matchId"
+	//   ],
+	//   "parameters": {
+	//     "matchId": {
+	//       "description": "The ID of the match.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "turnbasedmatches/{matchId}/cancel",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.login"
+	//   ]
+	// }
+
+}
+
+// method id "games.turnBasedMatches.create":
+
+type TurnBasedMatchesCreateCall struct {
+	s                           *Service
+	turnbasedmatchcreaterequest *TurnBasedMatchCreateRequest
+	opt_                        map[string]interface{}
+}
+
+// Create: Create a turn-based match.
+func (r *TurnBasedMatchesService) Create(turnbasedmatchcreaterequest *TurnBasedMatchCreateRequest) *TurnBasedMatchesCreateCall {
+	c := &TurnBasedMatchesCreateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.turnbasedmatchcreaterequest = turnbasedmatchcreaterequest
+	return c
+}
+
+// Language sets the optional parameter "language": Specify the
+// preferred language to use to format match info.
+func (c *TurnBasedMatchesCreateCall) Language(language string) *TurnBasedMatchesCreateCall {
+	c.opt_["language"] = language
+	return c
+}
+
+func (c *TurnBasedMatchesCreateCall) Do() (*TurnBasedMatch, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.turnbasedmatchcreaterequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["language"]; ok {
+		params.Set("language", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1/", "turnbasedmatches/create")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(TurnBasedMatch)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Create a turn-based match.",
+	//   "httpMethod": "POST",
+	//   "id": "games.turnBasedMatches.create",
+	//   "parameters": {
+	//     "language": {
+	//       "description": "Specify the preferred language to use to format match info.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "turnbasedmatches/create",
+	//   "request": {
+	//     "$ref": "TurnBasedMatchCreateRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "TurnBasedMatch"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.login"
+	//   ]
+	// }
+
+}
+
+// method id "games.turnBasedMatches.decline":
+
+type TurnBasedMatchesDeclineCall struct {
+	s       *Service
+	matchId string
+	opt_    map[string]interface{}
+}
+
+// Decline: Decline an invitation to play a turn-based match.
+func (r *TurnBasedMatchesService) Decline(matchId string) *TurnBasedMatchesDeclineCall {
+	c := &TurnBasedMatchesDeclineCall{s: r.s, opt_: make(map[string]interface{})}
+	c.matchId = matchId
+	return c
+}
+
+// Language sets the optional parameter "language": The preferred
+// language to use for strings returned by this method.
+func (c *TurnBasedMatchesDeclineCall) Language(language string) *TurnBasedMatchesDeclineCall {
+	c.opt_["language"] = language
+	return c
+}
+
+func (c *TurnBasedMatchesDeclineCall) Do() (*TurnBasedMatch, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["language"]; ok {
+		params.Set("language", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1/", "turnbasedmatches/{matchId}/decline")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{matchId}", url.QueryEscape(c.matchId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(TurnBasedMatch)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Decline an invitation to play a turn-based match.",
+	//   "httpMethod": "PUT",
+	//   "id": "games.turnBasedMatches.decline",
+	//   "parameterOrder": [
+	//     "matchId"
+	//   ],
+	//   "parameters": {
+	//     "language": {
+	//       "description": "The preferred language to use for strings returned by this method.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "matchId": {
+	//       "description": "The ID of the match.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "turnbasedmatches/{matchId}/decline",
+	//   "response": {
+	//     "$ref": "TurnBasedMatch"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.login"
+	//   ]
+	// }
+
+}
+
+// method id "games.turnBasedMatches.dismiss":
+
+type TurnBasedMatchesDismissCall struct {
+	s       *Service
+	matchId string
+	opt_    map[string]interface{}
+}
+
+// Dismiss: Dismiss a turn-based match from the match list. The match
+// will no longer show up in the list and will not generate
+// notifications.
+func (r *TurnBasedMatchesService) Dismiss(matchId string) *TurnBasedMatchesDismissCall {
+	c := &TurnBasedMatchesDismissCall{s: r.s, opt_: make(map[string]interface{})}
+	c.matchId = matchId
+	return c
+}
+
+func (c *TurnBasedMatchesDismissCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1/", "turnbasedmatches/{matchId}/dismiss")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{matchId}", url.QueryEscape(c.matchId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Dismiss a turn-based match from the match list. The match will no longer show up in the list and will not generate notifications.",
+	//   "httpMethod": "PUT",
+	//   "id": "games.turnBasedMatches.dismiss",
+	//   "parameterOrder": [
+	//     "matchId"
+	//   ],
+	//   "parameters": {
+	//     "matchId": {
+	//       "description": "The ID of the match.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "turnbasedmatches/{matchId}/dismiss",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.login"
+	//   ]
+	// }
+
+}
+
+// method id "games.turnBasedMatches.finish":
+
+type TurnBasedMatchesFinishCall struct {
+	s                     *Service
+	matchId               string
+	turnbasedmatchresults *TurnBasedMatchResults
+	opt_                  map[string]interface{}
+}
+
+// Finish: Finish a turn-based match. Each player should make this call
+// once, after all results are in. Only the player whose turn it is may
+// make the first call to Finish, and can pass in the final match state.
+func (r *TurnBasedMatchesService) Finish(matchId string, turnbasedmatchresults *TurnBasedMatchResults) *TurnBasedMatchesFinishCall {
+	c := &TurnBasedMatchesFinishCall{s: r.s, opt_: make(map[string]interface{})}
+	c.matchId = matchId
+	c.turnbasedmatchresults = turnbasedmatchresults
+	return c
+}
+
+// Language sets the optional parameter "language": The preferred
+// language to use for strings returned by this method.
+func (c *TurnBasedMatchesFinishCall) Language(language string) *TurnBasedMatchesFinishCall {
+	c.opt_["language"] = language
+	return c
+}
+
+func (c *TurnBasedMatchesFinishCall) Do() (*TurnBasedMatch, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.turnbasedmatchresults)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["language"]; ok {
+		params.Set("language", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1/", "turnbasedmatches/{matchId}/finish")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{matchId}", url.QueryEscape(c.matchId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(TurnBasedMatch)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Finish a turn-based match. Each player should make this call once, after all results are in. Only the player whose turn it is may make the first call to Finish, and can pass in the final match state.",
+	//   "httpMethod": "PUT",
+	//   "id": "games.turnBasedMatches.finish",
+	//   "parameterOrder": [
+	//     "matchId"
+	//   ],
+	//   "parameters": {
+	//     "language": {
+	//       "description": "The preferred language to use for strings returned by this method.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "matchId": {
+	//       "description": "The ID of the match.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "turnbasedmatches/{matchId}/finish",
+	//   "request": {
+	//     "$ref": "TurnBasedMatchResults"
+	//   },
+	//   "response": {
+	//     "$ref": "TurnBasedMatch"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.login"
+	//   ]
+	// }
+
+}
+
+// method id "games.turnBasedMatches.get":
+
+type TurnBasedMatchesGetCall struct {
+	s       *Service
+	matchId string
+	opt_    map[string]interface{}
+}
+
+// Get: Get the data for a turn-based match.
+func (r *TurnBasedMatchesService) Get(matchId string) *TurnBasedMatchesGetCall {
+	c := &TurnBasedMatchesGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.matchId = matchId
+	return c
+}
+
+// IncludeMatchData sets the optional parameter "includeMatchData": Get
+// match data along with metadata.
+func (c *TurnBasedMatchesGetCall) IncludeMatchData(includeMatchData bool) *TurnBasedMatchesGetCall {
+	c.opt_["includeMatchData"] = includeMatchData
+	return c
+}
+
+// Language sets the optional parameter "language": Specify the
+// preferred language to use to format match info.
+func (c *TurnBasedMatchesGetCall) Language(language string) *TurnBasedMatchesGetCall {
+	c.opt_["language"] = language
+	return c
+}
+
+func (c *TurnBasedMatchesGetCall) Do() (*TurnBasedMatch, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["includeMatchData"]; ok {
+		params.Set("includeMatchData", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["language"]; ok {
+		params.Set("language", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1/", "turnbasedmatches/{matchId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{matchId}", url.QueryEscape(c.matchId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(TurnBasedMatch)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get the data for a turn-based match.",
+	//   "httpMethod": "GET",
+	//   "id": "games.turnBasedMatches.get",
+	//   "parameterOrder": [
+	//     "matchId"
+	//   ],
+	//   "parameters": {
+	//     "includeMatchData": {
+	//       "description": "Get match data along with metadata.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "language": {
+	//       "description": "Specify the preferred language to use to format match info.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "matchId": {
+	//       "description": "The ID of the match.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "turnbasedmatches/{matchId}",
+	//   "response": {
+	//     "$ref": "TurnBasedMatch"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.login"
+	//   ]
+	// }
+
+}
+
+// method id "games.turnBasedMatches.join":
+
+type TurnBasedMatchesJoinCall struct {
+	s       *Service
+	matchId string
+	opt_    map[string]interface{}
+}
+
+// Join: Join a turn-based match.
+func (r *TurnBasedMatchesService) Join(matchId string) *TurnBasedMatchesJoinCall {
+	c := &TurnBasedMatchesJoinCall{s: r.s, opt_: make(map[string]interface{})}
+	c.matchId = matchId
+	return c
+}
+
+// Language sets the optional parameter "language": The preferred
+// language to use for strings returned by this method.
+func (c *TurnBasedMatchesJoinCall) Language(language string) *TurnBasedMatchesJoinCall {
+	c.opt_["language"] = language
+	return c
+}
+
+func (c *TurnBasedMatchesJoinCall) Do() (*TurnBasedMatch, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["language"]; ok {
+		params.Set("language", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1/", "turnbasedmatches/{matchId}/join")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{matchId}", url.QueryEscape(c.matchId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(TurnBasedMatch)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Join a turn-based match.",
+	//   "httpMethod": "PUT",
+	//   "id": "games.turnBasedMatches.join",
+	//   "parameterOrder": [
+	//     "matchId"
+	//   ],
+	//   "parameters": {
+	//     "language": {
+	//       "description": "The preferred language to use for strings returned by this method.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "matchId": {
+	//       "description": "The ID of the match.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "turnbasedmatches/{matchId}/join",
+	//   "response": {
+	//     "$ref": "TurnBasedMatch"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.login"
+	//   ]
+	// }
+
+}
+
+// method id "games.turnBasedMatches.leave":
+
+type TurnBasedMatchesLeaveCall struct {
+	s       *Service
+	matchId string
+	opt_    map[string]interface{}
+}
+
+// Leave: Leave a turn-based match when it is not the current player's
+// turn, without canceling the match.
+func (r *TurnBasedMatchesService) Leave(matchId string) *TurnBasedMatchesLeaveCall {
+	c := &TurnBasedMatchesLeaveCall{s: r.s, opt_: make(map[string]interface{})}
+	c.matchId = matchId
+	return c
+}
+
+// Language sets the optional parameter "language": The preferred
+// language to use for strings returned by this method.
+func (c *TurnBasedMatchesLeaveCall) Language(language string) *TurnBasedMatchesLeaveCall {
+	c.opt_["language"] = language
+	return c
+}
+
+func (c *TurnBasedMatchesLeaveCall) Do() (*TurnBasedMatch, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["language"]; ok {
+		params.Set("language", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1/", "turnbasedmatches/{matchId}/leave")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{matchId}", url.QueryEscape(c.matchId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(TurnBasedMatch)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Leave a turn-based match when it is not the current player's turn, without canceling the match.",
+	//   "httpMethod": "PUT",
+	//   "id": "games.turnBasedMatches.leave",
+	//   "parameterOrder": [
+	//     "matchId"
+	//   ],
+	//   "parameters": {
+	//     "language": {
+	//       "description": "The preferred language to use for strings returned by this method.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "matchId": {
+	//       "description": "The ID of the match.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "turnbasedmatches/{matchId}/leave",
+	//   "response": {
+	//     "$ref": "TurnBasedMatch"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.login"
+	//   ]
+	// }
+
+}
+
+// method id "games.turnBasedMatches.leaveTurn":
+
+type TurnBasedMatchesLeaveTurnCall struct {
+	s            *Service
+	matchId      string
+	matchVersion int64
+	opt_         map[string]interface{}
+}
+
+// LeaveTurn: Leave a turn-based match during the current player's turn,
+// without canceling the match.
+func (r *TurnBasedMatchesService) LeaveTurn(matchId string, matchVersion int64) *TurnBasedMatchesLeaveTurnCall {
+	c := &TurnBasedMatchesLeaveTurnCall{s: r.s, opt_: make(map[string]interface{})}
+	c.matchId = matchId
+	c.matchVersion = matchVersion
+	return c
+}
+
+// Language sets the optional parameter "language": The preferred
+// language to use for strings returned by this method.
+func (c *TurnBasedMatchesLeaveTurnCall) Language(language string) *TurnBasedMatchesLeaveTurnCall {
+	c.opt_["language"] = language
+	return c
+}
+
+// PendingParticipantId sets the optional parameter
+// "pendingParticipantId": The ID of another participant who should take
+// their turn next. If not set, the match will wait for other player(s)
+// to join via automatching; this is only valid if automatch criteria is
+// set on the match with remaining slots for automatched players.
+func (c *TurnBasedMatchesLeaveTurnCall) PendingParticipantId(pendingParticipantId string) *TurnBasedMatchesLeaveTurnCall {
+	c.opt_["pendingParticipantId"] = pendingParticipantId
+	return c
+}
+
+func (c *TurnBasedMatchesLeaveTurnCall) Do() (*TurnBasedMatch, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("matchVersion", fmt.Sprintf("%v", c.matchVersion))
+	if v, ok := c.opt_["language"]; ok {
+		params.Set("language", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pendingParticipantId"]; ok {
+		params.Set("pendingParticipantId", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1/", "turnbasedmatches/{matchId}/leaveTurn")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{matchId}", url.QueryEscape(c.matchId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(TurnBasedMatch)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Leave a turn-based match during the current player's turn, without canceling the match.",
+	//   "httpMethod": "PUT",
+	//   "id": "games.turnBasedMatches.leaveTurn",
+	//   "parameterOrder": [
+	//     "matchId",
+	//     "matchVersion"
+	//   ],
+	//   "parameters": {
+	//     "language": {
+	//       "description": "The preferred language to use for strings returned by this method.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "matchId": {
+	//       "description": "The ID of the match.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "matchVersion": {
+	//       "description": "The version of the match being updated.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "integer"
+	//     },
+	//     "pendingParticipantId": {
+	//       "description": "The ID of another participant who should take their turn next. If not set, the match will wait for other player(s) to join via automatching; this is only valid if automatch criteria is set on the match with remaining slots for automatched players.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "turnbasedmatches/{matchId}/leaveTurn",
+	//   "response": {
+	//     "$ref": "TurnBasedMatch"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.login"
+	//   ]
+	// }
+
+}
+
+// method id "games.turnBasedMatches.list":
+
+type TurnBasedMatchesListCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// List: Returns turn-based matches the player is or was involved in.
+func (r *TurnBasedMatchesService) List() *TurnBasedMatchesListCall {
+	c := &TurnBasedMatchesListCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+// IncludeMatchData sets the optional parameter "includeMatchData": True
+// if match data should be returned in the response. Note that not all
+// data will necessarily be returned if include_match_data is true; the
+// server may decide to only return data for some of the matches to
+// limit download size for the client. The remainder of the data for
+// these matches will be retrievable on request.
+func (c *TurnBasedMatchesListCall) IncludeMatchData(includeMatchData bool) *TurnBasedMatchesListCall {
+	c.opt_["includeMatchData"] = includeMatchData
+	return c
+}
+
+// Language sets the optional parameter "language": The preferred
+// language to use for strings returned by this method.
+func (c *TurnBasedMatchesListCall) Language(language string) *TurnBasedMatchesListCall {
+	c.opt_["language"] = language
+	return c
+}
+
+// MaxCompletedMatches sets the optional parameter
+// "maxCompletedMatches": The maximum number of completed or canceled
+// matches to return in the response. If not set, all matches returned
+// could be completed or canceled.
+func (c *TurnBasedMatchesListCall) MaxCompletedMatches(maxCompletedMatches int64) *TurnBasedMatchesListCall {
+	c.opt_["maxCompletedMatches"] = maxCompletedMatches
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of matches to return in the response, used for paging. For any
+// response, the actual number of matches to return may be less than the
+// specified maxResults.
+func (c *TurnBasedMatchesListCall) MaxResults(maxResults int64) *TurnBasedMatchesListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The token returned
+// by the previous request.
+func (c *TurnBasedMatchesListCall) PageToken(pageToken string) *TurnBasedMatchesListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+func (c *TurnBasedMatchesListCall) Do() (*TurnBasedMatchList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["includeMatchData"]; ok {
+		params.Set("includeMatchData", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["language"]; ok {
+		params.Set("language", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxCompletedMatches"]; ok {
+		params.Set("maxCompletedMatches", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1/", "turnbasedmatches")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(TurnBasedMatchList)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns turn-based matches the player is or was involved in.",
+	//   "httpMethod": "GET",
+	//   "id": "games.turnBasedMatches.list",
+	//   "parameters": {
+	//     "includeMatchData": {
+	//       "description": "True if match data should be returned in the response. Note that not all data will necessarily be returned if include_match_data is true; the server may decide to only return data for some of the matches to limit download size for the client. The remainder of the data for these matches will be retrievable on request.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "language": {
+	//       "description": "The preferred language to use for strings returned by this method.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxCompletedMatches": {
+	//       "description": "The maximum number of completed or canceled matches to return in the response. If not set, all matches returned could be completed or canceled.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "maximum": "500",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "maxResults": {
+	//       "description": "The maximum number of matches to return in the response, used for paging. For any response, the actual number of matches to return may be less than the specified maxResults.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "maximum": "500",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The token returned by the previous request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "turnbasedmatches",
+	//   "response": {
+	//     "$ref": "TurnBasedMatchList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.login"
+	//   ]
+	// }
+
+}
+
+// method id "games.turnBasedMatches.rematch":
+
+type TurnBasedMatchesRematchCall struct {
+	s       *Service
+	matchId string
+	opt_    map[string]interface{}
+}
+
+// Rematch: Create a rematch of a match that was previously completed,
+// with the same participants. This can be called by only one player on
+// a match still in their list; the player must have called Finish
+// first. Returns the newly created match; it will be the caller's turn.
+func (r *TurnBasedMatchesService) Rematch(matchId string) *TurnBasedMatchesRematchCall {
+	c := &TurnBasedMatchesRematchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.matchId = matchId
+	return c
+}
+
+// Language sets the optional parameter "language": The preferred
+// language to use for strings returned by this method.
+func (c *TurnBasedMatchesRematchCall) Language(language string) *TurnBasedMatchesRematchCall {
+	c.opt_["language"] = language
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A randomly
+// generated numeric ID for each request specified by the caller. This
+// number is used at the server to ensure that the request is handled
+// correctly across retries.
+func (c *TurnBasedMatchesRematchCall) RequestId(requestId int64) *TurnBasedMatchesRematchCall {
+	c.opt_["requestId"] = requestId
+	return c
+}
+
+func (c *TurnBasedMatchesRematchCall) Do() (*TurnBasedMatchRematch, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["language"]; ok {
+		params.Set("language", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["requestId"]; ok {
+		params.Set("requestId", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1/", "turnbasedmatches/{matchId}/rematch")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{matchId}", url.QueryEscape(c.matchId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(TurnBasedMatchRematch)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Create a rematch of a match that was previously completed, with the same participants. This can be called by only one player on a match still in their list; the player must have called Finish first. Returns the newly created match; it will be the caller's turn.",
+	//   "httpMethod": "POST",
+	//   "id": "games.turnBasedMatches.rematch",
+	//   "parameterOrder": [
+	//     "matchId"
+	//   ],
+	//   "parameters": {
+	//     "language": {
+	//       "description": "The preferred language to use for strings returned by this method.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "matchId": {
+	//       "description": "The ID of the match.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "A randomly generated numeric ID for each request specified by the caller. This number is used at the server to ensure that the request is handled correctly across retries.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "turnbasedmatches/{matchId}/rematch",
+	//   "response": {
+	//     "$ref": "TurnBasedMatchRematch"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.login"
+	//   ]
+	// }
+
+}
+
+// method id "games.turnBasedMatches.sync":
+
+type TurnBasedMatchesSyncCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// Sync: Returns turn-based matches the player is or was involved in
+// that changed since the last sync call, with the least recent changes
+// coming first. Matches that should be removed from the local cache
+// will have a status of MATCH_DELETED.
+func (r *TurnBasedMatchesService) Sync() *TurnBasedMatchesSyncCall {
+	c := &TurnBasedMatchesSyncCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+// IncludeMatchData sets the optional parameter "includeMatchData": True
+// if match data should be returned in the response. Note that not all
+// data will necessarily be returned if include_match_data is true; the
+// server may decide to only return data for some of the matches to
+// limit download size for the client. The remainder of the data for
+// these matches will be retrievable on request.
+func (c *TurnBasedMatchesSyncCall) IncludeMatchData(includeMatchData bool) *TurnBasedMatchesSyncCall {
+	c.opt_["includeMatchData"] = includeMatchData
+	return c
+}
+
+// Language sets the optional parameter "language": The preferred
+// language to use for strings returned by this method.
+func (c *TurnBasedMatchesSyncCall) Language(language string) *TurnBasedMatchesSyncCall {
+	c.opt_["language"] = language
+	return c
+}
+
+// MaxCompletedMatches sets the optional parameter
+// "maxCompletedMatches": The maximum number of completed or canceled
+// matches to return in the response. If not set, all matches returned
+// could be completed or canceled.
+func (c *TurnBasedMatchesSyncCall) MaxCompletedMatches(maxCompletedMatches int64) *TurnBasedMatchesSyncCall {
+	c.opt_["maxCompletedMatches"] = maxCompletedMatches
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of matches to return in the response, used for paging. For any
+// response, the actual number of matches to return may be less than the
+// specified maxResults.
+func (c *TurnBasedMatchesSyncCall) MaxResults(maxResults int64) *TurnBasedMatchesSyncCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The token returned
+// by the previous request.
+func (c *TurnBasedMatchesSyncCall) PageToken(pageToken string) *TurnBasedMatchesSyncCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+func (c *TurnBasedMatchesSyncCall) Do() (*TurnBasedMatchSync, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["includeMatchData"]; ok {
+		params.Set("includeMatchData", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["language"]; ok {
+		params.Set("language", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxCompletedMatches"]; ok {
+		params.Set("maxCompletedMatches", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1/", "turnbasedmatches/sync")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(TurnBasedMatchSync)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns turn-based matches the player is or was involved in that changed since the last sync call, with the least recent changes coming first. Matches that should be removed from the local cache will have a status of MATCH_DELETED.",
+	//   "httpMethod": "GET",
+	//   "id": "games.turnBasedMatches.sync",
+	//   "parameters": {
+	//     "includeMatchData": {
+	//       "description": "True if match data should be returned in the response. Note that not all data will necessarily be returned if include_match_data is true; the server may decide to only return data for some of the matches to limit download size for the client. The remainder of the data for these matches will be retrievable on request.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "language": {
+	//       "description": "The preferred language to use for strings returned by this method.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxCompletedMatches": {
+	//       "description": "The maximum number of completed or canceled matches to return in the response. If not set, all matches returned could be completed or canceled.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "maximum": "500",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "maxResults": {
+	//       "description": "The maximum number of matches to return in the response, used for paging. For any response, the actual number of matches to return may be less than the specified maxResults.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "maximum": "500",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The token returned by the previous request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "turnbasedmatches/sync",
+	//   "response": {
+	//     "$ref": "TurnBasedMatchSync"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.login"
+	//   ]
+	// }
+
+}
+
+// method id "games.turnBasedMatches.takeTurn":
+
+type TurnBasedMatchesTakeTurnCall struct {
+	s                  *Service
+	matchId            string
+	turnbasedmatchturn *TurnBasedMatchTurn
+	opt_               map[string]interface{}
+}
+
+// TakeTurn: Commit the results of a player turn.
+func (r *TurnBasedMatchesService) TakeTurn(matchId string, turnbasedmatchturn *TurnBasedMatchTurn) *TurnBasedMatchesTakeTurnCall {
+	c := &TurnBasedMatchesTakeTurnCall{s: r.s, opt_: make(map[string]interface{})}
+	c.matchId = matchId
+	c.turnbasedmatchturn = turnbasedmatchturn
+	return c
+}
+
+// Language sets the optional parameter "language": Specify the
+// preferred language to use to format match info.
+func (c *TurnBasedMatchesTakeTurnCall) Language(language string) *TurnBasedMatchesTakeTurnCall {
+	c.opt_["language"] = language
+	return c
+}
+
+func (c *TurnBasedMatchesTakeTurnCall) Do() (*TurnBasedMatch, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.turnbasedmatchturn)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["language"]; ok {
+		params.Set("language", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1/", "turnbasedmatches/{matchId}/turn")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{matchId}", url.QueryEscape(c.matchId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(TurnBasedMatch)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Commit the results of a player turn.",
+	//   "httpMethod": "PUT",
+	//   "id": "games.turnBasedMatches.takeTurn",
+	//   "parameterOrder": [
+	//     "matchId"
+	//   ],
+	//   "parameters": {
+	//     "language": {
+	//       "description": "Specify the preferred language to use to format match info.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "matchId": {
+	//       "description": "The ID of the match.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "turnbasedmatches/{matchId}/turn",
+	//   "request": {
+	//     "$ref": "TurnBasedMatchTurn"
+	//   },
+	//   "response": {
+	//     "$ref": "TurnBasedMatch"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/games",

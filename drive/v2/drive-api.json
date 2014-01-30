@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"_UU0hweWJUeoapnMzW_8ULttsqM/wC5CIevsGN3DREvDOOaUSmrkhxI\"",
+ "etag": "\"R6H4aXXmd1SZaWpEcGSkC2StmNw/4n-4kSqzPXfNWekZxHrF_fGAM4M\"",
  "discoveryVersion": "v1",
  "id": "drive:v2",
  "name": "drive",
@@ -510,6 +510,7 @@
   "Channel": {
    "id": "Channel",
    "type": "object",
+   "description": "An notification channel used to watch for resource changes.",
    "properties": {
     "address": {
      "type": "string",

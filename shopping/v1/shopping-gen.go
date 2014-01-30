@@ -387,41 +387,8 @@ type ShoppingModelProductJsonV1 struct {
 	// Images: Images of product.
 	Images []*ShoppingModelProductJsonV1Images `json:"images,omitempty"`
 
-	// Internal1: Google Internal.
-	Internal1 []string `json:"internal1,omitempty"`
-
-	// Internal10: Google Internal.
-	Internal10 []string `json:"internal10,omitempty"`
-
-	// Internal12: Google Internal.
-	Internal12 string `json:"internal12,omitempty"`
-
-	// Internal13: Google Internal.
-	Internal13 float64 `json:"internal13,omitempty"`
-
-	// Internal14: Google Internal.
-	Internal14 float64 `json:"internal14,omitempty"`
-
-	// Internal15: Google Internal.
-	Internal15 float64 `json:"internal15,omitempty"`
-
 	// Internal16: Google Internal. Attribute names are deliberately vague.
 	Internal16 *ShoppingModelProductJsonV1Internal16 `json:"internal16,omitempty"`
-
-	// Internal3: Google Internal.
-	Internal3 string `json:"internal3,omitempty"`
-
-	// Internal4: Google Internal.
-	Internal4 []*ShoppingModelProductJsonV1Internal4 `json:"internal4,omitempty"`
-
-	// Internal6: Google Internal.
-	Internal6 string `json:"internal6,omitempty"`
-
-	// Internal7: Google Internal.
-	Internal7 bool `json:"internal7,omitempty"`
-
-	// Internal8: Google Internal.
-	Internal8 []string `json:"internal8,omitempty"`
 
 	// Inventories: Inventories of product.
 	Inventories []*ShoppingModelProductJsonV1Inventories `json:"inventories,omitempty"`
@@ -438,9 +405,6 @@ type ShoppingModelProductJsonV1 struct {
 
 	// Mpns: List of all the product's MPNs.
 	Mpns []string `json:"mpns,omitempty"`
-
-	// PlusOne: Code to add to the page to render the +1 content.
-	PlusOne string `json:"plusOne,omitempty"`
 
 	// ProvidedId: Merchant-provided id of product (available only with a cx
 	// source).
@@ -522,14 +486,6 @@ type ShoppingModelProductJsonV1Internal16 struct {
 	Number int64 `json:"number,omitempty"`
 
 	Size int64 `json:"size,omitempty,string"`
-}
-
-type ShoppingModelProductJsonV1Internal4 struct {
-	// Confidence: Google Internal.
-	Confidence float64 `json:"confidence,omitempty"`
-
-	// Node: Google Internal.
-	Node int64 `json:"node,omitempty"`
 }
 
 type ShoppingModelProductJsonV1Inventories struct {
@@ -741,7 +697,7 @@ func (c *ProductsGetCall) Do() (*Product, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1097,13 +1053,6 @@ func (c *ProductsListCall) RestrictBy(restrictBy string) *ProductsListCall {
 	return c
 }
 
-// Safe sets the optional parameter "safe": Whether safe search is
-// enabled. Default: true
-func (c *ProductsListCall) Safe(safe bool) *ProductsListCall {
-	c.opt_["safe"] = safe
-	return c
-}
-
 // SpellingEnabled sets the optional parameter "spelling.enabled":
 // Whether to return spelling suggestions
 func (c *ProductsListCall) SpellingEnabled(spellingEnabled bool) *ProductsListCall {
@@ -1248,9 +1197,6 @@ func (c *ProductsListCall) Do() (*Products, error) {
 	if v, ok := c.opt_["restrictBy"]; ok {
 		params.Set("restrictBy", fmt.Sprintf("%v", v))
 	}
-	if v, ok := c.opt_["safe"]; ok {
-		params.Set("safe", fmt.Sprintf("%v", v))
-	}
 	if v, ok := c.opt_["spelling.enabled"]; ok {
 		params.Set("spelling.enabled", fmt.Sprintf("%v", v))
 	}
@@ -1279,7 +1225,7 @@ func (c *ProductsListCall) Do() (*Products, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1462,11 +1408,6 @@ func (c *ProductsListCall) Do() (*Products, error) {
 	//       "description": "Restriction specification",
 	//       "location": "query",
 	//       "type": "string"
-	//     },
-	//     "safe": {
-	//       "description": "Whether safe search is enabled. Default: true",
-	//       "location": "query",
-	//       "type": "boolean"
 	//     },
 	//     "source": {
 	//       "description": "Query source",

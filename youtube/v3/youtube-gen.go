@@ -552,6 +552,11 @@ type Channel struct {
 	// about the channel's content.
 	ContentDetails *ChannelContentDetails `json:"contentDetails,omitempty"`
 
+	// ContentOwnerDetails: The contentOwnerDetails object encapsulates
+	// channel data that is relevant for YouTube Partners linked with the
+	// channel.
+	ContentOwnerDetails *ChannelContentOwnerDetails `json:"contentOwnerDetails,omitempty"`
+
 	// ConversionPings: The conversionPings object encapsulates information
 	// about conversion pings that need to be respected by the channel.
 	ConversionPings *ChannelConversionPings `json:"conversionPings,omitempty"`
@@ -668,6 +673,16 @@ type ChannelContentDetailsRelatedPlaylists struct {
 	// later playlist. Use the playlistItems.insert and
 	// playlistItems.delete to add or remove items from that list.
 	WatchLater string `json:"watchLater,omitempty"`
+}
+
+type ChannelContentOwnerDetails struct {
+	// ContentOwner: The ID of the content owner linked to the channel.
+	ContentOwner string `json:"contentOwner,omitempty"`
+
+	// TimeLinked: The date and time of when the channel was linked to the
+	// content owner. The value is specified in ISO 8601
+	// (YYYY-MM-DDThh:mm:ss.sZ) format.
+	TimeLinked string `json:"timeLinked,omitempty"`
 }
 
 type ChannelConversionPing struct {
@@ -2721,7 +2736,7 @@ func (c *ActivitiesInsertCall) Do() (*Activity, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2891,7 +2906,7 @@ func (c *ActivitiesListCall) Do() (*ActivityListResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3054,7 +3069,7 @@ func (c *ChannelBannersInsertCall) Do() (*ChannelBannerResource, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3249,7 +3264,7 @@ func (c *ChannelsListCall) Do() (*ChannelListResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3391,7 +3406,7 @@ func (c *ChannelsUpdateCall) Do() (*Channel, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3499,7 +3514,7 @@ func (c *GuideCategoriesListCall) Do() (*GuideCategoryListResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3620,7 +3635,7 @@ func (c *LiveBroadcastsBindCall) Do() (*LiveBroadcast, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3773,7 +3788,7 @@ func (c *LiveBroadcastsControlCall) Do() (*LiveBroadcast, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3888,7 +3903,7 @@ func (c *LiveBroadcastsDeleteCall) Do() error {
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -3980,7 +3995,7 @@ func (c *LiveBroadcastsInsertCall) Do() (*LiveBroadcast, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4111,7 +4126,7 @@ func (c *LiveBroadcastsListCall) Do() (*LiveBroadcastListResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4251,7 +4266,7 @@ func (c *LiveBroadcastsTransitionCall) Do() (*LiveBroadcast, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4376,7 +4391,7 @@ func (c *LiveBroadcastsUpdateCall) Do() (*LiveBroadcast, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4448,7 +4463,7 @@ func (c *LiveStreamsDeleteCall) Do() error {
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -4515,7 +4530,7 @@ func (c *LiveStreamsInsertCall) Do() (*LiveStream, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4631,7 +4646,7 @@ func (c *LiveStreamsListCall) Do() (*LiveStreamListResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4730,7 +4745,7 @@ func (c *LiveStreamsUpdateCall) Do() (*LiveStream, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4797,7 +4812,7 @@ func (c *PlaylistItemsDeleteCall) Do() error {
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -4885,7 +4900,7 @@ func (c *PlaylistItemsInsertCall) Do() (*PlaylistItem, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -5040,7 +5055,7 @@ func (c *PlaylistItemsListCall) Do() (*PlaylistItemListResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -5150,7 +5165,7 @@ func (c *PlaylistItemsUpdateCall) Do() (*PlaylistItem, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -5240,7 +5255,7 @@ func (c *PlaylistsDeleteCall) Do() error {
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -5364,7 +5379,7 @@ func (c *PlaylistsInsertCall) Do() (*Playlist, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -5555,7 +5570,7 @@ func (c *PlaylistsListCall) Do() (*PlaylistListResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -5691,7 +5706,7 @@ func (c *PlaylistsUpdateCall) Do() (*Playlist, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -6080,7 +6095,7 @@ func (c *SearchListCall) Do() (*SearchListResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -6406,7 +6421,7 @@ func (c *SubscriptionsDeleteCall) Do() error {
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -6472,7 +6487,7 @@ func (c *SubscriptionsInsertCall) Do() (*Subscription, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -6684,7 +6699,7 @@ func (c *SubscriptionsListCall) Do() (*SubscriptionListResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -6850,7 +6865,7 @@ func (c *ThumbnailsSetCall) Do() (*ThumbnailSetResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -6974,7 +6989,7 @@ func (c *VideoCategoriesListCall) Do() (*VideoCategoryListResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -7078,7 +7093,7 @@ func (c *VideosDeleteCall) Do() error {
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -7164,7 +7179,7 @@ func (c *VideosGetRatingCall) Do() (*VideoGetRatingResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -7342,7 +7357,7 @@ func (c *VideosInsertCall) Do() (*Video, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -7577,7 +7592,7 @@ func (c *VideosListCall) Do() (*VideoListResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -7733,7 +7748,7 @@ func (c *VideosRateCall) Do() error {
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -7843,7 +7858,7 @@ func (c *VideosUpdateCall) Do() (*Video, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -7955,7 +7970,7 @@ func (c *WatermarksSetCall) Do() error {
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -8059,7 +8074,7 @@ func (c *WatermarksUnsetCall) Do() error {
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}

@@ -41,7 +41,8 @@ const basePath = "https://www.googleapis.com/games/v1management/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your game activity
+	// Share your Google+ profile information and view and manage your game
+	// activity
 	GamesScope = "https://www.googleapis.com/auth/games"
 
 	// Know your basic profile info and list of people in your circles.
@@ -58,6 +59,7 @@ func New(client *http.Client) (*Service, error) {
 	s.Players = NewPlayersService(s)
 	s.Rooms = NewRoomsService(s)
 	s.Scores = NewScoresService(s)
+	s.TurnBasedMatches = NewTurnBasedMatchesService(s)
 	return s, nil
 }
 
@@ -73,6 +75,8 @@ type Service struct {
 	Rooms *RoomsService
 
 	Scores *ScoresService
+
+	TurnBasedMatches *TurnBasedMatchesService
 }
 
 func NewAchievementsService(s *Service) *AchievementsService {
@@ -120,6 +124,15 @@ type ScoresService struct {
 	s *Service
 }
 
+func NewTurnBasedMatchesService(s *Service) *TurnBasedMatchesService {
+	rs := &TurnBasedMatchesService{s: s}
+	return rs
+}
+
+type TurnBasedMatchesService struct {
+	s *Service
+}
+
 type AchievementResetAllResponse struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string gamesManagement#achievementResetAllResponse.
@@ -151,6 +164,16 @@ type AchievementResetResponse struct {
 	// UpdateOccurred: Flag to indicate if the requested update actually
 	// occurred.
 	UpdateOccurred bool `json:"updateOccurred,omitempty"`
+}
+
+type GamesPlayedResource struct {
+	// AutoMatched: True if the player was auto-matched with the currently
+	// authenticated user.
+	AutoMatched bool `json:"autoMatched,omitempty"`
+
+	// TimeMillis: The last time the player played the game in milliseconds
+	// since the epoch in UTC.
+	TimeMillis int64 `json:"timeMillis,omitempty,string"`
 }
 
 type HiddenPlayer struct {
@@ -188,6 +211,11 @@ type Player struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string gamesManagement#player.
 	Kind string `json:"kind,omitempty"`
+
+	// LastPlayedWith: Details about the last time this player played a
+	// multiplayer game with the currently authenticated player. Populated
+	// for PLAYED_WITH player collection members.
+	LastPlayedWith *GamesPlayedResource `json:"lastPlayedWith,omitempty"`
 
 	// PlayerId: The ID of the player.
 	PlayerId string `json:"playerId,omitempty"`
@@ -240,7 +268,7 @@ func (c *AchievementsResetCall) Do() (*AchievementResetResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -304,7 +332,7 @@ func (c *AchievementsResetAllCall) Do() (*AchievementResetAllResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -382,7 +410,7 @@ func (c *ApplicationsListHiddenCall) Do() (*HiddenPlayerList, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -465,7 +493,7 @@ func (c *PlayersHideCall) Do() error {
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -535,7 +563,7 @@ func (c *PlayersUnhideCall) Do() error {
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -599,7 +627,7 @@ func (c *RoomsResetCall) Do() error {
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -648,7 +676,7 @@ func (c *ScoresResetCall) Do() (*PlayerScoreResetResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -676,6 +704,51 @@ func (c *ScoresResetCall) Do() (*PlayerScoreResetResponse, error) {
 	//   "response": {
 	//     "$ref": "PlayerScoreResetResponse"
 	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.login"
+	//   ]
+	// }
+
+}
+
+// method id "gamesManagement.turnBasedMatches.reset":
+
+type TurnBasedMatchesResetCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// Reset: Reset all turn-based match data for a user. This method is
+// only accessible to whitelisted tester accounts for your application.
+func (r *TurnBasedMatchesService) Reset() *TurnBasedMatchesResetCall {
+	c := &TurnBasedMatchesResetCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+func (c *TurnBasedMatchesResetCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1management/", "turnbasedmatches/reset")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Reset all turn-based match data for a user. This method is only accessible to whitelisted tester accounts for your application.",
+	//   "httpMethod": "POST",
+	//   "id": "gamesManagement.turnBasedMatches.reset",
+	//   "path": "turnbasedmatches/reset",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/games",
 	//     "https://www.googleapis.com/auth/plus.login"

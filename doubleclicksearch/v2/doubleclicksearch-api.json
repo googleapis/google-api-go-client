@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"_UU0hweWJUeoapnMzW_8ULttsqM/RGhRKxO_GjBXj5TYzl087SnSEic\"",
+ "etag": "\"R6H4aXXmd1SZaWpEcGSkC2StmNw/zgXIK-XntVUhtKNxy4Lwzk2SIek\"",
  "discoveryVersion": "v1",
  "id": "doubleclicksearch:v2",
  "name": "doubleclicksearch",
@@ -133,6 +133,20 @@
      "type": "string",
      "description": "The currency code for the revenue. Should be in ISO 4217 alphabetic (3-char) format."
     },
+    "customDimension": {
+     "type": "array",
+     "description": "The custom dimension values for the conversion.",
+     "items": {
+      "$ref": "CustomDimension"
+     }
+    },
+    "customMetric": {
+     "type": "array",
+     "description": "The custom metric values for the conversion.",
+     "items": {
+      "$ref": "CustomMetric"
+     }
+    },
     "dsConversionId": {
      "type": "string",
      "description": "DS conversion ID.",
@@ -142,6 +156,10 @@
      "type": "string",
      "description": "DS engine account ID.",
      "format": "int64"
+    },
+    "floodlightOrderId": {
+     "type": "string",
+     "description": "The advertiser provided order id for the conversion."
     },
     "quantityMillis": {
      "type": "string",
@@ -197,6 +215,37 @@
      "type": "string",
      "description": "Identifies this as a ConversionList resource. Value: the fixed string doubleclicksearch#conversionList.",
      "default": "doubleclicksearch#conversionList"
+    }
+   }
+  },
+  "CustomDimension": {
+   "id": "CustomDimension",
+   "type": "object",
+   "description": "A message containing the custome dimension.",
+   "properties": {
+    "name": {
+     "type": "string",
+     "description": "Custom dimension name."
+    },
+    "value": {
+     "type": "string",
+     "description": "Custom dimension value."
+    }
+   }
+  },
+  "CustomMetric": {
+   "id": "CustomMetric",
+   "type": "object",
+   "description": "A message containing the custome metric.",
+   "properties": {
+    "name": {
+     "type": "string",
+     "description": "Custom metric name."
+    },
+    "value": {
+     "type": "number",
+     "description": "Custom metric numeric value.",
+     "format": "double"
     }
    }
   },

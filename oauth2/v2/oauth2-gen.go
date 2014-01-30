@@ -134,7 +134,7 @@ type Tokeninfo struct {
 	Verified_email bool `json:"verified_email,omitempty"`
 }
 
-type Userinfo struct {
+type Userinfoplus struct {
 	// Email: The user's email address.
 	Email string `json:"email,omitempty"`
 
@@ -157,7 +157,7 @@ type Userinfo struct {
 	// Link: URL of the profile page.
 	Link string `json:"link,omitempty"`
 
-	// Locale: The user's default locale.
+	// Locale: The user's preferred locale.
 	Locale string `json:"locale,omitempty"`
 
 	// Name: The user's full name.
@@ -166,12 +166,10 @@ type Userinfo struct {
 	// Picture: URL of the user's picture image.
 	Picture string `json:"picture,omitempty"`
 
-	// Timezone: The user's default timezone.
-	Timezone string `json:"timezone,omitempty"`
-
 	// Verified_email: Boolean flag which is true if the email address is
-	// verified.
-	Verified_email bool `json:"verified_email,omitempty"`
+	// verified. Always verified because we only return the user's primary
+	// email address.
+	Verified_email string `json:"verified_email,omitempty"`
 }
 
 // method id "oauth2.tokeninfo":
@@ -218,7 +216,7 @@ func (c *TokeninfoCall) Do() (*Tokeninfo, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -261,7 +259,7 @@ func (r *UserinfoService) Get() *UserinfoGetCall {
 	return c
 }
 
-func (c *UserinfoGetCall) Do() (*Userinfo, error) {
+func (c *UserinfoGetCall) Do() (*Userinfoplus, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -274,11 +272,11 @@ func (c *UserinfoGetCall) Do() (*Userinfo, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Userinfo)
+	ret := new(Userinfoplus)
 	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
 		return nil, err
 	}
@@ -288,7 +286,7 @@ func (c *UserinfoGetCall) Do() (*Userinfo, error) {
 	//   "id": "oauth2.userinfo.get",
 	//   "path": "oauth2/v2/userinfo",
 	//   "response": {
-	//     "$ref": "Userinfo"
+	//     "$ref": "Userinfoplus"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/plus.login",
@@ -313,7 +311,7 @@ func (r *UserinfoV2MeService) Get() *UserinfoV2MeGetCall {
 	return c
 }
 
-func (c *UserinfoV2MeGetCall) Do() (*Userinfo, error) {
+func (c *UserinfoV2MeGetCall) Do() (*Userinfoplus, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -326,11 +324,11 @@ func (c *UserinfoV2MeGetCall) Do() (*Userinfo, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Userinfo)
+	ret := new(Userinfoplus)
 	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
 		return nil, err
 	}
@@ -340,7 +338,7 @@ func (c *UserinfoV2MeGetCall) Do() (*Userinfo, error) {
 	//   "id": "oauth2.userinfo.v2.me.get",
 	//   "path": "userinfo/v2/me",
 	//   "response": {
-	//     "$ref": "Userinfo"
+	//     "$ref": "Userinfoplus"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/plus.login",

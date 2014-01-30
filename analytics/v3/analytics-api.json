@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"_UU0hweWJUeoapnMzW_8ULttsqM/9Mb__zWkdivLUYRry6KufGQ683g\"",
+ "etag": "\"R6H4aXXmd1SZaWpEcGSkC2StmNw/tZH2wiiwJCVPY8lcNV1oKne8RTE\"",
  "discoveryVersion": "v1",
  "id": "analytics:v3",
  "name": "analytics",
@@ -2536,14 +2536,14 @@
        "parameters": {
         "dimensions": {
          "type": "string",
-         "description": "A comma-separated list of real time dimensions. E.g., 'ga:medium,ga:city'.",
-         "pattern": "(ga:.+)?",
+         "description": "A comma-separated list of real time dimensions. E.g., 'rt:medium,rt:city'.",
+         "pattern": "(ga:.+)|(rt:.+)",
          "location": "query"
         },
         "filters": {
          "type": "string",
          "description": "A comma-separated list of dimension or metric filters to be applied to real time data.",
-         "pattern": "ga:.+",
+         "pattern": "(ga:.+)|(rt:.+)",
          "location": "query"
         },
         "ids": {
@@ -2561,15 +2561,15 @@
         },
         "metrics": {
          "type": "string",
-         "description": "A comma-separated list of real time metrics. E.g., 'ga:activeVisitors'. At least one metric must be specified.",
+         "description": "A comma-separated list of real time metrics. E.g., 'rt:activeVisitors'. At least one metric must be specified.",
          "required": true,
-         "pattern": "ga:.+",
+         "pattern": "(ga:.+)|(rt:.+)",
          "location": "query"
         },
         "sort": {
          "type": "string",
          "description": "A comma-separated list of dimensions or metrics that determine the sort order for real time data.",
-         "pattern": "(-)?ga:.+",
+         "pattern": "(-)?((ga:.+)|(rt:.+))",
          "location": "query"
         }
        },

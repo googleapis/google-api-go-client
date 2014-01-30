@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"qMhxoRFWKZK4K3KdZJuqms1o3fc/jKO4sSDWQHdq9guVUNuYuRRGT2M\"",
+ "etag": "\"R6H4aXXmd1SZaWpEcGSkC2StmNw/VSQsvaIp7a857GGr-1SWQNmGMzE\"",
  "discoveryVersion": "v1",
  "id": "games:v1",
  "name": "games",
@@ -70,7 +70,7 @@
   "oauth2": {
    "scopes": {
     "https://www.googleapis.com/auth/games": {
-     "description": "View and manage your game activity"
+     "description": "Share your Google+ profile information and view and manage your game activity"
     },
     "https://www.googleapis.com/auth/plus.login": {
      "description": "Know your basic profile info and list of people in your circles."
@@ -853,6 +853,31 @@
     }
    }
   },
+  "ParticipantResult": {
+   "id": "ParticipantResult",
+   "type": "object",
+   "description": "This is a JSON template for a result for a match participant.",
+   "properties": {
+    "kind": {
+     "type": "string",
+     "description": "Uniquely identifies the type of this resource. Value is always the fixed string games#participantResult.",
+     "default": "games#participantResult"
+    },
+    "participantId": {
+     "type": "string",
+     "description": "The ID of the participant."
+    },
+    "placing": {
+     "type": "integer",
+     "description": "The placement or ranking of the participant in the match results; a number from one to the number of participants in the match. Multiple participants may have the same placing value in case of a type.",
+     "format": "int32"
+    },
+    "result": {
+     "type": "string",
+     "description": "The result of the participant for this match.\nPossible values are:  \n- \"MATCH_RESULT_WIN\" - The participant won the match. \n- \"MATCH_RESULT_LOSS\" - The participant lost the match. \n- \"MATCH_RESULT_TIE\" - The participant tied the match. \n- \"MATCH_RESULT_NONE\" - There was no winner for the match (nobody wins or loses this kind of game.) \n- \"MATCH_RESULT_DISCONNECT\" - The participant disconnected / left during the match. \n- \"MATCH_RESULT_DISAGREED\" - Different clients reported different results for this participant."
+    }
+   }
+  },
   "PeerChannelDiagnostics": {
    "id": "PeerChannelDiagnostics",
    "type": "object",
@@ -926,6 +951,27 @@
     }
    }
   },
+  "Played": {
+   "id": "Played",
+   "type": "object",
+   "description": "This is a JSON template for 3P metadata about a player playing a game.",
+   "properties": {
+    "autoMatched": {
+     "type": "boolean",
+     "description": "True if the player was auto-matched with the currently authenticated user."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Uniquely identifies the type of this resource. Value is always the fixed string games#played.",
+     "default": "games#played"
+    },
+    "timeMillis": {
+     "type": "string",
+     "description": "The last time the player played the game in milliseconds since the epoch in UTC.",
+     "format": "int64"
+    }
+   }
+  },
   "Player": {
    "id": "Player",
    "type": "object",
@@ -943,6 +989,10 @@
      "type": "string",
      "description": "Uniquely identifies the type of this resource. Value is always the fixed string games#player.",
      "default": "games#player"
+    },
+    "lastPlayedWith": {
+     "$ref": "Played",
+     "description": "Details about the last time this player played a multiplayer game with the currently authenticated player. Populated for PLAYED_WITH player collection members."
     },
     "playerId": {
      "type": "string",
@@ -1077,6 +1127,29 @@
     "player": {
      "$ref": "Player",
      "description": "The Player resources for the owner of this score."
+    }
+   }
+  },
+  "PlayerListResponse": {
+   "id": "PlayerListResponse",
+   "type": "object",
+   "description": "This is a JSON template for a third party player list response.",
+   "properties": {
+    "items": {
+     "type": "array",
+     "description": "The players.",
+     "items": {
+      "$ref": "Player"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Uniquely identifies the type of this resource. Value is always the fixed string games#playerListResponse.",
+     "default": "games#playerListResponse"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "Token corresponding to the next page of results."
     }
    }
   },
@@ -1362,6 +1435,11 @@
      "$ref": "NetworkDiagnostics",
      "description": "Network diagnostics for the client creating the room."
     },
+    "requestId": {
+     "type": "string",
+     "description": "A randomly generated numeric ID. This number is used at the server to ensure that the request is handled correctly across retries.",
+     "format": "int64"
+    },
     "variant": {
      "type": "integer",
      "description": "The variant / mode of the application to be played. This can be any integer value, or left blank. You should use a small number of variants to keep the auto-matching pool as large as possible.",
@@ -1555,6 +1633,10 @@
    "type": "object",
    "description": "This is a JSON template for a participant in a room.",
    "properties": {
+    "autoMatched": {
+     "type": "boolean",
+     "description": "True if this participant was auto-matched with the requesting player."
+    },
     "autoMatchedPlayer": {
      "$ref": "AnonymousPlayer",
      "description": "Information about a player that has been anonymously auto-matched against the requesting player. (Either player or autoMatchedPlayer will be set.)"
@@ -1656,6 +1738,372 @@
      "type": "string",
      "description": "Additional information about this score. Values will contain no more than 64 URI-safe characters as defined by section 2.3 of RFC 3986.",
      "pattern": "[a-zA-Z0-9-._~]{0,64}"
+    }
+   }
+  },
+  "TurnBasedAutoMatchingCriteria": {
+   "id": "TurnBasedAutoMatchingCriteria",
+   "type": "object",
+   "description": "This is a JSON template for an turn-based auto-match criteria object.",
+   "properties": {
+    "exclusiveBitmask": {
+     "type": "string",
+     "description": "A bitmask indicating when auto-matches are valid. When ANDed with other exclusive bitmasks, the result must be zero. Can be used to support exclusive roles within a game.",
+     "format": "int64"
+    },
+    "kind": {
+     "type": "string",
+     "description": "Uniquely identifies the type of this resource. Value is always the fixed string games#turnBasedAutoMatchingCriteria.",
+     "default": "games#turnBasedAutoMatchingCriteria"
+    },
+    "maxAutoMatchingPlayers": {
+     "type": "integer",
+     "description": "The maximum number of players that should be added to the match by auto-matching.",
+     "format": "int32"
+    },
+    "minAutoMatchingPlayers": {
+     "type": "integer",
+     "description": "The minimum number of players that should be added to the match by auto-matching.",
+     "format": "int32"
+    }
+   }
+  },
+  "TurnBasedMatch": {
+   "id": "TurnBasedMatch",
+   "type": "object",
+   "description": "This is a JSON template for a turn-based match resource object.",
+   "properties": {
+    "applicationId": {
+     "type": "string",
+     "description": "The ID of the application being played."
+    },
+    "autoMatchingCriteria": {
+     "$ref": "TurnBasedAutoMatchingCriteria",
+     "description": "Criteria for auto-matching players into this match."
+    },
+    "creationDetails": {
+     "$ref": "TurnBasedMatchModification",
+     "description": "Details about the match creation."
+    },
+    "data": {
+     "$ref": "TurnBasedMatchData",
+     "description": "The data / game state for this match."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Uniquely identifies the type of this resource. Value is always the fixed string games#turnBasedMatch.",
+     "default": "games#turnBasedMatch"
+    },
+    "lastUpdateDetails": {
+     "$ref": "TurnBasedMatchModification",
+     "description": "Details about the last update to the match."
+    },
+    "matchId": {
+     "type": "string",
+     "description": "Globally unique ID for a turn-based match."
+    },
+    "matchNumber": {
+     "type": "integer",
+     "description": "The number of the match in a chain of rematches. Will be set to 1 for the first match and incremented by 1 for each rematch.",
+     "format": "int32"
+    },
+    "matchVersion": {
+     "type": "integer",
+     "description": "The version of this match: an increasing counter, used to avoid out-of-date updates to the match.",
+     "format": "int32"
+    },
+    "participants": {
+     "type": "array",
+     "description": "The participants involved in the match, along with their statuses. Includes participants who have left or declined invitations.",
+     "items": {
+      "$ref": "TurnBasedMatchParticipant"
+     }
+    },
+    "pendingParticipantId": {
+     "type": "string",
+     "description": "The ID of the participant that is taking a turn."
+    },
+    "previousMatchData": {
+     "$ref": "TurnBasedMatchData",
+     "description": "The data / game state for the previous match; set for the first turn of rematches only."
+    },
+    "rematchId": {
+     "type": "string",
+     "description": "The ID of a rematch of this match. Only set for completed matches that have been rematched."
+    },
+    "results": {
+     "type": "array",
+     "description": "The results reported for this match.",
+     "items": {
+      "$ref": "ParticipantResult"
+     }
+    },
+    "status": {
+     "type": "string",
+     "description": "The status of the match.\nPossible values are:  \n- \"MATCH_AUTO_MATCHING\" - One or more slots need to be filled by auto-matching; the match cannot be established until they are filled. \n- \"MATCH_ACTIVE\" - The match has started. \n- \"MATCH_COMPLETE\" - The match has finished. \n- \"MATCH_CANCELED\" - The match was canceled. \n- \"MATCH_EXPIRED\" - The match expired due to inactivity. \n- \"MATCH_DELETED\" - The match should no longer be shown on the client. Returned only for tombstones for matches when sync is called."
+    },
+    "userMatchStatus": {
+     "type": "string",
+     "description": "The status of the current user in the match. Derived from the match type, match status, the user's participant status, and the pending participant for the match.\nPossible values are:  \n- \"USER_INVITED\" - The user has been invited to join the match and has not responded yet. \n- \"USER_AWAITING_TURN\" - The user is waiting for their turn. \n- \"USER_TURN\" - The user has an action to take in the match. \n- \"USER_MATCH_COMPLETED\" - The match has ended (it is completed, canceled, or expired.)"
+    },
+    "variant": {
+     "type": "integer",
+     "description": "The variant / mode of the application being played; can be any integer value, or left blank.",
+     "format": "int32"
+    }
+   }
+  },
+  "TurnBasedMatchCreateRequest": {
+   "id": "TurnBasedMatchCreateRequest",
+   "type": "object",
+   "description": "This is a JSON template for a turn-based match creation request.",
+   "properties": {
+    "autoMatchingCriteria": {
+     "$ref": "TurnBasedAutoMatchingCriteria",
+     "description": "Criteria for auto-matching players into this match."
+    },
+    "invitedPlayerIds": {
+     "type": "array",
+     "description": "The player ids to invite to the match.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Uniquely identifies the type of this resource. Value is always the fixed string games#turnBasedMatchCreateRequest.",
+     "default": "games#turnBasedMatchCreateRequest"
+    },
+    "requestId": {
+     "type": "string",
+     "description": "A randomly generated numeric ID. This number is used at the server to ensure that the request is handled correctly across retries.",
+     "format": "int64"
+    },
+    "variant": {
+     "type": "integer",
+     "description": "The variant / mode of the application to be played. This can be any integer value, or left blank. You should use a small number of variants to keep the auto-matching pool as large as possible.",
+     "format": "int32"
+    }
+   }
+  },
+  "TurnBasedMatchData": {
+   "id": "TurnBasedMatchData",
+   "type": "object",
+   "description": "This is a JSON template for a turn-based match data object.",
+   "properties": {
+    "data": {
+     "type": "string",
+     "description": "The byte representation of the data (limited to 128 kB), as a Base64-encoded string with the URL_SAFE encoding option.",
+     "format": "byte"
+    },
+    "dataAvailable": {
+     "type": "boolean",
+     "description": "True if this match has data available but it wasn't returned in a list response; fetching the match individually will retrieve this data."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Uniquely identifies the type of this resource. Value is always the fixed string games#turnBasedMatchData.",
+     "default": "games#turnBasedMatchData"
+    }
+   }
+  },
+  "TurnBasedMatchDataRequest": {
+   "id": "TurnBasedMatchDataRequest",
+   "type": "object",
+   "description": "This is a JSON template for sending a turn-based match data object.",
+   "properties": {
+    "data": {
+     "type": "string",
+     "description": "The byte representation of the data (limited to 128 kB), as a Base64-encoded string with the URL_SAFE encoding option.",
+     "format": "byte"
+    },
+    "kind": {
+     "type": "string",
+     "description": "Uniquely identifies the type of this resource. Value is always the fixed string games#turnBasedMatchDataRequest.",
+     "default": "games#turnBasedMatchDataRequest"
+    }
+   }
+  },
+  "TurnBasedMatchList": {
+   "id": "TurnBasedMatchList",
+   "type": "object",
+   "description": "This is a JSON template for a list of turn-based matches.",
+   "properties": {
+    "items": {
+     "type": "array",
+     "description": "The matches.",
+     "items": {
+      "$ref": "TurnBasedMatch"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Uniquely identifies the type of this resource. Value is always the fixed string games#turnBasedMatchList.",
+     "default": "games#turnBasedMatchList"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "The pagination token for the next page of results."
+    }
+   }
+  },
+  "TurnBasedMatchModification": {
+   "id": "TurnBasedMatchModification",
+   "type": "object",
+   "description": "This is a JSON template for turn-based match modification metadata.",
+   "properties": {
+    "kind": {
+     "type": "string",
+     "description": "Uniquely identifies the type of this resource. Value is always the fixed string games#turnBasedMatchModification.",
+     "default": "games#turnBasedMatchModification"
+    },
+    "modifiedTimestampMillis": {
+     "type": "string",
+     "description": "The timestamp at which they modified the match, in milliseconds since the epoch in UTC.",
+     "format": "int64"
+    },
+    "participantId": {
+     "type": "string",
+     "description": "The ID of the participant that modified the match."
+    }
+   }
+  },
+  "TurnBasedMatchParticipant": {
+   "id": "TurnBasedMatchParticipant",
+   "type": "object",
+   "description": "This is a JSON template for a participant in a turn-based match.",
+   "properties": {
+    "autoMatched": {
+     "type": "boolean",
+     "description": "True if this participant was auto-matched with the requesting player."
+    },
+    "autoMatchedPlayer": {
+     "$ref": "AnonymousPlayer",
+     "description": "Information about a player that has been anonymously auto-matched against the requesting player. (Either player or autoMatchedPlayer will be set.)"
+    },
+    "id": {
+     "type": "string",
+     "description": "An identifier for the participant in the scope of the match. Cannot be used to identify a player across matches or in other contexts."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Uniquely identifies the type of this resource. Value is always the fixed string games#turnBasedMatchParticipant.",
+     "default": "games#turnBasedMatchParticipant"
+    },
+    "player": {
+     "$ref": "Player",
+     "description": "Information about the player. Not populated if this player was anonymously auto-matched against the requesting player. (Either player or autoMatchedPlayer will be set.)"
+    },
+    "status": {
+     "type": "string",
+     "description": "The status of the participant with respect to the match.\nPossible values are:  \n- \"PARTICIPANT_NOT_INVITED_YET\" - The participant is slated to be invited to the match, but the invitation has not been sent; the invite will be sent when it becomes their turn. \n- \"PARTICIPANT_INVITED\" - The participant has been invited to join the match, but has not yet responded. \n- \"PARTICIPANT_JOINED\" - The participant has joined the match (either after creating it or accepting an invitation.) \n- \"PARTICIPANT_DECLINED\" - The participant declined an invitation to join the match. \n- \"PARTICIPANT_LEFT\" - The participant joined the match and then left it. \n- \"PARTICIPANT_FINISHED\" - The participant finished playing in the match. \n- \"PARTICIPANT_UNRESPONSIVE\" - The participant did not take their turn in the allotted time."
+    }
+   }
+  },
+  "TurnBasedMatchRematch": {
+   "id": "TurnBasedMatchRematch",
+   "type": "object",
+   "description": "This is a JSON template for a rematch response.",
+   "properties": {
+    "kind": {
+     "type": "string",
+     "description": "Uniquely identifies the type of this resource. Value is always the fixed string games#turnBasedMatchRematch.",
+     "default": "games#turnBasedMatchRematch"
+    },
+    "previousMatch": {
+     "$ref": "TurnBasedMatch",
+     "description": "The old match that the rematch was created from; will be updated such that the rematchId field will point at the new match."
+    },
+    "rematch": {
+     "$ref": "TurnBasedMatch",
+     "description": "The newly created match; a rematch of the old match with the same participants."
+    }
+   }
+  },
+  "TurnBasedMatchResults": {
+   "id": "TurnBasedMatchResults",
+   "type": "object",
+   "description": "This is a JSON template for a turn-based match results object.",
+   "properties": {
+    "data": {
+     "$ref": "TurnBasedMatchDataRequest",
+     "description": "The final match data."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Uniquely identifies the type of this resource. Value is always the fixed string games#turnBasedMatchResults.",
+     "default": "games#turnBasedMatchResults"
+    },
+    "matchVersion": {
+     "type": "integer",
+     "description": "The version of the match being updated.",
+     "format": "int32"
+    },
+    "results": {
+     "type": "array",
+     "description": "The match results for the participants in the match.",
+     "items": {
+      "$ref": "ParticipantResult"
+     }
+    }
+   }
+  },
+  "TurnBasedMatchSync": {
+   "id": "TurnBasedMatchSync",
+   "type": "object",
+   "description": "This is a JSON template for a list of turn-based matches returned from a sync.",
+   "properties": {
+    "items": {
+     "type": "array",
+     "description": "The matches.",
+     "items": {
+      "$ref": "TurnBasedMatch"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Uniquely identifies the type of this resource. Value is always the fixed string games#turnBasedMatchSync.",
+     "default": "games#turnBasedMatchSync"
+    },
+    "moreAvailable": {
+     "type": "boolean",
+     "description": "True if there were more matches available to fetch at the time the response was generated (which were not returned due to page size limits.)"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "The pagination token for the next page of results."
+    }
+   }
+  },
+  "TurnBasedMatchTurn": {
+   "id": "TurnBasedMatchTurn",
+   "type": "object",
+   "description": "This is a JSON template for the object representing a turn.",
+   "properties": {
+    "data": {
+     "$ref": "TurnBasedMatchDataRequest",
+     "description": "The shared game state data after the turn is over."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Uniquely identifies the type of this resource. Value is always the fixed string games#turnBasedMatchTurn.",
+     "default": "games#turnBasedMatchTurn"
+    },
+    "matchVersion": {
+     "type": "integer",
+     "description": "The version of this match: an increasing counter, used to avoid out-of-date updates to the match.",
+     "format": "int32"
+    },
+    "pendingParticipantId": {
+     "type": "string",
+     "description": "The ID of the participant who should take their turn next. May be set to the current player's participant ID to update match state without changing the turn. If not set, the match will wait for other player(s) to join via automatching; this is only valid if automatch criteria is set on the match with remaining slots for automatched players."
+    },
+    "results": {
+     "type": "array",
+     "description": "The match results for the participants in the match.",
+     "items": {
+      "$ref": "ParticipantResult"
+     }
     }
    }
   }
@@ -2041,6 +2489,49 @@
      ],
      "response": {
       "$ref": "Player"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/games",
+      "https://www.googleapis.com/auth/plus.login"
+     ]
+    },
+    "list": {
+     "id": "games.players.list",
+     "path": "players/me/players/{collection}",
+     "httpMethod": "GET",
+     "description": "Get the collection of players for the currently authenticated user.",
+     "parameters": {
+      "collection": {
+       "type": "string",
+       "description": "Collection of players being retrieved",
+       "required": true,
+       "enum": [
+        "playedWith"
+       ],
+       "enumDescriptions": [
+        "Retrieve a list of players you have played a multiplayer game (realtime or turn-based) with recently."
+       ],
+       "location": "path"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "The maximum number of player resources to return in the response, used for paging. For any response, the actual number of player resources returned may be less than the specified maxResults.",
+       "format": "int32",
+       "minimum": "1",
+       "maximum": "15",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "The token returned by the previous request.",
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "collection"
+     ],
+     "response": {
+      "$ref": "PlayerListResponse"
      },
      "scopes": [
       "https://www.googleapis.com/auth/games",
@@ -2596,6 +3087,429 @@
      },
      "response": {
       "$ref": "PlayerScoreListResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/games",
+      "https://www.googleapis.com/auth/plus.login"
+     ]
+    }
+   }
+  },
+  "turnBasedMatches": {
+   "methods": {
+    "cancel": {
+     "id": "games.turnBasedMatches.cancel",
+     "path": "turnbasedmatches/{matchId}/cancel",
+     "httpMethod": "PUT",
+     "description": "Cancel a turn-based match.",
+     "parameters": {
+      "matchId": {
+       "type": "string",
+       "description": "The ID of the match.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "matchId"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/games",
+      "https://www.googleapis.com/auth/plus.login"
+     ]
+    },
+    "create": {
+     "id": "games.turnBasedMatches.create",
+     "path": "turnbasedmatches/create",
+     "httpMethod": "POST",
+     "description": "Create a turn-based match.",
+     "parameters": {
+      "language": {
+       "type": "string",
+       "description": "Specify the preferred language to use to format match info.",
+       "location": "query"
+      }
+     },
+     "request": {
+      "$ref": "TurnBasedMatchCreateRequest"
+     },
+     "response": {
+      "$ref": "TurnBasedMatch"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/games",
+      "https://www.googleapis.com/auth/plus.login"
+     ]
+    },
+    "decline": {
+     "id": "games.turnBasedMatches.decline",
+     "path": "turnbasedmatches/{matchId}/decline",
+     "httpMethod": "PUT",
+     "description": "Decline an invitation to play a turn-based match.",
+     "parameters": {
+      "language": {
+       "type": "string",
+       "description": "The preferred language to use for strings returned by this method.",
+       "location": "query"
+      },
+      "matchId": {
+       "type": "string",
+       "description": "The ID of the match.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "matchId"
+     ],
+     "response": {
+      "$ref": "TurnBasedMatch"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/games",
+      "https://www.googleapis.com/auth/plus.login"
+     ]
+    },
+    "dismiss": {
+     "id": "games.turnBasedMatches.dismiss",
+     "path": "turnbasedmatches/{matchId}/dismiss",
+     "httpMethod": "PUT",
+     "description": "Dismiss a turn-based match from the match list. The match will no longer show up in the list and will not generate notifications.",
+     "parameters": {
+      "matchId": {
+       "type": "string",
+       "description": "The ID of the match.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "matchId"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/games",
+      "https://www.googleapis.com/auth/plus.login"
+     ]
+    },
+    "finish": {
+     "id": "games.turnBasedMatches.finish",
+     "path": "turnbasedmatches/{matchId}/finish",
+     "httpMethod": "PUT",
+     "description": "Finish a turn-based match. Each player should make this call once, after all results are in. Only the player whose turn it is may make the first call to Finish, and can pass in the final match state.",
+     "parameters": {
+      "language": {
+       "type": "string",
+       "description": "The preferred language to use for strings returned by this method.",
+       "location": "query"
+      },
+      "matchId": {
+       "type": "string",
+       "description": "The ID of the match.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "matchId"
+     ],
+     "request": {
+      "$ref": "TurnBasedMatchResults"
+     },
+     "response": {
+      "$ref": "TurnBasedMatch"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/games",
+      "https://www.googleapis.com/auth/plus.login"
+     ]
+    },
+    "get": {
+     "id": "games.turnBasedMatches.get",
+     "path": "turnbasedmatches/{matchId}",
+     "httpMethod": "GET",
+     "description": "Get the data for a turn-based match.",
+     "parameters": {
+      "includeMatchData": {
+       "type": "boolean",
+       "description": "Get match data along with metadata.",
+       "location": "query"
+      },
+      "language": {
+       "type": "string",
+       "description": "Specify the preferred language to use to format match info.",
+       "location": "query"
+      },
+      "matchId": {
+       "type": "string",
+       "description": "The ID of the match.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "matchId"
+     ],
+     "response": {
+      "$ref": "TurnBasedMatch"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/games",
+      "https://www.googleapis.com/auth/plus.login"
+     ]
+    },
+    "join": {
+     "id": "games.turnBasedMatches.join",
+     "path": "turnbasedmatches/{matchId}/join",
+     "httpMethod": "PUT",
+     "description": "Join a turn-based match.",
+     "parameters": {
+      "language": {
+       "type": "string",
+       "description": "The preferred language to use for strings returned by this method.",
+       "location": "query"
+      },
+      "matchId": {
+       "type": "string",
+       "description": "The ID of the match.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "matchId"
+     ],
+     "response": {
+      "$ref": "TurnBasedMatch"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/games",
+      "https://www.googleapis.com/auth/plus.login"
+     ]
+    },
+    "leave": {
+     "id": "games.turnBasedMatches.leave",
+     "path": "turnbasedmatches/{matchId}/leave",
+     "httpMethod": "PUT",
+     "description": "Leave a turn-based match when it is not the current player's turn, without canceling the match.",
+     "parameters": {
+      "language": {
+       "type": "string",
+       "description": "The preferred language to use for strings returned by this method.",
+       "location": "query"
+      },
+      "matchId": {
+       "type": "string",
+       "description": "The ID of the match.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "matchId"
+     ],
+     "response": {
+      "$ref": "TurnBasedMatch"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/games",
+      "https://www.googleapis.com/auth/plus.login"
+     ]
+    },
+    "leaveTurn": {
+     "id": "games.turnBasedMatches.leaveTurn",
+     "path": "turnbasedmatches/{matchId}/leaveTurn",
+     "httpMethod": "PUT",
+     "description": "Leave a turn-based match during the current player's turn, without canceling the match.",
+     "parameters": {
+      "language": {
+       "type": "string",
+       "description": "The preferred language to use for strings returned by this method.",
+       "location": "query"
+      },
+      "matchId": {
+       "type": "string",
+       "description": "The ID of the match.",
+       "required": true,
+       "location": "path"
+      },
+      "matchVersion": {
+       "type": "integer",
+       "description": "The version of the match being updated.",
+       "required": true,
+       "format": "int32",
+       "location": "query"
+      },
+      "pendingParticipantId": {
+       "type": "string",
+       "description": "The ID of another participant who should take their turn next. If not set, the match will wait for other player(s) to join via automatching; this is only valid if automatch criteria is set on the match with remaining slots for automatched players.",
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "matchId",
+      "matchVersion"
+     ],
+     "response": {
+      "$ref": "TurnBasedMatch"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/games",
+      "https://www.googleapis.com/auth/plus.login"
+     ]
+    },
+    "list": {
+     "id": "games.turnBasedMatches.list",
+     "path": "turnbasedmatches",
+     "httpMethod": "GET",
+     "description": "Returns turn-based matches the player is or was involved in.",
+     "parameters": {
+      "includeMatchData": {
+       "type": "boolean",
+       "description": "True if match data should be returned in the response. Note that not all data will necessarily be returned if include_match_data is true; the server may decide to only return data for some of the matches to limit download size for the client. The remainder of the data for these matches will be retrievable on request.",
+       "location": "query"
+      },
+      "language": {
+       "type": "string",
+       "description": "The preferred language to use for strings returned by this method.",
+       "location": "query"
+      },
+      "maxCompletedMatches": {
+       "type": "integer",
+       "description": "The maximum number of completed or canceled matches to return in the response. If not set, all matches returned could be completed or canceled.",
+       "format": "int32",
+       "minimum": "0",
+       "maximum": "500",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "The maximum number of matches to return in the response, used for paging. For any response, the actual number of matches to return may be less than the specified maxResults.",
+       "format": "int32",
+       "minimum": "1",
+       "maximum": "500",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "The token returned by the previous request.",
+       "location": "query"
+      }
+     },
+     "response": {
+      "$ref": "TurnBasedMatchList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/games",
+      "https://www.googleapis.com/auth/plus.login"
+     ]
+    },
+    "rematch": {
+     "id": "games.turnBasedMatches.rematch",
+     "path": "turnbasedmatches/{matchId}/rematch",
+     "httpMethod": "POST",
+     "description": "Create a rematch of a match that was previously completed, with the same participants. This can be called by only one player on a match still in their list; the player must have called Finish first. Returns the newly created match; it will be the caller's turn.",
+     "parameters": {
+      "language": {
+       "type": "string",
+       "description": "The preferred language to use for strings returned by this method.",
+       "location": "query"
+      },
+      "matchId": {
+       "type": "string",
+       "description": "The ID of the match.",
+       "required": true,
+       "location": "path"
+      },
+      "requestId": {
+       "type": "string",
+       "description": "A randomly generated numeric ID for each request specified by the caller. This number is used at the server to ensure that the request is handled correctly across retries.",
+       "format": "int64",
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "matchId"
+     ],
+     "response": {
+      "$ref": "TurnBasedMatchRematch"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/games",
+      "https://www.googleapis.com/auth/plus.login"
+     ]
+    },
+    "sync": {
+     "id": "games.turnBasedMatches.sync",
+     "path": "turnbasedmatches/sync",
+     "httpMethod": "GET",
+     "description": "Returns turn-based matches the player is or was involved in that changed since the last sync call, with the least recent changes coming first. Matches that should be removed from the local cache will have a status of MATCH_DELETED.",
+     "parameters": {
+      "includeMatchData": {
+       "type": "boolean",
+       "description": "True if match data should be returned in the response. Note that not all data will necessarily be returned if include_match_data is true; the server may decide to only return data for some of the matches to limit download size for the client. The remainder of the data for these matches will be retrievable on request.",
+       "location": "query"
+      },
+      "language": {
+       "type": "string",
+       "description": "The preferred language to use for strings returned by this method.",
+       "location": "query"
+      },
+      "maxCompletedMatches": {
+       "type": "integer",
+       "description": "The maximum number of completed or canceled matches to return in the response. If not set, all matches returned could be completed or canceled.",
+       "format": "int32",
+       "minimum": "0",
+       "maximum": "500",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "The maximum number of matches to return in the response, used for paging. For any response, the actual number of matches to return may be less than the specified maxResults.",
+       "format": "int32",
+       "minimum": "1",
+       "maximum": "500",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "The token returned by the previous request.",
+       "location": "query"
+      }
+     },
+     "response": {
+      "$ref": "TurnBasedMatchSync"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/games",
+      "https://www.googleapis.com/auth/plus.login"
+     ]
+    },
+    "takeTurn": {
+     "id": "games.turnBasedMatches.takeTurn",
+     "path": "turnbasedmatches/{matchId}/turn",
+     "httpMethod": "PUT",
+     "description": "Commit the results of a player turn.",
+     "parameters": {
+      "language": {
+       "type": "string",
+       "description": "Specify the preferred language to use to format match info.",
+       "location": "query"
+      },
+      "matchId": {
+       "type": "string",
+       "description": "The ID of the match.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "matchId"
+     ],
+     "request": {
+      "$ref": "TurnBasedMatchTurn"
+     },
+     "response": {
+      "$ref": "TurnBasedMatch"
      },
      "scopes": [
       "https://www.googleapis.com/auth/games",

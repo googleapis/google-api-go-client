@@ -251,6 +251,10 @@ type BlogPerUserInfo struct {
 	// to the blog
 	PhotosAlbumKey string `json:"photosAlbumKey,omitempty"`
 
+	// Role: Access permissions that the user has for the blog (ADMIN,
+	// AUTHOR, or READER).
+	Role string `json:"role,omitempty"`
+
 	// UserId: ID of the User
 	UserId string `json:"userId,omitempty"`
 }
@@ -687,7 +691,7 @@ func (c *BlogUserInfosGetCall) Do() (*BlogUserInfo, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -758,12 +762,22 @@ func (c *BlogsGetCall) MaxPosts(maxPosts int64) *BlogsGetCall {
 	return c
 }
 
+// View sets the optional parameter "view": Access level with which to
+// view the blogs. Note that some fields require elevated access.
+func (c *BlogsGetCall) View(view string) *BlogsGetCall {
+	c.opt_["view"] = view
+	return c
+}
+
 func (c *BlogsGetCall) Do() (*Blog, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	if v, ok := c.opt_["maxPosts"]; ok {
 		params.Set("maxPosts", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["view"]; ok {
+		params.Set("view", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/blogger/v3/", "blogs/{blogId}")
 	urls += "?" + params.Encode()
@@ -775,7 +789,7 @@ func (c *BlogsGetCall) Do() (*Blog, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -803,6 +817,21 @@ func (c *BlogsGetCall) Do() (*Blog, error) {
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "type": "integer"
+	//     },
+	//     "view": {
+	//       "description": "Access level with which to view the blogs. Note that some fields require elevated access.",
+	//       "enum": [
+	//         "ADMIN",
+	//         "AUTHOR",
+	//         "READER"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Admin level detail",
+	//         "Author level detail",
+	//         "Reader level detail"
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "blogs/{blogId}",
@@ -832,11 +861,21 @@ func (r *BlogsService) GetByUrl(url string) *BlogsGetByUrlCall {
 	return c
 }
 
+// View sets the optional parameter "view": Access level with which to
+// view the blogs. Note that some fields require elevated access.
+func (c *BlogsGetByUrlCall) View(view string) *BlogsGetByUrlCall {
+	c.opt_["view"] = view
+	return c
+}
+
 func (c *BlogsGetByUrlCall) Do() (*Blog, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("url", fmt.Sprintf("%v", c.url))
+	if v, ok := c.opt_["view"]; ok {
+		params.Set("view", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/blogger/v3/", "blogs/byurl")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -846,7 +885,7 @@ func (c *BlogsGetByUrlCall) Do() (*Blog, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -867,6 +906,21 @@ func (c *BlogsGetByUrlCall) Do() (*Blog, error) {
 	//       "description": "The URL of the blog to retrieve.",
 	//       "location": "query",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "Access level with which to view the blogs. Note that some fields require elevated access.",
+	//       "enum": [
+	//         "ADMIN",
+	//         "AUTHOR",
+	//         "READER"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Admin level detail",
+	//         "Author level detail",
+	//         "Reader level detail"
+	//       ],
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -905,7 +959,17 @@ func (c *BlogsListByUserCall) FetchUserInfo(fetchUserInfo bool) *BlogsListByUser
 	return c
 }
 
-// View sets the optional parameter "view":
+// Role sets the optional parameter "role": User access types for blogs
+// to include in the results, e.g. AUTHOR will return blogs where the
+// user has author level access. If no roles are specified, defaults to
+// ADMIN and AUTHOR roles.
+func (c *BlogsListByUserCall) Role(role string) *BlogsListByUserCall {
+	c.opt_["role"] = role
+	return c
+}
+
+// View sets the optional parameter "view": Access level with which to
+// view the blogs. Note that some fields require elevated access.
 func (c *BlogsListByUserCall) View(view string) *BlogsListByUserCall {
 	c.opt_["view"] = view
 	return c
@@ -917,6 +981,9 @@ func (c *BlogsListByUserCall) Do() (*BlogList, error) {
 	params.Set("alt", "json")
 	if v, ok := c.opt_["fetchUserInfo"]; ok {
 		params.Set("fetchUserInfo", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["role"]; ok {
+		params.Set("role", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["view"]; ok {
 		params.Set("view", fmt.Sprintf("%v", v))
@@ -931,7 +998,7 @@ func (c *BlogsListByUserCall) Do() (*BlogList, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -953,6 +1020,22 @@ func (c *BlogsListByUserCall) Do() (*BlogList, error) {
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
+	//     "role": {
+	//       "description": "User access types for blogs to include in the results, e.g. AUTHOR will return blogs where the user has author level access. If no roles are specified, defaults to ADMIN and AUTHOR roles.",
+	//       "enum": [
+	//         "ADMIN",
+	//         "AUTHOR",
+	//         "READER"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Admin role - User has Admin level access.",
+	//         "Author role - User has Author level access.",
+	//         "Reader role - User has Reader level access."
+	//       ],
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
 	//     "userId": {
 	//       "description": "ID of the user whose blogs are to be fetched. Either the word 'self' (sans quote marks) or the user's profile identifier.",
 	//       "location": "path",
@@ -960,6 +1043,7 @@ func (c *BlogsListByUserCall) Do() (*BlogList, error) {
 	//       "type": "string"
 	//     },
 	//     "view": {
+	//       "description": "Access level with which to view the blogs. Note that some fields require elevated access.",
 	//       "enum": [
 	//         "ADMIN",
 	//         "AUTHOR",
@@ -968,7 +1052,7 @@ func (c *BlogsListByUserCall) Do() (*BlogList, error) {
 	//       "enumDescriptions": [
 	//         "Admin level detail",
 	//         "Author level detail",
-	//         "Admin level detail"
+	//         "Reader level detail"
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -1021,7 +1105,7 @@ func (c *CommentsApproveCall) Do() (*Comment, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1105,7 +1189,7 @@ func (c *CommentsDeleteCall) Do() error {
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -1166,10 +1250,23 @@ func (r *CommentsService) Get(blogId string, postId string, commentId string) *C
 	return c
 }
 
+// View sets the optional parameter "view": Access level for the
+// requested comment (default: READER). Note that some comments will
+// require elevated permissions, for example comments where the parent
+// posts which is in a draft state, or comments that are pending
+// moderation.
+func (c *CommentsGetCall) View(view string) *CommentsGetCall {
+	c.opt_["view"] = view
+	return c
+}
+
 func (c *CommentsGetCall) Do() (*Comment, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["view"]; ok {
+		params.Set("view", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/blogger/v3/", "blogs/{blogId}/posts/{postId}/comments/{commentId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -1182,7 +1279,7 @@ func (c *CommentsGetCall) Do() (*Comment, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1217,6 +1314,21 @@ func (c *CommentsGetCall) Do() (*Comment, error) {
 	//       "description": "ID of the post to fetch posts from.",
 	//       "location": "path",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "Access level for the requested comment (default: READER). Note that some comments will require elevated permissions, for example comments where the parent posts which is in a draft state, or comments that are pending moderation.",
+	//       "enum": [
+	//         "ADMIN",
+	//         "AUTHOR",
+	//         "READER"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Admin level detail",
+	//         "Author level detail",
+	//         "Admin level detail"
+	//       ],
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -1284,13 +1396,15 @@ func (c *CommentsListCall) StartDate(startDate string) *CommentsListCall {
 	return c
 }
 
-// Statuses sets the optional parameter "statuses":
-func (c *CommentsListCall) Statuses(statuses string) *CommentsListCall {
-	c.opt_["statuses"] = statuses
+// Status sets the optional parameter "status":
+func (c *CommentsListCall) Status(status string) *CommentsListCall {
+	c.opt_["status"] = status
 	return c
 }
 
-// View sets the optional parameter "view":
+// View sets the optional parameter "view": Access level with which to
+// view the returned result. Note that some fields require elevated
+// access.
 func (c *CommentsListCall) View(view string) *CommentsListCall {
 	c.opt_["view"] = view
 	return c
@@ -1315,8 +1429,8 @@ func (c *CommentsListCall) Do() (*CommentList, error) {
 	if v, ok := c.opt_["startDate"]; ok {
 		params.Set("startDate", fmt.Sprintf("%v", v))
 	}
-	if v, ok := c.opt_["statuses"]; ok {
-		params.Set("statuses", fmt.Sprintf("%v", v))
+	if v, ok := c.opt_["status"]; ok {
+		params.Set("status", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["view"]; ok {
 		params.Set("view", fmt.Sprintf("%v", v))
@@ -1332,7 +1446,7 @@ func (c *CommentsListCall) Do() (*CommentList, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1390,7 +1504,7 @@ func (c *CommentsListCall) Do() (*CommentList, error) {
 	//       "location": "query",
 	//       "type": "string"
 	//     },
-	//     "statuses": {
+	//     "status": {
 	//       "enum": [
 	//         "emptied",
 	//         "live",
@@ -1408,6 +1522,7 @@ func (c *CommentsListCall) Do() (*CommentList, error) {
 	//       "type": "string"
 	//     },
 	//     "view": {
+	//       "description": "Access level with which to view the returned result. Note that some fields require elevated access.",
 	//       "enum": [
 	//         "ADMIN",
 	//         "AUTHOR",
@@ -1416,7 +1531,7 @@ func (c *CommentsListCall) Do() (*CommentList, error) {
 	//       "enumDescriptions": [
 	//         "Admin level detail",
 	//         "Author level detail",
-	//         "Admin level detail"
+	//         "Reader level detail"
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -1514,7 +1629,7 @@ func (c *CommentsListByBlogCall) Do() (*CommentList, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1613,7 +1728,7 @@ func (c *CommentsMarkAsSpamCall) Do() (*Comment, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1697,7 +1812,7 @@ func (c *CommentsRemoveContentCall) Do() (*Comment, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1784,7 +1899,7 @@ func (c *PageViewsGetCall) Do() (*Pageviews, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1866,7 +1981,7 @@ func (c *PagesDeleteCall) Do() error {
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -1942,7 +2057,7 @@ func (c *PagesGetCall) Do() (*Page, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1981,7 +2096,7 @@ func (c *PagesGetCall) Do() (*Page, error) {
 	//       "enumDescriptions": [
 	//         "Admin level detail",
 	//         "Author level detail",
-	//         "Admin level detail"
+	//         "Reader level detail"
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -2036,7 +2151,7 @@ func (c *PagesInsertCall) Do() (*Page, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2097,13 +2212,15 @@ func (c *PagesListCall) FetchBodies(fetchBodies bool) *PagesListCall {
 	return c
 }
 
-// Statuses sets the optional parameter "statuses":
-func (c *PagesListCall) Statuses(statuses string) *PagesListCall {
-	c.opt_["statuses"] = statuses
+// Status sets the optional parameter "status":
+func (c *PagesListCall) Status(status string) *PagesListCall {
+	c.opt_["status"] = status
 	return c
 }
 
-// View sets the optional parameter "view":
+// View sets the optional parameter "view": Access level with which to
+// view the returned result. Note that some fields require elevated
+// access.
 func (c *PagesListCall) View(view string) *PagesListCall {
 	c.opt_["view"] = view
 	return c
@@ -2116,8 +2233,8 @@ func (c *PagesListCall) Do() (*PageList, error) {
 	if v, ok := c.opt_["fetchBodies"]; ok {
 		params.Set("fetchBodies", fmt.Sprintf("%v", v))
 	}
-	if v, ok := c.opt_["statuses"]; ok {
-		params.Set("statuses", fmt.Sprintf("%v", v))
+	if v, ok := c.opt_["status"]; ok {
+		params.Set("status", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["view"]; ok {
 		params.Set("view", fmt.Sprintf("%v", v))
@@ -2132,7 +2249,7 @@ func (c *PagesListCall) Do() (*PageList, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2160,15 +2277,13 @@ func (c *PagesListCall) Do() (*PageList, error) {
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
-	//     "statuses": {
+	//     "status": {
 	//       "enum": [
 	//         "draft",
-	//         "imported",
 	//         "live"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Draft (unpublished) Pages",
-	//         "Pages that have had their content removed",
 	//         "Pages that are publicly visible"
 	//       ],
 	//       "location": "query",
@@ -2176,6 +2291,7 @@ func (c *PagesListCall) Do() (*PageList, error) {
 	//       "type": "string"
 	//     },
 	//     "view": {
+	//       "description": "Access level with which to view the returned result. Note that some fields require elevated access.",
 	//       "enum": [
 	//         "ADMIN",
 	//         "AUTHOR",
@@ -2184,7 +2300,7 @@ func (c *PagesListCall) Do() (*PageList, error) {
 	//       "enumDescriptions": [
 	//         "Admin level detail",
 	//         "Author level detail",
-	//         "Admin level detail"
+	//         "Reader level detail"
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -2242,7 +2358,7 @@ func (c *PagesPatchCall) Do() (*Page, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2327,7 +2443,7 @@ func (c *PagesUpdateCall) Do() (*Page, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2382,7 +2498,9 @@ type PostUserInfosGetCall struct {
 	opt_   map[string]interface{}
 }
 
-// Get: Gets one post and user info pair by postId and userId.
+// Get: Gets one post and user info pair, by post id and user id. The
+// post user info contains per-user information about the post, such as
+// access rights, specific to the user.
 func (r *PostUserInfosService) Get(userId string, blogId string, postId string) *PostUserInfosGetCall {
 	c := &PostUserInfosGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userId = userId
@@ -2417,7 +2535,7 @@ func (c *PostUserInfosGetCall) Do() (*PostUserInfo, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2427,7 +2545,7 @@ func (c *PostUserInfosGetCall) Do() (*PostUserInfo, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets one post and user info pair by postId and userId.",
+	//   "description": "Gets one post and user info pair, by post id and user id. The post user info contains per-user information about the post, such as access rights, specific to the user.",
 	//   "httpMethod": "GET",
 	//   "id": "blogger.postUserInfos.get",
 	//   "parameterOrder": [
@@ -2482,8 +2600,9 @@ type PostUserInfosListCall struct {
 	opt_   map[string]interface{}
 }
 
-// List: Retrieves a list of post and user info pairs, possibly
-// filtered.
+// List: Retrieves a list of post and post user info pairs, possibly
+// filtered. The post user info contains per-user information about the
+// post, such as access rights, specific to the user.
 func (r *PostUserInfosService) List(userId string, blogId string) *PostUserInfosListCall {
 	c := &PostUserInfosListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userId = userId
@@ -2499,7 +2618,7 @@ func (c *PostUserInfosListCall) EndDate(endDate string) *PostUserInfosListCall {
 }
 
 // FetchBodies sets the optional parameter "fetchBodies": Whether the
-// body content of posts is included.
+// body content of posts is included. Default is false.
 func (c *PostUserInfosListCall) FetchBodies(fetchBodies bool) *PostUserInfosListCall {
 	c.opt_["fetchBodies"] = fetchBodies
 	return c
@@ -2519,7 +2638,8 @@ func (c *PostUserInfosListCall) MaxResults(maxResults int64) *PostUserInfosListC
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Sort search results
+// OrderBy sets the optional parameter "orderBy": Sort order applied to
+// search results. Default is published.
 func (c *PostUserInfosListCall) OrderBy(orderBy string) *PostUserInfosListCall {
 	c.opt_["orderBy"] = orderBy
 	return c
@@ -2539,13 +2659,15 @@ func (c *PostUserInfosListCall) StartDate(startDate string) *PostUserInfosListCa
 	return c
 }
 
-// Statuses sets the optional parameter "statuses":
-func (c *PostUserInfosListCall) Statuses(statuses string) *PostUserInfosListCall {
-	c.opt_["statuses"] = statuses
+// Status sets the optional parameter "status":
+func (c *PostUserInfosListCall) Status(status string) *PostUserInfosListCall {
+	c.opt_["status"] = status
 	return c
 }
 
-// View sets the optional parameter "view":
+// View sets the optional parameter "view": Access level with which to
+// view the returned result. Note that some fields require elevated
+// access.
 func (c *PostUserInfosListCall) View(view string) *PostUserInfosListCall {
 	c.opt_["view"] = view
 	return c
@@ -2576,8 +2698,8 @@ func (c *PostUserInfosListCall) Do() (*PostUserInfosList, error) {
 	if v, ok := c.opt_["startDate"]; ok {
 		params.Set("startDate", fmt.Sprintf("%v", v))
 	}
-	if v, ok := c.opt_["statuses"]; ok {
-		params.Set("statuses", fmt.Sprintf("%v", v))
+	if v, ok := c.opt_["status"]; ok {
+		params.Set("status", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["view"]; ok {
 		params.Set("view", fmt.Sprintf("%v", v))
@@ -2593,7 +2715,7 @@ func (c *PostUserInfosListCall) Do() (*PostUserInfosList, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2603,7 +2725,7 @@ func (c *PostUserInfosListCall) Do() (*PostUserInfosList, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves a list of post and user info pairs, possibly filtered.",
+	//   "description": "Retrieves a list of post and post user info pairs, possibly filtered. The post user info contains per-user information about the post, such as access rights, specific to the user.",
 	//   "httpMethod": "GET",
 	//   "id": "blogger.postUserInfos.list",
 	//   "parameterOrder": [
@@ -2624,7 +2746,8 @@ func (c *PostUserInfosListCall) Do() (*PostUserInfosList, error) {
 	//       "type": "string"
 	//     },
 	//     "fetchBodies": {
-	//       "description": "Whether the body content of posts is included.",
+	//       "default": "false",
+	//       "description": "Whether the body content of posts is included. Default is false.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -2641,7 +2764,7 @@ func (c *PostUserInfosListCall) Do() (*PostUserInfosList, error) {
 	//     },
 	//     "orderBy": {
 	//       "default": "PUBLISHED",
-	//       "description": "Sort search results",
+	//       "description": "Sort order applied to search results. Default is published.",
 	//       "enum": [
 	//         "published",
 	//         "updated"
@@ -2664,7 +2787,7 @@ func (c *PostUserInfosListCall) Do() (*PostUserInfosList, error) {
 	//       "location": "query",
 	//       "type": "string"
 	//     },
-	//     "statuses": {
+	//     "status": {
 	//       "enum": [
 	//         "draft",
 	//         "live",
@@ -2686,6 +2809,7 @@ func (c *PostUserInfosListCall) Do() (*PostUserInfosList, error) {
 	//       "type": "string"
 	//     },
 	//     "view": {
+	//       "description": "Access level with which to view the returned result. Note that some fields require elevated access.",
 	//       "enum": [
 	//         "ADMIN",
 	//         "AUTHOR",
@@ -2744,7 +2868,7 @@ func (c *PostsDeleteCall) Do() error {
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -2796,6 +2920,22 @@ func (r *PostsService) Get(blogId string, postId string) *PostsGetCall {
 	return c
 }
 
+// FetchBody sets the optional parameter "fetchBody": Whether the body
+// content of the post is included (default: true). This should be set
+// to false when the post bodies are not required, to help minimize
+// traffic.
+func (c *PostsGetCall) FetchBody(fetchBody bool) *PostsGetCall {
+	c.opt_["fetchBody"] = fetchBody
+	return c
+}
+
+// FetchImages sets the optional parameter "fetchImages": Whether image
+// URL metadata for each post is included (default: false).
+func (c *PostsGetCall) FetchImages(fetchImages bool) *PostsGetCall {
+	c.opt_["fetchImages"] = fetchImages
+	return c
+}
+
 // MaxComments sets the optional parameter "maxComments": Maximum number
 // of comments to pull back on a post.
 func (c *PostsGetCall) MaxComments(maxComments int64) *PostsGetCall {
@@ -2803,7 +2943,9 @@ func (c *PostsGetCall) MaxComments(maxComments int64) *PostsGetCall {
 	return c
 }
 
-// View sets the optional parameter "view":
+// View sets the optional parameter "view": Access level with which to
+// view the returned result. Note that some fields require elevated
+// access.
 func (c *PostsGetCall) View(view string) *PostsGetCall {
 	c.opt_["view"] = view
 	return c
@@ -2813,6 +2955,12 @@ func (c *PostsGetCall) Do() (*Post, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fetchBody"]; ok {
+		params.Set("fetchBody", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fetchImages"]; ok {
+		params.Set("fetchImages", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["maxComments"]; ok {
 		params.Set("maxComments", fmt.Sprintf("%v", v))
 	}
@@ -2830,7 +2978,7 @@ func (c *PostsGetCall) Do() (*Post, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2854,6 +3002,17 @@ func (c *PostsGetCall) Do() (*Post, error) {
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "fetchBody": {
+	//       "default": "true",
+	//       "description": "Whether the body content of the post is included (default: true). This should be set to false when the post bodies are not required, to help minimize traffic.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "fetchImages": {
+	//       "description": "Whether image URL metadata for each post is included (default: false).",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "maxComments": {
 	//       "description": "Maximum number of comments to pull back on a post.",
 	//       "format": "uint32",
@@ -2867,6 +3026,7 @@ func (c *PostsGetCall) Do() (*Post, error) {
 	//       "type": "string"
 	//     },
 	//     "view": {
+	//       "description": "Access level with which to view the returned result. Note that some fields require elevated access.",
 	//       "enum": [
 	//         "ADMIN",
 	//         "AUTHOR",
@@ -2875,7 +3035,7 @@ func (c *PostsGetCall) Do() (*Post, error) {
 	//       "enumDescriptions": [
 	//         "Admin level detail",
 	//         "Author level detail",
-	//         "Admin level detail"
+	//         "Reader level detail"
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -2917,7 +3077,9 @@ func (c *PostsGetByPathCall) MaxComments(maxComments int64) *PostsGetByPathCall 
 	return c
 }
 
-// View sets the optional parameter "view":
+// View sets the optional parameter "view": Access level with which to
+// view the returned result. Note that some fields require elevated
+// access.
 func (c *PostsGetByPathCall) View(view string) *PostsGetByPathCall {
 	c.opt_["view"] = view
 	return c
@@ -2944,7 +3106,7 @@ func (c *PostsGetByPathCall) Do() (*Post, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2981,6 +3143,7 @@ func (c *PostsGetByPathCall) Do() (*Post, error) {
 	//       "type": "string"
 	//     },
 	//     "view": {
+	//       "description": "Access level with which to view the returned result. Note that some fields require elevated access.",
 	//       "enum": [
 	//         "ADMIN",
 	//         "AUTHOR",
@@ -2989,7 +3152,7 @@ func (c *PostsGetByPathCall) Do() (*Post, error) {
 	//       "enumDescriptions": [
 	//         "Admin level detail",
 	//         "Author level detail",
-	//         "Admin level detail"
+	//         "Reader level detail"
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -3024,8 +3187,23 @@ func (r *PostsService) Insert(blogId string, post *Post) *PostsInsertCall {
 	return c
 }
 
+// FetchBody sets the optional parameter "fetchBody": Whether the body
+// content of the post is included with the result (default: true).
+func (c *PostsInsertCall) FetchBody(fetchBody bool) *PostsInsertCall {
+	c.opt_["fetchBody"] = fetchBody
+	return c
+}
+
+// FetchImages sets the optional parameter "fetchImages": Whether image
+// URL metadata for each post is included in the returned result
+// (default: false).
+func (c *PostsInsertCall) FetchImages(fetchImages bool) *PostsInsertCall {
+	c.opt_["fetchImages"] = fetchImages
+	return c
+}
+
 // IsDraft sets the optional parameter "isDraft": Whether to create the
-// post as a draft
+// post as a draft (default: false).
 func (c *PostsInsertCall) IsDraft(isDraft bool) *PostsInsertCall {
 	c.opt_["isDraft"] = isDraft
 	return c
@@ -3040,6 +3218,12 @@ func (c *PostsInsertCall) Do() (*Post, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fetchBody"]; ok {
+		params.Set("fetchBody", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fetchImages"]; ok {
+		params.Set("fetchImages", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["isDraft"]; ok {
 		params.Set("isDraft", fmt.Sprintf("%v", v))
 	}
@@ -3054,7 +3238,7 @@ func (c *PostsInsertCall) Do() (*Post, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3077,8 +3261,19 @@ func (c *PostsInsertCall) Do() (*Post, error) {
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "fetchBody": {
+	//       "default": "true",
+	//       "description": "Whether the body content of the post is included with the result (default: true).",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "fetchImages": {
+	//       "description": "Whether image URL metadata for each post is included in the returned result (default: false).",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "isDraft": {
-	//       "description": "Whether to create the post as a draft",
+	//       "description": "Whether to create the post as a draft (default: false).",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -3169,13 +3364,16 @@ func (c *PostsListCall) StartDate(startDate string) *PostsListCall {
 	return c
 }
 
-// Statuses sets the optional parameter "statuses":
-func (c *PostsListCall) Statuses(statuses string) *PostsListCall {
-	c.opt_["statuses"] = statuses
+// Status sets the optional parameter "status": Statuses to include in
+// the results.
+func (c *PostsListCall) Status(status string) *PostsListCall {
+	c.opt_["status"] = status
 	return c
 }
 
-// View sets the optional parameter "view":
+// View sets the optional parameter "view": Access level with which to
+// view the returned result. Note that some fields require escalated
+// access.
 func (c *PostsListCall) View(view string) *PostsListCall {
 	c.opt_["view"] = view
 	return c
@@ -3209,8 +3407,8 @@ func (c *PostsListCall) Do() (*PostList, error) {
 	if v, ok := c.opt_["startDate"]; ok {
 		params.Set("startDate", fmt.Sprintf("%v", v))
 	}
-	if v, ok := c.opt_["statuses"]; ok {
-		params.Set("statuses", fmt.Sprintf("%v", v))
+	if v, ok := c.opt_["status"]; ok {
+		params.Set("status", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["view"]; ok {
 		params.Set("view", fmt.Sprintf("%v", v))
@@ -3225,7 +3423,7 @@ func (c *PostsListCall) Do() (*PostList, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3301,22 +3499,24 @@ func (c *PostsListCall) Do() (*PostList, error) {
 	//       "location": "query",
 	//       "type": "string"
 	//     },
-	//     "statuses": {
+	//     "status": {
+	//       "description": "Statuses to include in the results.",
 	//       "enum": [
 	//         "draft",
 	//         "live",
 	//         "scheduled"
 	//       ],
 	//       "enumDescriptions": [
-	//         "Draft posts",
+	//         "Draft (non-published) posts.",
 	//         "Published posts",
-	//         "Posts that are scheduled to publish in future."
+	//         "Posts that are scheduled to publish in the future."
 	//       ],
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
 	//     },
 	//     "view": {
+	//       "description": "Access level with which to view the returned result. Note that some fields require escalated access.",
 	//       "enum": [
 	//         "ADMIN",
 	//         "AUTHOR",
@@ -3362,6 +3562,42 @@ func (r *PostsService) Patch(blogId string, postId string, post *Post) *PostsPat
 	return c
 }
 
+// FetchBody sets the optional parameter "fetchBody": Whether the body
+// content of the post is included with the result (default: true).
+func (c *PostsPatchCall) FetchBody(fetchBody bool) *PostsPatchCall {
+	c.opt_["fetchBody"] = fetchBody
+	return c
+}
+
+// FetchImages sets the optional parameter "fetchImages": Whether image
+// URL metadata for each post is included in the returned result
+// (default: false).
+func (c *PostsPatchCall) FetchImages(fetchImages bool) *PostsPatchCall {
+	c.opt_["fetchImages"] = fetchImages
+	return c
+}
+
+// MaxComments sets the optional parameter "maxComments": Maximum number
+// of comments to retrieve with the returned post.
+func (c *PostsPatchCall) MaxComments(maxComments int64) *PostsPatchCall {
+	c.opt_["maxComments"] = maxComments
+	return c
+}
+
+// Publish sets the optional parameter "publish": Whether a publish
+// action should be performed when the post is updated (default: false).
+func (c *PostsPatchCall) Publish(publish bool) *PostsPatchCall {
+	c.opt_["publish"] = publish
+	return c
+}
+
+// Revert sets the optional parameter "revert": Whether a revert action
+// should be performed when the post is updated (default: false).
+func (c *PostsPatchCall) Revert(revert bool) *PostsPatchCall {
+	c.opt_["revert"] = revert
+	return c
+}
+
 func (c *PostsPatchCall) Do() (*Post, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.post)
@@ -3371,6 +3607,21 @@ func (c *PostsPatchCall) Do() (*Post, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fetchBody"]; ok {
+		params.Set("fetchBody", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fetchImages"]; ok {
+		params.Set("fetchImages", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxComments"]; ok {
+		params.Set("maxComments", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["publish"]; ok {
+		params.Set("publish", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["revert"]; ok {
+		params.Set("revert", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/blogger/v3/", "blogs/{blogId}/posts/{postId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
@@ -3383,7 +3634,7 @@ func (c *PostsPatchCall) Do() (*Post, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3407,11 +3658,38 @@ func (c *PostsPatchCall) Do() (*Post, error) {
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "fetchBody": {
+	//       "default": "true",
+	//       "description": "Whether the body content of the post is included with the result (default: true).",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "fetchImages": {
+	//       "description": "Whether image URL metadata for each post is included in the returned result (default: false).",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "maxComments": {
+	//       "description": "Maximum number of comments to retrieve with the returned post.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
 	//     "postId": {
 	//       "description": "The ID of the Post.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "publish": {
+	//       "description": "Whether a publish action should be performed when the post is updated (default: false).",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "revert": {
+	//       "description": "Whether a revert action should be performed when the post is updated (default: false).",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     }
 	//   },
 	//   "path": "blogs/{blogId}/posts/{postId}",
@@ -3470,7 +3748,7 @@ func (c *PostsPublishCall) Do() (*Post, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3550,7 +3828,7 @@ func (c *PostsRevertCall) Do() (*Post, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3645,7 +3923,7 @@ func (c *PostsSearchCall) Do() (*PostList, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3727,6 +4005,42 @@ func (r *PostsService) Update(blogId string, postId string, post *Post) *PostsUp
 	return c
 }
 
+// FetchBody sets the optional parameter "fetchBody": Whether the body
+// content of the post is included with the result (default: true).
+func (c *PostsUpdateCall) FetchBody(fetchBody bool) *PostsUpdateCall {
+	c.opt_["fetchBody"] = fetchBody
+	return c
+}
+
+// FetchImages sets the optional parameter "fetchImages": Whether image
+// URL metadata for each post is included in the returned result
+// (default: false).
+func (c *PostsUpdateCall) FetchImages(fetchImages bool) *PostsUpdateCall {
+	c.opt_["fetchImages"] = fetchImages
+	return c
+}
+
+// MaxComments sets the optional parameter "maxComments": Maximum number
+// of comments to retrieve with the returned post.
+func (c *PostsUpdateCall) MaxComments(maxComments int64) *PostsUpdateCall {
+	c.opt_["maxComments"] = maxComments
+	return c
+}
+
+// Publish sets the optional parameter "publish": Whether a publish
+// action should be performed when the post is updated (default: false).
+func (c *PostsUpdateCall) Publish(publish bool) *PostsUpdateCall {
+	c.opt_["publish"] = publish
+	return c
+}
+
+// Revert sets the optional parameter "revert": Whether a revert action
+// should be performed when the post is updated (default: false).
+func (c *PostsUpdateCall) Revert(revert bool) *PostsUpdateCall {
+	c.opt_["revert"] = revert
+	return c
+}
+
 func (c *PostsUpdateCall) Do() (*Post, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.post)
@@ -3736,6 +4050,21 @@ func (c *PostsUpdateCall) Do() (*Post, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fetchBody"]; ok {
+		params.Set("fetchBody", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fetchImages"]; ok {
+		params.Set("fetchImages", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxComments"]; ok {
+		params.Set("maxComments", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["publish"]; ok {
+		params.Set("publish", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["revert"]; ok {
+		params.Set("revert", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative("https://www.googleapis.com/blogger/v3/", "blogs/{blogId}/posts/{postId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
@@ -3748,7 +4077,7 @@ func (c *PostsUpdateCall) Do() (*Post, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3772,11 +4101,38 @@ func (c *PostsUpdateCall) Do() (*Post, error) {
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "fetchBody": {
+	//       "default": "true",
+	//       "description": "Whether the body content of the post is included with the result (default: true).",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "fetchImages": {
+	//       "description": "Whether image URL metadata for each post is included in the returned result (default: false).",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "maxComments": {
+	//       "description": "Maximum number of comments to retrieve with the returned post.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
 	//     "postId": {
 	//       "description": "The ID of the Post.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "publish": {
+	//       "description": "Whether a publish action should be performed when the post is updated (default: false).",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "revert": {
+	//       "description": "Whether a revert action should be performed when the post is updated (default: false).",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     }
 	//   },
 	//   "path": "blogs/{blogId}/posts/{postId}",
@@ -3822,7 +4178,7 @@ func (c *UsersGetCall) Do() (*User, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}

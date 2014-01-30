@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"qMhxoRFWKZK4K3KdZJuqms1o3fc/YrdEaGy03tV2BNsqBq5fSw9csZ8\"",
+ "etag": "\"R6H4aXXmd1SZaWpEcGSkC2StmNw/ozt-wXHp5zJmbnNr9rZygbg_eLg\"",
  "discoveryVersion": "v1",
  "id": "plusDomains:v1",
  "name": "plusDomains",
@@ -460,6 +460,10 @@
         "canPlusone": {
          "type": "boolean",
          "description": "Whether the viewer can +1 the activity."
+        },
+        "canUpdate": {
+         "type": "boolean",
+         "description": "Whether the viewer can edit or delete the activity."
         },
         "isPlusOned": {
          "type": "boolean",
@@ -976,7 +980,7 @@
     },
     "videoStatus": {
      "type": "string",
-     "description": "The encoding status of this video. Possible values are:  \n- \"PENDING\" - Video not yet processed. \n- \"FAILED\" - Video processing failed. \n- \"READY\" - A single video stream is playable. \n- \"FINAL\" - All video streams are playable."
+     "description": "The encoding status of this video. Possible values are:  \n- \"UPLOADING\" - Not all the video bytes have been received. \n- \"PENDING\" - Video not yet processed. \n- \"FAILED\" - Video processing failed. \n- \"READY\" - A single video stream is playable. \n- \"FINAL\" - All video streams are playable."
     },
     "width": {
      "type": "integer",
@@ -1042,7 +1046,7 @@
     },
     "circledByCount": {
      "type": "integer",
-     "description": "If a Google+ Page and for followers who are visible, the number of people who have added this page to a circle.",
+     "description": "For followers who are visible, the number of people who have added this person or page to a circle.",
      "format": "int32"
     },
     "cover": {

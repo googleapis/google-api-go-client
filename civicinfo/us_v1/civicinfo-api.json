@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"qMhxoRFWKZK4K3KdZJuqms1o3fc/gs0lH8i9LWaJL9JhZymkI8TMC-A\"",
+ "etag": "\"R6H4aXXmd1SZaWpEcGSkC2StmNw/UEI1KxB6ydqszwyMqMafNHGNT30\"",
  "discoveryVersion": "v1",
  "id": "civicinfo:us_v1",
  "name": "civicinfo",
@@ -410,6 +410,7 @@
   "Office": {
    "id": "Office",
    "type": "object",
+   "description": "Information about an Office held by one or more Officials.",
    "properties": {
     "level": {
      "type": "string",
@@ -541,7 +542,8 @@
    "description": "A request for political geography and representative information for an address.",
    "properties": {
     "address": {
-     "type": "string"
+     "type": "string",
+     "description": "The address to look up. May only be specified if the field ocdId is not given in the URL."
     }
    }
   },
@@ -759,6 +761,11 @@
        "type": "boolean",
        "description": "Whether to return information about offices and officials. If false, only the top-level district information will be returned.",
        "default": "true",
+       "location": "query"
+      },
+      "ocdId": {
+       "type": "string",
+       "description": "The division to look up. May only be specified if the address field is not given in the request body.",
        "location": "query"
       }
      },

@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"qMhxoRFWKZK4K3KdZJuqms1o3fc/B_T-KX8lOQBH1CsI6E-WKqK2W0U\"",
+ "etag": "\"R6H4aXXmd1SZaWpEcGSkC2StmNw/WiJFFLvE_6Q-3MjeCpMXsXhr054\"",
  "discoveryVersion": "v1",
  "id": "oauth2:v1",
  "name": "oauth2",
@@ -140,8 +140,8 @@
     }
    }
   },
-  "Userinfo": {
-   "id": "Userinfo",
+  "Userinfoplus": {
+   "id": "Userinfoplus",
    "type": "object",
    "properties": {
     "email": {
@@ -174,7 +174,7 @@
     },
     "locale": {
      "type": "string",
-     "description": "The user's default locale."
+     "description": "The user's preferred locale."
     },
     "name": {
      "type": "string",
@@ -184,13 +184,10 @@
      "type": "string",
      "description": "URL of the user's picture image."
     },
-    "timezone": {
-     "type": "string",
-     "description": "The user's default timezone."
-    },
     "verified_email": {
-     "type": "boolean",
-     "description": "Boolean flag which is true if the email address is verified."
+     "type": "string",
+     "description": "Boolean flag which is true if the email address is verified. Always verified because we only return the user's primary email address.",
+     "default": "true"
     }
    }
   }
@@ -227,7 +224,7 @@
      "httpMethod": "GET",
      "description": "Get user info",
      "response": {
-      "$ref": "Userinfo"
+      "$ref": "Userinfoplus"
      },
      "scopes": [
       "https://www.googleapis.com/auth/plus.login",
@@ -248,7 +245,7 @@
          "httpMethod": "GET",
          "description": "Get user info",
          "response": {
-          "$ref": "Userinfo"
+          "$ref": "Userinfoplus"
          },
          "scopes": [
           "https://www.googleapis.com/auth/plus.login",

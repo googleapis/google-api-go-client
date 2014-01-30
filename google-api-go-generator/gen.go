@@ -1162,7 +1162,7 @@ func (meth *Method) generateCode() {
 	pn(`req.Header.Set("User-Agent", "google-api-go-client/` + goGenVersion + `")`)
 	pn("res, err := c.s.client.Do(req);")
 	pn("if err != nil { return %serr }", nilRet)
-	pn("defer res.Body.Close()")
+	pn("defer googleapi.CloseBody(res)")
 	pn("if err := googleapi.CheckResponse(res); err != nil { return %serr }", nilRet)
 	if retTypeComma == "" {
 		pn("return nil")

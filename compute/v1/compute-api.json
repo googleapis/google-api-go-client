@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"R6H4aXXmd1SZaWpEcGSkC2StmNw/9STz1ADx48taCcxNZKk8eDunqi0\"",
+ "etag": "\"wkuhK30l0tkNyeDPwavF-CT2hTA/IZpr6FzrstzCGETlajRH4H_fIdk\"",
  "discoveryVersion": "v1",
  "id": "compute:v1",
  "name": "compute",
@@ -242,7 +242,7 @@
     },
     "selfLink": {
      "type": "string",
-     "description": "Server defined URL for this resource (output only)."
+     "description": "Server defined URL for the resource (output only)."
     }
    }
   },
@@ -275,9 +275,11 @@
         "NEXT_HOP_NOT_RUNNING",
         "NO_RESULTS_ON_PAGE",
         "REQUIRED_TOS_AGREEMENT",
+        "RESOURCE_NOT_DELETED",
         "UNREACHABLE"
        ],
        "enumDescriptions": [
+        "",
         "",
         "",
         "",
@@ -321,6 +323,10 @@
    "type": "object",
    "description": "An instance-attached disk resource.",
    "properties": {
+    "autoDelete": {
+     "type": "boolean",
+     "description": "Whether the disk will be auto-deleted when the instance is deleted (but not when the disk is detached from the instance)."
+    },
     "boot": {
      "type": "boolean",
      "description": "Indicates that this is a boot disk. VM will use the first partition of the disk for its root filesystem."
@@ -333,6 +339,10 @@
      "type": "integer",
      "description": "A zero-based index to assign to this disk, where 0 is reserved for the boot disk. If not specified, the server will choose an appropriate value (output only).",
      "format": "int32"
+    },
+    "initializeParams": {
+     "$ref": "AttachedDiskInitializeParams",
+     "description": "Initialization parameters."
     },
     "kind": {
      "type": "string",
@@ -371,6 +381,26 @@
        "compute.instances.insert"
       ]
      }
+    }
+   }
+  },
+  "AttachedDiskInitializeParams": {
+   "id": "AttachedDiskInitializeParams",
+   "type": "object",
+   "description": "Initialization parameters for the new disk (Mutually exclusive with 'source', can currently only be specified on the boot disk).",
+   "properties": {
+    "diskName": {
+     "type": "string",
+     "description": "Name of the disk (when not provided defaults to the name of the instance)."
+    },
+    "diskSizeGb": {
+     "type": "string",
+     "description": "Size of the disk in base-2 GB.",
+     "format": "int64"
+    },
+    "sourceImage": {
+     "type": "string",
+     "description": "The source image used to create this disk."
     }
    }
   },
@@ -586,9 +616,11 @@
         "NEXT_HOP_NOT_RUNNING",
         "NO_RESULTS_ON_PAGE",
         "REQUIRED_TOS_AGREEMENT",
+        "RESOURCE_NOT_DELETED",
         "UNREACHABLE"
        ],
        "enumDescriptions": [
+        "",
         "",
         "",
         "",
@@ -908,9 +940,11 @@
         "NEXT_HOP_NOT_RUNNING",
         "NO_RESULTS_ON_PAGE",
         "REQUIRED_TOS_AGREEMENT",
+        "RESOURCE_NOT_DELETED",
         "UNREACHABLE"
        ],
        "enumDescriptions": [
+        "",
         "",
         "",
         "",
@@ -1429,9 +1463,11 @@
         "NEXT_HOP_NOT_RUNNING",
         "NO_RESULTS_ON_PAGE",
         "REQUIRED_TOS_AGREEMENT",
+        "RESOURCE_NOT_DELETED",
         "UNREACHABLE"
        ],
        "enumDescriptions": [
+        "",
         "",
         "",
         "",
@@ -1642,9 +1678,11 @@
         "NEXT_HOP_NOT_RUNNING",
         "NO_RESULTS_ON_PAGE",
         "REQUIRED_TOS_AGREEMENT",
+        "RESOURCE_NOT_DELETED",
         "UNREACHABLE"
        ],
        "enumDescriptions": [
+        "",
         "",
         "",
         "",
@@ -1989,9 +2027,11 @@
          "NEXT_HOP_NOT_RUNNING",
          "NO_RESULTS_ON_PAGE",
          "REQUIRED_TOS_AGREEMENT",
+         "RESOURCE_NOT_DELETED",
          "UNREACHABLE"
         ],
         "enumDescriptions": [
+         "",
          "",
          "",
          "",
@@ -2126,9 +2166,11 @@
         "NEXT_HOP_NOT_RUNNING",
         "NO_RESULTS_ON_PAGE",
         "REQUIRED_TOS_AGREEMENT",
+        "RESOURCE_NOT_DELETED",
         "UNREACHABLE"
        ],
        "enumDescriptions": [
+        "",
         "",
         "",
         "",
@@ -2483,9 +2525,11 @@
          "NEXT_HOP_NOT_RUNNING",
          "NO_RESULTS_ON_PAGE",
          "REQUIRED_TOS_AGREEMENT",
+         "RESOURCE_NOT_DELETED",
          "UNREACHABLE"
         ],
         "enumDescriptions": [
+         "",
          "",
          "",
          "",
@@ -2892,9 +2936,11 @@
         "NEXT_HOP_NOT_RUNNING",
         "NO_RESULTS_ON_PAGE",
         "REQUIRED_TOS_AGREEMENT",
+        "RESOURCE_NOT_DELETED",
         "UNREACHABLE"
        ],
        "enumDescriptions": [
+        "",
         "",
         "",
         "",
@@ -3168,9 +3214,11 @@
         "NEXT_HOP_NOT_RUNNING",
         "NO_RESULTS_ON_PAGE",
         "REQUIRED_TOS_AGREEMENT",
+        "RESOURCE_NOT_DELETED",
         "UNREACHABLE"
        ],
        "enumDescriptions": [
+        "",
         "",
         "",
         "",
@@ -5308,6 +5356,61 @@
       "https://www.googleapis.com/auth/compute"
      ]
     },
+    "setDiskAutoDelete": {
+     "id": "compute.instances.setDiskAutoDelete",
+     "path": "{project}/zones/{zone}/instances/{instance}/setDiskAutoDelete",
+     "httpMethod": "POST",
+     "description": "Sets the auto-delete flag for a disk attached to an instance",
+     "parameters": {
+      "autoDelete": {
+       "type": "boolean",
+       "description": "Whether to auto-delete the disk when the instance is deleted.",
+       "required": true,
+       "location": "query"
+      },
+      "deviceName": {
+       "type": "string",
+       "description": "Disk device name to modify.",
+       "required": true,
+       "pattern": "\\w[\\w.-]{0,254}",
+       "location": "query"
+      },
+      "instance": {
+       "type": "string",
+       "description": "Instance name.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project name.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "zone": {
+       "type": "string",
+       "description": "Name of the zone scoping this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "zone",
+      "instance",
+      "autoDelete",
+      "deviceName"
+     ],
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
     "setMetadata": {
      "id": "compute.instances.setMetadata",
      "path": "{project}/zones/{zone}/instances/{instance}/setMetadata",
@@ -6470,7 +6573,6 @@
      "parameters": {
       "project": {
        "type": "string",
-       "description": "Name of the project scoping this request.",
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
@@ -6513,7 +6615,6 @@
      "parameters": {
       "project": {
        "type": "string",
-       "description": "Name of the project scoping this request.",
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
@@ -6681,7 +6782,6 @@
      "parameters": {
       "project": {
        "type": "string",
-       "description": "Name of the project scoping this request.",
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
@@ -6812,7 +6912,6 @@
      "parameters": {
       "project": {
        "type": "string",
-       "description": "Name of the project scoping this request.",
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
@@ -6855,7 +6954,6 @@
      "parameters": {
       "project": {
        "type": "string",
-       "description": "Name of the project scoping this request.",
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"

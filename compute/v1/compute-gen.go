@@ -61,7 +61,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client}
+	s := &Service{client: client, BasePath: basePath}
 	s.Addresses = NewAddressesService(s)
 	s.Disks = NewDisksService(s)
 	s.Firewalls = NewFirewallsService(s)
@@ -85,7 +85,8 @@ func New(client *http.Client) (*Service, error) {
 }
 
 type Service struct {
-	client *http.Client
+	client   *http.Client
+	BasePath string // API endpoint base URL
 
 	Addresses *AddressesService
 
@@ -389,7 +390,7 @@ type AddressList struct {
 	// (output only).
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: Server defined URL for this resource (output only).
+	// SelfLink: Server defined URL for the resource (output only).
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
@@ -422,6 +423,10 @@ type AddressesScopedListWarningData struct {
 }
 
 type AttachedDisk struct {
+	// AutoDelete: Whether the disk will be auto-deleted when the instance
+	// is deleted (but not when the disk is detached from the instance).
+	AutoDelete bool `json:"autoDelete,omitempty"`
+
 	// Boot: Indicates that this is a boot disk. VM will use the first
 	// partition of the disk for its root filesystem.
 	Boot bool `json:"boot,omitempty"`
@@ -438,6 +443,9 @@ type AttachedDisk struct {
 	// appropriate value (output only).
 	Index int64 `json:"index,omitempty"`
 
+	// InitializeParams: Initialization parameters.
+	InitializeParams *AttachedDiskInitializeParams `json:"initializeParams,omitempty"`
+
 	// Kind: Type of the resource.
 	Kind string `json:"kind,omitempty"`
 
@@ -452,6 +460,18 @@ type AttachedDisk struct {
 	// Type: Type of the disk, either "SCRATCH" or "PERSISTENT". Note that
 	// persistent disks must be created before you can specify them here.
 	Type string `json:"type,omitempty"`
+}
+
+type AttachedDiskInitializeParams struct {
+	// DiskName: Name of the disk (when not provided defaults to the name of
+	// the instance).
+	DiskName string `json:"diskName,omitempty"`
+
+	// DiskSizeGb: Size of the disk in base-2 GB.
+	DiskSizeGb int64 `json:"diskSizeGb,omitempty,string"`
+
+	// SourceImage: The source image used to create this disk.
+	SourceImage string `json:"sourceImage,omitempty"`
 }
 
 type DeprecationStatus struct {
@@ -2284,7 +2304,7 @@ func (c *AddressesAggregatedListCall) Do() (*AddressAggregatedList, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/aggregated/addresses")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/aggregated/addresses")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -2373,7 +2393,7 @@ func (c *AddressesDeleteCall) Do() (*Operation, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/regions/{region}/addresses/{address}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/regions/{region}/addresses/{address}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -2460,7 +2480,7 @@ func (c *AddressesGetCall) Do() (*Address, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/regions/{region}/addresses/{address}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/regions/{region}/addresses/{address}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -2554,7 +2574,7 @@ func (c *AddressesInsertCall) Do() (*Operation, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/regions/{region}/addresses")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/regions/{region}/addresses")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -2667,7 +2687,7 @@ func (c *AddressesListCall) Do() (*AddressList, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/regions/{region}/addresses")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/regions/{region}/addresses")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -2793,7 +2813,7 @@ func (c *DisksAggregatedListCall) Do() (*DiskAggregatedList, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/aggregated/disks")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/aggregated/disks")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -2889,7 +2909,7 @@ func (c *DisksCreateSnapshotCall) Do() (*Operation, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/zones/{zone}/disks/{disk}/createSnapshot")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/disks/{disk}/createSnapshot")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -2979,7 +2999,7 @@ func (c *DisksDeleteCall) Do() (*Operation, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/zones/{zone}/disks/{disk}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/disks/{disk}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -3066,7 +3086,7 @@ func (c *DisksGetCall) Do() (*Disk, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/zones/{zone}/disks/{disk}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/disks/{disk}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -3170,7 +3190,7 @@ func (c *DisksInsertCall) Do() (*Operation, error) {
 	if v, ok := c.opt_["sourceImage"]; ok {
 		params.Set("sourceImage", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/zones/{zone}/disks")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/disks")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -3288,7 +3308,7 @@ func (c *DisksListCall) Do() (*DiskList, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/zones/{zone}/disks")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/disks")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -3384,7 +3404,7 @@ func (c *FirewallsDeleteCall) Do() (*Operation, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/global/firewalls/{firewall}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/firewalls/{firewall}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -3460,7 +3480,7 @@ func (c *FirewallsGetCall) Do() (*Firewall, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/global/firewalls/{firewall}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/firewalls/{firewall}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -3543,7 +3563,7 @@ func (c *FirewallsInsertCall) Do() (*Operation, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/global/firewalls")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/firewalls")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -3645,7 +3665,7 @@ func (c *FirewallsListCall) Do() (*FirewallList, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/global/firewalls")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/firewalls")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -3740,7 +3760,7 @@ func (c *FirewallsPatchCall) Do() (*Operation, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/global/firewalls/{firewall}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/firewalls/{firewall}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -3828,7 +3848,7 @@ func (c *FirewallsUpdateCall) Do() (*Operation, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/global/firewalls/{firewall}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/firewalls/{firewall}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -3939,7 +3959,7 @@ func (c *ForwardingRulesAggregatedListCall) Do() (*ForwardingRuleAggregatedList,
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/aggregated/forwardingRules")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/aggregated/forwardingRules")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -4028,7 +4048,7 @@ func (c *ForwardingRulesDeleteCall) Do() (*Operation, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/regions/{region}/forwardingRules/{forwardingRule}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/regions/{region}/forwardingRules/{forwardingRule}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -4115,7 +4135,7 @@ func (c *ForwardingRulesGetCall) Do() (*ForwardingRule, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/regions/{region}/forwardingRules/{forwardingRule}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/regions/{region}/forwardingRules/{forwardingRule}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -4209,7 +4229,7 @@ func (c *ForwardingRulesInsertCall) Do() (*Operation, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/regions/{region}/forwardingRules")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/regions/{region}/forwardingRules")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -4322,7 +4342,7 @@ func (c *ForwardingRulesListCall) Do() (*ForwardingRuleList, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/regions/{region}/forwardingRules")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/regions/{region}/forwardingRules")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -4427,7 +4447,7 @@ func (c *ForwardingRulesSetTargetCall) Do() (*Operation, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/regions/{region}/forwardingRules/{forwardingRule}/setTarget")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/regions/{region}/forwardingRules/{forwardingRule}/setTarget")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -4547,7 +4567,7 @@ func (c *GlobalOperationsAggregatedListCall) Do() (*OperationAggregatedList, err
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/aggregated/operations")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/aggregated/operations")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -4634,7 +4654,7 @@ func (c *GlobalOperationsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/global/operations/{operation}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/operations/{operation}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -4703,7 +4723,7 @@ func (c *GlobalOperationsGetCall) Do() (*Operation, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/global/operations/{operation}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/operations/{operation}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -4811,7 +4831,7 @@ func (c *GlobalOperationsListCall) Do() (*OperationList, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/global/operations")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/operations")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -4898,7 +4918,7 @@ func (c *HttpHealthChecksDeleteCall) Do() (*Operation, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/global/httpHealthChecks/{httpHealthCheck}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/httpHealthChecks/{httpHealthCheck}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -4974,7 +4994,7 @@ func (c *HttpHealthChecksGetCall) Do() (*HttpHealthCheck, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/global/httpHealthChecks/{httpHealthCheck}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/httpHealthChecks/{httpHealthCheck}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -5057,7 +5077,7 @@ func (c *HttpHealthChecksInsertCall) Do() (*Operation, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/global/httpHealthChecks")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/httpHealthChecks")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -5159,7 +5179,7 @@ func (c *HttpHealthChecksListCall) Do() (*HttpHealthCheckList, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/global/httpHealthChecks")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/httpHealthChecks")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -5255,7 +5275,7 @@ func (c *HttpHealthChecksPatchCall) Do() (*Operation, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/global/httpHealthChecks/{httpHealthCheck}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/httpHealthChecks/{httpHealthCheck}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -5343,7 +5363,7 @@ func (c *HttpHealthChecksUpdateCall) Do() (*Operation, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/global/httpHealthChecks/{httpHealthCheck}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/httpHealthChecks/{httpHealthCheck}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -5423,7 +5443,7 @@ func (c *ImagesDeleteCall) Do() (*Operation, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/global/images/{image}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/images/{image}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -5507,7 +5527,7 @@ func (c *ImagesDeprecateCall) Do() (*Operation, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/global/images/{image}/deprecate")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/images/{image}/deprecate")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -5587,7 +5607,7 @@ func (c *ImagesGetCall) Do() (*Image, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/global/images/{image}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/images/{image}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -5670,7 +5690,7 @@ func (c *ImagesInsertCall) Do() (*Operation, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/global/images")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/images")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -5775,7 +5795,7 @@ func (c *ImagesListCall) Do() (*ImageList, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/global/images")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/images")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -5875,7 +5895,7 @@ func (c *InstancesAddAccessConfigCall) Do() (*Operation, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("networkInterface", fmt.Sprintf("%v", c.networkInterface))
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/zones/{zone}/instances/{instance}/addAccessConfig")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instances/{instance}/addAccessConfig")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -6001,7 +6021,7 @@ func (c *InstancesAggregatedListCall) Do() (*InstanceAggregatedList, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/aggregated/instances")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/aggregated/instances")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -6096,7 +6116,7 @@ func (c *InstancesAttachDiskCall) Do() (*Operation, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/zones/{zone}/instances/{instance}/attachDisk")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instances/{instance}/attachDisk")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -6187,7 +6207,7 @@ func (c *InstancesDeleteCall) Do() (*Operation, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/zones/{zone}/instances/{instance}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instances/{instance}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -6281,7 +6301,7 @@ func (c *InstancesDeleteAccessConfigCall) Do() (*Operation, error) {
 	params.Set("alt", "json")
 	params.Set("accessConfig", fmt.Sprintf("%v", c.accessConfig))
 	params.Set("networkInterface", fmt.Sprintf("%v", c.networkInterface))
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/zones/{zone}/instances/{instance}/deleteAccessConfig")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instances/{instance}/deleteAccessConfig")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -6385,7 +6405,7 @@ func (c *InstancesDetachDiskCall) Do() (*Operation, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("deviceName", fmt.Sprintf("%v", c.deviceName))
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/zones/{zone}/instances/{instance}/detachDisk")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instances/{instance}/detachDisk")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -6480,7 +6500,7 @@ func (c *InstancesGetCall) Do() (*Instance, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/zones/{zone}/instances/{instance}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instances/{instance}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -6569,7 +6589,7 @@ func (c *InstancesGetSerialPortOutputCall) Do() (*SerialPortOutput, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/zones/{zone}/instances/{instance}/serialPort")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instances/{instance}/serialPort")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -6663,7 +6683,7 @@ func (c *InstancesInsertCall) Do() (*Operation, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/zones/{zone}/instances")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instances")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -6776,7 +6796,7 @@ func (c *InstancesListCall) Do() (*InstanceList, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/zones/{zone}/instances")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instances")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -6874,7 +6894,7 @@ func (c *InstancesResetCall) Do() (*Operation, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/zones/{zone}/instances/{instance}/reset")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instances/{instance}/reset")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -6938,6 +6958,115 @@ func (c *InstancesResetCall) Do() (*Operation, error) {
 
 }
 
+// method id "compute.instances.setDiskAutoDelete":
+
+type InstancesSetDiskAutoDeleteCall struct {
+	s          *Service
+	project    string
+	zone       string
+	instance   string
+	autoDelete bool
+	deviceName string
+	opt_       map[string]interface{}
+}
+
+// SetDiskAutoDelete: Sets the auto-delete flag for a disk attached to
+// an instance
+func (r *InstancesService) SetDiskAutoDelete(project string, zone string, instance string, autoDelete bool, deviceName string) *InstancesSetDiskAutoDeleteCall {
+	c := &InstancesSetDiskAutoDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.zone = zone
+	c.instance = instance
+	c.autoDelete = autoDelete
+	c.deviceName = deviceName
+	return c
+}
+
+func (c *InstancesSetDiskAutoDeleteCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("autoDelete", fmt.Sprintf("%v", c.autoDelete))
+	params.Set("deviceName", fmt.Sprintf("%v", c.deviceName))
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instances/{instance}/setDiskAutoDelete")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{zone}", url.QueryEscape(c.zone), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{instance}", url.QueryEscape(c.instance), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Operation)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Sets the auto-delete flag for a disk attached to an instance",
+	//   "httpMethod": "POST",
+	//   "id": "compute.instances.setDiskAutoDelete",
+	//   "parameterOrder": [
+	//     "project",
+	//     "zone",
+	//     "instance",
+	//     "autoDelete",
+	//     "deviceName"
+	//   ],
+	//   "parameters": {
+	//     "autoDelete": {
+	//       "description": "Whether to auto-delete the disk when the instance is deleted.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "boolean"
+	//     },
+	//     "deviceName": {
+	//       "description": "Disk device name to modify.",
+	//       "location": "query",
+	//       "pattern": "\\w[\\w.-]{0,254}",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "instance": {
+	//       "description": "Instance name.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Project name.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "Name of the zone scoping this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/zones/{zone}/instances/{instance}/setDiskAutoDelete",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
 // method id "compute.instances.setMetadata":
 
 type InstancesSetMetadataCall struct {
@@ -6969,7 +7098,7 @@ func (c *InstancesSetMetadataCall) Do() (*Operation, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/zones/{zone}/instances/{instance}/setMetadata")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instances/{instance}/setMetadata")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -7067,7 +7196,7 @@ func (c *InstancesSetSchedulingCall) Do() (*Operation, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/zones/{zone}/instances/{instance}/setScheduling")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instances/{instance}/setScheduling")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -7166,7 +7295,7 @@ func (c *InstancesSetTagsCall) Do() (*Operation, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/zones/{zone}/instances/{instance}/setTags")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instances/{instance}/setTags")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -7286,7 +7415,7 @@ func (c *MachineTypesAggregatedListCall) Do() (*MachineTypeAggregatedList, error
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/aggregated/machineTypes")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/aggregated/machineTypes")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -7375,7 +7504,7 @@ func (c *MachineTypesGetCall) Do() (*MachineType, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/zones/{zone}/machineTypes/{machineType}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/machineTypes/{machineType}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -7494,7 +7623,7 @@ func (c *MachineTypesListCall) Do() (*MachineTypeList, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/zones/{zone}/machineTypes")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/machineTypes")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -7590,7 +7719,7 @@ func (c *NetworksDeleteCall) Do() (*Operation, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/global/networks/{network}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/networks/{network}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -7666,7 +7795,7 @@ func (c *NetworksGetCall) Do() (*Network, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/global/networks/{network}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/networks/{network}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -7749,7 +7878,7 @@ func (c *NetworksInsertCall) Do() (*Operation, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/global/networks")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/networks")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -7851,7 +7980,7 @@ func (c *NetworksListCall) Do() (*NetworkList, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/global/networks")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/networks")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -7936,7 +8065,7 @@ func (c *ProjectsGetCall) Do() (*Project, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -8010,7 +8139,7 @@ func (c *ProjectsSetCommonInstanceMetadataCall) Do() (*Operation, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/setCommonInstanceMetadata")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/setCommonInstanceMetadata")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -8083,7 +8212,7 @@ func (c *RegionOperationsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/regions/{region}/operations/{operation}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/regions/{region}/operations/{operation}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -8163,7 +8292,7 @@ func (c *RegionOperationsGetCall) Do() (*Operation, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/regions/{region}/operations/{operation}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/regions/{region}/operations/{operation}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -8282,7 +8411,7 @@ func (c *RegionOperationsListCall) Do() (*OperationList, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/regions/{region}/operations")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/regions/{region}/operations")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -8378,7 +8507,7 @@ func (c *RegionsGetCall) Do() (*Region, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/regions/{region}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/regions/{region}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -8486,7 +8615,7 @@ func (c *RegionsListCall) Do() (*RegionList, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/regions")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/regions")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -8573,7 +8702,7 @@ func (c *RoutesDeleteCall) Do() (*Operation, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/global/routes/{route}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/routes/{route}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -8649,7 +8778,7 @@ func (c *RoutesGetCall) Do() (*Route, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/global/routes/{route}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/routes/{route}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -8732,7 +8861,7 @@ func (c *RoutesInsertCall) Do() (*Operation, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/global/routes")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/routes")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -8834,7 +8963,7 @@ func (c *RoutesListCall) Do() (*RouteList, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/global/routes")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/routes")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -8921,7 +9050,7 @@ func (c *SnapshotsDeleteCall) Do() (*Operation, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/global/snapshots/{snapshot}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/snapshots/{snapshot}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -8997,7 +9126,7 @@ func (c *SnapshotsGetCall) Do() (*Snapshot, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/global/snapshots/{snapshot}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/snapshots/{snapshot}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -9105,7 +9234,7 @@ func (c *SnapshotsListCall) Do() (*SnapshotList, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/global/snapshots")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/snapshots")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -9223,7 +9352,7 @@ func (c *TargetInstancesAggregatedListCall) Do() (*TargetInstanceAggregatedList,
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/aggregated/targetInstances")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/aggregated/targetInstances")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -9312,7 +9441,7 @@ func (c *TargetInstancesDeleteCall) Do() (*Operation, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/zones/{zone}/targetInstances/{targetInstance}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/targetInstances/{targetInstance}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -9399,7 +9528,7 @@ func (c *TargetInstancesGetCall) Do() (*TargetInstance, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/zones/{zone}/targetInstances/{targetInstance}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/targetInstances/{targetInstance}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -9493,7 +9622,7 @@ func (c *TargetInstancesInsertCall) Do() (*Operation, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/zones/{zone}/targetInstances")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/targetInstances")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -9606,7 +9735,7 @@ func (c *TargetInstancesListCall) Do() (*TargetInstanceList, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/zones/{zone}/targetInstances")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/targetInstances")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -9711,7 +9840,7 @@ func (c *TargetPoolsAddHealthCheckCall) Do() (*Operation, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/regions/{region}/targetPools/{targetPool}/addHealthCheck")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/regions/{region}/targetPools/{targetPool}/addHealthCheck")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -9744,7 +9873,6 @@ func (c *TargetPoolsAddHealthCheckCall) Do() (*Operation, error) {
 	//   ],
 	//   "parameters": {
 	//     "project": {
-	//       "description": "Name of the project scoping this request.",
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
@@ -9809,7 +9937,7 @@ func (c *TargetPoolsAddInstanceCall) Do() (*Operation, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/regions/{region}/targetPools/{targetPool}/addInstance")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/regions/{region}/targetPools/{targetPool}/addInstance")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -9842,7 +9970,6 @@ func (c *TargetPoolsAddInstanceCall) Do() (*Operation, error) {
 	//   ],
 	//   "parameters": {
 	//     "project": {
-	//       "description": "Name of the project scoping this request.",
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
@@ -9928,7 +10055,7 @@ func (c *TargetPoolsAggregatedListCall) Do() (*TargetPoolAggregatedList, error) 
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/aggregated/targetPools")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/aggregated/targetPools")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -10017,7 +10144,7 @@ func (c *TargetPoolsDeleteCall) Do() (*Operation, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/regions/{region}/targetPools/{targetPool}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/regions/{region}/targetPools/{targetPool}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -10104,7 +10231,7 @@ func (c *TargetPoolsGetCall) Do() (*TargetPool, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/regions/{region}/targetPools/{targetPool}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/regions/{region}/targetPools/{targetPool}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -10200,7 +10327,7 @@ func (c *TargetPoolsGetHealthCall) Do() (*TargetPoolInstanceHealth, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/regions/{region}/targetPools/{targetPool}/getHealth")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/regions/{region}/targetPools/{targetPool}/getHealth")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -10233,7 +10360,6 @@ func (c *TargetPoolsGetHealthCall) Do() (*TargetPoolInstanceHealth, error) {
 	//   ],
 	//   "parameters": {
 	//     "project": {
-	//       "description": "Name of the project scoping this request.",
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
@@ -10298,7 +10424,7 @@ func (c *TargetPoolsInsertCall) Do() (*Operation, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/regions/{region}/targetPools")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/regions/{region}/targetPools")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -10411,7 +10537,7 @@ func (c *TargetPoolsListCall) Do() (*TargetPoolList, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/regions/{region}/targetPools")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/regions/{region}/targetPools")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -10516,7 +10642,7 @@ func (c *TargetPoolsRemoveHealthCheckCall) Do() (*Operation, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/regions/{region}/targetPools/{targetPool}/removeHealthCheck")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/regions/{region}/targetPools/{targetPool}/removeHealthCheck")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -10549,7 +10675,6 @@ func (c *TargetPoolsRemoveHealthCheckCall) Do() (*Operation, error) {
 	//   ],
 	//   "parameters": {
 	//     "project": {
-	//       "description": "Name of the project scoping this request.",
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
@@ -10614,7 +10739,7 @@ func (c *TargetPoolsRemoveInstanceCall) Do() (*Operation, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/regions/{region}/targetPools/{targetPool}/removeInstance")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/regions/{region}/targetPools/{targetPool}/removeInstance")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -10647,7 +10772,6 @@ func (c *TargetPoolsRemoveInstanceCall) Do() (*Operation, error) {
 	//   ],
 	//   "parameters": {
 	//     "project": {
-	//       "description": "Name of the project scoping this request.",
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
@@ -10722,7 +10846,7 @@ func (c *TargetPoolsSetBackupCall) Do() (*Operation, error) {
 	if v, ok := c.opt_["failoverRatio"]; ok {
 		params.Set("failoverRatio", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/regions/{region}/targetPools/{targetPool}/setBackup")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/regions/{region}/targetPools/{targetPool}/setBackup")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -10819,7 +10943,7 @@ func (c *ZoneOperationsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/zones/{zone}/operations/{operation}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/operations/{operation}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -10899,7 +11023,7 @@ func (c *ZoneOperationsGetCall) Do() (*Operation, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/zones/{zone}/operations/{operation}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/operations/{operation}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -11018,7 +11142,7 @@ func (c *ZoneOperationsListCall) Do() (*OperationList, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/zones/{zone}/operations")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/operations")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -11114,7 +11238,7 @@ func (c *ZonesGetCall) Do() (*Zone, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/zones/{zone}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -11222,7 +11346,7 @@ func (c *ZonesListCall) Do() (*ZoneList, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/compute/v1/projects/", "{project}/zones")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)

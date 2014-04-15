@@ -772,6 +772,13 @@ func (s *Schema) populateSubSchemas() (outerr error) {
 			addSubStruct(subApiName, at)
 			return
 		}
+		if at, ok := s.Type().ArrayType(); ok {
+			if at.IsSimple() || at.IsReference() {
+				return
+			}
+			addSubStruct(subApiName, at)
+			return
+		}
 		panicf("Unknown array type for %q: %s", subApiName, at)
 		return
 	}

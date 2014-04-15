@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"R6H4aXXmd1SZaWpEcGSkC2StmNw/1hrRzaBS8FwqKkt0ogZXiOU-RwQ\"",
+ "etag": "\"kEk3sFj6Ef5_yR1-H3bAO6qw9mI/sg56Xf_5EyNWaO73kOWKtnVtRUE\"",
  "discoveryVersion": "v1",
  "id": "adsensehost:v4.1",
  "name": "adsensehost",
@@ -991,7 +991,7 @@
          "type": "string",
          "description": "End of the date range to report on in \"YYYY-MM-DD\" format, inclusive.",
          "required": true,
-         "pattern": "\\d{4}-\\d{2}-\\d{2}|(today|startOfMonth|startOfYear)(([\\-\\+]\\d+[dwmy]){0,2}?)",
+         "pattern": "\\d{4}-\\d{2}-\\d{2}|(today|startOfMonth|startOfYear)(([\\-\\+]\\d+[dwmy]){0,3}?)",
          "location": "query"
         },
         "filter": {
@@ -1033,7 +1033,7 @@
          "type": "string",
          "description": "Start of the date range to report on in \"YYYY-MM-DD\" format, inclusive.",
          "required": true,
-         "pattern": "\\d{4}-\\d{2}-\\d{2}|(today|startOfMonth|startOfYear)(([\\-\\+]\\d+[dwmy]){0,2}?)",
+         "pattern": "\\d{4}-\\d{2}-\\d{2}|(today|startOfMonth|startOfYear)(([\\-\\+]\\d+[dwmy]){0,3}?)",
          "location": "query"
         },
         "startIndex": {
@@ -1401,7 +1401,7 @@
        "type": "string",
        "description": "End of the date range to report on in \"YYYY-MM-DD\" format, inclusive.",
        "required": true,
-       "pattern": "\\d{4}-\\d{2}-\\d{2}|(today|startOfMonth|startOfYear)(([\\-\\+]\\d+[dwmy]){0,2}?)",
+       "pattern": "\\d{4}-\\d{2}-\\d{2}|(today|startOfMonth|startOfYear)(([\\-\\+]\\d+[dwmy]){0,3}?)",
        "location": "query"
       },
       "filter": {
@@ -1443,7 +1443,7 @@
        "type": "string",
        "description": "Start of the date range to report on in \"YYYY-MM-DD\" format, inclusive.",
        "required": true,
-       "pattern": "\\d{4}-\\d{2}-\\d{2}|(today|startOfMonth|startOfYear)(([\\-\\+]\\d+[dwmy]){0,2}?)",
+       "pattern": "\\d{4}-\\d{2}-\\d{2}|(today|startOfMonth|startOfYear)(([\\-\\+]\\d+[dwmy]){0,3}?)",
        "location": "query"
       },
       "startIndex": {

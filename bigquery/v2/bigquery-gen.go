@@ -61,7 +61,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client}
+	s := &Service{client: client, BasePath: basePath}
 	s.Datasets = NewDatasetsService(s)
 	s.Jobs = NewJobsService(s)
 	s.Projects = NewProjectsService(s)
@@ -71,7 +71,8 @@ func New(client *http.Client) (*Service, error) {
 }
 
 type Service struct {
-	client *http.Client
+	client   *http.Client
+	BasePath string // API endpoint base URL
 
 	Datasets *DatasetsService
 
@@ -130,44 +131,34 @@ type TablesService struct {
 }
 
 type Dataset struct {
-	// Access: [Optional] Describes users' rights on the dataset. You can
-	// assign the same role to multiple users, and assign multiple roles to
-	// the same user.
-	// Default values assigned to a new dataset are as
-	// follows: OWNER - Project owners, dataset creator READER - Project
-	// readers WRITER - Project writers
-	// See ACLs and Rights for a
-	// description of these rights. If you specify any of these roles when
-	// creating a dataset, the assigned roles will overwrite the defaults
-	// listed above.
-	// To revoke rights to a dataset, call datasets.update()
-	// and omit the names of anyone whose rights you wish to revoke.
-	// However, every dataset must have at least one entity granted OWNER
-	// role.
-	// Each access object can have only one of the following members:
-	// userByEmail, groupByEmail, domain, or allAuthenticatedUsers.
+	// Access: [Optional] An array of objects that define dataset access for
+	// one or more entities. You can set this property when inserting or
+	// updating a dataset in order to control who is allowed to access the
+	// data. If unspecified at dataset creation time, BigQuery adds default
+	// dataset access for the following entities: access.specialGroup:
+	// projectReaders; access.role: READER; access.specialGroup:
+	// projectWriters; access.role: WRITER; access.specialGroup:
+	// projectOwners; access.role: OWNER; access.userByEmail: [dataset
+	// creator email]; access.role: OWNER;
 	Access []*DatasetAccess `json:"access,omitempty"`
 
 	// CreationTime: [Output-only] The time when this dataset was created,
 	// in milliseconds since the epoch.
 	CreationTime int64 `json:"creationTime,omitempty,string"`
 
-	// DatasetReference: [Required] Reference identifying dataset.
+	// DatasetReference: [Required] A reference that identifies the dataset.
 	DatasetReference *DatasetReference `json:"datasetReference,omitempty"`
 
-	// Description: [Optional] A user-friendly string description for the
-	// dataset. This might be shown in BigQuery UI for browsing the dataset.
+	// Description: [Optional] A user-friendly description of the dataset.
 	Description string `json:"description,omitempty"`
 
-	// Etag: [Output-only] A hash of this resource.
+	// Etag: [Output-only] A hash of the resource.
 	Etag string `json:"etag,omitempty"`
 
-	// FriendlyName: [Optional] A descriptive name for this dataset, which
-	// might be shown in any BigQuery user interfaces for browsing the
-	// dataset. Use datasetId for making API calls.
+	// FriendlyName: [Optional] A descriptive name for the dataset.
 	FriendlyName string `json:"friendlyName,omitempty"`
 
-	// Id: [Output-only] The fully-qualified unique name of this dataset in
+	// Id: [Output-only] The fully-qualified unique name of the dataset in
 	// the format projectId:datasetId. The dataset name without the project
 	// name is given in the datasetId field. When creating a new dataset,
 	// leave this field blank, and instead specify the datasetId field.
@@ -180,9 +171,9 @@ type Dataset struct {
 	// its tables was last modified, in milliseconds since the epoch.
 	LastModifiedTime int64 `json:"lastModifiedTime,omitempty,string"`
 
-	// SelfLink: [Output-only] An URL that can be used to access this
-	// resource again. You can use this URL in Get or Update requests to
-	// this resource.
+	// SelfLink: [Output-only] A URL that can be used to access the resource
+	// again. You can use this URL in Get or Update requests to the
+	// resource.
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
@@ -192,30 +183,24 @@ type DatasetAccess struct {
 	// Example: "example.com".
 	Domain string `json:"domain,omitempty"`
 
-	// GroupByEmail: [Pick one] A fully-qualified email address of a mailing
-	// list to grant access to. This must be either a Google Groups mailing
-	// list (ends in @googlegroups.com) or a group managed by an enterprise
-	// version of Google Groups.
+	// GroupByEmail: [Pick one] An email address of a Google Group to grant
+	// access to.
 	GroupByEmail string `json:"groupByEmail,omitempty"`
 
 	// Role: [Required] Describes the rights granted to the user specified
 	// by the other member of the access object. The following string values
-	// are supported: READER - User can call any list() or get() method on
-	// any collection or resource. WRITER - User can call any method on any
-	// collection except for datasets, on which they can call list() and
-	// get(). OWNER - User can call any method. The dataset creator is
-	// granted this role by default.
+	// are supported: READER, WRITER, OWNER.
 	Role string `json:"role,omitempty"`
 
-	// SpecialGroup: [Pick one] A special group to grant access to. The
-	// valid values are: projectOwners: Owners of the enclosing project.
+	// SpecialGroup: [Pick one] A special group to grant access to. Possible
+	// values include: projectOwners: Owners of the enclosing project.
 	// projectReaders: Readers of the enclosing project. projectWriters:
 	// Writers of the enclosing project. allAuthenticatedUsers: All
 	// authenticated BigQuery users.
 	SpecialGroup string `json:"specialGroup,omitempty"`
 
-	// UserByEmail: [Pick one] A fully qualified email address of a user to
-	// grant access to. For example: fred@example.com.
+	// UserByEmail: [Pick one] An email address of a user to grant access
+	// to. For example: fred@example.com.
 	UserByEmail string `json:"userByEmail,omitempty"`
 }
 
@@ -382,15 +367,20 @@ type JobConfigurationExtract struct {
 	// "NEWLINE_DELIMITED_JSON".
 	DestinationFormat string `json:"destinationFormat,omitempty"`
 
-	// DestinationUri: [Required] The fully-qualified Google Cloud Storage
-	// URI where the extracted table should be written.
+	// DestinationUri: [Pick one] DEPRECATED: Use destinationUris instead,
+	// passing only one URI as necessary. The fully-qualified Google Cloud
+	// Storage URI where the extracted table should be written.
 	DestinationUri string `json:"destinationUri,omitempty"`
+
+	// DestinationUris: [Pick one] A list of fully-qualified Google Cloud
+	// Storage URIs where the extracted table should be written.
+	DestinationUris []string `json:"destinationUris,omitempty"`
 
 	// FieldDelimiter: [Optional] Delimiter to use between fields in the
 	// exported data. Default is ','
 	FieldDelimiter string `json:"fieldDelimiter,omitempty"`
 
-	// PrintHeader: [Optional] Whether to print out a heder row in the
+	// PrintHeader: [Optional] Whether to print out a header row in the
 	// results. Default is true.
 	PrintHeader bool `json:"printHeader,omitempty"`
 
@@ -399,8 +389,13 @@ type JobConfigurationExtract struct {
 }
 
 type JobConfigurationLink struct {
-	// CreateDisposition: [Optional] Whether or not to create a new table,
-	// if none exists.
+	// CreateDisposition: [Optional] Specifies whether the job is allowed to
+	// create new tables. The following values are supported:
+	// CREATE_IF_NEEDED: If the table does not exist, BigQuery creates the
+	// table. CREATE_NEVER: The table must already exist. If it does not, a
+	// 'notFound' error is returned in the job result. The default value is
+	// CREATE_IF_NEEDED. Creation, truncation and append actions occur as
+	// one atomic update upon job completion.
 	CreateDisposition string `json:"createDisposition,omitempty"`
 
 	// DestinationTable: [Required] The destination table of the link job.
@@ -409,10 +404,16 @@ type JobConfigurationLink struct {
 	// SourceUri: [Required] URI of source table to link.
 	SourceUri []string `json:"sourceUri,omitempty"`
 
-	// WriteDisposition: [Optional] Whether to overwrite an existing table
-	// (WRITE_TRUNCATE), append to an existing table (WRITE_APPEND), or
-	// require that the the table is empty (WRITE_EMPTY). Default is
-	// WRITE_APPEND.
+	// WriteDisposition: [Optional] Specifies the action that occurs if the
+	// destination table already exists. The following values are supported:
+	// WRITE_TRUNCATE: If the table already exists, BigQuery overwrites the
+	// table data. WRITE_APPEND: If the table already exists, BigQuery
+	// appends the data to the table. WRITE_EMPTY: If the table already
+	// exists and contains data, a 'duplicate' error is returned in the job
+	// result. The default value is WRITE_EMPTY. Each action is atomic and
+	// only occurs if BigQuery is able to complete the job successfully.
+	// Creation, truncation and append actions occur as one atomic update
+	// upon job completion.
 	WriteDisposition string `json:"writeDisposition,omitempty"`
 }
 
@@ -453,6 +454,13 @@ type JobConfigurationLoad struct {
 	// binary state. BigQuery also supports the escape sequence "\t" to
 	// specify a tab separator. The default value is a comma (',').
 	FieldDelimiter string `json:"fieldDelimiter,omitempty"`
+
+	// IgnoreUnknownValues: [Optional] Accept rows that contain values that
+	// do not match the schema. The unknown values are ignored. Default is
+	// false which treats unknown values as errors. For CSV this ignores
+	// extra values at the end of a line. For JSON this ignores named values
+	// that do not match any column name.
+	IgnoreUnknownValues bool `json:"ignoreUnknownValues,omitempty"`
 
 	// MaxBadRecords: [Optional] The maximum number of bad records that
 	// BigQuery can ignore when running the job. If the number of bad
@@ -501,14 +509,15 @@ type JobConfigurationLoad struct {
 	SourceUris []string `json:"sourceUris,omitempty"`
 
 	// WriteDisposition: [Optional] Specifies the action that occurs if the
-	// destination table already exists. Each action is atomic and only
-	// occurs if BigQuery is able to fully load the data and the load job
-	// completes without error. The following values are supported:
+	// destination table already exists. The following values are supported:
 	// WRITE_TRUNCATE: If the table already exists, BigQuery overwrites the
-	// table. WRITE_APPEND: If the table already exists, BigQuery appends
-	// the data to the table. WRITE_EMPTY: If the table already exists, a
-	// 'duplicate' error is returned in the job result. Creation, truncation
-	// and append actions occur as one atomic update upon job completion.
+	// table data. WRITE_APPEND: If the table already exists, BigQuery
+	// appends the data to the table. WRITE_EMPTY: If the table already
+	// exists and contains data, a 'duplicate' error is returned in the job
+	// result. The default value is WRITE_EMPTY. Each action is atomic and
+	// only occurs if BigQuery is able to complete the job successfully.
+	// Creation, truncation and append actions occur as one atomic update
+	// upon job completion.
 	WriteDisposition string `json:"writeDisposition,omitempty"`
 }
 
@@ -518,13 +527,17 @@ type JobConfigurationQuery struct {
 	// destination_table to be set.
 	AllowLargeResults bool `json:"allowLargeResults,omitempty"`
 
-	// CreateDisposition: [Optional] Whether to create the table if it
-	// doesn't already exist (CREATE_IF_NEEDED) or to require the table
-	// already exist (CREATE_NEVER). Default is CREATE_IF_NEEDED.
+	// CreateDisposition: [Optional] Specifies whether the job is allowed to
+	// create new tables. The following values are supported:
+	// CREATE_IF_NEEDED: If the table does not exist, BigQuery creates the
+	// table. CREATE_NEVER: The table must already exist. If it does not, a
+	// 'notFound' error is returned in the job result. The default value is
+	// CREATE_IF_NEEDED. Creation, truncation and append actions occur as
+	// one atomic update upon job completion.
 	CreateDisposition string `json:"createDisposition,omitempty"`
 
-	// DefaultDataset: [Optional] Specifies the default dataset to assume
-	// for unqualified table names in the query.
+	// DefaultDataset: [Optional] Specifies the default dataset to use for
+	// unqualified table names in the query.
 	DefaultDataset *DatasetReference `json:"defaultDataset,omitempty"`
 
 	// DestinationTable: [Optional] Describes the table where the query
@@ -532,16 +545,12 @@ type JobConfigurationQuery struct {
 	// to store the results.
 	DestinationTable *TableReference `json:"destinationTable,omitempty"`
 
-	// PreserveNulls: [Experimental] If set, preserve null values in table
-	// data, rather than mapping null values to the column's default value.
-	// This flag currently defaults to false, but the default will soon be
-	// changed to true. Shortly afterward, this flag will be removed
-	// completely. Please specify true if possible, and false only if you
-	// need to force the old behavior while updating client code.
+	// PreserveNulls: [Deprecated] This property is deprecated.
 	PreserveNulls bool `json:"preserveNulls,omitempty"`
 
-	// Priority: [Optional] Specifies a priority for the query. Default is
-	// INTERACTIVE. Alternative is BATCH.
+	// Priority: [Optional] Specifies a priority for the query. Possible
+	// values include INTERACTIVE and BATCH. The default value is
+	// INTERACTIVE.
 	Priority string `json:"priority,omitempty"`
 
 	// Query: [Required] BigQuery SQL query to execute.
@@ -554,16 +563,27 @@ type JobConfigurationQuery struct {
 	// specified.
 	UseQueryCache bool `json:"useQueryCache,omitempty"`
 
-	// WriteDisposition: [Optional] Whether to overwrite an existing table
-	// (WRITE_TRUNCATE), append to an existing table (WRITE_APPEND), or
-	// require that the the table is empty (WRITE_EMPTY). Default is
-	// WRITE_EMPTY.
+	// WriteDisposition: [Optional] Specifies the action that occurs if the
+	// destination table already exists. The following values are supported:
+	// WRITE_TRUNCATE: If the table already exists, BigQuery overwrites the
+	// table data. WRITE_APPEND: If the table already exists, BigQuery
+	// appends the data to the table. WRITE_EMPTY: If the table already
+	// exists and contains data, a 'duplicate' error is returned in the job
+	// result. The default value is WRITE_EMPTY. Each action is atomic and
+	// only occurs if BigQuery is able to complete the job successfully.
+	// Creation, truncation and append actions occur as one atomic update
+	// upon job completion.
 	WriteDisposition string `json:"writeDisposition,omitempty"`
 }
 
 type JobConfigurationTableCopy struct {
-	// CreateDisposition: [Optional] Whether or not to create a new table,
-	// if none exists.
+	// CreateDisposition: [Optional] Specifies whether the job is allowed to
+	// create new tables. The following values are supported:
+	// CREATE_IF_NEEDED: If the table does not exist, BigQuery creates the
+	// table. CREATE_NEVER: The table must already exist. If it does not, a
+	// 'notFound' error is returned in the job result. The default value is
+	// CREATE_IF_NEEDED. Creation, truncation and append actions occur as
+	// one atomic update upon job completion.
 	CreateDisposition string `json:"createDisposition,omitempty"`
 
 	// DestinationTable: [Required] The destination table
@@ -572,8 +592,16 @@ type JobConfigurationTableCopy struct {
 	// SourceTable: [Required] Source table to copy.
 	SourceTable *TableReference `json:"sourceTable,omitempty"`
 
-	// WriteDisposition: [Optional] Whether or not to append or require the
-	// table to be empty.
+	// WriteDisposition: [Optional] Specifies the action that occurs if the
+	// destination table already exists. The following values are supported:
+	// WRITE_TRUNCATE: If the table already exists, BigQuery overwrites the
+	// table data. WRITE_APPEND: If the table already exists, BigQuery
+	// appends the data to the table. WRITE_EMPTY: If the table already
+	// exists and contains data, a 'duplicate' error is returned in the job
+	// result. The default value is WRITE_EMPTY. Each action is atomic and
+	// only occurs if BigQuery is able to complete the job successfully.
+	// Creation, truncation and append actions occur as one atomic update
+	// upon job completion.
 	WriteDisposition string `json:"writeDisposition,omitempty"`
 }
 
@@ -886,6 +914,14 @@ type Table struct {
 
 	// TableReference: [Required] Reference describing the ID of this table.
 	TableReference *TableReference `json:"tableReference,omitempty"`
+
+	// Type: [Output-only] Describes the table type. The following values
+	// are supported: TABLE: A normal BigQuery table. VIEW: A virtual table
+	// defined by a SQL query. The default value is TABLE.
+	Type string `json:"type,omitempty"`
+
+	// View: [Optional] The view definition.
+	View *ViewDefinition `json:"view,omitempty"`
 }
 
 type TableCell struct {
@@ -937,7 +973,7 @@ type TableDataList struct {
 	Kind string `json:"kind,omitempty"`
 
 	// PageToken: A token used for paging results. Providing this token
-	// instead of the startRow parameter can help you retrieve stable
+	// instead of the startIndex parameter can help you retrieve stable
 	// results when an underlying table is changing.
 	PageToken string `json:"pageToken,omitempty"`
 
@@ -998,6 +1034,9 @@ type TableListTables struct {
 
 	// TableReference: A reference uniquely identifying the table.
 	TableReference *TableReference `json:"tableReference,omitempty"`
+
+	// Type: The type of table. Possible values are: TABLE, VIEW.
+	Type string `json:"type,omitempty"`
 }
 
 type TableReference struct {
@@ -1019,6 +1058,12 @@ type TableRow struct {
 type TableSchema struct {
 	// Fields: Describes the fields in a table.
 	Fields []*TableFieldSchema `json:"fields,omitempty"`
+}
+
+type ViewDefinition struct {
+	// Query: [Required] A query that BigQuery executes when the view is
+	// referenced.
+	Query string `json:"query,omitempty"`
 }
 
 // method id "bigquery.datasets.delete":
@@ -1056,7 +1101,7 @@ func (c *DatasetsDeleteCall) Do() error {
 	if v, ok := c.opt_["deleteContents"]; ok {
 		params.Set("deleteContents", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2/", "projects/{projectId}/datasets/{datasetId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/datasets/{datasetId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{projectId}", url.QueryEscape(c.projectId), 1)
@@ -1129,7 +1174,7 @@ func (c *DatasetsGetCall) Do() (*Dataset, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2/", "projects/{projectId}/datasets/{datasetId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/datasets/{datasetId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{projectId}", url.QueryEscape(c.projectId), 1)
@@ -1209,7 +1254,7 @@ func (c *DatasetsInsertCall) Do() (*Dataset, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2/", "projects/{projectId}/datasets")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/datasets")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{projectId}", url.QueryEscape(c.projectId), 1)
@@ -1310,7 +1355,7 @@ func (c *DatasetsListCall) Do() (*DatasetList, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2/", "projects/{projectId}/datasets")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/datasets")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{projectId}", url.QueryEscape(c.projectId), 1)
@@ -1403,7 +1448,7 @@ func (c *DatasetsPatchCall) Do() (*Dataset, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2/", "projects/{projectId}/datasets/{datasetId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/datasets/{datasetId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{projectId}", url.QueryEscape(c.projectId), 1)
@@ -1491,7 +1536,7 @@ func (c *DatasetsUpdateCall) Do() (*Dataset, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2/", "projects/{projectId}/datasets/{datasetId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/datasets/{datasetId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{projectId}", url.QueryEscape(c.projectId), 1)
@@ -1570,7 +1615,7 @@ func (c *JobsGetCall) Do() (*Job, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2/", "projects/{projectId}/jobs/{jobId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/jobs/{jobId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{projectId}", url.QueryEscape(c.projectId), 1)
@@ -1687,7 +1732,7 @@ func (c *JobsGetQueryResultsCall) Do() (*GetQueryResultsResponse, error) {
 	if v, ok := c.opt_["timeoutMs"]; ok {
 		params.Set("timeoutMs", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2/", "projects/{projectId}/queries/{jobId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/queries/{jobId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{projectId}", url.QueryEscape(c.projectId), 1)
@@ -1795,7 +1840,7 @@ func (c *JobsInsertCall) Do() (*Job, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2/", "projects/{projectId}/jobs")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/jobs")
 	if c.media_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
 		params.Set("uploadType", "multipart")
@@ -1942,7 +1987,7 @@ func (c *JobsListCall) Do() (*JobList, error) {
 	if v, ok := c.opt_["stateFilter"]; ok {
 		params.Set("stateFilter", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2/", "projects/{projectId}/jobs")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/jobs")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{projectId}", url.QueryEscape(c.projectId), 1)
@@ -2060,7 +2105,7 @@ func (c *JobsQueryCall) Do() (*QueryResponse, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2/", "projects/{projectId}/queries")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/queries")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{projectId}", url.QueryEscape(c.projectId), 1)
@@ -2147,7 +2192,7 @@ func (c *ProjectsListCall) Do() (*ProjectList, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2/", "projects")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -2224,7 +2269,7 @@ func (c *TabledataInsertAllCall) Do() (*TableDataInsertAllResponse, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2/", "projects/{projectId}/datasets/{datasetId}/tables/{tableId}/insertAll")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/datasets/{datasetId}/tables/{tableId}/insertAll")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{projectId}", url.QueryEscape(c.projectId), 1)
@@ -2343,7 +2388,7 @@ func (c *TabledataListCall) Do() (*TableDataList, error) {
 	if v, ok := c.opt_["startIndex"]; ok {
 		params.Set("startIndex", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2/", "projects/{projectId}/datasets/{datasetId}/tables/{tableId}/data")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/datasets/{datasetId}/tables/{tableId}/data")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{projectId}", url.QueryEscape(c.projectId), 1)
@@ -2446,7 +2491,7 @@ func (c *TablesDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2/", "projects/{projectId}/datasets/{datasetId}/tables/{tableId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/datasets/{datasetId}/tables/{tableId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{projectId}", url.QueryEscape(c.projectId), 1)
@@ -2526,7 +2571,7 @@ func (c *TablesGetCall) Do() (*Table, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2/", "projects/{projectId}/datasets/{datasetId}/tables/{tableId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/datasets/{datasetId}/tables/{tableId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{projectId}", url.QueryEscape(c.projectId), 1)
@@ -2616,7 +2661,7 @@ func (c *TablesInsertCall) Do() (*Table, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2/", "projects/{projectId}/datasets/{datasetId}/tables")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/datasets/{datasetId}/tables")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{projectId}", url.QueryEscape(c.projectId), 1)
@@ -2715,7 +2760,7 @@ func (c *TablesListCall) Do() (*TableList, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2/", "projects/{projectId}/datasets/{datasetId}/tables")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/datasets/{datasetId}/tables")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{projectId}", url.QueryEscape(c.projectId), 1)
@@ -2813,7 +2858,7 @@ func (c *TablesPatchCall) Do() (*Table, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2/", "projects/{projectId}/datasets/{datasetId}/tables/{tableId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/datasets/{datasetId}/tables/{tableId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{projectId}", url.QueryEscape(c.projectId), 1)
@@ -2911,7 +2956,7 @@ func (c *TablesUpdateCall) Do() (*Table, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/bigquery/v2/", "projects/{projectId}/datasets/{datasetId}/tables/{tableId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/datasets/{datasetId}/tables/{tableId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{projectId}", url.QueryEscape(c.projectId), 1)

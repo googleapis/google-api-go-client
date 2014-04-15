@@ -43,13 +43,14 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client}
+	s := &Service{client: client, BasePath: basePath}
 	s.Apis = NewApisService(s)
 	return s, nil
 }
 
 type Service struct {
-	client *http.Client
+	client   *http.Client
+	BasePath string // API endpoint base URL
 
 	Apis *ApisService
 }
@@ -195,6 +196,11 @@ type JsonSchema struct {
 	// Type: The value type for this schema. A list of values can be found
 	// here: http://tools.ietf.org/html/draft-zyp-json-schema-03#section-5.1
 	Type string `json:"type,omitempty"`
+
+	// Variant: In a variant data type, the value of one property is used to
+	// determine how to interpret the entire entity. Its value must exist in
+	// a map of descriminant values to schema names.
+	Variant *JsonSchemaVariant `json:"variant,omitempty"`
 }
 
 type JsonSchemaAnnotations struct {
@@ -204,6 +210,20 @@ type JsonSchemaAnnotations struct {
 }
 
 type JsonSchemaProperties struct {
+}
+
+type JsonSchemaVariant struct {
+	// Discriminant: The name of the type discriminant property.
+	Discriminant string `json:"discriminant,omitempty"`
+
+	// Map: The map of discriminant value to schema to use for parsing..
+	Map []*JsonSchemaVariantMap `json:"map,omitempty"`
+}
+
+type JsonSchemaVariantMap struct {
+	Ref string `json:"$ref,omitempty"`
+
+	Type_value string `json:"type_value,omitempty"`
 }
 
 type RestDescription struct {
@@ -470,7 +490,7 @@ func (c *ApisGetRestCall) Do() (*RestDescription, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/discovery/v1/", "apis/{api}/{version}/rest")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "apis/{api}/{version}/rest")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{api}", url.QueryEscape(c.api), 1)
@@ -557,7 +577,7 @@ func (c *ApisListCall) Do() (*DirectoryList, error) {
 	if v, ok := c.opt_["preferred"]; ok {
 		params.Set("preferred", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/discovery/v1/", "apis")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "apis")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)

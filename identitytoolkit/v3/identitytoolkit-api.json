@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"R6H4aXXmd1SZaWpEcGSkC2StmNw/EHeFV5mCu-X5cQeRCxRTTM7NMJo\"",
+ "etag": "\"kEk3sFj6Ef5_yR1-H3bAO6qw9mI/KRARk1zfvD1Ng7hyNLY5ZbidGLY\"",
  "discoveryVersion": "v1",
  "id": "identitytoolkit:v3",
  "name": "identitytoolkit",
@@ -115,13 +115,6 @@
    "type": "object",
    "description": "Respone of downloading accounts in batch.",
    "properties": {
-    "accounts": {
-     "type": "array",
-     "description": "The user accounts data.",
-     "items": {
-      "type": "any"
-     }
-    },
     "kind": {
      "type": "string",
      "description": "The fixed string \"identitytoolkit#DownloadAccountResponse\".",
@@ -130,6 +123,13 @@
     "nextPageToken": {
      "type": "string",
      "description": "The next page token. To be used in a subsequent request to return the next page of results."
+    },
+    "users": {
+     "type": "array",
+     "description": "The user accounts data.",
+     "items": {
+      "$ref": "UserInfo"
+     }
     }
    }
   },
@@ -147,82 +147,7 @@
      "type": "array",
      "description": "The info of the users.",
      "items": {
-      "type": "object",
-      "properties": {
-       "dateOfBirth": {
-        "type": "string",
-        "description": "The user's date of birth."
-       },
-       "displayName": {
-        "type": "string",
-        "description": "The name of the user."
-       },
-       "email": {
-        "type": "string",
-        "description": "The email returned by the IdP. NOTE: The federated login user may not own the email."
-       },
-       "language": {
-        "type": "string",
-        "description": "The language of the user."
-       },
-       "localId": {
-        "type": "string",
-        "description": "The local ID of the user."
-       },
-       "password": {
-        "type": "string",
-        "description": "The user's hashed password.",
-        "format": "byte"
-       },
-       "passwordUpdatedAt": {
-        "type": "number",
-        "description": "The timestamp when the password was last updated.",
-        "format": "double"
-       },
-       "photoUrl": {
-        "type": "string",
-        "description": "The URL of the user profile photo."
-       },
-       "providerUserInfo": {
-        "type": "array",
-        "description": "The IDP of the user.",
-        "items": {
-         "type": "object",
-         "properties": {
-          "displayName": {
-           "type": "string",
-           "description": "The user's display name at the IDP."
-          },
-          "federatedId": {
-           "type": "string",
-           "description": "User's identifier at IDP."
-          },
-          "photoUrl": {
-           "type": "string",
-           "description": "The user's photo url at the IDP."
-          },
-          "providerId": {
-           "type": "string",
-           "description": "The IdP ID. For white listed IdPs it's a short domain name, e.g., google.com, aol.com, live.net and yahoo.com. For other OpenID IdPs it's the OP identifier."
-          }
-         }
-        }
-       },
-       "salt": {
-        "type": "string",
-        "description": "The user's password salt.",
-        "format": "byte"
-       },
-       "timeZone": {
-        "type": "string",
-        "description": "The time zone of the user."
-       },
-       "version": {
-        "type": "integer",
-        "description": "Version of the user's password.",
-        "format": "int32"
-       }
-      }
+      "$ref": "UserInfo"
      }
     }
    }
@@ -362,6 +287,14 @@
    "type": "object",
    "description": "Request to set the account information.",
    "properties": {
+    "captchaChallenge": {
+     "type": "string",
+     "description": "The captcha challenge."
+    },
+    "captchaResponse": {
+     "type": "string",
+     "description": "Response to the captcha."
+    },
     "displayName": {
      "type": "string",
      "description": "The name of the user."
@@ -427,11 +360,11 @@
      "type": "string",
      "format": "byte"
     },
-    "userAccount": {
+    "users": {
      "type": "array",
      "description": "The account info to be stored.",
      "items": {
-      "$ref": "Userinfo"
+      "$ref": "UserInfo"
      }
     }
    }
@@ -613,33 +546,75 @@
     }
    }
   },
-  "Userinfo": {
-   "id": "Userinfo",
+  "UserInfo": {
+   "id": "UserInfo",
    "type": "object",
    "description": "Template for an individual account info.",
    "properties": {
+    "displayName": {
+     "type": "string",
+     "description": "The name of the user."
+    },
     "email": {
      "type": "string",
-     "description": "email"
+     "description": "The email of the user."
     },
-    "kind": {
-     "type": "string",
-     "description": "Identifies this object as a user info.",
-     "default": "identitytoolkit#userinfo"
+    "emailVerified": {
+     "type": "boolean",
+     "description": "Whether the email has been verified."
     },
     "localId": {
      "type": "string",
-     "description": "user's id at the site"
+     "description": "The local ID of the user."
     },
-    "password": {
+    "passwordHash": {
      "type": "string",
-     "description": "password",
+     "description": "The user's hashed password.",
      "format": "byte"
+    },
+    "passwordUpdatedAt": {
+     "type": "number",
+     "description": "The timestamp when the password was last updated.",
+     "format": "double"
+    },
+    "photoUrl": {
+     "type": "string",
+     "description": "The URL of the user profile photo."
+    },
+    "providerUserInfo": {
+     "type": "array",
+     "description": "The IDP of the user.",
+     "items": {
+      "type": "object",
+      "properties": {
+       "displayName": {
+        "type": "string",
+        "description": "The user's display name at the IDP."
+       },
+       "federatedId": {
+        "type": "string",
+        "description": "User's identifier at IDP."
+       },
+       "photoUrl": {
+        "type": "string",
+        "description": "The user's photo url at the IDP."
+       },
+       "providerId": {
+        "type": "string",
+        "description": "The IdP ID. For white listed IdPs it's a short domain name, e.g., google.com, aol.com, live.net and yahoo.com. For other OpenID IdPs it's the OP identifier."
+       }
+      }
+     }
     },
     "salt": {
      "type": "string",
-     "description": "salt",
+     "description": "The user's password salt.",
      "format": "byte"
+    },
+    "version": {
+     "type": "integer",
+     "description": "Version of the user's password.",
+     "format": "int32"
     }
    }
   },

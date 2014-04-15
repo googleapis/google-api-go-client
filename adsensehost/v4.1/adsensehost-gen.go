@@ -49,7 +49,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client}
+	s := &Service{client: client, BasePath: basePath}
 	s.Accounts = NewAccountsService(s)
 	s.Adclients = NewAdclientsService(s)
 	s.Associationsessions = NewAssociationsessionsService(s)
@@ -60,7 +60,8 @@ func New(client *http.Client) (*Service, error) {
 }
 
 type Service struct {
-	client *http.Client
+	client   *http.Client
+	BasePath string // API endpoint base URL
 
 	Accounts *AccountsService
 
@@ -543,7 +544,7 @@ func (c *AccountsGetCall) Do() (*Account, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "accounts/{accountId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
@@ -611,7 +612,7 @@ func (c *AccountsListCall) Do() (*Accounts, error) {
 	for _, v := range c.filterAdClientId {
 		params.Add("filterAdClientId", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "accounts")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -678,7 +679,7 @@ func (c *AccountsAdclientsGetCall) Do() (*AdClient, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "accounts/{accountId}/adclients/{adClientId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/adclients/{adClientId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
@@ -772,7 +773,7 @@ func (c *AccountsAdclientsListCall) Do() (*AdClients, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "accounts/{accountId}/adclients")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/adclients")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
@@ -854,7 +855,7 @@ func (c *AccountsAdunitsDeleteCall) Do() (*AdUnit, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "accounts/{accountId}/adclients/{adClientId}/adunits/{adUnitId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/adclients/{adClientId}/adunits/{adUnitId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
@@ -938,7 +939,7 @@ func (c *AccountsAdunitsGetCall) Do() (*AdUnit, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "accounts/{accountId}/adclients/{adClientId}/adunits/{adUnitId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/adclients/{adClientId}/adunits/{adUnitId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
@@ -1033,7 +1034,7 @@ func (c *AccountsAdunitsGetAdCodeCall) Do() (*AdCode, error) {
 	if v, ok := c.opt_["hostCustomChannelId"]; ok {
 		params.Set("hostCustomChannelId", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "accounts/{accountId}/adclients/{adClientId}/adunits/{adUnitId}/adcode")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/adclients/{adClientId}/adunits/{adUnitId}/adcode")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
@@ -1129,7 +1130,7 @@ func (c *AccountsAdunitsInsertCall) Do() (*AdUnit, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "accounts/{accountId}/adclients/{adClientId}/adunits")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/adclients/{adClientId}/adunits")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
@@ -1239,7 +1240,7 @@ func (c *AccountsAdunitsListCall) Do() (*AdUnits, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "accounts/{accountId}/adclients/{adClientId}/adunits")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/adclients/{adClientId}/adunits")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
@@ -1342,7 +1343,7 @@ func (c *AccountsAdunitsPatchCall) Do() (*AdUnit, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("adUnitId", fmt.Sprintf("%v", c.adUnitId))
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "accounts/{accountId}/adclients/{adClientId}/adunits")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/adclients/{adClientId}/adunits")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
@@ -1435,7 +1436,7 @@ func (c *AccountsAdunitsUpdateCall) Do() (*AdUnit, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "accounts/{accountId}/adclients/{adClientId}/adunits")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/adclients/{adClientId}/adunits")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
@@ -1592,7 +1593,7 @@ func (c *AccountsReportsGenerateCall) Do() (*Report, error) {
 	if v, ok := c.opt_["startIndex"]; ok {
 		params.Set("startIndex", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "accounts/{accountId}/reports")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/reports")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
@@ -1637,7 +1638,7 @@ func (c *AccountsReportsGenerateCall) Do() (*Report, error) {
 	//     "endDate": {
 	//       "description": "End of the date range to report on in \"YYYY-MM-DD\" format, inclusive.",
 	//       "location": "query",
-	//       "pattern": "\\d{4}-\\d{2}-\\d{2}|(today|startOfMonth|startOfYear)(([\\-\\+]\\d+[dwmy]){0,2}?)",
+	//       "pattern": "\\d{4}-\\d{2}-\\d{2}|(today|startOfMonth|startOfYear)(([\\-\\+]\\d+[dwmy]){0,3}?)",
 	//       "required": true,
 	//       "type": "string"
 	//     },
@@ -1679,7 +1680,7 @@ func (c *AccountsReportsGenerateCall) Do() (*Report, error) {
 	//     "startDate": {
 	//       "description": "Start of the date range to report on in \"YYYY-MM-DD\" format, inclusive.",
 	//       "location": "query",
-	//       "pattern": "\\d{4}-\\d{2}-\\d{2}|(today|startOfMonth|startOfYear)(([\\-\\+]\\d+[dwmy]){0,2}?)",
+	//       "pattern": "\\d{4}-\\d{2}-\\d{2}|(today|startOfMonth|startOfYear)(([\\-\\+]\\d+[dwmy]){0,3}?)",
 	//       "required": true,
 	//       "type": "string"
 	//     },
@@ -1723,7 +1724,7 @@ func (c *AdclientsGetCall) Do() (*AdClient, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "adclients/{adClientId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "adclients/{adClientId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{adClientId}", url.QueryEscape(c.adClientId), 1)
@@ -1807,7 +1808,7 @@ func (c *AdclientsListCall) Do() (*AdClients, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "adclients")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "adclients")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -1901,7 +1902,7 @@ func (c *AssociationsessionsStartCall) Do() (*AssociationSession, error) {
 	if v, ok := c.opt_["websiteLocale"]; ok {
 		params.Set("websiteLocale", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "associationsessions/start")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "associationsessions/start")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -1998,7 +1999,7 @@ func (c *AssociationsessionsVerifyCall) Do() (*AssociationSession, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("token", fmt.Sprintf("%v", c.token))
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "associationsessions/verify")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "associationsessions/verify")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -2064,7 +2065,7 @@ func (c *CustomchannelsDeleteCall) Do() (*CustomChannel, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "adclients/{adClientId}/customchannels/{customChannelId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "adclients/{adClientId}/customchannels/{customChannelId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{adClientId}", url.QueryEscape(c.adClientId), 1)
@@ -2138,7 +2139,7 @@ func (c *CustomchannelsGetCall) Do() (*CustomChannel, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "adclients/{adClientId}/customchannels/{customChannelId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "adclients/{adClientId}/customchannels/{customChannelId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{adClientId}", url.QueryEscape(c.adClientId), 1)
@@ -2217,7 +2218,7 @@ func (c *CustomchannelsInsertCall) Do() (*CustomChannel, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "adclients/{adClientId}/customchannels")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "adclients/{adClientId}/customchannels")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{adClientId}", url.QueryEscape(c.adClientId), 1)
@@ -2308,7 +2309,7 @@ func (c *CustomchannelsListCall) Do() (*CustomChannels, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "adclients/{adClientId}/customchannels")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "adclients/{adClientId}/customchannels")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{adClientId}", url.QueryEscape(c.adClientId), 1)
@@ -2396,7 +2397,7 @@ func (c *CustomchannelsPatchCall) Do() (*CustomChannel, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("customChannelId", fmt.Sprintf("%v", c.customChannelId))
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "adclients/{adClientId}/customchannels")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "adclients/{adClientId}/customchannels")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{adClientId}", url.QueryEscape(c.adClientId), 1)
@@ -2478,7 +2479,7 @@ func (c *CustomchannelsUpdateCall) Do() (*CustomChannel, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "adclients/{adClientId}/customchannels")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "adclients/{adClientId}/customchannels")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{adClientId}", url.QueryEscape(c.adClientId), 1)
@@ -2625,7 +2626,7 @@ func (c *ReportsGenerateCall) Do() (*Report, error) {
 	if v, ok := c.opt_["startIndex"]; ok {
 		params.Set("startIndex", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "reports")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "reports")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -2662,7 +2663,7 @@ func (c *ReportsGenerateCall) Do() (*Report, error) {
 	//     "endDate": {
 	//       "description": "End of the date range to report on in \"YYYY-MM-DD\" format, inclusive.",
 	//       "location": "query",
-	//       "pattern": "\\d{4}-\\d{2}-\\d{2}|(today|startOfMonth|startOfYear)(([\\-\\+]\\d+[dwmy]){0,2}?)",
+	//       "pattern": "\\d{4}-\\d{2}-\\d{2}|(today|startOfMonth|startOfYear)(([\\-\\+]\\d+[dwmy]){0,3}?)",
 	//       "required": true,
 	//       "type": "string"
 	//     },
@@ -2704,7 +2705,7 @@ func (c *ReportsGenerateCall) Do() (*Report, error) {
 	//     "startDate": {
 	//       "description": "Start of the date range to report on in \"YYYY-MM-DD\" format, inclusive.",
 	//       "location": "query",
-	//       "pattern": "\\d{4}-\\d{2}-\\d{2}|(today|startOfMonth|startOfYear)(([\\-\\+]\\d+[dwmy]){0,2}?)",
+	//       "pattern": "\\d{4}-\\d{2}-\\d{2}|(today|startOfMonth|startOfYear)(([\\-\\+]\\d+[dwmy]){0,3}?)",
 	//       "required": true,
 	//       "type": "string"
 	//     },
@@ -2749,7 +2750,7 @@ func (c *UrlchannelsDeleteCall) Do() (*UrlChannel, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "adclients/{adClientId}/urlchannels/{urlChannelId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "adclients/{adClientId}/urlchannels/{urlChannelId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{adClientId}", url.QueryEscape(c.adClientId), 1)
@@ -2828,7 +2829,7 @@ func (c *UrlchannelsInsertCall) Do() (*UrlChannel, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "adclients/{adClientId}/urlchannels")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "adclients/{adClientId}/urlchannels")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{adClientId}", url.QueryEscape(c.adClientId), 1)
@@ -2918,7 +2919,7 @@ func (c *UrlchannelsListCall) Do() (*UrlChannels, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adsensehost/v4.1/", "adclients/{adClientId}/urlchannels")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "adclients/{adClientId}/urlchannels")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{adClientId}", url.QueryEscape(c.adClientId), 1)

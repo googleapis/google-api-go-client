@@ -49,7 +49,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client}
+	s := &Service{client: client, BasePath: basePath}
 	s.Accounts = NewAccountsService(s)
 	s.Creatives = NewCreativesService(s)
 	s.DirectDeals = NewDirectDealsService(s)
@@ -57,7 +57,8 @@ func New(client *http.Client) (*Service, error) {
 }
 
 type Service struct {
-	client *http.Client
+	client   *http.Client
+	BasePath string // API endpoint base URL
 
 	Accounts *AccountsService
 
@@ -251,6 +252,9 @@ type DirectDeal struct {
 	// Kind: Resource type.
 	Kind string `json:"kind,omitempty"`
 
+	// Name: Deal name.
+	Name string `json:"name,omitempty"`
+
 	// SellerNetwork: The name of the publisher offering this direct deal.
 	SellerNetwork string `json:"sellerNetwork,omitempty"`
 
@@ -287,7 +291,7 @@ func (c *AccountsGetCall) Do() (*Account, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1.1/", "accounts/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{id}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{id}", strconv.FormatInt(c.id, 10), 1)
@@ -350,7 +354,7 @@ func (c *AccountsListCall) Do() (*AccountsList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1.1/", "accounts")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -410,7 +414,7 @@ func (c *AccountsPatchCall) Do() (*Account, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1.1/", "accounts/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{id}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{id}", strconv.FormatInt(c.id, 10), 1)
@@ -486,7 +490,7 @@ func (c *AccountsUpdateCall) Do() (*Account, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1.1/", "accounts/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{id}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{id}", strconv.FormatInt(c.id, 10), 1)
@@ -545,7 +549,8 @@ type CreativesGetCall struct {
 	opt_            map[string]interface{}
 }
 
-// Get: Gets the status for a single creative.
+// Get: Gets the status for a single creative. A creative will be
+// available 30-40 minutes after submission.
 func (r *CreativesService) Get(accountId int64, buyerCreativeId string) *CreativesGetCall {
 	c := &CreativesGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.accountId = accountId
@@ -557,7 +562,7 @@ func (c *CreativesGetCall) Do() (*Creative, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1.1/", "creatives/{accountId}/{buyerCreativeId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "creatives/{accountId}/{buyerCreativeId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", strconv.FormatInt(c.accountId, 10), 1)
@@ -578,7 +583,7 @@ func (c *CreativesGetCall) Do() (*Creative, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the status for a single creative.",
+	//   "description": "Gets the status for a single creative. A creative will be available 30-40 minutes after submission.",
 	//   "httpMethod": "GET",
 	//   "id": "adexchangebuyer.creatives.get",
 	//   "parameterOrder": [
@@ -635,7 +640,7 @@ func (c *CreativesInsertCall) Do() (*Creative, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1.1/", "creatives")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "creatives")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -680,6 +685,7 @@ type CreativesListCall struct {
 }
 
 // List: Retrieves a list of the authenticated user's active creatives.
+// A creative will be available 30-40 minutes after submission.
 func (r *CreativesService) List() *CreativesListCall {
 	c := &CreativesListCall{s: r.s, opt_: make(map[string]interface{})}
 	return c
@@ -722,7 +728,7 @@ func (c *CreativesListCall) Do() (*CreativesList, error) {
 	if v, ok := c.opt_["statusFilter"]; ok {
 		params.Set("statusFilter", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1.1/", "creatives")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "creatives")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -741,7 +747,7 @@ func (c *CreativesListCall) Do() (*CreativesList, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves a list of the authenticated user's active creatives.",
+	//   "description": "Retrieves a list of the authenticated user's active creatives. A creative will be available 30-40 minutes after submission.",
 	//   "httpMethod": "GET",
 	//   "id": "adexchangebuyer.creatives.list",
 	//   "parameters": {
@@ -804,7 +810,7 @@ func (c *DirectDealsGetCall) Do() (*DirectDeal, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1.1/", "directdeals/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "directdeals/{id}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{id}", strconv.FormatInt(c.id, 10), 1)
@@ -867,7 +873,7 @@ func (c *DirectDealsListCall) Do() (*DirectDealsList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/adexchangebuyer/v1.1/", "directdeals")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "directdeals")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)

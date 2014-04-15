@@ -49,13 +49,14 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client}
+	s := &Service{client: client, BasePath: basePath}
 	s.Groups = NewGroupsService(s)
 	return s, nil
 }
 
 type Service struct {
-	client *http.Client
+	client   *http.Client
+	BasePath string // API endpoint base URL
 
 	Groups *GroupsService
 }
@@ -143,6 +144,11 @@ type Groups struct {
 	// Possible values are: ALLOW MODERATE SILENTLY_MODERATE REJECT
 	SpamModerationLevel string `json:"spamModerationLevel,omitempty"`
 
+	// WhoCanContactOwner: Permission to contact owner of the group via web
+	// UI. Possbile values are: ANYONE_CAN_CONTACT ALL_IN_DOMAIN_CAN_CONTACT
+	// ALL_MEMBERS_CAN_CONTACT ALL_MANAGERS_CAN_CONTACT
+	WhoCanContactOwner string `json:"whoCanContactOwner,omitempty"`
+
 	// WhoCanInvite: Permissions to invite members. Possbile values are:
 	// ALL_MEMBERS_CAN_INVITE ALL_MANAGERS_CAN_INVITE
 	WhoCanInvite string `json:"whoCanInvite,omitempty"`
@@ -151,6 +157,10 @@ type Groups struct {
 	// ANYONE_CAN_JOIN ALL_IN_DOMAIN_CAN_JOIN INVITED_CAN_JOIN
 	// CAN_REQUEST_TO_JOIN
 	WhoCanJoin string `json:"whoCanJoin,omitempty"`
+
+	// WhoCanLeaveGroup: Permission to leave the group. Possible values are:
+	// ALL_MANAGERS_CAN_LEAVE ALL_MEMBERS_CAN_LEAVE
+	WhoCanLeaveGroup string `json:"whoCanLeaveGroup,omitempty"`
 
 	// WhoCanPostMessage: Permissions to post messages to the group.
 	// Possible values are: NONE_CAN_POST ALL_MANAGERS_CAN_POST
@@ -187,7 +197,7 @@ func (c *GroupsGetCall) Do() (*Groups, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/groups/v1/groups/", "{groupUniqueId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{groupUniqueId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{groupUniqueId}", url.QueryEscape(c.groupUniqueId), 1)
@@ -259,7 +269,7 @@ func (c *GroupsPatchCall) Do() (*Groups, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/groups/v1/groups/", "{groupUniqueId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{groupUniqueId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{groupUniqueId}", url.QueryEscape(c.groupUniqueId), 1)
@@ -334,7 +344,7 @@ func (c *GroupsUpdateCall) Do() (*Groups, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/groups/v1/groups/", "{groupUniqueId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{groupUniqueId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{groupUniqueId}", url.QueryEscape(c.groupUniqueId), 1)

@@ -43,13 +43,14 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client}
+	s := &Service{client: client, BasePath: basePath}
 	s.Paws = NewPawsService(s)
 	return s, nil
 }
 
 type Service struct {
-	client *http.Client
+	client   *http.Client
+	BasePath string // API endpoint base URL
 
 	Paws *PawsService
 }
@@ -985,7 +986,7 @@ func (c *PawsGetSpectrumCall) Do() (*PawsGetSpectrumResponse, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/spectrum/v1explorer/paws/", "getSpectrum")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "getSpectrum")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -1044,7 +1045,7 @@ func (c *PawsGetSpectrumBatchCall) Do() (*PawsGetSpectrumBatchResponse, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/spectrum/v1explorer/paws/", "getSpectrumBatch")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "getSpectrumBatch")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -1103,7 +1104,7 @@ func (c *PawsInitCall) Do() (*PawsInitResponse, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/spectrum/v1explorer/paws/", "init")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "init")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -1165,7 +1166,7 @@ func (c *PawsNotifySpectrumUseCall) Do() (*PawsNotifySpectrumUseResponse, error)
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/spectrum/v1explorer/paws/", "notifySpectrumUse")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "notifySpectrumUse")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -1225,7 +1226,7 @@ func (c *PawsRegisterCall) Do() (*PawsRegisterResponse, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/spectrum/v1explorer/paws/", "register")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "register")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -1286,7 +1287,7 @@ func (c *PawsVerifyDeviceCall) Do() (*PawsVerifyDeviceResponse, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/spectrum/v1explorer/paws/", "verifyDevice")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "verifyDevice")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)

@@ -52,14 +52,15 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client}
+	s := &Service{client: client, BasePath: basePath}
 	s.Customers = NewCustomersService(s)
 	s.Subscriptions = NewSubscriptionsService(s)
 	return s, nil
 }
 
 type Service struct {
-	client *http.Client
+	client   *http.Client
+	BasePath string // API endpoint base URL
 
 	Customers *CustomersService
 
@@ -291,7 +292,7 @@ func (c *CustomersGetCall) Do() (*Customer, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/apps/reseller/v1/", "customers/{customerId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "customers/{customerId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{customerId}", url.QueryEscape(c.customerId), 1)
@@ -373,7 +374,7 @@ func (c *CustomersInsertCall) Do() (*Customer, error) {
 	if v, ok := c.opt_["customerAuthToken"]; ok {
 		params.Set("customerAuthToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/apps/reseller/v1/", "customers")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "customers")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -444,7 +445,7 @@ func (c *CustomersPatchCall) Do() (*Customer, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/apps/reseller/v1/", "customers/{customerId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "customers/{customerId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{customerId}", url.QueryEscape(c.customerId), 1)
@@ -520,7 +521,7 @@ func (c *CustomersUpdateCall) Do() (*Customer, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/apps/reseller/v1/", "customers/{customerId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "customers/{customerId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{customerId}", url.QueryEscape(c.customerId), 1)
@@ -597,7 +598,7 @@ func (c *SubscriptionsChangePlanCall) Do() (*Subscription, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/apps/reseller/v1/", "customers/{customerId}/subscriptions/{subscriptionId}/changePlan")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "customers/{customerId}/subscriptions/{subscriptionId}/changePlan")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{customerId}", url.QueryEscape(c.customerId), 1)
@@ -682,7 +683,7 @@ func (c *SubscriptionsChangeRenewalSettingsCall) Do() (*Subscription, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/apps/reseller/v1/", "customers/{customerId}/subscriptions/{subscriptionId}/changeRenewalSettings")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "customers/{customerId}/subscriptions/{subscriptionId}/changeRenewalSettings")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{customerId}", url.QueryEscape(c.customerId), 1)
@@ -767,7 +768,7 @@ func (c *SubscriptionsChangeSeatsCall) Do() (*Subscription, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/apps/reseller/v1/", "customers/{customerId}/subscriptions/{subscriptionId}/changeSeats")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "customers/{customerId}/subscriptions/{subscriptionId}/changeSeats")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{customerId}", url.QueryEscape(c.customerId), 1)
@@ -848,7 +849,7 @@ func (c *SubscriptionsDeleteCall) Do() error {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("deletionType", fmt.Sprintf("%v", c.deletionType))
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/apps/reseller/v1/", "customers/{customerId}/subscriptions/{subscriptionId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "customers/{customerId}/subscriptions/{subscriptionId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{customerId}", url.QueryEscape(c.customerId), 1)
@@ -932,7 +933,7 @@ func (c *SubscriptionsGetCall) Do() (*Subscription, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/apps/reseller/v1/", "customers/{customerId}/subscriptions/{subscriptionId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "customers/{customerId}/subscriptions/{subscriptionId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{customerId}", url.QueryEscape(c.customerId), 1)
@@ -1023,7 +1024,7 @@ func (c *SubscriptionsInsertCall) Do() (*Subscription, error) {
 	if v, ok := c.opt_["customerAuthToken"]; ok {
 		params.Set("customerAuthToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/apps/reseller/v1/", "customers/{customerId}/subscriptions")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "customers/{customerId}/subscriptions")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{customerId}", url.QueryEscape(c.customerId), 1)
@@ -1148,7 +1149,7 @@ func (c *SubscriptionsListCall) Do() (*Subscriptions, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/apps/reseller/v1/", "subscriptions")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "subscriptions")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -1233,7 +1234,7 @@ func (c *SubscriptionsStartPaidServiceCall) Do() (*Subscription, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/apps/reseller/v1/", "customers/{customerId}/subscriptions/{subscriptionId}/startPaidService")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "customers/{customerId}/subscriptions/{subscriptionId}/startPaidService")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{customerId}", url.QueryEscape(c.customerId), 1)

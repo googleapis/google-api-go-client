@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"R6H4aXXmd1SZaWpEcGSkC2StmNw/4n-4kSqzPXfNWekZxHrF_fGAM4M\"",
+ "etag": "\"kEk3sFj6Ef5_yR1-H3bAO6qw9mI/kuOAnH89ODs6iXVpq8K9hCO3DK0\"",
  "discoveryVersion": "v1",
  "id": "drive:v2",
  "name": "drive",
@@ -1128,7 +1128,7 @@
     },
     "properties": {
      "type": "array",
-     "description": "The list of properties. This is a write-only field.",
+     "description": "The list of properties.",
      "items": {
       "$ref": "Property"
      }
@@ -1317,7 +1317,7 @@
     },
     "id": {
      "type": "string",
-     "description": "The ID of the permission."
+     "description": "The ID of the user this permission refers to, and identical to the permissionId in the About and Files resources. When making a drive.permissions.insert request, exactly one of 'id' or 'value' fields must be specified."
     },
     "kind": {
      "type": "string",
@@ -1356,12 +1356,7 @@
     },
     "value": {
      "type": "string",
-     "description": "The email address or domain name for the entity. This is used during inserts and is not populated in responses.",
-     "annotations": {
-      "required": [
-       "drive.permissions.insert"
-      ]
-     }
+     "description": "The email address or domain name for the entity. This is used during inserts and is not populated in responses. When making a drive.permissions.insert request, exactly one of 'id' or 'value' fields must be specified."
     },
     "withLink": {
      "type": "boolean",
@@ -2446,7 +2441,7 @@
       "accept": [
        "*/*"
       ],
-      "maxSize": "10GB",
+      "maxSize": "1024GB",
       "protocols": {
        "simple": {
         "multipart": true,
@@ -2764,7 +2759,7 @@
       "accept": [
        "*/*"
       ],
-      "maxSize": "10GB",
+      "maxSize": "1024GB",
       "protocols": {
        "simple": {
         "multipart": true,

@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"R6H4aXXmd1SZaWpEcGSkC2StmNw/tZH2wiiwJCVPY8lcNV1oKne8RTE\"",
+ "etag": "\"kEk3sFj6Ef5_yR1-H3bAO6qw9mI/nYpof5sWVgQxA1Kf0FAXxMsfkXY\"",
  "discoveryVersion": "v1",
  "id": "analytics:v3",
  "name": "analytics",
@@ -168,6 +168,79 @@
     "name": {
      "type": "string",
      "description": "Account name."
+    }
+   }
+  },
+  "AccountSummaries": {
+   "id": "AccountSummaries",
+   "type": "object",
+   "description": "An AccountSummary collection lists a summary of accounts, properties and views (profiles) to which the user has access. Each resource in the collection corresponds to a single AccountSummary.",
+   "properties": {
+    "items": {
+     "type": "array",
+     "description": "A list of AccountSummaries.",
+     "items": {
+      "$ref": "AccountSummary"
+     }
+    },
+    "itemsPerPage": {
+     "type": "integer",
+     "description": "The maximum number of resources the response can contain, regardless of the actual number of resources returned. Its value ranges from 1 to 1000 with a value of 1000 by default, or otherwise specified by the max-results query parameter.",
+     "format": "int32"
+    },
+    "kind": {
+     "type": "string",
+     "description": "Collection type.",
+     "default": "analytics#accountSummaries"
+    },
+    "nextLink": {
+     "type": "string",
+     "description": "Link to next page for this AccountSummary collection."
+    },
+    "previousLink": {
+     "type": "string",
+     "description": "Link to previous page for this AccountSummary collection."
+    },
+    "startIndex": {
+     "type": "integer",
+     "description": "The starting index of the resources, which is 1 by default or otherwise specified by the start-index query parameter.",
+     "format": "int32"
+    },
+    "totalResults": {
+     "type": "integer",
+     "description": "The total number of results for the query, regardless of the number of results in the response.",
+     "format": "int32"
+    },
+    "username": {
+     "type": "string",
+     "description": "Email ID of the authenticated user"
+    }
+   }
+  },
+  "AccountSummary": {
+   "id": "AccountSummary",
+   "type": "object",
+   "description": "JSON template for an Analytics AccountSummary. An AccountSummary is a lightweight tree comprised of properties/profiles.",
+   "properties": {
+    "id": {
+     "type": "string",
+     "description": "Account ID."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Resource type for Analytics AccountSummary.",
+     "default": "analytics#accountSummary"
+    },
+    "name": {
+     "type": "string",
+     "description": "Account name."
+    },
+    "webProperties": {
+     "type": "array",
+     "description": "List of web properties under this account.",
+     "items": {
+      "$ref": "WebPropertySummary"
+     }
     }
    }
   },
@@ -755,7 +828,7 @@
     },
     "objectiveMetric": {
      "type": "string",
-     "description": "The metric that the experiment is optimizing. Valid values: \"ga:goal(n)Completions\", \"ga:bounces\", \"ga:pageviews\", \"ga:timeOnSite\", \"ga:transactions\", \"ga:transactionRevenue\". This field is required if status is \"RUNNING\" and servingFramework is one of \"REDIRECT\" or \"API\"."
+     "description": "The metric that the experiment is optimizing. Valid values: \"ga:goal(n)Completions\", \"ga:adsenseAdsClicks\", \"ga:adsenseAdsViewed\", \"ga:adsenseRevenue\", \"ga:bounces\", \"ga:pageviews\", \"ga:timeOnSite\", \"ga:transactions\", \"ga:transactionRevenue\". This field is required if status is \"RUNNING\" and servingFramework is one of \"REDIRECT\" or \"API\"."
     },
     "optimizationType": {
      "type": "string",
@@ -1690,6 +1763,14 @@
      "type": "string",
      "description": "The site search query parameters for this view (profile)."
     },
+    "stripSiteSearchCategoryParameters": {
+     "type": "boolean",
+     "description": "Whether or not Analytics will strip search category parameters from the URLs in your reports."
+    },
+    "stripSiteSearchQueryParameters": {
+     "type": "boolean",
+     "description": "Whether or not Analytics will strip search query parameters from the URLs in your reports."
+    },
     "timezone": {
      "type": "string",
      "description": "Time zone for which this view (profile) has been configured. Time zones are identified by strings from the TZ database."
@@ -1748,6 +1829,30 @@
     "webPropertyId": {
      "type": "string",
      "description": "Web property ID of the form UA-XXXXX-YY to which this view (profile) belongs."
+    }
+   }
+  },
+  "ProfileSummary": {
+   "id": "ProfileSummary",
+   "type": "object",
+   "description": "JSON template for an Analytics ProfileSummary. ProfileSummary returns basic information (i.e., summary) for a profile.",
+   "properties": {
+    "id": {
+     "type": "string",
+     "description": "View (profile) ID."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Resource type for Analytics ProfileSummary.",
+     "default": "analytics#profileSummary"
+    },
+    "name": {
+     "type": "string",
+     "description": "View (profile) name."
+    },
+    "type": {
+     "type": "string",
+     "description": "View (Profile) type. Supported types: WEB or APP."
     }
    }
   },
@@ -1931,41 +2036,45 @@
   "Segment": {
    "id": "Segment",
    "type": "object",
-   "description": "JSON template for an Analytics advanced segment.",
+   "description": "JSON template for an Analytics segment.",
    "properties": {
     "created": {
      "type": "string",
-     "description": "Time the advanced segment was created.",
+     "description": "Time the segment was created.",
      "format": "date-time"
     },
     "definition": {
      "type": "string",
-     "description": "Advanced segment definition."
+     "description": "Segment definition."
     },
     "id": {
      "type": "string",
-     "description": "Advanced segment ID."
+     "description": "Segment ID."
     },
     "kind": {
      "type": "string",
-     "description": "Resource type for Analytics advanced segment.",
+     "description": "Resource type for Analytics segment.",
      "default": "analytics#segment"
     },
     "name": {
      "type": "string",
-     "description": "Advanced segment name."
+     "description": "Segment name."
     },
     "segmentId": {
      "type": "string",
-     "description": "Segment ID. Can be used with the 'segment' parameter in Data Feed."
+     "description": "Segment ID. Can be used with the 'segment' parameter in Core Reporting API."
     },
     "selfLink": {
      "type": "string",
-     "description": "Link for this advanced segment."
+     "description": "Link for this segment."
+    },
+    "type": {
+     "type": "string",
+     "description": "Type for a segment. Possible values are \"BUILT_IN\" or \"CUSTOM\"."
     },
     "updated": {
      "type": "string",
-     "description": "Time the advanced segment was last modified.",
+     "description": "Time the segment was last modified.",
      "format": "date-time"
     }
    }
@@ -1973,11 +2082,11 @@
   "Segments": {
    "id": "Segments",
    "type": "object",
-   "description": "An advanced segment collection lists Analytics advanced segments that the user has access to. Each resource in the collection corresponds to a single Analytics advanced segment.",
+   "description": "An segment collection lists Analytics segments that the user has access to. Each resource in the collection corresponds to a single Analytics segment.",
    "properties": {
     "items": {
      "type": "array",
-     "description": "A list of advanced segments.",
+     "description": "A list of segments.",
      "items": {
       "$ref": "Segment"
      }
@@ -1989,16 +2098,16 @@
     },
     "kind": {
      "type": "string",
-     "description": "Collection type for advanced segments.",
+     "description": "Collection type for segments.",
      "default": "analytics#segments"
     },
     "nextLink": {
      "type": "string",
-     "description": "Link to next page for this advanced segment collection."
+     "description": "Link to next page for this segment collection."
     },
     "previousLink": {
      "type": "string",
-     "description": "Link to previous page for this advanced segment collection."
+     "description": "Link to previous page for this segment collection."
     },
     "startIndex": {
      "type": "integer",
@@ -2142,6 +2251,45 @@
     "name": {
      "type": "string",
      "description": "Name of this web property."
+    }
+   }
+  },
+  "WebPropertySummary": {
+   "id": "WebPropertySummary",
+   "type": "object",
+   "description": "JSON template for an Analytics WebPropertySummary. WebPropertySummary returns basic information (i.e., summary) for a web property.",
+   "properties": {
+    "id": {
+     "type": "string",
+     "description": "Web property ID of the form UA-XXXXX-YY."
+    },
+    "internalWebPropertyId": {
+     "type": "string",
+     "description": "Internal ID for this web property."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Resource type for Analytics WebPropertySummary.",
+     "default": "analytics#webPropertySummary"
+    },
+    "level": {
+     "type": "string",
+     "description": "Level for this web property. Possible values are STANDARD or PREMIUM."
+    },
+    "name": {
+     "type": "string",
+     "description": "Web property name."
+    },
+    "profiles": {
+     "type": "array",
+     "description": "List of profiles under this web property.",
+     "items": {
+      "$ref": "ProfileSummary"
+     }
+    },
+    "websiteUrl": {
+     "type": "string",
+     "description": "Website url for this web property."
     }
    }
   },
@@ -2387,7 +2535,7 @@
         },
         "segment": {
          "type": "string",
-         "description": "An Analytics advanced segment to be applied to data.",
+         "description": "An Analytics segment to be applied to data.",
          "location": "query"
         },
         "sort": {
@@ -2591,6 +2739,38 @@
   },
   "management": {
    "resources": {
+    "accountSummaries": {
+     "methods": {
+      "list": {
+       "id": "analytics.management.accountSummaries.list",
+       "path": "management/accountSummaries",
+       "httpMethod": "GET",
+       "description": "Lists account summaries (lightweight tree comprised of accounts/properties/profiles) to which the user has access.",
+       "parameters": {
+        "max-results": {
+         "type": "integer",
+         "description": "The maximum number of filters to include in this response.",
+         "format": "int32",
+         "location": "query"
+        },
+        "start-index": {
+         "type": "integer",
+         "description": "An index of the first entity to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.",
+         "format": "int32",
+         "minimum": "1",
+         "location": "query"
+        }
+       },
+       "response": {
+        "$ref": "AccountSummaries"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics.edit",
+        "https://www.googleapis.com/auth/analytics.readonly"
+       ]
+      }
+     }
+    },
     "accountUserLinks": {
      "methods": {
       "delete": {
@@ -3973,17 +4153,17 @@
        "id": "analytics.management.segments.list",
        "path": "management/segments",
        "httpMethod": "GET",
-       "description": "Lists advanced segments to which the user has access.",
+       "description": "Lists segments to which the user has access.",
        "parameters": {
         "max-results": {
          "type": "integer",
-         "description": "The maximum number of advanced segments to include in this response.",
+         "description": "The maximum number of segments to include in this response.",
          "format": "int32",
          "location": "query"
         },
         "start-index": {
          "type": "integer",
-         "description": "An index of the first advanced segment to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.",
+         "description": "An index of the first segment to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.",
          "format": "int32",
          "minimum": "1",
          "location": "query"

@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"R6H4aXXmd1SZaWpEcGSkC2StmNw/zgXIK-XntVUhtKNxy4Lwzk2SIek\"",
+ "etag": "\"kEk3sFj6Ef5_yR1-H3bAO6qw9mI/y4JNZN6WmoC1vLC4va-8Oh8limQ\"",
  "discoveryVersion": "v1",
  "id": "doubleclicksearch:v2",
  "name": "doubleclicksearch",
@@ -65,7 +65,71 @@
    "location": "query"
   }
  },
+ "auth": {
+  "oauth2": {
+   "scopes": {
+    "https://www.googleapis.com/auth/doubleclicksearch": {
+     "description": "View and manage your advertising data in DoubleClick Search"
+    }
+   }
+  }
+ },
  "schemas": {
+  "Availability": {
+   "id": "Availability",
+   "type": "object",
+   "description": "A message containing availability data relevant to DoubleClick Search.",
+   "properties": {
+    "advertiserId": {
+     "type": "string",
+     "description": "DS advertiser ID.",
+     "format": "int64",
+     "annotations": {
+      "required": [
+       "doubleclicksearch.conversion.updateAvailability"
+      ]
+     }
+    },
+    "agencyId": {
+     "type": "string",
+     "description": "DS agency ID.",
+     "format": "int64",
+     "annotations": {
+      "required": [
+       "doubleclicksearch.conversion.updateAvailability"
+      ]
+     }
+    },
+    "availabilityTimestamp": {
+     "type": "string",
+     "description": "The time by which all conversions have been uploaded, in epoch millis UTC.",
+     "format": "uint64",
+     "annotations": {
+      "required": [
+       "doubleclicksearch.conversion.updateAvailability"
+      ]
+     }
+    },
+    "segmentationId": {
+     "type": "string",
+     "description": "The numeric segmentation identifier (for example, DoubleClick Search Floodlight activity ID).",
+     "format": "int64"
+    },
+    "segmentationName": {
+     "type": "string",
+     "description": "The friendly segmentation identifier (for example, DoubleClick Search Floodlight activity name)."
+    },
+    "segmentationType": {
+     "type": "string",
+     "description": "The segmentation type that this availability is for (its default value is FLOODLIGHT).",
+     "annotations": {
+      "required": [
+       "doubleclicksearch.conversion.updateAvailability"
+      ]
+     }
+    }
+   }
+  },
   "Conversion": {
    "id": "Conversion",
    "type": "object",
@@ -102,7 +166,7 @@
     },
     "conversionId": {
      "type": "string",
-     "description": "Advertiser provided ID for the conversion, also known as the order ID.",
+     "description": "Advertiser-provided ID for the conversion, also known as the order ID.",
      "annotations": {
       "required": [
        "doubleclicksearch.conversion.insert"
@@ -131,18 +195,18 @@
     },
     "currencyCode": {
      "type": "string",
-     "description": "The currency code for the revenue. Should be in ISO 4217 alphabetic (3-char) format."
+     "description": "The currency code for the conversion's revenue. Should be in ISO 4217 alphabetic (3-char) format."
     },
     "customDimension": {
      "type": "array",
-     "description": "The custom dimension values for the conversion.",
+     "description": "Custom dimensions for the conversion, which can be used to filter data in a report.",
      "items": {
       "$ref": "CustomDimension"
      }
     },
     "customMetric": {
      "type": "array",
-     "description": "The custom metric values for the conversion.",
+     "description": "Custom metrics for the conversion.",
      "items": {
       "$ref": "CustomMetric"
      }
@@ -159,7 +223,7 @@
     },
     "floodlightOrderId": {
      "type": "string",
-     "description": "The advertiser provided order id for the conversion."
+     "description": "The advertiser-provided order id for the conversion."
     },
     "quantityMillis": {
      "type": "string",
@@ -337,7 +401,7 @@
        },
        "headerText": {
         "type": "string",
-        "description": "Header text that will appear in the report. This can be used to prevent collisions between DoubleClick Search columns and saved columns with the same name."
+        "description": "Text used to identify this column in the report output; defaults to columnName or savedColumnName when not specified. This can be used to prevent collisions between DoubleClick Search columns and saved columns with the same name."
        },
        "savedColumnName": {
         "type": "string",
@@ -395,8 +459,13 @@
     },
     "includeDeletedEntities": {
      "type": "boolean",
-     "description": "Determines if deleted entities should be included in the report. Defaults to true.",
-     "default": "true"
+     "description": "Determines if removed entities should be included in the report. Deprecated, please use includeRemovedEntities instead. Defaults to false.",
+     "default": "false"
+    },
+    "includeRemovedEntities": {
+     "type": "boolean",
+     "description": "Determines if removed entities should be included in the report. Defaults to false.",
+     "default": "false"
     },
     "maxRowsPerFile": {
      "type": "integer",
@@ -563,6 +632,34 @@
     "type": "any",
     "description": "Indicates the columns that are represented in this row. That is, each key corresponds to a column with a non-empty cell in this row."
    }
+  },
+  "UpdateAvailabilityRequest": {
+   "id": "UpdateAvailabilityRequest",
+   "type": "object",
+   "description": "The request to update availability.",
+   "properties": {
+    "availabilities": {
+     "type": "array",
+     "description": "The availabilities being requested.",
+     "items": {
+      "$ref": "Availability"
+     }
+    }
+   }
+  },
+  "UpdateAvailabilityResponse": {
+   "id": "UpdateAvailabilityResponse",
+   "type": "object",
+   "description": "The response to a update availability request.",
+   "properties": {
+    "availabilities": {
+     "type": "array",
+     "description": "The availabilities being returned.",
+     "items": {
+      "$ref": "Availability"
+     }
+    }
+   }
   }
  },
  "resources": {
@@ -665,7 +762,10 @@
      ],
      "response": {
       "$ref": "ConversionList"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/doubleclicksearch"
+     ]
     },
     "insert": {
      "id": "doubleclicksearch.conversion.insert",
@@ -677,7 +777,10 @@
      },
      "response": {
       "$ref": "ConversionList"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/doubleclicksearch"
+     ]
     },
     "patch": {
      "id": "doubleclicksearch.conversion.patch",
@@ -755,7 +858,10 @@
      },
      "response": {
       "$ref": "ConversionList"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/doubleclicksearch"
+     ]
     },
     "update": {
      "id": "doubleclicksearch.conversion.update",
@@ -767,7 +873,26 @@
      },
      "response": {
       "$ref": "ConversionList"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/doubleclicksearch"
+     ]
+    },
+    "updateAvailability": {
+     "id": "doubleclicksearch.conversion.updateAvailability",
+     "path": "conversion/updateAvailability",
+     "httpMethod": "POST",
+     "description": "Updates the availabilities of a batch of floodlight activities in DoubleClick Search.",
+     "request": {
+      "$ref": "UpdateAvailabilityRequest",
+      "parameterName": "empty"
+     },
+     "response": {
+      "$ref": "UpdateAvailabilityResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/doubleclicksearch"
+     ]
     }
    }
   },
@@ -784,7 +909,10 @@
      },
      "response": {
       "$ref": "Report"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/doubleclicksearch"
+     ]
     },
     "get": {
      "id": "doubleclicksearch.reports.get",
@@ -804,7 +932,10 @@
      ],
      "response": {
       "$ref": "Report"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/doubleclicksearch"
+     ]
     },
     "getFile": {
      "id": "doubleclicksearch.reports.getFile",
@@ -831,6 +962,9 @@
       "reportId",
       "reportFragment"
      ],
+     "scopes": [
+      "https://www.googleapis.com/auth/doubleclicksearch"
+     ],
      "supportsMediaDownload": true
     },
     "request": {
@@ -844,7 +978,10 @@
      },
      "response": {
       "$ref": "Report"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/doubleclicksearch"
+     ]
     }
    }
   }

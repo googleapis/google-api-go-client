@@ -52,17 +52,21 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client}
+	s := &Service{client: client, BasePath: basePath}
 	s.Activities = NewActivitiesService(s)
+	s.Channels = NewChannelsService(s)
 	s.CustomerUsageReports = NewCustomerUsageReportsService(s)
 	s.UserUsageReport = NewUserUsageReportService(s)
 	return s, nil
 }
 
 type Service struct {
-	client *http.Client
+	client   *http.Client
+	BasePath string // API endpoint base URL
 
 	Activities *ActivitiesService
+
+	Channels *ChannelsService
 
 	CustomerUsageReports *CustomerUsageReportsService
 
@@ -75,6 +79,15 @@ func NewActivitiesService(s *Service) *ActivitiesService {
 }
 
 type ActivitiesService struct {
+	s *Service
+}
+
+func NewChannelsService(s *Service) *ChannelsService {
+	rs := &ChannelsService{s: s}
+	return rs
+}
+
+type ChannelsService struct {
 	s *Service
 }
 
@@ -185,6 +198,48 @@ type ActivityId struct {
 	// UniqueQualifier: Unique qualifier if multiple events have the same
 	// time.
 	UniqueQualifier int64 `json:"uniqueQualifier,omitempty,string"`
+}
+
+type Channel struct {
+	// Address: The address where notifications are delivered for this
+	// channel.
+	Address string `json:"address,omitempty"`
+
+	// Expiration: Date and time of notification channel expiration,
+	// expressed as a Unix timestamp, in milliseconds. Optional.
+	Expiration int64 `json:"expiration,omitempty,string"`
+
+	// Id: A UUID or similar unique string that identifies this channel.
+	Id string `json:"id,omitempty"`
+
+	// Kind: Identifies this as a notification channel used to watch for
+	// changes to a resource. Value: the fixed string "api#channel".
+	Kind string `json:"kind,omitempty"`
+
+	// Params: Additional parameters controlling delivery channel behavior.
+	// Optional.
+	Params *ChannelParams `json:"params,omitempty"`
+
+	// Payload: A Boolean value to indicate whether payload is wanted.
+	// Optional.
+	Payload bool `json:"payload,omitempty"`
+
+	// ResourceId: An opaque ID that identifies the resource being watched
+	// on this channel. Stable across different API versions.
+	ResourceId string `json:"resourceId,omitempty"`
+
+	// ResourceUri: A version-specific identifier for the watched resource.
+	ResourceUri string `json:"resourceUri,omitempty"`
+
+	// Token: An arbitrary string delivered to the target address with each
+	// notification delivered over this channel. Optional.
+	Token string `json:"token,omitempty"`
+
+	// Type: The type of delivery mechanism used for this channel.
+	Type string `json:"type,omitempty"`
+}
+
+type ChannelParams struct {
 }
 
 type UsageReport struct {
@@ -383,7 +438,7 @@ func (c *ActivitiesListCall) Do() (*Activities, error) {
 	if v, ok := c.opt_["startTime"]; ok {
 		params.Set("startTime", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/admin/reports/v1/", "activity/users/{userKey}/applications/{applicationName}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "activity/users/{userKey}/applications/{applicationName}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{userKey}", url.QueryEscape(c.userKey), 1)
@@ -479,6 +534,279 @@ func (c *ActivitiesListCall) Do() (*Activities, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/admin.reports.audit.readonly"
+	//   ],
+	//   "supportsSubscription": true
+	// }
+
+}
+
+// method id "reports.activities.watch":
+
+type ActivitiesWatchCall struct {
+	s               *Service
+	userKey         string
+	applicationName string
+	channel         *Channel
+	opt_            map[string]interface{}
+}
+
+// Watch: Push changes to activities
+func (r *ActivitiesService) Watch(userKey string, applicationName string, channel *Channel) *ActivitiesWatchCall {
+	c := &ActivitiesWatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.userKey = userKey
+	c.applicationName = applicationName
+	c.channel = channel
+	return c
+}
+
+// ActorIpAddress sets the optional parameter "actorIpAddress": IP
+// Address of host where the event was performed. Supports both IPv4 and
+// IPv6 addresses.
+func (c *ActivitiesWatchCall) ActorIpAddress(actorIpAddress string) *ActivitiesWatchCall {
+	c.opt_["actorIpAddress"] = actorIpAddress
+	return c
+}
+
+// CustomerId sets the optional parameter "customerId": Represents the
+// customer for which the data is to be fetched.
+func (c *ActivitiesWatchCall) CustomerId(customerId string) *ActivitiesWatchCall {
+	c.opt_["customerId"] = customerId
+	return c
+}
+
+// EndTime sets the optional parameter "endTime": Return events which
+// occured at or before this time.
+func (c *ActivitiesWatchCall) EndTime(endTime string) *ActivitiesWatchCall {
+	c.opt_["endTime"] = endTime
+	return c
+}
+
+// EventName sets the optional parameter "eventName": Name of the event
+// being queried.
+func (c *ActivitiesWatchCall) EventName(eventName string) *ActivitiesWatchCall {
+	c.opt_["eventName"] = eventName
+	return c
+}
+
+// Filters sets the optional parameter "filters": Event parameters in
+// the form [parameter1 name][operator][parameter1 value],[parameter2
+// name][operator][parameter2 value],...
+func (c *ActivitiesWatchCall) Filters(filters string) *ActivitiesWatchCall {
+	c.opt_["filters"] = filters
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Number of
+// activity records to be shown in each page.
+func (c *ActivitiesWatchCall) MaxResults(maxResults int64) *ActivitiesWatchCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Token to specify
+// next page.
+func (c *ActivitiesWatchCall) PageToken(pageToken string) *ActivitiesWatchCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+// StartTime sets the optional parameter "startTime": Return events
+// which occured at or after this time.
+func (c *ActivitiesWatchCall) StartTime(startTime string) *ActivitiesWatchCall {
+	c.opt_["startTime"] = startTime
+	return c
+}
+
+func (c *ActivitiesWatchCall) Do() (*Channel, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["actorIpAddress"]; ok {
+		params.Set("actorIpAddress", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["customerId"]; ok {
+		params.Set("customerId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["endTime"]; ok {
+		params.Set("endTime", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["eventName"]; ok {
+		params.Set("eventName", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["filters"]; ok {
+		params.Set("filters", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["startTime"]; ok {
+		params.Set("startTime", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "activity/users/{userKey}/applications/{applicationName}/watch")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{userKey}", url.QueryEscape(c.userKey), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{applicationName}", url.QueryEscape(c.applicationName), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Channel)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Push changes to activities",
+	//   "httpMethod": "POST",
+	//   "id": "reports.activities.watch",
+	//   "parameterOrder": [
+	//     "userKey",
+	//     "applicationName"
+	//   ],
+	//   "parameters": {
+	//     "actorIpAddress": {
+	//       "description": "IP Address of host where the event was performed. Supports both IPv4 and IPv6 addresses.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "applicationName": {
+	//       "description": "Application name for which the events are to be retrieved.",
+	//       "location": "path",
+	//       "pattern": "(admin)|(docs)|(login)",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "customerId": {
+	//       "description": "Represents the customer for which the data is to be fetched.",
+	//       "location": "query",
+	//       "pattern": "C.+",
+	//       "type": "string"
+	//     },
+	//     "endTime": {
+	//       "description": "Return events which occured at or before this time.",
+	//       "location": "query",
+	//       "pattern": "(\\d\\d\\d\\d)-(\\d\\d)-(\\d\\d)T(\\d\\d):(\\d\\d):(\\d\\d)(?:\\.(\\d+))?(?:(Z)|([-+])(\\d\\d):(\\d\\d))",
+	//       "type": "string"
+	//     },
+	//     "eventName": {
+	//       "description": "Name of the event being queried.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "filters": {
+	//       "description": "Event parameters in the form [parameter1 name][operator][parameter1 value],[parameter2 name][operator][parameter2 value],...",
+	//       "location": "query",
+	//       "pattern": "(.+[\u003c,\u003c=,==,\u003e=,\u003e,\u003c\u003e].+,)*(.+[\u003c,\u003c=,==,\u003e=,\u003e,\u003c\u003e].+)",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "description": "Number of activity records to be shown in each page.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "maximum": "1000",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Token to specify next page.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "startTime": {
+	//       "description": "Return events which occured at or after this time.",
+	//       "location": "query",
+	//       "pattern": "(\\d\\d\\d\\d)-(\\d\\d)-(\\d\\d)T(\\d\\d):(\\d\\d):(\\d\\d)(?:\\.(\\d+))?(?:(Z)|([-+])(\\d\\d):(\\d\\d))",
+	//       "type": "string"
+	//     },
+	//     "userKey": {
+	//       "description": "Represents the profile id or the user email for which the data should be filtered. When 'all' is specified as the userKey, it returns usageReports for all users.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "activity/users/{userKey}/applications/{applicationName}/watch",
+	//   "request": {
+	//     "$ref": "Channel",
+	//     "parameterName": "resource"
+	//   },
+	//   "response": {
+	//     "$ref": "Channel"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.reports.audit.readonly"
+	//   ],
+	//   "supportsSubscription": true
+	// }
+
+}
+
+// method id "admin.channels.stop":
+
+type ChannelsStopCall struct {
+	s       *Service
+	channel *Channel
+	opt_    map[string]interface{}
+}
+
+// Stop: Stop watching resources through this channel
+func (r *ChannelsService) Stop(channel *Channel) *ChannelsStopCall {
+	c := &ChannelsStopCall{s: r.s, opt_: make(map[string]interface{})}
+	c.channel = channel
+	return c
+}
+
+func (c *ChannelsStopCall) Do() error {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
+	if err != nil {
+		return err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "/admin/reports_v1/channels/stop")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Stop watching resources through this channel",
+	//   "httpMethod": "POST",
+	//   "id": "admin.channels.stop",
+	//   "path": "/admin/reports_v1/channels/stop",
+	//   "request": {
+	//     "$ref": "Channel",
+	//     "parameterName": "resource"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.reports.audit.readonly"
 	//   ]
 	// }
 
@@ -535,7 +863,7 @@ func (c *CustomerUsageReportsGetCall) Do() (*UsageReports, error) {
 	if v, ok := c.opt_["parameters"]; ok {
 		params.Set("parameters", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/admin/reports/v1/", "usage/dates/{date}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "usage/dates/{date}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{date}", url.QueryEscape(c.date), 1)
@@ -671,7 +999,7 @@ func (c *UserUsageReportGetCall) Do() (*UsageReports, error) {
 	if v, ok := c.opt_["parameters"]; ok {
 		params.Set("parameters", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/admin/reports/v1/", "usage/users/{userKey}/dates/{date}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "usage/users/{userKey}/dates/{date}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{userKey}", url.QueryEscape(c.userKey), 1)

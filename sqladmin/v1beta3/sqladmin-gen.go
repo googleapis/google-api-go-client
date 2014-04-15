@@ -37,7 +37,7 @@ var _ = strings.Replace
 const apiId = "sqladmin:v1beta3"
 const apiName = "sqladmin"
 const apiVersion = "v1beta3"
-const basePath = "https://www.googleapis.com/sql/v1beta3/projects/"
+const basePath = "https://www.googleapis.com/sql/v1beta3/"
 
 // OAuth2 scopes used by this API.
 const (
@@ -52,8 +52,9 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client}
+	s := &Service{client: client, BasePath: basePath}
 	s.BackupRuns = NewBackupRunsService(s)
+	s.Flags = NewFlagsService(s)
 	s.Instances = NewInstancesService(s)
 	s.Operations = NewOperationsService(s)
 	s.SslCerts = NewSslCertsService(s)
@@ -62,9 +63,12 @@ func New(client *http.Client) (*Service, error) {
 }
 
 type Service struct {
-	client *http.Client
+	client   *http.Client
+	BasePath string // API endpoint base URL
 
 	BackupRuns *BackupRunsService
+
+	Flags *FlagsService
 
 	Instances *InstancesService
 
@@ -81,6 +85,15 @@ func NewBackupRunsService(s *Service) *BackupRunsService {
 }
 
 type BackupRunsService struct {
+	s *Service
+}
+
+func NewFlagsService(s *Service) *FlagsService {
+	rs := &FlagsService{s: s}
+	return rs
+}
+
+type FlagsService struct {
 	s *Service
 }
 
@@ -188,6 +201,59 @@ type BackupRunsListResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+type BinLogCoordinates struct {
+	// BinLogFileName: Name of the binary log file for a Cloud SQL instance.
+	BinLogFileName string `json:"binLogFileName,omitempty"`
+
+	// BinLogPosition: Position (offset) within the binary log file.
+	BinLogPosition int64 `json:"binLogPosition,omitempty,string"`
+
+	// Kind: This is always sql#binLogCoordinates.
+	Kind string `json:"kind,omitempty"`
+}
+
+type CloneContext struct {
+	// BinLogCoordinates: Binary log coordinates, if specified, indentify
+	// the the position up to which the source instance should be cloned. If
+	// not specified, the source instance is cloned up to the most recent
+	// binary log coordintes.
+	BinLogCoordinates *BinLogCoordinates `json:"binLogCoordinates,omitempty"`
+
+	// DestinationInstanceName: Name of the Cloud SQL instance to be created
+	// as a clone.
+	DestinationInstanceName string `json:"destinationInstanceName,omitempty"`
+
+	// Kind: This is always sql#cloneContext.
+	Kind string `json:"kind,omitempty"`
+
+	// SourceInstanceName: Name of the Cloud SQL instance to be cloned.
+	SourceInstanceName string `json:"sourceInstanceName,omitempty"`
+}
+
+type DatabaseFlags struct {
+	// Name: The name of the flag. These flags are passed at instance
+	// startup, so include both MySQL server options and MySQL system
+	// variables. Flags should be specified with underscores, not hyphens.
+	// Refer to the official MySQL documentation on server options and
+	// system variables for descriptions of what these flags do. Acceptable
+	// values are:  event_scheduler on or off (Note: The event scheduler
+	// will only work reliably if the instance activationPolicy is set to
+	// ALWAYS.) general_log on or off group_concat_max_len 4..17179869184
+	// innodb_flush_log_at_trx_commit 0..2 innodb_lock_wait_timeout
+	// 1..1073741824 log_bin_trust_function_creators on or off log_output
+	// Can be either TABLE or NONE, FILE is not supported.
+	// log_queries_not_using_indexes on or off long_query_time 0..30000000
+	// lower_case_table_names 0..2 max_allowed_packet 16384..1073741824
+	// read_only on or off skip_show_database on or off slow_query_log on or
+	// off wait_timeout 1..31536000
+	Name string `json:"name,omitempty"`
+
+	// Value: The value of the flag. Booleans should be set using 1 for
+	// true, and 0 for false. This field must be omitted if the flag doesn't
+	// take a value.
+	Value string `json:"value,omitempty"`
+}
+
 type DatabaseInstance struct {
 	// CurrentDiskSize: The current disk usage of the instance in bytes.
 	CurrentDiskSize int64 `json:"currentDiskSize,omitempty,string"`
@@ -216,9 +282,9 @@ type DatabaseInstance struct {
 	// instance. The Google apps domain is prefixed if applicable.
 	Project string `json:"project,omitempty"`
 
-	// Region: The geographical region. Can be us-east1, us-central or
-	// europe-west1. Defaults to us-central. The region can not be changed
-	// after instance creation.
+	// Region: The geographical region. Can be us-east1, us-central,
+	// asia-east1 or europe-west1. Defaults to us-central. The region can
+	// not be changed after instance creation.
 	Region string `json:"region,omitempty"`
 
 	// ServerCaCert: SSL configuration.
@@ -259,6 +325,42 @@ type ExportContext struct {
 	// operation fails. If the filename ends with .gz, the contents are
 	// compressed.
 	Uri string `json:"uri,omitempty"`
+}
+
+type Flag struct {
+	// AllowedStringValues: For STRING flags, a list of strings that the
+	// value can be set to.
+	AllowedStringValues []string `json:"allowedStringValues,omitempty"`
+
+	// AppliesTo: The database version this flag applies to. Currently this
+	// can only be [MYSQL_5_5].
+	AppliesTo []string `json:"appliesTo,omitempty"`
+
+	// Kind: This is always sql#flag.
+	Kind string `json:"kind,omitempty"`
+
+	// MaxValue: For INTEGER flags, the maximum allowed value.
+	MaxValue int64 `json:"maxValue,omitempty,string"`
+
+	// MinValue: For INTEGER flags, the minimum allowed value.
+	MinValue int64 `json:"minValue,omitempty,string"`
+
+	// Name: This is the name of the flag. Flag names always use
+	// underscores, not hyphens, e.g. max_allowed_packet
+	Name string `json:"name,omitempty"`
+
+	// Type: The type of the flag. Flags are typed to being BOOLEAN, STRING,
+	// INTEGER or NONE. NONE is used for flags which do not take a value,
+	// such as skip_grant_tables.
+	Type string `json:"type,omitempty"`
+}
+
+type FlagsListResponse struct {
+	// Items: List of flags.
+	Items []*Flag `json:"items,omitempty"`
+
+	// Kind: This is always sql#flagsList.
+	Kind string `json:"kind,omitempty"`
 }
 
 type ImportContext struct {
@@ -327,6 +429,21 @@ type InstanceOperation struct {
 type InstanceSetRootPasswordRequest struct {
 	// SetRootPasswordContext: Set Root Password Context.
 	SetRootPasswordContext *SetRootPasswordContext `json:"setRootPasswordContext,omitempty"`
+}
+
+type InstancesCloneRequest struct {
+	// CloneContext: Contains details about the clone operation.
+	CloneContext *CloneContext `json:"cloneContext,omitempty"`
+}
+
+type InstancesCloneResponse struct {
+	// Kind: This is always sql#instancesClone.
+	Kind string `json:"kind,omitempty"`
+
+	// Operation: An unique identifier for the operation associated with the
+	// cloned instance. You can use this identifier to retrieve the
+	// Operations resource, which has information about the operation.
+	Operation string `json:"operation,omitempty"`
 }
 
 type InstancesDeleteResponse struct {
@@ -425,7 +542,7 @@ type InstancesRestoreBackupResponse struct {
 }
 
 type InstancesSetRootPasswordResponse struct {
-	// Kind: This is always sql#instancesSetRootPasswird.
+	// Kind: This is always sql#instancesSetRootPassword.
 	Kind string `json:"kind,omitempty"`
 
 	// Operation: An identifier that uniquely identifies the operation. You
@@ -528,6 +645,9 @@ type Settings struct {
 
 	// BackupConfiguration: The daily backup configuration for the instance.
 	BackupConfiguration []*BackupConfiguration `json:"backupConfiguration,omitempty"`
+
+	// DatabaseFlags: The database flags passed to the instance at startup.
+	DatabaseFlags []*DatabaseFlags `json:"databaseFlags,omitempty"`
 
 	// IpConfiguration: The settings for IP Management. This allows to
 	// enable or disable the instance IP and manage which external networks
@@ -645,8 +765,8 @@ type Tier struct {
 	// Kind: This is always sql#tier.
 	Kind string `json:"kind,omitempty"`
 
-	// Region: The applicable regions for this tier. Can be us-east1 and
-	// europe-west1.
+	// Region: The applicable regions for this tier. Can be us-east1,
+	// europe-west1, or asia-east1.
 	Region []string `json:"region,omitempty"`
 
 	// Tier: An identifier for the service tier, for example D1, D2 etc. For
@@ -688,7 +808,7 @@ func (c *BackupRunsGetCall) Do() (*BackupRun, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("dueTime", fmt.Sprintf("%v", c.dueTime))
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/sql/v1beta3/projects/", "{project}/instances/{instance}/backupRuns/{backupConfiguration}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/{instance}/backupRuns/{backupConfiguration}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -745,7 +865,7 @@ func (c *BackupRunsGetCall) Do() (*BackupRun, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/instances/{instance}/backupRuns/{backupConfiguration}",
+	//   "path": "projects/{project}/instances/{instance}/backupRuns/{backupConfiguration}",
 	//   "response": {
 	//     "$ref": "BackupRun"
 	//   },
@@ -803,7 +923,7 @@ func (c *BackupRunsListCall) Do() (*BackupRunsListResponse, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/sql/v1beta3/projects/", "{project}/instances/{instance}/backupRuns")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/{instance}/backupRuns")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -863,9 +983,136 @@ func (c *BackupRunsListCall) Do() (*BackupRunsListResponse, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/instances/{instance}/backupRuns",
+	//   "path": "projects/{project}/instances/{instance}/backupRuns",
 	//   "response": {
 	//     "$ref": "BackupRunsListResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/sqlservice.admin"
+	//   ]
+	// }
+
+}
+
+// method id "sql.flags.list":
+
+type FlagsListCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// List: List all available database flags for Google Cloud SQL
+// instances.
+func (r *FlagsService) List() *FlagsListCall {
+	c := &FlagsListCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+func (c *FlagsListCall) Do() (*FlagsListResponse, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "flags")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(FlagsListResponse)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List all available database flags for Google Cloud SQL instances.",
+	//   "httpMethod": "GET",
+	//   "id": "sql.flags.list",
+	//   "path": "flags",
+	//   "response": {
+	//     "$ref": "FlagsListResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/sqlservice.admin"
+	//   ]
+	// }
+
+}
+
+// method id "sql.instances.clone":
+
+type InstancesCloneCall struct {
+	s                     *Service
+	project               string
+	instancesclonerequest *InstancesCloneRequest
+	opt_                  map[string]interface{}
+}
+
+// Clone: Creates a Cloud SQL instance as a clone of the source
+// instance.
+func (r *InstancesService) Clone(project string, instancesclonerequest *InstancesCloneRequest) *InstancesCloneCall {
+	c := &InstancesCloneCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.instancesclonerequest = instancesclonerequest
+	return c
+}
+
+func (c *InstancesCloneCall) Do() (*InstancesCloneResponse, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancesclonerequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/clone")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(InstancesCloneResponse)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a Cloud SQL instance as a clone of the source instance.",
+	//   "httpMethod": "POST",
+	//   "id": "sql.instances.clone",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Project ID of the source as well as the clone Cloud SQL instance.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "projects/{project}/instances/clone",
+	//   "request": {
+	//     "$ref": "InstancesCloneRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "InstancesCloneResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/sqlservice.admin"
@@ -895,7 +1142,7 @@ func (c *InstancesDeleteCall) Do() (*InstancesDeleteResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/sql/v1beta3/projects/", "{project}/instances/{instance}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/{instance}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -937,7 +1184,7 @@ func (c *InstancesDeleteCall) Do() (*InstancesDeleteResponse, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/instances/{instance}",
+	//   "path": "projects/{project}/instances/{instance}",
 	//   "response": {
 	//     "$ref": "InstancesDeleteResponse"
 	//   },
@@ -977,7 +1224,7 @@ func (c *InstancesExportCall) Do() (*InstancesExportResponse, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/sql/v1beta3/projects/", "{project}/instances/{instance}/export")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/{instance}/export")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -1020,7 +1267,7 @@ func (c *InstancesExportCall) Do() (*InstancesExportResponse, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/instances/{instance}/export",
+	//   "path": "projects/{project}/instances/{instance}/export",
 	//   "request": {
 	//     "$ref": "InstancesExportRequest"
 	//   },
@@ -1056,7 +1303,7 @@ func (c *InstancesGetCall) Do() (*DatabaseInstance, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/sql/v1beta3/projects/", "{project}/instances/{instance}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/{instance}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -1098,7 +1345,7 @@ func (c *InstancesGetCall) Do() (*DatabaseInstance, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/instances/{instance}",
+	//   "path": "projects/{project}/instances/{instance}",
 	//   "response": {
 	//     "$ref": "DatabaseInstance"
 	//   },
@@ -1138,7 +1385,7 @@ func (c *InstancesImportCall) Do() (*InstancesImportResponse, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/sql/v1beta3/projects/", "{project}/instances/{instance}/import")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/{instance}/import")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -1181,7 +1428,7 @@ func (c *InstancesImportCall) Do() (*InstancesImportResponse, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/instances/{instance}/import",
+	//   "path": "projects/{project}/instances/{instance}/import",
 	//   "request": {
 	//     "$ref": "InstancesImportRequest"
 	//   },
@@ -1221,7 +1468,7 @@ func (c *InstancesInsertCall) Do() (*InstancesInsertResponse, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/sql/v1beta3/projects/", "{project}/instances")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -1256,7 +1503,7 @@ func (c *InstancesInsertCall) Do() (*InstancesInsertResponse, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/instances",
+	//   "path": "projects/{project}/instances",
 	//   "request": {
 	//     "$ref": "DatabaseInstance"
 	//   },
@@ -1311,7 +1558,7 @@ func (c *InstancesListCall) Do() (*InstancesListResponse, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/sql/v1beta3/projects/", "{project}/instances")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -1356,7 +1603,7 @@ func (c *InstancesListCall) Do() (*InstancesListResponse, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/instances",
+	//   "path": "projects/{project}/instances",
 	//   "response": {
 	//     "$ref": "InstancesListResponse"
 	//   },
@@ -1398,7 +1645,7 @@ func (c *InstancesPatchCall) Do() (*InstancesUpdateResponse, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/sql/v1beta3/projects/", "{project}/instances/{instance}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/{instance}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -1441,7 +1688,7 @@ func (c *InstancesPatchCall) Do() (*InstancesUpdateResponse, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/instances/{instance}",
+	//   "path": "projects/{project}/instances/{instance}",
 	//   "request": {
 	//     "$ref": "DatabaseInstance"
 	//   },
@@ -1480,7 +1727,7 @@ func (c *InstancesResetSslConfigCall) Do() (*InstancesResetSslConfigResponse, er
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/sql/v1beta3/projects/", "{project}/instances/{instance}/resetSslConfig")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/{instance}/resetSslConfig")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -1522,7 +1769,7 @@ func (c *InstancesResetSslConfigCall) Do() (*InstancesResetSslConfigResponse, er
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/instances/{instance}/resetSslConfig",
+	//   "path": "projects/{project}/instances/{instance}/resetSslConfig",
 	//   "response": {
 	//     "$ref": "InstancesResetSslConfigResponse"
 	//   },
@@ -1554,7 +1801,7 @@ func (c *InstancesRestartCall) Do() (*InstancesRestartResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/sql/v1beta3/projects/", "{project}/instances/{instance}/restart")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/{instance}/restart")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -1596,7 +1843,7 @@ func (c *InstancesRestartCall) Do() (*InstancesRestartResponse, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/instances/{instance}/restart",
+	//   "path": "projects/{project}/instances/{instance}/restart",
 	//   "response": {
 	//     "$ref": "InstancesRestartResponse"
 	//   },
@@ -1634,7 +1881,7 @@ func (c *InstancesRestoreBackupCall) Do() (*InstancesRestoreBackupResponse, erro
 	params.Set("alt", "json")
 	params.Set("backupConfiguration", fmt.Sprintf("%v", c.backupConfigurationid))
 	params.Set("dueTime", fmt.Sprintf("%v", c.dueTime))
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/sql/v1beta3/projects/", "{project}/instances/{instance}/restoreBackup")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/{instance}/restoreBackup")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -1690,7 +1937,7 @@ func (c *InstancesRestoreBackupCall) Do() (*InstancesRestoreBackupResponse, erro
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/instances/{instance}/restoreBackup",
+	//   "path": "projects/{project}/instances/{instance}/restoreBackup",
 	//   "response": {
 	//     "$ref": "InstancesRestoreBackupResponse"
 	//   },
@@ -1729,7 +1976,7 @@ func (c *InstancesSetRootPasswordCall) Do() (*InstancesSetRootPasswordResponse, 
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/sql/v1beta3/projects/", "{project}/instances/{instance}/setRootPassword")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/{instance}/setRootPassword")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -1772,7 +2019,7 @@ func (c *InstancesSetRootPasswordCall) Do() (*InstancesSetRootPasswordResponse, 
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/instances/{instance}/setRootPassword",
+	//   "path": "projects/{project}/instances/{instance}/setRootPassword",
 	//   "request": {
 	//     "$ref": "InstanceSetRootPasswordRequest"
 	//   },
@@ -1816,7 +2063,7 @@ func (c *InstancesUpdateCall) Do() (*InstancesUpdateResponse, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/sql/v1beta3/projects/", "{project}/instances/{instance}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/{instance}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -1860,7 +2107,7 @@ func (c *InstancesUpdateCall) Do() (*InstancesUpdateResponse, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/instances/{instance}",
+	//   "path": "projects/{project}/instances/{instance}",
 	//   "request": {
 	//     "$ref": "DatabaseInstance"
 	//   },
@@ -1898,7 +2145,7 @@ func (c *OperationsGetCall) Do() (*InstanceOperation, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/sql/v1beta3/projects/", "{project}/instances/{instance}/operations/{operation}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/{instance}/operations/{operation}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -1948,7 +2195,7 @@ func (c *OperationsGetCall) Do() (*InstanceOperation, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/instances/{instance}/operations/{operation}",
+	//   "path": "projects/{project}/instances/{instance}/operations/{operation}",
 	//   "response": {
 	//     "$ref": "InstanceOperation"
 	//   },
@@ -2003,7 +2250,7 @@ func (c *OperationsListCall) Do() (*OperationsListResponse, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/sql/v1beta3/projects/", "{project}/instances/{instance}/operations")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/{instance}/operations")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -2056,7 +2303,7 @@ func (c *OperationsListCall) Do() (*OperationsListResponse, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/instances/{instance}/operations",
+	//   "path": "projects/{project}/instances/{instance}/operations",
 	//   "response": {
 	//     "$ref": "OperationsListResponse"
 	//   },
@@ -2091,7 +2338,7 @@ func (c *SslCertsDeleteCall) Do() (*SslCertsDeleteResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/sql/v1beta3/projects/", "{project}/instances/{instance}/sslCerts/{sha1Fingerprint}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/{instance}/sslCerts/{sha1Fingerprint}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -2141,7 +2388,7 @@ func (c *SslCertsDeleteCall) Do() (*SslCertsDeleteResponse, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/instances/{instance}/sslCerts/{sha1Fingerprint}",
+	//   "path": "projects/{project}/instances/{instance}/sslCerts/{sha1Fingerprint}",
 	//   "response": {
 	//     "$ref": "SslCertsDeleteResponse"
 	//   },
@@ -2177,7 +2424,7 @@ func (c *SslCertsGetCall) Do() (*SslCert, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/sql/v1beta3/projects/", "{project}/instances/{instance}/sslCerts/{sha1Fingerprint}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/{instance}/sslCerts/{sha1Fingerprint}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -2227,7 +2474,7 @@ func (c *SslCertsGetCall) Do() (*SslCert, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/instances/{instance}/sslCerts/{sha1Fingerprint}",
+	//   "path": "projects/{project}/instances/{instance}/sslCerts/{sha1Fingerprint}",
 	//   "response": {
 	//     "$ref": "SslCert"
 	//   },
@@ -2268,7 +2515,7 @@ func (c *SslCertsInsertCall) Do() (*SslCertsInsertResponse, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/sql/v1beta3/projects/", "{project}/instances/{instance}/sslCerts")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/{instance}/sslCerts")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -2311,7 +2558,7 @@ func (c *SslCertsInsertCall) Do() (*SslCertsInsertResponse, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/instances/{instance}/sslCerts",
+	//   "path": "projects/{project}/instances/{instance}/sslCerts",
 	//   "request": {
 	//     "$ref": "SslCertsInsertRequest"
 	//   },
@@ -2346,7 +2593,7 @@ func (c *SslCertsListCall) Do() (*SslCertsListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/sql/v1beta3/projects/", "{project}/instances/{instance}/sslCerts")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/{instance}/sslCerts")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -2388,7 +2635,7 @@ func (c *SslCertsListCall) Do() (*SslCertsListResponse, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/instances/{instance}/sslCerts",
+	//   "path": "projects/{project}/instances/{instance}/sslCerts",
 	//   "response": {
 	//     "$ref": "SslCertsListResponse"
 	//   },
@@ -2419,7 +2666,7 @@ func (c *TiersListCall) Do() (*TiersListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/sql/v1beta3/projects/", "{project}/tiers")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/tiers")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -2453,7 +2700,7 @@ func (c *TiersListCall) Do() (*TiersListResponse, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/tiers",
+	//   "path": "projects/{project}/tiers",
 	//   "response": {
 	//     "$ref": "TiersListResponse"
 	//   },

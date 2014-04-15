@@ -52,7 +52,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client}
+	s := &Service{client: client, BasePath: basePath}
 	s.Acl = NewAclService(s)
 	s.Activities = NewActivitiesService(s)
 	s.ActivityVisibility = NewActivityVisibilityService(s)
@@ -73,7 +73,8 @@ func New(client *http.Client) (*Service, error) {
 }
 
 type Service struct {
-	client *http.Client
+	client   *http.Client
+	BasePath string // API endpoint base URL
 
 	Acl *AclService
 
@@ -1078,7 +1079,7 @@ func (c *AclDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "activities/{activityId}/acl/{userId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "activities/{activityId}/acl/{userId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{activityId}", url.QueryEscape(c.activityId), 1)
@@ -1144,7 +1145,7 @@ func (c *ActivitiesDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "activities/{activityId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "activities/{activityId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{activityId}", url.QueryEscape(c.activityId), 1)
@@ -1233,7 +1234,7 @@ func (c *ActivitiesListCall) Do() (*ActivityList, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "people/{userId}/activities/{collection}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "people/{userId}/activities/{collection}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{userId}", url.QueryEscape(c.userId), 1)
@@ -1334,7 +1335,7 @@ func (c *ActivityVisibilityGetCall) Do() (*Visibility, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "activities/{activityId}/visibility")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "activities/{activityId}/visibility")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{activityId}", url.QueryEscape(c.activityId), 1)
@@ -1407,7 +1408,7 @@ func (c *ActivityVisibilityPatchCall) Do() (*Visibility, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "activities/{activityId}/visibility")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "activities/{activityId}/visibility")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{activityId}", url.QueryEscape(c.activityId), 1)
@@ -1482,7 +1483,7 @@ func (c *ActivityVisibilityUpdateCall) Do() (*Visibility, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "activities/{activityId}/visibility")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "activities/{activityId}/visibility")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{activityId}", url.QueryEscape(c.activityId), 1)
@@ -1552,7 +1553,7 @@ func (c *BadgesGetCall) Do() (*Badge, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "people/{userId}/badges/{badgeId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "people/{userId}/badges/{badgeId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{userId}", url.QueryEscape(c.userId), 1)
@@ -1626,7 +1627,7 @@ func (c *BadgesListCall) Do() (*BadgeList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "people/{userId}/badges")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "people/{userId}/badges")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{userId}", url.QueryEscape(c.userId), 1)
@@ -1691,7 +1692,7 @@ func (c *CommentsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "comments/{commentId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "comments/{commentId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{commentId}", url.QueryEscape(c.commentId), 1)
@@ -1758,7 +1759,7 @@ func (c *CommentsGetCall) Do() (*Comment, error) {
 	if v, ok := c.opt_["hl"]; ok {
 		params.Set("hl", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "comments/{commentId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "comments/{commentId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{commentId}", url.QueryEscape(c.commentId), 1)
@@ -1835,7 +1836,7 @@ func (c *CommentsInsertCall) Do() (*Comment, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "activities/{activityId}/comments")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "activities/{activityId}/comments")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{activityId}", url.QueryEscape(c.activityId), 1)
@@ -1942,7 +1943,7 @@ func (c *CommentsListCall) Do() (*CommentList, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "activities/{activityId}/comments")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "activities/{activityId}/comments")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{activityId}", url.QueryEscape(c.activityId), 1)
@@ -2048,7 +2049,7 @@ func (c *CommunitiesGetCall) Do() (*Community, error) {
 	if v, ok := c.opt_["hl"]; ok {
 		params.Set("hl", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "communities/{communityId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
@@ -2150,7 +2151,7 @@ func (c *CommunitiesListCall) Do() (*CommunityList, error) {
 	if v, ok := c.opt_["orderBy"]; ok {
 		params.Set("orderBy", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "people/{userId}/communities")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "people/{userId}/communities")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{userId}", url.QueryEscape(c.userId), 1)
@@ -2242,7 +2243,7 @@ func (c *CommunityFollowDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}/followers/{userId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "communities/{communityId}/followers/{userId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
@@ -2310,7 +2311,7 @@ func (c *CommunityFollowInsertCall) Do() (*CommunityMembers, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}/followers/{userId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "communities/{communityId}/followers/{userId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
@@ -2385,7 +2386,7 @@ func (c *CommunityMembersDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}/members/{userId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "communities/{communityId}/members/{userId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
@@ -2463,7 +2464,7 @@ func (c *CommunityMembersGetCall) Do() (*CommunityMembers, error) {
 	if v, ok := c.opt_["hl"]; ok {
 		params.Set("hl", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}/members/{userId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "communities/{communityId}/members/{userId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
@@ -2544,7 +2545,7 @@ func (c *CommunityMembersInsertCall) Do() (*CommunityMembers, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}/members/{userId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "communities/{communityId}/members/{userId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
@@ -2660,7 +2661,7 @@ func (c *CommunityMembersListCall) Do() (*CommunityMembersList, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}/members")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "communities/{communityId}/members")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
@@ -2752,7 +2753,7 @@ func (c *CommunityMessagesDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}/topics/{topicId}/messages/{messageId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "communities/{communityId}/topics/{topicId}/messages/{messageId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
@@ -2837,7 +2838,7 @@ func (c *CommunityMessagesInsertCall) Do() (*CommunityMessage, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}/topics/{topicId}/messages")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "communities/{communityId}/topics/{topicId}/messages")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
@@ -2947,7 +2948,7 @@ func (c *CommunityMessagesListCall) Do() (*CommunityMessageList, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}/topics/{topicId}/messages")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "communities/{communityId}/topics/{topicId}/messages")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
@@ -3049,7 +3050,7 @@ func (c *CommunityPollCommentsInsertCall) Do() (*CommunityPollComment, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}/polls/{pollId}/comments")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "communities/{communityId}/polls/{pollId}/comments")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
@@ -3158,7 +3159,7 @@ func (c *CommunityPollCommentsListCall) Do() (*CommunityPollCommentList, error) 
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}/polls/{pollId}/comments")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "communities/{communityId}/polls/{pollId}/comments")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
@@ -3258,7 +3259,7 @@ func (c *CommunityPollVotesInsertCall) Do() (*CommunityPollVote, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}/polls/{pollId}/votes")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "communities/{communityId}/polls/{pollId}/votes")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
@@ -3347,7 +3348,7 @@ func (c *CommunityPollsGetCall) Do() (*CommunityPoll, error) {
 	if v, ok := c.opt_["hl"]; ok {
 		params.Set("hl", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}/polls/{pollId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "communities/{communityId}/polls/{pollId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
@@ -3456,7 +3457,7 @@ func (c *CommunityPollsListCall) Do() (*CommunityPollList, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}/polls")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "communities/{communityId}/polls")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
@@ -3549,7 +3550,7 @@ func (c *CommunityRelatedListCall) Do() (*CommunityList, error) {
 	if v, ok := c.opt_["hl"]; ok {
 		params.Set("hl", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}/related")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "communities/{communityId}/related")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
@@ -3622,7 +3623,7 @@ func (c *CommunityTopicsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}/topics/{topicId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "communities/{communityId}/topics/{topicId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
@@ -3701,7 +3702,7 @@ func (c *CommunityTopicsGetCall) Do() (*CommunityTopic, error) {
 	if v, ok := c.opt_["hl"]; ok {
 		params.Set("hl", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}/topics/{topicId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "communities/{communityId}/topics/{topicId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
@@ -3798,7 +3799,7 @@ func (c *CommunityTopicsInsertCall) Do() (*CommunityTopic, error) {
 	if v, ok := c.opt_["isShout"]; ok {
 		params.Set("isShout", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}/topics")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "communities/{communityId}/topics")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
@@ -3902,7 +3903,7 @@ func (c *CommunityTopicsListCall) Do() (*CommunityTopicList, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "communities/{communityId}/topics")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "communities/{communityId}/topics")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
@@ -3986,7 +3987,7 @@ func (c *CountersListCall) Do() (*Counters, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "people/{userId}/counters")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "people/{userId}/counters")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{userId}", url.QueryEscape(c.userId), 1)
@@ -4056,7 +4057,7 @@ func (c *ScrapsInsertCall) Do() (*Activity, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/orkut/v2/", "activities/scraps")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "activities/scraps")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)

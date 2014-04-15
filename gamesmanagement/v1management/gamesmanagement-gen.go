@@ -53,7 +53,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client}
+	s := &Service{client: client, BasePath: basePath}
 	s.Achievements = NewAchievementsService(s)
 	s.Applications = NewApplicationsService(s)
 	s.Players = NewPlayersService(s)
@@ -64,7 +64,8 @@ func New(client *http.Client) (*Service, error) {
 }
 
 type Service struct {
-	client *http.Client
+	client   *http.Client
+	BasePath string // API endpoint base URL
 
 	Achievements *AchievementsService
 
@@ -217,8 +218,20 @@ type Player struct {
 	// for PLAYED_WITH player collection members.
 	LastPlayedWith *GamesPlayedResource `json:"lastPlayedWith,omitempty"`
 
+	// Name: An object representation of the individual components of the
+	// player's name.
+	Name *PlayerName `json:"name,omitempty"`
+
 	// PlayerId: The ID of the player.
 	PlayerId string `json:"playerId,omitempty"`
+}
+
+type PlayerName struct {
+	// FamilyName: The family name (last name) of this player.
+	FamilyName string `json:"familyName,omitempty"`
+
+	// GivenName: The given name (first name) of this player.
+	GivenName string `json:"givenName,omitempty"`
 }
 
 type PlayerScoreResetResponse struct {
@@ -258,7 +271,7 @@ func (c *AchievementsResetCall) Do() (*AchievementResetResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1management/", "achievements/{achievementId}/reset")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "achievements/{achievementId}/reset")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{achievementId}", url.QueryEscape(c.achievementId), 1)
@@ -323,7 +336,7 @@ func (c *AchievementsResetAllCall) Do() (*AchievementResetAllResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1management/", "achievements/reset")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "achievements/reset")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -349,6 +362,66 @@ func (c *AchievementsResetAllCall) Do() (*AchievementResetAllResponse, error) {
 	//   "response": {
 	//     "$ref": "AchievementResetAllResponse"
 	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.login"
+	//   ]
+	// }
+
+}
+
+// method id "gamesManagement.achievements.resetForAllPlayers":
+
+type AchievementsResetForAllPlayersCall struct {
+	s             *Service
+	achievementId string
+	opt_          map[string]interface{}
+}
+
+// ResetForAllPlayers: Resets the achievement with the given ID for the
+// all players. This method is only available to user accounts for your
+// developer console. Only draft achievements can be reset.
+func (r *AchievementsService) ResetForAllPlayers(achievementId string) *AchievementsResetForAllPlayersCall {
+	c := &AchievementsResetForAllPlayersCall{s: r.s, opt_: make(map[string]interface{})}
+	c.achievementId = achievementId
+	return c
+}
+
+func (c *AchievementsResetForAllPlayersCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "achievements/{achievementId}/resetForAllPlayers")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{achievementId}", url.QueryEscape(c.achievementId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Resets the achievement with the given ID for the all players. This method is only available to user accounts for your developer console. Only draft achievements can be reset.",
+	//   "httpMethod": "POST",
+	//   "id": "gamesManagement.achievements.resetForAllPlayers",
+	//   "parameterOrder": [
+	//     "achievementId"
+	//   ],
+	//   "parameters": {
+	//     "achievementId": {
+	//       "description": "The ID of the achievement used by this method.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "achievements/{achievementId}/resetForAllPlayers",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/games",
 	//     "https://www.googleapis.com/auth/plus.login"
@@ -400,7 +473,7 @@ func (c *ApplicationsListHiddenCall) Do() (*HiddenPlayerList, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1management/", "applications/{applicationId}/players/hidden")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "applications/{applicationId}/players/hidden")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{applicationId}", url.QueryEscape(c.applicationId), 1)
@@ -482,7 +555,7 @@ func (c *PlayersHideCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1management/", "applications/{applicationId}/players/hidden/{playerId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "applications/{applicationId}/players/hidden/{playerId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{applicationId}", url.QueryEscape(c.applicationId), 1)
@@ -552,7 +625,7 @@ func (c *PlayersUnhideCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1management/", "applications/{applicationId}/players/hidden/{playerId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "applications/{applicationId}/players/hidden/{playerId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{applicationId}", url.QueryEscape(c.applicationId), 1)
@@ -618,7 +691,7 @@ func (c *RoomsResetCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1management/", "rooms/reset")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "rooms/reset")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -666,7 +739,7 @@ func (c *ScoresResetCall) Do() (*PlayerScoreResetResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1management/", "leaderboards/{leaderboardId}/scores/reset")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "leaderboards/{leaderboardId}/scores/reset")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{leaderboardId}", url.QueryEscape(c.leaderboardId), 1)
@@ -712,6 +785,66 @@ func (c *ScoresResetCall) Do() (*PlayerScoreResetResponse, error) {
 
 }
 
+// method id "gamesManagement.scores.resetForAllPlayers":
+
+type ScoresResetForAllPlayersCall struct {
+	s             *Service
+	leaderboardId string
+	opt_          map[string]interface{}
+}
+
+// ResetForAllPlayers: Reset scores for the specified leaderboard for
+// all players. This method is only available to user accounts for your
+// developer console. Only draft leaderboards can be reset.
+func (r *ScoresService) ResetForAllPlayers(leaderboardId string) *ScoresResetForAllPlayersCall {
+	c := &ScoresResetForAllPlayersCall{s: r.s, opt_: make(map[string]interface{})}
+	c.leaderboardId = leaderboardId
+	return c
+}
+
+func (c *ScoresResetForAllPlayersCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "leaderboards/{leaderboardId}/scores/resetForAllPlayers")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{leaderboardId}", url.QueryEscape(c.leaderboardId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Reset scores for the specified leaderboard for all players. This method is only available to user accounts for your developer console. Only draft leaderboards can be reset.",
+	//   "httpMethod": "POST",
+	//   "id": "gamesManagement.scores.resetForAllPlayers",
+	//   "parameterOrder": [
+	//     "leaderboardId"
+	//   ],
+	//   "parameters": {
+	//     "leaderboardId": {
+	//       "description": "The ID of the leaderboard.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "leaderboards/{leaderboardId}/scores/resetForAllPlayers",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.login"
+	//   ]
+	// }
+
+}
+
 // method id "gamesManagement.turnBasedMatches.reset":
 
 type TurnBasedMatchesResetCall struct {
@@ -730,7 +863,7 @@ func (c *TurnBasedMatchesResetCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1management/", "turnbasedmatches/reset")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "turnbasedmatches/reset")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)

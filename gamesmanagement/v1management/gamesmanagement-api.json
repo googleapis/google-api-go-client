@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"R6H4aXXmd1SZaWpEcGSkC2StmNw/ov44EoOftUAJSJNvA3rrfvGfPuU\"",
+ "etag": "\"kEk3sFj6Ef5_yR1-H3bAO6qw9mI/ezsqeTaysRk0TeNXoa9oSjBpsPM\"",
  "discoveryVersion": "v1",
  "id": "gamesManagement:v1management",
  "name": "gamesManagement",
@@ -204,6 +204,20 @@
      "$ref": "GamesPlayedResource",
      "description": "Details about the last time this player played a multiplayer game with the currently authenticated player. Populated for PLAYED_WITH player collection members."
     },
+    "name": {
+     "type": "object",
+     "description": "An object representation of the individual components of the player's name.",
+     "properties": {
+      "familyName": {
+       "type": "string",
+       "description": "The family name (last name) of this player."
+      },
+      "givenName": {
+       "type": "string",
+       "description": "The given name (first name) of this player."
+      }
+     }
+    },
     "playerId": {
      "type": "string",
      "description": "The ID of the player."
@@ -265,6 +279,27 @@
      "response": {
       "$ref": "AchievementResetAllResponse"
      },
+     "scopes": [
+      "https://www.googleapis.com/auth/games",
+      "https://www.googleapis.com/auth/plus.login"
+     ]
+    },
+    "resetForAllPlayers": {
+     "id": "gamesManagement.achievements.resetForAllPlayers",
+     "path": "achievements/{achievementId}/resetForAllPlayers",
+     "httpMethod": "POST",
+     "description": "Resets the achievement with the given ID for the all players. This method is only available to user accounts for your developer console. Only draft achievements can be reset.",
+     "parameters": {
+      "achievementId": {
+       "type": "string",
+       "description": "The ID of the achievement used by this method.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "achievementId"
+     ],
      "scopes": [
       "https://www.googleapis.com/auth/games",
       "https://www.googleapis.com/auth/plus.login"
@@ -408,6 +443,27 @@
      "response": {
       "$ref": "PlayerScoreResetResponse"
      },
+     "scopes": [
+      "https://www.googleapis.com/auth/games",
+      "https://www.googleapis.com/auth/plus.login"
+     ]
+    },
+    "resetForAllPlayers": {
+     "id": "gamesManagement.scores.resetForAllPlayers",
+     "path": "leaderboards/{leaderboardId}/scores/resetForAllPlayers",
+     "httpMethod": "POST",
+     "description": "Reset scores for the specified leaderboard for all players. This method is only available to user accounts for your developer console. Only draft leaderboards can be reset.",
+     "parameters": {
+      "leaderboardId": {
+       "type": "string",
+       "description": "The ID of the leaderboard.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "leaderboardId"
+     ],
      "scopes": [
       "https://www.googleapis.com/auth/games",
       "https://www.googleapis.com/auth/plus.login"

@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"R6H4aXXmd1SZaWpEcGSkC2StmNw/8QGfdt_0KvVRl31kpTeGh_Y8UjM\"",
+ "etag": "\"kEk3sFj6Ef5_yR1-H3bAO6qw9mI/7feCcsSBHiSVKUXs7gmA_Rg25gw\"",
  "discoveryVersion": "v1",
  "id": "androidpublisher:v1",
  "name": "androidpublisher",
@@ -66,6 +66,15 @@
    "location": "query"
   }
  },
+ "auth": {
+  "oauth2": {
+   "scopes": {
+    "https://www.googleapis.com/auth/androidpublisher": {
+     "description": "View and manage your Google Play Android Developer account"
+    }
+   }
+  }
+ },
  "schemas": {
   "SubscriptionPurchase": {
    "id": "SubscriptionPurchase",
@@ -126,6 +135,9 @@
       "packageName",
       "subscriptionId",
       "token"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/androidpublisher"
      ]
     },
     "get": {
@@ -160,7 +172,10 @@
      ],
      "response": {
       "$ref": "SubscriptionPurchase"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/androidpublisher"
+     ]
     }
    }
   }

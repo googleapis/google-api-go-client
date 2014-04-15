@@ -43,18 +43,31 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client}
+	s := &Service{client: client, BasePath: basePath}
+	s.Divisions = NewDivisionsService(s)
 	s.Elections = NewElectionsService(s)
 	s.Representatives = NewRepresentativesService(s)
 	return s, nil
 }
 
 type Service struct {
-	client *http.Client
+	client   *http.Client
+	BasePath string // API endpoint base URL
+
+	Divisions *DivisionsService
 
 	Elections *ElectionsService
 
 	Representatives *RepresentativesService
+}
+
+func NewDivisionsService(s *Service) *DivisionsService {
+	rs := &DivisionsService{s: s}
+	return rs
+}
+
+type DivisionsService struct {
+	s *Service
 }
 
 func NewElectionsService(s *Service) *ElectionsService {
@@ -254,6 +267,26 @@ type Contest struct {
 	Type string `json:"type,omitempty"`
 }
 
+type DivisionSearchResponse struct {
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "civicinfo#divisionSearchResponse".
+	Kind string `json:"kind,omitempty"`
+
+	Results []*DivisionSearchResult `json:"results,omitempty"`
+
+	// Status: The result of the request. One of: success,
+	// addressUnparseable, noAddressParameter, internalLookupFailure
+	Status string `json:"status,omitempty"`
+}
+
+type DivisionSearchResult struct {
+	// Name: The name of the division.
+	Name string `json:"name,omitempty"`
+
+	// OcdId: The unique Open Civic Data identifier for this division.
+	OcdId string `json:"ocdId,omitempty"`
+}
+
 type Election struct {
 	// ElectionDay: Day of the election in YYYY-MM-DD format.
 	ElectionDay string `json:"electionDay,omitempty"`
@@ -433,7 +466,7 @@ type RepresentativeInfoResponse struct {
 	// Status: The result of the request. One of: success,
 	// noStreetSegmentFound, addressUnparseable, noAddressParameter,
 	// multipleStreetSegmentsFound, electionOver, electionUnknown,
-	// internalLookupFailure
+	// internalLookupFailure, RequestedBothAddressAndOcdId
 	Status string `json:"status,omitempty"`
 }
 
@@ -517,6 +550,75 @@ type VoterInfoResponse struct {
 	Status string `json:"status,omitempty"`
 }
 
+// method id "civicinfo.divisions.search":
+
+type DivisionsSearchCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// Search: Searches for political divisions by their natural name or OCD
+// ID.
+func (r *DivisionsService) Search() *DivisionsSearchCall {
+	c := &DivisionsSearchCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+// Query sets the optional parameter "query": The search query. Queries
+// can cover any parts of a OCD ID or a human readable division name.
+// All words given in the query are treated as required patterns. In
+// addition to that, most query operators of the Apache Lucene library
+// are supported. See
+// http://lucene.apache.org/core/2_9_4/queryparsersyntax.html
+func (c *DivisionsSearchCall) Query(query string) *DivisionsSearchCall {
+	c.opt_["query"] = query
+	return c
+}
+
+func (c *DivisionsSearchCall) Do() (*DivisionSearchResponse, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["query"]; ok {
+		params.Set("query", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "representatives/division_search")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(DivisionSearchResponse)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Searches for political divisions by their natural name or OCD ID.",
+	//   "httpMethod": "GET",
+	//   "id": "civicinfo.divisions.search",
+	//   "parameters": {
+	//     "query": {
+	//       "description": "The search query. Queries can cover any parts of a OCD ID or a human readable division name. All words given in the query are treated as required patterns. In addition to that, most query operators of the Apache Lucene library are supported. See http://lucene.apache.org/core/2_9_4/queryparsersyntax.html",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "representatives/division_search",
+	//   "response": {
+	//     "$ref": "DivisionSearchResponse"
+	//   }
+	// }
+
+}
+
 // method id "civicinfo.elections.electionQuery":
 
 type ElectionsElectionQueryCall struct {
@@ -534,7 +636,7 @@ func (c *ElectionsElectionQueryCall) Do() (*ElectionsQueryResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/civicinfo/us_v1/", "elections")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "elections")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -601,7 +703,7 @@ func (c *ElectionsVoterInfoQueryCall) Do() (*VoterInfoResponse, error) {
 	if v, ok := c.opt_["officialOnly"]; ok {
 		params.Set("officialOnly", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/civicinfo/us_v1/", "voterinfo/{electionId}/lookup")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "voterinfo/{electionId}/lookup")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{electionId}", strconv.FormatInt(c.electionId, 10), 1)
@@ -701,7 +803,7 @@ func (c *RepresentativesRepresentativeInfoQueryCall) Do() (*RepresentativeInfoRe
 	if v, ok := c.opt_["ocdId"]; ok {
 		params.Set("ocdId", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/civicinfo/us_v1/", "representatives/lookup")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "representatives/lookup")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)

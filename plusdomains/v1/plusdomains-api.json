@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"R6H4aXXmd1SZaWpEcGSkC2StmNw/ozt-wXHp5zJmbnNr9rZygbg_eLg\"",
+ "etag": "\"kEk3sFj6Ef5_yR1-H3bAO6qw9mI/WecM2nVo3OjpAn6UNY8qcfnUtHQ\"",
  "discoveryVersion": "v1",
  "id": "plusDomains:v1",
  "name": "plusDomains",
@@ -590,6 +590,11 @@
      "type": "string",
      "description": "Identifies this resource as an audience. Value: \"plus#audience\".",
      "default": "plus#audience"
+    },
+    "memberCount": {
+     "type": "integer",
+     "description": "The number of people in this circle. This only applies if entity_type is CIRCLE.",
+     "format": "uint32"
     },
     "visibility": {
      "type": "string",

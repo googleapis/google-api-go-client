@@ -1,9 +1,10 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"R6H4aXXmd1SZaWpEcGSkC2StmNw/FxhARD4JOsHMcAGQZjSyDYmF74M\"",
+ "etag": "\"kEk3sFj6Ef5_yR1-H3bAO6qw9mI/mlESaLdrZYKCTBOwQidwTWARgSg\"",
  "discoveryVersion": "v1",
  "id": "adexchangebuyer:v1.2",
  "name": "adexchangebuyer",
+ "canonicalName": "Ad Exchange Buyer",
  "version": "v1.2",
  "title": "Ad Exchange Buyer API",
  "description": "Lets you manage your Ad Exchange Buyer account.",
@@ -384,6 +385,10 @@
      "description": "Resource type.",
      "default": "adexchangebuyer#directDeal"
     },
+    "name": {
+     "type": "string",
+     "description": "Deal name."
+    },
     "privateExchangeMinCpm": {
      "type": "string",
      "description": "The minimum price for this direct deal. In cpm micros of currency according to currency_code. If set, then this deal is eligible for the private exchange tier of buying (below fixed price priority, run as a second price auction).",
@@ -426,7 +431,7 @@
    "properties": {
     "calloutStatusRate": {
      "type": "array",
-     "description": "Rate of various prefiltering statuses per match.",
+     "description": "Rate of various prefiltering statuses per match. Please refer to the callout-status-codes.txt file for different statuses.",
      "items": {
       "type": "any"
      }
@@ -440,7 +445,7 @@
     },
     "creativeStatusRate": {
      "type": "array",
-     "description": "Rate of ads with a given status.",
+     "description": "Rate of ads with a given status. Please refer to the creative-status-codes.txt file for different statuses.",
      "items": {
       "type": "any"
      }
@@ -634,7 +639,7 @@
      "id": "adexchangebuyer.creatives.get",
      "path": "creatives/{accountId}/{buyerCreativeId}",
      "httpMethod": "GET",
-     "description": "Gets the status for a single creative.",
+     "description": "Gets the status for a single creative. A creative will be available 30-40 minutes after submission.",
      "parameters": {
       "accountId": {
        "type": "integer",
@@ -680,7 +685,7 @@
      "id": "adexchangebuyer.creatives.list",
      "path": "creatives",
      "httpMethod": "GET",
-     "description": "Retrieves a list of the authenticated user's active creatives.",
+     "description": "Retrieves a list of the authenticated user's active creatives. A creative will be available 30-40 minutes after submission.",
      "parameters": {
       "maxResults": {
        "type": "integer",

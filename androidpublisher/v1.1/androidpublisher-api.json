@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"R6H4aXXmd1SZaWpEcGSkC2StmNw/rbFsgXrSsgoNou2PDhCGXSJHp3w\"",
+ "etag": "\"kEk3sFj6Ef5_yR1-H3bAO6qw9mI/i7ndXglQkcB7KPR_-HCYBmUKBRE\"",
  "discoveryVersion": "v1",
  "id": "androidpublisher:v1.1",
  "name": "androidpublisher",
@@ -66,6 +66,15 @@
    "location": "query"
   }
  },
+ "auth": {
+  "oauth2": {
+   "scopes": {
+    "https://www.googleapis.com/auth/androidpublisher": {
+     "description": "View and manage your Google Play Android Developer account"
+    }
+   }
+  }
+ },
  "schemas": {
   "InappPurchase": {
    "id": "InappPurchase",
@@ -74,7 +83,7 @@
    "properties": {
     "consumptionState": {
      "type": "integer",
-     "description": "The consumption state of the inapp product. Possible values are:  \n- - Consumed \n- - Yet to be consumed",
+     "description": "The consumption state of the inapp product. Possible values are:  \n- Yet to be consumed \n- Consumed",
      "format": "int32"
     },
     "developerPayload": {
@@ -88,7 +97,7 @@
     },
     "purchaseState": {
      "type": "integer",
-     "description": "The purchase state of the order. Possible values are:  \n- - Purchased \n- - Cancelled",
+     "description": "The purchase state of the order. Possible values are:  \n- Purchased \n- Cancelled",
      "format": "int32"
     },
     "purchaseTime": {
@@ -160,7 +169,10 @@
      ],
      "response": {
       "$ref": "InappPurchase"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/androidpublisher"
+     ]
     }
    }
   },
@@ -195,6 +207,9 @@
       "packageName",
       "subscriptionId",
       "token"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/androidpublisher"
      ]
     },
     "get": {
@@ -229,7 +244,10 @@
      ],
      "response": {
       "$ref": "SubscriptionPurchase"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/androidpublisher"
+     ]
     }
    }
   }

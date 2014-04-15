@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"R6H4aXXmd1SZaWpEcGSkC2StmNw/YFPxU7eaEFYPNqG8FdTGUu1zyfQ\"",
+ "etag": "\"kEk3sFj6Ef5_yR1-H3bAO6qw9mI/xqSX7-n8LugACXqRoz62D83GEuE\"",
  "discoveryVersion": "v1",
  "id": "admin:directory_v1",
  "name": "admin",
@@ -3055,7 +3055,7 @@
       },
       "query": {
        "type": "string",
-       "description": "Query string for prefix matching searches. Should be of the form \"key:value*\" where key can be \"email\", \"givenName\" or \"familyName\". The asterisk is required, for example: \"givenName:Ann*\" is a valid query.",
+       "description": "Query string search. Should be of the form \"\" where field can be any of supported fields, operators can be one of '=' for exact match or ':' for prefix match. For prefix match, the value should always be followed by a *.",
        "location": "query"
       },
       "showDeleted": {
@@ -3249,7 +3249,7 @@
       },
       "query": {
        "type": "string",
-       "description": "Query string for prefix matching searches. Should be of the form \"key:value*\" where key can be \"email\", \"givenName\" or \"familyName\". The asterisk is required, for example: \"givenName:Ann*\" is a valid query.",
+       "description": "Query string search. Should be of the form \"\" where field can be any of supported fields, operators can be one of '=' for exact match or ':' for prefix match. For prefix match, the value should always be followed by a *.",
        "location": "query"
       },
       "showDeleted": {

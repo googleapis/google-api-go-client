@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"R6H4aXXmd1SZaWpEcGSkC2StmNw/lV8t-NZJJnHD2jAQ6XOk0Sq9WCQ\"",
+ "etag": "\"kEk3sFj6Ef5_yR1-H3bAO6qw9mI/_7T_t50z1qoOGh9ZOpbii06YKEs\"",
  "discoveryVersion": "v1",
  "id": "pagespeedonline:v1",
  "name": "pagespeedonline",
@@ -285,21 +285,6 @@
        "type": "string",
        "description": "Total size of all request bytes sent by the page.",
        "format": "int64"
-      }
-     }
-    },
-    "request": {
-     "type": "object",
-     "description": "Echo of certain request parameters.",
-     "properties": {
-      "filter_third_party_resources": {
-       "type": "string"
-      },
-      "strategy": {
-       "type": "string"
-      },
-      "url": {
-       "type": "string"
       }
      }
     },

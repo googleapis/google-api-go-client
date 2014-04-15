@@ -49,13 +49,14 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client}
+	s := &Service{client: client, BasePath: basePath}
 	s.Url = NewUrlService(s)
 	return s, nil
 }
 
 type Service struct {
-	client *http.Client
+	client   *http.Client
+	BasePath string // API endpoint base URL
 
 	Url *UrlService
 }
@@ -197,7 +198,7 @@ func (c *UrlGetCall) Do() (*Url, error) {
 	if v, ok := c.opt_["projection"]; ok {
 		params.Set("projection", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/urlshortener/v1/", "url")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "url")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -277,7 +278,7 @@ func (c *UrlInsertCall) Do() (*Url, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/urlshortener/v1/", "url")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "url")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -351,7 +352,7 @@ func (c *UrlListCall) Do() (*UrlHistory, error) {
 	if v, ok := c.opt_["start-token"]; ok {
 		params.Set("start-token", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/urlshortener/v1/", "url/history")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "url/history")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)

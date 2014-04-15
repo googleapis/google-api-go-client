@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"R6H4aXXmd1SZaWpEcGSkC2StmNw/dAIcmWtYiRHJopm0A2BwwF4VxsY\"",
+ "etag": "\"kEk3sFj6Ef5_yR1-H3bAO6qw9mI/NWyyDxpG_jUB4-BRItKBh_G9Iew\"",
  "discoveryVersion": "v1",
  "id": "plus:v1",
  "name": "plus",
@@ -897,7 +897,7 @@
     },
     "tickerSymbol": {
      "type": "string",
-     "description": "The exchange traded instrument associated with a Corporation object. The tickerSymbol is expressed as an exchange and an instrument name separated by a space character. For the exchange component of the tickerSymbol attribute, we reccommend using the controlled vocaulary of Market Identifier Codes (MIC) specified in ISO15022."
+     "description": "The exchange traded instrument associated with a Corporation object. The tickerSymbol is expressed as an exchange and an instrument name separated by a space character. For the exchange component of the tickerSymbol attribute, we recommend using the controlled vocabulary of Market Identifier Codes (MIC) specified in ISO15022."
     },
     "type": {
      "type": "string",

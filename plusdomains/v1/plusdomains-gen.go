@@ -77,7 +77,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client}
+	s := &Service{client: client, BasePath: basePath}
 	s.Activities = NewActivitiesService(s)
 	s.Audiences = NewAudiencesService(s)
 	s.Circles = NewCirclesService(s)
@@ -88,7 +88,8 @@ func New(client *http.Client) (*Service, error) {
 }
 
 type Service struct {
-	client *http.Client
+	client   *http.Client
+	BasePath string // API endpoint base URL
 
 	Activities *ActivitiesService
 
@@ -548,6 +549,10 @@ type Audience struct {
 	// Kind: Identifies this resource as an audience. Value:
 	// "plus#audience".
 	Kind string `json:"kind,omitempty"`
+
+	// MemberCount: The number of people in this circle. This only applies
+	// if entity_type is CIRCLE.
+	MemberCount int64 `json:"memberCount,omitempty"`
 
 	// Visibility: The circle members' visibility as chosen by the owner of
 	// the circle. This only applies for items with "item.type" equals
@@ -1238,7 +1243,7 @@ func (c *ActivitiesGetCall) Do() (*Activity, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/plusDomains/v1/", "activities/{activityId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "activities/{activityId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{activityId}", url.QueryEscape(c.activityId), 1)
@@ -1323,7 +1328,7 @@ func (c *ActivitiesInsertCall) Do() (*Activity, error) {
 	if v, ok := c.opt_["preview"]; ok {
 		params.Set("preview", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/plusDomains/v1/", "people/{userId}/activities")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "people/{userId}/activities")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{userId}", url.QueryEscape(c.userId), 1)
@@ -1425,7 +1430,7 @@ func (c *ActivitiesListCall) Do() (*ActivityFeed, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/plusDomains/v1/", "people/{userId}/activities/{collection}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "people/{userId}/activities/{collection}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{userId}", url.QueryEscape(c.userId), 1)
@@ -1543,7 +1548,7 @@ func (c *AudiencesListCall) Do() (*AudiencesFeed, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/plusDomains/v1/", "people/{userId}/audiences")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "people/{userId}/audiences")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{userId}", url.QueryEscape(c.userId), 1)
@@ -1644,7 +1649,7 @@ func (c *CirclesAddPeopleCall) Do() (*Circle, error) {
 	if v, ok := c.opt_["userId"]; ok {
 		params.Set("userId", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/plusDomains/v1/", "circles/{circleId}/people")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "circles/{circleId}/people")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{circleId}", url.QueryEscape(c.circleId), 1)
@@ -1721,7 +1726,7 @@ func (c *CirclesGetCall) Do() (*Circle, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/plusDomains/v1/", "circles/{circleId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "circles/{circleId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{circleId}", url.QueryEscape(c.circleId), 1)
@@ -1793,7 +1798,7 @@ func (c *CirclesInsertCall) Do() (*Circle, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/plusDomains/v1/", "people/{userId}/circles")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "people/{userId}/circles")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{userId}", url.QueryEscape(c.userId), 1)
@@ -1887,7 +1892,7 @@ func (c *CirclesListCall) Do() (*CircleFeed, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/plusDomains/v1/", "people/{userId}/circles")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "people/{userId}/circles")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{userId}", url.QueryEscape(c.userId), 1)
@@ -1975,7 +1980,7 @@ func (c *CirclesPatchCall) Do() (*Circle, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/plusDomains/v1/", "circles/{circleId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "circles/{circleId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{circleId}", url.QueryEscape(c.circleId), 1)
@@ -2044,7 +2049,7 @@ func (c *CirclesRemoveCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/plusDomains/v1/", "circles/{circleId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "circles/{circleId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{circleId}", url.QueryEscape(c.circleId), 1)
@@ -2122,7 +2127,7 @@ func (c *CirclesRemovePeopleCall) Do() error {
 	if v, ok := c.opt_["userId"]; ok {
 		params.Set("userId", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/plusDomains/v1/", "circles/{circleId}/people")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "circles/{circleId}/people")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{circleId}", url.QueryEscape(c.circleId), 1)
@@ -2199,7 +2204,7 @@ func (c *CirclesUpdateCall) Do() (*Circle, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/plusDomains/v1/", "circles/{circleId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "circles/{circleId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{circleId}", url.QueryEscape(c.circleId), 1)
@@ -2268,7 +2273,7 @@ func (c *CommentsGetCall) Do() (*Comment, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/plusDomains/v1/", "comments/{commentId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "comments/{commentId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{commentId}", url.QueryEscape(c.commentId), 1)
@@ -2340,7 +2345,7 @@ func (c *CommentsInsertCall) Do() (*Comment, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/plusDomains/v1/", "activities/{activityId}/comments")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "activities/{activityId}/comments")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{activityId}", url.QueryEscape(c.activityId), 1)
@@ -2443,7 +2448,7 @@ func (c *CommentsListCall) Do() (*CommentFeed, error) {
 	if v, ok := c.opt_["sortOrder"]; ok {
 		params.Set("sortOrder", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/plusDomains/v1/", "activities/{activityId}/comments")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "activities/{activityId}/comments")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{activityId}", url.QueryEscape(c.activityId), 1)
@@ -2553,7 +2558,7 @@ func (c *MediaInsertCall) Do() (*Media, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/plusDomains/v1/", "people/{userId}/media/{collection}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "people/{userId}/media/{collection}")
 	if c.media_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
 		params.Set("uploadType", "multipart")
@@ -2660,7 +2665,7 @@ func (c *PeopleGetCall) Do() (*Person, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/plusDomains/v1/", "people/{userId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "people/{userId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{userId}", url.QueryEscape(c.userId), 1)
@@ -2764,7 +2769,7 @@ func (c *PeopleListCall) Do() (*PeopleFeed, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/plusDomains/v1/", "people/{userId}/people/{collection}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "people/{userId}/people/{collection}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{userId}", url.QueryEscape(c.userId), 1)
@@ -2898,7 +2903,7 @@ func (c *PeopleListByActivityCall) Do() (*PeopleFeed, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/plusDomains/v1/", "activities/{activityId}/people/{collection}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "activities/{activityId}/people/{collection}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{activityId}", url.QueryEscape(c.activityId), 1)
@@ -3019,7 +3024,7 @@ func (c *PeopleListByCircleCall) Do() (*PeopleFeed, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/plusDomains/v1/", "circles/{circleId}/people")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "circles/{circleId}/people")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{circleId}", url.QueryEscape(c.circleId), 1)

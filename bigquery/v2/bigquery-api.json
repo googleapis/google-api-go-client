@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"R6H4aXXmd1SZaWpEcGSkC2StmNw/Kv0rhP9unqs8S9LiqPR3dzZNvDk\"",
+ "etag": "\"kEk3sFj6Ef5_yR1-H3bAO6qw9mI/Q_buGY2JsMDrpm6SMTOf_s_Obbo\"",
  "discoveryVersion": "v1",
  "id": "bigquery:v2",
  "name": "bigquery",
@@ -95,7 +95,7 @@
    "properties": {
     "access": {
      "type": "array",
-     "description": "[Optional] Describes users' rights on the dataset. You can assign the same role to multiple users, and assign multiple roles to the same user.\nDefault values assigned to a new dataset are as follows: OWNER - Project owners, dataset creator READER - Project readers WRITER - Project writers\nSee ACLs and Rights for a description of these rights. If you specify any of these roles when creating a dataset, the assigned roles will overwrite the defaults listed above.\nTo revoke rights to a dataset, call datasets.update() and omit the names of anyone whose rights you wish to revoke. However, every dataset must have at least one entity granted OWNER role.\nEach access object can have only one of the following members: userByEmail, groupByEmail, domain, or allAuthenticatedUsers.",
+     "description": "[Optional] An array of objects that define dataset access for one or more entities. You can set this property when inserting or updating a dataset in order to control who is allowed to access the data. If unspecified at dataset creation time, BigQuery adds default dataset access for the following entities: access.specialGroup: projectReaders; access.role: READER; access.specialGroup: projectWriters; access.role: WRITER; access.specialGroup: projectOwners; access.role: OWNER; access.userByEmail: [dataset creator email]; access.role: OWNER;",
      "items": {
       "type": "object",
       "properties": {
@@ -105,19 +105,19 @@
        },
        "groupByEmail": {
         "type": "string",
-        "description": "[Pick one] A fully-qualified email address of a mailing list to grant access to. This must be either a Google Groups mailing list (ends in @googlegroups.com) or a group managed by an enterprise version of Google Groups."
+        "description": "[Pick one] An email address of a Google Group to grant access to."
        },
        "role": {
         "type": "string",
-        "description": "[Required] Describes the rights granted to the user specified by the other member of the access object. The following string values are supported: READER - User can call any list() or get() method on any collection or resource. WRITER - User can call any method on any collection except for datasets, on which they can call list() and get(). OWNER - User can call any method. The dataset creator is granted this role by default."
+        "description": "[Required] Describes the rights granted to the user specified by the other member of the access object. The following string values are supported: READER, WRITER, OWNER."
        },
        "specialGroup": {
         "type": "string",
-        "description": "[Pick one] A special group to grant access to. The valid values are: projectOwners: Owners of the enclosing project. projectReaders: Readers of the enclosing project. projectWriters: Writers of the enclosing project. allAuthenticatedUsers: All authenticated BigQuery users."
+        "description": "[Pick one] A special group to grant access to. Possible values include: projectOwners: Owners of the enclosing project. projectReaders: Readers of the enclosing project. projectWriters: Writers of the enclosing project. allAuthenticatedUsers: All authenticated BigQuery users."
        },
        "userByEmail": {
         "type": "string",
-        "description": "[Pick one] A fully qualified email address of a user to grant access to. For example: fred@example.com."
+        "description": "[Pick one] An email address of a user to grant access to. For example: fred@example.com."
        }
       }
      }
@@ -129,23 +129,23 @@
     },
     "datasetReference": {
      "$ref": "DatasetReference",
-     "description": "[Required] Reference identifying dataset."
+     "description": "[Required] A reference that identifies the dataset."
     },
     "description": {
      "type": "string",
-     "description": "[Optional] A user-friendly string description for the dataset. This might be shown in BigQuery UI for browsing the dataset."
+     "description": "[Optional] A user-friendly description of the dataset."
     },
     "etag": {
      "type": "string",
-     "description": "[Output-only] A hash of this resource."
+     "description": "[Output-only] A hash of the resource."
     },
     "friendlyName": {
      "type": "string",
-     "description": "[Optional] A descriptive name for this dataset, which might be shown in any BigQuery user interfaces for browsing the dataset. Use datasetId for making API calls."
+     "description": "[Optional] A descriptive name for the dataset."
     },
     "id": {
      "type": "string",
-     "description": "[Output-only] The fully-qualified unique name of this dataset in the format projectId:datasetId. The dataset name without the project name is given in the datasetId field. When creating a new dataset, leave this field blank, and instead specify the datasetId field."
+     "description": "[Output-only] The fully-qualified unique name of the dataset in the format projectId:datasetId. The dataset name without the project name is given in the datasetId field. When creating a new dataset, leave this field blank, and instead specify the datasetId field."
     },
     "kind": {
      "type": "string",
@@ -159,7 +159,7 @@
     },
     "selfLink": {
      "type": "string",
-     "description": "[Output-only] An URL that can be used to access this resource again. You can use this URL in Get or Update requests to this resource."
+     "description": "[Output-only] A URL that can be used to access the resource again. You can use this URL in Get or Update requests to the resource."
     }
    }
   },
@@ -380,7 +380,14 @@
     },
     "destinationUri": {
      "type": "string",
-     "description": "[Required] The fully-qualified Google Cloud Storage URI where the extracted table should be written."
+     "description": "[Pick one] DEPRECATED: Use destinationUris instead, passing only one URI as necessary. The fully-qualified Google Cloud Storage URI where the extracted table should be written."
+    },
+    "destinationUris": {
+     "type": "array",
+     "description": "[Pick one] A list of fully-qualified Google Cloud Storage URIs where the extracted table should be written.",
+     "items": {
+      "type": "string"
+     }
     },
     "fieldDelimiter": {
      "type": "string",
@@ -388,7 +395,7 @@
     },
     "printHeader": {
      "type": "boolean",
-     "description": "[Optional] Whether to print out a heder row in the results. Default is true."
+     "description": "[Optional] Whether to print out a header row in the results. Default is true."
     },
     "sourceTable": {
      "$ref": "TableReference",
@@ -402,7 +409,7 @@
    "properties": {
     "createDisposition": {
      "type": "string",
-     "description": "[Optional] Whether or not to create a new table, if none exists."
+     "description": "[Optional] Specifies whether the job is allowed to create new tables. The following values are supported: CREATE_IF_NEEDED: If the table does not exist, BigQuery creates the table. CREATE_NEVER: The table must already exist. If it does not, a 'notFound' error is returned in the job result. The default value is CREATE_IF_NEEDED. Creation, truncation and append actions occur as one atomic update upon job completion."
     },
     "destinationTable": {
      "$ref": "TableReference",
@@ -417,7 +424,7 @@
     },
     "writeDisposition": {
      "type": "string",
-     "description": "[Optional] Whether to overwrite an existing table (WRITE_TRUNCATE), append to an existing table (WRITE_APPEND), or require that the the table is empty (WRITE_EMPTY). Default is WRITE_APPEND."
+     "description": "[Optional] Specifies the action that occurs if the destination table already exists. The following values are supported: WRITE_TRUNCATE: If the table already exists, BigQuery overwrites the table data. WRITE_APPEND: If the table already exists, BigQuery appends the data to the table. WRITE_EMPTY: If the table already exists and contains data, a 'duplicate' error is returned in the job result. The default value is WRITE_EMPTY. Each action is atomic and only occurs if BigQuery is able to complete the job successfully. Creation, truncation and append actions occur as one atomic update upon job completion."
     }
    }
   },
@@ -448,6 +455,10 @@
     "fieldDelimiter": {
      "type": "string",
      "description": "[Optional] The separator for fields in a CSV file. BigQuery converts the string to ISO-8859-1 encoding, and then uses the first byte of the encoded string to split the data in its raw, binary state. BigQuery also supports the escape sequence \"\\t\" to specify a tab separator. The default value is a comma (',')."
+    },
+    "ignoreUnknownValues": {
+     "type": "boolean",
+     "description": "[Optional] Accept rows that contain values that do not match the schema. The unknown values are ignored. Default is false which treats unknown values as errors. For CSV this ignores extra values at the end of a line. For JSON this ignores named values that do not match any column name."
     },
     "maxBadRecords": {
      "type": "integer",
@@ -488,7 +499,7 @@
     },
     "writeDisposition": {
      "type": "string",
-     "description": "[Optional] Specifies the action that occurs if the destination table already exists. Each action is atomic and only occurs if BigQuery is able to fully load the data and the load job completes without error. The following values are supported: WRITE_TRUNCATE: If the table already exists, BigQuery overwrites the table. WRITE_APPEND: If the table already exists, BigQuery appends the data to the table. WRITE_EMPTY: If the table already exists, a 'duplicate' error is returned in the job result. Creation, truncation and append actions occur as one atomic update upon job completion."
+     "description": "[Optional] Specifies the action that occurs if the destination table already exists. The following values are supported: WRITE_TRUNCATE: If the table already exists, BigQuery overwrites the table data. WRITE_APPEND: If the table already exists, BigQuery appends the data to the table. WRITE_EMPTY: If the table already exists and contains data, a 'duplicate' error is returned in the job result. The default value is WRITE_EMPTY. Each action is atomic and only occurs if BigQuery is able to complete the job successfully. Creation, truncation and append actions occur as one atomic update upon job completion."
     }
    }
   },
@@ -502,11 +513,11 @@
     },
     "createDisposition": {
      "type": "string",
-     "description": "[Optional] Whether to create the table if it doesn't already exist (CREATE_IF_NEEDED) or to require the table already exist (CREATE_NEVER). Default is CREATE_IF_NEEDED."
+     "description": "[Optional] Specifies whether the job is allowed to create new tables. The following values are supported: CREATE_IF_NEEDED: If the table does not exist, BigQuery creates the table. CREATE_NEVER: The table must already exist. If it does not, a 'notFound' error is returned in the job result. The default value is CREATE_IF_NEEDED. Creation, truncation and append actions occur as one atomic update upon job completion."
     },
     "defaultDataset": {
      "$ref": "DatasetReference",
-     "description": "[Optional] Specifies the default dataset to assume for unqualified table names in the query."
+     "description": "[Optional] Specifies the default dataset to use for unqualified table names in the query."
     },
     "destinationTable": {
      "$ref": "TableReference",
@@ -514,11 +525,11 @@
     },
     "preserveNulls": {
      "type": "boolean",
-     "description": "[Experimental] If set, preserve null values in table data, rather than mapping null values to the column's default value. This flag currently defaults to false, but the default will soon be changed to true. Shortly afterward, this flag will be removed completely. Please specify true if possible, and false only if you need to force the old behavior while updating client code."
+     "description": "[Deprecated] This property is deprecated."
     },
     "priority": {
      "type": "string",
-     "description": "[Optional] Specifies a priority for the query. Default is INTERACTIVE. Alternative is BATCH."
+     "description": "[Optional] Specifies a priority for the query. Possible values include INTERACTIVE and BATCH. The default value is INTERACTIVE."
     },
     "query": {
      "type": "string",
@@ -530,7 +541,7 @@
     },
     "writeDisposition": {
      "type": "string",
-     "description": "[Optional] Whether to overwrite an existing table (WRITE_TRUNCATE), append to an existing table (WRITE_APPEND), or require that the the table is empty (WRITE_EMPTY). Default is WRITE_EMPTY."
+     "description": "[Optional] Specifies the action that occurs if the destination table already exists. The following values are supported: WRITE_TRUNCATE: If the table already exists, BigQuery overwrites the table data. WRITE_APPEND: If the table already exists, BigQuery appends the data to the table. WRITE_EMPTY: If the table already exists and contains data, a 'duplicate' error is returned in the job result. The default value is WRITE_EMPTY. Each action is atomic and only occurs if BigQuery is able to complete the job successfully. Creation, truncation and append actions occur as one atomic update upon job completion."
     }
    }
   },
@@ -540,7 +551,7 @@
    "properties": {
     "createDisposition": {
      "type": "string",
-     "description": "[Optional] Whether or not to create a new table, if none exists."
+     "description": "[Optional] Specifies whether the job is allowed to create new tables. The following values are supported: CREATE_IF_NEEDED: If the table does not exist, BigQuery creates the table. CREATE_NEVER: The table must already exist. If it does not, a 'notFound' error is returned in the job result. The default value is CREATE_IF_NEEDED. Creation, truncation and append actions occur as one atomic update upon job completion."
     },
     "destinationTable": {
      "$ref": "TableReference",
@@ -552,7 +563,7 @@
     },
     "writeDisposition": {
      "type": "string",
-     "description": "[Optional] Whether or not to append or require the table to be empty."
+     "description": "[Optional] Specifies the action that occurs if the destination table already exists. The following values are supported: WRITE_TRUNCATE: If the table already exists, BigQuery overwrites the table data. WRITE_APPEND: If the table already exists, BigQuery appends the data to the table. WRITE_EMPTY: If the table already exists and contains data, a 'duplicate' error is returned in the job result. The default value is WRITE_EMPTY. Each action is atomic and only occurs if BigQuery is able to complete the job successfully. Creation, truncation and append actions occur as one atomic update upon job completion."
     }
    }
   },
@@ -978,6 +989,14 @@
     "tableReference": {
      "$ref": "TableReference",
      "description": "[Required] Reference describing the ID of this table."
+    },
+    "type": {
+     "type": "string",
+     "description": "[Output-only] Describes the table type. The following values are supported: TABLE: A normal BigQuery table. VIEW: A virtual table defined by a SQL query. The default value is TABLE."
+    },
+    "view": {
+     "$ref": "ViewDefinition",
+     "description": "[Optional] The view definition."
     }
    }
   },
@@ -1066,7 +1085,7 @@
     },
     "pageToken": {
      "type": "string",
-     "description": "A token used for paging results. Providing this token instead of the startRow parameter can help you retrieve stable results when an underlying table is changing."
+     "description": "A token used for paging results. Providing this token instead of the startIndex parameter can help you retrieve stable results when an underlying table is changing."
     },
     "rows": {
      "type": "array",
@@ -1150,6 +1169,10 @@
        "tableReference": {
         "$ref": "TableReference",
         "description": "A reference uniquely identifying the table."
+       },
+       "type": {
+        "type": "string",
+        "description": "The type of table. Possible values are: TABLE, VIEW."
        }
       }
      }
@@ -1217,6 +1240,16 @@
      "items": {
       "$ref": "TableFieldSchema"
      }
+    }
+   }
+  },
+  "ViewDefinition": {
+   "id": "ViewDefinition",
+   "type": "object",
+   "properties": {
+    "query": {
+     "type": "string",
+     "description": "[Required] A query that BigQuery executes when the view is referenced."
     }
    }
   }

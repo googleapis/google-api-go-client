@@ -43,13 +43,14 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client}
+	s := &Service{client: client, BasePath: basePath}
 	s.Relyingparty = NewRelyingpartyService(s)
 	return s, nil
 }
 
 type Service struct {
-	client *http.Client
+	client   *http.Client
+	BasePath string // API endpoint base URL
 
 	Relyingparty *RelyingpartyService
 }
@@ -87,15 +88,15 @@ type DeleteAccountResponse struct {
 }
 
 type DownloadAccountResponse struct {
-	// Accounts: The user accounts data.
-	Accounts []interface{} `json:"accounts,omitempty"`
-
 	// Kind: The fixed string "identitytoolkit#DownloadAccountResponse".
 	Kind string `json:"kind,omitempty"`
 
 	// NextPageToken: The next page token. To be used in a subsequent
 	// request to return the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Users: The user accounts data.
+	Users []*UserInfo `json:"users,omitempty"`
 }
 
 type GetAccountInfoResponse struct {
@@ -103,62 +104,7 @@ type GetAccountInfoResponse struct {
 	Kind string `json:"kind,omitempty"`
 
 	// Users: The info of the users.
-	Users []*GetAccountInfoResponseUsers `json:"users,omitempty"`
-}
-
-type GetAccountInfoResponseUsers struct {
-	// DateOfBirth: The user's date of birth.
-	DateOfBirth string `json:"dateOfBirth,omitempty"`
-
-	// DisplayName: The name of the user.
-	DisplayName string `json:"displayName,omitempty"`
-
-	// Email: The email returned by the IdP. NOTE: The federated login user
-	// may not own the email.
-	Email string `json:"email,omitempty"`
-
-	// Language: The language of the user.
-	Language string `json:"language,omitempty"`
-
-	// LocalId: The local ID of the user.
-	LocalId string `json:"localId,omitempty"`
-
-	// Password: The user's hashed password.
-	Password string `json:"password,omitempty"`
-
-	// PasswordUpdatedAt: The timestamp when the password was last updated.
-	PasswordUpdatedAt float64 `json:"passwordUpdatedAt,omitempty"`
-
-	// PhotoUrl: The URL of the user profile photo.
-	PhotoUrl string `json:"photoUrl,omitempty"`
-
-	// ProviderUserInfo: The IDP of the user.
-	ProviderUserInfo []*GetAccountInfoResponseUsersProviderUserInfo `json:"providerUserInfo,omitempty"`
-
-	// Salt: The user's password salt.
-	Salt string `json:"salt,omitempty"`
-
-	// TimeZone: The time zone of the user.
-	TimeZone string `json:"timeZone,omitempty"`
-
-	// Version: Version of the user's password.
-	Version int64 `json:"version,omitempty"`
-}
-
-type GetAccountInfoResponseUsersProviderUserInfo struct {
-	// DisplayName: The user's display name at the IDP.
-	DisplayName string `json:"displayName,omitempty"`
-
-	// FederatedId: User's identifier at IDP.
-	FederatedId string `json:"federatedId,omitempty"`
-
-	// PhotoUrl: The user's photo url at the IDP.
-	PhotoUrl string `json:"photoUrl,omitempty"`
-
-	// ProviderId: The IdP ID. For white listed IdPs it's a short domain
-	// name, e.g., google.com, aol.com, live.net and yahoo.com. For other
-	// OpenID IdPs it's the OP identifier.
-	ProviderId string `json:"providerId,omitempty"`
+	Users []*UserInfo `json:"users,omitempty"`
 }
 
 type GetOobConfirmationCodeResponse struct {
@@ -243,6 +189,12 @@ type IdentitytoolkitRelyingpartyResetPasswordRequest struct {
 }
 
 type IdentitytoolkitRelyingpartySetAccountInfoRequest struct {
+	// CaptchaChallenge: The captcha challenge.
+	CaptchaChallenge string `json:"captchaChallenge,omitempty"`
+
+	// CaptchaResponse: Response to the captcha.
+	CaptchaResponse string `json:"captchaResponse,omitempty"`
+
 	// DisplayName: The name of the user.
 	DisplayName string `json:"displayName,omitempty"`
 
@@ -282,8 +234,8 @@ type IdentitytoolkitRelyingpartyUploadAccountRequest struct {
 
 	SignerKey string `json:"signerKey,omitempty"`
 
-	// UserAccount: The account info to be stored.
-	UserAccount []*Userinfo `json:"userAccount,omitempty"`
+	// Users: The account info to be stored.
+	Users []*UserInfo `json:"users,omitempty"`
 }
 
 type IdentitytoolkitRelyingpartyVerifyAssertionRequest struct {
@@ -397,21 +349,52 @@ type UploadAccountResponseError struct {
 	Message string `json:"message,omitempty"`
 }
 
-type Userinfo struct {
-	// Email: email
+type UserInfo struct {
+	// DisplayName: The name of the user.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Email: The email of the user.
 	Email string `json:"email,omitempty"`
 
-	// Kind: Identifies this object as a user info.
-	Kind string `json:"kind,omitempty"`
+	// EmailVerified: Whether the email has been verified.
+	EmailVerified bool `json:"emailVerified,omitempty"`
 
-	// LocalId: user's id at the site
+	// LocalId: The local ID of the user.
 	LocalId string `json:"localId,omitempty"`
 
-	// Password: password
-	Password string `json:"password,omitempty"`
+	// PasswordHash: The user's hashed password.
+	PasswordHash string `json:"passwordHash,omitempty"`
 
-	// Salt: salt
+	// PasswordUpdatedAt: The timestamp when the password was last updated.
+	PasswordUpdatedAt float64 `json:"passwordUpdatedAt,omitempty"`
+
+	// PhotoUrl: The URL of the user profile photo.
+	PhotoUrl string `json:"photoUrl,omitempty"`
+
+	// ProviderUserInfo: The IDP of the user.
+	ProviderUserInfo []*UserInfoProviderUserInfo `json:"providerUserInfo,omitempty"`
+
+	// Salt: The user's password salt.
 	Salt string `json:"salt,omitempty"`
+
+	// Version: Version of the user's password.
+	Version int64 `json:"version,omitempty"`
+}
+
+type UserInfoProviderUserInfo struct {
+	// DisplayName: The user's display name at the IDP.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// FederatedId: User's identifier at IDP.
+	FederatedId string `json:"federatedId,omitempty"`
+
+	// PhotoUrl: The user's photo url at the IDP.
+	PhotoUrl string `json:"photoUrl,omitempty"`
+
+	// ProviderId: The IdP ID. For white listed IdPs it's a short domain
+	// name, e.g., google.com, aol.com, live.net and yahoo.com. For other
+	// OpenID IdPs it's the OP identifier.
+	ProviderId string `json:"providerId,omitempty"`
 }
 
 type VerifyAssertionResponse struct {
@@ -562,7 +545,7 @@ func (c *RelyingpartyCreateAuthUriCall) Do() (*CreateAuthUriResponse, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/identitytoolkit/v3/relyingparty/", "createAuthUri")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "createAuthUri")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -620,7 +603,7 @@ func (c *RelyingpartyDeleteAccountCall) Do() (*DeleteAccountResponse, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/identitytoolkit/v3/relyingparty/", "deleteAccount")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "deleteAccount")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -678,7 +661,7 @@ func (c *RelyingpartyDownloadAccountCall) Do() (*DownloadAccountResponse, error)
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/identitytoolkit/v3/relyingparty/", "downloadAccount")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "downloadAccount")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -736,7 +719,7 @@ func (c *RelyingpartyGetAccountInfoCall) Do() (*GetAccountInfoResponse, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/identitytoolkit/v3/relyingparty/", "getAccountInfo")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "getAccountInfo")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -794,7 +777,7 @@ func (c *RelyingpartyGetOobConfirmationCodeCall) Do() (*GetOobConfirmationCodeRe
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/identitytoolkit/v3/relyingparty/", "getOobConfirmationCode")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "getOobConfirmationCode")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -852,7 +835,7 @@ func (c *RelyingpartyResetPasswordCall) Do() (*ResetPasswordResponse, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/identitytoolkit/v3/relyingparty/", "resetPassword")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "resetPassword")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -910,7 +893,7 @@ func (c *RelyingpartySetAccountInfoCall) Do() (*SetAccountInfoResponse, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/identitytoolkit/v3/relyingparty/", "setAccountInfo")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "setAccountInfo")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -968,7 +951,7 @@ func (c *RelyingpartyUploadAccountCall) Do() (*UploadAccountResponse, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/identitytoolkit/v3/relyingparty/", "uploadAccount")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "uploadAccount")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -1026,7 +1009,7 @@ func (c *RelyingpartyVerifyAssertionCall) Do() (*VerifyAssertionResponse, error)
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/identitytoolkit/v3/relyingparty/", "verifyAssertion")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "verifyAssertion")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -1084,7 +1067,7 @@ func (c *RelyingpartyVerifyPasswordCall) Do() (*VerifyPasswordResponse, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/identitytoolkit/v3/relyingparty/", "verifyPassword")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "verifyPassword")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)

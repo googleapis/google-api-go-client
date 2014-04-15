@@ -52,14 +52,15 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client}
+	s := &Service{client: client, BasePath: basePath}
 	s.Taskqueues = NewTaskqueuesService(s)
 	s.Tasks = NewTasksService(s)
 	return s, nil
 }
 
 type Service struct {
-	client *http.Client
+	client   *http.Client
+	BasePath string // API endpoint base URL
 
 	Taskqueues *TaskqueuesService
 
@@ -213,7 +214,7 @@ func (c *TaskqueuesGetCall) Do() (*TaskQueue, error) {
 	if v, ok := c.opt_["getStats"]; ok {
 		params.Set("getStats", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/taskqueue/v1beta2/projects/", "{project}/taskqueues/{taskqueue}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/taskqueues/{taskqueue}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -295,7 +296,7 @@ func (c *TasksDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/taskqueue/v1beta2/projects/", "{project}/taskqueues/{taskqueue}/tasks/{task}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/taskqueues/{taskqueue}/tasks/{task}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -373,7 +374,7 @@ func (c *TasksGetCall) Do() (*Task, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/taskqueue/v1beta2/projects/", "{project}/taskqueues/{taskqueue}/tasks/{task}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/taskqueues/{taskqueue}/tasks/{task}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -463,7 +464,7 @@ func (c *TasksInsertCall) Do() (*Task, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/taskqueue/v1beta2/projects/", "{project}/taskqueues/{taskqueue}/tasks")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/taskqueues/{taskqueue}/tasks")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -570,7 +571,7 @@ func (c *TasksLeaseCall) Do() (*Tasks, error) {
 	if v, ok := c.opt_["tag"]; ok {
 		params.Set("tag", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/taskqueue/v1beta2/projects/", "{project}/taskqueues/{taskqueue}/tasks/lease")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/taskqueues/{taskqueue}/tasks/lease")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -671,7 +672,7 @@ func (c *TasksListCall) Do() (*Tasks2, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/taskqueue/v1beta2/projects/", "{project}/taskqueues/{taskqueue}/tasks")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/taskqueues/{taskqueue}/tasks")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -759,7 +760,7 @@ func (c *TasksPatchCall) Do() (*Task, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("newLeaseSeconds", fmt.Sprintf("%v", c.newLeaseSeconds))
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/taskqueue/v1beta2/projects/", "{project}/taskqueues/{taskqueue}/tasks/{task}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/taskqueues/{taskqueue}/tasks/{task}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
@@ -864,7 +865,7 @@ func (c *TasksUpdateCall) Do() (*Task, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("newLeaseSeconds", fmt.Sprintf("%v", c.newLeaseSeconds))
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/taskqueue/v1beta2/projects/", "{project}/taskqueues/{taskqueue}/tasks/{task}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/taskqueues/{taskqueue}/tasks/{task}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)

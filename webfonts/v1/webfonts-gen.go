@@ -43,13 +43,14 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client}
+	s := &Service{client: client, BasePath: basePath}
 	s.Webfonts = NewWebfontsService(s)
 	return s, nil
 }
 
 type Service struct {
-	client *http.Client
+	client   *http.Client
+	BasePath string // API endpoint base URL
 
 	Webfonts *WebfontsService
 }
@@ -64,6 +65,9 @@ type WebfontsService struct {
 }
 
 type Webfont struct {
+	// Category: The category of the font.
+	Category string `json:"category,omitempty"`
+
 	// Family: The name of the font.
 	Family string `json:"family,omitempty"`
 
@@ -127,7 +131,7 @@ func (c *WebfontsListCall) Do() (*WebfontList, error) {
 	if v, ok := c.opt_["sort"]; ok {
 		params.Set("sort", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/webfonts/v1/", "webfonts")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "webfonts")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)

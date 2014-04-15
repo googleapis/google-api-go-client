@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"R6H4aXXmd1SZaWpEcGSkC2StmNw/OFXClfv6OCS3sTJnuMIzhjS2gtA\"",
+ "etag": "\"kEk3sFj6Ef5_yR1-H3bAO6qw9mI/jwIJIppaaUqSDha_itkGyYVYL5s\"",
  "discoveryVersion": "v1",
  "id": "groupssettings:v1",
  "name": "groupssettings",
@@ -168,6 +168,10 @@
      "type": "string",
      "description": "Moderation level for messages detected as spam. Possible values are: ALLOW MODERATE SILENTLY_MODERATE REJECT"
     },
+    "whoCanContactOwner": {
+     "type": "string",
+     "description": "Permission to contact owner of the group via web UI. Possbile values are: ANYONE_CAN_CONTACT ALL_IN_DOMAIN_CAN_CONTACT ALL_MEMBERS_CAN_CONTACT ALL_MANAGERS_CAN_CONTACT"
+    },
     "whoCanInvite": {
      "type": "string",
      "description": "Permissions to invite members. Possbile values are: ALL_MEMBERS_CAN_INVITE ALL_MANAGERS_CAN_INVITE"
@@ -175,6 +179,10 @@
     "whoCanJoin": {
      "type": "string",
      "description": "Permissions to join the group. Possible values are: ANYONE_CAN_JOIN ALL_IN_DOMAIN_CAN_JOIN INVITED_CAN_JOIN CAN_REQUEST_TO_JOIN"
+    },
+    "whoCanLeaveGroup": {
+     "type": "string",
+     "description": "Permission to leave the group. Possible values are: ALL_MANAGERS_CAN_LEAVE ALL_MEMBERS_CAN_LEAVE"
     },
     "whoCanPostMessage": {
      "type": "string",

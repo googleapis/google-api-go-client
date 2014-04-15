@@ -43,13 +43,14 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client}
+	s := &Service{client: client, BasePath: basePath}
 	s.Pagespeedapi = NewPagespeedapiService(s)
 	return s, nil
 }
 
 type Service struct {
-	client *http.Client
+	client   *http.Client
+	BasePath string // API endpoint base URL
 
 	Pagespeedapi *PagespeedapiService
 }
@@ -83,9 +84,6 @@ type Result struct {
 	// PageStats: Summary statistics for the page, such as number of
 	// JavaScript bytes, number of HTML bytes, etc.
 	PageStats *ResultPageStats `json:"pageStats,omitempty"`
-
-	// Request: Echo of certain request parameters.
-	Request *ResultRequest `json:"request,omitempty"`
 
 	// ResponseCode: Response code for the document. 200 indicates a normal
 	// page load. 4xx/5xx indicates an error.
@@ -168,14 +166,6 @@ type ResultPageStats struct {
 
 	// TotalRequestBytes: Total size of all request bytes sent by the page.
 	TotalRequestBytes int64 `json:"totalRequestBytes,omitempty,string"`
-}
-
-type ResultRequest struct {
-	Filter_third_party_resources string `json:"filter_third_party_resources,omitempty"`
-
-	Strategy string `json:"strategy,omitempty"`
-
-	Url string `json:"url,omitempty"`
 }
 
 type ResultScreenshot struct {
@@ -285,7 +275,7 @@ func (c *PagespeedapiRunpagespeedCall) Do() (*Result, error) {
 	if v, ok := c.opt_["strategy"]; ok {
 		params.Set("strategy", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/pagespeedonline/v1/", "runPagespeed")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "runPagespeed")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)

@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"R6H4aXXmd1SZaWpEcGSkC2StmNw/IDoOMQcdCXbs-r4-e9r1yLsOZZ8\"",
+ "etag": "\"kEk3sFj6Ef5_yR1-H3bAO6qw9mI/CD7bDR9g9q-XnWpJ4P4rUZfTgmg\"",
  "discoveryVersion": "v1",
  "id": "sqladmin:v1beta3",
  "name": "sqladmin",
@@ -16,10 +16,10 @@
  },
  "documentationLink": "https://developers.google.com/cloud-sql/docs/admin-api/",
  "protocol": "rest",
- "baseUrl": "https://www.googleapis.com/sql/v1beta3/projects/",
- "basePath": "/sql/v1beta3/projects/",
+ "baseUrl": "https://www.googleapis.com/sql/v1beta3/",
+ "basePath": "/sql/v1beta3/",
  "rootUrl": "https://www.googleapis.com/",
- "servicePath": "sql/v1beta3/projects/",
+ "servicePath": "sql/v1beta3/",
  "batchPath": "batch",
  "parameters": {
   "alt": {
@@ -178,6 +178,66 @@
     }
    }
   },
+  "BinLogCoordinates": {
+   "id": "BinLogCoordinates",
+   "type": "object",
+   "description": "Binary log coordinates.",
+   "properties": {
+    "binLogFileName": {
+     "type": "string",
+     "description": "Name of the binary log file for a Cloud SQL instance."
+    },
+    "binLogPosition": {
+     "type": "string",
+     "description": "Position (offset) within the binary log file.",
+     "format": "int64"
+    },
+    "kind": {
+     "type": "string",
+     "description": "This is always sql#binLogCoordinates.",
+     "default": "sql#binLogCoordinates"
+    }
+   }
+  },
+  "CloneContext": {
+   "id": "CloneContext",
+   "type": "object",
+   "description": "Database instance clone context.",
+   "properties": {
+    "binLogCoordinates": {
+     "$ref": "BinLogCoordinates",
+     "description": "Binary log coordinates, if specified, indentify the the position up to which the source instance should be cloned. If not specified, the source instance is cloned up to the most recent binary log coordintes."
+    },
+    "destinationInstanceName": {
+     "type": "string",
+     "description": "Name of the Cloud SQL instance to be created as a clone."
+    },
+    "kind": {
+     "type": "string",
+     "description": "This is always sql#cloneContext.",
+     "default": "sql#cloneContext"
+    },
+    "sourceInstanceName": {
+     "type": "string",
+     "description": "Name of the Cloud SQL instance to be cloned."
+    }
+   }
+  },
+  "DatabaseFlags": {
+   "id": "DatabaseFlags",
+   "type": "object",
+   "description": "MySQL flags for Cloud SQL instances.",
+   "properties": {
+    "name": {
+     "type": "string",
+     "description": "The name of the flag. These flags are passed at instance startup, so include both MySQL server options and MySQL system variables. Flags should be specified with underscores, not hyphens. Refer to the official MySQL documentation on server options and system variables for descriptions of what these flags do. Acceptable values are:  event_scheduler on or off (Note: The event scheduler will only work reliably if the instance activationPolicy is set to ALWAYS.) general_log on or off group_concat_max_len 4..17179869184 innodb_flush_log_at_trx_commit 0..2 innodb_lock_wait_timeout 1..1073741824 log_bin_trust_function_creators on or off log_output Can be either TABLE or NONE, FILE is not supported. log_queries_not_using_indexes on or off long_query_time 0..30000000 lower_case_table_names 0..2 max_allowed_packet 16384..1073741824 read_only on or off skip_show_database on or off slow_query_log on or off wait_timeout 1..31536000"
+    },
+    "value": {
+     "type": "string",
+     "description": "The value of the flag. Booleans should be set using 1 for true, and 0 for false. This field must be omitted if the flag doesn't take a value."
+    }
+   }
+  },
   "DatabaseInstance": {
    "id": "DatabaseInstance",
    "type": "object",
@@ -235,7 +295,7 @@
     },
     "region": {
      "type": "string",
-     "description": "The geographical region. Can be us-east1, us-central or europe-west1. Defaults to us-central. The region can not be changed after instance creation."
+     "description": "The geographical region. Can be us-east1, us-central, asia-east1 or europe-west1. Defaults to us-central. The region can not be changed after instance creation."
     },
     "serverCaCert": {
      "$ref": "SslCert",
@@ -278,6 +338,69 @@
     "uri": {
      "type": "string",
      "description": "The path to the file in Google Cloud Storage where the export will be stored, or where it was already stored. The URI is in the form gs://bucketName/fileName. If the file already exists, the operation fails. If the filename ends with .gz, the contents are compressed."
+    }
+   }
+  },
+  "Flag": {
+   "id": "Flag",
+   "type": "object",
+   "description": "A Google Cloud SQL service flag resource.",
+   "properties": {
+    "allowedStringValues": {
+     "type": "array",
+     "description": "For STRING flags, a list of strings that the value can be set to.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "appliesTo": {
+     "type": "array",
+     "description": "The database version this flag applies to. Currently this can only be [MYSQL_5_5].",
+     "items": {
+      "type": "string"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "This is always sql#flag.",
+     "default": "sql#flag"
+    },
+    "maxValue": {
+     "type": "string",
+     "description": "For INTEGER flags, the maximum allowed value.",
+     "format": "int64"
+    },
+    "minValue": {
+     "type": "string",
+     "description": "For INTEGER flags, the minimum allowed value.",
+     "format": "int64"
+    },
+    "name": {
+     "type": "string",
+     "description": "This is the name of the flag. Flag names always use underscores, not hyphens, e.g. max_allowed_packet"
+    },
+    "type": {
+     "type": "string",
+     "description": "The type of the flag. Flags are typed to being BOOLEAN, STRING, INTEGER or NONE. NONE is used for flags which do not take a value, such as skip_grant_tables."
+    }
+   }
+  },
+  "FlagsListResponse": {
+   "id": "FlagsListResponse",
+   "type": "object",
+   "description": "Flags list response.",
+   "properties": {
+    "items": {
+     "type": "array",
+     "description": "List of flags.",
+     "items": {
+      "$ref": "Flag"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "This is always sql#flagsList.",
+     "default": "sql#flagsList"
     }
    }
   },
@@ -374,6 +497,33 @@
     "setRootPasswordContext": {
      "$ref": "SetRootPasswordContext",
      "description": "Set Root Password Context."
+    }
+   }
+  },
+  "InstancesCloneRequest": {
+   "id": "InstancesCloneRequest",
+   "type": "object",
+   "description": "Database instance clone request.",
+   "properties": {
+    "cloneContext": {
+     "$ref": "CloneContext",
+     "description": "Contains details about the clone operation."
+    }
+   }
+  },
+  "InstancesCloneResponse": {
+   "id": "InstancesCloneResponse",
+   "type": "object",
+   "description": "Database instance clone response.",
+   "properties": {
+    "kind": {
+     "type": "string",
+     "description": "This is always sql#instancesClone.",
+     "default": "sql#instancesClone"
+    },
+    "operation": {
+     "type": "string",
+     "description": "An unique identifier for the operation associated with the cloned instance. You can use this identifier to retrieve the Operations resource, which has information about the operation."
     }
    }
   },
@@ -541,7 +691,7 @@
    "properties": {
     "kind": {
      "type": "string",
-     "description": "This is always sql#instancesSetRootPasswird.",
+     "description": "This is always sql#instancesSetRootPassword.",
      "default": "sql#instancesSetRootPassword"
     },
     "operation": {
@@ -700,6 +850,13 @@
      "description": "The daily backup configuration for the instance.",
      "items": {
       "$ref": "BackupConfiguration"
+     }
+    },
+    "databaseFlags": {
+     "type": "array",
+     "description": "The database flags passed to the instance at startup.",
+     "items": {
+      "$ref": "DatabaseFlags"
      }
     },
     "ipConfiguration": {
@@ -890,7 +1047,7 @@
     },
     "region": {
      "type": "array",
-     "description": "The applicable regions for this tier. Can be us-east1 and europe-west1.",
+     "description": "The applicable regions for this tier. Can be us-east1, europe-west1, or asia-east1.",
      "items": {
       "type": "string"
      }
@@ -926,7 +1083,7 @@
    "methods": {
     "get": {
      "id": "sql.backupRuns.get",
-     "path": "{project}/instances/{instance}/backupRuns/{backupConfiguration}",
+     "path": "projects/{project}/instances/{instance}/backupRuns/{backupConfiguration}",
      "httpMethod": "GET",
      "description": "Retrieves a resource containing information about a backup run.",
      "parameters": {
@@ -970,7 +1127,7 @@
     },
     "list": {
      "id": "sql.backupRuns.list",
-     "path": "{project}/instances/{instance}/backupRuns",
+     "path": "projects/{project}/instances/{instance}/backupRuns",
      "httpMethod": "GET",
      "description": "Lists all backup runs associated with a given instance and configuration in the reverse chronological order of the enqueued time.",
      "parameters": {
@@ -1018,11 +1175,53 @@
     }
    }
   },
+  "flags": {
+   "methods": {
+    "list": {
+     "id": "sql.flags.list",
+     "path": "flags",
+     "httpMethod": "GET",
+     "description": "List all available database flags for Google Cloud SQL instances.",
+     "response": {
+      "$ref": "FlagsListResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/sqlservice.admin"
+     ]
+    }
+   }
+  },
   "instances": {
    "methods": {
+    "clone": {
+     "id": "sql.instances.clone",
+     "path": "projects/{project}/instances/clone",
+     "httpMethod": "POST",
+     "description": "Creates a Cloud SQL instance as a clone of the source instance.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID of the source as well as the clone Cloud SQL instance.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "request": {
+      "$ref": "InstancesCloneRequest"
+     },
+     "response": {
+      "$ref": "InstancesCloneResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/sqlservice.admin"
+     ]
+    },
     "delete": {
      "id": "sql.instances.delete",
-     "path": "{project}/instances/{instance}",
+     "path": "projects/{project}/instances/{instance}",
      "httpMethod": "DELETE",
      "description": "Deletes a Cloud SQL instance.",
      "parameters": {
@@ -1052,7 +1251,7 @@
     },
     "export": {
      "id": "sql.instances.export",
-     "path": "{project}/instances/{instance}/export",
+     "path": "projects/{project}/instances/{instance}/export",
      "httpMethod": "POST",
      "description": "Exports data from a Cloud SQL instance to a Google Cloud Storage bucket as a MySQL dump file.",
      "parameters": {
@@ -1085,7 +1284,7 @@
     },
     "get": {
      "id": "sql.instances.get",
-     "path": "{project}/instances/{instance}",
+     "path": "projects/{project}/instances/{instance}",
      "httpMethod": "GET",
      "description": "Retrieves a resource containing information about a Cloud SQL instance.",
      "parameters": {
@@ -1115,7 +1314,7 @@
     },
     "import": {
      "id": "sql.instances.import",
-     "path": "{project}/instances/{instance}/import",
+     "path": "projects/{project}/instances/{instance}/import",
      "httpMethod": "POST",
      "description": "Imports data into a Cloud SQL instance from a MySQL dump file in Google Cloud Storage.",
      "parameters": {
@@ -1148,7 +1347,7 @@
     },
     "insert": {
      "id": "sql.instances.insert",
-     "path": "{project}/instances",
+     "path": "projects/{project}/instances",
      "httpMethod": "POST",
      "description": "Creates a new Cloud SQL instance.",
      "parameters": {
@@ -1174,7 +1373,7 @@
     },
     "list": {
      "id": "sql.instances.list",
-     "path": "{project}/instances",
+     "path": "projects/{project}/instances",
      "httpMethod": "GET",
      "description": "Lists instances under a given project in the alphabetical order of the instance name.",
      "parameters": {
@@ -1208,7 +1407,7 @@
     },
     "patch": {
      "id": "sql.instances.patch",
-     "path": "{project}/instances/{instance}",
+     "path": "projects/{project}/instances/{instance}",
      "httpMethod": "PATCH",
      "description": "Updates settings of a Cloud SQL instance. Caution: This is not a partial update, so you must include values for all the settings that you want to retain. For partial updates, use patch.. This method supports patch semantics.",
      "parameters": {
@@ -1241,7 +1440,7 @@
     },
     "resetSslConfig": {
      "id": "sql.instances.resetSslConfig",
-     "path": "{project}/instances/{instance}/resetSslConfig",
+     "path": "projects/{project}/instances/{instance}/resetSslConfig",
      "httpMethod": "POST",
      "description": "Deletes all client certificates and generates a new server SSL certificate for the instance. The changes will not take effect until the instance is restarted. Existing instances without a server certificate will need to call this once to set a server certificate.",
      "parameters": {
@@ -1271,7 +1470,7 @@
     },
     "restart": {
      "id": "sql.instances.restart",
-     "path": "{project}/instances/{instance}/restart",
+     "path": "projects/{project}/instances/{instance}/restart",
      "httpMethod": "POST",
      "description": "Restarts a Cloud SQL instance.",
      "parameters": {
@@ -1301,7 +1500,7 @@
     },
     "restoreBackup": {
      "id": "sql.instances.restoreBackup",
-     "path": "{project}/instances/{instance}/restoreBackup",
+     "path": "projects/{project}/instances/{instance}/restoreBackup",
      "httpMethod": "POST",
      "description": "Restores a backup of a Cloud SQL instance.",
      "parameters": {
@@ -1345,7 +1544,7 @@
     },
     "setRootPassword": {
      "id": "sql.instances.setRootPassword",
-     "path": "{project}/instances/{instance}/setRootPassword",
+     "path": "projects/{project}/instances/{instance}/setRootPassword",
      "httpMethod": "POST",
      "description": "Sets the password for the root user.",
      "parameters": {
@@ -1378,7 +1577,7 @@
     },
     "update": {
      "id": "sql.instances.update",
-     "path": "{project}/instances/{instance}",
+     "path": "projects/{project}/instances/{instance}",
      "httpMethod": "PUT",
      "description": "Updates settings of a Cloud SQL instance. Caution: This is not a partial update, so you must include values for all the settings that you want to retain. For partial updates, use patch.",
      "parameters": {
@@ -1416,7 +1615,7 @@
    "methods": {
     "get": {
      "id": "sql.operations.get",
-     "path": "{project}/instances/{instance}/operations/{operation}",
+     "path": "projects/{project}/instances/{instance}/operations/{operation}",
      "httpMethod": "GET",
      "description": "Retrieves an instance operation that has been performed on an instance.",
      "parameters": {
@@ -1453,7 +1652,7 @@
     },
     "list": {
      "id": "sql.operations.list",
-     "path": "{project}/instances/{instance}/operations",
+     "path": "projects/{project}/instances/{instance}/operations",
      "httpMethod": "GET",
      "description": "Lists all instance operations that have been performed on the given Cloud SQL instance in the reverse chronological order of the start time.",
      "parameters": {
@@ -1498,7 +1697,7 @@
    "methods": {
     "delete": {
      "id": "sql.sslCerts.delete",
-     "path": "{project}/instances/{instance}/sslCerts/{sha1Fingerprint}",
+     "path": "projects/{project}/instances/{instance}/sslCerts/{sha1Fingerprint}",
      "httpMethod": "DELETE",
      "description": "Deletes the SSL certificate. The change will not take effect until the instance is restarted.",
      "parameters": {
@@ -1535,7 +1734,7 @@
     },
     "get": {
      "id": "sql.sslCerts.get",
-     "path": "{project}/instances/{instance}/sslCerts/{sha1Fingerprint}",
+     "path": "projects/{project}/instances/{instance}/sslCerts/{sha1Fingerprint}",
      "httpMethod": "GET",
      "description": "Retrieves a particular SSL certificate. Does not include the private key (required for usage). The private key must be saved from the response to initial creation.",
      "parameters": {
@@ -1572,7 +1771,7 @@
     },
     "insert": {
      "id": "sql.sslCerts.insert",
-     "path": "{project}/instances/{instance}/sslCerts",
+     "path": "projects/{project}/instances/{instance}/sslCerts",
      "httpMethod": "POST",
      "description": "Creates an SSL certificate and returns it along with the private key and server certificate authority. The new certificate will not be usable until the instance is restarted.",
      "parameters": {
@@ -1605,7 +1804,7 @@
     },
     "list": {
      "id": "sql.sslCerts.list",
-     "path": "{project}/instances/{instance}/sslCerts",
+     "path": "projects/{project}/instances/{instance}/sslCerts",
      "httpMethod": "GET",
      "description": "Lists all of the current SSL certificates for the instance.",
      "parameters": {
@@ -1639,7 +1838,7 @@
    "methods": {
     "list": {
      "id": "sql.tiers.list",
-     "path": "{project}/tiers",
+     "path": "projects/{project}/tiers",
      "httpMethod": "GET",
      "description": "Lists all available service tiers for Google Cloud SQL, for example D1, D2. For related information, see Pricing.",
      "parameters": {

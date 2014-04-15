@@ -1,9 +1,10 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"R6H4aXXmd1SZaWpEcGSkC2StmNw/vKGqC21J29Bm6tbUCD1ghF4NHj8\"",
+ "etag": "\"kEk3sFj6Ef5_yR1-H3bAO6qw9mI/uBdBsKoCx2blJHBc5UBukt70JEU\"",
  "discoveryVersion": "v1",
  "id": "adexchangebuyer:v1",
  "name": "adexchangebuyer",
+ "canonicalName": "Ad Exchange Buyer",
  "version": "v1",
  "title": "Ad Exchange Buyer API",
  "description": "Lets you manage your Ad Exchange Buyer account.",
@@ -351,6 +352,10 @@
      "type": "string",
      "description": "Resource type.",
      "default": "adexchangebuyer#directDeal"
+    },
+    "name": {
+     "type": "string",
+     "description": "Deal name."
     },
     "sellerNetwork": {
      "type": "string",

@@ -52,13 +52,14 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client}
+	s := &Service{client: client, BasePath: basePath}
 	s.WebResource = NewWebResourceService(s)
 	return s, nil
 }
 
 type Service struct {
-	client *http.Client
+	client   *http.Client
+	BasePath string // API endpoint base URL
 
 	WebResource *WebResourceService
 }
@@ -155,7 +156,7 @@ func (c *WebResourceDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/siteVerification/v1/", "webResource/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "webResource/{id}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
@@ -212,7 +213,7 @@ func (c *WebResourceGetCall) Do() (*SiteVerificationWebResourceResource, error) 
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/siteVerification/v1/", "webResource/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "webResource/{id}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
@@ -282,7 +283,7 @@ func (c *WebResourceGetTokenCall) Do() (*SiteVerificationWebResourceGettokenResp
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/siteVerification/v1/", "token")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "token")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -347,7 +348,7 @@ func (c *WebResourceInsertCall) Do() (*SiteVerificationWebResourceResource, erro
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("verificationMethod", fmt.Sprintf("%v", c.verificationMethod))
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/siteVerification/v1/", "webResource")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "webResource")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -413,7 +414,7 @@ func (c *WebResourceListCall) Do() (*SiteVerificationWebResourceListResponse, er
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/siteVerification/v1/", "webResource")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "webResource")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -473,7 +474,7 @@ func (c *WebResourcePatchCall) Do() (*SiteVerificationWebResourceResource, error
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/siteVerification/v1/", "webResource/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "webResource/{id}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
@@ -548,7 +549,7 @@ func (c *WebResourceUpdateCall) Do() (*SiteVerificationWebResourceResource, erro
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/siteVerification/v1/", "webResource/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "webResource/{id}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)

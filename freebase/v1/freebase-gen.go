@@ -43,12 +43,13 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client}
+	s := &Service{client: client, BasePath: basePath}
 	return s, nil
 }
 
 type Service struct {
-	client *http.Client
+	client   *http.Client
+	BasePath string // API endpoint base URL
 }
 
 type ReconcileCandidate struct {
@@ -196,7 +197,7 @@ func (c *ReconcileCall) Do() (*ReconcileGet, error) {
 	if v, ok := c.opt_["prop"]; ok {
 		params.Set("prop", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/freebase/v1/", "reconcile")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "reconcile")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -514,7 +515,7 @@ func (c *SearchCall) Do() error {
 	if v, ok := c.opt_["without"]; ok {
 		params.Set("without", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/freebase/v1/", "search")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "search")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)

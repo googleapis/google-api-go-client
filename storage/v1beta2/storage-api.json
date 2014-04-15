@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"R6H4aXXmd1SZaWpEcGSkC2StmNw/DuL3Ga6eWuvbFkK4oOt2lDpJ4vQ\"",
+ "etag": "\"kEk3sFj6Ef5_yR1-H3bAO6qw9mI/1kn7iGSorTXBeUYcJymRrnSmuvg\"",
  "discoveryVersion": "v1",
  "id": "storage:v1beta2",
  "name": "storage",
@@ -619,6 +619,10 @@
      "type": "string",
      "description": "Content-Length of the data in bytes.",
      "format": "uint64"
+    },
+    "storageClass": {
+     "type": "string",
+     "description": "Storage class of the object."
     },
     "timeDeleted": {
      "type": "string",

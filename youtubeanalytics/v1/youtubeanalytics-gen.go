@@ -52,15 +52,40 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client}
+	s := &Service{client: client, BasePath: basePath}
+	s.BatchReportDefinitions = NewBatchReportDefinitionsService(s)
+	s.BatchReports = NewBatchReportsService(s)
 	s.Reports = NewReportsService(s)
 	return s, nil
 }
 
 type Service struct {
-	client *http.Client
+	client   *http.Client
+	BasePath string // API endpoint base URL
+
+	BatchReportDefinitions *BatchReportDefinitionsService
+
+	BatchReports *BatchReportsService
 
 	Reports *ReportsService
+}
+
+func NewBatchReportDefinitionsService(s *Service) *BatchReportDefinitionsService {
+	rs := &BatchReportDefinitionsService{s: s}
+	return rs
+}
+
+type BatchReportDefinitionsService struct {
+	s *Service
+}
+
+func NewBatchReportsService(s *Service) *BatchReportsService {
+	rs := &BatchReportsService{s: s}
+	return rs
+}
+
+type BatchReportsService struct {
+	s *Service
 }
 
 func NewReportsService(s *Service) *ReportsService {
@@ -70,6 +95,95 @@ func NewReportsService(s *Service) *ReportsService {
 
 type ReportsService struct {
 	s *Service
+}
+
+type BatchReportDefinitionList struct {
+	// Items: A list of batchReportDefinition resources that match the
+	// request criteria.
+	Items []*BatchReportDefinitionTemplate `json:"items,omitempty"`
+
+	// Kind: This value specifies the type of data included in the API
+	// response. For the list method, the kind property value is
+	// youtubeAnalytics#batchReportDefinitionList.
+	Kind string `json:"kind,omitempty"`
+}
+
+type BatchReportDefinitionTemplate struct {
+	// DefaultOutput: Default report definition's output.
+	DefaultOutput []*BatchReportDefinitionTemplateDefaultOutput `json:"defaultOutput,omitempty"`
+
+	// Id: The ID that YouTube assigns and uses to uniquely identify the
+	// report definition.
+	Id string `json:"id,omitempty"`
+
+	// Name: Name of the report definition.
+	Name string `json:"name,omitempty"`
+
+	// Status: Status of the report definition.
+	Status string `json:"status,omitempty"`
+
+	// Type: Type of the report definition.
+	Type string `json:"type,omitempty"`
+}
+
+type BatchReportDefinitionTemplateDefaultOutput struct {
+	// Format: Format of the output.
+	Format string `json:"format,omitempty"`
+
+	// Type: Type of the output.
+	Type string `json:"type,omitempty"`
+}
+
+type BatchReportList struct {
+	// Items: A list of batchReport resources that match the request
+	// criteria.
+	Items []*BatchReportTemplate `json:"items,omitempty"`
+
+	// Kind: This value specifies the type of data included in the API
+	// response. For the list method, the kind property value is
+	// youtubeAnalytics#batchReportList.
+	Kind string `json:"kind,omitempty"`
+}
+
+type BatchReportTemplate struct {
+	// Id: The ID that YouTube assigns and uses to uniquely identify the
+	// report.
+	Id string `json:"id,omitempty"`
+
+	// Outputs: Report outputs.
+	Outputs []*BatchReportTemplateOutputs `json:"outputs,omitempty"`
+
+	// Report_id: The ID of the the report definition.
+	Report_id string `json:"report_id,omitempty"`
+
+	// TimeSpan: Period included in the report. For reports containing all
+	// entities endTime is not set. Both startTime and endTime are
+	// inclusive.
+	TimeSpan *BatchReportTemplateTimeSpan `json:"timeSpan,omitempty"`
+
+	// TimeUpdated: The time when the report was updated.
+	TimeUpdated string `json:"timeUpdated,omitempty"`
+}
+
+type BatchReportTemplateOutputs struct {
+	// DownloadUrl: Cloud storage URL to download this report. This URL is
+	// valid for 30 minutes.
+	DownloadUrl string `json:"downloadUrl,omitempty"`
+
+	// Format: Format of the output.
+	Format string `json:"format,omitempty"`
+
+	// Type: Type of the output.
+	Type string `json:"type,omitempty"`
+}
+
+type BatchReportTemplateTimeSpan struct {
+	// EndTime: End of the period included in the report. Inclusive. For
+	// reports containing all entities endTime is not set.
+	EndTime string `json:"endTime,omitempty"`
+
+	// StartTime: Start of the period included in the report. Inclusive.
+	StartTime string `json:"startTime,omitempty"`
 }
 
 type ResultTable struct {
@@ -110,6 +224,146 @@ type ResultTableColumnHeaders struct {
 
 	// Name: The name of the dimension or metric.
 	Name string `json:"name,omitempty"`
+}
+
+// method id "youtubeAnalytics.batchReportDefinitions.list":
+
+type BatchReportDefinitionsListCall struct {
+	s                      *Service
+	onBehalfOfContentOwner string
+	opt_                   map[string]interface{}
+}
+
+// List: Retrieves a list of available batch report definitions.
+func (r *BatchReportDefinitionsService) List(onBehalfOfContentOwner string) *BatchReportDefinitionsListCall {
+	c := &BatchReportDefinitionsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.onBehalfOfContentOwner = onBehalfOfContentOwner
+	return c
+}
+
+func (c *BatchReportDefinitionsListCall) Do() (*BatchReportDefinitionList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", c.onBehalfOfContentOwner))
+	urls := googleapi.ResolveRelative(c.s.BasePath, "batchReportDefinitions")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(BatchReportDefinitionList)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a list of available batch report definitions.",
+	//   "httpMethod": "GET",
+	//   "id": "youtubeAnalytics.batchReportDefinitions.list",
+	//   "parameterOrder": [
+	//     "onBehalfOfContentOwner"
+	//   ],
+	//   "parameters": {
+	//     "onBehalfOfContentOwner": {
+	//       "description": "The onBehalfOfContentOwner parameter identifies the content owner that the user is acting on behalf of.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "batchReportDefinitions",
+	//   "response": {
+	//     "$ref": "BatchReportDefinitionList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/yt-analytics-monetary.readonly",
+	//     "https://www.googleapis.com/auth/yt-analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "youtubeAnalytics.batchReports.list":
+
+type BatchReportsListCall struct {
+	s                       *Service
+	batchReportDefinitionId string
+	onBehalfOfContentOwner  string
+	opt_                    map[string]interface{}
+}
+
+// List: Retrieves a list of processed batch reports.
+func (r *BatchReportsService) List(batchReportDefinitionId string, onBehalfOfContentOwner string) *BatchReportsListCall {
+	c := &BatchReportsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.batchReportDefinitionId = batchReportDefinitionId
+	c.onBehalfOfContentOwner = onBehalfOfContentOwner
+	return c
+}
+
+func (c *BatchReportsListCall) Do() (*BatchReportList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("batchReportDefinitionId", fmt.Sprintf("%v", c.batchReportDefinitionId))
+	params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", c.onBehalfOfContentOwner))
+	urls := googleapi.ResolveRelative(c.s.BasePath, "batchReports")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(BatchReportList)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a list of processed batch reports.",
+	//   "httpMethod": "GET",
+	//   "id": "youtubeAnalytics.batchReports.list",
+	//   "parameterOrder": [
+	//     "batchReportDefinitionId",
+	//     "onBehalfOfContentOwner"
+	//   ],
+	//   "parameters": {
+	//     "batchReportDefinitionId": {
+	//       "description": "The batchReportDefinitionId parameter specifies the ID of the batch reportort definition for which you are retrieving reports.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "onBehalfOfContentOwner": {
+	//       "description": "The onBehalfOfContentOwner parameter identifies the content owner that the user is acting on behalf of.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "batchReports",
+	//   "response": {
+	//     "$ref": "BatchReportList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/yt-analytics-monetary.readonly",
+	//     "https://www.googleapis.com/auth/yt-analytics.readonly"
+	//   ]
+	// }
+
 }
 
 // method id "youtubeAnalytics.reports.query":
@@ -206,7 +460,7 @@ func (c *ReportsQueryCall) Do() (*ResultTable, error) {
 	if v, ok := c.opt_["start-index"]; ok {
 		params.Set("start-index", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/youtube/analytics/v1/", "reports")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "reports")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)

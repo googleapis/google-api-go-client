@@ -49,7 +49,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client}
+	s := &Service{client: client, BasePath: basePath}
 	s.Bookshelves = NewBookshelvesService(s)
 	s.Cloudloading = NewCloudloadingService(s)
 	s.Layers = NewLayersService(s)
@@ -60,7 +60,8 @@ func New(client *http.Client) (*Service, error) {
 }
 
 type Service struct {
-	client *http.Client
+	client   *http.Client
+	BasePath string // API endpoint base URL
 
 	Bookshelves *BookshelvesService
 
@@ -1033,6 +1034,11 @@ type VolumeAccessInfo struct {
 	// restrictions.
 	DownloadAccess *DownloadAccessRestriction `json:"downloadAccess,omitempty"`
 
+	// DriveImportedContentLink: URL to the Google Drive viewer if this
+	// volume is uploaded by the user by selecting the file from Google
+	// Drive.
+	DriveImportedContentLink string `json:"driveImportedContentLink,omitempty"`
+
 	// Embeddable: Whether this volume can be embedded in a viewport using
 	// the Embedded Viewer API.
 	Embeddable bool `json:"embeddable,omitempty"`
@@ -1527,7 +1533,7 @@ func (c *BookshelvesGetCall) Do() (*Bookshelf, error) {
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "users/{userId}/bookshelves/{shelf}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "users/{userId}/bookshelves/{shelf}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{userId}", url.QueryEscape(c.userId), 1)
@@ -1614,7 +1620,7 @@ func (c *BookshelvesListCall) Do() (*Bookshelves, error) {
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "users/{userId}/bookshelves")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "users/{userId}/bookshelves")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{userId}", url.QueryEscape(c.userId), 1)
@@ -1726,7 +1732,7 @@ func (c *BookshelvesVolumesListCall) Do() (*Volumes, error) {
 	if v, ok := c.opt_["startIndex"]; ok {
 		params.Set("startIndex", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "users/{userId}/bookshelves/{shelf}/volumes")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "users/{userId}/bookshelves/{shelf}/volumes")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{userId}", url.QueryEscape(c.userId), 1)
@@ -1860,7 +1866,7 @@ func (c *CloudloadingAddBookCall) Do() (*BooksCloudloadingResource, error) {
 	if v, ok := c.opt_["upload_client_token"]; ok {
 		params.Set("upload_client_token", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "cloudloading/addBook")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "cloudloading/addBook")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -1934,7 +1940,7 @@ func (c *CloudloadingDeleteBookCall) Do() error {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("volumeId", fmt.Sprintf("%v", c.volumeId))
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "cloudloading/deleteBook")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "cloudloading/deleteBook")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -1995,7 +2001,7 @@ func (c *CloudloadingUpdateBookCall) Do() (*BooksCloudloadingResource, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "cloudloading/updateBook")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "cloudloading/updateBook")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -2073,7 +2079,7 @@ func (c *LayersGetCall) Do() (*Layersummary, error) {
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "volumes/{volumeId}/layersummary/{summaryId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/{volumeId}/layersummary/{summaryId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{volumeId}", url.QueryEscape(c.volumeId), 1)
@@ -2195,7 +2201,7 @@ func (c *LayersListCall) Do() (*Layersummaries, error) {
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "volumes/{volumeId}/layersummary")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/{volumeId}/layersummary")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{volumeId}", url.QueryEscape(c.volumeId), 1)
@@ -2351,7 +2357,7 @@ func (c *LayersAnnotationDataGetCall) Do() (*Annotationdata, error) {
 	if v, ok := c.opt_["w"]; ok {
 		params.Set("w", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "volumes/{volumeId}/layers/{layerId}/data/{annotationDataId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/{volumeId}/layers/{layerId}/data/{annotationDataId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{volumeId}", url.QueryEscape(c.volumeId), 1)
@@ -2581,7 +2587,7 @@ func (c *LayersAnnotationDataListCall) Do() (*Annotationsdata, error) {
 	if v, ok := c.opt_["w"]; ok {
 		params.Set("w", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "volumes/{volumeId}/layers/{layerId}/data")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/{volumeId}/layers/{layerId}/data")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{volumeId}", url.QueryEscape(c.volumeId), 1)
@@ -2743,7 +2749,7 @@ func (c *LayersVolumeAnnotationsGetCall) Do() (*Volumeannotation, error) {
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "volumes/{volumeId}/layers/{layerId}/annotations/{annotationId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/{volumeId}/layers/{layerId}/annotations/{annotationId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{volumeId}", url.QueryEscape(c.volumeId), 1)
@@ -2963,7 +2969,7 @@ func (c *LayersVolumeAnnotationsListCall) Do() (*Volumeannotations, error) {
 	if v, ok := c.opt_["volumeAnnotationsVersion"]; ok {
 		params.Set("volumeAnnotationsVersion", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "volumes/{volumeId}/layers/{layerId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/{volumeId}/layers/{layerId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{volumeId}", url.QueryEscape(c.volumeId), 1)
@@ -3131,7 +3137,7 @@ func (c *MyconfigReleaseDownloadAccessCall) Do() (*DownloadAccesses, error) {
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "myconfig/releaseDownloadAccess")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "myconfig/releaseDownloadAccess")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -3242,7 +3248,7 @@ func (c *MyconfigRequestAccessCall) Do() (*RequestAccess, error) {
 	if v, ok := c.opt_["locale"]; ok {
 		params.Set("locale", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "myconfig/requestAccess")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "myconfig/requestAccess")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -3394,7 +3400,7 @@ func (c *MyconfigSyncVolumeLicensesCall) Do() (*Volumes, error) {
 	if v, ok := c.opt_["volumeIds"]; ok {
 		params.Set("volumeIds", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "myconfig/syncVolumeLicenses")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "myconfig/syncVolumeLicenses")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -3509,7 +3515,7 @@ func (c *MylibraryAnnotationsDeleteCall) Do() error {
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "mylibrary/annotations/{annotationId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/annotations/{annotationId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{annotationId}", url.QueryEscape(c.annotationId), 1)
@@ -3581,7 +3587,7 @@ func (c *MylibraryAnnotationsGetCall) Do() (*Annotation, error) {
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "mylibrary/annotations/{annotationId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/annotations/{annotationId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{annotationId}", url.QueryEscape(c.annotationId), 1)
@@ -3676,7 +3682,7 @@ func (c *MylibraryAnnotationsInsertCall) Do() (*Annotation, error) {
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "mylibrary/annotations")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/annotations")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -3855,7 +3861,7 @@ func (c *MylibraryAnnotationsListCall) Do() (*Annotations, error) {
 	if v, ok := c.opt_["volumeId"]; ok {
 		params.Set("volumeId", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "mylibrary/annotations")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/annotations")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -3975,7 +3981,7 @@ func (c *MylibraryAnnotationsSummaryCall) Do() (*AnnotationsSummary, error) {
 	for _, v := range c.layerIds {
 		params.Add("layerIds", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "mylibrary/annotations/summary")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/annotations/summary")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -4063,7 +4069,7 @@ func (c *MylibraryAnnotationsUpdateCall) Do() (*Annotation, error) {
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "mylibrary/annotations/{annotationId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/annotations/{annotationId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{annotationId}", url.QueryEscape(c.annotationId), 1)
@@ -4149,7 +4155,7 @@ func (c *MylibraryBookshelvesAddVolumeCall) Do() error {
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "mylibrary/bookshelves/{shelf}/addVolume")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/bookshelves/{shelf}/addVolume")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{shelf}", url.QueryEscape(c.shelf), 1)
@@ -4228,7 +4234,7 @@ func (c *MylibraryBookshelvesClearVolumesCall) Do() error {
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "mylibrary/bookshelves/{shelf}/clearVolumes")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/bookshelves/{shelf}/clearVolumes")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{shelf}", url.QueryEscape(c.shelf), 1)
@@ -4301,7 +4307,7 @@ func (c *MylibraryBookshelvesGetCall) Do() (*Bookshelf, error) {
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "mylibrary/bookshelves/{shelf}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/bookshelves/{shelf}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{shelf}", url.QueryEscape(c.shelf), 1)
@@ -4379,7 +4385,7 @@ func (c *MylibraryBookshelvesListCall) Do() (*Bookshelves, error) {
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "mylibrary/bookshelves")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/bookshelves")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -4454,7 +4460,7 @@ func (c *MylibraryBookshelvesMoveVolumeCall) Do() error {
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "mylibrary/bookshelves/{shelf}/moveVolume")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/bookshelves/{shelf}/moveVolume")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{shelf}", url.QueryEscape(c.shelf), 1)
@@ -4544,7 +4550,7 @@ func (c *MylibraryBookshelvesRemoveVolumeCall) Do() error {
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "mylibrary/bookshelves/{shelf}/removeVolume")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/bookshelves/{shelf}/removeVolume")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{shelf}", url.QueryEscape(c.shelf), 1)
@@ -4683,7 +4689,7 @@ func (c *MylibraryBookshelvesVolumesListCall) Do() (*Volumes, error) {
 	if v, ok := c.opt_["startIndex"]; ok {
 		params.Set("startIndex", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "mylibrary/bookshelves/{shelf}/volumes")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/bookshelves/{shelf}/volumes")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{shelf}", url.QueryEscape(c.shelf), 1)
@@ -4814,7 +4820,7 @@ func (c *MylibraryReadingpositionsGetCall) Do() (*ReadingPosition, error) {
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "mylibrary/readingpositions/{volumeId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/readingpositions/{volumeId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{volumeId}", url.QueryEscape(c.volumeId), 1)
@@ -4934,7 +4940,7 @@ func (c *MylibraryReadingpositionsSetPositionCall) Do() error {
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "mylibrary/readingpositions/{volumeId}/setPosition")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/readingpositions/{volumeId}/setPosition")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{volumeId}", url.QueryEscape(c.volumeId), 1)
@@ -5081,7 +5087,7 @@ func (c *VolumesGetCall) Do() (*Volume, error) {
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "volumes/{volumeId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/{volumeId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{volumeId}", url.QueryEscape(c.volumeId), 1)
@@ -5292,7 +5298,7 @@ func (c *VolumesListCall) Do() (*Volumes, error) {
 	if v, ok := c.opt_["startIndex"]; ok {
 		params.Set("startIndex", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "volumes")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -5505,7 +5511,7 @@ func (c *VolumesAssociatedListCall) Do() (*Volumes, error) {
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "volumes/{volumeId}/associated")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/{volumeId}/associated")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{volumeId}", url.QueryEscape(c.volumeId), 1)
@@ -5652,7 +5658,7 @@ func (c *VolumesMybooksListCall) Do() (*Volumes, error) {
 	if v, ok := c.opt_["startIndex"]; ok {
 		params.Set("startIndex", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "volumes/mybooks")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/mybooks")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -5790,7 +5796,7 @@ func (c *VolumesRecommendedListCall) Do() (*Volumes, error) {
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "volumes/recommended")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/recommended")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -5879,7 +5885,7 @@ func (c *VolumesRecommendedRateCall) Do() (*BooksVolumesRecommendedRateResponse,
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "volumes/recommended/rate")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/recommended/rate")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -6027,7 +6033,7 @@ func (c *VolumesUseruploadedListCall) Do() (*Volumes, error) {
 	if v, ok := c.opt_["volumeId"]; ok {
 		params.Set("volumeId", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/books/v1/", "volumes/useruploaded")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/useruploaded")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)

@@ -58,13 +58,14 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client}
+	s := &Service{client: client, BasePath: basePath}
 	s.Userinfo = NewUserinfoService(s)
 	return s, nil
 }
 
 type Service struct {
-	client *http.Client
+	client   *http.Client
+	BasePath string // API endpoint base URL
 
 	Userinfo *UserinfoService
 }
@@ -169,7 +170,7 @@ type Userinfoplus struct {
 	// Verified_email: Boolean flag which is true if the email address is
 	// verified. Always verified because we only return the user's primary
 	// email address.
-	Verified_email string `json:"verified_email,omitempty"`
+	Verified_email bool `json:"verified_email,omitempty"`
 }
 
 // method id "oauth2.tokeninfo":
@@ -207,7 +208,7 @@ func (c *TokeninfoCall) Do() (*Tokeninfo, error) {
 	if v, ok := c.opt_["id_token"]; ok {
 		params.Set("id_token", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/", "oauth2/v2/tokeninfo")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "oauth2/v2/tokeninfo")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -263,7 +264,7 @@ func (c *UserinfoGetCall) Do() (*Userinfoplus, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/", "oauth2/v2/userinfo")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "oauth2/v2/userinfo")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -315,7 +316,7 @@ func (c *UserinfoV2MeGetCall) Do() (*Userinfoplus, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/", "userinfo/v2/me")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "userinfo/v2/me")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)

@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"R6H4aXXmd1SZaWpEcGSkC2StmNw/_kJQrsC49uCIVjQXyjfnVM-Qka8\"",
+ "etag": "\"kEk3sFj6Ef5_yR1-H3bAO6qw9mI/XBSlG6TmG-jHEwOVRN7HZMHldrk\"",
  "discoveryVersion": "v1",
  "id": "books:v1",
  "name": "books",
@@ -1143,6 +1143,10 @@
       "downloadAccess": {
        "$ref": "DownloadAccessRestriction",
        "description": "Information about a volume's download license access restrictions."
+      },
+      "driveImportedContentLink": {
+       "type": "string",
+       "description": "URL to the Google Drive viewer if this volume is uploaded by the user by selecting the file from Google Drive."
       },
       "embeddable": {
        "type": "boolean",

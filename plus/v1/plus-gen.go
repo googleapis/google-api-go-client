@@ -58,7 +58,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client}
+	s := &Service{client: client, BasePath: basePath}
 	s.Activities = NewActivitiesService(s)
 	s.Comments = NewCommentsService(s)
 	s.Moments = NewMomentsService(s)
@@ -67,7 +67,8 @@ func New(client *http.Client) (*Service, error) {
 }
 
 type Service struct {
-	client *http.Client
+	client   *http.Client
+	BasePath string // API endpoint base URL
 
 	Activities *ActivitiesService
 
@@ -765,8 +766,8 @@ type ItemScope struct {
 	// TickerSymbol: The exchange traded instrument associated with a
 	// Corporation object. The tickerSymbol is expressed as an exchange and
 	// an instrument name separated by a space character. For the exchange
-	// component of the tickerSymbol attribute, we reccommend using the
-	// controlled vocaulary of Market Identifier Codes (MIC) specified in
+	// component of the tickerSymbol attribute, we recommend using the
+	// controlled vocabulary of Market Identifier Codes (MIC) specified in
 	// ISO15022.
 	TickerSymbol string `json:"tickerSymbol,omitempty"`
 
@@ -1232,7 +1233,7 @@ func (c *ActivitiesGetCall) Do() (*Activity, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/plus/v1/", "activities/{activityId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "activities/{activityId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{activityId}", url.QueryEscape(c.activityId), 1)
@@ -1324,7 +1325,7 @@ func (c *ActivitiesListCall) Do() (*ActivityFeed, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/plus/v1/", "people/{userId}/activities/{collection}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "people/{userId}/activities/{collection}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{userId}", url.QueryEscape(c.userId), 1)
@@ -1464,7 +1465,7 @@ func (c *ActivitiesSearchCall) Do() (*ActivityFeed, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/plus/v1/", "activities")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "activities")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -1562,7 +1563,7 @@ func (c *CommentsGetCall) Do() (*Comment, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/plus/v1/", "comments/{commentId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "comments/{commentId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{commentId}", url.QueryEscape(c.commentId), 1)
@@ -1661,7 +1662,7 @@ func (c *CommentsListCall) Do() (*CommentFeed, error) {
 	if v, ok := c.opt_["sortOrder"]; ok {
 		params.Set("sortOrder", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/plus/v1/", "activities/{activityId}/comments")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "activities/{activityId}/comments")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{activityId}", url.QueryEscape(c.activityId), 1)
@@ -1774,7 +1775,7 @@ func (c *MomentsInsertCall) Do() (*Moment, error) {
 	if v, ok := c.opt_["debug"]; ok {
 		params.Set("debug", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/plus/v1/", "people/{userId}/moments/{collection}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "people/{userId}/moments/{collection}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{userId}", url.QueryEscape(c.userId), 1)
@@ -1908,7 +1909,7 @@ func (c *MomentsListCall) Do() (*MomentsFeed, error) {
 	if v, ok := c.opt_["type"]; ok {
 		params.Set("type", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/plus/v1/", "people/{userId}/moments/{collection}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "people/{userId}/moments/{collection}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{userId}", url.QueryEscape(c.userId), 1)
@@ -2011,7 +2012,7 @@ func (c *MomentsRemoveCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/plus/v1/", "moments/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "moments/{id}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
@@ -2070,7 +2071,7 @@ func (c *PeopleGetCall) Do() (*Person, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/plus/v1/", "people/{userId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "people/{userId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{userId}", url.QueryEscape(c.userId), 1)
@@ -2173,7 +2174,7 @@ func (c *PeopleListCall) Do() (*PeopleFeed, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/plus/v1/", "people/{userId}/people/{collection}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "people/{userId}/people/{collection}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{userId}", url.QueryEscape(c.userId), 1)
@@ -2308,7 +2309,7 @@ func (c *PeopleListByActivityCall) Do() (*PeopleFeed, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/plus/v1/", "activities/{activityId}/people/{collection}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "activities/{activityId}/people/{collection}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{activityId}", url.QueryEscape(c.activityId), 1)
@@ -2440,7 +2441,7 @@ func (c *PeopleSearchCall) Do() (*PeopleFeed, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/plus/v1/", "people")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "people")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)

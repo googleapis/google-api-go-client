@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"R6H4aXXmd1SZaWpEcGSkC2StmNw/rxVbU8eh1vQD-6UeVy5fvAHaxjo\"",
+ "etag": "\"kEk3sFj6Ef5_yR1-H3bAO6qw9mI/_OTlrhreIDbn9vfKusTrBlY5vkI\"",
  "discoveryVersion": "v1",
  "id": "drive:v1",
  "name": "drive",
@@ -293,7 +293,7 @@
       "accept": [
        "*/*"
       ],
-      "maxSize": "10GB",
+      "maxSize": "1024GB",
       "protocols": {
        "simple": {
         "multipart": true,
@@ -398,7 +398,7 @@
       "accept": [
        "*/*"
       ],
-      "maxSize": "10GB",
+      "maxSize": "1024GB",
       "protocols": {
        "simple": {
         "multipart": true,

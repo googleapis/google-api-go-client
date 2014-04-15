@@ -43,7 +43,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client}
+	s := &Service{client: client, BasePath: basePath}
 	s.Detections = NewDetectionsService(s)
 	s.Languages = NewLanguagesService(s)
 	s.Translations = NewTranslationsService(s)
@@ -51,7 +51,8 @@ func New(client *http.Client) (*Service, error) {
 }
 
 type Service struct {
-	client *http.Client
+	client   *http.Client
+	BasePath string // API endpoint base URL
 
 	Detections *DetectionsService
 
@@ -159,7 +160,7 @@ func (c *DetectionsListCall) Do() (*DetectionsListResponse, error) {
 	for _, v := range c.q {
 		params.Add("q", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/language/translate/", "v2/detect")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/detect")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -228,7 +229,7 @@ func (c *LanguagesListCall) Do() (*LanguagesListResponse, error) {
 	if v, ok := c.opt_["target"]; ok {
 		params.Set("target", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/language/translate/", "v2/languages")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/languages")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -319,7 +320,7 @@ func (c *TranslationsListCall) Do() (*TranslationsListResponse, error) {
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/language/translate/", "v2")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)

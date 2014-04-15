@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"R6H4aXXmd1SZaWpEcGSkC2StmNw/WiJFFLvE_6Q-3MjeCpMXsXhr054\"",
+ "etag": "\"kEk3sFj6Ef5_yR1-H3bAO6qw9mI/WlcQEurGo0sEddzjdUrIBdx9npM\"",
  "discoveryVersion": "v1",
  "id": "oauth2:v1",
  "name": "oauth2",
@@ -185,7 +185,7 @@
      "description": "URL of the user's picture image."
     },
     "verified_email": {
-     "type": "string",
+     "type": "boolean",
      "description": "Boolean flag which is true if the email address is verified. Always verified because we only return the user's primary email address.",
      "default": "true"
     }

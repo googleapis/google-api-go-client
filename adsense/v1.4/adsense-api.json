@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"R6H4aXXmd1SZaWpEcGSkC2StmNw/uMVHKJ4n_qcpz4oUX9kxQGD7l-A\"",
+ "etag": "\"kEk3sFj6Ef5_yR1-H3bAO6qw9mI/G2IFVrRZc_qYUIJrbpW9h4_B9is\"",
  "discoveryVersion": "v1",
  "id": "adsense:v1.4",
  "name": "adsense",
@@ -1411,7 +1411,7 @@
          "type": "string",
          "description": "End of the date range to report on in \"YYYY-MM-DD\" format, inclusive.",
          "required": true,
-         "pattern": "\\d{4}-\\d{2}-\\d{2}|(today|startOfMonth|startOfYear)(([\\-\\+]\\d+[dwmy]){0,2}?)",
+         "pattern": "\\d{4}-\\d{2}-\\d{2}|(today|startOfMonth|startOfYear)(([\\-\\+]\\d+[dwmy]){0,3}?)|(latest-(\\d{2})-(\\d{2})(-\\d+y)?)|(latest-latest-(\\d{2})(-\\d+m)?)",
          "location": "query"
         },
         "filter": {
@@ -1453,7 +1453,7 @@
          "type": "string",
          "description": "Start of the date range to report on in \"YYYY-MM-DD\" format, inclusive.",
          "required": true,
-         "pattern": "\\d{4}-\\d{2}-\\d{2}|(today|startOfMonth|startOfYear)(([\\-\\+]\\d+[dwmy]){0,2}?)",
+         "pattern": "\\d{4}-\\d{2}-\\d{2}|(today|startOfMonth|startOfYear)(([\\-\\+]\\d+[dwmy]){0,3}?)|(latest-(\\d{2})-(\\d{2})(-\\d+y)?)|(latest-latest-(\\d{2})(-\\d+m)?)",
          "location": "query"
         },
         "startIndex": {
@@ -2151,7 +2151,7 @@
        "type": "string",
        "description": "End of the date range to report on in \"YYYY-MM-DD\" format, inclusive.",
        "required": true,
-       "pattern": "\\d{4}-\\d{2}-\\d{2}|(today|startOfMonth|startOfYear)(([\\-\\+]\\d+[dwmy]){0,2}?)",
+       "pattern": "\\d{4}-\\d{2}-\\d{2}|(today|startOfMonth|startOfYear)(([\\-\\+]\\d+[dwmy]){0,3}?)|(latest-(\\d{2})-(\\d{2})(-\\d+y)?)|(latest-latest-(\\d{2})(-\\d+m)?)",
        "location": "query"
       },
       "filter": {
@@ -2193,7 +2193,7 @@
        "type": "string",
        "description": "Start of the date range to report on in \"YYYY-MM-DD\" format, inclusive.",
        "required": true,
-       "pattern": "\\d{4}-\\d{2}-\\d{2}|(today|startOfMonth|startOfYear)(([\\-\\+]\\d+[dwmy]){0,2}?)",
+       "pattern": "\\d{4}-\\d{2}-\\d{2}|(today|startOfMonth|startOfYear)(([\\-\\+]\\d+[dwmy]){0,3}?)|(latest-(\\d{2})-(\\d{2})(-\\d+y)?)|(latest-latest-(\\d{2})(-\\d+m)?)",
        "location": "query"
       },
       "startIndex": {

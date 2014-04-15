@@ -53,12 +53,13 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client}
+	s := &Service{client: client, BasePath: basePath}
 	s.AchievementDefinitions = NewAchievementDefinitionsService(s)
 	s.Achievements = NewAchievementsService(s)
 	s.Applications = NewApplicationsService(s)
 	s.Leaderboards = NewLeaderboardsService(s)
 	s.Players = NewPlayersService(s)
+	s.Pushtokens = NewPushtokensService(s)
 	s.Revisions = NewRevisionsService(s)
 	s.Rooms = NewRoomsService(s)
 	s.Scores = NewScoresService(s)
@@ -67,7 +68,8 @@ func New(client *http.Client) (*Service, error) {
 }
 
 type Service struct {
-	client *http.Client
+	client   *http.Client
+	BasePath string // API endpoint base URL
 
 	AchievementDefinitions *AchievementDefinitionsService
 
@@ -78,6 +80,8 @@ type Service struct {
 	Leaderboards *LeaderboardsService
 
 	Players *PlayersService
+
+	Pushtokens *PushtokensService
 
 	Revisions *RevisionsService
 
@@ -130,6 +134,15 @@ func NewPlayersService(s *Service) *PlayersService {
 }
 
 type PlayersService struct {
+	s *Service
+}
+
+func NewPushtokensService(s *Service) *PushtokensService {
+	rs := &PushtokensService{s: s}
+	return rs
+}
+
+type PushtokensService struct {
 	s *Service
 }
 
@@ -716,6 +729,9 @@ type NetworkDiagnostics struct {
 	// AndroidNetworkType: The Android network type.
 	AndroidNetworkType int64 `json:"androidNetworkType,omitempty"`
 
+	// IosNetworkType: iOS network type as defined in Reachability.h.
+	IosNetworkType int64 `json:"iosNetworkType,omitempty"`
+
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string games#networkDiagnostics.
 	Kind string `json:"kind,omitempty"`
@@ -834,8 +850,20 @@ type Player struct {
 	// for PLAYED_WITH player collection members.
 	LastPlayedWith *Played `json:"lastPlayedWith,omitempty"`
 
+	// Name: An object representation of the individual components of the
+	// player's name.
+	Name *PlayerName `json:"name,omitempty"`
+
 	// PlayerId: The ID of the player.
 	PlayerId string `json:"playerId,omitempty"`
+}
+
+type PlayerName struct {
+	// FamilyName: The family name (last name) of this player.
+	FamilyName string `json:"familyName,omitempty"`
+
+	// GivenName: The given name (first name) of this player.
+	GivenName string `json:"givenName,omitempty"`
 }
 
 type PlayerAchievement struct {
@@ -1024,6 +1052,53 @@ type PlayerScoreSubmissionList struct {
 	Scores []*ScoreSubmission `json:"scores,omitempty"`
 }
 
+type PushToken struct {
+	// ClientRevision: The revision of the client SDK used by your
+	// application, in the same format that's used by revisions.check. Used
+	// to send backward compatible messages. Format:
+	// [PLATFORM_TYPE]:[VERSION_NUMBER]. Possible values of PLATFORM_TYPE
+	// are:
+	// - IOS - Push token is for iOS
+	ClientRevision string `json:"clientRevision,omitempty"`
+
+	// Id: Unique identifier for this push token.
+	Id *PushTokenId `json:"id,omitempty"`
+
+	// Kind: Uniquely identifies the type of this resource. Value is always
+	// the fixed string games#pushToken.
+	Kind string `json:"kind,omitempty"`
+
+	// Language: The preferred language for notifications that are sent
+	// using this token.
+	Language string `json:"language,omitempty"`
+}
+
+type PushTokenId struct {
+	// Ios: A push token ID for iOS devices.
+	Ios *PushTokenIdIos `json:"ios,omitempty"`
+
+	// Kind: Uniquely identifies the type of this resource. Value is always
+	// the fixed string games#pushTokenId.
+	Kind string `json:"kind,omitempty"`
+}
+
+type PushTokenIdIos struct {
+	// Apns_device_token: Device token supplied by an iOS system call to
+	// register for remote notifications. Encode this field as web-safe
+	// base64.
+	Apns_device_token string `json:"apns_device_token,omitempty"`
+
+	// Apns_environment: Indicates whether this token should be used for the
+	// production or sandbox APNS server.
+	// Possible values are:
+	// -
+	// "PRODUCTION" - For the APNS production server at
+	// gateway.push.apple.com.
+	// - "SANDBOX" - For the APNS test server at
+	// gateway.sandbox.push.apple.com.
+	Apns_environment string `json:"apns_environment,omitempty"`
+}
+
 type RevisionCheckResponse struct {
 	// ApiVersion: The version of the API this client revision should use
 	// when calling API methods.
@@ -1065,6 +1140,10 @@ type Room struct {
 	// be displayed when the room is shown in a list (that is, an invitation
 	// to a room.)
 	Description string `json:"description,omitempty"`
+
+	// InviterId: The ID of the participant that invited the user to the
+	// room. Not set if the user was not invited to the room.
+	InviterId string `json:"inviterId,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string games#room.
@@ -1209,6 +1288,9 @@ type RoomLeaveDiagnostics struct {
 	// http://developer.android.com/reference/android/net/NetworkInfo.html#ge
 	// tType()
 	AndroidNetworkType int64 `json:"androidNetworkType,omitempty"`
+
+	// IosNetworkType: iOS network type as defined in Reachability.h.
+	IosNetworkType int64 `json:"iosNetworkType,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string games#roomLeaveDiagnostics.
@@ -1488,6 +1570,16 @@ type TurnBasedMatch struct {
 	// Data: The data / game state for this match.
 	Data *TurnBasedMatchData `json:"data,omitempty"`
 
+	// Description: This short description is generated by our servers based
+	// on turn state and is localized and worded relative to the player
+	// requesting the match. It is intended to be displayed when the match
+	// is shown in a list.
+	Description string `json:"description,omitempty"`
+
+	// InviterId: The ID of the participant that invited the user to the
+	// match. Not set if the user was not invited to the match.
+	InviterId string `json:"inviterId,omitempty"`
+
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string games#turnBasedMatch.
 	Kind string `json:"kind,omitempty"`
@@ -1561,6 +1653,11 @@ type TurnBasedMatch struct {
 	// Variant: The variant / mode of the application being played; can be
 	// any integer value, or left blank.
 	Variant int64 `json:"variant,omitempty"`
+
+	// WithParticipantId: The ID of another participant in the match that
+	// can be used when describing the participants the user is playing
+	// with.
+	WithParticipantId string `json:"withParticipantId,omitempty"`
 }
 
 type TurnBasedMatchCreateRequest struct {
@@ -1803,7 +1900,7 @@ func (c *AchievementDefinitionsListCall) Do() (*AchievementDefinitionsListRespon
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1/", "achievements")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "achievements")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -1892,7 +1989,7 @@ func (c *AchievementsIncrementCall) Do() (*AchievementIncrementResponse, error) 
 	if v, ok := c.opt_["requestId"]; ok {
 		params.Set("requestId", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1/", "achievements/{achievementId}/increment")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "achievements/{achievementId}/increment")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{achievementId}", url.QueryEscape(c.achievementId), 1)
@@ -2016,7 +2113,7 @@ func (c *AchievementsListCall) Do() (*PlayerAchievementListResponse, error) {
 	if v, ok := c.opt_["state"]; ok {
 		params.Set("state", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1/", "players/{playerId}/achievements")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "players/{playerId}/achievements")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{playerId}", url.QueryEscape(c.playerId), 1)
@@ -2117,7 +2214,7 @@ func (c *AchievementsRevealCall) Do() (*AchievementRevealResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1/", "achievements/{achievementId}/reveal")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "achievements/{achievementId}/reveal")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{achievementId}", url.QueryEscape(c.achievementId), 1)
@@ -2188,7 +2285,7 @@ func (c *AchievementsSetStepsAtLeastCall) Do() (*AchievementSetStepsAtLeastRespo
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("steps", fmt.Sprintf("%v", c.steps))
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1/", "achievements/{achievementId}/setStepsAtLeast")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "achievements/{achievementId}/setStepsAtLeast")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{achievementId}", url.QueryEscape(c.achievementId), 1)
@@ -2263,7 +2360,7 @@ func (c *AchievementsUnlockCall) Do() (*AchievementUnlockResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1/", "achievements/{achievementId}/unlock")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "achievements/{achievementId}/unlock")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{achievementId}", url.QueryEscape(c.achievementId), 1)
@@ -2334,7 +2431,7 @@ func (c *AchievementsUpdateMultipleCall) Do() (*AchievementUpdateMultipleRespons
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1/", "achievements/updateMultiple")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "achievements/updateMultiple")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -2414,7 +2511,7 @@ func (c *ApplicationsGetCall) Do() (*Application, error) {
 	if v, ok := c.opt_["platformType"]; ok {
 		params.Set("platformType", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1/", "applications/{applicationId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "applications/{applicationId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{applicationId}", url.QueryEscape(c.applicationId), 1)
@@ -2498,7 +2595,7 @@ func (c *ApplicationsPlayedCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1/", "applications/played")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "applications/played")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -2554,7 +2651,7 @@ func (c *LeaderboardsGetCall) Do() (*Leaderboard, error) {
 	if v, ok := c.opt_["language"]; ok {
 		params.Set("language", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1/", "leaderboards/{leaderboardId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "leaderboards/{leaderboardId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{leaderboardId}", url.QueryEscape(c.leaderboardId), 1)
@@ -2654,7 +2751,7 @@ func (c *LeaderboardsListCall) Do() (*LeaderboardListResponse, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1/", "leaderboards")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "leaderboards")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -2686,7 +2783,7 @@ func (c *LeaderboardsListCall) Do() (*LeaderboardListResponse, error) {
 	//       "description": "The maximum number of leaderboards to return in the response. For any response, the actual number of leaderboards returned may be less than the specified maxResults.",
 	//       "format": "int32",
 	//       "location": "query",
-	//       "maximum": "100",
+	//       "maximum": "200",
 	//       "minimum": "1",
 	//       "type": "integer"
 	//     },
@@ -2728,7 +2825,7 @@ func (c *PlayersGetCall) Do() (*Player, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1/", "players/{playerId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "players/{playerId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{playerId}", url.QueryEscape(c.playerId), 1)
@@ -2816,7 +2913,7 @@ func (c *PlayersListCall) Do() (*PlayerListResponse, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1/", "players/me/players/{collection}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "players/me/players/{collection}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{collection}", url.QueryEscape(c.collection), 1)
@@ -2881,6 +2978,117 @@ func (c *PlayersListCall) Do() (*PlayerListResponse, error) {
 
 }
 
+// method id "games.pushtokens.remove":
+
+type PushtokensRemoveCall struct {
+	s           *Service
+	pushtokenid *PushTokenId
+	opt_        map[string]interface{}
+}
+
+// Remove: Removes a push token for the current user and application.
+// Removing a non-existent push token will report success.
+func (r *PushtokensService) Remove(pushtokenid *PushTokenId) *PushtokensRemoveCall {
+	c := &PushtokensRemoveCall{s: r.s, opt_: make(map[string]interface{})}
+	c.pushtokenid = pushtokenid
+	return c
+}
+
+func (c *PushtokensRemoveCall) Do() error {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.pushtokenid)
+	if err != nil {
+		return err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "pushtokens/remove")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Removes a push token for the current user and application. Removing a non-existent push token will report success.",
+	//   "httpMethod": "POST",
+	//   "id": "games.pushtokens.remove",
+	//   "path": "pushtokens/remove",
+	//   "request": {
+	//     "$ref": "PushTokenId"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.login"
+	//   ]
+	// }
+
+}
+
+// method id "games.pushtokens.update":
+
+type PushtokensUpdateCall struct {
+	s         *Service
+	pushtoken *PushToken
+	opt_      map[string]interface{}
+}
+
+// Update: Registers a push token for the current user and application.
+func (r *PushtokensService) Update(pushtoken *PushToken) *PushtokensUpdateCall {
+	c := &PushtokensUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.pushtoken = pushtoken
+	return c
+}
+
+func (c *PushtokensUpdateCall) Do() error {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.pushtoken)
+	if err != nil {
+		return err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "pushtokens")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Registers a push token for the current user and application.",
+	//   "httpMethod": "PUT",
+	//   "id": "games.pushtokens.update",
+	//   "path": "pushtokens",
+	//   "request": {
+	//     "$ref": "PushToken"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.login"
+	//   ]
+	// }
+
+}
+
 // method id "games.revisions.check":
 
 type RevisionsCheckCall struct {
@@ -2901,7 +3109,7 @@ func (c *RevisionsCheckCall) Do() (*RevisionCheckResponse, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("clientRevision", fmt.Sprintf("%v", c.clientRevision))
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1/", "revisions/check")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "revisions/check")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -2981,7 +3189,7 @@ func (c *RoomsCreateCall) Do() (*Room, error) {
 	if v, ok := c.opt_["language"]; ok {
 		params.Set("language", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1/", "rooms/create")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "rooms/create")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -3046,7 +3254,7 @@ func (c *RoomsDeclineCall) Do() (*Room, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1/", "rooms/{roomId}/decline")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "rooms/{roomId}/decline")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{roomId}", url.QueryEscape(c.roomId), 1)
@@ -3112,7 +3320,7 @@ func (c *RoomsDismissCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1/", "rooms/{roomId}/dismiss")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "rooms/{roomId}/dismiss")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{roomId}", url.QueryEscape(c.roomId), 1)
@@ -3166,8 +3374,8 @@ func (r *RoomsService) Get(roomId string) *RoomsGetCall {
 	return c
 }
 
-// Language sets the optional parameter "language": Specify the
-// preferred language to use to format room info.
+// Language sets the optional parameter "language": The preferred
+// language to use for strings returned by this method.
 func (c *RoomsGetCall) Language(language string) *RoomsGetCall {
 	c.opt_["language"] = language
 	return c
@@ -3180,7 +3388,7 @@ func (c *RoomsGetCall) Do() (*Room, error) {
 	if v, ok := c.opt_["language"]; ok {
 		params.Set("language", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1/", "rooms/{roomId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "rooms/{roomId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{roomId}", url.QueryEscape(c.roomId), 1)
@@ -3208,7 +3416,7 @@ func (c *RoomsGetCall) Do() (*Room, error) {
 	//   ],
 	//   "parameters": {
 	//     "language": {
-	//       "description": "Specify the preferred language to use to format room info.",
+	//       "description": "The preferred language to use for strings returned by this method.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3258,7 +3466,7 @@ func (c *RoomsJoinCall) Do() (*Room, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1/", "rooms/{roomId}/join")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "rooms/{roomId}/join")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{roomId}", url.QueryEscape(c.roomId), 1)
@@ -3335,7 +3543,7 @@ func (c *RoomsLeaveCall) Do() (*Room, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1/", "rooms/{roomId}/leave")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "rooms/{roomId}/leave")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{roomId}", url.QueryEscape(c.roomId), 1)
@@ -3434,7 +3642,7 @@ func (c *RoomsListCall) Do() (*RoomList, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1/", "rooms")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "rooms")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -3516,7 +3724,7 @@ func (c *RoomsReportStatusCall) Do() (*RoomStatus, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1/", "rooms/{roomId}/reportstatus")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "rooms/{roomId}/reportstatus")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{roomId}", url.QueryEscape(c.roomId), 1)
@@ -3638,7 +3846,7 @@ func (c *ScoresGetCall) Do() (*PlayerLeaderboardScoreListResponse, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1/", "players/{playerId}/leaderboards/{leaderboardId}/scores/{timeSpan}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "players/{playerId}/leaderboards/{leaderboardId}/scores/{timeSpan}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{playerId}", url.QueryEscape(c.playerId), 1)
@@ -3801,7 +4009,7 @@ func (c *ScoresListCall) Do() (*LeaderboardScores, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1/", "leaderboards/{leaderboardId}/scores/{collection}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "leaderboards/{leaderboardId}/scores/{collection}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{leaderboardId}", url.QueryEscape(c.leaderboardId), 1)
@@ -3979,7 +4187,7 @@ func (c *ScoresListWindowCall) Do() (*LeaderboardScores, error) {
 	if v, ok := c.opt_["returnTopIfAbsent"]; ok {
 		params.Set("returnTopIfAbsent", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1/", "leaderboards/{leaderboardId}/window/{collection}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "leaderboards/{leaderboardId}/window/{collection}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{leaderboardId}", url.QueryEscape(c.leaderboardId), 1)
@@ -4131,7 +4339,7 @@ func (c *ScoresSubmitCall) Do() (*PlayerScoreResponse, error) {
 	if v, ok := c.opt_["scoreTag"]; ok {
 		params.Set("scoreTag", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1/", "leaderboards/{leaderboardId}/scores")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "leaderboards/{leaderboardId}/scores")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{leaderboardId}", url.QueryEscape(c.leaderboardId), 1)
@@ -4230,7 +4438,7 @@ func (c *ScoresSubmitMultipleCall) Do() (*PlayerScoreListResponse, error) {
 	if v, ok := c.opt_["language"]; ok {
 		params.Set("language", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1/", "leaderboards/scores")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "leaderboards/scores")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -4294,7 +4502,7 @@ func (c *TurnBasedMatchesCancelCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1/", "turnbasedmatches/{matchId}/cancel")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "turnbasedmatches/{matchId}/cancel")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{matchId}", url.QueryEscape(c.matchId), 1)
@@ -4348,8 +4556,8 @@ func (r *TurnBasedMatchesService) Create(turnbasedmatchcreaterequest *TurnBasedM
 	return c
 }
 
-// Language sets the optional parameter "language": Specify the
-// preferred language to use to format match info.
+// Language sets the optional parameter "language": The preferred
+// language to use for strings returned by this method.
 func (c *TurnBasedMatchesCreateCall) Language(language string) *TurnBasedMatchesCreateCall {
 	c.opt_["language"] = language
 	return c
@@ -4367,7 +4575,7 @@ func (c *TurnBasedMatchesCreateCall) Do() (*TurnBasedMatch, error) {
 	if v, ok := c.opt_["language"]; ok {
 		params.Set("language", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1/", "turnbasedmatches/create")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "turnbasedmatches/create")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -4392,7 +4600,7 @@ func (c *TurnBasedMatchesCreateCall) Do() (*TurnBasedMatch, error) {
 	//   "id": "games.turnBasedMatches.create",
 	//   "parameters": {
 	//     "language": {
-	//       "description": "Specify the preferred language to use to format match info.",
+	//       "description": "The preferred language to use for strings returned by this method.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -4441,7 +4649,7 @@ func (c *TurnBasedMatchesDeclineCall) Do() (*TurnBasedMatch, error) {
 	if v, ok := c.opt_["language"]; ok {
 		params.Set("language", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1/", "turnbasedmatches/{matchId}/decline")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "turnbasedmatches/{matchId}/decline")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{matchId}", url.QueryEscape(c.matchId), 1)
@@ -4513,7 +4721,7 @@ func (c *TurnBasedMatchesDismissCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1/", "turnbasedmatches/{matchId}/dismiss")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "turnbasedmatches/{matchId}/dismiss")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{matchId}", url.QueryEscape(c.matchId), 1)
@@ -4590,7 +4798,7 @@ func (c *TurnBasedMatchesFinishCall) Do() (*TurnBasedMatch, error) {
 	if v, ok := c.opt_["language"]; ok {
 		params.Set("language", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1/", "turnbasedmatches/{matchId}/finish")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "turnbasedmatches/{matchId}/finish")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{matchId}", url.QueryEscape(c.matchId), 1)
@@ -4667,8 +4875,8 @@ func (c *TurnBasedMatchesGetCall) IncludeMatchData(includeMatchData bool) *TurnB
 	return c
 }
 
-// Language sets the optional parameter "language": Specify the
-// preferred language to use to format match info.
+// Language sets the optional parameter "language": The preferred
+// language to use for strings returned by this method.
 func (c *TurnBasedMatchesGetCall) Language(language string) *TurnBasedMatchesGetCall {
 	c.opt_["language"] = language
 	return c
@@ -4684,7 +4892,7 @@ func (c *TurnBasedMatchesGetCall) Do() (*TurnBasedMatch, error) {
 	if v, ok := c.opt_["language"]; ok {
 		params.Set("language", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1/", "turnbasedmatches/{matchId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "turnbasedmatches/{matchId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{matchId}", url.QueryEscape(c.matchId), 1)
@@ -4717,7 +4925,7 @@ func (c *TurnBasedMatchesGetCall) Do() (*TurnBasedMatch, error) {
 	//       "type": "boolean"
 	//     },
 	//     "language": {
-	//       "description": "Specify the preferred language to use to format match info.",
+	//       "description": "The preferred language to use for strings returned by this method.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4769,7 +4977,7 @@ func (c *TurnBasedMatchesJoinCall) Do() (*TurnBasedMatch, error) {
 	if v, ok := c.opt_["language"]; ok {
 		params.Set("language", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1/", "turnbasedmatches/{matchId}/join")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "turnbasedmatches/{matchId}/join")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{matchId}", url.QueryEscape(c.matchId), 1)
@@ -4850,7 +5058,7 @@ func (c *TurnBasedMatchesLeaveCall) Do() (*TurnBasedMatch, error) {
 	if v, ok := c.opt_["language"]; ok {
 		params.Set("language", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1/", "turnbasedmatches/{matchId}/leave")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "turnbasedmatches/{matchId}/leave")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{matchId}", url.QueryEscape(c.matchId), 1)
@@ -4947,7 +5155,7 @@ func (c *TurnBasedMatchesLeaveTurnCall) Do() (*TurnBasedMatch, error) {
 	if v, ok := c.opt_["pendingParticipantId"]; ok {
 		params.Set("pendingParticipantId", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1/", "turnbasedmatches/{matchId}/leaveTurn")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "turnbasedmatches/{matchId}/leaveTurn")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{matchId}", url.QueryEscape(c.matchId), 1)
@@ -5086,7 +5294,7 @@ func (c *TurnBasedMatchesListCall) Do() (*TurnBasedMatchList, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1/", "turnbasedmatches")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "turnbasedmatches")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -5197,7 +5405,7 @@ func (c *TurnBasedMatchesRematchCall) Do() (*TurnBasedMatchRematch, error) {
 	if v, ok := c.opt_["requestId"]; ok {
 		params.Set("requestId", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1/", "turnbasedmatches/{matchId}/rematch")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "turnbasedmatches/{matchId}/rematch")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{matchId}", url.QueryEscape(c.matchId), 1)
@@ -5332,7 +5540,7 @@ func (c *TurnBasedMatchesSyncCall) Do() (*TurnBasedMatchSync, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1/", "turnbasedmatches/sync")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "turnbasedmatches/sync")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -5416,8 +5624,8 @@ func (r *TurnBasedMatchesService) TakeTurn(matchId string, turnbasedmatchturn *T
 	return c
 }
 
-// Language sets the optional parameter "language": Specify the
-// preferred language to use to format match info.
+// Language sets the optional parameter "language": The preferred
+// language to use for strings returned by this method.
 func (c *TurnBasedMatchesTakeTurnCall) Language(language string) *TurnBasedMatchesTakeTurnCall {
 	c.opt_["language"] = language
 	return c
@@ -5435,7 +5643,7 @@ func (c *TurnBasedMatchesTakeTurnCall) Do() (*TurnBasedMatch, error) {
 	if v, ok := c.opt_["language"]; ok {
 		params.Set("language", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/games/v1/", "turnbasedmatches/{matchId}/turn")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "turnbasedmatches/{matchId}/turn")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{matchId}", url.QueryEscape(c.matchId), 1)
@@ -5464,7 +5672,7 @@ func (c *TurnBasedMatchesTakeTurnCall) Do() (*TurnBasedMatch, error) {
 	//   ],
 	//   "parameters": {
 	//     "language": {
-	//       "description": "Specify the preferred language to use to format match info.",
+	//       "description": "The preferred language to use for strings returned by this method.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

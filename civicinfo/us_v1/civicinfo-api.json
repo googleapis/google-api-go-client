@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"R6H4aXXmd1SZaWpEcGSkC2StmNw/UEI1KxB6ydqszwyMqMafNHGNT30\"",
+ "etag": "\"kEk3sFj6Ef5_yR1-H3bAO6qw9mI/fgmSCrAaA7mxBfjU-xmYlE1C4zQ\"",
  "discoveryVersion": "v1",
  "id": "civicinfo:us_v1",
  "name": "civicinfo",
@@ -300,6 +300,43 @@
     }
    }
   },
+  "DivisionSearchResponse": {
+   "id": "DivisionSearchResponse",
+   "type": "object",
+   "description": "The result of a division search query.",
+   "properties": {
+    "kind": {
+     "type": "string",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"civicinfo#divisionSearchResponse\".",
+     "default": "civicinfo#divisionSearchResponse"
+    },
+    "results": {
+     "type": "array",
+     "items": {
+      "$ref": "DivisionSearchResult"
+     }
+    },
+    "status": {
+     "type": "string",
+     "description": "The result of the request. One of: success, addressUnparseable, noAddressParameter, internalLookupFailure"
+    }
+   }
+  },
+  "DivisionSearchResult": {
+   "id": "DivisionSearchResult",
+   "type": "object",
+   "description": "Represents a political geographic division that matches the requested query.",
+   "properties": {
+    "name": {
+     "type": "string",
+     "description": "The name of the division."
+    },
+    "ocdId": {
+     "type": "string",
+     "description": "The unique Open Civic Data identifier for this division."
+    }
+   }
+  },
   "Election": {
    "id": "Election",
    "type": "object",
@@ -587,7 +624,7 @@
     },
     "status": {
      "type": "string",
-     "description": "The result of the request. One of: success, noStreetSegmentFound, addressUnparseable, noAddressParameter, multipleStreetSegmentsFound, electionOver, electionUnknown, internalLookupFailure"
+     "description": "The result of the request. One of: success, noStreetSegmentFound, addressUnparseable, noAddressParameter, multipleStreetSegmentsFound, electionOver, electionUnknown, internalLookupFailure, RequestedBothAddressAndOcdId"
     }
    }
   },
@@ -706,6 +743,26 @@
   }
  },
  "resources": {
+  "divisions": {
+   "methods": {
+    "search": {
+     "id": "civicinfo.divisions.search",
+     "path": "representatives/division_search",
+     "httpMethod": "GET",
+     "description": "Searches for political divisions by their natural name or OCD ID.",
+     "parameters": {
+      "query": {
+       "type": "string",
+       "description": "The search query. Queries can cover any parts of a OCD ID or a human readable division name. All words given in the query are treated as required patterns. In addition to that, most query operators of the Apache Lucene library are supported. See http://lucene.apache.org/core/2_9_4/queryparsersyntax.html",
+       "location": "query"
+      }
+     },
+     "response": {
+      "$ref": "DivisionSearchResponse"
+     }
+    }
+   }
+  },
   "elections": {
    "methods": {
     "electionQuery": {

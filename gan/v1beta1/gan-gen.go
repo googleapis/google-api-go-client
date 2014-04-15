@@ -43,7 +43,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client}
+	s := &Service{client: client, BasePath: basePath}
 	s.Advertisers = NewAdvertisersService(s)
 	s.CcOffers = NewCcOffersService(s)
 	s.Events = NewEventsService(s)
@@ -54,7 +54,8 @@ func New(client *http.Client) (*Service, error) {
 }
 
 type Service struct {
-	client *http.Client
+	client   *http.Client
+	BasePath string // API endpoint base URL
 
 	Advertisers *AdvertisersService
 
@@ -862,7 +863,7 @@ func (c *AdvertisersGetCall) Do() (*Advertiser, error) {
 	if v, ok := c.opt_["advertiserId"]; ok {
 		params.Set("advertiserId", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/gan/v1beta1/", "{role}/{roleId}/advertiser")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{role}/{roleId}/advertiser")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{role}", url.QueryEscape(c.role), 1)
@@ -1028,7 +1029,7 @@ func (c *AdvertisersListCall) Do() (*Advertisers, error) {
 	if v, ok := c.opt_["relationshipStatus"]; ok {
 		params.Set("relationshipStatus", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/gan/v1beta1/", "{role}/{roleId}/advertisers")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{role}/{roleId}/advertisers")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{role}", url.QueryEscape(c.role), 1)
@@ -1183,7 +1184,7 @@ func (c *CcOffersListCall) Do() (*CcOffers, error) {
 	if v, ok := c.opt_["projection"]; ok {
 		params.Set("projection", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/gan/v1beta1/", "publishers/{publisher}/ccOffers")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "publishers/{publisher}/ccOffers")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{publisher}", url.QueryEscape(c.publisher), 1)
@@ -1444,7 +1445,7 @@ func (c *EventsListCall) Do() (*Events, error) {
 	if v, ok := c.opt_["type"]; ok {
 		params.Set("type", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/gan/v1beta1/", "{role}/{roleId}/events")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{role}/{roleId}/events")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{role}", url.QueryEscape(c.role), 1)
@@ -1645,7 +1646,7 @@ func (c *LinksGetCall) Do() (*Link, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/gan/v1beta1/", "{role}/{roleId}/link/{linkId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{role}/{roleId}/link/{linkId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{role}", url.QueryEscape(c.role), 1)
@@ -1740,7 +1741,7 @@ func (c *LinksInsertCall) Do() (*Link, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/gan/v1beta1/", "{role}/{roleId}/link")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{role}/{roleId}/link")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{role}", url.QueryEscape(c.role), 1)
@@ -1954,7 +1955,7 @@ func (c *LinksListCall) Do() (*Links, error) {
 	if v, ok := c.opt_["startDateMin"]; ok {
 		params.Set("startDateMin", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/gan/v1beta1/", "{role}/{roleId}/links")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{role}/{roleId}/links")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{role}", url.QueryEscape(c.role), 1)
@@ -2156,7 +2157,7 @@ func (c *PublishersGetCall) Do() (*Publisher, error) {
 	if v, ok := c.opt_["publisherId"]; ok {
 		params.Set("publisherId", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/gan/v1beta1/", "{role}/{roleId}/publisher")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{role}/{roleId}/publisher")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{role}", url.QueryEscape(c.role), 1)
@@ -2322,7 +2323,7 @@ func (c *PublishersListCall) Do() (*Publishers, error) {
 	if v, ok := c.opt_["relationshipStatus"]; ok {
 		params.Set("relationshipStatus", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/gan/v1beta1/", "{role}/{roleId}/publishers")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{role}/{roleId}/publishers")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{role}", url.QueryEscape(c.role), 1)
@@ -2574,7 +2575,7 @@ func (c *ReportsGetCall) Do() (*Report, error) {
 	if v, ok := c.opt_["status"]; ok {
 		params.Set("status", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/gan/v1beta1/", "{role}/{roleId}/report/{reportType}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{role}/{roleId}/report/{reportType}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{role}", url.QueryEscape(c.role), 1)

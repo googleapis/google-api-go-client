@@ -58,7 +58,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client}
+	s := &Service{client: client, BasePath: basePath}
 	s.Data = NewDataService(s)
 	s.Management = NewManagementService(s)
 	s.Metadata = NewMetadataService(s)
@@ -66,7 +66,8 @@ func New(client *http.Client) (*Service, error) {
 }
 
 type Service struct {
-	client *http.Client
+	client   *http.Client
+	BasePath string // API endpoint base URL
 
 	Data *DataService
 
@@ -122,6 +123,7 @@ type DataRealtimeService struct {
 
 func NewManagementService(s *Service) *ManagementService {
 	rs := &ManagementService{s: s}
+	rs.AccountSummaries = NewManagementAccountSummariesService(s)
 	rs.AccountUserLinks = NewManagementAccountUserLinksService(s)
 	rs.Accounts = NewManagementAccountsService(s)
 	rs.CustomDataSources = NewManagementCustomDataSourcesService(s)
@@ -139,6 +141,8 @@ func NewManagementService(s *Service) *ManagementService {
 
 type ManagementService struct {
 	s *Service
+
+	AccountSummaries *ManagementAccountSummariesService
 
 	AccountUserLinks *ManagementAccountUserLinksService
 
@@ -163,6 +167,15 @@ type ManagementService struct {
 	Webproperties *ManagementWebpropertiesService
 
 	WebpropertyUserLinks *ManagementWebpropertyUserLinksService
+}
+
+func NewManagementAccountSummariesService(s *Service) *ManagementAccountSummariesService {
+	rs := &ManagementAccountSummariesService{s: s}
+	return rs
+}
+
+type ManagementAccountSummariesService struct {
+	s *Service
 }
 
 func NewManagementAccountUserLinksService(s *Service) *ManagementAccountUserLinksService {
@@ -347,6 +360,52 @@ type AccountRef struct {
 
 	// Name: Account name.
 	Name string `json:"name,omitempty"`
+}
+
+type AccountSummaries struct {
+	// Items: A list of AccountSummaries.
+	Items []*AccountSummary `json:"items,omitempty"`
+
+	// ItemsPerPage: The maximum number of resources the response can
+	// contain, regardless of the actual number of resources returned. Its
+	// value ranges from 1 to 1000 with a value of 1000 by default, or
+	// otherwise specified by the max-results query parameter.
+	ItemsPerPage int64 `json:"itemsPerPage,omitempty"`
+
+	// Kind: Collection type.
+	Kind string `json:"kind,omitempty"`
+
+	// NextLink: Link to next page for this AccountSummary collection.
+	NextLink string `json:"nextLink,omitempty"`
+
+	// PreviousLink: Link to previous page for this AccountSummary
+	// collection.
+	PreviousLink string `json:"previousLink,omitempty"`
+
+	// StartIndex: The starting index of the resources, which is 1 by
+	// default or otherwise specified by the start-index query parameter.
+	StartIndex int64 `json:"startIndex,omitempty"`
+
+	// TotalResults: The total number of results for the query, regardless
+	// of the number of results in the response.
+	TotalResults int64 `json:"totalResults,omitempty"`
+
+	// Username: Email ID of the authenticated user
+	Username string `json:"username,omitempty"`
+}
+
+type AccountSummary struct {
+	// Id: Account ID.
+	Id string `json:"id,omitempty"`
+
+	// Kind: Resource type for Analytics AccountSummary.
+	Kind string `json:"kind,omitempty"`
+
+	// Name: Account name.
+	Name string `json:"name,omitempty"`
+
+	// WebProperties: List of web properties under this account.
+	WebProperties []*WebPropertySummary `json:"webProperties,omitempty"`
 }
 
 type Accounts struct {
@@ -745,10 +804,11 @@ type Experiment struct {
 	Name string `json:"name,omitempty"`
 
 	// ObjectiveMetric: The metric that the experiment is optimizing. Valid
-	// values: "ga:goal(n)Completions", "ga:bounces", "ga:pageviews",
-	// "ga:timeOnSite", "ga:transactions", "ga:transactionRevenue". This
-	// field is required if status is "RUNNING" and servingFramework is one
-	// of "REDIRECT" or "API".
+	// values: "ga:goal(n)Completions", "ga:adsenseAdsClicks",
+	// "ga:adsenseAdsViewed", "ga:adsenseRevenue", "ga:bounces",
+	// "ga:pageviews", "ga:timeOnSite", "ga:transactions",
+	// "ga:transactionRevenue". This field is required if status is
+	// "RUNNING" and servingFramework is one of "REDIRECT" or "API".
 	ObjectiveMetric string `json:"objectiveMetric,omitempty"`
 
 	// OptimizationType: Whether the objectiveMetric should be minimized or
@@ -1456,6 +1516,14 @@ type Profile struct {
 	// view (profile).
 	SiteSearchQueryParameters string `json:"siteSearchQueryParameters,omitempty"`
 
+	// StripSiteSearchCategoryParameters: Whether or not Analytics will
+	// strip search category parameters from the URLs in your reports.
+	StripSiteSearchCategoryParameters bool `json:"stripSiteSearchCategoryParameters,omitempty"`
+
+	// StripSiteSearchQueryParameters: Whether or not Analytics will strip
+	// search query parameters from the URLs in your reports.
+	StripSiteSearchQueryParameters bool `json:"stripSiteSearchQueryParameters,omitempty"`
+
 	// Timezone: Time zone for which this view (profile) has been
 	// configured. Time zones are identified by strings from the TZ
 	// database.
@@ -1521,6 +1589,20 @@ type ProfileRef struct {
 	// WebPropertyId: Web property ID of the form UA-XXXXX-YY to which this
 	// view (profile) belongs.
 	WebPropertyId string `json:"webPropertyId,omitempty"`
+}
+
+type ProfileSummary struct {
+	// Id: View (profile) ID.
+	Id string `json:"id,omitempty"`
+
+	// Kind: Resource type for Analytics ProfileSummary.
+	Kind string `json:"kind,omitempty"`
+
+	// Name: View (profile) name.
+	Name string `json:"name,omitempty"`
+
+	// Type: View (Profile) type. Supported types: WEB or APP.
+	Type string `json:"type,omitempty"`
 }
 
 type Profiles struct {
@@ -1652,34 +1734,37 @@ type RealtimeDataTotalsForAllResults struct {
 }
 
 type Segment struct {
-	// Created: Time the advanced segment was created.
+	// Created: Time the segment was created.
 	Created string `json:"created,omitempty"`
 
-	// Definition: Advanced segment definition.
+	// Definition: Segment definition.
 	Definition string `json:"definition,omitempty"`
 
-	// Id: Advanced segment ID.
+	// Id: Segment ID.
 	Id string `json:"id,omitempty"`
 
-	// Kind: Resource type for Analytics advanced segment.
+	// Kind: Resource type for Analytics segment.
 	Kind string `json:"kind,omitempty"`
 
-	// Name: Advanced segment name.
+	// Name: Segment name.
 	Name string `json:"name,omitempty"`
 
 	// SegmentId: Segment ID. Can be used with the 'segment' parameter in
-	// Data Feed.
+	// Core Reporting API.
 	SegmentId string `json:"segmentId,omitempty"`
 
-	// SelfLink: Link for this advanced segment.
+	// SelfLink: Link for this segment.
 	SelfLink string `json:"selfLink,omitempty"`
 
-	// Updated: Time the advanced segment was last modified.
+	// Type: Type for a segment. Possible values are "BUILT_IN" or "CUSTOM".
+	Type string `json:"type,omitempty"`
+
+	// Updated: Time the segment was last modified.
 	Updated string `json:"updated,omitempty"`
 }
 
 type Segments struct {
-	// Items: A list of advanced segments.
+	// Items: A list of segments.
 	Items []*Segment `json:"items,omitempty"`
 
 	// ItemsPerPage: The maximum number of resources the response can
@@ -1688,14 +1773,13 @@ type Segments struct {
 	// otherwise specified by the max-results query parameter.
 	ItemsPerPage int64 `json:"itemsPerPage,omitempty"`
 
-	// Kind: Collection type for advanced segments.
+	// Kind: Collection type for segments.
 	Kind string `json:"kind,omitempty"`
 
-	// NextLink: Link to next page for this advanced segment collection.
+	// NextLink: Link to next page for this segment collection.
 	NextLink string `json:"nextLink,omitempty"`
 
-	// PreviousLink: Link to previous page for this advanced segment
-	// collection.
+	// PreviousLink: Link to previous page for this segment collection.
 	PreviousLink string `json:"previousLink,omitempty"`
 
 	// StartIndex: The starting index of the resources, which is 1 by
@@ -1788,6 +1872,30 @@ type WebPropertyRef struct {
 
 	// Name: Name of this web property.
 	Name string `json:"name,omitempty"`
+}
+
+type WebPropertySummary struct {
+	// Id: Web property ID of the form UA-XXXXX-YY.
+	Id string `json:"id,omitempty"`
+
+	// InternalWebPropertyId: Internal ID for this web property.
+	InternalWebPropertyId string `json:"internalWebPropertyId,omitempty"`
+
+	// Kind: Resource type for Analytics WebPropertySummary.
+	Kind string `json:"kind,omitempty"`
+
+	// Level: Level for this web property. Possible values are STANDARD or
+	// PREMIUM.
+	Level string `json:"level,omitempty"`
+
+	// Name: Web property name.
+	Name string `json:"name,omitempty"`
+
+	// Profiles: List of profiles under this web property.
+	Profiles []*ProfileSummary `json:"profiles,omitempty"`
+
+	// WebsiteUrl: Website url for this web property.
+	WebsiteUrl string `json:"websiteUrl,omitempty"`
 }
 
 type Webproperties struct {
@@ -1955,8 +2063,8 @@ func (c *DataGaGetCall) SamplingLevel(samplingLevel string) *DataGaGetCall {
 	return c
 }
 
-// Segment sets the optional parameter "segment": An Analytics advanced
-// segment to be applied to data.
+// Segment sets the optional parameter "segment": An Analytics segment
+// to be applied to data.
 func (c *DataGaGetCall) Segment(segment string) *DataGaGetCall {
 	c.opt_["segment"] = segment
 	return c
@@ -2010,7 +2118,7 @@ func (c *DataGaGetCall) Do() (*GaData, error) {
 	if v, ok := c.opt_["start-index"]; ok {
 		params.Set("start-index", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "data/ga")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "data/ga")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -2107,7 +2215,7 @@ func (c *DataGaGetCall) Do() (*GaData, error) {
 	//       "type": "string"
 	//     },
 	//     "segment": {
-	//       "description": "An Analytics advanced segment to be applied to data.",
+	//       "description": "An Analytics segment to be applied to data.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2237,7 +2345,7 @@ func (c *DataMcfGetCall) Do() (*McfData, error) {
 	if v, ok := c.opt_["start-index"]; ok {
 		params.Set("start-index", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "data/mcf")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "data/mcf")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -2418,7 +2526,7 @@ func (c *DataRealtimeGetCall) Do() (*RealtimeData, error) {
 	if v, ok := c.opt_["sort"]; ok {
 		params.Set("sort", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "data/realtime")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "data/realtime")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -2496,6 +2604,94 @@ func (c *DataRealtimeGetCall) Do() (*RealtimeData, error) {
 
 }
 
+// method id "analytics.management.accountSummaries.list":
+
+type ManagementAccountSummariesListCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// List: Lists account summaries (lightweight tree comprised of
+// accounts/properties/profiles) to which the user has access.
+func (r *ManagementAccountSummariesService) List() *ManagementAccountSummariesListCall {
+	c := &ManagementAccountSummariesListCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+// MaxResults sets the optional parameter "max-results": The maximum
+// number of filters to include in this response.
+func (c *ManagementAccountSummariesListCall) MaxResults(maxResults int64) *ManagementAccountSummariesListCall {
+	c.opt_["max-results"] = maxResults
+	return c
+}
+
+// StartIndex sets the optional parameter "start-index": An index of the
+// first entity to retrieve. Use this parameter as a pagination
+// mechanism along with the max-results parameter.
+func (c *ManagementAccountSummariesListCall) StartIndex(startIndex int64) *ManagementAccountSummariesListCall {
+	c.opt_["start-index"] = startIndex
+	return c
+}
+
+func (c *ManagementAccountSummariesListCall) Do() (*AccountSummaries, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["max-results"]; ok {
+		params.Set("max-results", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["start-index"]; ok {
+		params.Set("start-index", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accountSummaries")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(AccountSummaries)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists account summaries (lightweight tree comprised of accounts/properties/profiles) to which the user has access.",
+	//   "httpMethod": "GET",
+	//   "id": "analytics.management.accountSummaries.list",
+	//   "parameters": {
+	//     "max-results": {
+	//       "description": "The maximum number of filters to include in this response.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "start-index": {
+	//       "description": "An index of the first entity to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     }
+	//   },
+	//   "path": "management/accountSummaries",
+	//   "response": {
+	//     "$ref": "AccountSummaries"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
 // method id "analytics.management.accountUserLinks.delete":
 
 type ManagementAccountUserLinksDeleteCall struct {
@@ -2517,7 +2713,7 @@ func (c *ManagementAccountUserLinksDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/entityUserLinks/{linkId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/entityUserLinks/{linkId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
@@ -2589,7 +2785,7 @@ func (c *ManagementAccountUserLinksInsertCall) Do() (*EntityUserLink, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/entityUserLinks")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/entityUserLinks")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
@@ -2678,7 +2874,7 @@ func (c *ManagementAccountUserLinksListCall) Do() (*EntityUserLinks, error) {
 	if v, ok := c.opt_["start-index"]; ok {
 		params.Set("start-index", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/entityUserLinks")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/entityUserLinks")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
@@ -2765,7 +2961,7 @@ func (c *ManagementAccountUserLinksUpdateCall) Do() (*EntityUserLink, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/entityUserLinks/{linkId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/entityUserLinks/{linkId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
@@ -2860,7 +3056,7 @@ func (c *ManagementAccountsListCall) Do() (*Accounts, error) {
 	if v, ok := c.opt_["start-index"]; ok {
 		params.Set("start-index", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -2952,7 +3148,7 @@ func (c *ManagementCustomDataSourcesListCall) Do() (*CustomDataSources, error) {
 	if v, ok := c.opt_["start-index"]; ok {
 		params.Set("start-index", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
@@ -3051,7 +3247,7 @@ func (c *ManagementDailyUploadsDeleteCall) Do() error {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("type", fmt.Sprintf("%v", c.type_))
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/dailyUploads/{date}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/dailyUploads/{date}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
@@ -3180,7 +3376,7 @@ func (c *ManagementDailyUploadsListCall) Do() (*DailyUploads, error) {
 	if v, ok := c.opt_["start-index"]; ok {
 		params.Set("start-index", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/dailyUploads")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/dailyUploads")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
@@ -3322,7 +3518,7 @@ func (c *ManagementDailyUploadsUploadCall) Do() (*DailyUploadAppend, error) {
 	if v, ok := c.opt_["reset"]; ok {
 		params.Set("reset", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/dailyUploads/{date}/uploads")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/dailyUploads/{date}/uploads")
 	if c.media_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
 		params.Set("uploadType", "multipart")
@@ -3477,7 +3673,7 @@ func (c *ManagementExperimentsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/experiments/{experimentId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/experiments/{experimentId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
@@ -3565,7 +3761,7 @@ func (c *ManagementExperimentsGetCall) Do() (*Experiment, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/experiments/{experimentId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/experiments/{experimentId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
@@ -3666,7 +3862,7 @@ func (c *ManagementExperimentsInsertCall) Do() (*Experiment, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/experiments")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/experiments")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
@@ -3776,7 +3972,7 @@ func (c *ManagementExperimentsListCall) Do() (*Experiments, error) {
 	if v, ok := c.opt_["start-index"]; ok {
 		params.Set("start-index", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/experiments")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/experiments")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
@@ -3888,7 +4084,7 @@ func (c *ManagementExperimentsPatchCall) Do() (*Experiment, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/experiments/{experimentId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/experiments/{experimentId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
@@ -3994,7 +4190,7 @@ func (c *ManagementExperimentsUpdateCall) Do() (*Experiment, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/experiments/{experimentId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/experiments/{experimentId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
@@ -4093,7 +4289,7 @@ func (c *ManagementGoalsGetCall) Do() (*Goal, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/goals/{goalId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/goals/{goalId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
@@ -4193,7 +4389,7 @@ func (c *ManagementGoalsInsertCall) Do() (*Goal, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/goals")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/goals")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
@@ -4302,7 +4498,7 @@ func (c *ManagementGoalsListCall) Do() (*Goals, error) {
 	if v, ok := c.opt_["start-index"]; ok {
 		params.Set("start-index", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/goals")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/goals")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
@@ -4411,7 +4607,7 @@ func (c *ManagementGoalsPatchCall) Do() (*Goal, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/goals/{goalId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/goals/{goalId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
@@ -4516,7 +4712,7 @@ func (c *ManagementGoalsUpdateCall) Do() (*Goal, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/goals/{goalId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/goals/{goalId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
@@ -4614,7 +4810,7 @@ func (c *ManagementProfileUserLinksDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/entityUserLinks/{linkId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/entityUserLinks/{linkId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
@@ -4706,7 +4902,7 @@ func (c *ManagementProfileUserLinksInsertCall) Do() (*EntityUserLink, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/entityUserLinks")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/entityUserLinks")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
@@ -4815,7 +5011,7 @@ func (c *ManagementProfileUserLinksListCall) Do() (*EntityUserLinks, error) {
 	if v, ok := c.opt_["start-index"]; ok {
 		params.Set("start-index", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/entityUserLinks")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/entityUserLinks")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
@@ -4922,7 +5118,7 @@ func (c *ManagementProfileUserLinksUpdateCall) Do() (*EntityUserLink, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/entityUserLinks/{linkId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/entityUserLinks/{linkId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
@@ -5018,7 +5214,7 @@ func (c *ManagementProfilesDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
@@ -5095,7 +5291,7 @@ func (c *ManagementProfilesGetCall) Do() (*Profile, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
@@ -5188,7 +5384,7 @@ func (c *ManagementProfilesInsertCall) Do() (*Profile, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
@@ -5287,7 +5483,7 @@ func (c *ManagementProfilesListCall) Do() (*Profiles, error) {
 	if v, ok := c.opt_["start-index"]; ok {
 		params.Set("start-index", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
@@ -5386,7 +5582,7 @@ func (c *ManagementProfilesPatchCall) Do() (*Profile, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
@@ -5481,7 +5677,7 @@ func (c *ManagementProfilesUpdateCall) Do() (*Profile, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
@@ -5553,22 +5749,22 @@ type ManagementSegmentsListCall struct {
 	opt_ map[string]interface{}
 }
 
-// List: Lists advanced segments to which the user has access.
+// List: Lists segments to which the user has access.
 func (r *ManagementSegmentsService) List() *ManagementSegmentsListCall {
 	c := &ManagementSegmentsListCall{s: r.s, opt_: make(map[string]interface{})}
 	return c
 }
 
 // MaxResults sets the optional parameter "max-results": The maximum
-// number of advanced segments to include in this response.
+// number of segments to include in this response.
 func (c *ManagementSegmentsListCall) MaxResults(maxResults int64) *ManagementSegmentsListCall {
 	c.opt_["max-results"] = maxResults
 	return c
 }
 
 // StartIndex sets the optional parameter "start-index": An index of the
-// first advanced segment to retrieve. Use this parameter as a
-// pagination mechanism along with the max-results parameter.
+// first segment to retrieve. Use this parameter as a pagination
+// mechanism along with the max-results parameter.
 func (c *ManagementSegmentsListCall) StartIndex(startIndex int64) *ManagementSegmentsListCall {
 	c.opt_["start-index"] = startIndex
 	return c
@@ -5584,7 +5780,7 @@ func (c *ManagementSegmentsListCall) Do() (*Segments, error) {
 	if v, ok := c.opt_["start-index"]; ok {
 		params.Set("start-index", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/segments")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/segments")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -5603,18 +5799,18 @@ func (c *ManagementSegmentsListCall) Do() (*Segments, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists advanced segments to which the user has access.",
+	//   "description": "Lists segments to which the user has access.",
 	//   "httpMethod": "GET",
 	//   "id": "analytics.management.segments.list",
 	//   "parameters": {
 	//     "max-results": {
-	//       "description": "The maximum number of advanced segments to include in this response.",
+	//       "description": "The maximum number of segments to include in this response.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "start-index": {
-	//       "description": "An index of the first advanced segment to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.",
+	//       "description": "An index of the first segment to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "minimum": "1",
@@ -5664,7 +5860,7 @@ func (c *ManagementUploadsDeleteUploadDataCall) Do() error {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/deleteUploadData")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/deleteUploadData")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
@@ -5751,7 +5947,7 @@ func (c *ManagementUploadsGetCall) Do() (*Upload, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/uploads/{uploadId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/uploads/{uploadId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
@@ -5870,7 +6066,7 @@ func (c *ManagementUploadsListCall) Do() (*Uploads, error) {
 	if v, ok := c.opt_["start-index"]; ok {
 		params.Set("start-index", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/uploads")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/uploads")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
@@ -5978,7 +6174,7 @@ func (c *ManagementUploadsUploadDataCall) Do() (*Upload, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/uploads")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/uploads")
 	if c.media_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
 		params.Set("uploadType", "multipart")
@@ -6091,7 +6287,7 @@ func (c *ManagementWebpropertiesGetCall) Do() (*Webproperty, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
@@ -6175,7 +6371,7 @@ func (c *ManagementWebpropertiesInsertCall) Do() (*Webproperty, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
@@ -6264,7 +6460,7 @@ func (c *ManagementWebpropertiesListCall) Do() (*Webproperties, error) {
 	if v, ok := c.opt_["start-index"]; ok {
 		params.Set("start-index", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
@@ -6353,7 +6549,7 @@ func (c *ManagementWebpropertiesPatchCall) Do() (*Webproperty, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
@@ -6438,7 +6634,7 @@ func (c *ManagementWebpropertiesUpdateCall) Do() (*Webproperty, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
@@ -6518,7 +6714,7 @@ func (c *ManagementWebpropertyUserLinksDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/entityUserLinks/{linkId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}/entityUserLinks/{linkId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
@@ -6600,7 +6796,7 @@ func (c *ManagementWebpropertyUserLinksInsertCall) Do() (*EntityUserLink, error)
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/entityUserLinks")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}/entityUserLinks")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
@@ -6699,7 +6895,7 @@ func (c *ManagementWebpropertyUserLinksListCall) Do() (*EntityUserLinks, error) 
 	if v, ok := c.opt_["start-index"]; ok {
 		params.Set("start-index", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/entityUserLinks")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}/entityUserLinks")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
@@ -6796,7 +6992,7 @@ func (c *ManagementWebpropertyUserLinksUpdateCall) Do() (*EntityUserLink, error)
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "management/accounts/{accountId}/webproperties/{webPropertyId}/entityUserLinks/{linkId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}/entityUserLinks/{linkId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
@@ -6880,7 +7076,7 @@ func (c *MetadataColumnsListCall) Do() (*Columns, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/analytics/v3/", "metadata/{reportType}/columns")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "metadata/{reportType}/columns")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{reportType}", url.QueryEscape(c.reportType), 1)

@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"R6H4aXXmd1SZaWpEcGSkC2StmNw/dG1NDjLwo4MlEwru1sJtI5oHDJM\"",
+ "etag": "\"kEk3sFj6Ef5_yR1-H3bAO6qw9mI/UNFMI_ENJ3hAFRWSi4GLSerTeFg\"",
  "discoveryVersion": "v1",
  "id": "discovery:v1",
  "name": "discovery",
@@ -251,6 +251,31 @@
     "type": {
      "type": "string",
      "description": "The value type for this schema. A list of values can be found here: http://tools.ietf.org/html/draft-zyp-json-schema-03#section-5.1"
+    },
+    "variant": {
+     "type": "object",
+     "description": "In a variant data type, the value of one property is used to determine how to interpret the entire entity. Its value must exist in a map of descriminant values to schema names.",
+     "properties": {
+      "discriminant": {
+       "type": "string",
+       "description": "The name of the type discriminant property."
+      },
+      "map": {
+       "type": "array",
+       "description": "The map of discriminant value to schema to use for parsing..",
+       "items": {
+        "type": "object",
+        "properties": {
+         "$ref": {
+          "type": "string"
+         },
+         "type_value": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
     }
    }
   },

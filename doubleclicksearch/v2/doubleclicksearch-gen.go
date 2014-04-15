@@ -39,18 +39,25 @@ const apiName = "doubleclicksearch"
 const apiVersion = "v2"
 const basePath = "https://www.googleapis.com/doubleclicksearch/v2/"
 
+// OAuth2 scopes used by this API.
+const (
+	// View and manage your advertising data in DoubleClick Search
+	DoubleclicksearchScope = "https://www.googleapis.com/auth/doubleclicksearch"
+)
+
 func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client}
+	s := &Service{client: client, BasePath: basePath}
 	s.Conversion = NewConversionService(s)
 	s.Reports = NewReportsService(s)
 	return s, nil
 }
 
 type Service struct {
-	client *http.Client
+	client   *http.Client
+	BasePath string // API endpoint base URL
 
 	Conversion *ConversionService
 
@@ -75,6 +82,30 @@ type ReportsService struct {
 	s *Service
 }
 
+type Availability struct {
+	// AdvertiserId: DS advertiser ID.
+	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
+
+	// AgencyId: DS agency ID.
+	AgencyId int64 `json:"agencyId,omitempty,string"`
+
+	// AvailabilityTimestamp: The time by which all conversions have been
+	// uploaded, in epoch millis UTC.
+	AvailabilityTimestamp uint64 `json:"availabilityTimestamp,omitempty,string"`
+
+	// SegmentationId: The numeric segmentation identifier (for example,
+	// DoubleClick Search Floodlight activity ID).
+	SegmentationId int64 `json:"segmentationId,omitempty,string"`
+
+	// SegmentationName: The friendly segmentation identifier (for example,
+	// DoubleClick Search Floodlight activity name).
+	SegmentationName string `json:"segmentationName,omitempty"`
+
+	// SegmentationType: The segmentation type that this availability is for
+	// (its default value is FLOODLIGHT).
+	SegmentationType string `json:"segmentationType,omitempty"`
+}
+
 type Conversion struct {
 	// AdGroupId: DS ad group ID.
 	AdGroupId int64 `json:"adGroupId,omitempty,string"`
@@ -94,7 +125,7 @@ type Conversion struct {
 	// ClickId: DS click ID for the conversion.
 	ClickId string `json:"clickId,omitempty"`
 
-	// ConversionId: Advertiser provided ID for the conversion, also known
+	// ConversionId: Advertiser-provided ID for the conversion, also known
 	// as the order ID.
 	ConversionId string `json:"conversionId,omitempty"`
 
@@ -109,14 +140,15 @@ type Conversion struct {
 	// CriterionId: DS criterion (keyword) ID.
 	CriterionId int64 `json:"criterionId,omitempty,string"`
 
-	// CurrencyCode: The currency code for the revenue. Should be in ISO
-	// 4217 alphabetic (3-char) format.
+	// CurrencyCode: The currency code for the conversion's revenue. Should
+	// be in ISO 4217 alphabetic (3-char) format.
 	CurrencyCode string `json:"currencyCode,omitempty"`
 
-	// CustomDimension: The custom dimension values for the conversion.
+	// CustomDimension: Custom dimensions for the conversion, which can be
+	// used to filter data in a report.
 	CustomDimension []*CustomDimension `json:"customDimension,omitempty"`
 
-	// CustomMetric: The custom metric values for the conversion.
+	// CustomMetric: Custom metrics for the conversion.
 	CustomMetric []*CustomMetric `json:"customMetric,omitempty"`
 
 	// DsConversionId: DS conversion ID.
@@ -125,7 +157,7 @@ type Conversion struct {
 	// EngineAccountId: DS engine account ID.
 	EngineAccountId int64 `json:"engineAccountId,omitempty,string"`
 
-	// FloodlightOrderId: The advertiser provided order id for the
+	// FloodlightOrderId: The advertiser-provided order id for the
 	// conversion.
 	FloodlightOrderId string `json:"floodlightOrderId,omitempty"`
 
@@ -249,9 +281,14 @@ type ReportRequest struct {
 	// Filters: A list of filters to be applied to the report.
 	Filters []*ReportRequestFilters `json:"filters,omitempty"`
 
-	// IncludeDeletedEntities: Determines if deleted entities should be
-	// included in the report. Defaults to true.
+	// IncludeDeletedEntities: Determines if removed entities should be
+	// included in the report. Deprecated, please use includeRemovedEntities
+	// instead. Defaults to false.
 	IncludeDeletedEntities bool `json:"includeDeletedEntities,omitempty"`
+
+	// IncludeRemovedEntities: Determines if removed entities should be
+	// included in the report. Defaults to false.
+	IncludeRemovedEntities bool `json:"includeRemovedEntities,omitempty"`
 
 	// MaxRowsPerFile: Asynchronous report only. The maximum number of rows
 	// per report file. A large report is split into many files based on
@@ -315,9 +352,10 @@ type ReportRequestColumns struct {
 	// column. Defaults to false.
 	GroupByColumn bool `json:"groupByColumn,omitempty"`
 
-	// HeaderText: Header text that will appear in the report. This can be
-	// used to prevent collisions between DoubleClick Search columns and
-	// saved columns with the same name.
+	// HeaderText: Text used to identify this column in the report output;
+	// defaults to columnName or savedColumnName when not specified. This
+	// can be used to prevent collisions between DoubleClick Search columns
+	// and saved columns with the same name.
 	HeaderText string `json:"headerText,omitempty"`
 
 	// SavedColumnName: Name of a saved column to include in the report. The
@@ -414,6 +452,16 @@ type ReportRequestTimeRange struct {
 type ReportRow struct {
 }
 
+type UpdateAvailabilityRequest struct {
+	// Availabilities: The availabilities being requested.
+	Availabilities []*Availability `json:"availabilities,omitempty"`
+}
+
+type UpdateAvailabilityResponse struct {
+	// Availabilities: The availabilities being returned.
+	Availabilities []*Availability `json:"availabilities,omitempty"`
+}
+
 // method id "doubleclicksearch.conversion.get":
 
 type ConversionGetCall struct {
@@ -489,7 +537,7 @@ func (c *ConversionGetCall) Do() (*ConversionList, error) {
 	if v, ok := c.opt_["criterionId"]; ok {
 		params.Set("criterionId", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/doubleclicksearch/v2/", "agency/{agencyId}/advertiser/{advertiserId}/engine/{engineAccountId}/conversion")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "agency/{agencyId}/advertiser/{advertiserId}/engine/{engineAccountId}/conversion")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{agencyId}", strconv.FormatInt(c.agencyId, 10), 1)
@@ -607,7 +655,10 @@ func (c *ConversionGetCall) Do() (*ConversionList, error) {
 	//   "path": "agency/{agencyId}/advertiser/{advertiserId}/engine/{engineAccountId}/conversion",
 	//   "response": {
 	//     "$ref": "ConversionList"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/doubleclicksearch"
+	//   ]
 	// }
 
 }
@@ -636,7 +687,7 @@ func (c *ConversionInsertCall) Do() (*ConversionList, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/doubleclicksearch/v2/", "conversion")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "conversion")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -665,7 +716,10 @@ func (c *ConversionInsertCall) Do() (*ConversionList, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "ConversionList"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/doubleclicksearch"
+	//   ]
 	// }
 
 }
@@ -716,7 +770,7 @@ func (c *ConversionPatchCall) Do() (*ConversionList, error) {
 	params.Set("rowCount", fmt.Sprintf("%v", c.rowCount))
 	params.Set("startDate", fmt.Sprintf("%v", c.startDate))
 	params.Set("startRow", fmt.Sprintf("%v", c.startRow))
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/doubleclicksearch/v2/", "conversion")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "conversion")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -811,7 +865,10 @@ func (c *ConversionPatchCall) Do() (*ConversionList, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "ConversionList"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/doubleclicksearch"
+	//   ]
 	// }
 
 }
@@ -840,7 +897,7 @@ func (c *ConversionUpdateCall) Do() (*ConversionList, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/doubleclicksearch/v2/", "conversion")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "conversion")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -869,7 +926,73 @@ func (c *ConversionUpdateCall) Do() (*ConversionList, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "ConversionList"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/doubleclicksearch"
+	//   ]
+	// }
+
+}
+
+// method id "doubleclicksearch.conversion.updateAvailability":
+
+type ConversionUpdateAvailabilityCall struct {
+	s                         *Service
+	updateavailabilityrequest *UpdateAvailabilityRequest
+	opt_                      map[string]interface{}
+}
+
+// UpdateAvailability: Updates the availabilities of a batch of
+// floodlight activities in DoubleClick Search.
+func (r *ConversionService) UpdateAvailability(updateavailabilityrequest *UpdateAvailabilityRequest) *ConversionUpdateAvailabilityCall {
+	c := &ConversionUpdateAvailabilityCall{s: r.s, opt_: make(map[string]interface{})}
+	c.updateavailabilityrequest = updateavailabilityrequest
+	return c
+}
+
+func (c *ConversionUpdateAvailabilityCall) Do() (*UpdateAvailabilityResponse, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.updateavailabilityrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "conversion/updateAvailability")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(UpdateAvailabilityResponse)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the availabilities of a batch of floodlight activities in DoubleClick Search.",
+	//   "httpMethod": "POST",
+	//   "id": "doubleclicksearch.conversion.updateAvailability",
+	//   "path": "conversion/updateAvailability",
+	//   "request": {
+	//     "$ref": "UpdateAvailabilityRequest",
+	//     "parameterName": "empty"
+	//   },
+	//   "response": {
+	//     "$ref": "UpdateAvailabilityResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/doubleclicksearch"
+	//   ]
 	// }
 
 }
@@ -898,7 +1021,7 @@ func (c *ReportsGenerateCall) Do() (*Report, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/doubleclicksearch/v2/", "reports/generate")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "reports/generate")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -928,7 +1051,10 @@ func (c *ReportsGenerateCall) Do() (*Report, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "Report"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/doubleclicksearch"
+	//   ]
 	// }
 
 }
@@ -952,7 +1078,7 @@ func (c *ReportsGetCall) Do() (*Report, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/doubleclicksearch/v2/", "reports/{reportId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "reports/{reportId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{reportId}", url.QueryEscape(c.reportId), 1)
@@ -989,7 +1115,10 @@ func (c *ReportsGetCall) Do() (*Report, error) {
 	//   "path": "reports/{reportId}",
 	//   "response": {
 	//     "$ref": "Report"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/doubleclicksearch"
+	//   ]
 	// }
 
 }
@@ -1015,7 +1144,7 @@ func (c *ReportsGetFileCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/doubleclicksearch/v2/", "reports/{reportId}/files/{reportFragment}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "reports/{reportId}/files/{reportFragment}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{reportId}", url.QueryEscape(c.reportId), 1)
@@ -1056,6 +1185,9 @@ func (c *ReportsGetFileCall) Do() error {
 	//     }
 	//   },
 	//   "path": "reports/{reportId}/files/{reportFragment}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/doubleclicksearch"
+	//   ],
 	//   "supportsMediaDownload": true
 	// }
 
@@ -1085,7 +1217,7 @@ func (c *ReportsRequestCall) Do() (*Report, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/doubleclicksearch/v2/", "reports")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "reports")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -1115,7 +1247,10 @@ func (c *ReportsRequestCall) Do() (*Report, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "Report"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/doubleclicksearch"
+	//   ]
 	// }
 
 }

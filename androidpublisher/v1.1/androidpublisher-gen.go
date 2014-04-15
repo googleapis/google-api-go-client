@@ -39,18 +39,25 @@ const apiName = "androidpublisher"
 const apiVersion = "v1.1"
 const basePath = "https://www.googleapis.com/androidpublisher/v1.1/applications/"
 
+// OAuth2 scopes used by this API.
+const (
+	// View and manage your Google Play Android Developer account
+	AndroidpublisherScope = "https://www.googleapis.com/auth/androidpublisher"
+)
+
 func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client}
+	s := &Service{client: client, BasePath: basePath}
 	s.Inapppurchases = NewInapppurchasesService(s)
 	s.Purchases = NewPurchasesService(s)
 	return s, nil
 }
 
 type Service struct {
-	client *http.Client
+	client   *http.Client
+	BasePath string // API endpoint base URL
 
 	Inapppurchases *InapppurchasesService
 
@@ -78,8 +85,8 @@ type PurchasesService struct {
 type InappPurchase struct {
 	// ConsumptionState: The consumption state of the inapp product.
 	// Possible values are:
-	// - - Consumed
-	// - - Yet to be consumed
+	// - Yet to be consumed
+	// - Consumed
 	ConsumptionState int64 `json:"consumptionState,omitempty"`
 
 	// DeveloperPayload: A developer-specified string that contains
@@ -92,8 +99,8 @@ type InappPurchase struct {
 
 	// PurchaseState: The purchase state of the order. Possible values are:
 	//
-	// - - Purchased
-	// - - Cancelled
+	// - Purchased
+	// - Cancelled
 	PurchaseState int64 `json:"purchaseState,omitempty"`
 
 	// PurchaseTime: The time the product was purchased, in milliseconds
@@ -142,7 +149,7 @@ func (c *InapppurchasesGetCall) Do() (*InappPurchase, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/androidpublisher/v1.1/applications/", "{packageName}/inapp/{productId}/purchases/{token}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{packageName}/inapp/{productId}/purchases/{token}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{packageName}", url.QueryEscape(c.packageName), 1)
@@ -195,7 +202,10 @@ func (c *InapppurchasesGetCall) Do() (*InappPurchase, error) {
 	//   "path": "{packageName}/inapp/{productId}/purchases/{token}",
 	//   "response": {
 	//     "$ref": "InappPurchase"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidpublisher"
+	//   ]
 	// }
 
 }
@@ -224,7 +234,7 @@ func (c *PurchasesCancelCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/androidpublisher/v1.1/applications/", "{packageName}/subscriptions/{subscriptionId}/purchases/{token}/cancel")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{packageName}/subscriptions/{subscriptionId}/purchases/{token}/cancel")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{packageName}", url.QueryEscape(c.packageName), 1)
@@ -270,7 +280,10 @@ func (c *PurchasesCancelCall) Do() error {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{packageName}/subscriptions/{subscriptionId}/purchases/{token}/cancel"
+	//   "path": "{packageName}/subscriptions/{subscriptionId}/purchases/{token}/cancel",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidpublisher"
+	//   ]
 	// }
 
 }
@@ -299,7 +312,7 @@ func (c *PurchasesGetCall) Do() (*SubscriptionPurchase, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/androidpublisher/v1.1/applications/", "{packageName}/subscriptions/{subscriptionId}/purchases/{token}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{packageName}/subscriptions/{subscriptionId}/purchases/{token}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{packageName}", url.QueryEscape(c.packageName), 1)
@@ -352,7 +365,10 @@ func (c *PurchasesGetCall) Do() (*SubscriptionPurchase, error) {
 	//   "path": "{packageName}/subscriptions/{subscriptionId}/purchases/{token}",
 	//   "response": {
 	//     "$ref": "SubscriptionPurchase"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidpublisher"
+	//   ]
 	// }
 
 }

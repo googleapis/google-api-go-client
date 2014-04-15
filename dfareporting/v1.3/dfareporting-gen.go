@@ -49,7 +49,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client}
+	s := &Service{client: client, BasePath: basePath}
 	s.DimensionValues = NewDimensionValuesService(s)
 	s.Files = NewFilesService(s)
 	s.Reports = NewReportsService(s)
@@ -58,7 +58,8 @@ func New(client *http.Client) (*Service, error) {
 }
 
 type Service struct {
-	client *http.Client
+	client   *http.Client
+	BasePath string // API endpoint base URL
 
 	DimensionValues *DimensionValuesService
 
@@ -1016,7 +1017,7 @@ func (c *DimensionValuesQueryCall) Do() (*DimensionValueList, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/dfareporting/v1.3/", "userprofiles/{profileId}/dimensionvalues/query")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/dimensionvalues/query")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{profileId}", strconv.FormatInt(c.profileId, 10), 1)
@@ -1100,7 +1101,7 @@ func (c *FilesGetCall) Do() (*File, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/dfareporting/v1.3/", "reports/{reportId}/files/{fileId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "reports/{reportId}/files/{fileId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{reportId}", strconv.FormatInt(c.reportId, 10), 1)
@@ -1225,7 +1226,7 @@ func (c *FilesListCall) Do() (*FileList, error) {
 	if v, ok := c.opt_["sortOrder"]; ok {
 		params.Set("sortOrder", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/dfareporting/v1.3/", "userprofiles/{profileId}/files")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/files")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{profileId}", strconv.FormatInt(c.profileId, 10), 1)
@@ -1349,7 +1350,7 @@ func (c *ReportsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/dfareporting/v1.3/", "userprofiles/{profileId}/reports/{reportId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/reports/{reportId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{profileId}", strconv.FormatInt(c.profileId, 10), 1)
@@ -1418,7 +1419,7 @@ func (c *ReportsGetCall) Do() (*Report, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/dfareporting/v1.3/", "userprofiles/{profileId}/reports/{reportId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/reports/{reportId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{profileId}", strconv.FormatInt(c.profileId, 10), 1)
@@ -1499,7 +1500,7 @@ func (c *ReportsInsertCall) Do() (*Report, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/dfareporting/v1.3/", "userprofiles/{profileId}/reports")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/reports")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{profileId}", strconv.FormatInt(c.profileId, 10), 1)
@@ -1618,7 +1619,7 @@ func (c *ReportsListCall) Do() (*ReportList, error) {
 	if v, ok := c.opt_["sortOrder"]; ok {
 		params.Set("sortOrder", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/dfareporting/v1.3/", "userprofiles/{profileId}/reports")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/reports")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{profileId}", strconv.FormatInt(c.profileId, 10), 1)
@@ -1749,7 +1750,7 @@ func (c *ReportsPatchCall) Do() (*Report, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/dfareporting/v1.3/", "userprofiles/{profileId}/reports/{reportId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/reports/{reportId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{profileId}", strconv.FormatInt(c.profileId, 10), 1)
@@ -1839,7 +1840,7 @@ func (c *ReportsRunCall) Do() (*File, error) {
 	if v, ok := c.opt_["synchronous"]; ok {
 		params.Set("synchronous", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/dfareporting/v1.3/", "userprofiles/{profileId}/reports/{reportId}/run")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/reports/{reportId}/run")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{profileId}", strconv.FormatInt(c.profileId, 10), 1)
@@ -1927,7 +1928,7 @@ func (c *ReportsUpdateCall) Do() (*Report, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/dfareporting/v1.3/", "userprofiles/{profileId}/reports/{reportId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/reports/{reportId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{profileId}", strconv.FormatInt(c.profileId, 10), 1)
@@ -2014,7 +2015,7 @@ func (c *ReportsCompatibleFieldsQueryCall) Do() (*CompatibleFields, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/dfareporting/v1.3/", "userprofiles/{profileId}/reports/compatiblefields/query")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/reports/compatiblefields/query")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{profileId}", strconv.FormatInt(c.profileId, 10), 1)
@@ -2087,7 +2088,7 @@ func (c *ReportsFilesGetCall) Do() (*File, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/dfareporting/v1.3/", "userprofiles/{profileId}/reports/{reportId}/files/{fileId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/reports/{reportId}/files/{fileId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{profileId}", strconv.FormatInt(c.profileId, 10), 1)
@@ -2213,7 +2214,7 @@ func (c *ReportsFilesListCall) Do() (*FileList, error) {
 	if v, ok := c.opt_["sortOrder"]; ok {
 		params.Set("sortOrder", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/dfareporting/v1.3/", "userprofiles/{profileId}/reports/{reportId}/files")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/reports/{reportId}/files")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{profileId}", strconv.FormatInt(c.profileId, 10), 1)
@@ -2328,7 +2329,7 @@ func (c *UserProfilesGetCall) Do() (*UserProfile, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/dfareporting/v1.3/", "userprofiles/{profileId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{profileId}", strconv.FormatInt(c.profileId, 10), 1)
@@ -2391,7 +2392,7 @@ func (c *UserProfilesListCall) Do() (*UserProfileList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/dfareporting/v1.3/", "userprofiles")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)

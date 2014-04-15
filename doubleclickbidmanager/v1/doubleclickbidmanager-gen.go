@@ -43,7 +43,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client}
+	s := &Service{client: client, BasePath: basePath}
 	s.Lineitems = NewLineitemsService(s)
 	s.Queries = NewQueriesService(s)
 	s.Reports = NewReportsService(s)
@@ -51,7 +51,8 @@ func New(client *http.Client) (*Service, error) {
 }
 
 type Service struct {
-	client *http.Client
+	client   *http.Client
+	BasePath string // API endpoint base URL
 
 	Lineitems *LineitemsService
 
@@ -115,7 +116,8 @@ type FilterPair struct {
 }
 
 type ListQueriesResponse struct {
-	// Kind: The kind, fixed to "doubleclickbidmanager#listQueriesResponse".
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "doubleclickbidmanager#listQueriesResponse".
 	Kind string `json:"kind,omitempty"`
 
 	// Queries: Retrieved queries.
@@ -123,7 +125,8 @@ type ListQueriesResponse struct {
 }
 
 type ListReportsResponse struct {
-	// Kind: The kind, fixed to "doubleclickbidmanager#listReportsResponse".
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "doubleclickbidmanager#listReportsResponse".
 	Kind string `json:"kind,omitempty"`
 
 	// Reports: Retrieved reports.
@@ -148,7 +151,8 @@ type Parameters struct {
 }
 
 type Query struct {
-	// Kind: The kind, fixed to "doubleclickbidmanager#query".
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "doubleclickbidmanager#query".
 	Kind string `json:"kind,omitempty"`
 
 	// Metadata: Query metadata.
@@ -230,8 +234,8 @@ type QuerySchedule struct {
 	// Only applies to scheduled reports.
 	NextRunMinuteOfDay int64 `json:"nextRunMinuteOfDay,omitempty"`
 
-	// NextRunTimezoneCode: Timezone in which a new report will be
-	// generated.
+	// NextRunTimezoneCode: Canonical timezone code for report generation
+	// time. Defaults to America/New_York.
 	NextRunTimezoneCode string `json:"nextRunTimezoneCode,omitempty"`
 }
 
@@ -380,7 +384,7 @@ func (c *LineitemsDownloadlineitemsCall) Do() (*DownloadLineItemsResponse, error
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/doubleclickbidmanager/v1/", "lineitems/downloadlineitems")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "lineitems/downloadlineitems")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -438,7 +442,7 @@ func (c *LineitemsUploadlineitemsCall) Do() (*UploadLineItemsResponse, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/doubleclickbidmanager/v1/", "lineitems/uploadlineitems")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "lineitems/uploadlineitems")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -496,7 +500,7 @@ func (c *QueriesCreatequeryCall) Do() (*Query, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/doubleclickbidmanager/v1/", "query")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "query")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -550,7 +554,7 @@ func (c *QueriesDeletequeryCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/doubleclickbidmanager/v1/", "query/{queryId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "query/{queryId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{queryId}", strconv.FormatInt(c.queryId, 10), 1)
@@ -605,7 +609,7 @@ func (c *QueriesGetqueryCall) Do() (*Query, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/doubleclickbidmanager/v1/", "query/{queryId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "query/{queryId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{queryId}", strconv.FormatInt(c.queryId, 10), 1)
@@ -665,7 +669,7 @@ func (c *QueriesListqueriesCall) Do() (*ListQueriesResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/doubleclickbidmanager/v1/", "queries")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "queries")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -721,7 +725,7 @@ func (c *QueriesRunqueryCall) Do() error {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/doubleclickbidmanager/v1/", "query/{queryId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "query/{queryId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{queryId}", strconv.FormatInt(c.queryId, 10), 1)
@@ -780,7 +784,7 @@ func (c *ReportsListreportsCall) Do() (*ListReportsResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/doubleclickbidmanager/v1/", "queries/{queryId}/reports")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "queries/{queryId}/reports")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{queryId}", strconv.FormatInt(c.queryId, 10), 1)

@@ -50,13 +50,14 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client}
+	s := &Service{client: client, BasePath: basePath}
 	s.Files = NewFilesService(s)
 	return s, nil
 }
 
 type Service struct {
-	client *http.Client
+	client   *http.Client
+	BasePath string // API endpoint base URL
 
 	Files *FilesService
 }
@@ -226,7 +227,7 @@ func (c *FilesGetCall) Do() (*File, error) {
 	if v, ok := c.opt_["updateViewedDate"]; ok {
 		params.Set("updateViewedDate", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v1/", "files/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{id}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
@@ -320,7 +321,7 @@ func (c *FilesInsertCall) Do() (*File, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v1/", "files")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "files")
 	if c.media_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
 		params.Set("uploadType", "multipart")
@@ -355,7 +356,7 @@ func (c *FilesInsertCall) Do() (*File, error) {
 	//     "accept": [
 	//       "*/*"
 	//     ],
-	//     "maxSize": "10GB",
+	//     "maxSize": "1024GB",
 	//     "protocols": {
 	//       "resumable": {
 	//         "multipart": true,
@@ -446,7 +447,7 @@ func (c *FilesPatchCall) Do() (*File, error) {
 	if v, ok := c.opt_["updateViewedDate"]; ok {
 		params.Set("updateViewedDate", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v1/", "files/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{id}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
@@ -581,7 +582,7 @@ func (c *FilesUpdateCall) Do() (*File, error) {
 	if v, ok := c.opt_["updateViewedDate"]; ok {
 		params.Set("updateViewedDate", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/drive/v1/", "files/{id}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{id}")
 	if c.media_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
 		params.Set("uploadType", "multipart")
@@ -617,7 +618,7 @@ func (c *FilesUpdateCall) Do() (*File, error) {
 	//     "accept": [
 	//       "*/*"
 	//     ],
-	//     "maxSize": "10GB",
+	//     "maxSize": "1024GB",
 	//     "protocols": {
 	//       "resumable": {
 	//         "multipart": true,

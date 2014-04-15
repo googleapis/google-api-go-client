@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"R6H4aXXmd1SZaWpEcGSkC2StmNw/Yx9k0sPKwAEHIXkjsQIZVeMr9po\"",
+ "etag": "\"kEk3sFj6Ef5_yR1-H3bAO6qw9mI/oPNy63UO0fYNZSm0s2bZIqE4DWs\"",
  "discoveryVersion": "v1",
  "id": "webfonts:v1",
  "name": "webfonts",
@@ -70,6 +70,10 @@
    "id": "Webfont",
    "type": "object",
    "properties": {
+    "category": {
+     "type": "string",
+     "description": "The category of the font."
+    },
     "family": {
      "type": "string",
      "description": "The name of the font."

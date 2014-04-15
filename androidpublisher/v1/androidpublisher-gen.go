@@ -39,17 +39,24 @@ const apiName = "androidpublisher"
 const apiVersion = "v1"
 const basePath = "https://www.googleapis.com/androidpublisher/v1/applications/"
 
+// OAuth2 scopes used by this API.
+const (
+	// View and manage your Google Play Android Developer account
+	AndroidpublisherScope = "https://www.googleapis.com/auth/androidpublisher"
+)
+
 func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client}
+	s := &Service{client: client, BasePath: basePath}
 	s.Purchases = NewPurchasesService(s)
 	return s, nil
 }
 
 type Service struct {
-	client *http.Client
+	client   *http.Client
+	BasePath string // API endpoint base URL
 
 	Purchases *PurchasesService
 }
@@ -105,7 +112,7 @@ func (c *PurchasesCancelCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/androidpublisher/v1/applications/", "{packageName}/subscriptions/{subscriptionId}/purchases/{token}/cancel")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{packageName}/subscriptions/{subscriptionId}/purchases/{token}/cancel")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{packageName}", url.QueryEscape(c.packageName), 1)
@@ -151,7 +158,10 @@ func (c *PurchasesCancelCall) Do() error {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{packageName}/subscriptions/{subscriptionId}/purchases/{token}/cancel"
+	//   "path": "{packageName}/subscriptions/{subscriptionId}/purchases/{token}/cancel",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidpublisher"
+	//   ]
 	// }
 
 }
@@ -180,7 +190,7 @@ func (c *PurchasesGetCall) Do() (*SubscriptionPurchase, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/androidpublisher/v1/applications/", "{packageName}/subscriptions/{subscriptionId}/purchases/{token}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{packageName}/subscriptions/{subscriptionId}/purchases/{token}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{packageName}", url.QueryEscape(c.packageName), 1)
@@ -233,7 +243,10 @@ func (c *PurchasesGetCall) Do() (*SubscriptionPurchase, error) {
 	//   "path": "{packageName}/subscriptions/{subscriptionId}/purchases/{token}",
 	//   "response": {
 	//     "$ref": "SubscriptionPurchase"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidpublisher"
+	//   ]
 	// }
 
 }

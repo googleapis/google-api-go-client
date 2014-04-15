@@ -52,7 +52,7 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client}
+	s := &Service{client: client, BasePath: basePath}
 	s.CustomFieldDef = NewCustomFieldDefService(s)
 	s.Jobs = NewJobsService(s)
 	s.Location = NewLocationService(s)
@@ -62,7 +62,8 @@ func New(client *http.Client) (*Service, error) {
 }
 
 type Service struct {
-	client *http.Client
+	client   *http.Client
+	BasePath string // API endpoint base URL
 
 	CustomFieldDef *CustomFieldDefService
 
@@ -346,7 +347,7 @@ func (c *CustomFieldDefListCall) Do() (*CustomFieldDefListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/coordinate/v1/teams/", "{teamId}/custom_fields")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{teamId}/custom_fields")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{teamId}", url.QueryEscape(c.teamId), 1)
@@ -413,7 +414,7 @@ func (c *JobsGetCall) Do() (*Job, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/coordinate/v1/teams/", "{teamId}/jobs/{jobId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{teamId}/jobs/{jobId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{teamId}", url.QueryEscape(c.teamId), 1)
@@ -558,7 +559,7 @@ func (c *JobsInsertCall) Do() (*Job, error) {
 	if v, ok := c.opt_["note"]; ok {
 		params.Set("note", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/coordinate/v1/teams/", "{teamId}/jobs")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{teamId}/jobs")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{teamId}", url.QueryEscape(c.teamId), 1)
@@ -712,7 +713,7 @@ func (c *JobsListCall) Do() (*JobListResponse, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/coordinate/v1/teams/", "{teamId}/jobs")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{teamId}/jobs")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{teamId}", url.QueryEscape(c.teamId), 1)
@@ -903,7 +904,7 @@ func (c *JobsPatchCall) Do() (*Job, error) {
 	if v, ok := c.opt_["title"]; ok {
 		params.Set("title", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/coordinate/v1/teams/", "{teamId}/jobs/{jobId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{teamId}/jobs/{jobId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{teamId}", url.QueryEscape(c.teamId), 1)
@@ -1156,7 +1157,7 @@ func (c *JobsUpdateCall) Do() (*Job, error) {
 	if v, ok := c.opt_["title"]; ok {
 		params.Set("title", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/coordinate/v1/teams/", "{teamId}/jobs/{jobId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{teamId}/jobs/{jobId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{teamId}", url.QueryEscape(c.teamId), 1)
@@ -1324,7 +1325,7 @@ func (c *LocationListCall) Do() (*LocationListResponse, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/coordinate/v1/teams/", "{teamId}/workers/{workerEmail}/locations")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{teamId}/workers/{workerEmail}/locations")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{teamId}", url.QueryEscape(c.teamId), 1)
@@ -1418,7 +1419,7 @@ func (c *ScheduleGetCall) Do() (*Schedule, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/coordinate/v1/teams/", "{teamId}/jobs/{jobId}/schedule")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{teamId}/jobs/{jobId}/schedule")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{teamId}", url.QueryEscape(c.teamId), 1)
@@ -1543,7 +1544,7 @@ func (c *SchedulePatchCall) Do() (*Schedule, error) {
 	if v, ok := c.opt_["startTime"]; ok {
 		params.Set("startTime", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/coordinate/v1/teams/", "{teamId}/jobs/{jobId}/schedule")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{teamId}/jobs/{jobId}/schedule")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{teamId}", url.QueryEscape(c.teamId), 1)
@@ -1693,7 +1694,7 @@ func (c *ScheduleUpdateCall) Do() (*Schedule, error) {
 	if v, ok := c.opt_["startTime"]; ok {
 		params.Set("startTime", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/coordinate/v1/teams/", "{teamId}/jobs/{jobId}/schedule")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{teamId}/jobs/{jobId}/schedule")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{teamId}", url.QueryEscape(c.teamId), 1)
@@ -1793,7 +1794,7 @@ func (c *WorkerListCall) Do() (*WorkerListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/coordinate/v1/teams/", "{teamId}/workers")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{teamId}/workers")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.URL.Path = strings.Replace(req.URL.Path, "{teamId}", url.QueryEscape(c.teamId), 1)

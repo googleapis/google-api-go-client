@@ -43,13 +43,14 @@ func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	s := &Service{client: client}
+	s := &Service{client: client, BasePath: basePath}
 	s.Cse = NewCseService(s)
 	return s, nil
 }
 
 type Service struct {
-	client *http.Client
+	client   *http.Client
+	BasePath string // API endpoint base URL
 
 	Cse *CseService
 }
@@ -625,7 +626,7 @@ func (c *CseListCall) Do() (*Search, error) {
 	if v, ok := c.opt_["start"]; ok {
 		params.Set("start", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative("https://www.googleapis.com/customsearch/", "v1")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)

@@ -1106,7 +1106,8 @@ func (meth *Method) generateCode() {
 	}
 	pn("var body io.Reader = nil")
 	hasContentType := false
-	if ba := args.bodyArg(); ba != nil {
+	httpMethod := jstr(meth.m, "httpMethod")
+	if ba := args.bodyArg(); ba != nil && httpMethod != "GET" {
 		style := "WithoutDataWrapper"
 		if a.needsDataWrapper() {
 			style = "WithDataWrapper"
@@ -1143,7 +1144,7 @@ func (meth *Method) generateCode() {
 		pn("}")
 	}
 	pn("urls += \"?\" + params.Encode()")
-	if meth.supportsMedia() {
+	if meth.supportsMedia() && httpMethod != "GET" {
 		if !hasContentType { // Support mediaUpload but no ctype set.
 			pn("body = new(bytes.Buffer)")
 			pn(`ctype := "application/json"`)
@@ -1151,7 +1152,7 @@ func (meth *Method) generateCode() {
 		}
 		pn("contentLength_, hasMedia_ := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)")
 	}
-	pn("req, _ := http.NewRequest(%q, urls, body)", jstr(meth.m, "httpMethod"))
+	pn("req, _ := http.NewRequest(%q, urls, body)", httpMethod)
 	// Replace param values after NewRequest to avoid reencoding them.
 	// E.g. Cloud Storage API requires '%2F' in entity param to be kept, but url.Parse replaces it with '/'.
 	for _, arg := range args.forLocation("path") {

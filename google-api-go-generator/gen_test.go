@@ -13,8 +13,10 @@ var updateGolden = flag.Bool("update_golden", false, "If true, causes TestAPIs t
 func TestAPIs(t *testing.T) {
 	names := []string{
 		"arrayofarray-1",
+		"arrayofmapofstrings",
 		"blogger-3",
 		"getwithoutbody",
+		"mapofstrings-1",
 		"quotednum",
 		"resource-named-service", // blogger/v3/blogger-api.json + s/BlogUserInfo/Service/
 	}

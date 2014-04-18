@@ -385,7 +385,7 @@ type Channel struct {
 
 	// Params: Additional parameters controlling delivery channel behavior.
 	// Optional.
-	Params *ChannelParams `json:"params,omitempty"`
+	Params map[string]string `json:"params,omitempty"`
 
 	// Payload: A Boolean value to indicate whether payload is wanted.
 	// Optional.
@@ -404,9 +404,6 @@ type Channel struct {
 
 	// Type: The type of delivery mechanism used for this channel.
 	Type string `json:"type,omitempty"`
-}
-
-type ChannelParams struct {
 }
 
 type ColorDefinition struct {
@@ -659,17 +656,11 @@ type EventCreator struct {
 type EventExtendedProperties struct {
 	// Private: Properties that are private to the copy of the event that
 	// appears on this calendar.
-	Private *EventExtendedPropertiesPrivate `json:"private,omitempty"`
+	Private map[string]string `json:"private,omitempty"`
 
 	// Shared: Properties that are shared between copies of the event on
 	// other attendees' calendars.
-	Shared *EventExtendedPropertiesShared `json:"shared,omitempty"`
-}
-
-type EventExtendedPropertiesPrivate struct {
-}
-
-type EventExtendedPropertiesShared struct {
+	Shared map[string]string `json:"shared,omitempty"`
 }
 
 type EventGadget struct {
@@ -691,7 +682,7 @@ type EventGadget struct {
 	Link string `json:"link,omitempty"`
 
 	// Preferences: Preferences.
-	Preferences *EventGadgetPreferences `json:"preferences,omitempty"`
+	Preferences map[string]string `json:"preferences,omitempty"`
 
 	// Title: The gadget's title.
 	Title string `json:"title,omitempty"`
@@ -701,9 +692,6 @@ type EventGadget struct {
 
 	// Width: The gadget's width in pixels. Optional.
 	Width int64 `json:"width,omitempty"`
-}
-
-type EventGadgetPreferences struct {
 }
 
 type EventOrganizer struct {

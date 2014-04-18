@@ -446,16 +446,13 @@ type AnalyticsDataimportDeleteUploadDataRequest struct {
 
 type Column struct {
 	// Attributes: Map of attribute name and value for this column.
-	Attributes *ColumnAttributes `json:"attributes,omitempty"`
+	Attributes map[string]string `json:"attributes,omitempty"`
 
 	// Id: Column id.
 	Id string `json:"id,omitempty"`
 
 	// Kind: Resource type for Analytics column.
 	Kind string `json:"kind,omitempty"`
-}
-
-type ColumnAttributes struct {
 }
 
 type Columns struct {
@@ -1025,7 +1022,7 @@ type GaData struct {
 	// the results, not just the results returned in this response. The
 	// order of the metric totals is same as the metric order specified in
 	// the request.
-	TotalsForAllResults *GaDataTotalsForAllResults `json:"totalsForAllResults,omitempty"`
+	TotalsForAllResults map[string]string `json:"totalsForAllResults,omitempty"`
 }
 
 type GaDataColumnHeaders struct {
@@ -1118,9 +1115,6 @@ type GaDataQuery struct {
 
 	// StartIndex: Start index.
 	StartIndex int64 `json:"start-index,omitempty"`
-}
-
-type GaDataTotalsForAllResults struct {
 }
 
 type Goal struct {
@@ -1361,7 +1355,7 @@ type McfData struct {
 	// the results, not just the results returned in this response. The
 	// order of the metric totals is same as the metric order specified in
 	// the request.
-	TotalsForAllResults *McfDataTotalsForAllResults `json:"totalsForAllResults,omitempty"`
+	TotalsForAllResults map[string]string `json:"totalsForAllResults,omitempty"`
 }
 
 type McfDataColumnHeaders struct {
@@ -1451,9 +1445,6 @@ type McfDataRowsItemConversionPathValue struct {
 	// NodeValue: Node value of an interaction on conversion path. Such as
 	// source, medium etc.
 	NodeValue string `json:"nodeValue,omitempty"`
-}
-
-type McfDataTotalsForAllResults struct {
 }
 
 type Profile struct {
@@ -1672,7 +1663,7 @@ type RealtimeData struct {
 	// the results, not just the results returned in this response. The
 	// order of the metric totals is same as the metric order specified in
 	// the request.
-	TotalsForAllResults *RealtimeDataTotalsForAllResults `json:"totalsForAllResults,omitempty"`
+	TotalsForAllResults map[string]string `json:"totalsForAllResults,omitempty"`
 }
 
 type RealtimeDataColumnHeaders struct {
@@ -1728,9 +1719,6 @@ type RealtimeDataQuery struct {
 	// Sort: List of dimensions or metrics based on which real time data is
 	// sorted.
 	Sort []string `json:"sort,omitempty"`
-}
-
-type RealtimeDataTotalsForAllResults struct {
 }
 
 type Segment struct {

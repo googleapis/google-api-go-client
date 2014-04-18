@@ -618,6 +618,10 @@ func (t *Type) AsGo() string {
 		}
 		return s.Type().AsGo()
 	}
+	if t.IsMap() {
+		// TODO(gmlewis): support maps to any type.
+		return fmt.Sprintf("map[string]string")
+	}
 	if t.IsStruct() {
 		if apiName, ok := t.m["_apiName"].(string); ok {
 			s := t.api.schemas[apiName]
@@ -645,6 +649,19 @@ func (t *Type) Reference() (apiName string, ok bool) {
 	apiName = jstr(t.m, "$ref")
 	ok = apiName != ""
 	return
+}
+
+func (t *Type) IsMap() bool {
+	props := jobj(t.m, "additionalProperties")
+	if props == nil {
+		return false
+	}
+	s := jstr(props, "type")
+	b := s == "string"
+	if !b {
+		log.Printf("Warning: found map to type %q which is not implemented yet.", s)
+	}
+	return b
 }
 
 func (t *Type) IsReference() bool {
@@ -730,7 +747,7 @@ func (s *Schema) populateSubSchemas() (outerr error) {
 
 	if s.Type().IsStruct() {
 		for _, p := range s.properties() {
-			if p.Type().IsSimple() {
+			if p.Type().IsSimple() || p.Type().IsMap() {
 				continue
 			}
 			if at, ok := p.Type().ArrayType(); ok {
@@ -772,7 +789,7 @@ func (s *Schema) populateSubSchemas() (outerr error) {
 			addSubStruct(subApiName, at)
 			return
 		}
-		if at, ok := s.Type().ArrayType(); ok {
+		if at, ok := at.ArrayType(); ok {
 			if at.IsSimple() || at.IsReference() {
 				return
 			}
@@ -803,7 +820,7 @@ func (s *Schema) GoName() string {
 }
 
 func (s *Schema) writeSchemaCode() {
-	if s.Type().IsStruct() {
+	if s.Type().IsStruct() && !s.Type().IsMap() {
 		s.writeSchemaStruct()
 		return
 	}
@@ -821,7 +838,7 @@ func (s *Schema) writeSchemaCode() {
 		return
 	}
 
-	if s.Type().IsSimple() {
+	if s.Type().IsSimple() || s.Type().IsMap() {
 		return
 	}
 

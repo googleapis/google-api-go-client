@@ -388,7 +388,7 @@ type Channel struct {
 
 	// Params: Additional parameters controlling delivery channel behavior.
 	// Optional.
-	Params *ChannelParams `json:"params,omitempty"`
+	Params map[string]string `json:"params,omitempty"`
 
 	// Payload: A Boolean value to indicate whether payload is wanted.
 	// Optional.
@@ -407,9 +407,6 @@ type Channel struct {
 
 	// Type: The type of delivery mechanism used for this channel.
 	Type string `json:"type,omitempty"`
-}
-
-type ChannelParams struct {
 }
 
 type ComposeRequest struct {
@@ -497,7 +494,7 @@ type Object struct {
 	MediaLink string `json:"mediaLink,omitempty"`
 
 	// Metadata: User-provided metadata, in key/value pairs.
-	Metadata *ObjectMetadata `json:"metadata,omitempty"`
+	Metadata map[string]string `json:"metadata,omitempty"`
 
 	// Metageneration: The generation of the metadata for this object at
 	// this generation. Used for metadata versioning. Has no meaning outside
@@ -527,9 +524,6 @@ type Object struct {
 
 	// Updated: Modification time of the object metadata in RFC 3339 format.
 	Updated string `json:"updated,omitempty"`
-}
-
-type ObjectMetadata struct {
 }
 
 type ObjectOwner struct {

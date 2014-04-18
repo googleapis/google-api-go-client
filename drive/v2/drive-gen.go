@@ -524,7 +524,7 @@ type Channel struct {
 
 	// Params: Additional parameters controlling delivery channel behavior.
 	// Optional.
-	Params *ChannelParams `json:"params,omitempty"`
+	Params map[string]string `json:"params,omitempty"`
 
 	// Payload: A Boolean value to indicate whether payload is wanted.
 	// Optional.
@@ -543,9 +543,6 @@ type Channel struct {
 
 	// Type: The type of delivery mechanism used for this channel.
 	Type string `json:"type,omitempty"`
-}
-
-type ChannelParams struct {
 }
 
 type ChildList struct {
@@ -765,7 +762,7 @@ type File struct {
 	ExplicitlyTrashed bool `json:"explicitlyTrashed,omitempty"`
 
 	// ExportLinks: Links for exporting Google Docs to specific formats.
-	ExportLinks *FileExportLinks `json:"exportLinks,omitempty"`
+	ExportLinks map[string]string `json:"exportLinks,omitempty"`
 
 	// FileExtension: The file extension used when downloading this file.
 	// This field is read only. To set the extension, include it in the
@@ -834,7 +831,7 @@ type File struct {
 	// OpenWithLinks: A map of the id of each of the user's apps to a link
 	// to open this file with that app. Only populated when the
 	// drive.apps.readonly scope is used.
-	OpenWithLinks *FileOpenWithLinks `json:"openWithLinks,omitempty"`
+	OpenWithLinks map[string]string `json:"openWithLinks,omitempty"`
 
 	// OriginalFilename: The original filename if the file was uploaded
 	// manually, or the original title if the file was inserted through the
@@ -900,9 +897,6 @@ type File struct {
 	// WritersCanShare: Whether writers can share the document with other
 	// users.
 	WritersCanShare bool `json:"writersCanShare,omitempty"`
-}
-
-type FileExportLinks struct {
 }
 
 type FileImageMediaMetadata struct {
@@ -1004,9 +998,6 @@ type FileLabels struct {
 
 	// Viewed: Whether this file has been viewed by this user.
 	Viewed bool `json:"viewed,omitempty"`
-}
-
-type FileOpenWithLinks struct {
 }
 
 type FileThumbnail struct {
@@ -1198,7 +1189,7 @@ type Revision struct {
 	Etag string `json:"etag,omitempty"`
 
 	// ExportLinks: Links for exporting Google Docs to specific formats.
-	ExportLinks *RevisionExportLinks `json:"exportLinks,omitempty"`
+	ExportLinks map[string]string `json:"exportLinks,omitempty"`
 
 	// FileSize: The size of the revision in bytes. This will only be
 	// populated on files with content stored in Drive.
@@ -1258,9 +1249,6 @@ type Revision struct {
 
 	// SelfLink: A link back to this revision.
 	SelfLink string `json:"selfLink,omitempty"`
-}
-
-type RevisionExportLinks struct {
 }
 
 type RevisionList struct {

@@ -73,7 +73,7 @@ type Webfont struct {
 
 	// Files: The font files (with all supported scripts) for each one of
 	// the available variants, as a key : value map.
-	Files *WebfontFiles `json:"files,omitempty"`
+	Files map[string]string `json:"files,omitempty"`
 
 	// Kind: This kind represents a webfont object in the webfonts service.
 	Kind string `json:"kind,omitempty"`
@@ -90,9 +90,6 @@ type Webfont struct {
 
 	// Version: The font version.
 	Version string `json:"version,omitempty"`
-}
-
-type WebfontFiles struct {
 }
 
 type WebfontList struct {

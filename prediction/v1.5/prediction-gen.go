@@ -96,7 +96,7 @@ type Analyze struct {
 	DataDescription *AnalyzeDataDescription `json:"dataDescription,omitempty"`
 
 	// Errors: List of errors with the data.
-	Errors []*AnalyzeErrors `json:"errors,omitempty"`
+	Errors []map[string]string `json:"errors,omitempty"`
 
 	// Id: The unique name for the predictive model.
 	Id string `json:"id,omitempty"`
@@ -191,9 +191,6 @@ type AnalyzeDataDescriptionOutputFeatureText struct {
 
 	// Value: The output label.
 	Value string `json:"value,omitempty"`
-}
-
-type AnalyzeErrors struct {
 }
 
 type AnalyzeModelDescription struct {

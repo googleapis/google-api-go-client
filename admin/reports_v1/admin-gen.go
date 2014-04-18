@@ -218,7 +218,7 @@ type Channel struct {
 
 	// Params: Additional parameters controlling delivery channel behavior.
 	// Optional.
-	Params *ChannelParams `json:"params,omitempty"`
+	Params map[string]string `json:"params,omitempty"`
 
 	// Payload: A Boolean value to indicate whether payload is wanted.
 	// Optional.
@@ -237,9 +237,6 @@ type Channel struct {
 
 	// Type: The type of delivery mechanism used for this channel.
 	Type string `json:"type,omitempty"`
-}
-
-type ChannelParams struct {
 }
 
 type UsageReport struct {

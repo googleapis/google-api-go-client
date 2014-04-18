@@ -268,7 +268,7 @@ type Object struct {
 	Media *ObjectMedia `json:"media,omitempty"`
 
 	// Metadata: User-provided metadata, in key/value pairs.
-	Metadata *ObjectMetadata `json:"metadata,omitempty"`
+	Metadata map[string]string `json:"metadata,omitempty"`
 
 	// Name: The name of this object. Required if not specified by URL
 	// parameter.
@@ -307,9 +307,6 @@ type ObjectMedia struct {
 
 	// TimeCreated: Creation time of the data in RFC 3339 format.
 	TimeCreated string `json:"timeCreated,omitempty"`
-}
-
-type ObjectMetadata struct {
 }
 
 type ObjectOwner struct {

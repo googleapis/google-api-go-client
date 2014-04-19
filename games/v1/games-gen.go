@@ -1088,14 +1088,9 @@ type PushTokenIdIos struct {
 	// base64.
 	Apns_device_token string `json:"apns_device_token,omitempty"`
 
-	// Apns_environment: Indicates whether this token should be used for the
-	// production or sandbox APNS server.
-	// Possible values are:
-	// -
-	// "PRODUCTION" - For the APNS production server at
-	// gateway.push.apple.com.
-	// - "SANDBOX" - For the APNS test server at
-	// gateway.sandbox.push.apple.com.
+	// Apns_environment: Use SANDBOX during development for the APNS test
+	// server at gateway.sandbox.push.apple.com or PRODUCTION for the
+	// production server at gateway.push.apple.com.
 	Apns_environment string `json:"apns_environment,omitempty"`
 }
 

@@ -53,6 +53,7 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client, BasePath: basePath}
+	s.Accounts = NewAccountsService(s)
 	s.Contacts = NewContactsService(s)
 	s.Locations = NewLocationsService(s)
 	s.Subscriptions = NewSubscriptionsService(s)
@@ -64,6 +65,8 @@ type Service struct {
 	client   *http.Client
 	BasePath string // API endpoint base URL
 
+	Accounts *AccountsService
+
 	Contacts *ContactsService
 
 	Locations *LocationsService
@@ -71,6 +74,15 @@ type Service struct {
 	Subscriptions *SubscriptionsService
 
 	Timeline *TimelineService
+}
+
+func NewAccountsService(s *Service) *AccountsService {
+	rs := &AccountsService{s: s}
+	return rs
+}
+
+type AccountsService struct {
+	s *Service
 }
 
 func NewContactsService(s *Service) *ContactsService {
@@ -121,6 +133,16 @@ type TimelineAttachmentsService struct {
 	s *Service
 }
 
+type Account struct {
+	AuthTokens []*AuthToken `json:"authTokens,omitempty"`
+
+	Features []string `json:"features,omitempty"`
+
+	Password string `json:"password,omitempty"`
+
+	UserData []*UserData `json:"userData,omitempty"`
+}
+
 type Attachment struct {
 	// ContentType: The MIME type of the attachment.
 	ContentType string `json:"contentType,omitempty"`
@@ -143,6 +165,12 @@ type AttachmentsListResponse struct {
 
 	// Kind: The type of resource. This is always mirror#attachmentsList.
 	Kind string `json:"kind,omitempty"`
+}
+
+type AuthToken struct {
+	AuthToken string `json:"authToken,omitempty"`
+
+	Type string `json:"type,omitempty"`
 }
 
 type Command struct {
@@ -659,6 +687,104 @@ type UserAction struct {
 	// initiated a voice command.  In the future, additional types may be
 	// added. UserActions with unrecognized types should be ignored.
 	Type string `json:"type,omitempty"`
+}
+
+type UserData struct {
+	Key string `json:"key,omitempty"`
+
+	Value string `json:"value,omitempty"`
+}
+
+// method id "mirror.accounts.insert":
+
+type AccountsInsertCall struct {
+	s           *Service
+	userToken   string
+	accountType string
+	accountName string
+	account     *Account
+	opt_        map[string]interface{}
+}
+
+// Insert: Inserts a new account for a user
+func (r *AccountsService) Insert(userToken string, accountType string, accountName string, account *Account) *AccountsInsertCall {
+	c := &AccountsInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.userToken = userToken
+	c.accountType = accountType
+	c.accountName = accountName
+	c.account = account
+	return c
+}
+
+func (c *AccountsInsertCall) Do() (*Account, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.account)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{userToken}/{accountType}/{accountName}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{userToken}", url.QueryEscape(c.userToken), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{accountType}", url.QueryEscape(c.accountType), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{accountName}", url.QueryEscape(c.accountName), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := new(Account)
+	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Inserts a new account for a user",
+	//   "httpMethod": "POST",
+	//   "id": "mirror.accounts.insert",
+	//   "parameterOrder": [
+	//     "userToken",
+	//     "accountType",
+	//     "accountName"
+	//   ],
+	//   "parameters": {
+	//     "accountName": {
+	//       "description": "The name of the account to be passed to the Android Account Manager.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "accountType": {
+	//       "description": "Account type to be passed to Android Account Manager.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "userToken": {
+	//       "description": "The ID for the user.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "accounts/{userToken}/{accountType}/{accountName}",
+	//   "request": {
+	//     "$ref": "Account"
+	//   },
+	//   "response": {
+	//     "$ref": "Account"
+	//   }
+	// }
+
 }
 
 // method id "mirror.contacts.delete":

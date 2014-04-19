@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"kEk3sFj6Ef5_yR1-H3bAO6qw9mI/V2Zv136XhJnBo9J18FvIDFeQEWo\"",
+ "etag": "\"5M1WkxnZyJhziV-cW1kdtwscs8E/wBs-qNgKobkZmtJOx0i4cFgYtC8\"",
  "discoveryVersion": "v1",
  "id": "games:v1",
  "name": "games",
@@ -1317,7 +1317,7 @@
       },
       "apns_environment": {
        "type": "string",
-       "description": "Indicates whether this token should be used for the production or sandbox APNS server.\nPossible values are:  \n- \"PRODUCTION\" - For the APNS production server at gateway.push.apple.com. \n- \"SANDBOX\" - For the APNS test server at gateway.sandbox.push.apple.com."
+       "description": "Use SANDBOX during development for the APNS test server at gateway.sandbox.push.apple.com or PRODUCTION for the production server at gateway.push.apple.com."
       }
      }
     },

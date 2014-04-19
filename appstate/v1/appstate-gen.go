@@ -278,7 +278,8 @@ type StatesGetCall struct {
 	opt_     map[string]interface{}
 }
 
-// Get: Retrieves the data corresponding to the passed key.
+// Get: Retrieves the data corresponding to the passed key. If the key
+// does not exist on the server, an HTTP 404 will be returned.
 func (r *StatesService) Get(stateKey int64) *StatesGetCall {
 	c := &StatesGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.stateKey = stateKey
@@ -309,7 +310,7 @@ func (c *StatesGetCall) Do() (*GetResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves the data corresponding to the passed key.",
+	//   "description": "Retrieves the data corresponding to the passed key. If the key does not exist on the server, an HTTP 404 will be returned.",
 	//   "httpMethod": "GET",
 	//   "id": "appstate.states.get",
 	//   "parameterOrder": [

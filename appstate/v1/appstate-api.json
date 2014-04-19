@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"kEk3sFj6Ef5_yR1-H3bAO6qw9mI/AYfjpxNKrbZsbCPO5ZP75STX_0g\"",
+ "etag": "\"5M1WkxnZyJhziV-cW1kdtwscs8E/EnSZa1SHLGZEekBcq4ZvbeJLWQE\"",
  "discoveryVersion": "v1",
  "id": "appstate:v1",
  "name": "appstate",
@@ -224,7 +224,7 @@
      "id": "appstate.states.get",
      "path": "states/{stateKey}",
      "httpMethod": "GET",
-     "description": "Retrieves the data corresponding to the passed key.",
+     "description": "Retrieves the data corresponding to the passed key. If the key does not exist on the server, an HTTP 404 will be returned.",
      "parameters": {
       "stateKey": {
        "type": "integer",

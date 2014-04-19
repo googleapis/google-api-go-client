@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"kEk3sFj6Ef5_yR1-H3bAO6qw9mI/6NjoV5n-K_jd4hS6NWdz6OFG544\"",
+ "etag": "\"5M1WkxnZyJhziV-cW1kdtwscs8E/cLXdvPSJ73RAjLVWqio6ofbcpRI\"",
  "discoveryVersion": "v1",
  "id": "mirror:v1",
  "name": "mirror",
@@ -81,6 +81,34 @@
   }
  },
  "schemas": {
+  "Account": {
+   "id": "Account",
+   "type": "object",
+   "description": "Represents an account passed into the Account Manager on Glass.",
+   "properties": {
+    "authTokens": {
+     "type": "array",
+     "items": {
+      "$ref": "AuthToken"
+     }
+    },
+    "features": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    },
+    "password": {
+     "type": "string"
+    },
+    "userData": {
+     "type": "array",
+     "items": {
+      "$ref": "UserData"
+     }
+    }
+   }
+  },
   "Attachment": {
    "id": "Attachment",
    "type": "object",
@@ -120,6 +148,18 @@
      "type": "string",
      "description": "The type of resource. This is always mirror#attachmentsList.",
      "default": "mirror#attachmentsList"
+    }
+   }
+  },
+  "AuthToken": {
+   "id": "AuthToken",
+   "type": "object",
+   "properties": {
+    "authToken": {
+     "type": "string"
+    },
+    "type": {
+     "type": "string"
     }
    }
   },
@@ -649,9 +689,62 @@
      "description": "The type of action. The value of this can be:  \n- SHARE - the user shared an item. \n- REPLY - the user replied to an item. \n- REPLY_ALL - the user replied to all recipients of an item. \n- CUSTOM - the user selected a custom menu item on the timeline item. \n- DELETE - the user deleted the item. \n- PIN - the user pinned the item. \n- UNPIN - the user unpinned the item. \n- LAUNCH - the user initiated a voice command.  In the future, additional types may be added. UserActions with unrecognized types should be ignored."
     }
    }
+  },
+  "UserData": {
+   "id": "UserData",
+   "type": "object",
+   "properties": {
+    "key": {
+     "type": "string"
+    },
+    "value": {
+     "type": "string"
+    }
+   }
   }
  },
  "resources": {
+  "accounts": {
+   "methods": {
+    "insert": {
+     "id": "mirror.accounts.insert",
+     "path": "accounts/{userToken}/{accountType}/{accountName}",
+     "httpMethod": "POST",
+     "description": "Inserts a new account for a user",
+     "parameters": {
+      "accountName": {
+       "type": "string",
+       "description": "The name of the account to be passed to the Android Account Manager.",
+       "required": true,
+       "location": "path"
+      },
+      "accountType": {
+       "type": "string",
+       "description": "Account type to be passed to Android Account Manager.",
+       "required": true,
+       "location": "path"
+      },
+      "userToken": {
+       "type": "string",
+       "description": "The ID for the user.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "userToken",
+      "accountType",
+      "accountName"
+     ],
+     "request": {
+      "$ref": "Account"
+     },
+     "response": {
+      "$ref": "Account"
+     }
+    }
+   }
+  },
   "contacts": {
    "methods": {
     "delete": {

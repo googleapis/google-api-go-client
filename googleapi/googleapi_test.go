@@ -120,10 +120,11 @@ var checkResponseTests = []CheckResponseTest{
 		&http.Response{
 			StatusCode: http.StatusNotFound,
 		},
-		`{"error":{"code":404,"message":"Error message for StatusNotFound."}}`,
+		`{"error":{"message":"Error message for StatusNotFound."}}`,
 		&Error{
 			Code:    http.StatusNotFound,
 			Message: "Error message for StatusNotFound.",
+			Body:    `{"error":{"message":"Error message for StatusNotFound."}}`,
 		},
 	},
 	{
@@ -131,7 +132,10 @@ var checkResponseTests = []CheckResponseTest{
 			StatusCode: http.StatusBadRequest,
 		},
 		`{"error":"invalid_token","error_description":"Invalid Value"}`,
-		fmt.Errorf(`googleapi: got HTTP response code 400 and error reading body: json: cannot unmarshal string into Go value of type googleapi.Error, server response: {"error":"invalid_token","error_description":"Invalid Value"}`),
+		&Error{
+			Code: http.StatusBadRequest,
+			Body: `{"error":"invalid_token","error_description":"Invalid Value"}`,
+		},
 	},
 }
 

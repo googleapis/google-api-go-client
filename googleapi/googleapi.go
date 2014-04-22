@@ -30,23 +30,31 @@ type ContentTyper interface {
 
 const Version = "0.5"
 
+// Error contains an error response from the server.
 type Error struct {
-	Code    int    `json:"code"`
+	// Code is the HTTP response status code and will always be populated.
+	Code int `json:"code"`
+	// Message is the server response message and is only populated when
+	// explicitly referenced by the JSON server response.
 	Message string `json:"message"`
+	// Body is the raw response returned by the server.
+	// It is often but not always JSON, depending on how the request fails.
+	Body string
 }
 
 func (e *Error) Error() string {
-	return fmt.Sprintf("googleapi: Error %d: %s", e.Code, e.Message)
+	if e.Message != "" {
+		return fmt.Sprintf("googleapi: Error %d: %v", e.Code, e.Message)
+	}
+	return fmt.Sprintf("googleapi: got HTTP response code %d with body: %v", e.Code, e.Body)
 }
 
 type errorReply struct {
 	Error *Error `json:"error"`
 }
 
-// CheckResponse parses the error response from the server (if any)
-// and returns an Error struct if the server used the standard
-// code/message JSON reponse format. If the server returned its own
-// custom response, the entire raw JSON response is returned.
+// CheckResponse returns an error (of type *Error) if the response
+// status code is not 2xx.
 func CheckResponse(res *http.Response) error {
 	if res.StatusCode >= 200 && res.StatusCode <= 299 {
 		return nil
@@ -56,11 +64,17 @@ func CheckResponse(res *http.Response) error {
 		jerr := new(errorReply)
 		err = json.Unmarshal(slurp, jerr)
 		if err == nil && jerr.Error != nil {
+			if jerr.Error.Code == 0 {
+				jerr.Error.Code = res.StatusCode
+			}
+			jerr.Error.Body = string(slurp)
 			return jerr.Error
 		}
 	}
-	return fmt.Errorf("googleapi: got HTTP response code %d and error reading body: %v, server response: %s",
-		res.StatusCode, err, slurp)
+	return &Error{
+		Code: res.StatusCode,
+		Body: string(slurp),
+	}
 }
 
 type MarshalStyle bool

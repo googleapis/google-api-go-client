@@ -7,8 +7,10 @@ package googleapi
 import (
 	"bytes"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 	"net/url"
+	"reflect"
 	"strings"
 	"testing"
 )
@@ -96,6 +98,51 @@ func TestSetOpaque(t *testing.T) {
 		prefix := fmt.Sprintf(prefixTmpl, test.wantRequestURI, test.in.Host)
 		if got := string(w.Bytes()); !strings.HasPrefix(got, prefix) {
 			t.Errorf("got %q expected prefix %q", got, prefix)
+		}
+	}
+}
+
+type CheckResponseTest struct {
+	in       *http.Response
+	bodyText string
+	want     error
+}
+
+var checkResponseTests = []CheckResponseTest{
+	{
+		&http.Response{
+			StatusCode: http.StatusOK,
+		},
+		"",
+		nil,
+	},
+	{
+		&http.Response{
+			StatusCode: http.StatusNotFound,
+		},
+		`{"error":{"code":404,"message":"Error message for StatusNotFound."}}`,
+		&Error{
+			Code:    http.StatusNotFound,
+			Message: "Error message for StatusNotFound.",
+		},
+	},
+	{
+		&http.Response{
+			StatusCode: http.StatusBadRequest,
+		},
+		`{"error":"invalid_token","error_description":"Invalid Value"}`,
+		fmt.Errorf(`googleapi: got HTTP response code 400 and error reading body: json: cannot unmarshal string into Go value of type googleapi.Error, server response: {"error":"invalid_token","error_description":"Invalid Value"}`),
+	},
+}
+
+func TestCheckResponse(t *testing.T) {
+	for _, test := range checkResponseTests {
+		res := test.in
+		if test.bodyText != "" {
+			res.Body = ioutil.NopCloser(strings.NewReader(test.bodyText))
+		}
+		if g := CheckResponse(res); !reflect.DeepEqual(g, test.want) {
+			t.Errorf("CheckResponse: got %v, want %v", g, test.want)
 		}
 	}
 }

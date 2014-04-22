@@ -43,6 +43,10 @@ type errorReply struct {
 	Error *Error `json:"error"`
 }
 
+// CheckResponse parses the error response from the server (if any)
+// and returns an Error struct if the server used the standard
+// code/message JSON reponse format. If the server returned its own
+// custom response, the entire raw JSON response is returned.
 func CheckResponse(res *http.Response) error {
 	if res.StatusCode >= 200 && res.StatusCode <= 299 {
 		return nil
@@ -55,8 +59,8 @@ func CheckResponse(res *http.Response) error {
 			return jerr.Error
 		}
 	}
-	return fmt.Errorf("googleapi: got HTTP response code %d and error reading body: %v",
-		res.StatusCode, err)
+	return fmt.Errorf("googleapi: got HTTP response code %d and error reading body: %v, server response: %s",
+		res.StatusCode, err, slurp)
 }
 
 type MarshalStyle bool

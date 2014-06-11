@@ -524,8 +524,9 @@ type Schema struct {
 
 	typ *Type // lazily populated by Type
 
-	apiName string // the native API-defined name of this type
-	goName  string // lazily populated by GoName
+	apiName      string // the native API-defined name of this type
+	goName       string // lazily populated by GoName
+	goReturnType string // lazily populated by GoReturnType
 }
 
 type Property struct {
@@ -618,9 +619,8 @@ func (t *Type) AsGo() string {
 		}
 		return s.Type().AsGo()
 	}
-	if t.IsMap() {
-		// TODO(gmlewis): support maps to any type.
-		return fmt.Sprintf("map[string]string")
+	if typ, ok := t.MapType(); ok {
+		return typ
 	}
 	if t.IsStruct() {
 		if apiName, ok := t.m["_apiName"].(string); ok {
@@ -652,16 +652,36 @@ func (t *Type) Reference() (apiName string, ok bool) {
 }
 
 func (t *Type) IsMap() bool {
+	_, ok := t.MapType()
+	return ok
+}
+
+// MapType checks if the current node is a map and if true, it returns the Go type for the map, such as map[string]string.
+func (t *Type) MapType() (typ string, ok bool) {
 	props := jobj(t.m, "additionalProperties")
 	if props == nil {
-		return false
+		return "", false
 	}
 	s := jstr(props, "type")
-	b := s == "string"
-	if !b {
-		log.Printf("Warning: found map to type %q which is not implemented yet.", s)
+	if s == "string" {
+		return "map[string]string", true
 	}
-	return b
+	if s != "array" {
+		// TODO(gmlewis): support maps to any type.
+		log.Printf("Warning: found map to type %q which is not implemented yet.", s)
+		return "", false
+	}
+	items := jobj(props, "items")
+	if items == nil {
+		return "", false
+	}
+	s = jstr(items, "type")
+	if s != "string" {
+		// TODO(gmlewis): support maps to any type.
+		log.Printf("Warning: found map of arrays of type %q which is not implemented yet.", s)
+		return "", false
+	}
+	return "map[string][]string", true
 }
 
 func (t *Type) IsReference() bool {
@@ -814,9 +834,28 @@ func (s *Schema) populateSubSchemas() (outerr error) {
 // and doesn't conflict with an existing name.
 func (s *Schema) GoName() string {
 	if s.goName == "" {
-		s.goName = s.api.GetName(initialCap(s.apiName))
+		if name, ok := s.Type().MapType(); ok {
+			s.goName = name
+		} else {
+			s.goName = s.api.GetName(initialCap(s.apiName))
+		}
 	}
 	return s.goName
+}
+
+// GoReturnType returns the Go type to use as the return type.
+// If a type is a struct, it will return *StructType,
+// for a map it will return map[string]ValueType,
+// for (not yet supported) slices it will return []ValueType.
+func (s *Schema) GoReturnType() string {
+	if s.goReturnType == "" {
+		if s.Type().IsMap() {
+			s.goReturnType = s.GoName()
+		} else {
+			s.goReturnType = "*" + s.GoName()
+		}
+	}
+	return s.goReturnType
 }
 
 func (s *Schema) writeSchemaCode() {
@@ -1192,8 +1231,8 @@ func (meth *Method) generateCode() {
 	if retTypeComma == "" {
 		pn("return nil")
 	} else {
-		pn("ret := new(%s)", responseType(a, meth.m)[1:])
-		pn("if err := json.NewDecoder(res.Body).Decode(ret); err != nil { return nil, err }")
+		pn("var ret %s", responseType(a, meth.m))
+		pn("if err := json.NewDecoder(res.Body).Decode(&ret); err != nil { return nil, err }")
 		pn("return ret, nil")
 	}
 
@@ -1496,7 +1535,7 @@ func responseType(api *API, m map[string]interface{}) string {
 	if ro != nil {
 		if ref := jstr(ro, "$ref"); ref != "" {
 			if s := api.schemas[ref]; s != nil {
-				return "*" + s.GoName()
+				return s.GoReturnType()
 			}
 			return "*" + ref
 		}

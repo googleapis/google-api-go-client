@@ -31,6 +31,40 @@
     "project": {
      "type": "string",
      "description": "The project ID to which this time series belongs."
+    },
+    "tags": {
+     "type": "object",
+     "description": "A map of additional information.",
+     "additionalProperties": {
+      "type": "array",
+      "description": "A string which maps to an array of values.",
+      "items": {
+       "type": "string"
+      }
+     }
+    }
+   }
+  },
+  "GetMapResponse": {
+   "id": "GetMapResponse",
+   "type": "object",
+   "description": "Response of getting a map.",
+   "additionalProperties": {
+    "type": "string"
+   }
+  }
+ },
+ "resources": {
+  "atlas": {
+   "methods": {
+    "getMap": {
+     "id": "mapofstrings.getMap",
+     "path": "map",
+     "httpMethod": "GET",
+     "description": "Get a map.",
+     "response": {
+      "$ref": "GetMapResponse"
+     }
     }
    }
   }

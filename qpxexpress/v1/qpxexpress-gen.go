@@ -670,8 +670,8 @@ func (c *TripsSearchCall) Do() (*TripsSearchResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(TripsSearchResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *TripsSearchResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil

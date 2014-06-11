@@ -639,8 +639,8 @@ func (c *CseListCall) Do() (*Search, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Search)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Search
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil

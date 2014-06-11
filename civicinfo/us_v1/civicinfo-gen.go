@@ -280,6 +280,14 @@ type DivisionSearchResponse struct {
 }
 
 type DivisionSearchResult struct {
+	// Aliases: Other Open Civic Data identifiers that refer to the same
+	// division -- for example, those that refer to other political
+	// divisions whose boundaries are defined to be coterminous with this
+	// one. For example, ocd-division/country:us/state:wy will include an
+	// alias of ocd-division/country:us/state:wy/cd:1, since Wyoming has
+	// only one Congressional district.
+	Aliases []string `json:"aliases,omitempty"`
+
 	// Name: The name of the division.
 	Name string `json:"name,omitempty"`
 
@@ -342,6 +350,11 @@ type ElectoralDistrict struct {
 }
 
 type GeographicDivision struct {
+	// AlsoKnownAs: Any other valid OCD IDs that refer to the same division.
+	// For example, if ocd_id above is ocd-division/country:us/district:dc,
+	// this will contain ocd-division/country:us/state:dc.
+	AlsoKnownAs []string `json:"alsoKnownAs,omitempty"`
+
 	// Name: The name of the division.
 	Name string `json:"name,omitempty"`
 
@@ -359,6 +372,9 @@ type GeographicDivision struct {
 }
 
 type Office struct {
+	// DivisionId: The OCD ID of the division this office is part of.
+	DivisionId string `json:"divisionId,omitempty"`
+
 	// Level: The level of this elected office. One of: federal, state,
 	// county, city, other
 	Level string `json:"level,omitempty"`
@@ -595,8 +611,8 @@ func (c *DivisionsSearchCall) Do() (*DivisionSearchResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(DivisionSearchResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *DivisionSearchResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -649,8 +665,8 @@ func (c *ElectionsElectionQueryCall) Do() (*ElectionsQueryResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(ElectionsQueryResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *ElectionsQueryResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -718,8 +734,8 @@ func (c *ElectionsVoterInfoQueryCall) Do() (*VoterInfoResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(VoterInfoResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *VoterInfoResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -788,6 +804,16 @@ func (c *RepresentativesRepresentativeInfoQueryCall) OcdId(ocdId string) *Repres
 	return c
 }
 
+// Recursive sets the optional parameter "recursive": When ocd_id is
+// supplied, return all divisions which are hierarchically nested within
+// the queried division. For example, if querying
+// ocd-division/country:us/district:dc, this would also return all DC's
+// wards and ANCs.
+func (c *RepresentativesRepresentativeInfoQueryCall) Recursive(recursive bool) *RepresentativesRepresentativeInfoQueryCall {
+	c.opt_["recursive"] = recursive
+	return c
+}
+
 func (c *RepresentativesRepresentativeInfoQueryCall) Do() (*RepresentativeInfoResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.representativeinforequest)
@@ -803,6 +829,9 @@ func (c *RepresentativesRepresentativeInfoQueryCall) Do() (*RepresentativeInfoRe
 	if v, ok := c.opt_["ocdId"]; ok {
 		params.Set("ocdId", fmt.Sprintf("%v", v))
 	}
+	if v, ok := c.opt_["recursive"]; ok {
+		params.Set("recursive", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "representatives/lookup")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -817,8 +846,8 @@ func (c *RepresentativesRepresentativeInfoQueryCall) Do() (*RepresentativeInfoRe
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(RepresentativeInfoResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *RepresentativeInfoResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -837,6 +866,12 @@ func (c *RepresentativesRepresentativeInfoQueryCall) Do() (*RepresentativeInfoRe
 	//       "description": "The division to look up. May only be specified if the address field is not given in the request body.",
 	//       "location": "query",
 	//       "type": "string"
+	//     },
+	//     "recursive": {
+	//       "default": "false",
+	//       "description": "When ocd_id is supplied, return all divisions which are hierarchically nested within the queried division. For example, if querying ocd-division/country:us/district:dc, this would also return all DC's wards and ANCs.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     }
 	//   },
 	//   "path": "representatives/lookup",

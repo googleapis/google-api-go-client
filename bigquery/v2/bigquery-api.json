@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"kEk3sFj6Ef5_yR1-H3bAO6qw9mI/Q_buGY2JsMDrpm6SMTOf_s_Obbo\"",
+ "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/vtUNJ6y2psRVc6mZBgPBTxMifKc\"",
  "discoveryVersion": "v1",
  "id": "bigquery:v2",
  "name": "bigquery",
@@ -72,6 +72,9 @@
    "scopes": {
     "https://www.googleapis.com/auth/bigquery": {
      "description": "View and manage your data in Google BigQuery"
+    },
+    "https://www.googleapis.com/auth/bigquery.insertdata": {
+     "description": "Insert data into Google BigQuery"
     },
     "https://www.googleapis.com/auth/cloud-platform": {
      "description": "View and manage your data across Google Cloud Platform services"
@@ -374,6 +377,10 @@
    "id": "JobConfigurationExtract",
    "type": "object",
    "properties": {
+    "compression": {
+     "type": "string",
+     "description": "[Optional] The compression type to use for exported files. Possible values include GZIP and NONE. The default value is NONE."
+    },
     "destinationFormat": {
      "type": "string",
      "description": "[Experimental] Optional and defaults to CSV. Format with which files should be exported. To export to CSV, specify \"CSV\". Tables with nested or repeated fields cannot be exported as CSV. To export to newline-delimited JSON, specify \"NEWLINE_DELIMITED_JSON\"."
@@ -509,7 +516,7 @@
    "properties": {
     "allowLargeResults": {
      "type": "boolean",
-     "description": "If true, allows the query to produce arbitrarily large result tables at a slight cost in performance. Requires destination_table to be set."
+     "description": "If true, allows the query to produce arbitrarily large result tables at a slight cost in performance. Requires destinationTable to be set."
     },
     "createDisposition": {
      "type": "string",
@@ -522,6 +529,10 @@
     "destinationTable": {
      "$ref": "TableReference",
      "description": "[Optional] Describes the table where the query results should be stored. If not present, a new table will be created to store the results."
+    },
+    "flattenResults": {
+     "type": "boolean",
+     "description": "[Experimental] Flattens all nested and repeated fields in the query results. The default value is true. allowLargeResults must be true if this is set to false."
     },
     "preserveNulls": {
      "type": "boolean",
@@ -1759,6 +1770,7 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/bigquery",
+      "https://www.googleapis.com/auth/bigquery.insertdata",
       "https://www.googleapis.com/auth/cloud-platform"
      ]
     },

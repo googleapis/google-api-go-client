@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"kEk3sFj6Ef5_yR1-H3bAO6qw9mI/zcpG0fjFy3jg5hXoSMJXXIEGriY\"",
+ "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/PSvBXr6OUrG5iOZ4QlmAkwkWRxA\"",
  "discoveryVersion": "v1",
  "id": "youtube:v3",
  "name": "youtube",
@@ -952,13 +952,19 @@
       "multipleChannels",
       "multiplePlaylists",
       "popularUploads",
+      "postedPlaylists",
+      "postedVideos",
       "recentActivity",
       "recentPosts",
       "recentUploads",
       "singlePlaylist",
+      "subscriptions",
       "upcomingEvents"
      ],
      "enumDescriptions": [
+      "",
+      "",
+      "",
       "",
       "",
       "",
@@ -1160,6 +1166,46 @@
       ""
      ]
     },
+    "agcomRating": {
+     "type": "string",
+     "description": "Rating system for Italy - Autorit� per le Garanzie nelle Comunicazioni",
+     "enum": [
+      "agcomT",
+      "agcomUnrated",
+      "agcomVm14",
+      "agcomVm18"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "anatelRating": {
+     "type": "string",
+     "description": "Rating system for Chile - Asociaci�n Nacional de Televisi�n",
+     "enum": [
+      "anatelA",
+      "anatelF",
+      "anatelI",
+      "anatelI10",
+      "anatelI12",
+      "anatelI7",
+      "anatelR",
+      "anatelUnrated"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
     "bbfcRating": {
      "type": "string",
      "description": "British Board of Film Classification",
@@ -1172,6 +1218,54 @@
       "bbfcR18",
       "bbfcU",
       "bbfcUnrated"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "bfvcRating": {
+     "type": "string",
+     "description": "Rating system for Thailand - Board of Filmand Video Censors",
+     "enum": [
+      "bfvc13",
+      "bfvc15",
+      "bfvc18",
+      "bfvc20",
+      "bfvcB",
+      "bfvcE",
+      "bfvcG",
+      "bfvcUnrated"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "bmukkRating": {
+     "type": "string",
+     "description": "Rating system for Austria - Bundesministeriums f�r Unterricht, Kunst und Kultur!",
+     "enum": [
+      "bmukk10",
+      "bmukk12",
+      "bmukk14",
+      "bmukk16",
+      "bmukk6",
+      "bmukk8",
+      "bmukkAa",
+      "bmukkUnrated"
      ],
      "enumDescriptions": [
       "",
@@ -1244,6 +1338,68 @@
       ""
      ]
     },
+    "cccRating": {
+     "type": "string",
+     "description": "Rating system for Chile - Consejo de Calificaci�n Cinematogr�fica",
+     "enum": [
+      "ccc14",
+      "ccc18",
+      "ccc18s",
+      "ccc18v",
+      "ccc6",
+      "cccTe",
+      "cccUnrated"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "cceRating": {
+     "type": "string",
+     "description": "Rating system for Portugal - Comiss�o de Classifica��o de Espect�culos",
+     "enum": [
+      "cceM12",
+      "cceM16",
+      "cceM18",
+      "cceM4",
+      "cceM6",
+      "cceUnrated"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "chfilmRating": {
+     "type": "string",
+     "description": "Rating system for Switzerland - Switzerland Rating System",
+     "enum": [
+      "chfilm0",
+      "chfilm12",
+      "chfilm16",
+      "chfilm18",
+      "chfilm6",
+      "chfilmUnrated"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
     "chvrsRating": {
      "type": "string",
      "description": "Canadian Home Video Rating System",
@@ -1259,6 +1415,100 @@
      "enumDescriptions": [
       "",
       "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "cicfRating": {
+     "type": "string",
+     "description": "Rating system for Belgium - Belgium Rating System",
+     "enum": [
+      "cicfE",
+      "cicfKntEna",
+      "cicfKtEa",
+      "cicfUnrated"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "cnaRating": {
+     "type": "string",
+     "description": "Rating system for Romania - CONSILIUL NATIONAL AL AUDIOVIZUALULUI - CNA",
+     "enum": [
+      "cna12",
+      "cna15",
+      "cna18",
+      "cna18plus",
+      "cnaAp",
+      "cnaUnrated"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "csaRating": {
+     "type": "string",
+     "description": "Rating system for France - Conseil sup�rieur de l?audiovisuel",
+     "enum": [
+      "csa10",
+      "csa12",
+      "csa16",
+      "csa18",
+      "csaInterdiction",
+      "csaUnrated"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "cscfRating": {
+     "type": "string",
+     "description": "Rating system for Luxembourg - Commission de surveillance de la classification des films",
+     "enum": [
+      "cscf12",
+      "cscf16",
+      "cscf18",
+      "cscf6",
+      "cscfA",
+      "cscfUnrated"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "czfilmRating": {
+     "type": "string",
+     "description": "Rating system for Czech republic - Czech republic Rating System",
+     "enum": [
+      "czfilm12",
+      "czfilm14",
+      "czfilm18",
+      "czfilmU",
+      "czfilmUnrated"
+     ],
+     "enumDescriptions": [
       "",
       "",
       "",
@@ -1288,6 +1538,48 @@
       ""
      ]
     },
+    "eefilmRating": {
+     "type": "string",
+     "description": "Rating system for Estonia - Estonia Rating System",
+     "enum": [
+      "eefilmK12",
+      "eefilmK14",
+      "eefilmK16",
+      "eefilmK6",
+      "eefilmL",
+      "eefilmMs12",
+      "eefilmMs6",
+      "eefilmPere",
+      "eefilmUnrated"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "egfilmRating": {
+     "type": "string",
+     "description": "Rating system for Egypt - Egypt Rating System",
+     "enum": [
+      "egfilm18",
+      "egfilmBn",
+      "egfilmGn",
+      "egfilmUnrated"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
     "eirinRating": {
      "type": "string",
      "description": "Rating system in Japan - Eiga Rinri Kanri Iinkai",
@@ -1297,6 +1589,48 @@
       "eirinR15plus",
       "eirinR18plus",
       "eirinUnrated"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "fcbmRating": {
+     "type": "string",
+     "description": "Rating system for Malaysia - Film Censorship Board of Malaysia",
+     "enum": [
+      "fcbm18",
+      "fcbm18pa",
+      "fcbm18pl",
+      "fcbm18sg",
+      "fcbm18sx",
+      "fcbmP13",
+      "fcbmU",
+      "fcbmUnrated"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "fcoRating": {
+     "type": "string",
+     "description": "Rating system for Hong kong - Office for Film, Newspaper and Article Administration",
+     "enum": [
+      "fcoI",
+      "fcoIia",
+      "fcoIib",
+      "fcoIii",
+      "fcoUnrated"
      ],
      "enumDescriptions": [
       "",
@@ -1328,6 +1662,34 @@
       ""
      ]
     },
+    "fpbRating": {
+     "type": "string",
+     "description": "Rating system for South africa - Film & Publication Board",
+     "enum": [
+      "fpb1012Pg",
+      "fpb13",
+      "fpb16",
+      "fpb18",
+      "fpb79Pg",
+      "fpbA",
+      "fpbPg",
+      "fpbUnrated",
+      "fpbX18",
+      "fpbXx"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
     "fskRating": {
      "type": "string",
      "description": "Rating system in Germany - Voluntary Self Regulation of the Movie Industry",
@@ -1341,6 +1703,24 @@
      ],
      "enumDescriptions": [
       "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "grfilmRating": {
+     "type": "string",
+     "description": "Rating system for Greece - Greece Rating System",
+     "enum": [
+      "grfilmE",
+      "grfilmK",
+      "grfilmK13",
+      "grfilmK17",
+      "grfilmUnrated"
+     ],
+     "enumDescriptions": [
       "",
       "",
       "",
@@ -1372,6 +1752,102 @@
       ""
      ]
     },
+    "ifcoRating": {
+     "type": "string",
+     "description": "Rating system in Ireland - Irish Film Classification Office",
+     "enum": [
+      "ifco12",
+      "ifco15",
+      "ifco18",
+      "ifcoG",
+      "ifcoPg",
+      "ifcoUnrated"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "ilfilmRating": {
+     "type": "string",
+     "description": "Rating system for Israel - Israel Rating System",
+     "enum": [
+      "ilfilm12",
+      "ilfilm16",
+      "ilfilm18",
+      "ilfilmAa",
+      "ilfilmUnrated"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "incaaRating": {
+     "type": "string",
+     "description": "Rating system for Argentina - Instituto Nacional de Cine y Artes Audiovisuales",
+     "enum": [
+      "incaaAtp",
+      "incaaC",
+      "incaaSam13",
+      "incaaSam16",
+      "incaaSam18",
+      "incaaUnrated"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "kfcbRating": {
+     "type": "string",
+     "description": "Rating system for Kenya - Kenya Film Classification Board",
+     "enum": [
+      "kfcb16plus",
+      "kfcbG",
+      "kfcbPg",
+      "kfcbR",
+      "kfcbUnrated"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "kijkwijzerRating": {
+     "type": "string",
+     "description": "Rating system for Netherlands - Nederlands Instituut voor de Classificatie van Audiovisuele Media",
+     "enum": [
+      "kijkwijzer12",
+      "kijkwijzer16",
+      "kijkwijzer6",
+      "kijkwijzer9",
+      "kijkwijzerAl",
+      "kijkwijzerUnrated"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
     "kmrbRating": {
      "type": "string",
      "description": "Rating system in South Korea - Korea Media Rating Board",
@@ -1382,6 +1858,132 @@
       "kmrbR",
       "kmrbTeenr",
       "kmrbUnrated"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "lsfRating": {
+     "type": "string",
+     "description": "Rating system for Indonesia - Lembaga Sensor Film",
+     "enum": [
+      "lsfA",
+      "lsfBo",
+      "lsfD",
+      "lsfR",
+      "lsfSu",
+      "lsfUnrated"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "mccaaRating": {
+     "type": "string",
+     "description": "Rating system for Malta - Film Age-Classification Board",
+     "enum": [
+      "mccaa12",
+      "mccaa12a",
+      "mccaa14",
+      "mccaa15",
+      "mccaa16",
+      "mccaa18",
+      "mccaaPg",
+      "mccaaU",
+      "mccaaUnrated"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "mccypRating": {
+     "type": "string",
+     "description": "Rating system for Denmark - The Media Council for Children and Young People",
+     "enum": [
+      "mccyp11",
+      "mccyp15",
+      "mccyp7",
+      "mccypA",
+      "mccypUnrated"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "mdaRating": {
+     "type": "string",
+     "description": "Rating system for Singapore - Media Development Authority",
+     "enum": [
+      "mdaG",
+      "mdaM18",
+      "mdaNc16",
+      "mdaPg",
+      "mdaPg13",
+      "mdaR21",
+      "mdaUnrated"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "medietilsynetRating": {
+     "type": "string",
+     "description": "Rating system for Norway - Medietilsynet",
+     "enum": [
+      "medietilsynet11",
+      "medietilsynet15",
+      "medietilsynet18",
+      "medietilsynet7",
+      "medietilsynetA",
+      "medietilsynetUnrated"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "mekuRating": {
+     "type": "string",
+     "description": "Rating system for Finland - Finnish Centre for Media Education and Audiovisual Media",
+     "enum": [
+      "meku12",
+      "meku16",
+      "meku18",
+      "meku7",
+      "mekuS",
+      "mekuUnrated"
      ],
      "enumDescriptions": [
       "",
@@ -1412,6 +2014,50 @@
       ""
      ]
     },
+    "mocRating": {
+     "type": "string",
+     "description": "Rating system for Colombia - MoC",
+     "enum": [
+      "moc12",
+      "moc15",
+      "moc18",
+      "moc7",
+      "mocBanned",
+      "mocE",
+      "mocT",
+      "mocUnrated",
+      "mocX"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "moctwRating": {
+     "type": "string",
+     "description": "Rating system for Taiwan - Ministry of Culture - Tawan",
+     "enum": [
+      "moctwG",
+      "moctwP",
+      "moctwPg",
+      "moctwR",
+      "moctwUnrated"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
     "mpaaRating": {
      "type": "string",
      "description": "Motion Picture Association of America rating for the content.",
@@ -1425,6 +2071,134 @@
      ],
      "enumDescriptions": [
       "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "mtrcbRating": {
+     "type": "string",
+     "description": "Rating system for Philippines - MOVIE AND TELEVISION REVIEW AND CLASSIFICATION BOARD",
+     "enum": [
+      "mtrcbG",
+      "mtrcbPg",
+      "mtrcbR13",
+      "mtrcbR16",
+      "mtrcbR18",
+      "mtrcbUnrated",
+      "mtrcbX"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "nbcRating": {
+     "type": "string",
+     "description": "Rating system for Maldives - National Bureau of Classification",
+     "enum": [
+      "nbc12plus",
+      "nbc15plus",
+      "nbc18plus",
+      "nbc18plusr",
+      "nbcG",
+      "nbcPg",
+      "nbcPu",
+      "nbcUnrated"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "nbcplRating": {
+     "type": "string",
+     "description": "Rating system for Poland - National Broadcasting Council",
+     "enum": [
+      "nbcpl18plus",
+      "nbcplI",
+      "nbcplIi",
+      "nbcplIii",
+      "nbcplIv",
+      "nbcplUnrated"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "nfrcRating": {
+     "type": "string",
+     "description": "Rating system for Bulgaria - National Film Centre",
+     "enum": [
+      "nfrcA",
+      "nfrcB",
+      "nfrcC",
+      "nfrcD",
+      "nfrcUnrated",
+      "nfrcX"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "nfvcbRating": {
+     "type": "string",
+     "description": "Rating system for Nigeria - National Film and Video Censors Board",
+     "enum": [
+      "nfvcb12",
+      "nfvcb12a",
+      "nfvcb15",
+      "nfvcb18",
+      "nfvcbG",
+      "nfvcbPg",
+      "nfvcbRe",
+      "nfvcbUnrated"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "nkclvRating": {
+     "type": "string",
+     "description": "Rating system for Latvia - National Film Center of Latvia",
+     "enum": [
+      "nkclv12plus",
+      "nkclv18plus",
+      "nkclv7plus",
+      "nkclvU",
+      "nkclvUnrated"
+     ],
+     "enumDescriptions": [
       "",
       "",
       "",
@@ -1456,6 +2230,66 @@
       ""
      ]
     },
+    "pefilmRating": {
+     "type": "string",
+     "description": "Rating system for Peru - Peru Rating System",
+     "enum": [
+      "pefilm14",
+      "pefilm18",
+      "pefilmPg",
+      "pefilmPt",
+      "pefilmUnrated"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "rcnofRating": {
+     "type": "string",
+     "description": "Rating system for Hungary - Rating Committee of the National Office of Film",
+     "enum": [
+      "rcnofI",
+      "rcnofIi",
+      "rcnofIii",
+      "rcnofIv",
+      "rcnofUnrated",
+      "rcnofV",
+      "rcnofVi"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "resorteviolenciaRating": {
+     "type": "string",
+     "description": "Rating system for Venezuela - SiBCI",
+     "enum": [
+      "resorteviolenciaA",
+      "resorteviolenciaB",
+      "resorteviolenciaC",
+      "resorteviolenciaD",
+      "resorteviolenciaE",
+      "resorteviolenciaUnrated"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
     "rtcRating": {
      "type": "string",
      "description": "Rating system in Mexico - General Directorate of Radio, Television and Cinematography",
@@ -1478,6 +2312,24 @@
       ""
      ]
     },
+    "rteRating": {
+     "type": "string",
+     "description": "Rating system for Ireland - Raidi� Teilif�s �ireann",
+     "enum": [
+      "rteCh",
+      "rteGa",
+      "rteMa",
+      "rtePs",
+      "rteUnrated"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
     "russiaRating": {
      "type": "string",
      "description": "Rating system in Russia",
@@ -1491,6 +2343,64 @@
      ],
      "enumDescriptions": [
       "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "skfilmRating": {
+     "type": "string",
+     "description": "Rating system for Slovakia - Slovakia Rating System",
+     "enum": [
+      "skfilmG",
+      "skfilmP2",
+      "skfilmP5",
+      "skfilmP8",
+      "skfilmUnrated"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "smaisRating": {
+     "type": "string",
+     "description": "Rating system for Iceland - SMAIS",
+     "enum": [
+      "smais12",
+      "smais14",
+      "smais16",
+      "smais18",
+      "smais7",
+      "smaisL",
+      "smaisUnrated"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "smsaRating": {
+     "type": "string",
+     "description": "Rating system for Sweden - Statens medier�d (National Media Council)",
+     "enum": [
+      "smsa11",
+      "smsa15",
+      "smsa7",
+      "smsaA",
+      "smsaUnrated"
+     ],
+     "enumDescriptions": [
       "",
       "",
       "",
@@ -4575,6 +5485,11 @@
      "httpMethod": "POST",
      "description": "Adds a channelSection for the authenticated user's channel.",
      "parameters": {
+      "onBehalfOfContentOwner": {
+       "type": "string",
+       "description": "Note: This parameter is intended exclusively for YouTube content partners.\n\nThe onBehalfOfContentOwner parameter indicates that the request's authorization credentials identify a YouTube CMS user who is acting on behalf of the content owner specified in the parameter value. This parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and get access to all their video and channel data, without having to provide authentication credentials for each individual channel. The CMS account that the user authenticates with must be linked to the specified YouTube content owner.",
+       "location": "query"
+      },
       "onBehalfOfContentOwnerChannel": {
        "type": "string",
        "description": "This parameter can only be used in a properly authorized request. Note: This parameter is intended exclusively for YouTube content partners.\n\nThe onBehalfOfContentOwnerChannel parameter specifies the YouTube channel ID of the channel to which a video is being added. This parameter is required when a request specifies a value for the onBehalfOfContentOwner parameter, and it can only be used in conjunction with that parameter. In addition, the request must be authorized using a CMS account that is linked to the content owner that the onBehalfOfContentOwner parameter specifies. Finally, the channel that the onBehalfOfContentOwnerChannel parameter value specifies must be linked to the content owner that the onBehalfOfContentOwner parameter specifies.\n\nThis parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and perform actions on behalf of the channel specified in the parameter value, without having to provide authentication credentials for each separate channel.",
@@ -5661,7 +6576,7 @@
       },
       "part": {
        "type": "string",
-       "description": "The part parameter specifies a comma-separated list of one or more playlist resource properties that the API response will include. The part names that you can include in the parameter value are id, snippet, and status.\n\nIf the parameter identifies a property that contains child properties, the child properties will be included in the response. For example, in a playlist resource, the snippet property contains properties like author, title, description, tags, and timeCreated. As such, if you set part=snippet, the API response will contain all of those properties.",
+       "description": "The part parameter specifies a comma-separated list of one or more playlist resource properties that the API response will include. The part names that you can include in the parameter value are id, snippet, status, and contentDetails.\n\nIf the parameter identifies a property that contains child properties, the child properties will be included in the response. For example, in a playlist resource, the snippet property contains properties like author, title, description, tags, and timeCreated. As such, if you set part=snippet, the API response will contain all of those properties.",
        "required": true,
        "location": "query"
       }
@@ -5761,6 +6676,16 @@
       "forMine": {
        "type": "boolean",
        "description": "The forMine parameter restricts the search to only retrieve videos owned by the authenticated user. If you set this parameter to true, then the type parameter's value must also be set to video.",
+       "location": "query"
+      },
+      "location": {
+       "type": "string",
+       "description": "The location parameter restricts a search to videos that have a geographical location specified in their metadata. The value is a string that specifies geographic longitude/latitude coordinates e.g. (-122.08427,37.42307)",
+       "location": "query"
+      },
+      "locationRadius": {
+       "type": "string",
+       "description": "The locationRadius, in conjunction with the location parameter, defines a geographic area. If the geographic coordinates associated with a video fall within that area, then the video may be included in search results. This parameter value must be a floating point number followed by a measurement unit. Valid measurement units are m, km, ft, and mi. For example, valid parameter values include 1500m, 5km, 10000ft, and 0.75mi. The API does not support locationRadius parameter values larger than 1000 kilometers.",
        "location": "query"
       },
       "maxResults": {

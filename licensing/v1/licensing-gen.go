@@ -219,8 +219,8 @@ func (c *LicenseAssignmentsGetCall) Do() (*LicenseAssignment, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(LicenseAssignment)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *LicenseAssignment
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -305,8 +305,8 @@ func (c *LicenseAssignmentsInsertCall) Do() (*LicenseAssignment, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(LicenseAssignment)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *LicenseAssignment
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -401,8 +401,8 @@ func (c *LicenseAssignmentsListForProductCall) Do() (*LicenseAssignmentList, err
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(LicenseAssignmentList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *LicenseAssignmentList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -512,8 +512,8 @@ func (c *LicenseAssignmentsListForProductAndSkuCall) Do() (*LicenseAssignmentLis
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(LicenseAssignmentList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *LicenseAssignmentList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -616,8 +616,8 @@ func (c *LicenseAssignmentsPatchCall) Do() (*LicenseAssignment, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(LicenseAssignment)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *LicenseAssignment
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -708,8 +708,8 @@ func (c *LicenseAssignmentsUpdateCall) Do() (*LicenseAssignment, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(LicenseAssignment)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *LicenseAssignment
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil

@@ -558,8 +558,8 @@ func (c *AccountsGetCall) Do() (*Account, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Account)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Account
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -625,8 +625,8 @@ func (c *AccountsListCall) Do() (*Accounts, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Accounts)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Accounts
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -694,8 +694,8 @@ func (c *AccountsAdclientsGetCall) Do() (*AdClient, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(AdClient)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *AdClient
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -787,8 +787,8 @@ func (c *AccountsAdclientsListCall) Do() (*AdClients, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(AdClients)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *AdClients
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -871,8 +871,8 @@ func (c *AccountsAdunitsDeleteCall) Do() (*AdUnit, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(AdUnit)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *AdUnit
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -955,8 +955,8 @@ func (c *AccountsAdunitsGetCall) Do() (*AdUnit, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(AdUnit)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *AdUnit
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1050,8 +1050,8 @@ func (c *AccountsAdunitsGetAdCodeCall) Do() (*AdCode, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(AdCode)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *AdCode
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1146,8 +1146,8 @@ func (c *AccountsAdunitsInsertCall) Do() (*AdUnit, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(AdUnit)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *AdUnit
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1255,8 +1255,8 @@ func (c *AccountsAdunitsListCall) Do() (*AdUnits, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(AdUnits)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *AdUnits
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1359,8 +1359,8 @@ func (c *AccountsAdunitsPatchCall) Do() (*AdUnit, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(AdUnit)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *AdUnit
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1452,8 +1452,8 @@ func (c *AccountsAdunitsUpdateCall) Do() (*AdUnit, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(AdUnit)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *AdUnit
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1607,8 +1607,8 @@ func (c *AccountsReportsGenerateCall) Do() (*Report, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Report)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Report
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1738,8 +1738,8 @@ func (c *AdclientsGetCall) Do() (*AdClient, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(AdClient)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *AdClient
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1821,8 +1821,8 @@ func (c *AdclientsListCall) Do() (*AdClients, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(AdClients)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *AdClients
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1915,8 +1915,8 @@ func (c *AssociationsessionsStartCall) Do() (*AssociationSession, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(AssociationSession)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *AssociationSession
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2012,8 +2012,8 @@ func (c *AssociationsessionsVerifyCall) Do() (*AssociationSession, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(AssociationSession)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *AssociationSession
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2080,8 +2080,8 @@ func (c *CustomchannelsDeleteCall) Do() (*CustomChannel, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(CustomChannel)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *CustomChannel
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2154,8 +2154,8 @@ func (c *CustomchannelsGetCall) Do() (*CustomChannel, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(CustomChannel)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *CustomChannel
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2233,8 +2233,8 @@ func (c *CustomchannelsInsertCall) Do() (*CustomChannel, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(CustomChannel)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *CustomChannel
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2323,8 +2323,8 @@ func (c *CustomchannelsListCall) Do() (*CustomChannels, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(CustomChannels)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *CustomChannels
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2412,8 +2412,8 @@ func (c *CustomchannelsPatchCall) Do() (*CustomChannel, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(CustomChannel)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *CustomChannel
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2494,8 +2494,8 @@ func (c *CustomchannelsUpdateCall) Do() (*CustomChannel, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(CustomChannel)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *CustomChannel
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2639,8 +2639,8 @@ func (c *ReportsGenerateCall) Do() (*Report, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Report)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Report
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2765,8 +2765,8 @@ func (c *UrlchannelsDeleteCall) Do() (*UrlChannel, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(UrlChannel)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *UrlChannel
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2844,8 +2844,8 @@ func (c *UrlchannelsInsertCall) Do() (*UrlChannel, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(UrlChannel)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *UrlChannel
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2933,8 +2933,8 @@ func (c *UrlchannelsListCall) Do() (*UrlChannels, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(UrlChannels)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *UrlChannels
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil

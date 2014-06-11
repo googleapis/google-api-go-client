@@ -173,8 +173,8 @@ func (c *DetectionsListCall) Do() (*DetectionsListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(DetectionsListResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *DetectionsListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -242,8 +242,8 @@ func (c *LanguagesListCall) Do() (*LanguagesListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(LanguagesListResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *LanguagesListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -333,8 +333,8 @@ func (c *TranslationsListCall) Do() (*TranslationsListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(TranslationsListResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *TranslationsListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil

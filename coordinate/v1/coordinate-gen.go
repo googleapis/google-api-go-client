@@ -361,8 +361,8 @@ func (c *CustomFieldDefListCall) Do() (*CustomFieldDefListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(CustomFieldDefListResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *CustomFieldDefListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -429,8 +429,8 @@ func (c *JobsGetCall) Do() (*Job, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Job)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Job
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -574,8 +574,8 @@ func (c *JobsInsertCall) Do() (*Job, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Job)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Job
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -727,8 +727,8 @@ func (c *JobsListCall) Do() (*JobListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(JobListResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *JobListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -920,8 +920,8 @@ func (c *JobsPatchCall) Do() (*Job, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Job)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Job
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1173,8 +1173,8 @@ func (c *JobsUpdateCall) Do() (*Job, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Job)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Job
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1340,8 +1340,8 @@ func (c *LocationListCall) Do() (*LocationListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(LocationListResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *LocationListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1434,8 +1434,8 @@ func (c *ScheduleGetCall) Do() (*Schedule, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Schedule)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Schedule
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1560,8 +1560,8 @@ func (c *SchedulePatchCall) Do() (*Schedule, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Schedule)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Schedule
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1710,8 +1710,8 @@ func (c *ScheduleUpdateCall) Do() (*Schedule, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Schedule)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Schedule
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1808,8 +1808,8 @@ func (c *WorkerListCall) Do() (*WorkerListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(WorkerListResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *WorkerListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil

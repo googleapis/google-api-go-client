@@ -295,7 +295,7 @@ func (c *DataGetCall) Do() error {
 	//       "type": "integer"
 	//     },
 	//     "metrics": {
-	//       "description": "A comma-separated list of Analytics metrics. E.g., 'ga:visits,ga:pageviews'. At least one metric must be specified to retrieve a valid Analytics report.",
+	//       "description": "A comma-separated list of Analytics metrics. E.g., 'ga:sessions,ga:pageviews'. At least one metric must be specified to retrieve a valid Analytics report.",
 	//       "location": "query",
 	//       "pattern": "ga:.+",
 	//       "required": true,

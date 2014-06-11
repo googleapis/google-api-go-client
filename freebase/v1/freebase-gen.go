@@ -210,8 +210,8 @@ func (c *ReconcileCall) Do() (*ReconcileGet, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(ReconcileGet)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *ReconcileGet
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil

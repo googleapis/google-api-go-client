@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"kEk3sFj6Ef5_yR1-H3bAO6qw9mI/g0dlAqv19pD_cw5NLrQ2z9eB7ig\"",
+ "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/rC7evxf6j8LpJCoZJCsaJEaVGbY\"",
  "discoveryVersion": "v1",
  "id": "analytics:v2.4",
  "name": "analytics",
@@ -120,7 +120,7 @@
       },
       "metrics": {
        "type": "string",
-       "description": "A comma-separated list of Analytics metrics. E.g., 'ga:visits,ga:pageviews'. At least one metric must be specified to retrieve a valid Analytics report.",
+       "description": "A comma-separated list of Analytics metrics. E.g., 'ga:sessions,ga:pageviews'. At least one metric must be specified to retrieve a valid Analytics report.",
        "required": true,
        "pattern": "ga:.+",
        "location": "query"

@@ -211,8 +211,8 @@ func (c *GroupsGetCall) Do() (*Groups, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Groups)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Groups
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -284,8 +284,8 @@ func (c *GroupsPatchCall) Do() (*Groups, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Groups)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Groups
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -359,8 +359,8 @@ func (c *GroupsUpdateCall) Do() (*Groups, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Groups)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Groups
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil

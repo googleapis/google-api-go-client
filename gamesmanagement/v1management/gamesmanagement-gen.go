@@ -285,8 +285,8 @@ func (c *AchievementsResetCall) Do() (*AchievementResetResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(AchievementResetResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *AchievementResetResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -349,8 +349,8 @@ func (c *AchievementsResetAllCall) Do() (*AchievementResetAllResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(AchievementResetAllResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *AchievementResetAllResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -487,8 +487,8 @@ func (c *ApplicationsListHiddenCall) Do() (*HiddenPlayerList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(HiddenPlayerList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *HiddenPlayerList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -753,8 +753,8 @@ func (c *ScoresResetCall) Do() (*PlayerScoreResetResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(PlayerScoreResetResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *PlayerScoreResetResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil

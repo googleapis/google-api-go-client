@@ -166,8 +166,8 @@ func (c *StatesClearCall) Do() (*WriteResult, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(WriteResult)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *WriteResult
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -304,8 +304,8 @@ func (c *StatesGetCall) Do() (*GetResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(GetResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *GetResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -378,8 +378,8 @@ func (c *StatesListCall) Do() (*ListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(ListResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *ListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -464,8 +464,8 @@ func (c *StatesUpdateCall) Do() (*WriteResult, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(WriteResult)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *WriteResult
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil

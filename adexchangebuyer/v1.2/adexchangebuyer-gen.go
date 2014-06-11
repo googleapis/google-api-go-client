@@ -53,7 +53,6 @@ func New(client *http.Client) (*Service, error) {
 	s.Accounts = NewAccountsService(s)
 	s.Creatives = NewCreativesService(s)
 	s.DirectDeals = NewDirectDealsService(s)
-	s.PerformanceReport = NewPerformanceReportService(s)
 	return s, nil
 }
 
@@ -66,8 +65,6 @@ type Service struct {
 	Creatives *CreativesService
 
 	DirectDeals *DirectDealsService
-
-	PerformanceReport *PerformanceReportService
 }
 
 func NewAccountsService(s *Service) *AccountsService {
@@ -94,15 +91,6 @@ func NewDirectDealsService(s *Service) *DirectDealsService {
 }
 
 type DirectDealsService struct {
-	s *Service
-}
-
-func NewPerformanceReportService(s *Service) *PerformanceReportService {
-	rs := &PerformanceReportService{s: s}
-	return rs
-}
-
-type PerformanceReportService struct {
 	s *Service
 }
 
@@ -315,78 +303,6 @@ type DirectDealsList struct {
 	Kind string `json:"kind,omitempty"`
 }
 
-type PerformanceReport struct {
-	// CalloutStatusRate: Rate of various prefiltering statuses per match.
-	// Please refer to the callout-status-codes.txt file for different
-	// statuses.
-	CalloutStatusRate []interface{} `json:"calloutStatusRate,omitempty"`
-
-	// CookieMatcherStatusRate: Average QPS for cookie matcher operations.
-	CookieMatcherStatusRate []interface{} `json:"cookieMatcherStatusRate,omitempty"`
-
-	// CreativeStatusRate: Rate of ads with a given status. Please refer to
-	// the creative-status-codes.txt file for different statuses.
-	CreativeStatusRate []interface{} `json:"creativeStatusRate,omitempty"`
-
-	// HostedMatchStatusRate: Average QPS for hosted match operations.
-	HostedMatchStatusRate []interface{} `json:"hostedMatchStatusRate,omitempty"`
-
-	// Kind: Resource type.
-	Kind string `json:"kind,omitempty"`
-
-	// Latency50thPercentile: The 50th percentile round trip latency(ms) as
-	// perceived from Google servers for the duration period covered by the
-	// report.
-	Latency50thPercentile float64 `json:"latency50thPercentile,omitempty"`
-
-	// Latency85thPercentile: The 85th percentile round trip latency(ms) as
-	// perceived from Google servers for the duration period covered by the
-	// report.
-	Latency85thPercentile float64 `json:"latency85thPercentile,omitempty"`
-
-	// Latency95thPercentile: The 95th percentile round trip latency(ms) as
-	// perceived from Google servers for the duration period covered by the
-	// report.
-	Latency95thPercentile float64 `json:"latency95thPercentile,omitempty"`
-
-	// NoQuotaInRegion: Rate of various quota account statuses per quota
-	// check.
-	NoQuotaInRegion float64 `json:"noQuotaInRegion,omitempty"`
-
-	// OutOfQuota: Rate of various quota account statuses per quota check.
-	OutOfQuota float64 `json:"outOfQuota,omitempty"`
-
-	// PixelMatchRequests: Average QPS for pixel match requests from
-	// clients.
-	PixelMatchRequests float64 `json:"pixelMatchRequests,omitempty"`
-
-	// PixelMatchResponses: Average QPS for pixel match responses from
-	// clients.
-	PixelMatchResponses float64 `json:"pixelMatchResponses,omitempty"`
-
-	// QuotaConfiguredLimit: The configured quota limits for this account.
-	QuotaConfiguredLimit float64 `json:"quotaConfiguredLimit,omitempty"`
-
-	// QuotaThrottledLimit: The throttled quota limits for this account.
-	QuotaThrottledLimit float64 `json:"quotaThrottledLimit,omitempty"`
-
-	// Region: The trading location of this data.
-	Region string `json:"region,omitempty"`
-
-	// Timestamp: The unix timestamp of the starting time of this
-	// performance data.
-	Timestamp int64 `json:"timestamp,omitempty,string"`
-}
-
-type PerformanceReportList struct {
-	// Kind: Resource type.
-	Kind string `json:"kind,omitempty"`
-
-	// Performance_report: A list of performance reports relevant for the
-	// account.
-	Performance_report []*PerformanceReport `json:"performance_report,omitempty"`
-}
-
 // method id "adexchangebuyer.accounts.get":
 
 type AccountsGetCall struct {
@@ -420,8 +336,8 @@ func (c *AccountsGetCall) Do() (*Account, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Account)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Account
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -482,8 +398,8 @@ func (c *AccountsListCall) Do() (*AccountsList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(AccountsList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *AccountsList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -544,8 +460,8 @@ func (c *AccountsPatchCall) Do() (*Account, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Account)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Account
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -620,8 +536,8 @@ func (c *AccountsUpdateCall) Do() (*Account, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Account)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Account
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -692,8 +608,8 @@ func (c *CreativesGetCall) Do() (*Creative, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Creative)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Creative
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -769,8 +685,8 @@ func (c *CreativesInsertCall) Do() (*Creative, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Creative)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Creative
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -856,8 +772,8 @@ func (c *CreativesListCall) Do() (*CreativesList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(CreativesList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *CreativesList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -939,8 +855,8 @@ func (c *DirectDealsGetCall) Do() (*DirectDeal, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(DirectDeal)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *DirectDeal
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1001,8 +917,8 @@ func (c *DirectDealsListCall) Do() (*DirectDealsList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(DirectDealsList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *DirectDealsList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1013,127 +929,6 @@ func (c *DirectDealsListCall) Do() (*DirectDealsList, error) {
 	//   "path": "directdeals",
 	//   "response": {
 	//     "$ref": "DirectDealsList"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/adexchange.buyer"
-	//   ]
-	// }
-
-}
-
-// method id "adexchangebuyer.performanceReport.list":
-
-type PerformanceReportListCall struct {
-	s             *Service
-	accountId     int64
-	endDateTime   string
-	startDateTime string
-	opt_          map[string]interface{}
-}
-
-// List: Retrieves the authenticated user's list of performance metrics.
-func (r *PerformanceReportService) List(accountId int64, endDateTime string, startDateTime string) *PerformanceReportListCall {
-	c := &PerformanceReportListCall{s: r.s, opt_: make(map[string]interface{})}
-	c.accountId = accountId
-	c.endDateTime = endDateTime
-	c.startDateTime = startDateTime
-	return c
-}
-
-// MaxResults sets the optional parameter "maxResults": Maximum number
-// of entries returned on one result page. If not set, the default is
-// 100.
-func (c *PerformanceReportListCall) MaxResults(maxResults int64) *PerformanceReportListCall {
-	c.opt_["maxResults"] = maxResults
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": A continuation
-// token, used to page through performance reports. To retrieve the next
-// page, set this parameter to the value of "nextPageToken" from the
-// previous response.
-func (c *PerformanceReportListCall) PageToken(pageToken string) *PerformanceReportListCall {
-	c.opt_["pageToken"] = pageToken
-	return c
-}
-
-func (c *PerformanceReportListCall) Do() (*PerformanceReportList, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	params.Set("accountId", fmt.Sprintf("%v", c.accountId))
-	params.Set("endDateTime", fmt.Sprintf("%v", c.endDateTime))
-	params.Set("startDateTime", fmt.Sprintf("%v", c.startDateTime))
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "performancereport")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := new(PerformanceReportList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Retrieves the authenticated user's list of performance metrics.",
-	//   "httpMethod": "GET",
-	//   "id": "adexchangebuyer.performanceReport.list",
-	//   "parameterOrder": [
-	//     "accountId",
-	//     "endDateTime",
-	//     "startDateTime"
-	//   ],
-	//   "parameters": {
-	//     "accountId": {
-	//       "description": "The account id to get the reports.",
-	//       "format": "int64",
-	//       "location": "query",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "endDateTime": {
-	//       "description": "The end time of the report in ISO 8601 timestamp format using UTC.",
-	//       "location": "query",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "maxResults": {
-	//       "description": "Maximum number of entries returned on one result page. If not set, the default is 100. Optional.",
-	//       "format": "uint32",
-	//       "location": "query",
-	//       "maximum": "1000",
-	//       "minimum": "1",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A continuation token, used to page through performance reports. To retrieve the next page, set this parameter to the value of \"nextPageToken\" from the previous response. Optional.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "startDateTime": {
-	//       "description": "The start time of the report in ISO 8601 timestamp format using UTC.",
-	//       "location": "query",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "performancereport",
-	//   "response": {
-	//     "$ref": "PerformanceReportList"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/adexchange.buyer"

@@ -260,6 +260,11 @@ type About struct {
 	// Kind: This is always drive#about.
 	Kind string `json:"kind,omitempty"`
 
+	// LanguageCode: The user's language or locale code, as defined by BCP
+	// 47, with some extensions from Unicode's LDML format
+	// (http://www.unicode.org/reports/tr35/).
+	LanguageCode string `json:"languageCode,omitempty"`
+
 	// LargestChangeId: The largest change id.
 	LargestChangeId int64 `json:"largestChangeId,omitempty,string"`
 
@@ -273,6 +278,10 @@ type About struct {
 	// PermissionId: The current user's ID as visible in the permissions
 	// collection.
 	PermissionId string `json:"permissionId,omitempty"`
+
+	// QuotaBytesByService: The amount of storage quota used by different
+	// Google services.
+	QuotaBytesByService []*AboutQuotaBytesByService `json:"quotaBytesByService,omitempty"`
 
 	// QuotaBytesTotal: The total number of quota bytes.
 	QuotaBytesTotal int64 `json:"quotaBytesTotal,omitempty,string"`
@@ -351,6 +360,14 @@ type AboutMaxUploadSizes struct {
 	Type string `json:"type,omitempty"`
 }
 
+type AboutQuotaBytesByService struct {
+	// BytesUsed: The storage quota bytes used by the service.
+	BytesUsed int64 `json:"bytesUsed,omitempty,string"`
+
+	// ServiceName: The service's name, e.g. DRIVE, GMAIL, or PHOTOS.
+	ServiceName string `json:"serviceName,omitempty"`
+}
+
 type App struct {
 	// Authorized: Whether the app is authorized to access data on the
 	// user's Drive.
@@ -363,6 +380,10 @@ type App struct {
 
 	// CreateUrl: The url to create a new file with this app.
 	CreateUrl string `json:"createUrl,omitempty"`
+
+	// HasDriveWideScope: Whether the app has drive-wide scope. An app with
+	// drive-wide scope can access all files in the user's drive.
+	HasDriveWideScope bool `json:"hasDriveWideScope,omitempty"`
 
 	// Icons: The various icons for the app.
 	Icons []*AppIcons `json:"icons,omitempty"`
@@ -422,6 +443,10 @@ type App struct {
 	// file.
 	SupportsMultiOpen bool `json:"supportsMultiOpen,omitempty"`
 
+	// SupportsOfflineCreate: Whether this app supports creating new files
+	// when offline.
+	SupportsOfflineCreate bool `json:"supportsOfflineCreate,omitempty"`
+
 	// UseByDefault: Whether the app is selected as the default handler for
 	// the types it supports.
 	UseByDefault bool `json:"useByDefault,omitempty"`
@@ -446,6 +471,10 @@ type AppIcons struct {
 }
 
 type AppList struct {
+	// DefaultAppIds: List of app IDs that the user has specified to use by
+	// default.
+	DefaultAppIds []string `json:"defaultAppIds,omitempty"`
+
 	// Etag: The ETag of the list.
 	Etag string `json:"etag,omitempty"`
 
@@ -809,6 +838,10 @@ type File struct {
 	// (formatted RFC 3339 timestamp).
 	LastViewedByMeDate string `json:"lastViewedByMeDate,omitempty"`
 
+	// MarkedViewedByMeDate: Time this file was explicitly marked viewed by
+	// the user (formatted RFC 3339 timestamp).
+	MarkedViewedByMeDate string `json:"markedViewedByMeDate,omitempty"`
+
 	// Md5Checksum: An MD5 checksum for the content of this file. This is
 	// populated only for files with content stored in Drive.
 	Md5Checksum string `json:"md5Checksum,omitempty"`
@@ -853,6 +886,10 @@ type File struct {
 	// placed in the default root folder.
 	Parents []*ParentReference `json:"parents,omitempty"`
 
+	// Permissions: The list of permissions for users with access to this
+	// file.
+	Permissions []*Permission `json:"permissions,omitempty"`
+
 	// Properties: The list of properties.
 	Properties []*Property `json:"properties,omitempty"`
 
@@ -869,6 +906,10 @@ type File struct {
 	// (formatted RFC 3339 timestamp).
 	SharedWithMeDate string `json:"sharedWithMeDate,omitempty"`
 
+	// SharingUser: User that shared the item with the current user, if
+	// available.
+	SharingUser *User `json:"sharingUser,omitempty"`
+
 	// Thumbnail: Thumbnail for the file. Only accepted on upload and for
 	// files that are not already thumbnailed by Google.
 	Thumbnail *FileThumbnail `json:"thumbnail,omitempty"`
@@ -882,6 +923,11 @@ type File struct {
 	// UserPermission: The permissions for the authenticated user on this
 	// file.
 	UserPermission *Permission `json:"userPermission,omitempty"`
+
+	// Version: A monotonically increasing version number for the file. This
+	// reflects every change made to the file on the server, even those not
+	// visible to the requesting user.
+	Version int64 `json:"version,omitempty,string"`
 
 	// WebContentLink: A link for downloading the content of the file in a
 	// browser using cookie based authentication. In cases where the content
@@ -1068,14 +1114,14 @@ type Permission struct {
 	AuthKey string `json:"authKey,omitempty"`
 
 	// Domain: The domain name of the entity this permission refers to. This
-	// is an output-only field which is populated when the permission type
-	// is "user", "group" or "domain".
+	// is an output-only field which is present when the permission type is
+	// user, group or domain.
 	Domain string `json:"domain,omitempty"`
 
 	// EmailAddress: The email address of the user this permission refers
-	// to. This is an output-only field which is populated when the
-	// permission type is "user" and the given user's Google+ profile
-	// privacy settings allow exposing their email address.
+	// to. This is an output-only field which is present when the permission
+	// type is user and the given user's Google+ profile privacy settings
+	// allow exposing their email address.
 	EmailAddress string `json:"emailAddress,omitempty"`
 
 	// Etag: The ETag of the permission.
@@ -1083,7 +1129,7 @@ type Permission struct {
 
 	// Id: The ID of the user this permission refers to, and identical to
 	// the permissionId in the About and Files resources. When making a
-	// drive.permissions.insert request, exactly one of 'id' or 'value'
+	// drive.permissions.insert request, exactly one of the id or value
 	// fields must be specified.
 	Id string `json:"id,omitempty"`
 
@@ -1116,7 +1162,7 @@ type Permission struct {
 
 	// Value: The email address or domain name for the entity. This is used
 	// during inserts and is not populated in responses. When making a
-	// drive.permissions.insert request, exactly one of 'id' or 'value'
+	// drive.permissions.insert request, exactly one of the id or value
 	// fields must be specified.
 	Value string `json:"value,omitempty"`
 
@@ -1269,6 +1315,9 @@ type User struct {
 	// DisplayName: A plain text displayable name for this user.
 	DisplayName string `json:"displayName,omitempty"`
 
+	// EmailAddress: The email address of the user.
+	EmailAddress string `json:"emailAddress,omitempty"`
+
 	// IsAuthenticatedUser: Whether this user is the same as the
 	// authenticated user for whom the request was made.
 	IsAuthenticatedUser bool `json:"isAuthenticatedUser,omitempty"`
@@ -1304,10 +1353,10 @@ func (r *AboutService) Get() *AboutGetCall {
 
 // IncludeSubscribed sets the optional parameter "includeSubscribed":
 // When calculating the number of remaining change IDs, whether to
-// include shared files and public files the user has opened. When set
+// include public files the user has opened and shared files. When set
 // to false, this counts only change IDs for owned files and any shared
-// or public files that the user has explictly added to a folder in
-// Drive.
+// or public files that the user has explicitly added to a folder they
+// own.
 func (c *AboutGetCall) IncludeSubscribed(includeSubscribed bool) *AboutGetCall {
 	c.opt_["includeSubscribed"] = includeSubscribed
 	return c
@@ -1354,8 +1403,8 @@ func (c *AboutGetCall) Do() (*About, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(About)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *About
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1366,7 +1415,7 @@ func (c *AboutGetCall) Do() (*About, error) {
 	//   "parameters": {
 	//     "includeSubscribed": {
 	//       "default": "true",
-	//       "description": "When calculating the number of remaining change IDs, whether to include shared files and public files the user has opened. When set to false, this counts only change IDs for owned files and any shared or public files that the user has explictly added to a folder in Drive.",
+	//       "description": "When calculating the number of remaining change IDs, whether to include public files the user has opened and shared files. When set to false, this counts only change IDs for owned files and any shared or public files that the user has explicitly added to a folder they own.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -1432,8 +1481,8 @@ func (c *AppsGetCall) Do() (*App, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(App)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *App
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1481,10 +1530,49 @@ func (r *AppsService) List() *AppsListCall {
 	return c
 }
 
+// AppFilterExtensions sets the optional parameter
+// "appFilterExtensions": A comma-separated list of file extensions for
+// open with filtering. All apps within the given app query scope which
+// can open any of the given file extensions will be included in the
+// response. If appFilterMimeTypes are provided as well, the result is a
+// union of the two resulting app lists.
+func (c *AppsListCall) AppFilterExtensions(appFilterExtensions string) *AppsListCall {
+	c.opt_["appFilterExtensions"] = appFilterExtensions
+	return c
+}
+
+// AppFilterMimeTypes sets the optional parameter "appFilterMimeTypes":
+// A comma-separated list of MIME types for open with filtering. All
+// apps within the given app query scope which can open any of the given
+// MIME types will be included in the response. If appFilterExtensions
+// are provided as well, the result is a union of the two resulting app
+// lists.
+func (c *AppsListCall) AppFilterMimeTypes(appFilterMimeTypes string) *AppsListCall {
+	c.opt_["appFilterMimeTypes"] = appFilterMimeTypes
+	return c
+}
+
+// LanguageCode sets the optional parameter "languageCode": A language
+// or locale code, as defined by BCP 47, with some extensions from
+// Unicode's LDML format (http://www.unicode.org/reports/tr35/).
+func (c *AppsListCall) LanguageCode(languageCode string) *AppsListCall {
+	c.opt_["languageCode"] = languageCode
+	return c
+}
+
 func (c *AppsListCall) Do() (*AppList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["appFilterExtensions"]; ok {
+		params.Set("appFilterExtensions", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["appFilterMimeTypes"]; ok {
+		params.Set("appFilterMimeTypes", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["languageCode"]; ok {
+		params.Set("languageCode", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "apps")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -1498,8 +1586,8 @@ func (c *AppsListCall) Do() (*AppList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(AppList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *AppList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1507,6 +1595,25 @@ func (c *AppsListCall) Do() (*AppList, error) {
 	//   "description": "Lists a user's installed apps.",
 	//   "httpMethod": "GET",
 	//   "id": "drive.apps.list",
+	//   "parameters": {
+	//     "appFilterExtensions": {
+	//       "default": "",
+	//       "description": "A comma-separated list of file extensions for open with filtering. All apps within the given app query scope which can open any of the given file extensions will be included in the response. If appFilterMimeTypes are provided as well, the result is a union of the two resulting app lists.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "appFilterMimeTypes": {
+	//       "default": "",
+	//       "description": "A comma-separated list of MIME types for open with filtering. All apps within the given app query scope which can open any of the given MIME types will be included in the response. If appFilterExtensions are provided as well, the result is a union of the two resulting app lists.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "languageCode": {
+	//       "description": "A language or locale code, as defined by BCP 47, with some extensions from Unicode's LDML format (http://www.unicode.org/reports/tr35/).",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
 	//   "path": "apps",
 	//   "response": {
 	//     "$ref": "AppList"
@@ -1551,8 +1658,8 @@ func (c *ChangesGetCall) Do() (*Change, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Change)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Change
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1608,9 +1715,9 @@ func (c *ChangesListCall) IncludeDeleted(includeDeleted bool) *ChangesListCall {
 }
 
 // IncludeSubscribed sets the optional parameter "includeSubscribed":
-// Whether to include shared files and public files the user has opened.
-// When set to false, the list will include owned files plus any shared
-// or public files the user has explictly added to a folder in Drive.
+// Whether to include public files the user has opened and shared files.
+// When set to false, the list only includes owned files plus any shared
+// or public files the user has explicitly added to a folder they own.
 func (c *ChangesListCall) IncludeSubscribed(includeSubscribed bool) *ChangesListCall {
 	c.opt_["includeSubscribed"] = includeSubscribed
 	return c
@@ -1669,8 +1776,8 @@ func (c *ChangesListCall) Do() (*ChangeList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(ChangeList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *ChangeList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1687,7 +1794,7 @@ func (c *ChangesListCall) Do() (*ChangeList, error) {
 	//     },
 	//     "includeSubscribed": {
 	//       "default": "true",
-	//       "description": "Whether to include shared files and public files the user has opened. When set to false, the list will include owned files plus any shared or public files the user has explictly added to a folder in Drive.",
+	//       "description": "Whether to include public files the user has opened and shared files. When set to false, the list only includes owned files plus any shared or public files the user has explicitly added to a folder they own.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -1751,9 +1858,9 @@ func (c *ChangesWatchCall) IncludeDeleted(includeDeleted bool) *ChangesWatchCall
 }
 
 // IncludeSubscribed sets the optional parameter "includeSubscribed":
-// Whether to include shared files and public files the user has opened.
-// When set to false, the list will include owned files plus any shared
-// or public files the user has explictly added to a folder in Drive.
+// Whether to include public files the user has opened and shared files.
+// When set to false, the list only includes owned files plus any shared
+// or public files the user has explicitly added to a folder they own.
 func (c *ChangesWatchCall) IncludeSubscribed(includeSubscribed bool) *ChangesWatchCall {
 	c.opt_["includeSubscribed"] = includeSubscribed
 	return c
@@ -1818,8 +1925,8 @@ func (c *ChangesWatchCall) Do() (*Channel, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Channel)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Channel
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1836,7 +1943,7 @@ func (c *ChangesWatchCall) Do() (*Channel, error) {
 	//     },
 	//     "includeSubscribed": {
 	//       "default": "true",
-	//       "description": "Whether to include shared files and public files the user has opened. When set to false, the list will include owned files plus any shared or public files the user has explictly added to a folder in Drive.",
+	//       "description": "Whether to include public files the user has opened and shared files. When set to false, the list only includes owned files plus any shared or public files the user has explicitly added to a folder they own.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -2045,8 +2152,8 @@ func (c *ChildrenGetCall) Do() (*ChildReference, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(ChildReference)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *ChildReference
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2128,8 +2235,8 @@ func (c *ChildrenInsertCall) Do() (*ChildReference, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(ChildReference)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *ChildReference
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2227,8 +2334,8 @@ func (c *ChildrenListCall) Do() (*ChildList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(ChildList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *ChildList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2396,8 +2503,8 @@ func (c *CommentsGetCall) Do() (*Comment, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Comment)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Comment
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2483,8 +2590,8 @@ func (c *CommentsInsertCall) Do() (*Comment, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Comment)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Comment
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2596,8 +2703,8 @@ func (c *CommentsListCall) Do() (*CommentList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(CommentList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *CommentList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2699,8 +2806,8 @@ func (c *CommentsPatchCall) Do() (*Comment, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Comment)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Comment
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2785,8 +2892,8 @@ func (c *CommentsUpdateCall) Do() (*Comment, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Comment)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Comment
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2939,8 +3046,8 @@ func (c *FilesCopyCall) Do() (*File, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(File)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *File
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3082,6 +3189,49 @@ func (c *FilesDeleteCall) Do() error {
 
 }
 
+// method id "drive.files.emptyTrash":
+
+type FilesEmptyTrashCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// EmptyTrash: Permanently deletes all of the user's trashed files.
+func (r *FilesService) EmptyTrash() *FilesEmptyTrashCall {
+	c := &FilesEmptyTrashCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+func (c *FilesEmptyTrashCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "files/trash")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Permanently deletes all of the user's trashed files.",
+	//   "httpMethod": "DELETE",
+	//   "id": "drive.files.emptyTrash",
+	//   "path": "files/trash",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive"
+	//   ]
+	// }
+
+}
+
 // method id "drive.files.get":
 
 type FilesGetCall struct {
@@ -3136,8 +3286,8 @@ func (c *FilesGetCall) Do() (*File, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(File)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *File
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3324,8 +3474,8 @@ func (c *FilesInsertCall) Do() (*File, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(File)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *File
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3492,8 +3642,8 @@ func (c *FilesListCall) Do() (*FileList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(FileList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *FileList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3568,6 +3718,13 @@ func (r *FilesService) Patch(fileId string, file *File) *FilesPatchCall {
 	return c
 }
 
+// AddParents sets the optional parameter "addParents": Comma-separated
+// list of parent IDs to add.
+func (c *FilesPatchCall) AddParents(addParents string) *FilesPatchCall {
+	c.opt_["addParents"] = addParents
+	return c
+}
+
 // Convert sets the optional parameter "convert": Whether to convert
 // this file to the corresponding Google Docs format.
 func (c *FilesPatchCall) Convert(convert bool) *FilesPatchCall {
@@ -3603,6 +3760,13 @@ func (c *FilesPatchCall) OcrLanguage(ocrLanguage string) *FilesPatchCall {
 // revision.
 func (c *FilesPatchCall) Pinned(pinned bool) *FilesPatchCall {
 	c.opt_["pinned"] = pinned
+	return c
+}
+
+// RemoveParents sets the optional parameter "removeParents":
+// Comma-separated list of parent IDs to remove.
+func (c *FilesPatchCall) RemoveParents(removeParents string) *FilesPatchCall {
+	c.opt_["removeParents"] = removeParents
 	return c
 }
 
@@ -3651,6 +3815,9 @@ func (c *FilesPatchCall) Do() (*File, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["addParents"]; ok {
+		params.Set("addParents", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["convert"]; ok {
 		params.Set("convert", fmt.Sprintf("%v", v))
 	}
@@ -3665,6 +3832,9 @@ func (c *FilesPatchCall) Do() (*File, error) {
 	}
 	if v, ok := c.opt_["pinned"]; ok {
 		params.Set("pinned", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["removeParents"]; ok {
+		params.Set("removeParents", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["setModifiedDate"]; ok {
 		params.Set("setModifiedDate", fmt.Sprintf("%v", v))
@@ -3696,8 +3866,8 @@ func (c *FilesPatchCall) Do() (*File, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(File)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *File
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3709,6 +3879,11 @@ func (c *FilesPatchCall) Do() (*File, error) {
 	//     "fileId"
 	//   ],
 	//   "parameters": {
+	//     "addParents": {
+	//       "description": "Comma-separated list of parent IDs to add.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "convert": {
 	//       "default": "false",
 	//       "description": "Whether to convert this file to the corresponding Google Docs format.",
@@ -3743,6 +3918,11 @@ func (c *FilesPatchCall) Do() (*File, error) {
 	//       "description": "Whether to pin the new revision.",
 	//       "location": "query",
 	//       "type": "boolean"
+	//     },
+	//     "removeParents": {
+	//       "description": "Comma-separated list of parent IDs to remove.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "setModifiedDate": {
 	//       "default": "false",
@@ -3824,8 +4004,8 @@ func (c *FilesTouchCall) Do() (*File, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(File)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *File
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3891,8 +4071,8 @@ func (c *FilesTrashCall) Do() (*File, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(File)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *File
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3957,8 +4137,8 @@ func (c *FilesUntrashCall) Do() (*File, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(File)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *File
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -4008,6 +4188,13 @@ func (r *FilesService) Update(fileId string, file *File) *FilesUpdateCall {
 	return c
 }
 
+// AddParents sets the optional parameter "addParents": Comma-separated
+// list of parent IDs to add.
+func (c *FilesUpdateCall) AddParents(addParents string) *FilesUpdateCall {
+	c.opt_["addParents"] = addParents
+	return c
+}
+
 // Convert sets the optional parameter "convert": Whether to convert
 // this file to the corresponding Google Docs format.
 func (c *FilesUpdateCall) Convert(convert bool) *FilesUpdateCall {
@@ -4043,6 +4230,13 @@ func (c *FilesUpdateCall) OcrLanguage(ocrLanguage string) *FilesUpdateCall {
 // revision.
 func (c *FilesUpdateCall) Pinned(pinned bool) *FilesUpdateCall {
 	c.opt_["pinned"] = pinned
+	return c
+}
+
+// RemoveParents sets the optional parameter "removeParents":
+// Comma-separated list of parent IDs to remove.
+func (c *FilesUpdateCall) RemoveParents(removeParents string) *FilesUpdateCall {
+	c.opt_["removeParents"] = removeParents
 	return c
 }
 
@@ -4095,6 +4289,9 @@ func (c *FilesUpdateCall) Do() (*File, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["addParents"]; ok {
+		params.Set("addParents", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["convert"]; ok {
 		params.Set("convert", fmt.Sprintf("%v", v))
 	}
@@ -4109,6 +4306,9 @@ func (c *FilesUpdateCall) Do() (*File, error) {
 	}
 	if v, ok := c.opt_["pinned"]; ok {
 		params.Set("pinned", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["removeParents"]; ok {
+		params.Set("removeParents", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["setModifiedDate"]; ok {
 		params.Set("setModifiedDate", fmt.Sprintf("%v", v))
@@ -4148,8 +4348,8 @@ func (c *FilesUpdateCall) Do() (*File, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(File)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *File
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -4177,6 +4377,11 @@ func (c *FilesUpdateCall) Do() (*File, error) {
 	//     "fileId"
 	//   ],
 	//   "parameters": {
+	//     "addParents": {
+	//       "description": "Comma-separated list of parent IDs to add.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "convert": {
 	//       "default": "false",
 	//       "description": "Whether to convert this file to the corresponding Google Docs format.",
@@ -4211,6 +4416,11 @@ func (c *FilesUpdateCall) Do() (*File, error) {
 	//       "description": "Whether to pin the new revision.",
 	//       "location": "query",
 	//       "type": "boolean"
+	//     },
+	//     "removeParents": {
+	//       "description": "Comma-separated list of parent IDs to remove.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "setModifiedDate": {
 	//       "default": "false",
@@ -4322,8 +4532,8 @@ func (c *FilesWatchCall) Do() (*Channel, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Channel)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Channel
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -4486,8 +4696,8 @@ func (c *ParentsGetCall) Do() (*ParentReference, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(ParentReference)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *ParentReference
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -4569,8 +4779,8 @@ func (c *ParentsInsertCall) Do() (*ParentReference, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(ParentReference)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *ParentReference
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -4638,8 +4848,8 @@ func (c *ParentsListCall) Do() (*ParentList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(ParentList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *ParentList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -4777,8 +4987,8 @@ func (c *PermissionsGetCall) Do() (*Permission, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Permission)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Permission
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -4851,8 +5061,8 @@ func (c *PermissionsGetIdForEmailCall) Do() (*PermissionId, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(PermissionId)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *PermissionId
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -4913,7 +5123,8 @@ func (c *PermissionsInsertCall) EmailMessage(emailMessage string) *PermissionsIn
 
 // SendNotificationEmails sets the optional parameter
 // "sendNotificationEmails": Whether to send notification emails when
-// sharing to users or groups.
+// sharing to users or groups. This parameter is ignored and an email is
+// sent if the role is owner.
 func (c *PermissionsInsertCall) SendNotificationEmails(sendNotificationEmails bool) *PermissionsInsertCall {
 	c.opt_["sendNotificationEmails"] = sendNotificationEmails
 	return c
@@ -4949,8 +5160,8 @@ func (c *PermissionsInsertCall) Do() (*Permission, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Permission)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Permission
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -4975,7 +5186,7 @@ func (c *PermissionsInsertCall) Do() (*Permission, error) {
 	//     },
 	//     "sendNotificationEmails": {
 	//       "default": "true",
-	//       "description": "Whether to send notification emails when sharing to users or groups.",
+	//       "description": "Whether to send notification emails when sharing to users or groups. This parameter is ignored and an email is sent if the role is owner.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -5028,8 +5239,8 @@ func (c *PermissionsListCall) Do() (*PermissionList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(PermissionList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *PermissionList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -5117,8 +5328,8 @@ func (c *PermissionsPatchCall) Do() (*Permission, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Permission)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Permission
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -5220,8 +5431,8 @@ func (c *PermissionsUpdateCall) Do() (*Permission, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Permission)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Permission
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -5399,8 +5610,8 @@ func (c *PropertiesGetCall) Do() (*Property, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Property)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Property
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -5488,8 +5699,8 @@ func (c *PropertiesInsertCall) Do() (*Property, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Property)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Property
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -5557,8 +5768,8 @@ func (c *PropertiesListCall) Do() (*PropertyList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(PropertyList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *PropertyList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -5646,8 +5857,8 @@ func (c *PropertiesPatchCall) Do() (*Property, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Property)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Property
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -5749,8 +5960,8 @@ func (c *PropertiesUpdateCall) Do() (*Property, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Property)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Property
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -5814,10 +6025,22 @@ func (r *RealtimeService) Get(fileId string) *RealtimeGetCall {
 	return c
 }
 
+// Revision sets the optional parameter "revision": The revision of the
+// Realtime API data model to export. Revisions start at 1 (the initial
+// empty data model) and are incremented with each change. If this
+// parameter is excluded, the most recent data model will be returned.
+func (c *RealtimeGetCall) Revision(revision int64) *RealtimeGetCall {
+	c.opt_["revision"] = revision
+	return c
+}
+
 func (c *RealtimeGetCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["revision"]; ok {
+		params.Set("revision", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/realtime")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -5846,6 +6069,13 @@ func (c *RealtimeGetCall) Do() error {
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "revision": {
+	//       "description": "The revision of the Realtime API data model to export. Revisions start at 1 (the initial empty data model) and are incremented with each change. If this parameter is excluded, the most recent data model will be returned.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "minimum": "1",
+	//       "type": "integer"
 	//     }
 	//   },
 	//   "path": "files/{fileId}/realtime",
@@ -6097,8 +6327,8 @@ func (c *RepliesGetCall) Do() (*CommentReply, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(CommentReply)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *CommentReply
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -6194,8 +6424,8 @@ func (c *RepliesInsertCall) Do() (*CommentReply, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(CommentReply)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *CommentReply
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -6305,8 +6535,8 @@ func (c *RepliesListCall) Do() (*CommentReplyList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(CommentReplyList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *CommentReplyList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -6413,8 +6643,8 @@ func (c *RepliesPatchCall) Do() (*CommentReply, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(CommentReply)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *CommentReply
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -6509,8 +6739,8 @@ func (c *RepliesUpdateCall) Do() (*CommentReply, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(CommentReply)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *CommentReply
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -6663,8 +6893,8 @@ func (c *RevisionsGetCall) Do() (*Revision, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Revision)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Revision
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -6738,8 +6968,8 @@ func (c *RevisionsListCall) Do() (*RevisionList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(RevisionList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *RevisionList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -6817,8 +7047,8 @@ func (c *RevisionsPatchCall) Do() (*Revision, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Revision)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Revision
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -6904,8 +7134,8 @@ func (c *RevisionsUpdateCall) Do() (*Revision, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Revision)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Revision
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil

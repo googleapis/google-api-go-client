@@ -267,9 +267,8 @@ type CreativeFilteringReasonsReasons struct {
 	// exchange.
 	FilteringCount int64 `json:"filteringCount,omitempty,string"`
 
-	// FilteringStatus: The filtering status code. Please refer to
-	// "creative-status-codes.txt" in the Downloads section for the status
-	// codes.
+	// FilteringStatus: The filtering status code. Please refer to the
+	// creative-status-codes.txt file for different statuses.
 	FilteringStatus int64 `json:"filteringStatus,omitempty"`
 }
 
@@ -445,8 +444,8 @@ func (c *AccountsGetCall) Do() (*Account, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Account)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Account
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -507,8 +506,8 @@ func (c *AccountsListCall) Do() (*AccountsList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(AccountsList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *AccountsList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -569,8 +568,8 @@ func (c *AccountsPatchCall) Do() (*Account, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Account)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Account
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -645,8 +644,8 @@ func (c *AccountsUpdateCall) Do() (*Account, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Account)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Account
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -717,8 +716,8 @@ func (c *CreativesGetCall) Do() (*Creative, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Creative)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Creative
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -794,8 +793,8 @@ func (c *CreativesInsertCall) Do() (*Creative, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Creative)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Creative
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -831,6 +830,21 @@ func (r *CreativesService) List() *CreativesListCall {
 	return c
 }
 
+// AccountId sets the optional parameter "accountId": When specified,
+// only creatives for the given account ids are returned.
+func (c *CreativesListCall) AccountId(accountId int64) *CreativesListCall {
+	c.opt_["accountId"] = accountId
+	return c
+}
+
+// BuyerCreativeId sets the optional parameter "buyerCreativeId": When
+// specified, only creatives for the given buyer creative ids are
+// returned.
+func (c *CreativesListCall) BuyerCreativeId(buyerCreativeId string) *CreativesListCall {
+	c.opt_["buyerCreativeId"] = buyerCreativeId
+	return c
+}
+
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of entries returned on one result page. If not set, the default is
 // 100.
@@ -859,6 +873,12 @@ func (c *CreativesListCall) Do() (*CreativesList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["accountId"]; ok {
+		params.Set("accountId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["buyerCreativeId"]; ok {
+		params.Set("buyerCreativeId", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
@@ -881,8 +901,8 @@ func (c *CreativesListCall) Do() (*CreativesList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(CreativesList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *CreativesList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -891,6 +911,19 @@ func (c *CreativesListCall) Do() (*CreativesList, error) {
 	//   "httpMethod": "GET",
 	//   "id": "adexchangebuyer.creatives.list",
 	//   "parameters": {
+	//     "accountId": {
+	//       "description": "When specified, only creatives for the given account ids are returned.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "integer"
+	//     },
+	//     "buyerCreativeId": {
+	//       "description": "When specified, only creatives for the given buyer creative ids are returned.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
 	//     "maxResults": {
 	//       "description": "Maximum number of entries returned on one result page. If not set, the default is 100. Optional.",
 	//       "format": "uint32",
@@ -964,8 +997,8 @@ func (c *DirectDealsGetCall) Do() (*DirectDeal, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(DirectDeal)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *DirectDeal
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1026,8 +1059,8 @@ func (c *DirectDealsListCall) Do() (*DirectDealsList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(DirectDealsList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *DirectDealsList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1108,8 +1141,8 @@ func (c *PerformanceReportListCall) Do() (*PerformanceReportList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(PerformanceReportList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *PerformanceReportList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil

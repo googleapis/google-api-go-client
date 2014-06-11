@@ -168,8 +168,15 @@ type Acl struct {
 	Kind string `json:"kind,omitempty"`
 
 	// NextPageToken: Token used to access the next page of this result.
-	// Omitted if no further results are available.
+	// Omitted if no further results are available, in which case
+	// nextSyncToken is provided.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// NextSyncToken: Token used at a later point in time to retrieve only
+	// the entries that have changed since this result was returned. Omitted
+	// if further results are available, in which case nextPageToken is
+	// provided.
+	NextSyncToken string `json:"nextSyncToken,omitempty"`
 }
 
 type AclRule struct {
@@ -256,7 +263,15 @@ type CalendarList struct {
 	Kind string `json:"kind,omitempty"`
 
 	// NextPageToken: Token used to access the next page of this result.
+	// Omitted if no further results are available, in which case
+	// nextSyncToken is provided.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// NextSyncToken: Token used at a later point in time to retrieve only
+	// the entries that have changed since this result was returned. Omitted
+	// if further results are available, in which case nextPageToken is
+	// provided.
+	NextSyncToken string `json:"nextSyncToken,omitempty"`
 }
 
 type CalendarListEntry struct {
@@ -276,19 +291,23 @@ type CalendarListEntry struct {
 	// additional ability to see and manipulate ACLs.
 	AccessRole string `json:"accessRole,omitempty"`
 
-	// BackgroundColor: The main color of the calendar in the format
-	// '#0088aa'. This property supersedes the index-based colorId property.
-	// Optional.
+	// BackgroundColor: The main color of the calendar in the hexadecimal
+	// format "#0088aa". This property supersedes the index-based colorId
+	// property. Optional.
 	BackgroundColor string `json:"backgroundColor,omitempty"`
 
 	// ColorId: The color of the calendar. This is an ID referring to an
-	// entry in the "calendar" section of the colors definition (see the
-	// "colors" endpoint). Optional.
+	// entry in the calendar section of the colors definition (see the
+	// colors endpoint). Optional.
 	ColorId string `json:"colorId,omitempty"`
 
 	// DefaultReminders: The default reminders that the authenticated user
 	// has for this calendar.
 	DefaultReminders []*EventReminder `json:"defaultReminders,omitempty"`
+
+	// Deleted: Whether this calendar list entry has been deleted from the
+	// calendar list. Read-only. Optional. The default is False.
+	Deleted bool `json:"deleted,omitempty"`
 
 	// Description: Description of the calendar. Optional. Read-only.
 	Description string `json:"description,omitempty"`
@@ -296,9 +315,9 @@ type CalendarListEntry struct {
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
 
-	// ForegroundColor: The foreground color of the calendar in the format
-	// '#ffffff'. This property supersedes the index-based colorId property.
-	// Optional.
+	// ForegroundColor: The foreground color of the calendar in the
+	// hexadecimal format "#ffffff". This property supersedes the
+	// index-based colorId property. Optional.
 	ForegroundColor string `json:"foregroundColor,omitempty"`
 
 	// Hidden: Whether the calendar has been hidden from the list. Optional.
@@ -418,13 +437,13 @@ type ColorDefinition struct {
 
 type Colors struct {
 	// Calendar: Palette of calendar colors, mapping from the color ID to
-	// its definition. An 'calendarListEntry' resource refers to one of
-	// these color IDs in its 'color' field. Read-only.
+	// its definition. A calendarListEntry resource refers to one of these
+	// color IDs in its color field. Read-only.
 	Calendar *ColorsCalendar `json:"calendar,omitempty"`
 
 	// Event: Palette of event colors, mapping from the color ID to its
-	// definition. An 'event' resource may refer to one of these color IDs
-	// in its 'color' field. Read-only.
+	// definition. An event resource may refer to one of these color IDs in
+	// its color field. Read-only.
 	Event *ColorsEvent `json:"event,omitempty"`
 
 	// Kind: Type of the resource ("calendar#colors").
@@ -470,13 +489,13 @@ type Event struct {
 
 	// AttendeesOmitted: Whether attendees may have been omitted from the
 	// event's representation. When retrieving an event, this may be due to
-	// a restriction specified by the 'maxAttendee' query parameter. When
+	// a restriction specified by the maxAttendee query parameter. When
 	// updating an event, this can be used to only update the participant's
 	// response. Optional. The default is False.
 	AttendeesOmitted bool `json:"attendeesOmitted,omitempty"`
 
 	// ColorId: The color of the event. This is an ID referring to an entry
-	// in the "event" section of the colors definition (see the "colors"
+	// in the event section of the colors definition (see the  colors
 	// endpoint). Optional.
 	ColorId string `json:"colorId,omitempty"`
 
@@ -559,9 +578,9 @@ type Event struct {
 	Locked bool `json:"locked,omitempty"`
 
 	// Organizer: The organizer of the event. If the organizer is also an
-	// attendee, this is indicated with a separate entry in 'attendees' with
-	// the 'organizer' field set to True. To change the organizer, use the
-	// "move" operation. Read-only, except when importing an event.
+	// attendee, this is indicated with a separate entry in attendees with
+	// the organizer field set to True. To change the organizer, use the
+	// move operation. Read-only, except when importing an event.
 	Organizer *EventOrganizer `json:"organizer,omitempty"`
 
 	// OriginalStartTime: For an instance of a recurring event, this is the
@@ -783,7 +802,7 @@ type EventDateTime struct {
 
 	// DateTime: The time, as a combined date-time value (formatted
 	// according to RFC 3339). A time zone offset is required unless a time
-	// zone is explicitly specified in 'timeZone'.
+	// zone is explicitly specified in timeZone.
 	DateTime string `json:"dateTime,omitempty"`
 
 	// TimeZone: The name of the time zone in which the time is specified
@@ -828,7 +847,7 @@ type Events struct {
 	// DefaultReminders: The default reminders on the calendar for the
 	// authenticated user. These reminders apply to all events on this
 	// calendar that do not explicitly override them (i.e. do not have
-	// 'reminders.useDefault' set to 'true').
+	// reminders.useDefault set to True).
 	DefaultReminders []*EventReminder `json:"defaultReminders,omitempty"`
 
 	// Description: Description of the calendar. Read-only.
@@ -844,8 +863,15 @@ type Events struct {
 	Kind string `json:"kind,omitempty"`
 
 	// NextPageToken: Token used to access the next page of this result.
-	// Omitted if no further results are available.
+	// Omitted if no further results are available, in which case
+	// nextSyncToken is provided.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// NextSyncToken: Token used at a later point in time to retrieve only
+	// the entries that have changed since this result was returned. Omitted
+	// if further results are available, in which case nextPageToken is
+	// provided.
+	NextSyncToken string `json:"nextSyncToken,omitempty"`
 
 	// Summary: Title of the calendar. Read-only.
 	Summary string `json:"summary,omitempty"`
@@ -952,6 +978,17 @@ type Settings struct {
 
 	// Kind: Type of the collection ("calendar#settings").
 	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: Token used to access the next page of this result.
+	// Omitted if no further results are available, in which case
+	// nextSyncToken is provided.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// NextSyncToken: Token used at a later point in time to retrieve only
+	// the entries that have changed since this result was returned. Omitted
+	// if further results are available, in which case nextPageToken is
+	// provided.
+	NextSyncToken string `json:"nextSyncToken,omitempty"`
 }
 
 type TimePeriod struct {
@@ -1065,8 +1102,8 @@ func (c *AclGetCall) Do() (*AclRule, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(AclRule)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *AclRule
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1145,8 +1182,8 @@ func (c *AclInsertCall) Do() (*AclRule, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(AclRule)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *AclRule
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1194,10 +1231,64 @@ func (r *AclService) List(calendarId string) *AclListCall {
 	return c
 }
 
+// MaxResults sets the optional parameter "maxResults": Maximum number
+// of entries returned on one result page. By default the value is 100
+// entries. The page size can never be larger than 250 entries.
+func (c *AclListCall) MaxResults(maxResults int64) *AclListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Token specifying
+// which result page to return.
+func (c *AclListCall) PageToken(pageToken string) *AclListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+// ShowDeleted sets the optional parameter "showDeleted": Whether to
+// include deleted ACLs in the result. Deleted ACLs are represented by
+// role equal to "none". Deleted ACLs will always be included if
+// syncToken is provided.  The default is False.
+func (c *AclListCall) ShowDeleted(showDeleted bool) *AclListCall {
+	c.opt_["showDeleted"] = showDeleted
+	return c
+}
+
+// SyncToken sets the optional parameter "syncToken": Token obtained
+// from the nextSyncToken field returned on the last page of results
+// from the previous list request. It makes the result of this list
+// request contain only entries that have changed since then. All
+// entries deleted since the previous list request will always be in the
+// result set and it is not allowed to set showDeleted to False.
+// If the
+// syncToken expires, the server will respond with a 410 GONE response
+// code and the client should clear its storage and perform a full
+// synchronization without any syncToken.
+// Learn more about incremental
+// synchronization.
+//  The default is to return all entries.
+func (c *AclListCall) SyncToken(syncToken string) *AclListCall {
+	c.opt_["syncToken"] = syncToken
+	return c
+}
+
 func (c *AclListCall) Do() (*Acl, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["showDeleted"]; ok {
+		params.Set("showDeleted", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["syncToken"]; ok {
+		params.Set("syncToken", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "calendars/{calendarId}/acl")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -1212,8 +1303,8 @@ func (c *AclListCall) Do() (*Acl, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Acl)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Acl
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1229,6 +1320,28 @@ func (c *AclListCall) Do() (*Acl, error) {
 	//       "description": "Calendar identifier.",
 	//       "location": "path",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "description": "Maximum number of entries returned on one result page. By default the value is 100 entries. The page size can never be larger than 250 entries. Optional.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Token specifying which result page to return. Optional.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "showDeleted": {
+	//       "description": "Whether to include deleted ACLs in the result. Deleted ACLs are represented by role equal to \"none\". Deleted ACLs will always be included if syncToken is provided. Optional. The default is False.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "syncToken": {
+	//       "description": "Token obtained from the nextSyncToken field returned on the last page of results from the previous list request. It makes the result of this list request contain only entries that have changed since then. All entries deleted since the previous list request will always be in the result set and it is not allowed to set showDeleted to False.\nIf the syncToken expires, the server will respond with a 410 GONE response code and the client should clear its storage and perform a full synchronization without any syncToken.\nLearn more about incremental synchronization.\nOptional. The default is to return all entries.",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -1289,8 +1402,8 @@ func (c *AclPatchCall) Do() (*AclRule, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(AclRule)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *AclRule
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1374,8 +1487,8 @@ func (c *AclUpdateCall) Do() (*AclRule, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(AclRule)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *AclRule
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1411,6 +1524,159 @@ func (c *AclUpdateCall) Do() (*AclRule, error) {
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/calendar"
 	//   ]
+	// }
+
+}
+
+// method id "calendar.acl.watch":
+
+type AclWatchCall struct {
+	s          *Service
+	calendarId string
+	channel    *Channel
+	opt_       map[string]interface{}
+}
+
+// Watch: Watch for changes to ACL resources.
+func (r *AclService) Watch(calendarId string, channel *Channel) *AclWatchCall {
+	c := &AclWatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.calendarId = calendarId
+	c.channel = channel
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum number
+// of entries returned on one result page. By default the value is 100
+// entries. The page size can never be larger than 250 entries.
+func (c *AclWatchCall) MaxResults(maxResults int64) *AclWatchCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Token specifying
+// which result page to return.
+func (c *AclWatchCall) PageToken(pageToken string) *AclWatchCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+// ShowDeleted sets the optional parameter "showDeleted": Whether to
+// include deleted ACLs in the result. Deleted ACLs are represented by
+// role equal to "none". Deleted ACLs will always be included if
+// syncToken is provided.  The default is False.
+func (c *AclWatchCall) ShowDeleted(showDeleted bool) *AclWatchCall {
+	c.opt_["showDeleted"] = showDeleted
+	return c
+}
+
+// SyncToken sets the optional parameter "syncToken": Token obtained
+// from the nextSyncToken field returned on the last page of results
+// from the previous list request. It makes the result of this list
+// request contain only entries that have changed since then. All
+// entries deleted since the previous list request will always be in the
+// result set and it is not allowed to set showDeleted to False.
+// If the
+// syncToken expires, the server will respond with a 410 GONE response
+// code and the client should clear its storage and perform a full
+// synchronization without any syncToken.
+// Learn more about incremental
+// synchronization.
+//  The default is to return all entries.
+func (c *AclWatchCall) SyncToken(syncToken string) *AclWatchCall {
+	c.opt_["syncToken"] = syncToken
+	return c
+}
+
+func (c *AclWatchCall) Do() (*Channel, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["showDeleted"]; ok {
+		params.Set("showDeleted", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["syncToken"]; ok {
+		params.Set("syncToken", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "calendars/{calendarId}/acl/watch")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{calendarId}", url.QueryEscape(c.calendarId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Channel
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Watch for changes to ACL resources.",
+	//   "httpMethod": "POST",
+	//   "id": "calendar.acl.watch",
+	//   "parameterOrder": [
+	//     "calendarId"
+	//   ],
+	//   "parameters": {
+	//     "calendarId": {
+	//       "description": "Calendar identifier.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "description": "Maximum number of entries returned on one result page. By default the value is 100 entries. The page size can never be larger than 250 entries. Optional.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Token specifying which result page to return. Optional.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "showDeleted": {
+	//       "description": "Whether to include deleted ACLs in the result. Deleted ACLs are represented by role equal to \"none\". Deleted ACLs will always be included if syncToken is provided. Optional. The default is False.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "syncToken": {
+	//       "description": "Token obtained from the nextSyncToken field returned on the last page of results from the previous list request. It makes the result of this list request contain only entries that have changed since then. All entries deleted since the previous list request will always be in the result set and it is not allowed to set showDeleted to False.\nIf the syncToken expires, the server will respond with a 410 GONE response code and the client should clear its storage and perform a full synchronization without any syncToken.\nLearn more about incremental synchronization.\nOptional. The default is to return all entries.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "calendars/{calendarId}/acl/watch",
+	//   "request": {
+	//     "$ref": "Channel",
+	//     "parameterName": "resource"
+	//   },
+	//   "response": {
+	//     "$ref": "Channel"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/calendar"
+	//   ],
+	//   "supportsSubscription": true
 	// }
 
 }
@@ -1505,8 +1771,8 @@ func (c *CalendarListGetCall) Do() (*CalendarListEntry, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(CalendarListEntry)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *CalendarListEntry
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1588,8 +1854,8 @@ func (c *CalendarListInsertCall) Do() (*CalendarListEntry, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(CalendarListEntry)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *CalendarListEntry
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1632,7 +1898,8 @@ func (r *CalendarListService) List() *CalendarListListCall {
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number
-// of entries returned on one result page.
+// of entries returned on one result page. By default the value is 100
+// entries. The page size can never be larger than 250 entries.
 func (c *CalendarListListCall) MaxResults(maxResults int64) *CalendarListListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -1653,10 +1920,41 @@ func (c *CalendarListListCall) PageToken(pageToken string) *CalendarListListCall
 	return c
 }
 
+// ShowDeleted sets the optional parameter "showDeleted": Whether to
+// include deleted calendar list entries in the result.  The default is
+// False.
+func (c *CalendarListListCall) ShowDeleted(showDeleted bool) *CalendarListListCall {
+	c.opt_["showDeleted"] = showDeleted
+	return c
+}
+
 // ShowHidden sets the optional parameter "showHidden": Whether to show
 // hidden entries.  The default is False.
 func (c *CalendarListListCall) ShowHidden(showHidden bool) *CalendarListListCall {
 	c.opt_["showHidden"] = showHidden
+	return c
+}
+
+// SyncToken sets the optional parameter "syncToken": Token obtained
+// from the nextSyncToken field returned on the last page of results
+// from the previous list request. It makes the result of this list
+// request contain only entries that have changed since then. If only
+// read-only fields such as calendar properties or ACLs have changed,
+// the entry won't be returned. All entries deleted and hidden since the
+// previous list request will always be in the result set and it is not
+// allowed to set showDeleted neither showHidden to False.
+// To ensure
+// client state consistency minAccessRole query parameter cannot be
+// specified together with nextSyncToken.
+// If the syncToken expires, the
+// server will respond with a 410 GONE response code and the client
+// should clear its storage and perform a full synchronization without
+// any syncToken.
+// Learn more about incremental synchronization.
+//  The
+// default is to return all entries.
+func (c *CalendarListListCall) SyncToken(syncToken string) *CalendarListListCall {
+	c.opt_["syncToken"] = syncToken
 	return c
 }
 
@@ -1673,8 +1971,14 @@ func (c *CalendarListListCall) Do() (*CalendarList, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
+	if v, ok := c.opt_["showDeleted"]; ok {
+		params.Set("showDeleted", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["showHidden"]; ok {
 		params.Set("showHidden", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["syncToken"]; ok {
+		params.Set("syncToken", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/me/calendarList")
 	urls += "?" + params.Encode()
@@ -1689,8 +1993,8 @@ func (c *CalendarListListCall) Do() (*CalendarList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(CalendarList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *CalendarList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1700,7 +2004,7 @@ func (c *CalendarListListCall) Do() (*CalendarList, error) {
 	//   "id": "calendar.calendarList.list",
 	//   "parameters": {
 	//     "maxResults": {
-	//       "description": "Maximum number of entries returned on one result page. Optional.",
+	//       "description": "Maximum number of entries returned on one result page. By default the value is 100 entries. The page size can never be larger than 250 entries. Optional.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "minimum": "1",
@@ -1728,10 +2032,20 @@ func (c *CalendarListListCall) Do() (*CalendarList, error) {
 	//       "location": "query",
 	//       "type": "string"
 	//     },
+	//     "showDeleted": {
+	//       "description": "Whether to include deleted calendar list entries in the result. Optional. The default is False.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "showHidden": {
 	//       "description": "Whether to show hidden entries. Optional. The default is False.",
 	//       "location": "query",
 	//       "type": "boolean"
+	//     },
+	//     "syncToken": {
+	//       "description": "Token obtained from the nextSyncToken field returned on the last page of results from the previous list request. It makes the result of this list request contain only entries that have changed since then. If only read-only fields such as calendar properties or ACLs have changed, the entry won't be returned. All entries deleted and hidden since the previous list request will always be in the result set and it is not allowed to set showDeleted neither showHidden to False.\nTo ensure client state consistency minAccessRole query parameter cannot be specified together with nextSyncToken.\nIf the syncToken expires, the server will respond with a 410 GONE response code and the client should clear its storage and perform a full synchronization without any syncToken.\nLearn more about incremental synchronization.\nOptional. The default is to return all entries.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "users/me/calendarList",
@@ -1766,10 +2080,10 @@ func (r *CalendarListService) Patch(calendarId string, calendarlistentry *Calend
 }
 
 // ColorRgbFormat sets the optional parameter "colorRgbFormat": Whether
-// to use the 'foregroundColor' and 'backgroundColor' fields to write
-// the calendar colors (RGB). If this feature is used, the index-based
-// 'colorId' field will be set to the best matching option
-// automatically.  The default is False.
+// to use the foregroundColor and backgroundColor fields to write the
+// calendar colors (RGB). If this feature is used, the index-based
+// colorId field will be set to the best matching option automatically.
+// The default is False.
 func (c *CalendarListPatchCall) ColorRgbFormat(colorRgbFormat bool) *CalendarListPatchCall {
 	c.opt_["colorRgbFormat"] = colorRgbFormat
 	return c
@@ -1802,8 +2116,8 @@ func (c *CalendarListPatchCall) Do() (*CalendarListEntry, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(CalendarListEntry)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *CalendarListEntry
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1822,7 +2136,7 @@ func (c *CalendarListPatchCall) Do() (*CalendarListEntry, error) {
 	//       "type": "string"
 	//     },
 	//     "colorRgbFormat": {
-	//       "description": "Whether to use the 'foregroundColor' and 'backgroundColor' fields to write the calendar colors (RGB). If this feature is used, the index-based 'colorId' field will be set to the best matching option automatically. Optional. The default is False.",
+	//       "description": "Whether to use the foregroundColor and backgroundColor fields to write the calendar colors (RGB). If this feature is used, the index-based colorId field will be set to the best matching option automatically. Optional. The default is False.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -1859,10 +2173,10 @@ func (r *CalendarListService) Update(calendarId string, calendarlistentry *Calen
 }
 
 // ColorRgbFormat sets the optional parameter "colorRgbFormat": Whether
-// to use the 'foregroundColor' and 'backgroundColor' fields to write
-// the calendar colors (RGB). If this feature is used, the index-based
-// 'colorId' field will be set to the best matching option
-// automatically.  The default is False.
+// to use the foregroundColor and backgroundColor fields to write the
+// calendar colors (RGB). If this feature is used, the index-based
+// colorId field will be set to the best matching option automatically.
+// The default is False.
 func (c *CalendarListUpdateCall) ColorRgbFormat(colorRgbFormat bool) *CalendarListUpdateCall {
 	c.opt_["colorRgbFormat"] = colorRgbFormat
 	return c
@@ -1895,8 +2209,8 @@ func (c *CalendarListUpdateCall) Do() (*CalendarListEntry, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(CalendarListEntry)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *CalendarListEntry
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1915,7 +2229,7 @@ func (c *CalendarListUpdateCall) Do() (*CalendarListEntry, error) {
 	//       "type": "string"
 	//     },
 	//     "colorRgbFormat": {
-	//       "description": "Whether to use the 'foregroundColor' and 'backgroundColor' fields to write the calendar colors (RGB). If this feature is used, the index-based 'colorId' field will be set to the best matching option automatically. Optional. The default is False.",
+	//       "description": "Whether to use the foregroundColor and backgroundColor fields to write the calendar colors (RGB). If this feature is used, the index-based colorId field will be set to the best matching option automatically. Optional. The default is False.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -1930,6 +2244,195 @@ func (c *CalendarListUpdateCall) Do() (*CalendarListEntry, error) {
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/calendar"
 	//   ]
+	// }
+
+}
+
+// method id "calendar.calendarList.watch":
+
+type CalendarListWatchCall struct {
+	s       *Service
+	channel *Channel
+	opt_    map[string]interface{}
+}
+
+// Watch: Watch for changes to CalendarList resources.
+func (r *CalendarListService) Watch(channel *Channel) *CalendarListWatchCall {
+	c := &CalendarListWatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.channel = channel
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum number
+// of entries returned on one result page. By default the value is 100
+// entries. The page size can never be larger than 250 entries.
+func (c *CalendarListWatchCall) MaxResults(maxResults int64) *CalendarListWatchCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// MinAccessRole sets the optional parameter "minAccessRole": The
+// minimum access role for the user in the returned entires.  The
+// default is no restriction.
+func (c *CalendarListWatchCall) MinAccessRole(minAccessRole string) *CalendarListWatchCall {
+	c.opt_["minAccessRole"] = minAccessRole
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Token specifying
+// which result page to return.
+func (c *CalendarListWatchCall) PageToken(pageToken string) *CalendarListWatchCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+// ShowDeleted sets the optional parameter "showDeleted": Whether to
+// include deleted calendar list entries in the result.  The default is
+// False.
+func (c *CalendarListWatchCall) ShowDeleted(showDeleted bool) *CalendarListWatchCall {
+	c.opt_["showDeleted"] = showDeleted
+	return c
+}
+
+// ShowHidden sets the optional parameter "showHidden": Whether to show
+// hidden entries.  The default is False.
+func (c *CalendarListWatchCall) ShowHidden(showHidden bool) *CalendarListWatchCall {
+	c.opt_["showHidden"] = showHidden
+	return c
+}
+
+// SyncToken sets the optional parameter "syncToken": Token obtained
+// from the nextSyncToken field returned on the last page of results
+// from the previous list request. It makes the result of this list
+// request contain only entries that have changed since then. If only
+// read-only fields such as calendar properties or ACLs have changed,
+// the entry won't be returned. All entries deleted and hidden since the
+// previous list request will always be in the result set and it is not
+// allowed to set showDeleted neither showHidden to False.
+// To ensure
+// client state consistency minAccessRole query parameter cannot be
+// specified together with nextSyncToken.
+// If the syncToken expires, the
+// server will respond with a 410 GONE response code and the client
+// should clear its storage and perform a full synchronization without
+// any syncToken.
+// Learn more about incremental synchronization.
+//  The
+// default is to return all entries.
+func (c *CalendarListWatchCall) SyncToken(syncToken string) *CalendarListWatchCall {
+	c.opt_["syncToken"] = syncToken
+	return c
+}
+
+func (c *CalendarListWatchCall) Do() (*Channel, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["minAccessRole"]; ok {
+		params.Set("minAccessRole", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["showDeleted"]; ok {
+		params.Set("showDeleted", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["showHidden"]; ok {
+		params.Set("showHidden", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["syncToken"]; ok {
+		params.Set("syncToken", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "users/me/calendarList/watch")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Channel
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Watch for changes to CalendarList resources.",
+	//   "httpMethod": "POST",
+	//   "id": "calendar.calendarList.watch",
+	//   "parameters": {
+	//     "maxResults": {
+	//       "description": "Maximum number of entries returned on one result page. By default the value is 100 entries. The page size can never be larger than 250 entries. Optional.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     },
+	//     "minAccessRole": {
+	//       "description": "The minimum access role for the user in the returned entires. Optional. The default is no restriction.",
+	//       "enum": [
+	//         "freeBusyReader",
+	//         "owner",
+	//         "reader",
+	//         "writer"
+	//       ],
+	//       "enumDescriptions": [
+	//         "The user can read free/busy information.",
+	//         "The user can read and modify events and access control lists.",
+	//         "The user can read events that are not private.",
+	//         "The user can read and modify events."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageToken": {
+	//       "description": "Token specifying which result page to return. Optional.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "showDeleted": {
+	//       "description": "Whether to include deleted calendar list entries in the result. Optional. The default is False.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "showHidden": {
+	//       "description": "Whether to show hidden entries. Optional. The default is False.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "syncToken": {
+	//       "description": "Token obtained from the nextSyncToken field returned on the last page of results from the previous list request. It makes the result of this list request contain only entries that have changed since then. If only read-only fields such as calendar properties or ACLs have changed, the entry won't be returned. All entries deleted and hidden since the previous list request will always be in the result set and it is not allowed to set showDeleted neither showHidden to False.\nTo ensure client state consistency minAccessRole query parameter cannot be specified together with nextSyncToken.\nIf the syncToken expires, the server will respond with a 410 GONE response code and the client should clear its storage and perform a full synchronization without any syncToken.\nLearn more about incremental synchronization.\nOptional. The default is to return all entries.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "users/me/calendarList/watch",
+	//   "request": {
+	//     "$ref": "Channel",
+	//     "parameterName": "resource"
+	//   },
+	//   "response": {
+	//     "$ref": "Channel"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/calendar",
+	//     "https://www.googleapis.com/auth/calendar.readonly"
+	//   ],
+	//   "supportsSubscription": true
 	// }
 
 }
@@ -2083,8 +2586,8 @@ func (c *CalendarsGetCall) Do() (*Calendar, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Calendar)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Calendar
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2153,8 +2656,8 @@ func (c *CalendarsInsertCall) Do() (*Calendar, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Calendar)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Calendar
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2218,8 +2721,8 @@ func (c *CalendarsPatchCall) Do() (*Calendar, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Calendar)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Calendar
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2293,8 +2796,8 @@ func (c *CalendarsUpdateCall) Do() (*Calendar, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Calendar)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Calendar
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2413,8 +2916,8 @@ func (c *ColorsGetCall) Do() (*Colors, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Colors)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Colors
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2535,7 +3038,7 @@ func (r *EventsService) Get(calendarId string, eventId string) *EventsGetCall {
 }
 
 // AlwaysIncludeEmail sets the optional parameter "alwaysIncludeEmail":
-// Whether to always include a value in the "email" field for the
+// Whether to always include a value in the email field for the
 // organizer, creator and attendees, even if no real email is available
 // (i.e. a generated, non-working value will be provided). The use of
 // this option is discouraged and should only be used by clients which
@@ -2590,8 +3093,8 @@ func (c *EventsGetCall) Do() (*Event, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Event)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Event
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2605,7 +3108,7 @@ func (c *EventsGetCall) Do() (*Event, error) {
 	//   ],
 	//   "parameters": {
 	//     "alwaysIncludeEmail": {
-	//       "description": "Whether to always include a value in the \"email\" field for the organizer, creator and attendees, even if no real email is available (i.e. a generated, non-working value will be provided). The use of this option is discouraged and should only be used by clients which cannot handle the absence of an email address value in the mentioned places. Optional. The default is False.",
+	//       "description": "Whether to always include a value in the email field for the organizer, creator and attendees, even if no real email is available (i.e. a generated, non-working value will be provided). The use of this option is discouraged and should only be used by clients which cannot handle the absence of an email address value in the mentioned places. Optional. The default is False.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -2688,8 +3191,8 @@ func (c *EventsImportCall) Do() (*Event, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Event)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Event
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2786,8 +3289,8 @@ func (c *EventsInsertCall) Do() (*Event, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Event)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Event
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2850,7 +3353,7 @@ func (r *EventsService) Instances(calendarId string, eventId string) *EventsInst
 }
 
 // AlwaysIncludeEmail sets the optional parameter "alwaysIncludeEmail":
-// Whether to always include a value in the "email" field for the
+// Whether to always include a value in the email field for the
 // organizer, creator and attendees, even if no real email is available
 // (i.e. a generated, non-working value will be provided). The use of
 // this option is discouraged and should only be used by clients which
@@ -2871,7 +3374,8 @@ func (c *EventsInstancesCall) MaxAttendees(maxAttendees int64) *EventsInstancesC
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number
-// of events returned on one result page.
+// of events returned on one result page. By default the value is 250
+// events. The page size can never be larger than 2500 events.
 func (c *EventsInstancesCall) MaxResults(maxResults int64) *EventsInstancesCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -2892,9 +3396,9 @@ func (c *EventsInstancesCall) PageToken(pageToken string) *EventsInstancesCall {
 }
 
 // ShowDeleted sets the optional parameter "showDeleted": Whether to
-// include deleted events (with 'status' equals 'cancelled') in the
+// include deleted events (with status equals "cancelled") in the
 // result. Cancelled instances of recurring events will still be
-// included if 'singleEvents' is False.  The default is False.
+// included if singleEvents is False.  The default is False.
 func (c *EventsInstancesCall) ShowDeleted(showDeleted bool) *EventsInstancesCall {
 	c.opt_["showDeleted"] = showDeleted
 	return c
@@ -2969,8 +3473,8 @@ func (c *EventsInstancesCall) Do() (*Events, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Events)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Events
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2984,7 +3488,7 @@ func (c *EventsInstancesCall) Do() (*Events, error) {
 	//   ],
 	//   "parameters": {
 	//     "alwaysIncludeEmail": {
-	//       "description": "Whether to always include a value in the \"email\" field for the organizer, creator and attendees, even if no real email is available (i.e. a generated, non-working value will be provided). The use of this option is discouraged and should only be used by clients which cannot handle the absence of an email address value in the mentioned places. Optional. The default is False.",
+	//       "description": "Whether to always include a value in the email field for the organizer, creator and attendees, even if no real email is available (i.e. a generated, non-working value will be provided). The use of this option is discouraged and should only be used by clients which cannot handle the absence of an email address value in the mentioned places. Optional. The default is False.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -3008,7 +3512,7 @@ func (c *EventsInstancesCall) Do() (*Events, error) {
 	//       "type": "integer"
 	//     },
 	//     "maxResults": {
-	//       "description": "Maximum number of events returned on one result page. Optional.",
+	//       "description": "Maximum number of events returned on one result page. By default the value is 250 events. The page size can never be larger than 2500 events. Optional.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "minimum": "1",
@@ -3025,7 +3529,7 @@ func (c *EventsInstancesCall) Do() (*Events, error) {
 	//       "type": "string"
 	//     },
 	//     "showDeleted": {
-	//       "description": "Whether to include deleted events (with 'status' equals 'cancelled') in the result. Cancelled instances of recurring events will still be included if 'singleEvents' is False. Optional. The default is False.",
+	//       "description": "Whether to include deleted events (with status equals \"cancelled\") in the result. Cancelled instances of recurring events will still be included if singleEvents is False. Optional. The default is False.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -3076,7 +3580,7 @@ func (r *EventsService) List(calendarId string) *EventsListCall {
 }
 
 // AlwaysIncludeEmail sets the optional parameter "alwaysIncludeEmail":
-// Whether to always include a value in the "email" field for the
+// Whether to always include a value in the email field for the
 // organizer, creator and attendees, even if no real email is available
 // (i.e. a generated, non-working value will be provided). The use of
 // this option is discouraged and should only be used by clients which
@@ -3087,8 +3591,8 @@ func (c *EventsListCall) AlwaysIncludeEmail(alwaysIncludeEmail bool) *EventsList
 	return c
 }
 
-// ICalUID sets the optional parameter "iCalUID": Specifies iCalendar
-// UID (iCalUID) of events to be included in the response.
+// ICalUID sets the optional parameter "iCalUID": Specifies event ID in
+// the iCalendar format to be included in the response.
 func (c *EventsListCall) ICalUID(iCalUID string) *EventsListCall {
 	c.opt_["iCalUID"] = iCalUID
 	return c
@@ -3104,7 +3608,8 @@ func (c *EventsListCall) MaxAttendees(maxAttendees int64) *EventsListCall {
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number
-// of events returned on one result page.
+// of events returned on one result page. By default the value is 250
+// events. The page size can never be larger than 2500 events.
 func (c *EventsListCall) MaxResults(maxResults int64) *EventsListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -3154,13 +3659,12 @@ func (c *EventsListCall) SharedExtendedProperty(sharedExtendedProperty string) *
 }
 
 // ShowDeleted sets the optional parameter "showDeleted": Whether to
-// include deleted events (with 'status' equals 'cancelled') in the
+// include deleted events (with status equals "cancelled") in the
 // result. Cancelled instances of recurring events (but not the
-// underlying recurring event) will still be included if 'showDeleted'
-// and 'singleEvents' are both False. If 'showDeleted' and
-// 'singleEvents' are both True, only single instances of deleted events
-// (but not the underlying recurring events) are returned.  The default
-// is False.
+// underlying recurring event) will still be included if showDeleted and
+// singleEvents are both False. If showDeleted and singleEvents are both
+// True, only single instances of deleted events (but not the underlying
+// recurring events) are returned.  The default is False.
 func (c *EventsListCall) ShowDeleted(showDeleted bool) *EventsListCall {
 	c.opt_["showDeleted"] = showDeleted
 	return c
@@ -3180,6 +3684,38 @@ func (c *EventsListCall) ShowHiddenInvitations(showHiddenInvitations bool) *Even
 // recurring events themselves.  The default is False.
 func (c *EventsListCall) SingleEvents(singleEvents bool) *EventsListCall {
 	c.opt_["singleEvents"] = singleEvents
+	return c
+}
+
+// SyncToken sets the optional parameter "syncToken": Token obtained
+// from the nextSyncToken field returned on the last page of results
+// from the previous list request. It makes the result of this list
+// request contain only entries that have changed since then. All events
+// deleted since the previous list request will always be in the result
+// set and it is not allowed to set showDeleted to False.
+// There are
+// several query parameters that cannot be specified together with
+// nextSyncToken to ensure consistency of the client state.
+//
+// These are:
+//
+// - iCalUID
+// - orderBy
+// - privateExtendedProperty
+// - q
+// -
+// sharedExtendedProperty
+// - timeMin
+// - timeMax
+// - updatedMin If the
+// syncToken expires, the server will respond with a 410 GONE response
+// code and the client should clear its storage and perform a full
+// synchronization without any syncToken.
+// Learn more about incremental
+// synchronization.
+//  The default is to return all entries.
+func (c *EventsListCall) SyncToken(syncToken string) *EventsListCall {
+	c.opt_["syncToken"] = syncToken
 	return c
 }
 
@@ -3208,7 +3744,9 @@ func (c *EventsListCall) TimeZone(timeZone string) *EventsListCall {
 
 // UpdatedMin sets the optional parameter "updatedMin": Lower bound for
 // an event's last modification time (as a RFC 3339 timestamp) to filter
-// by.  The default is not to filter by last modification time.
+// by. When specified, entries deleted since this time will always be
+// included regardless of showDeleted.  The default is not to filter by
+// last modification time.
 func (c *EventsListCall) UpdatedMin(updatedMin string) *EventsListCall {
 	c.opt_["updatedMin"] = updatedMin
 	return c
@@ -3254,6 +3792,9 @@ func (c *EventsListCall) Do() (*Events, error) {
 	if v, ok := c.opt_["singleEvents"]; ok {
 		params.Set("singleEvents", fmt.Sprintf("%v", v))
 	}
+	if v, ok := c.opt_["syncToken"]; ok {
+		params.Set("syncToken", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["timeMax"]; ok {
 		params.Set("timeMax", fmt.Sprintf("%v", v))
 	}
@@ -3280,8 +3821,8 @@ func (c *EventsListCall) Do() (*Events, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Events)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Events
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3294,7 +3835,7 @@ func (c *EventsListCall) Do() (*Events, error) {
 	//   ],
 	//   "parameters": {
 	//     "alwaysIncludeEmail": {
-	//       "description": "Whether to always include a value in the \"email\" field for the organizer, creator and attendees, even if no real email is available (i.e. a generated, non-working value will be provided). The use of this option is discouraged and should only be used by clients which cannot handle the absence of an email address value in the mentioned places. Optional. The default is False.",
+	//       "description": "Whether to always include a value in the email field for the organizer, creator and attendees, even if no real email is available (i.e. a generated, non-working value will be provided). The use of this option is discouraged and should only be used by clients which cannot handle the absence of an email address value in the mentioned places. Optional. The default is False.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -3305,7 +3846,7 @@ func (c *EventsListCall) Do() (*Events, error) {
 	//       "type": "string"
 	//     },
 	//     "iCalUID": {
-	//       "description": "Specifies iCalendar UID (iCalUID) of events to be included in the response. Optional.",
+	//       "description": "Specifies event ID in the iCalendar format to be included in the response. Optional.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3317,7 +3858,7 @@ func (c *EventsListCall) Do() (*Events, error) {
 	//       "type": "integer"
 	//     },
 	//     "maxResults": {
-	//       "description": "Maximum number of events returned on one result page. Optional.",
+	//       "description": "Maximum number of events returned on one result page. By default the value is 250 events. The page size can never be larger than 2500 events. Optional.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "minimum": "1",
@@ -3330,7 +3871,7 @@ func (c *EventsListCall) Do() (*Events, error) {
 	//         "updated"
 	//       ],
 	//       "enumDescriptions": [
-	//         "Order by the start date/time (ascending). This is only available when querying single events (i.e. the parameter \"singleEvents\" is True)",
+	//         "Order by the start date/time (ascending). This is only available when querying single events (i.e. the parameter singleEvents is True)",
 	//         "Order by last modification time (ascending)."
 	//       ],
 	//       "location": "query",
@@ -3359,7 +3900,7 @@ func (c *EventsListCall) Do() (*Events, error) {
 	//       "type": "string"
 	//     },
 	//     "showDeleted": {
-	//       "description": "Whether to include deleted events (with 'status' equals 'cancelled') in the result. Cancelled instances of recurring events (but not the underlying recurring event) will still be included if 'showDeleted' and 'singleEvents' are both False. If 'showDeleted' and 'singleEvents' are both True, only single instances of deleted events (but not the underlying recurring events) are returned. Optional. The default is False.",
+	//       "description": "Whether to include deleted events (with status equals \"cancelled\") in the result. Cancelled instances of recurring events (but not the underlying recurring event) will still be included if showDeleted and singleEvents are both False. If showDeleted and singleEvents are both True, only single instances of deleted events (but not the underlying recurring events) are returned. Optional. The default is False.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -3372,6 +3913,11 @@ func (c *EventsListCall) Do() (*Events, error) {
 	//       "description": "Whether to expand recurring events into instances and only return single one-off events and instances of recurring events, but not the underlying recurring events themselves. Optional. The default is False.",
 	//       "location": "query",
 	//       "type": "boolean"
+	//     },
+	//     "syncToken": {
+	//       "description": "Token obtained from the nextSyncToken field returned on the last page of results from the previous list request. It makes the result of this list request contain only entries that have changed since then. All events deleted since the previous list request will always be in the result set and it is not allowed to set showDeleted to False.\nThere are several query parameters that cannot be specified together with nextSyncToken to ensure consistency of the client state.\n\nThese are: \n- iCalUID \n- orderBy \n- privateExtendedProperty \n- q \n- sharedExtendedProperty \n- timeMin \n- timeMax \n- updatedMin If the syncToken expires, the server will respond with a 410 GONE response code and the client should clear its storage and perform a full synchronization without any syncToken.\nLearn more about incremental synchronization.\nOptional. The default is to return all entries.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "timeMax": {
 	//       "description": "Upper bound (exclusive) for an event's start time to filter by. Optional. The default is not to filter by start time.",
@@ -3391,7 +3937,7 @@ func (c *EventsListCall) Do() (*Events, error) {
 	//       "type": "string"
 	//     },
 	//     "updatedMin": {
-	//       "description": "Lower bound for an event's last modification time (as a RFC 3339 timestamp) to filter by. Optional. The default is not to filter by last modification time.",
+	//       "description": "Lower bound for an event's last modification time (as a RFC 3339 timestamp) to filter by. When specified, entries deleted since this time will always be included regardless of showDeleted. Optional. The default is not to filter by last modification time.",
 	//       "format": "date-time",
 	//       "location": "query",
 	//       "type": "string"
@@ -3461,8 +4007,8 @@ func (c *EventsMoveCall) Do() (*Event, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Event)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Event
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3531,7 +4077,7 @@ func (r *EventsService) Patch(calendarId string, eventId string, event *Event) *
 }
 
 // AlwaysIncludeEmail sets the optional parameter "alwaysIncludeEmail":
-// Whether to always include a value in the "email" field for the
+// Whether to always include a value in the email field for the
 // organizer, creator and attendees, even if no real email is available
 // (i.e. a generated, non-working value will be provided). The use of
 // this option is discouraged and should only be used by clients which
@@ -3593,8 +4139,8 @@ func (c *EventsPatchCall) Do() (*Event, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Event)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Event
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3608,7 +4154,7 @@ func (c *EventsPatchCall) Do() (*Event, error) {
 	//   ],
 	//   "parameters": {
 	//     "alwaysIncludeEmail": {
-	//       "description": "Whether to always include a value in the \"email\" field for the organizer, creator and attendees, even if no real email is available (i.e. a generated, non-working value will be provided). The use of this option is discouraged and should only be used by clients which cannot handle the absence of an email address value in the mentioned places. Optional. The default is False.",
+	//       "description": "Whether to always include a value in the email field for the organizer, creator and attendees, even if no real email is available (i.e. a generated, non-working value will be provided). The use of this option is discouraged and should only be used by clients which cannot handle the absence of an email address value in the mentioned places. Optional. The default is False.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -3698,8 +4244,8 @@ func (c *EventsQuickAddCall) Do() (*Event, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Event)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Event
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3761,7 +4307,7 @@ func (r *EventsService) Update(calendarId string, eventId string, event *Event) 
 }
 
 // AlwaysIncludeEmail sets the optional parameter "alwaysIncludeEmail":
-// Whether to always include a value in the "email" field for the
+// Whether to always include a value in the email field for the
 // organizer, creator and attendees, even if no real email is available
 // (i.e. a generated, non-working value will be provided). The use of
 // this option is discouraged and should only be used by clients which
@@ -3823,8 +4369,8 @@ func (c *EventsUpdateCall) Do() (*Event, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Event)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Event
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3838,7 +4384,7 @@ func (c *EventsUpdateCall) Do() (*Event, error) {
 	//   ],
 	//   "parameters": {
 	//     "alwaysIncludeEmail": {
-	//       "description": "Whether to always include a value in the \"email\" field for the organizer, creator and attendees, even if no real email is available (i.e. a generated, non-working value will be provided). The use of this option is discouraged and should only be used by clients which cannot handle the absence of an email address value in the mentioned places. Optional. The default is False.",
+	//       "description": "Whether to always include a value in the email field for the organizer, creator and attendees, even if no real email is available (i.e. a generated, non-working value will be provided). The use of this option is discouraged and should only be used by clients which cannot handle the absence of an email address value in the mentioned places. Optional. The default is False.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -3899,7 +4445,7 @@ func (r *EventsService) Watch(calendarId string, channel *Channel) *EventsWatchC
 }
 
 // AlwaysIncludeEmail sets the optional parameter "alwaysIncludeEmail":
-// Whether to always include a value in the "email" field for the
+// Whether to always include a value in the email field for the
 // organizer, creator and attendees, even if no real email is available
 // (i.e. a generated, non-working value will be provided). The use of
 // this option is discouraged and should only be used by clients which
@@ -3910,8 +4456,8 @@ func (c *EventsWatchCall) AlwaysIncludeEmail(alwaysIncludeEmail bool) *EventsWat
 	return c
 }
 
-// ICalUID sets the optional parameter "iCalUID": Specifies iCalendar
-// UID (iCalUID) of events to be included in the response.
+// ICalUID sets the optional parameter "iCalUID": Specifies event ID in
+// the iCalendar format to be included in the response.
 func (c *EventsWatchCall) ICalUID(iCalUID string) *EventsWatchCall {
 	c.opt_["iCalUID"] = iCalUID
 	return c
@@ -3927,7 +4473,8 @@ func (c *EventsWatchCall) MaxAttendees(maxAttendees int64) *EventsWatchCall {
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number
-// of events returned on one result page.
+// of events returned on one result page. By default the value is 250
+// events. The page size can never be larger than 2500 events.
 func (c *EventsWatchCall) MaxResults(maxResults int64) *EventsWatchCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -3977,13 +4524,12 @@ func (c *EventsWatchCall) SharedExtendedProperty(sharedExtendedProperty string) 
 }
 
 // ShowDeleted sets the optional parameter "showDeleted": Whether to
-// include deleted events (with 'status' equals 'cancelled') in the
+// include deleted events (with status equals "cancelled") in the
 // result. Cancelled instances of recurring events (but not the
-// underlying recurring event) will still be included if 'showDeleted'
-// and 'singleEvents' are both False. If 'showDeleted' and
-// 'singleEvents' are both True, only single instances of deleted events
-// (but not the underlying recurring events) are returned.  The default
-// is False.
+// underlying recurring event) will still be included if showDeleted and
+// singleEvents are both False. If showDeleted and singleEvents are both
+// True, only single instances of deleted events (but not the underlying
+// recurring events) are returned.  The default is False.
 func (c *EventsWatchCall) ShowDeleted(showDeleted bool) *EventsWatchCall {
 	c.opt_["showDeleted"] = showDeleted
 	return c
@@ -4003,6 +4549,38 @@ func (c *EventsWatchCall) ShowHiddenInvitations(showHiddenInvitations bool) *Eve
 // recurring events themselves.  The default is False.
 func (c *EventsWatchCall) SingleEvents(singleEvents bool) *EventsWatchCall {
 	c.opt_["singleEvents"] = singleEvents
+	return c
+}
+
+// SyncToken sets the optional parameter "syncToken": Token obtained
+// from the nextSyncToken field returned on the last page of results
+// from the previous list request. It makes the result of this list
+// request contain only entries that have changed since then. All events
+// deleted since the previous list request will always be in the result
+// set and it is not allowed to set showDeleted to False.
+// There are
+// several query parameters that cannot be specified together with
+// nextSyncToken to ensure consistency of the client state.
+//
+// These are:
+//
+// - iCalUID
+// - orderBy
+// - privateExtendedProperty
+// - q
+// -
+// sharedExtendedProperty
+// - timeMin
+// - timeMax
+// - updatedMin If the
+// syncToken expires, the server will respond with a 410 GONE response
+// code and the client should clear its storage and perform a full
+// synchronization without any syncToken.
+// Learn more about incremental
+// synchronization.
+//  The default is to return all entries.
+func (c *EventsWatchCall) SyncToken(syncToken string) *EventsWatchCall {
+	c.opt_["syncToken"] = syncToken
 	return c
 }
 
@@ -4031,7 +4609,9 @@ func (c *EventsWatchCall) TimeZone(timeZone string) *EventsWatchCall {
 
 // UpdatedMin sets the optional parameter "updatedMin": Lower bound for
 // an event's last modification time (as a RFC 3339 timestamp) to filter
-// by.  The default is not to filter by last modification time.
+// by. When specified, entries deleted since this time will always be
+// included regardless of showDeleted.  The default is not to filter by
+// last modification time.
 func (c *EventsWatchCall) UpdatedMin(updatedMin string) *EventsWatchCall {
 	c.opt_["updatedMin"] = updatedMin
 	return c
@@ -4082,6 +4662,9 @@ func (c *EventsWatchCall) Do() (*Channel, error) {
 	if v, ok := c.opt_["singleEvents"]; ok {
 		params.Set("singleEvents", fmt.Sprintf("%v", v))
 	}
+	if v, ok := c.opt_["syncToken"]; ok {
+		params.Set("syncToken", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["timeMax"]; ok {
 		params.Set("timeMax", fmt.Sprintf("%v", v))
 	}
@@ -4109,8 +4692,8 @@ func (c *EventsWatchCall) Do() (*Channel, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Channel)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Channel
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -4123,7 +4706,7 @@ func (c *EventsWatchCall) Do() (*Channel, error) {
 	//   ],
 	//   "parameters": {
 	//     "alwaysIncludeEmail": {
-	//       "description": "Whether to always include a value in the \"email\" field for the organizer, creator and attendees, even if no real email is available (i.e. a generated, non-working value will be provided). The use of this option is discouraged and should only be used by clients which cannot handle the absence of an email address value in the mentioned places. Optional. The default is False.",
+	//       "description": "Whether to always include a value in the email field for the organizer, creator and attendees, even if no real email is available (i.e. a generated, non-working value will be provided). The use of this option is discouraged and should only be used by clients which cannot handle the absence of an email address value in the mentioned places. Optional. The default is False.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -4134,7 +4717,7 @@ func (c *EventsWatchCall) Do() (*Channel, error) {
 	//       "type": "string"
 	//     },
 	//     "iCalUID": {
-	//       "description": "Specifies iCalendar UID (iCalUID) of events to be included in the response. Optional.",
+	//       "description": "Specifies event ID in the iCalendar format to be included in the response. Optional.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4146,7 +4729,7 @@ func (c *EventsWatchCall) Do() (*Channel, error) {
 	//       "type": "integer"
 	//     },
 	//     "maxResults": {
-	//       "description": "Maximum number of events returned on one result page. Optional.",
+	//       "description": "Maximum number of events returned on one result page. By default the value is 250 events. The page size can never be larger than 2500 events. Optional.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "minimum": "1",
@@ -4159,7 +4742,7 @@ func (c *EventsWatchCall) Do() (*Channel, error) {
 	//         "updated"
 	//       ],
 	//       "enumDescriptions": [
-	//         "Order by the start date/time (ascending). This is only available when querying single events (i.e. the parameter \"singleEvents\" is True)",
+	//         "Order by the start date/time (ascending). This is only available when querying single events (i.e. the parameter singleEvents is True)",
 	//         "Order by last modification time (ascending)."
 	//       ],
 	//       "location": "query",
@@ -4188,7 +4771,7 @@ func (c *EventsWatchCall) Do() (*Channel, error) {
 	//       "type": "string"
 	//     },
 	//     "showDeleted": {
-	//       "description": "Whether to include deleted events (with 'status' equals 'cancelled') in the result. Cancelled instances of recurring events (but not the underlying recurring event) will still be included if 'showDeleted' and 'singleEvents' are both False. If 'showDeleted' and 'singleEvents' are both True, only single instances of deleted events (but not the underlying recurring events) are returned. Optional. The default is False.",
+	//       "description": "Whether to include deleted events (with status equals \"cancelled\") in the result. Cancelled instances of recurring events (but not the underlying recurring event) will still be included if showDeleted and singleEvents are both False. If showDeleted and singleEvents are both True, only single instances of deleted events (but not the underlying recurring events) are returned. Optional. The default is False.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -4201,6 +4784,11 @@ func (c *EventsWatchCall) Do() (*Channel, error) {
 	//       "description": "Whether to expand recurring events into instances and only return single one-off events and instances of recurring events, but not the underlying recurring events themselves. Optional. The default is False.",
 	//       "location": "query",
 	//       "type": "boolean"
+	//     },
+	//     "syncToken": {
+	//       "description": "Token obtained from the nextSyncToken field returned on the last page of results from the previous list request. It makes the result of this list request contain only entries that have changed since then. All events deleted since the previous list request will always be in the result set and it is not allowed to set showDeleted to False.\nThere are several query parameters that cannot be specified together with nextSyncToken to ensure consistency of the client state.\n\nThese are: \n- iCalUID \n- orderBy \n- privateExtendedProperty \n- q \n- sharedExtendedProperty \n- timeMin \n- timeMax \n- updatedMin If the syncToken expires, the server will respond with a 410 GONE response code and the client should clear its storage and perform a full synchronization without any syncToken.\nLearn more about incremental synchronization.\nOptional. The default is to return all entries.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "timeMax": {
 	//       "description": "Upper bound (exclusive) for an event's start time to filter by. Optional. The default is not to filter by start time.",
@@ -4220,7 +4808,7 @@ func (c *EventsWatchCall) Do() (*Channel, error) {
 	//       "type": "string"
 	//     },
 	//     "updatedMin": {
-	//       "description": "Lower bound for an event's last modification time (as a RFC 3339 timestamp) to filter by. Optional. The default is not to filter by last modification time.",
+	//       "description": "Lower bound for an event's last modification time (as a RFC 3339 timestamp) to filter by. When specified, entries deleted since this time will always be included regardless of showDeleted. Optional. The default is not to filter by last modification time.",
 	//       "format": "date-time",
 	//       "location": "query",
 	//       "type": "string"
@@ -4281,8 +4869,8 @@ func (c *FreebusyQueryCall) Do() (*FreeBusyResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(FreeBusyResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *FreeBusyResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -4338,8 +4926,8 @@ func (c *SettingsGetCall) Do() (*Setting, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Setting)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Setting
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -4383,10 +4971,50 @@ func (r *SettingsService) List() *SettingsListCall {
 	return c
 }
 
+// MaxResults sets the optional parameter "maxResults": Maximum number
+// of entries returned on one result page. By default the value is 100
+// entries. The page size can never be larger than 250 entries.
+func (c *SettingsListCall) MaxResults(maxResults int64) *SettingsListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Token specifying
+// which result page to return.
+func (c *SettingsListCall) PageToken(pageToken string) *SettingsListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+// SyncToken sets the optional parameter "syncToken": Token obtained
+// from the nextSyncToken field returned on the last page of results
+// from the previous list request. It makes the result of this list
+// request contain only entries that have changed since then.
+// If the
+// syncToken expires, the server will respond with a 410 GONE response
+// code and the client should clear its storage and perform a full
+// synchronization without any syncToken.
+// Learn more about incremental
+// synchronization.
+//  The default is to return all entries.
+func (c *SettingsListCall) SyncToken(syncToken string) *SettingsListCall {
+	c.opt_["syncToken"] = syncToken
+	return c
+}
+
 func (c *SettingsListCall) Do() (*Settings, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["syncToken"]; ok {
+		params.Set("syncToken", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/me/settings")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -4400,8 +5028,8 @@ func (c *SettingsListCall) Do() (*Settings, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Settings)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Settings
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -4409,9 +5037,151 @@ func (c *SettingsListCall) Do() (*Settings, error) {
 	//   "description": "Returns all user settings for the authenticated user.",
 	//   "httpMethod": "GET",
 	//   "id": "calendar.settings.list",
+	//   "parameters": {
+	//     "maxResults": {
+	//       "description": "Maximum number of entries returned on one result page. By default the value is 100 entries. The page size can never be larger than 250 entries. Optional.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Token specifying which result page to return. Optional.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "syncToken": {
+	//       "description": "Token obtained from the nextSyncToken field returned on the last page of results from the previous list request. It makes the result of this list request contain only entries that have changed since then.\nIf the syncToken expires, the server will respond with a 410 GONE response code and the client should clear its storage and perform a full synchronization without any syncToken.\nLearn more about incremental synchronization.\nOptional. The default is to return all entries.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
 	//   "path": "users/me/settings",
 	//   "response": {
 	//     "$ref": "Settings"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/calendar",
+	//     "https://www.googleapis.com/auth/calendar.readonly"
+	//   ],
+	//   "supportsSubscription": true
+	// }
+
+}
+
+// method id "calendar.settings.watch":
+
+type SettingsWatchCall struct {
+	s       *Service
+	channel *Channel
+	opt_    map[string]interface{}
+}
+
+// Watch: Watch for changes to Settings resources.
+func (r *SettingsService) Watch(channel *Channel) *SettingsWatchCall {
+	c := &SettingsWatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.channel = channel
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum number
+// of entries returned on one result page. By default the value is 100
+// entries. The page size can never be larger than 250 entries.
+func (c *SettingsWatchCall) MaxResults(maxResults int64) *SettingsWatchCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Token specifying
+// which result page to return.
+func (c *SettingsWatchCall) PageToken(pageToken string) *SettingsWatchCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+// SyncToken sets the optional parameter "syncToken": Token obtained
+// from the nextSyncToken field returned on the last page of results
+// from the previous list request. It makes the result of this list
+// request contain only entries that have changed since then.
+// If the
+// syncToken expires, the server will respond with a 410 GONE response
+// code and the client should clear its storage and perform a full
+// synchronization without any syncToken.
+// Learn more about incremental
+// synchronization.
+//  The default is to return all entries.
+func (c *SettingsWatchCall) SyncToken(syncToken string) *SettingsWatchCall {
+	c.opt_["syncToken"] = syncToken
+	return c
+}
+
+func (c *SettingsWatchCall) Do() (*Channel, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["syncToken"]; ok {
+		params.Set("syncToken", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "users/me/settings/watch")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Channel
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Watch for changes to Settings resources.",
+	//   "httpMethod": "POST",
+	//   "id": "calendar.settings.watch",
+	//   "parameters": {
+	//     "maxResults": {
+	//       "description": "Maximum number of entries returned on one result page. By default the value is 100 entries. The page size can never be larger than 250 entries. Optional.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Token specifying which result page to return. Optional.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "syncToken": {
+	//       "description": "Token obtained from the nextSyncToken field returned on the last page of results from the previous list request. It makes the result of this list request contain only entries that have changed since then.\nIf the syncToken expires, the server will respond with a 410 GONE response code and the client should clear its storage and perform a full synchronization without any syncToken.\nLearn more about incremental synchronization.\nOptional. The default is to return all entries.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "users/me/settings/watch",
+	//   "request": {
+	//     "$ref": "Channel",
+	//     "parameterName": "resource"
+	//   },
+	//   "response": {
+	//     "$ref": "Channel"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/calendar",

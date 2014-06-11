@@ -258,14 +258,63 @@ type AcquisitionTime struct {
 	// 3339 formatted date-time value (1970-01-01T00:00:00Z).
 	End string `json:"end,omitempty"`
 
-	// Precision: The precision of acquisition time. Valid values include:
-	// 'year', 'month', 'day', 'hour', 'minute' and 'second'.
+	// Precision: The precision of acquisition time.
 	Precision string `json:"precision,omitempty"`
 
 	// Start: The acquisition time, or start time if acquisition time is a
 	// range. The value is an RFC 3339 formatted date-time value
 	// (1970-01-01T00:00:00Z).
 	Start string `json:"start,omitempty"`
+}
+
+type Asset struct {
+	// Bbox: A rectangular bounding box which contains all of the data in
+	// this asset. The numbers represent latitude and longitude in decimal
+	// degrees.
+	Bbox []float64 `json:"bbox,omitempty"`
+
+	// CreationTime: The creation time of this asset. The value is an RFC
+	// 3339-formatted date-time value (for example, 1970-01-01T00:00:00Z).
+	CreationTime string `json:"creationTime,omitempty"`
+
+	// Description: The asset's description.
+	Description string `json:"description,omitempty"`
+
+	// Id: The asset's globally unique ID.
+	Id string `json:"id,omitempty"`
+
+	// LastModifiedTime: The last modified time of this asset. The value is
+	// an RFC 3339-formatted date-time value (for example,
+	// 1970-01-01T00:00:00Z).
+	LastModifiedTime string `json:"lastModifiedTime,omitempty"`
+
+	// Name: The asset's name.
+	Name string `json:"name,omitempty"`
+
+	// ProjectId: The ID of the project to which the asset belongs.
+	ProjectId string `json:"projectId,omitempty"`
+
+	// Resource: The URL to query to retrieve the asset's complete object.
+	// The assets endpoint only returns high-level information about a
+	// resource.
+	Resource string `json:"resource,omitempty"`
+
+	// Tags: An array of text strings, with each string representing a tag.
+	// More information about tags can be found in the Tagging data article
+	// of the Maps Engine help center.
+	Tags []string `json:"tags,omitempty"`
+
+	// Type: The type of asset. One of raster, rasterCollection, table, map,
+	// or layer.
+	Type string `json:"type,omitempty"`
+}
+
+type AssetsListResponse struct {
+	// Assets: Assets returned.
+	Assets []*Asset `json:"assets,omitempty"`
+
+	// NextPageToken: Next page token.
+	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
 type Border struct {
@@ -392,68 +441,67 @@ type GeoJsonGeometry struct {
 }
 
 type GeoJsonGeometryCollection struct {
-	// Geometries: The geometry objects that are contained within this
-	// geometry collection.
+	// Geometries: An array of geometry objects. There must be at least 2
+	// different types of geometries in the array.
 	Geometries []*GeoJsonGeometry `json:"geometries,omitempty"`
 
-	// Type: Identifies this object as a geometry collection.
+	// Type: Identifies this object as a GeoJsonGeometryCollection.
 	Type string `json:"type,omitempty"`
 }
 
 type GeoJsonLineString struct {
-	// Coordinates: The coordinates of this line string as an array of two
-	// or more positions.
+	// Coordinates: An array of two or more positions, representing a line.
 	Coordinates [][]float64 `json:"coordinates,omitempty"`
 
-	// Type: Identifies this object as a line string.
+	// Type: Identifies this object as a GeoJsonLineString.
 	Type string `json:"type,omitempty"`
 }
 
 type GeoJsonMultiLineString struct {
-	// Coordinates: The coordinates of this multi-line string as an array of
-	// line string coordinate arrays.
+	// Coordinates: An array of at least two GeoJsonLineString coordinate
+	// arrays.
 	Coordinates [][][]float64 `json:"coordinates,omitempty"`
 
-	// Type: Identifies this object as a multi-line string.
+	// Type: Identifies this object as a GeoJsonMultiLineString.
 	Type string `json:"type,omitempty"`
 }
 
 type GeoJsonMultiPoint struct {
-	// Coordinates: The coordinates of this multi-point as an array of
-	// positions.
+	// Coordinates: An array of at least two GeoJsonPoint coordinate arrays.
 	Coordinates [][]float64 `json:"coordinates,omitempty"`
 
-	// Type: Identifies this object as a multi-point.
+	// Type: Identifies this object as a GeoJsonMultiPoint.
 	Type string `json:"type,omitempty"`
 }
 
 type GeoJsonMultiPolygon struct {
-	// Coordinates: The coordinates of this multi-polygon as an array of
-	// polygon coordinate arrays.
+	// Coordinates: An array of at least two GeoJsonPolygon coordinate
+	// arrays.
 	Coordinates [][][][]float64 `json:"coordinates,omitempty"`
 
-	// Type: Identifies this object as a multi-polygon.
+	// Type: Identifies this object as a GeoJsonMultiPolygon.
 	Type string `json:"type,omitempty"`
 }
 
 type GeoJsonPoint struct {
-	// Coordinates: The coordinates of this point as a position in
-	// [longitude, latitude] or [longitude, latitude, altitude] form.
+	// Coordinates: A single GeoJsonPosition, specifying the location of the
+	// point.
 	Coordinates []float64 `json:"coordinates,omitempty"`
 
-	// Type: Identifies this object as a point.
+	// Type: Identifies this object as a GeoJsonPoint.
 	Type string `json:"type,omitempty"`
 }
 
 type GeoJsonPolygon struct {
-	// Coordinates: The coordinates of this polygon as an array of linear
-	// ring coordinate arrays. A linear ring is a closed line string with 4
-	// or more positions. The first and last positions are equivalent. For
-	// polygons with multiple rings, the first must be the exterior ring and
-	// any others must be interior rings or holes.
+	// Coordinates: An array of LinearRings, each of which is an array of
+	// four or more GeoJsonPositions. The first and last coordinates in each
+	// LinearRing must be the same. For polygons with multiple rings, the
+	// first LinearRing is the external ring, with subsequent rings being
+	// interior rings (i.e. hole). All LinearRings must contain
+	// GeoJsonPositions in counter-clockwise order.
 	Coordinates [][][]float64 `json:"coordinates,omitempty"`
 
-	// Type: Identifies this object as a polygon.
+	// Type: Identifies this object as a GeoJsonPolygon.
 	Type string `json:"type,omitempty"`
 }
 
@@ -477,10 +525,9 @@ type Image struct {
 	// Attribution: The name of the attribution to be used for this Raster.
 	Attribution string `json:"attribution,omitempty"`
 
-	// Bbox: An array of four numbers (west, south, east, north) which
-	// define the rectangular bounding box which contains all of the data in
-	// this Raster. The numbers represent latitudes and longitudes in
-	// decimal degrees.
+	// Bbox: A rectangular bounding box which contains all of the data in
+	// this Raster. The numbers represent latitude and longitude in decimal
+	// degrees.
 	Bbox []float64 `json:"bbox,omitempty"`
 
 	// CreationTime: The creation time of this raster. The value is an RFC
@@ -504,25 +551,13 @@ type Image struct {
 	// an RFC 3339 formatted date-time value (e.g. 1970-01-01T00:00:00Z).
 	LastModifiedTime string `json:"lastModifiedTime,omitempty"`
 
-	// MaskType: The mask processing type of this Raster. Valid values
-	// include "autoMask", "alphaChannelMask", "noMask", "imageMask".
+	// MaskType: The mask processing type of this Raster.
 	MaskType string `json:"maskType,omitempty"`
 
 	// Name: The name of this Raster, supplied by the author.
 	Name string `json:"name,omitempty"`
 
-	// ProcessingStatus: The processing status of this Raster. The raster
-	// processing status values can be:
-	//
-	// 'notReady': The raster is not ready
-	// to be processed - some files have not been uploaded.
-	// 'ready': The
-	// raster is queued for processing.
-	// 'processing': The raster is
-	// currently processing.
-	// 'complete': Processing has completed
-	// successfully.
-	// 'failed': Processing failed to complete.
+	// ProcessingStatus: The processing status of this Raster.
 	ProcessingStatus string `json:"processingStatus,omitempty"`
 
 	// ProjectId: The ID of the project that this Raster is in.
@@ -560,9 +595,8 @@ type LabelStyle struct {
 }
 
 type Layer struct {
-	// Bbox: An array of four numbers (west, south, east, north) which
-	// define the rectangular bounding box which contains all of the data in
-	// this Layer. The numbers represent latitudes and longitudes in decimal
+	// Bbox: A rectangular bounding box which contains all of the data in
+	// this Layer. The numbers represent latitude and longitude in decimal
 	// degrees.
 	Bbox []float64 `json:"bbox,omitempty"`
 
@@ -571,7 +605,6 @@ type Layer struct {
 	CreationTime string `json:"creationTime,omitempty"`
 
 	// DatasourceType: The type of the datasources used to build this Layer.
-	// One of either "table" or "image".
 	DatasourceType string `json:"datasourceType,omitempty"`
 
 	// Datasources: An array of datasources used to build this Layer. If
@@ -658,8 +691,7 @@ type LineStyleStroke struct {
 }
 
 type Map struct {
-	// Bbox: An array of four numbers (west, south, east, north) which
-	// define the rectangular bounding box which contains all of the data in
+	// Bbox: A rectangular bounding box which contains all of the data in
 	// this Map. The numbers represent latitude and longitude in decimal
 	// degrees.
 	Bbox []float64 `json:"bbox,omitempty"`
@@ -678,6 +710,12 @@ type Map struct {
 
 	// Description: The description of this Map, supplied by the author.
 	Description string `json:"description,omitempty"`
+
+	// DraftAccessList: The name of an access list of the Map Editor type.
+	// The user on whose behalf the request is being sent must be an editor
+	// on that access list. Read About access lists in the Google Maps
+	// Engine help center for more information.
+	DraftAccessList string `json:"draftAccessList,omitempty"`
 
 	// Id: A globally unique ID, used to refer to this Map.
 	Id string `json:"id,omitempty"`
@@ -701,7 +739,6 @@ type Map struct {
 }
 
 type MapFolder struct {
-	// Contents: The contents of this Folder.
 	Contents []*MapItem `json:"contents,omitempty"`
 
 	// DefaultViewport: An array of four numbers (west, south, east, north)
@@ -709,17 +746,21 @@ type MapFolder struct {
 	// The numbers represent latitude and longitude in decimal degrees.
 	DefaultViewport []float64 `json:"defaultViewport,omitempty"`
 
-	// Key: A user defined alias for this Folder, specific to this Map.
+	// Expandable: The expandability setting of this MapFolder. If true, the
+	// folder can be expanded.
+	Expandable bool `json:"expandable,omitempty"`
+
+	// Key: A user defined alias for this MapFolder, specific to this Map.
 	Key string `json:"key,omitempty"`
 
-	// Name: The name of this Folder.
+	// Name: The name of this MapFolder.
 	Name string `json:"name,omitempty"`
 
-	// Type: Identifies this object as a Folder. (( constant "folder" ))
+	// Type: Identifies this object as a MapFolder.
 	Type string `json:"type,omitempty"`
 
-	// Visibility: The visibility setting of this Folder. One of "defaultOn"
-	// or "defaultOff".
+	// Visibility: The visibility setting of this MapFolder. One of
+	// "defaultOn" or "defaultOff".
 	Visibility string `json:"visibility,omitempty"`
 }
 
@@ -732,16 +773,16 @@ type MapKmlLink struct {
 	// The numbers represent latitude and longitude in decimal degrees.
 	DefaultViewport []float64 `json:"defaultViewport,omitempty"`
 
-	// KmlUrl: The URL to the KML file represented by this KmlLink.
+	// KmlUrl: The URL to the KML file represented by this MapKmlLink.
 	KmlUrl string `json:"kmlUrl,omitempty"`
 
-	// Name: The name of this KmlLink.
+	// Name: The name of this MapKmlLink.
 	Name string `json:"name,omitempty"`
 
-	// Type: Identifies this object as a KmlLink. (( constant "kmlLink" ))
+	// Type: Identifies this object as a MapKmlLink.
 	Type string `json:"type,omitempty"`
 
-	// Visibility: The visibility setting of this KmlLink. One of
+	// Visibility: The visibility setting of this MapKmlLink. One of
 	// "defaultOn" or "defaultOff".
 	Visibility string `json:"visibility,omitempty"`
 }
@@ -752,21 +793,21 @@ type MapLayer struct {
 	// The numbers represent latitude and longitude in decimal degrees.
 	DefaultViewport []float64 `json:"defaultViewport,omitempty"`
 
-	// Id: The ID of this Layer. This ID can be used to request more details
-	// about this Layer.
+	// Id: The ID of this MapLayer. This ID can be used to request more
+	// details about the layer.
 	Id string `json:"id,omitempty"`
 
-	// Key: A user defined alias for this Layer, specific to this Map.
+	// Key: A user defined alias for this MapLayer, specific to this Map.
 	Key string `json:"key,omitempty"`
 
-	// Name: The name of this Layer.
+	// Name: The name of this MapLayer.
 	Name string `json:"name,omitempty"`
 
-	// Type: Identifies this object as a Layer. (( constant "layer" ))
+	// Type: Identifies this object as a MapLayer.
 	Type string `json:"type,omitempty"`
 
-	// Visibility: The visibility setting of this Layer. One of "defaultOn"
-	// or "defaultOff".
+	// Visibility: The visibility setting of this MapLayer. One of
+	// "defaultOn" or "defaultOff".
 	Visibility string `json:"visibility,omitempty"`
 }
 
@@ -787,7 +828,7 @@ type ParentsListResponse struct {
 	// NextPageToken: Next page token.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// Parents: Resources returned.
+	// Parents: The parent assets.
 	Parents []*Parent `json:"parents,omitempty"`
 }
 
@@ -828,10 +869,9 @@ type PublishResponse struct {
 }
 
 type Raster struct {
-	// Bbox: An array of four numbers (west, south, east, north) which
-	// define the rectangular bounding box which contains all of the data in
-	// this Raster. The numbers represent latitudes and longitudes in
-	// decimal degrees.
+	// Bbox: A rectangular bounding box which contains all of the data in
+	// this Raster. The numbers represent latitude and longitude in decimal
+	// degrees.
 	Bbox []float64 `json:"bbox,omitempty"`
 
 	// CreationTime: The creation time of this raster. The value is an RFC
@@ -866,13 +906,12 @@ type RasterCollection struct {
 	// RasterCollection.
 	Attribution string `json:"attribution,omitempty"`
 
-	// Bbox: An array of four numbers (west, south, east, north) which
-	// define the rectangular bounding box which contains all of the data in
-	// this RasterCollection. The numbers represent latitudes and longitudes
+	// Bbox: A rectangular bounding box which contains all of the data in
+	// this RasterCollection. The numbers represent latitude and longitude
 	// in decimal degrees.
 	Bbox []float64 `json:"bbox,omitempty"`
 
-	// CreationTime: The creation time of this rasterCollection. The value
+	// CreationTime: The creation time of this RasterCollection. The value
 	// is an RFC 3339 formatted date-time value (e.g. 1970-01-01T00:00:00Z).
 	CreationTime string `json:"creationTime,omitempty"`
 
@@ -889,7 +928,7 @@ type RasterCollection struct {
 	// Id: A globally unique ID, used to refer to this RasterCollection.
 	Id string `json:"id,omitempty"`
 
-	// LastModifiedTime: The last modified time of this rasterCollection.
+	// LastModifiedTime: The last modified time of this RasterCollection.
 	// The value is an RFC 3339 formatted date-time value (e.g.
 	// 1970-01-01T00:00:00Z).
 	LastModifiedTime string `json:"lastModifiedTime,omitempty"`
@@ -900,6 +939,9 @@ type RasterCollection struct {
 	// Name: The name of this RasterCollection, supplied by the author.
 	Name string `json:"name,omitempty"`
 
+	// ProcessingStatus: The processing status of this RasterCollection.
+	ProcessingStatus string `json:"processingStatus,omitempty"`
+
 	// ProjectId: The ID of the project that this RasterCollection is in.
 	ProjectId string `json:"projectId,omitempty"`
 
@@ -909,6 +951,24 @@ type RasterCollection struct {
 
 	// Tags: Tags of this RasterCollection.
 	Tags []string `json:"tags,omitempty"`
+}
+
+type RasterCollectionsRasterBatchDeleteRequest struct {
+	// Ids: An array of Raster asset IDs to be removed from this
+	// RasterCollection.
+	Ids []string `json:"ids,omitempty"`
+}
+
+type RasterCollectionsRastersBatchDeleteResponse struct {
+}
+
+type RasterCollectionsRastersBatchInsertRequest struct {
+	// Ids: An array of Raster asset IDs to be added to this
+	// RasterCollection.
+	Ids []string `json:"ids,omitempty"`
+}
+
+type RasterCollectionsRastersBatchInsertResponse struct {
 }
 
 type RastercollectionsListResponse struct {
@@ -927,62 +987,11 @@ type RastersListResponse struct {
 	Rasters []*Raster `json:"rasters,omitempty"`
 }
 
-type Resource struct {
-	// Bbox: An array of four numbers (west, south, east, north) which
-	// define the rectangular bounding box which contains all of the data in
-	// this asset. The numbers represent latitude and longitude in decimal
-	// degrees.
-	Bbox []float64 `json:"bbox,omitempty"`
-
-	// CreationTime: The creation time of this asset. The value is an RFC
-	// 3339-formatted date-time value (for example, 1970-01-01T00:00:00Z).
-	CreationTime string `json:"creationTime,omitempty"`
-
-	// Description: The asset's description.
-	Description string `json:"description,omitempty"`
-
-	// Id: The asset's globally unique ID.
-	Id string `json:"id,omitempty"`
-
-	// LastModifiedTime: The last modified time of this asset. The value is
-	// an RFC 3339-formatted date-time value (for example,
-	// 1970-01-01T00:00:00Z).
-	LastModifiedTime string `json:"lastModifiedTime,omitempty"`
-
-	// Name: The asset's name.
-	Name string `json:"name,omitempty"`
-
-	// ProjectId: The ID of the project to which the asset belongs.
-	ProjectId string `json:"projectId,omitempty"`
-
-	// Resource: The URL to query to retrieve the asset's complete object.
-	// The assets endpoint only returns high-level information about a
-	// resource.
-	Resource string `json:"resource,omitempty"`
-
-	// Tags: An array of text strings, with each string representing a tag.
-	// More information about tags can be found in the Tagging data article
-	// of the Maps Engine help center.
-	Tags []string `json:"tags,omitempty"`
-
-	// Type: The type of asset. One of raster, rasterCollection, table, map,
-	// or layer.
-	Type string `json:"type,omitempty"`
-}
-
-type ResourcesListResponse struct {
-	// Assets: Assets returned.
-	Assets []*Resource `json:"assets,omitempty"`
-
-	// NextPageToken: Next page token.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-}
-
 type Schema struct {
-	// Columns: An array of column objects. The first object in the array
-	// must be named geometry and be of type points, lineStrings, polygons,
-	// or mixedGeometry.
-	Columns []*SchemaColumns `json:"columns,omitempty"`
+	// Columns: An array of TableColumn objects. The first object in the
+	// array must be named geometry and be of type points, lineStrings,
+	// polygons, or mixedGeometry.
+	Columns []*TableColumn `json:"columns,omitempty"`
 
 	// PrimaryGeometry: The name of the column that contains a feature's
 	// geometry. This field can be omitted during table create; Google Maps
@@ -995,29 +1004,10 @@ type Schema struct {
 	PrimaryKey string `json:"primaryKey,omitempty"`
 }
 
-type SchemaColumns struct {
-	// Name: The column name.
-	Name string `json:"name,omitempty"`
-
-	// Type: The type of data stored in this column. Accepted values are:
-	//
-	//
-	// - integer
-	// - double
-	// - boolean
-	// - string
-	// - mixedGeometry
-	// - points
-	//
-	// - lineStrings
-	// - polygons
-	Type string `json:"type,omitempty"`
-}
-
 type Table struct {
-	// Bbox: An array of four numbers (west, south, east, north) which
-	// define the rectangular bounding box which contains all of the data in
-	// this table.
+	// Bbox: A rectangular bounding box which contains all of the data in
+	// this table. The numbers represent latitude and longitude in decimal
+	// degrees.
 	Bbox []float64 `json:"bbox,omitempty"`
 
 	// CreationTime: The creation time of this table. The value is an RFC
@@ -1046,18 +1036,7 @@ type Table struct {
 	// Name: The name of this table, supplied by the author.
 	Name string `json:"name,omitempty"`
 
-	// ProcessingStatus: The processing status of this table. The supported
-	// processing status values are:
-	//
-	// - notReady: The table is not ready to
-	// be processed - some files have not been uploaded.
-	// - ready: The table
-	// is queued for processing.
-	// - processing: The table is currently
-	// processing.
-	// - complete: Processing has completed successfully.
-	// -
-	// failed: Processing failed to complete.
+	// ProcessingStatus: The processing status of this table.
 	ProcessingStatus string `json:"processingStatus,omitempty"`
 
 	// ProjectId: The ID of the project to which the table belongs.
@@ -1081,6 +1060,14 @@ type Table struct {
 	// More information about tags can be found in the Tagging data article
 	// of the Maps Engine help center.
 	Tags []string `json:"tags,omitempty"`
+}
+
+type TableColumn struct {
+	// Name: The column name.
+	Name string `json:"name,omitempty"`
+
+	// Type: The type of data stored in this column.
+	Type string `json:"type,omitempty"`
 }
 
 type TablesListResponse struct {
@@ -1130,7 +1117,7 @@ func (r *AssetsService) Get(id string) *AssetsGetCall {
 	return c
 }
 
-func (c *AssetsGetCall) Do() (*Resource, error) {
+func (c *AssetsGetCall) Do() (*Asset, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1148,8 +1135,8 @@ func (c *AssetsGetCall) Do() (*Resource, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Resource)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Asset
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1170,7 +1157,7 @@ func (c *AssetsGetCall) Do() (*Resource, error) {
 	//   },
 	//   "path": "assets/{id}",
 	//   "response": {
-	//     "$ref": "Resource"
+	//     "$ref": "Asset"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/mapsengine",
@@ -1275,7 +1262,7 @@ func (c *AssetsListCall) Type(type_ string) *AssetsListCall {
 	return c
 }
 
-func (c *AssetsListCall) Do() (*ResourcesListResponse, error) {
+func (c *AssetsListCall) Do() (*AssetsListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1322,8 +1309,8 @@ func (c *AssetsListCall) Do() (*ResourcesListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(ResourcesListResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *AssetsListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1402,7 +1389,7 @@ func (c *AssetsListCall) Do() (*ResourcesListResponse, error) {
 	//   },
 	//   "path": "assets",
 	//   "response": {
-	//     "$ref": "ResourcesListResponse"
+	//     "$ref": "AssetsListResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/mapsengine",
@@ -1468,8 +1455,8 @@ func (c *AssetsParentsListCall) Do() (*ParentsListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(ParentsListResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *ParentsListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1559,8 +1546,8 @@ func (c *LayersCreateCall) Do() (*Layer, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Layer)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Layer
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1631,8 +1618,8 @@ func (c *LayersGetCall) Do() (*Layer, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Layer)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Layer
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1807,8 +1794,8 @@ func (c *LayersListCall) Do() (*LayersListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(LayersListResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *LayersListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1913,8 +1900,8 @@ func (c *LayersProcessCall) Do() (*ProcessResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(ProcessResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *ProcessResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1977,8 +1964,8 @@ func (c *LayersPublishCall) Do() (*PublishResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(PublishResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *PublishResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2064,8 +2051,8 @@ func (c *LayersParentsListCall) Do() (*ParentsListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(ParentsListResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *ParentsListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2102,6 +2089,67 @@ func (c *LayersParentsListCall) Do() (*ParentsListResponse, error) {
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/mapsengine",
 	//     "https://www.googleapis.com/auth/mapsengine.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "mapsengine.maps.create":
+
+type MapsCreateCall struct {
+	s    *Service
+	map_ *Map
+	opt_ map[string]interface{}
+}
+
+// Create: Create a map asset.
+func (r *MapsService) Create(map_ *Map) *MapsCreateCall {
+	c := &MapsCreateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.map_ = map_
+	return c
+}
+
+func (c *MapsCreateCall) Do() (*Map, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.map_)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "maps")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Map
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Create a map asset.",
+	//   "httpMethod": "POST",
+	//   "id": "mapsengine.maps.create",
+	//   "path": "maps",
+	//   "request": {
+	//     "$ref": "Map"
+	//   },
+	//   "response": {
+	//     "$ref": "Map"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/mapsengine"
 	//   ]
 	// }
 
@@ -2149,8 +2197,8 @@ func (c *MapsGetCall) Do() (*Map, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Map)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Map
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2325,8 +2373,8 @@ func (c *MapsListCall) Do() (*MapsListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(MapsListResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *MapsListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2398,6 +2446,70 @@ func (c *MapsListCall) Do() (*MapsListResponse, error) {
 
 }
 
+// method id "mapsengine.maps.publish":
+
+type MapsPublishCall struct {
+	s    *Service
+	id   string
+	opt_ map[string]interface{}
+}
+
+// Publish: Publish a map asset.
+func (r *MapsService) Publish(id string) *MapsPublishCall {
+	c := &MapsPublishCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	return c
+}
+
+func (c *MapsPublishCall) Do() (*PublishResponse, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "maps/{id}/publish")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *PublishResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Publish a map asset.",
+	//   "httpMethod": "POST",
+	//   "id": "mapsengine.maps.publish",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The ID of the map.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "maps/{id}/publish",
+	//   "response": {
+	//     "$ref": "PublishResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/mapsengine"
+	//   ]
+	// }
+
+}
+
 // method id "mapsengine.projects.list":
 
 type ProjectsListCall struct {
@@ -2428,8 +2540,8 @@ func (c *ProjectsListCall) Do() (*ProjectsListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(ProjectsListResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *ProjectsListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2487,8 +2599,8 @@ func (c *RasterCollectionsCreateCall) Do() (*RasterCollection, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(RasterCollection)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *RasterCollection
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2543,8 +2655,8 @@ func (c *RasterCollectionsGetCall) Do() (*RasterCollection, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(RasterCollection)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *RasterCollection
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2707,8 +2819,8 @@ func (c *RasterCollectionsListCall) Do() (*RastercollectionsListResponse, error)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(RastercollectionsListResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *RastercollectionsListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2780,6 +2892,70 @@ func (c *RasterCollectionsListCall) Do() (*RastercollectionsListResponse, error)
 
 }
 
+// method id "mapsengine.rasterCollections.process":
+
+type RasterCollectionsProcessCall struct {
+	s    *Service
+	id   string
+	opt_ map[string]interface{}
+}
+
+// Process: Process a raster collection asset.
+func (r *RasterCollectionsService) Process(id string) *RasterCollectionsProcessCall {
+	c := &RasterCollectionsProcessCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	return c
+}
+
+func (c *RasterCollectionsProcessCall) Do() (*ProcessResponse, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "rasterCollections/{id}/process")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *ProcessResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Process a raster collection asset.",
+	//   "httpMethod": "POST",
+	//   "id": "mapsengine.rasterCollections.process",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The ID of the raster collection.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "rasterCollections/{id}/process",
+	//   "response": {
+	//     "$ref": "ProcessResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/mapsengine"
+	//   ]
+	// }
+
+}
+
 // method id "mapsengine.rasterCollections.parents.list":
 
 type RasterCollectionsParentsListCall struct {
@@ -2836,8 +3012,8 @@ func (c *RasterCollectionsParentsListCall) Do() (*ParentsListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(ParentsListResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *ParentsListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2874,6 +3050,165 @@ func (c *RasterCollectionsParentsListCall) Do() (*ParentsListResponse, error) {
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/mapsengine",
 	//     "https://www.googleapis.com/auth/mapsengine.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "mapsengine.rasterCollections.rasters.batchDelete":
+
+type RasterCollectionsRastersBatchDeleteCall struct {
+	s                                         *Service
+	id                                        string
+	rastercollectionsrasterbatchdeleterequest *RasterCollectionsRasterBatchDeleteRequest
+	opt_                                      map[string]interface{}
+}
+
+// BatchDelete: Remove rasters from an existing raster collection.
+//
+// Up
+// to 50 rasters can be included in a single batchDelete request. Each
+// batchDelete request is atomic.
+func (r *RasterCollectionsRastersService) BatchDelete(id string, rastercollectionsrasterbatchdeleterequest *RasterCollectionsRasterBatchDeleteRequest) *RasterCollectionsRastersBatchDeleteCall {
+	c := &RasterCollectionsRastersBatchDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	c.rastercollectionsrasterbatchdeleterequest = rastercollectionsrasterbatchdeleterequest
+	return c
+}
+
+func (c *RasterCollectionsRastersBatchDeleteCall) Do() (*RasterCollectionsRastersBatchDeleteResponse, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.rastercollectionsrasterbatchdeleterequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "rasterCollections/{id}/rasters/batchDelete")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *RasterCollectionsRastersBatchDeleteResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Remove rasters from an existing raster collection.\n\nUp to 50 rasters can be included in a single batchDelete request. Each batchDelete request is atomic.",
+	//   "httpMethod": "POST",
+	//   "id": "mapsengine.rasterCollections.rasters.batchDelete",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The ID of the raster collection to which these rasters belong.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "rasterCollections/{id}/rasters/batchDelete",
+	//   "request": {
+	//     "$ref": "RasterCollectionsRasterBatchDeleteRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "RasterCollectionsRastersBatchDeleteResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/mapsengine"
+	//   ]
+	// }
+
+}
+
+// method id "mapsengine.rasterCollections.rasters.batchInsert":
+
+type RasterCollectionsRastersBatchInsertCall struct {
+	s                                          *Service
+	id                                         string
+	rastercollectionsrastersbatchinsertrequest *RasterCollectionsRastersBatchInsertRequest
+	opt_                                       map[string]interface{}
+}
+
+// BatchInsert: Add rasters to an existing raster collection. Rasters
+// must be successfully processed in order to be added to a raster
+// collection.
+//
+// Up to 50 rasters can be included in a single batchInsert
+// request. Each batchInsert request is atomic.
+func (r *RasterCollectionsRastersService) BatchInsert(id string, rastercollectionsrastersbatchinsertrequest *RasterCollectionsRastersBatchInsertRequest) *RasterCollectionsRastersBatchInsertCall {
+	c := &RasterCollectionsRastersBatchInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	c.rastercollectionsrastersbatchinsertrequest = rastercollectionsrastersbatchinsertrequest
+	return c
+}
+
+func (c *RasterCollectionsRastersBatchInsertCall) Do() (*RasterCollectionsRastersBatchInsertResponse, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.rastercollectionsrastersbatchinsertrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "rasterCollections/{id}/rasters/batchInsert")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *RasterCollectionsRastersBatchInsertResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Add rasters to an existing raster collection. Rasters must be successfully processed in order to be added to a raster collection.\n\nUp to 50 rasters can be included in a single batchInsert request. Each batchInsert request is atomic.",
+	//   "httpMethod": "POST",
+	//   "id": "mapsengine.rasterCollections.rasters.batchInsert",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The ID of the raster collection to which these rasters belong.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "rasterCollections/{id}/rasters/batchInsert",
+	//   "request": {
+	//     "$ref": "RasterCollectionsRastersBatchInsertRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "RasterCollectionsRastersBatchInsertResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/mapsengine"
 	//   ]
 	// }
 
@@ -3001,8 +3336,8 @@ func (c *RasterCollectionsRastersListCall) Do() (*RastersListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(RastersListResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *RastersListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3111,8 +3446,8 @@ func (c *RastersGetCall) Do() (*Image, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Image)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Image
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3181,8 +3516,8 @@ func (c *RastersUploadCall) Do() (*Image, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Image)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Image
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3360,8 +3695,8 @@ func (c *RastersParentsListCall) Do() (*ParentsListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(ParentsListResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *ParentsListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3441,8 +3776,8 @@ func (c *TablesCreateCall) Do() (*Table, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Table)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Table
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3506,8 +3841,8 @@ func (c *TablesGetCall) Do() (*Table, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Table)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Table
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3682,8 +4017,8 @@ func (c *TablesListCall) Do() (*TablesListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(TablesListResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *TablesListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3800,8 +4135,8 @@ func (c *TablesUploadCall) Do() (*Table, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Table)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Table
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -4125,8 +4460,8 @@ func (c *TablesFeaturesGetCall) Do() (*Feature, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Feature)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Feature
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -4310,8 +4645,8 @@ func (c *TablesFeaturesListCall) Do() (*FeaturesListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(FeaturesListResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *FeaturesListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -4557,8 +4892,8 @@ func (c *TablesParentsListCall) Do() (*ParentsListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(ParentsListResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *ParentsListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil

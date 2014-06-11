@@ -1247,8 +1247,8 @@ func (c *ActivitiesGetCall) Do() (*Activity, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Activity)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Activity
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1340,8 +1340,8 @@ func (c *ActivitiesListCall) Do() (*ActivityFeed, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(ActivityFeed)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *ActivityFeed
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1478,8 +1478,8 @@ func (c *ActivitiesSearchCall) Do() (*ActivityFeed, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(ActivityFeed)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *ActivityFeed
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1577,8 +1577,8 @@ func (c *CommentsGetCall) Do() (*Comment, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Comment)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Comment
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1676,8 +1676,8 @@ func (c *CommentsListCall) Do() (*CommentFeed, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(CommentFeed)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *CommentFeed
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1791,8 +1791,8 @@ func (c *MomentsInsertCall) Do() (*Moment, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Moment)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Moment
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1924,8 +1924,8 @@ func (c *MomentsListCall) Do() (*MomentsFeed, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(MomentsFeed)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *MomentsFeed
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2085,8 +2085,8 @@ func (c *PeopleGetCall) Do() (*Person, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Person)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Person
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2189,8 +2189,8 @@ func (c *PeopleListCall) Do() (*PeopleFeed, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(PeopleFeed)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *PeopleFeed
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2324,8 +2324,8 @@ func (c *PeopleListByActivityCall) Do() (*PeopleFeed, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(PeopleFeed)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *PeopleFeed
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2454,8 +2454,8 @@ func (c *PeopleSearchCall) Do() (*PeopleFeed, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(PeopleFeed)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *PeopleFeed
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil

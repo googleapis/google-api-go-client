@@ -63,9 +63,13 @@ func New(client *http.Client) (*Service, error) {
 	}
 	s := &Service{client: client, BasePath: basePath}
 	s.Addresses = NewAddressesService(s)
+	s.BackendServices = NewBackendServicesService(s)
+	s.DiskTypes = NewDiskTypesService(s)
 	s.Disks = NewDisksService(s)
 	s.Firewalls = NewFirewallsService(s)
 	s.ForwardingRules = NewForwardingRulesService(s)
+	s.GlobalAddresses = NewGlobalAddressesService(s)
+	s.GlobalForwardingRules = NewGlobalForwardingRulesService(s)
 	s.GlobalOperations = NewGlobalOperationsService(s)
 	s.HttpHealthChecks = NewHttpHealthChecksService(s)
 	s.Images = NewImagesService(s)
@@ -77,8 +81,10 @@ func New(client *http.Client) (*Service, error) {
 	s.Regions = NewRegionsService(s)
 	s.Routes = NewRoutesService(s)
 	s.Snapshots = NewSnapshotsService(s)
+	s.TargetHttpProxies = NewTargetHttpProxiesService(s)
 	s.TargetInstances = NewTargetInstancesService(s)
 	s.TargetPools = NewTargetPoolsService(s)
+	s.UrlMaps = NewUrlMapsService(s)
 	s.ZoneOperations = NewZoneOperationsService(s)
 	s.Zones = NewZonesService(s)
 	return s, nil
@@ -90,11 +96,19 @@ type Service struct {
 
 	Addresses *AddressesService
 
+	BackendServices *BackendServicesService
+
+	DiskTypes *DiskTypesService
+
 	Disks *DisksService
 
 	Firewalls *FirewallsService
 
 	ForwardingRules *ForwardingRulesService
+
+	GlobalAddresses *GlobalAddressesService
+
+	GlobalForwardingRules *GlobalForwardingRulesService
 
 	GlobalOperations *GlobalOperationsService
 
@@ -118,9 +132,13 @@ type Service struct {
 
 	Snapshots *SnapshotsService
 
+	TargetHttpProxies *TargetHttpProxiesService
+
 	TargetInstances *TargetInstancesService
 
 	TargetPools *TargetPoolsService
+
+	UrlMaps *UrlMapsService
 
 	ZoneOperations *ZoneOperationsService
 
@@ -133,6 +151,24 @@ func NewAddressesService(s *Service) *AddressesService {
 }
 
 type AddressesService struct {
+	s *Service
+}
+
+func NewBackendServicesService(s *Service) *BackendServicesService {
+	rs := &BackendServicesService{s: s}
+	return rs
+}
+
+type BackendServicesService struct {
+	s *Service
+}
+
+func NewDiskTypesService(s *Service) *DiskTypesService {
+	rs := &DiskTypesService{s: s}
+	return rs
+}
+
+type DiskTypesService struct {
 	s *Service
 }
 
@@ -160,6 +196,24 @@ func NewForwardingRulesService(s *Service) *ForwardingRulesService {
 }
 
 type ForwardingRulesService struct {
+	s *Service
+}
+
+func NewGlobalAddressesService(s *Service) *GlobalAddressesService {
+	rs := &GlobalAddressesService{s: s}
+	return rs
+}
+
+type GlobalAddressesService struct {
+	s *Service
+}
+
+func NewGlobalForwardingRulesService(s *Service) *GlobalForwardingRulesService {
+	rs := &GlobalForwardingRulesService{s: s}
+	return rs
+}
+
+type GlobalForwardingRulesService struct {
 	s *Service
 }
 
@@ -262,6 +316,15 @@ type SnapshotsService struct {
 	s *Service
 }
 
+func NewTargetHttpProxiesService(s *Service) *TargetHttpProxiesService {
+	rs := &TargetHttpProxiesService{s: s}
+	return rs
+}
+
+type TargetHttpProxiesService struct {
+	s *Service
+}
+
 func NewTargetInstancesService(s *Service) *TargetInstancesService {
 	rs := &TargetInstancesService{s: s}
 	return rs
@@ -277,6 +340,15 @@ func NewTargetPoolsService(s *Service) *TargetPoolsService {
 }
 
 type TargetPoolsService struct {
+	s *Service
+}
+
+func NewUrlMapsService(s *Service) *UrlMapsService {
+	rs := &UrlMapsService{s: s}
+	return rs
+}
+
+type UrlMapsService struct {
 	s *Service
 }
 
@@ -340,7 +412,8 @@ type Address struct {
 	// RFC1035.
 	Name string `json:"name,omitempty"`
 
-	// Region: URL of the region where the address resides (output only).
+	// Region: URL of the region where the regional address resides (output
+	// only). This field is not applicable to global addresses.
 	Region string `json:"region,omitempty"`
 
 	// SelfLink: Server defined URL for the resource (output only).
@@ -470,8 +543,126 @@ type AttachedDiskInitializeParams struct {
 	// DiskSizeGb: Size of the disk in base-2 GB.
 	DiskSizeGb int64 `json:"diskSizeGb,omitempty,string"`
 
+	// DiskType: URL of the disk type resource describing which disk type to
+	// use to create the disk; provided by the client when the disk is
+	// created.
+	DiskType string `json:"diskType,omitempty"`
+
 	// SourceImage: The source image used to create this disk.
 	SourceImage string `json:"sourceImage,omitempty"`
+}
+
+type Backend struct {
+	// BalancingMode: The balancing mode of this backend, default is
+	// UTILIZATION.
+	BalancingMode string `json:"balancingMode,omitempty"`
+
+	// CapacityScaler: The multiplier (a value between 0 and 1e6) of the max
+	// capacity (CPU or RPS, depending on 'balancingMode') the group should
+	// serve up to. 0 means the group is totally drained. Default value is
+	// 1. Valid range is [0, 1e6].
+	CapacityScaler float64 `json:"capacityScaler,omitempty"`
+
+	// Description: An optional textual description of the resource, which
+	// is provided by the client when the resource is created.
+	Description string `json:"description,omitempty"`
+
+	// Group: URL of a zonal Cloud Resource View resource. This resoure view
+	// defines the list of instances that serve traffic. Member virtual
+	// machine instances from each resource view must live in the same zone
+	// as the resource view itself.
+	Group string `json:"group,omitempty"`
+
+	// MaxRate: The max RPS of the group. Can be used with either balancing
+	// mode, but required if RATE mode. For RATE mode, either maxRate or
+	// maxRatePerInstance must be set.
+	MaxRate int64 `json:"maxRate,omitempty"`
+
+	// MaxRatePerInstance: The max RPS that a single backed instance can
+	// handle. This is used to calculate the capacity of the group. Can be
+	// used in either balancing mode. For RATE mode, either maxRate or
+	// maxRatePerInstance must be set.
+	MaxRatePerInstance float64 `json:"maxRatePerInstance,omitempty"`
+
+	// MaxUtilization: Used when 'balancingMode' is UTILIZATION. This ratio
+	// defines the CPU utilization target for the group. The default is 0.8.
+	// Valid range is [0, 1].
+	MaxUtilization float64 `json:"maxUtilization,omitempty"`
+}
+
+type BackendService struct {
+	// Backends: The list of backends that serve this BackendService.
+	Backends []*Backend `json:"backends,omitempty"`
+
+	// CreationTimestamp: Creation timestamp in RFC3339 text format (output
+	// only).
+	CreationTimestamp string `json:"creationTimestamp,omitempty"`
+
+	// Description: An optional textual description of the resource;
+	// provided by the client when the resource is created.
+	Description string `json:"description,omitempty"`
+
+	// Fingerprint: Fingerprint of this resource. A hash of the contents
+	// stored in this object. This field is used in optimistic locking. This
+	// field will be ignored when inserting a BackendService. An up-to-date
+	// fingerprint must be provided in order to update the BackendService.
+	Fingerprint string `json:"fingerprint,omitempty"`
+
+	// HealthChecks: The list of URLs to the HttpHealthCheck resource for
+	// health checking this BackendService. Currently at most one health
+	// check can be specified, and a health check is required.
+	HealthChecks []string `json:"healthChecks,omitempty"`
+
+	// Id: Unique identifier for the resource; defined by the server (output
+	// only).
+	Id uint64 `json:"id,omitempty,string"`
+
+	// Kind: Type of the resource.
+	Kind string `json:"kind,omitempty"`
+
+	// Name: Name of the resource; provided by the client when the resource
+	// is created. The name must be 1-63 characters long, and comply with
+	// RFC1035.
+	Name string `json:"name,omitempty"`
+
+	// Port: The TCP port to connect on the backend. The default value is
+	// 80.
+	Port int64 `json:"port,omitempty"`
+
+	Protocol string `json:"protocol,omitempty"`
+
+	// SelfLink: Server defined URL for the resource (output only).
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// TimeoutSec: How many seconds to wait for the backend before
+	// considering it a failed request. Default is 30 seconds.
+	TimeoutSec int64 `json:"timeoutSec,omitempty"`
+}
+
+type BackendServiceGroupHealth struct {
+	HealthStatus []*HealthStatus `json:"healthStatus,omitempty"`
+
+	// Kind: Type of resource.
+	Kind string `json:"kind,omitempty"`
+}
+
+type BackendServiceList struct {
+	// Id: Unique identifier for the resource; defined by the server (output
+	// only).
+	Id string `json:"id,omitempty"`
+
+	// Items: The BackendService resources.
+	Items []*BackendService `json:"items,omitempty"`
+
+	// Kind: Type of resource.
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: A token used to continue a truncated list request
+	// (output only).
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SelfLink: Server defined URL for this resource (output only).
+	SelfLink string `json:"selfLink,omitempty"`
 }
 
 type DeprecationStatus struct {
@@ -558,6 +749,10 @@ type Disk struct {
 	// Status: The status of disk creation (output only).
 	Status string `json:"status,omitempty"`
 
+	// Type: URL of the disk type resource describing which disk type to use
+	// to create the disk; provided by the client when the disk is created.
+	Type string `json:"type,omitempty"`
+
 	// Zone: URL of the zone where the disk resides (output only).
 	Zone string `json:"zone,omitempty"`
 }
@@ -601,6 +796,107 @@ type DiskList struct {
 
 	// SelfLink: Server defined URL for this resource (output only).
 	SelfLink string `json:"selfLink,omitempty"`
+}
+
+type DiskType struct {
+	// CreationTimestamp: Creation timestamp in RFC3339 text format (output
+	// only).
+	CreationTimestamp string `json:"creationTimestamp,omitempty"`
+
+	// Deprecated: The deprecation status associated with this disk type.
+	Deprecated *DeprecationStatus `json:"deprecated,omitempty"`
+
+	// Description: An optional textual description of the resource.
+	Description string `json:"description,omitempty"`
+
+	// Id: Unique identifier for the resource; defined by the server (output
+	// only).
+	Id uint64 `json:"id,omitempty,string"`
+
+	// Kind: Type of the resource.
+	Kind string `json:"kind,omitempty"`
+
+	// Name: Name of the resource.
+	Name string `json:"name,omitempty"`
+
+	// SelfLink: Server defined URL for the resource (output only).
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// ValidDiskSize: An optional textual descroption of the valid disk
+	// size, e.g., "10GB-10TB".
+	ValidDiskSize string `json:"validDiskSize,omitempty"`
+
+	// Zone: Url of the zone where the disk type resides (output only).
+	Zone string `json:"zone,omitempty"`
+}
+
+type DiskTypeAggregatedList struct {
+	// Id: Unique identifier for the resource; defined by the server (output
+	// only).
+	Id string `json:"id,omitempty"`
+
+	// Items: A map of scoped disk type lists.
+	Items *DiskTypeAggregatedListItems `json:"items,omitempty"`
+
+	// Kind: Type of resource.
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: A token used to continue a truncated list request
+	// (output only).
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SelfLink: Server defined URL for this resource (output only).
+	SelfLink string `json:"selfLink,omitempty"`
+}
+
+type DiskTypeAggregatedListItems struct {
+}
+
+type DiskTypeList struct {
+	// Id: Unique identifier for the resource; defined by the server (output
+	// only).
+	Id string `json:"id,omitempty"`
+
+	// Items: The disk type resources.
+	Items []*DiskType `json:"items,omitempty"`
+
+	// Kind: Type of resource.
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: A token used to continue a truncated list request
+	// (output only).
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SelfLink: Server defined URL for this resource (output only).
+	SelfLink string `json:"selfLink,omitempty"`
+}
+
+type DiskTypesScopedList struct {
+	// DiskTypes: List of disk types contained in this scope.
+	DiskTypes []*DiskType `json:"diskTypes,omitempty"`
+
+	// Warning: Informational warning which replaces the list of disk types
+	// when the list is empty.
+	Warning *DiskTypesScopedListWarning `json:"warning,omitempty"`
+}
+
+type DiskTypesScopedListWarning struct {
+	// Code: The warning type identifier for this warning.
+	Code string `json:"code,omitempty"`
+
+	// Data: Metadata for this warning in 'key: value' format.
+	Data []*DiskTypesScopedListWarningData `json:"data,omitempty"`
+
+	// Message: Optional human-readable details for this warning.
+	Message string `json:"message,omitempty"`
+}
+
+type DiskTypesScopedListWarningData struct {
+	// Key: A key for the warning data.
+	Key string `json:"key,omitempty"`
+
+	// Value: A warning data value corresponding to the key.
+	Value string `json:"value,omitempty"`
 }
 
 type DisksScopedList struct {
@@ -721,9 +1017,11 @@ type FirewallList struct {
 
 type ForwardingRule struct {
 	// IPAddress: Value of the reserved IP address that this forwarding rule
-	// is serving on behalf of. The address resource must live in the same
-	// region as the forwarding rule. If left empty (default value), an
-	// ephemeral IP will be assigned.
+	// is serving on behalf of. For global forwarding rules, the address
+	// must be a global IP; for regional forwarding rules, the address must
+	// live in the same region as the forwarding rule. If left empty
+	// (default value), an ephemeral IP from the same scope (global or
+	// regional) will be assigned.
 	IPAddress string `json:"IPAddress,omitempty"`
 
 	// IPProtocol: The IP protocol to which this rule applies, valid options
@@ -758,15 +1056,18 @@ type ForwardingRule struct {
 	// @pattern: \d+(?:-\d+)?
 	PortRange string `json:"portRange,omitempty"`
 
-	// Region: URL of the region where the forwarding rule resides (output
-	// only).
+	// Region: URL of the region where the regional forwarding rule resides
+	// (output only). This field is not applicable to global forwarding
+	// rules.
 	Region string `json:"region,omitempty"`
 
 	// SelfLink: Server defined URL for the resource (output only).
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// Target: The URL of the target resource to receive the matched
-	// traffic. It must live in the same region as this forwarding rule.
+	// traffic. For regional forwarding rules, this target must live in the
+	// same region as the forwarding rule. For global forwarding rules, this
+	// target must be a global TargetHttpProxy resource.
 	Target string `json:"target,omitempty"`
 }
 
@@ -852,6 +1153,20 @@ type HealthStatus struct {
 
 	// IpAddress: The IP address represented by this resource.
 	IpAddress string `json:"ipAddress,omitempty"`
+}
+
+type HostRule struct {
+	Description string `json:"description,omitempty"`
+
+	// Hosts: The list of host patterns to match. They must be FQDN except
+	// that it may start with ?*.? or ?*-?. The ?*? acts like a glob and
+	// will match any string of atoms (separated by .?s and -?s) to the
+	// left.
+	Hosts []string `json:"hosts,omitempty"`
+
+	// PathMatcher: The name of the PathMatcher to match the path portion of
+	// the URL, if the this HostRule matches the URL's host portion.
+	PathMatcher string `json:"pathMatcher,omitempty"`
 }
 
 type HttpHealthCheck struct {
@@ -942,6 +1257,9 @@ type Image struct {
 	// Description: Textual description of the resource; provided by the
 	// client when the resource is created.
 	Description string `json:"description,omitempty"`
+
+	// DiskSizeGb: Size of the image when restored onto a disk (in GiB).
+	DiskSizeGb int64 `json:"diskSizeGb,omitempty,string"`
 
 	// Id: Unique identifier for the resource; defined by the server (output
 	// only).
@@ -1585,6 +1903,33 @@ type OperationsScopedListWarningData struct {
 	Value string `json:"value,omitempty"`
 }
 
+type PathMatcher struct {
+	// DefaultService: The URL to the BackendService resource. This will be
+	// used if none of the 'pathRules' defined by this PathMatcher is met by
+	// the URL's path portion.
+	DefaultService string `json:"defaultService,omitempty"`
+
+	Description string `json:"description,omitempty"`
+
+	// Name: The name to which this PathMatcher is referred by the HostRule.
+	Name string `json:"name,omitempty"`
+
+	// PathRules: The list of path rules.
+	PathRules []*PathRule `json:"pathRules,omitempty"`
+}
+
+type PathRule struct {
+	// Paths: The list of path patterns to match. Each must start with ?/"
+	// and the only place a "*" is allowed is at the end following a "/".
+	// The string fed to the path matcher does not include any text after
+	// the first "?" or "#", and those chars are not allowed here.
+	Paths []string `json:"paths,omitempty"`
+
+	// Service: The URL of the BackendService resource if this rule is
+	// matched.
+	Service string `json:"service,omitempty"`
+}
+
 type Project struct {
 	// CommonInstanceMetadata: Metadata key/value pairs available to all
 	// instances contained in this project.
@@ -1612,6 +1957,10 @@ type Project struct {
 
 	// SelfLink: Server defined URL for the resource (output only).
 	SelfLink string `json:"selfLink,omitempty"`
+
+	// UsageExportLocation: The location in Cloud Storage and naming method
+	// of the daily usage report.
+	UsageExportLocation *UsageExportLocation `json:"usageExportLocation,omitempty"`
 }
 
 type Quota struct {
@@ -1677,6 +2026,10 @@ type RegionList struct {
 
 	// SelfLink: Server defined URL for this resource (output only).
 	SelfLink string `json:"selfLink,omitempty"`
+}
+
+type ResourceGroupReference struct {
+	Group string `json:"group,omitempty"`
 }
 
 type Route struct {
@@ -1890,6 +2243,54 @@ type Tags struct {
 	// Items: An array of tags. Each tag must be 1-63 characters long, and
 	// comply with RFC1035.
 	Items []string `json:"items,omitempty"`
+}
+
+type TargetHttpProxy struct {
+	// CreationTimestamp: Creation timestamp in RFC3339 text format (output
+	// only).
+	CreationTimestamp string `json:"creationTimestamp,omitempty"`
+
+	// Description: An optional textual description of the resource;
+	// provided by the client when the resource is created.
+	Description string `json:"description,omitempty"`
+
+	// Id: Unique identifier for the resource; defined by the server (output
+	// only).
+	Id uint64 `json:"id,omitempty,string"`
+
+	// Kind: Type of the resource.
+	Kind string `json:"kind,omitempty"`
+
+	// Name: Name of the resource; provided by the client when the resource
+	// is created. The name must be 1-63 characters long, and comply with
+	// RFC1035.
+	Name string `json:"name,omitempty"`
+
+	// SelfLink: Server defined URL for the resource (output only).
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// UrlMap: URL to the UrlMap resource that defines the mapping from URL
+	// to the BackendService.
+	UrlMap string `json:"urlMap,omitempty"`
+}
+
+type TargetHttpProxyList struct {
+	// Id: Unique identifier for the resource; defined by the server (output
+	// only).
+	Id string `json:"id,omitempty"`
+
+	// Items: The TargetHttpProxy resources.
+	Items []*TargetHttpProxy `json:"items,omitempty"`
+
+	// Kind: Type of resource.
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: A token used to continue a truncated list request
+	// (output only).
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SelfLink: Server defined URL for this resource (output only).
+	SelfLink string `json:"selfLink,omitempty"`
 }
 
 type TargetInstance struct {
@@ -2183,6 +2584,138 @@ type TargetReference struct {
 	Target string `json:"target,omitempty"`
 }
 
+type TestFailure struct {
+	ActualService string `json:"actualService,omitempty"`
+
+	ExpectedService string `json:"expectedService,omitempty"`
+
+	Host string `json:"host,omitempty"`
+
+	Path string `json:"path,omitempty"`
+}
+
+type UrlMap struct {
+	// CreationTimestamp: Creation timestamp in RFC3339 text format (output
+	// only).
+	CreationTimestamp string `json:"creationTimestamp,omitempty"`
+
+	// DefaultService: The URL of the BackendService resource if none of the
+	// hostRules match.
+	DefaultService string `json:"defaultService,omitempty"`
+
+	// Description: An optional textual description of the resource;
+	// provided by the client when the resource is created.
+	Description string `json:"description,omitempty"`
+
+	// Fingerprint: Fingerprint of this resource. A hash of the contents
+	// stored in this object. This field is used in optimistic locking. This
+	// field will be ignored when inserting a UrlMap. An up-to-date
+	// fingerprint must be provided in order to update the UrlMap.
+	Fingerprint string `json:"fingerprint,omitempty"`
+
+	// HostRules: The list of HostRules to use against the URL.
+	HostRules []*HostRule `json:"hostRules,omitempty"`
+
+	// Id: Unique identifier for the resource; defined by the server (output
+	// only).
+	Id uint64 `json:"id,omitempty,string"`
+
+	// Kind: Type of the resource.
+	Kind string `json:"kind,omitempty"`
+
+	// Name: Name of the resource; provided by the client when the resource
+	// is created. The name must be 1-63 characters long, and comply with
+	// RFC1035.
+	Name string `json:"name,omitempty"`
+
+	// PathMatchers: The list of named PathMatchers to use against the URL.
+	PathMatchers []*PathMatcher `json:"pathMatchers,omitempty"`
+
+	// SelfLink: Server defined URL for the resource (output only).
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// Tests: The list of expected URL mappings. Request to update this
+	// UrlMap will succeed only all of the test cases pass.
+	Tests []*UrlMapTest `json:"tests,omitempty"`
+}
+
+type UrlMapList struct {
+	// Id: Unique identifier for the resource; defined by the server (output
+	// only).
+	Id string `json:"id,omitempty"`
+
+	// Items: The UrlMap resources.
+	Items []*UrlMap `json:"items,omitempty"`
+
+	// Kind: Type of resource.
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: A token used to continue a truncated list request
+	// (output only).
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SelfLink: Server defined URL for this resource (output only).
+	SelfLink string `json:"selfLink,omitempty"`
+}
+
+type UrlMapReference struct {
+	UrlMap string `json:"urlMap,omitempty"`
+}
+
+type UrlMapTest struct {
+	// Description: Description of this test case.
+	Description string `json:"description,omitempty"`
+
+	// Host: Host portion of the URL.
+	Host string `json:"host,omitempty"`
+
+	// Path: Path portion of the URL.
+	Path string `json:"path,omitempty"`
+
+	// Service: Expected BackendService resource the given URL should be
+	// mapped to.
+	Service string `json:"service,omitempty"`
+}
+
+type UrlMapValidationResult struct {
+	LoadErrors []string `json:"loadErrors,omitempty"`
+
+	// LoadSucceeded: Whether the given UrlMap can be successfully loaded.
+	// If false, 'loadErrors' indicates the reasons.
+	LoadSucceeded bool `json:"loadSucceeded,omitempty"`
+
+	TestFailures []*TestFailure `json:"testFailures,omitempty"`
+
+	// TestPassed: If successfully loaded, this field indicates whether the
+	// test passed. If false, 'testFailures's indicate the reason of
+	// failure.
+	TestPassed bool `json:"testPassed,omitempty"`
+}
+
+type UrlMapsValidateRequest struct {
+	// Resource: Content of the UrlMap to be validated.
+	Resource *UrlMap `json:"resource,omitempty"`
+}
+
+type UrlMapsValidateResponse struct {
+	Result *UrlMapValidationResult `json:"result,omitempty"`
+}
+
+type UsageExportLocation struct {
+	// BucketName: The name of an existing bucket in Cloud Storage where the
+	// usage report object is stored. The Google Service Account is granted
+	// write access to this bucket. This is simply the bucket name, with no
+	// "gs://" or "https://storage.googleapis.com/" in front of it.
+	BucketName string `json:"bucketName,omitempty"`
+
+	// ReportNamePrefix: An optional prefix for the name of the usage report
+	// object stored in bucket_name. If not supplied, defaults to "usage_".
+	// The report is stored as a CSV file named _gce_.csv. where  is the day
+	// of the usage according to Pacific Time. The prefix should conform to
+	// Cloud Storage object naming conventions.
+	ReportNamePrefix string `json:"reportNamePrefix,omitempty"`
+}
+
 type Zone struct {
 	// CreationTimestamp: Creation timestamp in RFC3339 text format (output
 	// only).
@@ -2318,8 +2851,8 @@ func (c *AddressesAggregatedListCall) Do() (*AddressAggregatedList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(AddressAggregatedList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *AddressAggregatedList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2409,8 +2942,8 @@ func (c *AddressesDeleteCall) Do() (*Operation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Operation)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2496,8 +3029,8 @@ func (c *AddressesGetCall) Do() (*Address, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Address)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Address
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2590,8 +3123,8 @@ func (c *AddressesInsertCall) Do() (*Operation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Operation)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2702,8 +3235,8 @@ func (c *AddressesListCall) Do() (*AddressList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(AddressList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *AddressList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2753,6 +3286,952 @@ func (c *AddressesListCall) Do() (*AddressList, error) {
 	//   "path": "{project}/regions/{region}/addresses",
 	//   "response": {
 	//     "$ref": "AddressList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.backendServices.delete":
+
+type BackendServicesDeleteCall struct {
+	s              *Service
+	project        string
+	backendService string
+	opt_           map[string]interface{}
+}
+
+// Delete: Deletes the specified BackendService resource.
+func (r *BackendServicesService) Delete(project string, backendService string) *BackendServicesDeleteCall {
+	c := &BackendServicesDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.backendService = backendService
+	return c
+}
+
+func (c *BackendServicesDeleteCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/backendServices/{backendService}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{backendService}", url.QueryEscape(c.backendService), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the specified BackendService resource.",
+	//   "httpMethod": "DELETE",
+	//   "id": "compute.backendServices.delete",
+	//   "parameterOrder": [
+	//     "project",
+	//     "backendService"
+	//   ],
+	//   "parameters": {
+	//     "backendService": {
+	//       "description": "Name of the BackendService resource to delete.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/backendServices/{backendService}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.backendServices.get":
+
+type BackendServicesGetCall struct {
+	s              *Service
+	project        string
+	backendService string
+	opt_           map[string]interface{}
+}
+
+// Get: Returns the specified BackendService resource.
+func (r *BackendServicesService) Get(project string, backendService string) *BackendServicesGetCall {
+	c := &BackendServicesGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.backendService = backendService
+	return c
+}
+
+func (c *BackendServicesGetCall) Do() (*BackendService, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/backendServices/{backendService}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{backendService}", url.QueryEscape(c.backendService), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *BackendService
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the specified BackendService resource.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.backendServices.get",
+	//   "parameterOrder": [
+	//     "project",
+	//     "backendService"
+	//   ],
+	//   "parameters": {
+	//     "backendService": {
+	//       "description": "Name of the BackendService resource to return.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/backendServices/{backendService}",
+	//   "response": {
+	//     "$ref": "BackendService"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.backendServices.getHealth":
+
+type BackendServicesGetHealthCall struct {
+	s                      *Service
+	project                string
+	backendService         string
+	resourcegroupreference *ResourceGroupReference
+	opt_                   map[string]interface{}
+}
+
+// GetHealth: Gets the most recent health check results for this
+// BackendService.
+func (r *BackendServicesService) GetHealth(project string, backendService string, resourcegroupreference *ResourceGroupReference) *BackendServicesGetHealthCall {
+	c := &BackendServicesGetHealthCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.backendService = backendService
+	c.resourcegroupreference = resourcegroupreference
+	return c
+}
+
+func (c *BackendServicesGetHealthCall) Do() (*BackendServiceGroupHealth, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.resourcegroupreference)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/backendServices/{backendService}/getHealth")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{backendService}", url.QueryEscape(c.backendService), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *BackendServiceGroupHealth
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the most recent health check results for this BackendService.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.backendServices.getHealth",
+	//   "parameterOrder": [
+	//     "project",
+	//     "backendService"
+	//   ],
+	//   "parameters": {
+	//     "backendService": {
+	//       "description": "Name of the BackendService resource to which the queried instance belongs.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/backendServices/{backendService}/getHealth",
+	//   "request": {
+	//     "$ref": "ResourceGroupReference"
+	//   },
+	//   "response": {
+	//     "$ref": "BackendServiceGroupHealth"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.backendServices.insert":
+
+type BackendServicesInsertCall struct {
+	s              *Service
+	project        string
+	backendservice *BackendService
+	opt_           map[string]interface{}
+}
+
+// Insert: Creates a BackendService resource in the specified project
+// using the data included in the request.
+func (r *BackendServicesService) Insert(project string, backendservice *BackendService) *BackendServicesInsertCall {
+	c := &BackendServicesInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.backendservice = backendservice
+	return c
+}
+
+func (c *BackendServicesInsertCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.backendservice)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/backendServices")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a BackendService resource in the specified project using the data included in the request.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.backendServices.insert",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/backendServices",
+	//   "request": {
+	//     "$ref": "BackendService"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.backendServices.list":
+
+type BackendServicesListCall struct {
+	s       *Service
+	project string
+	opt_    map[string]interface{}
+}
+
+// List: Retrieves the list of BackendService resources available to the
+// specified project.
+func (r *BackendServicesService) List(project string) *BackendServicesListCall {
+	c := &BackendServicesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter expression for
+// filtering listed resources.
+func (c *BackendServicesListCall) Filter(filter string) *BackendServicesListCall {
+	c.opt_["filter"] = filter
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum count of
+// results to be returned. Maximum value is 500 and default value is
+// 500.
+func (c *BackendServicesListCall) MaxResults(maxResults int64) *BackendServicesListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Tag returned by a
+// previous list request truncated by maxResults. Used to continue a
+// previous list request.
+func (c *BackendServicesListCall) PageToken(pageToken string) *BackendServicesListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+func (c *BackendServicesListCall) Do() (*BackendServiceList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["filter"]; ok {
+		params.Set("filter", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/backendServices")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *BackendServiceList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the list of BackendService resources available to the specified project.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.backendServices.list",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Filter expression for filtering listed resources.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "500",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "500",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/backendServices",
+	//   "response": {
+	//     "$ref": "BackendServiceList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.backendServices.patch":
+
+type BackendServicesPatchCall struct {
+	s              *Service
+	project        string
+	backendService string
+	backendservice *BackendService
+	opt_           map[string]interface{}
+}
+
+// Patch: Update the entire content of the BackendService resource. This
+// method supports patch semantics.
+func (r *BackendServicesService) Patch(project string, backendService string, backendservice *BackendService) *BackendServicesPatchCall {
+	c := &BackendServicesPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.backendService = backendService
+	c.backendservice = backendservice
+	return c
+}
+
+func (c *BackendServicesPatchCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.backendservice)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/backendServices/{backendService}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{backendService}", url.QueryEscape(c.backendService), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Update the entire content of the BackendService resource. This method supports patch semantics.",
+	//   "httpMethod": "PATCH",
+	//   "id": "compute.backendServices.patch",
+	//   "parameterOrder": [
+	//     "project",
+	//     "backendService"
+	//   ],
+	//   "parameters": {
+	//     "backendService": {
+	//       "description": "Name of the BackendService resource to update.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/backendServices/{backendService}",
+	//   "request": {
+	//     "$ref": "BackendService"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.backendServices.update":
+
+type BackendServicesUpdateCall struct {
+	s              *Service
+	project        string
+	backendService string
+	backendservice *BackendService
+	opt_           map[string]interface{}
+}
+
+// Update: Update the entire content of the BackendService resource.
+func (r *BackendServicesService) Update(project string, backendService string, backendservice *BackendService) *BackendServicesUpdateCall {
+	c := &BackendServicesUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.backendService = backendService
+	c.backendservice = backendservice
+	return c
+}
+
+func (c *BackendServicesUpdateCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.backendservice)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/backendServices/{backendService}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{backendService}", url.QueryEscape(c.backendService), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Update the entire content of the BackendService resource.",
+	//   "httpMethod": "PUT",
+	//   "id": "compute.backendServices.update",
+	//   "parameterOrder": [
+	//     "project",
+	//     "backendService"
+	//   ],
+	//   "parameters": {
+	//     "backendService": {
+	//       "description": "Name of the BackendService resource to update.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/backendServices/{backendService}",
+	//   "request": {
+	//     "$ref": "BackendService"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.diskTypes.aggregatedList":
+
+type DiskTypesAggregatedListCall struct {
+	s       *Service
+	project string
+	opt_    map[string]interface{}
+}
+
+// AggregatedList: Retrieves the list of disk type resources grouped by
+// scope.
+func (r *DiskTypesService) AggregatedList(project string) *DiskTypesAggregatedListCall {
+	c := &DiskTypesAggregatedListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter expression for
+// filtering listed resources.
+func (c *DiskTypesAggregatedListCall) Filter(filter string) *DiskTypesAggregatedListCall {
+	c.opt_["filter"] = filter
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum count of
+// results to be returned. Maximum value is 500 and default value is
+// 500.
+func (c *DiskTypesAggregatedListCall) MaxResults(maxResults int64) *DiskTypesAggregatedListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Tag returned by a
+// previous list request truncated by maxResults. Used to continue a
+// previous list request.
+func (c *DiskTypesAggregatedListCall) PageToken(pageToken string) *DiskTypesAggregatedListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+func (c *DiskTypesAggregatedListCall) Do() (*DiskTypeAggregatedList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["filter"]; ok {
+		params.Set("filter", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/aggregated/diskTypes")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *DiskTypeAggregatedList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the list of disk type resources grouped by scope.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.diskTypes.aggregatedList",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Filter expression for filtering listed resources.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "500",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "500",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/aggregated/diskTypes",
+	//   "response": {
+	//     "$ref": "DiskTypeAggregatedList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.diskTypes.get":
+
+type DiskTypesGetCall struct {
+	s        *Service
+	project  string
+	zone     string
+	diskType string
+	opt_     map[string]interface{}
+}
+
+// Get: Returns the specified disk type resource.
+func (r *DiskTypesService) Get(project string, zone string, diskType string) *DiskTypesGetCall {
+	c := &DiskTypesGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.zone = zone
+	c.diskType = diskType
+	return c
+}
+
+func (c *DiskTypesGetCall) Do() (*DiskType, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/diskTypes/{diskType}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{zone}", url.QueryEscape(c.zone), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{diskType}", url.QueryEscape(c.diskType), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *DiskType
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the specified disk type resource.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.diskTypes.get",
+	//   "parameterOrder": [
+	//     "project",
+	//     "zone",
+	//     "diskType"
+	//   ],
+	//   "parameters": {
+	//     "diskType": {
+	//       "description": "Name of the disk type resource to return.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "Name of the zone scoping this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/zones/{zone}/diskTypes/{diskType}",
+	//   "response": {
+	//     "$ref": "DiskType"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.diskTypes.list":
+
+type DiskTypesListCall struct {
+	s       *Service
+	project string
+	zone    string
+	opt_    map[string]interface{}
+}
+
+// List: Retrieves the list of disk type resources available to the
+// specified project.
+func (r *DiskTypesService) List(project string, zone string) *DiskTypesListCall {
+	c := &DiskTypesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.zone = zone
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter expression for
+// filtering listed resources.
+func (c *DiskTypesListCall) Filter(filter string) *DiskTypesListCall {
+	c.opt_["filter"] = filter
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum count of
+// results to be returned. Maximum value is 500 and default value is
+// 500.
+func (c *DiskTypesListCall) MaxResults(maxResults int64) *DiskTypesListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Tag returned by a
+// previous list request truncated by maxResults. Used to continue a
+// previous list request.
+func (c *DiskTypesListCall) PageToken(pageToken string) *DiskTypesListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+func (c *DiskTypesListCall) Do() (*DiskTypeList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["filter"]; ok {
+		params.Set("filter", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/diskTypes")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{zone}", url.QueryEscape(c.zone), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *DiskTypeList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the list of disk type resources available to the specified project.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.diskTypes.list",
+	//   "parameterOrder": [
+	//     "project",
+	//     "zone"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Filter expression for filtering listed resources.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "500",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "500",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "Name of the zone scoping this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/zones/{zone}/diskTypes",
+	//   "response": {
+	//     "$ref": "DiskTypeList"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/compute",
@@ -2827,8 +4306,8 @@ func (c *DisksAggregatedListCall) Do() (*DiskAggregatedList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(DiskAggregatedList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *DiskAggregatedList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2926,8 +4405,8 @@ func (c *DisksCreateSnapshotCall) Do() (*Operation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Operation)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3015,8 +4494,8 @@ func (c *DisksDeleteCall) Do() (*Operation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Operation)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3102,8 +4581,8 @@ func (c *DisksGetCall) Do() (*Disk, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Disk)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Disk
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3206,8 +4685,8 @@ func (c *DisksInsertCall) Do() (*Operation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Operation)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3323,8 +4802,8 @@ func (c *DisksListCall) Do() (*DiskList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(DiskList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *DiskList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3419,8 +4898,8 @@ func (c *FirewallsDeleteCall) Do() (*Operation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Operation)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3495,8 +4974,8 @@ func (c *FirewallsGetCall) Do() (*Firewall, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Firewall)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Firewall
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3578,8 +5057,8 @@ func (c *FirewallsInsertCall) Do() (*Operation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Operation)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3679,8 +5158,8 @@ func (c *FirewallsListCall) Do() (*FirewallList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(FirewallList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *FirewallList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3776,8 +5255,8 @@ func (c *FirewallsPatchCall) Do() (*Operation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Operation)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3864,8 +5343,8 @@ func (c *FirewallsUpdateCall) Do() (*Operation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Operation)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3973,8 +5452,8 @@ func (c *ForwardingRulesAggregatedListCall) Do() (*ForwardingRuleAggregatedList,
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(ForwardingRuleAggregatedList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *ForwardingRuleAggregatedList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -4064,8 +5543,8 @@ func (c *ForwardingRulesDeleteCall) Do() (*Operation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Operation)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -4151,8 +5630,8 @@ func (c *ForwardingRulesGetCall) Do() (*ForwardingRule, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(ForwardingRule)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *ForwardingRule
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -4245,8 +5724,8 @@ func (c *ForwardingRulesInsertCall) Do() (*Operation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Operation)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -4357,8 +5836,8 @@ func (c *ForwardingRulesListCall) Do() (*ForwardingRuleList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(ForwardingRuleList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *ForwardingRuleList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -4464,8 +5943,8 @@ func (c *ForwardingRulesSetTargetCall) Do() (*Operation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Operation)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -4502,6 +5981,788 @@ func (c *ForwardingRulesSetTargetCall) Do() (*Operation, error) {
 	//     }
 	//   },
 	//   "path": "{project}/regions/{region}/forwardingRules/{forwardingRule}/setTarget",
+	//   "request": {
+	//     "$ref": "TargetReference"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.globalAddresses.delete":
+
+type GlobalAddressesDeleteCall struct {
+	s       *Service
+	project string
+	address string
+	opt_    map[string]interface{}
+}
+
+// Delete: Deletes the specified address resource.
+func (r *GlobalAddressesService) Delete(project string, address string) *GlobalAddressesDeleteCall {
+	c := &GlobalAddressesDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.address = address
+	return c
+}
+
+func (c *GlobalAddressesDeleteCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/addresses/{address}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{address}", url.QueryEscape(c.address), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the specified address resource.",
+	//   "httpMethod": "DELETE",
+	//   "id": "compute.globalAddresses.delete",
+	//   "parameterOrder": [
+	//     "project",
+	//     "address"
+	//   ],
+	//   "parameters": {
+	//     "address": {
+	//       "description": "Name of the address resource to delete.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/addresses/{address}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.globalAddresses.get":
+
+type GlobalAddressesGetCall struct {
+	s       *Service
+	project string
+	address string
+	opt_    map[string]interface{}
+}
+
+// Get: Returns the specified address resource.
+func (r *GlobalAddressesService) Get(project string, address string) *GlobalAddressesGetCall {
+	c := &GlobalAddressesGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.address = address
+	return c
+}
+
+func (c *GlobalAddressesGetCall) Do() (*Address, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/addresses/{address}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{address}", url.QueryEscape(c.address), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Address
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the specified address resource.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.globalAddresses.get",
+	//   "parameterOrder": [
+	//     "project",
+	//     "address"
+	//   ],
+	//   "parameters": {
+	//     "address": {
+	//       "description": "Name of the address resource to return.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/addresses/{address}",
+	//   "response": {
+	//     "$ref": "Address"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.globalAddresses.insert":
+
+type GlobalAddressesInsertCall struct {
+	s       *Service
+	project string
+	address *Address
+	opt_    map[string]interface{}
+}
+
+// Insert: Creates an address resource in the specified project using
+// the data included in the request.
+func (r *GlobalAddressesService) Insert(project string, address *Address) *GlobalAddressesInsertCall {
+	c := &GlobalAddressesInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.address = address
+	return c
+}
+
+func (c *GlobalAddressesInsertCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.address)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/addresses")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates an address resource in the specified project using the data included in the request.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.globalAddresses.insert",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/addresses",
+	//   "request": {
+	//     "$ref": "Address"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.globalAddresses.list":
+
+type GlobalAddressesListCall struct {
+	s       *Service
+	project string
+	opt_    map[string]interface{}
+}
+
+// List: Retrieves the list of global address resources.
+func (r *GlobalAddressesService) List(project string) *GlobalAddressesListCall {
+	c := &GlobalAddressesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter expression for
+// filtering listed resources.
+func (c *GlobalAddressesListCall) Filter(filter string) *GlobalAddressesListCall {
+	c.opt_["filter"] = filter
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum count of
+// results to be returned. Maximum value is 500 and default value is
+// 500.
+func (c *GlobalAddressesListCall) MaxResults(maxResults int64) *GlobalAddressesListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Tag returned by a
+// previous list request truncated by maxResults. Used to continue a
+// previous list request.
+func (c *GlobalAddressesListCall) PageToken(pageToken string) *GlobalAddressesListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+func (c *GlobalAddressesListCall) Do() (*AddressList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["filter"]; ok {
+		params.Set("filter", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/addresses")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *AddressList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the list of global address resources.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.globalAddresses.list",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Filter expression for filtering listed resources.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "500",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "500",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/addresses",
+	//   "response": {
+	//     "$ref": "AddressList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.globalForwardingRules.delete":
+
+type GlobalForwardingRulesDeleteCall struct {
+	s              *Service
+	project        string
+	forwardingRule string
+	opt_           map[string]interface{}
+}
+
+// Delete: Deletes the specified ForwardingRule resource.
+func (r *GlobalForwardingRulesService) Delete(project string, forwardingRule string) *GlobalForwardingRulesDeleteCall {
+	c := &GlobalForwardingRulesDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.forwardingRule = forwardingRule
+	return c
+}
+
+func (c *GlobalForwardingRulesDeleteCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/forwardingRules/{forwardingRule}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{forwardingRule}", url.QueryEscape(c.forwardingRule), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the specified ForwardingRule resource.",
+	//   "httpMethod": "DELETE",
+	//   "id": "compute.globalForwardingRules.delete",
+	//   "parameterOrder": [
+	//     "project",
+	//     "forwardingRule"
+	//   ],
+	//   "parameters": {
+	//     "forwardingRule": {
+	//       "description": "Name of the ForwardingRule resource to delete.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/forwardingRules/{forwardingRule}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.globalForwardingRules.get":
+
+type GlobalForwardingRulesGetCall struct {
+	s              *Service
+	project        string
+	forwardingRule string
+	opt_           map[string]interface{}
+}
+
+// Get: Returns the specified ForwardingRule resource.
+func (r *GlobalForwardingRulesService) Get(project string, forwardingRule string) *GlobalForwardingRulesGetCall {
+	c := &GlobalForwardingRulesGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.forwardingRule = forwardingRule
+	return c
+}
+
+func (c *GlobalForwardingRulesGetCall) Do() (*ForwardingRule, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/forwardingRules/{forwardingRule}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{forwardingRule}", url.QueryEscape(c.forwardingRule), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *ForwardingRule
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the specified ForwardingRule resource.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.globalForwardingRules.get",
+	//   "parameterOrder": [
+	//     "project",
+	//     "forwardingRule"
+	//   ],
+	//   "parameters": {
+	//     "forwardingRule": {
+	//       "description": "Name of the ForwardingRule resource to return.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/forwardingRules/{forwardingRule}",
+	//   "response": {
+	//     "$ref": "ForwardingRule"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.globalForwardingRules.insert":
+
+type GlobalForwardingRulesInsertCall struct {
+	s              *Service
+	project        string
+	forwardingrule *ForwardingRule
+	opt_           map[string]interface{}
+}
+
+// Insert: Creates a ForwardingRule resource in the specified project
+// and region using the data included in the request.
+func (r *GlobalForwardingRulesService) Insert(project string, forwardingrule *ForwardingRule) *GlobalForwardingRulesInsertCall {
+	c := &GlobalForwardingRulesInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.forwardingrule = forwardingrule
+	return c
+}
+
+func (c *GlobalForwardingRulesInsertCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.forwardingrule)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/forwardingRules")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a ForwardingRule resource in the specified project and region using the data included in the request.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.globalForwardingRules.insert",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/forwardingRules",
+	//   "request": {
+	//     "$ref": "ForwardingRule"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.globalForwardingRules.list":
+
+type GlobalForwardingRulesListCall struct {
+	s       *Service
+	project string
+	opt_    map[string]interface{}
+}
+
+// List: Retrieves the list of ForwardingRule resources available to the
+// specified project.
+func (r *GlobalForwardingRulesService) List(project string) *GlobalForwardingRulesListCall {
+	c := &GlobalForwardingRulesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter expression for
+// filtering listed resources.
+func (c *GlobalForwardingRulesListCall) Filter(filter string) *GlobalForwardingRulesListCall {
+	c.opt_["filter"] = filter
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum count of
+// results to be returned. Maximum value is 500 and default value is
+// 500.
+func (c *GlobalForwardingRulesListCall) MaxResults(maxResults int64) *GlobalForwardingRulesListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Tag returned by a
+// previous list request truncated by maxResults. Used to continue a
+// previous list request.
+func (c *GlobalForwardingRulesListCall) PageToken(pageToken string) *GlobalForwardingRulesListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+func (c *GlobalForwardingRulesListCall) Do() (*ForwardingRuleList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["filter"]; ok {
+		params.Set("filter", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/forwardingRules")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *ForwardingRuleList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the list of ForwardingRule resources available to the specified project.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.globalForwardingRules.list",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Filter expression for filtering listed resources.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "500",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "500",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/forwardingRules",
+	//   "response": {
+	//     "$ref": "ForwardingRuleList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.globalForwardingRules.setTarget":
+
+type GlobalForwardingRulesSetTargetCall struct {
+	s               *Service
+	project         string
+	forwardingRule  string
+	targetreference *TargetReference
+	opt_            map[string]interface{}
+}
+
+// SetTarget: Changes target url for forwarding rule.
+func (r *GlobalForwardingRulesService) SetTarget(project string, forwardingRule string, targetreference *TargetReference) *GlobalForwardingRulesSetTargetCall {
+	c := &GlobalForwardingRulesSetTargetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.forwardingRule = forwardingRule
+	c.targetreference = targetreference
+	return c
+}
+
+func (c *GlobalForwardingRulesSetTargetCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.targetreference)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/forwardingRules/{forwardingRule}/setTarget")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{forwardingRule}", url.QueryEscape(c.forwardingRule), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Changes target url for forwarding rule.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.globalForwardingRules.setTarget",
+	//   "parameterOrder": [
+	//     "project",
+	//     "forwardingRule"
+	//   ],
+	//   "parameters": {
+	//     "forwardingRule": {
+	//       "description": "Name of the ForwardingRule resource in which target is to be set.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/forwardingRules/{forwardingRule}/setTarget",
 	//   "request": {
 	//     "$ref": "TargetReference"
 	//   },
@@ -4581,8 +6842,8 @@ func (c *GlobalOperationsAggregatedListCall) Do() (*OperationAggregatedList, err
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(OperationAggregatedList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *OperationAggregatedList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -4738,8 +6999,8 @@ func (c *GlobalOperationsGetCall) Do() (*Operation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Operation)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -4845,8 +7106,8 @@ func (c *GlobalOperationsListCall) Do() (*OperationList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(OperationList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *OperationList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -4933,8 +7194,8 @@ func (c *HttpHealthChecksDeleteCall) Do() (*Operation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Operation)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -5009,8 +7270,8 @@ func (c *HttpHealthChecksGetCall) Do() (*HttpHealthCheck, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(HttpHealthCheck)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *HttpHealthCheck
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -5092,8 +7353,8 @@ func (c *HttpHealthChecksInsertCall) Do() (*Operation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Operation)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -5193,8 +7454,8 @@ func (c *HttpHealthChecksListCall) Do() (*HttpHealthCheckList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(HttpHealthCheckList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *HttpHealthCheckList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -5291,8 +7552,8 @@ func (c *HttpHealthChecksPatchCall) Do() (*Operation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Operation)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -5379,8 +7640,8 @@ func (c *HttpHealthChecksUpdateCall) Do() (*Operation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Operation)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -5458,8 +7719,8 @@ func (c *ImagesDeleteCall) Do() (*Operation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Operation)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -5543,8 +7804,8 @@ func (c *ImagesDeprecateCall) Do() (*Operation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Operation)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -5622,8 +7883,8 @@ func (c *ImagesGetCall) Do() (*Image, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Image)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Image
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -5705,8 +7966,8 @@ func (c *ImagesInsertCall) Do() (*Operation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Operation)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -5809,8 +8070,8 @@ func (c *ImagesListCall) Do() (*ImageList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(ImageList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *ImageList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -5912,8 +8173,8 @@ func (c *InstancesAddAccessConfigCall) Do() (*Operation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Operation)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -6035,8 +8296,8 @@ func (c *InstancesAggregatedListCall) Do() (*InstanceAggregatedList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(InstanceAggregatedList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *InstanceAggregatedList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -6133,8 +8394,8 @@ func (c *InstancesAttachDiskCall) Do() (*Operation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Operation)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -6223,8 +8484,8 @@ func (c *InstancesDeleteCall) Do() (*Operation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Operation)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -6317,8 +8578,8 @@ func (c *InstancesDeleteAccessConfigCall) Do() (*Operation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Operation)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -6421,8 +8682,8 @@ func (c *InstancesDetachDiskCall) Do() (*Operation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Operation)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -6516,8 +8777,8 @@ func (c *InstancesGetCall) Do() (*Instance, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Instance)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Instance
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -6605,8 +8866,8 @@ func (c *InstancesGetSerialPortOutputCall) Do() (*SerialPortOutput, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(SerialPortOutput)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *SerialPortOutput
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -6699,8 +8960,8 @@ func (c *InstancesInsertCall) Do() (*Operation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Operation)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -6811,8 +9072,8 @@ func (c *InstancesListCall) Do() (*InstanceList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(InstanceList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *InstanceList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -6910,8 +9171,8 @@ func (c *InstancesResetCall) Do() (*Operation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Operation)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -7004,8 +9265,8 @@ func (c *InstancesSetDiskAutoDeleteCall) Do() (*Operation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Operation)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -7115,8 +9376,8 @@ func (c *InstancesSetMetadataCall) Do() (*Operation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Operation)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -7213,8 +9474,8 @@ func (c *InstancesSetSchedulingCall) Do() (*Operation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Operation)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -7312,8 +9573,8 @@ func (c *InstancesSetTagsCall) Do() (*Operation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Operation)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -7429,8 +9690,8 @@ func (c *MachineTypesAggregatedListCall) Do() (*MachineTypeAggregatedList, error
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(MachineTypeAggregatedList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *MachineTypeAggregatedList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -7520,8 +9781,8 @@ func (c *MachineTypesGetCall) Do() (*MachineType, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(MachineType)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *MachineType
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -7638,8 +9899,8 @@ func (c *MachineTypesListCall) Do() (*MachineTypeList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(MachineTypeList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *MachineTypeList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -7734,8 +9995,8 @@ func (c *NetworksDeleteCall) Do() (*Operation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Operation)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -7810,8 +10071,8 @@ func (c *NetworksGetCall) Do() (*Network, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Network)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Network
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -7893,8 +10154,8 @@ func (c *NetworksInsertCall) Do() (*Operation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Operation)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -7994,8 +10255,8 @@ func (c *NetworksListCall) Do() (*NetworkList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(NetworkList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *NetworkList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -8079,8 +10340,8 @@ func (c *ProjectsGetCall) Do() (*Project, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Project)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Project
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -8154,8 +10415,8 @@ func (c *ProjectsSetCommonInstanceMetadataCall) Do() (*Operation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Operation)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -8184,6 +10445,85 @@ func (c *ProjectsSetCommonInstanceMetadataCall) Do() (*Operation, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.projects.setUsageExportBucket":
+
+type ProjectsSetUsageExportBucketCall struct {
+	s                   *Service
+	project             string
+	usageexportlocation *UsageExportLocation
+	opt_                map[string]interface{}
+}
+
+// SetUsageExportBucket: Sets usage export location
+func (r *ProjectsService) SetUsageExportBucket(project string, usageexportlocation *UsageExportLocation) *ProjectsSetUsageExportBucketCall {
+	c := &ProjectsSetUsageExportBucketCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.usageexportlocation = usageexportlocation
+	return c
+}
+
+func (c *ProjectsSetUsageExportBucketCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.usageexportlocation)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/setUsageExportBucket")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Sets usage export location",
+	//   "httpMethod": "POST",
+	//   "id": "compute.projects.setUsageExportBucket",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/setUsageExportBucket",
+	//   "request": {
+	//     "$ref": "UsageExportLocation"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/devstorage.full_control",
+	//     "https://www.googleapis.com/auth/devstorage.read_only",
+	//     "https://www.googleapis.com/auth/devstorage.read_write"
 	//   ]
 	// }
 
@@ -8308,8 +10648,8 @@ func (c *RegionOperationsGetCall) Do() (*Operation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Operation)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -8426,8 +10766,8 @@ func (c *RegionOperationsListCall) Do() (*OperationList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(OperationList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *OperationList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -8522,8 +10862,8 @@ func (c *RegionsGetCall) Do() (*Region, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Region)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Region
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -8629,8 +10969,8 @@ func (c *RegionsListCall) Do() (*RegionList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(RegionList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *RegionList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -8717,8 +11057,8 @@ func (c *RoutesDeleteCall) Do() (*Operation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Operation)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -8793,8 +11133,8 @@ func (c *RoutesGetCall) Do() (*Route, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Route)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Route
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -8876,8 +11216,8 @@ func (c *RoutesInsertCall) Do() (*Operation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Operation)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -8977,8 +11317,8 @@ func (c *RoutesListCall) Do() (*RouteList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(RouteList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *RouteList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -9065,8 +11405,8 @@ func (c *SnapshotsDeleteCall) Do() (*Operation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Operation)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -9141,8 +11481,8 @@ func (c *SnapshotsGetCall) Do() (*Snapshot, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Snapshot)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Snapshot
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -9248,8 +11588,8 @@ func (c *SnapshotsListCall) Do() (*SnapshotList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(SnapshotList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *SnapshotList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -9295,6 +11635,441 @@ func (c *SnapshotsListCall) Do() (*SnapshotList, error) {
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.targetHttpProxies.delete":
+
+type TargetHttpProxiesDeleteCall struct {
+	s               *Service
+	project         string
+	targetHttpProxy string
+	opt_            map[string]interface{}
+}
+
+// Delete: Deletes the specified TargetHttpProxy resource.
+func (r *TargetHttpProxiesService) Delete(project string, targetHttpProxy string) *TargetHttpProxiesDeleteCall {
+	c := &TargetHttpProxiesDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.targetHttpProxy = targetHttpProxy
+	return c
+}
+
+func (c *TargetHttpProxiesDeleteCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/targetHttpProxies/{targetHttpProxy}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{targetHttpProxy}", url.QueryEscape(c.targetHttpProxy), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the specified TargetHttpProxy resource.",
+	//   "httpMethod": "DELETE",
+	//   "id": "compute.targetHttpProxies.delete",
+	//   "parameterOrder": [
+	//     "project",
+	//     "targetHttpProxy"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "targetHttpProxy": {
+	//       "description": "Name of the TargetHttpProxy resource to delete.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/targetHttpProxies/{targetHttpProxy}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.targetHttpProxies.get":
+
+type TargetHttpProxiesGetCall struct {
+	s               *Service
+	project         string
+	targetHttpProxy string
+	opt_            map[string]interface{}
+}
+
+// Get: Returns the specified TargetHttpProxy resource.
+func (r *TargetHttpProxiesService) Get(project string, targetHttpProxy string) *TargetHttpProxiesGetCall {
+	c := &TargetHttpProxiesGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.targetHttpProxy = targetHttpProxy
+	return c
+}
+
+func (c *TargetHttpProxiesGetCall) Do() (*TargetHttpProxy, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/targetHttpProxies/{targetHttpProxy}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{targetHttpProxy}", url.QueryEscape(c.targetHttpProxy), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *TargetHttpProxy
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the specified TargetHttpProxy resource.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.targetHttpProxies.get",
+	//   "parameterOrder": [
+	//     "project",
+	//     "targetHttpProxy"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "targetHttpProxy": {
+	//       "description": "Name of the TargetHttpProxy resource to return.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/targetHttpProxies/{targetHttpProxy}",
+	//   "response": {
+	//     "$ref": "TargetHttpProxy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.targetHttpProxies.insert":
+
+type TargetHttpProxiesInsertCall struct {
+	s               *Service
+	project         string
+	targethttpproxy *TargetHttpProxy
+	opt_            map[string]interface{}
+}
+
+// Insert: Creates a TargetHttpProxy resource in the specified project
+// using the data included in the request.
+func (r *TargetHttpProxiesService) Insert(project string, targethttpproxy *TargetHttpProxy) *TargetHttpProxiesInsertCall {
+	c := &TargetHttpProxiesInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.targethttpproxy = targethttpproxy
+	return c
+}
+
+func (c *TargetHttpProxiesInsertCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.targethttpproxy)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/targetHttpProxies")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a TargetHttpProxy resource in the specified project using the data included in the request.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.targetHttpProxies.insert",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/targetHttpProxies",
+	//   "request": {
+	//     "$ref": "TargetHttpProxy"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.targetHttpProxies.list":
+
+type TargetHttpProxiesListCall struct {
+	s       *Service
+	project string
+	opt_    map[string]interface{}
+}
+
+// List: Retrieves the list of TargetHttpProxy resources available to
+// the specified project.
+func (r *TargetHttpProxiesService) List(project string) *TargetHttpProxiesListCall {
+	c := &TargetHttpProxiesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter expression for
+// filtering listed resources.
+func (c *TargetHttpProxiesListCall) Filter(filter string) *TargetHttpProxiesListCall {
+	c.opt_["filter"] = filter
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum count of
+// results to be returned. Maximum value is 500 and default value is
+// 500.
+func (c *TargetHttpProxiesListCall) MaxResults(maxResults int64) *TargetHttpProxiesListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Tag returned by a
+// previous list request truncated by maxResults. Used to continue a
+// previous list request.
+func (c *TargetHttpProxiesListCall) PageToken(pageToken string) *TargetHttpProxiesListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+func (c *TargetHttpProxiesListCall) Do() (*TargetHttpProxyList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["filter"]; ok {
+		params.Set("filter", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/targetHttpProxies")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *TargetHttpProxyList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the list of TargetHttpProxy resources available to the specified project.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.targetHttpProxies.list",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Filter expression for filtering listed resources.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "500",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "500",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/targetHttpProxies",
+	//   "response": {
+	//     "$ref": "TargetHttpProxyList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.targetHttpProxies.setUrlMap":
+
+type TargetHttpProxiesSetUrlMapCall struct {
+	s               *Service
+	project         string
+	targetHttpProxy string
+	urlmapreference *UrlMapReference
+	opt_            map[string]interface{}
+}
+
+// SetUrlMap: Changes the URL map for TargetHttpProxy.
+func (r *TargetHttpProxiesService) SetUrlMap(project string, targetHttpProxy string, urlmapreference *UrlMapReference) *TargetHttpProxiesSetUrlMapCall {
+	c := &TargetHttpProxiesSetUrlMapCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.targetHttpProxy = targetHttpProxy
+	c.urlmapreference = urlmapreference
+	return c
+}
+
+func (c *TargetHttpProxiesSetUrlMapCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.urlmapreference)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/targetHttpProxies/{targetHttpProxy}/setUrlMap")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{targetHttpProxy}", url.QueryEscape(c.targetHttpProxy), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Changes the URL map for TargetHttpProxy.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.targetHttpProxies.setUrlMap",
+	//   "parameterOrder": [
+	//     "project",
+	//     "targetHttpProxy"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "targetHttpProxy": {
+	//       "description": "Name of the TargetHttpProxy resource whose URL map is to be set.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/targetHttpProxies/{targetHttpProxy}/setUrlMap",
+	//   "request": {
+	//     "$ref": "UrlMapReference"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
 
@@ -9366,8 +12141,8 @@ func (c *TargetInstancesAggregatedListCall) Do() (*TargetInstanceAggregatedList,
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(TargetInstanceAggregatedList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *TargetInstanceAggregatedList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -9457,8 +12232,8 @@ func (c *TargetInstancesDeleteCall) Do() (*Operation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Operation)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -9544,8 +12319,8 @@ func (c *TargetInstancesGetCall) Do() (*TargetInstance, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(TargetInstance)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *TargetInstance
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -9638,8 +12413,8 @@ func (c *TargetInstancesInsertCall) Do() (*Operation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Operation)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -9750,8 +12525,8 @@ func (c *TargetInstancesListCall) Do() (*TargetInstanceList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(TargetInstanceList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *TargetInstanceList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -9857,8 +12632,8 @@ func (c *TargetPoolsAddHealthCheckCall) Do() (*Operation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Operation)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -9954,8 +12729,8 @@ func (c *TargetPoolsAddInstanceCall) Do() (*Operation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Operation)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -10069,8 +12844,8 @@ func (c *TargetPoolsAggregatedListCall) Do() (*TargetPoolAggregatedList, error) 
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(TargetPoolAggregatedList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *TargetPoolAggregatedList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -10160,8 +12935,8 @@ func (c *TargetPoolsDeleteCall) Do() (*Operation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Operation)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -10247,8 +13022,8 @@ func (c *TargetPoolsGetCall) Do() (*TargetPool, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(TargetPool)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *TargetPool
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -10344,8 +13119,8 @@ func (c *TargetPoolsGetHealthCall) Do() (*TargetPoolInstanceHealth, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(TargetPoolInstanceHealth)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *TargetPoolInstanceHealth
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -10440,8 +13215,8 @@ func (c *TargetPoolsInsertCall) Do() (*Operation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Operation)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -10552,8 +13327,8 @@ func (c *TargetPoolsListCall) Do() (*TargetPoolList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(TargetPoolList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *TargetPoolList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -10659,8 +13434,8 @@ func (c *TargetPoolsRemoveHealthCheckCall) Do() (*Operation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Operation)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -10756,8 +13531,8 @@ func (c *TargetPoolsRemoveInstanceCall) Do() (*Operation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Operation)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -10863,8 +13638,8 @@ func (c *TargetPoolsSetBackupCall) Do() (*Operation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Operation)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -10912,6 +13687,618 @@ func (c *TargetPoolsSetBackupCall) Do() (*Operation, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.urlMaps.delete":
+
+type UrlMapsDeleteCall struct {
+	s       *Service
+	project string
+	urlMap  string
+	opt_    map[string]interface{}
+}
+
+// Delete: Deletes the specified UrlMap resource.
+func (r *UrlMapsService) Delete(project string, urlMap string) *UrlMapsDeleteCall {
+	c := &UrlMapsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.urlMap = urlMap
+	return c
+}
+
+func (c *UrlMapsDeleteCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/urlMaps/{urlMap}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{urlMap}", url.QueryEscape(c.urlMap), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the specified UrlMap resource.",
+	//   "httpMethod": "DELETE",
+	//   "id": "compute.urlMaps.delete",
+	//   "parameterOrder": [
+	//     "project",
+	//     "urlMap"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "urlMap": {
+	//       "description": "Name of the UrlMap resource to delete.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/urlMaps/{urlMap}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.urlMaps.get":
+
+type UrlMapsGetCall struct {
+	s       *Service
+	project string
+	urlMap  string
+	opt_    map[string]interface{}
+}
+
+// Get: Returns the specified UrlMap resource.
+func (r *UrlMapsService) Get(project string, urlMap string) *UrlMapsGetCall {
+	c := &UrlMapsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.urlMap = urlMap
+	return c
+}
+
+func (c *UrlMapsGetCall) Do() (*UrlMap, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/urlMaps/{urlMap}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{urlMap}", url.QueryEscape(c.urlMap), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *UrlMap
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the specified UrlMap resource.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.urlMaps.get",
+	//   "parameterOrder": [
+	//     "project",
+	//     "urlMap"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "urlMap": {
+	//       "description": "Name of the UrlMap resource to return.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/urlMaps/{urlMap}",
+	//   "response": {
+	//     "$ref": "UrlMap"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.urlMaps.insert":
+
+type UrlMapsInsertCall struct {
+	s       *Service
+	project string
+	urlmap  *UrlMap
+	opt_    map[string]interface{}
+}
+
+// Insert: Creates a UrlMap resource in the specified project using the
+// data included in the request.
+func (r *UrlMapsService) Insert(project string, urlmap *UrlMap) *UrlMapsInsertCall {
+	c := &UrlMapsInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.urlmap = urlmap
+	return c
+}
+
+func (c *UrlMapsInsertCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.urlmap)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/urlMaps")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a UrlMap resource in the specified project using the data included in the request.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.urlMaps.insert",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/urlMaps",
+	//   "request": {
+	//     "$ref": "UrlMap"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.urlMaps.list":
+
+type UrlMapsListCall struct {
+	s       *Service
+	project string
+	opt_    map[string]interface{}
+}
+
+// List: Retrieves the list of UrlMap resources available to the
+// specified project.
+func (r *UrlMapsService) List(project string) *UrlMapsListCall {
+	c := &UrlMapsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter expression for
+// filtering listed resources.
+func (c *UrlMapsListCall) Filter(filter string) *UrlMapsListCall {
+	c.opt_["filter"] = filter
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum count of
+// results to be returned. Maximum value is 500 and default value is
+// 500.
+func (c *UrlMapsListCall) MaxResults(maxResults int64) *UrlMapsListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Tag returned by a
+// previous list request truncated by maxResults. Used to continue a
+// previous list request.
+func (c *UrlMapsListCall) PageToken(pageToken string) *UrlMapsListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+func (c *UrlMapsListCall) Do() (*UrlMapList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["filter"]; ok {
+		params.Set("filter", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/urlMaps")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *UrlMapList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the list of UrlMap resources available to the specified project.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.urlMaps.list",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Filter expression for filtering listed resources.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "500",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "500",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/urlMaps",
+	//   "response": {
+	//     "$ref": "UrlMapList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.urlMaps.patch":
+
+type UrlMapsPatchCall struct {
+	s       *Service
+	project string
+	urlMap  string
+	urlmap  *UrlMap
+	opt_    map[string]interface{}
+}
+
+// Patch: Update the entire content of the UrlMap resource. This method
+// supports patch semantics.
+func (r *UrlMapsService) Patch(project string, urlMap string, urlmap *UrlMap) *UrlMapsPatchCall {
+	c := &UrlMapsPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.urlMap = urlMap
+	c.urlmap = urlmap
+	return c
+}
+
+func (c *UrlMapsPatchCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.urlmap)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/urlMaps/{urlMap}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{urlMap}", url.QueryEscape(c.urlMap), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Update the entire content of the UrlMap resource. This method supports patch semantics.",
+	//   "httpMethod": "PATCH",
+	//   "id": "compute.urlMaps.patch",
+	//   "parameterOrder": [
+	//     "project",
+	//     "urlMap"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "urlMap": {
+	//       "description": "Name of the UrlMap resource to update.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/urlMaps/{urlMap}",
+	//   "request": {
+	//     "$ref": "UrlMap"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.urlMaps.update":
+
+type UrlMapsUpdateCall struct {
+	s       *Service
+	project string
+	urlMap  string
+	urlmap  *UrlMap
+	opt_    map[string]interface{}
+}
+
+// Update: Update the entire content of the UrlMap resource.
+func (r *UrlMapsService) Update(project string, urlMap string, urlmap *UrlMap) *UrlMapsUpdateCall {
+	c := &UrlMapsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.urlMap = urlMap
+	c.urlmap = urlmap
+	return c
+}
+
+func (c *UrlMapsUpdateCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.urlmap)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/urlMaps/{urlMap}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{urlMap}", url.QueryEscape(c.urlMap), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Update the entire content of the UrlMap resource.",
+	//   "httpMethod": "PUT",
+	//   "id": "compute.urlMaps.update",
+	//   "parameterOrder": [
+	//     "project",
+	//     "urlMap"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "urlMap": {
+	//       "description": "Name of the UrlMap resource to update.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/urlMaps/{urlMap}",
+	//   "request": {
+	//     "$ref": "UrlMap"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.urlMaps.validate":
+
+type UrlMapsValidateCall struct {
+	s                      *Service
+	project                string
+	urlMap                 string
+	urlmapsvalidaterequest *UrlMapsValidateRequest
+	opt_                   map[string]interface{}
+}
+
+// Validate: Run static validation for the UrlMap. In particular, the
+// tests of the provided UrlMap will be run. Calling this method does
+// NOT create the UrlMap.
+func (r *UrlMapsService) Validate(project string, urlMap string, urlmapsvalidaterequest *UrlMapsValidateRequest) *UrlMapsValidateCall {
+	c := &UrlMapsValidateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.urlMap = urlMap
+	c.urlmapsvalidaterequest = urlmapsvalidaterequest
+	return c
+}
+
+func (c *UrlMapsValidateCall) Do() (*UrlMapsValidateResponse, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.urlmapsvalidaterequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/urlMaps/{urlMap}/validate")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{urlMap}", url.QueryEscape(c.urlMap), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *UrlMapsValidateResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Run static validation for the UrlMap. In particular, the tests of the provided UrlMap will be run. Calling this method does NOT create the UrlMap.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.urlMaps.validate",
+	//   "parameterOrder": [
+	//     "project",
+	//     "urlMap"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "urlMap": {
+	//       "description": "Name of the UrlMap resource to be validated as.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/urlMaps/{urlMap}/validate",
+	//   "request": {
+	//     "$ref": "UrlMapsValidateRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "UrlMapsValidateResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/compute"
@@ -11039,8 +14426,8 @@ func (c *ZoneOperationsGetCall) Do() (*Operation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Operation)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -11157,8 +14544,8 @@ func (c *ZoneOperationsListCall) Do() (*OperationList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(OperationList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *OperationList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -11253,8 +14640,8 @@ func (c *ZonesGetCall) Do() (*Zone, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Zone)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Zone
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -11360,8 +14747,8 @@ func (c *ZonesListCall) Do() (*ZoneList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(ZoneList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *ZoneList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil

@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"5M1WkxnZyJhziV-cW1kdtwscs8E/cLXdvPSJ73RAjLVWqio6ofbcpRI\"",
+ "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/P_6QqcENeFe4mOWvklmxjxxN35k\"",
  "discoveryVersion": "v1",
  "id": "mirror:v1",
  "name": "mirror",
@@ -448,6 +448,26 @@
     }
    }
   },
+  "Setting": {
+   "id": "Setting",
+   "type": "object",
+   "description": "A setting for Glass.",
+   "properties": {
+    "id": {
+     "type": "string",
+     "description": "The setting's ID. The following IDs are valid:  \n- locale - The key to the user’s language/locale (BCP 47 identifier) that Glassware should use to render localized content."
+    },
+    "kind": {
+     "type": "string",
+     "description": "The type of resource. This is always mirror#setting.",
+     "default": "mirror#setting"
+    },
+    "value": {
+     "type": "string",
+     "description": "The setting value, as a string."
+    }
+   }
+  },
   "Subscription": {
    "id": "Subscription",
    "type": "object",
@@ -465,7 +485,7 @@
     },
     "collection": {
      "type": "string",
-     "description": "The collection to subscribe to. Allowed values are:  \n- timeline - Changes in the timeline including insertion, deletion, and updates. \n- locations - Location updates.",
+     "description": "The collection to subscribe to. Allowed values are:  \n- timeline - Changes in the timeline including insertion, deletion, and updates. \n- locations - Location updates. \n- settings - Settings updates.",
      "annotations": {
       "required": [
        "mirror.subscriptions.insert",
@@ -907,6 +927,33 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/glass.location",
+      "https://www.googleapis.com/auth/glass.timeline"
+     ]
+    }
+   }
+  },
+  "settings": {
+   "methods": {
+    "get": {
+     "id": "mirror.settings.get",
+     "path": "settings/{id}",
+     "httpMethod": "GET",
+     "description": "Gets a single setting by ID.",
+     "parameters": {
+      "id": {
+       "type": "string",
+       "description": "The ID of the setting. The following IDs are valid: \n- locale - The key to the user’s language/locale (BCP 47 identifier) that Glassware should use to render localized content.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "id"
+     ],
+     "response": {
+      "$ref": "Setting"
+     },
+     "scopes": [
       "https://www.googleapis.com/auth/glass.timeline"
      ]
     }

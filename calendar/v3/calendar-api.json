@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"kEk3sFj6Ef5_yR1-H3bAO6qw9mI/AvFzDvrMkTggQcj9dKzw6cVhrpQ\"",
+ "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/icy_kevyvyjgCKjN6s1gb_9TUZs\"",
  "discoveryVersion": "v1",
  "id": "calendar:v3",
  "name": "calendar",
@@ -100,7 +100,11 @@
     },
     "nextPageToken": {
      "type": "string",
-     "description": "Token used to access the next page of this result. Omitted if no further results are available."
+     "description": "Token used to access the next page of this result. Omitted if no further results are available, in which case nextSyncToken is provided."
+    },
+    "nextSyncToken": {
+     "type": "string",
+     "description": "Token used at a later point in time to retrieve only the entries that have changed since this result was returned. Omitted if further results are available, in which case nextPageToken is provided."
     }
    }
   },
@@ -218,7 +222,11 @@
     },
     "nextPageToken": {
      "type": "string",
-     "description": "Token used to access the next page of this result."
+     "description": "Token used to access the next page of this result. Omitted if no further results are available, in which case nextSyncToken is provided."
+    },
+    "nextSyncToken": {
+     "type": "string",
+     "description": "Token used at a later point in time to retrieve only the entries that have changed since this result was returned. Omitted if further results are available, in which case nextPageToken is provided."
     }
    }
   },
@@ -232,11 +240,11 @@
     },
     "backgroundColor": {
      "type": "string",
-     "description": "The main color of the calendar in the format '#0088aa'. This property supersedes the index-based colorId property. Optional."
+     "description": "The main color of the calendar in the hexadecimal format \"#0088aa\". This property supersedes the index-based colorId property. Optional."
     },
     "colorId": {
      "type": "string",
-     "description": "The color of the calendar. This is an ID referring to an entry in the \"calendar\" section of the colors definition (see the \"colors\" endpoint). Optional."
+     "description": "The color of the calendar. This is an ID referring to an entry in the calendar section of the colors definition (see the colors endpoint). Optional."
     },
     "defaultReminders": {
      "type": "array",
@@ -244,6 +252,11 @@
      "items": {
       "$ref": "EventReminder"
      }
+    },
+    "deleted": {
+     "type": "boolean",
+     "description": "Whether this calendar list entry has been deleted from the calendar list. Read-only. Optional. The default is False.",
+     "default": "false"
     },
     "description": {
      "type": "string",
@@ -255,7 +268,7 @@
     },
     "foregroundColor": {
      "type": "string",
-     "description": "The foreground color of the calendar in the format '#ffffff'. This property supersedes the index-based colorId property. Optional."
+     "description": "The foreground color of the calendar in the hexadecimal format \"#ffffff\". This property supersedes the index-based colorId property. Optional."
     },
     "hidden": {
      "type": "boolean",
@@ -415,7 +428,7 @@
    "properties": {
     "calendar": {
      "type": "object",
-     "description": "Palette of calendar colors, mapping from the color ID to its definition. An 'calendarListEntry' resource refers to one of these color IDs in its 'color' field. Read-only.",
+     "description": "Palette of calendar colors, mapping from the color ID to its definition. A calendarListEntry resource refers to one of these color IDs in its color field. Read-only.",
      "additionalProperties": {
       "$ref": "ColorDefinition",
       "description": "A calendar color defintion."
@@ -423,7 +436,7 @@
     },
     "event": {
      "type": "object",
-     "description": "Palette of event colors, mapping from the color ID to its definition. An 'event' resource may refer to one of these color IDs in its 'color' field. Read-only.",
+     "description": "Palette of event colors, mapping from the color ID to its definition. An event resource may refer to one of these color IDs in its color field. Read-only.",
      "additionalProperties": {
       "$ref": "ColorDefinition",
       "description": "An event color definition."
@@ -473,12 +486,12 @@
     },
     "attendeesOmitted": {
      "type": "boolean",
-     "description": "Whether attendees may have been omitted from the event's representation. When retrieving an event, this may be due to a restriction specified by the 'maxAttendee' query parameter. When updating an event, this can be used to only update the participant's response. Optional. The default is False.",
+     "description": "Whether attendees may have been omitted from the event's representation. When retrieving an event, this may be due to a restriction specified by the maxAttendee query parameter. When updating an event, this can be used to only update the participant's response. Optional. The default is False.",
      "default": "false"
     },
     "colorId": {
      "type": "string",
-     "description": "The color of the event. This is an ID referring to an entry in the \"event\" section of the colors definition (see the \"colors\" endpoint). Optional."
+     "description": "The color of the event. This is an ID referring to an entry in the event section of the colors definition (see the  colors endpoint). Optional."
     },
     "created": {
      "type": "string",
@@ -650,7 +663,7 @@
     },
     "organizer": {
      "type": "object",
-     "description": "The organizer of the event. If the organizer is also an attendee, this is indicated with a separate entry in 'attendees' with the 'organizer' field set to True. To change the organizer, use the \"move\" operation. Read-only, except when importing an event.",
+     "description": "The organizer of the event. If the organizer is also an attendee, this is indicated with a separate entry in attendees with the organizer field set to True. To change the organizer, use the move operation. Read-only, except when importing an event.",
      "properties": {
       "displayName": {
        "type": "string",
@@ -828,7 +841,7 @@
     },
     "dateTime": {
      "type": "string",
-     "description": "The time, as a combined date-time value (formatted according to RFC 3339). A time zone offset is required unless a time zone is explicitly specified in 'timeZone'.",
+     "description": "The time, as a combined date-time value (formatted according to RFC 3339). A time zone offset is required unless a time zone is explicitly specified in timeZone.",
      "format": "date-time"
     },
     "timeZone": {
@@ -880,7 +893,7 @@
     },
     "defaultReminders": {
      "type": "array",
-     "description": "The default reminders on the calendar for the authenticated user. These reminders apply to all events on this calendar that do not explicitly override them (i.e. do not have 'reminders.useDefault' set to 'true').",
+     "description": "The default reminders on the calendar for the authenticated user. These reminders apply to all events on this calendar that do not explicitly override them (i.e. do not have reminders.useDefault set to True).",
      "items": {
       "$ref": "EventReminder"
      }
@@ -907,7 +920,11 @@
     },
     "nextPageToken": {
      "type": "string",
-     "description": "Token used to access the next page of this result. Omitted if no further results are available."
+     "description": "Token used to access the next page of this result. Omitted if no further results are available, in which case nextSyncToken is provided."
+    },
+    "nextSyncToken": {
+     "type": "string",
+     "description": "Token used at a later point in time to retrieve only the entries that have changed since this result was returned. Omitted if further results are available, in which case nextPageToken is provided."
     },
     "summary": {
      "type": "string",
@@ -1091,6 +1108,14 @@
      "type": "string",
      "description": "Type of the collection (\"calendar#settings\").",
      "default": "calendar#settings"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "Token used to access the next page of this result. Omitted if no further results are available, in which case nextSyncToken is provided."
+    },
+    "nextSyncToken": {
+     "type": "string",
+     "description": "Token used at a later point in time to retrieve only the entries that have changed since this result was returned. Omitted if further results are available, in which case nextPageToken is provided."
     }
    }
   },
@@ -1209,6 +1234,28 @@
        "description": "Calendar identifier.",
        "required": true,
        "location": "path"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "Maximum number of entries returned on one result page. By default the value is 100 entries. The page size can never be larger than 250 entries. Optional.",
+       "format": "int32",
+       "minimum": "1",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Token specifying which result page to return. Optional.",
+       "location": "query"
+      },
+      "showDeleted": {
+       "type": "boolean",
+       "description": "Whether to include deleted ACLs in the result. Deleted ACLs are represented by role equal to \"none\". Deleted ACLs will always be included if syncToken is provided. Optional. The default is False.",
+       "location": "query"
+      },
+      "syncToken": {
+       "type": "string",
+       "description": "Token obtained from the nextSyncToken field returned on the last page of results from the previous list request. It makes the result of this list request contain only entries that have changed since then. All entries deleted since the previous list request will always be in the result set and it is not allowed to set showDeleted to False.\nIf the syncToken expires, the server will respond with a 410 GONE response code and the client should clear its storage and perform a full synchronization without any syncToken.\nLearn more about incremental synchronization.\nOptional. The default is to return all entries.",
+       "location": "query"
       }
      },
      "parameterOrder": [
@@ -1287,6 +1334,56 @@
      "scopes": [
       "https://www.googleapis.com/auth/calendar"
      ]
+    },
+    "watch": {
+     "id": "calendar.acl.watch",
+     "path": "calendars/{calendarId}/acl/watch",
+     "httpMethod": "POST",
+     "description": "Watch for changes to ACL resources.",
+     "parameters": {
+      "calendarId": {
+       "type": "string",
+       "description": "Calendar identifier.",
+       "required": true,
+       "location": "path"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "Maximum number of entries returned on one result page. By default the value is 100 entries. The page size can never be larger than 250 entries. Optional.",
+       "format": "int32",
+       "minimum": "1",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Token specifying which result page to return. Optional.",
+       "location": "query"
+      },
+      "showDeleted": {
+       "type": "boolean",
+       "description": "Whether to include deleted ACLs in the result. Deleted ACLs are represented by role equal to \"none\". Deleted ACLs will always be included if syncToken is provided. Optional. The default is False.",
+       "location": "query"
+      },
+      "syncToken": {
+       "type": "string",
+       "description": "Token obtained from the nextSyncToken field returned on the last page of results from the previous list request. It makes the result of this list request contain only entries that have changed since then. All entries deleted since the previous list request will always be in the result set and it is not allowed to set showDeleted to False.\nIf the syncToken expires, the server will respond with a 410 GONE response code and the client should clear its storage and perform a full synchronization without any syncToken.\nLearn more about incremental synchronization.\nOptional. The default is to return all entries.",
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "calendarId"
+     ],
+     "request": {
+      "$ref": "Channel",
+      "parameterName": "resource"
+     },
+     "response": {
+      "$ref": "Channel"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/calendar"
+     ],
+     "supportsSubscription": true
     }
    }
   },
@@ -1366,7 +1463,7 @@
      "parameters": {
       "maxResults": {
        "type": "integer",
-       "description": "Maximum number of entries returned on one result page. Optional.",
+       "description": "Maximum number of entries returned on one result page. By default the value is 100 entries. The page size can never be larger than 250 entries. Optional.",
        "format": "int32",
        "minimum": "1",
        "location": "query"
@@ -1393,9 +1490,19 @@
        "description": "Token specifying which result page to return. Optional.",
        "location": "query"
       },
+      "showDeleted": {
+       "type": "boolean",
+       "description": "Whether to include deleted calendar list entries in the result. Optional. The default is False.",
+       "location": "query"
+      },
       "showHidden": {
        "type": "boolean",
        "description": "Whether to show hidden entries. Optional. The default is False.",
+       "location": "query"
+      },
+      "syncToken": {
+       "type": "string",
+       "description": "Token obtained from the nextSyncToken field returned on the last page of results from the previous list request. It makes the result of this list request contain only entries that have changed since then. If only read-only fields such as calendar properties or ACLs have changed, the entry won't be returned. All entries deleted and hidden since the previous list request will always be in the result set and it is not allowed to set showDeleted neither showHidden to False.\nTo ensure client state consistency minAccessRole query parameter cannot be specified together with nextSyncToken.\nIf the syncToken expires, the server will respond with a 410 GONE response code and the client should clear its storage and perform a full synchronization without any syncToken.\nLearn more about incremental synchronization.\nOptional. The default is to return all entries.",
        "location": "query"
       }
      },
@@ -1422,7 +1529,7 @@
       },
       "colorRgbFormat": {
        "type": "boolean",
-       "description": "Whether to use the 'foregroundColor' and 'backgroundColor' fields to write the calendar colors (RGB). If this feature is used, the index-based 'colorId' field will be set to the best matching option automatically. Optional. The default is False.",
+       "description": "Whether to use the foregroundColor and backgroundColor fields to write the calendar colors (RGB). If this feature is used, the index-based colorId field will be set to the best matching option automatically. Optional. The default is False.",
        "location": "query"
       }
      },
@@ -1453,7 +1560,7 @@
       },
       "colorRgbFormat": {
        "type": "boolean",
-       "description": "Whether to use the 'foregroundColor' and 'backgroundColor' fields to write the calendar colors (RGB). If this feature is used, the index-based 'colorId' field will be set to the best matching option automatically. Optional. The default is False.",
+       "description": "Whether to use the foregroundColor and backgroundColor fields to write the calendar colors (RGB). If this feature is used, the index-based colorId field will be set to the best matching option automatically. Optional. The default is False.",
        "location": "query"
       }
      },
@@ -1469,6 +1576,70 @@
      "scopes": [
       "https://www.googleapis.com/auth/calendar"
      ]
+    },
+    "watch": {
+     "id": "calendar.calendarList.watch",
+     "path": "users/me/calendarList/watch",
+     "httpMethod": "POST",
+     "description": "Watch for changes to CalendarList resources.",
+     "parameters": {
+      "maxResults": {
+       "type": "integer",
+       "description": "Maximum number of entries returned on one result page. By default the value is 100 entries. The page size can never be larger than 250 entries. Optional.",
+       "format": "int32",
+       "minimum": "1",
+       "location": "query"
+      },
+      "minAccessRole": {
+       "type": "string",
+       "description": "The minimum access role for the user in the returned entires. Optional. The default is no restriction.",
+       "enum": [
+        "freeBusyReader",
+        "owner",
+        "reader",
+        "writer"
+       ],
+       "enumDescriptions": [
+        "The user can read free/busy information.",
+        "The user can read and modify events and access control lists.",
+        "The user can read events that are not private.",
+        "The user can read and modify events."
+       ],
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Token specifying which result page to return. Optional.",
+       "location": "query"
+      },
+      "showDeleted": {
+       "type": "boolean",
+       "description": "Whether to include deleted calendar list entries in the result. Optional. The default is False.",
+       "location": "query"
+      },
+      "showHidden": {
+       "type": "boolean",
+       "description": "Whether to show hidden entries. Optional. The default is False.",
+       "location": "query"
+      },
+      "syncToken": {
+       "type": "string",
+       "description": "Token obtained from the nextSyncToken field returned on the last page of results from the previous list request. It makes the result of this list request contain only entries that have changed since then. If only read-only fields such as calendar properties or ACLs have changed, the entry won't be returned. All entries deleted and hidden since the previous list request will always be in the result set and it is not allowed to set showDeleted neither showHidden to False.\nTo ensure client state consistency minAccessRole query parameter cannot be specified together with nextSyncToken.\nIf the syncToken expires, the server will respond with a 410 GONE response code and the client should clear its storage and perform a full synchronization without any syncToken.\nLearn more about incremental synchronization.\nOptional. The default is to return all entries.",
+       "location": "query"
+      }
+     },
+     "request": {
+      "$ref": "Channel",
+      "parameterName": "resource"
+     },
+     "response": {
+      "$ref": "Channel"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/calendar",
+      "https://www.googleapis.com/auth/calendar.readonly"
+     ],
+     "supportsSubscription": true
     }
    }
   },
@@ -1684,7 +1855,7 @@
      "parameters": {
       "alwaysIncludeEmail": {
        "type": "boolean",
-       "description": "Whether to always include a value in the \"email\" field for the organizer, creator and attendees, even if no real email is available (i.e. a generated, non-working value will be provided). The use of this option is discouraged and should only be used by clients which cannot handle the absence of an email address value in the mentioned places. Optional. The default is False.",
+       "description": "Whether to always include a value in the email field for the organizer, creator and attendees, even if no real email is available (i.e. a generated, non-working value will be provided). The use of this option is discouraged and should only be used by clients which cannot handle the absence of an email address value in the mentioned places. Optional. The default is False.",
        "location": "query"
       },
       "calendarId": {
@@ -1796,7 +1967,7 @@
      "parameters": {
       "alwaysIncludeEmail": {
        "type": "boolean",
-       "description": "Whether to always include a value in the \"email\" field for the organizer, creator and attendees, even if no real email is available (i.e. a generated, non-working value will be provided). The use of this option is discouraged and should only be used by clients which cannot handle the absence of an email address value in the mentioned places. Optional. The default is False.",
+       "description": "Whether to always include a value in the email field for the organizer, creator and attendees, even if no real email is available (i.e. a generated, non-working value will be provided). The use of this option is discouraged and should only be used by clients which cannot handle the absence of an email address value in the mentioned places. Optional. The default is False.",
        "location": "query"
       },
       "calendarId": {
@@ -1820,7 +1991,7 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "Maximum number of events returned on one result page. Optional.",
+       "description": "Maximum number of events returned on one result page. By default the value is 250 events. The page size can never be larger than 2500 events. Optional.",
        "format": "int32",
        "minimum": "1",
        "location": "query"
@@ -1837,7 +2008,7 @@
       },
       "showDeleted": {
        "type": "boolean",
-       "description": "Whether to include deleted events (with 'status' equals 'cancelled') in the result. Cancelled instances of recurring events will still be included if 'singleEvents' is False. Optional. The default is False.",
+       "description": "Whether to include deleted events (with status equals \"cancelled\") in the result. Cancelled instances of recurring events will still be included if singleEvents is False. Optional. The default is False.",
        "location": "query"
       },
       "timeMax": {
@@ -1879,7 +2050,7 @@
      "parameters": {
       "alwaysIncludeEmail": {
        "type": "boolean",
-       "description": "Whether to always include a value in the \"email\" field for the organizer, creator and attendees, even if no real email is available (i.e. a generated, non-working value will be provided). The use of this option is discouraged and should only be used by clients which cannot handle the absence of an email address value in the mentioned places. Optional. The default is False.",
+       "description": "Whether to always include a value in the email field for the organizer, creator and attendees, even if no real email is available (i.e. a generated, non-working value will be provided). The use of this option is discouraged and should only be used by clients which cannot handle the absence of an email address value in the mentioned places. Optional. The default is False.",
        "location": "query"
       },
       "calendarId": {
@@ -1890,7 +2061,7 @@
       },
       "iCalUID": {
        "type": "string",
-       "description": "Specifies iCalendar UID (iCalUID) of events to be included in the response. Optional.",
+       "description": "Specifies event ID in the iCalendar format to be included in the response. Optional.",
        "location": "query"
       },
       "maxAttendees": {
@@ -1902,7 +2073,7 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "Maximum number of events returned on one result page. Optional.",
+       "description": "Maximum number of events returned on one result page. By default the value is 250 events. The page size can never be larger than 2500 events. Optional.",
        "format": "int32",
        "minimum": "1",
        "location": "query"
@@ -1915,7 +2086,7 @@
         "updated"
        ],
        "enumDescriptions": [
-        "Order by the start date/time (ascending). This is only available when querying single events (i.e. the parameter \"singleEvents\" is True)",
+        "Order by the start date/time (ascending). This is only available when querying single events (i.e. the parameter singleEvents is True)",
         "Order by last modification time (ascending)."
        ],
        "location": "query"
@@ -1944,7 +2115,7 @@
       },
       "showDeleted": {
        "type": "boolean",
-       "description": "Whether to include deleted events (with 'status' equals 'cancelled') in the result. Cancelled instances of recurring events (but not the underlying recurring event) will still be included if 'showDeleted' and 'singleEvents' are both False. If 'showDeleted' and 'singleEvents' are both True, only single instances of deleted events (but not the underlying recurring events) are returned. Optional. The default is False.",
+       "description": "Whether to include deleted events (with status equals \"cancelled\") in the result. Cancelled instances of recurring events (but not the underlying recurring event) will still be included if showDeleted and singleEvents are both False. If showDeleted and singleEvents are both True, only single instances of deleted events (but not the underlying recurring events) are returned. Optional. The default is False.",
        "location": "query"
       },
       "showHiddenInvitations": {
@@ -1955,6 +2126,11 @@
       "singleEvents": {
        "type": "boolean",
        "description": "Whether to expand recurring events into instances and only return single one-off events and instances of recurring events, but not the underlying recurring events themselves. Optional. The default is False.",
+       "location": "query"
+      },
+      "syncToken": {
+       "type": "string",
+       "description": "Token obtained from the nextSyncToken field returned on the last page of results from the previous list request. It makes the result of this list request contain only entries that have changed since then. All events deleted since the previous list request will always be in the result set and it is not allowed to set showDeleted to False.\nThere are several query parameters that cannot be specified together with nextSyncToken to ensure consistency of the client state.\n\nThese are: \n- iCalUID \n- orderBy \n- privateExtendedProperty \n- q \n- sharedExtendedProperty \n- timeMin \n- timeMax \n- updatedMin If the syncToken expires, the server will respond with a 410 GONE response code and the client should clear its storage and perform a full synchronization without any syncToken.\nLearn more about incremental synchronization.\nOptional. The default is to return all entries.",
        "location": "query"
       },
       "timeMax": {
@@ -1976,7 +2152,7 @@
       },
       "updatedMin": {
        "type": "string",
-       "description": "Lower bound for an event's last modification time (as a RFC 3339 timestamp) to filter by. Optional. The default is not to filter by last modification time.",
+       "description": "Lower bound for an event's last modification time (as a RFC 3339 timestamp) to filter by. When specified, entries deleted since this time will always be included regardless of showDeleted. Optional. The default is not to filter by last modification time.",
        "format": "date-time",
        "location": "query"
       }
@@ -2043,7 +2219,7 @@
      "parameters": {
       "alwaysIncludeEmail": {
        "type": "boolean",
-       "description": "Whether to always include a value in the \"email\" field for the organizer, creator and attendees, even if no real email is available (i.e. a generated, non-working value will be provided). The use of this option is discouraged and should only be used by clients which cannot handle the absence of an email address value in the mentioned places. Optional. The default is False.",
+       "description": "Whether to always include a value in the email field for the organizer, creator and attendees, even if no real email is available (i.e. a generated, non-working value will be provided). The use of this option is discouraged and should only be used by clients which cannot handle the absence of an email address value in the mentioned places. Optional. The default is False.",
        "location": "query"
       },
       "calendarId": {
@@ -2128,7 +2304,7 @@
      "parameters": {
       "alwaysIncludeEmail": {
        "type": "boolean",
-       "description": "Whether to always include a value in the \"email\" field for the organizer, creator and attendees, even if no real email is available (i.e. a generated, non-working value will be provided). The use of this option is discouraged and should only be used by clients which cannot handle the absence of an email address value in the mentioned places. Optional. The default is False.",
+       "description": "Whether to always include a value in the email field for the organizer, creator and attendees, even if no real email is available (i.e. a generated, non-working value will be provided). The use of this option is discouraged and should only be used by clients which cannot handle the absence of an email address value in the mentioned places. Optional. The default is False.",
        "location": "query"
       },
       "calendarId": {
@@ -2178,7 +2354,7 @@
      "parameters": {
       "alwaysIncludeEmail": {
        "type": "boolean",
-       "description": "Whether to always include a value in the \"email\" field for the organizer, creator and attendees, even if no real email is available (i.e. a generated, non-working value will be provided). The use of this option is discouraged and should only be used by clients which cannot handle the absence of an email address value in the mentioned places. Optional. The default is False.",
+       "description": "Whether to always include a value in the email field for the organizer, creator and attendees, even if no real email is available (i.e. a generated, non-working value will be provided). The use of this option is discouraged and should only be used by clients which cannot handle the absence of an email address value in the mentioned places. Optional. The default is False.",
        "location": "query"
       },
       "calendarId": {
@@ -2189,7 +2365,7 @@
       },
       "iCalUID": {
        "type": "string",
-       "description": "Specifies iCalendar UID (iCalUID) of events to be included in the response. Optional.",
+       "description": "Specifies event ID in the iCalendar format to be included in the response. Optional.",
        "location": "query"
       },
       "maxAttendees": {
@@ -2201,7 +2377,7 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "Maximum number of events returned on one result page. Optional.",
+       "description": "Maximum number of events returned on one result page. By default the value is 250 events. The page size can never be larger than 2500 events. Optional.",
        "format": "int32",
        "minimum": "1",
        "location": "query"
@@ -2214,7 +2390,7 @@
         "updated"
        ],
        "enumDescriptions": [
-        "Order by the start date/time (ascending). This is only available when querying single events (i.e. the parameter \"singleEvents\" is True)",
+        "Order by the start date/time (ascending). This is only available when querying single events (i.e. the parameter singleEvents is True)",
         "Order by last modification time (ascending)."
        ],
        "location": "query"
@@ -2243,7 +2419,7 @@
       },
       "showDeleted": {
        "type": "boolean",
-       "description": "Whether to include deleted events (with 'status' equals 'cancelled') in the result. Cancelled instances of recurring events (but not the underlying recurring event) will still be included if 'showDeleted' and 'singleEvents' are both False. If 'showDeleted' and 'singleEvents' are both True, only single instances of deleted events (but not the underlying recurring events) are returned. Optional. The default is False.",
+       "description": "Whether to include deleted events (with status equals \"cancelled\") in the result. Cancelled instances of recurring events (but not the underlying recurring event) will still be included if showDeleted and singleEvents are both False. If showDeleted and singleEvents are both True, only single instances of deleted events (but not the underlying recurring events) are returned. Optional. The default is False.",
        "location": "query"
       },
       "showHiddenInvitations": {
@@ -2254,6 +2430,11 @@
       "singleEvents": {
        "type": "boolean",
        "description": "Whether to expand recurring events into instances and only return single one-off events and instances of recurring events, but not the underlying recurring events themselves. Optional. The default is False.",
+       "location": "query"
+      },
+      "syncToken": {
+       "type": "string",
+       "description": "Token obtained from the nextSyncToken field returned on the last page of results from the previous list request. It makes the result of this list request contain only entries that have changed since then. All events deleted since the previous list request will always be in the result set and it is not allowed to set showDeleted to False.\nThere are several query parameters that cannot be specified together with nextSyncToken to ensure consistency of the client state.\n\nThese are: \n- iCalUID \n- orderBy \n- privateExtendedProperty \n- q \n- sharedExtendedProperty \n- timeMin \n- timeMax \n- updatedMin If the syncToken expires, the server will respond with a 410 GONE response code and the client should clear its storage and perform a full synchronization without any syncToken.\nLearn more about incremental synchronization.\nOptional. The default is to return all entries.",
        "location": "query"
       },
       "timeMax": {
@@ -2275,7 +2456,7 @@
       },
       "updatedMin": {
        "type": "string",
-       "description": "Lower bound for an event's last modification time (as a RFC 3339 timestamp) to filter by. Optional. The default is not to filter by last modification time.",
+       "description": "Lower bound for an event's last modification time (as a RFC 3339 timestamp) to filter by. When specified, entries deleted since this time will always be included regardless of showDeleted. Optional. The default is not to filter by last modification time.",
        "format": "date-time",
        "location": "query"
       }
@@ -2349,8 +2530,64 @@
      "path": "users/me/settings",
      "httpMethod": "GET",
      "description": "Returns all user settings for the authenticated user.",
+     "parameters": {
+      "maxResults": {
+       "type": "integer",
+       "description": "Maximum number of entries returned on one result page. By default the value is 100 entries. The page size can never be larger than 250 entries. Optional.",
+       "format": "int32",
+       "minimum": "1",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Token specifying which result page to return. Optional.",
+       "location": "query"
+      },
+      "syncToken": {
+       "type": "string",
+       "description": "Token obtained from the nextSyncToken field returned on the last page of results from the previous list request. It makes the result of this list request contain only entries that have changed since then.\nIf the syncToken expires, the server will respond with a 410 GONE response code and the client should clear its storage and perform a full synchronization without any syncToken.\nLearn more about incremental synchronization.\nOptional. The default is to return all entries.",
+       "location": "query"
+      }
+     },
      "response": {
       "$ref": "Settings"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/calendar",
+      "https://www.googleapis.com/auth/calendar.readonly"
+     ],
+     "supportsSubscription": true
+    },
+    "watch": {
+     "id": "calendar.settings.watch",
+     "path": "users/me/settings/watch",
+     "httpMethod": "POST",
+     "description": "Watch for changes to Settings resources.",
+     "parameters": {
+      "maxResults": {
+       "type": "integer",
+       "description": "Maximum number of entries returned on one result page. By default the value is 100 entries. The page size can never be larger than 250 entries. Optional.",
+       "format": "int32",
+       "minimum": "1",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Token specifying which result page to return. Optional.",
+       "location": "query"
+      },
+      "syncToken": {
+       "type": "string",
+       "description": "Token obtained from the nextSyncToken field returned on the last page of results from the previous list request. It makes the result of this list request contain only entries that have changed since then.\nIf the syncToken expires, the server will respond with a 410 GONE response code and the client should clear its storage and perform a full synchronization without any syncToken.\nLearn more about incremental synchronization.\nOptional. The default is to return all entries.",
+       "location": "query"
+      }
+     },
+     "request": {
+      "$ref": "Channel",
+      "parameterName": "resource"
+     },
+     "response": {
+      "$ref": "Channel"
      },
      "scopes": [
       "https://www.googleapis.com/auth/calendar",

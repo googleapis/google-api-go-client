@@ -498,8 +498,8 @@ func (c *BucketAccessControlsGetCall) Do() (*BucketAccessControl, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(BucketAccessControl)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *BucketAccessControl
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -577,8 +577,8 @@ func (c *BucketAccessControlsInsertCall) Do() (*BucketAccessControl, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(BucketAccessControl)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *BucketAccessControl
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -644,8 +644,8 @@ func (c *BucketAccessControlsListCall) Do() (*BucketAccessControls, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(BucketAccessControls)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *BucketAccessControls
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -720,8 +720,8 @@ func (c *BucketAccessControlsPatchCall) Do() (*BucketAccessControl, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(BucketAccessControl)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *BucketAccessControl
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -805,8 +805,8 @@ func (c *BucketAccessControlsUpdateCall) Do() (*BucketAccessControl, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(BucketAccessControl)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *BucketAccessControl
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -947,8 +947,8 @@ func (c *BucketsGetCall) Do() (*Bucket, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Bucket)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Bucket
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1043,8 +1043,8 @@ func (c *BucketsInsertCall) Do() (*Bucket, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Bucket)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Bucket
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1146,8 +1146,8 @@ func (c *BucketsListCall) Do() (*Buckets, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Buckets)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Buckets
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1256,8 +1256,8 @@ func (c *BucketsPatchCall) Do() (*Bucket, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Bucket)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Bucket
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1355,8 +1355,8 @@ func (c *BucketsUpdateCall) Do() (*Bucket, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Bucket)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Bucket
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1521,8 +1521,8 @@ func (c *ObjectAccessControlsGetCall) Do() (*ObjectAccessControl, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(ObjectAccessControl)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *ObjectAccessControl
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1610,8 +1610,8 @@ func (c *ObjectAccessControlsInsertCall) Do() (*ObjectAccessControl, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(ObjectAccessControl)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *ObjectAccessControl
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1687,8 +1687,8 @@ func (c *ObjectAccessControlsListCall) Do() (*ObjectAccessControls, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(ObjectAccessControls)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *ObjectAccessControls
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1773,8 +1773,8 @@ func (c *ObjectAccessControlsPatchCall) Do() (*ObjectAccessControl, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(ObjectAccessControl)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *ObjectAccessControl
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1868,8 +1868,8 @@ func (c *ObjectAccessControlsUpdateCall) Do() (*ObjectAccessControl, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(ObjectAccessControl)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *ObjectAccessControl
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2030,8 +2030,8 @@ func (c *ObjectsGetCall) Do() (*Object, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Object)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Object
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2160,8 +2160,8 @@ func (c *ObjectsInsertCall) Do() (*Object, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Object)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Object
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2319,8 +2319,8 @@ func (c *ObjectsListCall) Do() (*Objects, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Objects)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Objects
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2443,8 +2443,8 @@ func (c *ObjectsPatchCall) Do() (*Object, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Object)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Object
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2552,8 +2552,8 @@ func (c *ObjectsUpdateCall) Do() (*Object, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Object)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Object
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil

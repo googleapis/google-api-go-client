@@ -585,8 +585,8 @@ func (c *DatasetsAllocateIdsCall) Do() (*AllocateIdsResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(AllocateIdsResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *AllocateIdsResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -661,8 +661,8 @@ func (c *DatasetsBeginTransactionCall) Do() (*BeginTransactionResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(BeginTransactionResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *BeginTransactionResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -738,8 +738,8 @@ func (c *DatasetsCommitCall) Do() (*CommitResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(CommitResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *CommitResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -814,8 +814,8 @@ func (c *DatasetsLookupCall) Do() (*LookupResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(LookupResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *LookupResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -890,8 +890,8 @@ func (c *DatasetsRollbackCall) Do() (*RollbackResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(RollbackResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *RollbackResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -966,8 +966,8 @@ func (c *DatasetsRunQueryCall) Do() (*RunQueryResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(RunQueryResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *RunQueryResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil

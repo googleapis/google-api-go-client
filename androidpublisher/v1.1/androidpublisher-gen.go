@@ -93,7 +93,7 @@ type InappPurchase struct {
 	// supplemental information about an order.
 	DeveloperPayload string `json:"developerPayload,omitempty"`
 
-	// Kind: This kind represents a inappPurchase object in the
+	// Kind: This kind represents an inappPurchase object in the
 	// androidpublisher service.
 	Kind string `json:"kind,omitempty"`
 
@@ -165,8 +165,8 @@ func (c *InapppurchasesGetCall) Do() (*InappPurchase, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(InappPurchase)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *InappPurchase
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -328,8 +328,8 @@ func (c *PurchasesGetCall) Do() (*SubscriptionPurchase, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(SubscriptionPurchase)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *SubscriptionPurchase
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil

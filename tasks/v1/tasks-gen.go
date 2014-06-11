@@ -300,8 +300,8 @@ func (c *TasklistsGetCall) Do() (*TaskList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(TaskList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *TaskList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -371,8 +371,8 @@ func (c *TasklistsInsertCall) Do() (*TaskList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(TaskList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *TaskList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -444,8 +444,8 @@ func (c *TasklistsListCall) Do() (*TaskLists, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(TaskLists)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *TaskLists
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -520,8 +520,8 @@ func (c *TasklistsPatchCall) Do() (*TaskList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(TaskList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *TaskList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -595,8 +595,8 @@ func (c *TasklistsUpdateCall) Do() (*TaskList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(TaskList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *TaskList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -791,8 +791,8 @@ func (c *TasksGetCall) Do() (*Task, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Task)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Task
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -892,8 +892,8 @@ func (c *TasksInsertCall) Do() (*Task, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Task)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Task
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1077,8 +1077,8 @@ func (c *TasksListCall) Do() (*Tasks, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Tasks)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Tasks
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1220,8 +1220,8 @@ func (c *TasksMoveCall) Do() (*Task, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Task)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Task
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1313,8 +1313,8 @@ func (c *TasksPatchCall) Do() (*Task, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Task)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Task
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1398,8 +1398,8 @@ func (c *TasksUpdateCall) Do() (*Task, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Task)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Task
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil

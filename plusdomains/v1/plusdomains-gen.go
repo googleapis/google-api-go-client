@@ -44,8 +44,9 @@ const (
 	// View your circles and the people and pages in them
 	PlusCirclesReadScope = "https://www.googleapis.com/auth/plus.circles.read"
 
-	// Manage your circles and add people and pages, who will be notified
-	// and may appear on your public Google+ profile
+	// Manage your circles and add people and pages. People and pages you
+	// add to your circles will be notified. Others may see this information
+	// publicly. People you add to circles can use Hangouts with you.
 	PlusCirclesWriteScope = "https://www.googleapis.com/auth/plus.circles.write"
 
 	// Know your basic profile info and list of people in your circles.
@@ -1257,8 +1258,8 @@ func (c *ActivitiesGetCall) Do() (*Activity, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Activity)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Activity
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1343,8 +1344,8 @@ func (c *ActivitiesInsertCall) Do() (*Activity, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Activity)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Activity
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1445,8 +1446,8 @@ func (c *ActivitiesListCall) Do() (*ActivityFeed, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(ActivityFeed)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *ActivityFeed
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1562,8 +1563,8 @@ func (c *AudiencesListCall) Do() (*AudiencesFeed, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(AudiencesFeed)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *AudiencesFeed
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1663,8 +1664,8 @@ func (c *CirclesAddPeopleCall) Do() (*Circle, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Circle)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Circle
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1740,8 +1741,8 @@ func (c *CirclesGetCall) Do() (*Circle, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Circle)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Circle
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1813,8 +1814,8 @@ func (c *CirclesInsertCall) Do() (*Circle, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Circle)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Circle
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1906,8 +1907,8 @@ func (c *CirclesListCall) Do() (*CircleFeed, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(CircleFeed)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *CircleFeed
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1995,8 +1996,8 @@ func (c *CirclesPatchCall) Do() (*Circle, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Circle)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Circle
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2219,8 +2220,8 @@ func (c *CirclesUpdateCall) Do() (*Circle, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Circle)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Circle
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2287,8 +2288,8 @@ func (c *CommentsGetCall) Do() (*Comment, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Comment)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Comment
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2360,8 +2361,8 @@ func (c *CommentsInsertCall) Do() (*Comment, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Comment)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Comment
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2462,8 +2463,8 @@ func (c *CommentsListCall) Do() (*CommentFeed, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(CommentFeed)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *CommentFeed
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2582,8 +2583,8 @@ func (c *MediaInsertCall) Do() (*Media, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Media)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Media
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2679,8 +2680,8 @@ func (c *PeopleGetCall) Do() (*Person, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Person)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Person
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2784,8 +2785,8 @@ func (c *PeopleListCall) Do() (*PeopleFeed, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(PeopleFeed)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *PeopleFeed
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2918,8 +2919,8 @@ func (c *PeopleListByActivityCall) Do() (*PeopleFeed, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(PeopleFeed)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *PeopleFeed
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3038,8 +3039,8 @@ func (c *PeopleListByCircleCall) Do() (*PeopleFeed, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(PeopleFeed)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *PeopleFeed
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil

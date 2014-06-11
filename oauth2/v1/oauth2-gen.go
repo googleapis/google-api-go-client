@@ -235,8 +235,8 @@ func (c *TokeninfoCall) Do() (*Tokeninfo, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Tokeninfo)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Tokeninfo
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -294,8 +294,8 @@ func (c *UserinfoGetCall) Do() (*Userinfoplus, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Userinfoplus)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Userinfoplus
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -347,8 +347,8 @@ func (c *UserinfoV2MeGetCall) Do() (*Userinfoplus, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Userinfoplus)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Userinfoplus
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil

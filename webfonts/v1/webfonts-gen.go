@@ -141,8 +141,8 @@ func (c *WebfontsListCall) Do() (*WebfontList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(WebfontList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *WebfontList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil

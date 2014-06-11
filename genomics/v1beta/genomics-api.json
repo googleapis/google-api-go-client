@@ -1,0 +1,1844 @@
+{
+ "kind": "discovery#restDescription",
+ "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/EobR8eLvV6RKj0dy24fVd9EiITY\"",
+ "discoveryVersion": "v1",
+ "id": "genomics:v1beta",
+ "name": "genomics",
+ "version": "v1beta",
+ "title": "Genomics API",
+ "description": "Provides access to Genomics data.",
+ "ownerDomain": "google.com",
+ "ownerName": "Google",
+ "icons": {
+  "x16": "http://www.google.com/images/icons/product/search-16.gif",
+  "x32": "http://www.google.com/images/icons/product/search-32.gif"
+ },
+ "documentationLink": "https://developers.google.com/genomics/v1beta/reference",
+ "labels": [
+  "limited_availability"
+ ],
+ "protocol": "rest",
+ "baseUrl": "https://www.googleapis.com/genomics/v1beta/",
+ "basePath": "/genomics/v1beta/",
+ "rootUrl": "https://www.googleapis.com/",
+ "servicePath": "genomics/v1beta/",
+ "batchPath": "batch",
+ "parameters": {
+  "alt": {
+   "type": "string",
+   "description": "Data format for the response.",
+   "default": "json",
+   "enum": [
+    "json"
+   ],
+   "enumDescriptions": [
+    "Responses with Content-Type of application/json"
+   ],
+   "location": "query"
+  },
+  "fields": {
+   "type": "string",
+   "description": "Selector specifying which fields to include in a partial response.",
+   "location": "query"
+  },
+  "key": {
+   "type": "string",
+   "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
+   "location": "query"
+  },
+  "oauth_token": {
+   "type": "string",
+   "description": "OAuth 2.0 token for the current user.",
+   "location": "query"
+  },
+  "prettyPrint": {
+   "type": "boolean",
+   "description": "Returns response with indentations and line breaks.",
+   "default": "true",
+   "location": "query"
+  },
+  "quotaUser": {
+   "type": "string",
+   "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.",
+   "location": "query"
+  },
+  "userIp": {
+   "type": "string",
+   "description": "IP address of the site where the request originates. Use this if you want to enforce per-user limits.",
+   "location": "query"
+  }
+ },
+ "auth": {
+  "oauth2": {
+   "scopes": {
+    "https://www.googleapis.com/auth/devstorage.read_write": {
+     "description": "Manage your data in Google Cloud Storage"
+    },
+    "https://www.googleapis.com/auth/genomics": {
+     "description": "View and manage Genomics data"
+    }
+   }
+  }
+ },
+ "schemas": {
+  "Beacon": {
+   "id": "Beacon",
+   "type": "object",
+   "description": "A beacon represents whether any variant call in a dataset has a specific allele at a particular position.",
+   "externalTypeName": "cloud.genomics.varstore.Beacon",
+   "properties": {
+    "exists": {
+     "type": "boolean",
+     "description": "True if the allele exists on any variant call, false otherwise."
+    }
+   }
+  },
+  "Call": {
+   "id": "Call",
+   "type": "object",
+   "description": "A Call represents the determination of genotype with respect to a particular variant. It may include associated information such as quality and phasing. For example, a Call might assign a probability of 0.32 to the occurrence of a SNP named rs1234 in a callset with the name NA12345.",
+   "externalTypeName": "cloud.genomics.varstore.Call",
+   "properties": {
+    "callsetId": {
+     "type": "string",
+     "description": "The ID of the callset this variant call belongs to."
+    },
+    "callsetName": {
+     "type": "string",
+     "description": "The name of the callset this variant call belongs to."
+    },
+    "genotype": {
+     "type": "array",
+     "description": "The genotype of this variant call. Each value represents either the value of the referenceBases field or a 1-based index into alternateBases. If a variant had a referenceBases field of \"T\" and an alternateBases value of [\"A\", \"C\"], and the genotype was [2, 1], that would mean the call represented the heterozygous value \"CA\" for this variant. If the genotype was instead [0, 1], the represented value would be \"TA\". Ordering of the genotype values is important if the phaseset field is present.",
+     "items": {
+      "type": "string",
+      "format": "int64"
+     }
+    },
+    "genotypeLikelihood": {
+     "type": "array",
+     "description": "The genotype likelihoods for this variant call. Each array entry represents how likely a specific genotype is for this call. The value ordering is defined by the GL tag in the VCF spec.",
+     "items": {
+      "type": "number",
+      "format": "double"
+     }
+    },
+    "info": {
+     "type": "object",
+     "description": "A map of additional variant call information.",
+     "additionalProperties": {
+      "type": "array",
+      "description": "A string which maps to an array of values.",
+      "items": {
+       "type": "string"
+      }
+     }
+    },
+    "phaseset": {
+     "type": "string",
+     "description": "If this field is present, this variant call's genotype ordering implies the phase of the bases and is consistent with any other variant calls on the same contig which have the same phaseset value."
+    }
+   }
+  },
+  "Callset": {
+   "id": "Callset",
+   "type": "object",
+   "description": "A Callset is a collection of Variant Calls. It belongs to a Dataset.",
+   "externalTypeName": "cloud.genomics.varstore.Callset",
+   "properties": {
+    "created": {
+     "type": "string",
+     "description": "The date this callset was created in milliseconds from the epoch.",
+     "format": "int64"
+    },
+    "datasetId": {
+     "type": "string",
+     "description": "The ID of the dataset this callset belongs to."
+    },
+    "id": {
+     "type": "string",
+     "description": "The Google generated ID of the callset, immutable."
+    },
+    "info": {
+     "type": "object",
+     "description": "A map of additional callset information.",
+     "additionalProperties": {
+      "type": "array",
+      "description": "A string which maps to an array of values.",
+      "items": {
+       "type": "string"
+      }
+     }
+    },
+    "name": {
+     "type": "string",
+     "description": "The callset name."
+    }
+   }
+  },
+  "ContigBound": {
+   "id": "ContigBound",
+   "type": "object",
+   "description": "ContigBound records an upper bound for the starting coordinate of variants in a particular contig.",
+   "externalTypeName": "cloud.genomics.varstore.ContigBound",
+   "properties": {
+    "contig": {
+     "type": "string",
+     "description": "The contig the bound is associate with."
+    },
+    "upperBound": {
+     "type": "string",
+     "description": "An upper bound (inclusive) on the starting coordinate of any variant in the contig.",
+     "format": "int64"
+    }
+   }
+  },
+  "Dataset": {
+   "id": "Dataset",
+   "type": "object",
+   "description": "A Dataset is a collection of genomic data.",
+   "externalTypeName": "cloud.genomics.datasets.Dataset",
+   "properties": {
+    "id": {
+     "type": "string",
+     "description": "The Google generated ID of the dataset, immutable."
+    },
+    "isPublic": {
+     "type": "boolean",
+     "description": "Flag indicating whether or not a dataset is publicly viewable. If a dataset is not public, it inherits viewing permissions from its project."
+    },
+    "name": {
+     "type": "string",
+     "description": "The dataset name."
+    },
+    "projectId": {
+     "type": "string",
+     "description": "The Google Developers Console project number that this dataset belongs to.",
+     "format": "int64"
+    }
+   }
+  },
+  "ExperimentalCreateJobRequest": {
+   "id": "ExperimentalCreateJobRequest",
+   "type": "object",
+   "description": "The job creation request.",
+   "externalTypeName": "cloud.genomics.jobs.ExperimentalCreateJobRequest",
+   "properties": {
+    "align": {
+     "type": "boolean",
+     "description": "Specifies whether or not to run the alignment pipeline. At least one of align or call_variants must be provided."
+    },
+    "callVariants": {
+     "type": "boolean",
+     "description": "Specifies whether or not to run the variant calling pipeline. If specified, alignment will be performed first and the aligned BAMs will passed as input to the variant caller. At least one of align or call_variants must be provided."
+    },
+    "gcsOutputPath": {
+     "type": "string",
+     "description": "Specifies where to copy the results of certain pipelines. This shoud be in the form of \"gs://bucket/path\"."
+    },
+    "projectId": {
+     "type": "string",
+     "description": "Required. The Google Cloud Project ID with which to associate the request.",
+     "format": "int64"
+    },
+    "sourceUris": {
+     "type": "array",
+     "description": "Required. A list of Google Cloud Storage URIs of data files to operate upon.",
+     "items": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  "ExperimentalCreateJobResponse": {
+   "id": "ExperimentalCreateJobResponse",
+   "type": "object",
+   "description": "The job creation response.",
+   "externalTypeName": "cloud.genomics.jobs.ExperimentalCreateJobResponse",
+   "properties": {
+    "jobId": {
+     "type": "string",
+     "description": "A job ID that can be used to get status information."
+    }
+   }
+  },
+  "ExportReadsetsRequest": {
+   "id": "ExportReadsetsRequest",
+   "type": "object",
+   "description": "The readset export request.",
+   "externalTypeName": "cloud.genomics.readstore.ExportReadsetsRequest",
+   "properties": {
+    "exportUri": {
+     "type": "string",
+     "description": "A Google Cloud Storage URI where the exported BAM file will be created. The currently authenticated user must have write access to the new file location. An error will be returned if the URI already contains data."
+    },
+    "projectId": {
+     "type": "string",
+     "description": "The Google Developers Console project number that owns this export. This is the project that will be billed.",
+     "format": "int64"
+    },
+    "readsetIds": {
+     "type": "array",
+     "description": "The IDs of the readsets to export.",
+     "items": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  "ExportReadsetsResponse": {
+   "id": "ExportReadsetsResponse",
+   "type": "object",
+   "description": "The readset export response.",
+   "externalTypeName": "cloud.genomics.readstore.ExportReadsetsResponse",
+   "properties": {
+    "jobId": {
+     "type": "string",
+     "description": "A job ID that can be used to get status information."
+    }
+   }
+  },
+  "ExportVariantsRequest": {
+   "id": "ExportVariantsRequest",
+   "type": "object",
+   "description": "The variant data export request.",
+   "externalTypeName": "cloud.genomics.varstore.ExportVariantsRequest",
+   "properties": {
+    "bigqueryDataset": {
+     "type": "string",
+     "description": "The BigQuery dataset for export. Note this is distinct from the Genomics concept of \"dataset\"."
+    },
+    "bigqueryTable": {
+     "type": "string",
+     "description": "The BigQuery table for export."
+    },
+    "callsetIds": {
+     "type": "array",
+     "description": "If provided, only variant call information from the specified callsets will be exported. By default all variant calls are exported.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "datasetIds": {
+     "type": "array",
+     "description": "The IDs of the datasets that contain variant data which should be exported. At least one dataset ID must be provided.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "exportUri": {
+     "type": "string",
+     "description": "The Google Cloud URI to export to."
+    },
+    "format": {
+     "type": "string",
+     "description": "The format for the exported data.",
+     "enum": [
+      "bigquery"
+     ],
+     "enumDescriptions": [
+      ""
+     ]
+    },
+    "projectId": {
+     "type": "string",
+     "description": "The Google Cloud project number that owns this export. This is the project that will be billed.",
+     "format": "int64"
+    }
+   }
+  },
+  "ExportVariantsResponse": {
+   "id": "ExportVariantsResponse",
+   "type": "object",
+   "description": "The variant data export response.",
+   "externalTypeName": "cloud.genomics.varstore.ExportVariantsResponse",
+   "properties": {
+    "jobId": {
+     "type": "string",
+     "description": "A job ID that can be used to get status information."
+    }
+   }
+  },
+  "GetVariantsSummaryResponse": {
+   "id": "GetVariantsSummaryResponse",
+   "type": "object",
+   "description": "The variants summary response.",
+   "externalTypeName": "cloud.genomics.varstore.GetVariantsSummaryResponse",
+   "properties": {
+    "contigBounds": {
+     "type": "array",
+     "description": "A list of all contigs used by the variants in a dataset with associated coordinate upper bounds for each one.",
+     "items": {
+      "$ref": "ContigBound"
+     }
+    }
+   }
+  },
+  "Header": {
+   "id": "Header",
+   "type": "object",
+   "externalTypeName": "cloud.genomics.parser.bam.Header",
+   "properties": {
+    "sortingOrder": {
+     "type": "string",
+     "description": "(SO) Sorting order of alignments."
+    },
+    "version": {
+     "type": "string",
+     "description": "(VN) BAM format version."
+    }
+   }
+  },
+  "HeaderSection": {
+   "id": "HeaderSection",
+   "type": "object",
+   "description": "The header section of the BAM/SAM file.",
+   "externalTypeName": "cloud.genomics.parser.bam.HeaderSection",
+   "properties": {
+    "comments": {
+     "type": "array",
+     "description": "(@CO) One-line text comments.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "fileUri": {
+     "type": "string",
+     "description": "The file URI that this data was imported from."
+    },
+    "headers": {
+     "type": "array",
+     "description": "(@HD) The header line.",
+     "items": {
+      "$ref": "Header"
+     }
+    },
+    "programs": {
+     "type": "array",
+     "description": "(@PG) Programs.",
+     "items": {
+      "$ref": "Program"
+     }
+    },
+    "readGroups": {
+     "type": "array",
+     "description": "(@RG) Read group.",
+     "items": {
+      "$ref": "ReadGroup"
+     }
+    },
+    "refSequences": {
+     "type": "array",
+     "description": "(@SQ) Reference sequence dictionary.",
+     "items": {
+      "$ref": "ReferenceSequence"
+     }
+    }
+   }
+  },
+  "ImportReadsetsRequest": {
+   "id": "ImportReadsetsRequest",
+   "type": "object",
+   "description": "The readset import request.",
+   "externalTypeName": "cloud.genomics.readstore.ImportReadsetsRequest",
+   "properties": {
+    "datasetId": {
+     "type": "string",
+     "description": "Required. The ID of the dataset these readsets will belong to."
+    },
+    "sourceUris": {
+     "type": "array",
+     "description": "A list of URIs pointing at BAM or FASTQ files in Google Cloud Storage.",
+     "items": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  "ImportReadsetsResponse": {
+   "id": "ImportReadsetsResponse",
+   "type": "object",
+   "description": "The readset import response.",
+   "externalTypeName": "cloud.genomics.readstore.ImportReadsetsResponse",
+   "properties": {
+    "jobId": {
+     "type": "string",
+     "description": "A job ID that can be used to get status information."
+    }
+   }
+  },
+  "ImportVariantsRequest": {
+   "id": "ImportVariantsRequest",
+   "type": "object",
+   "description": "The variant data import request.",
+   "externalTypeName": "cloud.genomics.varstore.ImportVariantsRequest",
+   "properties": {
+    "datasetId": {
+     "type": "string",
+     "description": "Required. The dataset to which variant data should be imported."
+    },
+    "sourceUris": {
+     "type": "array",
+     "description": "A list of URIs pointing at VCF files in Google Cloud Storage. See the VCF Specification for more details on the input format.",
+     "items": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  "ImportVariantsResponse": {
+   "id": "ImportVariantsResponse",
+   "type": "object",
+   "description": "The variant data import response.",
+   "externalTypeName": "cloud.genomics.varstore.ImportVariantsResponse",
+   "properties": {
+    "jobId": {
+     "type": "string",
+     "description": "A job ID that can be used to get status information."
+    }
+   }
+  },
+  "Job": {
+   "id": "Job",
+   "type": "object",
+   "description": "A Job represents an ongoing process that can be monitored for status information.",
+   "externalTypeName": "cloud.genomics.jobs.Job",
+   "properties": {
+    "description": {
+     "type": "string",
+     "description": "A more detailed description of this job's current status."
+    },
+    "errors": {
+     "type": "array",
+     "description": "Any errors that occurred during processing.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "id": {
+     "type": "string",
+     "description": "The job ID."
+    },
+    "importedIds": {
+     "type": "array",
+     "description": "If this Job represents an import, this field will contain the IDs of the objects that were successfully imported.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "projectId": {
+     "type": "string",
+     "description": "The Google Developers Console project number to which this job belongs.",
+     "format": "int64"
+    },
+    "status": {
+     "type": "string",
+     "description": "The status of this job.",
+     "enum": [
+      "failure",
+      "new",
+      "pending",
+      "running",
+      "success",
+      "unknownStatus"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "warnings": {
+     "type": "array",
+     "description": "Any warnings that occurred during processing.",
+     "items": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  "ListDatasetsResponse": {
+   "id": "ListDatasetsResponse",
+   "type": "object",
+   "description": "The dataset list response.",
+   "externalTypeName": "cloud.genomics.datasets.ListDatasetsResponse",
+   "properties": {
+    "datasets": {
+     "type": "array",
+     "description": "The list of matching Datasets.",
+     "items": {
+      "$ref": "Dataset"
+     }
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "The continuation token, which is used to page through large result sets. Provide this value in a subsequent request to return the next page of results. This field will be empty if there aren't any additional results."
+    }
+   }
+  },
+  "Program": {
+   "id": "Program",
+   "type": "object",
+   "externalTypeName": "cloud.genomics.parser.bam.Program",
+   "properties": {
+    "commandLine": {
+     "type": "string",
+     "description": "(CL) Command line."
+    },
+    "id": {
+     "type": "string",
+     "description": "(ID) Program record identifier."
+    },
+    "name": {
+     "type": "string",
+     "description": "(PN) Program name."
+    },
+    "prevProgramId": {
+     "type": "string",
+     "description": "(PP) Previous program ID."
+    },
+    "version": {
+     "type": "string",
+     "description": "(VN) Program version."
+    }
+   }
+  },
+  "Read": {
+   "id": "Read",
+   "type": "object",
+   "description": "A Read is a group of bases that may or may not have been aligned to a reference. It contains quality information and other metadata.",
+   "externalTypeName": "cloud.genomics.readstore.Read",
+   "properties": {
+    "alignedBases": {
+     "type": "string",
+     "description": "The originalBases after the cigar field has been applied. Deletions are represented with '-' and insertions are omitted."
+    },
+    "baseQuality": {
+     "type": "string",
+     "description": "Represents the quality of each base in this read. Each character represents one base. To get the quality, take the ASCII value of the character and subtract 33. (QUAL)"
+    },
+    "cigar": {
+     "type": "string",
+     "description": "A condensed representation of how this read matches up to the reference. (CIGAR)"
+    },
+    "flags": {
+     "type": "integer",
+     "description": "Each bit of this number has a different meaning if enabled. See the full BAM spec for more details. (FLAG)",
+     "format": "int32"
+    },
+    "id": {
+     "type": "string",
+     "description": "The Google generated ID of the read, immutable."
+    },
+    "mappingQuality": {
+     "type": "integer",
+     "description": "A score up to 255 that represents how likely this read's aligned position is to be correct. A higher value is better. (MAPQ)",
+     "format": "int32"
+    },
+    "matePosition": {
+     "type": "integer",
+     "description": "The 1-based start position of the paired read. (PNEXT)",
+     "format": "int32"
+    },
+    "mateReferenceSequenceName": {
+     "type": "string",
+     "description": "The name of the sequence that the paired read is aligned to. This is usually the same as referenceSequenceName. (RNEXT)"
+    },
+    "name": {
+     "type": "string",
+     "description": "The name of the read. When imported from a BAM file, this is the query template name. (QNAME)"
+    },
+    "originalBases": {
+     "type": "string",
+     "description": "The list of bases that this read represents (such as \"CATCGA\"). (SEQ)"
+    },
+    "position": {
+     "type": "integer",
+     "description": "The 1-based start position of the aligned read. If the first base starts at the very beginning of the reference sequence, then the position would be '1'. (POS)",
+     "format": "int32"
+    },
+    "readsetId": {
+     "type": "string",
+     "description": "The ID of the readset this read belongs to."
+    },
+    "referenceSequenceName": {
+     "type": "string",
+     "description": "The name of the sequence that this read is aligned to. This would be, for example, 'X' for the X Chromosome or '20' for Chromosome 20. (RNAME)"
+    },
+    "tags": {
+     "type": "object",
+     "description": "A map of additional read information. (TAG)",
+     "additionalProperties": {
+      "type": "array",
+      "description": "A string which maps to an array of values.",
+      "items": {
+       "type": "string"
+      }
+     }
+    },
+    "templateLength": {
+     "type": "integer",
+     "description": "Length of the original piece of DNA that produced both this read and the paired read. (TLEN)",
+     "format": "int32"
+    }
+   }
+  },
+  "ReadGroup": {
+   "id": "ReadGroup",
+   "type": "object",
+   "externalTypeName": "cloud.genomics.parser.bam.ReadGroup",
+   "properties": {
+    "date": {
+     "type": "string",
+     "description": "(DT) Date the run was produced (ISO8601 date or date/time)."
+    },
+    "description": {
+     "type": "string",
+     "description": "(DS) Description."
+    },
+    "flowOrder": {
+     "type": "string",
+     "description": "(FO) Flow order. The array of nucleotide bases that correspond to the nucleotides used for each flow of each read."
+    },
+    "id": {
+     "type": "string",
+     "description": "(ID) Read group identifier."
+    },
+    "keySequence": {
+     "type": "string",
+     "description": "(KS) The array of nucleotide bases that correspond to the key sequence of each read."
+    },
+    "library": {
+     "type": "string",
+     "description": "(LS) Library."
+    },
+    "platformUnit": {
+     "type": "string",
+     "description": "(PU) Platform unit."
+    },
+    "predictedInsertSize": {
+     "type": "integer",
+     "description": "(PI) Predicted median insert size.",
+     "format": "int32"
+    },
+    "processingProgram": {
+     "type": "string",
+     "description": "(PG) Programs used for processing the read group."
+    },
+    "sample": {
+     "type": "string",
+     "description": "(SM) Sample."
+    },
+    "sequencingCenterName": {
+     "type": "string",
+     "description": "(CN) Name of sequencing center producing the read."
+    },
+    "sequencingTechnology": {
+     "type": "string",
+     "description": "(PL) Platform/technology used to produce the reads."
+    }
+   }
+  },
+  "Readset": {
+   "id": "Readset",
+   "type": "object",
+   "description": "A Readset is a collection of Reads.",
+   "externalTypeName": "cloud.genomics.readstore.Readset",
+   "properties": {
+    "created": {
+     "type": "string",
+     "description": "The date this readset was created, in milliseconds from the epoch.",
+     "format": "int64"
+    },
+    "datasetId": {
+     "type": "string",
+     "description": "The ID of the dataset this readset belongs to."
+    },
+    "fileData": {
+     "type": "array",
+     "description": "File information from the original BAM import. See the BAM format specification for additional information on each field.",
+     "items": {
+      "$ref": "HeaderSection"
+     }
+    },
+    "id": {
+     "type": "string",
+     "description": "The Google generated ID of the readset, immutable."
+    },
+    "name": {
+     "type": "string",
+     "description": "The readset name, typically this is the sample name."
+    },
+    "readCount": {
+     "type": "string",
+     "description": "The number of reads in this readset.",
+     "format": "uint64"
+    }
+   }
+  },
+  "ReferenceSequence": {
+   "id": "ReferenceSequence",
+   "type": "object",
+   "externalTypeName": "cloud.genomics.parser.bam.ReferenceSequence",
+   "properties": {
+    "assemblyId": {
+     "type": "string",
+     "description": "(AS) Genome assembly identifier."
+    },
+    "length": {
+     "type": "integer",
+     "description": "(LN) Reference sequence length.",
+     "format": "int32"
+    },
+    "md5Checksum": {
+     "type": "string",
+     "description": "(M5) MD5 checksum of the sequence in the uppercase, excluding spaces but including pads as *."
+    },
+    "name": {
+     "type": "string",
+     "description": "(SN) Reference sequence name."
+    },
+    "species": {
+     "type": "string",
+     "description": "(SP) Species."
+    },
+    "uri": {
+     "type": "string",
+     "description": "(UR) URI of the sequence."
+    }
+   }
+  },
+  "SearchCallsetsRequest": {
+   "id": "SearchCallsetsRequest",
+   "type": "object",
+   "description": "The callset search request.",
+   "externalTypeName": "cloud.genomics.varstore.SearchCallsetsRequest",
+   "properties": {
+    "datasetIds": {
+     "type": "array",
+     "description": "Restrict the query to callsets within the given datasets. At least one ID must be provided.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "maxResults": {
+     "type": "string",
+     "description": "The maximum number of callsets to return.",
+     "format": "uint64"
+    },
+    "name": {
+     "type": "string",
+     "description": "Only return callsets for which a substring of the name matches this string."
+    },
+    "pageToken": {
+     "type": "string",
+     "description": "The continuation token, which is used to page through large result sets. To get the next page of results, set this parameter to the value of \"nextPageToken\" from the previous response."
+    }
+   }
+  },
+  "SearchCallsetsResponse": {
+   "id": "SearchCallsetsResponse",
+   "type": "object",
+   "description": "The callset search response.",
+   "externalTypeName": "cloud.genomics.varstore.SearchCallsetsResponse",
+   "properties": {
+    "callsets": {
+     "type": "array",
+     "description": "The list of matching callsets.",
+     "items": {
+      "$ref": "Callset"
+     }
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "The continuation token, which is used to page through large result sets. Provide this value in a subsequent request to return the next page of results. This field will be empty if there aren't any additional results."
+    }
+   }
+  },
+  "SearchReadsRequest": {
+   "id": "SearchReadsRequest",
+   "type": "object",
+   "description": "The read search request.",
+   "externalTypeName": "cloud.genomics.readstore.SearchReadsRequest",
+   "properties": {
+    "pageToken": {
+     "type": "string",
+     "description": "The continuation token, which is used to page through large result sets. To get the next page of results, set this parameter to the value of \"nextPageToken\" from the previous response."
+    },
+    "readsetIds": {
+     "type": "array",
+     "description": "If specified, will restrict this query to reads within the given readsets. At least one readset ID must be provided.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "sequenceEnd": {
+     "type": "string",
+     "description": "The end position (1-based, inclusive) of this query. If a sequence name is specified, this defaults to the sequence's length.",
+     "format": "uint64"
+    },
+    "sequenceName": {
+     "type": "string",
+     "description": "The sequence to query. (e.g. 'X' for the X chromosome) Leaving this blank returns results from all sequences, including unmapped reads."
+    },
+    "sequenceStart": {
+     "type": "string",
+     "description": "The start position (1-based, inclusive) of this query. If a sequence name is specified, this defaults to 1.",
+     "format": "uint64"
+    }
+   }
+  },
+  "SearchReadsResponse": {
+   "id": "SearchReadsResponse",
+   "type": "object",
+   "description": "The read search response.",
+   "externalTypeName": "cloud.genomics.readstore.SearchReadsResponse",
+   "properties": {
+    "nextPageToken": {
+     "type": "string",
+     "description": "The continuation token, which is used to page through large result sets. Provide this value in a subsequent request to return the next page of results. This field will be empty if there aren't any additional results."
+    },
+    "reads": {
+     "type": "array",
+     "description": "The list of matching Reads. The resulting Reads are sorted by position; the smallest positions are returned first. Unmapped reads, which have no position, are returned last and are further sorted alphabetically by name.",
+     "items": {
+      "$ref": "Read"
+     }
+    }
+   }
+  },
+  "SearchReadsetsRequest": {
+   "id": "SearchReadsetsRequest",
+   "type": "object",
+   "description": "The readset search request.",
+   "externalTypeName": "cloud.genomics.readstore.SearchReadsetsRequest",
+   "properties": {
+    "datasetIds": {
+     "type": "array",
+     "description": "Restricts this query to readsets within the given datasets. At least one ID must be provided.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "name": {
+     "type": "string",
+     "description": "Only return readsets for which a substring of the name matches this string."
+    },
+    "pageToken": {
+     "type": "string",
+     "description": "The continuation token, which is used to page through large result sets. To get the next page of results, set this parameter to the value of \"nextPageToken\" from the previous response."
+    }
+   }
+  },
+  "SearchReadsetsResponse": {
+   "id": "SearchReadsetsResponse",
+   "type": "object",
+   "description": "The readset search response.",
+   "externalTypeName": "cloud.genomics.readstore.SearchReadsetsResponse",
+   "properties": {
+    "nextPageToken": {
+     "type": "string",
+     "description": "The continuation token, which is used to page through large result sets. Provide this value in a subsequent request to return the next page of results. This field will be empty if there aren't any additional results."
+    },
+    "readsets": {
+     "type": "array",
+     "description": "The list of matching Readsets.",
+     "items": {
+      "$ref": "Readset"
+     }
+    }
+   }
+  },
+  "SearchVariantsRequest": {
+   "id": "SearchVariantsRequest",
+   "type": "object",
+   "description": "The variant search request.",
+   "externalTypeName": "cloud.genomics.varstore.SearchVariantsRequest",
+   "properties": {
+    "callsetIds": {
+     "type": "array",
+     "description": "Only return variant calls which belong to callsets with these ids. Leaving this blank returns all variant calls. At most one of callsetNames or callsetIds should be provided.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "callsetNames": {
+     "type": "array",
+     "description": "Only return variant calls which belong to callsets which have exactly these names. Leaving this blank returns all variant calls. At most one of callsetNames or callsetIds should be provided.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "contig": {
+     "type": "string",
+     "description": "Required. Only return variants on this contig."
+    },
+    "datasetId": {
+     "type": "string",
+     "description": "Required. The ID of the dataset to search."
+    },
+    "endPosition": {
+     "type": "string",
+     "description": "Required. The end of the window (1-based, inclusive) for which overlapping variants should be returned.",
+     "format": "int64"
+    },
+    "maxResults": {
+     "type": "string",
+     "description": "The maximum number of variants to return.",
+     "format": "uint64"
+    },
+    "pageToken": {
+     "type": "string",
+     "description": "The continuation token, which is used to page through large result sets. To get the next page of results, set this parameter to the value of \"nextPageToken\" from the previous response."
+    },
+    "startPosition": {
+     "type": "string",
+     "description": "Required. The beginning of the window (1-based, inclusive) for which overlapping variants should be returned.",
+     "format": "int64"
+    },
+    "variantName": {
+     "type": "string",
+     "description": "Only return variants which have exactly this name."
+    }
+   }
+  },
+  "SearchVariantsResponse": {
+   "id": "SearchVariantsResponse",
+   "type": "object",
+   "description": "The variant search response.",
+   "externalTypeName": "cloud.genomics.varstore.SearchVariantsResponse",
+   "properties": {
+    "nextPageToken": {
+     "type": "string",
+     "description": "The continuation token, which is used to page through large result sets. Provide this value in a subsequent request to return the next page of results. This field will be empty if there aren't any additional results."
+    },
+    "variants": {
+     "type": "array",
+     "description": "The list of matching Variants.",
+     "items": {
+      "$ref": "Variant"
+     }
+    }
+   }
+  },
+  "Variant": {
+   "id": "Variant",
+   "type": "object",
+   "description": "A Variant represents a change in DNA sequence relative to some reference. For example, a Variant could represent a SNP or an insertion. Variants belong to a Dataset.",
+   "externalTypeName": "cloud.genomics.varstore.Variant",
+   "properties": {
+    "alternateBases": {
+     "type": "array",
+     "description": "The bases that appear instead of the reference bases.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "calls": {
+     "type": "array",
+     "description": "The variant calls for this particular variant. Each one represents the determination of genotype with respect to this variant.",
+     "items": {
+      "$ref": "Call"
+     }
+    },
+    "contig": {
+     "type": "string",
+     "description": "The contig on which this variant occurs. (such as 'chr20' or 'X')"
+    },
+    "created": {
+     "type": "string",
+     "description": "The date this variant was created, in milliseconds from the epoch.",
+     "format": "int64"
+    },
+    "datasetId": {
+     "type": "string",
+     "description": "The ID of the dataset this variant belongs to."
+    },
+    "id": {
+     "type": "string",
+     "description": "The Google generated ID of the variant, immutable."
+    },
+    "info": {
+     "type": "object",
+     "description": "A map of additional variant information.",
+     "additionalProperties": {
+      "type": "array",
+      "description": "A string which maps to an array of values.",
+      "items": {
+       "type": "string"
+      }
+     }
+    },
+    "names": {
+     "type": "array",
+     "description": "Names for the variant, for example a RefSNP ID.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "position": {
+     "type": "string",
+     "description": "The position at which this variant occurs (1-based). This corresponds to the first base of the string of reference bases.",
+     "format": "int64"
+    },
+    "referenceBases": {
+     "type": "string",
+     "description": "The reference bases for this variant. They start at the given position."
+    }
+   }
+  }
+ },
+ "resources": {
+  "beacons": {
+   "methods": {
+    "get": {
+     "id": "genomics.beacons.get",
+     "path": "beacons/{datasetId}",
+     "httpMethod": "GET",
+     "description": "This is an experimental API that provides a Global Alliance for Genomics and Health Beacon. It may change at any time.",
+     "parameters": {
+      "allele": {
+       "type": "string",
+       "description": "Required. The allele to look for ('A', 'C', 'G' or 'T').",
+       "location": "query"
+      },
+      "contig": {
+       "type": "string",
+       "description": "Required. The contig to query over.",
+       "location": "query"
+      },
+      "datasetId": {
+       "type": "string",
+       "description": "The ID of the dataset to query over. It must be public. Private datasets will return an unauthorized exception.",
+       "required": true,
+       "location": "path"
+      },
+      "position": {
+       "type": "string",
+       "description": "Required. The 1-based position to query at.",
+       "format": "int64",
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "datasetId"
+     ],
+     "response": {
+      "$ref": "Beacon"
+     }
+    }
+   }
+  },
+  "callsets": {
+   "methods": {
+    "create": {
+     "id": "genomics.callsets.create",
+     "path": "callsets",
+     "httpMethod": "POST",
+     "description": "Creates a new callset.",
+     "request": {
+      "$ref": "Callset"
+     },
+     "response": {
+      "$ref": "Callset"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/genomics"
+     ]
+    },
+    "delete": {
+     "id": "genomics.callsets.delete",
+     "path": "callsets/{callsetId}",
+     "httpMethod": "DELETE",
+     "description": "Deletes a callset.",
+     "parameters": {
+      "callsetId": {
+       "type": "string",
+       "description": "The ID of the callset to be deleted.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "callsetId"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/genomics"
+     ]
+    },
+    "get": {
+     "id": "genomics.callsets.get",
+     "path": "callsets/{callsetId}",
+     "httpMethod": "GET",
+     "description": "Gets a callset by ID.",
+     "parameters": {
+      "callsetId": {
+       "type": "string",
+       "description": "The ID of the callset.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "callsetId"
+     ],
+     "response": {
+      "$ref": "Callset"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/genomics"
+     ]
+    },
+    "patch": {
+     "id": "genomics.callsets.patch",
+     "path": "callsets/{callsetId}",
+     "httpMethod": "PATCH",
+     "description": "Updates a callset. This method supports patch semantics.",
+     "parameters": {
+      "callsetId": {
+       "type": "string",
+       "description": "The ID of the callset to be updated.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "callsetId"
+     ],
+     "request": {
+      "$ref": "Callset"
+     },
+     "response": {
+      "$ref": "Callset"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/genomics"
+     ]
+    },
+    "search": {
+     "id": "genomics.callsets.search",
+     "path": "callsets/search",
+     "httpMethod": "POST",
+     "description": "Gets a list of callsets matching the criteria.",
+     "request": {
+      "$ref": "SearchCallsetsRequest"
+     },
+     "response": {
+      "$ref": "SearchCallsetsResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/genomics"
+     ]
+    },
+    "update": {
+     "id": "genomics.callsets.update",
+     "path": "callsets/{callsetId}",
+     "httpMethod": "PUT",
+     "description": "Updates a callset.",
+     "parameters": {
+      "callsetId": {
+       "type": "string",
+       "description": "The ID of the callset to be updated.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "callsetId"
+     ],
+     "request": {
+      "$ref": "Callset"
+     },
+     "response": {
+      "$ref": "Callset"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/genomics"
+     ]
+    }
+   }
+  },
+  "datasets": {
+   "methods": {
+    "create": {
+     "id": "genomics.datasets.create",
+     "path": "datasets",
+     "httpMethod": "POST",
+     "description": "Creates a new dataset.",
+     "request": {
+      "$ref": "Dataset"
+     },
+     "response": {
+      "$ref": "Dataset"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/genomics"
+     ]
+    },
+    "delete": {
+     "id": "genomics.datasets.delete",
+     "path": "datasets/{datasetId}",
+     "httpMethod": "DELETE",
+     "description": "Deletes a dataset.",
+     "parameters": {
+      "datasetId": {
+       "type": "string",
+       "description": "The ID of the dataset to be deleted.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "datasetId"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/genomics"
+     ]
+    },
+    "get": {
+     "id": "genomics.datasets.get",
+     "path": "datasets/{datasetId}",
+     "httpMethod": "GET",
+     "description": "Gets a dataset by ID.",
+     "parameters": {
+      "datasetId": {
+       "type": "string",
+       "description": "The ID of the dataset.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "datasetId"
+     ],
+     "response": {
+      "$ref": "Dataset"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/genomics"
+     ]
+    },
+    "list": {
+     "id": "genomics.datasets.list",
+     "path": "datasets",
+     "httpMethod": "GET",
+     "description": "Lists all datasets.",
+     "parameters": {
+      "maxResults": {
+       "type": "string",
+       "description": "The maximum number of results returned by this request.",
+       "default": "50",
+       "format": "uint64",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "The continuation token, which is used to page through large result sets. To get the next page of results, set this parameter to the value of \"nextPageToken\" from the previous response.",
+       "location": "query"
+      },
+      "projectId": {
+       "type": "string",
+       "description": "Only return datasets which belong to this Google Developers Console project.",
+       "format": "int64",
+       "location": "query"
+      }
+     },
+     "response": {
+      "$ref": "ListDatasetsResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/genomics"
+     ]
+    },
+    "patch": {
+     "id": "genomics.datasets.patch",
+     "path": "datasets/{datasetId}",
+     "httpMethod": "PATCH",
+     "description": "Updates a dataset. This method supports patch semantics.",
+     "parameters": {
+      "datasetId": {
+       "type": "string",
+       "description": "The ID of the dataset to be updated.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "datasetId"
+     ],
+     "request": {
+      "$ref": "Dataset"
+     },
+     "response": {
+      "$ref": "Dataset"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/genomics"
+     ]
+    },
+    "update": {
+     "id": "genomics.datasets.update",
+     "path": "datasets/{datasetId}",
+     "httpMethod": "PUT",
+     "description": "Updates a dataset.",
+     "parameters": {
+      "datasetId": {
+       "type": "string",
+       "description": "The ID of the dataset to be updated.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "datasetId"
+     ],
+     "request": {
+      "$ref": "Dataset"
+     },
+     "response": {
+      "$ref": "Dataset"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/genomics"
+     ]
+    }
+   }
+  },
+  "experimental": {
+   "resources": {
+    "jobs": {
+     "methods": {
+      "create": {
+       "id": "genomics.experimental.jobs.create",
+       "path": "experimental/jobs/create",
+       "httpMethod": "POST",
+       "description": "Creates and asynchronously runs an ad-hoc job. This is an experimental call and may be removed or changed at any time.",
+       "request": {
+        "$ref": "ExperimentalCreateJobRequest"
+       },
+       "response": {
+        "$ref": "ExperimentalCreateJobResponse"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/devstorage.read_write",
+        "https://www.googleapis.com/auth/genomics"
+       ]
+      }
+     }
+    }
+   }
+  },
+  "jobs": {
+   "methods": {
+    "get": {
+     "id": "genomics.jobs.get",
+     "path": "jobs/{jobId}",
+     "httpMethod": "GET",
+     "description": "Gets a job by ID.",
+     "parameters": {
+      "jobId": {
+       "type": "string",
+       "description": "The ID of the job.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "jobId"
+     ],
+     "response": {
+      "$ref": "Job"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/genomics"
+     ]
+    }
+   }
+  },
+  "reads": {
+   "methods": {
+    "get": {
+     "id": "genomics.reads.get",
+     "path": "reads/{readId}",
+     "httpMethod": "GET",
+     "description": "Gets a read by ID.",
+     "parameters": {
+      "readId": {
+       "type": "string",
+       "description": "The ID of the read.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "readId"
+     ],
+     "response": {
+      "$ref": "Read"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/genomics"
+     ]
+    },
+    "search": {
+     "id": "genomics.reads.search",
+     "path": "reads/search",
+     "httpMethod": "POST",
+     "description": "Gets a list of reads matching the criteria.",
+     "request": {
+      "$ref": "SearchReadsRequest"
+     },
+     "response": {
+      "$ref": "SearchReadsResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/genomics"
+     ]
+    }
+   }
+  },
+  "readsets": {
+   "methods": {
+    "create": {
+     "id": "genomics.readsets.create",
+     "path": "readsets",
+     "httpMethod": "POST",
+     "description": "Creates a new readset.",
+     "request": {
+      "$ref": "Readset"
+     },
+     "response": {
+      "$ref": "Readset"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/genomics"
+     ]
+    },
+    "delete": {
+     "id": "genomics.readsets.delete",
+     "path": "readsets/{readsetId}",
+     "httpMethod": "DELETE",
+     "description": "Deletes a readset.",
+     "parameters": {
+      "readsetId": {
+       "type": "string",
+       "description": "The ID of the readset to be deleted.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "readsetId"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/genomics"
+     ]
+    },
+    "export": {
+     "id": "genomics.readsets.export",
+     "path": "readsets/export",
+     "httpMethod": "POST",
+     "description": "Exports readsets to a file.",
+     "request": {
+      "$ref": "ExportReadsetsRequest"
+     },
+     "response": {
+      "$ref": "ExportReadsetsResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/devstorage.read_write",
+      "https://www.googleapis.com/auth/genomics"
+     ]
+    },
+    "get": {
+     "id": "genomics.readsets.get",
+     "path": "readsets/{readsetId}",
+     "httpMethod": "GET",
+     "description": "Gets a readset by ID.",
+     "parameters": {
+      "readsetId": {
+       "type": "string",
+       "description": "The ID of the readset.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "readsetId"
+     ],
+     "response": {
+      "$ref": "Readset"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/genomics"
+     ]
+    },
+    "import": {
+     "id": "genomics.readsets.import",
+     "path": "readsets/import",
+     "httpMethod": "POST",
+     "description": "Creates readsets by asynchronously importing the provided information.",
+     "request": {
+      "$ref": "ImportReadsetsRequest"
+     },
+     "response": {
+      "$ref": "ImportReadsetsResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/devstorage.read_write",
+      "https://www.googleapis.com/auth/genomics"
+     ]
+    },
+    "patch": {
+     "id": "genomics.readsets.patch",
+     "path": "readsets/{readsetId}",
+     "httpMethod": "PATCH",
+     "description": "Updates a readset. This method supports patch semantics.",
+     "parameters": {
+      "readsetId": {
+       "type": "string",
+       "description": "The ID of the readset to be updated.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "readsetId"
+     ],
+     "request": {
+      "$ref": "Readset"
+     },
+     "response": {
+      "$ref": "Readset"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/genomics"
+     ]
+    },
+    "search": {
+     "id": "genomics.readsets.search",
+     "path": "readsets/search",
+     "httpMethod": "POST",
+     "description": "Gets a list of readsets matching the criteria.",
+     "request": {
+      "$ref": "SearchReadsetsRequest"
+     },
+     "response": {
+      "$ref": "SearchReadsetsResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/genomics"
+     ]
+    },
+    "update": {
+     "id": "genomics.readsets.update",
+     "path": "readsets/{readsetId}",
+     "httpMethod": "PUT",
+     "description": "Updates a readset.",
+     "parameters": {
+      "readsetId": {
+       "type": "string",
+       "description": "The ID of the readset to be updated.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "readsetId"
+     ],
+     "request": {
+      "$ref": "Readset"
+     },
+     "response": {
+      "$ref": "Readset"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/genomics"
+     ]
+    }
+   }
+  },
+  "variants": {
+   "methods": {
+    "create": {
+     "id": "genomics.variants.create",
+     "path": "variants",
+     "httpMethod": "POST",
+     "description": "Creates a new variant.",
+     "request": {
+      "$ref": "Variant"
+     },
+     "response": {
+      "$ref": "Variant"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/genomics"
+     ]
+    },
+    "delete": {
+     "id": "genomics.variants.delete",
+     "path": "variants/{variantId}",
+     "httpMethod": "DELETE",
+     "description": "Deletes a variant.",
+     "parameters": {
+      "variantId": {
+       "type": "string",
+       "description": "The ID of the variant to be deleted.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "variantId"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/genomics"
+     ]
+    },
+    "export": {
+     "id": "genomics.variants.export",
+     "path": "variants/export",
+     "httpMethod": "POST",
+     "description": "Exports variant data to an external destination.",
+     "request": {
+      "$ref": "ExportVariantsRequest"
+     },
+     "response": {
+      "$ref": "ExportVariantsResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/genomics"
+     ]
+    },
+    "get": {
+     "id": "genomics.variants.get",
+     "path": "variants/{variantId}",
+     "httpMethod": "GET",
+     "description": "Gets a variant by ID.",
+     "parameters": {
+      "variantId": {
+       "type": "string",
+       "description": "The ID of the variant.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "variantId"
+     ],
+     "response": {
+      "$ref": "Variant"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/genomics"
+     ]
+    },
+    "getSummary": {
+     "id": "genomics.variants.getSummary",
+     "path": "variants/summary",
+     "httpMethod": "GET",
+     "description": "Gets a summary of all the variant data in a dataset.",
+     "parameters": {
+      "datasetId": {
+       "type": "string",
+       "description": "Required. The ID of the dataset to get variant summary information for.",
+       "location": "query"
+      }
+     },
+     "response": {
+      "$ref": "GetVariantsSummaryResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/genomics"
+     ]
+    },
+    "import": {
+     "id": "genomics.variants.import",
+     "path": "variants/import",
+     "httpMethod": "POST",
+     "description": "Creates variant data by asynchronously importing the provided information.",
+     "request": {
+      "$ref": "ImportVariantsRequest"
+     },
+     "response": {
+      "$ref": "ImportVariantsResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/devstorage.read_write",
+      "https://www.googleapis.com/auth/genomics"
+     ]
+    },
+    "patch": {
+     "id": "genomics.variants.patch",
+     "path": "variants/{variantId}",
+     "httpMethod": "PATCH",
+     "description": "Updates a variant. This method supports patch semantics.",
+     "parameters": {
+      "variantId": {
+       "type": "string",
+       "description": "The ID of the variant to be updated..",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "variantId"
+     ],
+     "request": {
+      "$ref": "Variant"
+     },
+     "response": {
+      "$ref": "Variant"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/genomics"
+     ]
+    },
+    "search": {
+     "id": "genomics.variants.search",
+     "path": "variants/search",
+     "httpMethod": "POST",
+     "description": "Gets a list of variants matching the criteria.",
+     "request": {
+      "$ref": "SearchVariantsRequest"
+     },
+     "response": {
+      "$ref": "SearchVariantsResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/genomics"
+     ]
+    },
+    "update": {
+     "id": "genomics.variants.update",
+     "path": "variants/{variantId}",
+     "httpMethod": "PUT",
+     "description": "Updates a variant.",
+     "parameters": {
+      "variantId": {
+       "type": "string",
+       "description": "The ID of the variant to be updated..",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "variantId"
+     ],
+     "request": {
+      "$ref": "Variant"
+     },
+     "response": {
+      "$ref": "Variant"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/genomics"
+     ]
+    }
+   }
+  }
+ }
+}

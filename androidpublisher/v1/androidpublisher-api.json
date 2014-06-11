@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"kEk3sFj6Ef5_yR1-H3bAO6qw9mI/7feCcsSBHiSVKUXs7gmA_Rg25gw\"",
+ "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/UUBf3jcU1S7f2gMA7g9Iuwrld9I\"",
  "discoveryVersion": "v1",
  "id": "androidpublisher:v1",
  "name": "androidpublisher",
@@ -79,7 +79,7 @@
   "SubscriptionPurchase": {
    "id": "SubscriptionPurchase",
    "type": "object",
-   "description": "A Purchase resource indicates the status of a user's subscription purchase.",
+   "description": "A SubscriptionPurchase resource indicates the status of a user's subscription purchase.",
    "properties": {
     "autoRenewing": {
      "type": "boolean",

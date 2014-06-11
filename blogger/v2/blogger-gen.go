@@ -514,8 +514,8 @@ func (c *BlogsGetCall) Do() (*Blog, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Blog)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Blog
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -584,8 +584,8 @@ func (c *CommentsGetCall) Do() (*Comment, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Comment)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Comment
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -705,8 +705,8 @@ func (c *CommentsListCall) Do() (*CommentList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(CommentList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *CommentList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -801,8 +801,8 @@ func (c *PagesGetCall) Do() (*Page, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Page)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Page
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -882,8 +882,8 @@ func (c *PagesListCall) Do() (*PageList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(PageList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *PageList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -954,8 +954,8 @@ func (c *PostsGetCall) Do() (*Post, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Post)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Post
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1065,8 +1065,8 @@ func (c *PostsListCall) Do() (*PostList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(PostList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *PostList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1151,8 +1151,8 @@ func (c *UsersGetCall) Do() (*User, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(User)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *User
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1215,8 +1215,8 @@ func (c *UsersBlogsListCall) Do() (*BlogList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(BlogList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *BlogList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil

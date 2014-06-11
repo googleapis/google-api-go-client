@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"kEk3sFj6Ef5_yR1-H3bAO6qw9mI/kuOAnH89ODs6iXVpq8K9hCO3DK0\"",
+ "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/nC6FAiorEmIGYsW4V9qo5vJq4Ws\"",
  "discoveryVersion": "v1",
  "id": "drive:v2",
  "name": "drive",
@@ -206,6 +206,10 @@
      "description": "This is always drive#about.",
      "default": "drive#about"
     },
+    "languageCode": {
+     "type": "string",
+     "description": "The user's language or locale code, as defined by BCP 47, with some extensions from Unicode's LDML format (http://www.unicode.org/reports/tr35/)."
+    },
     "largestChangeId": {
      "type": "string",
      "description": "The largest change id.",
@@ -236,6 +240,24 @@
     "permissionId": {
      "type": "string",
      "description": "The current user's ID as visible in the permissions collection."
+    },
+    "quotaBytesByService": {
+     "type": "array",
+     "description": "The amount of storage quota used by different Google services.",
+     "items": {
+      "type": "object",
+      "properties": {
+       "bytesUsed": {
+        "type": "string",
+        "description": "The storage quota bytes used by the service.",
+        "format": "int64"
+       },
+       "serviceName": {
+        "type": "string",
+        "description": "The service's name, e.g. DRIVE, GMAIL, or PHOTOS."
+       }
+      }
+     }
     },
     "quotaBytesTotal": {
      "type": "string",
@@ -292,6 +314,10 @@
     "createUrl": {
      "type": "string",
      "description": "The url to create a new file with this app."
+    },
+    "hasDriveWideScope": {
+     "type": "boolean",
+     "description": "Whether the app has drive-wide scope. An app with drive-wide scope can access all files in the user's drive."
     },
     "icons": {
      "type": "array",
@@ -396,6 +422,10 @@
      "type": "boolean",
      "description": "Whether this app supports opening more than one file."
     },
+    "supportsOfflineCreate": {
+     "type": "boolean",
+     "description": "Whether this app supports creating new files when offline."
+    },
     "useByDefault": {
      "type": "boolean",
      "description": "Whether the app is selected as the default handler for the types it supports."
@@ -407,6 +437,13 @@
    "type": "object",
    "description": "A list of third-party applications which the user has installed or given access to Google Drive.",
    "properties": {
+    "defaultAppIds": {
+     "type": "array",
+     "description": "List of app IDs that the user has specified to use by default.",
+     "items": {
+      "type": "string"
+     }
+    },
     "etag": {
      "type": "string",
      "description": "The ETag of the list."
@@ -1076,6 +1113,11 @@
      "description": "Last time this file was viewed by the user (formatted RFC 3339 timestamp).",
      "format": "date-time"
     },
+    "markedViewedByMeDate": {
+     "type": "string",
+     "description": "Time this file was explicitly marked viewed by the user (formatted RFC 3339 timestamp).",
+     "format": "date-time"
+    },
     "md5Checksum": {
      "type": "string",
      "description": "An MD5 checksum for the content of this file. This is populated only for files with content stored in Drive."
@@ -1126,6 +1168,13 @@
       "$ref": "ParentReference"
      }
     },
+    "permissions": {
+     "type": "array",
+     "description": "The list of permissions for users with access to this file.",
+     "items": {
+      "$ref": "Permission"
+     }
+    },
     "properties": {
      "type": "array",
      "description": "The list of properties.",
@@ -1150,6 +1199,10 @@
      "type": "string",
      "description": "Time at which this file was shared with the user (formatted RFC 3339 timestamp).",
      "format": "date-time"
+    },
+    "sharingUser": {
+     "$ref": "User",
+     "description": "User that shared the item with the current user, if available."
     },
     "thumbnail": {
      "type": "object",
@@ -1177,6 +1230,11 @@
     "userPermission": {
      "$ref": "Permission",
      "description": "The permissions for the authenticated user on this file."
+    },
+    "version": {
+     "type": "string",
+     "description": "A monotonically increasing version number for the file. This reflects every change made to the file on the server, even those not visible to the requesting user.",
+     "format": "int64"
     },
     "webContentLink": {
      "type": "string",
@@ -1305,11 +1363,11 @@
     },
     "domain": {
      "type": "string",
-     "description": "The domain name of the entity this permission refers to. This is an output-only field which is populated when the permission type is \"user\", \"group\" or \"domain\"."
+     "description": "The domain name of the entity this permission refers to. This is an output-only field which is present when the permission type is user, group or domain."
     },
     "emailAddress": {
      "type": "string",
-     "description": "The email address of the user this permission refers to. This is an output-only field which is populated when the permission type is \"user\" and the given user's Google+ profile privacy settings allow exposing their email address."
+     "description": "The email address of the user this permission refers to. This is an output-only field which is present when the permission type is user and the given user's Google+ profile privacy settings allow exposing their email address."
     },
     "etag": {
      "type": "string",
@@ -1317,7 +1375,7 @@
     },
     "id": {
      "type": "string",
-     "description": "The ID of the user this permission refers to, and identical to the permissionId in the About and Files resources. When making a drive.permissions.insert request, exactly one of 'id' or 'value' fields must be specified."
+     "description": "The ID of the user this permission refers to, and identical to the permissionId in the About and Files resources. When making a drive.permissions.insert request, exactly one of the id or value fields must be specified."
     },
     "kind": {
      "type": "string",
@@ -1356,7 +1414,7 @@
     },
     "value": {
      "type": "string",
-     "description": "The email address or domain name for the entity. This is used during inserts and is not populated in responses. When making a drive.permissions.insert request, exactly one of 'id' or 'value' fields must be specified."
+     "description": "The email address or domain name for the entity. This is used during inserts and is not populated in responses. When making a drive.permissions.insert request, exactly one of the id or value fields must be specified."
     },
     "withLink": {
      "type": "boolean",
@@ -1588,6 +1646,10 @@
      "type": "string",
      "description": "A plain text displayable name for this user."
     },
+    "emailAddress": {
+     "type": "string",
+     "description": "The email address of the user."
+    },
     "isAuthenticatedUser": {
      "type": "boolean",
      "description": "Whether this user is the same as the authenticated user for whom the request was made."
@@ -1625,7 +1687,7 @@
      "parameters": {
       "includeSubscribed": {
        "type": "boolean",
-       "description": "When calculating the number of remaining change IDs, whether to include shared files and public files the user has opened. When set to false, this counts only change IDs for owned files and any shared or public files that the user has explictly added to a folder in Drive.",
+       "description": "When calculating the number of remaining change IDs, whether to include public files the user has opened and shared files. When set to false, this counts only change IDs for owned files and any shared or public files that the user has explicitly added to a folder they own.",
        "default": "true",
        "location": "query"
       },
@@ -1691,6 +1753,25 @@
      "path": "apps",
      "httpMethod": "GET",
      "description": "Lists a user's installed apps.",
+     "parameters": {
+      "appFilterExtensions": {
+       "type": "string",
+       "description": "A comma-separated list of file extensions for open with filtering. All apps within the given app query scope which can open any of the given file extensions will be included in the response. If appFilterMimeTypes are provided as well, the result is a union of the two resulting app lists.",
+       "default": "",
+       "location": "query"
+      },
+      "appFilterMimeTypes": {
+       "type": "string",
+       "description": "A comma-separated list of MIME types for open with filtering. All apps within the given app query scope which can open any of the given MIME types will be included in the response. If appFilterExtensions are provided as well, the result is a union of the two resulting app lists.",
+       "default": "",
+       "location": "query"
+      },
+      "languageCode": {
+       "type": "string",
+       "description": "A language or locale code, as defined by BCP 47, with some extensions from Unicode's LDML format (http://www.unicode.org/reports/tr35/).",
+       "location": "query"
+      }
+     },
      "response": {
       "$ref": "AppList"
      },
@@ -1744,7 +1825,7 @@
       },
       "includeSubscribed": {
        "type": "boolean",
-       "description": "Whether to include shared files and public files the user has opened. When set to false, the list will include owned files plus any shared or public files the user has explictly added to a folder in Drive.",
+       "description": "Whether to include public files the user has opened and shared files. When set to false, the list only includes owned files plus any shared or public files the user has explicitly added to a folder they own.",
        "default": "true",
        "location": "query"
       },
@@ -1795,7 +1876,7 @@
       },
       "includeSubscribed": {
        "type": "boolean",
-       "description": "Whether to include shared files and public files the user has opened. When set to false, the list will include owned files plus any shared or public files the user has explictly added to a folder in Drive.",
+       "description": "Whether to include public files the user has opened and shared files. When set to false, the list only includes owned files plus any shared or public files the user has explicitly added to a folder they own.",
        "default": "true",
        "location": "query"
       },
@@ -2316,6 +2397,15 @@
       "https://www.googleapis.com/auth/drive.file"
      ]
     },
+    "emptyTrash": {
+     "id": "drive.files.emptyTrash",
+     "path": "files/trash",
+     "httpMethod": "DELETE",
+     "description": "Permanently deletes all of the user's trashed files.",
+     "scopes": [
+      "https://www.googleapis.com/auth/drive"
+     ]
+    },
     "get": {
      "id": "drive.files.get",
      "path": "files/{fileId}",
@@ -2511,6 +2601,11 @@
      "httpMethod": "PATCH",
      "description": "Updates file metadata and/or content. This method supports patch semantics.",
      "parameters": {
+      "addParents": {
+       "type": "string",
+       "description": "Comma-separated list of parent IDs to add.",
+       "location": "query"
+      },
       "convert": {
        "type": "boolean",
        "description": "Whether to convert this file to the corresponding Google Docs format.",
@@ -2544,6 +2639,11 @@
        "type": "boolean",
        "description": "Whether to pin the new revision.",
        "default": "false",
+       "location": "query"
+      },
+      "removeParents": {
+       "type": "string",
+       "description": "Comma-separated list of parent IDs to remove.",
        "location": "query"
       },
       "setModifiedDate": {
@@ -2674,6 +2774,11 @@
      "httpMethod": "PUT",
      "description": "Updates file metadata and/or content.",
      "parameters": {
+      "addParents": {
+       "type": "string",
+       "description": "Comma-separated list of parent IDs to add.",
+       "location": "query"
+      },
       "convert": {
        "type": "boolean",
        "description": "Whether to convert this file to the corresponding Google Docs format.",
@@ -2707,6 +2812,11 @@
        "type": "boolean",
        "description": "Whether to pin the new revision.",
        "default": "false",
+       "location": "query"
+      },
+      "removeParents": {
+       "type": "string",
+       "description": "Comma-separated list of parent IDs to remove.",
        "location": "query"
       },
       "setModifiedDate": {
@@ -3057,7 +3167,7 @@
       },
       "sendNotificationEmails": {
        "type": "boolean",
-       "description": "Whether to send notification emails when sharing to users or groups.",
+       "description": "Whether to send notification emails when sharing to users or groups. This parameter is ignored and an email is sent if the role is owner.",
        "default": "true",
        "location": "query"
       }
@@ -3413,6 +3523,13 @@
        "description": "The ID of the file that the Realtime API data model is associated with.",
        "required": true,
        "location": "path"
+      },
+      "revision": {
+       "type": "integer",
+       "description": "The revision of the Realtime API data model to export. Revisions start at 1 (the initial empty data model) and are incremented with each change. If this parameter is excluded, the most recent data model will be returned.",
+       "format": "int32",
+       "minimum": "1",
+       "location": "query"
       }
      },
      "parameterOrder": [

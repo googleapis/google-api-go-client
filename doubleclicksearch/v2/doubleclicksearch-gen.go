@@ -52,6 +52,7 @@ func New(client *http.Client) (*Service, error) {
 	s := &Service{client: client, BasePath: basePath}
 	s.Conversion = NewConversionService(s)
 	s.Reports = NewReportsService(s)
+	s.SavedColumns = NewSavedColumnsService(s)
 	return s, nil
 }
 
@@ -62,6 +63,8 @@ type Service struct {
 	Conversion *ConversionService
 
 	Reports *ReportsService
+
+	SavedColumns *SavedColumnsService
 }
 
 func NewConversionService(s *Service) *ConversionService {
@@ -79,6 +82,15 @@ func NewReportsService(s *Service) *ReportsService {
 }
 
 type ReportsService struct {
+	s *Service
+}
+
+func NewSavedColumnsService(s *Service) *SavedColumnsService {
+	rs := &SavedColumnsService{s: s}
+	return rs
+}
+
+type SavedColumnsService struct {
 	s *Service
 }
 
@@ -266,13 +278,55 @@ type ReportFiles struct {
 	Url string `json:"url,omitempty"`
 }
 
+type ReportApiColumnSpec struct {
+	// ColumnName: Name of a DoubleClick Search column to include in the
+	// report.
+	ColumnName string `json:"columnName,omitempty"`
+
+	// CustomDimensionName: Segments a report by a custom dimension. The
+	// report must be scoped to an advertiser or lower, and the custom
+	// dimension must already be set up in DoubleClick Search. The custom
+	// dimension name, which appears in DoubleClick Search, is case
+	// sensitive.
+	CustomDimensionName string `json:"customDimensionName,omitempty"`
+
+	// EndDate: Inclusive day in YYYY-MM-DD format. When provided, this
+	// overrides the overall time range of the report for this column only.
+	// Must be provided together with startDate.
+	EndDate string `json:"endDate,omitempty"`
+
+	// GroupByColumn: Synchronous report only. Set to true to group by this
+	// column. Defaults to false.
+	GroupByColumn bool `json:"groupByColumn,omitempty"`
+
+	// HeaderText: Text used to identify this column in the report output;
+	// defaults to columnName or savedColumnName when not specified. This
+	// can be used to prevent collisions between DoubleClick Search columns
+	// and saved columns with the same name.
+	HeaderText string `json:"headerText,omitempty"`
+
+	// PlatformSource: The platform that is used to provide data for the
+	// custom dimension. Acceptable values are "Floodlight".
+	PlatformSource string `json:"platformSource,omitempty"`
+
+	// SavedColumnName: Name of a saved column to include in the report. The
+	// report must be scoped at advertiser or lower, and this saved column
+	// must already be created in the DoubleClick Search UI.
+	SavedColumnName string `json:"savedColumnName,omitempty"`
+
+	// StartDate: Inclusive date in YYYY-MM-DD format. When provided, this
+	// overrides the overall time range of the report for this column only.
+	// Must be provided together with endDate.
+	StartDate string `json:"startDate,omitempty"`
+}
+
 type ReportRequest struct {
 	// Columns: The columns to include in the report. This includes both
 	// DoubleClick Search columns and saved columns. For DoubleClick Search
 	// columns, only the columnName parameter is required. For saved columns
 	// only the savedColumnName parameter is required. Both columnName and
 	// savedColumnName cannot be set in the same stanza.
-	Columns []*ReportRequestColumns `json:"columns,omitempty"`
+	Columns []*ReportApiColumnSpec `json:"columns,omitempty"`
 
 	// DownloadFormat: Format that the report should be returned in.
 	// Currently csv or tsv is supported.
@@ -282,8 +336,8 @@ type ReportRequest struct {
 	Filters []*ReportRequestFilters `json:"filters,omitempty"`
 
 	// IncludeDeletedEntities: Determines if removed entities should be
-	// included in the report. Deprecated, please use includeRemovedEntities
-	// instead. Defaults to false.
+	// included in the report. Defaults to false. Deprecated, please use
+	// includeRemovedEntities instead.
 	IncludeDeletedEntities bool `json:"includeDeletedEntities,omitempty"`
 
 	// IncludeRemovedEntities: Determines if removed entities should be
@@ -338,41 +392,10 @@ type ReportRequest struct {
 	VerifySingleTimeZone bool `json:"verifySingleTimeZone,omitempty"`
 }
 
-type ReportRequestColumns struct {
-	// ColumnName: Name of a DoubleClick Search column to include in the
-	// report.
-	ColumnName string `json:"columnName,omitempty"`
-
-	// EndDate: Inclusive day in YYYY-MM-DD format. When provided, this
-	// overrides the overall time range of the report for this column only.
-	// Must be provided together with startDate.
-	EndDate string `json:"endDate,omitempty"`
-
-	// GroupByColumn: Synchronous report only. Set to true to group by this
-	// column. Defaults to false.
-	GroupByColumn bool `json:"groupByColumn,omitempty"`
-
-	// HeaderText: Text used to identify this column in the report output;
-	// defaults to columnName or savedColumnName when not specified. This
-	// can be used to prevent collisions between DoubleClick Search columns
-	// and saved columns with the same name.
-	HeaderText string `json:"headerText,omitempty"`
-
-	// SavedColumnName: Name of a saved column to include in the report. The
-	// report must be scoped at advertiser or lower, and this saved column
-	// must already be created in the DoubleClick Search UI.
-	SavedColumnName string `json:"savedColumnName,omitempty"`
-
-	// StartDate: Inclusive date in YYYY-MM-DD format. When provided, this
-	// overrides the overall time range of the report for this column only.
-	// Must be provided together with endDate.
-	StartDate string `json:"startDate,omitempty"`
-}
-
 type ReportRequestFilters struct {
 	// Column: Column to perform the filter on. This can be a DoubleClick
 	// Search column or a saved column.
-	Column *ReportRequestFiltersColumn `json:"column,omitempty"`
+	Column *ReportApiColumnSpec `json:"column,omitempty"`
 
 	// Operator: Operator to use in the filter. See the filter reference for
 	// a list of available operators.
@@ -382,30 +405,14 @@ type ReportRequestFilters struct {
 	Values []interface{} `json:"values,omitempty"`
 }
 
-type ReportRequestFiltersColumn struct {
-	// ColumnName: Name of a DoubleClick Search column to filter on.
-	ColumnName string `json:"columnName,omitempty"`
-
-	// SavedColumnName: Name of a saved column to filter on.
-	SavedColumnName string `json:"savedColumnName,omitempty"`
-}
-
 type ReportRequestOrderBy struct {
 	// Column: Column to perform the sort on. This can be a DoubleClick
 	// Search-defined column or a saved column.
-	Column *ReportRequestOrderByColumn `json:"column,omitempty"`
+	Column *ReportApiColumnSpec `json:"column,omitempty"`
 
 	// SortOrder: The sort direction, which is either ascending or
 	// descending.
 	SortOrder string `json:"sortOrder,omitempty"`
-}
-
-type ReportRequestOrderByColumn struct {
-	// ColumnName: Name of a DoubleClick Search column to sort by.
-	ColumnName string `json:"columnName,omitempty"`
-
-	// SavedColumnName: Name of a saved column to sort by.
-	SavedColumnName string `json:"savedColumnName,omitempty"`
 }
 
 type ReportRequestReportScope struct {
@@ -450,6 +457,27 @@ type ReportRequestTimeRange struct {
 }
 
 type ReportRow struct {
+}
+
+type SavedColumn struct {
+	// Kind: Identifies this as a SavedColumn resource. Value: the fixed
+	// string doubleclicksearch#savedColumn.
+	Kind string `json:"kind,omitempty"`
+
+	// SavedColumnName: The name of the saved column.
+	SavedColumnName string `json:"savedColumnName,omitempty"`
+
+	// Type: The type of data this saved column will produce.
+	Type string `json:"type,omitempty"`
+}
+
+type SavedColumnList struct {
+	// Items: The saved columns being requested.
+	Items []*SavedColumn `json:"items,omitempty"`
+
+	// Kind: Identifies this as a SavedColumnList resource. Value: the fixed
+	// string doubleclicksearch#savedColumnList.
+	Kind string `json:"kind,omitempty"`
 }
 
 type UpdateAvailabilityRequest struct {
@@ -553,8 +581,8 @@ func (c *ConversionGetCall) Do() (*ConversionList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(ConversionList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *ConversionList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -701,8 +729,8 @@ func (c *ConversionInsertCall) Do() (*ConversionList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(ConversionList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *ConversionList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -784,8 +812,8 @@ func (c *ConversionPatchCall) Do() (*ConversionList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(ConversionList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *ConversionList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -911,8 +939,8 @@ func (c *ConversionUpdateCall) Do() (*ConversionList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(ConversionList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *ConversionList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -973,8 +1001,8 @@ func (c *ConversionUpdateAvailabilityCall) Do() (*UpdateAvailabilityResponse, er
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(UpdateAvailabilityResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *UpdateAvailabilityResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1035,8 +1063,8 @@ func (c *ReportsGenerateCall) Do() (*Report, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Report)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Report
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1092,8 +1120,8 @@ func (c *ReportsGetCall) Do() (*Report, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Report)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Report
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1231,8 +1259,8 @@ func (c *ReportsRequestCall) Do() (*Report, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Report)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Report
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1247,6 +1275,82 @@ func (c *ReportsRequestCall) Do() (*Report, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "Report"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/doubleclicksearch"
+	//   ]
+	// }
+
+}
+
+// method id "doubleclicksearch.savedColumns.list":
+
+type SavedColumnsListCall struct {
+	s            *Service
+	agencyId     int64
+	advertiserId int64
+	opt_         map[string]interface{}
+}
+
+// List: Retrieve the list of saved columns for a specified advertiser.
+func (r *SavedColumnsService) List(agencyId int64, advertiserId int64) *SavedColumnsListCall {
+	c := &SavedColumnsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.agencyId = agencyId
+	c.advertiserId = advertiserId
+	return c
+}
+
+func (c *SavedColumnsListCall) Do() (*SavedColumnList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "agency/{agencyId}/advertiser/{advertiserId}/savedcolumns")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{agencyId}", strconv.FormatInt(c.agencyId, 10), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{advertiserId}", strconv.FormatInt(c.advertiserId, 10), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *SavedColumnList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieve the list of saved columns for a specified advertiser.",
+	//   "httpMethod": "GET",
+	//   "id": "doubleclicksearch.savedColumns.list",
+	//   "parameterOrder": [
+	//     "agencyId",
+	//     "advertiserId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "DS ID of the advertiser.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "agencyId": {
+	//       "description": "DS ID of the agency.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "agency/{agencyId}/advertiser/{advertiserId}/savedcolumns",
+	//   "response": {
+	//     "$ref": "SavedColumnList"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/doubleclicksearch"

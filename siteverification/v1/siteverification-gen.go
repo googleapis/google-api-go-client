@@ -227,8 +227,8 @@ func (c *WebResourceGetCall) Do() (*SiteVerificationWebResourceResource, error) 
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(SiteVerificationWebResourceResource)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *SiteVerificationWebResourceResource
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -297,8 +297,8 @@ func (c *WebResourceGetTokenCall) Do() (*SiteVerificationWebResourceGettokenResp
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(SiteVerificationWebResourceGettokenResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *SiteVerificationWebResourceGettokenResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -362,8 +362,8 @@ func (c *WebResourceInsertCall) Do() (*SiteVerificationWebResourceResource, erro
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(SiteVerificationWebResourceResource)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *SiteVerificationWebResourceResource
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -427,8 +427,8 @@ func (c *WebResourceListCall) Do() (*SiteVerificationWebResourceListResponse, er
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(SiteVerificationWebResourceListResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *SiteVerificationWebResourceListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -489,8 +489,8 @@ func (c *WebResourcePatchCall) Do() (*SiteVerificationWebResourceResource, error
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(SiteVerificationWebResourceResource)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *SiteVerificationWebResourceResource
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -564,8 +564,8 @@ func (c *WebResourceUpdateCall) Do() (*SiteVerificationWebResourceResource, erro
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(SiteVerificationWebResourceResource)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *SiteVerificationWebResourceResource
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil

@@ -222,8 +222,8 @@ func (c *TaskqueuesGetCall) Do() (*TaskQueue, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(TaskQueue)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *TaskQueue
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -383,8 +383,8 @@ func (c *TasksGetCall) Do() (*Task, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Task)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Task
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -471,8 +471,8 @@ func (c *TasksLeaseCall) Do() (*Tasks, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Tasks)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Tasks
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -562,8 +562,8 @@ func (c *TasksListCall) Do() (*Tasks2, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Tasks2)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Tasks2
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil

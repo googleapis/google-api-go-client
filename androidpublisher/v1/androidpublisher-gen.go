@@ -206,8 +206,8 @@ func (c *PurchasesGetCall) Do() (*SubscriptionPurchase, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(SubscriptionPurchase)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *SubscriptionPurchase
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil

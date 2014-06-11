@@ -56,6 +56,7 @@ func New(client *http.Client) (*Service, error) {
 	s.Accounts = NewAccountsService(s)
 	s.Contacts = NewContactsService(s)
 	s.Locations = NewLocationsService(s)
+	s.Settings = NewSettingsService(s)
 	s.Subscriptions = NewSubscriptionsService(s)
 	s.Timeline = NewTimelineService(s)
 	return s, nil
@@ -70,6 +71,8 @@ type Service struct {
 	Contacts *ContactsService
 
 	Locations *LocationsService
+
+	Settings *SettingsService
 
 	Subscriptions *SubscriptionsService
 
@@ -100,6 +103,15 @@ func NewLocationsService(s *Service) *LocationsService {
 }
 
 type LocationsService struct {
+	s *Service
+}
+
+func NewSettingsService(s *Service) *SettingsService {
+	rs := &SettingsService{s: s}
+	return rs
+}
+
+type SettingsService struct {
 	s *Service
 }
 
@@ -420,6 +432,20 @@ type NotificationConfig struct {
 	Level string `json:"level,omitempty"`
 }
 
+type Setting struct {
+	// Id: The setting's ID. The following IDs are valid:
+	// - locale - The
+	// key to the user’s language/locale (BCP 47 identifier) that
+	// Glassware should use to render localized content.
+	Id string `json:"id,omitempty"`
+
+	// Kind: The type of resource. This is always mirror#setting.
+	Kind string `json:"kind,omitempty"`
+
+	// Value: The setting value, as a string.
+	Value string `json:"value,omitempty"`
+}
+
 type Subscription struct {
 	// CallbackUrl: The URL where notifications should be delivered (must
 	// start with https://).
@@ -430,6 +456,8 @@ type Subscription struct {
 	// timeline - Changes in the timeline including insertion, deletion, and
 	// updates.
 	// - locations - Location updates.
+	// - settings - Settings
+	// updates.
 	Collection string `json:"collection,omitempty"`
 
 	// Id: The ID of the subscription.
@@ -742,8 +770,8 @@ func (c *AccountsInsertCall) Do() (*Account, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Account)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Account
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -877,8 +905,8 @@ func (c *ContactsGetCall) Do() (*Contact, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Contact)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Contact
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -946,8 +974,8 @@ func (c *ContactsInsertCall) Do() (*Contact, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Contact)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Contact
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -999,8 +1027,8 @@ func (c *ContactsListCall) Do() (*ContactsListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(ContactsListResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *ContactsListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1061,8 +1089,8 @@ func (c *ContactsPatchCall) Do() (*Contact, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Contact)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Contact
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1136,8 +1164,8 @@ func (c *ContactsUpdateCall) Do() (*Contact, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Contact)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Contact
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1203,8 +1231,8 @@ func (c *LocationsGetCall) Do() (*Location, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Location)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Location
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1265,8 +1293,8 @@ func (c *LocationsListCall) Do() (*LocationsListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(LocationsListResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *LocationsListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1280,6 +1308,70 @@ func (c *LocationsListCall) Do() (*LocationsListResponse, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/glass.location",
+	//     "https://www.googleapis.com/auth/glass.timeline"
+	//   ]
+	// }
+
+}
+
+// method id "mirror.settings.get":
+
+type SettingsGetCall struct {
+	s    *Service
+	id   string
+	opt_ map[string]interface{}
+}
+
+// Get: Gets a single setting by ID.
+func (r *SettingsService) Get(id string) *SettingsGetCall {
+	c := &SettingsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	return c
+}
+
+func (c *SettingsGetCall) Do() (*Setting, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "settings/{id}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Setting
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a single setting by ID.",
+	//   "httpMethod": "GET",
+	//   "id": "mirror.settings.get",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The ID of the setting. The following IDs are valid: \n- locale - The key to the user’s language/locale (BCP 47 identifier) that Glassware should use to render localized content.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "settings/{id}",
+	//   "response": {
+	//     "$ref": "Setting"
+	//   },
+	//   "scopes": [
 	//     "https://www.googleapis.com/auth/glass.timeline"
 	//   ]
 	// }
@@ -1381,8 +1473,8 @@ func (c *SubscriptionsInsertCall) Do() (*Subscription, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Subscription)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Subscription
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1435,8 +1527,8 @@ func (c *SubscriptionsListCall) Do() (*SubscriptionsListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(SubscriptionsListResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *SubscriptionsListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1496,8 +1588,8 @@ func (c *SubscriptionsUpdateCall) Do() (*Subscription, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Subscription)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Subscription
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1621,8 +1713,8 @@ func (c *TimelineGetCall) Do() (*TimelineItem, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(TimelineItem)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *TimelineItem
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1704,8 +1796,8 @@ func (c *TimelineInsertCall) Do() (*TimelineItem, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(TimelineItem)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *TimelineItem
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1847,8 +1939,8 @@ func (c *TimelineListCall) Do() (*TimelineListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(TimelineListResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *TimelineListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1956,8 +2048,8 @@ func (c *TimelinePatchCall) Do() (*TimelineItem, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(TimelineItem)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *TimelineItem
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2045,8 +2137,8 @@ func (c *TimelineUpdateCall) Do() (*TimelineItem, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(TimelineItem)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *TimelineItem
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2203,8 +2295,8 @@ func (c *TimelineAttachmentsGetCall) Do() (*Attachment, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Attachment)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Attachment
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2291,8 +2383,8 @@ func (c *TimelineAttachmentsInsertCall) Do() (*Attachment, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Attachment)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Attachment
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2374,8 +2466,8 @@ func (c *TimelineAttachmentsListCall) Do() (*AttachmentsListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(AttachmentsListResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *AttachmentsListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil

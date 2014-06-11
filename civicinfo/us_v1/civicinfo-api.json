@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"kEk3sFj6Ef5_yR1-H3bAO6qw9mI/fgmSCrAaA7mxBfjU-xmYlE1C4zQ\"",
+ "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/Pi0ps_LBhdGhyCeYmvCqhL4v7oY\"",
  "discoveryVersion": "v1",
  "id": "civicinfo:us_v1",
  "name": "civicinfo",
@@ -327,6 +327,13 @@
    "type": "object",
    "description": "Represents a political geographic division that matches the requested query.",
    "properties": {
+    "aliases": {
+     "type": "array",
+     "description": "Other Open Civic Data identifiers that refer to the same division -- for example, those that refer to other political divisions whose boundaries are defined to be coterminous with this one. For example, ocd-division/country:us/state:wy will include an alias of ocd-division/country:us/state:wy/cd:1, since Wyoming has only one Congressional district.",
+     "items": {
+      "type": "string"
+     }
+    },
     "name": {
      "type": "string",
      "description": "The name of the division."
@@ -427,6 +434,13 @@
    "type": "object",
    "description": "Describes a political geography.",
    "properties": {
+    "alsoKnownAs": {
+     "type": "array",
+     "description": "Any other valid OCD IDs that refer to the same division. For example, if ocd_id above is ocd-division/country:us/district:dc, this will contain ocd-division/country:us/state:dc.",
+     "items": {
+      "type": "string"
+     }
+    },
     "name": {
      "type": "string",
      "description": "The name of the division."
@@ -449,6 +463,10 @@
    "type": "object",
    "description": "Information about an Office held by one or more Officials.",
    "properties": {
+    "divisionId": {
+     "type": "string",
+     "description": "The OCD ID of the division this office is part of."
+    },
     "level": {
      "type": "string",
      "description": "The level of this elected office. One of: federal, state, county, city, other"
@@ -823,6 +841,12 @@
       "ocdId": {
        "type": "string",
        "description": "The division to look up. May only be specified if the address field is not given in the request body.",
+       "location": "query"
+      },
+      "recursive": {
+       "type": "boolean",
+       "description": "When ocd_id is supplied, return all divisions which are hierarchically nested within the queried division. For example, if querying ocd-division/country:us/district:dc, this would also return all DC's wards and ANCs.",
+       "default": "false",
        "location": "query"
       }
      },

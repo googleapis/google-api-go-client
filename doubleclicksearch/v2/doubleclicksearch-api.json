@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"kEk3sFj6Ef5_yR1-H3bAO6qw9mI/y4JNZN6WmoC1vLC4va-8Oh8limQ\"",
+ "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/zp5V0BNas4hRtoNpHYkQAWU2qnU\"",
  "discoveryVersion": "v1",
  "id": "doubleclicksearch:v2",
  "name": "doubleclicksearch",
@@ -375,6 +375,46 @@
     }
    }
   },
+  "ReportApiColumnSpec": {
+   "id": "ReportApiColumnSpec",
+   "type": "object",
+   "description": "A request object used to create a DoubleClick Search report.",
+   "properties": {
+    "columnName": {
+     "type": "string",
+     "description": "Name of a DoubleClick Search column to include in the report."
+    },
+    "customDimensionName": {
+     "type": "string",
+     "description": "Segments a report by a custom dimension. The report must be scoped to an advertiser or lower, and the custom dimension must already be set up in DoubleClick Search. The custom dimension name, which appears in DoubleClick Search, is case sensitive."
+    },
+    "endDate": {
+     "type": "string",
+     "description": "Inclusive day in YYYY-MM-DD format. When provided, this overrides the overall time range of the report for this column only. Must be provided together with startDate."
+    },
+    "groupByColumn": {
+     "type": "boolean",
+     "description": "Synchronous report only. Set to true to group by this column. Defaults to false.",
+     "default": "false"
+    },
+    "headerText": {
+     "type": "string",
+     "description": "Text used to identify this column in the report output; defaults to columnName or savedColumnName when not specified. This can be used to prevent collisions between DoubleClick Search columns and saved columns with the same name."
+    },
+    "platformSource": {
+     "type": "string",
+     "description": "The platform that is used to provide data for the custom dimension. Acceptable values are \"Floodlight\"."
+    },
+    "savedColumnName": {
+     "type": "string",
+     "description": "Name of a saved column to include in the report. The report must be scoped at advertiser or lower, and this saved column must already be created in the DoubleClick Search UI."
+    },
+    "startDate": {
+     "type": "string",
+     "description": "Inclusive date in YYYY-MM-DD format. When provided, this overrides the overall time range of the report for this column only. Must be provided together with endDate."
+    }
+   }
+  },
   "ReportRequest": {
    "id": "ReportRequest",
    "type": "object",
@@ -384,34 +424,7 @@
      "type": "array",
      "description": "The columns to include in the report. This includes both DoubleClick Search columns and saved columns. For DoubleClick Search columns, only the columnName parameter is required. For saved columns only the savedColumnName parameter is required. Both columnName and savedColumnName cannot be set in the same stanza.",
      "items": {
-      "type": "object",
-      "properties": {
-       "columnName": {
-        "type": "string",
-        "description": "Name of a DoubleClick Search column to include in the report."
-       },
-       "endDate": {
-        "type": "string",
-        "description": "Inclusive day in YYYY-MM-DD format. When provided, this overrides the overall time range of the report for this column only. Must be provided together with startDate."
-       },
-       "groupByColumn": {
-        "type": "boolean",
-        "description": "Synchronous report only. Set to true to group by this column. Defaults to false.",
-        "default": "false"
-       },
-       "headerText": {
-        "type": "string",
-        "description": "Text used to identify this column in the report output; defaults to columnName or savedColumnName when not specified. This can be used to prevent collisions between DoubleClick Search columns and saved columns with the same name."
-       },
-       "savedColumnName": {
-        "type": "string",
-        "description": "Name of a saved column to include in the report. The report must be scoped at advertiser or lower, and this saved column must already be created in the DoubleClick Search UI."
-       },
-       "startDate": {
-        "type": "string",
-        "description": "Inclusive date in YYYY-MM-DD format. When provided, this overrides the overall time range of the report for this column only. Must be provided together with endDate."
-       }
-      }
+      "$ref": "ReportApiColumnSpec"
      }
     },
     "downloadFormat": {
@@ -430,18 +443,8 @@
       "type": "object",
       "properties": {
        "column": {
-        "type": "object",
-        "description": "Column to perform the filter on. This can be a DoubleClick Search column or a saved column.",
-        "properties": {
-         "columnName": {
-          "type": "string",
-          "description": "Name of a DoubleClick Search column to filter on."
-         },
-         "savedColumnName": {
-          "type": "string",
-          "description": "Name of a saved column to filter on."
-         }
-        }
+        "$ref": "ReportApiColumnSpec",
+        "description": "Column to perform the filter on. This can be a DoubleClick Search column or a saved column."
        },
        "operator": {
         "type": "string",
@@ -459,7 +462,7 @@
     },
     "includeDeletedEntities": {
      "type": "boolean",
-     "description": "Determines if removed entities should be included in the report. Deprecated, please use includeRemovedEntities instead. Defaults to false.",
+     "description": "Determines if removed entities should be included in the report. Defaults to false. Deprecated, please use includeRemovedEntities instead.",
      "default": "false"
     },
     "includeRemovedEntities": {
@@ -486,18 +489,8 @@
       "type": "object",
       "properties": {
        "column": {
-        "type": "object",
-        "description": "Column to perform the sort on. This can be a DoubleClick Search-defined column or a saved column.",
-        "properties": {
-         "columnName": {
-          "type": "string",
-          "description": "Name of a DoubleClick Search column to sort by."
-         },
-         "savedColumnName": {
-          "type": "string",
-          "description": "Name of a saved column to sort by."
-         }
-        }
+        "$ref": "ReportApiColumnSpec",
+        "description": "Column to perform the sort on. This can be a DoubleClick Search-defined column or a saved column."
        },
        "sortOrder": {
         "type": "string",
@@ -631,6 +624,45 @@
    "additionalProperties": {
     "type": "any",
     "description": "Indicates the columns that are represented in this row. That is, each key corresponds to a column with a non-empty cell in this row."
+   }
+  },
+  "SavedColumn": {
+   "id": "SavedColumn",
+   "type": "object",
+   "description": "A saved column",
+   "properties": {
+    "kind": {
+     "type": "string",
+     "description": "Identifies this as a SavedColumn resource. Value: the fixed string doubleclicksearch#savedColumn.",
+     "default": "doubleclicksearch#savedColumn"
+    },
+    "savedColumnName": {
+     "type": "string",
+     "description": "The name of the saved column."
+    },
+    "type": {
+     "type": "string",
+     "description": "The type of data this saved column will produce."
+    }
+   }
+  },
+  "SavedColumnList": {
+   "id": "SavedColumnList",
+   "type": "object",
+   "description": "A list of saved columns. Advertisers create saved columns to report on Floodlight activities, Google Analytics goals, or custom KPIs. To request reports with saved columns, you'll need the saved column names that are available from this list.",
+   "properties": {
+    "items": {
+     "type": "array",
+     "description": "The saved columns being requested.",
+     "items": {
+      "$ref": "SavedColumn"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies this as a SavedColumnList resource. Value: the fixed string doubleclicksearch#savedColumnList.",
+     "default": "doubleclicksearch#savedColumnList"
+    }
    }
   },
   "UpdateAvailabilityRequest": {
@@ -978,6 +1010,42 @@
      },
      "response": {
       "$ref": "Report"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/doubleclicksearch"
+     ]
+    }
+   }
+  },
+  "savedColumns": {
+   "methods": {
+    "list": {
+     "id": "doubleclicksearch.savedColumns.list",
+     "path": "agency/{agencyId}/advertiser/{advertiserId}/savedcolumns",
+     "httpMethod": "GET",
+     "description": "Retrieve the list of saved columns for a specified advertiser.",
+     "parameters": {
+      "advertiserId": {
+       "type": "string",
+       "description": "DS ID of the advertiser.",
+       "required": true,
+       "format": "int64",
+       "location": "path"
+      },
+      "agencyId": {
+       "type": "string",
+       "description": "DS ID of the agency.",
+       "required": true,
+       "format": "int64",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "agencyId",
+      "advertiserId"
+     ],
+     "response": {
+      "$ref": "SavedColumnList"
      },
      "scopes": [
       "https://www.googleapis.com/auth/doubleclicksearch"

@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"kEk3sFj6Ef5_yR1-H3bAO6qw9mI/KRARk1zfvD1Ng7hyNLY5ZbidGLY\"",
+ "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/vyykkTYdybKkqslsgtBDhFzxmkE\"",
  "discoveryVersion": "v1",
  "id": "identitytoolkit:v3",
  "name": "identitytoolkit",
@@ -257,6 +257,14 @@
       "type": "string"
      }
     }
+   }
+  },
+  "IdentitytoolkitRelyingpartyGetPublicKeysResponse": {
+   "id": "IdentitytoolkitRelyingpartyGetPublicKeysResponse",
+   "type": "object",
+   "description": "Respone of getting public keys.",
+   "additionalProperties": {
+    "type": "string"
    }
   },
   "IdentitytoolkitRelyingpartyResetPasswordRequest": {
@@ -835,6 +843,15 @@
      },
      "response": {
       "$ref": "GetOobConfirmationCodeResponse"
+     }
+    },
+    "getPublicKeys": {
+     "id": "identitytoolkit.relyingparty.getPublicKeys",
+     "path": "publicKeys",
+     "httpMethod": "GET",
+     "description": "Get token signing public key.",
+     "response": {
+      "$ref": "IdentitytoolkitRelyingpartyGetPublicKeysResponse"
      }
     },
     "resetPassword": {

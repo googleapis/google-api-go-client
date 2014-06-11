@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"5M1WkxnZyJhziV-cW1kdtwscs8E/wBs-qNgKobkZmtJOx0i4cFgYtC8\"",
+ "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/AVvFKWeRohnggeCzv6j9kCQuS54\"",
  "discoveryVersion": "v1",
  "id": "games:v1",
  "name": "games",
@@ -412,6 +412,13 @@
     "description": {
      "type": "string",
      "description": "The description of the application."
+    },
+    "enabledFeatures": {
+     "type": "array",
+     "description": "A list of features that have been enabled for the application.\nPossible values are:  \n- \"SNAPSHOTS\" - Snapshots has been enabled",
+     "items": {
+      "type": "string"
+     }
     },
     "id": {
      "type": "string",
@@ -851,6 +858,14 @@
      "description": "Uniquely identifies the type of this resource. Value is always the fixed string games#networkDiagnostics.",
      "default": "games#networkDiagnostics"
     },
+    "networkOperatorCode": {
+     "type": "string",
+     "description": "The MCC+MNC code for the client's network connection. On Android: http://developer.android.com/reference/android/telephony/TelephonyManager.html#getNetworkOperator() On iOS, see: https://developer.apple.com/library/ios/documentation/NetworkingInternet/Reference/CTCarrier/Reference/Reference.html"
+    },
+    "networkOperatorName": {
+     "type": "string",
+     "description": "The name of the carrier of the client's network connection. On Android: http://developer.android.com/reference/android/telephony/TelephonyManager.html#getNetworkOperatorName() On iOS: https://developer.apple.com/library/ios/documentation/NetworkingInternet/Reference/CTCarrier/Reference/Reference.html#//apple_ref/occ/instp/CTCarrier/carrierName"
+    },
     "registrationLatencyMillis": {
      "type": "integer",
      "description": "The amount of time in milliseconds it took for the client to establish a connection with the XMPP server.",
@@ -959,7 +974,7 @@
   "Played": {
    "id": "Played",
    "type": "object",
-   "description": "This is a JSON template for 3P metadata about a player playing a game.",
+   "description": "This is a JSON template for metadata about a player playing a game with the currently authenticated user.",
    "properties": {
     "autoMatched": {
      "type": "boolean",
@@ -1573,6 +1588,14 @@
      "description": "Uniquely identifies the type of this resource. Value is always the fixed string games#roomLeaveDiagnostics.",
      "default": "games#roomLeaveDiagnostics"
     },
+    "networkOperatorCode": {
+     "type": "string",
+     "description": "The MCC+MNC code for the client's network connection. On Android: http://developer.android.com/reference/android/telephony/TelephonyManager.html#getNetworkOperator() On iOS, see: https://developer.apple.com/library/ios/documentation/NetworkingInternet/Reference/CTCarrier/Reference/Reference.html"
+    },
+    "networkOperatorName": {
+     "type": "string",
+     "description": "The name of the carrier of the client's network connection. On Android: http://developer.android.com/reference/android/telephony/TelephonyManager.html#getNetworkOperatorName() On iOS: https://developer.apple.com/library/ios/documentation/NetworkingInternet/Reference/CTCarrier/Reference/Reference.html#//apple_ref/occ/instp/CTCarrier/carrierName"
+    },
     "peerSession": {
      "type": "array",
      "description": "Diagnostics about all peer sessions.",
@@ -1602,7 +1625,7 @@
     },
     "reason": {
      "type": "string",
-     "description": "Reason for leaving the match.\nPossible values are:  \n- \"PLAYER_LEFT\" - The player chose to leave the room.. \n- \"GAME_LEFT\" - The game chose to remove the player from the room. \n- \"REALTIME_ABANDONED\" - The player switched to another application and abandoned the room. \n- \"REALTIME_PEER_CONNECTION_FAILURE\" - The client was unable to establish a connection to other peer(s). \n- \"REALTIME_SERVER_CONNECTION_FAILURE\" - The client was unable to communicate with the server. \n- \"REALTIME_SERVER_ERROR\" - The client received an error response when it tried to communicate with the server. \n- \"REALTIME_TIMEOUT\" - The client timed out while waiting for a room."
+     "description": "Reason for leaving the match.\nPossible values are:  \n- \"PLAYER_LEFT\" - The player chose to leave the room.. \n- \"GAME_LEFT\" - The game chose to remove the player from the room. \n- \"REALTIME_ABANDONED\" - The player switched to another application and abandoned the room. \n- \"REALTIME_PEER_CONNECTION_FAILURE\" - The client was unable to establish a connection to other peer(s). \n- \"REALTIME_SERVER_CONNECTION_FAILURE\" - The client was unable to communicate with the server. \n- \"REALTIME_SERVER_ERROR\" - The client received an error response when it tried to communicate with the server. \n- \"REALTIME_TIMEOUT\" - The client timed out while waiting for a room. \n- \"REALTIME_CLIENT_DISCONNECTING\" - The client disconnects without first calling Leave. \n- \"REALTIME_SIGN_OUT\" - The user signed out of G+ while in the room. \n- \"REALTIME_GAME_CRASHED\" - The game crashed. \n- \"REALTIME_ROOM_SERVICE_CRASHED\" - RoomAndroidService crashed. \n- \"REALTIME_DIFFERENT_CLIENT_ROOM_OPERATION\" - Another client is trying to enter a room. \n- \"REALTIME_SAME_CLIENT_ROOM_OPERATION\" - The same client is trying to enter a new room."
     }
    }
   },
@@ -2568,6 +2591,11 @@
      "httpMethod": "GET",
      "description": "Retrieves the Player resource with the given ID. To retrieve the player for the currently authenticated user, set playerId to me.",
      "parameters": {
+      "language": {
+       "type": "string",
+       "description": "The preferred language to use for strings returned by this method.",
+       "location": "query"
+      },
       "playerId": {
        "type": "string",
        "description": "A player ID. A value of me may be used in place of the authenticated player's ID.",
@@ -2603,6 +2631,11 @@
         "Retrieve a list of players you have played a multiplayer game (realtime or turn-based) with recently."
        ],
        "location": "path"
+      },
+      "language": {
+       "type": "string",
+       "description": "The preferred language to use for strings returned by this method.",
+       "location": "query"
       },
       "maxResults": {
        "type": "integer",
@@ -2720,6 +2753,11 @@
      "httpMethod": "POST",
      "description": "Decline an invitation to join a room. For internal use by the Games SDK only. Calling this method directly is unsupported.",
      "parameters": {
+      "language": {
+       "type": "string",
+       "description": "The preferred language to use for strings returned by this method.",
+       "location": "query"
+      },
       "roomId": {
        "type": "string",
        "description": "The ID of the room.",
@@ -2794,6 +2832,11 @@
      "httpMethod": "POST",
      "description": "Join a room. For internal use by the Games SDK only. Calling this method directly is unsupported.",
      "parameters": {
+      "language": {
+       "type": "string",
+       "description": "The preferred language to use for strings returned by this method.",
+       "location": "query"
+      },
       "roomId": {
        "type": "string",
        "description": "The ID of the room.",
@@ -2821,6 +2864,11 @@
      "httpMethod": "POST",
      "description": "Leave a room. For internal use by the Games SDK only. Calling this method directly is unsupported.",
      "parameters": {
+      "language": {
+       "type": "string",
+       "description": "The preferred language to use for strings returned by this method.",
+       "location": "query"
+      },
       "roomId": {
        "type": "string",
        "description": "The ID of the room.",
@@ -2881,6 +2929,11 @@
      "httpMethod": "POST",
      "description": "Updates sent by a client reporting the status of peers in a room. For internal use by the Games SDK only. Calling this method directly is unsupported.",
      "parameters": {
+      "language": {
+       "type": "string",
+       "description": "The preferred language to use for strings returned by this method.",
+       "location": "query"
+      },
       "roomId": {
        "type": "string",
        "description": "The ID of the room.",

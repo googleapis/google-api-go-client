@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"kEk3sFj6Ef5_yR1-H3bAO6qw9mI/1kn7iGSorTXBeUYcJymRrnSmuvg\"",
+ "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/Y17JpHMU7hxxaCh8xMxuKXh2SnY\"",
  "discoveryVersion": "v1",
  "id": "storage:v1beta2",
  "name": "storage",
@@ -114,7 +114,7 @@
        },
        "method": {
         "type": "array",
-        "description": "The list of HTTP methods on which to include CORS response headers, e.g. GET, OPTIONS, POST. Note, \"*\" is permitted in the list of methods, and means \"any method\".",
+        "description": "The list of HTTP methods on which to include CORS response headers: GET, OPTIONS, POST, etc. Note, \"*\" is permitted in the list of methods, and means \"any method\".",
         "items": {
          "type": "string"
         }
@@ -172,7 +172,7 @@
           "properties": {
            "type": {
             "type": "string",
-            "description": "Type of the action, e.g. Delete."
+            "description": "Type of the action. Currently only Delete is supported."
            }
           }
          },
@@ -240,7 +240,7 @@
     },
     "owner": {
      "type": "object",
-     "description": "The owner of the bucket. This will always be the project team's owner group.",
+     "description": "The owner of the bucket. This is always the project team's owner group.",
      "properties": {
       "entity": {
        "type": "string",
@@ -258,7 +258,7 @@
     },
     "storageClass": {
      "type": "string",
-     "description": "The bucket's storage class. This defines how objects in the bucket will be stored and determines the SLA and the cost of storage. Typical values are STANDARD and DURABLE_REDUCED_AVAILABILITY. Defaults to STANDARD. See the developer's guide for the authoritative list."
+     "description": "The bucket's storage class. This defines how objects in the bucket are stored and determines the SLA and the cost of storage. Typical values are STANDARD and DURABLE_REDUCED_AVAILABILITY. Defaults to STANDARD. See the developer's guide for the authoritative list."
     },
     "timeCreated": {
      "type": "string",
@@ -1319,14 +1319,14 @@
       },
       "ifMetagenerationMatch": {
        "type": "string",
-       "description": "Makes the operation conditional on whether the destination object's current metageneration matches the given value.",
-       "format": "uint64",
+       "description": "If present, only return default ACL listing if the bucket's current metageneration matches this value.",
+       "format": "int64",
        "location": "query"
       },
       "ifMetagenerationNotMatch": {
        "type": "string",
-       "description": "Makes the operation conditional on whether the destination object's current metageneration does not match the given value.",
-       "format": "uint64",
+       "description": "If present, only return default ACL listing if the bucket's current metageneration does not match the given value.",
+       "format": "int64",
        "location": "query"
       }
      },

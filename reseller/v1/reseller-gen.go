@@ -306,8 +306,8 @@ func (c *CustomersGetCall) Do() (*Customer, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Customer)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Customer
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -388,8 +388,8 @@ func (c *CustomersInsertCall) Do() (*Customer, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Customer)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Customer
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -460,8 +460,8 @@ func (c *CustomersPatchCall) Do() (*Customer, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Customer)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Customer
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -536,8 +536,8 @@ func (c *CustomersUpdateCall) Do() (*Customer, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Customer)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Customer
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -614,8 +614,8 @@ func (c *SubscriptionsChangePlanCall) Do() (*Subscription, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Subscription)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Subscription
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -699,8 +699,8 @@ func (c *SubscriptionsChangeRenewalSettingsCall) Do() (*Subscription, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Subscription)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Subscription
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -784,8 +784,8 @@ func (c *SubscriptionsChangeSeatsCall) Do() (*Subscription, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Subscription)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Subscription
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -948,8 +948,8 @@ func (c *SubscriptionsGetCall) Do() (*Subscription, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Subscription)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Subscription
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1039,8 +1039,8 @@ func (c *SubscriptionsInsertCall) Do() (*Subscription, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Subscription)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Subscription
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1162,8 +1162,8 @@ func (c *SubscriptionsListCall) Do() (*Subscriptions, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Subscriptions)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Subscriptions
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1249,8 +1249,8 @@ func (c *SubscriptionsStartPaidServiceCall) Do() (*Subscription, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Subscription)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Subscription
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil

@@ -1000,8 +1000,8 @@ func (c *PawsGetSpectrumCall) Do() (*PawsGetSpectrumResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(PawsGetSpectrumResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *PawsGetSpectrumResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1059,8 +1059,8 @@ func (c *PawsGetSpectrumBatchCall) Do() (*PawsGetSpectrumBatchResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(PawsGetSpectrumBatchResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *PawsGetSpectrumBatchResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1118,8 +1118,8 @@ func (c *PawsInitCall) Do() (*PawsInitResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(PawsInitResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *PawsInitResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1180,8 +1180,8 @@ func (c *PawsNotifySpectrumUseCall) Do() (*PawsNotifySpectrumUseResponse, error)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(PawsNotifySpectrumUseResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *PawsNotifySpectrumUseResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1240,8 +1240,8 @@ func (c *PawsRegisterCall) Do() (*PawsRegisterResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(PawsRegisterResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *PawsRegisterResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1301,8 +1301,8 @@ func (c *PawsVerifyDeviceCall) Do() (*PawsVerifyDeviceResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(PawsVerifyDeviceResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *PawsVerifyDeviceResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil

@@ -560,8 +560,8 @@ func (c *DimensionValuesQueryCall) Do() (*DimensionValueList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(DimensionValueList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *DimensionValueList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -681,8 +681,8 @@ func (c *FilesListCall) Do() (*FileList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(FileList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *FileList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -859,8 +859,8 @@ func (c *ReportsGetCall) Do() (*Report, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Report)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Report
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -940,8 +940,8 @@ func (c *ReportsInsertCall) Do() (*Report, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Report)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Report
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1048,8 +1048,8 @@ func (c *ReportsListCall) Do() (*ReportList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(ReportList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *ReportList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1167,8 +1167,8 @@ func (c *ReportsPatchCall) Do() (*Report, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Report)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Report
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1256,8 +1256,8 @@ func (c *ReportsRunCall) Do() (*File, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(File)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *File
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1345,8 +1345,8 @@ func (c *ReportsUpdateCall) Do() (*Report, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Report)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Report
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1427,8 +1427,8 @@ func (c *ReportsFilesGetCall) Do() (*File, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(File)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *File
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1551,8 +1551,8 @@ func (c *ReportsFilesListCall) Do() (*FileList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(FileList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *FileList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1665,8 +1665,8 @@ func (c *UserProfilesGetCall) Do() (*UserProfile, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(UserProfile)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *UserProfile
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1727,8 +1727,8 @@ func (c *UserProfilesListCall) Do() (*UserProfileList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(UserProfileList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *UserProfileList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil

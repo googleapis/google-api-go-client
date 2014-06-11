@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"kEk3sFj6Ef5_yR1-H3bAO6qw9mI/3m5rB86FE5KuW1K3jAl88AxCreg\"",
+ "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/JGLKT60zAt7oJU6U-g60SWQJBUU\"",
  "discoveryVersion": "v1",
  "id": "mapsengine:v1",
  "name": "mapsengine",
@@ -91,7 +91,7 @@
     },
     "precision": {
      "type": "string",
-     "description": "The precision of acquisition time. Valid values include: 'year', 'month', 'day', 'hour', 'minute' and 'second'.",
+     "description": "The precision of acquisition time.",
      "enum": [
       "day",
       "hour",
@@ -113,6 +113,94 @@
      "type": "string",
      "description": "The acquisition time, or start time if acquisition time is a range. The value is an RFC 3339 formatted date-time value (1970-01-01T00:00:00Z).",
      "format": "date-time"
+    }
+   }
+  },
+  "Asset": {
+   "id": "Asset",
+   "type": "object",
+   "description": "An asset is any Google Maps Engine resource that has a globally unique ID. Assets include maps, layers, vector tables, raster collections, and rasters. Projects and features are not considered assets.\n\nMore detailed information about an asset can be obtained by querying the asset's particular endpoint.",
+   "properties": {
+    "bbox": {
+     "type": "array",
+     "description": "A rectangular bounding box which contains all of the data in this asset. The numbers represent latitude and longitude in decimal degrees.",
+     "items": {
+      "type": "number",
+      "format": "double"
+     }
+    },
+    "creationTime": {
+     "type": "string",
+     "description": "The creation time of this asset. The value is an RFC 3339-formatted date-time value (for example, 1970-01-01T00:00:00Z).",
+     "format": "date-time"
+    },
+    "description": {
+     "type": "string",
+     "description": "The asset's description."
+    },
+    "id": {
+     "type": "string",
+     "description": "The asset's globally unique ID."
+    },
+    "lastModifiedTime": {
+     "type": "string",
+     "description": "The last modified time of this asset. The value is an RFC 3339-formatted date-time value (for example, 1970-01-01T00:00:00Z).",
+     "format": "date-time"
+    },
+    "name": {
+     "type": "string",
+     "description": "The asset's name."
+    },
+    "projectId": {
+     "type": "string",
+     "description": "The ID of the project to which the asset belongs."
+    },
+    "resource": {
+     "type": "string",
+     "description": "The URL to query to retrieve the asset's complete object. The assets endpoint only returns high-level information about a resource."
+    },
+    "tags": {
+     "type": "array",
+     "description": "An array of text strings, with each string representing a tag. More information about tags can be found in the Tagging data article of the Maps Engine help center.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "type": {
+     "type": "string",
+     "description": "The type of asset. One of raster, rasterCollection, table, map, or layer.",
+     "enum": [
+      "layer",
+      "map",
+      "raster",
+      "rasterCollection",
+      "table"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    }
+   }
+  },
+  "AssetsListResponse": {
+   "id": "AssetsListResponse",
+   "type": "object",
+   "description": "The response returned by a call to resources.List.",
+   "properties": {
+    "assets": {
+     "type": "array",
+     "description": "Assets returned.",
+     "items": {
+      "$ref": "Asset"
+     }
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "Next page token."
     }
    }
   },
@@ -420,7 +508,6 @@
   },
   "GeoJsonGeometry": {
    "id": "GeoJsonGeometry",
-   "description": "A geometry object",
    "type": "object",
    "variant": {
     "discriminant": "type",
@@ -459,18 +546,18 @@
   "GeoJsonGeometryCollection": {
    "id": "GeoJsonGeometryCollection",
    "type": "object",
-   "description": "Geometry Collection",
+   "description": "A heterogenous collection of GeoJsonGeometry objects.",
    "properties": {
     "geometries": {
      "type": "array",
-     "description": "The geometry objects that are contained within this geometry collection.",
+     "description": "An array of geometry objects. There must be at least 2 different types of geometries in the array.",
      "items": {
       "$ref": "GeoJsonGeometry"
      }
     },
     "type": {
      "type": "string",
-     "description": "Identifies this object as a geometry collection.",
+     "description": "Identifies this object as a GeoJsonGeometryCollection.",
      "enum": [
       "GeometryCollection"
      ],
@@ -483,22 +570,17 @@
   "GeoJsonLineString": {
    "id": "GeoJsonLineString",
    "type": "object",
-   "description": "Line String",
    "properties": {
     "coordinates": {
      "type": "array",
-     "description": "The coordinates of this line string as an array of two or more positions.",
+     "description": "An array of two or more positions, representing a line.",
      "items": {
-      "type": "array",
-      "items": {
-       "type": "number",
-       "format": "double"
-      }
+      "$ref": "GeoJsonPosition"
      }
     },
     "type": {
      "type": "string",
-     "description": "Identifies this object as a line string.",
+     "description": "Identifies this object as a GeoJsonLineString.",
      "enum": [
       "LineString"
      ],
@@ -515,21 +597,17 @@
    "properties": {
     "coordinates": {
      "type": "array",
-     "description": "The coordinates of this multi-line string as an array of line string coordinate arrays.",
+     "description": "An array of at least two GeoJsonLineString coordinate arrays.",
      "items": {
       "type": "array",
       "items": {
-       "type": "array",
-       "items": {
-        "type": "number",
-        "format": "double"
-       }
+       "$ref": "GeoJsonPosition"
       }
      }
     },
     "type": {
      "type": "string",
-     "description": "Identifies this object as a multi-line string.",
+     "description": "Identifies this object as a GeoJsonMultiLineString.",
      "enum": [
       "MultiLineString"
      ],
@@ -545,18 +623,14 @@
    "properties": {
     "coordinates": {
      "type": "array",
-     "description": "The coordinates of this multi-point as an array of positions.",
+     "description": "An array of at least two GeoJsonPoint coordinate arrays.",
      "items": {
-      "type": "array",
-      "items": {
-       "type": "number",
-       "format": "double"
-      }
+      "$ref": "GeoJsonPosition"
      }
     },
     "type": {
      "type": "string",
-     "description": "Identifies this object as a multi-point.",
+     "description": "Identifies this object as a GeoJsonMultiPoint.",
      "enum": [
       "MultiPoint"
      ],
@@ -569,28 +643,23 @@
   "GeoJsonMultiPolygon": {
    "id": "GeoJsonMultiPolygon",
    "type": "object",
-   "description": "Multi Polygon",
    "properties": {
     "coordinates": {
      "type": "array",
-     "description": "The coordinates of this multi-polygon as an array of polygon coordinate arrays.",
+     "description": "An array of at least two GeoJsonPolygon coordinate arrays.",
      "items": {
       "type": "array",
       "items": {
        "type": "array",
        "items": {
-        "type": "array",
-        "items": {
-         "type": "number",
-         "format": "double"
-        }
+        "$ref": "GeoJsonPosition"
        }
       }
      }
     },
     "type": {
      "type": "string",
-     "description": "Identifies this object as a multi-polygon.",
+     "description": "Identifies this object as a GeoJsonMultiPolygon.",
      "enum": [
       "MultiPolygon"
      ],
@@ -605,16 +674,12 @@
    "type": "object",
    "properties": {
     "coordinates": {
-     "type": "array",
-     "description": "The coordinates of this point as a position in [longitude, latitude] or [longitude, latitude, altitude] form.",
-     "items": {
-      "type": "number",
-      "format": "double"
-     }
+     "$ref": "GeoJsonPosition",
+     "description": "A single GeoJsonPosition, specifying the location of the point."
     },
     "type": {
      "type": "string",
-     "description": "Identifies this object as a point.",
+     "description": "Identifies this object as a GeoJsonPoint.",
      "enum": [
       "Point"
      ],
@@ -627,25 +692,20 @@
   "GeoJsonPolygon": {
    "id": "GeoJsonPolygon",
    "type": "object",
-   "description": "Polygon",
    "properties": {
     "coordinates": {
      "type": "array",
-     "description": "The coordinates of this polygon as an array of linear ring coordinate arrays. A linear ring is a closed line string with 4 or more positions. The first and last positions are equivalent. For polygons with multiple rings, the first must be the exterior ring and any others must be interior rings or holes.",
+     "description": "An array of LinearRings, each of which is an array of four or more GeoJsonPositions. The first and last coordinates in each LinearRing must be the same. For polygons with multiple rings, the first LinearRing is the external ring, with subsequent rings being interior rings (i.e. hole). All LinearRings must contain GeoJsonPositions in counter-clockwise order.",
      "items": {
       "type": "array",
       "items": {
-       "type": "array",
-       "items": {
-        "type": "number",
-        "format": "double"
-       }
+       "$ref": "GeoJsonPosition"
       }
      }
     },
     "type": {
      "type": "string",
-     "description": "Identifies this object as a polygon.",
+     "description": "Identifies this object as a GeoJsonPolygon.",
      "enum": [
       "Polygon"
      ],
@@ -655,12 +715,22 @@
     }
    }
   },
+  "GeoJsonPosition": {
+   "id": "GeoJsonPosition",
+   "type": "array",
+   "description": "A position represents a geographical position as an array containing a longitude and a latitude, and optionally an altitude, in that order. All Geometry objects make use of positions to represent geometries as nested arrays. The structure of the array is governed by the type of the geometry.",
+   "items": {
+    "type": "number",
+    "format": "double"
+   }
+  },
   "GeoJsonProperties": {
    "id": "GeoJsonProperties",
    "type": "object",
    "description": "The properties associated with a feature.",
    "additionalProperties": {
-    "type": "any"
+    "type": "any",
+    "description": "An arbitrary key-value pair. The key must be the name of a column in the table's schema, and the type of the value must correspond to the type specified in the schema."
    }
   },
   "IconStyle": {
@@ -698,7 +768,7 @@
     },
     "bbox": {
      "type": "array",
-     "description": "An array of four numbers (west, south, east, north) which define the rectangular bounding box which contains all of the data in this Raster. The numbers represent latitudes and longitudes in decimal degrees.",
+     "description": "A rectangular bounding box which contains all of the data in this Raster. The numbers represent latitude and longitude in decimal degrees.",
      "items": {
       "type": "number",
       "format": "double"
@@ -740,7 +810,7 @@
     },
     "maskType": {
      "type": "string",
-     "description": "The mask processing type of this Raster. Valid values include \"autoMask\", \"alphaChannelMask\", \"noMask\", \"imageMask\".",
+     "description": "The mask processing type of this Raster.",
      "default": "autoMask",
      "enum": [
       "alphaChannelMask",
@@ -766,7 +836,7 @@
     },
     "processingStatus": {
      "type": "string",
-     "description": "The processing status of this Raster. The raster processing status values can be:\n\n'notReady': The raster is not ready to be processed - some files have not been uploaded.\n'ready': The raster is queued for processing.\n'processing': The raster is currently processing.\n'complete': Processing has completed successfully.\n'failed': Processing failed to complete.",
+     "description": "The processing status of this Raster.",
      "enum": [
       "complete",
       "failed",
@@ -794,7 +864,17 @@
     "rasterType": {
      "type": "string",
      "description": "The type of this Raster. Always \"image\" today.",
-     "default": "image"
+     "enum": [
+      "image"
+     ],
+     "enumDescriptions": [
+      ""
+     ],
+     "annotations": {
+      "required": [
+       "mapsengine.rasters.upload"
+      ]
+     }
     },
     "tags": {
      "type": "array",
@@ -863,15 +943,6 @@
     }
    }
   },
-  "LatLngBox": {
-   "id": "LatLngBox",
-   "type": "array",
-   "description": "A rectangular geographic bounds.",
-   "items": {
-    "type": "number",
-    "format": "double"
-   }
-  },
   "Layer": {
    "id": "Layer",
    "type": "object",
@@ -879,7 +950,7 @@
    "properties": {
     "bbox": {
      "type": "array",
-     "description": "An array of four numbers (west, south, east, north) which define the rectangular bounding box which contains all of the data in this Layer. The numbers represent latitudes and longitudes in decimal degrees.",
+     "description": "A rectangular bounding box which contains all of the data in this Layer. The numbers represent latitude and longitude in decimal degrees.",
      "items": {
       "type": "number",
       "format": "double"
@@ -892,7 +963,7 @@
     },
     "datasourceType": {
      "type": "string",
-     "description": "The type of the datasources used to build this Layer. One of either \"table\" or \"image\".",
+     "description": "The type of the datasources used to build this Layer.",
      "enum": [
       "image",
       "table"
@@ -1067,7 +1138,7 @@
    "properties": {
     "bbox": {
      "type": "array",
-     "description": "An array of four numbers (west, south, east, north) which define the rectangular bounding box which contains all of the data in this Map. The numbers represent latitude and longitude in decimal degrees.",
+     "description": "A rectangular bounding box which contains all of the data in this Map. The numbers represent latitude and longitude in decimal degrees.",
      "items": {
       "type": "number",
       "format": "double"
@@ -1097,6 +1168,15 @@
      "type": "string",
      "description": "The description of this Map, supplied by the author."
     },
+    "draftAccessList": {
+     "type": "string",
+     "description": "The name of an access list of the Map Editor type. The user on whose behalf the request is being sent must be an editor on that access list. Read About access lists in the Google Maps Engine help center for more information.",
+     "annotations": {
+      "required": [
+       "mapsengine.maps.create"
+      ]
+     }
+    },
     "id": {
      "type": "string",
      "description": "A globally unique ID, used to refer to this Map."
@@ -1108,11 +1188,21 @@
     },
     "name": {
      "type": "string",
-     "description": "The name of this Map, supplied by the author."
+     "description": "The name of this Map, supplied by the author.",
+     "annotations": {
+      "required": [
+       "mapsengine.maps.create"
+      ]
+     }
     },
     "projectId": {
      "type": "string",
-     "description": "The ID of the project that this Map is in."
+     "description": "The ID of the project that this Map is in.",
+     "annotations": {
+      "required": [
+       "mapsengine.maps.create"
+      ]
+     }
     },
     "tags": {
      "type": "array",
@@ -1144,37 +1234,63 @@
    "properties": {
     "contents": {
      "type": "array",
-     "description": "The contents of this Folder.",
      "items": {
       "$ref": "MapItem"
      }
     },
     "defaultViewport": {
-     "$ref": "LatLngBox",
-     "description": "An array of four numbers (west, south, east, north) which defines the rectangular bounding box of the default viewport. The numbers represent latitude and longitude in decimal degrees."
+     "type": "array",
+     "description": "An array of four numbers (west, south, east, north) which defines the rectangular bounding box of the default viewport. The numbers represent latitude and longitude in decimal degrees.",
+     "items": {
+      "type": "number",
+      "format": "double"
+     }
+    },
+    "expandable": {
+     "type": "boolean",
+     "description": "The expandability setting of this MapFolder. If true, the folder can be expanded."
     },
     "key": {
      "type": "string",
-     "description": "A user defined alias for this Folder, specific to this Map."
+     "description": "A user defined alias for this MapFolder, specific to this Map.",
+     "annotations": {
+      "required": [
+       "mapsengine.maps.create"
+      ]
+     }
     },
     "name": {
      "type": "string",
-     "description": "The name of this Folder."
+     "description": "The name of this MapFolder.",
+     "annotations": {
+      "required": [
+       "mapsengine.maps.create"
+      ]
+     }
     },
     "type": {
      "type": "string",
-     "description": "Identifies this object as a Folder. (( constant \"folder\" ))",
-     "default": "folder"
+     "description": "Identifies this object as a MapFolder.",
+     "enum": [
+      "folder"
+     ],
+     "enumDescriptions": [
+      ""
+     ],
+     "annotations": {
+      "required": [
+       "mapsengine.maps.create"
+      ]
+     }
     },
     "visibility": {
      "type": "string",
-     "description": "The visibility setting of this Folder. One of \"defaultOn\" or \"defaultOff\"."
+     "description": "The visibility setting of this MapFolder. One of \"defaultOn\" or \"defaultOff\"."
     }
    }
   },
   "MapItem": {
    "id": "MapItem",
-   "description": "A map item.",
    "type": "object",
    "variant": {
     "discriminant": "type",
@@ -1199,25 +1315,49 @@
    "type": "object",
    "properties": {
     "defaultViewport": {
-     "$ref": "LatLngBox",
-     "description": "An array of four numbers (west, south, east, north) which defines the rectangular bounding box of the default viewport. The numbers represent latitude and longitude in decimal degrees."
+     "type": "array",
+     "description": "An array of four numbers (west, south, east, north) which defines the rectangular bounding box of the default viewport. The numbers represent latitude and longitude in decimal degrees.",
+     "items": {
+      "type": "number",
+      "format": "double"
+     }
     },
     "kmlUrl": {
      "type": "string",
-     "description": "The URL to the KML file represented by this KmlLink."
+     "description": "The URL to the KML file represented by this MapKmlLink.",
+     "annotations": {
+      "required": [
+       "mapsengine.maps.create"
+      ]
+     }
     },
     "name": {
      "type": "string",
-     "description": "The name of this KmlLink."
+     "description": "The name of this MapKmlLink.",
+     "annotations": {
+      "required": [
+       "mapsengine.maps.create"
+      ]
+     }
     },
     "type": {
      "type": "string",
-     "description": "Identifies this object as a KmlLink. (( constant \"kmlLink\" ))",
-     "default": "kmlLink"
+     "description": "Identifies this object as a MapKmlLink.",
+     "enum": [
+      "kmlLink"
+     ],
+     "enumDescriptions": [
+      ""
+     ],
+     "annotations": {
+      "required": [
+       "mapsengine.maps.create"
+      ]
+     }
     },
     "visibility": {
      "type": "string",
-     "description": "The visibility setting of this KmlLink. One of \"defaultOn\" or \"defaultOff\"."
+     "description": "The visibility setting of this MapKmlLink. One of \"defaultOn\" or \"defaultOff\"."
     }
    }
   },
@@ -1226,29 +1366,53 @@
    "type": "object",
    "properties": {
     "defaultViewport": {
-     "$ref": "LatLngBox",
-     "description": "An array of four numbers (west, south, east, north) which defines the rectangular bounding box of the default viewport. The numbers represent latitude and longitude in decimal degrees."
+     "type": "array",
+     "description": "An array of four numbers (west, south, east, north) which defines the rectangular bounding box of the default viewport. The numbers represent latitude and longitude in decimal degrees.",
+     "items": {
+      "type": "number",
+      "format": "double"
+     }
     },
     "id": {
      "type": "string",
-     "description": "The ID of this Layer. This ID can be used to request more details about this Layer."
+     "description": "The ID of this MapLayer. This ID can be used to request more details about the layer.",
+     "annotations": {
+      "required": [
+       "mapsengine.maps.create"
+      ]
+     }
     },
     "key": {
      "type": "string",
-     "description": "A user defined alias for this Layer, specific to this Map."
+     "description": "A user defined alias for this MapLayer, specific to this Map.",
+     "annotations": {
+      "required": [
+       "mapsengine.maps.create"
+      ]
+     }
     },
     "name": {
      "type": "string",
-     "description": "The name of this Layer."
+     "description": "The name of this MapLayer."
     },
     "type": {
      "type": "string",
-     "description": "Identifies this object as a Layer. (( constant \"layer\" ))",
-     "default": "layer"
+     "description": "Identifies this object as a MapLayer.",
+     "enum": [
+      "layer"
+     ],
+     "enumDescriptions": [
+      ""
+     ],
+     "annotations": {
+      "required": [
+       "mapsengine.maps.create"
+      ]
+     }
     },
     "visibility": {
      "type": "string",
-     "description": "The visibility setting of this Layer. One of \"defaultOn\" or \"defaultOff\"."
+     "description": "The visibility setting of this MapLayer. One of \"defaultOn\" or \"defaultOff\"."
     }
    }
   },
@@ -1292,7 +1456,7 @@
     },
     "parents": {
      "type": "array",
-     "description": "Resources returned.",
+     "description": "The parent assets.",
      "items": {
       "$ref": "Parent"
      }
@@ -1380,7 +1544,7 @@
    "properties": {
     "bbox": {
      "type": "array",
-     "description": "An array of four numbers (west, south, east, north) which define the rectangular bounding box which contains all of the data in this Raster. The numbers represent latitudes and longitudes in decimal degrees.",
+     "description": "A rectangular bounding box which contains all of the data in this Raster. The numbers represent latitude and longitude in decimal degrees.",
      "items": {
       "type": "number",
       "format": "double"
@@ -1442,7 +1606,7 @@
     },
     "bbox": {
      "type": "array",
-     "description": "An array of four numbers (west, south, east, north) which define the rectangular bounding box which contains all of the data in this RasterCollection. The numbers represent latitudes and longitudes in decimal degrees.",
+     "description": "A rectangular bounding box which contains all of the data in this RasterCollection. The numbers represent latitude and longitude in decimal degrees.",
      "items": {
       "type": "number",
       "format": "double"
@@ -1450,7 +1614,7 @@
     },
     "creationTime": {
      "type": "string",
-     "description": "The creation time of this rasterCollection. The value is an RFC 3339 formatted date-time value (e.g. 1970-01-01T00:00:00Z).",
+     "description": "The creation time of this RasterCollection. The value is an RFC 3339 formatted date-time value (e.g. 1970-01-01T00:00:00Z).",
      "format": "date-time"
     },
     "description": {
@@ -1472,7 +1636,7 @@
     },
     "lastModifiedTime": {
      "type": "string",
-     "description": "The last modified time of this rasterCollection. The value is an RFC 3339 formatted date-time value (e.g. 1970-01-01T00:00:00Z).",
+     "description": "The last modified time of this RasterCollection. The value is an RFC 3339 formatted date-time value (e.g. 1970-01-01T00:00:00Z).",
      "format": "date-time"
     },
     "mosaic": {
@@ -1492,6 +1656,24 @@
        "mapsengine.rasterCollections.create"
       ]
      }
+    },
+    "processingStatus": {
+     "type": "string",
+     "description": "The processing status of this RasterCollection.",
+     "enum": [
+      "complete",
+      "failed",
+      "notReady",
+      "processing",
+      "ready"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
     },
     "projectId": {
      "type": "string",
@@ -1525,6 +1707,44 @@
      }
     }
    }
+  },
+  "RasterCollectionsRasterBatchDeleteRequest": {
+   "id": "RasterCollectionsRasterBatchDeleteRequest",
+   "type": "object",
+   "description": "The request sent to rasterCollections.Rasters.BatchDelete.",
+   "properties": {
+    "ids": {
+     "type": "array",
+     "description": "An array of Raster asset IDs to be removed from this RasterCollection.",
+     "items": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  "RasterCollectionsRastersBatchDeleteResponse": {
+   "id": "RasterCollectionsRastersBatchDeleteResponse",
+   "type": "object",
+   "description": "The response returned by a call to rasterCollections.rasters.batchDelete."
+  },
+  "RasterCollectionsRastersBatchInsertRequest": {
+   "id": "RasterCollectionsRastersBatchInsertRequest",
+   "type": "object",
+   "description": "The request sent to rasterCollections.Rasters.BatchInsert.",
+   "properties": {
+    "ids": {
+     "type": "array",
+     "description": "An array of Raster asset IDs to be added to this RasterCollection.",
+     "items": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  "RasterCollectionsRastersBatchInsertResponse": {
+   "id": "RasterCollectionsRastersBatchInsertResponse",
+   "type": "object",
+   "description": "The response returned by a call to rasterCollections.rasters.batchInsert."
   },
   "RastercollectionsListResponse": {
    "id": "RastercollectionsListResponse",
@@ -1562,94 +1782,6 @@
     }
    }
   },
-  "Resource": {
-   "id": "Resource",
-   "type": "object",
-   "description": "An asset is any Google Maps Engine resource that has a globally unique ID. Assets include maps, layers, vector tables, raster collections, and rasters. Projects and features are not considered assets.\n\nMore detailed information about an asset can be obtained by querying the asset's particular endpoint.",
-   "properties": {
-    "bbox": {
-     "type": "array",
-     "description": "An array of four numbers (west, south, east, north) which define the rectangular bounding box which contains all of the data in this asset. The numbers represent latitude and longitude in decimal degrees.",
-     "items": {
-      "type": "number",
-      "format": "double"
-     }
-    },
-    "creationTime": {
-     "type": "string",
-     "description": "The creation time of this asset. The value is an RFC 3339-formatted date-time value (for example, 1970-01-01T00:00:00Z).",
-     "format": "date-time"
-    },
-    "description": {
-     "type": "string",
-     "description": "The asset's description."
-    },
-    "id": {
-     "type": "string",
-     "description": "The asset's globally unique ID."
-    },
-    "lastModifiedTime": {
-     "type": "string",
-     "description": "The last modified time of this asset. The value is an RFC 3339-formatted date-time value (for example, 1970-01-01T00:00:00Z).",
-     "format": "date-time"
-    },
-    "name": {
-     "type": "string",
-     "description": "The asset's name."
-    },
-    "projectId": {
-     "type": "string",
-     "description": "The ID of the project to which the asset belongs."
-    },
-    "resource": {
-     "type": "string",
-     "description": "The URL to query to retrieve the asset's complete object. The assets endpoint only returns high-level information about a resource."
-    },
-    "tags": {
-     "type": "array",
-     "description": "An array of text strings, with each string representing a tag. More information about tags can be found in the Tagging data article of the Maps Engine help center.",
-     "items": {
-      "type": "string"
-     }
-    },
-    "type": {
-     "type": "string",
-     "description": "The type of asset. One of raster, rasterCollection, table, map, or layer.",
-     "enum": [
-      "layer",
-      "map",
-      "raster",
-      "rasterCollection",
-      "table"
-     ],
-     "enumDescriptions": [
-      "",
-      "",
-      "",
-      "",
-      ""
-     ]
-    }
-   }
-  },
-  "ResourcesListResponse": {
-   "id": "ResourcesListResponse",
-   "type": "object",
-   "description": "The response returned by a call to resources.List.",
-   "properties": {
-    "assets": {
-     "type": "array",
-     "description": "Assets returned.",
-     "items": {
-      "$ref": "Resource"
-     }
-    },
-    "nextPageToken": {
-     "type": "string",
-     "description": "Next page token."
-    }
-   }
-  },
   "Schema": {
    "id": "Schema",
    "type": "object",
@@ -1657,41 +1789,9 @@
    "properties": {
     "columns": {
      "type": "array",
-     "description": "An array of column objects. The first object in the array must be named geometry and be of type points, lineStrings, polygons, or mixedGeometry.",
+     "description": "An array of TableColumn objects. The first object in the array must be named geometry and be of type points, lineStrings, polygons, or mixedGeometry.",
      "items": {
-      "type": "object",
-      "properties": {
-       "name": {
-        "type": "string",
-        "description": "The column name."
-       },
-       "type": {
-        "type": "string",
-        "description": "The type of data stored in this column. Accepted values are:\n \n- integer \n- double \n- boolean \n- string \n- mixedGeometry \n- points \n- lineStrings \n- polygons",
-        "enum": [
-         "boolean",
-         "datetime",
-         "double",
-         "integer",
-         "lineStrings",
-         "mixedGeometry",
-         "points",
-         "polygons",
-         "string"
-        ],
-        "enumDescriptions": [
-         "",
-         "",
-         "",
-         "",
-         "",
-         "",
-         "",
-         "",
-         ""
-        ]
-       }
-      }
+      "$ref": "TableColumn"
      },
      "annotations": {
       "required": [
@@ -1716,7 +1816,7 @@
    "properties": {
     "bbox": {
      "type": "array",
-     "description": "An array of four numbers (west, south, east, north) which define the rectangular bounding box which contains all of the data in this table.",
+     "description": "A rectangular bounding box which contains all of the data in this table. The numbers represent latitude and longitude in decimal degrees.",
      "items": {
       "type": "number",
       "format": "double"
@@ -1769,7 +1869,7 @@
     },
     "processingStatus": {
      "type": "string",
-     "description": "The processing status of this table. The supported processing status values are:\n \n- notReady: The table is not ready to be processed - some files have not been uploaded. \n- ready: The table is queued for processing. \n- processing: The table is currently processing. \n- complete: Processing has completed successfully. \n- failed: Processing failed to complete.",
+     "description": "The processing status of this table.",
      "enum": [
       "complete",
       "failed",
@@ -1814,6 +1914,42 @@
      "items": {
       "type": "string"
      }
+    }
+   }
+  },
+  "TableColumn": {
+   "id": "TableColumn",
+   "type": "object",
+   "properties": {
+    "name": {
+     "type": "string",
+     "description": "The column name."
+    },
+    "type": {
+     "type": "string",
+     "description": "The type of data stored in this column.",
+     "enum": [
+      "boolean",
+      "datetime",
+      "double",
+      "integer",
+      "lineStrings",
+      "mixedGeometry",
+      "points",
+      "polygons",
+      "string"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
     }
    }
   },
@@ -1916,7 +2052,7 @@
       "id"
      ],
      "response": {
-      "$ref": "Resource"
+      "$ref": "Asset"
      },
      "scopes": [
       "https://www.googleapis.com/auth/mapsengine",
@@ -1998,7 +2134,7 @@
       }
      },
      "response": {
-      "$ref": "ResourcesListResponse"
+      "$ref": "AssetsListResponse"
      },
      "scopes": [
       "https://www.googleapis.com/auth/mapsengine",
@@ -2264,6 +2400,21 @@
   },
   "maps": {
    "methods": {
+    "create": {
+     "id": "mapsengine.maps.create",
+     "path": "maps",
+     "httpMethod": "POST",
+     "description": "Create a map asset.",
+     "request": {
+      "$ref": "Map"
+     },
+     "response": {
+      "$ref": "Map"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/mapsengine"
+     ]
+    },
     "get": {
      "id": "mapsengine.maps.get",
      "path": "maps/{id}",
@@ -2363,6 +2514,29 @@
      "scopes": [
       "https://www.googleapis.com/auth/mapsengine",
       "https://www.googleapis.com/auth/mapsengine.readonly"
+     ]
+    },
+    "publish": {
+     "id": "mapsengine.maps.publish",
+     "path": "maps/{id}/publish",
+     "httpMethod": "POST",
+     "description": "Publish a map asset.",
+     "parameters": {
+      "id": {
+       "type": "string",
+       "description": "The ID of the map.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "id"
+     ],
+     "response": {
+      "$ref": "PublishResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/mapsengine"
      ]
     }
    }
@@ -2489,6 +2663,29 @@
       "https://www.googleapis.com/auth/mapsengine",
       "https://www.googleapis.com/auth/mapsengine.readonly"
      ]
+    },
+    "process": {
+     "id": "mapsengine.rasterCollections.process",
+     "path": "rasterCollections/{id}/process",
+     "httpMethod": "POST",
+     "description": "Process a raster collection asset.",
+     "parameters": {
+      "id": {
+       "type": "string",
+       "description": "The ID of the raster collection.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "id"
+     ],
+     "response": {
+      "$ref": "ProcessResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/mapsengine"
+     ]
     }
    },
    "resources": {
@@ -2533,6 +2730,58 @@
     },
     "rasters": {
      "methods": {
+      "batchDelete": {
+       "id": "mapsengine.rasterCollections.rasters.batchDelete",
+       "path": "rasterCollections/{id}/rasters/batchDelete",
+       "httpMethod": "POST",
+       "description": "Remove rasters from an existing raster collection.\n\nUp to 50 rasters can be included in a single batchDelete request. Each batchDelete request is atomic.",
+       "parameters": {
+        "id": {
+         "type": "string",
+         "description": "The ID of the raster collection to which these rasters belong.",
+         "required": true,
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "id"
+       ],
+       "request": {
+        "$ref": "RasterCollectionsRasterBatchDeleteRequest"
+       },
+       "response": {
+        "$ref": "RasterCollectionsRastersBatchDeleteResponse"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/mapsengine"
+       ]
+      },
+      "batchInsert": {
+       "id": "mapsengine.rasterCollections.rasters.batchInsert",
+       "path": "rasterCollections/{id}/rasters/batchInsert",
+       "httpMethod": "POST",
+       "description": "Add rasters to an existing raster collection. Rasters must be successfully processed in order to be added to a raster collection.\n\nUp to 50 rasters can be included in a single batchInsert request. Each batchInsert request is atomic.",
+       "parameters": {
+        "id": {
+         "type": "string",
+         "description": "The ID of the raster collection to which these rasters belong.",
+         "required": true,
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "id"
+       ],
+       "request": {
+        "$ref": "RasterCollectionsRastersBatchInsertRequest"
+       },
+       "response": {
+        "$ref": "RasterCollectionsRastersBatchInsertResponse"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/mapsengine"
+       ]
+      },
       "list": {
        "id": "mapsengine.rasterCollections.rasters.list",
        "path": "rasterCollections/{id}/rasters",

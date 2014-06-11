@@ -272,8 +272,8 @@ func (c *ActivitiesListCall) Do() (*Activities, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Activities)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Activities
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil

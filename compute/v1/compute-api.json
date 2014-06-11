@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"kEk3sFj6Ef5_yR1-H3bAO6qw9mI/IZpr6FzrstzCGETlajRH4H_fIdk\"",
+ "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/qLGD1lW3Gg5l2ZgG6H6aby7D0Xw\"",
  "discoveryVersion": "v1",
  "id": "compute:v1",
  "name": "compute",
@@ -157,7 +157,7 @@
     },
     "region": {
      "type": "string",
-     "description": "URL of the region where the address resides (output only)."
+     "description": "URL of the region where the regional address resides (output only). This field is not applicable to global addresses."
     },
     "selfLink": {
      "type": "string",
@@ -398,9 +398,180 @@
      "description": "Size of the disk in base-2 GB.",
      "format": "int64"
     },
+    "diskType": {
+     "type": "string",
+     "description": "URL of the disk type resource describing which disk type to use to create the disk; provided by the client when the disk is created."
+    },
     "sourceImage": {
      "type": "string",
      "description": "The source image used to create this disk."
+    }
+   }
+  },
+  "Backend": {
+   "id": "Backend",
+   "type": "object",
+   "description": "Message containing information of one individual backend.",
+   "properties": {
+    "balancingMode": {
+     "type": "string",
+     "description": "The balancing mode of this backend, default is UTILIZATION.",
+     "enum": [
+      "RATE",
+      "UTILIZATION"
+     ],
+     "enumDescriptions": [
+      "",
+      ""
+     ]
+    },
+    "capacityScaler": {
+     "type": "number",
+     "description": "The multiplier (a value between 0 and 1e6) of the max capacity (CPU or RPS, depending on 'balancingMode') the group should serve up to. 0 means the group is totally drained. Default value is 1. Valid range is [0, 1e6].",
+     "format": "float"
+    },
+    "description": {
+     "type": "string",
+     "description": "An optional textual description of the resource, which is provided by the client when the resource is created."
+    },
+    "group": {
+     "type": "string",
+     "description": "URL of a zonal Cloud Resource View resource. This resoure view defines the list of instances that serve traffic. Member virtual machine instances from each resource view must live in the same zone as the resource view itself."
+    },
+    "maxRate": {
+     "type": "integer",
+     "description": "The max RPS of the group. Can be used with either balancing mode, but required if RATE mode. For RATE mode, either maxRate or maxRatePerInstance must be set.",
+     "format": "int32"
+    },
+    "maxRatePerInstance": {
+     "type": "number",
+     "description": "The max RPS that a single backed instance can handle. This is used to calculate the capacity of the group. Can be used in either balancing mode. For RATE mode, either maxRate or maxRatePerInstance must be set.",
+     "format": "float"
+    },
+    "maxUtilization": {
+     "type": "number",
+     "description": "Used when 'balancingMode' is UTILIZATION. This ratio defines the CPU utilization target for the group. The default is 0.8. Valid range is [0, 1].",
+     "format": "float"
+    }
+   }
+  },
+  "BackendService": {
+   "id": "BackendService",
+   "type": "object",
+   "description": "A BackendService resource. This resource defines a group of backend VMs together with their serving capacity.",
+   "properties": {
+    "backends": {
+     "type": "array",
+     "description": "The list of backends that serve this BackendService.",
+     "items": {
+      "$ref": "Backend"
+     }
+    },
+    "creationTimestamp": {
+     "type": "string",
+     "description": "Creation timestamp in RFC3339 text format (output only)."
+    },
+    "description": {
+     "type": "string",
+     "description": "An optional textual description of the resource; provided by the client when the resource is created."
+    },
+    "fingerprint": {
+     "type": "string",
+     "description": "Fingerprint of this resource. A hash of the contents stored in this object. This field is used in optimistic locking. This field will be ignored when inserting a BackendService. An up-to-date fingerprint must be provided in order to update the BackendService.",
+     "format": "byte"
+    },
+    "healthChecks": {
+     "type": "array",
+     "description": "The list of URLs to the HttpHealthCheck resource for health checking this BackendService. Currently at most one health check can be specified, and a health check is required.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "id": {
+     "type": "string",
+     "description": "Unique identifier for the resource; defined by the server (output only).",
+     "format": "uint64"
+    },
+    "kind": {
+     "type": "string",
+     "description": "Type of the resource.",
+     "default": "compute#backendService"
+    },
+    "name": {
+     "type": "string",
+     "description": "Name of the resource; provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035.",
+     "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?"
+    },
+    "port": {
+     "type": "integer",
+     "description": "The TCP port to connect on the backend. The default value is 80.",
+     "format": "int32"
+    },
+    "protocol": {
+     "type": "string",
+     "enum": [
+      "HTTP"
+     ],
+     "enumDescriptions": [
+      ""
+     ]
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "Server defined URL for the resource (output only)."
+    },
+    "timeoutSec": {
+     "type": "integer",
+     "description": "How many seconds to wait for the backend before considering it a failed request. Default is 30 seconds.",
+     "format": "int32"
+    }
+   }
+  },
+  "BackendServiceGroupHealth": {
+   "id": "BackendServiceGroupHealth",
+   "type": "object",
+   "properties": {
+    "healthStatus": {
+     "type": "array",
+     "items": {
+      "$ref": "HealthStatus"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Type of resource.",
+     "default": "compute#backendServiceGroupHealth"
+    }
+   }
+  },
+  "BackendServiceList": {
+   "id": "BackendServiceList",
+   "type": "object",
+   "description": "Contains a list of BackendService resources.",
+   "properties": {
+    "id": {
+     "type": "string",
+     "description": "Unique identifier for the resource; defined by the server (output only)."
+    },
+    "items": {
+     "type": "array",
+     "description": "The BackendService resources.",
+     "items": {
+      "$ref": "BackendService"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Type of resource.",
+     "default": "compute#backendServiceList"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "A token used to continue a truncated list request (output only)."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "Server defined URL for this resource (output only)."
     }
    }
   },
@@ -519,6 +690,10 @@
       ""
      ]
     },
+    "type": {
+     "type": "string",
+     "description": "URL of the disk type resource describing which disk type to use to create the disk; provided by the client when the disk is created."
+    },
     "zone": {
      "type": "string",
      "description": "URL of the zone where the disk resides (output only)."
@@ -584,6 +759,186 @@
     "selfLink": {
      "type": "string",
      "description": "Server defined URL for this resource (output only)."
+    }
+   }
+  },
+  "DiskType": {
+   "id": "DiskType",
+   "type": "object",
+   "description": "A disk type resource.",
+   "properties": {
+    "creationTimestamp": {
+     "type": "string",
+     "description": "Creation timestamp in RFC3339 text format (output only)."
+    },
+    "deprecated": {
+     "$ref": "DeprecationStatus",
+     "description": "The deprecation status associated with this disk type."
+    },
+    "description": {
+     "type": "string",
+     "description": "An optional textual description of the resource."
+    },
+    "id": {
+     "type": "string",
+     "description": "Unique identifier for the resource; defined by the server (output only).",
+     "format": "uint64"
+    },
+    "kind": {
+     "type": "string",
+     "description": "Type of the resource.",
+     "default": "compute#diskType"
+    },
+    "name": {
+     "type": "string",
+     "description": "Name of the resource.",
+     "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?"
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "Server defined URL for the resource (output only)."
+    },
+    "validDiskSize": {
+     "type": "string",
+     "description": "An optional textual descroption of the valid disk size, e.g., \"10GB-10TB\"."
+    },
+    "zone": {
+     "type": "string",
+     "description": "Url of the zone where the disk type resides (output only)."
+    }
+   }
+  },
+  "DiskTypeAggregatedList": {
+   "id": "DiskTypeAggregatedList",
+   "type": "object",
+   "properties": {
+    "id": {
+     "type": "string",
+     "description": "Unique identifier for the resource; defined by the server (output only)."
+    },
+    "items": {
+     "type": "object",
+     "description": "A map of scoped disk type lists.",
+     "additionalProperties": {
+      "$ref": "DiskTypesScopedList",
+      "description": "Name of the scope containing this set of disk types."
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Type of resource.",
+     "default": "compute#diskTypeAggregatedList"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "A token used to continue a truncated list request (output only)."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "Server defined URL for this resource (output only)."
+    }
+   }
+  },
+  "DiskTypeList": {
+   "id": "DiskTypeList",
+   "type": "object",
+   "description": "Contains a list of disk type resources.",
+   "properties": {
+    "id": {
+     "type": "string",
+     "description": "Unique identifier for the resource; defined by the server (output only)."
+    },
+    "items": {
+     "type": "array",
+     "description": "The disk type resources.",
+     "items": {
+      "$ref": "DiskType"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Type of resource.",
+     "default": "compute#diskTypeList"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "A token used to continue a truncated list request (output only)."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "Server defined URL for this resource (output only)."
+    }
+   }
+  },
+  "DiskTypesScopedList": {
+   "id": "DiskTypesScopedList",
+   "type": "object",
+   "properties": {
+    "diskTypes": {
+     "type": "array",
+     "description": "List of disk types contained in this scope.",
+     "items": {
+      "$ref": "DiskType"
+     }
+    },
+    "warning": {
+     "type": "object",
+     "description": "Informational warning which replaces the list of disk types when the list is empty.",
+     "properties": {
+      "code": {
+       "type": "string",
+       "description": "The warning type identifier for this warning.",
+       "enum": [
+        "DEPRECATED_RESOURCE_USED",
+        "DISK_SIZE_LARGER_THAN_IMAGE_SIZE",
+        "INJECTED_KERNELS_DEPRECATED",
+        "NEXT_HOP_ADDRESS_NOT_ASSIGNED",
+        "NEXT_HOP_CANNOT_IP_FORWARD",
+        "NEXT_HOP_INSTANCE_NOT_FOUND",
+        "NEXT_HOP_INSTANCE_NOT_ON_NETWORK",
+        "NEXT_HOP_NOT_RUNNING",
+        "NO_RESULTS_ON_PAGE",
+        "REQUIRED_TOS_AGREEMENT",
+        "RESOURCE_NOT_DELETED",
+        "UNREACHABLE"
+       ],
+       "enumDescriptions": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+       ]
+      },
+      "data": {
+       "type": "array",
+       "description": "Metadata for this warning in 'key: value' format.",
+       "items": {
+        "type": "object",
+        "properties": {
+         "key": {
+          "type": "string",
+          "description": "A key for the warning data."
+         },
+         "value": {
+          "type": "string",
+          "description": "A warning data value corresponding to the key."
+         }
+        }
+       }
+      },
+      "message": {
+       "type": "string",
+       "description": "Optional human-readable details for this warning."
+      }
+     }
     }
    }
   },
@@ -788,7 +1143,7 @@
    "properties": {
     "IPAddress": {
      "type": "string",
-     "description": "Value of the reserved IP address that this forwarding rule is serving on behalf of. The address resource must live in the same region as the forwarding rule. If left empty (default value), an ephemeral IP will be assigned."
+     "description": "Value of the reserved IP address that this forwarding rule is serving on behalf of. For global forwarding rules, the address must be a global IP; for regional forwarding rules, the address must live in the same region as the forwarding rule. If left empty (default value), an ephemeral IP from the same scope (global or regional) will be assigned."
     },
     "IPProtocol": {
      "type": "string",
@@ -837,7 +1192,7 @@
     },
     "region": {
      "type": "string",
-     "description": "URL of the region where the forwarding rule resides (output only)."
+     "description": "URL of the region where the regional forwarding rule resides (output only). This field is not applicable to global forwarding rules."
     },
     "selfLink": {
      "type": "string",
@@ -845,7 +1200,7 @@
     },
     "target": {
      "type": "string",
-     "description": "The URL of the target resource to receive the matched traffic. It must live in the same region as this forwarding rule."
+     "description": "The URL of the target resource to receive the matched traffic. For regional forwarding rules, this target must live in the same region as the forwarding rule. For global forwarding rules, this target must be a global TargetHttpProxy resource."
     }
    }
   },
@@ -1018,6 +1373,27 @@
     }
    }
   },
+  "HostRule": {
+   "id": "HostRule",
+   "type": "object",
+   "description": "A host-matching rule for a URL. If matched, will use the named PathMatcher to select the BackendService.",
+   "properties": {
+    "description": {
+     "type": "string"
+    },
+    "hosts": {
+     "type": "array",
+     "description": "The list of host patterns to match. They must be FQDN except that it may start with ?*.? or ?*-?. The ?*? acts like a glob and will match any string of atoms (separated by .?s and -?s) to the left.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "pathMatcher": {
+     "type": "string",
+     "description": "The name of the PathMatcher to match the path portion of the URL, if the this HostRule matches the URL's host portion."
+    }
+   }
+  },
   "HttpHealthCheck": {
    "id": "HttpHealthCheck",
    "type": "object",
@@ -1138,6 +1514,11 @@
      "type": "string",
      "description": "Textual description of the resource; provided by the client when the resource is created."
     },
+    "diskSizeGb": {
+     "type": "string",
+     "description": "Size of the image when restored onto a disk (in GiB).",
+     "format": "int64"
+    },
     "id": {
      "type": "string",
      "description": "Unique identifier for the resource; defined by the server (output only).",
@@ -1165,7 +1546,12 @@
       "containerType": {
        "type": "string",
        "description": "The format used to encode and transmit the block device. Should be TAR. This is just a container and transmission format and not a runtime format. Provided by the client when the disk image is created.",
-       "default": "TAR"
+       "enum": [
+        "TAR"
+       ],
+       "enumDescriptions": [
+        ""
+       ]
       },
       "sha1Checksum": {
        "type": "string",
@@ -1196,12 +1582,7 @@
      ],
      "enumDescriptions": [
       ""
-     ],
-     "annotations": {
-      "required": [
-       "compute.images.insert"
-      ]
-     }
+     ]
     },
     "status": {
      "type": "string",
@@ -2209,6 +2590,49 @@
     }
    }
   },
+  "PathMatcher": {
+   "id": "PathMatcher",
+   "type": "object",
+   "description": "A matcher for the path portion of the URL. The BackendService from the longest-matched rule will serve the URL. If no rule was matched, the default_service will be used.",
+   "properties": {
+    "defaultService": {
+     "type": "string",
+     "description": "The URL to the BackendService resource. This will be used if none of the 'pathRules' defined by this PathMatcher is met by the URL's path portion."
+    },
+    "description": {
+     "type": "string"
+    },
+    "name": {
+     "type": "string",
+     "description": "The name to which this PathMatcher is referred by the HostRule."
+    },
+    "pathRules": {
+     "type": "array",
+     "description": "The list of path rules.",
+     "items": {
+      "$ref": "PathRule"
+     }
+    }
+   }
+  },
+  "PathRule": {
+   "id": "PathRule",
+   "type": "object",
+   "description": "A path-matching rule for a URL. If matched, will use the specified BackendService to handle the traffic arriving at this URL.",
+   "properties": {
+    "paths": {
+     "type": "array",
+     "description": "The list of path patterns to match. Each must start with ?/\" and the only place a \"*\" is allowed is at the end following a \"/\". The string fed to the path matcher does not include any text after the first \"?\" or \"#\", and those chars are not allowed here.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "service": {
+     "type": "string",
+     "description": "The URL of the BackendService resource if this rule is matched."
+    }
+   }
+  },
   "Project": {
    "id": "Project",
    "type": "object",
@@ -2250,6 +2674,10 @@
     "selfLink": {
      "type": "string",
      "description": "Server defined URL for the resource (output only)."
+    },
+    "usageExportLocation": {
+     "$ref": "UsageExportLocation",
+     "description": "The location in Cloud Storage and naming method of the daily usage report."
     }
    }
   },
@@ -2267,6 +2695,7 @@
      "type": "string",
      "description": "Name of the quota metric.",
      "enum": [
+      "BACKEND_SERVICES",
       "CPUS",
       "DISKS",
       "DISKS_TOTAL_GB",
@@ -2284,11 +2713,18 @@
       "OPERATIONS",
       "ROUTES",
       "SNAPSHOTS",
+      "SSD_TOTAL_GB",
       "STATIC_ADDRESSES",
+      "TARGET_HTTP_PROXIES",
       "TARGET_INSTANCES",
-      "TARGET_POOLS"
+      "TARGET_POOLS",
+      "URL_MAPS"
      ],
      "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
       "",
       "",
       "",
@@ -2409,6 +2845,15 @@
     "selfLink": {
      "type": "string",
      "description": "Server defined URL for this resource (output only)."
+    }
+   }
+  },
+  "ResourceGroupReference": {
+   "id": "ResourceGroupReference",
+   "type": "object",
+   "properties": {
+    "group": {
+     "type": "string"
     }
    }
   },
@@ -2790,6 +3235,75 @@
      "items": {
       "type": "string"
      }
+    }
+   }
+  },
+  "TargetHttpProxy": {
+   "id": "TargetHttpProxy",
+   "type": "object",
+   "description": "A TargetHttpProxy resource. This resource defines an HTTP proxy.",
+   "properties": {
+    "creationTimestamp": {
+     "type": "string",
+     "description": "Creation timestamp in RFC3339 text format (output only)."
+    },
+    "description": {
+     "type": "string",
+     "description": "An optional textual description of the resource; provided by the client when the resource is created."
+    },
+    "id": {
+     "type": "string",
+     "description": "Unique identifier for the resource; defined by the server (output only).",
+     "format": "uint64"
+    },
+    "kind": {
+     "type": "string",
+     "description": "Type of the resource.",
+     "default": "compute#targetHttpProxy"
+    },
+    "name": {
+     "type": "string",
+     "description": "Name of the resource; provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035.",
+     "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?"
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "Server defined URL for the resource (output only)."
+    },
+    "urlMap": {
+     "type": "string",
+     "description": "URL to the UrlMap resource that defines the mapping from URL to the BackendService."
+    }
+   }
+  },
+  "TargetHttpProxyList": {
+   "id": "TargetHttpProxyList",
+   "type": "object",
+   "description": "Contains a list of TargetHttpProxy resources.",
+   "properties": {
+    "id": {
+     "type": "string",
+     "description": "Unique identifier for the resource; defined by the server (output only)."
+    },
+    "items": {
+     "type": "array",
+     "description": "The TargetHttpProxy resources.",
+     "items": {
+      "$ref": "TargetHttpProxy"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Type of resource.",
+     "default": "compute#targetHttpProxyList"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "A token used to continue a truncated list request (output only)."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "Server defined URL for this resource (output only)."
     }
    }
   },
@@ -3266,6 +3780,212 @@
     }
    }
   },
+  "TestFailure": {
+   "id": "TestFailure",
+   "type": "object",
+   "properties": {
+    "actualService": {
+     "type": "string"
+    },
+    "expectedService": {
+     "type": "string"
+    },
+    "host": {
+     "type": "string"
+    },
+    "path": {
+     "type": "string"
+    }
+   }
+  },
+  "UrlMap": {
+   "id": "UrlMap",
+   "type": "object",
+   "description": "A UrlMap resource. This resource defines the mapping from URL to the BackendService resource, based on the \"longest-match\" of the URL's host and path.",
+   "properties": {
+    "creationTimestamp": {
+     "type": "string",
+     "description": "Creation timestamp in RFC3339 text format (output only)."
+    },
+    "defaultService": {
+     "type": "string",
+     "description": "The URL of the BackendService resource if none of the hostRules match."
+    },
+    "description": {
+     "type": "string",
+     "description": "An optional textual description of the resource; provided by the client when the resource is created."
+    },
+    "fingerprint": {
+     "type": "string",
+     "description": "Fingerprint of this resource. A hash of the contents stored in this object. This field is used in optimistic locking. This field will be ignored when inserting a UrlMap. An up-to-date fingerprint must be provided in order to update the UrlMap.",
+     "format": "byte"
+    },
+    "hostRules": {
+     "type": "array",
+     "description": "The list of HostRules to use against the URL.",
+     "items": {
+      "$ref": "HostRule"
+     }
+    },
+    "id": {
+     "type": "string",
+     "description": "Unique identifier for the resource; defined by the server (output only).",
+     "format": "uint64"
+    },
+    "kind": {
+     "type": "string",
+     "description": "Type of the resource.",
+     "default": "compute#urlMap"
+    },
+    "name": {
+     "type": "string",
+     "description": "Name of the resource; provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035.",
+     "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?"
+    },
+    "pathMatchers": {
+     "type": "array",
+     "description": "The list of named PathMatchers to use against the URL.",
+     "items": {
+      "$ref": "PathMatcher"
+     }
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "Server defined URL for the resource (output only)."
+    },
+    "tests": {
+     "type": "array",
+     "description": "The list of expected URL mappings. Request to update this UrlMap will succeed only all of the test cases pass.",
+     "items": {
+      "$ref": "UrlMapTest"
+     }
+    }
+   }
+  },
+  "UrlMapList": {
+   "id": "UrlMapList",
+   "type": "object",
+   "description": "Contains a list of UrlMap resources.",
+   "properties": {
+    "id": {
+     "type": "string",
+     "description": "Unique identifier for the resource; defined by the server (output only)."
+    },
+    "items": {
+     "type": "array",
+     "description": "The UrlMap resources.",
+     "items": {
+      "$ref": "UrlMap"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Type of resource.",
+     "default": "compute#urlMapList"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "A token used to continue a truncated list request (output only)."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "Server defined URL for this resource (output only)."
+    }
+   }
+  },
+  "UrlMapReference": {
+   "id": "UrlMapReference",
+   "type": "object",
+   "properties": {
+    "urlMap": {
+     "type": "string"
+    }
+   }
+  },
+  "UrlMapTest": {
+   "id": "UrlMapTest",
+   "type": "object",
+   "description": "Message for the expected URL mappings.",
+   "properties": {
+    "description": {
+     "type": "string",
+     "description": "Description of this test case."
+    },
+    "host": {
+     "type": "string",
+     "description": "Host portion of the URL."
+    },
+    "path": {
+     "type": "string",
+     "description": "Path portion of the URL."
+    },
+    "service": {
+     "type": "string",
+     "description": "Expected BackendService resource the given URL should be mapped to."
+    }
+   }
+  },
+  "UrlMapValidationResult": {
+   "id": "UrlMapValidationResult",
+   "type": "object",
+   "description": "Message representing the validation result for a UrlMap.",
+   "properties": {
+    "loadErrors": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    },
+    "loadSucceeded": {
+     "type": "boolean",
+     "description": "Whether the given UrlMap can be successfully loaded. If false, 'loadErrors' indicates the reasons."
+    },
+    "testFailures": {
+     "type": "array",
+     "items": {
+      "$ref": "TestFailure"
+     }
+    },
+    "testPassed": {
+     "type": "boolean",
+     "description": "If successfully loaded, this field indicates whether the test passed. If false, 'testFailures's indicate the reason of failure."
+    }
+   }
+  },
+  "UrlMapsValidateRequest": {
+   "id": "UrlMapsValidateRequest",
+   "type": "object",
+   "properties": {
+    "resource": {
+     "$ref": "UrlMap",
+     "description": "Content of the UrlMap to be validated."
+    }
+   }
+  },
+  "UrlMapsValidateResponse": {
+   "id": "UrlMapsValidateResponse",
+   "type": "object",
+   "properties": {
+    "result": {
+     "$ref": "UrlMapValidationResult"
+    }
+   }
+  },
+  "UsageExportLocation": {
+   "id": "UsageExportLocation",
+   "type": "object",
+   "description": "The location in Cloud Storage and naming method of the daily usage report. Contains bucket_name and report_name prefix.",
+   "properties": {
+    "bucketName": {
+     "type": "string",
+     "description": "The name of an existing bucket in Cloud Storage where the usage report object is stored. The Google Service Account is granted write access to this bucket. This is simply the bucket name, with no \"gs://\" or \"https://storage.googleapis.com/\" in front of it."
+    },
+    "reportNamePrefix": {
+     "type": "string",
+     "description": "An optional prefix for the name of the usage report object stored in bucket_name. If not supplied, defaults to \"usage_\". The report is stored as a CSV file named _gce_.csv. where  is the day of the usage according to Pacific Time. The prefix should conform to Cloud Storage object naming conventions."
+    }
+   }
+  },
   "Zone": {
    "id": "Zone",
    "type": "object",
@@ -3585,6 +4305,392 @@
      ],
      "response": {
       "$ref": "AddressList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    }
+   }
+  },
+  "backendServices": {
+   "methods": {
+    "delete": {
+     "id": "compute.backendServices.delete",
+     "path": "{project}/global/backendServices/{backendService}",
+     "httpMethod": "DELETE",
+     "description": "Deletes the specified BackendService resource.",
+     "parameters": {
+      "backendService": {
+       "type": "string",
+       "description": "Name of the BackendService resource to delete.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "backendService"
+     ],
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "get": {
+     "id": "compute.backendServices.get",
+     "path": "{project}/global/backendServices/{backendService}",
+     "httpMethod": "GET",
+     "description": "Returns the specified BackendService resource.",
+     "parameters": {
+      "backendService": {
+       "type": "string",
+       "description": "Name of the BackendService resource to return.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "backendService"
+     ],
+     "response": {
+      "$ref": "BackendService"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "getHealth": {
+     "id": "compute.backendServices.getHealth",
+     "path": "{project}/global/backendServices/{backendService}/getHealth",
+     "httpMethod": "POST",
+     "description": "Gets the most recent health check results for this BackendService.",
+     "parameters": {
+      "backendService": {
+       "type": "string",
+       "description": "Name of the BackendService resource to which the queried instance belongs.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "backendService"
+     ],
+     "request": {
+      "$ref": "ResourceGroupReference"
+     },
+     "response": {
+      "$ref": "BackendServiceGroupHealth"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "insert": {
+     "id": "compute.backendServices.insert",
+     "path": "{project}/global/backendServices",
+     "httpMethod": "POST",
+     "description": "Creates a BackendService resource in the specified project using the data included in the request.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "request": {
+      "$ref": "BackendService"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "list": {
+     "id": "compute.backendServices.list",
+     "path": "{project}/global/backendServices",
+     "httpMethod": "GET",
+     "description": "Retrieves the list of BackendService resources available to the specified project.",
+     "parameters": {
+      "filter": {
+       "type": "string",
+       "description": "Optional. Filter expression for filtering listed resources.",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "default": "500",
+       "format": "uint32",
+       "minimum": "0",
+       "maximum": "500",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "location": "query"
+      },
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "response": {
+      "$ref": "BackendServiceList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "patch": {
+     "id": "compute.backendServices.patch",
+     "path": "{project}/global/backendServices/{backendService}",
+     "httpMethod": "PATCH",
+     "description": "Update the entire content of the BackendService resource. This method supports patch semantics.",
+     "parameters": {
+      "backendService": {
+       "type": "string",
+       "description": "Name of the BackendService resource to update.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "backendService"
+     ],
+     "request": {
+      "$ref": "BackendService"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "update": {
+     "id": "compute.backendServices.update",
+     "path": "{project}/global/backendServices/{backendService}",
+     "httpMethod": "PUT",
+     "description": "Update the entire content of the BackendService resource.",
+     "parameters": {
+      "backendService": {
+       "type": "string",
+       "description": "Name of the BackendService resource to update.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "backendService"
+     ],
+     "request": {
+      "$ref": "BackendService"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute"
+     ]
+    }
+   }
+  },
+  "diskTypes": {
+   "methods": {
+    "aggregatedList": {
+     "id": "compute.diskTypes.aggregatedList",
+     "path": "{project}/aggregated/diskTypes",
+     "httpMethod": "GET",
+     "description": "Retrieves the list of disk type resources grouped by scope.",
+     "parameters": {
+      "filter": {
+       "type": "string",
+       "description": "Optional. Filter expression for filtering listed resources.",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "default": "500",
+       "format": "uint32",
+       "minimum": "0",
+       "maximum": "500",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "location": "query"
+      },
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "response": {
+      "$ref": "DiskTypeAggregatedList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "get": {
+     "id": "compute.diskTypes.get",
+     "path": "{project}/zones/{zone}/diskTypes/{diskType}",
+     "httpMethod": "GET",
+     "description": "Returns the specified disk type resource.",
+     "parameters": {
+      "diskType": {
+       "type": "string",
+       "description": "Name of the disk type resource to return.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "zone": {
+       "type": "string",
+       "description": "Name of the zone scoping this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "zone",
+      "diskType"
+     ],
+     "response": {
+      "$ref": "DiskType"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "list": {
+     "id": "compute.diskTypes.list",
+     "path": "{project}/zones/{zone}/diskTypes",
+     "httpMethod": "GET",
+     "description": "Retrieves the list of disk type resources available to the specified project.",
+     "parameters": {
+      "filter": {
+       "type": "string",
+       "description": "Optional. Filter expression for filtering listed resources.",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "default": "500",
+       "format": "uint32",
+       "minimum": "0",
+       "maximum": "500",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "location": "query"
+      },
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "zone": {
+       "type": "string",
+       "description": "Name of the zone scoping this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "zone"
+     ],
+     "response": {
+      "$ref": "DiskTypeList"
      },
      "scopes": [
       "https://www.googleapis.com/auth/compute",
@@ -4311,6 +5417,321 @@
      "parameterOrder": [
       "project",
       "region",
+      "forwardingRule"
+     ],
+     "request": {
+      "$ref": "TargetReference"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute"
+     ]
+    }
+   }
+  },
+  "globalAddresses": {
+   "methods": {
+    "delete": {
+     "id": "compute.globalAddresses.delete",
+     "path": "{project}/global/addresses/{address}",
+     "httpMethod": "DELETE",
+     "description": "Deletes the specified address resource.",
+     "parameters": {
+      "address": {
+       "type": "string",
+       "description": "Name of the address resource to delete.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "address"
+     ],
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "get": {
+     "id": "compute.globalAddresses.get",
+     "path": "{project}/global/addresses/{address}",
+     "httpMethod": "GET",
+     "description": "Returns the specified address resource.",
+     "parameters": {
+      "address": {
+       "type": "string",
+       "description": "Name of the address resource to return.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "address"
+     ],
+     "response": {
+      "$ref": "Address"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "insert": {
+     "id": "compute.globalAddresses.insert",
+     "path": "{project}/global/addresses",
+     "httpMethod": "POST",
+     "description": "Creates an address resource in the specified project using the data included in the request.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "request": {
+      "$ref": "Address"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "list": {
+     "id": "compute.globalAddresses.list",
+     "path": "{project}/global/addresses",
+     "httpMethod": "GET",
+     "description": "Retrieves the list of global address resources.",
+     "parameters": {
+      "filter": {
+       "type": "string",
+       "description": "Optional. Filter expression for filtering listed resources.",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "default": "500",
+       "format": "uint32",
+       "minimum": "0",
+       "maximum": "500",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "location": "query"
+      },
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "response": {
+      "$ref": "AddressList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    }
+   }
+  },
+  "globalForwardingRules": {
+   "methods": {
+    "delete": {
+     "id": "compute.globalForwardingRules.delete",
+     "path": "{project}/global/forwardingRules/{forwardingRule}",
+     "httpMethod": "DELETE",
+     "description": "Deletes the specified ForwardingRule resource.",
+     "parameters": {
+      "forwardingRule": {
+       "type": "string",
+       "description": "Name of the ForwardingRule resource to delete.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "forwardingRule"
+     ],
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "get": {
+     "id": "compute.globalForwardingRules.get",
+     "path": "{project}/global/forwardingRules/{forwardingRule}",
+     "httpMethod": "GET",
+     "description": "Returns the specified ForwardingRule resource.",
+     "parameters": {
+      "forwardingRule": {
+       "type": "string",
+       "description": "Name of the ForwardingRule resource to return.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "forwardingRule"
+     ],
+     "response": {
+      "$ref": "ForwardingRule"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "insert": {
+     "id": "compute.globalForwardingRules.insert",
+     "path": "{project}/global/forwardingRules",
+     "httpMethod": "POST",
+     "description": "Creates a ForwardingRule resource in the specified project and region using the data included in the request.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "request": {
+      "$ref": "ForwardingRule"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "list": {
+     "id": "compute.globalForwardingRules.list",
+     "path": "{project}/global/forwardingRules",
+     "httpMethod": "GET",
+     "description": "Retrieves the list of ForwardingRule resources available to the specified project.",
+     "parameters": {
+      "filter": {
+       "type": "string",
+       "description": "Optional. Filter expression for filtering listed resources.",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "default": "500",
+       "format": "uint32",
+       "minimum": "0",
+       "maximum": "500",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "location": "query"
+      },
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "response": {
+      "$ref": "ForwardingRuleList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "setTarget": {
+     "id": "compute.globalForwardingRules.setTarget",
+     "path": "{project}/global/forwardingRules/{forwardingRule}/setTarget",
+     "httpMethod": "POST",
+     "description": "Changes target url for forwarding rule.",
+     "parameters": {
+      "forwardingRule": {
+       "type": "string",
+       "description": "Name of the ForwardingRule resource in which target is to be set.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
       "forwardingRule"
      ],
      "request": {
@@ -5876,6 +7297,36 @@
      "scopes": [
       "https://www.googleapis.com/auth/compute"
      ]
+    },
+    "setUsageExportBucket": {
+     "id": "compute.projects.setUsageExportBucket",
+     "path": "{project}/setUsageExportBucket",
+     "httpMethod": "POST",
+     "description": "Sets usage export location",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "request": {
+      "$ref": "UsageExportLocation"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/devstorage.full_control",
+      "https://www.googleapis.com/auth/devstorage.read_only",
+      "https://www.googleapis.com/auth/devstorage.read_write"
+     ]
     }
    }
   },
@@ -6343,6 +7794,181 @@
      "scopes": [
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    }
+   }
+  },
+  "targetHttpProxies": {
+   "methods": {
+    "delete": {
+     "id": "compute.targetHttpProxies.delete",
+     "path": "{project}/global/targetHttpProxies/{targetHttpProxy}",
+     "httpMethod": "DELETE",
+     "description": "Deletes the specified TargetHttpProxy resource.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "targetHttpProxy": {
+       "type": "string",
+       "description": "Name of the TargetHttpProxy resource to delete.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "targetHttpProxy"
+     ],
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "get": {
+     "id": "compute.targetHttpProxies.get",
+     "path": "{project}/global/targetHttpProxies/{targetHttpProxy}",
+     "httpMethod": "GET",
+     "description": "Returns the specified TargetHttpProxy resource.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "targetHttpProxy": {
+       "type": "string",
+       "description": "Name of the TargetHttpProxy resource to return.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "targetHttpProxy"
+     ],
+     "response": {
+      "$ref": "TargetHttpProxy"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "insert": {
+     "id": "compute.targetHttpProxies.insert",
+     "path": "{project}/global/targetHttpProxies",
+     "httpMethod": "POST",
+     "description": "Creates a TargetHttpProxy resource in the specified project using the data included in the request.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "request": {
+      "$ref": "TargetHttpProxy"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "list": {
+     "id": "compute.targetHttpProxies.list",
+     "path": "{project}/global/targetHttpProxies",
+     "httpMethod": "GET",
+     "description": "Retrieves the list of TargetHttpProxy resources available to the specified project.",
+     "parameters": {
+      "filter": {
+       "type": "string",
+       "description": "Optional. Filter expression for filtering listed resources.",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "default": "500",
+       "format": "uint32",
+       "minimum": "0",
+       "maximum": "500",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "location": "query"
+      },
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "response": {
+      "$ref": "TargetHttpProxyList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "setUrlMap": {
+     "id": "compute.targetHttpProxies.setUrlMap",
+     "path": "{project}/targetHttpProxies/{targetHttpProxy}/setUrlMap",
+     "httpMethod": "POST",
+     "description": "Changes the URL map for TargetHttpProxy.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "targetHttpProxy": {
+       "type": "string",
+       "description": "Name of the TargetHttpProxy resource whose URL map is to be set.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "targetHttpProxy"
+     ],
+     "request": {
+      "$ref": "UrlMapReference"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute"
      ]
     }
    }
@@ -7032,6 +8658,251 @@
      },
      "response": {
       "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute"
+     ]
+    }
+   }
+  },
+  "urlMaps": {
+   "methods": {
+    "delete": {
+     "id": "compute.urlMaps.delete",
+     "path": "{project}/global/urlMaps/{urlMap}",
+     "httpMethod": "DELETE",
+     "description": "Deletes the specified UrlMap resource.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "urlMap": {
+       "type": "string",
+       "description": "Name of the UrlMap resource to delete.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "urlMap"
+     ],
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "get": {
+     "id": "compute.urlMaps.get",
+     "path": "{project}/global/urlMaps/{urlMap}",
+     "httpMethod": "GET",
+     "description": "Returns the specified UrlMap resource.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "urlMap": {
+       "type": "string",
+       "description": "Name of the UrlMap resource to return.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "urlMap"
+     ],
+     "response": {
+      "$ref": "UrlMap"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "insert": {
+     "id": "compute.urlMaps.insert",
+     "path": "{project}/global/urlMaps",
+     "httpMethod": "POST",
+     "description": "Creates a UrlMap resource in the specified project using the data included in the request.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "request": {
+      "$ref": "UrlMap"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "list": {
+     "id": "compute.urlMaps.list",
+     "path": "{project}/global/urlMaps",
+     "httpMethod": "GET",
+     "description": "Retrieves the list of UrlMap resources available to the specified project.",
+     "parameters": {
+      "filter": {
+       "type": "string",
+       "description": "Optional. Filter expression for filtering listed resources.",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "default": "500",
+       "format": "uint32",
+       "minimum": "0",
+       "maximum": "500",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "location": "query"
+      },
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "response": {
+      "$ref": "UrlMapList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "patch": {
+     "id": "compute.urlMaps.patch",
+     "path": "{project}/global/urlMaps/{urlMap}",
+     "httpMethod": "PATCH",
+     "description": "Update the entire content of the UrlMap resource. This method supports patch semantics.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "urlMap": {
+       "type": "string",
+       "description": "Name of the UrlMap resource to update.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "urlMap"
+     ],
+     "request": {
+      "$ref": "UrlMap"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "update": {
+     "id": "compute.urlMaps.update",
+     "path": "{project}/global/urlMaps/{urlMap}",
+     "httpMethod": "PUT",
+     "description": "Update the entire content of the UrlMap resource.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "urlMap": {
+       "type": "string",
+       "description": "Name of the UrlMap resource to update.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "urlMap"
+     ],
+     "request": {
+      "$ref": "UrlMap"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "validate": {
+     "id": "compute.urlMaps.validate",
+     "path": "{project}/global/urlMaps/{urlMap}/validate",
+     "httpMethod": "POST",
+     "description": "Run static validation for the UrlMap. In particular, the tests of the provided UrlMap will be run. Calling this method does NOT create the UrlMap.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "urlMap": {
+       "type": "string",
+       "description": "Name of the UrlMap resource to be validated as.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "urlMap"
+     ],
+     "request": {
+      "$ref": "UrlMapsValidateRequest"
+     },
+     "response": {
+      "$ref": "UrlMapsValidateResponse"
      },
      "scopes": [
       "https://www.googleapis.com/auth/compute"

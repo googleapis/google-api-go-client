@@ -188,8 +188,8 @@ func (c *PredictCall) Do() (*Output, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Output)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Output
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -263,8 +263,8 @@ func (c *HostedmodelsPredictCall) Do() (*Output, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Output)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Output
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -387,8 +387,8 @@ func (c *TrainingGetCall) Do() (*Training, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Training)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Training
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -466,8 +466,8 @@ func (c *TrainingInsertCall) Do() (*Training, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Training)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Training
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -540,8 +540,8 @@ func (c *TrainingUpdateCall) Do() (*Training, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Training)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Training
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil

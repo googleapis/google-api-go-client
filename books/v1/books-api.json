@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"kEk3sFj6Ef5_yR1-H3bAO6qw9mI/XBSlG6TmG-jHEwOVRN7HZMHldrk\"",
+ "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/fOUT8ysj7UwsMfXC3MyxMbk09lM\"",
  "discoveryVersion": "v1",
  "id": "books:v1",
  "name": "books",
@@ -1002,6 +1002,58 @@
     }
    }
   },
+  "Offers": {
+   "id": "Offers",
+   "type": "object",
+   "properties": {
+    "items": {
+     "type": "array",
+     "description": "A list of offers.",
+     "items": {
+      "type": "object",
+      "properties": {
+       "artUrl": {
+        "type": "string"
+       },
+       "id": {
+        "type": "string"
+       },
+       "items": {
+        "type": "array",
+        "items": {
+         "type": "object",
+         "properties": {
+          "author": {
+           "type": "string"
+          },
+          "canonicalVolumeLink": {
+           "type": "string"
+          },
+          "coverUrl": {
+           "type": "string"
+          },
+          "description": {
+           "type": "string"
+          },
+          "title": {
+           "type": "string"
+          },
+          "volumeId": {
+           "type": "string"
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Resource type.",
+     "default": "promooffer#offers"
+    }
+   }
+  },
   "ReadingPosition": {
    "id": "ReadingPosition",
    "type": "object",
@@ -1612,6 +1664,10 @@
        "type": "integer",
        "description": "The number of review ratings for this volume.",
        "format": "int32"
+      },
+      "readingModes": {
+       "type": "any",
+       "description": "The reading modes available for this volume."
       },
       "subtitle": {
        "type": "string",
@@ -3143,6 +3199,150 @@
        ]
       }
      }
+    }
+   }
+  },
+  "promooffer": {
+   "methods": {
+    "accept": {
+     "id": "books.promooffer.accept",
+     "path": "promooffer/accept",
+     "httpMethod": "POST",
+     "description": "",
+     "parameters": {
+      "androidId": {
+       "type": "string",
+       "description": "device android_id",
+       "location": "query"
+      },
+      "device": {
+       "type": "string",
+       "description": "device device",
+       "location": "query"
+      },
+      "manufacturer": {
+       "type": "string",
+       "description": "device manufacturer",
+       "location": "query"
+      },
+      "model": {
+       "type": "string",
+       "description": "device model",
+       "location": "query"
+      },
+      "offerId": {
+       "type": "string",
+       "location": "query"
+      },
+      "product": {
+       "type": "string",
+       "description": "device product",
+       "location": "query"
+      },
+      "serial": {
+       "type": "string",
+       "description": "device serial",
+       "location": "query"
+      },
+      "volumeId": {
+       "type": "string",
+       "description": "Volume id to exercise the offer",
+       "location": "query"
+      }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/books"
+     ]
+    },
+    "dismiss": {
+     "id": "books.promooffer.dismiss",
+     "path": "promooffer/dismiss",
+     "httpMethod": "POST",
+     "description": "",
+     "parameters": {
+      "androidId": {
+       "type": "string",
+       "description": "device android_id",
+       "location": "query"
+      },
+      "device": {
+       "type": "string",
+       "description": "device device",
+       "location": "query"
+      },
+      "manufacturer": {
+       "type": "string",
+       "description": "device manufacturer",
+       "location": "query"
+      },
+      "model": {
+       "type": "string",
+       "description": "device model",
+       "location": "query"
+      },
+      "offerId": {
+       "type": "string",
+       "description": "Offer to dimiss",
+       "location": "query"
+      },
+      "product": {
+       "type": "string",
+       "description": "device product",
+       "location": "query"
+      },
+      "serial": {
+       "type": "string",
+       "description": "device serial",
+       "location": "query"
+      }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/books"
+     ]
+    },
+    "get": {
+     "id": "books.promooffer.get",
+     "path": "promooffer/get",
+     "httpMethod": "GET",
+     "description": "Returns a list of promo offers available to the user",
+     "parameters": {
+      "androidId": {
+       "type": "string",
+       "description": "device android_id",
+       "location": "query"
+      },
+      "device": {
+       "type": "string",
+       "description": "device device",
+       "location": "query"
+      },
+      "manufacturer": {
+       "type": "string",
+       "description": "device manufacturer",
+       "location": "query"
+      },
+      "model": {
+       "type": "string",
+       "description": "device model",
+       "location": "query"
+      },
+      "product": {
+       "type": "string",
+       "description": "device product",
+       "location": "query"
+      },
+      "serial": {
+       "type": "string",
+       "description": "device serial",
+       "location": "query"
+      }
+     },
+     "response": {
+      "$ref": "Offers"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/books"
+     ]
     }
    }
   },

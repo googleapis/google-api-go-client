@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"kEk3sFj6Ef5_yR1-H3bAO6qw9mI/i7ndXglQkcB7KPR_-HCYBmUKBRE\"",
+ "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/bS1XRqjc6yZk7_4BPKBpe9B9r8M\"",
  "discoveryVersion": "v1",
  "id": "androidpublisher:v1.1",
  "name": "androidpublisher",
@@ -79,7 +79,7 @@
   "InappPurchase": {
    "id": "InappPurchase",
    "type": "object",
-   "description": "A Purchase resource indicates the status of a user's subscription purchase.",
+   "description": "An InappPurchase resource indicates the status of a user's inapp product purchase.",
    "properties": {
     "consumptionState": {
      "type": "integer",
@@ -92,7 +92,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "This kind represents a inappPurchase object in the androidpublisher service.",
+     "description": "This kind represents an inappPurchase object in the androidpublisher service.",
      "default": "androidpublisher#inappPurchase"
     },
     "purchaseState": {
@@ -110,7 +110,7 @@
   "SubscriptionPurchase": {
    "id": "SubscriptionPurchase",
    "type": "object",
-   "description": "A Purchase resource indicates the status of a user's subscription purchase.",
+   "description": "A SubscriptionPurchase resource indicates the status of a user's subscription purchase.",
    "properties": {
     "autoRenewing": {
      "type": "boolean",

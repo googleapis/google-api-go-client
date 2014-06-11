@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"kEk3sFj6Ef5_yR1-H3bAO6qw9mI/ezsqeTaysRk0TeNXoa9oSjBpsPM\"",
+ "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/FpQ-AKQeFRSUO748ZrH_mqEgT8Q\"",
  "discoveryVersion": "v1",
  "id": "gamesManagement:v1management",
  "name": "gamesManagement",
@@ -125,7 +125,7 @@
   "GamesPlayedResource": {
    "id": "GamesPlayedResource",
    "type": "object",
-   "description": "This is a JSON template for 3P metadata about a player playing a game.",
+   "description": "This is a JSON template for metadata about a player playing a game with the currently authenticated user.",
    "properties": {
     "autoMatched": {
      "type": "boolean",

@@ -878,8 +878,8 @@ func (c *AdvertisersGetCall) Do() (*Advertiser, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Advertiser)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Advertiser
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1044,8 +1044,8 @@ func (c *AdvertisersListCall) Do() (*Advertisers, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Advertisers)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Advertisers
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1198,8 +1198,8 @@ func (c *CcOffersListCall) Do() (*CcOffers, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(CcOffers)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *CcOffers
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1460,8 +1460,8 @@ func (c *EventsListCall) Do() (*Events, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Events)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Events
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1662,8 +1662,8 @@ func (c *LinksGetCall) Do() (*Link, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Link)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Link
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1757,8 +1757,8 @@ func (c *LinksInsertCall) Do() (*Link, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Link)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Link
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1970,8 +1970,8 @@ func (c *LinksListCall) Do() (*Links, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Links)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Links
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2172,8 +2172,8 @@ func (c *PublishersGetCall) Do() (*Publisher, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Publisher)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Publisher
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2338,8 +2338,8 @@ func (c *PublishersListCall) Do() (*Publishers, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Publishers)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Publishers
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2591,8 +2591,8 @@ func (c *ReportsGetCall) Do() (*Report, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Report)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Report
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil

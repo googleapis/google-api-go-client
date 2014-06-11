@@ -946,8 +946,24 @@ type ContentRating struct {
 	// Board
 	AcbRating string `json:"acbRating,omitempty"`
 
+	// AgcomRating: Rating system for Italy - Autorit� per le Garanzie
+	// nelle Comunicazioni
+	AgcomRating string `json:"agcomRating,omitempty"`
+
+	// AnatelRating: Rating system for Chile - Asociaci�n Nacional de
+	// Televisi�n
+	AnatelRating string `json:"anatelRating,omitempty"`
+
 	// BbfcRating: British Board of Film Classification
 	BbfcRating string `json:"bbfcRating,omitempty"`
+
+	// BfvcRating: Rating system for Thailand - Board of Filmand Video
+	// Censors
+	BfvcRating string `json:"bfvcRating,omitempty"`
+
+	// BmukkRating: Rating system for Austria - Bundesministeriums f�r
+	// Unterricht, Kunst und Kultur!
+	BmukkRating string `json:"bmukkRating,omitempty"`
 
 	// CatvRating: Rating system for Canadian TV - Canadian TV
 	// Classification System
@@ -960,48 +976,188 @@ type ContentRating struct {
 	// Certification
 	CbfcRating string `json:"cbfcRating,omitempty"`
 
+	// CccRating: Rating system for Chile - Consejo de Calificaci�n
+	// Cinematogr�fica
+	CccRating string `json:"cccRating,omitempty"`
+
+	// CceRating: Rating system for Portugal - Comiss�o de
+	// Classifica��o de Espect�culos
+	CceRating string `json:"cceRating,omitempty"`
+
+	// ChfilmRating: Rating system for Switzerland - Switzerland Rating
+	// System
+	ChfilmRating string `json:"chfilmRating,omitempty"`
+
 	// ChvrsRating: Canadian Home Video Rating System
 	ChvrsRating string `json:"chvrsRating,omitempty"`
+
+	// CicfRating: Rating system for Belgium - Belgium Rating System
+	CicfRating string `json:"cicfRating,omitempty"`
+
+	// CnaRating: Rating system for Romania - CONSILIUL NATIONAL AL
+	// AUDIOVIZUALULUI - CNA
+	CnaRating string `json:"cnaRating,omitempty"`
+
+	// CsaRating: Rating system for France - Conseil sup�rieur de
+	// l?audiovisuel
+	CsaRating string `json:"csaRating,omitempty"`
+
+	// CscfRating: Rating system for Luxembourg - Commission de surveillance
+	// de la classification des films
+	CscfRating string `json:"cscfRating,omitempty"`
+
+	// CzfilmRating: Rating system for Czech republic - Czech republic
+	// Rating System
+	CzfilmRating string `json:"czfilmRating,omitempty"`
 
 	// DjctqRating: Rating system in Brazil - Department of Justice, Rating,
 	// Titles and Qualification
 	DjctqRating string `json:"djctqRating,omitempty"`
 
+	// EefilmRating: Rating system for Estonia - Estonia Rating System
+	EefilmRating string `json:"eefilmRating,omitempty"`
+
+	// EgfilmRating: Rating system for Egypt - Egypt Rating System
+	EgfilmRating string `json:"egfilmRating,omitempty"`
+
 	// EirinRating: Rating system in Japan - Eiga Rinri Kanri Iinkai
 	EirinRating string `json:"eirinRating,omitempty"`
 
+	// FcbmRating: Rating system for Malaysia - Film Censorship Board of
+	// Malaysia
+	FcbmRating string `json:"fcbmRating,omitempty"`
+
+	// FcoRating: Rating system for Hong kong - Office for Film, Newspaper
+	// and Article Administration
+	FcoRating string `json:"fcoRating,omitempty"`
+
 	// FmocRating: Rating system in France - French Minister of Culture
 	FmocRating string `json:"fmocRating,omitempty"`
+
+	// FpbRating: Rating system for South africa - Film & Publication Board
+	FpbRating string `json:"fpbRating,omitempty"`
 
 	// FskRating: Rating system in Germany - Voluntary Self Regulation of
 	// the Movie Industry
 	FskRating string `json:"fskRating,omitempty"`
 
+	// GrfilmRating: Rating system for Greece - Greece Rating System
+	GrfilmRating string `json:"grfilmRating,omitempty"`
+
 	// IcaaRating: Rating system in Spain - Instituto de Cinematografia y de
 	// las Artes Audiovisuales
 	IcaaRating string `json:"icaaRating,omitempty"`
 
+	// IfcoRating: Rating system in Ireland - Irish Film Classification
+	// Office
+	IfcoRating string `json:"ifcoRating,omitempty"`
+
+	// IlfilmRating: Rating system for Israel - Israel Rating System
+	IlfilmRating string `json:"ilfilmRating,omitempty"`
+
+	// IncaaRating: Rating system for Argentina - Instituto Nacional de Cine
+	// y Artes Audiovisuales
+	IncaaRating string `json:"incaaRating,omitempty"`
+
+	// KfcbRating: Rating system for Kenya - Kenya Film Classification Board
+	KfcbRating string `json:"kfcbRating,omitempty"`
+
+	// KijkwijzerRating: Rating system for Netherlands - Nederlands
+	// Instituut voor de Classificatie van Audiovisuele Media
+	KijkwijzerRating string `json:"kijkwijzerRating,omitempty"`
+
 	// KmrbRating: Rating system in South Korea - Korea Media Rating Board
 	KmrbRating string `json:"kmrbRating,omitempty"`
+
+	// LsfRating: Rating system for Indonesia - Lembaga Sensor Film
+	LsfRating string `json:"lsfRating,omitempty"`
+
+	// MccaaRating: Rating system for Malta - Film Age-Classification Board
+	MccaaRating string `json:"mccaaRating,omitempty"`
+
+	// MccypRating: Rating system for Denmark - The Media Council for
+	// Children and Young People
+	MccypRating string `json:"mccypRating,omitempty"`
+
+	// MdaRating: Rating system for Singapore - Media Development Authority
+	MdaRating string `json:"mdaRating,omitempty"`
+
+	// MedietilsynetRating: Rating system for Norway - Medietilsynet
+	MedietilsynetRating string `json:"medietilsynetRating,omitempty"`
+
+	// MekuRating: Rating system for Finland - Finnish Centre for Media
+	// Education and Audiovisual Media
+	MekuRating string `json:"mekuRating,omitempty"`
 
 	// MibacRating: Rating system in Italy - Ministero dei Beni e delle
 	// Attivita Culturali e del Turismo
 	MibacRating string `json:"mibacRating,omitempty"`
 
+	// MocRating: Rating system for Colombia - MoC
+	MocRating string `json:"mocRating,omitempty"`
+
+	// MoctwRating: Rating system for Taiwan - Ministry of Culture - Tawan
+	MoctwRating string `json:"moctwRating,omitempty"`
+
 	// MpaaRating: Motion Picture Association of America rating for the
 	// content.
 	MpaaRating string `json:"mpaaRating,omitempty"`
+
+	// MtrcbRating: Rating system for Philippines - MOVIE AND TELEVISION
+	// REVIEW AND CLASSIFICATION BOARD
+	MtrcbRating string `json:"mtrcbRating,omitempty"`
+
+	// NbcRating: Rating system for Maldives - National Bureau of
+	// Classification
+	NbcRating string `json:"nbcRating,omitempty"`
+
+	// NbcplRating: Rating system for Poland - National Broadcasting Council
+	NbcplRating string `json:"nbcplRating,omitempty"`
+
+	// NfrcRating: Rating system for Bulgaria - National Film Centre
+	NfrcRating string `json:"nfrcRating,omitempty"`
+
+	// NfvcbRating: Rating system for Nigeria - National Film and Video
+	// Censors Board
+	NfvcbRating string `json:"nfvcbRating,omitempty"`
+
+	// NkclvRating: Rating system for Latvia - National Film Center of
+	// Latvia
+	NkclvRating string `json:"nkclvRating,omitempty"`
 
 	// OflcRating: Rating system in New Zealand - Office of Film and
 	// Literature Classification
 	OflcRating string `json:"oflcRating,omitempty"`
 
+	// PefilmRating: Rating system for Peru - Peru Rating System
+	PefilmRating string `json:"pefilmRating,omitempty"`
+
+	// RcnofRating: Rating system for Hungary - Rating Committee of the
+	// National Office of Film
+	RcnofRating string `json:"rcnofRating,omitempty"`
+
+	// ResorteviolenciaRating: Rating system for Venezuela - SiBCI
+	ResorteviolenciaRating string `json:"resorteviolenciaRating,omitempty"`
+
 	// RtcRating: Rating system in Mexico - General Directorate of Radio,
 	// Television and Cinematography
 	RtcRating string `json:"rtcRating,omitempty"`
 
+	// RteRating: Rating system for Ireland - Raidi� Teilif�s �ireann
+	RteRating string `json:"rteRating,omitempty"`
+
 	// RussiaRating: Rating system in Russia
 	RussiaRating string `json:"russiaRating,omitempty"`
+
+	// SkfilmRating: Rating system for Slovakia - Slovakia Rating System
+	SkfilmRating string `json:"skfilmRating,omitempty"`
+
+	// SmaisRating: Rating system for Iceland - SMAIS
+	SmaisRating string `json:"smaisRating,omitempty"`
+
+	// SmsaRating: Rating system for Sweden - Statens medier�d (National
+	// Media Council)
+	SmsaRating string `json:"smsaRating,omitempty"`
 
 	// TvpgRating: TV Parental Guidelines rating of the content.
 	TvpgRating string `json:"tvpgRating,omitempty"`
@@ -2940,8 +3096,8 @@ func (c *ActivitiesInsertCall) Do() (*Activity, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Activity)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Activity
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3110,8 +3266,8 @@ func (c *ActivitiesListCall) Do() (*ActivityListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(ActivityListResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *ActivityListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3273,8 +3429,8 @@ func (c *ChannelBannersInsertCall) Do() (*ChannelBannerResource, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(ChannelBannerResource)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *ChannelBannerResource
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3398,6 +3554,25 @@ func (r *ChannelSectionsService) Insert(part string, channelsection *ChannelSect
 	return c
 }
 
+// OnBehalfOfContentOwner sets the optional parameter
+// "onBehalfOfContentOwner": Note: This parameter is intended
+// exclusively for YouTube content partners.
+//
+// The onBehalfOfContentOwner
+// parameter indicates that the request's authorization credentials
+// identify a YouTube CMS user who is acting on behalf of the content
+// owner specified in the parameter value. This parameter is intended
+// for YouTube content partners that own and manage many different
+// YouTube channels. It allows content owners to authenticate once and
+// get access to all their video and channel data, without having to
+// provide authentication credentials for each individual channel. The
+// CMS account that the user authenticates with must be linked to the
+// specified YouTube content owner.
+func (c *ChannelSectionsInsertCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *ChannelSectionsInsertCall {
+	c.opt_["onBehalfOfContentOwner"] = onBehalfOfContentOwner
+	return c
+}
+
 // OnBehalfOfContentOwnerChannel sets the optional parameter
 // "onBehalfOfContentOwnerChannel": This parameter can only be used in a
 // properly authorized request. Note: This parameter is intended
@@ -3436,6 +3611,9 @@ func (c *ChannelSectionsInsertCall) Do() (*ChannelSection, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("part", fmt.Sprintf("%v", c.part))
+	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
+		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["onBehalfOfContentOwnerChannel"]; ok {
 		params.Set("onBehalfOfContentOwnerChannel", fmt.Sprintf("%v", v))
 	}
@@ -3453,8 +3631,8 @@ func (c *ChannelSectionsInsertCall) Do() (*ChannelSection, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(ChannelSection)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *ChannelSection
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3466,6 +3644,11 @@ func (c *ChannelSectionsInsertCall) Do() (*ChannelSection, error) {
 	//     "part"
 	//   ],
 	//   "parameters": {
+	//     "onBehalfOfContentOwner": {
+	//       "description": "Note: This parameter is intended exclusively for YouTube content partners.\n\nThe onBehalfOfContentOwner parameter indicates that the request's authorization credentials identify a YouTube CMS user who is acting on behalf of the content owner specified in the parameter value. This parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and get access to all their video and channel data, without having to provide authentication credentials for each individual channel. The CMS account that the user authenticates with must be linked to the specified YouTube content owner.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "onBehalfOfContentOwnerChannel": {
 	//       "description": "This parameter can only be used in a properly authorized request. Note: This parameter is intended exclusively for YouTube content partners.\n\nThe onBehalfOfContentOwnerChannel parameter specifies the YouTube channel ID of the channel to which a video is being added. This parameter is required when a request specifies a value for the onBehalfOfContentOwner parameter, and it can only be used in conjunction with that parameter. In addition, the request must be authorized using a CMS account that is linked to the content owner that the onBehalfOfContentOwner parameter specifies. Finally, the channel that the onBehalfOfContentOwnerChannel parameter value specifies must be linked to the content owner that the onBehalfOfContentOwner parameter specifies.\n\nThis parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and perform actions on behalf of the channel specified in the parameter value, without having to provide authentication credentials for each separate channel.",
 	//       "location": "query",
@@ -3583,8 +3766,8 @@ func (c *ChannelSectionsListCall) Do() (*ChannelSectionListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(ChannelSectionListResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *ChannelSectionListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3677,8 +3860,8 @@ func (c *ChannelSectionsUpdateCall) Do() (*ChannelSection, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(ChannelSection)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *ChannelSection
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3857,8 +4040,8 @@ func (c *ChannelsListCall) Do() (*ChannelListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(ChannelListResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *ChannelListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3999,8 +4182,8 @@ func (c *ChannelsUpdateCall) Do() (*Channel, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Channel)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Channel
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -4107,8 +4290,8 @@ func (c *GuideCategoriesListCall) Do() (*GuideCategoryListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(GuideCategoryListResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *GuideCategoryListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -4199,8 +4382,8 @@ func (c *I18nLanguagesListCall) Do() (*I18nLanguageListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(I18nLanguageListResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *I18nLanguageListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -4281,8 +4464,8 @@ func (c *I18nRegionsListCall) Do() (*I18nRegionListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(I18nRegionListResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *I18nRegionListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -4423,8 +4606,8 @@ func (c *LiveBroadcastsBindCall) Do() (*LiveBroadcast, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(LiveBroadcast)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *LiveBroadcast
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -4612,8 +4795,8 @@ func (c *LiveBroadcastsControlCall) Do() (*LiveBroadcast, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(LiveBroadcast)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *LiveBroadcast
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -4891,8 +5074,8 @@ func (c *LiveBroadcastsInsertCall) Do() (*LiveBroadcast, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(LiveBroadcast)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *LiveBroadcast
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -5080,8 +5263,8 @@ func (c *LiveBroadcastsListCall) Do() (*LiveBroadcastListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(LiveBroadcastListResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *LiveBroadcastListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -5261,8 +5444,8 @@ func (c *LiveBroadcastsTransitionCall) Do() (*LiveBroadcast, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(LiveBroadcast)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *LiveBroadcast
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -5422,8 +5605,8 @@ func (c *LiveBroadcastsUpdateCall) Do() (*LiveBroadcast, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(LiveBroadcast)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *LiveBroadcast
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -5682,8 +5865,8 @@ func (c *LiveStreamsInsertCall) Do() (*LiveStream, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(LiveStream)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *LiveStream
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -5861,8 +6044,8 @@ func (c *LiveStreamsListCall) Do() (*LiveStreamListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(LiveStreamListResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *LiveStreamListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -6023,8 +6206,8 @@ func (c *LiveStreamsUpdateCall) Do() (*LiveStream, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(LiveStream)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *LiveStream
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -6188,8 +6371,8 @@ func (c *PlaylistItemsInsertCall) Do() (*PlaylistItem, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(PlaylistItem)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *PlaylistItem
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -6343,8 +6526,8 @@ func (c *PlaylistItemsListCall) Do() (*PlaylistItemListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(PlaylistItemListResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *PlaylistItemListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -6453,8 +6636,8 @@ func (c *PlaylistItemsUpdateCall) Do() (*PlaylistItem, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(PlaylistItem)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *PlaylistItem
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -6667,8 +6850,8 @@ func (c *PlaylistsInsertCall) Do() (*Playlist, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Playlist)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Playlist
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -6858,8 +7041,8 @@ func (c *PlaylistsListCall) Do() (*PlaylistListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(PlaylistListResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *PlaylistListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -6911,7 +7094,7 @@ func (c *PlaylistsListCall) Do() (*PlaylistListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "part": {
-	//       "description": "The part parameter specifies a comma-separated list of one or more playlist resource properties that the API response will include. The part names that you can include in the parameter value are id, snippet, and status.\n\nIf the parameter identifies a property that contains child properties, the child properties will be included in the response. For example, in a playlist resource, the snippet property contains properties like author, title, description, tags, and timeCreated. As such, if you set part=snippet, the API response will contain all of those properties.",
+	//       "description": "The part parameter specifies a comma-separated list of one or more playlist resource properties that the API response will include. The part names that you can include in the parameter value are id, snippet, status, and contentDetails.\n\nIf the parameter identifies a property that contains child properties, the child properties will be included in the response. For example, in a playlist resource, the snippet property contains properties like author, title, description, tags, and timeCreated. As such, if you set part=snippet, the API response will contain all of those properties.",
 	//       "location": "query",
 	//       "required": true,
 	//       "type": "string"
@@ -6994,8 +7177,8 @@ func (c *PlaylistsUpdateCall) Do() (*Playlist, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Playlist)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Playlist
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -7096,6 +7279,30 @@ func (c *SearchListCall) ForContentOwner(forContentOwner bool) *SearchListCall {
 // parameter's value must also be set to video.
 func (c *SearchListCall) ForMine(forMine bool) *SearchListCall {
 	c.opt_["forMine"] = forMine
+	return c
+}
+
+// Location sets the optional parameter "location": The location
+// parameter restricts a search to videos that have a geographical
+// location specified in their metadata. The value is a string that
+// specifies geographic longitude/latitude coordinates e.g.
+// (-122.08427,37.42307)
+func (c *SearchListCall) Location(location string) *SearchListCall {
+	c.opt_["location"] = location
+	return c
+}
+
+// LocationRadius sets the optional parameter "locationRadius": The
+// locationRadius, in conjunction with the location parameter, defines a
+// geographic area. If the geographic coordinates associated with a
+// video fall within that area, then the video may be included in search
+// results. This parameter value must be a floating point number
+// followed by a measurement unit. Valid measurement units are m, km,
+// ft, and mi. For example, valid parameter values include 1500m, 5km,
+// 10000ft, and 0.75mi. The API does not support locationRadius
+// parameter values larger than 1000 kilometers.
+func (c *SearchListCall) LocationRadius(locationRadius string) *SearchListCall {
+	c.opt_["locationRadius"] = locationRadius
 	return c
 }
 
@@ -7307,6 +7514,12 @@ func (c *SearchListCall) Do() (*SearchListResponse, error) {
 	if v, ok := c.opt_["forMine"]; ok {
 		params.Set("forMine", fmt.Sprintf("%v", v))
 	}
+	if v, ok := c.opt_["location"]; ok {
+		params.Set("location", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["locationRadius"]; ok {
+		params.Set("locationRadius", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
@@ -7383,8 +7596,8 @@ func (c *SearchListCall) Do() (*SearchListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(SearchListResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *SearchListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -7438,6 +7651,16 @@ func (c *SearchListCall) Do() (*SearchListResponse, error) {
 	//       "description": "The forMine parameter restricts the search to only retrieve videos owned by the authenticated user. If you set this parameter to true, then the type parameter's value must also be set to video.",
 	//       "location": "query",
 	//       "type": "boolean"
+	//     },
+	//     "location": {
+	//       "description": "The location parameter restricts a search to videos that have a geographical location specified in their metadata. The value is a string that specifies geographic longitude/latitude coordinates e.g. (-122.08427,37.42307)",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "locationRadius": {
+	//       "description": "The locationRadius, in conjunction with the location parameter, defines a geographic area. If the geographic coordinates associated with a video fall within that area, then the video may be included in search results. This parameter value must be a floating point number followed by a measurement unit. Valid measurement units are m, km, ft, and mi. For example, valid parameter values include 1500m, 5km, 10000ft, and 0.75mi. The API does not support locationRadius parameter values larger than 1000 kilometers.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "maxResults": {
 	//       "default": "5",
@@ -7775,8 +7998,8 @@ func (c *SubscriptionsInsertCall) Do() (*Subscription, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Subscription)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Subscription
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -7987,8 +8210,8 @@ func (c *SubscriptionsListCall) Do() (*SubscriptionListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(SubscriptionListResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *SubscriptionListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -8153,8 +8376,8 @@ func (c *ThumbnailsSetCall) Do() (*ThumbnailSetResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(ThumbnailSetResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *ThumbnailSetResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -8277,8 +8500,8 @@ func (c *VideoCategoriesListCall) Do() (*VideoCategoryListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(VideoCategoryListResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *VideoCategoryListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -8467,8 +8690,8 @@ func (c *VideosGetRatingCall) Do() (*VideoGetRatingResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(VideoGetRatingResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *VideoGetRatingResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -8645,8 +8868,8 @@ func (c *VideosInsertCall) Do() (*Video, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Video)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Video
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -8880,8 +9103,8 @@ func (c *VideosListCall) Do() (*VideoListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(VideoListResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *VideoListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -9146,8 +9369,8 @@ func (c *VideosUpdateCall) Do() (*Video, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Video)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Video
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil

@@ -428,6 +428,13 @@ type Application struct {
 	// Description: The description of the application.
 	Description string `json:"description,omitempty"`
 
+	// EnabledFeatures: A list of features that have been enabled for the
+	// application.
+	// Possible values are:
+	// - "SNAPSHOTS" - Snapshots has
+	// been enabled
+	EnabledFeatures []string `json:"enabledFeatures,omitempty"`
+
 	// Id: The ID of the application.
 	Id string `json:"id,omitempty"`
 
@@ -735,6 +742,23 @@ type NetworkDiagnostics struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string games#networkDiagnostics.
 	Kind string `json:"kind,omitempty"`
+
+	// NetworkOperatorCode: The MCC+MNC code for the client's network
+	// connection. On Android:
+	// http://developer.android.com/reference/android/telephony/TelephonyMana
+	// ger.html#getNetworkOperator() On iOS, see:
+	// https://developer.apple.com/library/ios/documentation/NetworkingIntern
+	// et/Reference/CTCarrier/Reference/Reference.html
+	NetworkOperatorCode string `json:"networkOperatorCode,omitempty"`
+
+	// NetworkOperatorName: The name of the carrier of the client's network
+	// connection. On Android:
+	// http://developer.android.com/reference/android/telephony/TelephonyMana
+	// ger.html#getNetworkOperatorName() On iOS:
+	// https://developer.apple.com/library/ios/documentation/NetworkingIntern
+	// et/Reference/CTCarrier/Reference/Reference.html#//apple_ref/occ/instp/
+	// CTCarrier/carrierName
+	NetworkOperatorName string `json:"networkOperatorName,omitempty"`
 
 	// RegistrationLatencyMillis: The amount of time in milliseconds it took
 	// for the client to establish a connection with the XMPP server.
@@ -1291,6 +1315,23 @@ type RoomLeaveDiagnostics struct {
 	// the fixed string games#roomLeaveDiagnostics.
 	Kind string `json:"kind,omitempty"`
 
+	// NetworkOperatorCode: The MCC+MNC code for the client's network
+	// connection. On Android:
+	// http://developer.android.com/reference/android/telephony/TelephonyMana
+	// ger.html#getNetworkOperator() On iOS, see:
+	// https://developer.apple.com/library/ios/documentation/NetworkingIntern
+	// et/Reference/CTCarrier/Reference/Reference.html
+	NetworkOperatorCode string `json:"networkOperatorCode,omitempty"`
+
+	// NetworkOperatorName: The name of the carrier of the client's network
+	// connection. On Android:
+	// http://developer.android.com/reference/android/telephony/TelephonyMana
+	// ger.html#getNetworkOperatorName() On iOS:
+	// https://developer.apple.com/library/ios/documentation/NetworkingIntern
+	// et/Reference/CTCarrier/Reference/Reference.html#//apple_ref/occ/instp/
+	// CTCarrier/carrierName
+	NetworkOperatorName string `json:"networkOperatorName,omitempty"`
+
 	// PeerSession: Diagnostics about all peer sessions.
 	PeerSession []*PeerSessionDiagnostics `json:"peerSession,omitempty"`
 
@@ -1325,6 +1366,19 @@ type RoomLeaveRequest struct {
 	// server.
 	// - "REALTIME_TIMEOUT" - The client timed out while waiting
 	// for a room.
+	// - "REALTIME_CLIENT_DISCONNECTING" - The client
+	// disconnects without first calling Leave.
+	// - "REALTIME_SIGN_OUT" - The
+	// user signed out of G+ while in the room.
+	// - "REALTIME_GAME_CRASHED" -
+	// The game crashed.
+	// - "REALTIME_ROOM_SERVICE_CRASHED" -
+	// RoomAndroidService crashed.
+	// -
+	// "REALTIME_DIFFERENT_CLIENT_ROOM_OPERATION" - Another client is trying
+	// to enter a room.
+	// - "REALTIME_SAME_CLIENT_ROOM_OPERATION" - The same
+	// client is trying to enter a new room.
 	Reason string `json:"reason,omitempty"`
 }
 
@@ -1908,8 +1962,8 @@ func (c *AchievementDefinitionsListCall) Do() (*AchievementDefinitionsListRespon
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(AchievementDefinitionsListResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *AchievementDefinitionsListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1998,8 +2052,8 @@ func (c *AchievementsIncrementCall) Do() (*AchievementIncrementResponse, error) 
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(AchievementIncrementResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *AchievementIncrementResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2122,8 +2176,8 @@ func (c *AchievementsListCall) Do() (*PlayerAchievementListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(PlayerAchievementListResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *PlayerAchievementListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2223,8 +2277,8 @@ func (c *AchievementsRevealCall) Do() (*AchievementRevealResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(AchievementRevealResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *AchievementRevealResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2294,8 +2348,8 @@ func (c *AchievementsSetStepsAtLeastCall) Do() (*AchievementSetStepsAtLeastRespo
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(AchievementSetStepsAtLeastResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *AchievementSetStepsAtLeastResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2369,8 +2423,8 @@ func (c *AchievementsUnlockCall) Do() (*AchievementUnlockResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(AchievementUnlockResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *AchievementUnlockResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2440,8 +2494,8 @@ func (c *AchievementsUpdateMultipleCall) Do() (*AchievementUpdateMultipleRespons
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(AchievementUpdateMultipleResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *AchievementUpdateMultipleResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2520,8 +2574,8 @@ func (c *ApplicationsGetCall) Do() (*Application, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Application)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Application
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2660,8 +2714,8 @@ func (c *LeaderboardsGetCall) Do() (*Leaderboard, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Leaderboard)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Leaderboard
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2759,8 +2813,8 @@ func (c *LeaderboardsListCall) Do() (*LeaderboardListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(LeaderboardListResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *LeaderboardListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2816,10 +2870,20 @@ func (r *PlayersService) Get(playerId string) *PlayersGetCall {
 	return c
 }
 
+// Language sets the optional parameter "language": The preferred
+// language to use for strings returned by this method.
+func (c *PlayersGetCall) Language(language string) *PlayersGetCall {
+	c.opt_["language"] = language
+	return c
+}
+
 func (c *PlayersGetCall) Do() (*Player, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["language"]; ok {
+		params.Set("language", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "players/{playerId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -2834,8 +2898,8 @@ func (c *PlayersGetCall) Do() (*Player, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Player)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Player
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2847,6 +2911,11 @@ func (c *PlayersGetCall) Do() (*Player, error) {
 	//     "playerId"
 	//   ],
 	//   "parameters": {
+	//     "language": {
+	//       "description": "The preferred language to use for strings returned by this method.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "playerId": {
 	//       "description": "A player ID. A value of me may be used in place of the authenticated player's ID.",
 	//       "location": "path",
@@ -2882,6 +2951,13 @@ func (r *PlayersService) List(collection string) *PlayersListCall {
 	return c
 }
 
+// Language sets the optional parameter "language": The preferred
+// language to use for strings returned by this method.
+func (c *PlayersListCall) Language(language string) *PlayersListCall {
+	c.opt_["language"] = language
+	return c
+}
+
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of player resources to return in the response, used for
 // paging. For any response, the actual number of player resources
@@ -2902,6 +2978,9 @@ func (c *PlayersListCall) Do() (*PlayerListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["language"]; ok {
+		params.Set("language", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
@@ -2922,8 +3001,8 @@ func (c *PlayersListCall) Do() (*PlayerListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(PlayerListResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *PlayerListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2945,6 +3024,11 @@ func (c *PlayersListCall) Do() (*PlayerListResponse, error) {
 	//       ],
 	//       "location": "path",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "language": {
+	//       "description": "The preferred language to use for strings returned by this method.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
@@ -3117,8 +3201,8 @@ func (c *RevisionsCheckCall) Do() (*RevisionCheckResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(RevisionCheckResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *RevisionCheckResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3198,8 +3282,8 @@ func (c *RoomsCreateCall) Do() (*Room, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Room)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Room
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3245,10 +3329,20 @@ func (r *RoomsService) Decline(roomId string) *RoomsDeclineCall {
 	return c
 }
 
+// Language sets the optional parameter "language": The preferred
+// language to use for strings returned by this method.
+func (c *RoomsDeclineCall) Language(language string) *RoomsDeclineCall {
+	c.opt_["language"] = language
+	return c
+}
+
 func (c *RoomsDeclineCall) Do() (*Room, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["language"]; ok {
+		params.Set("language", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rooms/{roomId}/decline")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -3263,8 +3357,8 @@ func (c *RoomsDeclineCall) Do() (*Room, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Room)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Room
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3276,6 +3370,11 @@ func (c *RoomsDeclineCall) Do() (*Room, error) {
 	//     "roomId"
 	//   ],
 	//   "parameters": {
+	//     "language": {
+	//       "description": "The preferred language to use for strings returned by this method.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "roomId": {
 	//       "description": "The ID of the room.",
 	//       "location": "path",
@@ -3397,8 +3496,8 @@ func (c *RoomsGetCall) Do() (*Room, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Room)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Room
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3452,6 +3551,13 @@ func (r *RoomsService) Join(roomId string, roomjoinrequest *RoomJoinRequest) *Ro
 	return c
 }
 
+// Language sets the optional parameter "language": The preferred
+// language to use for strings returned by this method.
+func (c *RoomsJoinCall) Language(language string) *RoomsJoinCall {
+	c.opt_["language"] = language
+	return c
+}
+
 func (c *RoomsJoinCall) Do() (*Room, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.roomjoinrequest)
@@ -3461,6 +3567,9 @@ func (c *RoomsJoinCall) Do() (*Room, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["language"]; ok {
+		params.Set("language", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rooms/{roomId}/join")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -3476,8 +3585,8 @@ func (c *RoomsJoinCall) Do() (*Room, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Room)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Room
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3489,6 +3598,11 @@ func (c *RoomsJoinCall) Do() (*Room, error) {
 	//     "roomId"
 	//   ],
 	//   "parameters": {
+	//     "language": {
+	//       "description": "The preferred language to use for strings returned by this method.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "roomId": {
 	//       "description": "The ID of the room.",
 	//       "location": "path",
@@ -3529,6 +3643,13 @@ func (r *RoomsService) Leave(roomId string, roomleaverequest *RoomLeaveRequest) 
 	return c
 }
 
+// Language sets the optional parameter "language": The preferred
+// language to use for strings returned by this method.
+func (c *RoomsLeaveCall) Language(language string) *RoomsLeaveCall {
+	c.opt_["language"] = language
+	return c
+}
+
 func (c *RoomsLeaveCall) Do() (*Room, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.roomleaverequest)
@@ -3538,6 +3659,9 @@ func (c *RoomsLeaveCall) Do() (*Room, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["language"]; ok {
+		params.Set("language", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rooms/{roomId}/leave")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -3553,8 +3677,8 @@ func (c *RoomsLeaveCall) Do() (*Room, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Room)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Room
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3566,6 +3690,11 @@ func (c *RoomsLeaveCall) Do() (*Room, error) {
 	//     "roomId"
 	//   ],
 	//   "parameters": {
+	//     "language": {
+	//       "description": "The preferred language to use for strings returned by this method.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "roomId": {
 	//       "description": "The ID of the room.",
 	//       "location": "path",
@@ -3650,8 +3779,8 @@ func (c *RoomsListCall) Do() (*RoomList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(RoomList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *RoomList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3710,6 +3839,13 @@ func (r *RoomsService) ReportStatus(roomId string, roomp2pstatuses *RoomP2PStatu
 	return c
 }
 
+// Language sets the optional parameter "language": The preferred
+// language to use for strings returned by this method.
+func (c *RoomsReportStatusCall) Language(language string) *RoomsReportStatusCall {
+	c.opt_["language"] = language
+	return c
+}
+
 func (c *RoomsReportStatusCall) Do() (*RoomStatus, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.roomp2pstatuses)
@@ -3719,6 +3855,9 @@ func (c *RoomsReportStatusCall) Do() (*RoomStatus, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["language"]; ok {
+		params.Set("language", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rooms/{roomId}/reportstatus")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -3734,8 +3873,8 @@ func (c *RoomsReportStatusCall) Do() (*RoomStatus, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(RoomStatus)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *RoomStatus
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3747,6 +3886,11 @@ func (c *RoomsReportStatusCall) Do() (*RoomStatus, error) {
 	//     "roomId"
 	//   ],
 	//   "parameters": {
+	//     "language": {
+	//       "description": "The preferred language to use for strings returned by this method.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "roomId": {
 	//       "description": "The ID of the room.",
 	//       "location": "path",
@@ -3857,8 +4001,8 @@ func (c *ScoresGetCall) Do() (*PlayerLeaderboardScoreListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(PlayerLeaderboardScoreListResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *PlayerLeaderboardScoreListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -4019,8 +4163,8 @@ func (c *ScoresListCall) Do() (*LeaderboardScores, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(LeaderboardScores)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *LeaderboardScores
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -4197,8 +4341,8 @@ func (c *ScoresListWindowCall) Do() (*LeaderboardScores, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(LeaderboardScores)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *LeaderboardScores
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -4348,8 +4492,8 @@ func (c *ScoresSubmitCall) Do() (*PlayerScoreResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(PlayerScoreResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *PlayerScoreResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -4447,8 +4591,8 @@ func (c *ScoresSubmitMultipleCall) Do() (*PlayerScoreListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(PlayerScoreListResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *PlayerScoreListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -4584,8 +4728,8 @@ func (c *TurnBasedMatchesCreateCall) Do() (*TurnBasedMatch, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(TurnBasedMatch)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *TurnBasedMatch
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -4658,8 +4802,8 @@ func (c *TurnBasedMatchesDeclineCall) Do() (*TurnBasedMatch, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(TurnBasedMatch)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *TurnBasedMatch
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -4808,8 +4952,8 @@ func (c *TurnBasedMatchesFinishCall) Do() (*TurnBasedMatch, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(TurnBasedMatch)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *TurnBasedMatch
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -4901,8 +5045,8 @@ func (c *TurnBasedMatchesGetCall) Do() (*TurnBasedMatch, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(TurnBasedMatch)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *TurnBasedMatch
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -4986,8 +5130,8 @@ func (c *TurnBasedMatchesJoinCall) Do() (*TurnBasedMatch, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(TurnBasedMatch)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *TurnBasedMatch
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -5067,8 +5211,8 @@ func (c *TurnBasedMatchesLeaveCall) Do() (*TurnBasedMatch, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(TurnBasedMatch)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *TurnBasedMatch
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -5164,8 +5308,8 @@ func (c *TurnBasedMatchesLeaveTurnCall) Do() (*TurnBasedMatch, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(TurnBasedMatch)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *TurnBasedMatch
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -5302,8 +5446,8 @@ func (c *TurnBasedMatchesListCall) Do() (*TurnBasedMatchList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(TurnBasedMatchList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *TurnBasedMatchList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -5414,8 +5558,8 @@ func (c *TurnBasedMatchesRematchCall) Do() (*TurnBasedMatchRematch, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(TurnBasedMatchRematch)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *TurnBasedMatchRematch
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -5548,8 +5692,8 @@ func (c *TurnBasedMatchesSyncCall) Do() (*TurnBasedMatchSync, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(TurnBasedMatchSync)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *TurnBasedMatchSync
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -5653,8 +5797,8 @@ func (c *TurnBasedMatchesTakeTurnCall) Do() (*TurnBasedMatch, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(TurnBasedMatch)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *TurnBasedMatch
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil

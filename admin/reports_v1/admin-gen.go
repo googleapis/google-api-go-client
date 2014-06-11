@@ -450,8 +450,8 @@ func (c *ActivitiesListCall) Do() (*Activities, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Activities)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Activities
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -663,8 +663,8 @@ func (c *ActivitiesWatchCall) Do() (*Channel, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Channel)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Channel
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -874,8 +874,8 @@ func (c *CustomerUsageReportsGetCall) Do() (*UsageReports, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(UsageReports)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *UsageReports
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1011,8 +1011,8 @@ func (c *UserUsageReportGetCall) Do() (*UsageReports, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(UsageReports)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *UsageReports
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil

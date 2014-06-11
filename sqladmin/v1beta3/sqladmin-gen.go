@@ -258,8 +258,9 @@ type DatabaseInstance struct {
 	// CurrentDiskSize: The current disk usage of the instance in bytes.
 	CurrentDiskSize int64 `json:"currentDiskSize,omitempty,string"`
 
-	// DatabaseVersion: The database engine type and version, for example
-	// MYSQL_5_5 for MySQL 5.5.
+	// DatabaseVersion: The database engine type and version. Can be
+	// MYSQL_5_5 or MYSQL_5_6. Defaults to MYSQL_5_5. The databaseVersion
+	// can not be changed after instance creation.
 	DatabaseVersion string `json:"databaseVersion,omitempty"`
 
 	// Etag: HTTP 1.1 Entity tag for the resource.
@@ -824,8 +825,8 @@ func (c *BackupRunsGetCall) Do() (*BackupRun, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(BackupRun)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *BackupRun
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -938,8 +939,8 @@ func (c *BackupRunsListCall) Do() (*BackupRunsListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(BackupRunsListResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *BackupRunsListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1025,8 +1026,8 @@ func (c *FlagsListCall) Do() (*FlagsListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(FlagsListResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *FlagsListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1087,8 +1088,8 @@ func (c *InstancesCloneCall) Do() (*InstancesCloneResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(InstancesCloneResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *InstancesCloneResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1157,8 +1158,8 @@ func (c *InstancesDeleteCall) Do() (*InstancesDeleteResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(InstancesDeleteResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *InstancesDeleteResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1240,8 +1241,8 @@ func (c *InstancesExportCall) Do() (*InstancesExportResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(InstancesExportResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *InstancesExportResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1318,8 +1319,8 @@ func (c *InstancesGetCall) Do() (*DatabaseInstance, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(DatabaseInstance)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *DatabaseInstance
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1401,8 +1402,8 @@ func (c *InstancesImportCall) Do() (*InstancesImportResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(InstancesImportResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *InstancesImportResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1483,8 +1484,8 @@ func (c *InstancesInsertCall) Do() (*InstancesInsertResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(InstancesInsertResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *InstancesInsertResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1572,8 +1573,8 @@ func (c *InstancesListCall) Do() (*InstancesListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(InstancesListResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *InstancesListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1661,8 +1662,8 @@ func (c *InstancesPatchCall) Do() (*InstancesUpdateResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(InstancesUpdateResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *InstancesUpdateResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1742,8 +1743,8 @@ func (c *InstancesResetSslConfigCall) Do() (*InstancesResetSslConfigResponse, er
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(InstancesResetSslConfigResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *InstancesResetSslConfigResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1816,8 +1817,8 @@ func (c *InstancesRestartCall) Do() (*InstancesRestartResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(InstancesRestartResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *InstancesRestartResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1896,8 +1897,8 @@ func (c *InstancesRestoreBackupCall) Do() (*InstancesRestoreBackupResponse, erro
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(InstancesRestoreBackupResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *InstancesRestoreBackupResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1992,8 +1993,8 @@ func (c *InstancesSetRootPasswordCall) Do() (*InstancesSetRootPasswordResponse, 
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(InstancesSetRootPasswordResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *InstancesSetRootPasswordResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2079,8 +2080,8 @@ func (c *InstancesUpdateCall) Do() (*InstancesUpdateResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(InstancesUpdateResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *InstancesUpdateResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2161,8 +2162,8 @@ func (c *OperationsGetCall) Do() (*InstanceOperation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(InstanceOperation)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *InstanceOperation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2265,8 +2266,8 @@ func (c *OperationsListCall) Do() (*OperationsListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(OperationsListResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *OperationsListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2354,8 +2355,8 @@ func (c *SslCertsDeleteCall) Do() (*SslCertsDeleteResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(SslCertsDeleteResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *SslCertsDeleteResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2440,8 +2441,8 @@ func (c *SslCertsGetCall) Do() (*SslCert, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(SslCert)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *SslCert
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2531,8 +2532,8 @@ func (c *SslCertsInsertCall) Do() (*SslCertsInsertResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(SslCertsInsertResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *SslCertsInsertResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2608,8 +2609,8 @@ func (c *SslCertsListCall) Do() (*SslCertsListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(SslCertsListResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *SslCertsListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2680,8 +2681,8 @@ func (c *TiersListCall) Do() (*TiersListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(TiersListResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *TiersListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil

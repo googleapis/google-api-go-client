@@ -559,8 +559,8 @@ func (c *RelyingpartyCreateAuthUriCall) Do() (*CreateAuthUriResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(CreateAuthUriResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *CreateAuthUriResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -617,8 +617,8 @@ func (c *RelyingpartyDeleteAccountCall) Do() (*DeleteAccountResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(DeleteAccountResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *DeleteAccountResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -675,8 +675,8 @@ func (c *RelyingpartyDownloadAccountCall) Do() (*DownloadAccountResponse, error)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(DownloadAccountResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *DownloadAccountResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -733,8 +733,8 @@ func (c *RelyingpartyGetAccountInfoCall) Do() (*GetAccountInfoResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(GetAccountInfoResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *GetAccountInfoResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -791,8 +791,8 @@ func (c *RelyingpartyGetOobConfirmationCodeCall) Do() (*GetOobConfirmationCodeRe
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(GetOobConfirmationCodeResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *GetOobConfirmationCodeResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -806,6 +806,53 @@ func (c *RelyingpartyGetOobConfirmationCodeCall) Do() (*GetOobConfirmationCodeRe
 	//   },
 	//   "response": {
 	//     "$ref": "GetOobConfirmationCodeResponse"
+	//   }
+	// }
+
+}
+
+// method id "identitytoolkit.relyingparty.getPublicKeys":
+
+type RelyingpartyGetPublicKeysCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// GetPublicKeys: Get token signing public key.
+func (r *RelyingpartyService) GetPublicKeys() *RelyingpartyGetPublicKeysCall {
+	c := &RelyingpartyGetPublicKeysCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+func (c *RelyingpartyGetPublicKeysCall) Do() (map[string]string, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "publicKeys")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret map[string]string
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get token signing public key.",
+	//   "httpMethod": "GET",
+	//   "id": "identitytoolkit.relyingparty.getPublicKeys",
+	//   "path": "publicKeys",
+	//   "response": {
+	//     "$ref": "IdentitytoolkitRelyingpartyGetPublicKeysResponse"
 	//   }
 	// }
 
@@ -849,8 +896,8 @@ func (c *RelyingpartyResetPasswordCall) Do() (*ResetPasswordResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(ResetPasswordResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *ResetPasswordResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -907,8 +954,8 @@ func (c *RelyingpartySetAccountInfoCall) Do() (*SetAccountInfoResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(SetAccountInfoResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *SetAccountInfoResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -965,8 +1012,8 @@ func (c *RelyingpartyUploadAccountCall) Do() (*UploadAccountResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(UploadAccountResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *UploadAccountResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1023,8 +1070,8 @@ func (c *RelyingpartyVerifyAssertionCall) Do() (*VerifyAssertionResponse, error)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(VerifyAssertionResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *VerifyAssertionResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1081,8 +1128,8 @@ func (c *RelyingpartyVerifyPasswordCall) Do() (*VerifyPasswordResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(VerifyPasswordResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *VerifyPasswordResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil

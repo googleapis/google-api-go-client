@@ -44,6 +44,9 @@ const (
 	// View and manage your data in Google BigQuery
 	BigqueryScope = "https://www.googleapis.com/auth/bigquery"
 
+	// Insert data into Google BigQuery
+	BigqueryInsertdataScope = "https://www.googleapis.com/auth/bigquery.insertdata"
+
 	// View and manage your data across Google Cloud Platform services
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
@@ -360,6 +363,11 @@ type JobConfiguration struct {
 }
 
 type JobConfigurationExtract struct {
+	// Compression: [Optional] The compression type to use for exported
+	// files. Possible values include GZIP and NONE. The default value is
+	// NONE.
+	Compression string `json:"compression,omitempty"`
+
 	// DestinationFormat: [Experimental] Optional and defaults to CSV.
 	// Format with which files should be exported. To export to CSV, specify
 	// "CSV". Tables with nested or repeated fields cannot be exported as
@@ -524,7 +532,7 @@ type JobConfigurationLoad struct {
 type JobConfigurationQuery struct {
 	// AllowLargeResults: If true, allows the query to produce arbitrarily
 	// large result tables at a slight cost in performance. Requires
-	// destination_table to be set.
+	// destinationTable to be set.
 	AllowLargeResults bool `json:"allowLargeResults,omitempty"`
 
 	// CreateDisposition: [Optional] Specifies whether the job is allowed to
@@ -544,6 +552,11 @@ type JobConfigurationQuery struct {
 	// results should be stored. If not present, a new table will be created
 	// to store the results.
 	DestinationTable *TableReference `json:"destinationTable,omitempty"`
+
+	// FlattenResults: [Experimental] Flattens all nested and repeated
+	// fields in the query results. The default value is true.
+	// allowLargeResults must be true if this is set to false.
+	FlattenResults bool `json:"flattenResults,omitempty"`
 
 	// PreserveNulls: [Deprecated] This property is deprecated.
 	PreserveNulls bool `json:"preserveNulls,omitempty"`
@@ -1189,8 +1202,8 @@ func (c *DatasetsGetCall) Do() (*Dataset, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Dataset)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Dataset
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1269,8 +1282,8 @@ func (c *DatasetsInsertCall) Do() (*Dataset, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Dataset)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Dataset
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1369,8 +1382,8 @@ func (c *DatasetsListCall) Do() (*DatasetList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(DatasetList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *DatasetList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1464,8 +1477,8 @@ func (c *DatasetsPatchCall) Do() (*Dataset, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Dataset)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Dataset
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1552,8 +1565,8 @@ func (c *DatasetsUpdateCall) Do() (*Dataset, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Dataset)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Dataset
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1630,8 +1643,8 @@ func (c *JobsGetCall) Do() (*Job, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Job)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Job
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1747,8 +1760,8 @@ func (c *JobsGetQueryResultsCall) Do() (*GetQueryResultsResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(GetQueryResultsResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *GetQueryResultsResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1863,8 +1876,8 @@ func (c *JobsInsertCall) Do() (*Job, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Job)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Job
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2001,8 +2014,8 @@ func (c *JobsListCall) Do() (*JobList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(JobList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *JobList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2120,8 +2133,8 @@ func (c *JobsQueryCall) Do() (*QueryResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(QueryResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *QueryResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2205,8 +2218,8 @@ func (c *ProjectsListCall) Do() (*ProjectList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(ProjectList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *ProjectList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2286,8 +2299,8 @@ func (c *TabledataInsertAllCall) Do() (*TableDataInsertAllResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(TableDataInsertAllResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *TableDataInsertAllResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2329,6 +2342,7 @@ func (c *TabledataInsertAllCall) Do() (*TableDataInsertAllResponse, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/bigquery",
+	//     "https://www.googleapis.com/auth/bigquery.insertdata",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -2404,8 +2418,8 @@ func (c *TabledataListCall) Do() (*TableDataList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(TableDataList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *TableDataList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2587,8 +2601,8 @@ func (c *TablesGetCall) Do() (*Table, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Table)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Table
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2677,8 +2691,8 @@ func (c *TablesInsertCall) Do() (*Table, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Table)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Table
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2775,8 +2789,8 @@ func (c *TablesListCall) Do() (*TableList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(TableList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *TableList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2875,8 +2889,8 @@ func (c *TablesPatchCall) Do() (*Table, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Table)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Table
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2973,8 +2987,8 @@ func (c *TablesUpdateCall) Do() (*Table, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Table)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Table
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil

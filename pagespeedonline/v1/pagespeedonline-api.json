@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"kEk3sFj6Ef5_yR1-H3bAO6qw9mI/_7T_t50z1qoOGh9ZOpbii06YKEs\"",
+ "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/tevBz-thgzH_ImSvqLYeF9mOfTw\"",
  "discoveryVersion": "v1",
  "id": "pagespeedonline:v1",
  "name": "pagespeedonline",
@@ -377,12 +377,6 @@
       "screenshot": {
        "type": "boolean",
        "description": "Indicates if binary data containing a screenshot should be included",
-       "default": "false",
-       "location": "query"
-      },
-      "snapshots": {
-       "type": "boolean",
-       "description": "Indicates if binary data containing snapshot images should be included",
        "default": "false",
        "location": "query"
       },

@@ -55,6 +55,7 @@ func New(client *http.Client) (*Service, error) {
 	s.Layers = NewLayersService(s)
 	s.Myconfig = NewMyconfigService(s)
 	s.Mylibrary = NewMylibraryService(s)
+	s.Promooffer = NewPromoofferService(s)
 	s.Volumes = NewVolumesService(s)
 	return s, nil
 }
@@ -72,6 +73,8 @@ type Service struct {
 	Myconfig *MyconfigService
 
 	Mylibrary *MylibraryService
+
+	Promooffer *PromoofferService
 
 	Volumes *VolumesService
 }
@@ -202,6 +205,15 @@ func NewMylibraryReadingpositionsService(s *Service) *MylibraryReadingpositionsS
 }
 
 type MylibraryReadingpositionsService struct {
+	s *Service
+}
+
+func NewPromoofferService(s *Service) *PromoofferService {
+	rs := &PromoofferService{s: s}
+	return rs
+}
+
+type PromoofferService struct {
 	s *Service
 }
 
@@ -889,6 +901,36 @@ type Layersummary struct {
 	VolumeId string `json:"volumeId,omitempty"`
 }
 
+type Offers struct {
+	// Items: A list of offers.
+	Items []*OffersItems `json:"items,omitempty"`
+
+	// Kind: Resource type.
+	Kind string `json:"kind,omitempty"`
+}
+
+type OffersItems struct {
+	ArtUrl string `json:"artUrl,omitempty"`
+
+	Id string `json:"id,omitempty"`
+
+	Items []*OffersItemsItems `json:"items,omitempty"`
+}
+
+type OffersItemsItems struct {
+	Author string `json:"author,omitempty"`
+
+	CanonicalVolumeLink string `json:"canonicalVolumeLink,omitempty"`
+
+	CoverUrl string `json:"coverUrl,omitempty"`
+
+	Description string `json:"description,omitempty"`
+
+	Title string `json:"title,omitempty"`
+
+	VolumeId string `json:"volumeId,omitempty"`
+}
+
 type ReadingPosition struct {
 	// EpubCfiPosition: Position in an EPUB as a CFI.
 	EpubCfiPosition string `json:"epubCfiPosition,omitempty"`
@@ -1353,6 +1395,9 @@ type VolumeVolumeInfo struct {
 	// RatingsCount: The number of review ratings for this volume.
 	RatingsCount int64 `json:"ratingsCount,omitempty"`
 
+	// ReadingModes: The reading modes available for this volume.
+	ReadingModes interface{} `json:"readingModes,omitempty"`
+
 	// Subtitle: Volume subtitle. (In LITE projection.)
 	Subtitle string `json:"subtitle,omitempty"`
 
@@ -1548,8 +1593,8 @@ func (c *BookshelvesGetCall) Do() (*Bookshelf, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Bookshelf)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Bookshelf
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1634,8 +1679,8 @@ func (c *BookshelvesListCall) Do() (*Bookshelves, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Bookshelves)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Bookshelves
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1747,8 +1792,8 @@ func (c *BookshelvesVolumesListCall) Do() (*Volumes, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Volumes)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Volumes
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1879,8 +1924,8 @@ func (c *CloudloadingAddBookCall) Do() (*BooksCloudloadingResource, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(BooksCloudloadingResource)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *BooksCloudloadingResource
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2015,8 +2060,8 @@ func (c *CloudloadingUpdateBookCall) Do() (*BooksCloudloadingResource, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(BooksCloudloadingResource)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *BooksCloudloadingResource
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2094,8 +2139,8 @@ func (c *LayersGetCall) Do() (*Layersummary, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Layersummary)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Layersummary
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2215,8 +2260,8 @@ func (c *LayersListCall) Do() (*Layersummaries, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Layersummaries)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Layersummaries
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2373,8 +2418,8 @@ func (c *LayersAnnotationDataGetCall) Do() (*Annotationdata, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Annotationdata)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Annotationdata
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2602,8 +2647,8 @@ func (c *LayersAnnotationDataListCall) Do() (*Annotationsdata, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Annotationsdata)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Annotationsdata
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2765,8 +2810,8 @@ func (c *LayersVolumeAnnotationsGetCall) Do() (*Volumeannotation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Volumeannotation)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Volumeannotation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2984,8 +3029,8 @@ func (c *LayersVolumeAnnotationsListCall) Do() (*Volumeannotations, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Volumeannotations)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Volumeannotations
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3150,8 +3195,8 @@ func (c *MyconfigReleaseDownloadAccessCall) Do() (*DownloadAccesses, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(DownloadAccesses)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *DownloadAccesses
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3261,8 +3306,8 @@ func (c *MyconfigRequestAccessCall) Do() (*RequestAccess, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(RequestAccess)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *RequestAccess
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3413,8 +3458,8 @@ func (c *MyconfigSyncVolumeLicensesCall) Do() (*Volumes, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Volumes)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Volumes
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3601,8 +3646,8 @@ func (c *MylibraryAnnotationsGetCall) Do() (*Annotation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Annotation)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Annotation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3696,8 +3741,8 @@ func (c *MylibraryAnnotationsInsertCall) Do() (*Annotation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Annotation)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Annotation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3874,8 +3919,8 @@ func (c *MylibraryAnnotationsListCall) Do() (*Annotations, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Annotations)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Annotations
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3994,8 +4039,8 @@ func (c *MylibraryAnnotationsSummaryCall) Do() (*AnnotationsSummary, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(AnnotationsSummary)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *AnnotationsSummary
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -4084,8 +4129,8 @@ func (c *MylibraryAnnotationsUpdateCall) Do() (*Annotation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Annotation)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Annotation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -4321,8 +4366,8 @@ func (c *MylibraryBookshelvesGetCall) Do() (*Bookshelf, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Bookshelf)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Bookshelf
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -4398,8 +4443,8 @@ func (c *MylibraryBookshelvesListCall) Do() (*Bookshelves, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Bookshelves)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Bookshelves
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -4703,8 +4748,8 @@ func (c *MylibraryBookshelvesVolumesListCall) Do() (*Volumes, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Volumes)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Volumes
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -4834,8 +4879,8 @@ func (c *MylibraryReadingpositionsGetCall) Do() (*ReadingPosition, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(ReadingPosition)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *ReadingPosition
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -5028,6 +5073,445 @@ func (c *MylibraryReadingpositionsSetPositionCall) Do() error {
 
 }
 
+// method id "books.promooffer.accept":
+
+type PromoofferAcceptCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// Accept:
+func (r *PromoofferService) Accept() *PromoofferAcceptCall {
+	c := &PromoofferAcceptCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+// AndroidId sets the optional parameter "androidId": device android_id
+func (c *PromoofferAcceptCall) AndroidId(androidId string) *PromoofferAcceptCall {
+	c.opt_["androidId"] = androidId
+	return c
+}
+
+// Device sets the optional parameter "device": device device
+func (c *PromoofferAcceptCall) Device(device string) *PromoofferAcceptCall {
+	c.opt_["device"] = device
+	return c
+}
+
+// Manufacturer sets the optional parameter "manufacturer": device
+// manufacturer
+func (c *PromoofferAcceptCall) Manufacturer(manufacturer string) *PromoofferAcceptCall {
+	c.opt_["manufacturer"] = manufacturer
+	return c
+}
+
+// Model sets the optional parameter "model": device model
+func (c *PromoofferAcceptCall) Model(model string) *PromoofferAcceptCall {
+	c.opt_["model"] = model
+	return c
+}
+
+// OfferId sets the optional parameter "offerId":
+func (c *PromoofferAcceptCall) OfferId(offerId string) *PromoofferAcceptCall {
+	c.opt_["offerId"] = offerId
+	return c
+}
+
+// Product sets the optional parameter "product": device product
+func (c *PromoofferAcceptCall) Product(product string) *PromoofferAcceptCall {
+	c.opt_["product"] = product
+	return c
+}
+
+// Serial sets the optional parameter "serial": device serial
+func (c *PromoofferAcceptCall) Serial(serial string) *PromoofferAcceptCall {
+	c.opt_["serial"] = serial
+	return c
+}
+
+// VolumeId sets the optional parameter "volumeId": Volume id to
+// exercise the offer
+func (c *PromoofferAcceptCall) VolumeId(volumeId string) *PromoofferAcceptCall {
+	c.opt_["volumeId"] = volumeId
+	return c
+}
+
+func (c *PromoofferAcceptCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["androidId"]; ok {
+		params.Set("androidId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["device"]; ok {
+		params.Set("device", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["manufacturer"]; ok {
+		params.Set("manufacturer", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["model"]; ok {
+		params.Set("model", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["offerId"]; ok {
+		params.Set("offerId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["product"]; ok {
+		params.Set("product", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["serial"]; ok {
+		params.Set("serial", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["volumeId"]; ok {
+		params.Set("volumeId", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "promooffer/accept")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "",
+	//   "httpMethod": "POST",
+	//   "id": "books.promooffer.accept",
+	//   "parameters": {
+	//     "androidId": {
+	//       "description": "device android_id",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "device": {
+	//       "description": "device device",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "manufacturer": {
+	//       "description": "device manufacturer",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "model": {
+	//       "description": "device model",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "offerId": {
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "product": {
+	//       "description": "device product",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "serial": {
+	//       "description": "device serial",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "volumeId": {
+	//       "description": "Volume id to exercise the offer",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "promooffer/accept",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/books"
+	//   ]
+	// }
+
+}
+
+// method id "books.promooffer.dismiss":
+
+type PromoofferDismissCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// Dismiss:
+func (r *PromoofferService) Dismiss() *PromoofferDismissCall {
+	c := &PromoofferDismissCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+// AndroidId sets the optional parameter "androidId": device android_id
+func (c *PromoofferDismissCall) AndroidId(androidId string) *PromoofferDismissCall {
+	c.opt_["androidId"] = androidId
+	return c
+}
+
+// Device sets the optional parameter "device": device device
+func (c *PromoofferDismissCall) Device(device string) *PromoofferDismissCall {
+	c.opt_["device"] = device
+	return c
+}
+
+// Manufacturer sets the optional parameter "manufacturer": device
+// manufacturer
+func (c *PromoofferDismissCall) Manufacturer(manufacturer string) *PromoofferDismissCall {
+	c.opt_["manufacturer"] = manufacturer
+	return c
+}
+
+// Model sets the optional parameter "model": device model
+func (c *PromoofferDismissCall) Model(model string) *PromoofferDismissCall {
+	c.opt_["model"] = model
+	return c
+}
+
+// OfferId sets the optional parameter "offerId": Offer to dimiss
+func (c *PromoofferDismissCall) OfferId(offerId string) *PromoofferDismissCall {
+	c.opt_["offerId"] = offerId
+	return c
+}
+
+// Product sets the optional parameter "product": device product
+func (c *PromoofferDismissCall) Product(product string) *PromoofferDismissCall {
+	c.opt_["product"] = product
+	return c
+}
+
+// Serial sets the optional parameter "serial": device serial
+func (c *PromoofferDismissCall) Serial(serial string) *PromoofferDismissCall {
+	c.opt_["serial"] = serial
+	return c
+}
+
+func (c *PromoofferDismissCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["androidId"]; ok {
+		params.Set("androidId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["device"]; ok {
+		params.Set("device", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["manufacturer"]; ok {
+		params.Set("manufacturer", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["model"]; ok {
+		params.Set("model", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["offerId"]; ok {
+		params.Set("offerId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["product"]; ok {
+		params.Set("product", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["serial"]; ok {
+		params.Set("serial", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "promooffer/dismiss")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "",
+	//   "httpMethod": "POST",
+	//   "id": "books.promooffer.dismiss",
+	//   "parameters": {
+	//     "androidId": {
+	//       "description": "device android_id",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "device": {
+	//       "description": "device device",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "manufacturer": {
+	//       "description": "device manufacturer",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "model": {
+	//       "description": "device model",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "offerId": {
+	//       "description": "Offer to dimiss",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "product": {
+	//       "description": "device product",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "serial": {
+	//       "description": "device serial",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "promooffer/dismiss",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/books"
+	//   ]
+	// }
+
+}
+
+// method id "books.promooffer.get":
+
+type PromoofferGetCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// Get: Returns a list of promo offers available to the user
+func (r *PromoofferService) Get() *PromoofferGetCall {
+	c := &PromoofferGetCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+// AndroidId sets the optional parameter "androidId": device android_id
+func (c *PromoofferGetCall) AndroidId(androidId string) *PromoofferGetCall {
+	c.opt_["androidId"] = androidId
+	return c
+}
+
+// Device sets the optional parameter "device": device device
+func (c *PromoofferGetCall) Device(device string) *PromoofferGetCall {
+	c.opt_["device"] = device
+	return c
+}
+
+// Manufacturer sets the optional parameter "manufacturer": device
+// manufacturer
+func (c *PromoofferGetCall) Manufacturer(manufacturer string) *PromoofferGetCall {
+	c.opt_["manufacturer"] = manufacturer
+	return c
+}
+
+// Model sets the optional parameter "model": device model
+func (c *PromoofferGetCall) Model(model string) *PromoofferGetCall {
+	c.opt_["model"] = model
+	return c
+}
+
+// Product sets the optional parameter "product": device product
+func (c *PromoofferGetCall) Product(product string) *PromoofferGetCall {
+	c.opt_["product"] = product
+	return c
+}
+
+// Serial sets the optional parameter "serial": device serial
+func (c *PromoofferGetCall) Serial(serial string) *PromoofferGetCall {
+	c.opt_["serial"] = serial
+	return c
+}
+
+func (c *PromoofferGetCall) Do() (*Offers, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["androidId"]; ok {
+		params.Set("androidId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["device"]; ok {
+		params.Set("device", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["manufacturer"]; ok {
+		params.Set("manufacturer", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["model"]; ok {
+		params.Set("model", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["product"]; ok {
+		params.Set("product", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["serial"]; ok {
+		params.Set("serial", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "promooffer/get")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Offers
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a list of promo offers available to the user",
+	//   "httpMethod": "GET",
+	//   "id": "books.promooffer.get",
+	//   "parameters": {
+	//     "androidId": {
+	//       "description": "device android_id",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "device": {
+	//       "description": "device device",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "manufacturer": {
+	//       "description": "device manufacturer",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "model": {
+	//       "description": "device model",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "product": {
+	//       "description": "device product",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "serial": {
+	//       "description": "device serial",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "promooffer/get",
+	//   "response": {
+	//     "$ref": "Offers"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/books"
+	//   ]
+	// }
+
+}
+
 // method id "books.volumes.get":
 
 type VolumesGetCall struct {
@@ -5101,8 +5585,8 @@ func (c *VolumesGetCall) Do() (*Volume, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Volume)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Volume
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -5311,8 +5795,8 @@ func (c *VolumesListCall) Do() (*Volumes, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Volumes)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Volumes
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -5525,8 +6009,8 @@ func (c *VolumesAssociatedListCall) Do() (*Volumes, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Volumes)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Volumes
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -5671,8 +6155,8 @@ func (c *VolumesMybooksListCall) Do() (*Volumes, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Volumes)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Volumes
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -5809,8 +6293,8 @@ func (c *VolumesRecommendedListCall) Do() (*Volumes, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Volumes)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Volumes
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -5898,8 +6382,8 @@ func (c *VolumesRecommendedRateCall) Do() (*BooksVolumesRecommendedRateResponse,
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(BooksVolumesRecommendedRateResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *BooksVolumesRecommendedRateResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -6046,8 +6530,8 @@ func (c *VolumesUseruploadedListCall) Do() (*Volumes, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Volumes)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Volumes
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil

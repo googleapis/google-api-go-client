@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"kEk3sFj6Ef5_yR1-H3bAO6qw9mI/nYpof5sWVgQxA1Kf0FAXxMsfkXY\"",
+ "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/DgHEoKY28S8gD2bhg7HKc07T99Q\"",
  "discoveryVersion": "v1",
  "id": "analytics:v3",
  "name": "analytics",
@@ -76,6 +76,9 @@
     },
     "https://www.googleapis.com/auth/analytics.manage.users": {
      "description": "Manage Google Analytics Account users by email address"
+    },
+    "https://www.googleapis.com/auth/analytics.provision": {
+     "description": "Create a new Google Analytics account along with its default property and view"
     },
     "https://www.googleapis.com/auth/analytics.readonly": {
      "description": "View your Google Analytics data"
@@ -244,6 +247,38 @@
     }
    }
   },
+  "AccountTicket": {
+   "id": "AccountTicket",
+   "type": "object",
+   "description": "JSON template for an Analytics account ticket. The account ticket consists of the ticket ID and the basic information for the account, property and profile.",
+   "properties": {
+    "account": {
+     "$ref": "Account",
+     "description": "Account for this ticket."
+    },
+    "id": {
+     "type": "string",
+     "description": "Account ticket ID used to access the account ticket."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Resource type for account ticket.",
+     "default": "analytics#accountTicket"
+    },
+    "profile": {
+     "$ref": "Profile",
+     "description": "View (Profile) for the account."
+    },
+    "redirectUri": {
+     "type": "string",
+     "description": "Redirect URI where the user will be sent after accepting Terms of Service. Must be configured in APIs console as a callback URL."
+    },
+    "webproperty": {
+     "$ref": "Webproperty",
+     "description": "Web property for the account."
+    }
+   }
+  },
   "Accounts": {
    "id": "Accounts",
    "type": "object",
@@ -287,6 +322,32 @@
     "username": {
      "type": "string",
      "description": "Email ID of the authenticated user"
+    }
+   }
+  },
+  "AdWordsAccount": {
+   "id": "AdWordsAccount",
+   "type": "object",
+   "description": "JSON template for an AdWords account.",
+   "properties": {
+    "autoTaggingEnabled": {
+     "type": "boolean",
+     "description": "True if auto-tagging is enabled on the AdWords account. Read-only after the insert operation."
+    },
+    "customerId": {
+     "type": "string",
+     "description": "Customer ID. This field is required when creating an AdWords link.",
+     "annotations": {
+      "required": [
+       "analytics.management.webPropertyAdWordsLinks.insert",
+       "analytics.management.webPropertyAdWordsLinks.update"
+      ]
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Resource type for AdWords account.",
+     "default": "analytics#adWordsAccount"
     }
    }
   },
@@ -656,6 +717,107 @@
     }
    }
   },
+  "EntityAdWordsLink": {
+   "id": "EntityAdWordsLink",
+   "type": "object",
+   "description": "JSON template for Analytics Entity AdWords Link.",
+   "properties": {
+    "adWordsAccounts": {
+     "type": "array",
+     "description": "A list of AdWords client accounts. These cannot be MCC accounts. This field is required when creating an AdWords link. It cannot be empty.",
+     "items": {
+      "$ref": "AdWordsAccount"
+     },
+     "annotations": {
+      "required": [
+       "analytics.management.webPropertyAdWordsLinks.insert",
+       "analytics.management.webPropertyAdWordsLinks.update"
+      ]
+     }
+    },
+    "entity": {
+     "type": "object",
+     "description": "Web property being linked.",
+     "properties": {
+      "webPropertyRef": {
+       "$ref": "WebPropertyRef"
+      }
+     }
+    },
+    "id": {
+     "type": "string",
+     "description": "Entity AdWords link ID"
+    },
+    "kind": {
+     "type": "string",
+     "description": "Resource type for entity AdWords link.",
+     "default": "analytics#entityAdWordsLink"
+    },
+    "name": {
+     "type": "string",
+     "description": "Name of the link. This field is required when creating an AdWords link.",
+     "annotations": {
+      "required": [
+       "analytics.management.webPropertyAdWordsLinks.insert",
+       "analytics.management.webPropertyAdWordsLinks.update"
+      ]
+     }
+    },
+    "profileIds": {
+     "type": "array",
+     "description": "IDs of linked Views (Profiles) represented as strings.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "URL link for this Google Analytics - Google AdWords link."
+    }
+   }
+  },
+  "EntityAdWordsLinks": {
+   "id": "EntityAdWordsLinks",
+   "type": "object",
+   "description": "An entity AdWords link collection provides a list of GA-AdWords links Each resource in this collection corresponds to a single link.",
+   "properties": {
+    "items": {
+     "type": "array",
+     "description": "A list of entity AdWords links.",
+     "items": {
+      "$ref": "EntityAdWordsLink"
+     }
+    },
+    "itemsPerPage": {
+     "type": "integer",
+     "description": "The maximum number of entries the response can contain, regardless of the actual number of entries returned. Its value ranges from 1 to 1000 with a value of 1000 by default, or otherwise specified by the max-results query parameter.",
+     "format": "int32"
+    },
+    "kind": {
+     "type": "string",
+     "description": "Collection type.",
+     "default": "analytics#entityAdWordsLinks"
+    },
+    "nextLink": {
+     "type": "string",
+     "description": "Next link for this AdWords link collection."
+    },
+    "previousLink": {
+     "type": "string",
+     "description": "Previous link for this AdWords link collection."
+    },
+    "startIndex": {
+     "type": "integer",
+     "description": "The starting index of the entries, which is 1 by default or otherwise specified by the start-index query parameter.",
+     "format": "int32"
+    },
+    "totalResults": {
+     "type": "integer",
+     "description": "The total number of results for the query, regardless of the number of results in the response.",
+     "format": "int32"
+    }
+   }
+  },
   "EntityUserLink": {
    "id": "EntityUserLink",
    "type": "object",
@@ -813,7 +975,7 @@
     },
     "minimumExperimentLengthInDays": {
      "type": "integer",
-     "description": "Specifies the minimum length of the experiment. Can be changed for a running experiment. This field may not be changed for an experiments whose status is ENDED.",
+     "description": "An integer number in [3, 90]. Specifies the minimum length of the experiment. Can be changed for a running experiment. This field may not be changed for an experiments whose status is ENDED.",
      "format": "int32"
     },
     "name": {
@@ -828,7 +990,7 @@
     },
     "objectiveMetric": {
      "type": "string",
-     "description": "The metric that the experiment is optimizing. Valid values: \"ga:goal(n)Completions\", \"ga:adsenseAdsClicks\", \"ga:adsenseAdsViewed\", \"ga:adsenseRevenue\", \"ga:bounces\", \"ga:pageviews\", \"ga:timeOnSite\", \"ga:transactions\", \"ga:transactionRevenue\". This field is required if status is \"RUNNING\" and servingFramework is one of \"REDIRECT\" or \"API\"."
+     "description": "The metric that the experiment is optimizing. Valid values: \"ga:goal(n)Completions\", \"ga:adsenseAdsClicks\", \"ga:adsenseAdsViewed\", \"ga:adsenseRevenue\", \"ga:bounces\", \"ga:pageviews\", \"ga:sessionDuration\", \"ga:transactions\", \"ga:transactionRevenue\". This field is required if status is \"RUNNING\" and servingFramework is one of \"REDIRECT\" or \"API\"."
     },
     "optimizationType": {
      "type": "string",
@@ -987,6 +1149,284 @@
     "totalResults": {
      "type": "integer",
      "description": "The total number of results for the query, regardless of the number of resources in the result.",
+     "format": "int32"
+    },
+    "username": {
+     "type": "string",
+     "description": "Email ID of the authenticated user"
+    }
+   }
+  },
+  "Filter": {
+   "id": "Filter",
+   "type": "object",
+   "description": "JSON template for an Analytics account filter.",
+   "properties": {
+    "accountId": {
+     "type": "string",
+     "description": "Account ID to which this filter belongs."
+    },
+    "advancedDetails": {
+     "type": "object",
+     "description": "Details for the filter of the type ADVANCED.",
+     "properties": {
+      "caseSensitive": {
+       "type": "boolean",
+       "description": "Indicates if the filter expressions are case sensitive."
+      },
+      "extractA": {
+       "type": "string",
+       "description": "Expression to extract from field A."
+      },
+      "extractB": {
+       "type": "string",
+       "description": "Expression to extract from field B."
+      },
+      "fieldA": {
+       "type": "string",
+       "description": "Field A."
+      },
+      "fieldARequired": {
+       "type": "boolean",
+       "description": "Indicates if field A is required to match."
+      },
+      "fieldB": {
+       "type": "string",
+       "description": "Field B."
+      },
+      "fieldBRequired": {
+       "type": "boolean",
+       "description": "Indicates if field B is required to match."
+      },
+      "outputConstructor": {
+       "type": "string",
+       "description": "Expression used to construct the output value."
+      },
+      "outputToField": {
+       "type": "string",
+       "description": "Output field."
+      },
+      "overrideOutputField": {
+       "type": "boolean",
+       "description": "Indicates if the existing value of the output field, if any, should be overridden by the output expression."
+      }
+     }
+    },
+    "created": {
+     "type": "string",
+     "description": "Time this filter was created.",
+     "format": "date-time",
+     "readOnly": true
+    },
+    "excludeDetails": {
+     "$ref": "FilterExpression",
+     "description": "Details for the filter of the type EXCLUDE."
+    },
+    "id": {
+     "type": "string",
+     "description": "Filter ID."
+    },
+    "includeDetails": {
+     "$ref": "FilterExpression",
+     "description": "Details for the filter of the type INCLUDE."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Resource type for Analytics filter.",
+     "default": "analytics#filter",
+     "readOnly": true
+    },
+    "lowercaseDetails": {
+     "type": "object",
+     "description": "Details for the filter of the type LOWER.",
+     "properties": {
+      "field": {
+       "type": "string",
+       "description": "Field to use in the filter."
+      }
+     }
+    },
+    "name": {
+     "type": "string",
+     "description": "Name of this filter.",
+     "annotations": {
+      "required": [
+       "analytics.management.filters.insert",
+       "analytics.management.filters.update"
+      ]
+     }
+    },
+    "parentLink": {
+     "type": "object",
+     "description": "Parent link for this filter. Points to the account to which this filter belongs.",
+     "properties": {
+      "href": {
+       "type": "string",
+       "description": "Link to the account to which this filter belongs."
+      },
+      "type": {
+       "type": "string",
+       "description": "Value is \"analytics#account\".",
+       "default": "analytics#account"
+      }
+     }
+    },
+    "searchAndReplaceDetails": {
+     "type": "object",
+     "description": "Details for the filter of the type SEARCH_AND_REPLACE.",
+     "properties": {
+      "caseSensitive": {
+       "type": "boolean",
+       "description": "Determines if the filter is case sensitive."
+      },
+      "field": {
+       "type": "string",
+       "description": "Field to use in the filter."
+      },
+      "replaceString": {
+       "type": "string",
+       "description": "Term to replace the search term with."
+      },
+      "searchString": {
+       "type": "string",
+       "description": "Term to search."
+      }
+     }
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "Link for this filter.",
+     "readOnly": true
+    },
+    "type": {
+     "type": "string",
+     "description": "Type of this filter. Possible values are INCLUDE, EXCLUDE, LOWERCASE, UPPERCASE, SEARCH_AND_REPLACE and ADVANCED.",
+     "annotations": {
+      "required": [
+       "analytics.management.filters.insert",
+       "analytics.management.filters.update"
+      ]
+     }
+    },
+    "updated": {
+     "type": "string",
+     "description": "Time this filter was last modified.",
+     "format": "date-time",
+     "readOnly": true
+    },
+    "uppercaseDetails": {
+     "type": "object",
+     "description": "Details for the filter of the type UPPER.",
+     "properties": {
+      "field": {
+       "type": "string",
+       "description": "Field to use in the filter."
+      }
+     }
+    }
+   }
+  },
+  "FilterExpression": {
+   "id": "FilterExpression",
+   "type": "object",
+   "description": "JSON template for an Analytics filter expression.",
+   "properties": {
+    "caseSensitive": {
+     "type": "boolean",
+     "description": "Determines if the filter is case sensitive."
+    },
+    "expressionValue": {
+     "type": "string",
+     "description": "Filter expression value"
+    },
+    "field": {
+     "type": "string",
+     "description": "Field to filter. Possible values:  \n- Reserved  \n- UNUSED,   \n- Content and Traffic  \n- PAGE_REQUEST_URI, \n- PAGE_HOSTNAME, \n- PAGE_TITLE, \n- REFERRAL, \n- COST_DATA_URI (Campaign target URL), \n- HIT_TYPE, \n- INTERNAL_SEARCH_TERM, \n- INTERNAL_SEARCH_TYPE, \n- SOURCE_PROPERTY_TRACKING_ID,   \n- Campaign or AdGroup  \n- CAMPAIGN_SOURCE, \n- CAMPAIGN_MEDIUM, \n- CAMPAIGN_NAME, \n- CAMPAIGN_AD_GROUP, \n- CAMPAIGN_TERM, \n- CAMPAIGN_CONTENT, \n- CAMPAIGN_CODE, \n- CAMPAIGN_REFERRAL_PATH,   \n- E-Commerce  \n- TRANSACTION_COUNTRY, \n- TRANSACTION_REGION, \n- TRANSACTION_CITY, \n- TRANSACTION_AFFILIATION (Store or order location), \n- ITEM_NAME, \n- ITEM_CODE, \n- ITEM_VARIATION, \n- TRANSACTION_ID, \n- TRANSACTION_CURRENCY_CODE, \n- PRODUCT_ACTION_TYPE,   \n- Audience/Users  \n- BROWSER, \n- BROWSER_VERSION, \n- BROWSER_SIZE, \n- PLATFORM, \n- PLATFORM_VERSION, \n- LANGUAGE, \n- SCREEN_RESOLUTION, \n- SCREEN_COLORS, \n- JAVA_ENABLED, \n- FLASH_VERSION, \n- GEO_SPEED (Connection speed), \n- VISITOR_TYPE, \n- GEO_ORGANIZATION (ISP organization), \n- GEO_DOMAIN, \n- GEO_IP_ADDRESS, \n- GEO_IP_VERSION,   \n- Location  \n- GEO_COUNTRY, \n- GEO_REGION, \n- GEO_CITY,   \n- Event  \n- EVENT_CATEGORY, \n- EVENT_ACTION, \n- EVENT_LABEL,   \n- Other  \n- CUSTOM_FIELD_1, \n- CUSTOM_FIELD_2, \n- USER_DEFINED_VALUE,   \n- Application  \n- APP_ID, \n- APP_INSTALLER_ID, \n- APP_NAME, \n- APP_VERSION, \n- SCREEN, \n- IS_APP, \n- IS_FATAL_EXCEPTION, \n- EXCEPTION_DESCRIPTION,   \n- Mobile device  \n- IS_MOBILE, \n- IS_TABLET, \n- MOBILE_HAS_QWERTY_KEYBOARD, \n- MOBILE_HAS_NFC_SUPPORT, \n- MOBILE_HAS_CELLULAR_RADIO, \n- MOBILE_HAS_WIFI_SUPPORT, \n- MOBILE_BRAND_NAME, \n- MOBILE_MODEL_NAME, \n- MOBILE_MARKETING_NAME, \n- MOBILE_POINTING_METHOD,   \n- Social  \n- SOCIAL_NETWORK, \n- SOCIAL_ACTION, \n- SOCIAL_ACTION_TARGET,"
+    },
+    "kind": {
+     "type": "string",
+     "description": "Kind value for filter expression",
+     "default": "analytics#filterExpression"
+    },
+    "matchType": {
+     "type": "string",
+     "description": "Match type for this filter. Possible values are BEGINS_WITH, EQUAL, ENDS_WITH, CONTAINS, MATCHES. Include and Exclude filters can use any match type. Match type is not applicable to Upper case and Lower case filters. Search and Replace expressions in the Search and Replace filter and all filter expressions in the Advanced filter default to MATCHES. User should not set match type for those filters."
+    }
+   }
+  },
+  "FilterRef": {
+   "id": "FilterRef",
+   "type": "object",
+   "description": "JSON template for a profile filter link.",
+   "properties": {
+    "accountId": {
+     "type": "string",
+     "description": "Account ID to which this filter belongs.",
+     "readOnly": true
+    },
+    "href": {
+     "type": "string",
+     "description": "Link for this filter."
+    },
+    "id": {
+     "type": "string",
+     "description": "Filter ID.",
+     "annotations": {
+      "required": [
+       "analytics.management.profileFilterLinks.insert"
+      ]
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Kind value for filter reference.",
+     "default": "analytics#filterRef"
+    },
+    "name": {
+     "type": "string",
+     "description": "Name of this filter.",
+     "readOnly": true
+    }
+   }
+  },
+  "Filters": {
+   "id": "Filters",
+   "type": "object",
+   "description": "A filter collection lists filters created by users in an Analytics account. Each resource in the collection corresponds to a filter.",
+   "properties": {
+    "items": {
+     "type": "array",
+     "description": "A list of filters.",
+     "items": {
+      "$ref": "Filter"
+     }
+    },
+    "itemsPerPage": {
+     "type": "integer",
+     "description": "The maximum number of resources the response can contain, regardless of the actual number of resources returned. Its value ranges from 1 to 1,000 with a value of 1000 by default, or otherwise specified by the max-results query parameter.",
+     "format": "int32"
+    },
+    "kind": {
+     "type": "string",
+     "description": "Collection type.",
+     "default": "analytics#filters"
+    },
+    "nextLink": {
+     "type": "string",
+     "description": "Link to next page for this filter collection."
+    },
+    "previousLink": {
+     "type": "string",
+     "description": "Link to previous page for this filter collection."
+    },
+    "startIndex": {
+     "type": "integer",
+     "description": "The starting index of the resources, which is 1 by default or otherwise specified by the start-index query parameter.",
+     "format": "int32"
+    },
+    "totalResults": {
+     "type": "integer",
+     "description": "The total number of results for the query, regardless of the number of results in the response.",
      "format": "int32"
     },
     "username": {
@@ -1796,6 +2236,87 @@
     }
    }
   },
+  "ProfileFilterLink": {
+   "id": "ProfileFilterLink",
+   "type": "object",
+   "description": "JSON template for an Analytics profile filter link.",
+   "properties": {
+    "filterRef": {
+     "$ref": "FilterRef",
+     "description": "Filter for this link."
+    },
+    "id": {
+     "type": "string",
+     "description": "Profile filter link ID."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Resource type for Analytics filter.",
+     "default": "analytics#profileFilterLink",
+     "readOnly": true
+    },
+    "profileRef": {
+     "$ref": "ProfileRef",
+     "description": "View (Profile) for this link."
+    },
+    "rank": {
+     "type": "integer",
+     "description": "The rank of this profile filter link relative to the other filters linked to the same profile.\nFor readonly (i.e., list and get) operations, the rank always starts at 1.\nFor write (i.e., create, update, or delete) operations, you may specify a value between 0 and 255 inclusively, [0, 255]. In order to insert a link at the end of the list, either don't specify a rank or set a rank to a number greater than the largest rank in the list. In order to insert a link to the beginning of the list specify a rank that is less than or equal to 1. The new link will move all existing filters with the same or lower rank down the list. After the link is inserted/updated/deleted all profile filter links will be renumbered starting at 1.",
+     "format": "int32"
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "Link for this profile filter link.",
+     "readOnly": true
+    }
+   }
+  },
+  "ProfileFilterLinks": {
+   "id": "ProfileFilterLinks",
+   "type": "object",
+   "description": "A profile filter link collection lists profile filter links between profiles and filters. Each resource in the collection corresponds to a profile filter link.",
+   "properties": {
+    "items": {
+     "type": "array",
+     "description": "A list of profile filter links.",
+     "items": {
+      "$ref": "ProfileFilterLink"
+     }
+    },
+    "itemsPerPage": {
+     "type": "integer",
+     "description": "The maximum number of resources the response can contain, regardless of the actual number of resources returned. Its value ranges from 1 to 1,000 with a value of 1000 by default, or otherwise specified by the max-results query parameter.",
+     "format": "int32"
+    },
+    "kind": {
+     "type": "string",
+     "description": "Collection type.",
+     "default": "analytics#profileFilterLinks"
+    },
+    "nextLink": {
+     "type": "string",
+     "description": "Link to next page for this profile filter link collection."
+    },
+    "previousLink": {
+     "type": "string",
+     "description": "Link to previous page for this profile filter link collection."
+    },
+    "startIndex": {
+     "type": "integer",
+     "description": "The starting index of the resources, which is 1 by default or otherwise specified by the start-index query parameter.",
+     "format": "int32"
+    },
+    "totalResults": {
+     "type": "integer",
+     "description": "The total number of results for the query, regardless of the number of results in the response.",
+     "format": "int32"
+    },
+    "username": {
+     "type": "string",
+     "description": "Email ID of the authenticated user"
+    }
+   }
+  },
   "ProfileRef": {
    "id": "ProfileRef",
    "type": "object",
@@ -2117,6 +2638,186 @@
     "totalResults": {
      "type": "integer",
      "description": "The total number of results for the query, regardless of the number of results in the response.",
+     "format": "int32"
+    },
+    "username": {
+     "type": "string",
+     "description": "Email ID of the authenticated user"
+    }
+   }
+  },
+  "UnsampledReport": {
+   "id": "UnsampledReport",
+   "type": "object",
+   "description": "JSON template for Analytics unsampled report resource.",
+   "properties": {
+    "accountId": {
+     "type": "string",
+     "description": "Account ID to which this unsampled report belongs."
+    },
+    "cloudStorageDownloadDetails": {
+     "type": "object",
+     "description": "Download details for a file stored in Google Cloud Storage.",
+     "readOnly": true,
+     "properties": {
+      "bucketId": {
+       "type": "string",
+       "description": "Id of the bucket the file object is stored in."
+      },
+      "objectId": {
+       "type": "string",
+       "description": "Id of the file object containing the report data."
+      }
+     }
+    },
+    "created": {
+     "type": "string",
+     "description": "Time this unsampled report was created.",
+     "format": "date-time",
+     "readOnly": true
+    },
+    "dimensions": {
+     "type": "string",
+     "description": "The dimensions for the unsampled report."
+    },
+    "downloadType": {
+     "type": "string",
+     "description": "The type of download you need to use for the report data file.",
+     "readOnly": true
+    },
+    "driveDownloadDetails": {
+     "type": "object",
+     "description": "Download details for a file stored in Google Drive.",
+     "readOnly": true,
+     "properties": {
+      "documentId": {
+       "type": "string",
+       "description": "Id of the document/file containing the report data."
+      }
+     }
+    },
+    "end-date": {
+     "type": "string",
+     "description": "The end date for the unsampled report.",
+     "annotations": {
+      "required": [
+       "analytics.management.filters.insert",
+       "analytics.management.unsampledReports.insert"
+      ]
+     }
+    },
+    "filters": {
+     "type": "string",
+     "description": "The filters for the unsampled report."
+    },
+    "id": {
+     "type": "string",
+     "description": "Unsampled report ID."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Resource type for an Analytics unsampled report.",
+     "default": "analytics#unsampledReport",
+     "readOnly": true
+    },
+    "metrics": {
+     "type": "string",
+     "description": "The metrics for the unsampled report.",
+     "annotations": {
+      "required": [
+       "analytics.management.filters.insert",
+       "analytics.management.unsampledReports.insert"
+      ]
+     }
+    },
+    "profileId": {
+     "type": "string",
+     "description": "View (Profile) ID to which this unsampled report belongs."
+    },
+    "segment": {
+     "type": "string",
+     "description": "The segment for the unsampled report."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "Link for this unsampled report.",
+     "readOnly": true
+    },
+    "start-date": {
+     "type": "string",
+     "description": "The start date for the unsampled report.",
+     "annotations": {
+      "required": [
+       "analytics.management.filters.insert",
+       "analytics.management.unsampledReports.insert"
+      ]
+     }
+    },
+    "status": {
+     "type": "string",
+     "description": "Status of this unsampled report. Possible values are PENDING, COMPLETED, or FAILED.",
+     "readOnly": true
+    },
+    "title": {
+     "type": "string",
+     "description": "Title of the unsampled report.",
+     "annotations": {
+      "required": [
+       "analytics.management.filters.insert",
+       "analytics.management.unsampledReports.insert"
+      ]
+     }
+    },
+    "updated": {
+     "type": "string",
+     "description": "Time this unsampled report was last modified.",
+     "format": "date-time",
+     "readOnly": true
+    },
+    "webPropertyId": {
+     "type": "string",
+     "description": "Web property ID to which this unsampled report belongs. The web property ID is of the form UA-XXXXX-YY."
+    }
+   }
+  },
+  "UnsampledReports": {
+   "id": "UnsampledReports",
+   "type": "object",
+   "description": "An unsampled report collection lists Analytics unsampled reports to which the user has access. Each view (profile) can have a set of unsampled reports. Each resource in the unsampled report collection corresponds to a single Analytics unsampled report.",
+   "properties": {
+    "items": {
+     "type": "array",
+     "description": "A list of unsampled reports.",
+     "items": {
+      "$ref": "UnsampledReport"
+     }
+    },
+    "itemsPerPage": {
+     "type": "integer",
+     "description": "The maximum number of resources the response can contain, regardless of the actual number of resources returned. Its value ranges from 1 to 1000 with a value of 1000 by default, or otherwise specified by the max-results query parameter.",
+     "format": "int32"
+    },
+    "kind": {
+     "type": "string",
+     "description": "Collection type.",
+     "default": "analytics#unsampledReports"
+    },
+    "nextLink": {
+     "type": "string",
+     "description": "Link to next page for this unsampled report collection."
+    },
+    "previousLink": {
+     "type": "string",
+     "description": "Link to previous page for this unsampled report collection."
+    },
+    "startIndex": {
+     "type": "integer",
+     "description": "The starting index of the resources, which is 1 by default or otherwise specified by the start-index query parameter.",
+     "format": "int32"
+    },
+    "totalResults": {
+     "type": "integer",
+     "description": "The total number of results for the query, regardless of the number of resources in the result.",
      "format": "int32"
     },
     "username": {
@@ -2500,7 +3201,7 @@
         },
         "metrics": {
          "type": "string",
-         "description": "A comma-separated list of Analytics metrics. E.g., 'ga:visits,ga:pageviews'. At least one metric must be specified.",
+         "description": "A comma-separated list of Analytics metrics. E.g., 'ga:sessions,ga:pageviews'. At least one metric must be specified.",
          "required": true,
          "pattern": "ga:.+",
          "location": "query"
@@ -2709,7 +3410,7 @@
         },
         "metrics": {
          "type": "string",
-         "description": "A comma-separated list of real time metrics. E.g., 'rt:activeVisitors'. At least one metric must be specified.",
+         "description": "A comma-separated list of real time metrics. E.g., 'rt:activeUsers'. At least one metric must be specified.",
          "required": true,
          "pattern": "(ga:.+)|(rt:.+)",
          "location": "query"
@@ -3493,6 +4194,201 @@
       }
      }
     },
+    "filters": {
+     "methods": {
+      "delete": {
+       "id": "analytics.management.filters.delete",
+       "path": "management/accounts/{accountId}/filters/{filterId}",
+       "httpMethod": "DELETE",
+       "description": "Delete a filter.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account ID to delete the filter for.",
+         "required": true,
+         "location": "path"
+        },
+        "filterId": {
+         "type": "string",
+         "description": "ID of the filter to be deleted.",
+         "required": true,
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "filterId"
+       ],
+       "response": {
+        "$ref": "Filter"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics.edit"
+       ]
+      },
+      "get": {
+       "id": "analytics.management.filters.get",
+       "path": "management/accounts/{accountId}/filters/{filterId}",
+       "httpMethod": "GET",
+       "description": "Returns a filters to which the user has access.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account ID to retrieve filters for.",
+         "required": true,
+         "location": "path"
+        },
+        "filterId": {
+         "type": "string",
+         "description": "Filter ID to retrieve filters for.",
+         "required": true,
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "filterId"
+       ],
+       "response": {
+        "$ref": "Filter"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics.edit",
+        "https://www.googleapis.com/auth/analytics.readonly"
+       ]
+      },
+      "insert": {
+       "id": "analytics.management.filters.insert",
+       "path": "management/accounts/{accountId}/filters",
+       "httpMethod": "POST",
+       "description": "Create a new filter.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account ID to create filter for.",
+         "required": true,
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId"
+       ],
+       "request": {
+        "$ref": "Filter"
+       },
+       "response": {
+        "$ref": "Filter"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics.edit"
+       ]
+      },
+      "list": {
+       "id": "analytics.management.filters.list",
+       "path": "management/accounts/{accountId}/filters",
+       "httpMethod": "GET",
+       "description": "Lists all filters for an account",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account ID to retrieve filters for.",
+         "required": true,
+         "pattern": "\\d+",
+         "location": "path"
+        },
+        "max-results": {
+         "type": "integer",
+         "description": "The maximum number of filters to include in this response.",
+         "format": "int32",
+         "location": "query"
+        },
+        "start-index": {
+         "type": "integer",
+         "description": "An index of the first entity to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.",
+         "format": "int32",
+         "minimum": "1",
+         "location": "query"
+        }
+       },
+       "parameterOrder": [
+        "accountId"
+       ],
+       "response": {
+        "$ref": "Filters"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics.edit",
+        "https://www.googleapis.com/auth/analytics.readonly"
+       ]
+      },
+      "patch": {
+       "id": "analytics.management.filters.patch",
+       "path": "management/accounts/{accountId}/filters/{filterId}",
+       "httpMethod": "PATCH",
+       "description": "Updates an existing filter. This method supports patch semantics.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account ID to which the filter belongs.",
+         "required": true,
+         "location": "path"
+        },
+        "filterId": {
+         "type": "string",
+         "description": "ID of the filter to be updated.",
+         "required": true,
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "filterId"
+       ],
+       "request": {
+        "$ref": "Filter"
+       },
+       "response": {
+        "$ref": "Filter"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics.edit"
+       ]
+      },
+      "update": {
+       "id": "analytics.management.filters.update",
+       "path": "management/accounts/{accountId}/filters/{filterId}",
+       "httpMethod": "PUT",
+       "description": "Updates an existing filter.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account ID to which the filter belongs.",
+         "required": true,
+         "location": "path"
+        },
+        "filterId": {
+         "type": "string",
+         "description": "ID of the filter to be updated.",
+         "required": true,
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "filterId"
+       ],
+       "request": {
+        "$ref": "Filter"
+       },
+       "response": {
+        "$ref": "Filter"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics.edit"
+       ]
+      }
+     }
+    },
     "goals": {
      "methods": {
       "get": {
@@ -3728,6 +4624,301 @@
       }
      }
     },
+    "profileFilterLinks": {
+     "methods": {
+      "delete": {
+       "id": "analytics.management.profileFilterLinks.delete",
+       "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/profileFilterLinks/{linkId}",
+       "httpMethod": "DELETE",
+       "description": "Delete a profile filter link.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account ID to which the profile filter link belongs.",
+         "required": true,
+         "pattern": "\\d+",
+         "location": "path"
+        },
+        "linkId": {
+         "type": "string",
+         "description": "ID of the profile filter link to delete.",
+         "required": true,
+         "pattern": "\\d+:\\d+",
+         "location": "path"
+        },
+        "profileId": {
+         "type": "string",
+         "description": "Profile ID to which the filter link belongs.",
+         "required": true,
+         "pattern": "\\d+",
+         "location": "path"
+        },
+        "webPropertyId": {
+         "type": "string",
+         "description": "Web property Id to which the profile filter link belongs.",
+         "required": true,
+         "pattern": "UA-(\\d+)-(\\d+)",
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "webPropertyId",
+        "profileId",
+        "linkId"
+       ],
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics.edit"
+       ]
+      },
+      "get": {
+       "id": "analytics.management.profileFilterLinks.get",
+       "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/profileFilterLinks/{linkId}",
+       "httpMethod": "GET",
+       "description": "Returns a single profile filter link.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account ID to retrieve profile filter link for.",
+         "required": true,
+         "pattern": "\\d+",
+         "location": "path"
+        },
+        "linkId": {
+         "type": "string",
+         "description": "ID of the profile filter link.",
+         "required": true,
+         "pattern": "\\d+:\\d+",
+         "location": "path"
+        },
+        "profileId": {
+         "type": "string",
+         "description": "Profile ID to retrieve filter link for.",
+         "required": true,
+         "pattern": "\\d+",
+         "location": "path"
+        },
+        "webPropertyId": {
+         "type": "string",
+         "description": "Web property Id to retrieve profile filter link for.",
+         "required": true,
+         "pattern": "UA-(\\d+)-(\\d+)",
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "webPropertyId",
+        "profileId",
+        "linkId"
+       ],
+       "response": {
+        "$ref": "ProfileFilterLink"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics.edit",
+        "https://www.googleapis.com/auth/analytics.readonly"
+       ]
+      },
+      "insert": {
+       "id": "analytics.management.profileFilterLinks.insert",
+       "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/profileFilterLinks",
+       "httpMethod": "POST",
+       "description": "Create a new profile filter link.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account ID to create profile filter link for.",
+         "required": true,
+         "pattern": "\\d+",
+         "location": "path"
+        },
+        "profileId": {
+         "type": "string",
+         "description": "Profile ID to create filter link for.",
+         "required": true,
+         "pattern": "\\d+",
+         "location": "path"
+        },
+        "webPropertyId": {
+         "type": "string",
+         "description": "Web property Id to create profile filter link for.",
+         "required": true,
+         "pattern": "UA-(\\d+)-(\\d+)",
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "webPropertyId",
+        "profileId"
+       ],
+       "request": {
+        "$ref": "ProfileFilterLink"
+       },
+       "response": {
+        "$ref": "ProfileFilterLink"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics.edit"
+       ]
+      },
+      "list": {
+       "id": "analytics.management.profileFilterLinks.list",
+       "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/profileFilterLinks",
+       "httpMethod": "GET",
+       "description": "Lists all profile filter links for a profile.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account ID to retrieve profile filter links for.",
+         "required": true,
+         "pattern": "\\d+",
+         "location": "path"
+        },
+        "max-results": {
+         "type": "integer",
+         "description": "The maximum number of profile filter links to include in this response.",
+         "format": "int32",
+         "location": "query"
+        },
+        "profileId": {
+         "type": "string",
+         "description": "Profile ID to retrieve filter links for. Can either be a specific profile ID or '~all', which refers to all the profiles that user has access to.",
+         "required": true,
+         "location": "path"
+        },
+        "start-index": {
+         "type": "integer",
+         "description": "An index of the first entity to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.",
+         "format": "int32",
+         "minimum": "1",
+         "location": "query"
+        },
+        "webPropertyId": {
+         "type": "string",
+         "description": "Web property Id for profile filter links for. Can either be a specific web property ID or '~all', which refers to all the web properties that user has access to.",
+         "required": true,
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "webPropertyId",
+        "profileId"
+       ],
+       "response": {
+        "$ref": "ProfileFilterLinks"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics.edit",
+        "https://www.googleapis.com/auth/analytics.readonly"
+       ]
+      },
+      "patch": {
+       "id": "analytics.management.profileFilterLinks.patch",
+       "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/profileFilterLinks/{linkId}",
+       "httpMethod": "PATCH",
+       "description": "Update an existing profile filter link. This method supports patch semantics.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account ID to which profile filter link belongs.",
+         "required": true,
+         "pattern": "\\d+",
+         "location": "path"
+        },
+        "linkId": {
+         "type": "string",
+         "description": "ID of the profile filter link to be updated.",
+         "required": true,
+         "pattern": "\\d+:\\d+",
+         "location": "path"
+        },
+        "profileId": {
+         "type": "string",
+         "description": "Profile ID to which filter link belongs",
+         "required": true,
+         "pattern": "\\d+",
+         "location": "path"
+        },
+        "webPropertyId": {
+         "type": "string",
+         "description": "Web property Id to which profile filter link belongs",
+         "required": true,
+         "pattern": "UA-(\\d+)-(\\d+)",
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "webPropertyId",
+        "profileId",
+        "linkId"
+       ],
+       "request": {
+        "$ref": "ProfileFilterLink"
+       },
+       "response": {
+        "$ref": "ProfileFilterLink"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics.edit"
+       ]
+      },
+      "update": {
+       "id": "analytics.management.profileFilterLinks.update",
+       "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/profileFilterLinks/{linkId}",
+       "httpMethod": "PUT",
+       "description": "Update an existing profile filter link.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account ID to which profile filter link belongs.",
+         "required": true,
+         "pattern": "\\d+",
+         "location": "path"
+        },
+        "linkId": {
+         "type": "string",
+         "description": "ID of the profile filter link to be updated.",
+         "required": true,
+         "pattern": "\\d+:\\d+",
+         "location": "path"
+        },
+        "profileId": {
+         "type": "string",
+         "description": "Profile ID to which filter link belongs",
+         "required": true,
+         "pattern": "\\d+",
+         "location": "path"
+        },
+        "webPropertyId": {
+         "type": "string",
+         "description": "Web property Id to which profile filter link belongs",
+         "required": true,
+         "pattern": "UA-(\\d+)-(\\d+)",
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "webPropertyId",
+        "profileId",
+        "linkId"
+       ],
+       "request": {
+        "$ref": "ProfileFilterLink"
+       },
+       "response": {
+        "$ref": "ProfileFilterLink"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics.edit"
+       ]
+      }
+     }
+    },
     "profileUserLinks": {
      "methods": {
       "delete": {
@@ -3831,7 +5022,7 @@
         },
         "profileId": {
          "type": "string",
-         "description": "View (Profile) ID to retrieve the profile-user links for",
+         "description": "View (Profile) ID to retrieve the profile-user links for. Can either be a specific profile ID or '~all', which refers to all the profiles that user has access to.",
          "required": true,
          "location": "path"
         },
@@ -3844,7 +5035,7 @@
         },
         "webPropertyId": {
          "type": "string",
-         "description": "Web Property ID which the given view (profile) belongs to.",
+         "description": "Web Property ID which the given view (profile) belongs to. Can either be a specific web property ID or '~all', which refers to all the web properties that user has access to.",
          "required": true,
          "location": "path"
         }
@@ -4180,6 +5371,149 @@
       }
      }
     },
+    "unsampledReports": {
+     "methods": {
+      "get": {
+       "id": "analytics.management.unsampledReports.get",
+       "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/unsampledReports/{unsampledReportId}",
+       "httpMethod": "GET",
+       "description": "Returns a single unsampled report.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account ID to retrieve unsampled report for.",
+         "required": true,
+         "location": "path"
+        },
+        "profileId": {
+         "type": "string",
+         "description": "View (Profile) ID to retrieve unsampled report for.",
+         "required": true,
+         "location": "path"
+        },
+        "unsampledReportId": {
+         "type": "string",
+         "description": "ID of the unsampled report to retrieve.",
+         "required": true,
+         "location": "path"
+        },
+        "webPropertyId": {
+         "type": "string",
+         "description": "Web property ID to retrieve unsampled reports for.",
+         "required": true,
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "webPropertyId",
+        "profileId",
+        "unsampledReportId"
+       ],
+       "response": {
+        "$ref": "UnsampledReport"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics",
+        "https://www.googleapis.com/auth/analytics.edit",
+        "https://www.googleapis.com/auth/analytics.readonly"
+       ]
+      },
+      "insert": {
+       "id": "analytics.management.unsampledReports.insert",
+       "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/unsampledReports",
+       "httpMethod": "POST",
+       "description": "Create a new unsampled report.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account ID to create the unsampled report for.",
+         "required": true,
+         "location": "path"
+        },
+        "profileId": {
+         "type": "string",
+         "description": "View (Profile) ID to create the unsampled report for.",
+         "required": true,
+         "location": "path"
+        },
+        "webPropertyId": {
+         "type": "string",
+         "description": "Web property ID to create the unsampled report for.",
+         "required": true,
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "webPropertyId",
+        "profileId"
+       ],
+       "request": {
+        "$ref": "UnsampledReport"
+       },
+       "response": {
+        "$ref": "UnsampledReport"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics",
+        "https://www.googleapis.com/auth/analytics.edit"
+       ]
+      },
+      "list": {
+       "id": "analytics.management.unsampledReports.list",
+       "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/unsampledReports",
+       "httpMethod": "GET",
+       "description": "Lists unsampled reports to which the user has access.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account ID to retrieve unsampled reports for. Must be a specific account ID, ~all is not supported.",
+         "required": true,
+         "location": "path"
+        },
+        "max-results": {
+         "type": "integer",
+         "description": "The maximum number of unsampled reports to include in this response.",
+         "format": "int32",
+         "location": "query"
+        },
+        "profileId": {
+         "type": "string",
+         "description": "View (Profile) ID to retrieve unsampled reports for. Must be a specific view (profile) ID, ~all is not supported.",
+         "required": true,
+         "location": "path"
+        },
+        "start-index": {
+         "type": "integer",
+         "description": "An index of the first unsampled report to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.",
+         "format": "int32",
+         "minimum": "1",
+         "location": "query"
+        },
+        "webPropertyId": {
+         "type": "string",
+         "description": "Web property ID to retrieve unsampled reports for. Must be a specific web property ID, ~all is not supported.",
+         "required": true,
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "webPropertyId",
+        "profileId"
+       ],
+       "response": {
+        "$ref": "UnsampledReports"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics",
+        "https://www.googleapis.com/auth/analytics.edit",
+        "https://www.googleapis.com/auth/analytics.readonly"
+       ]
+      }
+     }
+    },
     "uploads": {
      "methods": {
       "deleteUploadData": {
@@ -4385,6 +5719,240 @@
          }
         }
        }
+      }
+     }
+    },
+    "webPropertyAdWordsLinks": {
+     "methods": {
+      "delete": {
+       "id": "analytics.management.webPropertyAdWordsLinks.delete",
+       "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/entityAdWordsLinks/{webPropertyAdWordsLinkId}",
+       "httpMethod": "DELETE",
+       "description": "Deletes a web property-AdWords link.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "ID of the account which the given web property belongs to.",
+         "required": true,
+         "location": "path"
+        },
+        "webPropertyAdWordsLinkId": {
+         "type": "string",
+         "description": "Web property AdWords link ID.",
+         "required": true,
+         "location": "path"
+        },
+        "webPropertyId": {
+         "type": "string",
+         "description": "Web property ID to delete the AdWords link for.",
+         "required": true,
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "webPropertyId",
+        "webPropertyAdWordsLinkId"
+       ],
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics.edit"
+       ]
+      },
+      "get": {
+       "id": "analytics.management.webPropertyAdWordsLinks.get",
+       "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/entityAdWordsLinks/{webPropertyAdWordsLinkId}",
+       "httpMethod": "GET",
+       "description": "Returns a web property-AdWords link to which the user has access.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "ID of the account which the given web property belongs to.",
+         "required": true,
+         "location": "path"
+        },
+        "webPropertyAdWordsLinkId": {
+         "type": "string",
+         "description": "Web property-AdWords link ID.",
+         "required": true,
+         "location": "path"
+        },
+        "webPropertyId": {
+         "type": "string",
+         "description": "Web property ID to retrieve the AdWords link for.",
+         "required": true,
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "webPropertyId",
+        "webPropertyAdWordsLinkId"
+       ],
+       "response": {
+        "$ref": "EntityAdWordsLink"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics.edit",
+        "https://www.googleapis.com/auth/analytics.readonly"
+       ]
+      },
+      "insert": {
+       "id": "analytics.management.webPropertyAdWordsLinks.insert",
+       "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/entityAdWordsLinks",
+       "httpMethod": "POST",
+       "description": "Creates a webProperty-AdWords link.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "ID of the Google Analytics account to create the link for.",
+         "required": true,
+         "location": "path"
+        },
+        "webPropertyId": {
+         "type": "string",
+         "description": "Web property ID to create the link for.",
+         "required": true,
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "webPropertyId"
+       ],
+       "request": {
+        "$ref": "EntityAdWordsLink"
+       },
+       "response": {
+        "$ref": "EntityAdWordsLink"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics.edit"
+       ]
+      },
+      "list": {
+       "id": "analytics.management.webPropertyAdWordsLinks.list",
+       "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/entityAdWordsLinks",
+       "httpMethod": "GET",
+       "description": "Lists webProperty-AdWords links for a given web property.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "ID of the account which the given web property belongs to.",
+         "required": true,
+         "pattern": "\\d+",
+         "location": "path"
+        },
+        "max-results": {
+         "type": "integer",
+         "description": "The maximum number of webProperty-AdWords links to include in this response.",
+         "format": "int32",
+         "location": "query"
+        },
+        "start-index": {
+         "type": "integer",
+         "description": "An index of the first webProperty-AdWords link to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.",
+         "format": "int32",
+         "minimum": "1",
+         "location": "query"
+        },
+        "webPropertyId": {
+         "type": "string",
+         "description": "Web property ID to retrieve the AdWords links for.",
+         "required": true,
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "webPropertyId"
+       ],
+       "response": {
+        "$ref": "EntityAdWordsLinks"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics.edit",
+        "https://www.googleapis.com/auth/analytics.readonly"
+       ]
+      },
+      "patch": {
+       "id": "analytics.management.webPropertyAdWordsLinks.patch",
+       "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/entityAdWordsLinks/{webPropertyAdWordsLinkId}",
+       "httpMethod": "PATCH",
+       "description": "Updates an existing webProperty-AdWords link. This method supports patch semantics.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "ID of the account which the given web property belongs to.",
+         "required": true,
+         "location": "path"
+        },
+        "webPropertyAdWordsLinkId": {
+         "type": "string",
+         "description": "Web property-AdWords link ID.",
+         "required": true,
+         "location": "path"
+        },
+        "webPropertyId": {
+         "type": "string",
+         "description": "Web property ID to retrieve the AdWords link for.",
+         "required": true,
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "webPropertyId",
+        "webPropertyAdWordsLinkId"
+       ],
+       "request": {
+        "$ref": "EntityAdWordsLink"
+       },
+       "response": {
+        "$ref": "EntityAdWordsLink"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics.edit"
+       ]
+      },
+      "update": {
+       "id": "analytics.management.webPropertyAdWordsLinks.update",
+       "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/entityAdWordsLinks/{webPropertyAdWordsLinkId}",
+       "httpMethod": "PUT",
+       "description": "Updates an existing webProperty-AdWords link.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "ID of the account which the given web property belongs to.",
+         "required": true,
+         "location": "path"
+        },
+        "webPropertyAdWordsLinkId": {
+         "type": "string",
+         "description": "Web property-AdWords link ID.",
+         "required": true,
+         "location": "path"
+        },
+        "webPropertyId": {
+         "type": "string",
+         "description": "Web property ID to retrieve the AdWords link for.",
+         "required": true,
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "webPropertyId",
+        "webPropertyAdWordsLinkId"
+       ],
+       "request": {
+        "$ref": "EntityAdWordsLink"
+       },
+       "response": {
+        "$ref": "EntityAdWordsLink"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics.edit"
+       ]
       }
      }
     },
@@ -4651,7 +6219,7 @@
         },
         "webPropertyId": {
          "type": "string",
-         "description": "Web Property ID for the webProperty-user links to retrieve.",
+         "description": "Web Property ID for the webProperty-user links to retrieve. Can either be a specific web property ID or '~all', which refers to all the web properties that user has access to.",
          "required": true,
          "location": "path"
         }
@@ -4742,6 +6310,25 @@
        ]
       }
      }
+    }
+   }
+  },
+  "provisioning": {
+   "methods": {
+    "createAccountTicket": {
+     "id": "analytics.provisioning.createAccountTicket",
+     "path": "provisioning/createAccountTicket",
+     "httpMethod": "POST",
+     "description": "Creates an account ticket.",
+     "request": {
+      "$ref": "AccountTicket"
+     },
+     "response": {
+      "$ref": "AccountTicket"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/analytics.provision"
+     ]
     }
    }
   }

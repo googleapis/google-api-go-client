@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"kEk3sFj6Ef5_yR1-H3bAO6qw9mI/CD7bDR9g9q-XnWpJ4P4rUZfTgmg\"",
+ "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/-0C9cgBAK-bO0svRKvwX8Or1F7I\"",
  "discoveryVersion": "v1",
  "id": "sqladmin:v1beta3",
  "name": "sqladmin",
@@ -250,7 +250,7 @@
     },
     "databaseVersion": {
      "type": "string",
-     "description": "The database engine type and version, for example MYSQL_5_5 for MySQL 5.5."
+     "description": "The database engine type and version. Can be MYSQL_5_5 or MYSQL_5_6. Defaults to MYSQL_5_5. The databaseVersion can not be changed after instance creation."
     },
     "etag": {
      "type": "string",

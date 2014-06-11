@@ -211,8 +211,8 @@ func (c *UrlGetCall) Do() (*Url, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Url)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Url
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -292,8 +292,8 @@ func (c *UrlInsertCall) Do() (*Url, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Url)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Url
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -365,8 +365,8 @@ func (c *UrlListCall) Do() (*UrlHistory, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(UrlHistory)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *UrlHistory
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil

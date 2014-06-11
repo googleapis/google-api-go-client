@@ -505,8 +505,8 @@ func (c *ApisGetRestCall) Do() (*RestDescription, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(RestDescription)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *RestDescription
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -590,8 +590,8 @@ func (c *ApisListCall) Do() (*DirectoryList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(DirectoryList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *DirectoryList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil

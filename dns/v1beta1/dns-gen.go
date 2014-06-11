@@ -341,8 +341,8 @@ func (c *ChangesCreateCall) Do() (*Change, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Change)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Change
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -422,8 +422,8 @@ func (c *ChangesGetCall) Do() (*Change, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Change)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Change
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -547,8 +547,8 @@ func (c *ChangesListCall) Do() (*ChangesListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(ChangesListResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *ChangesListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -656,8 +656,8 @@ func (c *ManagedZonesCreateCall) Do() (*ManagedZone, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(ManagedZone)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *ManagedZone
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -795,8 +795,8 @@ func (c *ManagedZonesGetCall) Do() (*ManagedZone, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(ManagedZone)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *ManagedZone
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -891,8 +891,8 @@ func (c *ManagedZonesListCall) Do() (*ManagedZonesListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(ManagedZonesListResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *ManagedZonesListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -968,8 +968,8 @@ func (c *ProjectsGetCall) Do() (*Project, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(Project)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *Project
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1081,8 +1081,8 @@ func (c *ResourceRecordSetsListCall) Do() (*ResourceRecordSetsListResponse, erro
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(ResourceRecordSetsListResponse)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *ResourceRecordSetsListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil

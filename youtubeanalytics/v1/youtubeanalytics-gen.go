@@ -259,8 +259,8 @@ func (c *BatchReportDefinitionsListCall) Do() (*BatchReportDefinitionList, error
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(BatchReportDefinitionList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *BatchReportDefinitionList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -327,8 +327,8 @@ func (c *BatchReportsListCall) Do() (*BatchReportList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(BatchReportList)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *BatchReportList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -473,8 +473,8 @@ func (c *ReportsQueryCall) Do() (*ResultTable, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := new(ResultTable)
-	if err := json.NewDecoder(res.Body).Decode(ret); err != nil {
+	var ret *ResultTable
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil

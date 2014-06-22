@@ -730,6 +730,13 @@ type Map struct {
 	// ProjectId: The ID of the project that this Map is in.
 	ProjectId string `json:"projectId,omitempty"`
 
+	// PublishedAccessList: The access list to whom view permissions are
+	// granted. The value must be the name of a Maps Engine access list of
+	// the Map Viewer type, and the user must be a viewer on that list. Read
+	// About access lists in the Google Maps Engine help center for more
+	// information.
+	PublishedAccessList string `json:"publishedAccessList,omitempty"`
+
 	// Tags: Tags of this Map.
 	Tags []string `json:"tags,omitempty"`
 
@@ -3600,7 +3607,7 @@ func (c *RastersFilesInsertCall) Do() error {
 	//     "accept": [
 	//       "*/*"
 	//     ],
-	//     "maxSize": "1GB",
+	//     "maxSize": "10GB",
 	//     "protocols": {
 	//       "resumable": {
 	//         "multipart": true,

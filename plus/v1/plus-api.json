@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"kEk3sFj6Ef5_yR1-H3bAO6qw9mI/NWyyDxpG_jUB4-BRItKBh_G9Iew\"",
+ "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/tPt4D11LEIkPfNtjEtVehirZPQw\"",
  "discoveryVersion": "v1",
  "id": "plus:v1",
  "name": "plus",
@@ -1357,6 +1357,10 @@
     "displayName": {
      "type": "string",
      "description": "The display name of the place."
+    },
+    "id": {
+     "type": "string",
+     "description": "The id of the place."
     },
     "kind": {
      "type": "string",

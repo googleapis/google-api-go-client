@@ -54,6 +54,7 @@ func New(client *http.Client) (*Service, error) {
 	s.Creatives = NewCreativesService(s)
 	s.DirectDeals = NewDirectDealsService(s)
 	s.PerformanceReport = NewPerformanceReportService(s)
+	s.PretargetingConfig = NewPretargetingConfigService(s)
 	return s, nil
 }
 
@@ -68,6 +69,8 @@ type Service struct {
 	DirectDeals *DirectDealsService
 
 	PerformanceReport *PerformanceReportService
+
+	PretargetingConfig *PretargetingConfigService
 }
 
 func NewAccountsService(s *Service) *AccountsService {
@@ -103,6 +106,15 @@ func NewPerformanceReportService(s *Service) *PerformanceReportService {
 }
 
 type PerformanceReportService struct {
+	s *Service
+}
+
+func NewPretargetingConfigService(s *Service) *PretargetingConfigService {
+	rs := &PretargetingConfigService{s: s}
+	return rs
+}
+
+type PretargetingConfigService struct {
 	s *Service
 }
 
@@ -409,6 +421,136 @@ type PerformanceReportList struct {
 	// PerformanceReport: A list of performance reports relevant for the
 	// account.
 	PerformanceReport []*PerformanceReport `json:"performanceReport,omitempty"`
+}
+
+type PretargetingConfig struct {
+	// ConfigId: The config id; generated automatically. Leave this field
+	// blank for insert requests.
+	ConfigId int64 `json:"configId,omitempty,string"`
+
+	// ConfigName: The name of the config. Must be unique. Required for all
+	// requests.
+	ConfigName string `json:"configName,omitempty"`
+
+	// CreativeType: List must contain exactly one of
+	// PRETARGETING_CREATIVE_TYPE_HTML or PRETARGETING_CREATIVE_TYPE_VIDEO.
+	CreativeType []string `json:"creativeType,omitempty"`
+
+	// Dimensions: Requests which allow one of these (width, height) pairs
+	// will match. All pairs must be supported ad dimensions.
+	Dimensions []*PretargetingConfigDimensions `json:"dimensions,omitempty"`
+
+	// ExcludedContentLabels: Requests with any of these content labels will
+	// not match. Values are from content-labels.txt in the downloadable
+	// files section.
+	ExcludedContentLabels googleapi.Int64s `json:"excludedContentLabels,omitempty"`
+
+	// ExcludedGeoCriteriaIds: Requests containing any of these geo criteria
+	// ids will not match.
+	ExcludedGeoCriteriaIds googleapi.Int64s `json:"excludedGeoCriteriaIds,omitempty"`
+
+	// ExcludedPlacements: Requests containing any of these placements will
+	// not match.
+	ExcludedPlacements []*PretargetingConfigExcludedPlacements `json:"excludedPlacements,omitempty"`
+
+	// ExcludedUserLists: Requests containing any of these users list ids
+	// will not match.
+	ExcludedUserLists googleapi.Int64s `json:"excludedUserLists,omitempty"`
+
+	// ExcludedVerticals: Requests containing any of these vertical ids will
+	// not match. Values are from the publisher-verticals.txt file in the
+	// downloadable files section.
+	ExcludedVerticals googleapi.Int64s `json:"excludedVerticals,omitempty"`
+
+	// GeoCriteriaIds: Requests containing any of these geo criteria ids
+	// will match.
+	GeoCriteriaIds googleapi.Int64s `json:"geoCriteriaIds,omitempty"`
+
+	// IsActive: Whether this config is active. Required for all requests.
+	IsActive bool `json:"isActive,omitempty"`
+
+	// Kind: The kind of the resource, i.e.
+	// "adexchangebuyer#pretargetingConfig".
+	Kind string `json:"kind,omitempty"`
+
+	// Languages: Request containing any of these language codes will match.
+	Languages []string `json:"languages,omitempty"`
+
+	// MobileCarriers: Requests containing any of these mobile carrier ids
+	// will match. Values are from mobile-carriers.csv in the downloadable
+	// files section.
+	MobileCarriers googleapi.Int64s `json:"mobileCarriers,omitempty"`
+
+	// MobileDevices: Requests containing any of these mobile device ids
+	// will match. Values are from mobile-devices.csv in the downloadable
+	// files section.
+	MobileDevices googleapi.Int64s `json:"mobileDevices,omitempty"`
+
+	// MobileOperatingSystemVersions: Requests containing any of these
+	// mobile operating system version ids will match. Values are from
+	// mobile-os.csv in the downloadable files section.
+	MobileOperatingSystemVersions googleapi.Int64s `json:"mobileOperatingSystemVersions,omitempty"`
+
+	// Placements: Requests containing any of these placements will match.
+	Placements []*PretargetingConfigPlacements `json:"placements,omitempty"`
+
+	// Platforms: Requests matching any of these platforms will match.
+	// Possible values are PRETARGETING_PLATFORM_MOBILE,
+	// PRETARGETING_PLATFORM_DESKTOP, and PRETARGETING_PLATFORM_TABLET.
+	Platforms []string `json:"platforms,omitempty"`
+
+	// SupportedCreativeAttributes: Creative attributes should be declared
+	// here if all creatives corresponding to this pretargeting
+	// configuration have that creative attribute. Values are from
+	// pretargetable-creative-attributes.txt in the downloadable files
+	// section.
+	SupportedCreativeAttributes googleapi.Int64s `json:"supportedCreativeAttributes,omitempty"`
+
+	// UserLists: Requests containing any of these user list ids will match.
+	UserLists googleapi.Int64s `json:"userLists,omitempty"`
+
+	// VendorTypes: Requests that allow any of these vendor ids will match.
+	// Values are from vendors.txt in the downloadable files section.
+	VendorTypes googleapi.Int64s `json:"vendorTypes,omitempty"`
+
+	// Verticals: Requests containing any of these vertical ids will match.
+	Verticals googleapi.Int64s `json:"verticals,omitempty"`
+}
+
+type PretargetingConfigDimensions struct {
+	// Height: Height in pixels.
+	Height int64 `json:"height,omitempty,string"`
+
+	// Width: Width in pixels.
+	Width int64 `json:"width,omitempty,string"`
+}
+
+type PretargetingConfigExcludedPlacements struct {
+	// Token: The value of the placement. Interpretation depends on the
+	// placement type, e.g. URL for a site placement, channel name for a
+	// channel placement, app id for a mobile app placement.
+	Token string `json:"token,omitempty"`
+
+	// Type: The type of the placement.
+	Type string `json:"type,omitempty"`
+}
+
+type PretargetingConfigPlacements struct {
+	// Token: The value of the placement. Interpretation depends on the
+	// placement type, e.g. URL for a site placement, channel name for a
+	// channel placement, app id for a mobile app placement.
+	Token string `json:"token,omitempty"`
+
+	// Type: The type of the placement.
+	Type string `json:"type,omitempty"`
+}
+
+type PretargetingConfigList struct {
+	// Items: A list of pretargeting configs
+	Items []*PretargetingConfig `json:"items,omitempty"`
+
+	// Kind: Resource type.
+	Kind string `json:"kind,omitempty"`
 }
 
 // method id "adexchangebuyer.accounts.get":
@@ -1192,6 +1334,468 @@ func (c *PerformanceReportListCall) Do() (*PerformanceReportList, error) {
 	//   "path": "performancereport",
 	//   "response": {
 	//     "$ref": "PerformanceReportList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer.pretargetingConfig.delete":
+
+type PretargetingConfigDeleteCall struct {
+	s         *Service
+	accountId int64
+	configId  int64
+	opt_      map[string]interface{}
+}
+
+// Delete: Deletes an existing pretargeting config.
+func (r *PretargetingConfigService) Delete(accountId int64, configId int64) *PretargetingConfigDeleteCall {
+	c := &PretargetingConfigDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.configId = configId
+	return c
+}
+
+func (c *PretargetingConfigDeleteCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "pretargetingconfigs/{accountId}/{configId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", strconv.FormatInt(c.accountId, 10), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{configId}", strconv.FormatInt(c.configId, 10), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Deletes an existing pretargeting config.",
+	//   "httpMethod": "DELETE",
+	//   "id": "adexchangebuyer.pretargetingConfig.delete",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "configId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "The account id to delete the pretargeting config for.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "configId": {
+	//       "description": "The specific id of the configuration to delete.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "pretargetingconfigs/{accountId}/{configId}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer.pretargetingConfig.get":
+
+type PretargetingConfigGetCall struct {
+	s         *Service
+	accountId int64
+	configId  int64
+	opt_      map[string]interface{}
+}
+
+// Get: Gets a specific pretargeting configuration
+func (r *PretargetingConfigService) Get(accountId int64, configId int64) *PretargetingConfigGetCall {
+	c := &PretargetingConfigGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.configId = configId
+	return c
+}
+
+func (c *PretargetingConfigGetCall) Do() (*PretargetingConfig, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "pretargetingconfigs/{accountId}/{configId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", strconv.FormatInt(c.accountId, 10), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{configId}", strconv.FormatInt(c.configId, 10), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *PretargetingConfig
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a specific pretargeting configuration",
+	//   "httpMethod": "GET",
+	//   "id": "adexchangebuyer.pretargetingConfig.get",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "configId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "The account id to get the pretargeting config for.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "configId": {
+	//       "description": "The specific id of the configuration to retrieve.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "pretargetingconfigs/{accountId}/{configId}",
+	//   "response": {
+	//     "$ref": "PretargetingConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer.pretargetingConfig.insert":
+
+type PretargetingConfigInsertCall struct {
+	s                  *Service
+	accountId          int64
+	pretargetingconfig *PretargetingConfig
+	opt_               map[string]interface{}
+}
+
+// Insert: Inserts a new pretargeting configuration.
+func (r *PretargetingConfigService) Insert(accountId int64, pretargetingconfig *PretargetingConfig) *PretargetingConfigInsertCall {
+	c := &PretargetingConfigInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.pretargetingconfig = pretargetingconfig
+	return c
+}
+
+func (c *PretargetingConfigInsertCall) Do() (*PretargetingConfig, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.pretargetingconfig)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "pretargetingconfigs/{accountId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", strconv.FormatInt(c.accountId, 10), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *PretargetingConfig
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Inserts a new pretargeting configuration.",
+	//   "httpMethod": "POST",
+	//   "id": "adexchangebuyer.pretargetingConfig.insert",
+	//   "parameterOrder": [
+	//     "accountId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "The account id to insert the pretargeting config for.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "pretargetingconfigs/{accountId}",
+	//   "request": {
+	//     "$ref": "PretargetingConfig"
+	//   },
+	//   "response": {
+	//     "$ref": "PretargetingConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer.pretargetingConfig.list":
+
+type PretargetingConfigListCall struct {
+	s         *Service
+	accountId int64
+	opt_      map[string]interface{}
+}
+
+// List: Retrieves a list of the authenticated user's pretargeting
+// configurations.
+func (r *PretargetingConfigService) List(accountId int64) *PretargetingConfigListCall {
+	c := &PretargetingConfigListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	return c
+}
+
+func (c *PretargetingConfigListCall) Do() (*PretargetingConfigList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "pretargetingconfigs/{accountId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", strconv.FormatInt(c.accountId, 10), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *PretargetingConfigList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a list of the authenticated user's pretargeting configurations.",
+	//   "httpMethod": "GET",
+	//   "id": "adexchangebuyer.pretargetingConfig.list",
+	//   "parameterOrder": [
+	//     "accountId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "The account id to get the pretargeting configs for.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "pretargetingconfigs/{accountId}",
+	//   "response": {
+	//     "$ref": "PretargetingConfigList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer.pretargetingConfig.patch":
+
+type PretargetingConfigPatchCall struct {
+	s                  *Service
+	accountId          int64
+	configId           int64
+	pretargetingconfig *PretargetingConfig
+	opt_               map[string]interface{}
+}
+
+// Patch: Updates an existing pretargeting config. This method supports
+// patch semantics.
+func (r *PretargetingConfigService) Patch(accountId int64, configId int64, pretargetingconfig *PretargetingConfig) *PretargetingConfigPatchCall {
+	c := &PretargetingConfigPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.configId = configId
+	c.pretargetingconfig = pretargetingconfig
+	return c
+}
+
+func (c *PretargetingConfigPatchCall) Do() (*PretargetingConfig, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.pretargetingconfig)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "pretargetingconfigs/{accountId}/{configId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", strconv.FormatInt(c.accountId, 10), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{configId}", strconv.FormatInt(c.configId, 10), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *PretargetingConfig
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an existing pretargeting config. This method supports patch semantics.",
+	//   "httpMethod": "PATCH",
+	//   "id": "adexchangebuyer.pretargetingConfig.patch",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "configId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "The account id to update the pretargeting config for.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "configId": {
+	//       "description": "The specific id of the configuration to update.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "pretargetingconfigs/{accountId}/{configId}",
+	//   "request": {
+	//     "$ref": "PretargetingConfig"
+	//   },
+	//   "response": {
+	//     "$ref": "PretargetingConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer.pretargetingConfig.update":
+
+type PretargetingConfigUpdateCall struct {
+	s                  *Service
+	accountId          int64
+	configId           int64
+	pretargetingconfig *PretargetingConfig
+	opt_               map[string]interface{}
+}
+
+// Update: Updates an existing pretargeting config.
+func (r *PretargetingConfigService) Update(accountId int64, configId int64, pretargetingconfig *PretargetingConfig) *PretargetingConfigUpdateCall {
+	c := &PretargetingConfigUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.configId = configId
+	c.pretargetingconfig = pretargetingconfig
+	return c
+}
+
+func (c *PretargetingConfigUpdateCall) Do() (*PretargetingConfig, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.pretargetingconfig)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "pretargetingconfigs/{accountId}/{configId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", strconv.FormatInt(c.accountId, 10), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{configId}", strconv.FormatInt(c.configId, 10), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *PretargetingConfig
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an existing pretargeting config.",
+	//   "httpMethod": "PUT",
+	//   "id": "adexchangebuyer.pretargetingConfig.update",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "configId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "The account id to update the pretargeting config for.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "configId": {
+	//       "description": "The specific id of the configuration to update.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "pretargetingconfigs/{accountId}/{configId}",
+	//   "request": {
+	//     "$ref": "PretargetingConfig"
+	//   },
+	//   "response": {
+	//     "$ref": "PretargetingConfig"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/adexchange.buyer"

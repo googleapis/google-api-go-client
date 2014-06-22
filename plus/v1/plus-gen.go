@@ -1169,6 +1169,9 @@ type Place struct {
 	// DisplayName: The display name of the place.
 	DisplayName string `json:"displayName,omitempty"`
 
+	// Id: The id of the place.
+	Id string `json:"id,omitempty"`
+
 	// Kind: Identifies this resource as a place. Value: "plus#place".
 	Kind string `json:"kind,omitempty"`
 

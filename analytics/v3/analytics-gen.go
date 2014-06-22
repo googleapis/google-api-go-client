@@ -587,6 +587,8 @@ type CustomDataSource struct {
 	// Id: Custom data source ID.
 	Id string `json:"id,omitempty"`
 
+	ImportBehavior string `json:"importBehavior,omitempty"`
+
 	// Kind: Resource type for Analytics custom data source.
 	Kind string `json:"kind,omitempty"`
 
@@ -609,6 +611,8 @@ type CustomDataSource struct {
 
 	// Updated: Time this custom data source was last modified.
 	Updated string `json:"updated,omitempty"`
+
+	UploadType string `json:"uploadType,omitempty"`
 
 	// WebPropertyId: Web property ID of the form UA-XXXXX-YY to which this
 	// custom data source belongs.
@@ -8194,6 +8198,88 @@ func (c *ManagementUploadsListCall) Do() (*Uploads, error) {
 	//     "https://www.googleapis.com/auth/analytics",
 	//     "https://www.googleapis.com/auth/analytics.edit",
 	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.uploads.migrateDataImport":
+
+type ManagementUploadsMigrateDataImportCall struct {
+	s                  *Service
+	accountId          string
+	webPropertyId      string
+	customDataSourceId string
+	opt_               map[string]interface{}
+}
+
+// MigrateDataImport: Migrate custom data source and data imports to
+// latest version.
+func (r *ManagementUploadsService) MigrateDataImport(accountId string, webPropertyId string, customDataSourceId string) *ManagementUploadsMigrateDataImportCall {
+	c := &ManagementUploadsMigrateDataImportCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.webPropertyId = webPropertyId
+	c.customDataSourceId = customDataSourceId
+	return c
+}
+
+func (c *ManagementUploadsMigrateDataImportCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/migrateDataImport")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{webPropertyId}", url.QueryEscape(c.webPropertyId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{customDataSourceId}", url.QueryEscape(c.customDataSourceId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Migrate custom data source and data imports to latest version.",
+	//   "httpMethod": "POST",
+	//   "id": "analytics.management.uploads.migrateDataImport",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "webPropertyId",
+	//     "customDataSourceId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account Id for migration.",
+	//       "location": "path",
+	//       "pattern": "\\d+",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "customDataSourceId": {
+	//       "description": "Custom data source Id for migration.",
+	//       "location": "path",
+	//       "pattern": ".{22}",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "webPropertyId": {
+	//       "description": "Web property Id for migration.",
+	//       "location": "path",
+	//       "pattern": "UA-(\\d+)-(\\d+)",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/migrateDataImport",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics",
+	//     "https://www.googleapis.com/auth/analytics.edit"
 	//   ]
 	// }
 

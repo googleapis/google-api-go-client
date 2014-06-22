@@ -2263,7 +2263,8 @@ type TabledataInsertAllCall struct {
 	opt_                      map[string]interface{}
 }
 
-// InsertAll: Inserts the supplied rows into the table.
+// InsertAll: Streams data into BigQuery one record at a time without
+// needing to run a load job.
 func (r *TabledataService) InsertAll(projectId string, datasetId string, tableId string, tabledatainsertallrequest *TableDataInsertAllRequest) *TabledataInsertAllCall {
 	c := &TabledataInsertAllCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectId = projectId
@@ -2305,7 +2306,7 @@ func (c *TabledataInsertAllCall) Do() (*TableDataInsertAllResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Inserts the supplied rows into the table.",
+	//   "description": "Streams data into BigQuery one record at a time without needing to run a load job.",
 	//   "httpMethod": "POST",
 	//   "id": "bigquery.tabledata.insertAll",
 	//   "parameterOrder": [

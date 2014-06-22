@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/PSvBXr6OUrG5iOZ4QlmAkwkWRxA\"",
+ "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/gYW61R0Q1-AaEn1DifBcLYtzGfg\"",
  "discoveryVersion": "v1",
  "id": "youtube:v3",
  "name": "youtube",
@@ -6680,7 +6680,7 @@
       },
       "location": {
        "type": "string",
-       "description": "The location parameter restricts a search to videos that have a geographical location specified in their metadata. The value is a string that specifies geographic longitude/latitude coordinates e.g. (-122.08427,37.42307)",
+       "description": "The location parameter restricts a search to videos that have a geographical location specified in their metadata. The value is a string that specifies geographic latitude/longitude coordinates e.g. (37.42307,-122.08427)",
        "location": "query"
       },
       "locationRadius": {

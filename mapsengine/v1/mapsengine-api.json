@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/JGLKT60zAt7oJU6U-g60SWQJBUU\"",
+ "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/z7k6c_KBbk6EbWRFw80T__76pjg\"",
  "discoveryVersion": "v1",
  "id": "mapsengine:v1",
  "name": "mapsengine",
@@ -1203,6 +1203,10 @@
        "mapsengine.maps.create"
       ]
      }
+    },
+    "publishedAccessList": {
+     "type": "string",
+     "description": "The access list to whom view permissions are granted. The value must be the name of a Maps Engine access list of the Map Viewer type, and the user must be a viewer on that list. Read About access lists in the Google Maps Engine help center for more information."
     },
     "tags": {
      "type": "array",
@@ -2931,7 +2935,7 @@
         "accept": [
          "*/*"
         ],
-        "maxSize": "1GB",
+        "maxSize": "10GB",
         "protocols": {
          "simple": {
           "multipart": true,

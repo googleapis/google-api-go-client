@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/DgHEoKY28S8gD2bhg7HKc07T99Q\"",
+ "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/Okz6uD7sX42-Q472w-eBSjs0s8k\"",
  "discoveryVersion": "v1",
  "id": "analytics:v3",
  "name": "analytics",
@@ -459,6 +459,9 @@
      "type": "string",
      "description": "Custom data source ID."
     },
+    "importBehavior": {
+     "type": "string"
+    },
     "kind": {
      "type": "string",
      "description": "Resource type for Analytics custom data source.",
@@ -502,6 +505,9 @@
      "type": "string",
      "description": "Time this custom data source was last modified.",
      "format": "date-time"
+    },
+    "uploadType": {
+     "type": "string"
     },
     "webPropertyId": {
      "type": "string",
@@ -5661,6 +5667,44 @@
         "https://www.googleapis.com/auth/analytics",
         "https://www.googleapis.com/auth/analytics.edit",
         "https://www.googleapis.com/auth/analytics.readonly"
+       ]
+      },
+      "migrateDataImport": {
+       "id": "analytics.management.uploads.migrateDataImport",
+       "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/migrateDataImport",
+       "httpMethod": "POST",
+       "description": "Migrate custom data source and data imports to latest version.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account Id for migration.",
+         "required": true,
+         "pattern": "\\d+",
+         "location": "path"
+        },
+        "customDataSourceId": {
+         "type": "string",
+         "description": "Custom data source Id for migration.",
+         "required": true,
+         "pattern": ".{22}",
+         "location": "path"
+        },
+        "webPropertyId": {
+         "type": "string",
+         "description": "Web property Id for migration.",
+         "required": true,
+         "pattern": "UA-(\\d+)-(\\d+)",
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "webPropertyId",
+        "customDataSourceId"
+       ],
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics",
+        "https://www.googleapis.com/auth/analytics.edit"
        ]
       },
       "uploadData": {

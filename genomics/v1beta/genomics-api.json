@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/EobR8eLvV6RKj0dy24fVd9EiITY\"",
+ "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/AGnTPmVF4YTrwZeds9Gyc0TXwoY\"",
  "discoveryVersion": "v1",
  "id": "genomics:v1beta",
  "name": "genomics",
@@ -111,8 +111,8 @@
      "type": "array",
      "description": "The genotype of this variant call. Each value represents either the value of the referenceBases field or a 1-based index into alternateBases. If a variant had a referenceBases field of \"T\" and an alternateBases value of [\"A\", \"C\"], and the genotype was [2, 1], that would mean the call represented the heterozygous value \"CA\" for this variant. If the genotype was instead [0, 1], the represented value would be \"TA\". Ordering of the genotype values is important if the phaseset field is present.",
      "items": {
-      "type": "string",
-      "format": "int64"
+      "type": "integer",
+      "format": "int32"
      }
     },
     "genotypeLikelihood": {
@@ -306,11 +306,11 @@
    "properties": {
     "bigqueryDataset": {
      "type": "string",
-     "description": "The BigQuery dataset for export. Note this is distinct from the Genomics concept of \"dataset\"."
+     "description": "The BigQuery dataset to export data to. Note that this is distinct from the Genomics concept of \"dataset\". The caller must have WRITE access to this BigQuery dataset."
     },
     "bigqueryTable": {
      "type": "string",
-     "description": "The BigQuery table for export."
+     "description": "The BigQuery table to export data to. The caller must have WRITE access to this BigQuery table."
     },
     "callsetIds": {
      "type": "array",
@@ -319,16 +319,9 @@
       "type": "string"
      }
     },
-    "datasetIds": {
-     "type": "array",
-     "description": "The IDs of the datasets that contain variant data which should be exported. At least one dataset ID must be provided.",
-     "items": {
-      "type": "string"
-     }
-    },
-    "exportUri": {
+    "datasetId": {
      "type": "string",
-     "description": "The Google Cloud URI to export to."
+     "description": "Required. The ID of the dataset that contains variant data which should be exported. The caller must have READ access to this dataset."
     },
     "format": {
      "type": "string",
@@ -870,23 +863,23 @@
     },
     "readsetIds": {
      "type": "array",
-     "description": "If specified, will restrict this query to reads within the given readsets. At least one readset ID must be provided.",
+     "description": "The readsets within which to search for reads. At least one readset ID must be provided. All specified readsets must be aligned against a common set of reference sequences; this defines the genomic coordinates for the query.",
      "items": {
       "type": "string"
      }
     },
     "sequenceEnd": {
      "type": "string",
-     "description": "The end position (1-based, inclusive) of this query. If a sequence name is specified, this defaults to the sequence's length.",
+     "description": "The end position (1-based, inclusive) of the target range. If specified, sequenceName must also be specified. Defaults to the end of the target reference sequence, if any.",
      "format": "uint64"
     },
     "sequenceName": {
      "type": "string",
-     "description": "The sequence to query. (e.g. 'X' for the X chromosome) Leaving this blank returns results from all sequences, including unmapped reads."
+     "description": "Restricts the results to a particular reference sequence such as '1', 'chr1', or 'X'. The set of valid references sequences depends on the readsets specified. If set to \"\", only unmapped Reads are returned."
     },
     "sequenceStart": {
      "type": "string",
-     "description": "The start position (1-based, inclusive) of this query. If a sequence name is specified, this defaults to 1.",
+     "description": "The start position (1-based, inclusive) of the target range. If specified, sequenceName must also be specified. Defaults to the start of the target reference sequence, if any.",
      "format": "uint64"
     }
    }
@@ -1487,7 +1480,7 @@
      "id": "genomics.reads.search",
      "path": "reads/search",
      "httpMethod": "POST",
-     "description": "Gets a list of reads matching the criteria.",
+     "description": "Gets a list of reads for one or more readsets. SearchReads operates over a genomic coordinate space of sequence+position defined over the reference sequences to which the requested readsets are aligned. If a target positional range is specified, SearchReads returns all reads whose alignment to the reference genome overlap the range. A query which specifies only readset IDs yields all reads in those readsets, including unmapped reads.",
      "request": {
       "$ref": "SearchReadsRequest"
      },

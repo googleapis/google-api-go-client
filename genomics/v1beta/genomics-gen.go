@@ -190,7 +190,7 @@ type Call struct {
 	// variant. If the genotype was instead [0, 1], the represented value
 	// would be "TA". Ordering of the genotype values is important if the
 	// phaseset field is present.
-	Genotype googleapi.Int64s `json:"genotype,omitempty"`
+	Genotype []int64 `json:"genotype,omitempty"`
 
 	// GenotypeLikelihood: The genotype likelihoods for this variant call.
 	// Each array entry represents how likely a specific genotype is for
@@ -302,11 +302,13 @@ type ExportReadsetsResponse struct {
 }
 
 type ExportVariantsRequest struct {
-	// BigqueryDataset: The BigQuery dataset for export. Note this is
-	// distinct from the Genomics concept of "dataset".
+	// BigqueryDataset: The BigQuery dataset to export data to. Note that
+	// this is distinct from the Genomics concept of "dataset". The caller
+	// must have WRITE access to this BigQuery dataset.
 	BigqueryDataset string `json:"bigqueryDataset,omitempty"`
 
-	// BigqueryTable: The BigQuery table for export.
+	// BigqueryTable: The BigQuery table to export data to. The caller must
+	// have WRITE access to this BigQuery table.
 	BigqueryTable string `json:"bigqueryTable,omitempty"`
 
 	// CallsetIds: If provided, only variant call information from the
@@ -314,12 +316,10 @@ type ExportVariantsRequest struct {
 	// exported.
 	CallsetIds []string `json:"callsetIds,omitempty"`
 
-	// DatasetIds: The IDs of the datasets that contain variant data which
-	// should be exported. At least one dataset ID must be provided.
-	DatasetIds []string `json:"datasetIds,omitempty"`
-
-	// ExportUri: The Google Cloud URI to export to.
-	ExportUri string `json:"exportUri,omitempty"`
+	// DatasetId: Required. The ID of the dataset that contains variant data
+	// which should be exported. The caller must have READ access to this
+	// dataset.
+	DatasetId string `json:"datasetId,omitempty"`
 
 	// Format: The format for the exported data.
 	Format string `json:"format,omitempty"`
@@ -637,21 +637,26 @@ type SearchReadsRequest struct {
 	// parameter to the value of "nextPageToken" from the previous response.
 	PageToken string `json:"pageToken,omitempty"`
 
-	// ReadsetIds: If specified, will restrict this query to reads within
-	// the given readsets. At least one readset ID must be provided.
+	// ReadsetIds: The readsets within which to search for reads. At least
+	// one readset ID must be provided. All specified readsets must be
+	// aligned against a common set of reference sequences; this defines the
+	// genomic coordinates for the query.
 	ReadsetIds []string `json:"readsetIds,omitempty"`
 
-	// SequenceEnd: The end position (1-based, inclusive) of this query. If
-	// a sequence name is specified, this defaults to the sequence's length.
+	// SequenceEnd: The end position (1-based, inclusive) of the target
+	// range. If specified, sequenceName must also be specified. Defaults to
+	// the end of the target reference sequence, if any.
 	SequenceEnd uint64 `json:"sequenceEnd,omitempty,string"`
 
-	// SequenceName: The sequence to query. (e.g. 'X' for the X chromosome)
-	// Leaving this blank returns results from all sequences, including
-	// unmapped reads.
+	// SequenceName: Restricts the results to a particular reference
+	// sequence such as '1', 'chr1', or 'X'. The set of valid references
+	// sequences depends on the readsets specified. If set to "", only
+	// unmapped Reads are returned.
 	SequenceName string `json:"sequenceName,omitempty"`
 
-	// SequenceStart: The start position (1-based, inclusive) of this query.
-	// If a sequence name is specified, this defaults to 1.
+	// SequenceStart: The start position (1-based, inclusive) of the target
+	// range. If specified, sequenceName must also be specified. Defaults to
+	// the start of the target reference sequence, if any.
 	SequenceStart uint64 `json:"sequenceStart,omitempty,string"`
 }
 
@@ -1916,7 +1921,13 @@ type ReadsSearchCall struct {
 	opt_               map[string]interface{}
 }
 
-// Search: Gets a list of reads matching the criteria.
+// Search: Gets a list of reads for one or more readsets. SearchReads
+// operates over a genomic coordinate space of sequence+position defined
+// over the reference sequences to which the requested readsets are
+// aligned. If a target positional range is specified, SearchReads
+// returns all reads whose alignment to the reference genome overlap the
+// range. A query which specifies only readset IDs yields all reads in
+// those readsets, including unmapped reads.
 func (r *ReadsService) Search(searchreadsrequest *SearchReadsRequest) *ReadsSearchCall {
 	c := &ReadsSearchCall{s: r.s, opt_: make(map[string]interface{})}
 	c.searchreadsrequest = searchreadsrequest
@@ -1952,7 +1963,7 @@ func (c *ReadsSearchCall) Do() (*SearchReadsResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a list of reads matching the criteria.",
+	//   "description": "Gets a list of reads for one or more readsets. SearchReads operates over a genomic coordinate space of sequence+position defined over the reference sequences to which the requested readsets are aligned. If a target positional range is specified, SearchReads returns all reads whose alignment to the reference genome overlap the range. A query which specifies only readset IDs yields all reads in those readsets, including unmapped reads.",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.reads.search",
 	//   "path": "reads/search",

@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/nC6FAiorEmIGYsW4V9qo5vJq4Ws\"",
+ "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/Ws1ATmP3hfBGUbWPVOgFpUqGfbk\"",
  "discoveryVersion": "v1",
  "id": "drive:v2",
  "name": "drive",
@@ -439,7 +439,7 @@
    "properties": {
     "defaultAppIds": {
      "type": "array",
-     "description": "List of app IDs that the user has specified to use by default.",
+     "description": "List of app IDs that the user has specified to use by default. The list is in reverse-priority order (lowest to highest).",
      "items": {
       "type": "string"
      }

@@ -300,7 +300,7 @@ type Pool struct {
 	Labels []*Label `json:"labels,omitempty"`
 
 	// Name: The name of the replica pool. Must follow the regex
-	// [a-zA-Z0-9-_]{1,28}
+	// [a-z]([-a-z0-9]*[a-z0-9])? and be 1-28 characters long.
 	Name string `json:"name,omitempty"`
 
 	// NumReplicas: Deprecated! Use initial_num_replicas instead.
@@ -329,9 +329,7 @@ type Pool struct {
 	// when growing the pool in size, or when a replica restarts.
 	Template *Template `json:"template,omitempty"`
 
-	// Type: The type of replica pool this is. Currently, only SMART_VM is
-	// supported to indicate Google Compute Engine virtual machine
-	// instances.
+	// Type: Deprecated! Do not set.
 	Type string `json:"type,omitempty"`
 }
 
@@ -1409,7 +1407,7 @@ func (r *ReplicasService) Restart(projectName string, zone string, poolName stri
 	return c
 }
 
-func (c *ReplicasRestartCall) Do() error {
+func (c *ReplicasRestartCall) Do() (*Replica, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1424,13 +1422,17 @@ func (c *ReplicasRestartCall) Do() error {
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return nil, err
 	}
-	return nil
+	var ret *Replica
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
 	// {
 	//   "description": "Restarts a replica in a pool.",
 	//   "httpMethod": "POST",
@@ -1468,6 +1470,9 @@ func (c *ReplicasRestartCall) Do() error {
 	//     }
 	//   },
 	//   "path": "{projectName}/zones/{zone}/pools/{poolName}/replicas/{replicaName}/restart",
+	//   "response": {
+	//     "$ref": "Replica"
+	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/ndev.cloudman",

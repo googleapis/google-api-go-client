@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/k9ugfUCtvB8YfkMCp45drVr4bhc\"",
+ "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/IppDfK0CjXD9AYpQUEOpRxnDZzg\"",
  "discoveryVersion": "v1",
  "id": "adexchangebuyer:v1.3",
  "name": "adexchangebuyer",
@@ -565,6 +565,218 @@
      }
     }
    }
+  },
+  "PretargetingConfig": {
+   "id": "PretargetingConfig",
+   "type": "object",
+   "properties": {
+    "configId": {
+     "type": "string",
+     "description": "The config id; generated automatically. Leave this field blank for insert requests.",
+     "format": "int64"
+    },
+    "configName": {
+     "type": "string",
+     "description": "The name of the config. Must be unique. Required for all requests."
+    },
+    "creativeType": {
+     "type": "array",
+     "description": "List must contain exactly one of PRETARGETING_CREATIVE_TYPE_HTML or PRETARGETING_CREATIVE_TYPE_VIDEO.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "dimensions": {
+     "type": "array",
+     "description": "Requests which allow one of these (width, height) pairs will match. All pairs must be supported ad dimensions.",
+     "items": {
+      "type": "object",
+      "properties": {
+       "height": {
+        "type": "string",
+        "description": "Height in pixels.",
+        "format": "int64"
+       },
+       "width": {
+        "type": "string",
+        "description": "Width in pixels.",
+        "format": "int64"
+       }
+      }
+     }
+    },
+    "excludedContentLabels": {
+     "type": "array",
+     "description": "Requests with any of these content labels will not match. Values are from content-labels.txt in the downloadable files section.",
+     "items": {
+      "type": "string",
+      "format": "int64"
+     }
+    },
+    "excludedGeoCriteriaIds": {
+     "type": "array",
+     "description": "Requests containing any of these geo criteria ids will not match.",
+     "items": {
+      "type": "string",
+      "format": "int64"
+     }
+    },
+    "excludedPlacements": {
+     "type": "array",
+     "description": "Requests containing any of these placements will not match.",
+     "items": {
+      "type": "object",
+      "properties": {
+       "token": {
+        "type": "string",
+        "description": "The value of the placement. Interpretation depends on the placement type, e.g. URL for a site placement, channel name for a channel placement, app id for a mobile app placement."
+       },
+       "type": {
+        "type": "string",
+        "description": "The type of the placement."
+       }
+      }
+     }
+    },
+    "excludedUserLists": {
+     "type": "array",
+     "description": "Requests containing any of these users list ids will not match.",
+     "items": {
+      "type": "string",
+      "format": "int64"
+     }
+    },
+    "excludedVerticals": {
+     "type": "array",
+     "description": "Requests containing any of these vertical ids will not match. Values are from the publisher-verticals.txt file in the downloadable files section.",
+     "items": {
+      "type": "string",
+      "format": "int64"
+     }
+    },
+    "geoCriteriaIds": {
+     "type": "array",
+     "description": "Requests containing any of these geo criteria ids will match.",
+     "items": {
+      "type": "string",
+      "format": "int64"
+     }
+    },
+    "isActive": {
+     "type": "boolean",
+     "description": "Whether this config is active. Required for all requests."
+    },
+    "kind": {
+     "type": "string",
+     "description": "The kind of the resource, i.e. \"adexchangebuyer#pretargetingConfig\".",
+     "default": "adexchangebuyer#pretargetingConfig"
+    },
+    "languages": {
+     "type": "array",
+     "description": "Request containing any of these language codes will match.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "mobileCarriers": {
+     "type": "array",
+     "description": "Requests containing any of these mobile carrier ids will match. Values are from mobile-carriers.csv in the downloadable files section.",
+     "items": {
+      "type": "string",
+      "format": "int64"
+     }
+    },
+    "mobileDevices": {
+     "type": "array",
+     "description": "Requests containing any of these mobile device ids will match. Values are from mobile-devices.csv in the downloadable files section.",
+     "items": {
+      "type": "string",
+      "format": "int64"
+     }
+    },
+    "mobileOperatingSystemVersions": {
+     "type": "array",
+     "description": "Requests containing any of these mobile operating system version ids will match. Values are from mobile-os.csv in the downloadable files section.",
+     "items": {
+      "type": "string",
+      "format": "int64"
+     }
+    },
+    "placements": {
+     "type": "array",
+     "description": "Requests containing any of these placements will match.",
+     "items": {
+      "type": "object",
+      "properties": {
+       "token": {
+        "type": "string",
+        "description": "The value of the placement. Interpretation depends on the placement type, e.g. URL for a site placement, channel name for a channel placement, app id for a mobile app placement."
+       },
+       "type": {
+        "type": "string",
+        "description": "The type of the placement."
+       }
+      }
+     }
+    },
+    "platforms": {
+     "type": "array",
+     "description": "Requests matching any of these platforms will match. Possible values are PRETARGETING_PLATFORM_MOBILE, PRETARGETING_PLATFORM_DESKTOP, and PRETARGETING_PLATFORM_TABLET.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "supportedCreativeAttributes": {
+     "type": "array",
+     "description": "Creative attributes should be declared here if all creatives corresponding to this pretargeting configuration have that creative attribute. Values are from pretargetable-creative-attributes.txt in the downloadable files section.",
+     "items": {
+      "type": "string",
+      "format": "int64"
+     }
+    },
+    "userLists": {
+     "type": "array",
+     "description": "Requests containing any of these user list ids will match.",
+     "items": {
+      "type": "string",
+      "format": "int64"
+     }
+    },
+    "vendorTypes": {
+     "type": "array",
+     "description": "Requests that allow any of these vendor ids will match. Values are from vendors.txt in the downloadable files section.",
+     "items": {
+      "type": "string",
+      "format": "int64"
+     }
+    },
+    "verticals": {
+     "type": "array",
+     "description": "Requests containing any of these vertical ids will match.",
+     "items": {
+      "type": "string",
+      "format": "int64"
+     }
+    }
+   }
+  },
+  "PretargetingConfigList": {
+   "id": "PretargetingConfigList",
+   "type": "object",
+   "properties": {
+    "items": {
+     "type": "array",
+     "description": "A list of pretargeting configs",
+     "items": {
+      "$ref": "PretargetingConfig"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Resource type.",
+     "default": "adexchangebuyer#pretargetingConfigList"
+    }
+   }
   }
  },
  "resources": {
@@ -855,6 +1067,192 @@
      ],
      "response": {
       "$ref": "PerformanceReportList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/adexchange.buyer"
+     ]
+    }
+   }
+  },
+  "pretargetingConfig": {
+   "methods": {
+    "delete": {
+     "id": "adexchangebuyer.pretargetingConfig.delete",
+     "path": "pretargetingconfigs/{accountId}/{configId}",
+     "httpMethod": "DELETE",
+     "description": "Deletes an existing pretargeting config.",
+     "parameters": {
+      "accountId": {
+       "type": "string",
+       "description": "The account id to delete the pretargeting config for.",
+       "required": true,
+       "format": "int64",
+       "location": "path"
+      },
+      "configId": {
+       "type": "string",
+       "description": "The specific id of the configuration to delete.",
+       "required": true,
+       "format": "int64",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "accountId",
+      "configId"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/adexchange.buyer"
+     ]
+    },
+    "get": {
+     "id": "adexchangebuyer.pretargetingConfig.get",
+     "path": "pretargetingconfigs/{accountId}/{configId}",
+     "httpMethod": "GET",
+     "description": "Gets a specific pretargeting configuration",
+     "parameters": {
+      "accountId": {
+       "type": "string",
+       "description": "The account id to get the pretargeting config for.",
+       "required": true,
+       "format": "int64",
+       "location": "path"
+      },
+      "configId": {
+       "type": "string",
+       "description": "The specific id of the configuration to retrieve.",
+       "required": true,
+       "format": "int64",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "accountId",
+      "configId"
+     ],
+     "response": {
+      "$ref": "PretargetingConfig"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/adexchange.buyer"
+     ]
+    },
+    "insert": {
+     "id": "adexchangebuyer.pretargetingConfig.insert",
+     "path": "pretargetingconfigs/{accountId}",
+     "httpMethod": "POST",
+     "description": "Inserts a new pretargeting configuration.",
+     "parameters": {
+      "accountId": {
+       "type": "string",
+       "description": "The account id to insert the pretargeting config for.",
+       "required": true,
+       "format": "int64",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "accountId"
+     ],
+     "request": {
+      "$ref": "PretargetingConfig"
+     },
+     "response": {
+      "$ref": "PretargetingConfig"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/adexchange.buyer"
+     ]
+    },
+    "list": {
+     "id": "adexchangebuyer.pretargetingConfig.list",
+     "path": "pretargetingconfigs/{accountId}",
+     "httpMethod": "GET",
+     "description": "Retrieves a list of the authenticated user's pretargeting configurations.",
+     "parameters": {
+      "accountId": {
+       "type": "string",
+       "description": "The account id to get the pretargeting configs for.",
+       "required": true,
+       "format": "int64",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "accountId"
+     ],
+     "response": {
+      "$ref": "PretargetingConfigList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/adexchange.buyer"
+     ]
+    },
+    "patch": {
+     "id": "adexchangebuyer.pretargetingConfig.patch",
+     "path": "pretargetingconfigs/{accountId}/{configId}",
+     "httpMethod": "PATCH",
+     "description": "Updates an existing pretargeting config. This method supports patch semantics.",
+     "parameters": {
+      "accountId": {
+       "type": "string",
+       "description": "The account id to update the pretargeting config for.",
+       "required": true,
+       "format": "int64",
+       "location": "path"
+      },
+      "configId": {
+       "type": "string",
+       "description": "The specific id of the configuration to update.",
+       "required": true,
+       "format": "int64",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "accountId",
+      "configId"
+     ],
+     "request": {
+      "$ref": "PretargetingConfig"
+     },
+     "response": {
+      "$ref": "PretargetingConfig"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/adexchange.buyer"
+     ]
+    },
+    "update": {
+     "id": "adexchangebuyer.pretargetingConfig.update",
+     "path": "pretargetingconfigs/{accountId}/{configId}",
+     "httpMethod": "PUT",
+     "description": "Updates an existing pretargeting config.",
+     "parameters": {
+      "accountId": {
+       "type": "string",
+       "description": "The account id to update the pretargeting config for.",
+       "required": true,
+       "format": "int64",
+       "location": "path"
+      },
+      "configId": {
+       "type": "string",
+       "description": "The specific id of the configuration to update.",
+       "required": true,
+       "format": "int64",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "accountId",
+      "configId"
+     ],
+     "request": {
+      "$ref": "PretargetingConfig"
+     },
+     "response": {
+      "$ref": "PretargetingConfig"
      },
      "scopes": [
       "https://www.googleapis.com/auth/adexchange.buyer"

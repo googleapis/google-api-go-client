@@ -472,7 +472,7 @@ type AppIcons struct {
 
 type AppList struct {
 	// DefaultAppIds: List of app IDs that the user has specified to use by
-	// default.
+	// default. The list is in reverse-priority order (lowest to highest).
 	DefaultAppIds []string `json:"defaultAppIds,omitempty"`
 
 	// Etag: The ETag of the list.

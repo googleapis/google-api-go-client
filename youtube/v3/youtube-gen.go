@@ -7285,8 +7285,8 @@ func (c *SearchListCall) ForMine(forMine bool) *SearchListCall {
 // Location sets the optional parameter "location": The location
 // parameter restricts a search to videos that have a geographical
 // location specified in their metadata. The value is a string that
-// specifies geographic longitude/latitude coordinates e.g.
-// (-122.08427,37.42307)
+// specifies geographic latitude/longitude coordinates e.g.
+// (37.42307,-122.08427)
 func (c *SearchListCall) Location(location string) *SearchListCall {
 	c.opt_["location"] = location
 	return c
@@ -7653,7 +7653,7 @@ func (c *SearchListCall) Do() (*SearchListResponse, error) {
 	//       "type": "boolean"
 	//     },
 	//     "location": {
-	//       "description": "The location parameter restricts a search to videos that have a geographical location specified in their metadata. The value is a string that specifies geographic longitude/latitude coordinates e.g. (-122.08427,37.42307)",
+	//       "description": "The location parameter restricts a search to videos that have a geographical location specified in their metadata. The value is a string that specifies geographic latitude/longitude coordinates e.g. (37.42307,-122.08427)",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/vtUNJ6y2psRVc6mZBgPBTxMifKc\"",
+ "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/e8FH7rRc5UojPTvcSdSNZpAD9-g\"",
  "discoveryVersion": "v1",
  "id": "bigquery:v2",
  "name": "bigquery",
@@ -1736,7 +1736,7 @@
      "id": "bigquery.tabledata.insertAll",
      "path": "projects/{projectId}/datasets/{datasetId}/tables/{tableId}/insertAll",
      "httpMethod": "POST",
-     "description": "Inserts the supplied rows into the table.",
+     "description": "Streams data into BigQuery one record at a time without needing to run a load job.",
      "parameters": {
       "datasetId": {
        "type": "string",

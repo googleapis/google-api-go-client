@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/ijVy2a0Y7VvW4oUg6wh0RktqmKA\"",
+ "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/TfqVrl1FllgJa1w8F40ZhNul9GY\"",
  "discoveryVersion": "v1",
  "id": "replicapool:v1beta1",
  "name": "replicapool",
@@ -383,7 +383,7 @@
     },
     "name": {
      "type": "string",
-     "description": "The name of the replica pool. Must follow the regex [a-zA-Z0-9-_]{1,28}"
+     "description": "The name of the replica pool. Must follow the regex [a-z]([-a-z0-9]*[a-z0-9])? and be 1-28 characters long."
     },
     "numReplicas": {
      "type": "integer",
@@ -418,7 +418,7 @@
     },
     "type": {
      "type": "string",
-     "description": "The type of replica pool this is. Currently, only SMART_VM is supported to indicate Google Compute Engine virtual machine instances."
+     "description": "Deprecated! Do not set."
     }
    }
   },
@@ -1089,6 +1089,9 @@
       "poolName",
       "replicaName"
      ],
+     "response": {
+      "$ref": "Replica"
+     },
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/ndev.cloudman",

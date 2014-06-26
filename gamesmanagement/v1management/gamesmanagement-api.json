@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/FpQ-AKQeFRSUO748ZrH_mqEgT8Q\"",
+ "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/zVOXZoYEl6_11tkhayt84llb6lA\"",
  "discoveryVersion": "v1",
  "id": "gamesManagement:v1management",
  "name": "gamesManagement",
@@ -138,6 +138,53 @@
     }
    }
   },
+  "GamesPlayerExperienceInfoResource": {
+   "id": "GamesPlayerExperienceInfoResource",
+   "type": "object",
+   "description": "This is a JSON template for 1P/3P metadata about the player's experience.",
+   "properties": {
+    "currentExperiencePoints": {
+     "type": "string",
+     "description": "The current number of experience points for the player",
+     "format": "int64"
+    },
+    "currentLevel": {
+     "$ref": "GamesPlayerLevelResource",
+     "description": "The current level of the player"
+    },
+    "lastLevelUpTimestampMillis": {
+     "type": "string",
+     "description": "The timestamp when the player was leveled up last time millis since epoch UTC.",
+     "format": "int64"
+    },
+    "nextLevel": {
+     "$ref": "GamesPlayerLevelResource",
+     "description": "The next level of the player. If the current level is the maximum level, this should be same as the current level."
+    }
+   }
+  },
+  "GamesPlayerLevelResource": {
+   "id": "GamesPlayerLevelResource",
+   "type": "object",
+   "description": "This is a JSON template for 1P/3P metadata about a user's level.",
+   "properties": {
+    "level": {
+     "type": "integer",
+     "description": "The level for the user",
+     "format": "int32"
+    },
+    "maxExperiencePoints": {
+     "type": "string",
+     "description": "The maximum experience points for this level",
+     "format": "int64"
+    },
+    "minExperiencePoints": {
+     "type": "string",
+     "description": "The minimum experience points for this level",
+     "format": "int64"
+    }
+   }
+  },
   "HiddenPlayer": {
    "id": "HiddenPlayer",
    "type": "object",
@@ -195,6 +242,10 @@
      "type": "string",
      "description": "The name to display for the player."
     },
+    "experienceInfo": {
+     "$ref": "GamesPlayerExperienceInfoResource",
+     "description": "An object to represent Play Game experience information for the player."
+    },
     "kind": {
      "type": "string",
      "description": "Uniquely identifies the type of this resource. Value is always the fixed string gamesManagement#player.",
@@ -221,6 +272,10 @@
     "playerId": {
      "type": "string",
      "description": "The ID of the player."
+    },
+    "title": {
+     "type": "string",
+     "description": "The player's title rewarded for their game activities."
     }
    }
   },
@@ -348,6 +403,62 @@
     }
    }
   },
+  "events": {
+   "methods": {
+    "reset": {
+     "id": "gamesManagement.events.reset",
+     "path": "events/{eventId}/reset",
+     "httpMethod": "POST",
+     "description": "Reset all player progress on the event for the currently authenticated player. This method is only accessible to whitelisted tester accounts for your application. All resources that use the event will also be reset.",
+     "parameters": {
+      "eventId": {
+       "type": "string",
+       "description": "The ID of the event.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "eventId"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/games",
+      "https://www.googleapis.com/auth/plus.login"
+     ]
+    },
+    "resetAll": {
+     "id": "gamesManagement.events.resetAll",
+     "path": "events/reset",
+     "httpMethod": "POST",
+     "description": "Reset all player progress on all unpublished events for the currently authenticated player. This method is only accessible to whitelisted tester accounts for your application. All resources that use the events will also be reset.",
+     "scopes": [
+      "https://www.googleapis.com/auth/games",
+      "https://www.googleapis.com/auth/plus.login"
+     ]
+    },
+    "resetForAllPlayers": {
+     "id": "gamesManagement.events.resetForAllPlayers",
+     "path": "events/{eventId}/resetForAllPlayers",
+     "httpMethod": "POST",
+     "description": "Reset all player progress on the event for all players. This method is only available to user accounts for your developer console. Only draft events can be reset. All resources that use the event will also be reset.",
+     "parameters": {
+      "eventId": {
+       "type": "string",
+       "description": "The ID of the event.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "eventId"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/games",
+      "https://www.googleapis.com/auth/plus.login"
+     ]
+    }
+   }
+  },
   "players": {
    "methods": {
     "hide": {
@@ -400,6 +511,31 @@
      "parameterOrder": [
       "applicationId",
       "playerId"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/games",
+      "https://www.googleapis.com/auth/plus.login"
+     ]
+    }
+   }
+  },
+  "quests": {
+   "methods": {
+    "reset": {
+     "id": "gamesManagement.quests.reset",
+     "path": "quests/{questId}/reset",
+     "httpMethod": "POST",
+     "description": "Reset all player progress on the quest for the currently authenticated player. This method is only accessible to whitelisted tester accounts for your application.",
+     "parameters": {
+      "questId": {
+       "type": "string",
+       "description": "The ID of the quest.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "questId"
      ],
      "scopes": [
       "https://www.googleapis.com/auth/games",

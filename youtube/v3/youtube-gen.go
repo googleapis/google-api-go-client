@@ -1663,6 +1663,10 @@ type LiveBroadcastStatus struct {
 	// using the API's liveBroadcasts.transition method.
 	LifeCycleStatus string `json:"lifeCycleStatus,omitempty"`
 
+	// LiveBroadcastPriority: Priority of the live broadcast event (internal
+	// state).
+	LiveBroadcastPriority string `json:"liveBroadcastPriority,omitempty"`
+
 	// PrivacyStatus: The broadcast's privacy status. Note that the
 	// broadcast represents exactly one YouTube video, so the privacy
 	// settings are identical to those supported for videos. In addition,
@@ -2877,7 +2881,7 @@ type VideoRecordingDetails struct {
 	LocationDescription string `json:"locationDescription,omitempty"`
 
 	// RecordingDate: The date and time when the video was recorded. The
-	// value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.
+	// value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sssZ) format.
 	RecordingDate string `json:"recordingDate,omitempty"`
 }
 
@@ -4755,7 +4759,8 @@ func (c *LiveBroadcastsControlCall) OnBehalfOfContentOwnerChannel(onBehalfOfCont
 
 // Walltime sets the optional parameter "walltime": The walltime
 // parameter specifies the wall clock time at which the specified slate
-// change will occur.
+// change will occur. The value is specified in ISO 8601
+// (YYYY-MM-DDThh:mm:ss.sZ) format.
 func (c *LiveBroadcastsControlCall) Walltime(walltime string) *LiveBroadcastsControlCall {
 	c.opt_["walltime"] = walltime
 	return c
@@ -4843,7 +4848,7 @@ func (c *LiveBroadcastsControlCall) Do() (*LiveBroadcast, error) {
 	//       "type": "string"
 	//     },
 	//     "walltime": {
-	//       "description": "The walltime parameter specifies the wall clock time at which the specified slate change will occur.",
+	//       "description": "The walltime parameter specifies the wall clock time at which the specified slate change will occur. The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.",
 	//       "format": "date-time",
 	//       "location": "query",
 	//       "type": "string"

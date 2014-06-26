@@ -356,7 +356,7 @@ func (c *FilesInsertCall) Do() (*File, error) {
 	//     "accept": [
 	//       "*/*"
 	//     ],
-	//     "maxSize": "1024GB",
+	//     "maxSize": "5120GB",
 	//     "protocols": {
 	//       "resumable": {
 	//         "multipart": true,
@@ -618,7 +618,7 @@ func (c *FilesUpdateCall) Do() (*File, error) {
 	//     "accept": [
 	//       "*/*"
 	//     ],
-	//     "maxSize": "1024GB",
+	//     "maxSize": "5120GB",
 	//     "protocols": {
 	//       "resumable": {
 	//         "multipart": true,

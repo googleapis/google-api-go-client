@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"kEk3sFj6Ef5_yR1-H3bAO6qw9mI/WhvzCm5J5nAWPdnVXhGkrRz8-Wc\"",
+ "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/326vA-FkWTAsBS87tMbdTss8IyI\"",
  "discoveryVersion": "v1",
  "id": "admin:reports_v1",
  "name": "admin",
@@ -448,7 +448,7 @@
        "type": "string",
        "description": "Application name for which the events are to be retrieved.",
        "required": true,
-       "pattern": "(admin)|(docs)|(login)",
+       "pattern": "(admin)|(docs)|(drive)|(login)",
        "location": "path"
       },
       "customerId": {
@@ -527,7 +527,7 @@
        "type": "string",
        "description": "Application name for which the events are to be retrieved.",
        "required": true,
-       "pattern": "(admin)|(docs)|(login)",
+       "pattern": "(admin)|(docs)|(drive)|(login)",
        "location": "path"
       },
       "customerId": {

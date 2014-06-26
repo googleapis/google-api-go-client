@@ -439,6 +439,10 @@ type ChromeOsDevice struct {
 	// PlatformVersion: Chromebook platform version (Read-only)
 	PlatformVersion string `json:"platformVersion,omitempty"`
 
+	// RecentUsers: List of recent device users, in descending order by last
+	// login time (Read-only)
+	RecentUsers []*ChromeOsDeviceRecentUsers `json:"recentUsers,omitempty"`
+
 	// SerialNumber: Chromebook serial number (Read-only)
 	SerialNumber string `json:"serialNumber,omitempty"`
 
@@ -451,6 +455,15 @@ type ChromeOsDevice struct {
 	// WillAutoRenew: Will Chromebook auto reniew after support end date
 	// (Read-only)
 	WillAutoRenew bool `json:"willAutoRenew,omitempty"`
+}
+
+type ChromeOsDeviceRecentUsers struct {
+	// Email: Email address of the user. Present only if the user type is
+	// managed
+	Email string `json:"email,omitempty"`
+
+	// Type: The type of the user
+	Type string `json:"type,omitempty"`
 }
 
 type ChromeOsDevices struct {
@@ -553,6 +566,19 @@ type MobileDevice struct {
 	// Applications: List of applications installed on Mobile Device
 	Applications []*MobileDeviceApplications `json:"applications,omitempty"`
 
+	// BasebandVersion: Mobile Device Baseband version (Read-only)
+	BasebandVersion string `json:"basebandVersion,omitempty"`
+
+	// BuildNumber: Mobile Device Build number (Read-only)
+	BuildNumber string `json:"buildNumber,omitempty"`
+
+	// DefaultLanguage: The default locale used on the Mobile Device
+	// (Read-only)
+	DefaultLanguage string `json:"defaultLanguage,omitempty"`
+
+	// DeviceCompromisedStatus: Mobile Device compromised status (Read-only)
+	DeviceCompromisedStatus string `json:"deviceCompromisedStatus,omitempty"`
+
 	// DeviceId: Mobile Device serial number (Read-only)
 	DeviceId string `json:"deviceId,omitempty"`
 
@@ -570,6 +596,12 @@ type MobileDevice struct {
 	// HardwareId: Mobile Device Hardware Id (Read-only)
 	HardwareId string `json:"hardwareId,omitempty"`
 
+	// Imei: Mobile Device IMEI number (Read-only)
+	Imei string `json:"imei,omitempty"`
+
+	// KernelVersion: Mobile Device Kernel version (Read-only)
+	KernelVersion string `json:"kernelVersion,omitempty"`
+
 	// Kind: Kind of resource this is.
 	Kind string `json:"kind,omitempty"`
 
@@ -578,17 +610,31 @@ type MobileDevice struct {
 	// (Read-only)
 	LastSync string `json:"lastSync,omitempty"`
 
+	// ManagedAccountIsOnOwnerProfile: Boolean indicating if this account is
+	// on owner/primary profile or not (Read-only)
+	ManagedAccountIsOnOwnerProfile bool `json:"managedAccountIsOnOwnerProfile,omitempty"`
+
+	// Meid: Mobile Device MEID number (Read-only)
+	Meid string `json:"meid,omitempty"`
+
 	// Model: Name of the model of the device
 	Model string `json:"model,omitempty"`
 
 	// Name: List of owner user's names (Read-only)
 	Name []string `json:"name,omitempty"`
 
+	// NetworkOperator: Mobile Device mobile or network operator (if
+	// available) (Read-only)
+	NetworkOperator string `json:"networkOperator,omitempty"`
+
 	// Os: Name of the mobile operating system
 	Os string `json:"os,omitempty"`
 
 	// ResourceId: Unique identifier of Mobile Device (Read-only)
 	ResourceId string `json:"resourceId,omitempty"`
+
+	// SerialNumber: Mobile Device SSN or Serial Number (Read-only)
+	SerialNumber string `json:"serialNumber,omitempty"`
 
 	// Status: Status of the device (Read-only)
 	Status string `json:"status,omitempty"`
@@ -598,6 +644,9 @@ type MobileDevice struct {
 
 	// UserAgent: Mobile Device user agent
 	UserAgent string `json:"userAgent,omitempty"`
+
+	// WifiMacAddress: Mobile Device WiFi MAC address (Read-only)
+	WifiMacAddress string `json:"wifiMacAddress,omitempty"`
 }
 
 type MobileDeviceApplications struct {

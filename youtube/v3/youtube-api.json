@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/gYW61R0Q1-AaEn1DifBcLYtzGfg\"",
+ "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/kMIQvX-x3mQnPFOGOYSnPK4w0oU\"",
  "discoveryVersion": "v1",
  "id": "youtube:v3",
  "name": "youtube",
@@ -3151,6 +3151,20 @@
       ""
      ]
     },
+    "liveBroadcastPriority": {
+     "type": "string",
+     "description": "Priority of the live broadcast event (internal state).",
+     "enum": [
+      "high",
+      "low",
+      "normal"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      ""
+     ]
+    },
     "privacyStatus": {
      "type": "string",
      "description": "The broadcast's privacy status. Note that the broadcast represents exactly one YouTube video, so the privacy settings are identical to those supported for videos. In addition, you can set this field by modifying the broadcast resource or by setting the privacyStatus field of the corresponding video resource.",
@@ -4950,7 +4964,7 @@
     },
     "recordingDate": {
      "type": "string",
-     "description": "The date and time when the video was recorded. The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.",
+     "description": "The date and time when the video was recorded. The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sssZ) format.",
      "format": "date-time"
     }
    }
@@ -5904,7 +5918,7 @@
       },
       "walltime": {
        "type": "string",
-       "description": "The walltime parameter specifies the wall clock time at which the specified slate change will occur.",
+       "description": "The walltime parameter specifies the wall clock time at which the specified slate change will occur. The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.",
        "format": "date-time",
        "location": "query"
       }

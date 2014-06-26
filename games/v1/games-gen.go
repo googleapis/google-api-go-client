@@ -41,6 +41,9 @@ const basePath = "https://www.googleapis.com/games/v1/"
 
 // OAuth2 scopes used by this API.
 const (
+	// View and manage its own configuration data in your Google Drive
+	DriveAppdataScope = "https://www.googleapis.com/auth/drive.appdata"
+
 	// Share your Google+ profile information and view and manage your game
 	// activity
 	GamesScope = "https://www.googleapis.com/auth/games"
@@ -57,12 +60,17 @@ func New(client *http.Client) (*Service, error) {
 	s.AchievementDefinitions = NewAchievementDefinitionsService(s)
 	s.Achievements = NewAchievementsService(s)
 	s.Applications = NewApplicationsService(s)
+	s.Events = NewEventsService(s)
 	s.Leaderboards = NewLeaderboardsService(s)
+	s.Metagame = NewMetagameService(s)
 	s.Players = NewPlayersService(s)
 	s.Pushtokens = NewPushtokensService(s)
+	s.QuestMilestones = NewQuestMilestonesService(s)
+	s.Quests = NewQuestsService(s)
 	s.Revisions = NewRevisionsService(s)
 	s.Rooms = NewRoomsService(s)
 	s.Scores = NewScoresService(s)
+	s.Snapshots = NewSnapshotsService(s)
 	s.TurnBasedMatches = NewTurnBasedMatchesService(s)
 	return s, nil
 }
@@ -77,17 +85,27 @@ type Service struct {
 
 	Applications *ApplicationsService
 
+	Events *EventsService
+
 	Leaderboards *LeaderboardsService
+
+	Metagame *MetagameService
 
 	Players *PlayersService
 
 	Pushtokens *PushtokensService
+
+	QuestMilestones *QuestMilestonesService
+
+	Quests *QuestsService
 
 	Revisions *RevisionsService
 
 	Rooms *RoomsService
 
 	Scores *ScoresService
+
+	Snapshots *SnapshotsService
 
 	TurnBasedMatches *TurnBasedMatchesService
 }
@@ -119,12 +137,30 @@ type ApplicationsService struct {
 	s *Service
 }
 
+func NewEventsService(s *Service) *EventsService {
+	rs := &EventsService{s: s}
+	return rs
+}
+
+type EventsService struct {
+	s *Service
+}
+
 func NewLeaderboardsService(s *Service) *LeaderboardsService {
 	rs := &LeaderboardsService{s: s}
 	return rs
 }
 
 type LeaderboardsService struct {
+	s *Service
+}
+
+func NewMetagameService(s *Service) *MetagameService {
+	rs := &MetagameService{s: s}
+	return rs
+}
+
+type MetagameService struct {
 	s *Service
 }
 
@@ -143,6 +179,24 @@ func NewPushtokensService(s *Service) *PushtokensService {
 }
 
 type PushtokensService struct {
+	s *Service
+}
+
+func NewQuestMilestonesService(s *Service) *QuestMilestonesService {
+	rs := &QuestMilestonesService{s: s}
+	return rs
+}
+
+type QuestMilestonesService struct {
+	s *Service
+}
+
+func NewQuestsService(s *Service) *QuestsService {
+	rs := &QuestsService{s: s}
+	return rs
+}
+
+type QuestsService struct {
 	s *Service
 }
 
@@ -173,6 +227,15 @@ type ScoresService struct {
 	s *Service
 }
 
+func NewSnapshotsService(s *Service) *SnapshotsService {
+	rs := &SnapshotsService{s: s}
+	return rs
+}
+
+type SnapshotsService struct {
+	s *Service
+}
+
 func NewTurnBasedMatchesService(s *Service) *TurnBasedMatchesService {
 	rs := &TurnBasedMatchesService{s: s}
 	return rs
@@ -193,6 +256,10 @@ type AchievementDefinition struct {
 
 	// Description: The description of the achievement.
 	Description string `json:"description,omitempty"`
+
+	// ExperiencePoints: Experience points which will be earned when
+	// unlocking this achievement.
+	ExperiencePoints int64 `json:"experiencePoints,omitempty,string"`
 
 	// FormattedTotalSteps: The total steps for an incremental achievement
 	// as a string.
@@ -468,6 +535,202 @@ type ApplicationCategory struct {
 	Secondary string `json:"secondary,omitempty"`
 }
 
+type Category struct {
+	// Category: The category name.
+	Category string `json:"category,omitempty"`
+
+	// ExperiencePoints: Experience points earned in this category.
+	ExperiencePoints int64 `json:"experiencePoints,omitempty,string"`
+
+	// Kind: Uniquely identifies the type of this resource. Value is always
+	// the fixed string games#category.
+	Kind string `json:"kind,omitempty"`
+}
+
+type CategoryListResponse struct {
+	// Items: The list of categories with usage data.
+	Items []*Category `json:"items,omitempty"`
+
+	// Kind: Uniquely identifies the type of this resource. Value is always
+	// the fixed string games#categoryListResponse.
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: Token corresponding to the next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+}
+
+type EventBatchRecordFailure struct {
+	// FailureCause: The cause for the update failure.
+	// Possible values are:
+	//
+	// - "TOO_LARGE" - A batch request was issued with more events than are
+	// allowed in a single batch.
+	// - "TIME_PERIOD_EXPIRED" - A batch was
+	// sent with data too far in the past to record.
+	// - "TIME_PERIOD_SHORT"
+	// - A batch was sent with a time range that was too short.
+	// -
+	// "TIME_PERIOD_LONG" - A batch was sent with a time range that was too
+	// long.
+	// - "ALREADY_UPDATED" - An attempt was made to record a batch of
+	// data which was already seen.
+	// - "RECORD_RATE_HIGH" - An attempt was
+	// made to record data faster than the server will apply updates.
+	FailureCause string `json:"failureCause,omitempty"`
+
+	// Kind: Uniquely identifies the type of this resource. Value is always
+	// the fixed string games#eventBatchRecordFailure.
+	Kind string `json:"kind,omitempty"`
+
+	// Range: The time range which was rejected, empty for a request-wide
+	// failure.
+	Range *EventPeriodRange `json:"range,omitempty"`
+}
+
+type EventChild struct {
+	// ChildId: The ID of the child event.
+	ChildId string `json:"childId,omitempty"`
+
+	// Kind: Uniquely identifies the type of this resource. Value is always
+	// the fixed string games#eventChild.
+	Kind string `json:"kind,omitempty"`
+}
+
+type EventDefinition struct {
+	// ChildEvents: A list of events that are a child of this event.
+	ChildEvents []*EventChild `json:"childEvents,omitempty"`
+
+	// Description: Description of what this event represents.
+	Description string `json:"description,omitempty"`
+
+	// DisplayName: The name to display for the event.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Id: The ID of the event.
+	Id string `json:"id,omitempty"`
+
+	// ImageUrl: The base URL for the image that represents the event.
+	ImageUrl string `json:"imageUrl,omitempty"`
+
+	// IsDefaultImageUrl: Indicates whether the icon image being returned is
+	// a default image, or is game-provided.
+	IsDefaultImageUrl bool `json:"isDefaultImageUrl,omitempty"`
+
+	// Kind: Uniquely identifies the type of this resource. Value is always
+	// the fixed string games#eventDefinition.
+	Kind string `json:"kind,omitempty"`
+
+	// Visibility: The visibility of event being tracked in this
+	// definition.
+	// Possible values are:
+	// - "REVEALED" - This event should
+	// be visible to all users.
+	// - "HIDDEN" - This event should only be
+	// shown to users that have have recorded this event at least once.
+	Visibility string `json:"visibility,omitempty"`
+}
+
+type EventDefinitionListResponse struct {
+	// Items: The event definitions.
+	Items []*EventDefinition `json:"items,omitempty"`
+
+	// Kind: Uniquely identifies the type of this resource. Value is always
+	// the fixed string games#eventDefinitionListResponse.
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: The pagination token for the next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+}
+
+type EventPeriodRange struct {
+	// Kind: Uniquely identifies the type of this resource. Value is always
+	// the fixed string games#eventPeriodRange.
+	Kind string `json:"kind,omitempty"`
+
+	// PeriodEndMillis: The time when this update period ends, in millis,
+	// since 1970 UTC (Unix Epoch).
+	PeriodEndMillis int64 `json:"periodEndMillis,omitempty,string"`
+
+	// PeriodStartMillis: The time when this update period begins, in
+	// millis, since 1970 UTC (Unix Epoch).
+	PeriodStartMillis int64 `json:"periodStartMillis,omitempty,string"`
+}
+
+type EventPeriodUpdate struct {
+	// Kind: Uniquely identifies the type of this resource. Value is always
+	// the fixed string games#eventPeriodUpdate.
+	Kind string `json:"kind,omitempty"`
+
+	// TimePeriod: The time period being covered by this update.
+	TimePeriod *EventPeriodRange `json:"timePeriod,omitempty"`
+
+	// Updates: The updates being made for this time period.
+	Updates []*EventUpdateRequest `json:"updates,omitempty"`
+}
+
+type EventRecordFailure struct {
+	// EventId: The ID of the event that was not updated.
+	EventId string `json:"eventId,omitempty"`
+
+	// FailureCause: The cause for the update failure.
+	// Possible values are:
+	//
+	// - "NOT_FOUND" - An attempt was made to set an event that was not
+	// defined.
+	// - "INVALID_UPDATE_VALUE" - An attempt was made to increment
+	// an event by a non-positive value.
+	FailureCause string `json:"failureCause,omitempty"`
+
+	// Kind: Uniquely identifies the type of this resource. Value is always
+	// the fixed string games#eventRecordFailure.
+	Kind string `json:"kind,omitempty"`
+}
+
+type EventRecordRequest struct {
+	// CurrentTimeMillis: The current time when this update was sent, in
+	// millis, since 1970 UTC (Unix Epoch).
+	CurrentTimeMillis int64 `json:"currentTimeMillis,omitempty,string"`
+
+	// Kind: Uniquely identifies the type of this resource. Value is always
+	// the fixed string games#eventRecordRequest.
+	Kind string `json:"kind,omitempty"`
+
+	// RequestId: The request ID used to identify this attempt to record
+	// events.
+	RequestId int64 `json:"requestId,omitempty,string"`
+
+	// TimePeriods: The time period updates being made in this request.
+	TimePeriods []*EventPeriodUpdate `json:"timePeriods,omitempty"`
+}
+
+type EventUpdateRequest struct {
+	// DefinitionId: The ID of the event being modified in this update.
+	DefinitionId string `json:"definitionId,omitempty"`
+
+	// Kind: Uniquely identifies the type of this resource. Value is always
+	// the fixed string games#eventUpdateRequest.
+	Kind string `json:"kind,omitempty"`
+
+	// UpdateCount: The update being made for this event.
+	UpdateCount int64 `json:"updateCount,omitempty,string"`
+}
+
+type EventUpdateResponse struct {
+	// BatchFailures: Any batch-wide failures which occurred applying
+	// updates.
+	BatchFailures []*EventBatchRecordFailure `json:"batchFailures,omitempty"`
+
+	// EventFailures: Any failures updating a particular event.
+	EventFailures []*EventRecordFailure `json:"eventFailures,omitempty"`
+
+	// Kind: Uniquely identifies the type of this resource. Value is always
+	// the fixed string games#eventUpdateResponse.
+	Kind string `json:"kind,omitempty"`
+
+	// PlayerEvents: The current status of any updated events
+	PlayerEvents []*PlayerEvent `json:"playerEvents,omitempty"`
+}
+
 type GamesAchievementIncrement struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string games#GamesAchievementIncrement.
@@ -729,6 +992,19 @@ type LeaderboardScores struct {
 	PrevPageToken string `json:"prevPageToken,omitempty"`
 }
 
+type MetagameConfig struct {
+	// CurrentVersion: Current version of the metagame configuration data.
+	// When this data is updated, the version will be increased by one.
+	CurrentVersion int64 `json:"currentVersion,omitempty"`
+
+	// Kind: Uniquely identifies the type of this resource. Value is always
+	// the fixed string games#metagameConfig.
+	Kind string `json:"kind,omitempty"`
+
+	// PlayerLevels: The list of player levels.
+	PlayerLevels []*PlayerLevel `json:"playerLevels,omitempty"`
+}
+
 type NetworkDiagnostics struct {
 	// AndroidNetworkSubtype: The Android network subtype.
 	AndroidNetworkSubtype int64 `json:"androidNetworkSubtype,omitempty"`
@@ -865,6 +1141,10 @@ type Player struct {
 	// DisplayName: The name to display for the player.
 	DisplayName string `json:"displayName,omitempty"`
 
+	// ExperienceInfo: An object to represent Play Game experience
+	// information for the player.
+	ExperienceInfo *PlayerExperienceInfo `json:"experienceInfo,omitempty"`
+
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string games#player.
 	Kind string `json:"kind,omitempty"`
@@ -880,6 +1160,9 @@ type Player struct {
 
 	// PlayerId: The ID of the player.
 	PlayerId string `json:"playerId,omitempty"`
+
+	// Title: The player's title rewarded for their game activities.
+	Title string `json:"title,omitempty"`
 }
 
 type PlayerName struct {
@@ -902,6 +1185,12 @@ type PlayerAchievement struct {
 
 	// CurrentSteps: The current steps for an incremental achievement.
 	CurrentSteps int64 `json:"currentSteps,omitempty"`
+
+	// ExperiencePoints: Experience points earned for the achievement. This
+	// field is absent for achievements that have not yet been unlocked and
+	// 0 for achievements that have been unlocked by testers but that are
+	// unpublished.
+	ExperiencePoints int64 `json:"experiencePoints,omitempty,string"`
 
 	// FormattedCurrentStepsString: The current steps for an incremental
 	// achievement as a string.
@@ -929,6 +1218,58 @@ type PlayerAchievementListResponse struct {
 
 	// NextPageToken: Token corresponding to the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+}
+
+type PlayerEvent struct {
+	// DefinitionId: The ID of the event.
+	DefinitionId string `json:"definitionId,omitempty"`
+
+	// FormattedNumEvents: The current number of times this event has
+	// occurred as a string.
+	FormattedNumEvents string `json:"formattedNumEvents,omitempty"`
+
+	// Kind: Uniquely identifies the type of this resource. Value is always
+	// the fixed string games#playerEvent.
+	Kind string `json:"kind,omitempty"`
+
+	// NumEvents: The current number of times this event has occurred.
+	NumEvents int64 `json:"numEvents,omitempty,string"`
+
+	// PlayerId: The ID of the player.
+	PlayerId string `json:"playerId,omitempty"`
+}
+
+type PlayerEventListResponse struct {
+	// Items: The player events.
+	Items []*PlayerEvent `json:"items,omitempty"`
+
+	// Kind: Uniquely identifies the type of this resource. Value is always
+	// the fixed string games#playerEventListResponse.
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: The pagination token for the next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+}
+
+type PlayerExperienceInfo struct {
+	// CurrentExperiencePoints: The current number of experience points for
+	// the player
+	CurrentExperiencePoints int64 `json:"currentExperiencePoints,omitempty,string"`
+
+	// CurrentLevel: The current level of the player
+	CurrentLevel *PlayerLevel `json:"currentLevel,omitempty"`
+
+	// Kind: Uniquely identifies the type of this resource. Value is always
+	// the fixed string games#playerExperienceInfo.
+	Kind string `json:"kind,omitempty"`
+
+	// LastLevelUpTimestampMillis: The timestamp when the player was leveled
+	// up last time millis since epoch UTC.
+	LastLevelUpTimestampMillis int64 `json:"lastLevelUpTimestampMillis,omitempty,string"`
+
+	// NextLevel: The next level of the player. If the current level is the
+	// maximum level, this should be same as the current level.
+	NextLevel *PlayerLevel `json:"nextLevel,omitempty"`
 }
 
 type PlayerLeaderboardScore struct {
@@ -985,6 +1326,21 @@ type PlayerLeaderboardScoreListResponse struct {
 
 	// Player: The Player resources for the owner of this score.
 	Player *Player `json:"player,omitempty"`
+}
+
+type PlayerLevel struct {
+	// Kind: Uniquely identifies the type of this resource. Value is always
+	// the fixed string games#playerLevel.
+	Kind string `json:"kind,omitempty"`
+
+	// Level: The level for the user
+	Level int64 `json:"level,omitempty"`
+
+	// MaxExperiencePoints: The maximum experience points for this level
+	MaxExperiencePoints int64 `json:"maxExperiencePoints,omitempty,string"`
+
+	// MinExperiencePoints: The minimum experience points for this level
+	MinExperiencePoints int64 `json:"minExperiencePoints,omitempty,string"`
 }
 
 type PlayerListResponse struct {
@@ -1112,10 +1468,169 @@ type PushTokenIdIos struct {
 	// base64.
 	Apns_device_token string `json:"apns_device_token,omitempty"`
 
-	// Apns_environment: Use SANDBOX during development for the APNS test
-	// server at gateway.sandbox.push.apple.com or PRODUCTION for the
-	// production server at gateway.push.apple.com.
+	// Apns_environment: Indicates whether this token should be used for the
+	// production or sandbox APNS server.
 	Apns_environment string `json:"apns_environment,omitempty"`
+}
+
+type Quest struct {
+	// AcceptedTimestampMillis: The timestamp at which the user accepted the
+	// quest in milliseconds since the epoch in UTC. Only present if the
+	// player has accepted the quest.
+	AcceptedTimestampMillis int64 `json:"acceptedTimestampMillis,omitempty,string"`
+
+	// ApplicationId: The ID of the application this quest is part of.
+	ApplicationId string `json:"applicationId,omitempty"`
+
+	// BannerUrl: The banner image URL for the quest.
+	BannerUrl string `json:"bannerUrl,omitempty"`
+
+	// Description: The description of the quest.
+	Description string `json:"description,omitempty"`
+
+	// EndTimestampMillis: The timestamp at which the quest ceases to be
+	// active in milliseconds since the epoch in UTC.
+	EndTimestampMillis int64 `json:"endTimestampMillis,omitempty,string"`
+
+	// IconUrl: The icon image URL for the quest.
+	IconUrl string `json:"iconUrl,omitempty"`
+
+	// Id: The ID of the quest.
+	Id string `json:"id,omitempty"`
+
+	// IsDefaultBannerUrl: Indicates whether the banner image being returned
+	// is a default image, or is game-provided.
+	IsDefaultBannerUrl bool `json:"isDefaultBannerUrl,omitempty"`
+
+	// IsDefaultIconUrl: Indicates whether the icon image being returned is
+	// a default image, or is game-provided.
+	IsDefaultIconUrl bool `json:"isDefaultIconUrl,omitempty"`
+
+	// Kind: Uniquely identifies the type of this resource. Value is always
+	// the fixed string games#quest.
+	Kind string `json:"kind,omitempty"`
+
+	// LastUpdatedTimestampMillis: The timestamp at which the quest was last
+	// updated by the user in milliseconds since the epoch in UTC. Only
+	// present if the player has accepted the quest.
+	LastUpdatedTimestampMillis int64 `json:"lastUpdatedTimestampMillis,omitempty,string"`
+
+	// Milestones: The quest milestones.
+	Milestones []*QuestMilestone `json:"milestones,omitempty"`
+
+	// Name: The name of the quest.
+	Name string `json:"name,omitempty"`
+
+	// NotifyTimestampMillis: The timestamp at which the user should be
+	// notified that the quest will end soon in milliseconds since the epoch
+	// in UTC.
+	NotifyTimestampMillis int64 `json:"notifyTimestampMillis,omitempty,string"`
+
+	// StartTimestampMillis: The timestamp at which the quest becomes active
+	// in milliseconds since the epoch in UTC.
+	StartTimestampMillis int64 `json:"startTimestampMillis,omitempty,string"`
+
+	// State: The state of the quest.
+	// Possible values are:
+	// - "UPCOMING" -
+	// The quest is upcoming. The user can see the quest, but cannot accept
+	// it until it is open.
+	// - "OPEN" - The quest is currently open and may
+	// be accepted at this time.
+	// - "ACCEPTED" - The user is currently
+	// participating in this quest.
+	// - "COMPLETED" - User has completed the
+	// quest.
+	// - "FAILED" - The quest was attempted but was not completed
+	// before the deadline expired.
+	// - "EXPIRED" - The quest has expired and
+	// was not accepted.
+	// - "DELETED" - The quest should be deleted from the
+	// local database.
+	State string `json:"state,omitempty"`
+}
+
+type QuestContribution struct {
+	// FormattedValue: The formatted value of the contribution.
+	FormattedValue string `json:"formattedValue,omitempty"`
+
+	// Kind: Uniquely identifies the type of this resource. Value is always
+	// the fixed string games#questContribution.
+	Kind string `json:"kind,omitempty"`
+
+	// Value: The value of the contribution.
+	Value int64 `json:"value,omitempty,string"`
+}
+
+type QuestCriterion struct {
+	// CompletionContribution: The total number of times the associated
+	// event must be incremented for the player to complete this quest.
+	CompletionContribution *QuestContribution `json:"completionContribution,omitempty"`
+
+	// CurrentContribution: The number of increments the player has made
+	// toward the completion count event increments required to complete the
+	// quest. This value will not exceed the completion contribution.
+	// There
+	// will be no currentContribution until the player has accepted the
+	// quest.
+	CurrentContribution *QuestContribution `json:"currentContribution,omitempty"`
+
+	// EventId: The ID of the event the criterion corresponds to.
+	EventId string `json:"eventId,omitempty"`
+
+	// InitialPlayerProgress: The value of the event associated with this
+	// quest at the time that the quest was accepted. This value may change
+	// if event increments that took place before the start of quest are
+	// uploaded after the quest starts.
+	// There will be no
+	// initialPlayerProgress until the player has accepted the quest.
+	InitialPlayerProgress *QuestContribution `json:"initialPlayerProgress,omitempty"`
+
+	// Kind: Uniquely identifies the type of this resource. Value is always
+	// the fixed string games#questCriterion.
+	Kind string `json:"kind,omitempty"`
+}
+
+type QuestListResponse struct {
+	// Items: The quests.
+	Items []*Quest `json:"items,omitempty"`
+
+	// Kind: Uniquely identifies the type of this resource. Value is always
+	// the fixed string games#questListResponse.
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: Token corresponding to the next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+}
+
+type QuestMilestone struct {
+	// CompletionRewardData: The completion reward data of the milestone,
+	// represented as a Base64-encoded string. This is a developer-specified
+	// binary blob with size between 0 and 2 kB before encoding.
+	CompletionRewardData string `json:"completionRewardData,omitempty"`
+
+	// Criteria: The criteria of the milestone.
+	Criteria []*QuestCriterion `json:"criteria,omitempty"`
+
+	// Id: The milestone ID.
+	Id string `json:"id,omitempty"`
+
+	// Kind: Uniquely identifies the type of this resource. Value is always
+	// the fixed string games#questMilestone.
+	Kind string `json:"kind,omitempty"`
+
+	// State: The current state of the milestone.
+	// Possible values are:
+	// -
+	// "COMPLETED_NOT_CLAIMED" - The milestone is complete, but has not yet
+	// been claimed.
+	// - "CLAIMED" - The milestone is complete and has been
+	// claimed.
+	// - "NOT_COMPLETED" - The milestone has not yet been
+	// completed.
+	// - "NOT_STARTED" - The milestone is for a quest that has
+	// not yet been accepted.
+	State string `json:"state,omitempty"`
 }
 
 type RevisionCheckResponse struct {
@@ -1584,6 +2099,79 @@ type ScoreSubmission struct {
 	// contain no more than 64 URI-safe characters as defined by section 2.3
 	// of RFC 3986.
 	ScoreTag string `json:"scoreTag,omitempty"`
+}
+
+type Snapshot struct {
+	// CoverImage: The cover image of this snapshot. May be absent if there
+	// is no image.
+	CoverImage *SnapshotImage `json:"coverImage,omitempty"`
+
+	// Description: The description of this snapshot.
+	Description string `json:"description,omitempty"`
+
+	// DriveId: The ID of the file underlying this snapshot in the Drive
+	// API. Only present if the snapshot is a view on a drive file and the
+	// file is owned by the caller.
+	DriveId string `json:"driveId,omitempty"`
+
+	// DurationMillis: The duration associated with this snapshot, in
+	// millis.
+	DurationMillis int64 `json:"durationMillis,omitempty,string"`
+
+	// Id: The ID of the snapshot.
+	Id string `json:"id,omitempty"`
+
+	// Kind: Uniquely identifies the type of this resource. Value is always
+	// the fixed string games#snapshot.
+	Kind string `json:"kind,omitempty"`
+
+	// LastModifiedMillis: The timestamp (in millis since Unix epoch) of the
+	// last modification to this snapshot.
+	LastModifiedMillis int64 `json:"lastModifiedMillis,omitempty,string"`
+
+	// Title: The title of this snapshot.
+	Title string `json:"title,omitempty"`
+
+	// Type: The type of this snapshot.
+	// Possible values are:
+	// - "SAVE_GAME"
+	// - A snapshot representing a save game.
+	Type string `json:"type,omitempty"`
+
+	// UniqueName: The unique name provided when the snapshot was created.
+	UniqueName string `json:"uniqueName,omitempty"`
+}
+
+type SnapshotImage struct {
+	// Height: The height of the image.
+	Height int64 `json:"height,omitempty"`
+
+	// Kind: Uniquely identifies the type of this resource. Value is always
+	// the fixed string games#snapshotImage.
+	Kind string `json:"kind,omitempty"`
+
+	// Mime_type: The mime_type of the image.
+	Mime_type string `json:"mime_type,omitempty"`
+
+	// Url: The url of the image. This url may be invalidated at any time
+	// and should not be cached.
+	Url string `json:"url,omitempty"`
+
+	// Width: The width of the image.
+	Width int64 `json:"width,omitempty"`
+}
+
+type SnapshotListResponse struct {
+	// Items: The snapshots.
+	Items []*Snapshot `json:"items,omitempty"`
+
+	// Kind: Uniquely identifies the type of this resource. Value is always
+	// the fixed string games#snapshotListResponse.
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: Token corresponding to the next page of results. If
+	// there are no more results, the token is omitted.
+	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
 type TurnBasedAutoMatchingCriteria struct {
@@ -2671,6 +3259,294 @@ func (c *ApplicationsPlayedCall) Do() error {
 
 }
 
+// method id "games.events.listByPlayer":
+
+type EventsListByPlayerCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// ListByPlayer: Returns a list of the current progress on events in
+// this application for the currently authorized user.
+func (r *EventsService) ListByPlayer() *EventsListByPlayerCall {
+	c := &EventsListByPlayerCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+// Language sets the optional parameter "language": The preferred
+// language to use for strings returned by this method.
+func (c *EventsListByPlayerCall) Language(language string) *EventsListByPlayerCall {
+	c.opt_["language"] = language
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of events to return in the response, used for paging. For any
+// response, the actual number of events to return may be less than the
+// specified maxResults.
+func (c *EventsListByPlayerCall) MaxResults(maxResults int64) *EventsListByPlayerCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The token returned
+// by the previous request.
+func (c *EventsListByPlayerCall) PageToken(pageToken string) *EventsListByPlayerCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+func (c *EventsListByPlayerCall) Do() (*PlayerEventListResponse, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["language"]; ok {
+		params.Set("language", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "events")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *PlayerEventListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a list of the current progress on events in this application for the currently authorized user.",
+	//   "httpMethod": "GET",
+	//   "id": "games.events.listByPlayer",
+	//   "parameters": {
+	//     "language": {
+	//       "description": "The preferred language to use for strings returned by this method.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "description": "The maximum number of events to return in the response, used for paging. For any response, the actual number of events to return may be less than the specified maxResults.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "maximum": "500",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The token returned by the previous request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "events",
+	//   "response": {
+	//     "$ref": "PlayerEventListResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.login"
+	//   ]
+	// }
+
+}
+
+// method id "games.events.listDefinitions":
+
+type EventsListDefinitionsCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// ListDefinitions: Returns a list of the event definitions in this
+// application.
+func (r *EventsService) ListDefinitions() *EventsListDefinitionsCall {
+	c := &EventsListDefinitionsCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+// Language sets the optional parameter "language": The preferred
+// language to use for strings returned by this method.
+func (c *EventsListDefinitionsCall) Language(language string) *EventsListDefinitionsCall {
+	c.opt_["language"] = language
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of event definitions to return in the response, used for
+// paging. For any response, the actual number of event definitions to
+// return may be less than the specified maxResults.
+func (c *EventsListDefinitionsCall) MaxResults(maxResults int64) *EventsListDefinitionsCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The token returned
+// by the previous request.
+func (c *EventsListDefinitionsCall) PageToken(pageToken string) *EventsListDefinitionsCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+func (c *EventsListDefinitionsCall) Do() (*EventDefinitionListResponse, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["language"]; ok {
+		params.Set("language", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "eventDefinitions")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *EventDefinitionListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a list of the event definitions in this application.",
+	//   "httpMethod": "GET",
+	//   "id": "games.events.listDefinitions",
+	//   "parameters": {
+	//     "language": {
+	//       "description": "The preferred language to use for strings returned by this method.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "description": "The maximum number of event definitions to return in the response, used for paging. For any response, the actual number of event definitions to return may be less than the specified maxResults.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "maximum": "500",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The token returned by the previous request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "eventDefinitions",
+	//   "response": {
+	//     "$ref": "EventDefinitionListResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.login"
+	//   ]
+	// }
+
+}
+
+// method id "games.events.record":
+
+type EventsRecordCall struct {
+	s                  *Service
+	eventrecordrequest *EventRecordRequest
+	opt_               map[string]interface{}
+}
+
+// Record: Records a batch of event updates for the currently authorized
+// user of this application.
+func (r *EventsService) Record(eventrecordrequest *EventRecordRequest) *EventsRecordCall {
+	c := &EventsRecordCall{s: r.s, opt_: make(map[string]interface{})}
+	c.eventrecordrequest = eventrecordrequest
+	return c
+}
+
+// Language sets the optional parameter "language": The preferred
+// language to use for strings returned by this method.
+func (c *EventsRecordCall) Language(language string) *EventsRecordCall {
+	c.opt_["language"] = language
+	return c
+}
+
+func (c *EventsRecordCall) Do() (*EventUpdateResponse, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.eventrecordrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["language"]; ok {
+		params.Set("language", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "events")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *EventUpdateResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Records a batch of event updates for the currently authorized user of this application.",
+	//   "httpMethod": "POST",
+	//   "id": "games.events.record",
+	//   "parameters": {
+	//     "language": {
+	//       "description": "The preferred language to use for strings returned by this method.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "events",
+	//   "request": {
+	//     "$ref": "EventRecordRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "EventUpdateResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.login"
+	//   ]
+	// }
+
+}
+
 // method id "games.leaderboards.get":
 
 type LeaderboardsGetCall struct {
@@ -2854,6 +3730,190 @@ func (c *LeaderboardsListCall) Do() (*LeaderboardListResponse, error) {
 
 }
 
+// method id "games.metagame.getMetagameConfig":
+
+type MetagameGetMetagameConfigCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// GetMetagameConfig: Return the metagame configuration data for the
+// calling application.
+func (r *MetagameService) GetMetagameConfig() *MetagameGetMetagameConfigCall {
+	c := &MetagameGetMetagameConfigCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+func (c *MetagameGetMetagameConfigCall) Do() (*MetagameConfig, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "metagameConfig")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *MetagameConfig
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Return the metagame configuration data for the calling application.",
+	//   "httpMethod": "GET",
+	//   "id": "games.metagame.getMetagameConfig",
+	//   "path": "metagameConfig",
+	//   "response": {
+	//     "$ref": "MetagameConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.login"
+	//   ]
+	// }
+
+}
+
+// method id "games.metagame.listCategoriesByPlayer":
+
+type MetagameListCategoriesByPlayerCall struct {
+	s          *Service
+	playerId   string
+	collection string
+	opt_       map[string]interface{}
+}
+
+// ListCategoriesByPlayer: List play data aggregated per category for
+// the player corresponding to playerId.
+func (r *MetagameService) ListCategoriesByPlayer(playerId string, collection string) *MetagameListCategoriesByPlayerCall {
+	c := &MetagameListCategoriesByPlayerCall{s: r.s, opt_: make(map[string]interface{})}
+	c.playerId = playerId
+	c.collection = collection
+	return c
+}
+
+// Language sets the optional parameter "language": The preferred
+// language to use for strings returned by this method.
+func (c *MetagameListCategoriesByPlayerCall) Language(language string) *MetagameListCategoriesByPlayerCall {
+	c.opt_["language"] = language
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of category resources to return in the response, used for
+// paging. For any response, the actual number of category resources
+// returned may be less than the specified maxResults.
+func (c *MetagameListCategoriesByPlayerCall) MaxResults(maxResults int64) *MetagameListCategoriesByPlayerCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The token returned
+// by the previous request.
+func (c *MetagameListCategoriesByPlayerCall) PageToken(pageToken string) *MetagameListCategoriesByPlayerCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+func (c *MetagameListCategoriesByPlayerCall) Do() (*CategoryListResponse, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["language"]; ok {
+		params.Set("language", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "players/{playerId}/categories/{collection}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{playerId}", url.QueryEscape(c.playerId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{collection}", url.QueryEscape(c.collection), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *CategoryListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List play data aggregated per category for the player corresponding to playerId.",
+	//   "httpMethod": "GET",
+	//   "id": "games.metagame.listCategoriesByPlayer",
+	//   "parameterOrder": [
+	//     "playerId",
+	//     "collection"
+	//   ],
+	//   "parameters": {
+	//     "collection": {
+	//       "description": "The collection of categories for which data will be returned.",
+	//       "enum": [
+	//         "all"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Retrieve data for all categories. This is the default."
+	//       ],
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "language": {
+	//       "description": "The preferred language to use for strings returned by this method.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "description": "The maximum number of category resources to return in the response, used for paging. For any response, the actual number of category resources returned may be less than the specified maxResults.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "maximum": "100",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The token returned by the previous request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "playerId": {
+	//       "description": "A player ID. A value of me may be used in place of the authenticated player's ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "players/{playerId}/categories/{collection}",
+	//   "response": {
+	//     "$ref": "CategoryListResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.login"
+	//   ]
+	// }
+
+}
+
 // method id "games.players.get":
 
 type PlayersGetCall struct {
@@ -3017,9 +4077,11 @@ func (c *PlayersListCall) Do() (*PlayerListResponse, error) {
 	//     "collection": {
 	//       "description": "Collection of players being retrieved",
 	//       "enum": [
-	//         "playedWith"
+	//         "playedWith",
+	//         "played_with"
 	//       ],
 	//       "enumDescriptions": [
+	//         "(DEPRECATED: please use played_with!) Retrieve a list of players you have played a multiplayer game (realtime or turn-based) with recently.",
 	//         "Retrieve a list of players you have played a multiplayer game (realtime or turn-based) with recently."
 	//       ],
 	//       "location": "path",
@@ -3159,6 +4221,285 @@ func (c *PushtokensUpdateCall) Do() error {
 	//   "path": "pushtokens",
 	//   "request": {
 	//     "$ref": "PushToken"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.login"
+	//   ]
+	// }
+
+}
+
+// method id "games.questMilestones.claim":
+
+type QuestMilestonesClaimCall struct {
+	s           *Service
+	questId     string
+	milestoneId string
+	requestId   int64
+	opt_        map[string]interface{}
+}
+
+// Claim: Report that reward for the milestone corresponding to
+// milestoneId for the quest corresponding to questId has been claimed
+// by the currently authorized user.
+func (r *QuestMilestonesService) Claim(questId string, milestoneId string, requestId int64) *QuestMilestonesClaimCall {
+	c := &QuestMilestonesClaimCall{s: r.s, opt_: make(map[string]interface{})}
+	c.questId = questId
+	c.milestoneId = milestoneId
+	c.requestId = requestId
+	return c
+}
+
+func (c *QuestMilestonesClaimCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("requestId", fmt.Sprintf("%v", c.requestId))
+	urls := googleapi.ResolveRelative(c.s.BasePath, "quests/{questId}/milestones/{milestoneId}/claim")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{questId}", url.QueryEscape(c.questId), 1)
+	req.URL.Path = strings.Replace(req.URL.Path, "{milestoneId}", url.QueryEscape(c.milestoneId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Report that reward for the milestone corresponding to milestoneId for the quest corresponding to questId has been claimed by the currently authorized user.",
+	//   "httpMethod": "PUT",
+	//   "id": "games.questMilestones.claim",
+	//   "parameterOrder": [
+	//     "questId",
+	//     "milestoneId",
+	//     "requestId"
+	//   ],
+	//   "parameters": {
+	//     "milestoneId": {
+	//       "description": "The ID of the Milestone.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "questId": {
+	//       "description": "The ID of the quest.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "A randomly generated numeric ID for each request specified by the caller. This number is used at the server to ensure that the request is handled correctly across retries.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "quests/{questId}/milestones/{milestoneId}/claim",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.login"
+	//   ]
+	// }
+
+}
+
+// method id "games.quests.accept":
+
+type QuestsAcceptCall struct {
+	s       *Service
+	questId string
+	opt_    map[string]interface{}
+}
+
+// Accept: Indicates that the currently authorized user will participate
+// in the quest.
+func (r *QuestsService) Accept(questId string) *QuestsAcceptCall {
+	c := &QuestsAcceptCall{s: r.s, opt_: make(map[string]interface{})}
+	c.questId = questId
+	return c
+}
+
+// Language sets the optional parameter "language": The preferred
+// language to use for strings returned by this method.
+func (c *QuestsAcceptCall) Language(language string) *QuestsAcceptCall {
+	c.opt_["language"] = language
+	return c
+}
+
+func (c *QuestsAcceptCall) Do() (*Quest, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["language"]; ok {
+		params.Set("language", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "quests/{questId}/accept")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{questId}", url.QueryEscape(c.questId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Quest
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Indicates that the currently authorized user will participate in the quest.",
+	//   "httpMethod": "POST",
+	//   "id": "games.quests.accept",
+	//   "parameterOrder": [
+	//     "questId"
+	//   ],
+	//   "parameters": {
+	//     "language": {
+	//       "description": "The preferred language to use for strings returned by this method.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "questId": {
+	//       "description": "The ID of the quest.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "quests/{questId}/accept",
+	//   "response": {
+	//     "$ref": "Quest"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.login"
+	//   ]
+	// }
+
+}
+
+// method id "games.quests.list":
+
+type QuestsListCall struct {
+	s        *Service
+	playerId string
+	opt_     map[string]interface{}
+}
+
+// List: Get a list of quests for your application and the currently
+// authenticated player.
+func (r *QuestsService) List(playerId string) *QuestsListCall {
+	c := &QuestsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.playerId = playerId
+	return c
+}
+
+// Language sets the optional parameter "language": The preferred
+// language to use for strings returned by this method.
+func (c *QuestsListCall) Language(language string) *QuestsListCall {
+	c.opt_["language"] = language
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of quest resources to return in the response, used for paging.
+// For any response, the actual number of quest resources returned may
+// be less than the specified maxResults. Acceptable values are 1 to 50,
+// inclusive. (Default: 50).
+func (c *QuestsListCall) MaxResults(maxResults int64) *QuestsListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The token returned
+// by the previous request.
+func (c *QuestsListCall) PageToken(pageToken string) *QuestsListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+func (c *QuestsListCall) Do() (*QuestListResponse, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["language"]; ok {
+		params.Set("language", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "players/{playerId}/quests")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{playerId}", url.QueryEscape(c.playerId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *QuestListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get a list of quests for your application and the currently authenticated player.",
+	//   "httpMethod": "GET",
+	//   "id": "games.quests.list",
+	//   "parameterOrder": [
+	//     "playerId"
+	//   ],
+	//   "parameters": {
+	//     "language": {
+	//       "description": "The preferred language to use for strings returned by this method.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "description": "The maximum number of quest resources to return in the response, used for paging. For any response, the actual number of quest resources returned may be less than the specified maxResults. Acceptable values are 1 to 50, inclusive. (Default: 50).",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "maximum": "50",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The token returned by the previous request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "playerId": {
+	//       "description": "A player ID. A value of me may be used in place of the authenticated player's ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "players/{playerId}/quests",
+	//   "response": {
+	//     "$ref": "QuestListResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/games",
@@ -4615,6 +5956,204 @@ func (c *ScoresSubmitMultipleCall) Do() (*PlayerScoreListResponse, error) {
 	//     "$ref": "PlayerScoreListResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.login"
+	//   ]
+	// }
+
+}
+
+// method id "games.snapshots.get":
+
+type SnapshotsGetCall struct {
+	s          *Service
+	snapshotId string
+	opt_       map[string]interface{}
+}
+
+// Get: Retrieves the metadata for a given snapshot ID.
+func (r *SnapshotsService) Get(snapshotId string) *SnapshotsGetCall {
+	c := &SnapshotsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.snapshotId = snapshotId
+	return c
+}
+
+// Language sets the optional parameter "language": The preferred
+// language to use for strings returned by this method.
+func (c *SnapshotsGetCall) Language(language string) *SnapshotsGetCall {
+	c.opt_["language"] = language
+	return c
+}
+
+func (c *SnapshotsGetCall) Do() (*Snapshot, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["language"]; ok {
+		params.Set("language", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "snapshots/{snapshotId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{snapshotId}", url.QueryEscape(c.snapshotId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Snapshot
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the metadata for a given snapshot ID.",
+	//   "httpMethod": "GET",
+	//   "id": "games.snapshots.get",
+	//   "parameterOrder": [
+	//     "snapshotId"
+	//   ],
+	//   "parameters": {
+	//     "language": {
+	//       "description": "The preferred language to use for strings returned by this method.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "snapshotId": {
+	//       "description": "The ID of the snapshot.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "snapshots/{snapshotId}",
+	//   "response": {
+	//     "$ref": "Snapshot"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive.appdata",
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.login"
+	//   ]
+	// }
+
+}
+
+// method id "games.snapshots.list":
+
+type SnapshotsListCall struct {
+	s        *Service
+	playerId string
+	opt_     map[string]interface{}
+}
+
+// List: Retrieves a list of snapshots created by your application for
+// the player corresponding to the player ID.
+func (r *SnapshotsService) List(playerId string) *SnapshotsListCall {
+	c := &SnapshotsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.playerId = playerId
+	return c
+}
+
+// Language sets the optional parameter "language": The preferred
+// language to use for strings returned by this method.
+func (c *SnapshotsListCall) Language(language string) *SnapshotsListCall {
+	c.opt_["language"] = language
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of snapshot resources to return in the response, used for
+// paging. For any response, the actual number of snapshot resources
+// returned may be less than the specified maxResults.
+func (c *SnapshotsListCall) MaxResults(maxResults int64) *SnapshotsListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The token returned
+// by the previous request.
+func (c *SnapshotsListCall) PageToken(pageToken string) *SnapshotsListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+func (c *SnapshotsListCall) Do() (*SnapshotListResponse, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["language"]; ok {
+		params.Set("language", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "players/{playerId}/snapshots")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{playerId}", url.QueryEscape(c.playerId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *SnapshotListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a list of snapshots created by your application for the player corresponding to the player ID.",
+	//   "httpMethod": "GET",
+	//   "id": "games.snapshots.list",
+	//   "parameterOrder": [
+	//     "playerId"
+	//   ],
+	//   "parameters": {
+	//     "language": {
+	//       "description": "The preferred language to use for strings returned by this method.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "description": "The maximum number of snapshot resources to return in the response, used for paging. For any response, the actual number of snapshot resources returned may be less than the specified maxResults.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "maximum": "25",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The token returned by the previous request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "playerId": {
+	//       "description": "A player ID. A value of me may be used in place of the authenticated player's ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "players/{playerId}/snapshots",
+	//   "response": {
+	//     "$ref": "SnapshotListResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive.appdata",
 	//     "https://www.googleapis.com/auth/games",
 	//     "https://www.googleapis.com/auth/plus.login"
 	//   ]

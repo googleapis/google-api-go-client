@@ -56,7 +56,9 @@ func New(client *http.Client) (*Service, error) {
 	s := &Service{client: client, BasePath: basePath}
 	s.Achievements = NewAchievementsService(s)
 	s.Applications = NewApplicationsService(s)
+	s.Events = NewEventsService(s)
 	s.Players = NewPlayersService(s)
+	s.Quests = NewQuestsService(s)
 	s.Rooms = NewRoomsService(s)
 	s.Scores = NewScoresService(s)
 	s.TurnBasedMatches = NewTurnBasedMatchesService(s)
@@ -71,7 +73,11 @@ type Service struct {
 
 	Applications *ApplicationsService
 
+	Events *EventsService
+
 	Players *PlayersService
+
+	Quests *QuestsService
 
 	Rooms *RoomsService
 
@@ -98,12 +104,30 @@ type ApplicationsService struct {
 	s *Service
 }
 
+func NewEventsService(s *Service) *EventsService {
+	rs := &EventsService{s: s}
+	return rs
+}
+
+type EventsService struct {
+	s *Service
+}
+
 func NewPlayersService(s *Service) *PlayersService {
 	rs := &PlayersService{s: s}
 	return rs
 }
 
 type PlayersService struct {
+	s *Service
+}
+
+func NewQuestsService(s *Service) *QuestsService {
+	rs := &QuestsService{s: s}
+	return rs
+}
+
+type QuestsService struct {
 	s *Service
 }
 
@@ -177,6 +201,34 @@ type GamesPlayedResource struct {
 	TimeMillis int64 `json:"timeMillis,omitempty,string"`
 }
 
+type GamesPlayerExperienceInfoResource struct {
+	// CurrentExperiencePoints: The current number of experience points for
+	// the player
+	CurrentExperiencePoints int64 `json:"currentExperiencePoints,omitempty,string"`
+
+	// CurrentLevel: The current level of the player
+	CurrentLevel *GamesPlayerLevelResource `json:"currentLevel,omitempty"`
+
+	// LastLevelUpTimestampMillis: The timestamp when the player was leveled
+	// up last time millis since epoch UTC.
+	LastLevelUpTimestampMillis int64 `json:"lastLevelUpTimestampMillis,omitempty,string"`
+
+	// NextLevel: The next level of the player. If the current level is the
+	// maximum level, this should be same as the current level.
+	NextLevel *GamesPlayerLevelResource `json:"nextLevel,omitempty"`
+}
+
+type GamesPlayerLevelResource struct {
+	// Level: The level for the user
+	Level int64 `json:"level,omitempty"`
+
+	// MaxExperiencePoints: The maximum experience points for this level
+	MaxExperiencePoints int64 `json:"maxExperiencePoints,omitempty,string"`
+
+	// MinExperiencePoints: The minimum experience points for this level
+	MinExperiencePoints int64 `json:"minExperiencePoints,omitempty,string"`
+}
+
 type HiddenPlayer struct {
 	// HiddenTimeMillis: The time this player was hidden.
 	HiddenTimeMillis int64 `json:"hiddenTimeMillis,omitempty,string"`
@@ -209,6 +261,10 @@ type Player struct {
 	// DisplayName: The name to display for the player.
 	DisplayName string `json:"displayName,omitempty"`
 
+	// ExperienceInfo: An object to represent Play Game experience
+	// information for the player.
+	ExperienceInfo *GamesPlayerExperienceInfoResource `json:"experienceInfo,omitempty"`
+
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string gamesManagement#player.
 	Kind string `json:"kind,omitempty"`
@@ -224,6 +280,9 @@ type Player struct {
 
 	// PlayerId: The ID of the player.
 	PlayerId string `json:"playerId,omitempty"`
+
+	// Title: The player's title rewarded for their game activities.
+	Title string `json:"title,omitempty"`
 }
 
 type PlayerName struct {
@@ -532,6 +591,175 @@ func (c *ApplicationsListHiddenCall) Do() (*HiddenPlayerList, error) {
 
 }
 
+// method id "gamesManagement.events.reset":
+
+type EventsResetCall struct {
+	s       *Service
+	eventId string
+	opt_    map[string]interface{}
+}
+
+// Reset: Reset all player progress on the event for the currently
+// authenticated player. This method is only accessible to whitelisted
+// tester accounts for your application. All resources that use the
+// event will also be reset.
+func (r *EventsService) Reset(eventId string) *EventsResetCall {
+	c := &EventsResetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.eventId = eventId
+	return c
+}
+
+func (c *EventsResetCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "events/{eventId}/reset")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{eventId}", url.QueryEscape(c.eventId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Reset all player progress on the event for the currently authenticated player. This method is only accessible to whitelisted tester accounts for your application. All resources that use the event will also be reset.",
+	//   "httpMethod": "POST",
+	//   "id": "gamesManagement.events.reset",
+	//   "parameterOrder": [
+	//     "eventId"
+	//   ],
+	//   "parameters": {
+	//     "eventId": {
+	//       "description": "The ID of the event.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "events/{eventId}/reset",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.login"
+	//   ]
+	// }
+
+}
+
+// method id "gamesManagement.events.resetAll":
+
+type EventsResetAllCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// ResetAll: Reset all player progress on all unpublished events for the
+// currently authenticated player. This method is only accessible to
+// whitelisted tester accounts for your application. All resources that
+// use the events will also be reset.
+func (r *EventsService) ResetAll() *EventsResetAllCall {
+	c := &EventsResetAllCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+func (c *EventsResetAllCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "events/reset")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Reset all player progress on all unpublished events for the currently authenticated player. This method is only accessible to whitelisted tester accounts for your application. All resources that use the events will also be reset.",
+	//   "httpMethod": "POST",
+	//   "id": "gamesManagement.events.resetAll",
+	//   "path": "events/reset",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.login"
+	//   ]
+	// }
+
+}
+
+// method id "gamesManagement.events.resetForAllPlayers":
+
+type EventsResetForAllPlayersCall struct {
+	s       *Service
+	eventId string
+	opt_    map[string]interface{}
+}
+
+// ResetForAllPlayers: Reset all player progress on the event for all
+// players. This method is only available to user accounts for your
+// developer console. Only draft events can be reset. All resources that
+// use the event will also be reset.
+func (r *EventsService) ResetForAllPlayers(eventId string) *EventsResetForAllPlayersCall {
+	c := &EventsResetForAllPlayersCall{s: r.s, opt_: make(map[string]interface{})}
+	c.eventId = eventId
+	return c
+}
+
+func (c *EventsResetForAllPlayersCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "events/{eventId}/resetForAllPlayers")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{eventId}", url.QueryEscape(c.eventId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Reset all player progress on the event for all players. This method is only available to user accounts for your developer console. Only draft events can be reset. All resources that use the event will also be reset.",
+	//   "httpMethod": "POST",
+	//   "id": "gamesManagement.events.resetForAllPlayers",
+	//   "parameterOrder": [
+	//     "eventId"
+	//   ],
+	//   "parameters": {
+	//     "eventId": {
+	//       "description": "The ID of the event.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "events/{eventId}/resetForAllPlayers",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.login"
+	//   ]
+	// }
+
+}
+
 // method id "gamesManagement.players.hide":
 
 type PlayersHideCall struct {
@@ -664,6 +892,66 @@ func (c *PlayersUnhideCall) Do() error {
 	//     }
 	//   },
 	//   "path": "applications/{applicationId}/players/hidden/{playerId}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.login"
+	//   ]
+	// }
+
+}
+
+// method id "gamesManagement.quests.reset":
+
+type QuestsResetCall struct {
+	s       *Service
+	questId string
+	opt_    map[string]interface{}
+}
+
+// Reset: Reset all player progress on the quest for the currently
+// authenticated player. This method is only accessible to whitelisted
+// tester accounts for your application.
+func (r *QuestsService) Reset(questId string) *QuestsResetCall {
+	c := &QuestsResetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.questId = questId
+	return c
+}
+
+func (c *QuestsResetCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "quests/{questId}/reset")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{questId}", url.QueryEscape(c.questId), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Reset all player progress on the quest for the currently authenticated player. This method is only accessible to whitelisted tester accounts for your application.",
+	//   "httpMethod": "POST",
+	//   "id": "gamesManagement.quests.reset",
+	//   "parameterOrder": [
+	//     "questId"
+	//   ],
+	//   "parameters": {
+	//     "questId": {
+	//       "description": "The ID of the quest.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "quests/{questId}/reset",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/games",
 	//     "https://www.googleapis.com/auth/plus.login"

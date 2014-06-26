@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/4rwzQ1xDe8Te7WdesPFPpgJvnHg\"",
+ "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/kOh4UWPeBkrcpeXA6cdiUiHI43c\"",
  "discoveryVersion": "v1",
  "id": "admin:directory_v1",
  "name": "admin",
@@ -366,6 +366,23 @@
      "type": "string",
      "description": "Chromebook platform version (Read-only)"
     },
+    "recentUsers": {
+     "type": "array",
+     "description": "List of recent device users, in descending order by last login time (Read-only)",
+     "items": {
+      "type": "object",
+      "properties": {
+       "email": {
+        "type": "string",
+        "description": "Email address of the user. Present only if the user type is managed"
+       },
+       "type": {
+        "type": "string",
+        "description": "The type of the user"
+       }
+      }
+     }
+    },
     "serialNumber": {
      "type": "string",
      "description": "Chromebook serial number (Read-only)"
@@ -596,6 +613,22 @@
       }
      }
     },
+    "basebandVersion": {
+     "type": "string",
+     "description": "Mobile Device Baseband version (Read-only)"
+    },
+    "buildNumber": {
+     "type": "string",
+     "description": "Mobile Device Build number (Read-only)"
+    },
+    "defaultLanguage": {
+     "type": "string",
+     "description": "The default locale used on the Mobile Device (Read-only)"
+    },
+    "deviceCompromisedStatus": {
+     "type": "string",
+     "description": "Mobile Device compromised status (Read-only)"
+    },
     "deviceId": {
      "type": "string",
      "description": "Mobile Device serial number (Read-only)"
@@ -620,6 +653,14 @@
      "type": "string",
      "description": "Mobile Device Hardware Id (Read-only)"
     },
+    "imei": {
+     "type": "string",
+     "description": "Mobile Device IMEI number (Read-only)"
+    },
+    "kernelVersion": {
+     "type": "string",
+     "description": "Mobile Device Kernel version (Read-only)"
+    },
     "kind": {
      "type": "string",
      "description": "Kind of resource this is.",
@@ -629,6 +670,14 @@
      "type": "string",
      "description": "Date and time the device was last synchronized with the policy settings in the Google Apps administrator control panel (Read-only)",
      "format": "date-time"
+    },
+    "managedAccountIsOnOwnerProfile": {
+     "type": "boolean",
+     "description": "Boolean indicating if this account is on owner/primary profile or not (Read-only)"
+    },
+    "meid": {
+     "type": "string",
+     "description": "Mobile Device MEID number (Read-only)"
     },
     "model": {
      "type": "string",
@@ -641,6 +690,10 @@
       "type": "string"
      }
     },
+    "networkOperator": {
+     "type": "string",
+     "description": "Mobile Device mobile or network operator (if available) (Read-only)"
+    },
     "os": {
      "type": "string",
      "description": "Name of the mobile operating system"
@@ -648,6 +701,10 @@
     "resourceId": {
      "type": "string",
      "description": "Unique identifier of Mobile Device (Read-only)"
+    },
+    "serialNumber": {
+     "type": "string",
+     "description": "Mobile Device SSN or Serial Number (Read-only)"
     },
     "status": {
      "type": "string",
@@ -660,6 +717,10 @@
     "userAgent": {
      "type": "string",
      "description": "Mobile Device user agent"
+    },
+    "wifiMacAddress": {
+     "type": "string",
+     "description": "Mobile Device WiFi MAC address (Read-only)"
     }
    }
   },

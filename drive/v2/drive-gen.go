@@ -297,6 +297,12 @@ type About struct {
 	// items.
 	QuotaBytesUsedInTrash int64 `json:"quotaBytesUsedInTrash,omitempty,string"`
 
+	// QuotaType: The type of the user's storage quota. Possible values are:
+	//
+	// - LIMITED
+	// - UNLIMITED
+	QuotaType string `json:"quotaType,omitempty"`
+
 	// RemainingChangeIds: The number of remaining change ids.
 	RemainingChangeIds int64 `json:"remainingChangeIds,omitempty,string"`
 
@@ -3487,7 +3493,7 @@ func (c *FilesInsertCall) Do() (*File, error) {
 	//     "accept": [
 	//       "*/*"
 	//     ],
-	//     "maxSize": "1024GB",
+	//     "maxSize": "5120GB",
 	//     "protocols": {
 	//       "resumable": {
 	//         "multipart": true,
@@ -4361,7 +4367,7 @@ func (c *FilesUpdateCall) Do() (*File, error) {
 	//     "accept": [
 	//       "*/*"
 	//     ],
-	//     "maxSize": "1024GB",
+	//     "maxSize": "5120GB",
 	//     "protocols": {
 	//       "resumable": {
 	//         "multipart": true,

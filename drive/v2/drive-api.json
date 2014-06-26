@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/Ws1ATmP3hfBGUbWPVOgFpUqGfbk\"",
+ "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/IERJ5Hcz59m5dfn8v5XjYGA7sqU\"",
  "discoveryVersion": "v1",
  "id": "drive:v2",
  "name": "drive",
@@ -278,6 +278,10 @@
      "type": "string",
      "description": "The number of quota bytes used by trashed items.",
      "format": "int64"
+    },
+    "quotaType": {
+     "type": "string",
+     "description": "The type of the user's storage quota. Possible values are:  \n- LIMITED \n- UNLIMITED"
     },
     "remainingChangeIds": {
      "type": "string",
@@ -2531,7 +2535,7 @@
       "accept": [
        "*/*"
       ],
-      "maxSize": "1024GB",
+      "maxSize": "5120GB",
       "protocols": {
        "simple": {
         "multipart": true,
@@ -2869,7 +2873,7 @@
       "accept": [
        "*/*"
       ],
-      "maxSize": "1024GB",
+      "maxSize": "5120GB",
       "protocols": {
        "simple": {
         "multipart": true,

@@ -50,3 +50,25 @@ func TestAPIs(t *testing.T) {
 		}
 	}
 }
+
+func TestScope(t *testing.T) {
+	tests := [][]string{
+		{
+			"https://www.googleapis.com/auth/somescope",
+			"SomescopeScope",
+		},
+		{
+			"https://mail.google.com/somescope",
+			"MailGoogleComSomescopeScope",
+		},
+		{
+			"https://mail.google.com/",
+			"MailGoogleComScope",
+		},
+	}
+	for _, test := range tests {
+		if got := scopeIdentifierFromURL(test[0]); got != test[1] {
+			t.Errorf("scopeIdentifierFromURL(%q) got %q, want %q", test[0], got, test[1])
+		}
+	}
+}

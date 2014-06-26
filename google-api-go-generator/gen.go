@@ -512,7 +512,12 @@ func (a *API) generateScopeConstants() {
 func scopeIdentifierFromURL(urlStr string) string {
 	const prefix = "https://www.googleapis.com/auth/"
 	if !strings.HasPrefix(urlStr, prefix) {
-		log.Fatalf("Unexpected oauth2 scope %q doesn't start with %q", urlStr, prefix)
+		const https = "https://"
+		if !strings.HasPrefix(urlStr, https) {
+			log.Fatalf("Unexpected oauth2 scope %q doesn't start with %q", urlStr, https)
+		}
+		ident := validGoIdentifer(depunct(urlStr[len(https):], true)) + "Scope"
+		return ident
 	}
 	ident := validGoIdentifer(initialCap(urlStr[len(prefix):])) + "Scope"
 	return ident

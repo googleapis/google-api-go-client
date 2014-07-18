@@ -280,6 +280,9 @@ type Asset struct {
 	// Description: The asset's description.
 	Description string `json:"description,omitempty"`
 
+	// Etag: The ETag, used to refer to the current version of the asset.
+	Etag string `json:"etag,omitempty"`
+
 	// Id: The asset's globally unique ID.
 	Id string `json:"id,omitempty"`
 
@@ -518,58 +521,6 @@ type IconStyle struct {
 	Name string `json:"name,omitempty"`
 }
 
-type Image struct {
-	// AcquisitionTime: The acquisition time of this Raster.
-	AcquisitionTime *AcquisitionTime `json:"acquisitionTime,omitempty"`
-
-	// Attribution: The name of the attribution to be used for this Raster.
-	Attribution string `json:"attribution,omitempty"`
-
-	// Bbox: A rectangular bounding box which contains all of the data in
-	// this Raster. The numbers represent latitude and longitude in decimal
-	// degrees.
-	Bbox []float64 `json:"bbox,omitempty"`
-
-	// CreationTime: The creation time of this raster. The value is an RFC
-	// 3339 formatted date-time value (e.g. 1970-01-01T00:00:00Z).
-	CreationTime string `json:"creationTime,omitempty"`
-
-	// Description: The description of this Raster, supplied by the author.
-	Description string `json:"description,omitempty"`
-
-	// DraftAccessList: The Map Editors access list to share this Raster
-	// with.
-	DraftAccessList string `json:"draftAccessList,omitempty"`
-
-	// Files: The files associated with this Raster.
-	Files []*File `json:"files,omitempty"`
-
-	// Id: A globally unique ID, used to refer to this Raster.
-	Id string `json:"id,omitempty"`
-
-	// LastModifiedTime: The last modified time of this raster. The value is
-	// an RFC 3339 formatted date-time value (e.g. 1970-01-01T00:00:00Z).
-	LastModifiedTime string `json:"lastModifiedTime,omitempty"`
-
-	// MaskType: The mask processing type of this Raster.
-	MaskType string `json:"maskType,omitempty"`
-
-	// Name: The name of this Raster, supplied by the author.
-	Name string `json:"name,omitempty"`
-
-	// ProcessingStatus: The processing status of this Raster.
-	ProcessingStatus string `json:"processingStatus,omitempty"`
-
-	// ProjectId: The ID of the project that this Raster is in.
-	ProjectId string `json:"projectId,omitempty"`
-
-	// RasterType: The type of this Raster. Always "image" today.
-	RasterType string `json:"rasterType,omitempty"`
-
-	// Tags: Tags of this Raster.
-	Tags []string `json:"tags,omitempty"`
-}
-
 type LabelStyle struct {
 	// Color: Color of the text. If not provided, default to black.
 	Color string `json:"color,omitempty"`
@@ -617,11 +568,14 @@ type Layer struct {
 	// Description: The description of this Layer, supplied by the author.
 	Description string `json:"description,omitempty"`
 
-	// DraftAccessList: The name of an access list of the Map Editor type.
-	// The user on whose behalf the request is being sent must be an editor
-	// on that access list. Read About access lists in the Google Maps
-	// Engine help center for more information.
+	// DraftAccessList: Deprecated: The name of an access list of the Map
+	// Editor type. The user on whose behalf the request is being sent must
+	// be an editor on that access list. Read About access lists in the
+	// Google Maps Engine help center for more information.
 	DraftAccessList string `json:"draftAccessList,omitempty"`
+
+	// Etag: The ETag, used to refer to the current version of the asset.
+	Etag string `json:"etag,omitempty"`
 
 	// Id: A globally unique ID, used to refer to this Layer.
 	Id string `json:"id,omitempty"`
@@ -639,11 +593,11 @@ type Layer struct {
 	// ProjectId: The ID of the project that this Layer is in.
 	ProjectId string `json:"projectId,omitempty"`
 
-	// PublishedAccessList: The access list to whom view permissions are
-	// granted. The value must be the name of a Maps Engine access list of
-	// the Map Viewer type, and the user must be a viewer on that list. Read
-	// About access lists in the Google Maps Engine help center for more
-	// information.
+	// PublishedAccessList: Deprecated: The access list to whom view
+	// permissions are granted. The value must be the name of a Maps Engine
+	// access list of the Map Viewer type, and the user must be a viewer on
+	// that list. Read About access lists in the Google Maps Engine help
+	// center for more information.
 	PublishedAccessList string `json:"publishedAccessList,omitempty"`
 
 	// Style: The Styling information for a vector layer.
@@ -711,11 +665,14 @@ type Map struct {
 	// Description: The description of this Map, supplied by the author.
 	Description string `json:"description,omitempty"`
 
-	// DraftAccessList: The name of an access list of the Map Editor type.
-	// The user on whose behalf the request is being sent must be an editor
-	// on that access list. Read About access lists in the Google Maps
-	// Engine help center for more information.
+	// DraftAccessList: Deprecated: The name of an access list of the Map
+	// Editor type. The user on whose behalf the request is being sent must
+	// be an editor on that access list. Read About access lists in the
+	// Google Maps Engine help center for more information.
 	DraftAccessList string `json:"draftAccessList,omitempty"`
+
+	// Etag: The ETag, used to refer to the current version of the asset.
+	Etag string `json:"etag,omitempty"`
 
 	// Id: A globally unique ID, used to refer to this Map.
 	Id string `json:"id,omitempty"`
@@ -727,14 +684,18 @@ type Map struct {
 	// Name: The name of this Map, supplied by the author.
 	Name string `json:"name,omitempty"`
 
+	// ProcessingStatus: The processing status of this map. Map processing
+	// is automatically started once a map becomes ready for processing.
+	ProcessingStatus string `json:"processingStatus,omitempty"`
+
 	// ProjectId: The ID of the project that this Map is in.
 	ProjectId string `json:"projectId,omitempty"`
 
-	// PublishedAccessList: The access list to whom view permissions are
-	// granted. The value must be the name of a Maps Engine access list of
-	// the Map Viewer type, and the user must be a viewer on that list. Read
-	// About access lists in the Google Maps Engine help center for more
-	// information.
+	// PublishedAccessList: Deprecated: The access list to whom view
+	// permissions are granted. The value must be the name of a Maps Engine
+	// access list of the Map Viewer type, and the user must be a viewer on
+	// that list. Read About access lists in the Google Maps Engine help
+	// center for more information.
 	PublishedAccessList string `json:"publishedAccessList,omitempty"`
 
 	// Tags: Tags of this Map.
@@ -876,6 +837,126 @@ type PublishResponse struct {
 }
 
 type Raster struct {
+	// AcquisitionTime: The acquisition time of this Raster.
+	AcquisitionTime *AcquisitionTime `json:"acquisitionTime,omitempty"`
+
+	// Attribution: The name of the attribution to be used for this Raster.
+	Attribution interface{} `json:"attribution,omitempty"`
+
+	// Bbox: A rectangular bounding box which contains all of the data in
+	// this Raster. The numbers represent latitude and longitude in decimal
+	// degrees.
+	Bbox []float64 `json:"bbox,omitempty"`
+
+	// CreationTime: The creation time of this raster. The value is an RFC
+	// 3339 formatted date-time value (e.g. 1970-01-01T00:00:00Z).
+	CreationTime string `json:"creationTime,omitempty"`
+
+	// Description: The description of this Raster, supplied by the author.
+	Description string `json:"description,omitempty"`
+
+	// DraftAccessList: Deprecated: The name of an access list of the Map
+	// Editor type. The user on whose behalf the request is being sent must
+	// be an editor on that access list. Read About access lists in the
+	// Google Maps Engine help center for more information.
+	DraftAccessList string `json:"draftAccessList,omitempty"`
+
+	// Etag: The ETag, used to refer to the current version of the asset.
+	Etag string `json:"etag,omitempty"`
+
+	// Files: The files associated with this Raster.
+	Files []*File `json:"files,omitempty"`
+
+	// Id: A globally unique ID, used to refer to this Raster.
+	Id string `json:"id,omitempty"`
+
+	// LastModifiedTime: The last modified time of this raster. The value is
+	// an RFC 3339 formatted date-time value (e.g. 1970-01-01T00:00:00Z).
+	LastModifiedTime string `json:"lastModifiedTime,omitempty"`
+
+	// MaskType: The mask processing type of this Raster.
+	MaskType string `json:"maskType,omitempty"`
+
+	// Name: The name of this Raster, supplied by the author.
+	Name string `json:"name,omitempty"`
+
+	// ProcessingStatus: The processing status of this Raster.
+	ProcessingStatus string `json:"processingStatus,omitempty"`
+
+	// ProjectId: The ID of the project that this Raster is in.
+	ProjectId string `json:"projectId,omitempty"`
+
+	// RasterType: The type of this Raster. Always "image" today.
+	RasterType string `json:"rasterType,omitempty"`
+
+	// Tags: Tags of this Raster.
+	Tags []string `json:"tags,omitempty"`
+}
+
+type RasterCollection struct {
+	// Attribution: The name of the attribution to be used for this
+	// RasterCollection.
+	Attribution interface{} `json:"attribution,omitempty"`
+
+	// Bbox: A rectangular bounding box which contains all of the data in
+	// this RasterCollection. The numbers represent latitude and longitude
+	// in decimal degrees.
+	Bbox []float64 `json:"bbox,omitempty"`
+
+	// CreationTime: The creation time of this RasterCollection. The value
+	// is an RFC 3339 formatted date-time value (e.g. 1970-01-01T00:00:00Z).
+	CreationTime string `json:"creationTime,omitempty"`
+
+	// Description: The description of this RasterCollection, supplied by
+	// the author.
+	Description string `json:"description,omitempty"`
+
+	// DraftAccessList: Deprecated: The name of an access list of the Map
+	// Editor type. The user on whose behalf the request is being sent must
+	// be an editor on that access list. Read About access lists in the
+	// Google Maps Engine help center for more information.
+	DraftAccessList string `json:"draftAccessList,omitempty"`
+
+	// Etag: The ETag, used to refer to the current version of the asset.
+	Etag string `json:"etag,omitempty"`
+
+	// Id: A globally unique ID, used to refer to this RasterCollection.
+	Id string `json:"id,omitempty"`
+
+	// LastModifiedTime: The last modified time of this RasterCollection.
+	// The value is an RFC 3339 formatted date-time value (e.g.
+	// 1970-01-01T00:00:00Z).
+	LastModifiedTime string `json:"lastModifiedTime,omitempty"`
+
+	// Mosaic: True if this RasterCollection is a mosaic.
+	Mosaic bool `json:"mosaic,omitempty"`
+
+	// Name: The name of this RasterCollection, supplied by the author.
+	Name string `json:"name,omitempty"`
+
+	// ProcessingStatus: The processing status of this RasterCollection.
+	ProcessingStatus string `json:"processingStatus,omitempty"`
+
+	// ProjectId: The ID of the project that this RasterCollection is in.
+	ProjectId string `json:"projectId,omitempty"`
+
+	// RasterType: The type of rasters contained within this
+	// RasterCollection.
+	RasterType string `json:"rasterType,omitempty"`
+
+	// Tags: Tags of this RasterCollection.
+	Tags []string `json:"tags,omitempty"`
+}
+
+type RasterCollectionsListResponse struct {
+	// NextPageToken: Next page token.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// RasterCollections: Resources returned.
+	RasterCollections []*RasterCollection `json:"rasterCollections,omitempty"`
+}
+
+type RasterCollectionsRaster struct {
 	// Bbox: A rectangular bounding box which contains all of the data in
 	// this Raster. The numbers represent latitude and longitude in decimal
 	// degrees.
@@ -908,58 +989,6 @@ type Raster struct {
 	Tags []string `json:"tags,omitempty"`
 }
 
-type RasterCollection struct {
-	// Attribution: The name of the attribution to be used for this
-	// RasterCollection.
-	Attribution string `json:"attribution,omitempty"`
-
-	// Bbox: A rectangular bounding box which contains all of the data in
-	// this RasterCollection. The numbers represent latitude and longitude
-	// in decimal degrees.
-	Bbox []float64 `json:"bbox,omitempty"`
-
-	// CreationTime: The creation time of this RasterCollection. The value
-	// is an RFC 3339 formatted date-time value (e.g. 1970-01-01T00:00:00Z).
-	CreationTime string `json:"creationTime,omitempty"`
-
-	// Description: The description of this RasterCollection, supplied by
-	// the author.
-	Description string `json:"description,omitempty"`
-
-	// DraftAccessList: The name of an access list of the Map Editor type.
-	// The user on whose behalf the request is being sent must be an editor
-	// on that access list. Read About access lists in the Google Maps
-	// Engine help center for more information.
-	DraftAccessList string `json:"draftAccessList,omitempty"`
-
-	// Id: A globally unique ID, used to refer to this RasterCollection.
-	Id string `json:"id,omitempty"`
-
-	// LastModifiedTime: The last modified time of this RasterCollection.
-	// The value is an RFC 3339 formatted date-time value (e.g.
-	// 1970-01-01T00:00:00Z).
-	LastModifiedTime string `json:"lastModifiedTime,omitempty"`
-
-	// Mosaic: True if this RasterCollection is a mosaic.
-	Mosaic bool `json:"mosaic,omitempty"`
-
-	// Name: The name of this RasterCollection, supplied by the author.
-	Name string `json:"name,omitempty"`
-
-	// ProcessingStatus: The processing status of this RasterCollection.
-	ProcessingStatus string `json:"processingStatus,omitempty"`
-
-	// ProjectId: The ID of the project that this RasterCollection is in.
-	ProjectId string `json:"projectId,omitempty"`
-
-	// RasterType: The type of rasters contained within this
-	// RasterCollection.
-	RasterType string `json:"rasterType,omitempty"`
-
-	// Tags: Tags of this RasterCollection.
-	Tags []string `json:"tags,omitempty"`
-}
-
 type RasterCollectionsRasterBatchDeleteRequest struct {
 	// Ids: An array of Raster asset IDs to be removed from this
 	// RasterCollection.
@@ -978,20 +1007,12 @@ type RasterCollectionsRastersBatchInsertRequest struct {
 type RasterCollectionsRastersBatchInsertResponse struct {
 }
 
-type RastercollectionsListResponse struct {
-	// NextPageToken: Next page token.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// RasterCollections: Resources returned.
-	RasterCollections []*RasterCollection `json:"rasterCollections,omitempty"`
-}
-
-type RastersListResponse struct {
+type RasterCollectionsRastersListResponse struct {
 	// NextPageToken: Next page token.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Rasters: Resources returned.
-	Rasters []*Raster `json:"rasters,omitempty"`
+	Rasters []*RasterCollectionsRaster `json:"rasters,omitempty"`
 }
 
 type Schema struct {
@@ -1024,11 +1045,14 @@ type Table struct {
 	// Description: The description of this table, supplied by the author.
 	Description string `json:"description,omitempty"`
 
-	// DraftAccessList: The name of an access list of the Map Editor type.
-	// The user on whose behalf the request is being sent must be an editor
-	// on that access list. Read About access lists in the Google Maps
-	// Engine help center for more information.
+	// DraftAccessList: Deprecated: The name of an access list of the Map
+	// Editor type. The user on whose behalf the request is being sent must
+	// be an editor on that access list. Read About access lists in the
+	// Google Maps Engine help center for more information.
 	DraftAccessList string `json:"draftAccessList,omitempty"`
+
+	// Etag: The ETag, used to refer to the current version of the asset.
+	Etag string `json:"etag,omitempty"`
 
 	// Files: The files associated with this table.
 	Files []*File `json:"files,omitempty"`
@@ -1049,11 +1073,11 @@ type Table struct {
 	// ProjectId: The ID of the project to which the table belongs.
 	ProjectId string `json:"projectId,omitempty"`
 
-	// PublishedAccessList: The access list to whom view permissions are
-	// granted. The value must be the name of a Maps Engine access list of
-	// the Map Viewer type, and the user must be a viewer on that list. Read
-	// About access lists in the Google Maps Engine help center for more
-	// information.
+	// PublishedAccessList: Deprecated: The access list to whom view
+	// permissions are granted. The value must be the name of a Maps Engine
+	// access list of the Map Viewer type, and the user must be a viewer on
+	// that list. Read About access lists in the Google Maps Engine help
+	// center for more information.
 	PublishedAccessList string `json:"publishedAccessList,omitempty"`
 
 	// Schema: The schema for this table.
@@ -1086,9 +1110,6 @@ type TablesListResponse struct {
 }
 
 type VectorStyle struct {
-	// DisplayRules: Display rules of the vector style. The first matched
-	// rule will apply to the features. If no display rule is provided, a
-	// default display rule will be generated according to Geometry type.
 	DisplayRules []*DisplayRule `json:"displayRules,omitempty"`
 
 	// FeatureInfo: Individual feature info, this is called Info Window in
@@ -1262,6 +1283,13 @@ func (c *AssetsListCall) ProjectId(projectId string) *AssetsListCall {
 	return c
 }
 
+// Tags sets the optional parameter "tags": A comma separated list of
+// tags. Returned assets will contain all the tags from the list.
+func (c *AssetsListCall) Tags(tags string) *AssetsListCall {
+	c.opt_["tags"] = tags
+	return c
+}
+
 // Type sets the optional parameter "type": An asset type restriction.
 // If set, only resources of this type will be returned.
 func (c *AssetsListCall) Type(type_ string) *AssetsListCall {
@@ -1299,6 +1327,9 @@ func (c *AssetsListCall) Do() (*AssetsListResponse, error) {
 	}
 	if v, ok := c.opt_["projectId"]; ok {
 		params.Set("projectId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["tags"]; ok {
+		params.Set("tags", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["type"]; ok {
 		params.Set("type", fmt.Sprintf("%v", v))
@@ -1373,6 +1404,11 @@ func (c *AssetsListCall) Do() (*AssetsListResponse, error) {
 	//     },
 	//     "projectId": {
 	//       "description": "The ID of a Maps Engine project, used to filter the response. To list all available projects with their IDs, send a Projects: list request. You can also find your project ID as the value of the DashboardPlace:cid URL parameter when signed in to mapsengine.google.com.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "tags": {
+	//       "description": "A comma separated list of tags. Returned assets will contain all the tags from the list.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1505,6 +1541,70 @@ func (c *AssetsParentsListCall) Do() (*ParentsListResponse, error) {
 
 }
 
+// method id "mapsengine.layers.cancelProcessing":
+
+type LayersCancelProcessingCall struct {
+	s    *Service
+	id   string
+	opt_ map[string]interface{}
+}
+
+// CancelProcessing: Cancel processing on a layer asset.
+func (r *LayersService) CancelProcessing(id string) *LayersCancelProcessingCall {
+	c := &LayersCancelProcessingCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	return c
+}
+
+func (c *LayersCancelProcessingCall) Do() (*ProcessResponse, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "layers/{id}/cancelProcessing")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *ProcessResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Cancel processing on a layer asset.",
+	//   "httpMethod": "POST",
+	//   "id": "mapsengine.layers.cancelProcessing",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The ID of the layer.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "layers/{id}/cancelProcessing",
+	//   "response": {
+	//     "$ref": "ProcessResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/mapsengine"
+	//   ]
+	// }
+
+}
+
 // method id "mapsengine.layers.create":
 
 type LayersCreateCall struct {
@@ -1576,6 +1676,63 @@ func (c *LayersCreateCall) Do() (*Layer, error) {
 	//   "response": {
 	//     "$ref": "Layer"
 	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/mapsengine"
+	//   ]
+	// }
+
+}
+
+// method id "mapsengine.layers.delete":
+
+type LayersDeleteCall struct {
+	s    *Service
+	id   string
+	opt_ map[string]interface{}
+}
+
+// Delete: Delete a layer.
+func (r *LayersService) Delete(id string) *LayersDeleteCall {
+	c := &LayersDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	return c
+}
+
+func (c *LayersDeleteCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "layers/{id}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Delete a layer.",
+	//   "httpMethod": "DELETE",
+	//   "id": "mapsengine.layers.delete",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The ID of the layer. Only the layer creator or project owner are permitted to delete. If the layer is published, or included in a map, the request will fail. Unpublish the layer, and remove it from all maps prior to deleting.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "layers/{id}",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/mapsengine"
 	//   ]
@@ -1757,6 +1914,13 @@ func (c *LayersListCall) ProjectId(projectId string) *LayersListCall {
 	return c
 }
 
+// Tags sets the optional parameter "tags": A comma separated list of
+// tags. Returned assets will contain all the tags from the list.
+func (c *LayersListCall) Tags(tags string) *LayersListCall {
+	c.opt_["tags"] = tags
+	return c
+}
+
 func (c *LayersListCall) Do() (*LayersListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1787,6 +1951,9 @@ func (c *LayersListCall) Do() (*LayersListResponse, error) {
 	}
 	if v, ok := c.opt_["projectId"]; ok {
 		params.Set("projectId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["tags"]; ok {
+		params.Set("tags", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "layers")
 	urls += "?" + params.Encode()
@@ -1860,6 +2027,11 @@ func (c *LayersListCall) Do() (*LayersListResponse, error) {
 	//       "description": "The ID of a Maps Engine project, used to filter the response. To list all available projects with their IDs, send a Projects: list request. You can also find your project ID as the value of the DashboardPlace:cid URL parameter when signed in to mapsengine.google.com.",
 	//       "location": "query",
 	//       "type": "string"
+	//     },
+	//     "tags": {
+	//       "description": "A comma separated list of tags. Returned assets will contain all the tags from the list.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "layers",
@@ -1869,6 +2041,74 @@ func (c *LayersListCall) Do() (*LayersListResponse, error) {
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/mapsengine",
 	//     "https://www.googleapis.com/auth/mapsengine.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "mapsengine.layers.patch":
+
+type LayersPatchCall struct {
+	s     *Service
+	id    string
+	layer *Layer
+	opt_  map[string]interface{}
+}
+
+// Patch: Mutate a layer asset.
+func (r *LayersService) Patch(id string, layer *Layer) *LayersPatchCall {
+	c := &LayersPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	c.layer = layer
+	return c
+}
+
+func (c *LayersPatchCall) Do() error {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.layer)
+	if err != nil {
+		return err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "layers/{id}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Mutate a layer asset.",
+	//   "httpMethod": "PATCH",
+	//   "id": "mapsengine.layers.patch",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The ID of the layer.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "layers/{id}",
+	//   "request": {
+	//     "$ref": "Layer"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/mapsengine"
 	//   ]
 	// }
 
@@ -1992,6 +2232,70 @@ func (c *LayersPublishCall) Do() (*PublishResponse, error) {
 	//     }
 	//   },
 	//   "path": "layers/{id}/publish",
+	//   "response": {
+	//     "$ref": "PublishResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/mapsengine"
+	//   ]
+	// }
+
+}
+
+// method id "mapsengine.layers.unpublish":
+
+type LayersUnpublishCall struct {
+	s    *Service
+	id   string
+	opt_ map[string]interface{}
+}
+
+// Unpublish: Unpublish a layer asset.
+func (r *LayersService) Unpublish(id string) *LayersUnpublishCall {
+	c := &LayersUnpublishCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	return c
+}
+
+func (c *LayersUnpublishCall) Do() (*PublishResponse, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "layers/{id}/unpublish")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *PublishResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Unpublish a layer asset.",
+	//   "httpMethod": "POST",
+	//   "id": "mapsengine.layers.unpublish",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The ID of the layer.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "layers/{id}/unpublish",
 	//   "response": {
 	//     "$ref": "PublishResponse"
 	//   },
@@ -2155,6 +2459,63 @@ func (c *MapsCreateCall) Do() (*Map, error) {
 	//   "response": {
 	//     "$ref": "Map"
 	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/mapsengine"
+	//   ]
+	// }
+
+}
+
+// method id "mapsengine.maps.delete":
+
+type MapsDeleteCall struct {
+	s    *Service
+	id   string
+	opt_ map[string]interface{}
+}
+
+// Delete: Delete a map.
+func (r *MapsService) Delete(id string) *MapsDeleteCall {
+	c := &MapsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	return c
+}
+
+func (c *MapsDeleteCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "maps/{id}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Delete a map.",
+	//   "httpMethod": "DELETE",
+	//   "id": "mapsengine.maps.delete",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The ID of the map. Only the map creator or project owner are permitted to delete. If the map is published the request will fail. Unpublish the map prior to deleting.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "maps/{id}",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/mapsengine"
 	//   ]
@@ -2336,6 +2697,13 @@ func (c *MapsListCall) ProjectId(projectId string) *MapsListCall {
 	return c
 }
 
+// Tags sets the optional parameter "tags": A comma separated list of
+// tags. Returned assets will contain all the tags from the list.
+func (c *MapsListCall) Tags(tags string) *MapsListCall {
+	c.opt_["tags"] = tags
+	return c
+}
+
 func (c *MapsListCall) Do() (*MapsListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2366,6 +2734,9 @@ func (c *MapsListCall) Do() (*MapsListResponse, error) {
 	}
 	if v, ok := c.opt_["projectId"]; ok {
 		params.Set("projectId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["tags"]; ok {
+		params.Set("tags", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "maps")
 	urls += "?" + params.Encode()
@@ -2439,6 +2810,11 @@ func (c *MapsListCall) Do() (*MapsListResponse, error) {
 	//       "description": "The ID of a Maps Engine project, used to filter the response. To list all available projects with their IDs, send a Projects: list request. You can also find your project ID as the value of the DashboardPlace:cid URL parameter when signed in to mapsengine.google.com.",
 	//       "location": "query",
 	//       "type": "string"
+	//     },
+	//     "tags": {
+	//       "description": "A comma separated list of tags. Returned assets will contain all the tags from the list.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "maps",
@@ -2448,6 +2824,74 @@ func (c *MapsListCall) Do() (*MapsListResponse, error) {
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/mapsengine",
 	//     "https://www.googleapis.com/auth/mapsengine.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "mapsengine.maps.patch":
+
+type MapsPatchCall struct {
+	s    *Service
+	id   string
+	map_ *Map
+	opt_ map[string]interface{}
+}
+
+// Patch: Mutate a map asset.
+func (r *MapsService) Patch(id string, map_ *Map) *MapsPatchCall {
+	c := &MapsPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	c.map_ = map_
+	return c
+}
+
+func (c *MapsPatchCall) Do() error {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.map_)
+	if err != nil {
+		return err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "maps/{id}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Mutate a map asset.",
+	//   "httpMethod": "PATCH",
+	//   "id": "mapsengine.maps.patch",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The ID of the map.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "maps/{id}",
+	//   "request": {
+	//     "$ref": "Map"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/mapsengine"
 	//   ]
 	// }
 
@@ -2517,6 +2961,70 @@ func (c *MapsPublishCall) Do() (*PublishResponse, error) {
 
 }
 
+// method id "mapsengine.maps.unpublish":
+
+type MapsUnpublishCall struct {
+	s    *Service
+	id   string
+	opt_ map[string]interface{}
+}
+
+// Unpublish: Unpublish a map asset.
+func (r *MapsService) Unpublish(id string) *MapsUnpublishCall {
+	c := &MapsUnpublishCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	return c
+}
+
+func (c *MapsUnpublishCall) Do() (*PublishResponse, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "maps/{id}/unpublish")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *PublishResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Unpublish a map asset.",
+	//   "httpMethod": "POST",
+	//   "id": "mapsengine.maps.unpublish",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The ID of the map.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "maps/{id}/unpublish",
+	//   "response": {
+	//     "$ref": "PublishResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/mapsengine"
+	//   ]
+	// }
+
+}
+
 // method id "mapsengine.projects.list":
 
 type ProjectsListCall struct {
@@ -2563,6 +3071,70 @@ func (c *ProjectsListCall) Do() (*ProjectsListResponse, error) {
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/mapsengine",
 	//     "https://www.googleapis.com/auth/mapsengine.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "mapsengine.rasterCollections.cancelProcessing":
+
+type RasterCollectionsCancelProcessingCall struct {
+	s    *Service
+	id   string
+	opt_ map[string]interface{}
+}
+
+// CancelProcessing: Cancel processing on a raster collection asset.
+func (r *RasterCollectionsService) CancelProcessing(id string) *RasterCollectionsCancelProcessingCall {
+	c := &RasterCollectionsCancelProcessingCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	return c
+}
+
+func (c *RasterCollectionsCancelProcessingCall) Do() (*ProcessResponse, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "rasterCollections/{id}/cancelProcessing")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *ProcessResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Cancel processing on a raster collection asset.",
+	//   "httpMethod": "POST",
+	//   "id": "mapsengine.rasterCollections.cancelProcessing",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The ID of the raster collection.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "rasterCollections/{id}/cancelProcessing",
+	//   "response": {
+	//     "$ref": "ProcessResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/mapsengine"
 	//   ]
 	// }
 
@@ -2622,6 +3194,63 @@ func (c *RasterCollectionsCreateCall) Do() (*RasterCollection, error) {
 	//   "response": {
 	//     "$ref": "RasterCollection"
 	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/mapsengine"
+	//   ]
+	// }
+
+}
+
+// method id "mapsengine.rasterCollections.delete":
+
+type RasterCollectionsDeleteCall struct {
+	s    *Service
+	id   string
+	opt_ map[string]interface{}
+}
+
+// Delete: Delete a raster collection.
+func (r *RasterCollectionsService) Delete(id string) *RasterCollectionsDeleteCall {
+	c := &RasterCollectionsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	return c
+}
+
+func (c *RasterCollectionsDeleteCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "rasterCollections/{id}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Delete a raster collection.",
+	//   "httpMethod": "DELETE",
+	//   "id": "mapsengine.rasterCollections.delete",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The ID of the raster collection. Only the raster collection creator or project owner are permitted to delete. If the rastor collection is included in a layer, the request will fail. Remove the raster collection from all layers prior to deleting.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "rasterCollections/{id}",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/mapsengine"
 	//   ]
@@ -2782,7 +3411,14 @@ func (c *RasterCollectionsListCall) ProjectId(projectId string) *RasterCollectio
 	return c
 }
 
-func (c *RasterCollectionsListCall) Do() (*RastercollectionsListResponse, error) {
+// Tags sets the optional parameter "tags": A comma separated list of
+// tags. Returned assets will contain all the tags from the list.
+func (c *RasterCollectionsListCall) Tags(tags string) *RasterCollectionsListCall {
+	c.opt_["tags"] = tags
+	return c
+}
+
+func (c *RasterCollectionsListCall) Do() (*RasterCollectionsListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -2813,6 +3449,9 @@ func (c *RasterCollectionsListCall) Do() (*RastercollectionsListResponse, error)
 	if v, ok := c.opt_["projectId"]; ok {
 		params.Set("projectId", fmt.Sprintf("%v", v))
 	}
+	if v, ok := c.opt_["tags"]; ok {
+		params.Set("tags", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasterCollections")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -2826,7 +3465,7 @@ func (c *RasterCollectionsListCall) Do() (*RastercollectionsListResponse, error)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *RastercollectionsListResponse
+	var ret *RasterCollectionsListResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -2885,15 +3524,88 @@ func (c *RasterCollectionsListCall) Do() (*RastercollectionsListResponse, error)
 	//       "description": "The ID of a Maps Engine project, used to filter the response. To list all available projects with their IDs, send a Projects: list request. You can also find your project ID as the value of the DashboardPlace:cid URL parameter when signed in to mapsengine.google.com.",
 	//       "location": "query",
 	//       "type": "string"
+	//     },
+	//     "tags": {
+	//       "description": "A comma separated list of tags. Returned assets will contain all the tags from the list.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "rasterCollections",
 	//   "response": {
-	//     "$ref": "RastercollectionsListResponse"
+	//     "$ref": "RasterCollectionsListResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/mapsengine",
 	//     "https://www.googleapis.com/auth/mapsengine.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "mapsengine.rasterCollections.patch":
+
+type RasterCollectionsPatchCall struct {
+	s                *Service
+	id               string
+	rastercollection *RasterCollection
+	opt_             map[string]interface{}
+}
+
+// Patch: Mutate a raster collection asset.
+func (r *RasterCollectionsService) Patch(id string, rastercollection *RasterCollection) *RasterCollectionsPatchCall {
+	c := &RasterCollectionsPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	c.rastercollection = rastercollection
+	return c
+}
+
+func (c *RasterCollectionsPatchCall) Do() error {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.rastercollection)
+	if err != nil {
+		return err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "rasterCollections/{id}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Mutate a raster collection asset.",
+	//   "httpMethod": "PATCH",
+	//   "id": "mapsengine.rasterCollections.patch",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The ID of the raster collection.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "rasterCollections/{id}",
+	//   "request": {
+	//     "$ref": "RasterCollection"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/mapsengine"
 	//   ]
 	// }
 
@@ -3301,7 +4013,14 @@ func (c *RasterCollectionsRastersListCall) PageToken(pageToken string) *RasterCo
 	return c
 }
 
-func (c *RasterCollectionsRastersListCall) Do() (*RastersListResponse, error) {
+// Tags sets the optional parameter "tags": A comma separated list of
+// tags. Returned assets will contain all the tags from the list.
+func (c *RasterCollectionsRastersListCall) Tags(tags string) *RasterCollectionsRastersListCall {
+	c.opt_["tags"] = tags
+	return c
+}
+
+func (c *RasterCollectionsRastersListCall) Do() (*RasterCollectionsRastersListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -3329,6 +4048,9 @@ func (c *RasterCollectionsRastersListCall) Do() (*RastersListResponse, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
+	if v, ok := c.opt_["tags"]; ok {
+		params.Set("tags", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasterCollections/{id}/rasters")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -3343,7 +4065,7 @@ func (c *RasterCollectionsRastersListCall) Do() (*RastersListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *RastersListResponse
+	var ret *RasterCollectionsRastersListResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -3406,15 +4128,77 @@ func (c *RasterCollectionsRastersListCall) Do() (*RastersListResponse, error) {
 	//       "description": "The continuation token, used to page through large result sets. To get the next page of results, set this parameter to the value of nextPageToken from the previous response.",
 	//       "location": "query",
 	//       "type": "string"
+	//     },
+	//     "tags": {
+	//       "description": "A comma separated list of tags. Returned assets will contain all the tags from the list.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "rasterCollections/{id}/rasters",
 	//   "response": {
-	//     "$ref": "RastersListResponse"
+	//     "$ref": "RasterCollectionsRastersListResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/mapsengine",
 	//     "https://www.googleapis.com/auth/mapsengine.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "mapsengine.rasters.delete":
+
+type RastersDeleteCall struct {
+	s    *Service
+	id   string
+	opt_ map[string]interface{}
+}
+
+// Delete: Delete a raster.
+func (r *RastersService) Delete(id string) *RastersDeleteCall {
+	c := &RastersDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	return c
+}
+
+func (c *RastersDeleteCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "rasters/{id}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Delete a raster.",
+	//   "httpMethod": "DELETE",
+	//   "id": "mapsengine.rasters.delete",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The ID of the raster. Only the raster creator or project owner are permitted to delete. If the raster is included in a layer or mosaic, the request will fail. Remove it from all parents prior to deleting.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "rasters/{id}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/mapsengine"
 	//   ]
 	// }
 
@@ -3435,7 +4219,7 @@ func (r *RastersService) Get(id string) *RastersGetCall {
 	return c
 }
 
-func (c *RastersGetCall) Do() (*Image, error) {
+func (c *RastersGetCall) Do() (*Raster, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -3453,7 +4237,7 @@ func (c *RastersGetCall) Do() (*Image, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Image
+	var ret *Raster
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -3475,7 +4259,7 @@ func (c *RastersGetCall) Do() (*Image, error) {
 	//   },
 	//   "path": "rasters/{id}",
 	//   "response": {
-	//     "$ref": "Image"
+	//     "$ref": "Raster"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/mapsengine",
@@ -3485,24 +4269,92 @@ func (c *RastersGetCall) Do() (*Image, error) {
 
 }
 
-// method id "mapsengine.rasters.upload":
+// method id "mapsengine.rasters.patch":
 
-type RastersUploadCall struct {
-	s     *Service
-	image *Image
-	opt_  map[string]interface{}
+type RastersPatchCall struct {
+	s      *Service
+	id     string
+	raster *Raster
+	opt_   map[string]interface{}
 }
 
-// Upload: Create a skeleton raster asset for upload.
-func (r *RastersService) Upload(image *Image) *RastersUploadCall {
-	c := &RastersUploadCall{s: r.s, opt_: make(map[string]interface{})}
-	c.image = image
+// Patch: Mutate a raster asset.
+func (r *RastersService) Patch(id string, raster *Raster) *RastersPatchCall {
+	c := &RastersPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	c.raster = raster
 	return c
 }
 
-func (c *RastersUploadCall) Do() (*Image, error) {
+func (c *RastersPatchCall) Do() error {
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.image)
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.raster)
+	if err != nil {
+		return err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "rasters/{id}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Mutate a raster asset.",
+	//   "httpMethod": "PATCH",
+	//   "id": "mapsengine.rasters.patch",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The ID of the raster.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "rasters/{id}",
+	//   "request": {
+	//     "$ref": "Raster"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/mapsengine"
+	//   ]
+	// }
+
+}
+
+// method id "mapsengine.rasters.upload":
+
+type RastersUploadCall struct {
+	s      *Service
+	raster *Raster
+	opt_   map[string]interface{}
+}
+
+// Upload: Create a skeleton raster asset for upload.
+func (r *RastersService) Upload(raster *Raster) *RastersUploadCall {
+	c := &RastersUploadCall{s: r.s, opt_: make(map[string]interface{})}
+	c.raster = raster
+	return c
+}
+
+func (c *RastersUploadCall) Do() (*Raster, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.raster)
 	if err != nil {
 		return nil, err
 	}
@@ -3523,7 +4375,7 @@ func (c *RastersUploadCall) Do() (*Image, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Image
+	var ret *Raster
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -3534,10 +4386,10 @@ func (c *RastersUploadCall) Do() (*Image, error) {
 	//   "id": "mapsengine.rasters.upload",
 	//   "path": "rasters/upload",
 	//   "request": {
-	//     "$ref": "Image"
+	//     "$ref": "Raster"
 	//   },
 	//   "response": {
-	//     "$ref": "Image"
+	//     "$ref": "Raster"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/mapsengine"
@@ -3806,6 +4658,63 @@ func (c *TablesCreateCall) Do() (*Table, error) {
 
 }
 
+// method id "mapsengine.tables.delete":
+
+type TablesDeleteCall struct {
+	s    *Service
+	id   string
+	opt_ map[string]interface{}
+}
+
+// Delete: Delete a table.
+func (r *TablesService) Delete(id string) *TablesDeleteCall {
+	c := &TablesDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	return c
+}
+
+func (c *TablesDeleteCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{id}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Delete a table.",
+	//   "httpMethod": "DELETE",
+	//   "id": "mapsengine.tables.delete",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The ID of the table. Only the table creator or project owner are permitted to delete. If the table is included in a layer, the request will fail. Remove it from all layers prior to deleting.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "tables/{id}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/mapsengine"
+	//   ]
+	// }
+
+}
+
 // method id "mapsengine.tables.get":
 
 type TablesGetCall struct {
@@ -3980,6 +4889,13 @@ func (c *TablesListCall) ProjectId(projectId string) *TablesListCall {
 	return c
 }
 
+// Tags sets the optional parameter "tags": A comma separated list of
+// tags. Returned assets will contain all the tags from the list.
+func (c *TablesListCall) Tags(tags string) *TablesListCall {
+	c.opt_["tags"] = tags
+	return c
+}
+
 func (c *TablesListCall) Do() (*TablesListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4010,6 +4926,9 @@ func (c *TablesListCall) Do() (*TablesListResponse, error) {
 	}
 	if v, ok := c.opt_["projectId"]; ok {
 		params.Set("projectId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["tags"]; ok {
+		params.Set("tags", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables")
 	urls += "?" + params.Encode()
@@ -4083,6 +5002,11 @@ func (c *TablesListCall) Do() (*TablesListResponse, error) {
 	//       "description": "The ID of a Maps Engine project, used to filter the response. To list all available projects with their IDs, send a Projects: list request. You can also find your project ID as the value of the DashboardPlace:cid URL parameter when signed in to mapsengine.google.com.",
 	//       "location": "query",
 	//       "type": "string"
+	//     },
+	//     "tags": {
+	//       "description": "A comma separated list of tags. Returned assets will contain all the tags from the list.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "tables",
@@ -4092,6 +5016,74 @@ func (c *TablesListCall) Do() (*TablesListResponse, error) {
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/mapsengine",
 	//     "https://www.googleapis.com/auth/mapsengine.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "mapsengine.tables.patch":
+
+type TablesPatchCall struct {
+	s     *Service
+	id    string
+	table *Table
+	opt_  map[string]interface{}
+}
+
+// Patch: Mutate a table asset.
+func (r *TablesService) Patch(id string, table *Table) *TablesPatchCall {
+	c := &TablesPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	c.table = table
+	return c
+}
+
+func (c *TablesPatchCall) Do() error {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.table)
+	if err != nil {
+		return err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{id}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Mutate a table asset.",
+	//   "httpMethod": "PATCH",
+	//   "id": "mapsengine.tables.patch",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The ID of the table.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "tables/{id}",
+	//   "request": {
+	//     "$ref": "Table"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/mapsengine"
 	//   ]
 	// }
 

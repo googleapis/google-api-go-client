@@ -1,10 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/IERJ5Hcz59m5dfn8v5XjYGA7sqU\"",
+ "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/Jr_9O66ndvAx3IBfHAhD2JQcRu8\"",
  "discoveryVersion": "v1",
  "id": "drive:v2",
  "name": "drive",
  "version": "v2",
+ "revision": "20140714",
  "title": "Drive API",
  "description": "The API to interact with Drive.",
  "ownerDomain": "google.com",
@@ -2555,6 +2556,19 @@
      "httpMethod": "GET",
      "description": "Lists the user's files.",
      "parameters": {
+      "corpus": {
+       "type": "string",
+       "description": "The body of items (files/documents) to which the query applies.",
+       "enum": [
+        "DEFAULT",
+        "DOMAIN"
+       ],
+       "enumDescriptions": [
+        "The items that the user has accessed.",
+        "Items shared to the user's domain."
+       ],
+       "location": "query"
+      },
       "maxResults": {
        "type": "integer",
        "description": "Maximum number of files to return.",

@@ -563,18 +563,18 @@ type EventBatchRecordFailure struct {
 	// FailureCause: The cause for the update failure.
 	// Possible values are:
 	//
-	// - "TOO_LARGE" - A batch request was issued with more events than are
+	// - "TOO_LARGE": A batch request was issued with more events than are
 	// allowed in a single batch.
-	// - "TIME_PERIOD_EXPIRED" - A batch was
-	// sent with data too far in the past to record.
-	// - "TIME_PERIOD_SHORT"
-	// - A batch was sent with a time range that was too short.
+	// - "TIME_PERIOD_EXPIRED": A batch was sent
+	// with data too far in the past to record.
+	// - "TIME_PERIOD_SHORT": A
+	// batch was sent with a time range that was too short.
 	// -
-	// "TIME_PERIOD_LONG" - A batch was sent with a time range that was too
+	// "TIME_PERIOD_LONG": A batch was sent with a time range that was too
 	// long.
-	// - "ALREADY_UPDATED" - An attempt was made to record a batch of
+	// - "ALREADY_UPDATED": An attempt was made to record a batch of
 	// data which was already seen.
-	// - "RECORD_RATE_HIGH" - An attempt was
+	// - "RECORD_RATE_HIGH": An attempt was
 	// made to record data faster than the server will apply updates.
 	FailureCause string `json:"failureCause,omitempty"`
 
@@ -582,7 +582,7 @@ type EventBatchRecordFailure struct {
 	// the fixed string games#eventBatchRecordFailure.
 	Kind string `json:"kind,omitempty"`
 
-	// Range: The time range which was rejected, empty for a request-wide
+	// Range: The time range which was rejected; empty for a request-wide
 	// failure.
 	Range *EventPeriodRange `json:"range,omitempty"`
 }
@@ -623,10 +623,10 @@ type EventDefinition struct {
 	// Visibility: The visibility of event being tracked in this
 	// definition.
 	// Possible values are:
-	// - "REVEALED" - This event should
-	// be visible to all users.
-	// - "HIDDEN" - This event should only be
-	// shown to users that have have recorded this event at least once.
+	// - "REVEALED": This event should be
+	// visible to all users.
+	// - "HIDDEN": This event should only be shown to
+	// users that have recorded this event at least once.
 	Visibility string `json:"visibility,omitempty"`
 }
 
@@ -688,7 +688,7 @@ type EventRecordFailure struct {
 
 type EventRecordRequest struct {
 	// CurrentTimeMillis: The current time when this update was sent, in
-	// millis, since 1970 UTC (Unix Epoch).
+	// milliseconds, since 1970 UTC (Unix Epoch).
 	CurrentTimeMillis int64 `json:"currentTimeMillis,omitempty,string"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
@@ -699,7 +699,8 @@ type EventRecordRequest struct {
 	// events.
 	RequestId int64 `json:"requestId,omitempty,string"`
 
-	// TimePeriods: The time period updates being made in this request.
+	// TimePeriods: A list of the time period updates being made in this
+	// request.
 	TimePeriods []*EventPeriodUpdate `json:"timePeriods,omitempty"`
 }
 
@@ -711,7 +712,8 @@ type EventUpdateRequest struct {
 	// the fixed string games#eventUpdateRequest.
 	Kind string `json:"kind,omitempty"`
 
-	// UpdateCount: The update being made for this event.
+	// UpdateCount: The number of times this event occurred in this time
+	// period.
 	UpdateCount int64 `json:"updateCount,omitempty,string"`
 }
 
@@ -994,7 +996,8 @@ type LeaderboardScores struct {
 
 type MetagameConfig struct {
 	// CurrentVersion: Current version of the metagame configuration data.
-	// When this data is updated, the version will be increased by one.
+	// When this data is updated, the version number will be increased by
+	// one.
 	CurrentVersion int64 `json:"currentVersion,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
@@ -1155,7 +1158,7 @@ type Player struct {
 	LastPlayedWith *Played `json:"lastPlayedWith,omitempty"`
 
 	// Name: An object representation of the individual components of the
-	// player's name.
+	// player's name. For some players, these fields may not be present.
 	Name *PlayerName `json:"name,omitempty"`
 
 	// PlayerId: The ID of the player.
@@ -1166,10 +1169,12 @@ type Player struct {
 }
 
 type PlayerName struct {
-	// FamilyName: The family name (last name) of this player.
+	// FamilyName: The family name of this player. In some places, this is
+	// known as the last name.
 	FamilyName string `json:"familyName,omitempty"`
 
-	// GivenName: The given name (first name) of this player.
+	// GivenName: The given name of this player. In some places, this is
+	// known as the first name.
 	GivenName string `json:"givenName,omitempty"`
 }
 
@@ -1221,11 +1226,12 @@ type PlayerAchievementListResponse struct {
 }
 
 type PlayerEvent struct {
-	// DefinitionId: The ID of the event.
+	// DefinitionId: The ID of the event definition.
 	DefinitionId string `json:"definitionId,omitempty"`
 
 	// FormattedNumEvents: The current number of times this event has
-	// occurred as a string.
+	// occurred, as a string. The formatting of this string depends on the
+	// configuration of your event in the Play Games Developer Console.
 	FormattedNumEvents string `json:"formattedNumEvents,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
@@ -1253,10 +1259,10 @@ type PlayerEventListResponse struct {
 
 type PlayerExperienceInfo struct {
 	// CurrentExperiencePoints: The current number of experience points for
-	// the player
+	// the player.
 	CurrentExperiencePoints int64 `json:"currentExperiencePoints,omitempty,string"`
 
-	// CurrentLevel: The current level of the player
+	// CurrentLevel: The current level of the player.
 	CurrentLevel *PlayerLevel `json:"currentLevel,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
@@ -1264,7 +1270,7 @@ type PlayerExperienceInfo struct {
 	Kind string `json:"kind,omitempty"`
 
 	// LastLevelUpTimestampMillis: The timestamp when the player was leveled
-	// up last time millis since epoch UTC.
+	// up, in millis since Unix epoch UTC.
 	LastLevelUpTimestampMillis int64 `json:"lastLevelUpTimestampMillis,omitempty,string"`
 
 	// NextLevel: The next level of the player. If the current level is the
@@ -1333,13 +1339,13 @@ type PlayerLevel struct {
 	// the fixed string games#playerLevel.
 	Kind string `json:"kind,omitempty"`
 
-	// Level: The level for the user
+	// Level: The level for the user.
 	Level int64 `json:"level,omitempty"`
 
-	// MaxExperiencePoints: The maximum experience points for this level
+	// MaxExperiencePoints: The maximum experience points for this level.
 	MaxExperiencePoints int64 `json:"maxExperiencePoints,omitempty,string"`
 
-	// MinExperiencePoints: The minimum experience points for this level
+	// MinExperiencePoints: The minimum experience points for this level.
 	MinExperiencePoints int64 `json:"minExperiencePoints,omitempty,string"`
 }
 
@@ -1532,26 +1538,28 @@ type Quest struct {
 
 	// State: The state of the quest.
 	// Possible values are:
-	// - "UPCOMING" -
+	// - "UPCOMING":
 	// The quest is upcoming. The user can see the quest, but cannot accept
 	// it until it is open.
-	// - "OPEN" - The quest is currently open and may
+	// - "OPEN": The quest is currently open and may
 	// be accepted at this time.
-	// - "ACCEPTED" - The user is currently
+	// - "ACCEPTED": The user is currently
 	// participating in this quest.
-	// - "COMPLETED" - User has completed the
-	// quest.
-	// - "FAILED" - The quest was attempted but was not completed
+	// - "COMPLETED": The user has completed
+	// the quest.
+	// - "FAILED": The quest was attempted but was not completed
 	// before the deadline expired.
-	// - "EXPIRED" - The quest has expired and
+	// - "EXPIRED": The quest has expired and
 	// was not accepted.
-	// - "DELETED" - The quest should be deleted from the
+	// - "DELETED": The quest should be deleted from the
 	// local database.
 	State string `json:"state,omitempty"`
 }
 
 type QuestContribution struct {
-	// FormattedValue: The formatted value of the contribution.
+	// FormattedValue: The formatted value of the contribution as a string.
+	// Format depends on the configuration for the associated event
+	// definition in the Play Games Developer Console.
 	FormattedValue string `json:"formattedValue,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
@@ -1606,7 +1614,7 @@ type QuestListResponse struct {
 type QuestMilestone struct {
 	// CompletionRewardData: The completion reward data of the milestone,
 	// represented as a Base64-encoded string. This is a developer-specified
-	// binary blob with size between 0 and 2 kB before encoding.
+	// binary blob with size between 0 and 2 KB before encoding.
 	CompletionRewardData string `json:"completionRewardData,omitempty"`
 
 	// Criteria: The criteria of the milestone.
@@ -2110,7 +2118,7 @@ type Snapshot struct {
 	Description string `json:"description,omitempty"`
 
 	// DriveId: The ID of the file underlying this snapshot in the Drive
-	// API. Only present if the snapshot is a view on a drive file and the
+	// API. Only present if the snapshot is a view on a Drive file and the
 	// file is owned by the caller.
 	DriveId string `json:"driveId,omitempty"`
 
@@ -2150,10 +2158,10 @@ type SnapshotImage struct {
 	// the fixed string games#snapshotImage.
 	Kind string `json:"kind,omitempty"`
 
-	// Mime_type: The mime_type of the image.
+	// Mime_type: The MIME type of the image.
 	Mime_type string `json:"mime_type,omitempty"`
 
-	// Url: The url of the image. This url may be invalidated at any time
+	// Url: The URL of the image. This URL may be invalidated at any time
 	// and should not be cached.
 	Url string `json:"url,omitempty"`
 
@@ -3266,8 +3274,8 @@ type EventsListByPlayerCall struct {
 	opt_ map[string]interface{}
 }
 
-// ListByPlayer: Returns a list of the current progress on events in
-// this application for the currently authorized user.
+// ListByPlayer: Returns a list showing the current progress on events
+// in this application for the currently authenticated user.
 func (r *EventsService) ListByPlayer() *EventsListByPlayerCall {
 	c := &EventsListByPlayerCall{s: r.s, opt_: make(map[string]interface{})}
 	return c
@@ -3328,7 +3336,7 @@ func (c *EventsListByPlayerCall) Do() (*PlayerEventListResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns a list of the current progress on events in this application for the currently authorized user.",
+	//   "description": "Returns a list showing the current progress on events in this application for the currently authenticated user.",
 	//   "httpMethod": "GET",
 	//   "id": "games.events.listByPlayer",
 	//   "parameters": {
@@ -3341,7 +3349,7 @@ func (c *EventsListByPlayerCall) Do() (*PlayerEventListResponse, error) {
 	//       "description": "The maximum number of events to return in the response, used for paging. For any response, the actual number of events to return may be less than the specified maxResults.",
 	//       "format": "int32",
 	//       "location": "query",
-	//       "maximum": "500",
+	//       "maximum": "100",
 	//       "minimum": "1",
 	//       "type": "integer"
 	//     },
@@ -3445,7 +3453,7 @@ func (c *EventsListDefinitionsCall) Do() (*EventDefinitionListResponse, error) {
 	//       "description": "The maximum number of event definitions to return in the response, used for paging. For any response, the actual number of event definitions to return may be less than the specified maxResults.",
 	//       "format": "int32",
 	//       "location": "query",
-	//       "maximum": "500",
+	//       "maximum": "100",
 	//       "minimum": "1",
 	//       "type": "integer"
 	//     },
@@ -3475,8 +3483,8 @@ type EventsRecordCall struct {
 	opt_               map[string]interface{}
 }
 
-// Record: Records a batch of event updates for the currently authorized
-// user of this application.
+// Record: Records a batch of changes to the number of times events have
+// occurred for the currently authenticated user of this application.
 func (r *EventsService) Record(eventrecordrequest *EventRecordRequest) *EventsRecordCall {
 	c := &EventsRecordCall{s: r.s, opt_: make(map[string]interface{})}
 	c.eventrecordrequest = eventrecordrequest
@@ -3522,7 +3530,7 @@ func (c *EventsRecordCall) Do() (*EventUpdateResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Records a batch of event updates for the currently authorized user of this application.",
+	//   "description": "Records a batch of changes to the number of times events have occurred for the currently authenticated user of this application.",
 	//   "httpMethod": "POST",
 	//   "id": "games.events.record",
 	//   "parameters": {
@@ -4240,7 +4248,7 @@ type QuestMilestonesClaimCall struct {
 	opt_        map[string]interface{}
 }
 
-// Claim: Report that reward for the milestone corresponding to
+// Claim: Report that a reward for the milestone corresponding to
 // milestoneId for the quest corresponding to questId has been claimed
 // by the currently authorized user.
 func (r *QuestMilestonesService) Claim(questId string, milestoneId string, requestId int64) *QuestMilestonesClaimCall {
@@ -4273,7 +4281,7 @@ func (c *QuestMilestonesClaimCall) Do() error {
 	}
 	return nil
 	// {
-	//   "description": "Report that reward for the milestone corresponding to milestoneId for the quest corresponding to questId has been claimed by the currently authorized user.",
+	//   "description": "Report that a reward for the milestone corresponding to milestoneId for the quest corresponding to questId has been claimed by the currently authorized user.",
 	//   "httpMethod": "PUT",
 	//   "id": "games.questMilestones.claim",
 	//   "parameterOrder": [
@@ -4283,7 +4291,7 @@ func (c *QuestMilestonesClaimCall) Do() error {
 	//   ],
 	//   "parameters": {
 	//     "milestoneId": {
-	//       "description": "The ID of the Milestone.",
+	//       "description": "The ID of the milestone.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -4295,7 +4303,7 @@ func (c *QuestMilestonesClaimCall) Do() error {
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "A randomly generated numeric ID for each request specified by the caller. This number is used at the server to ensure that the request is handled correctly across retries.",
+	//       "description": "A numeric ID to ensure that the request is handled correctly across retries. Your client application must generate this ID randomly.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "required": true,

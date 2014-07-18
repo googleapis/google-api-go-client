@@ -439,12 +439,12 @@ type Colors struct {
 	// Calendar: Palette of calendar colors, mapping from the color ID to
 	// its definition. A calendarListEntry resource refers to one of these
 	// color IDs in its color field. Read-only.
-	Calendar *ColorsCalendar `json:"calendar,omitempty"`
+	Calendar map[string]ColorDefinition `json:"calendar,omitempty"`
 
 	// Event: Palette of event colors, mapping from the color ID to its
 	// definition. An event resource may refer to one of these color IDs in
 	// its color field. Read-only.
-	Event *ColorsEvent `json:"event,omitempty"`
+	Event map[string]ColorDefinition `json:"event,omitempty"`
 
 	// Kind: Type of the resource ("calendar#colors").
 	Kind string `json:"kind,omitempty"`
@@ -452,12 +452,6 @@ type Colors struct {
 	// Updated: Last modification time of the color palette (as a RFC 3339
 	// timestamp). Read-only.
 	Updated string `json:"updated,omitempty"`
-}
-
-type ColorsCalendar struct {
-}
-
-type ColorsEvent struct {
 }
 
 type Error struct {
@@ -932,10 +926,10 @@ type FreeBusyRequestItem struct {
 
 type FreeBusyResponse struct {
 	// Calendars: List of free/busy information for calendars.
-	Calendars *FreeBusyResponseCalendars `json:"calendars,omitempty"`
+	Calendars map[string]FreeBusyCalendar `json:"calendars,omitempty"`
 
 	// Groups: Expansion of groups.
-	Groups *FreeBusyResponseGroups `json:"groups,omitempty"`
+	Groups map[string]FreeBusyGroup `json:"groups,omitempty"`
 
 	// Kind: Type of the resource ("calendar#freeBusy").
 	Kind string `json:"kind,omitempty"`
@@ -945,12 +939,6 @@ type FreeBusyResponse struct {
 
 	// TimeMin: The start of the interval.
 	TimeMin string `json:"timeMin,omitempty"`
-}
-
-type FreeBusyResponseCalendars struct {
-}
-
-type FreeBusyResponseGroups struct {
 }
 
 type Setting struct {

@@ -106,6 +106,8 @@ type BeginTransactionResponse struct {
 }
 
 type CommitRequest struct {
+	IgnoreReadOnly bool `json:"ignoreReadOnly,omitempty"`
+
 	// Mode: The type of commit to perform. Either TRANSACTIONAL or
 	// NON_TRANSACTIONAL.
 	Mode string `json:"mode,omitempty"`
@@ -145,10 +147,7 @@ type Entity struct {
 	Key *Key `json:"key,omitempty"`
 
 	// Properties: The entity's properties.
-	Properties *EntityProperties `json:"properties,omitempty"`
-}
-
-type EntityProperties struct {
+	Properties map[string]Property `json:"properties,omitempty"`
 }
 
 type EntityResult struct {
@@ -211,20 +210,24 @@ type Key struct {
 	// entity's ancestors are required to be in the path along with the
 	// entity identifier itself. The only exception is that in some
 	// documented cases, the identifier in the last path element (for the
-	// entity) itself may be omitted. A path can never be empty.
+	// entity) itself may be omitted. A path can never be empty. The path
+	// can have at most 100 elements.
 	Path []*KeyPathElement `json:"path,omitempty"`
 }
 
 type KeyPathElement struct {
-	// Id: The ID of the entity. Always > 0.
+	// Id: The ID of the entity. Never equal to zero. Values less than zero
+	// are discouraged and will not be supported in the future.
 	Id int64 `json:"id,omitempty,string"`
 
-	// Kind: The kind of the entity. Kinds matching regex "__.*__" are
-	// reserved/read-only. Cannot be "".
+	// Kind: The kind of the entity. A kind matching regex "__.*__" is
+	// reserved/read-only. A kind must not contain more than 500 characters.
+	// Cannot be "".
 	Kind string `json:"kind,omitempty"`
 
-	// Name: The name of the entity. Names matching regex "__.*__" are
-	// reserved/read-only. Cannot be "".
+	// Name: The name of the entity. A name matching regex "__.*__" is
+	// reserved/read-only. A name must not be more than 500 characters.
+	// Cannot be "".
 	Name string `json:"name,omitempty"`
 }
 
@@ -302,7 +305,7 @@ type Property struct {
 	// BlobKeyValue: A blob key value.
 	BlobKeyValue string `json:"blobKeyValue,omitempty"`
 
-	// BlobValue: A blob value.
+	// BlobValue: A blob value. May be a maximum of 1,000,000 bytes.
 	BlobValue string `json:"blobValue,omitempty"`
 
 	// BooleanValue: A boolean value.
@@ -456,7 +459,8 @@ type ReadOptions struct {
 }
 
 type ResponseHeader struct {
-	// Kind: The kind, fixed to "datastore#responseHeader".
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "datastore#responseHeader".
 	Kind string `json:"kind,omitempty"`
 }
 
@@ -477,7 +481,10 @@ type RunQueryRequest struct {
 
 	// PartitionId: Entities are partitioned into subsets, identified by a
 	// dataset (usually implicitly specified by the project) and namespace
-	// ID. Queries are scoped to a single partition.
+	// ID. Queries are scoped to a single partition. This partition ID is
+	// normalized with the standard default context partition ID, but all
+	// other partition IDs in RunQueryRequest are normalized with this
+	// partition ID as the context partition ID.
 	PartitionId *PartitionId `json:"partitionId,omitempty"`
 
 	// Query: The query to run. Either this field or field gql_query must be
@@ -499,7 +506,7 @@ type Value struct {
 	// BlobKeyValue: A blob key value.
 	BlobKeyValue string `json:"blobKeyValue,omitempty"`
 
-	// BlobValue: A blob value.
+	// BlobValue: A blob value. May be a maximum of 1,000,000 bytes.
 	BlobValue string `json:"blobValue,omitempty"`
 
 	// BooleanValue: A boolean value.

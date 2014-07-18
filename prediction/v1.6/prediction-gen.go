@@ -365,7 +365,7 @@ type Output struct {
 	OutputMulti []*OutputOutputMulti `json:"outputMulti,omitempty"`
 
 	// OutputValue: The estimated regression value (Regression models only).
-	OutputValue float64 `json:"outputValue,omitempty"`
+	OutputValue string `json:"outputValue,omitempty"`
 
 	// SelfLink: A URL to re-request this resource.
 	SelfLink string `json:"selfLink,omitempty"`

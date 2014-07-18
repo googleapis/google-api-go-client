@@ -1,10 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"kEk3sFj6Ef5_yR1-H3bAO6qw9mI/YrLZoq09n__afr7YsPCxL5HrUUs\"",
+ "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/U6TAzaYG8gg9DG4CXfo1KrwOU1g\"",
  "discoveryVersion": "v1",
  "id": "datastore:v1beta1",
  "name": "datastore",
  "version": "v1beta1",
+ "revision": "20140613",
  "title": "Google Cloud Datastore API",
  "description": "API for accessing Google Cloud Datastore.",
  "ownerDomain": "google.com",
@@ -167,6 +168,9 @@
    "type": "object",
    "externalTypeName": "apphosting.client.datastoreservice.proto.CommitRequest",
    "properties": {
+    "ignoreReadOnly": {
+     "type": "boolean"
+    },
     "mutation": {
      "$ref": "Mutation",
      "description": "The mutation to perform. Optional."
@@ -224,7 +228,7 @@
      "description": "The entity's properties.",
      "additionalProperties": {
       "$ref": "Property",
-      "description": "The name of the property. Properties with names matching regex \"__.*__\" are reserved. A reserved property name is forbidden in certain documented contexts. The name cannot be \"\"."
+      "description": "The name of the property. A property name matching regex \"__.*__\" is reserved. A reserved property name is forbidden in certain documented contexts. The name must not contain more than 500 characters. Cannot be \"\"."
      }
     }
    }
@@ -312,7 +316,7 @@
     },
     "path": {
      "type": "array",
-     "description": "The entity path. An entity path consists of one or more elements composed of a kind and a string or numerical identifier, which identify entities. The first element identifies a root entity, the second element identifies a child of the root entity, the third element a child of the second entity, and so forth. The entities identified by all prefixes of the path are called the element's ancestors. An entity path is always fully complete: ALL of the entity's ancestors are required to be in the path along with the entity identifier itself. The only exception is that in some documented cases, the identifier in the last path element (for the entity) itself may be omitted. A path can never be empty.",
+     "description": "The entity path. An entity path consists of one or more elements composed of a kind and a string or numerical identifier, which identify entities. The first element identifies a root entity, the second element identifies a child of the root entity, the third element a child of the second entity, and so forth. The entities identified by all prefixes of the path are called the element's ancestors. An entity path is always fully complete: ALL of the entity's ancestors are required to be in the path along with the entity identifier itself. The only exception is that in some documented cases, the identifier in the last path element (for the entity) itself may be omitted. A path can never be empty. The path can have at most 100 elements.",
      "items": {
       "$ref": "KeyPathElement"
      }
@@ -327,16 +331,16 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "The ID of the entity. Always \u003e 0.",
+     "description": "The ID of the entity. Never equal to zero. Values less than zero are discouraged and will not be supported in the future.",
      "format": "int64"
     },
     "kind": {
      "type": "string",
-     "description": "The kind of the entity. Kinds matching regex \"__.*__\" are reserved/read-only. Cannot be \"\"."
+     "description": "The kind of the entity. A kind matching regex \"__.*__\" is reserved/read-only. A kind must not contain more than 500 characters. Cannot be \"\"."
     },
     "name": {
      "type": "string",
-     "description": "The name of the entity. Names matching regex \"__.*__\" are reserved/read-only. Cannot be \"\"."
+     "description": "The name of the entity. A name matching regex \"__.*__\" is reserved/read-only. A name must not be more than 500 characters. Cannot be \"\"."
     }
    }
   },
@@ -672,7 +676,7 @@
    "properties": {
     "kind": {
      "type": "string",
-     "description": "The kind, fixed to \"datastore#responseHeader\".",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"datastore#responseHeader\".",
      "default": "datastore#responseHeader"
     }
    }
@@ -710,7 +714,7 @@
     },
     "partitionId": {
      "$ref": "PartitionId",
-     "description": "Entities are partitioned into subsets, identified by a dataset (usually implicitly specified by the project) and namespace ID. Queries are scoped to a single partition."
+     "description": "Entities are partitioned into subsets, identified by a dataset (usually implicitly specified by the project) and namespace ID. Queries are scoped to a single partition. This partition ID is normalized with the standard default context partition ID, but all other partition IDs in RunQueryRequest are normalized with this partition ID as the context partition ID."
     },
     "query": {
      "$ref": "Query",
@@ -747,7 +751,7 @@
     },
     "blobValue": {
      "type": "string",
-     "description": "A blob value.",
+     "description": "A blob value. May be a maximum of 1,000,000 bytes.",
      "format": "byte"
     },
     "booleanValue": {

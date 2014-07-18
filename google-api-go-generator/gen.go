@@ -672,7 +672,12 @@ func (t *Type) MapType() (typ string, ok bool) {
 		return "map[string]string", true
 	}
 	if s != "array" {
-		// TODO(gmlewis): support maps to any type.
+		if s == "" { // Check for reference
+			s = jstr(props, "$ref")
+			if s != "" {
+				return "map[string]" + s, true
+			}
+		}
 		log.Printf("Warning: found map to type %q which is not implemented yet.", s)
 		return "", false
 	}
@@ -682,7 +687,12 @@ func (t *Type) MapType() (typ string, ok bool) {
 	}
 	s = jstr(items, "type")
 	if s != "string" {
-		// TODO(gmlewis): support maps to any type.
+		if s == "" { // Check for reference
+			s = jstr(items, "$ref")
+			if s != "" {
+				return "map[string][]" + s, true
+			}
+		}
 		log.Printf("Warning: found map of arrays of type %q which is not implemented yet.", s)
 		return "", false
 	}
@@ -882,7 +892,14 @@ func (s *Schema) writeSchemaCode() {
 		return
 	}
 
-	if s.Type().IsSimple() || s.Type().IsMap() {
+	if s.Type().IsSimple() {
+		apitype := jstr(s.m, "type")
+		typ := mustSimpleTypeConvert(apitype, jstr(s.m, "format"))
+		s.api.p("\ntype %s %s\n", s.GoName(), typ)
+		return
+	}
+
+	if s.Type().IsMap() {
 		return
 	}
 

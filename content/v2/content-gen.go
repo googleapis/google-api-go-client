@@ -167,6 +167,8 @@ type Account struct {
 	// account.
 	SellerId string `json:"sellerId,omitempty"`
 
+	// Users: Users with access to the account. Every account (except for
+	// subaccounts) must have at least one admin user.
 	Users []*AccountUser `json:"users,omitempty"`
 
 	// WebsiteUrl: The merchant's website.
@@ -800,7 +802,7 @@ type LoyaltyPoints struct {
 	// name to 12 full-width characters or 24 Roman characters.
 	Name string `json:"name,omitempty"`
 
-	// PointsValue: The retailer?s loyalty points in absolute value.
+	// PointsValue: The retailer's loyalty points in absolute value.
 	PointsValue uint64 `json:"pointsValue,omitempty,string"`
 
 	// Ratio: The ratio of a point when converted to currency. Google
@@ -840,6 +842,10 @@ type Product struct {
 
 	// Availability: Availability status of the item.
 	Availability string `json:"availability,omitempty"`
+
+	// AvailabilityDate: The day a pre-ordered product becomes available for
+	// delivery.
+	AvailabilityDate string `json:"availabilityDate,omitempty"`
 
 	// Brand: Brand of the item.
 	Brand string `json:"brand,omitempty"`
@@ -921,6 +927,11 @@ type Product struct {
 	// Brazil only.
 	Installment *ProductInstallment `json:"installment,omitempty"`
 
+	// IsBundle: Whether the item is a merchant-defined bundle. A bundle is
+	// a custom grouping of different products sold by a merchant for a
+	// single price.
+	IsBundle bool `json:"isBundle,omitempty"`
+
 	// ItemGroupId: Shared identifier for all variants of the same product.
 	ItemGroupId string `json:"itemGroupId,omitempty"`
 
@@ -941,6 +952,9 @@ type Product struct {
 	// MerchantMultipackQuantity: The number of identical products in a
 	// merchant-defined multipack.
 	MerchantMultipackQuantity uint64 `json:"merchantMultipackQuantity,omitempty,string"`
+
+	// MobileLink: Link to a mobile-optimized version of the landing page.
+	MobileLink string `json:"mobileLink,omitempty"`
 
 	// Mpn: Manufacturer Part Number (MPN) of the item.
 	Mpn string `json:"mpn,omitempty"`
@@ -972,14 +986,21 @@ type Product struct {
 	// ShippingWeight: Weight of the item for shipping.
 	ShippingWeight *ProductShippingWeight `json:"shippingWeight,omitempty"`
 
+	// SizeSystem: System in which the size is specified. Recommended for
+	// apparel items.
+	SizeSystem string `json:"sizeSystem,omitempty"`
+
+	// SizeType: The cut of the item. Recommended for apparel items.
+	SizeType string `json:"sizeType,omitempty"`
+
 	// Sizes: Size of the item.
 	Sizes []string `json:"sizes,omitempty"`
 
 	// TargetCountry: The two-letter ISO 3166 country code for the item.
 	TargetCountry string `json:"targetCountry,omitempty"`
 
-	// Tax: Tax information.
-	Tax *ProductTax `json:"tax,omitempty"`
+	// Taxes: Tax information.
+	Taxes []*ProductTax `json:"taxes,omitempty"`
 
 	// Title: Title of the item.
 	Title string `json:"title,omitempty"`
@@ -1255,8 +1276,8 @@ type AccountsCustombatchCall struct {
 	opt_                       map[string]interface{}
 }
 
-// Custombatch: Retrieve, insert, update, and delete multiple Merchant
-// Center (sub-)accounts in a single request.
+// Custombatch: Retrieves, inserts, updates, and deletes multiple
+// Merchant Center (sub-)accounts in a single request.
 func (r *AccountsService) Custombatch(accountscustombatchrequest *AccountsCustomBatchRequest) *AccountsCustombatchCall {
 	c := &AccountsCustombatchCall{s: r.s, opt_: make(map[string]interface{})}
 	c.accountscustombatchrequest = accountscustombatchrequest
@@ -1292,7 +1313,7 @@ func (c *AccountsCustombatchCall) Do() (*AccountsCustomBatchResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieve, insert, update, and delete multiple Merchant Center (sub-)accounts in a single request.",
+	//   "description": "Retrieves, inserts, updates, and deletes multiple Merchant Center (sub-)accounts in a single request.",
 	//   "httpMethod": "POST",
 	//   "id": "content.accounts.custombatch",
 	//   "path": "accounts/batch",
@@ -1318,7 +1339,7 @@ type AccountsDeleteCall struct {
 	opt_       map[string]interface{}
 }
 
-// Delete: Delete a Merchant Center sub-account.
+// Delete: Deletes a Merchant Center sub-account.
 func (r *AccountsService) Delete(merchantId uint64, accountId uint64) *AccountsDeleteCall {
 	c := &AccountsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.merchantId = merchantId
@@ -1347,7 +1368,7 @@ func (c *AccountsDeleteCall) Do() error {
 	}
 	return nil
 	// {
-	//   "description": "Delete a Merchant Center sub-account.",
+	//   "description": "Deletes a Merchant Center sub-account.",
 	//   "httpMethod": "DELETE",
 	//   "id": "content.accounts.delete",
 	//   "parameterOrder": [
@@ -1387,7 +1408,7 @@ type AccountsGetCall struct {
 	opt_       map[string]interface{}
 }
 
-// Get: Retrieve a Merchant Center account.
+// Get: Retrieves a Merchant Center account.
 func (r *AccountsService) Get(merchantId uint64, accountId uint64) *AccountsGetCall {
 	c := &AccountsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.merchantId = merchantId
@@ -1420,7 +1441,7 @@ func (c *AccountsGetCall) Do() (*Account, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieve a Merchant Center account.",
+	//   "description": "Retrieves a Merchant Center account.",
 	//   "httpMethod": "GET",
 	//   "id": "content.accounts.get",
 	//   "parameterOrder": [
@@ -1463,7 +1484,7 @@ type AccountsInsertCall struct {
 	opt_       map[string]interface{}
 }
 
-// Insert: Create a Merchant Center sub-account.
+// Insert: Creates a Merchant Center sub-account.
 func (r *AccountsService) Insert(merchantId uint64, account *Account) *AccountsInsertCall {
 	c := &AccountsInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.merchantId = merchantId
@@ -1501,7 +1522,7 @@ func (c *AccountsInsertCall) Do() (*Account, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Create a Merchant Center sub-account.",
+	//   "description": "Creates a Merchant Center sub-account.",
 	//   "httpMethod": "POST",
 	//   "id": "content.accounts.insert",
 	//   "parameterOrder": [
@@ -1538,7 +1559,7 @@ type AccountsListCall struct {
 	opt_       map[string]interface{}
 }
 
-// List: List the sub-accounts in your Merchant Center account.
+// List: Lists the sub-accounts in your Merchant Center account.
 func (r *AccountsService) List(merchantId uint64) *AccountsListCall {
 	c := &AccountsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.merchantId = merchantId
@@ -1589,7 +1610,7 @@ func (c *AccountsListCall) Do() (*AccountsListResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "List the sub-accounts in your Merchant Center account.",
+	//   "description": "Lists the sub-accounts in your Merchant Center account.",
 	//   "httpMethod": "GET",
 	//   "id": "content.accounts.list",
 	//   "parameterOrder": [
@@ -1636,7 +1657,7 @@ type AccountsPatchCall struct {
 	opt_       map[string]interface{}
 }
 
-// Patch: Update a Merchant Center account. This method supports patch
+// Patch: Updates a Merchant Center account. This method supports patch
 // semantics.
 func (r *AccountsService) Patch(merchantId uint64, accountId uint64, account *Account) *AccountsPatchCall {
 	c := &AccountsPatchCall{s: r.s, opt_: make(map[string]interface{})}
@@ -1677,7 +1698,7 @@ func (c *AccountsPatchCall) Do() (*Account, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Update a Merchant Center account. This method supports patch semantics.",
+	//   "description": "Updates a Merchant Center account. This method supports patch semantics.",
 	//   "httpMethod": "PATCH",
 	//   "id": "content.accounts.patch",
 	//   "parameterOrder": [
@@ -1724,7 +1745,7 @@ type AccountsUpdateCall struct {
 	opt_       map[string]interface{}
 }
 
-// Update: Update a Merchant Center account.
+// Update: Updates a Merchant Center account.
 func (r *AccountsService) Update(merchantId uint64, accountId uint64, account *Account) *AccountsUpdateCall {
 	c := &AccountsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.merchantId = merchantId
@@ -1764,7 +1785,7 @@ func (c *AccountsUpdateCall) Do() (*Account, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Update a Merchant Center account.",
+	//   "description": "Updates a Merchant Center account.",
 	//   "httpMethod": "PUT",
 	//   "id": "content.accounts.update",
 	//   "parameterOrder": [
@@ -1870,7 +1891,7 @@ type AccountstatusesGetCall struct {
 	opt_       map[string]interface{}
 }
 
-// Get: Retrieve the status of a Merchant Center account.
+// Get: Retrieves the status of a Merchant Center account.
 func (r *AccountstatusesService) Get(merchantId uint64, accountId uint64) *AccountstatusesGetCall {
 	c := &AccountstatusesGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.merchantId = merchantId
@@ -1903,7 +1924,7 @@ func (c *AccountstatusesGetCall) Do() (*AccountStatus, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieve the status of a Merchant Center account.",
+	//   "description": "Retrieves the status of a Merchant Center account.",
 	//   "httpMethod": "GET",
 	//   "id": "content.accountstatuses.get",
 	//   "parameterOrder": [
@@ -1945,7 +1966,7 @@ type AccountstatusesListCall struct {
 	opt_       map[string]interface{}
 }
 
-// List: List the statuses of the sub-accounts in your Merchant Center
+// List: Lists the statuses of the sub-accounts in your Merchant Center
 // account.
 func (r *AccountstatusesService) List(merchantId uint64) *AccountstatusesListCall {
 	c := &AccountstatusesListCall{s: r.s, opt_: make(map[string]interface{})}
@@ -1998,7 +2019,7 @@ func (c *AccountstatusesListCall) Do() (*AccountstatusesListResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "List the statuses of the sub-accounts in your Merchant Center account.",
+	//   "description": "Lists the statuses of the sub-accounts in your Merchant Center account.",
 	//   "httpMethod": "GET",
 	//   "id": "content.accountstatuses.list",
 	//   "parameterOrder": [
@@ -2164,7 +2185,7 @@ type DatafeedsDeleteCall struct {
 	opt_       map[string]interface{}
 }
 
-// Delete: Delete a datafeed from your Merchant Center account.
+// Delete: Deletes a datafeed from your Merchant Center account.
 func (r *DatafeedsService) Delete(merchantId uint64, datafeedId uint64) *DatafeedsDeleteCall {
 	c := &DatafeedsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.merchantId = merchantId
@@ -2193,7 +2214,7 @@ func (c *DatafeedsDeleteCall) Do() error {
 	}
 	return nil
 	// {
-	//   "description": "Delete a datafeed from your Merchant Center account.",
+	//   "description": "Deletes a datafeed from your Merchant Center account.",
 	//   "httpMethod": "DELETE",
 	//   "id": "content.datafeeds.delete",
 	//   "parameterOrder": [
@@ -2231,7 +2252,7 @@ type DatafeedsGetCall struct {
 	opt_       map[string]interface{}
 }
 
-// Get: Retrieve a datafeed from your Merchant Center account.
+// Get: Retrieves a datafeed from your Merchant Center account.
 func (r *DatafeedsService) Get(merchantId uint64, datafeedId uint64) *DatafeedsGetCall {
 	c := &DatafeedsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.merchantId = merchantId
@@ -2264,7 +2285,7 @@ func (c *DatafeedsGetCall) Do() (*Datafeed, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieve a datafeed from your Merchant Center account.",
+	//   "description": "Retrieves a datafeed from your Merchant Center account.",
 	//   "httpMethod": "GET",
 	//   "id": "content.datafeeds.get",
 	//   "parameterOrder": [
@@ -2305,7 +2326,7 @@ type DatafeedsInsertCall struct {
 	opt_       map[string]interface{}
 }
 
-// Insert: Register a datafeed against your Merchant Center account.
+// Insert: Registers a datafeed with your Merchant Center account.
 func (r *DatafeedsService) Insert(merchantId uint64, datafeed *Datafeed) *DatafeedsInsertCall {
 	c := &DatafeedsInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.merchantId = merchantId
@@ -2343,7 +2364,7 @@ func (c *DatafeedsInsertCall) Do() (*Datafeed, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Register a datafeed against your Merchant Center account.",
+	//   "description": "Registers a datafeed with your Merchant Center account.",
 	//   "httpMethod": "POST",
 	//   "id": "content.datafeeds.insert",
 	//   "parameterOrder": [
@@ -2379,7 +2400,7 @@ type DatafeedsListCall struct {
 	opt_       map[string]interface{}
 }
 
-// List: List the datafeeds in your Merchant Center account.
+// List: Lists the datafeeds in your Merchant Center account.
 func (r *DatafeedsService) List(merchantId uint64) *DatafeedsListCall {
 	c := &DatafeedsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.merchantId = merchantId
@@ -2410,7 +2431,7 @@ func (c *DatafeedsListCall) Do() (*DatafeedsListResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "List the datafeeds in your Merchant Center account.",
+	//   "description": "Lists the datafeeds in your Merchant Center account.",
 	//   "httpMethod": "GET",
 	//   "id": "content.datafeeds.list",
 	//   "parameterOrder": [
@@ -2445,8 +2466,8 @@ type DatafeedsPatchCall struct {
 	opt_       map[string]interface{}
 }
 
-// Patch: Update a datafeed of your Merchant Center account. This method
-// supports patch semantics.
+// Patch: Updates a datafeed of your Merchant Center account. This
+// method supports patch semantics.
 func (r *DatafeedsService) Patch(merchantId uint64, datafeedId uint64, datafeed *Datafeed) *DatafeedsPatchCall {
 	c := &DatafeedsPatchCall{s: r.s, opt_: make(map[string]interface{})}
 	c.merchantId = merchantId
@@ -2486,7 +2507,7 @@ func (c *DatafeedsPatchCall) Do() (*Datafeed, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Update a datafeed of your Merchant Center account. This method supports patch semantics.",
+	//   "description": "Updates a datafeed of your Merchant Center account. This method supports patch semantics.",
 	//   "httpMethod": "PATCH",
 	//   "id": "content.datafeeds.patch",
 	//   "parameterOrder": [
@@ -2531,7 +2552,7 @@ type DatafeedsUpdateCall struct {
 	opt_       map[string]interface{}
 }
 
-// Update: Update a datafeed of your Merchant Center account.
+// Update: Updates a datafeed of your Merchant Center account.
 func (r *DatafeedsService) Update(merchantId uint64, datafeedId uint64, datafeed *Datafeed) *DatafeedsUpdateCall {
 	c := &DatafeedsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.merchantId = merchantId
@@ -2571,7 +2592,7 @@ func (c *DatafeedsUpdateCall) Do() (*Datafeed, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Update a datafeed of your Merchant Center account.",
+	//   "description": "Updates a datafeed of your Merchant Center account.",
 	//   "httpMethod": "PUT",
 	//   "id": "content.datafeeds.update",
 	//   "parameterOrder": [
@@ -2735,7 +2756,7 @@ type DatafeedstatusesGetCall struct {
 	opt_       map[string]interface{}
 }
 
-// Get: Retrieve the status of a datafeed from your Merchant Center
+// Get: Retrieves the status of a datafeed from your Merchant Center
 // account.
 func (r *DatafeedstatusesService) Get(merchantId uint64, datafeedId uint64) *DatafeedstatusesGetCall {
 	c := &DatafeedstatusesGetCall{s: r.s, opt_: make(map[string]interface{})}
@@ -2769,7 +2790,7 @@ func (c *DatafeedstatusesGetCall) Do() (*DatafeedStatus, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieve the status of a datafeed from your Merchant Center account.",
+	//   "description": "Retrieves the status of a datafeed from your Merchant Center account.",
 	//   "httpMethod": "GET",
 	//   "id": "content.datafeedstatuses.get",
 	//   "parameterOrder": [
@@ -2809,7 +2830,7 @@ type DatafeedstatusesListCall struct {
 	opt_       map[string]interface{}
 }
 
-// List: List the statuses of the datafeeds in your Merchant Center
+// List: Lists the statuses of the datafeeds in your Merchant Center
 // account.
 func (r *DatafeedstatusesService) List(merchantId uint64) *DatafeedstatusesListCall {
 	c := &DatafeedstatusesListCall{s: r.s, opt_: make(map[string]interface{})}
@@ -2841,7 +2862,7 @@ func (c *DatafeedstatusesListCall) Do() (*DatafeedstatusesListResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "List the statuses of the datafeeds in your Merchant Center account.",
+	//   "description": "Lists the statuses of the datafeeds in your Merchant Center account.",
 	//   "httpMethod": "GET",
 	//   "id": "content.datafeedstatuses.list",
 	//   "parameterOrder": [
@@ -2874,7 +2895,7 @@ type InventoryCustombatchCall struct {
 	opt_                        map[string]interface{}
 }
 
-// Custombatch: Update price and availability for multiple products or
+// Custombatch: Updates price and availability for multiple products or
 // stores in a single request.
 func (r *InventoryService) Custombatch(inventorycustombatchrequest *InventoryCustomBatchRequest) *InventoryCustombatchCall {
 	c := &InventoryCustombatchCall{s: r.s, opt_: make(map[string]interface{})}
@@ -2911,7 +2932,7 @@ func (c *InventoryCustombatchCall) Do() (*InventoryCustomBatchResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Update price and availability for multiple products or stores in a single request.",
+	//   "description": "Updates price and availability for multiple products or stores in a single request.",
 	//   "httpMethod": "POST",
 	//   "id": "content.inventory.custombatch",
 	//   "path": "inventory/batch",
@@ -2939,7 +2960,7 @@ type InventorySetCall struct {
 	opt_                map[string]interface{}
 }
 
-// Set: Update price and availability of a product in your Merchant
+// Set: Updates price and availability of a product in your Merchant
 // Center account.
 func (r *InventoryService) Set(merchantId uint64, storeCode string, productId string, inventorysetrequest *InventorySetRequest) *InventorySetCall {
 	c := &InventorySetCall{s: r.s, opt_: make(map[string]interface{})}
@@ -2982,7 +3003,7 @@ func (c *InventorySetCall) Do() (*InventorySetResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Update price and availability of a product in your Merchant Center account.",
+	//   "description": "Updates price and availability of a product in your Merchant Center account.",
 	//   "httpMethod": "POST",
 	//   "id": "content.inventory.set",
 	//   "parameterOrder": [
@@ -3005,7 +3026,7 @@ func (c *InventorySetCall) Do() (*InventorySetResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "storeCode": {
-	//       "description": "The code of the store for which to update price and availability.",
+	//       "description": "The code of the store for which to update price and availability. Use online to update price and availability of an online product.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -3033,7 +3054,7 @@ type ProductsCustombatchCall struct {
 	opt_                       map[string]interface{}
 }
 
-// Custombatch: Retrieve, insert, and delete multiple products in a
+// Custombatch: Retrieves, inserts, and deletes multiple products in a
 // single request.
 func (r *ProductsService) Custombatch(productscustombatchrequest *ProductsCustomBatchRequest) *ProductsCustombatchCall {
 	c := &ProductsCustombatchCall{s: r.s, opt_: make(map[string]interface{})}
@@ -3080,7 +3101,7 @@ func (c *ProductsCustombatchCall) Do() (*ProductsCustomBatchResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieve, insert, and delete multiple products in a single request.",
+	//   "description": "Retrieves, inserts, and deletes multiple products in a single request.",
 	//   "httpMethod": "POST",
 	//   "id": "content.products.custombatch",
 	//   "parameters": {
@@ -3113,7 +3134,7 @@ type ProductsDeleteCall struct {
 	opt_       map[string]interface{}
 }
 
-// Delete: Delete a product from your Merchant Center account.
+// Delete: Deletes a product from your Merchant Center account.
 func (r *ProductsService) Delete(merchantId uint64, productId string) *ProductsDeleteCall {
 	c := &ProductsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.merchantId = merchantId
@@ -3152,7 +3173,7 @@ func (c *ProductsDeleteCall) Do() error {
 	}
 	return nil
 	// {
-	//   "description": "Delete a product from your Merchant Center account.",
+	//   "description": "Deletes a product from your Merchant Center account.",
 	//   "httpMethod": "DELETE",
 	//   "id": "content.products.delete",
 	//   "parameterOrder": [
@@ -3196,7 +3217,7 @@ type ProductsGetCall struct {
 	opt_       map[string]interface{}
 }
 
-// Get: Retrieve a product from your Merchant Center account.
+// Get: Retrieves a product from your Merchant Center account.
 func (r *ProductsService) Get(merchantId uint64, productId string) *ProductsGetCall {
 	c := &ProductsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.merchantId = merchantId
@@ -3229,7 +3250,7 @@ func (c *ProductsGetCall) Do() (*Product, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieve a product from your Merchant Center account.",
+	//   "description": "Retrieves a product from your Merchant Center account.",
 	//   "httpMethod": "GET",
 	//   "id": "content.products.get",
 	//   "parameterOrder": [
@@ -3271,7 +3292,7 @@ type ProductsInsertCall struct {
 	opt_       map[string]interface{}
 }
 
-// Insert: Upload products to your Merchant Center account.
+// Insert: Uploads a product to your Merchant Center account.
 func (r *ProductsService) Insert(merchantId uint64, product *Product) *ProductsInsertCall {
 	c := &ProductsInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.merchantId = merchantId
@@ -3319,7 +3340,7 @@ func (c *ProductsInsertCall) Do() (*Product, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Upload products to your Merchant Center account.",
+	//   "description": "Uploads a product to your Merchant Center account.",
 	//   "httpMethod": "POST",
 	//   "id": "content.products.insert",
 	//   "parameterOrder": [
@@ -3361,7 +3382,7 @@ type ProductsListCall struct {
 	opt_       map[string]interface{}
 }
 
-// List: List the products in your Merchant Center account.
+// List: Lists the products in your Merchant Center account.
 func (r *ProductsService) List(merchantId uint64) *ProductsListCall {
 	c := &ProductsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.merchantId = merchantId
@@ -3412,7 +3433,7 @@ func (c *ProductsListCall) Do() (*ProductsListResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "List the products in your Merchant Center account.",
+	//   "description": "Lists the products in your Merchant Center account.",
 	//   "httpMethod": "GET",
 	//   "id": "content.products.list",
 	//   "parameterOrder": [
@@ -3457,7 +3478,7 @@ type ProductstatusesCustombatchCall struct {
 	opt_                              map[string]interface{}
 }
 
-// Custombatch: Get the statuses of multiple products in a single
+// Custombatch: Gets the statuses of multiple products in a single
 // request.
 func (r *ProductstatusesService) Custombatch(productstatusescustombatchrequest *ProductstatusesCustomBatchRequest) *ProductstatusesCustombatchCall {
 	c := &ProductstatusesCustombatchCall{s: r.s, opt_: make(map[string]interface{})}
@@ -3494,7 +3515,7 @@ func (c *ProductstatusesCustombatchCall) Do() (*ProductstatusesCustomBatchRespon
 	}
 	return ret, nil
 	// {
-	//   "description": "Get the statuses of multiple products in a single request.",
+	//   "description": "Gets the statuses of multiple products in a single request.",
 	//   "httpMethod": "POST",
 	//   "id": "content.productstatuses.custombatch",
 	//   "path": "productstatuses/batch",
@@ -3520,7 +3541,7 @@ type ProductstatusesGetCall struct {
 	opt_       map[string]interface{}
 }
 
-// Get: Get the status of a product from your Merchant Center account.
+// Get: Gets the status of a product from your Merchant Center account.
 func (r *ProductstatusesService) Get(merchantId uint64, productId string) *ProductstatusesGetCall {
 	c := &ProductstatusesGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.merchantId = merchantId
@@ -3553,7 +3574,7 @@ func (c *ProductstatusesGetCall) Do() (*ProductStatus, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Get the status of a product from your Merchant Center account.",
+	//   "description": "Gets the status of a product from your Merchant Center account.",
 	//   "httpMethod": "GET",
 	//   "id": "content.productstatuses.get",
 	//   "parameterOrder": [
@@ -3594,7 +3615,7 @@ type ProductstatusesListCall struct {
 	opt_       map[string]interface{}
 }
 
-// List: List the statuses of the products in your Merchant Center
+// List: Lists the statuses of the products in your Merchant Center
 // account.
 func (r *ProductstatusesService) List(merchantId uint64) *ProductstatusesListCall {
 	c := &ProductstatusesListCall{s: r.s, opt_: make(map[string]interface{})}
@@ -3647,7 +3668,7 @@ func (c *ProductstatusesListCall) Do() (*ProductstatusesListResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "List the statuses of the products in your Merchant Center account.",
+	//   "description": "Lists the statuses of the products in your Merchant Center account.",
 	//   "httpMethod": "GET",
 	//   "id": "content.productstatuses.list",
 	//   "parameterOrder": [

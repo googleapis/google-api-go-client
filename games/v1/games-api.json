@@ -1,11 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/E8Y84lW_GDQytl7mmIiPLiMTcow\"",
+ "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/xwf08x2IZkPk9RJ-oZakN0ikkn8\"",
  "discoveryVersion": "v1",
  "id": "games:v1",
  "name": "games",
  "canonicalName": "Games",
  "version": "v1",
+ "revision": "20140711",
  "title": "Google Play Game Services API",
  "description": "The API for Google Play Game Services.",
  "ownerDomain": "google.com",
@@ -531,7 +532,7 @@
    "properties": {
     "failureCause": {
      "type": "string",
-     "description": "The cause for the update failure.\nPossible values are:  \n- \"TOO_LARGE\" - A batch request was issued with more events than are allowed in a single batch. \n- \"TIME_PERIOD_EXPIRED\" - A batch was sent with data too far in the past to record. \n- \"TIME_PERIOD_SHORT\" - A batch was sent with a time range that was too short. \n- \"TIME_PERIOD_LONG\" - A batch was sent with a time range that was too long. \n- \"ALREADY_UPDATED\" - An attempt was made to record a batch of data which was already seen. \n- \"RECORD_RATE_HIGH\" - An attempt was made to record data faster than the server will apply updates."
+     "description": "The cause for the update failure.\nPossible values are:  \n- \"TOO_LARGE\": A batch request was issued with more events than are allowed in a single batch. \n- \"TIME_PERIOD_EXPIRED\": A batch was sent with data too far in the past to record. \n- \"TIME_PERIOD_SHORT\": A batch was sent with a time range that was too short. \n- \"TIME_PERIOD_LONG\": A batch was sent with a time range that was too long. \n- \"ALREADY_UPDATED\": An attempt was made to record a batch of data which was already seen. \n- \"RECORD_RATE_HIGH\": An attempt was made to record data faster than the server will apply updates."
     },
     "kind": {
      "type": "string",
@@ -540,7 +541,7 @@
     },
     "range": {
      "$ref": "EventPeriodRange",
-     "description": "The time range which was rejected, empty for a request-wide failure."
+     "description": "The time range which was rejected; empty for a request-wide failure."
     }
    }
   },
@@ -599,7 +600,7 @@
     },
     "visibility": {
      "type": "string",
-     "description": "The visibility of event being tracked in this definition.\nPossible values are:  \n- \"REVEALED\" - This event should be visible to all users. \n- \"HIDDEN\" - This event should only be shown to users that have have recorded this event at least once."
+     "description": "The visibility of event being tracked in this definition.\nPossible values are:  \n- \"REVEALED\": This event should be visible to all users. \n- \"HIDDEN\": This event should only be shown to users that have recorded this event at least once."
     }
    }
   },
@@ -698,7 +699,7 @@
    "properties": {
     "currentTimeMillis": {
      "type": "string",
-     "description": "The current time when this update was sent, in millis, since 1970 UTC (Unix Epoch).",
+     "description": "The current time when this update was sent, in milliseconds, since 1970 UTC (Unix Epoch).",
      "format": "int64"
     },
     "kind": {
@@ -713,7 +714,7 @@
     },
     "timePeriods": {
      "type": "array",
-     "description": "The time period updates being made in this request.",
+     "description": "A list of the time period updates being made in this request.",
      "items": {
       "$ref": "EventPeriodUpdate"
      }
@@ -736,7 +737,7 @@
     },
     "updateCount": {
      "type": "string",
-     "description": "The update being made for this event.",
+     "description": "The number of times this event occurred in this time period.",
      "format": "int64"
     }
    }
@@ -1142,7 +1143,7 @@
    "properties": {
     "currentVersion": {
      "type": "integer",
-     "description": "Current version of the metagame configuration data. When this data is updated, the version will be increased by one.",
+     "description": "Current version of the metagame configuration data. When this data is updated, the version number will be increased by one.",
      "format": "int32"
     },
     "kind": {
@@ -1346,15 +1347,15 @@
     },
     "name": {
      "type": "object",
-     "description": "An object representation of the individual components of the player's name.",
+     "description": "An object representation of the individual components of the player's name. For some players, these fields may not be present.",
      "properties": {
       "familyName": {
        "type": "string",
-       "description": "The family name (last name) of this player."
+       "description": "The family name of this player. In some places, this is known as the last name."
       },
       "givenName": {
        "type": "string",
-       "description": "The given name (first name) of this player."
+       "description": "The given name of this player. In some places, this is known as the first name."
       }
      }
     },
@@ -1437,11 +1438,11 @@
    "properties": {
     "definitionId": {
      "type": "string",
-     "description": "The ID of the event."
+     "description": "The ID of the event definition."
     },
     "formattedNumEvents": {
      "type": "string",
-     "description": "The current number of times this event has occurred as a string."
+     "description": "The current number of times this event has occurred, as a string. The formatting of this string depends on the configuration of your event in the Play Games Developer Console."
     },
     "kind": {
      "type": "string",
@@ -1489,12 +1490,12 @@
    "properties": {
     "currentExperiencePoints": {
      "type": "string",
-     "description": "The current number of experience points for the player",
+     "description": "The current number of experience points for the player.",
      "format": "int64"
     },
     "currentLevel": {
      "$ref": "PlayerLevel",
-     "description": "The current level of the player"
+     "description": "The current level of the player."
     },
     "kind": {
      "type": "string",
@@ -1503,7 +1504,7 @@
     },
     "lastLevelUpTimestampMillis": {
      "type": "string",
-     "description": "The timestamp when the player was leveled up last time millis since epoch UTC.",
+     "description": "The timestamp when the player was leveled up, in millis since Unix epoch UTC.",
      "format": "int64"
     },
     "nextLevel": {
@@ -1597,17 +1598,17 @@
     },
     "level": {
      "type": "integer",
-     "description": "The level for the user",
+     "description": "The level for the user.",
      "format": "int32"
     },
     "maxExperiencePoints": {
      "type": "string",
-     "description": "The maximum experience points for this level",
+     "description": "The maximum experience points for this level.",
      "format": "int64"
     },
     "minExperiencePoints": {
      "type": "string",
-     "description": "The minimum experience points for this level",
+     "description": "The minimum experience points for this level.",
      "format": "int64"
     }
    }
@@ -1867,7 +1868,7 @@
     },
     "state": {
      "type": "string",
-     "description": "The state of the quest.\nPossible values are:  \n- \"UPCOMING\" - The quest is upcoming. The user can see the quest, but cannot accept it until it is open. \n- \"OPEN\" - The quest is currently open and may be accepted at this time. \n- \"ACCEPTED\" - The user is currently participating in this quest. \n- \"COMPLETED\" - User has completed the quest. \n- \"FAILED\" - The quest was attempted but was not completed before the deadline expired. \n- \"EXPIRED\" - The quest has expired and was not accepted. \n- \"DELETED\" - The quest should be deleted from the local database."
+     "description": "The state of the quest.\nPossible values are:  \n- \"UPCOMING\": The quest is upcoming. The user can see the quest, but cannot accept it until it is open. \n- \"OPEN\": The quest is currently open and may be accepted at this time. \n- \"ACCEPTED\": The user is currently participating in this quest. \n- \"COMPLETED\": The user has completed the quest. \n- \"FAILED\": The quest was attempted but was not completed before the deadline expired. \n- \"EXPIRED\": The quest has expired and was not accepted. \n- \"DELETED\": The quest should be deleted from the local database."
     }
    }
   },
@@ -1878,7 +1879,7 @@
    "properties": {
     "formattedValue": {
      "type": "string",
-     "description": "The formatted value of the contribution."
+     "description": "The formatted value of the contribution as a string. Format depends on the configuration for the associated event definition in the Play Games Developer Console."
     },
     "kind": {
      "type": "string",
@@ -1950,7 +1951,7 @@
    "properties": {
     "completionRewardData": {
      "type": "string",
-     "description": "The completion reward data of the milestone, represented as a Base64-encoded string. This is a developer-specified binary blob with size between 0 and 2 kB before encoding.",
+     "description": "The completion reward data of the milestone, represented as a Base64-encoded string. This is a developer-specified binary blob with size between 0 and 2 KB before encoding.",
      "format": "byte"
     },
     "criteria": {
@@ -2490,7 +2491,7 @@
     },
     "driveId": {
      "type": "string",
-     "description": "The ID of the file underlying this snapshot in the Drive API. Only present if the snapshot is a view on a drive file and the file is owned by the caller."
+     "description": "The ID of the file underlying this snapshot in the Drive API. Only present if the snapshot is a view on a Drive file and the file is owned by the caller."
     },
     "durationMillis": {
      "type": "string",
@@ -2542,11 +2543,11 @@
     },
     "mime_type": {
      "type": "string",
-     "description": "The mime_type of the image."
+     "description": "The MIME type of the image."
     },
     "url": {
      "type": "string",
-     "description": "The url of the image. This url may be invalidated at any time and should not be cached."
+     "description": "The URL of the image. This URL may be invalidated at any time and should not be cached."
     },
     "width": {
      "type": "integer",
@@ -3258,7 +3259,7 @@
      "id": "games.events.listByPlayer",
      "path": "events",
      "httpMethod": "GET",
-     "description": "Returns a list of the current progress on events in this application for the currently authorized user.",
+     "description": "Returns a list showing the current progress on events in this application for the currently authenticated user.",
      "parameters": {
       "language": {
        "type": "string",
@@ -3270,7 +3271,7 @@
        "description": "The maximum number of events to return in the response, used for paging. For any response, the actual number of events to return may be less than the specified maxResults.",
        "format": "int32",
        "minimum": "1",
-       "maximum": "500",
+       "maximum": "100",
        "location": "query"
       },
       "pageToken": {
@@ -3303,7 +3304,7 @@
        "description": "The maximum number of event definitions to return in the response, used for paging. For any response, the actual number of event definitions to return may be less than the specified maxResults.",
        "format": "int32",
        "minimum": "1",
-       "maximum": "500",
+       "maximum": "100",
        "location": "query"
       },
       "pageToken": {
@@ -3324,7 +3325,7 @@
      "id": "games.events.record",
      "path": "events",
      "httpMethod": "POST",
-     "description": "Records a batch of event updates for the currently authorized user of this application.",
+     "description": "Records a batch of changes to the number of times events have occurred for the currently authenticated user of this application.",
      "parameters": {
       "language": {
        "type": "string",
@@ -3602,11 +3603,11 @@
      "id": "games.questMilestones.claim",
      "path": "quests/{questId}/milestones/{milestoneId}/claim",
      "httpMethod": "PUT",
-     "description": "Report that reward for the milestone corresponding to milestoneId for the quest corresponding to questId has been claimed by the currently authorized user.",
+     "description": "Report that a reward for the milestone corresponding to milestoneId for the quest corresponding to questId has been claimed by the currently authorized user.",
      "parameters": {
       "milestoneId": {
        "type": "string",
-       "description": "The ID of the Milestone.",
+       "description": "The ID of the milestone.",
        "required": true,
        "location": "path"
       },
@@ -3618,7 +3619,7 @@
       },
       "requestId": {
        "type": "string",
-       "description": "A randomly generated numeric ID for each request specified by the caller. This number is used at the server to ensure that the request is handled correctly across retries.",
+       "description": "A numeric ID to ensure that the request is handled correctly across retries. Your client application must generate this ID randomly.",
        "required": true,
        "format": "int64",
        "location": "query"

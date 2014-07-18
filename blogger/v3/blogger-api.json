@@ -1,10 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"kEk3sFj6Ef5_yR1-H3bAO6qw9mI/TO0nvlGiFkC4eBcMUbWL9BiW0xc\"",
+ "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/BrZoer-JM4DM9kghr6CWDzq-goM\"",
  "discoveryVersion": "v1",
  "id": "blogger:v3",
  "name": "blogger",
  "version": "v3",
+ "revision": "20140711",
  "title": "Blogger API",
  "description": "API for access to the data within Blogger.",
  "ownerDomain": "google.com",
@@ -169,6 +170,10 @@
     "selfLink": {
      "type": "string",
      "description": "The API REST URL to fetch this resource from."
+    },
+    "status": {
+     "type": "string",
+     "description": "The status of the blog."
     },
     "updated": {
      "type": "string",
@@ -619,6 +624,10 @@
      "description": "RFC 3339 date-time when this Post was published.",
      "format": "date-time"
     },
+    "readerComments": {
+     "type": "string",
+     "description": "Comment control and display setting for readers of this post."
+    },
     "replies": {
      "type": "object",
      "description": "The container of comments on this Post.",
@@ -871,7 +880,7 @@
      "id": "blogger.blogs.get",
      "path": "blogs/{blogId}",
      "httpMethod": "GET",
-     "description": "Gets one blog by id.",
+     "description": "Gets one blog by ID.",
      "parameters": {
       "blogId": {
        "type": "string",
@@ -887,16 +896,16 @@
       },
       "view": {
        "type": "string",
-       "description": "Access level with which to view the blogs. Note that some fields require elevated access.",
+       "description": "Access level with which to view the blog. Note that some fields require elevated access.",
        "enum": [
         "ADMIN",
         "AUTHOR",
         "READER"
        ],
        "enumDescriptions": [
-        "Admin level detail",
-        "Author level detail",
-        "Reader level detail"
+        "Admin level detail.",
+        "Author level detail.",
+        "Reader level detail."
        ],
        "location": "query"
       }
@@ -926,16 +935,16 @@
       },
       "view": {
        "type": "string",
-       "description": "Access level with which to view the blogs. Note that some fields require elevated access.",
+       "description": "Access level with which to view the blog. Note that some fields require elevated access.",
        "enum": [
         "ADMIN",
         "AUTHOR",
         "READER"
        ],
        "enumDescriptions": [
-        "Admin level detail",
-        "Author level detail",
-        "Reader level detail"
+        "Admin level detail.",
+        "Author level detail.",
+        "Reader level detail."
        ],
        "location": "query"
       }
@@ -971,9 +980,24 @@
         "READER"
        ],
        "enumDescriptions": [
-        "Admin role - User has Admin level access.",
-        "Author role - User has Author level access.",
-        "Reader role - User has Reader level access."
+        "Admin role - Blogs where the user has Admin level access.",
+        "Author role - Blogs where the user has Author level access.",
+        "Reader role - Blogs where the user has Reader level access (to a private blog)."
+       ],
+       "repeated": true,
+       "location": "query"
+      },
+      "status": {
+       "type": "string",
+       "description": "Blog statuses to include in the result (default: Live blogs only). Note that ADMIN access is required to view deleted blogs.",
+       "default": "LIVE",
+       "enum": [
+        "DELETED",
+        "LIVE"
+       ],
+       "enumDescriptions": [
+        "Blog has been deleted by an administrator.",
+        "Blog is currently live."
        ],
        "repeated": true,
        "location": "query"
@@ -993,9 +1017,9 @@
         "READER"
        ],
        "enumDescriptions": [
-        "Admin level detail",
-        "Author level detail",
-        "Reader level detail"
+        "Admin level detail.",
+        "Author level detail.",
+        "Reader level detail."
        ],
        "location": "query"
       }
@@ -1023,7 +1047,7 @@
      "parameters": {
       "blogId": {
        "type": "string",
-       "description": "The Id of the Blog.",
+       "description": "The ID of the Blog.",
        "required": true,
        "location": "path"
       },
@@ -1056,11 +1080,11 @@
      "id": "blogger.comments.delete",
      "path": "blogs/{blogId}/posts/{postId}/comments/{commentId}",
      "httpMethod": "DELETE",
-     "description": "Delete a comment by id.",
+     "description": "Delete a comment by ID.",
      "parameters": {
       "blogId": {
        "type": "string",
-       "description": "The Id of the Blog.",
+       "description": "The ID of the Blog.",
        "required": true,
        "location": "path"
       },
@@ -1090,7 +1114,7 @@
      "id": "blogger.comments.get",
      "path": "blogs/{blogId}/posts/{postId}/comments/{commentId}",
      "httpMethod": "GET",
-     "description": "Gets one comment by id.",
+     "description": "Gets one comment by ID.",
      "parameters": {
       "blogId": {
        "type": "string",
@@ -1290,7 +1314,7 @@
      "parameters": {
       "blogId": {
        "type": "string",
-       "description": "The Id of the Blog.",
+       "description": "The ID of the Blog.",
        "required": true,
        "location": "path"
       },
@@ -1327,7 +1351,7 @@
      "parameters": {
       "blogId": {
        "type": "string",
-       "description": "The Id of the Blog.",
+       "description": "The ID of the Blog.",
        "required": true,
        "location": "path"
       },
@@ -1406,11 +1430,11 @@
      "id": "blogger.pages.delete",
      "path": "blogs/{blogId}/pages/{pageId}",
      "httpMethod": "DELETE",
-     "description": "Delete a page by id.",
+     "description": "Delete a page by ID.",
      "parameters": {
       "blogId": {
        "type": "string",
-       "description": "The Id of the Blog.",
+       "description": "The ID of the Blog.",
        "required": true,
        "location": "path"
       },
@@ -1433,7 +1457,7 @@
      "id": "blogger.pages.get",
      "path": "blogs/{blogId}/pages/{pageId}",
      "httpMethod": "GET",
-     "description": "Gets one blog page by id.",
+     "description": "Gets one blog page by ID.",
      "parameters": {
       "blogId": {
        "type": "string",
@@ -1485,6 +1509,11 @@
        "description": "ID of the blog to add the page to.",
        "required": true,
        "location": "path"
+      },
+      "isDraft": {
+       "type": "boolean",
+       "description": "Whether to create the page as a draft (default: false).",
+       "location": "query"
       }
      },
      "parameterOrder": [
@@ -1574,6 +1603,16 @@
        "description": "The ID of the Page.",
        "required": true,
        "location": "path"
+      },
+      "publish": {
+       "type": "boolean",
+       "description": "Whether a publish action should be performed when the page is updated (default: false).",
+       "location": "query"
+      },
+      "revert": {
+       "type": "boolean",
+       "description": "Whether a revert action should be performed when the page is updated (default: false).",
+       "location": "query"
       }
      },
      "parameterOrder": [
@@ -1607,6 +1646,16 @@
        "description": "The ID of the Page.",
        "required": true,
        "location": "path"
+      },
+      "publish": {
+       "type": "boolean",
+       "description": "Whether a publish action should be performed when the page is updated (default: false).",
+       "location": "query"
+      },
+      "revert": {
+       "type": "boolean",
+       "description": "Whether a revert action should be performed when the page is updated (default: false).",
+       "location": "query"
       }
      },
      "parameterOrder": [
@@ -1631,7 +1680,7 @@
      "id": "blogger.postUserInfos.get",
      "path": "users/{userId}/blogs/{blogId}/posts/{postId}",
      "httpMethod": "GET",
-     "description": "Gets one post and user info pair, by post id and user id. The post user info contains per-user information about the post, such as access rights, specific to the user.",
+     "description": "Gets one post and user info pair, by post ID and user ID. The post user info contains per-user information about the post, such as access rights, specific to the user.",
      "parameters": {
       "blogId": {
        "type": "string",
@@ -1788,11 +1837,11 @@
      "id": "blogger.posts.delete",
      "path": "blogs/{blogId}/posts/{postId}",
      "httpMethod": "DELETE",
-     "description": "Delete a post by id.",
+     "description": "Delete a post by ID.",
      "parameters": {
       "blogId": {
        "type": "string",
-       "description": "The Id of the Blog.",
+       "description": "The ID of the Blog.",
        "required": true,
        "location": "path"
       },
@@ -1815,7 +1864,7 @@
      "id": "blogger.posts.get",
      "path": "blogs/{blogId}/posts/{postId}",
      "httpMethod": "GET",
-     "description": "Get a post by id.",
+     "description": "Get a post by ID.",
      "parameters": {
       "blogId": {
        "type": "string",
@@ -2140,7 +2189,7 @@
      "id": "blogger.posts.publish",
      "path": "blogs/{blogId}/posts/{postId}/publish",
      "httpMethod": "POST",
-     "description": "Publish a draft post.",
+     "description": "Publishes a draft post, optionally at the specific time of the given publishDate parameter.",
      "parameters": {
       "blogId": {
        "type": "string",
@@ -2156,7 +2205,7 @@
       },
       "publishDate": {
        "type": "string",
-       "description": "The date and time to schedule the publishing of the Blog.",
+       "description": "Optional date and time to schedule the publishing of the Blog. If no publishDate parameter is given, the post is either published at the a previously saved schedule date (if present), or the current time. If a future date is given, the post will be scheduled to be published.",
        "format": "date-time",
        "location": "query"
       }
@@ -2321,7 +2370,7 @@
      "id": "blogger.users.get",
      "path": "users/{userId}",
      "httpMethod": "GET",
-     "description": "Gets one user by id.",
+     "description": "Gets one user by ID.",
      "parameters": {
       "userId": {
        "type": "string",

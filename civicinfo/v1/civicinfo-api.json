@@ -1,11 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/smqJXr2CKK6u5cNYcHp4hIzdV4g\"",
+ "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/9quV6UzbWGUUsFsJkffU4NX0-gU\"",
  "discoveryVersion": "v1",
  "id": "civicinfo:v1",
  "name": "civicinfo",
  "canonicalName": "Civic Info",
  "version": "v1",
+ "revision": "20140630",
  "title": "Google Civic Information API",
  "description": "An API for accessing civic information.",
  "ownerDomain": "google.com",
@@ -436,7 +437,7 @@
    "properties": {
     "alsoKnownAs": {
      "type": "array",
-     "description": "Any other valid OCD IDs that refer to the same division. For example, if ocd_id above is ocd-division/country:us/district:dc, this will contain ocd-division/country:us/state:dc.",
+     "description": "Any other valid OCD IDs that refer to the same division. For example, if this division's OCD ID is ocd-division/country:us/district:dc, this will contain ocd-division/country:us/state:dc.",
      "items": {
       "type": "string"
      }
@@ -465,7 +466,7 @@
    "properties": {
     "divisionId": {
      "type": "string",
-     "description": "The OCD ID of the division this office is part of."
+     "description": "The OCD ID of the division with which this office is associated."
     },
     "level": {
      "type": "string",
@@ -477,7 +478,7 @@
     },
     "officialIds": {
      "type": "array",
-     "description": "List of people who presently hold the office.",
+     "description": "List of keys in the officials object of people who presently hold this office.",
      "items": {
       "type": "string"
      }
@@ -830,7 +831,7 @@
      "id": "civicinfo.representatives.representativeInfoQuery",
      "path": "representatives/lookup",
      "httpMethod": "POST",
-     "description": "Looks up political geography and (optionally) representative information based on an address.",
+     "description": "Looks up political geography and representative information based on an address or Open Civic Data division identifier.",
      "parameters": {
       "includeOffices": {
        "type": "boolean",

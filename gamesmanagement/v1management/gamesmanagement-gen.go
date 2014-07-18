@@ -203,14 +203,14 @@ type GamesPlayedResource struct {
 
 type GamesPlayerExperienceInfoResource struct {
 	// CurrentExperiencePoints: The current number of experience points for
-	// the player
+	// the player.
 	CurrentExperiencePoints int64 `json:"currentExperiencePoints,omitempty,string"`
 
-	// CurrentLevel: The current level of the player
+	// CurrentLevel: The current level of the player.
 	CurrentLevel *GamesPlayerLevelResource `json:"currentLevel,omitempty"`
 
 	// LastLevelUpTimestampMillis: The timestamp when the player was leveled
-	// up last time millis since epoch UTC.
+	// up, in millis since Unix epoch UTC.
 	LastLevelUpTimestampMillis int64 `json:"lastLevelUpTimestampMillis,omitempty,string"`
 
 	// NextLevel: The next level of the player. If the current level is the
@@ -219,13 +219,13 @@ type GamesPlayerExperienceInfoResource struct {
 }
 
 type GamesPlayerLevelResource struct {
-	// Level: The level for the user
+	// Level: The level for the user.
 	Level int64 `json:"level,omitempty"`
 
-	// MaxExperiencePoints: The maximum experience points for this level
+	// MaxExperiencePoints: The maximum experience points for this level.
 	MaxExperiencePoints int64 `json:"maxExperiencePoints,omitempty,string"`
 
-	// MinExperiencePoints: The minimum experience points for this level
+	// MinExperiencePoints: The minimum experience points for this level.
 	MinExperiencePoints int64 `json:"minExperiencePoints,omitempty,string"`
 }
 
@@ -275,7 +275,7 @@ type Player struct {
 	LastPlayedWith *GamesPlayedResource `json:"lastPlayedWith,omitempty"`
 
 	// Name: An object representation of the individual components of the
-	// player's name.
+	// player's name. For some players, these fields may not be present.
 	Name *PlayerName `json:"name,omitempty"`
 
 	// PlayerId: The ID of the player.
@@ -286,10 +286,12 @@ type Player struct {
 }
 
 type PlayerName struct {
-	// FamilyName: The family name (last name) of this player.
+	// FamilyName: The family name of this player. In some places, this is
+	// known as the last name.
 	FamilyName string `json:"familyName,omitempty"`
 
-	// GivenName: The given name (first name) of this player.
+	// GivenName: The given name of this player. In some places, this is
+	// known as the first name.
 	GivenName string `json:"givenName,omitempty"`
 }
 

@@ -908,7 +908,7 @@ type Person struct {
 	// Cover: The cover photo content.
 	Cover *PersonCover `json:"cover,omitempty"`
 
-	// CurrentLocation: The current location for this person.
+	// CurrentLocation: (this field is not currently used)
 	CurrentLocation string `json:"currentLocation,omitempty"`
 
 	// DisplayName: The name of this person, which is suitable for display.
@@ -1066,6 +1066,9 @@ type PersonEmails struct {
 }
 
 type PersonImage struct {
+	// IsDefault: Whether the person's profile photo is the default one
+	IsDefault bool `json:"isDefault,omitempty"`
+
 	// Url: The URL of the person's profile photo. To resize the image and
 	// crop it to a square, append the query string ?sz=x, where x is the
 	// dimension in pixels of each side.

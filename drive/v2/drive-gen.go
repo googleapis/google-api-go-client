@@ -3592,6 +3592,13 @@ func (r *FilesService) List() *FilesListCall {
 	return c
 }
 
+// Corpus sets the optional parameter "corpus": The body of items
+// (files/documents) to which the query applies.
+func (c *FilesListCall) Corpus(corpus string) *FilesListCall {
+	c.opt_["corpus"] = corpus
+	return c
+}
+
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of files to return.
 func (c *FilesListCall) MaxResults(maxResults int64) *FilesListCall {
@@ -3623,6 +3630,9 @@ func (c *FilesListCall) Do() (*FileList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["corpus"]; ok {
+		params.Set("corpus", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
@@ -3658,6 +3668,19 @@ func (c *FilesListCall) Do() (*FileList, error) {
 	//   "httpMethod": "GET",
 	//   "id": "drive.files.list",
 	//   "parameters": {
+	//     "corpus": {
+	//       "description": "The body of items (files/documents) to which the query applies.",
+	//       "enum": [
+	//         "DEFAULT",
+	//         "DOMAIN"
+	//       ],
+	//       "enumDescriptions": [
+	//         "The items that the user has accessed.",
+	//         "Items shared to the user's domain."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "maxResults": {
 	//       "default": "100",
 	//       "description": "Maximum number of files to return.",

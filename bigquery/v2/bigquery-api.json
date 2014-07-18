@@ -1,10 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/e8FH7rRc5UojPTvcSdSNZpAD9-g\"",
+ "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/eoUh3ZfOfs136OrKu1zxAIy6CrA\"",
  "discoveryVersion": "v1",
  "id": "bigquery:v2",
  "name": "bigquery",
  "version": "v2",
+ "revision": "20140715",
  "title": "BigQuery API",
  "description": "A data platform for customers to create, manage, share and query data.",
  "ownerDomain": "google.com",
@@ -383,7 +384,7 @@
     },
     "destinationFormat": {
      "type": "string",
-     "description": "[Experimental] Optional and defaults to CSV. Format with which files should be exported. To export to CSV, specify \"CSV\". Tables with nested or repeated fields cannot be exported as CSV. To export to newline-delimited JSON, specify \"NEWLINE_DELIMITED_JSON\"."
+     "description": "[Optional] The exported file format. Possible values include CSV, NEWLINE_DELIMITED_JSON and AVRO. The default value is CSV. Tables with nested or repeated fields cannot be exported as CSV."
     },
     "destinationUri": {
      "type": "string",
@@ -570,7 +571,14 @@
     },
     "sourceTable": {
      "$ref": "TableReference",
-     "description": "[Required] Source table to copy."
+     "description": "[Pick one] Source table to copy."
+    },
+    "sourceTables": {
+     "type": "array",
+     "description": "[Pick one] Source tables to copy.",
+     "items": {
+      "$ref": "TableReference"
+     }
     },
     "writeDisposition": {
      "type": "string",

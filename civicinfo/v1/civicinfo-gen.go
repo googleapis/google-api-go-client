@@ -351,8 +351,9 @@ type ElectoralDistrict struct {
 
 type GeographicDivision struct {
 	// AlsoKnownAs: Any other valid OCD IDs that refer to the same division.
-	// For example, if ocd_id above is ocd-division/country:us/district:dc,
-	// this will contain ocd-division/country:us/state:dc.
+	// For example, if this division's OCD ID is
+	// ocd-division/country:us/district:dc, this will contain
+	// ocd-division/country:us/state:dc.
 	AlsoKnownAs []string `json:"alsoKnownAs,omitempty"`
 
 	// Name: The name of the division.
@@ -372,7 +373,8 @@ type GeographicDivision struct {
 }
 
 type Office struct {
-	// DivisionId: The OCD ID of the division this office is part of.
+	// DivisionId: The OCD ID of the division with which this office is
+	// associated.
 	DivisionId string `json:"divisionId,omitempty"`
 
 	// Level: The level of this elected office. One of: federal, state,
@@ -382,7 +384,8 @@ type Office struct {
 	// Name: The human-readable name of the office.
 	Name string `json:"name,omitempty"`
 
-	// OfficialIds: List of people who presently hold the office.
+	// OfficialIds: List of keys in the officials object of people who
+	// presently hold this office.
 	OfficialIds []string `json:"officialIds,omitempty"`
 
 	// Sources: A list of sources for this office. If multiple sources are
@@ -462,7 +465,7 @@ type RepresentativeInfoRequest struct {
 type RepresentativeInfoResponse struct {
 	// Divisions: Political geographic divisions that contain the requested
 	// address.
-	Divisions *RepresentativeInfoResponseDivisions `json:"divisions,omitempty"`
+	Divisions map[string]GeographicDivision `json:"divisions,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "civicinfo#representativeInfoResponse".
@@ -473,26 +476,17 @@ type RepresentativeInfoResponse struct {
 
 	// Offices: Elected offices referenced by the divisions listed above.
 	// Will only be present if includeOffices was true in the request.
-	Offices *RepresentativeInfoResponseOffices `json:"offices,omitempty"`
+	Offices map[string]Office `json:"offices,omitempty"`
 
 	// Officials: Officials holding the offices listed above. Will only be
 	// present if includeOffices was true in the request.
-	Officials *RepresentativeInfoResponseOfficials `json:"officials,omitempty"`
+	Officials map[string]Official `json:"officials,omitempty"`
 
 	// Status: The result of the request. One of: success,
 	// noStreetSegmentFound, addressUnparseable, noAddressParameter,
 	// multipleStreetSegmentsFound, electionOver, electionUnknown,
 	// internalLookupFailure, RequestedBothAddressAndOcdId
 	Status string `json:"status,omitempty"`
-}
-
-type RepresentativeInfoResponseDivisions struct {
-}
-
-type RepresentativeInfoResponseOffices struct {
-}
-
-type RepresentativeInfoResponseOfficials struct {
 }
 
 type SimpleAddressType struct {
@@ -781,7 +775,8 @@ type RepresentativesRepresentativeInfoQueryCall struct {
 }
 
 // RepresentativeInfoQuery: Looks up political geography and
-// (optionally) representative information based on an address.
+// representative information based on an address or Open Civic Data
+// division identifier.
 func (r *RepresentativesService) RepresentativeInfoQuery(representativeinforequest *RepresentativeInfoRequest) *RepresentativesRepresentativeInfoQueryCall {
 	c := &RepresentativesRepresentativeInfoQueryCall{s: r.s, opt_: make(map[string]interface{})}
 	c.representativeinforequest = representativeinforequest
@@ -852,7 +847,7 @@ func (c *RepresentativesRepresentativeInfoQueryCall) Do() (*RepresentativeInfoRe
 	}
 	return ret, nil
 	// {
-	//   "description": "Looks up political geography and (optionally) representative information based on an address.",
+	//   "description": "Looks up political geography and representative information based on an address or Open Civic Data division identifier.",
 	//   "httpMethod": "POST",
 	//   "id": "civicinfo.representatives.representativeInfoQuery",
 	//   "parameters": {

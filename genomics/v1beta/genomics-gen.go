@@ -41,11 +41,17 @@ const basePath = "https://www.googleapis.com/genomics/v1beta/"
 
 // OAuth2 scopes used by this API.
 const (
+	// View and manage your data in Google BigQuery
+	BigqueryScope = "https://www.googleapis.com/auth/bigquery"
+
 	// Manage your data in Google Cloud Storage
 	DevstorageRead_writeScope = "https://www.googleapis.com/auth/devstorage.read_write"
 
 	// View and manage Genomics data
 	GenomicsScope = "https://www.googleapis.com/auth/genomics"
+
+	// View Genomics data
+	GenomicsReadonlyScope = "https://www.googleapis.com/auth/genomics.readonly"
 )
 
 func New(client *http.Client) (*Service, error) {
@@ -189,7 +195,8 @@ type Call struct {
 	// would mean the call represented the heterozygous value "CA" for this
 	// variant. If the genotype was instead [0, 1], the represented value
 	// would be "TA". Ordering of the genotype values is important if the
-	// phaseset field is present.
+	// phaseset field is present. If a genotype is not called (that is, a
+	// "." is present in the GT string,) -1 is returned.
 	Genotype []int64 `json:"genotype,omitempty"`
 
 	// GenotypeLikelihood: The genotype likelihoods for this variant call.
@@ -204,7 +211,9 @@ type Call struct {
 	// Phaseset: If this field is present, this variant call's genotype
 	// ordering implies the phase of the bases and is consistent with any
 	// other variant calls on the same contig which have the same phaseset
-	// value.
+	// value. When importing data from VCF, if the genotype data was phased,
+	// but no phase set was specified this field will be set to
+	// "DEFAULT_PHASESET".
 	Phaseset string `json:"phaseset,omitempty"`
 }
 
@@ -267,12 +276,21 @@ type ExperimentalCreateJobRequest struct {
 	// pipelines. This shoud be in the form of "gs://bucket/path".
 	GcsOutputPath string `json:"gcsOutputPath,omitempty"`
 
+	// PairedSourceUris: A list of Google Cloud Storage URIs of paired end
+	// .fastq files to operate upon. If specified, this represents the
+	// second file of each paired .fastq file. The first file of each pair
+	// should be specified in "sourceUris".
+	PairedSourceUris []string `json:"pairedSourceUris,omitempty"`
+
 	// ProjectId: Required. The Google Cloud Project ID with which to
 	// associate the request.
 	ProjectId int64 `json:"projectId,omitempty,string"`
 
-	// SourceUris: Required. A list of Google Cloud Storage URIs of data
-	// files to operate upon.
+	// SourceUris: A list of Google Cloud Storage URIs of data files to
+	// operate upon. These can be .bam, interleaved .fastq, or paired
+	// .fastq. If specifying paired .fastq files, the first of each pair of
+	// files should be listed here, and the second of each pair should be
+	// listed in "pairedSourceUris".
 	SourceUris []string `json:"sourceUris,omitempty"`
 }
 
@@ -370,11 +388,11 @@ type HeaderSection struct {
 
 type ImportReadsetsRequest struct {
 	// DatasetId: Required. The ID of the dataset these readsets will belong
-	// to.
+	// to. The caller must have WRITE permissions to this dataset.
 	DatasetId string `json:"datasetId,omitempty"`
 
-	// SourceUris: A list of URIs pointing at BAM or FASTQ files in Google
-	// Cloud Storage.
+	// SourceUris: A list of URIs pointing at BAM files in Google Cloud
+	// Storage.
 	SourceUris []string `json:"sourceUris,omitempty"`
 }
 
@@ -400,6 +418,10 @@ type ImportVariantsResponse struct {
 }
 
 type Job struct {
+	// Created: The date this job was created, in milliseconds from the
+	// epoch.
+	Created int64 `json:"created,omitempty,string"`
+
 	// Description: A more detailed description of this job's current
 	// status.
 	Description string `json:"description,omitempty"`
@@ -631,7 +653,49 @@ type SearchCallsetsResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+type SearchJobsRequest struct {
+	// CreatedAfter: If specified, only jobs created on or after this date,
+	// given in milliseconds since Unix epoch, will be listed.
+	CreatedAfter int64 `json:"createdAfter,omitempty,string"`
+
+	// CreatedBefore: If specified, only jobs created prior to this date,
+	// given in milliseconds since Unix epoch, will be listed.
+	CreatedBefore int64 `json:"createdBefore,omitempty,string"`
+
+	// MaxResults: Specifies the number of results to return in a single
+	// page. If unspecified, it will default to 128. The maximum value is
+	// 256.
+	MaxResults uint64 `json:"maxResults,omitempty,string"`
+
+	// PageToken: The continuation token which is used to page through large
+	// result sets. To get the next page of results, set this parameter to
+	// the value of the "nextPageToken" from the previous response.
+	PageToken string `json:"pageToken,omitempty"`
+
+	// ProjectId: The Google Developers Console project number to which the
+	// jobs belong.
+	ProjectId int64 `json:"projectId,omitempty,string"`
+
+	// Status: An optional list of Status values to filter the listing.
+	Status []string `json:"status,omitempty"`
+}
+
+type SearchJobsResponse struct {
+	// Jobs: The list of jobs results, ordered newest to oldest.
+	Jobs []*Job `json:"jobs,omitempty"`
+
+	// NextPageToken: The continuation token which is used to page through
+	// large result sets. Provide this value is a subsequent request to
+	// return the next page of results. This field will be empty if there
+	// are no more results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+}
+
 type SearchReadsRequest struct {
+	// MaxResults: Specifies number of results to return in a single page.
+	// If unspecified, it will default to 256. The maximum value is 1024.
+	MaxResults uint64 `json:"maxResults,omitempty,string"`
+
 	// PageToken: The continuation token, which is used to page through
 	// large result sets. To get the next page of results, set this
 	// parameter to the value of "nextPageToken" from the previous response.
@@ -644,8 +708,8 @@ type SearchReadsRequest struct {
 	ReadsetIds []string `json:"readsetIds,omitempty"`
 
 	// SequenceEnd: The end position (1-based, inclusive) of the target
-	// range. If specified, sequenceName must also be specified. Defaults to
-	// the end of the target reference sequence, if any.
+	// range. If specified, "sequenceName" must also be specified. Defaults
+	// to the end of the target reference sequence, if any.
 	SequenceEnd uint64 `json:"sequenceEnd,omitempty,string"`
 
 	// SequenceName: Restricts the results to a particular reference
@@ -655,8 +719,8 @@ type SearchReadsRequest struct {
 	SequenceName string `json:"sequenceName,omitempty"`
 
 	// SequenceStart: The start position (1-based, inclusive) of the target
-	// range. If specified, sequenceName must also be specified. Defaults to
-	// the start of the target reference sequence, if any.
+	// range. If specified, "sequenceName" must also be specified. Defaults
+	// to the start of the target reference sequence, if any.
 	SequenceStart uint64 `json:"sequenceStart,omitempty,string"`
 }
 
@@ -678,6 +742,10 @@ type SearchReadsetsRequest struct {
 	// DatasetIds: Restricts this query to readsets within the given
 	// datasets. At least one ID must be provided.
 	DatasetIds []string `json:"datasetIds,omitempty"`
+
+	// MaxResults: Specifies number of results to return in a single page.
+	// If unspecified, it will default to 128. The maximum value is 256.
+	MaxResults uint64 `json:"maxResults,omitempty,string"`
 
 	// Name: Only return readsets for which a substring of the name matches
 	// this string.
@@ -1071,7 +1139,8 @@ func (c *CallsetsGetCall) Do() (*Callset, error) {
 	//     "$ref": "Callset"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/genomics"
+	//     "https://www.googleapis.com/auth/genomics",
+	//     "https://www.googleapis.com/auth/genomics.readonly"
 	//   ]
 	// }
 
@@ -1207,7 +1276,8 @@ func (c *CallsetsSearchCall) Do() (*SearchCallsetsResponse, error) {
 	//     "$ref": "SearchCallsetsResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/genomics"
+	//     "https://www.googleapis.com/auth/genomics",
+	//     "https://www.googleapis.com/auth/genomics.readonly"
 	//   ]
 	// }
 
@@ -1464,7 +1534,8 @@ func (c *DatasetsGetCall) Do() (*Dataset, error) {
 	//     "$ref": "Dataset"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/genomics"
+	//     "https://www.googleapis.com/auth/genomics",
+	//     "https://www.googleapis.com/auth/genomics.readonly"
 	//   ]
 	// }
 
@@ -1566,7 +1637,8 @@ func (c *DatasetsListCall) Do() (*ListDatasetsResponse, error) {
 	//     "$ref": "ListDatasetsResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/genomics"
+	//     "https://www.googleapis.com/auth/genomics",
+	//     "https://www.googleapis.com/auth/genomics.readonly"
 	//   ]
 	// }
 
@@ -1843,8 +1915,67 @@ func (c *JobsGetCall) Do() (*Job, error) {
 	//     "$ref": "Job"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/genomics"
+	//     "https://www.googleapis.com/auth/genomics",
+	//     "https://www.googleapis.com/auth/genomics.readonly"
 	//   ]
+	// }
+
+}
+
+// method id "genomics.jobs.search":
+
+type JobsSearchCall struct {
+	s                 *Service
+	searchjobsrequest *SearchJobsRequest
+	opt_              map[string]interface{}
+}
+
+// Search: Searches jobs within a project.
+func (r *JobsService) Search(searchjobsrequest *SearchJobsRequest) *JobsSearchCall {
+	c := &JobsSearchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.searchjobsrequest = searchjobsrequest
+	return c
+}
+
+func (c *JobsSearchCall) Do() (*SearchJobsResponse, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.searchjobsrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "jobs/search")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *SearchJobsResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Searches jobs within a project.",
+	//   "httpMethod": "POST",
+	//   "id": "genomics.jobs.search",
+	//   "path": "jobs/search",
+	//   "request": {
+	//     "$ref": "SearchJobsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "SearchJobsResponse"
+	//   }
 	// }
 
 }
@@ -1905,10 +2036,7 @@ func (c *ReadsGetCall) Do() (*Read, error) {
 	//   "path": "reads/{readId}",
 	//   "response": {
 	//     "$ref": "Read"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/genomics"
-	//   ]
+	//   }
 	// }
 
 }
@@ -1921,13 +2049,16 @@ type ReadsSearchCall struct {
 	opt_               map[string]interface{}
 }
 
-// Search: Gets a list of reads for one or more readsets. SearchReads
-// operates over a genomic coordinate space of sequence+position defined
-// over the reference sequences to which the requested readsets are
-// aligned. If a target positional range is specified, SearchReads
-// returns all reads whose alignment to the reference genome overlap the
-// range. A query which specifies only readset IDs yields all reads in
-// those readsets, including unmapped reads.
+// Search: Gets a list of reads for one or more readsets. Reads search
+// operates over a genomic coordinate space of reference sequence &
+// position defined over the reference sequences to which the requested
+// readsets are aligned. If a target positional range is specified,
+// search returns all reads whose alignment to the reference genome
+// overlap the range. A query which specifies only readset IDs yields
+// all reads in those readsets, including unmapped reads. All reads
+// returned (including reads on subsequent pages) are ordered by genomic
+// coordinate (reference sequence & position). Reads with equivalent
+// genomic coordinates are returned in a deterministic order.
 func (r *ReadsService) Search(searchreadsrequest *SearchReadsRequest) *ReadsSearchCall {
 	c := &ReadsSearchCall{s: r.s, opt_: make(map[string]interface{})}
 	c.searchreadsrequest = searchreadsrequest
@@ -1963,7 +2094,7 @@ func (c *ReadsSearchCall) Do() (*SearchReadsResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a list of reads for one or more readsets. SearchReads operates over a genomic coordinate space of sequence+position defined over the reference sequences to which the requested readsets are aligned. If a target positional range is specified, SearchReads returns all reads whose alignment to the reference genome overlap the range. A query which specifies only readset IDs yields all reads in those readsets, including unmapped reads.",
+	//   "description": "Gets a list of reads for one or more readsets. Reads search operates over a genomic coordinate space of reference sequence \u0026 position defined over the reference sequences to which the requested readsets are aligned. If a target positional range is specified, search returns all reads whose alignment to the reference genome overlap the range. A query which specifies only readset IDs yields all reads in those readsets, including unmapped reads. All reads returned (including reads on subsequent pages) are ordered by genomic coordinate (reference sequence \u0026 position). Reads with equivalent genomic coordinates are returned in a deterministic order.",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.reads.search",
 	//   "path": "reads/search",
@@ -1974,7 +2105,8 @@ func (c *ReadsSearchCall) Do() (*SearchReadsResponse, error) {
 	//     "$ref": "SearchReadsResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/genomics"
+	//     "https://www.googleapis.com/auth/genomics",
+	//     "https://www.googleapis.com/auth/genomics.readonly"
 	//   ]
 	// }
 
@@ -2033,10 +2165,7 @@ func (c *ReadsetsCreateCall) Do() (*Readset, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "Readset"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/genomics"
-	//   ]
+	//   }
 	// }
 
 }
@@ -2084,7 +2213,7 @@ func (c *ReadsetsDeleteCall) Do() error {
 	//   ],
 	//   "parameters": {
 	//     "readsetId": {
-	//       "description": "The ID of the readset to be deleted.",
+	//       "description": "The ID of the readset to be deleted. The caller must have WRITE permissions to the dataset associated with this readset.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2106,7 +2235,11 @@ type ReadsetsExportCall struct {
 	opt_                  map[string]interface{}
 }
 
-// Export: Exports readsets to a file.
+// Export: Exports readsets to a BAM file in Google Cloud Storage. Note
+// that currently there may be some differences between exported BAM
+// files and the original BAM file at the time of import. In particular,
+// comments in the input file header will not be preserved, and some
+// custom tags will be converted to strings.
 func (r *ReadsetsService) Export(exportreadsetsrequest *ExportReadsetsRequest) *ReadsetsExportCall {
 	c := &ReadsetsExportCall{s: r.s, opt_: make(map[string]interface{})}
 	c.exportreadsetsrequest = exportreadsetsrequest
@@ -2142,7 +2275,7 @@ func (c *ReadsetsExportCall) Do() (*ExportReadsetsResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Exports readsets to a file.",
+	//   "description": "Exports readsets to a BAM file in Google Cloud Storage. Note that currently there may be some differences between exported BAM files and the original BAM file at the time of import. In particular, comments in the input file header will not be preserved, and some custom tags will be converted to strings.",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.readsets.export",
 	//   "path": "readsets/export",
@@ -2218,7 +2351,8 @@ func (c *ReadsetsGetCall) Do() (*Readset, error) {
 	//     "$ref": "Readset"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/genomics"
+	//     "https://www.googleapis.com/auth/genomics",
+	//     "https://www.googleapis.com/auth/genomics.readonly"
 	//   ]
 	// }
 
@@ -2233,7 +2367,10 @@ type ReadsetsImportCall struct {
 }
 
 // Import: Creates readsets by asynchronously importing the provided
-// information.
+// information. Note that currently comments in the input file header
+// are not imported and some custom tags will be converted to strings,
+// rather than preserving tag types. The caller must have WRITE
+// permissions to the dataset.
 func (r *ReadsetsService) Import(importreadsetsrequest *ImportReadsetsRequest) *ReadsetsImportCall {
 	c := &ReadsetsImportCall{s: r.s, opt_: make(map[string]interface{})}
 	c.importreadsetsrequest = importreadsetsrequest
@@ -2269,7 +2406,7 @@ func (c *ReadsetsImportCall) Do() (*ImportReadsetsResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates readsets by asynchronously importing the provided information.",
+	//   "description": "Creates readsets by asynchronously importing the provided information. Note that currently comments in the input file header are not imported and some custom tags will be converted to strings, rather than preserving tag types. The caller must have WRITE permissions to the dataset.",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.readsets.import",
 	//   "path": "readsets/import",
@@ -2417,7 +2554,8 @@ func (c *ReadsetsSearchCall) Do() (*SearchReadsetsResponse, error) {
 	//     "$ref": "SearchReadsetsResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/genomics"
+	//     "https://www.googleapis.com/auth/genomics",
+	//     "https://www.googleapis.com/auth/genomics.readonly"
 	//   ]
 	// }
 
@@ -2671,6 +2809,7 @@ func (c *VariantsExportCall) Do() (*ExportVariantsResponse, error) {
 	//     "$ref": "ExportVariantsResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigquery",
 	//     "https://www.googleapis.com/auth/genomics"
 	//   ]
 	// }
@@ -2735,7 +2874,8 @@ func (c *VariantsGetCall) Do() (*Variant, error) {
 	//     "$ref": "Variant"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/genomics"
+	//     "https://www.googleapis.com/auth/genomics",
+	//     "https://www.googleapis.com/auth/genomics.readonly"
 	//   ]
 	// }
 
@@ -2802,7 +2942,8 @@ func (c *VariantsGetSummaryCall) Do() (*GetVariantsSummaryResponse, error) {
 	//     "$ref": "GetVariantsSummaryResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/genomics"
+	//     "https://www.googleapis.com/auth/genomics",
+	//     "https://www.googleapis.com/auth/genomics.readonly"
 	//   ]
 	// }
 
@@ -3001,7 +3142,8 @@ func (c *VariantsSearchCall) Do() (*SearchVariantsResponse, error) {
 	//     "$ref": "SearchVariantsResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/genomics"
+	//     "https://www.googleapis.com/auth/genomics",
+	//     "https://www.googleapis.com/auth/genomics.readonly"
 	//   ]
 	// }
 

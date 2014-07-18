@@ -189,6 +189,9 @@ type Blog struct {
 	// SelfLink: The API REST URL to fetch this resource from.
 	SelfLink string `json:"selfLink,omitempty"`
 
+	// Status: The status of the blog.
+	Status string `json:"status,omitempty"`
+
 	// Updated: RFC 3339 date-time when this blog was last updated.
 	Updated string `json:"updated,omitempty"`
 
@@ -475,6 +478,10 @@ type Post struct {
 	// Published: RFC 3339 date-time when this Post was published.
 	Published string `json:"published,omitempty"`
 
+	// ReaderComments: Comment control and display setting for readers of
+	// this post.
+	ReaderComments string `json:"readerComments,omitempty"`
+
 	// Replies: The container of comments on this Post.
 	Replies *PostReplies `json:"replies,omitempty"`
 
@@ -749,7 +756,7 @@ type BlogsGetCall struct {
 	opt_   map[string]interface{}
 }
 
-// Get: Gets one blog by id.
+// Get: Gets one blog by ID.
 func (r *BlogsService) Get(blogId string) *BlogsGetCall {
 	c := &BlogsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.blogId = blogId
@@ -764,7 +771,7 @@ func (c *BlogsGetCall) MaxPosts(maxPosts int64) *BlogsGetCall {
 }
 
 // View sets the optional parameter "view": Access level with which to
-// view the blogs. Note that some fields require elevated access.
+// view the blog. Note that some fields require elevated access.
 func (c *BlogsGetCall) View(view string) *BlogsGetCall {
 	c.opt_["view"] = view
 	return c
@@ -800,7 +807,7 @@ func (c *BlogsGetCall) Do() (*Blog, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets one blog by id.",
+	//   "description": "Gets one blog by ID.",
 	//   "httpMethod": "GET",
 	//   "id": "blogger.blogs.get",
 	//   "parameterOrder": [
@@ -820,16 +827,16 @@ func (c *BlogsGetCall) Do() (*Blog, error) {
 	//       "type": "integer"
 	//     },
 	//     "view": {
-	//       "description": "Access level with which to view the blogs. Note that some fields require elevated access.",
+	//       "description": "Access level with which to view the blog. Note that some fields require elevated access.",
 	//       "enum": [
 	//         "ADMIN",
 	//         "AUTHOR",
 	//         "READER"
 	//       ],
 	//       "enumDescriptions": [
-	//         "Admin level detail",
-	//         "Author level detail",
-	//         "Reader level detail"
+	//         "Admin level detail.",
+	//         "Author level detail.",
+	//         "Reader level detail."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -863,7 +870,7 @@ func (r *BlogsService) GetByUrl(url string) *BlogsGetByUrlCall {
 }
 
 // View sets the optional parameter "view": Access level with which to
-// view the blogs. Note that some fields require elevated access.
+// view the blog. Note that some fields require elevated access.
 func (c *BlogsGetByUrlCall) View(view string) *BlogsGetByUrlCall {
 	c.opt_["view"] = view
 	return c
@@ -910,16 +917,16 @@ func (c *BlogsGetByUrlCall) Do() (*Blog, error) {
 	//       "type": "string"
 	//     },
 	//     "view": {
-	//       "description": "Access level with which to view the blogs. Note that some fields require elevated access.",
+	//       "description": "Access level with which to view the blog. Note that some fields require elevated access.",
 	//       "enum": [
 	//         "ADMIN",
 	//         "AUTHOR",
 	//         "READER"
 	//       ],
 	//       "enumDescriptions": [
-	//         "Admin level detail",
-	//         "Author level detail",
-	//         "Reader level detail"
+	//         "Admin level detail.",
+	//         "Author level detail.",
+	//         "Reader level detail."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -969,6 +976,14 @@ func (c *BlogsListByUserCall) Role(role string) *BlogsListByUserCall {
 	return c
 }
 
+// Status sets the optional parameter "status": Blog statuses to include
+// in the result (default: Live blogs only). Note that ADMIN access is
+// required to view deleted blogs.
+func (c *BlogsListByUserCall) Status(status string) *BlogsListByUserCall {
+	c.opt_["status"] = status
+	return c
+}
+
 // View sets the optional parameter "view": Access level with which to
 // view the blogs. Note that some fields require elevated access.
 func (c *BlogsListByUserCall) View(view string) *BlogsListByUserCall {
@@ -985,6 +1000,9 @@ func (c *BlogsListByUserCall) Do() (*BlogList, error) {
 	}
 	if v, ok := c.opt_["role"]; ok {
 		params.Set("role", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["status"]; ok {
+		params.Set("status", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["view"]; ok {
 		params.Set("view", fmt.Sprintf("%v", v))
@@ -1029,9 +1047,24 @@ func (c *BlogsListByUserCall) Do() (*BlogList, error) {
 	//         "READER"
 	//       ],
 	//       "enumDescriptions": [
-	//         "Admin role - User has Admin level access.",
-	//         "Author role - User has Author level access.",
-	//         "Reader role - User has Reader level access."
+	//         "Admin role - Blogs where the user has Admin level access.",
+	//         "Author role - Blogs where the user has Author level access.",
+	//         "Reader role - Blogs where the user has Reader level access (to a private blog)."
+	//       ],
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "status": {
+	//       "default": "LIVE",
+	//       "description": "Blog statuses to include in the result (default: Live blogs only). Note that ADMIN access is required to view deleted blogs.",
+	//       "enum": [
+	//         "DELETED",
+	//         "LIVE"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Blog has been deleted by an administrator.",
+	//         "Blog is currently live."
 	//       ],
 	//       "location": "query",
 	//       "repeated": true,
@@ -1051,9 +1084,9 @@ func (c *BlogsListByUserCall) Do() (*BlogList, error) {
 	//         "READER"
 	//       ],
 	//       "enumDescriptions": [
-	//         "Admin level detail",
-	//         "Author level detail",
-	//         "Reader level detail"
+	//         "Admin level detail.",
+	//         "Author level detail.",
+	//         "Reader level detail."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -1126,7 +1159,7 @@ func (c *CommentsApproveCall) Do() (*Comment, error) {
 	//   ],
 	//   "parameters": {
 	//     "blogId": {
-	//       "description": "The Id of the Blog.",
+	//       "description": "The ID of the Blog.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1165,7 +1198,7 @@ type CommentsDeleteCall struct {
 	opt_      map[string]interface{}
 }
 
-// Delete: Delete a comment by id.
+// Delete: Delete a comment by ID.
 func (r *CommentsService) Delete(blogId string, postId string, commentId string) *CommentsDeleteCall {
 	c := &CommentsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.blogId = blogId
@@ -1196,7 +1229,7 @@ func (c *CommentsDeleteCall) Do() error {
 	}
 	return nil
 	// {
-	//   "description": "Delete a comment by id.",
+	//   "description": "Delete a comment by ID.",
 	//   "httpMethod": "DELETE",
 	//   "id": "blogger.comments.delete",
 	//   "parameterOrder": [
@@ -1206,7 +1239,7 @@ func (c *CommentsDeleteCall) Do() error {
 	//   ],
 	//   "parameters": {
 	//     "blogId": {
-	//       "description": "The Id of the Blog.",
+	//       "description": "The ID of the Blog.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1242,7 +1275,7 @@ type CommentsGetCall struct {
 	opt_      map[string]interface{}
 }
 
-// Get: Gets one comment by id.
+// Get: Gets one comment by ID.
 func (r *CommentsService) Get(blogId string, postId string, commentId string) *CommentsGetCall {
 	c := &CommentsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.blogId = blogId
@@ -1290,7 +1323,7 @@ func (c *CommentsGetCall) Do() (*Comment, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets one comment by id.",
+	//   "description": "Gets one comment by ID.",
 	//   "httpMethod": "GET",
 	//   "id": "blogger.comments.get",
 	//   "parameterOrder": [
@@ -1749,7 +1782,7 @@ func (c *CommentsMarkAsSpamCall) Do() (*Comment, error) {
 	//   ],
 	//   "parameters": {
 	//     "blogId": {
-	//       "description": "The Id of the Blog.",
+	//       "description": "The ID of the Blog.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1833,7 +1866,7 @@ func (c *CommentsRemoveContentCall) Do() (*Comment, error) {
 	//   ],
 	//   "parameters": {
 	//     "blogId": {
-	//       "description": "The Id of the Blog.",
+	//       "description": "The ID of the Blog.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1959,7 +1992,7 @@ type PagesDeleteCall struct {
 	opt_   map[string]interface{}
 }
 
-// Delete: Delete a page by id.
+// Delete: Delete a page by ID.
 func (r *PagesService) Delete(blogId string, pageId string) *PagesDeleteCall {
 	c := &PagesDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.blogId = blogId
@@ -1988,7 +2021,7 @@ func (c *PagesDeleteCall) Do() error {
 	}
 	return nil
 	// {
-	//   "description": "Delete a page by id.",
+	//   "description": "Delete a page by ID.",
 	//   "httpMethod": "DELETE",
 	//   "id": "blogger.pages.delete",
 	//   "parameterOrder": [
@@ -1997,7 +2030,7 @@ func (c *PagesDeleteCall) Do() error {
 	//   ],
 	//   "parameters": {
 	//     "blogId": {
-	//       "description": "The Id of the Blog.",
+	//       "description": "The ID of the Blog.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2026,7 +2059,7 @@ type PagesGetCall struct {
 	opt_   map[string]interface{}
 }
 
-// Get: Gets one blog page by id.
+// Get: Gets one blog page by ID.
 func (r *PagesService) Get(blogId string, pageId string) *PagesGetCall {
 	c := &PagesGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.blogId = blogId
@@ -2068,7 +2101,7 @@ func (c *PagesGetCall) Do() (*Page, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets one blog page by id.",
+	//   "description": "Gets one blog page by ID.",
 	//   "httpMethod": "GET",
 	//   "id": "blogger.pages.get",
 	//   "parameterOrder": [
@@ -2132,6 +2165,13 @@ func (r *PagesService) Insert(blogId string, page *Page) *PagesInsertCall {
 	return c
 }
 
+// IsDraft sets the optional parameter "isDraft": Whether to create the
+// page as a draft (default: false).
+func (c *PagesInsertCall) IsDraft(isDraft bool) *PagesInsertCall {
+	c.opt_["isDraft"] = isDraft
+	return c
+}
+
 func (c *PagesInsertCall) Do() (*Page, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.page)
@@ -2141,6 +2181,9 @@ func (c *PagesInsertCall) Do() (*Page, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["isDraft"]; ok {
+		params.Set("isDraft", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/pages")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -2174,6 +2217,11 @@ func (c *PagesInsertCall) Do() (*Page, error) {
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "isDraft": {
+	//       "description": "Whether to create the page as a draft (default: false).",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     }
 	//   },
 	//   "path": "blogs/{blogId}/pages",
@@ -2338,6 +2386,20 @@ func (r *PagesService) Patch(blogId string, pageId string, page *Page) *PagesPat
 	return c
 }
 
+// Publish sets the optional parameter "publish": Whether a publish
+// action should be performed when the page is updated (default: false).
+func (c *PagesPatchCall) Publish(publish bool) *PagesPatchCall {
+	c.opt_["publish"] = publish
+	return c
+}
+
+// Revert sets the optional parameter "revert": Whether a revert action
+// should be performed when the page is updated (default: false).
+func (c *PagesPatchCall) Revert(revert bool) *PagesPatchCall {
+	c.opt_["revert"] = revert
+	return c
+}
+
 func (c *PagesPatchCall) Do() (*Page, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.page)
@@ -2347,6 +2409,12 @@ func (c *PagesPatchCall) Do() (*Page, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["publish"]; ok {
+		params.Set("publish", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["revert"]; ok {
+		params.Set("revert", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/pages/{pageId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
@@ -2388,6 +2456,16 @@ func (c *PagesPatchCall) Do() (*Page, error) {
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "publish": {
+	//       "description": "Whether a publish action should be performed when the page is updated (default: false).",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "revert": {
+	//       "description": "Whether a revert action should be performed when the page is updated (default: false).",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     }
 	//   },
 	//   "path": "blogs/{blogId}/pages/{pageId}",
@@ -2423,6 +2501,20 @@ func (r *PagesService) Update(blogId string, pageId string, page *Page) *PagesUp
 	return c
 }
 
+// Publish sets the optional parameter "publish": Whether a publish
+// action should be performed when the page is updated (default: false).
+func (c *PagesUpdateCall) Publish(publish bool) *PagesUpdateCall {
+	c.opt_["publish"] = publish
+	return c
+}
+
+// Revert sets the optional parameter "revert": Whether a revert action
+// should be performed when the page is updated (default: false).
+func (c *PagesUpdateCall) Revert(revert bool) *PagesUpdateCall {
+	c.opt_["revert"] = revert
+	return c
+}
+
 func (c *PagesUpdateCall) Do() (*Page, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.page)
@@ -2432,6 +2524,12 @@ func (c *PagesUpdateCall) Do() (*Page, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["publish"]; ok {
+		params.Set("publish", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["revert"]; ok {
+		params.Set("revert", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/pages/{pageId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
@@ -2473,6 +2571,16 @@ func (c *PagesUpdateCall) Do() (*Page, error) {
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "publish": {
+	//       "description": "Whether a publish action should be performed when the page is updated (default: false).",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "revert": {
+	//       "description": "Whether a revert action should be performed when the page is updated (default: false).",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     }
 	//   },
 	//   "path": "blogs/{blogId}/pages/{pageId}",
@@ -2499,7 +2607,7 @@ type PostUserInfosGetCall struct {
 	opt_   map[string]interface{}
 }
 
-// Get: Gets one post and user info pair, by post id and user id. The
+// Get: Gets one post and user info pair, by post ID and user ID. The
 // post user info contains per-user information about the post, such as
 // access rights, specific to the user.
 func (r *PostUserInfosService) Get(userId string, blogId string, postId string) *PostUserInfosGetCall {
@@ -2546,7 +2654,7 @@ func (c *PostUserInfosGetCall) Do() (*PostUserInfo, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets one post and user info pair, by post id and user id. The post user info contains per-user information about the post, such as access rights, specific to the user.",
+	//   "description": "Gets one post and user info pair, by post ID and user ID. The post user info contains per-user information about the post, such as access rights, specific to the user.",
 	//   "httpMethod": "GET",
 	//   "id": "blogger.postUserInfos.get",
 	//   "parameterOrder": [
@@ -2846,7 +2954,7 @@ type PostsDeleteCall struct {
 	opt_   map[string]interface{}
 }
 
-// Delete: Delete a post by id.
+// Delete: Delete a post by ID.
 func (r *PostsService) Delete(blogId string, postId string) *PostsDeleteCall {
 	c := &PostsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.blogId = blogId
@@ -2875,7 +2983,7 @@ func (c *PostsDeleteCall) Do() error {
 	}
 	return nil
 	// {
-	//   "description": "Delete a post by id.",
+	//   "description": "Delete a post by ID.",
 	//   "httpMethod": "DELETE",
 	//   "id": "blogger.posts.delete",
 	//   "parameterOrder": [
@@ -2884,7 +2992,7 @@ func (c *PostsDeleteCall) Do() error {
 	//   ],
 	//   "parameters": {
 	//     "blogId": {
-	//       "description": "The Id of the Blog.",
+	//       "description": "The ID of the Blog.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2913,7 +3021,7 @@ type PostsGetCall struct {
 	opt_   map[string]interface{}
 }
 
-// Get: Get a post by id.
+// Get: Get a post by ID.
 func (r *PostsService) Get(blogId string, postId string) *PostsGetCall {
 	c := &PostsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.blogId = blogId
@@ -2989,7 +3097,7 @@ func (c *PostsGetCall) Do() (*Post, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Get a post by id.",
+	//   "description": "Get a post by ID.",
 	//   "httpMethod": "GET",
 	//   "id": "blogger.posts.get",
 	//   "parameterOrder": [
@@ -3716,7 +3824,8 @@ type PostsPublishCall struct {
 	opt_   map[string]interface{}
 }
 
-// Publish: Publish a draft post.
+// Publish: Publishes a draft post, optionally at the specific time of
+// the given publishDate parameter.
 func (r *PostsService) Publish(blogId string, postId string) *PostsPublishCall {
 	c := &PostsPublishCall{s: r.s, opt_: make(map[string]interface{})}
 	c.blogId = blogId
@@ -3724,8 +3833,11 @@ func (r *PostsService) Publish(blogId string, postId string) *PostsPublishCall {
 	return c
 }
 
-// PublishDate sets the optional parameter "publishDate": The date and
-// time to schedule the publishing of the Blog.
+// PublishDate sets the optional parameter "publishDate": Optional date
+// and time to schedule the publishing of the Blog. If no publishDate
+// parameter is given, the post is either published at the a previously
+// saved schedule date (if present), or the current time. If a future
+// date is given, the post will be scheduled to be published.
 func (c *PostsPublishCall) PublishDate(publishDate string) *PostsPublishCall {
 	c.opt_["publishDate"] = publishDate
 	return c
@@ -3759,7 +3871,7 @@ func (c *PostsPublishCall) Do() (*Post, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Publish a draft post.",
+	//   "description": "Publishes a draft post, optionally at the specific time of the given publishDate parameter.",
 	//   "httpMethod": "POST",
 	//   "id": "blogger.posts.publish",
 	//   "parameterOrder": [
@@ -3780,7 +3892,7 @@ func (c *PostsPublishCall) Do() (*Post, error) {
 	//       "type": "string"
 	//     },
 	//     "publishDate": {
-	//       "description": "The date and time to schedule the publishing of the Blog.",
+	//       "description": "Optional date and time to schedule the publishing of the Blog. If no publishDate parameter is given, the post is either published at the a previously saved schedule date (if present), or the current time. If a future date is given, the post will be scheduled to be published.",
 	//       "format": "date-time",
 	//       "location": "query",
 	//       "type": "string"
@@ -4158,7 +4270,7 @@ type UsersGetCall struct {
 	opt_   map[string]interface{}
 }
 
-// Get: Gets one user by id.
+// Get: Gets one user by ID.
 func (r *UsersService) Get(userId string) *UsersGetCall {
 	c := &UsersGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userId = userId
@@ -4189,7 +4301,7 @@ func (c *UsersGetCall) Do() (*User, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets one user by id.",
+	//   "description": "Gets one user by ID.",
 	//   "httpMethod": "GET",
 	//   "id": "blogger.users.get",
 	//   "parameterOrder": [

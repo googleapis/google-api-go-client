@@ -1,10 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/oKNcPENu4cYVP-aSqiH_bsbzkBM\"",
+ "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/Qrs2SriggaSYO28pp7DFm8wFPbo\"",
  "discoveryVersion": "v1",
  "id": "compute:v1",
  "name": "compute",
  "version": "v1",
+ "revision": "20140625",
  "title": "Compute Engine API",
  "description": "API for the Google Compute Engine service.",
  "ownerDomain": "google.com",
@@ -1593,6 +1594,14 @@
     "selfLink": {
      "type": "string",
      "description": "Server defined URL for the resource (output only)."
+    },
+    "sourceDisk": {
+     "type": "string",
+     "description": "The source disk used to create this image. Once the source disk has been deleted from the system, this field will be cleared, and will not be set even if a disk with the same name has been re-created."
+    },
+    "sourceDiskId": {
+     "type": "string",
+     "description": "The 'id' value of the disk used to create this image. This value may be used to determine whether the image was taken from the current or a previous instance of a given disk name."
     },
     "sourceType": {
      "type": "string",

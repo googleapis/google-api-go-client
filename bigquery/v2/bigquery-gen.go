@@ -368,11 +368,10 @@ type JobConfigurationExtract struct {
 	// NONE.
 	Compression string `json:"compression,omitempty"`
 
-	// DestinationFormat: [Experimental] Optional and defaults to CSV.
-	// Format with which files should be exported. To export to CSV, specify
-	// "CSV". Tables with nested or repeated fields cannot be exported as
-	// CSV. To export to newline-delimited JSON, specify
-	// "NEWLINE_DELIMITED_JSON".
+	// DestinationFormat: [Optional] The exported file format. Possible
+	// values include CSV, NEWLINE_DELIMITED_JSON and AVRO. The default
+	// value is CSV. Tables with nested or repeated fields cannot be
+	// exported as CSV.
 	DestinationFormat string `json:"destinationFormat,omitempty"`
 
 	// DestinationUri: [Pick one] DEPRECATED: Use destinationUris instead,
@@ -602,8 +601,11 @@ type JobConfigurationTableCopy struct {
 	// DestinationTable: [Required] The destination table
 	DestinationTable *TableReference `json:"destinationTable,omitempty"`
 
-	// SourceTable: [Required] Source table to copy.
+	// SourceTable: [Pick one] Source table to copy.
 	SourceTable *TableReference `json:"sourceTable,omitempty"`
+
+	// SourceTables: [Pick one] Source tables to copy.
+	SourceTables []*TableReference `json:"sourceTables,omitempty"`
 
 	// WriteDisposition: [Optional] Specifies the action that occurs if the
 	// destination table already exists. The following values are supported:
@@ -745,8 +747,7 @@ type JobStatus struct {
 	State string `json:"state,omitempty"`
 }
 
-type JsonObject struct {
-}
+type JsonValue interface{}
 
 type ProjectList struct {
 	// Etag: A hash of the page of results
@@ -958,7 +959,7 @@ type TableDataInsertAllRequestRows struct {
 	// Json: [Required] A JSON object that contains a row of data. The
 	// object's properties and values must match the destination table's
 	// schema.
-	Json *JsonObject `json:"json,omitempty"`
+	Json map[string]JsonValue `json:"json,omitempty"`
 }
 
 type TableDataInsertAllResponse struct {

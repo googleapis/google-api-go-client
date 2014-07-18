@@ -1,10 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/XB72JV-Yfv80n4coJYXQlF382l4\"",
+ "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/E7sPEvLfeMnXigmEUBxkqIoRoSA\"",
  "discoveryVersion": "v1",
  "id": "content:v2",
  "name": "content",
  "version": "v2",
+ "revision": "20140701",
  "title": "Content API for Shopping",
  "description": "Manage product items, inventory, and Merchant Center accounts for Google Shopping.",
  "ownerDomain": "google.com",
@@ -120,6 +121,7 @@
     },
     "users": {
      "type": "array",
+     "description": "Users with access to the account. Every account (except for subaccounts) must have at least one admin user.",
      "items": {
       "$ref": "AccountUser"
      }
@@ -1236,7 +1238,7 @@
     },
     "pointsValue": {
      "type": "string",
-     "description": "The retailer?s loyalty points in absolute value.",
+     "description": "The retailer's loyalty points in absolute value.",
      "format": "uint64"
     },
     "ratio": {
@@ -1298,6 +1300,10 @@
     "availability": {
      "type": "string",
      "description": "Availability status of the item."
+    },
+    "availabilityDate": {
+     "type": "string",
+     "description": "The day a pre-ordered product becomes available for delivery."
     },
     "brand": {
      "type": "string",
@@ -1410,6 +1416,10 @@
      "$ref": "ProductInstallment",
      "description": "Number and amount of installments to pay for an item. Brazil only."
     },
+    "isBundle": {
+     "type": "boolean",
+     "description": "Whether the item is a merchant-defined bundle. A bundle is a custom grouping of different products sold by a merchant for a single price."
+    },
     "itemGroupId": {
      "type": "string",
      "description": "Shared identifier for all variants of the same product."
@@ -1435,6 +1445,10 @@
      "type": "string",
      "description": "The number of identical products in a merchant-defined multipack.",
      "format": "uint64"
+    },
+    "mobileLink": {
+     "type": "string",
+     "description": "Link to a mobile-optimized version of the landing page."
     },
     "mpn": {
      "type": "string",
@@ -1484,6 +1498,14 @@
      "$ref": "ProductShippingWeight",
      "description": "Weight of the item for shipping."
     },
+    "sizeSystem": {
+     "type": "string",
+     "description": "System in which the size is specified. Recommended for apparel items."
+    },
+    "sizeType": {
+     "type": "string",
+     "description": "The cut of the item. Recommended for apparel items."
+    },
     "sizes": {
      "type": "array",
      "description": "Size of the item.",
@@ -1500,9 +1522,12 @@
       ]
      }
     },
-    "tax": {
-     "$ref": "ProductTax",
-     "description": "Tax information."
+    "taxes": {
+     "type": "array",
+     "description": "Tax information.",
+     "items": {
+      "$ref": "ProductTax"
+     }
     },
     "title": {
      "type": "string",
@@ -1965,7 +1990,7 @@
      "id": "content.accounts.custombatch",
      "path": "accounts/batch",
      "httpMethod": "POST",
-     "description": "Retrieve, insert, update, and delete multiple Merchant Center (sub-)accounts in a single request.",
+     "description": "Retrieves, inserts, updates, and deletes multiple Merchant Center (sub-)accounts in a single request.",
      "request": {
       "$ref": "AccountsCustomBatchRequest"
      },
@@ -1980,7 +2005,7 @@
      "id": "content.accounts.delete",
      "path": "{merchantId}/accounts/{accountId}",
      "httpMethod": "DELETE",
-     "description": "Delete a Merchant Center sub-account.",
+     "description": "Deletes a Merchant Center sub-account.",
      "parameters": {
       "accountId": {
        "type": "string",
@@ -2009,7 +2034,7 @@
      "id": "content.accounts.get",
      "path": "{merchantId}/accounts/{accountId}",
      "httpMethod": "GET",
-     "description": "Retrieve a Merchant Center account.",
+     "description": "Retrieves a Merchant Center account.",
      "parameters": {
       "accountId": {
        "type": "string",
@@ -2041,7 +2066,7 @@
      "id": "content.accounts.insert",
      "path": "{merchantId}/accounts",
      "httpMethod": "POST",
-     "description": "Create a Merchant Center sub-account.",
+     "description": "Creates a Merchant Center sub-account.",
      "parameters": {
       "merchantId": {
        "type": "string",
@@ -2068,7 +2093,7 @@
      "id": "content.accounts.list",
      "path": "{merchantId}/accounts",
      "httpMethod": "GET",
-     "description": "List the sub-accounts in your Merchant Center account.",
+     "description": "Lists the sub-accounts in your Merchant Center account.",
      "parameters": {
       "maxResults": {
        "type": "integer",
@@ -2103,7 +2128,7 @@
      "id": "content.accounts.patch",
      "path": "{merchantId}/accounts/{accountId}",
      "httpMethod": "PATCH",
-     "description": "Update a Merchant Center account. This method supports patch semantics.",
+     "description": "Updates a Merchant Center account. This method supports patch semantics.",
      "parameters": {
       "accountId": {
        "type": "string",
@@ -2138,7 +2163,7 @@
      "id": "content.accounts.update",
      "path": "{merchantId}/accounts/{accountId}",
      "httpMethod": "PUT",
-     "description": "Update a Merchant Center account.",
+     "description": "Updates a Merchant Center account.",
      "parameters": {
       "accountId": {
        "type": "string",
@@ -2191,7 +2216,7 @@
      "id": "content.accountstatuses.get",
      "path": "{merchantId}/accountstatuses/{accountId}",
      "httpMethod": "GET",
-     "description": "Retrieve the status of a Merchant Center account.",
+     "description": "Retrieves the status of a Merchant Center account.",
      "parameters": {
       "accountId": {
        "type": "string",
@@ -2223,7 +2248,7 @@
      "id": "content.accountstatuses.list",
      "path": "{merchantId}/accountstatuses",
      "httpMethod": "GET",
-     "description": "List the statuses of the sub-accounts in your Merchant Center account.",
+     "description": "Lists the statuses of the sub-accounts in your Merchant Center account.",
      "parameters": {
       "maxResults": {
        "type": "integer",
@@ -2290,7 +2315,7 @@
      "id": "content.datafeeds.delete",
      "path": "{merchantId}/datafeeds/{datafeedId}",
      "httpMethod": "DELETE",
-     "description": "Delete a datafeed from your Merchant Center account.",
+     "description": "Deletes a datafeed from your Merchant Center account.",
      "parameters": {
       "datafeedId": {
        "type": "string",
@@ -2317,7 +2342,7 @@
      "id": "content.datafeeds.get",
      "path": "{merchantId}/datafeeds/{datafeedId}",
      "httpMethod": "GET",
-     "description": "Retrieve a datafeed from your Merchant Center account.",
+     "description": "Retrieves a datafeed from your Merchant Center account.",
      "parameters": {
       "datafeedId": {
        "type": "string",
@@ -2347,7 +2372,7 @@
      "id": "content.datafeeds.insert",
      "path": "{merchantId}/datafeeds",
      "httpMethod": "POST",
-     "description": "Register a datafeed against your Merchant Center account.",
+     "description": "Registers a datafeed with your Merchant Center account.",
      "parameters": {
       "merchantId": {
        "type": "string",
@@ -2373,7 +2398,7 @@
      "id": "content.datafeeds.list",
      "path": "{merchantId}/datafeeds",
      "httpMethod": "GET",
-     "description": "List the datafeeds in your Merchant Center account.",
+     "description": "Lists the datafeeds in your Merchant Center account.",
      "parameters": {
       "merchantId": {
        "type": "string",
@@ -2396,7 +2421,7 @@
      "id": "content.datafeeds.patch",
      "path": "{merchantId}/datafeeds/{datafeedId}",
      "httpMethod": "PATCH",
-     "description": "Update a datafeed of your Merchant Center account. This method supports patch semantics.",
+     "description": "Updates a datafeed of your Merchant Center account. This method supports patch semantics.",
      "parameters": {
       "datafeedId": {
        "type": "string",
@@ -2429,7 +2454,7 @@
      "id": "content.datafeeds.update",
      "path": "{merchantId}/datafeeds/{datafeedId}",
      "httpMethod": "PUT",
-     "description": "Update a datafeed of your Merchant Center account.",
+     "description": "Updates a datafeed of your Merchant Center account.",
      "parameters": {
       "datafeedId": {
        "type": "string",
@@ -2494,7 +2519,7 @@
      "id": "content.datafeedstatuses.get",
      "path": "{merchantId}/datafeedstatuses/{datafeedId}",
      "httpMethod": "GET",
-     "description": "Retrieve the status of a datafeed from your Merchant Center account.",
+     "description": "Retrieves the status of a datafeed from your Merchant Center account.",
      "parameters": {
       "datafeedId": {
        "type": "string",
@@ -2524,7 +2549,7 @@
      "id": "content.datafeedstatuses.list",
      "path": "{merchantId}/datafeedstatuses",
      "httpMethod": "GET",
-     "description": "List the statuses of the datafeeds in your Merchant Center account.",
+     "description": "Lists the statuses of the datafeeds in your Merchant Center account.",
      "parameters": {
       "merchantId": {
        "type": "string",
@@ -2551,7 +2576,7 @@
      "id": "content.inventory.custombatch",
      "path": "inventory/batch",
      "httpMethod": "POST",
-     "description": "Update price and availability for multiple products or stores in a single request.",
+     "description": "Updates price and availability for multiple products or stores in a single request.",
      "request": {
       "$ref": "InventoryCustomBatchRequest"
      },
@@ -2566,7 +2591,7 @@
      "id": "content.inventory.set",
      "path": "{merchantId}/inventory/{storeCode}/products/{productId}",
      "httpMethod": "POST",
-     "description": "Update price and availability of a product in your Merchant Center account.",
+     "description": "Updates price and availability of a product in your Merchant Center account.",
      "parameters": {
       "merchantId": {
        "type": "string",
@@ -2583,7 +2608,7 @@
       },
       "storeCode": {
        "type": "string",
-       "description": "The code of the store for which to update price and availability.",
+       "description": "The code of the store for which to update price and availability. Use online to update price and availability of an online product.",
        "required": true,
        "location": "path"
       }
@@ -2611,7 +2636,7 @@
      "id": "content.products.custombatch",
      "path": "products/batch",
      "httpMethod": "POST",
-     "description": "Retrieve, insert, and delete multiple products in a single request.",
+     "description": "Retrieves, inserts, and deletes multiple products in a single request.",
      "parameters": {
       "dryRun": {
        "type": "boolean",
@@ -2633,7 +2658,7 @@
      "id": "content.products.delete",
      "path": "{merchantId}/products/{productId}",
      "httpMethod": "DELETE",
-     "description": "Delete a product from your Merchant Center account.",
+     "description": "Deletes a product from your Merchant Center account.",
      "parameters": {
       "dryRun": {
        "type": "boolean",
@@ -2666,7 +2691,7 @@
      "id": "content.products.get",
      "path": "{merchantId}/products/{productId}",
      "httpMethod": "GET",
-     "description": "Retrieve a product from your Merchant Center account.",
+     "description": "Retrieves a product from your Merchant Center account.",
      "parameters": {
       "merchantId": {
        "type": "string",
@@ -2697,7 +2722,7 @@
      "id": "content.products.insert",
      "path": "{merchantId}/products",
      "httpMethod": "POST",
-     "description": "Upload products to your Merchant Center account.",
+     "description": "Uploads a product to your Merchant Center account.",
      "parameters": {
       "dryRun": {
        "type": "boolean",
@@ -2729,7 +2754,7 @@
      "id": "content.products.list",
      "path": "{merchantId}/products",
      "httpMethod": "GET",
-     "description": "List the products in your Merchant Center account.",
+     "description": "Lists the products in your Merchant Center account.",
      "parameters": {
       "maxResults": {
        "type": "integer",
@@ -2768,7 +2793,7 @@
      "id": "content.productstatuses.custombatch",
      "path": "productstatuses/batch",
      "httpMethod": "POST",
-     "description": "Get the statuses of multiple products in a single request.",
+     "description": "Gets the statuses of multiple products in a single request.",
      "request": {
       "$ref": "ProductstatusesCustomBatchRequest"
      },
@@ -2783,7 +2808,7 @@
      "id": "content.productstatuses.get",
      "path": "{merchantId}/productstatuses/{productId}",
      "httpMethod": "GET",
-     "description": "Get the status of a product from your Merchant Center account.",
+     "description": "Gets the status of a product from your Merchant Center account.",
      "parameters": {
       "merchantId": {
        "type": "string",
@@ -2814,7 +2839,7 @@
      "id": "content.productstatuses.list",
      "path": "{merchantId}/productstatuses",
      "httpMethod": "GET",
-     "description": "List the statuses of the products in your Merchant Center account.",
+     "description": "Lists the statuses of the products in your Merchant Center account.",
      "parameters": {
       "maxResults": {
        "type": "integer",

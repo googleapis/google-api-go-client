@@ -444,7 +444,7 @@ type AddressAggregatedList struct {
 	Id string `json:"id,omitempty"`
 
 	// Items: A map of scoped address lists.
-	Items *AddressAggregatedListItems `json:"items,omitempty"`
+	Items map[string]AddressesScopedList `json:"items,omitempty"`
 
 	// Kind: Type of resource.
 	Kind string `json:"kind,omitempty"`
@@ -455,9 +455,6 @@ type AddressAggregatedList struct {
 
 	// SelfLink: Server defined URL for this resource (output only).
 	SelfLink string `json:"selfLink,omitempty"`
-}
-
-type AddressAggregatedListItems struct {
 }
 
 type AddressList struct {
@@ -781,7 +778,7 @@ type DiskAggregatedList struct {
 	Id string `json:"id,omitempty"`
 
 	// Items: A map of scoped disk lists.
-	Items *DiskAggregatedListItems `json:"items,omitempty"`
+	Items map[string]DisksScopedList `json:"items,omitempty"`
 
 	// Kind: Type of resource.
 	Kind string `json:"kind,omitempty"`
@@ -792,9 +789,6 @@ type DiskAggregatedList struct {
 
 	// SelfLink: Server defined URL for this resource (output only).
 	SelfLink string `json:"selfLink,omitempty"`
-}
-
-type DiskAggregatedListItems struct {
 }
 
 type DiskList struct {
@@ -854,7 +848,7 @@ type DiskTypeAggregatedList struct {
 	Id string `json:"id,omitempty"`
 
 	// Items: A map of scoped disk type lists.
-	Items *DiskTypeAggregatedListItems `json:"items,omitempty"`
+	Items map[string]DiskTypesScopedList `json:"items,omitempty"`
 
 	// Kind: Type of resource.
 	Kind string `json:"kind,omitempty"`
@@ -865,9 +859,6 @@ type DiskTypeAggregatedList struct {
 
 	// SelfLink: Server defined URL for this resource (output only).
 	SelfLink string `json:"selfLink,omitempty"`
-}
-
-type DiskTypeAggregatedListItems struct {
 }
 
 type DiskTypeList struct {
@@ -1095,7 +1086,7 @@ type ForwardingRuleAggregatedList struct {
 	Id string `json:"id,omitempty"`
 
 	// Items: A map of scoped forwarding rule lists.
-	Items *ForwardingRuleAggregatedListItems `json:"items,omitempty"`
+	Items map[string]ForwardingRulesScopedList `json:"items,omitempty"`
 
 	// Kind: Type of resource.
 	Kind string `json:"kind,omitempty"`
@@ -1106,9 +1097,6 @@ type ForwardingRuleAggregatedList struct {
 
 	// SelfLink: Server defined URL for this resource (output only).
 	SelfLink string `json:"selfLink,omitempty"`
-}
-
-type ForwardingRuleAggregatedListItems struct {
 }
 
 type ForwardingRuleList struct {
@@ -1300,6 +1288,17 @@ type Image struct {
 	// SelfLink: Server defined URL for the resource (output only).
 	SelfLink string `json:"selfLink,omitempty"`
 
+	// SourceDisk: The source disk used to create this image. Once the
+	// source disk has been deleted from the system, this field will be
+	// cleared, and will not be set even if a disk with the same name has
+	// been re-created.
+	SourceDisk string `json:"sourceDisk,omitempty"`
+
+	// SourceDiskId: The 'id' value of the disk used to create this image.
+	// This value may be used to determine whether the image was taken from
+	// the current or a previous instance of a given disk name.
+	SourceDiskId string `json:"sourceDiskId,omitempty"`
+
 	// SourceType: Must be "RAW"; provided by the client when the disk image
 	// is created.
 	SourceType string `json:"sourceType,omitempty"`
@@ -1434,7 +1433,7 @@ type InstanceAggregatedList struct {
 	Id string `json:"id,omitempty"`
 
 	// Items: A map of scoped instance lists.
-	Items *InstanceAggregatedListItems `json:"items,omitempty"`
+	Items map[string]InstancesScopedList `json:"items,omitempty"`
 
 	// Kind: Type of resource.
 	Kind string `json:"kind,omitempty"`
@@ -1445,9 +1444,6 @@ type InstanceAggregatedList struct {
 
 	// SelfLink: Server defined URL for this resource (output only).
 	SelfLink string `json:"selfLink,omitempty"`
-}
-
-type InstanceAggregatedListItems struct {
 }
 
 type InstanceList struct {
@@ -1574,7 +1570,7 @@ type MachineTypeAggregatedList struct {
 	Id string `json:"id,omitempty"`
 
 	// Items: A map of scoped machine type lists.
-	Items *MachineTypeAggregatedListItems `json:"items,omitempty"`
+	Items map[string]MachineTypesScopedList `json:"items,omitempty"`
 
 	// Kind: Type of resource.
 	Kind string `json:"kind,omitempty"`
@@ -1585,9 +1581,6 @@ type MachineTypeAggregatedList struct {
 
 	// SelfLink: Server defined URL for this resource (output only).
 	SelfLink string `json:"selfLink,omitempty"`
-}
-
-type MachineTypeAggregatedListItems struct {
 }
 
 type MachineTypeList struct {
@@ -1875,7 +1868,7 @@ type OperationAggregatedList struct {
 	Id string `json:"id,omitempty"`
 
 	// Items: A map of scoped operation lists.
-	Items *OperationAggregatedListItems `json:"items,omitempty"`
+	Items map[string]OperationsScopedList `json:"items,omitempty"`
 
 	// Kind: Type of resource.
 	Kind string `json:"kind,omitempty"`
@@ -1886,9 +1879,6 @@ type OperationAggregatedList struct {
 
 	// SelfLink: Server defined URL for this resource (output only).
 	SelfLink string `json:"selfLink,omitempty"`
-}
-
-type OperationAggregatedListItems struct {
 }
 
 type OperationList struct {
@@ -2374,7 +2364,7 @@ type TargetInstanceAggregatedList struct {
 	Id string `json:"id,omitempty"`
 
 	// Items: A map of scoped target instance lists.
-	Items *TargetInstanceAggregatedListItems `json:"items,omitempty"`
+	Items map[string]TargetInstancesScopedList `json:"items,omitempty"`
 
 	// Kind: Type of resource.
 	Kind string `json:"kind,omitempty"`
@@ -2385,9 +2375,6 @@ type TargetInstanceAggregatedList struct {
 
 	// SelfLink: Server defined URL for this resource (output only).
 	SelfLink string `json:"selfLink,omitempty"`
-}
-
-type TargetInstanceAggregatedListItems struct {
 }
 
 type TargetInstanceList struct {
@@ -2528,7 +2515,7 @@ type TargetPoolAggregatedList struct {
 	Id string `json:"id,omitempty"`
 
 	// Items: A map of scoped target pool lists.
-	Items *TargetPoolAggregatedListItems `json:"items,omitempty"`
+	Items map[string]TargetPoolsScopedList `json:"items,omitempty"`
 
 	// Kind: Type of resource.
 	Kind string `json:"kind,omitempty"`
@@ -2539,9 +2526,6 @@ type TargetPoolAggregatedList struct {
 
 	// SelfLink: Server defined URL for this resource (output only).
 	SelfLink string `json:"selfLink,omitempty"`
-}
-
-type TargetPoolAggregatedListItems struct {
 }
 
 type TargetPoolInstanceHealth struct {

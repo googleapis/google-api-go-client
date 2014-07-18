@@ -1,11 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/zVOXZoYEl6_11tkhayt84llb6lA\"",
+ "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/yxWm-QaR2nsk1oHoUjch6jqsZKI\"",
  "discoveryVersion": "v1",
  "id": "gamesManagement:v1management",
  "name": "gamesManagement",
  "canonicalName": "Games Management",
  "version": "v1management",
+ "revision": "20140711",
  "title": "Google Play Game Services Management API",
  "description": "The Management API for Google Play Game Services.",
  "ownerDomain": "google.com",
@@ -145,16 +146,16 @@
    "properties": {
     "currentExperiencePoints": {
      "type": "string",
-     "description": "The current number of experience points for the player",
+     "description": "The current number of experience points for the player.",
      "format": "int64"
     },
     "currentLevel": {
      "$ref": "GamesPlayerLevelResource",
-     "description": "The current level of the player"
+     "description": "The current level of the player."
     },
     "lastLevelUpTimestampMillis": {
      "type": "string",
-     "description": "The timestamp when the player was leveled up last time millis since epoch UTC.",
+     "description": "The timestamp when the player was leveled up, in millis since Unix epoch UTC.",
      "format": "int64"
     },
     "nextLevel": {
@@ -170,17 +171,17 @@
    "properties": {
     "level": {
      "type": "integer",
-     "description": "The level for the user",
+     "description": "The level for the user.",
      "format": "int32"
     },
     "maxExperiencePoints": {
      "type": "string",
-     "description": "The maximum experience points for this level",
+     "description": "The maximum experience points for this level.",
      "format": "int64"
     },
     "minExperiencePoints": {
      "type": "string",
-     "description": "The minimum experience points for this level",
+     "description": "The minimum experience points for this level.",
      "format": "int64"
     }
    }
@@ -257,15 +258,15 @@
     },
     "name": {
      "type": "object",
-     "description": "An object representation of the individual components of the player's name.",
+     "description": "An object representation of the individual components of the player's name. For some players, these fields may not be present.",
      "properties": {
       "familyName": {
        "type": "string",
-       "description": "The family name (last name) of this player."
+       "description": "The family name of this player. In some places, this is known as the last name."
       },
       "givenName": {
        "type": "string",
-       "description": "The given name (first name) of this player."
+       "description": "The given name of this player. In some places, this is known as the first name."
       }
      }
     },

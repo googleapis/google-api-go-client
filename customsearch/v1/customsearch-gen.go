@@ -254,16 +254,13 @@ type Search struct {
 
 	Promotions []*Promotion `json:"promotions,omitempty"`
 
-	Queries *SearchQueries `json:"queries,omitempty"`
+	Queries map[string][]Query `json:"queries,omitempty"`
 
 	SearchInformation *SearchSearchInformation `json:"searchInformation,omitempty"`
 
 	Spelling *SearchSpelling `json:"spelling,omitempty"`
 
 	Url *SearchUrl `json:"url,omitempty"`
-}
-
-type SearchQueries struct {
 }
 
 type SearchSearchInformation struct {

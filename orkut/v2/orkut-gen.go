@@ -1082,9 +1082,10 @@ func (c *AclDeleteCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "activities/{activityId}/acl/{userId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{activityId}", url.QueryEscape(c.activityId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{userId}", url.QueryEscape(c.userId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"activityId": c.activityId,
+		"userId":     c.userId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1148,8 +1149,9 @@ func (c *ActivitiesDeleteCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "activities/{activityId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{activityId}", url.QueryEscape(c.activityId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"activityId": c.activityId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1237,9 +1239,10 @@ func (c *ActivitiesListCall) Do() (*ActivityList, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "people/{userId}/activities/{collection}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{userId}", url.QueryEscape(c.userId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{collection}", url.QueryEscape(c.collection), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"userId":     c.userId,
+		"collection": c.collection,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1338,8 +1341,9 @@ func (c *ActivityVisibilityGetCall) Do() (*Visibility, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "activities/{activityId}/visibility")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{activityId}", url.QueryEscape(c.activityId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"activityId": c.activityId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1411,8 +1415,9 @@ func (c *ActivityVisibilityPatchCall) Do() (*Visibility, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "activities/{activityId}/visibility")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{activityId}", url.QueryEscape(c.activityId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"activityId": c.activityId,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -1486,8 +1491,9 @@ func (c *ActivityVisibilityUpdateCall) Do() (*Visibility, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "activities/{activityId}/visibility")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{activityId}", url.QueryEscape(c.activityId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"activityId": c.activityId,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -1556,9 +1562,10 @@ func (c *BadgesGetCall) Do() (*Badge, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "people/{userId}/badges/{badgeId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{userId}", url.QueryEscape(c.userId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{badgeId}", strconv.FormatInt(c.badgeId, 10), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"userId":  c.userId,
+		"badgeId": strconv.FormatInt(c.badgeId, 10),
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1630,8 +1637,9 @@ func (c *BadgesListCall) Do() (*BadgeList, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "people/{userId}/badges")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{userId}", url.QueryEscape(c.userId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"userId": c.userId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1695,8 +1703,9 @@ func (c *CommentsDeleteCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "comments/{commentId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{commentId}", url.QueryEscape(c.commentId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"commentId": c.commentId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1762,8 +1771,9 @@ func (c *CommentsGetCall) Do() (*Comment, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "comments/{commentId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{commentId}", url.QueryEscape(c.commentId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"commentId": c.commentId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1839,8 +1849,9 @@ func (c *CommentsInsertCall) Do() (*Comment, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "activities/{activityId}/comments")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{activityId}", url.QueryEscape(c.activityId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"activityId": c.activityId,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -1946,8 +1957,9 @@ func (c *CommentsListCall) Do() (*CommentList, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "activities/{activityId}/comments")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{activityId}", url.QueryEscape(c.activityId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"activityId": c.activityId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -2052,8 +2064,9 @@ func (c *CommunitiesGetCall) Do() (*Community, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "communities/{communityId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"communityId": strconv.FormatInt(c.communityId, 10),
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -2154,8 +2167,9 @@ func (c *CommunitiesListCall) Do() (*CommunityList, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "people/{userId}/communities")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{userId}", url.QueryEscape(c.userId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"userId": c.userId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -2246,9 +2260,10 @@ func (c *CommunityFollowDeleteCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "communities/{communityId}/followers/{userId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{userId}", url.QueryEscape(c.userId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"communityId": strconv.FormatInt(c.communityId, 10),
+		"userId":      c.userId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -2314,9 +2329,10 @@ func (c *CommunityFollowInsertCall) Do() (*CommunityMembers, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "communities/{communityId}/followers/{userId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{userId}", url.QueryEscape(c.userId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"communityId": strconv.FormatInt(c.communityId, 10),
+		"userId":      c.userId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -2389,9 +2405,10 @@ func (c *CommunityMembersDeleteCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "communities/{communityId}/members/{userId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{userId}", url.QueryEscape(c.userId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"communityId": strconv.FormatInt(c.communityId, 10),
+		"userId":      c.userId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -2467,9 +2484,10 @@ func (c *CommunityMembersGetCall) Do() (*CommunityMembers, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "communities/{communityId}/members/{userId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{userId}", url.QueryEscape(c.userId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"communityId": strconv.FormatInt(c.communityId, 10),
+		"userId":      c.userId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -2548,9 +2566,10 @@ func (c *CommunityMembersInsertCall) Do() (*CommunityMembers, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "communities/{communityId}/members/{userId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{userId}", url.QueryEscape(c.userId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"communityId": strconv.FormatInt(c.communityId, 10),
+		"userId":      c.userId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -2664,8 +2683,9 @@ func (c *CommunityMembersListCall) Do() (*CommunityMembersList, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "communities/{communityId}/members")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"communityId": strconv.FormatInt(c.communityId, 10),
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -2756,10 +2776,11 @@ func (c *CommunityMessagesDeleteCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "communities/{communityId}/topics/{topicId}/messages/{messageId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{topicId}", strconv.FormatInt(c.topicId, 10), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{messageId}", strconv.FormatInt(c.messageId, 10), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"communityId": strconv.FormatInt(c.communityId, 10),
+		"topicId":     strconv.FormatInt(c.topicId, 10),
+		"messageId":   strconv.FormatInt(c.messageId, 10),
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -2841,9 +2862,10 @@ func (c *CommunityMessagesInsertCall) Do() (*CommunityMessage, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "communities/{communityId}/topics/{topicId}/messages")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{topicId}", strconv.FormatInt(c.topicId, 10), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"communityId": strconv.FormatInt(c.communityId, 10),
+		"topicId":     strconv.FormatInt(c.topicId, 10),
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -2951,9 +2973,10 @@ func (c *CommunityMessagesListCall) Do() (*CommunityMessageList, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "communities/{communityId}/topics/{topicId}/messages")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{topicId}", strconv.FormatInt(c.topicId, 10), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"communityId": strconv.FormatInt(c.communityId, 10),
+		"topicId":     strconv.FormatInt(c.topicId, 10),
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -3053,9 +3076,10 @@ func (c *CommunityPollCommentsInsertCall) Do() (*CommunityPollComment, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "communities/{communityId}/polls/{pollId}/comments")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{pollId}", url.QueryEscape(c.pollId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"communityId": strconv.FormatInt(c.communityId, 10),
+		"pollId":      c.pollId,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -3162,9 +3186,10 @@ func (c *CommunityPollCommentsListCall) Do() (*CommunityPollCommentList, error) 
 	urls := googleapi.ResolveRelative(c.s.BasePath, "communities/{communityId}/polls/{pollId}/comments")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{pollId}", url.QueryEscape(c.pollId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"communityId": strconv.FormatInt(c.communityId, 10),
+		"pollId":      c.pollId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -3262,9 +3287,10 @@ func (c *CommunityPollVotesInsertCall) Do() (*CommunityPollVote, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "communities/{communityId}/polls/{pollId}/votes")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{pollId}", url.QueryEscape(c.pollId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"communityId": strconv.FormatInt(c.communityId, 10),
+		"pollId":      c.pollId,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -3351,9 +3377,10 @@ func (c *CommunityPollsGetCall) Do() (*CommunityPoll, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "communities/{communityId}/polls/{pollId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{pollId}", url.QueryEscape(c.pollId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"communityId": strconv.FormatInt(c.communityId, 10),
+		"pollId":      c.pollId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -3460,8 +3487,9 @@ func (c *CommunityPollsListCall) Do() (*CommunityPollList, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "communities/{communityId}/polls")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"communityId": strconv.FormatInt(c.communityId, 10),
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -3553,8 +3581,9 @@ func (c *CommunityRelatedListCall) Do() (*CommunityList, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "communities/{communityId}/related")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"communityId": strconv.FormatInt(c.communityId, 10),
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -3626,9 +3655,10 @@ func (c *CommunityTopicsDeleteCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "communities/{communityId}/topics/{topicId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{topicId}", strconv.FormatInt(c.topicId, 10), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"communityId": strconv.FormatInt(c.communityId, 10),
+		"topicId":     strconv.FormatInt(c.topicId, 10),
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -3705,9 +3735,10 @@ func (c *CommunityTopicsGetCall) Do() (*CommunityTopic, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "communities/{communityId}/topics/{topicId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{topicId}", strconv.FormatInt(c.topicId, 10), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"communityId": strconv.FormatInt(c.communityId, 10),
+		"topicId":     strconv.FormatInt(c.topicId, 10),
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -3802,8 +3833,9 @@ func (c *CommunityTopicsInsertCall) Do() (*CommunityTopic, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "communities/{communityId}/topics")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"communityId": strconv.FormatInt(c.communityId, 10),
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -3906,8 +3938,9 @@ func (c *CommunityTopicsListCall) Do() (*CommunityTopicList, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "communities/{communityId}/topics")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{communityId}", strconv.FormatInt(c.communityId, 10), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"communityId": strconv.FormatInt(c.communityId, 10),
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -3990,8 +4023,9 @@ func (c *CountersListCall) Do() (*Counters, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "people/{userId}/counters")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{userId}", url.QueryEscape(c.userId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"userId": c.userId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {

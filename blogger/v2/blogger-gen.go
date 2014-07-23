@@ -503,8 +503,9 @@ func (c *BlogsGetCall) Do() (*Blog, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{blogId}", url.QueryEscape(c.blogId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"blogId": c.blogId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -571,10 +572,11 @@ func (c *CommentsGetCall) Do() (*Comment, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/posts/{postId}/comments/{commentId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{blogId}", url.QueryEscape(c.blogId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{postId}", url.QueryEscape(c.postId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{commentId}", url.QueryEscape(c.commentId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"blogId":    c.blogId,
+		"postId":    c.postId,
+		"commentId": c.commentId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -693,9 +695,10 @@ func (c *CommentsListCall) Do() (*CommentList, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/posts/{postId}/comments")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{blogId}", url.QueryEscape(c.blogId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{postId}", url.QueryEscape(c.postId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"blogId": c.blogId,
+		"postId": c.postId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -789,9 +792,10 @@ func (c *PagesGetCall) Do() (*Page, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/pages/{pageId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{blogId}", url.QueryEscape(c.blogId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{pageId}", url.QueryEscape(c.pageId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"blogId": c.blogId,
+		"pageId": c.pageId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -871,8 +875,9 @@ func (c *PagesListCall) Do() (*PageList, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/pages")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{blogId}", url.QueryEscape(c.blogId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"blogId": c.blogId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -942,9 +947,10 @@ func (c *PostsGetCall) Do() (*Post, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/posts/{postId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{blogId}", url.QueryEscape(c.blogId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{postId}", url.QueryEscape(c.postId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"blogId": c.blogId,
+		"postId": c.postId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1054,8 +1060,9 @@ func (c *PostsListCall) Do() (*PostList, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/posts")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{blogId}", url.QueryEscape(c.blogId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"blogId": c.blogId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1140,8 +1147,9 @@ func (c *UsersGetCall) Do() (*User, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/{userId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{userId}", url.QueryEscape(c.userId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"userId": c.userId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1204,8 +1212,9 @@ func (c *UsersBlogsListCall) Do() (*BlogList, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/{userId}/blogs")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{userId}", url.QueryEscape(c.userId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"userId": c.userId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {

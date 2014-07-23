@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/jkiTlyYKy35N_Pp4yoNfd5dUw3U\"",
+ "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/lXU4Ldyb8PUNFjDdYKoIcmxRcg0\"",
  "discoveryVersion": "v1",
  "id": "mapsengine:v1",
  "name": "mapsengine",
  "canonicalName": "Maps Engine",
  "version": "v1",
- "revision": "20140715",
+ "revision": "20140722",
  "title": "Google Maps Engine API",
  "description": "The Google Maps Engine API allows developers to store and query geospatial vector and raster data.",
  "ownerDomain": "google.com",
@@ -1380,7 +1380,7 @@
    "properties": {
     "icon": {
      "$ref": "IconStyle",
-     "description": "Icon for the point; exactly one field in 'icon' must be set.",
+     "description": "Icon for the point; if it isn't null, exactly one field in 'icon' must be set.",
      "annotations": {
       "required": [
        "mapsengine.layers.create",
@@ -1458,7 +1458,7 @@
      "description": "The acquisition time of this Raster."
     },
     "attribution": {
-     "type": "any",
+     "type": "string",
      "description": "The name of the attribution to be used for this Raster."
     },
     "bbox": {
@@ -1595,7 +1595,7 @@
    "description": "A raster collection groups multiple Raster resources for inclusion in a Layer.",
    "properties": {
     "attribution": {
-     "type": "any",
+     "type": "string",
      "description": "The name of the attribution to be used for this RasterCollection."
     },
     "bbox": {

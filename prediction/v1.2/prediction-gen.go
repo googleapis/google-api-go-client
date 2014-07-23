@@ -176,8 +176,9 @@ func (c *PredictCall) Do() (*Output, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "training/{data}/predict")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{data}", url.QueryEscape(c.data), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"data": c.data,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -251,8 +252,9 @@ func (c *HostedmodelsPredictCall) Do() (*Output, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "hostedmodels/{hostedModelName}/predict")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{hostedModelName}", url.QueryEscape(c.hostedModelName), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"hostedModelName": c.hostedModelName,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -319,8 +321,9 @@ func (c *TrainingDeleteCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "training/{data}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{data}", url.QueryEscape(c.data), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"data": c.data,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -376,8 +379,9 @@ func (c *TrainingGetCall) Do() (*Training, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "training/{data}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{data}", url.QueryEscape(c.data), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"data": c.data,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -528,8 +532,9 @@ func (c *TrainingUpdateCall) Do() (*Training, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "training/{data}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{data}", url.QueryEscape(c.data), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"data": c.data,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)

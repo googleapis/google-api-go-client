@@ -232,8 +232,9 @@ func (c *TasklistsDeleteCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/@me/lists/{tasklist}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{tasklist}", url.QueryEscape(c.tasklistid), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"tasklist": c.tasklistid,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -289,8 +290,9 @@ func (c *TasklistsGetCall) Do() (*TaskList, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/@me/lists/{tasklist}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{tasklist}", url.QueryEscape(c.tasklistid), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"tasklist": c.tasklistid,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -508,8 +510,9 @@ func (c *TasklistsPatchCall) Do() (*TaskList, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/@me/lists/{tasklist}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{tasklist}", url.QueryEscape(c.tasklistid), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"tasklist": c.tasklistid,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -583,8 +586,9 @@ func (c *TasklistsUpdateCall) Do() (*TaskList, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/@me/lists/{tasklist}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{tasklist}", url.QueryEscape(c.tasklistid), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"tasklist": c.tasklistid,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -653,8 +657,9 @@ func (c *TasksClearCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "lists/{tasklist}/clear")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{tasklist}", url.QueryEscape(c.tasklistid), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"tasklist": c.tasklistid,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -712,9 +717,10 @@ func (c *TasksDeleteCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "lists/{tasklist}/tasks/{task}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{tasklist}", url.QueryEscape(c.tasklistid), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{task}", url.QueryEscape(c.taskid), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"tasklist": c.tasklistid,
+		"task":     c.taskid,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -779,9 +785,10 @@ func (c *TasksGetCall) Do() (*Task, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "lists/{tasklist}/tasks/{task}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{tasklist}", url.QueryEscape(c.tasklistid), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{task}", url.QueryEscape(c.taskid), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"tasklist": c.tasklistid,
+		"task":     c.taskid,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -880,8 +887,9 @@ func (c *TasksInsertCall) Do() (*Task, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "lists/{tasklist}/tasks")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{tasklist}", url.QueryEscape(c.tasklistid), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"tasklist": c.tasklistid,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -1066,8 +1074,9 @@ func (c *TasksListCall) Do() (*Tasks, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "lists/{tasklist}/tasks")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{tasklist}", url.QueryEscape(c.tasklistid), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"tasklist": c.tasklistid,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1208,9 +1217,10 @@ func (c *TasksMoveCall) Do() (*Task, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "lists/{tasklist}/tasks/{task}/move")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{tasklist}", url.QueryEscape(c.tasklistid), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{task}", url.QueryEscape(c.taskid), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"tasklist": c.tasklistid,
+		"task":     c.taskid,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1300,9 +1310,10 @@ func (c *TasksPatchCall) Do() (*Task, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "lists/{tasklist}/tasks/{task}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{tasklist}", url.QueryEscape(c.tasklistid), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{task}", url.QueryEscape(c.taskid), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"tasklist": c.tasklistid,
+		"task":     c.taskid,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -1385,9 +1396,10 @@ func (c *TasksUpdateCall) Do() (*Task, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "lists/{tasklist}/tasks/{task}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{tasklist}", url.QueryEscape(c.tasklistid), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{task}", url.QueryEscape(c.taskid), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"tasklist": c.tasklistid,
+		"task":     c.taskid,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)

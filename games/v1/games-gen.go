@@ -2637,8 +2637,9 @@ func (c *AchievementsIncrementCall) Do() (*AchievementIncrementResponse, error) 
 	urls := googleapi.ResolveRelative(c.s.BasePath, "achievements/{achievementId}/increment")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{achievementId}", url.QueryEscape(c.achievementId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"achievementId": c.achievementId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -2761,8 +2762,9 @@ func (c *AchievementsListCall) Do() (*PlayerAchievementListResponse, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "players/{playerId}/achievements")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{playerId}", url.QueryEscape(c.playerId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"playerId": c.playerId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -2862,8 +2864,9 @@ func (c *AchievementsRevealCall) Do() (*AchievementRevealResponse, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "achievements/{achievementId}/reveal")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{achievementId}", url.QueryEscape(c.achievementId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"achievementId": c.achievementId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -2933,8 +2936,9 @@ func (c *AchievementsSetStepsAtLeastCall) Do() (*AchievementSetStepsAtLeastRespo
 	urls := googleapi.ResolveRelative(c.s.BasePath, "achievements/{achievementId}/setStepsAtLeast")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{achievementId}", url.QueryEscape(c.achievementId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"achievementId": c.achievementId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -3008,8 +3012,9 @@ func (c *AchievementsUnlockCall) Do() (*AchievementUnlockResponse, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "achievements/{achievementId}/unlock")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{achievementId}", url.QueryEscape(c.achievementId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"achievementId": c.achievementId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -3159,8 +3164,9 @@ func (c *ApplicationsGetCall) Do() (*Application, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "applications/{applicationId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{applicationId}", url.QueryEscape(c.applicationId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"applicationId": c.applicationId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -3587,8 +3593,9 @@ func (c *LeaderboardsGetCall) Do() (*Leaderboard, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "leaderboards/{leaderboardId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{leaderboardId}", url.QueryEscape(c.leaderboardId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"leaderboardId": c.leaderboardId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -3847,9 +3854,10 @@ func (c *MetagameListCategoriesByPlayerCall) Do() (*CategoryListResponse, error)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "players/{playerId}/categories/{collection}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{playerId}", url.QueryEscape(c.playerId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{collection}", url.QueryEscape(c.collection), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"playerId":   c.playerId,
+		"collection": c.collection,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -3955,8 +3963,9 @@ func (c *PlayersGetCall) Do() (*Player, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "players/{playerId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{playerId}", url.QueryEscape(c.playerId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"playerId": c.playerId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -4058,8 +4067,9 @@ func (c *PlayersListCall) Do() (*PlayerListResponse, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "players/me/players/{collection}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{collection}", url.QueryEscape(c.collection), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"collection": c.collection,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -4267,9 +4277,10 @@ func (c *QuestMilestonesClaimCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "quests/{questId}/milestones/{milestoneId}/claim")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{questId}", url.QueryEscape(c.questId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{milestoneId}", url.QueryEscape(c.milestoneId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"questId":     c.questId,
+		"milestoneId": c.milestoneId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -4352,8 +4363,9 @@ func (c *QuestsAcceptCall) Do() (*Quest, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "quests/{questId}/accept")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{questId}", url.QueryEscape(c.questId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"questId": c.questId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -4456,8 +4468,9 @@ func (c *QuestsListCall) Do() (*QuestListResponse, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "players/{playerId}/quests")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{playerId}", url.QueryEscape(c.playerId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"playerId": c.playerId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -4695,8 +4708,9 @@ func (c *RoomsDeclineCall) Do() (*Room, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rooms/{roomId}/decline")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{roomId}", url.QueryEscape(c.roomId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"roomId": c.roomId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -4766,8 +4780,9 @@ func (c *RoomsDismissCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rooms/{roomId}/dismiss")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{roomId}", url.QueryEscape(c.roomId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"roomId": c.roomId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -4834,8 +4849,9 @@ func (c *RoomsGetCall) Do() (*Room, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rooms/{roomId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{roomId}", url.QueryEscape(c.roomId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"roomId": c.roomId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -4922,8 +4938,9 @@ func (c *RoomsJoinCall) Do() (*Room, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rooms/{roomId}/join")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{roomId}", url.QueryEscape(c.roomId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"roomId": c.roomId,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -5014,8 +5031,9 @@ func (c *RoomsLeaveCall) Do() (*Room, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rooms/{roomId}/leave")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{roomId}", url.QueryEscape(c.roomId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"roomId": c.roomId,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -5210,8 +5228,9 @@ func (c *RoomsReportStatusCall) Do() (*RoomStatus, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rooms/{roomId}/reportstatus")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{roomId}", url.QueryEscape(c.roomId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"roomId": c.roomId,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -5337,10 +5356,11 @@ func (c *ScoresGetCall) Do() (*PlayerLeaderboardScoreListResponse, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "players/{playerId}/leaderboards/{leaderboardId}/scores/{timeSpan}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{playerId}", url.QueryEscape(c.playerId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{leaderboardId}", url.QueryEscape(c.leaderboardId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{timeSpan}", url.QueryEscape(c.timeSpan), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"playerId":      c.playerId,
+		"leaderboardId": c.leaderboardId,
+		"timeSpan":      c.timeSpan,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -5500,9 +5520,10 @@ func (c *ScoresListCall) Do() (*LeaderboardScores, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "leaderboards/{leaderboardId}/scores/{collection}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{leaderboardId}", url.QueryEscape(c.leaderboardId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{collection}", url.QueryEscape(c.collection), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"leaderboardId": c.leaderboardId,
+		"collection":    c.collection,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -5678,9 +5699,10 @@ func (c *ScoresListWindowCall) Do() (*LeaderboardScores, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "leaderboards/{leaderboardId}/window/{collection}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{leaderboardId}", url.QueryEscape(c.leaderboardId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{collection}", url.QueryEscape(c.collection), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"leaderboardId": c.leaderboardId,
+		"collection":    c.collection,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -5830,8 +5852,9 @@ func (c *ScoresSubmitCall) Do() (*PlayerScoreResponse, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "leaderboards/{leaderboardId}/scores")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{leaderboardId}", url.QueryEscape(c.leaderboardId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"leaderboardId": c.leaderboardId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -6003,8 +6026,9 @@ func (c *SnapshotsGetCall) Do() (*Snapshot, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "snapshots/{snapshotId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{snapshotId}", url.QueryEscape(c.snapshotId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"snapshotId": c.snapshotId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -6107,8 +6131,9 @@ func (c *SnapshotsListCall) Do() (*SnapshotListResponse, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "players/{playerId}/snapshots")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{playerId}", url.QueryEscape(c.playerId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"playerId": c.playerId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -6191,8 +6216,9 @@ func (c *TurnBasedMatchesCancelCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "turnbasedmatches/{matchId}/cancel")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{matchId}", url.QueryEscape(c.matchId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"matchId": c.matchId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -6338,8 +6364,9 @@ func (c *TurnBasedMatchesDeclineCall) Do() (*TurnBasedMatch, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "turnbasedmatches/{matchId}/decline")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{matchId}", url.QueryEscape(c.matchId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"matchId": c.matchId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -6410,8 +6437,9 @@ func (c *TurnBasedMatchesDismissCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "turnbasedmatches/{matchId}/dismiss")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{matchId}", url.QueryEscape(c.matchId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"matchId": c.matchId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -6487,8 +6515,9 @@ func (c *TurnBasedMatchesFinishCall) Do() (*TurnBasedMatch, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "turnbasedmatches/{matchId}/finish")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{matchId}", url.QueryEscape(c.matchId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"matchId": c.matchId,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -6581,8 +6610,9 @@ func (c *TurnBasedMatchesGetCall) Do() (*TurnBasedMatch, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "turnbasedmatches/{matchId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{matchId}", url.QueryEscape(c.matchId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"matchId": c.matchId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -6666,8 +6696,9 @@ func (c *TurnBasedMatchesJoinCall) Do() (*TurnBasedMatch, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "turnbasedmatches/{matchId}/join")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{matchId}", url.QueryEscape(c.matchId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"matchId": c.matchId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -6747,8 +6778,9 @@ func (c *TurnBasedMatchesLeaveCall) Do() (*TurnBasedMatch, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "turnbasedmatches/{matchId}/leave")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{matchId}", url.QueryEscape(c.matchId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"matchId": c.matchId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -6844,8 +6876,9 @@ func (c *TurnBasedMatchesLeaveTurnCall) Do() (*TurnBasedMatch, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "turnbasedmatches/{matchId}/leaveTurn")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{matchId}", url.QueryEscape(c.matchId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"matchId": c.matchId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -7094,8 +7127,9 @@ func (c *TurnBasedMatchesRematchCall) Do() (*TurnBasedMatchRematch, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "turnbasedmatches/{matchId}/rematch")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{matchId}", url.QueryEscape(c.matchId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"matchId": c.matchId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -7332,8 +7366,9 @@ func (c *TurnBasedMatchesTakeTurnCall) Do() (*TurnBasedMatch, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "turnbasedmatches/{matchId}/turn")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{matchId}", url.QueryEscape(c.matchId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"matchId": c.matchId,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)

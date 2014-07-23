@@ -1581,9 +1581,10 @@ func (c *BookshelvesGetCall) Do() (*Bookshelf, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/{userId}/bookshelves/{shelf}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{userId}", url.QueryEscape(c.userId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{shelf}", url.QueryEscape(c.shelf), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"userId": c.userId,
+		"shelf":  c.shelf,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1668,8 +1669,9 @@ func (c *BookshelvesListCall) Do() (*Bookshelves, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/{userId}/bookshelves")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{userId}", url.QueryEscape(c.userId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"userId": c.userId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1780,9 +1782,10 @@ func (c *BookshelvesVolumesListCall) Do() (*Volumes, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/{userId}/bookshelves/{shelf}/volumes")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{userId}", url.QueryEscape(c.userId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{shelf}", url.QueryEscape(c.shelf), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"userId": c.userId,
+		"shelf":  c.shelf,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -2127,9 +2130,10 @@ func (c *LayersGetCall) Do() (*Layersummary, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/{volumeId}/layersummary/{summaryId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{volumeId}", url.QueryEscape(c.volumeId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{summaryId}", url.QueryEscape(c.summaryId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"volumeId":  c.volumeId,
+		"summaryId": c.summaryId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -2249,8 +2253,9 @@ func (c *LayersListCall) Do() (*Layersummaries, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/{volumeId}/layersummary")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{volumeId}", url.QueryEscape(c.volumeId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"volumeId": c.volumeId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -2405,10 +2410,11 @@ func (c *LayersAnnotationDataGetCall) Do() (*Annotationdata, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/{volumeId}/layers/{layerId}/data/{annotationDataId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{volumeId}", url.QueryEscape(c.volumeId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{layerId}", url.QueryEscape(c.layerId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{annotationDataId}", url.QueryEscape(c.annotationDataId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"volumeId":         c.volumeId,
+		"layerId":          c.layerId,
+		"annotationDataId": c.annotationDataId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -2635,9 +2641,10 @@ func (c *LayersAnnotationDataListCall) Do() (*Annotationsdata, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/{volumeId}/layers/{layerId}/data")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{volumeId}", url.QueryEscape(c.volumeId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{layerId}", url.QueryEscape(c.layerId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"volumeId": c.volumeId,
+		"layerId":  c.layerId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -2797,10 +2804,11 @@ func (c *LayersVolumeAnnotationsGetCall) Do() (*Volumeannotation, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/{volumeId}/layers/{layerId}/annotations/{annotationId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{volumeId}", url.QueryEscape(c.volumeId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{layerId}", url.QueryEscape(c.layerId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{annotationId}", url.QueryEscape(c.annotationId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"volumeId":     c.volumeId,
+		"layerId":      c.layerId,
+		"annotationId": c.annotationId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -3017,9 +3025,10 @@ func (c *LayersVolumeAnnotationsListCall) Do() (*Volumeannotations, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/{volumeId}/layers/{layerId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{volumeId}", url.QueryEscape(c.volumeId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{layerId}", url.QueryEscape(c.layerId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"volumeId": c.volumeId,
+		"layerId":  c.layerId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -3563,8 +3572,9 @@ func (c *MylibraryAnnotationsDeleteCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/annotations/{annotationId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{annotationId}", url.QueryEscape(c.annotationId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"annotationId": c.annotationId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -3635,8 +3645,9 @@ func (c *MylibraryAnnotationsGetCall) Do() (*Annotation, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/annotations/{annotationId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{annotationId}", url.QueryEscape(c.annotationId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"annotationId": c.annotationId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -4117,8 +4128,9 @@ func (c *MylibraryAnnotationsUpdateCall) Do() (*Annotation, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/annotations/{annotationId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{annotationId}", url.QueryEscape(c.annotationId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"annotationId": c.annotationId,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -4203,8 +4215,9 @@ func (c *MylibraryBookshelvesAddVolumeCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/bookshelves/{shelf}/addVolume")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{shelf}", url.QueryEscape(c.shelf), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"shelf": c.shelf,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -4282,8 +4295,9 @@ func (c *MylibraryBookshelvesClearVolumesCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/bookshelves/{shelf}/clearVolumes")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{shelf}", url.QueryEscape(c.shelf), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"shelf": c.shelf,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -4355,8 +4369,9 @@ func (c *MylibraryBookshelvesGetCall) Do() (*Bookshelf, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/bookshelves/{shelf}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{shelf}", url.QueryEscape(c.shelf), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"shelf": c.shelf,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -4508,8 +4523,9 @@ func (c *MylibraryBookshelvesMoveVolumeCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/bookshelves/{shelf}/moveVolume")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{shelf}", url.QueryEscape(c.shelf), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"shelf": c.shelf,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -4598,8 +4614,9 @@ func (c *MylibraryBookshelvesRemoveVolumeCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/bookshelves/{shelf}/removeVolume")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{shelf}", url.QueryEscape(c.shelf), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"shelf": c.shelf,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -4737,8 +4754,9 @@ func (c *MylibraryBookshelvesVolumesListCall) Do() (*Volumes, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/bookshelves/{shelf}/volumes")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{shelf}", url.QueryEscape(c.shelf), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"shelf": c.shelf,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -4868,8 +4886,9 @@ func (c *MylibraryReadingpositionsGetCall) Do() (*ReadingPosition, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/readingpositions/{volumeId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{volumeId}", url.QueryEscape(c.volumeId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"volumeId": c.volumeId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -4988,8 +5007,9 @@ func (c *MylibraryReadingpositionsSetPositionCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/readingpositions/{volumeId}/setPosition")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{volumeId}", url.QueryEscape(c.volumeId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"volumeId": c.volumeId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -5574,8 +5594,9 @@ func (c *VolumesGetCall) Do() (*Volume, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/{volumeId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{volumeId}", url.QueryEscape(c.volumeId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"volumeId": c.volumeId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -5998,8 +6019,9 @@ func (c *VolumesAssociatedListCall) Do() (*Volumes, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/{volumeId}/associated")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{volumeId}", url.QueryEscape(c.volumeId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"volumeId": c.volumeId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {

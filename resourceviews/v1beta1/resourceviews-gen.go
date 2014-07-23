@@ -226,10 +226,11 @@ func (c *RegionViewsAddresourcesCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectName}/regions/{region}/resourceViews/{resourceViewName}/addResources")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{projectName}", url.QueryEscape(c.projectName), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{region}", url.QueryEscape(c.region), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{resourceViewName}", url.QueryEscape(c.resourceViewName), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"projectName":      c.projectName,
+		"region":           c.region,
+		"resourceViewName": c.resourceViewName,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -308,10 +309,11 @@ func (c *RegionViewsDeleteCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectName}/regions/{region}/resourceViews/{resourceViewName}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{projectName}", url.QueryEscape(c.projectName), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{region}", url.QueryEscape(c.region), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{resourceViewName}", url.QueryEscape(c.resourceViewName), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"projectName":      c.projectName,
+		"region":           c.region,
+		"resourceViewName": c.resourceViewName,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -386,10 +388,11 @@ func (c *RegionViewsGetCall) Do() (*ResourceView, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectName}/regions/{region}/resourceViews/{resourceViewName}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{projectName}", url.QueryEscape(c.projectName), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{region}", url.QueryEscape(c.region), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{resourceViewName}", url.QueryEscape(c.resourceViewName), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"projectName":      c.projectName,
+		"region":           c.region,
+		"resourceViewName": c.resourceViewName,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -477,9 +480,10 @@ func (c *RegionViewsInsertCall) Do() (*RegionViewsInsertResponse, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectName}/regions/{region}/resourceViews")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{projectName}", url.QueryEscape(c.projectName), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{region}", url.QueryEscape(c.region), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"projectName": c.projectName,
+		"region":      c.region,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -579,9 +583,10 @@ func (c *RegionViewsListCall) Do() (*RegionViewsListResponse, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectName}/regions/{region}/resourceViews")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{projectName}", url.QueryEscape(c.projectName), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{region}", url.QueryEscape(c.region), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"projectName": c.projectName,
+		"region":      c.region,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -694,10 +699,11 @@ func (c *RegionViewsListresourcesCall) Do() (*RegionViewsListResourcesResponse, 
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectName}/regions/{region}/resourceViews/{resourceViewName}/resources")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{projectName}", url.QueryEscape(c.projectName), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{region}", url.QueryEscape(c.region), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{resourceViewName}", url.QueryEscape(c.resourceViewName), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"projectName":      c.projectName,
+		"region":           c.region,
+		"resourceViewName": c.resourceViewName,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -801,10 +807,11 @@ func (c *RegionViewsRemoveresourcesCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectName}/regions/{region}/resourceViews/{resourceViewName}/removeResources")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{projectName}", url.QueryEscape(c.projectName), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{region}", url.QueryEscape(c.region), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{resourceViewName}", url.QueryEscape(c.resourceViewName), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"projectName":      c.projectName,
+		"region":           c.region,
+		"resourceViewName": c.resourceViewName,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -890,10 +897,11 @@ func (c *ZoneViewsAddresourcesCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectName}/zones/{zone}/resourceViews/{resourceViewName}/addResources")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{projectName}", url.QueryEscape(c.projectName), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{zone}", url.QueryEscape(c.zone), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{resourceViewName}", url.QueryEscape(c.resourceViewName), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"projectName":      c.projectName,
+		"zone":             c.zone,
+		"resourceViewName": c.resourceViewName,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -972,10 +980,11 @@ func (c *ZoneViewsDeleteCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectName}/zones/{zone}/resourceViews/{resourceViewName}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{projectName}", url.QueryEscape(c.projectName), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{zone}", url.QueryEscape(c.zone), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{resourceViewName}", url.QueryEscape(c.resourceViewName), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"projectName":      c.projectName,
+		"zone":             c.zone,
+		"resourceViewName": c.resourceViewName,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1050,10 +1059,11 @@ func (c *ZoneViewsGetCall) Do() (*ResourceView, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectName}/zones/{zone}/resourceViews/{resourceViewName}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{projectName}", url.QueryEscape(c.projectName), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{zone}", url.QueryEscape(c.zone), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{resourceViewName}", url.QueryEscape(c.resourceViewName), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"projectName":      c.projectName,
+		"zone":             c.zone,
+		"resourceViewName": c.resourceViewName,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1141,9 +1151,10 @@ func (c *ZoneViewsInsertCall) Do() (*ZoneViewsInsertResponse, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectName}/zones/{zone}/resourceViews")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{projectName}", url.QueryEscape(c.projectName), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{zone}", url.QueryEscape(c.zone), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"projectName": c.projectName,
+		"zone":        c.zone,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -1243,9 +1254,10 @@ func (c *ZoneViewsListCall) Do() (*ZoneViewsListResponse, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectName}/zones/{zone}/resourceViews")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{projectName}", url.QueryEscape(c.projectName), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{zone}", url.QueryEscape(c.zone), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"projectName": c.projectName,
+		"zone":        c.zone,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1358,10 +1370,11 @@ func (c *ZoneViewsListresourcesCall) Do() (*ZoneViewsListResourcesResponse, erro
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectName}/zones/{zone}/resourceViews/{resourceViewName}/resources")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{projectName}", url.QueryEscape(c.projectName), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{zone}", url.QueryEscape(c.zone), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{resourceViewName}", url.QueryEscape(c.resourceViewName), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"projectName":      c.projectName,
+		"zone":             c.zone,
+		"resourceViewName": c.resourceViewName,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1465,10 +1478,11 @@ func (c *ZoneViewsRemoveresourcesCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectName}/zones/{zone}/resourceViews/{resourceViewName}/removeResources")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{projectName}", url.QueryEscape(c.projectName), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{zone}", url.QueryEscape(c.zone), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{resourceViewName}", url.QueryEscape(c.resourceViewName), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"projectName":      c.projectName,
+		"zone":             c.zone,
+		"resourceViewName": c.resourceViewName,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)

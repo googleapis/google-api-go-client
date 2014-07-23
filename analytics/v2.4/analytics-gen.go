@@ -463,10 +463,11 @@ func (c *ManagementGoalsListCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/goals")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{webPropertyId}", url.QueryEscape(c.webPropertyId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{profileId}", url.QueryEscape(c.profileId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"accountId":     c.accountId,
+		"webPropertyId": c.webPropertyId,
+		"profileId":     c.profileId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -573,9 +574,10 @@ func (c *ManagementProfilesListCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{webPropertyId}", url.QueryEscape(c.webPropertyId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"accountId":     c.accountId,
+		"webPropertyId": c.webPropertyId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -753,8 +755,9 @@ func (c *ManagementWebpropertiesListCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", url.QueryEscape(c.accountId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"accountId": c.accountId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {

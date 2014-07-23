@@ -415,8 +415,9 @@ func (c *SubscriptionsDeleteCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "subscriptions/{+subscription}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{subscription}", url.QueryEscape(c.subscription), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"subscription": c.subscription,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -473,8 +474,9 @@ func (c *SubscriptionsGetCall) Do() (*Subscription, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "subscriptions/{+subscription}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{subscription}", url.QueryEscape(c.subscription), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"subscription": c.subscription,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -883,8 +885,9 @@ func (c *TopicsDeleteCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "topics/{+topic}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{topic}", url.QueryEscape(c.topic), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"topic": c.topic,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -944,8 +947,9 @@ func (c *TopicsGetCall) Do() (*Topic, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "topics/{+topic}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{topic}", url.QueryEscape(c.topic), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"topic": c.topic,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {

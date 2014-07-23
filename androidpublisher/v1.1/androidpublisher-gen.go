@@ -152,10 +152,11 @@ func (c *InapppurchasesGetCall) Do() (*InappPurchase, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{packageName}/inapp/{productId}/purchases/{token}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{packageName}", url.QueryEscape(c.packageName), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{productId}", url.QueryEscape(c.productId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{token}", url.QueryEscape(c.token), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName": c.packageName,
+		"productId":   c.productId,
+		"token":       c.token,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -237,10 +238,11 @@ func (c *PurchasesCancelCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{packageName}/subscriptions/{subscriptionId}/purchases/{token}/cancel")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{packageName}", url.QueryEscape(c.packageName), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{subscriptionId}", url.QueryEscape(c.subscriptionId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{token}", url.QueryEscape(c.token), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName":    c.packageName,
+		"subscriptionId": c.subscriptionId,
+		"token":          c.token,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -315,10 +317,11 @@ func (c *PurchasesGetCall) Do() (*SubscriptionPurchase, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{packageName}/subscriptions/{subscriptionId}/purchases/{token}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{packageName}", url.QueryEscape(c.packageName), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{subscriptionId}", url.QueryEscape(c.subscriptionId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{token}", url.QueryEscape(c.token), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName":    c.packageName,
+		"subscriptionId": c.subscriptionId,
+		"token":          c.token,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {

@@ -200,8 +200,9 @@ func (c *GroupsGetCall) Do() (*Groups, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{groupUniqueId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{groupUniqueId}", url.QueryEscape(c.groupUniqueId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"groupUniqueId": c.groupUniqueId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -272,8 +273,9 @@ func (c *GroupsPatchCall) Do() (*Groups, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{groupUniqueId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{groupUniqueId}", url.QueryEscape(c.groupUniqueId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"groupUniqueId": c.groupUniqueId,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -347,8 +349,9 @@ func (c *GroupsUpdateCall) Do() (*Groups, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{groupUniqueId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{groupUniqueId}", url.QueryEscape(c.groupUniqueId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"groupUniqueId": c.groupUniqueId,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)

@@ -350,8 +350,9 @@ func (c *CustomFieldDefListCall) Do() (*CustomFieldDefListResponse, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{teamId}/custom_fields")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{teamId}", url.QueryEscape(c.teamId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"teamId": c.teamId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -417,9 +418,10 @@ func (c *JobsGetCall) Do() (*Job, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{teamId}/jobs/{jobId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{teamId}", url.QueryEscape(c.teamId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{jobId}", strconv.FormatUint(c.jobId, 10), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"teamId": c.teamId,
+		"jobId":  strconv.FormatUint(c.jobId, 10),
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -562,8 +564,9 @@ func (c *JobsInsertCall) Do() (*Job, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{teamId}/jobs")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{teamId}", url.QueryEscape(c.teamId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"teamId": c.teamId,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -716,8 +719,9 @@ func (c *JobsListCall) Do() (*JobListResponse, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{teamId}/jobs")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{teamId}", url.QueryEscape(c.teamId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"teamId": c.teamId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -907,9 +911,10 @@ func (c *JobsPatchCall) Do() (*Job, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{teamId}/jobs/{jobId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{teamId}", url.QueryEscape(c.teamId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{jobId}", strconv.FormatUint(c.jobId, 10), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"teamId": c.teamId,
+		"jobId":  strconv.FormatUint(c.jobId, 10),
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -1160,9 +1165,10 @@ func (c *JobsUpdateCall) Do() (*Job, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{teamId}/jobs/{jobId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{teamId}", url.QueryEscape(c.teamId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{jobId}", strconv.FormatUint(c.jobId, 10), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"teamId": c.teamId,
+		"jobId":  strconv.FormatUint(c.jobId, 10),
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -1328,9 +1334,10 @@ func (c *LocationListCall) Do() (*LocationListResponse, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{teamId}/workers/{workerEmail}/locations")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{teamId}", url.QueryEscape(c.teamId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{workerEmail}", url.QueryEscape(c.workerEmail), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"teamId":      c.teamId,
+		"workerEmail": c.workerEmail,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1422,9 +1429,10 @@ func (c *ScheduleGetCall) Do() (*Schedule, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{teamId}/jobs/{jobId}/schedule")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{teamId}", url.QueryEscape(c.teamId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{jobId}", strconv.FormatUint(c.jobId, 10), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"teamId": c.teamId,
+		"jobId":  strconv.FormatUint(c.jobId, 10),
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1547,9 +1555,10 @@ func (c *SchedulePatchCall) Do() (*Schedule, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{teamId}/jobs/{jobId}/schedule")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{teamId}", url.QueryEscape(c.teamId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{jobId}", strconv.FormatUint(c.jobId, 10), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"teamId": c.teamId,
+		"jobId":  strconv.FormatUint(c.jobId, 10),
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -1697,9 +1706,10 @@ func (c *ScheduleUpdateCall) Do() (*Schedule, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{teamId}/jobs/{jobId}/schedule")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{teamId}", url.QueryEscape(c.teamId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{jobId}", strconv.FormatUint(c.jobId, 10), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"teamId": c.teamId,
+		"jobId":  strconv.FormatUint(c.jobId, 10),
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -1797,8 +1807,9 @@ func (c *WorkerListCall) Do() (*WorkerListResponse, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{teamId}/workers")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{teamId}", url.QueryEscape(c.teamId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"teamId": c.teamId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {

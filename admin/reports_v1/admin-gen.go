@@ -438,9 +438,10 @@ func (c *ActivitiesListCall) Do() (*Activities, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "activity/users/{userKey}/applications/{applicationName}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{userKey}", url.QueryEscape(c.userKey), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{applicationName}", url.QueryEscape(c.applicationName), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"userKey":         c.userKey,
+		"applicationName": c.applicationName,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -650,9 +651,10 @@ func (c *ActivitiesWatchCall) Do() (*Channel, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "activity/users/{userKey}/applications/{applicationName}/watch")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{userKey}", url.QueryEscape(c.userKey), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{applicationName}", url.QueryEscape(c.applicationName), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"userKey":         c.userKey,
+		"applicationName": c.applicationName,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -863,8 +865,9 @@ func (c *CustomerUsageReportsGetCall) Do() (*UsageReports, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "usage/dates/{date}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{date}", url.QueryEscape(c.date), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"date": c.date,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -999,9 +1002,10 @@ func (c *UserUsageReportGetCall) Do() (*UsageReports, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "usage/users/{userKey}/dates/{date}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{userKey}", url.QueryEscape(c.userKey), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{date}", url.QueryEscape(c.date), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"userKey": c.userKey,
+		"date":    c.date,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {

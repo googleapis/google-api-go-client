@@ -756,10 +756,11 @@ func (c *AccountsInsertCall) Do() (*Account, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{userToken}/{accountType}/{accountName}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{userToken}", url.QueryEscape(c.userToken), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{accountType}", url.QueryEscape(c.accountType), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{accountName}", url.QueryEscape(c.accountName), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"userToken":   c.userToken,
+		"accountType": c.accountType,
+		"accountName": c.accountName,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -837,8 +838,9 @@ func (c *ContactsDeleteCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "contacts/{id}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -894,8 +896,9 @@ func (c *ContactsGetCall) Do() (*Contact, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "contacts/{id}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1077,8 +1080,9 @@ func (c *ContactsPatchCall) Do() (*Contact, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "contacts/{id}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -1152,8 +1156,9 @@ func (c *ContactsUpdateCall) Do() (*Contact, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "contacts/{id}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -1220,8 +1225,9 @@ func (c *LocationsGetCall) Do() (*Location, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "locations/{id}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1336,8 +1342,9 @@ func (c *SettingsGetCall) Do() (*Setting, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "settings/{id}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1400,8 +1407,9 @@ func (c *SubscriptionsDeleteCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "subscriptions/{id}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1576,8 +1584,9 @@ func (c *SubscriptionsUpdateCall) Do() (*Subscription, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "subscriptions/{id}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -1644,8 +1653,9 @@ func (c *TimelineDeleteCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "timeline/{id}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1702,8 +1712,9 @@ func (c *TimelineGetCall) Do() (*TimelineItem, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "timeline/{id}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -2036,8 +2047,9 @@ func (c *TimelinePatchCall) Do() (*TimelineItem, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "timeline/{id}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -2122,8 +2134,9 @@ func (c *TimelineUpdateCall) Do() (*TimelineItem, error) {
 	urls += "?" + params.Encode()
 	contentLength_, hasMedia_ := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
 	req, _ := http.NewRequest("PUT", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
 	if hasMedia_ {
 		req.ContentLength = contentLength_
 	}
@@ -2215,9 +2228,10 @@ func (c *TimelineAttachmentsDeleteCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "timeline/{itemId}/attachments/{attachmentId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{itemId}", url.QueryEscape(c.itemId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{attachmentId}", url.QueryEscape(c.attachmentId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"itemId":       c.itemId,
+		"attachmentId": c.attachmentId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -2283,9 +2297,10 @@ func (c *TimelineAttachmentsGetCall) Do() (*Attachment, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "timeline/{itemId}/attachments/{attachmentId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{itemId}", url.QueryEscape(c.itemId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{attachmentId}", url.QueryEscape(c.attachmentId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"itemId":       c.itemId,
+		"attachmentId": c.attachmentId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -2368,8 +2383,9 @@ func (c *TimelineAttachmentsInsertCall) Do() (*Attachment, error) {
 	ctype := "application/json"
 	contentLength_, hasMedia_ := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{itemId}", url.QueryEscape(c.itemId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"itemId": c.itemId,
+	})
 	if hasMedia_ {
 		req.ContentLength = contentLength_
 	}
@@ -2455,8 +2471,9 @@ func (c *TimelineAttachmentsListCall) Do() (*AttachmentsListResponse, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "timeline/{itemId}/attachments")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{itemId}", url.QueryEscape(c.itemId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"itemId": c.itemId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {

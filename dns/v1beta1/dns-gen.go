@@ -328,9 +328,10 @@ func (c *ChangesCreateCall) Do() (*Change, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/managedZones/{managedZone}/changes")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{managedZone}", url.QueryEscape(c.managedZone), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"project":     c.project,
+		"managedZone": c.managedZone,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -409,10 +410,11 @@ func (c *ChangesGetCall) Do() (*Change, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/managedZones/{managedZone}/changes/{changeId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{managedZone}", url.QueryEscape(c.managedZone), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{changeId}", url.QueryEscape(c.changeId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"project":     c.project,
+		"managedZone": c.managedZone,
+		"changeId":    c.changeId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -535,9 +537,10 @@ func (c *ChangesListCall) Do() (*ChangesListResponse, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/managedZones/{managedZone}/changes")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{managedZone}", url.QueryEscape(c.managedZone), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"project":     c.project,
+		"managedZone": c.managedZone,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -644,8 +647,9 @@ func (c *ManagedZonesCreateCall) Do() (*ManagedZone, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/managedZones")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -715,9 +719,10 @@ func (c *ManagedZonesDeleteCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/managedZones/{managedZone}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{managedZone}", url.QueryEscape(c.managedZone), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"project":     c.project,
+		"managedZone": c.managedZone,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -783,9 +788,10 @@ func (c *ManagedZonesGetCall) Do() (*ManagedZone, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/managedZones/{managedZone}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{managedZone}", url.QueryEscape(c.managedZone), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"project":     c.project,
+		"managedZone": c.managedZone,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -880,8 +886,9 @@ func (c *ManagedZonesListCall) Do() (*ManagedZonesListResponse, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/managedZones")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -957,8 +964,9 @@ func (c *ProjectsGetCall) Do() (*Project, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1069,9 +1077,10 @@ func (c *ResourceRecordSetsListCall) Do() (*ResourceRecordSetsListResponse, erro
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/managedZones/{managedZone}/rrsets")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{project}", url.QueryEscape(c.project), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{managedZone}", url.QueryEscape(c.managedZone), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"project":     c.project,
+		"managedZone": c.managedZone,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {

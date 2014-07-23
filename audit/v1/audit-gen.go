@@ -260,9 +260,10 @@ func (c *ActivitiesListCall) Do() (*Activities, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{customerId}/{applicationId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{customerId}", url.QueryEscape(c.customerId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{applicationId}", strconv.FormatInt(c.applicationId, 10), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"customerId":    c.customerId,
+		"applicationId": strconv.FormatInt(c.applicationId, 10),
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {

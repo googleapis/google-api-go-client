@@ -568,10 +568,11 @@ func (c *ConversionGetCall) Do() (*ConversionList, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "agency/{agencyId}/advertiser/{advertiserId}/engine/{engineAccountId}/conversion")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{agencyId}", strconv.FormatInt(c.agencyId, 10), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{advertiserId}", strconv.FormatInt(c.advertiserId, 10), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{engineAccountId}", strconv.FormatInt(c.engineAccountId, 10), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"agencyId":        strconv.FormatInt(c.agencyId, 10),
+		"advertiserId":    strconv.FormatInt(c.advertiserId, 10),
+		"engineAccountId": strconv.FormatInt(c.engineAccountId, 10),
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1109,8 +1110,9 @@ func (c *ReportsGetCall) Do() (*Report, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "reports/{reportId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{reportId}", url.QueryEscape(c.reportId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"reportId": c.reportId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1175,9 +1177,10 @@ func (c *ReportsGetFileCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "reports/{reportId}/files/{reportFragment}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{reportId}", url.QueryEscape(c.reportId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{reportFragment}", strconv.FormatInt(c.reportFragment, 10), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"reportId":       c.reportId,
+		"reportFragment": strconv.FormatInt(c.reportFragment, 10),
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1307,9 +1310,10 @@ func (c *SavedColumnsListCall) Do() (*SavedColumnList, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "agency/{agencyId}/advertiser/{advertiserId}/savedcolumns")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{agencyId}", strconv.FormatInt(c.agencyId, 10), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{advertiserId}", strconv.FormatInt(c.advertiserId, 10), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"agencyId":     strconv.FormatInt(c.agencyId, 10),
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {

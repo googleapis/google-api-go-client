@@ -196,7 +196,7 @@ type Call struct {
 	// variant. If the genotype was instead [0, 1], the represented value
 	// would be "TA". Ordering of the genotype values is important if the
 	// phaseset field is present. If a genotype is not called (that is, a
-	// "." is present in the GT string,) -1 is returned.
+	// "." is present in the GT string) -1 is returned.
 	Genotype []int64 `json:"genotype,omitempty"`
 
 	// GenotypeLikelihood: The genotype likelihoods for this variant call.
@@ -211,7 +211,7 @@ type Call struct {
 	// Phaseset: If this field is present, this variant call's genotype
 	// ordering implies the phase of the bases and is consistent with any
 	// other variant calls on the same contig which have the same phaseset
-	// value. When importing data from VCF, if the genotype data was phased,
+	// value. When importing data from VCF, if the genotype data was phased
 	// but no phase set was specified this field will be set to
 	// "DEFAULT_PHASESET".
 	Phaseset string `json:"phaseset,omitempty"`
@@ -356,6 +356,8 @@ type GetVariantsSummaryResponse struct {
 	// ContigBounds: A list of all contigs used by the variants in a dataset
 	// with associated coordinate upper bounds for each one.
 	ContigBounds []*ContigBound `json:"contigBounds,omitempty"`
+
+	Metadata []*Metadata `json:"metadata,omitempty"`
 }
 
 type Header struct {
@@ -456,6 +458,33 @@ type ListDatasetsResponse struct {
 	// return the next page of results. This field will be empty if there
 	// aren't any additional results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+}
+
+type Metadata struct {
+	// Description: A textual description of this metadata.
+	Description string `json:"description,omitempty"`
+
+	// Id: User-provided ID field, not enforced by this API. Two or more
+	// pieces of structured metadata with identical id and key fields are
+	// considered equivalent.
+	Id string `json:"id,omitempty"`
+
+	// Info: Remaining structured metadata key-value pairs.
+	Info map[string][]string `json:"info,omitempty"`
+
+	// Key: The top-level key.
+	Key string `json:"key,omitempty"`
+
+	// Number: The number of values that can be included in a field
+	// described by this metadata.
+	Number string `json:"number,omitempty"`
+
+	// Type: The type of data. Possible types include: Integer, Float, Flag,
+	// Character, and String.
+	Type string `json:"type,omitempty"`
+
+	// Value: The value field for simple metadata
+	Value string `json:"value,omitempty"`
 }
 
 type Program struct {
@@ -655,16 +684,15 @@ type SearchCallsetsResponse struct {
 
 type SearchJobsRequest struct {
 	// CreatedAfter: If specified, only jobs created on or after this date,
-	// given in milliseconds since Unix epoch, will be listed.
+	// given in milliseconds since Unix epoch, will be returned.
 	CreatedAfter int64 `json:"createdAfter,omitempty,string"`
 
 	// CreatedBefore: If specified, only jobs created prior to this date,
-	// given in milliseconds since Unix epoch, will be listed.
+	// given in milliseconds since Unix epoch, will be returned.
 	CreatedBefore int64 `json:"createdBefore,omitempty,string"`
 
 	// MaxResults: Specifies the number of results to return in a single
-	// page. If unspecified, it will default to 128. The maximum value is
-	// 256.
+	// page. Defaults to 128. The maximum value is 256.
 	MaxResults uint64 `json:"maxResults,omitempty,string"`
 
 	// PageToken: The continuation token which is used to page through large
@@ -672,11 +700,11 @@ type SearchJobsRequest struct {
 	// the value of the "nextPageToken" from the previous response.
 	PageToken string `json:"pageToken,omitempty"`
 
-	// ProjectId: The Google Developers Console project number to which the
-	// jobs belong.
+	// ProjectId: Required. Only return jobs which belong to this Google
+	// Developers Console project. Only accepts project numbers.
 	ProjectId int64 `json:"projectId,omitempty,string"`
 
-	// Status: An optional list of Status values to filter the listing.
+	// Status: Only return jobs which have a matching status.
 	Status []string `json:"status,omitempty"`
 }
 
@@ -714,7 +742,7 @@ type SearchReadsRequest struct {
 
 	// SequenceName: Restricts the results to a particular reference
 	// sequence such as '1', 'chr1', or 'X'. The set of valid references
-	// sequences depends on the readsets specified. If set to "", only
+	// sequences depends on the readsets specified. If set to "*", only
 	// unmapped Reads are returned.
 	SequenceName string `json:"sequenceName,omitempty"`
 
@@ -908,8 +936,9 @@ func (c *BeaconsGetCall) Do() (*Beacon, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "beacons/{datasetId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{datasetId}", url.QueryEscape(c.datasetId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"datasetId": c.datasetId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1046,8 +1075,9 @@ func (c *CallsetsDeleteCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "callsets/{callsetId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{callsetId}", url.QueryEscape(c.callsetId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"callsetId": c.callsetId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1103,8 +1133,9 @@ func (c *CallsetsGetCall) Do() (*Callset, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "callsets/{callsetId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{callsetId}", url.QueryEscape(c.callsetId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"callsetId": c.callsetId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1175,8 +1206,9 @@ func (c *CallsetsPatchCall) Do() (*Callset, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "callsets/{callsetId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{callsetId}", url.QueryEscape(c.callsetId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"callsetId": c.callsetId,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -1312,8 +1344,9 @@ func (c *CallsetsUpdateCall) Do() (*Callset, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "callsets/{callsetId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{callsetId}", url.QueryEscape(c.callsetId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"callsetId": c.callsetId,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -1441,8 +1474,9 @@ func (c *DatasetsDeleteCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "datasets/{datasetId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{datasetId}", url.QueryEscape(c.datasetId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"datasetId": c.datasetId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1498,8 +1532,9 @@ func (c *DatasetsGetCall) Do() (*Dataset, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "datasets/{datasetId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{datasetId}", url.QueryEscape(c.datasetId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"datasetId": c.datasetId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1571,7 +1606,8 @@ func (c *DatasetsListCall) PageToken(pageToken string) *DatasetsListCall {
 }
 
 // ProjectId sets the optional parameter "projectId": Only return
-// datasets which belong to this Google Developers Console project.
+// datasets which belong to this Google Developers Console project. Only
+// accepts project numbers.
 func (c *DatasetsListCall) ProjectId(projectId int64) *DatasetsListCall {
 	c.opt_["projectId"] = projectId
 	return c
@@ -1626,7 +1662,7 @@ func (c *DatasetsListCall) Do() (*ListDatasetsResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Only return datasets which belong to this Google Developers Console project.",
+	//       "description": "Only return datasets which belong to this Google Developers Console project. Only accepts project numbers.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
@@ -1673,8 +1709,9 @@ func (c *DatasetsPatchCall) Do() (*Dataset, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "datasets/{datasetId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{datasetId}", url.QueryEscape(c.datasetId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"datasetId": c.datasetId,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -1748,8 +1785,9 @@ func (c *DatasetsUpdateCall) Do() (*Dataset, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "datasets/{datasetId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{datasetId}", url.QueryEscape(c.datasetId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"datasetId": c.datasetId,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -1879,8 +1917,9 @@ func (c *JobsGetCall) Do() (*Job, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "jobs/{jobId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{jobId}", url.QueryEscape(c.jobId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"jobId": c.jobId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1930,7 +1969,7 @@ type JobsSearchCall struct {
 	opt_              map[string]interface{}
 }
 
-// Search: Searches jobs within a project.
+// Search: Gets a list of jobs matching the criteria.
 func (r *JobsService) Search(searchjobsrequest *SearchJobsRequest) *JobsSearchCall {
 	c := &JobsSearchCall{s: r.s, opt_: make(map[string]interface{})}
 	c.searchjobsrequest = searchjobsrequest
@@ -1966,7 +2005,7 @@ func (c *JobsSearchCall) Do() (*SearchJobsResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Searches jobs within a project.",
+	//   "description": "Gets a list of jobs matching the criteria.",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.jobs.search",
 	//   "path": "jobs/search",
@@ -1975,67 +2014,6 @@ func (c *JobsSearchCall) Do() (*SearchJobsResponse, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "SearchJobsResponse"
-	//   }
-	// }
-
-}
-
-// method id "genomics.reads.get":
-
-type ReadsGetCall struct {
-	s      *Service
-	readId string
-	opt_   map[string]interface{}
-}
-
-// Get: Gets a read by ID.
-func (r *ReadsService) Get(readId string) *ReadsGetCall {
-	c := &ReadsGetCall{s: r.s, opt_: make(map[string]interface{})}
-	c.readId = readId
-	return c
-}
-
-func (c *ReadsGetCall) Do() (*Read, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "reads/{readId}")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{readId}", url.QueryEscape(c.readId), 1)
-	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	var ret *Read
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Gets a read by ID.",
-	//   "httpMethod": "GET",
-	//   "id": "genomics.reads.get",
-	//   "parameterOrder": [
-	//     "readId"
-	//   ],
-	//   "parameters": {
-	//     "readId": {
-	//       "description": "The ID of the read.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "reads/{readId}",
-	//   "response": {
-	//     "$ref": "Read"
 	//   }
 	// }
 
@@ -2112,64 +2090,6 @@ func (c *ReadsSearchCall) Do() (*SearchReadsResponse, error) {
 
 }
 
-// method id "genomics.readsets.create":
-
-type ReadsetsCreateCall struct {
-	s       *Service
-	readset *Readset
-	opt_    map[string]interface{}
-}
-
-// Create: Creates a new readset.
-func (r *ReadsetsService) Create(readset *Readset) *ReadsetsCreateCall {
-	c := &ReadsetsCreateCall{s: r.s, opt_: make(map[string]interface{})}
-	c.readset = readset
-	return c
-}
-
-func (c *ReadsetsCreateCall) Do() (*Readset, error) {
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.readset)
-	if err != nil {
-		return nil, err
-	}
-	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "readsets")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("POST", urls, body)
-	googleapi.SetOpaque(req.URL)
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	var ret *Readset
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Creates a new readset.",
-	//   "httpMethod": "POST",
-	//   "id": "genomics.readsets.create",
-	//   "path": "readsets",
-	//   "request": {
-	//     "$ref": "Readset"
-	//   },
-	//   "response": {
-	//     "$ref": "Readset"
-	//   }
-	// }
-
-}
-
 // method id "genomics.readsets.delete":
 
 type ReadsetsDeleteCall struct {
@@ -2192,8 +2112,9 @@ func (c *ReadsetsDeleteCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "readsets/{readsetId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{readsetId}", url.QueryEscape(c.readsetId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"readsetId": c.readsetId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -2315,8 +2236,9 @@ func (c *ReadsetsGetCall) Do() (*Readset, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "readsets/{readsetId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{readsetId}", url.QueryEscape(c.readsetId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"readsetId": c.readsetId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -2453,8 +2375,9 @@ func (c *ReadsetsPatchCall) Do() (*Readset, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "readsets/{readsetId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{readsetId}", url.QueryEscape(c.readsetId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"readsetId": c.readsetId,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -2479,7 +2402,7 @@ func (c *ReadsetsPatchCall) Do() (*Readset, error) {
 	//   ],
 	//   "parameters": {
 	//     "readsetId": {
-	//       "description": "The ID of the readset to be updated.",
+	//       "description": "The ID of the readset to be updated. The caller must have WRITE permissions to the dataset associated with this readset.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2590,8 +2513,9 @@ func (c *ReadsetsUpdateCall) Do() (*Readset, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "readsets/{readsetId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{readsetId}", url.QueryEscape(c.readsetId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"readsetId": c.readsetId,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -2616,7 +2540,7 @@ func (c *ReadsetsUpdateCall) Do() (*Readset, error) {
 	//   ],
 	//   "parameters": {
 	//     "readsetId": {
-	//       "description": "The ID of the readset to be updated.",
+	//       "description": "The ID of the readset to be updated. The caller must have WRITE permissions to the dataset associated with this readset.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2719,8 +2643,9 @@ func (c *VariantsDeleteCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "variants/{variantId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{variantId}", url.QueryEscape(c.variantId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"variantId": c.variantId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -2838,8 +2763,9 @@ func (c *VariantsGetCall) Do() (*Variant, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "variants/{variantId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{variantId}", url.QueryEscape(c.variantId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"variantId": c.variantId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -3041,8 +2967,9 @@ func (c *VariantsPatchCall) Do() (*Variant, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "variants/{variantId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{variantId}", url.QueryEscape(c.variantId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"variantId": c.variantId,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -3178,8 +3105,9 @@ func (c *VariantsUpdateCall) Do() (*Variant, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "variants/{variantId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{variantId}", url.QueryEscape(c.variantId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"variantId": c.variantId,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)

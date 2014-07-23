@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/iY4AWTymGjbdiprfFZM5wmT_tDY\"",
+ "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/tbwQ2vsOQc910gnFzUqE0UEarNg\"",
  "discoveryVersion": "v1",
  "id": "plusDomains:v1",
  "name": "plusDomains",
  "version": "v1",
- "revision": "20140715",
+ "revision": "20140718",
  "title": "Google+ Domains API",
  "description": "The Google+ API enables developers to build on top of the Google+ platform.",
  "ownerDomain": "google.com",
@@ -97,7 +97,7 @@
      "description": "View your email address"
     },
     "https://www.googleapis.com/auth/userinfo.profile": {
-     "description": "View basic information about your account"
+     "description": "View your basic profile info"
     }
    }
   }

@@ -801,7 +801,8 @@ type ParentsListResponse struct {
 }
 
 type PointStyle struct {
-	// Icon: Icon for the point; exactly one field in 'icon' must be set.
+	// Icon: Icon for the point; if it isn't null, exactly one field in
+	// 'icon' must be set.
 	Icon *IconStyle `json:"icon,omitempty"`
 
 	// Label: Label style for the point.
@@ -841,7 +842,7 @@ type Raster struct {
 	AcquisitionTime *AcquisitionTime `json:"acquisitionTime,omitempty"`
 
 	// Attribution: The name of the attribution to be used for this Raster.
-	Attribution interface{} `json:"attribution,omitempty"`
+	Attribution string `json:"attribution,omitempty"`
 
 	// Bbox: A rectangular bounding box which contains all of the data in
 	// this Raster. The numbers represent latitude and longitude in decimal
@@ -896,7 +897,7 @@ type Raster struct {
 type RasterCollection struct {
 	// Attribution: The name of the attribution to be used for this
 	// RasterCollection.
-	Attribution interface{} `json:"attribution,omitempty"`
+	Attribution string `json:"attribution,omitempty"`
 
 	// Bbox: A rectangular bounding box which contains all of the data in
 	// this RasterCollection. The numbers represent latitude and longitude
@@ -1152,8 +1153,9 @@ func (c *AssetsGetCall) Do() (*Asset, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "assets/{id}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1487,8 +1489,9 @@ func (c *AssetsParentsListCall) Do() (*ParentsListResponse, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "assets/{id}/parents")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1563,8 +1566,9 @@ func (c *LayersCancelProcessingCall) Do() (*ProcessResponse, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "layers/{id}/cancelProcessing")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1705,8 +1709,9 @@ func (c *LayersDeleteCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "layers/{id}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1771,8 +1776,9 @@ func (c *LayersGetCall) Do() (*Layer, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "layers/{id}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -2075,8 +2081,9 @@ func (c *LayersPatchCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "layers/{id}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -2136,8 +2143,9 @@ func (c *LayersProcessCall) Do() (*ProcessResponse, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "layers/{id}/process")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -2200,8 +2208,9 @@ func (c *LayersPublishCall) Do() (*PublishResponse, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "layers/{id}/publish")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -2264,8 +2273,9 @@ func (c *LayersUnpublishCall) Do() (*PublishResponse, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "layers/{id}/unpublish")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -2351,8 +2361,9 @@ func (c *LayersParentsListCall) Do() (*ParentsListResponse, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "layers/{id}/parents")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -2488,8 +2499,9 @@ func (c *MapsDeleteCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "maps/{id}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -2554,8 +2566,9 @@ func (c *MapsGetCall) Do() (*Map, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "maps/{id}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -2858,8 +2871,9 @@ func (c *MapsPatchCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "maps/{id}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -2919,8 +2933,9 @@ func (c *MapsPublishCall) Do() (*PublishResponse, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "maps/{id}/publish")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -2983,8 +2998,9 @@ func (c *MapsUnpublishCall) Do() (*PublishResponse, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "maps/{id}/unpublish")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -3098,8 +3114,9 @@ func (c *RasterCollectionsCancelProcessingCall) Do() (*ProcessResponse, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasterCollections/{id}/cancelProcessing")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -3223,8 +3240,9 @@ func (c *RasterCollectionsDeleteCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasterCollections/{id}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -3280,8 +3298,9 @@ func (c *RasterCollectionsGetCall) Do() (*RasterCollection, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasterCollections/{id}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -3572,8 +3591,9 @@ func (c *RasterCollectionsPatchCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasterCollections/{id}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -3633,8 +3653,9 @@ func (c *RasterCollectionsProcessCall) Do() (*ProcessResponse, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasterCollections/{id}/process")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -3720,8 +3741,9 @@ func (c *RasterCollectionsParentsListCall) Do() (*ParentsListResponse, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasterCollections/{id}/parents")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -3807,8 +3829,9 @@ func (c *RasterCollectionsRastersBatchDeleteCall) Do() (*RasterCollectionsRaster
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasterCollections/{id}/rasters/batchDelete")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -3887,8 +3910,9 @@ func (c *RasterCollectionsRastersBatchInsertCall) Do() (*RasterCollectionsRaster
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasterCollections/{id}/rasters/batchInsert")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -4054,8 +4078,9 @@ func (c *RasterCollectionsRastersListCall) Do() (*RasterCollectionsRastersListRe
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasterCollections/{id}/rasters")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -4169,8 +4194,9 @@ func (c *RastersDeleteCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasters/{id}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -4226,8 +4252,9 @@ func (c *RastersGetCall) Do() (*Raster, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasters/{id}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -4298,8 +4325,9 @@ func (c *RastersPatchCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasters/{id}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -4435,8 +4463,9 @@ func (c *RastersFilesInsertCall) Do() error {
 	ctype := "application/json"
 	contentLength_, hasMedia_ := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
 	if hasMedia_ {
 		req.ContentLength = contentLength_
 	}
@@ -4543,8 +4572,9 @@ func (c *RastersParentsListCall) Do() (*ParentsListResponse, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasters/{id}/parents")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -4680,8 +4710,9 @@ func (c *TablesDeleteCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{id}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -4746,8 +4777,9 @@ func (c *TablesGetCall) Do() (*Table, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{id}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -5050,8 +5082,9 @@ func (c *TablesPatchCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{id}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -5186,8 +5219,9 @@ func (c *TablesFeaturesBatchDeleteCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{id}/features/batchDelete")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -5268,8 +5302,9 @@ func (c *TablesFeaturesBatchInsertCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{id}/features/batchInsert")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -5363,8 +5398,9 @@ func (c *TablesFeaturesBatchPatchCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{id}/features/batchPatch")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -5447,9 +5483,10 @@ func (c *TablesFeaturesGetCall) Do() (*Feature, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{tableId}/features/{id}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{tableId}", url.QueryEscape(c.tableId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"tableId": c.tableId,
+		"id":      c.id,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -5633,8 +5670,9 @@ func (c *TablesFeaturesListCall) Do() (*FeaturesListResponse, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{id}/features")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -5772,8 +5810,9 @@ func (c *TablesFilesInsertCall) Do() error {
 	ctype := "application/json"
 	contentLength_, hasMedia_ := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
 	if hasMedia_ {
 		req.ContentLength = contentLength_
 	}
@@ -5880,8 +5919,9 @@ func (c *TablesParentsListCall) Do() (*ParentsListResponse, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{id}/parents")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", url.QueryEscape(c.id), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {

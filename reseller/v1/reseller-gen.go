@@ -295,8 +295,9 @@ func (c *CustomersGetCall) Do() (*Customer, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "customers/{customerId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{customerId}", url.QueryEscape(c.customerId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"customerId": c.customerId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -448,8 +449,9 @@ func (c *CustomersPatchCall) Do() (*Customer, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "customers/{customerId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{customerId}", url.QueryEscape(c.customerId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"customerId": c.customerId,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -524,8 +526,9 @@ func (c *CustomersUpdateCall) Do() (*Customer, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "customers/{customerId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{customerId}", url.QueryEscape(c.customerId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"customerId": c.customerId,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -601,9 +604,10 @@ func (c *SubscriptionsChangePlanCall) Do() (*Subscription, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "customers/{customerId}/subscriptions/{subscriptionId}/changePlan")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{customerId}", url.QueryEscape(c.customerId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{subscriptionId}", url.QueryEscape(c.subscriptionId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"customerId":     c.customerId,
+		"subscriptionId": c.subscriptionId,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -686,9 +690,10 @@ func (c *SubscriptionsChangeRenewalSettingsCall) Do() (*Subscription, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "customers/{customerId}/subscriptions/{subscriptionId}/changeRenewalSettings")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{customerId}", url.QueryEscape(c.customerId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{subscriptionId}", url.QueryEscape(c.subscriptionId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"customerId":     c.customerId,
+		"subscriptionId": c.subscriptionId,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -771,9 +776,10 @@ func (c *SubscriptionsChangeSeatsCall) Do() (*Subscription, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "customers/{customerId}/subscriptions/{subscriptionId}/changeSeats")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{customerId}", url.QueryEscape(c.customerId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{subscriptionId}", url.QueryEscape(c.subscriptionId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"customerId":     c.customerId,
+		"subscriptionId": c.subscriptionId,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -852,9 +858,10 @@ func (c *SubscriptionsDeleteCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "customers/{customerId}/subscriptions/{subscriptionId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{customerId}", url.QueryEscape(c.customerId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{subscriptionId}", url.QueryEscape(c.subscriptionId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"customerId":     c.customerId,
+		"subscriptionId": c.subscriptionId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -936,9 +943,10 @@ func (c *SubscriptionsGetCall) Do() (*Subscription, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "customers/{customerId}/subscriptions/{subscriptionId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{customerId}", url.QueryEscape(c.customerId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{subscriptionId}", url.QueryEscape(c.subscriptionId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"customerId":     c.customerId,
+		"subscriptionId": c.subscriptionId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1027,8 +1035,9 @@ func (c *SubscriptionsInsertCall) Do() (*Subscription, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "customers/{customerId}/subscriptions")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{customerId}", url.QueryEscape(c.customerId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"customerId": c.customerId,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -1237,9 +1246,10 @@ func (c *SubscriptionsStartPaidServiceCall) Do() (*Subscription, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "customers/{customerId}/subscriptions/{subscriptionId}/startPaidService")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{customerId}", url.QueryEscape(c.customerId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{subscriptionId}", url.QueryEscape(c.subscriptionId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"customerId":     c.customerId,
+		"subscriptionId": c.subscriptionId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {

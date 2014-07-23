@@ -50,7 +50,7 @@ const (
 	// View your email address
 	UserinfoEmailScope = "https://www.googleapis.com/auth/userinfo.email"
 
-	// View basic information about your account
+	// View your basic profile info
 	UserinfoProfileScope = "https://www.googleapis.com/auth/userinfo.profile"
 )
 

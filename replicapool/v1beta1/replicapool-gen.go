@@ -515,10 +515,11 @@ func (c *PoolsDeleteCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectName}/zones/{zone}/pools/{poolName}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{projectName}", url.QueryEscape(c.projectName), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{zone}", url.QueryEscape(c.zone), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{poolName}", url.QueryEscape(c.poolName), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"projectName": c.projectName,
+		"zone":        c.zone,
+		"poolName":    c.poolName,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -598,10 +599,11 @@ func (c *PoolsGetCall) Do() (*Pool, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectName}/zones/{zone}/pools/{poolName}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{projectName}", url.QueryEscape(c.projectName), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{zone}", url.QueryEscape(c.zone), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{poolName}", url.QueryEscape(c.poolName), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"projectName": c.projectName,
+		"zone":        c.zone,
+		"poolName":    c.poolName,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -691,9 +693,10 @@ func (c *PoolsInsertCall) Do() (*Pool, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectName}/zones/{zone}/pools")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{projectName}", url.QueryEscape(c.projectName), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{zone}", url.QueryEscape(c.zone), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"projectName": c.projectName,
+		"zone":        c.zone,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -793,9 +796,10 @@ func (c *PoolsListCall) Do() (*PoolsListResponse, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectName}/zones/{zone}/pools")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{projectName}", url.QueryEscape(c.projectName), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{zone}", url.QueryEscape(c.zone), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"projectName": c.projectName,
+		"zone":        c.zone,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -901,10 +905,11 @@ func (c *PoolsResizeCall) Do() (*Pool, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectName}/zones/{zone}/pools/{poolName}/resize")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{projectName}", url.QueryEscape(c.projectName), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{zone}", url.QueryEscape(c.zone), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{poolName}", url.QueryEscape(c.poolName), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"projectName": c.projectName,
+		"zone":        c.zone,
+		"poolName":    c.poolName,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1000,10 +1005,11 @@ func (c *PoolsUpdatetemplateCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectName}/zones/{zone}/pools/{poolName}/updateTemplate")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{projectName}", url.QueryEscape(c.projectName), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{zone}", url.QueryEscape(c.zone), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{poolName}", url.QueryEscape(c.poolName), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"projectName": c.projectName,
+		"zone":        c.zone,
+		"poolName":    c.poolName,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -1092,11 +1098,12 @@ func (c *ReplicasDeleteCall) Do() (*Replica, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectName}/zones/{zone}/pools/{poolName}/replicas/{replicaName}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{projectName}", url.QueryEscape(c.projectName), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{zone}", url.QueryEscape(c.zone), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{poolName}", url.QueryEscape(c.poolName), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{replicaName}", url.QueryEscape(c.replicaName), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"projectName": c.projectName,
+		"zone":        c.zone,
+		"poolName":    c.poolName,
+		"replicaName": c.replicaName,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -1192,11 +1199,12 @@ func (c *ReplicasGetCall) Do() (*Replica, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectName}/zones/{zone}/pools/{poolName}/replicas/{replicaName}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{projectName}", url.QueryEscape(c.projectName), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{zone}", url.QueryEscape(c.zone), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{poolName}", url.QueryEscape(c.poolName), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{replicaName}", url.QueryEscape(c.replicaName), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"projectName": c.projectName,
+		"zone":        c.zone,
+		"poolName":    c.poolName,
+		"replicaName": c.replicaName,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1310,10 +1318,11 @@ func (c *ReplicasListCall) Do() (*ReplicasListResponse, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectName}/zones/{zone}/pools/{poolName}/replicas")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{projectName}", url.QueryEscape(c.projectName), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{zone}", url.QueryEscape(c.zone), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{poolName}", url.QueryEscape(c.poolName), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"projectName": c.projectName,
+		"zone":        c.zone,
+		"poolName":    c.poolName,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1414,11 +1423,12 @@ func (c *ReplicasRestartCall) Do() (*Replica, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectName}/zones/{zone}/pools/{poolName}/replicas/{replicaName}/restart")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{projectName}", url.QueryEscape(c.projectName), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{zone}", url.QueryEscape(c.zone), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{poolName}", url.QueryEscape(c.poolName), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{replicaName}", url.QueryEscape(c.replicaName), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"projectName": c.projectName,
+		"zone":        c.zone,
+		"poolName":    c.poolName,
+		"replicaName": c.replicaName,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {

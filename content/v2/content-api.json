@@ -1,11 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/E7sPEvLfeMnXigmEUBxkqIoRoSA\"",
+ "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/-8w52eNC7sHUEf_7_5FxtsK7k78\"",
  "discoveryVersion": "v1",
  "id": "content:v2",
  "name": "content",
+ "canonicalName": "Shopping Content",
  "version": "v2",
- "revision": "20140701",
+ "revision": "20140718",
  "title": "Content API for Shopping",
  "description": "Manage product items, inventory, and Merchant Center accounts for Google Shopping.",
  "ownerDomain": "google.com",
@@ -147,6 +148,228 @@
     }
    }
   },
+  "AccountShipping": {
+   "id": "AccountShipping",
+   "type": "object",
+   "properties": {
+    "accountId": {
+     "type": "string",
+     "description": "The ID of the account to which these account shipping settings belong.",
+     "format": "uint64"
+    },
+    "carrierRates": {
+     "type": "array",
+     "description": "Carrier-based shipping calculations.",
+     "items": {
+      "$ref": "AccountShippingCarrierRate"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"content#accountShipping\".",
+     "default": "content#accountShipping"
+    },
+    "locationGroups": {
+     "type": "array",
+     "description": "Location groups for shipping.",
+     "items": {
+      "$ref": "AccountShippingLocationGroup"
+     }
+    },
+    "rateTables": {
+     "type": "array",
+     "description": "Rate tables definitions.",
+     "items": {
+      "$ref": "AccountShippingRateTable"
+     }
+    },
+    "services": {
+     "type": "array",
+     "description": "Shipping services describing shipping fees calculation.",
+     "items": {
+      "$ref": "AccountShippingShippingService"
+     }
+    }
+   }
+  },
+  "AccountShippingCarrierRate": {
+   "id": "AccountShippingCarrierRate",
+   "type": "object",
+   "description": "A carrier-calculated shipping rate.",
+   "properties": {
+    "carrier": {
+     "type": "string",
+     "description": "The carrier that is responsible for the shipping, such as \"UPS\", \"FedEx\", or \"USPS\"."
+    },
+    "carrierService": {
+     "type": "string",
+     "description": "The carrier service, such as \"Ground\" or \"2Day\"."
+    },
+    "modifierFlatRate": {
+     "$ref": "Price",
+     "description": "Additive shipping rate modifier."
+    },
+    "modifierPercent": {
+     "type": "string",
+     "description": "Multiplicative shipping rate modifier in percent. Represented as a floating point number without the percentage character."
+    },
+    "name": {
+     "type": "string",
+     "description": "The name of the carrier rate."
+    },
+    "saleCountry": {
+     "type": "string",
+     "description": "Sale country for which this carrier rate is valid, represented as an ISO_3166-1 Alpha-2 code."
+    },
+    "shippingOrigin": {
+     "type": "string",
+     "description": "Shipping origin represented as a postal code."
+    }
+   }
+  },
+  "AccountShippingCondition": {
+   "id": "AccountShippingCondition",
+   "type": "object",
+   "properties": {
+    "deliveryLocationGroup": {
+     "type": "string",
+     "description": "Delivery location in terms of a location group name. A location group with this name must be specified among location groups."
+    },
+    "deliveryLocationId": {
+     "type": "string",
+     "description": "Delivery location in terms of a location ID. Can be used to represent administrative areas, smaller country subdivisions, or cities.",
+     "format": "int64"
+    },
+    "deliveryPostalCode": {
+     "type": "string",
+     "description": "Delivery location in terms of a postal code range."
+    },
+    "priceMax": {
+     "$ref": "Price",
+     "description": "Maximum shipping price. Forms an interval between the maximum of smaller prices (exclusive) and this price (inclusive)."
+    },
+    "shippingLabel": {
+     "type": "string",
+     "description": "Shipping label of the product. The products with the label are matched."
+    },
+    "weightMax": {
+     "$ref": "Weight",
+     "description": "Maximum shipping weight. Forms an interval between the maximum of smaller weight (exclusive) and this weight (inclusive)."
+    }
+   }
+  },
+  "AccountShippingLocationGroup": {
+   "id": "AccountShippingLocationGroup",
+   "type": "object",
+   "description": "A user-defined locations group in a given country. All the locations of the group must be of the same type.",
+   "properties": {
+    "country": {
+     "type": "string",
+     "description": "The country in which this location group is, represented as ISO_3166-1 Alpha-2 code."
+    },
+    "locationIds": {
+     "type": "array",
+     "description": "A location ID (also called criteria ID) representing administrative",
+     "items": {
+      "type": "string",
+      "format": "int64"
+     }
+    },
+    "name": {
+     "type": "string",
+     "description": "The name of the location group."
+    },
+    "postalCodes": {
+     "type": "array",
+     "description": "A postal code range, that can be either:  \n- A single postal code (e.g. 12345)\n- A postal code prefix followed by a star (e.g. 1234*)\n- A range of postal codes, separated by a dash (e.g. 12340-12359)\n- A range of postal codes prefixes (e.g. 1234*-1235*). Prefixes must be of the same length (e.g. 12*-2* is invalid).",
+     "items": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  "AccountShippingRateTable": {
+   "id": "AccountShippingRateTable",
+   "type": "object",
+   "description": "A single or bi-dimensional table of shipping rates. Each dimension is defined in terms of consecutive price/weight ranges, delivery locations, or shipping labels.",
+   "properties": {
+    "contents": {
+     "type": "array",
+     "description": "One-dimensional table cells define one condition along the same dimension.! Bi-dimensional table cells use two dimension with respectively M and N distinct values and must contain exactly M * N cells with distinct conditions (for each possible value pairs).",
+     "items": {
+      "$ref": "AccountShippingRateTableCell"
+     }
+    },
+    "name": {
+     "type": "string",
+     "description": "The name of the rate table."
+    },
+    "saleCountry": {
+     "type": "string",
+     "description": "Sale country for which this table is valid, represented as an ISO_3166-1 Alpha-2 code."
+    }
+   }
+  },
+  "AccountShippingRateTableCell": {
+   "id": "AccountShippingRateTableCell",
+   "type": "object",
+   "properties": {
+    "condition": {
+     "$ref": "AccountShippingCondition",
+     "description": "Conditions for which the cell is valid. All cells in a table must use the same dimension or pair of dimensions among price, weight, shipping_label or delivery location. If the cell condition is not specified, it will act as a catch-all and match all the elements that are not matched by other cells in this dimension."
+    },
+    "rate": {
+     "$ref": "Price",
+     "description": "The rate applicable if the cell conditions are matched."
+    }
+   }
+  },
+  "AccountShippingShippingService": {
+   "id": "AccountShippingShippingService",
+   "type": "object",
+   "description": "Shipping services provided in a country.",
+   "properties": {
+    "active": {
+     "type": "boolean",
+     "description": "Whether the shipping service is available. Defaults to true if not specified."
+    },
+    "calculationMethod": {
+     "$ref": "AccountShippingShippingServiceCalculationMethod",
+     "description": "Calculation method for the \"simple\" case that needs no rules."
+    },
+    "name": {
+     "type": "string",
+     "description": "The name of this shipping service."
+    },
+    "saleCountry": {
+     "type": "string",
+     "description": "Sale country for which this service can be used, represented as an ISO_3166-1 Alpha-2 code."
+    }
+   }
+  },
+  "AccountShippingShippingServiceCalculationMethod": {
+   "id": "AccountShippingShippingServiceCalculationMethod",
+   "type": "object",
+   "description": "Shipping cost calculation method. Exactly one of the field is set.",
+   "properties": {
+    "carrierRate": {
+     "type": "string",
+     "description": "Name of the carrier rate to use for the calculation."
+    },
+    "flatRate": {
+     "$ref": "Price",
+     "description": "Fixed price shipping, represented as a floating point number associated with a currency."
+    },
+    "percentageRate": {
+     "type": "string",
+     "description": "Percentage of the price, represented as a floating point number without the percentage character."
+    },
+    "rateTable": {
+     "type": "string",
+     "description": "Name of the rate table to use for the calculation."
+    }
+   }
+  },
   "AccountStatus": {
    "id": "AccountStatus",
    "type": "object",
@@ -236,6 +459,57 @@
     "valueOnLandingPage": {
      "type": "string",
      "description": "The actual value on the landing page."
+    }
+   }
+  },
+  "AccountTax": {
+   "id": "AccountTax",
+   "type": "object",
+   "properties": {
+    "accountId": {
+     "type": "string",
+     "description": "The ID of the account to which these account tax settings belong.",
+     "format": "uint64"
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"content#accountTax\".",
+     "default": "content#accountTax"
+    },
+    "rules": {
+     "type": "array",
+     "description": "Tax rules.",
+     "items": {
+      "$ref": "AccountTaxTaxRule"
+     }
+    }
+   }
+  },
+  "AccountTaxTaxRule": {
+   "id": "AccountTaxTaxRule",
+   "type": "object",
+   "description": "Tax calculation rule to apply in a state or province (USA only).",
+   "properties": {
+    "country": {
+     "type": "string",
+     "description": "Country code in which tax is applicable."
+    },
+    "locationId": {
+     "type": "string",
+     "description": "State (or province) is which the tax is applicable, described by its location id (also called criteria id).",
+     "format": "uint64"
+    },
+    "ratePercent": {
+     "type": "string",
+     "description": "Explicit tax rate in percent, represented as a floating point number without the percentage character. Must not be negative."
+    },
+    "shippingTaxed": {
+     "type": "boolean",
+     "description": "If true, shipping charges are also taxed."
+    },
+    "useGlobalRate": {
+     "type": "boolean",
+     "description": "Whether the tax rate is taken from a global tax table or specified explicitly."
     }
    }
   },
@@ -1981,6 +2255,20 @@
      }
     }
    }
+  },
+  "Weight": {
+   "id": "Weight",
+   "type": "object",
+   "properties": {
+    "unit": {
+     "type": "string",
+     "description": "The unit of the weight."
+    },
+    "value": {
+     "type": "string",
+     "description": "The weight represented as a number."
+    }
+   }
   }
  },
  "resources": {
@@ -2196,6 +2484,45 @@
     }
    }
   },
+  "accountshipping": {
+   "methods": {
+    "patch": {
+     "id": "content.accountshipping.patch",
+     "path": "{merchantId}/accountshipping/{accountId}",
+     "httpMethod": "PATCH",
+     "description": "Updates the shipping settings of the account. This method supports patch semantics.",
+     "parameters": {
+      "accountId": {
+       "type": "string",
+       "description": "The ID of the account for which to get/update account shipping settings.",
+       "required": true,
+       "format": "uint64",
+       "location": "path"
+      },
+      "merchantId": {
+       "type": "string",
+       "description": "The ID of the managing account.",
+       "required": true,
+       "format": "uint64",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "merchantId",
+      "accountId"
+     ],
+     "request": {
+      "$ref": "AccountShipping"
+     },
+     "response": {
+      "$ref": "AccountShipping"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/content"
+     ]
+    }
+   }
+  },
   "accountstatuses": {
    "methods": {
     "custombatch": {
@@ -2274,6 +2601,45 @@
      ],
      "response": {
       "$ref": "AccountstatusesListResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/content"
+     ]
+    }
+   }
+  },
+  "accounttax": {
+   "methods": {
+    "patch": {
+     "id": "content.accounttax.patch",
+     "path": "{merchantId}/accounttax/{accountId}",
+     "httpMethod": "PATCH",
+     "description": "Updates the tax settings of the account. This method supports patch semantics.",
+     "parameters": {
+      "accountId": {
+       "type": "string",
+       "description": "The ID of the account for which to get/update account tax settings.",
+       "required": true,
+       "format": "uint64",
+       "location": "path"
+      },
+      "merchantId": {
+       "type": "string",
+       "description": "The ID of the managing account.",
+       "required": true,
+       "format": "uint64",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "merchantId",
+      "accountId"
+     ],
+     "request": {
+      "$ref": "AccountTax"
+     },
+     "response": {
+      "$ref": "AccountTax"
      },
      "scopes": [
       "https://www.googleapis.com/auth/content"

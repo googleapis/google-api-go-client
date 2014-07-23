@@ -469,9 +469,10 @@ func (c *ApisGetRestCall) Do() (*RestDescription, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "apis/{api}/{version}/rest")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{api}", url.QueryEscape(c.api), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{version}", url.QueryEscape(c.version), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"api":     c.api,
+		"version": c.version,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {

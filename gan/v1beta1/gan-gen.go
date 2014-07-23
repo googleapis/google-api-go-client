@@ -866,9 +866,10 @@ func (c *AdvertisersGetCall) Do() (*Advertiser, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{role}/{roleId}/advertiser")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{role}", url.QueryEscape(c.role), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{roleId}", url.QueryEscape(c.roleId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"role":   c.role,
+		"roleId": c.roleId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1032,9 +1033,10 @@ func (c *AdvertisersListCall) Do() (*Advertisers, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{role}/{roleId}/advertisers")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{role}", url.QueryEscape(c.role), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{roleId}", url.QueryEscape(c.roleId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"role":   c.role,
+		"roleId": c.roleId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1187,8 +1189,9 @@ func (c *CcOffersListCall) Do() (*CcOffers, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "publishers/{publisher}/ccOffers")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{publisher}", url.QueryEscape(c.publisher), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"publisher": c.publisher,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1448,9 +1451,10 @@ func (c *EventsListCall) Do() (*Events, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{role}/{roleId}/events")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{role}", url.QueryEscape(c.role), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{roleId}", url.QueryEscape(c.roleId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"role":   c.role,
+		"roleId": c.roleId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1649,10 +1653,11 @@ func (c *LinksGetCall) Do() (*Link, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{role}/{roleId}/link/{linkId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{role}", url.QueryEscape(c.role), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{roleId}", url.QueryEscape(c.roleId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{linkId}", strconv.FormatInt(c.linkId, 10), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"role":   c.role,
+		"roleId": c.roleId,
+		"linkId": strconv.FormatInt(c.linkId, 10),
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1744,9 +1749,10 @@ func (c *LinksInsertCall) Do() (*Link, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{role}/{roleId}/link")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{role}", url.QueryEscape(c.role), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{roleId}", url.QueryEscape(c.roleId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"role":   c.role,
+		"roleId": c.roleId,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -1958,9 +1964,10 @@ func (c *LinksListCall) Do() (*Links, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{role}/{roleId}/links")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{role}", url.QueryEscape(c.role), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{roleId}", url.QueryEscape(c.roleId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"role":   c.role,
+		"roleId": c.roleId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -2160,9 +2167,10 @@ func (c *PublishersGetCall) Do() (*Publisher, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{role}/{roleId}/publisher")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{role}", url.QueryEscape(c.role), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{roleId}", url.QueryEscape(c.roleId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"role":   c.role,
+		"roleId": c.roleId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -2326,9 +2334,10 @@ func (c *PublishersListCall) Do() (*Publishers, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{role}/{roleId}/publishers")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{role}", url.QueryEscape(c.role), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{roleId}", url.QueryEscape(c.roleId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"role":   c.role,
+		"roleId": c.roleId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -2578,10 +2587,11 @@ func (c *ReportsGetCall) Do() (*Report, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{role}/{roleId}/report/{reportType}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{role}", url.QueryEscape(c.role), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{roleId}", url.QueryEscape(c.roleId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{reportType}", url.QueryEscape(c.reportType), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"role":       c.role,
+		"roleId":     c.roleId,
+		"reportType": c.reportType,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {

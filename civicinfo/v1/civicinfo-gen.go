@@ -716,8 +716,9 @@ func (c *ElectionsVoterInfoQueryCall) Do() (*VoterInfoResponse, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "voterinfo/{electionId}/lookup")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{electionId}", strconv.FormatInt(c.electionId, 10), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"electionId": strconv.FormatInt(c.electionId, 10),
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)

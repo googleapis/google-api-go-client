@@ -1,11 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/kOh4UWPeBkrcpeXA6cdiUiHI43c\"",
+ "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/hOhaAoDk9cE9xZLdvYDGAPiddf8\"",
  "discoveryVersion": "v1",
  "id": "admin:directory_v1",
  "name": "admin",
  "canonicalName": "directory",
  "version": "directory_v1",
+ "revision": "20140715",
  "title": "Admin Directory API",
  "description": "The Admin SDK Directory API lets you view and manage enterprise resources such as users and groups, administrative notifications, security features, and more.",
  "ownerDomain": "google.com",
@@ -128,7 +129,7 @@
   "Alias": {
    "id": "Alias",
    "type": "object",
-   "description": "JSON template for Alias object in Apps Directory API.",
+   "description": "JSON template for Alias object in Directory API.",
    "properties": {
     "alias": {
      "type": "string",
@@ -156,7 +157,7 @@
   "Aliases": {
    "id": "Aliases",
    "type": "object",
-   "description": "JSON response template to list aliases in Apps Directory API.",
+   "description": "JSON response template to list aliases in Directory API.",
    "properties": {
     "aliases": {
      "type": "array",
@@ -293,7 +294,7 @@
   "ChromeOsDevice": {
    "id": "ChromeOsDevice",
    "type": "object",
-   "description": "JSON template for Chrome Os Device resource in Apps Directory API.",
+   "description": "JSON template for Chrome Os Device resource in Directory API.",
    "properties": {
     "annotatedLocation": {
      "type": "string",
@@ -314,6 +315,10 @@
     "etag": {
      "type": "string",
      "description": "ETag of the resource."
+    },
+    "ethernetMacAddress": {
+     "type": "string",
+     "description": "Chromebook Mac Address on ethernet network interface (Read-only)"
     },
     "firmwareVersion": {
      "type": "string",
@@ -336,7 +341,7 @@
     },
     "macAddress": {
      "type": "string",
-     "description": "Chromebook Mac Address (Read-only)"
+     "description": "Chromebook Mac Address on wifi network interface (Read-only)"
     },
     "meid": {
      "type": "string",
@@ -405,7 +410,7 @@
   "ChromeOsDevices": {
    "id": "ChromeOsDevices",
    "type": "object",
-   "description": "JSON response template for List Chrome OS Devices operation in Apps Directory API.",
+   "description": "JSON response template for List Chrome OS Devices operation in Directory API.",
    "properties": {
     "chromeosdevices": {
      "type": "array",
@@ -432,7 +437,7 @@
   "Group": {
    "id": "Group",
    "type": "object",
-   "description": "JSON template for Group resource in Apps Directory API.",
+   "description": "JSON template for Group resource in Directory API.",
    "properties": {
     "adminCreated": {
      "type": "boolean",
@@ -492,7 +497,7 @@
   "Groups": {
    "id": "Groups",
    "type": "object",
-   "description": "JSON response template for List Groups operation in Apps Directory API.",
+   "description": "JSON response template for List Groups operation in Directory API.",
    "properties": {
     "etag": {
      "type": "string",
@@ -519,7 +524,7 @@
   "Member": {
    "id": "Member",
    "type": "object",
-   "description": "JSON template for Member resource in Apps Directory API.",
+   "description": "JSON template for Member resource in Directory API.",
    "properties": {
     "email": {
      "type": "string",
@@ -551,7 +556,7 @@
   "Members": {
    "id": "Members",
    "type": "object",
-   "description": "JSON response template for List Members operation in Apps Directory API.",
+   "description": "JSON response template for List Members operation in Directory API.",
    "properties": {
     "etag": {
      "type": "string",
@@ -578,7 +583,7 @@
   "MobileDevice": {
    "id": "MobileDevice",
    "type": "object",
-   "description": "JSON template for Mobile Device resource in Apps Directory API.",
+   "description": "JSON template for Mobile Device resource in Directory API.",
    "properties": {
     "applications": {
      "type": "array",
@@ -727,7 +732,7 @@
   "MobileDeviceAction": {
    "id": "MobileDeviceAction",
    "type": "object",
-   "description": "JSON request template for firing commands on Mobile Device in Apps Directory Devices API.",
+   "description": "JSON request template for firing commands on Mobile Device in Directory Devices API.",
    "properties": {
     "action": {
      "type": "string",
@@ -743,7 +748,7 @@
   "MobileDevices": {
    "id": "MobileDevices",
    "type": "object",
-   "description": "JSON response template for List Mobile Devices operation in Apps Directory API.",
+   "description": "JSON response template for List Mobile Devices operation in Directory API.",
    "properties": {
     "etag": {
      "type": "string",
@@ -848,7 +853,7 @@
   "OrgUnit": {
    "id": "OrgUnit",
    "type": "object",
-   "description": "JSON template for Org Unit resource in Apps Directory API.",
+   "description": "JSON template for Org Unit resource in Directory API.",
    "properties": {
     "blockInheritance": {
      "type": "boolean",
@@ -894,7 +899,7 @@
   "OrgUnits": {
    "id": "OrgUnits",
    "type": "object",
-   "description": "JSON response template for List Organization Units operation in Apps Directory API.",
+   "description": "JSON response template for List Organization Units operation in Directory API.",
    "properties": {
     "etag": {
      "type": "string",
@@ -917,7 +922,7 @@
   "Token": {
    "id": "Token",
    "type": "object",
-   "description": "JSON template for token resource in Apps Directory API.",
+   "description": "JSON template for token resource in Directory API.",
    "properties": {
     "anonymous": {
      "type": "boolean",
@@ -960,7 +965,7 @@
   "Tokens": {
    "id": "Tokens",
    "type": "object",
-   "description": "JSON response template for List tokens operation in Apps Directory API.",
+   "description": "JSON response template for List tokens operation in Directory API.",
    "properties": {
     "etag": {
      "type": "string",
@@ -1263,7 +1268,7 @@
   "UserMakeAdmin": {
    "id": "UserMakeAdmin",
    "type": "object",
-   "description": "JSON request template for setting/revoking admin status of a user in Apps Directory API.",
+   "description": "JSON request template for setting/revoking admin status of a user in Directory API.",
    "properties": {
     "status": {
      "type": "boolean",
@@ -1279,7 +1284,7 @@
   "UserName": {
    "id": "UserName",
    "type": "object",
-   "description": "JSON template for name of a user in Apps Directory API.",
+   "description": "JSON template for name of a user in Directory API.",
    "properties": {
     "familyName": {
      "type": "string",
@@ -1382,7 +1387,7 @@
   "UserPhoto": {
    "id": "UserPhoto",
    "type": "object",
-   "description": "JSON template for Photo object in Apps Directory API.",
+   "description": "JSON template for Photo object in Directory API.",
    "properties": {
     "etag": {
      "type": "string",
@@ -1449,7 +1454,7 @@
   "UserUndelete": {
    "id": "UserUndelete",
    "type": "object",
-   "description": "JSON request template to undelete a user in Apps Directory API.",
+   "description": "JSON request template to undelete a user in Directory API.",
    "properties": {
     "orgUnitPath": {
      "type": "string",
@@ -1491,7 +1496,7 @@
   "VerificationCode": {
    "id": "VerificationCode",
    "type": "object",
-   "description": "JSON template for verification codes in Apps Directory API.",
+   "description": "JSON template for verification codes in Directory API.",
    "properties": {
     "etag": {
      "type": "string",
@@ -1515,7 +1520,7 @@
   "VerificationCodes": {
    "id": "VerificationCodes",
    "type": "object",
-   "description": "JSON response template for List verification codes operation in Apps Directory API.",
+   "description": "JSON response template for List verification codes operation in Directory API.",
    "properties": {
     "etag": {
      "type": "string",

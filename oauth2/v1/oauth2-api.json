@@ -1,10 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"kEk3sFj6Ef5_yR1-H3bAO6qw9mI/WlcQEurGo0sEddzjdUrIBdx9npM\"",
+ "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/WnsDEOWuKteGyxrkkrdhoGfx6k0\"",
  "discoveryVersion": "v1",
  "id": "oauth2:v1",
  "name": "oauth2",
  "version": "v1",
+ "revision": "20140710",
  "title": "Google OAuth2 API",
  "description": "Lets you access OAuth2 protocol related APIs.",
  "ownerDomain": "google.com",
@@ -78,7 +79,7 @@
      "description": "View your email address"
     },
     "https://www.googleapis.com/auth/userinfo.profile": {
-     "description": "View basic information about your account"
+     "description": "View your basic profile info"
     }
    }
   }

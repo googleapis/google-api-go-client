@@ -843,8 +843,9 @@ func (c *DimensionValuesQueryCall) Do() (*DimensionValueList, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/dimensionvalues/query")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{profileId}", strconv.FormatInt(c.profileId, 10), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"profileId": strconv.FormatInt(c.profileId, 10),
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -927,9 +928,10 @@ func (c *FilesGetCall) Do() (*File, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "reports/{reportId}/files/{fileId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{reportId}", strconv.FormatInt(c.reportId, 10), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", strconv.FormatInt(c.fileId, 10), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"reportId": strconv.FormatInt(c.reportId, 10),
+		"fileId":   strconv.FormatInt(c.fileId, 10),
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1052,8 +1054,9 @@ func (c *FilesListCall) Do() (*FileList, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/files")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{profileId}", strconv.FormatInt(c.profileId, 10), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"profileId": strconv.FormatInt(c.profileId, 10),
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1176,9 +1179,10 @@ func (c *ReportsDeleteCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/reports/{reportId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{profileId}", strconv.FormatInt(c.profileId, 10), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{reportId}", strconv.FormatInt(c.reportId, 10), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"profileId": strconv.FormatInt(c.profileId, 10),
+		"reportId":  strconv.FormatInt(c.reportId, 10),
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1245,9 +1249,10 @@ func (c *ReportsGetCall) Do() (*Report, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/reports/{reportId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{profileId}", strconv.FormatInt(c.profileId, 10), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{reportId}", strconv.FormatInt(c.reportId, 10), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"profileId": strconv.FormatInt(c.profileId, 10),
+		"reportId":  strconv.FormatInt(c.reportId, 10),
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1326,8 +1331,9 @@ func (c *ReportsInsertCall) Do() (*Report, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/reports")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{profileId}", strconv.FormatInt(c.profileId, 10), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"profileId": strconv.FormatInt(c.profileId, 10),
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -1445,8 +1451,9 @@ func (c *ReportsListCall) Do() (*ReportList, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/reports")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{profileId}", strconv.FormatInt(c.profileId, 10), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"profileId": strconv.FormatInt(c.profileId, 10),
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1576,9 +1583,10 @@ func (c *ReportsPatchCall) Do() (*Report, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/reports/{reportId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{profileId}", strconv.FormatInt(c.profileId, 10), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{reportId}", strconv.FormatInt(c.reportId, 10), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"profileId": strconv.FormatInt(c.profileId, 10),
+		"reportId":  strconv.FormatInt(c.reportId, 10),
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -1666,9 +1674,10 @@ func (c *ReportsRunCall) Do() (*File, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/reports/{reportId}/run")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{profileId}", strconv.FormatInt(c.profileId, 10), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{reportId}", strconv.FormatInt(c.reportId, 10), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"profileId": strconv.FormatInt(c.profileId, 10),
+		"reportId":  strconv.FormatInt(c.reportId, 10),
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1754,9 +1763,10 @@ func (c *ReportsUpdateCall) Do() (*Report, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/reports/{reportId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{profileId}", strconv.FormatInt(c.profileId, 10), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{reportId}", strconv.FormatInt(c.reportId, 10), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"profileId": strconv.FormatInt(c.profileId, 10),
+		"reportId":  strconv.FormatInt(c.reportId, 10),
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -1836,10 +1846,11 @@ func (c *ReportsFilesGetCall) Do() (*File, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/reports/{reportId}/files/{fileId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{profileId}", strconv.FormatInt(c.profileId, 10), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{reportId}", strconv.FormatInt(c.reportId, 10), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", strconv.FormatInt(c.fileId, 10), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"profileId": strconv.FormatInt(c.profileId, 10),
+		"reportId":  strconv.FormatInt(c.reportId, 10),
+		"fileId":    strconv.FormatInt(c.fileId, 10),
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1962,9 +1973,10 @@ func (c *ReportsFilesListCall) Do() (*FileList, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/reports/{reportId}/files")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{profileId}", strconv.FormatInt(c.profileId, 10), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{reportId}", strconv.FormatInt(c.reportId, 10), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"profileId": strconv.FormatInt(c.profileId, 10),
+		"reportId":  strconv.FormatInt(c.reportId, 10),
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -2077,8 +2089,9 @@ func (c *UserProfilesGetCall) Do() (*UserProfile, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{profileId}", strconv.FormatInt(c.profileId, 10), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"profileId": strconv.FormatInt(c.profileId, 10),
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {

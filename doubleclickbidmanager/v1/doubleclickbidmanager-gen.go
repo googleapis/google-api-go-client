@@ -557,8 +557,9 @@ func (c *QueriesDeletequeryCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "query/{queryId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{queryId}", strconv.FormatInt(c.queryId, 10), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"queryId": strconv.FormatInt(c.queryId, 10),
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -612,8 +613,9 @@ func (c *QueriesGetqueryCall) Do() (*Query, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "query/{queryId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{queryId}", strconv.FormatInt(c.queryId, 10), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"queryId": strconv.FormatInt(c.queryId, 10),
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -728,8 +730,9 @@ func (c *QueriesRunqueryCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "query/{queryId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{queryId}", strconv.FormatInt(c.queryId, 10), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"queryId": strconv.FormatInt(c.queryId, 10),
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -787,8 +790,9 @@ func (c *ReportsListreportsCall) Do() (*ListReportsResponse, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "queries/{queryId}/reports")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{queryId}", strconv.FormatInt(c.queryId, 10), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"queryId": strconv.FormatInt(c.queryId, 10),
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {

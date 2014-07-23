@@ -294,8 +294,9 @@ func (c *AccountsGetCall) Do() (*Account, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{id}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", strconv.FormatInt(c.id, 10), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": strconv.FormatInt(c.id, 10),
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -417,8 +418,9 @@ func (c *AccountsPatchCall) Do() (*Account, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{id}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", strconv.FormatInt(c.id, 10), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": strconv.FormatInt(c.id, 10),
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -493,8 +495,9 @@ func (c *AccountsUpdateCall) Do() (*Account, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{id}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", strconv.FormatInt(c.id, 10), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": strconv.FormatInt(c.id, 10),
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -565,9 +568,10 @@ func (c *CreativesGetCall) Do() (*Creative, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "creatives/{accountId}/{buyerCreativeId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{accountId}", strconv.FormatInt(c.accountId, 10), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{buyerCreativeId}", url.QueryEscape(c.buyerCreativeId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"accountId":       strconv.FormatInt(c.accountId, 10),
+		"buyerCreativeId": c.buyerCreativeId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -813,8 +817,9 @@ func (c *DirectDealsGetCall) Do() (*DirectDeal, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "directdeals/{id}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{id}", strconv.FormatInt(c.id, 10), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": strconv.FormatInt(c.id, 10),
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {

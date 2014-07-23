@@ -580,8 +580,9 @@ func (c *DatasetsAllocateIdsCall) Do() (*AllocateIdsResponse, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{datasetId}/allocateIds")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{datasetId}", url.QueryEscape(c.datasetId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"datasetId": c.datasetId,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -656,8 +657,9 @@ func (c *DatasetsBeginTransactionCall) Do() (*BeginTransactionResponse, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{datasetId}/beginTransaction")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{datasetId}", url.QueryEscape(c.datasetId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"datasetId": c.datasetId,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -733,8 +735,9 @@ func (c *DatasetsCommitCall) Do() (*CommitResponse, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{datasetId}/commit")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{datasetId}", url.QueryEscape(c.datasetId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"datasetId": c.datasetId,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -809,8 +812,9 @@ func (c *DatasetsLookupCall) Do() (*LookupResponse, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{datasetId}/lookup")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{datasetId}", url.QueryEscape(c.datasetId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"datasetId": c.datasetId,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -885,8 +889,9 @@ func (c *DatasetsRollbackCall) Do() (*RollbackResponse, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{datasetId}/rollback")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{datasetId}", url.QueryEscape(c.datasetId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"datasetId": c.datasetId,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -961,8 +966,9 @@ func (c *DatasetsRunQueryCall) Do() (*RunQueryResponse, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{datasetId}/runQuery")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{datasetId}", url.QueryEscape(c.datasetId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"datasetId": c.datasetId,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)

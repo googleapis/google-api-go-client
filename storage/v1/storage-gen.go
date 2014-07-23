@@ -670,9 +670,10 @@ func (c *BucketAccessControlsDeleteCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "b/{bucket}/acl/{entity}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{bucket}", url.QueryEscape(c.bucket), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{entity}", url.QueryEscape(c.entity), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"bucket": c.bucket,
+		"entity": c.entity,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -738,9 +739,10 @@ func (c *BucketAccessControlsGetCall) Do() (*BucketAccessControl, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "b/{bucket}/acl/{entity}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{bucket}", url.QueryEscape(c.bucket), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{entity}", url.QueryEscape(c.entity), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"bucket": c.bucket,
+		"entity": c.entity,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -817,8 +819,9 @@ func (c *BucketAccessControlsInsertCall) Do() (*BucketAccessControl, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "b/{bucket}/acl")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{bucket}", url.QueryEscape(c.bucket), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"bucket": c.bucket,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -885,8 +888,9 @@ func (c *BucketAccessControlsListCall) Do() (*BucketAccessControls, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "b/{bucket}/acl")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{bucket}", url.QueryEscape(c.bucket), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"bucket": c.bucket,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -959,9 +963,10 @@ func (c *BucketAccessControlsPatchCall) Do() (*BucketAccessControl, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "b/{bucket}/acl/{entity}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{bucket}", url.QueryEscape(c.bucket), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{entity}", url.QueryEscape(c.entity), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"bucket": c.bucket,
+		"entity": c.entity,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -1044,9 +1049,10 @@ func (c *BucketAccessControlsUpdateCall) Do() (*BucketAccessControl, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "b/{bucket}/acl/{entity}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{bucket}", url.QueryEscape(c.bucket), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{entity}", url.QueryEscape(c.entity), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"bucket": c.bucket,
+		"entity": c.entity,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -1142,8 +1148,9 @@ func (c *BucketsDeleteCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "b/{bucket}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{bucket}", url.QueryEscape(c.bucket), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"bucket": c.bucket,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1246,8 +1253,9 @@ func (c *BucketsGetCall) Do() (*Bucket, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "b/{bucket}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{bucket}", url.QueryEscape(c.bucket), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"bucket": c.bucket,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1640,8 +1648,9 @@ func (c *BucketsPatchCall) Do() (*Bucket, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "b/{bucket}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{bucket}", url.QueryEscape(c.bucket), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"bucket": c.bucket,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -1804,8 +1813,9 @@ func (c *BucketsUpdateCall) Do() (*Bucket, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "b/{bucket}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{bucket}", url.QueryEscape(c.bucket), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"bucket": c.bucket,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -1977,9 +1987,10 @@ func (c *DefaultObjectAccessControlsDeleteCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "b/{bucket}/defaultObjectAcl/{entity}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{bucket}", url.QueryEscape(c.bucket), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{entity}", url.QueryEscape(c.entity), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"bucket": c.bucket,
+		"entity": c.entity,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -2045,9 +2056,10 @@ func (c *DefaultObjectAccessControlsGetCall) Do() (*ObjectAccessControl, error) 
 	urls := googleapi.ResolveRelative(c.s.BasePath, "b/{bucket}/defaultObjectAcl/{entity}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{bucket}", url.QueryEscape(c.bucket), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{entity}", url.QueryEscape(c.entity), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"bucket": c.bucket,
+		"entity": c.entity,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -2125,8 +2137,9 @@ func (c *DefaultObjectAccessControlsInsertCall) Do() (*ObjectAccessControl, erro
 	urls := googleapi.ResolveRelative(c.s.BasePath, "b/{bucket}/defaultObjectAcl")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{bucket}", url.QueryEscape(c.bucket), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"bucket": c.bucket,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -2216,8 +2229,9 @@ func (c *DefaultObjectAccessControlsListCall) Do() (*ObjectAccessControls, error
 	urls := googleapi.ResolveRelative(c.s.BasePath, "b/{bucket}/defaultObjectAcl")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{bucket}", url.QueryEscape(c.bucket), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"bucket": c.bucket,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -2302,9 +2316,10 @@ func (c *DefaultObjectAccessControlsPatchCall) Do() (*ObjectAccessControl, error
 	urls := googleapi.ResolveRelative(c.s.BasePath, "b/{bucket}/defaultObjectAcl/{entity}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{bucket}", url.QueryEscape(c.bucket), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{entity}", url.QueryEscape(c.entity), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"bucket": c.bucket,
+		"entity": c.entity,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -2387,9 +2402,10 @@ func (c *DefaultObjectAccessControlsUpdateCall) Do() (*ObjectAccessControl, erro
 	urls := googleapi.ResolveRelative(c.s.BasePath, "b/{bucket}/defaultObjectAcl/{entity}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{bucket}", url.QueryEscape(c.bucket), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{entity}", url.QueryEscape(c.entity), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"bucket": c.bucket,
+		"entity": c.entity,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -2479,10 +2495,11 @@ func (c *ObjectAccessControlsDeleteCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "b/{bucket}/o/{object}/acl/{entity}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{bucket}", url.QueryEscape(c.bucket), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{object}", url.QueryEscape(c.object), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{entity}", url.QueryEscape(c.entity), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"bucket": c.bucket,
+		"object": c.object,
+		"entity": c.entity,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -2574,10 +2591,11 @@ func (c *ObjectAccessControlsGetCall) Do() (*ObjectAccessControl, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "b/{bucket}/o/{object}/acl/{entity}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{bucket}", url.QueryEscape(c.bucket), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{object}", url.QueryEscape(c.object), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{entity}", url.QueryEscape(c.entity), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"bucket": c.bucket,
+		"object": c.object,
+		"entity": c.entity,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -2680,9 +2698,10 @@ func (c *ObjectAccessControlsInsertCall) Do() (*ObjectAccessControl, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "b/{bucket}/o/{object}/acl")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{bucket}", url.QueryEscape(c.bucket), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{object}", url.QueryEscape(c.object), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"bucket": c.bucket,
+		"object": c.object,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -2775,9 +2794,10 @@ func (c *ObjectAccessControlsListCall) Do() (*ObjectAccessControls, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "b/{bucket}/o/{object}/acl")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{bucket}", url.QueryEscape(c.bucket), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{object}", url.QueryEscape(c.object), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"bucket": c.bucket,
+		"object": c.object,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -2876,10 +2896,11 @@ func (c *ObjectAccessControlsPatchCall) Do() (*ObjectAccessControl, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "b/{bucket}/o/{object}/acl/{entity}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{bucket}", url.QueryEscape(c.bucket), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{object}", url.QueryEscape(c.object), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{entity}", url.QueryEscape(c.entity), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"bucket": c.bucket,
+		"object": c.object,
+		"entity": c.entity,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -2988,10 +3009,11 @@ func (c *ObjectAccessControlsUpdateCall) Do() (*ObjectAccessControl, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "b/{bucket}/o/{object}/acl/{entity}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{bucket}", url.QueryEscape(c.bucket), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{object}", url.QueryEscape(c.object), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{entity}", url.QueryEscape(c.entity), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"bucket": c.bucket,
+		"object": c.object,
+		"entity": c.entity,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -3121,9 +3143,10 @@ func (c *ObjectsComposeCall) Do() (*Object, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "b/{destinationBucket}/o/{destinationObject}/compose")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{destinationBucket}", url.QueryEscape(c.destinationBucket), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{destinationObject}", url.QueryEscape(c.destinationObject), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"destinationBucket": c.destinationBucket,
+		"destinationObject": c.destinationObject,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -3373,11 +3396,12 @@ func (c *ObjectsCopyCall) Do() (*Object, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "b/{sourceBucket}/o/{sourceObject}/copyTo/b/{destinationBucket}/o/{destinationObject}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{sourceBucket}", url.QueryEscape(c.sourceBucket), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{sourceObject}", url.QueryEscape(c.sourceObject), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{destinationBucket}", url.QueryEscape(c.destinationBucket), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{destinationObject}", url.QueryEscape(c.destinationObject), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"sourceBucket":      c.sourceBucket,
+		"sourceObject":      c.sourceObject,
+		"destinationBucket": c.destinationBucket,
+		"destinationObject": c.destinationObject,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -3615,9 +3639,10 @@ func (c *ObjectsDeleteCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "b/{bucket}/o/{object}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{bucket}", url.QueryEscape(c.bucket), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{object}", url.QueryEscape(c.object), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"bucket": c.bucket,
+		"object": c.object,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -3779,9 +3804,10 @@ func (c *ObjectsGetCall) Do() (*Object, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "b/{bucket}/o/{object}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{bucket}", url.QueryEscape(c.bucket), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{object}", url.QueryEscape(c.object), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"bucket": c.bucket,
+		"object": c.object,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -4005,8 +4031,9 @@ func (c *ObjectsInsertCall) Do() (*Object, error) {
 	urls += "?" + params.Encode()
 	contentLength_, hasMedia_ := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{bucket}", url.QueryEscape(c.bucket), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"bucket": c.bucket,
+	})
 	if hasMedia_ {
 		req.ContentLength = contentLength_
 	}
@@ -4228,8 +4255,9 @@ func (c *ObjectsListCall) Do() (*Objects, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "b/{bucket}/o")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{bucket}", url.QueryEscape(c.bucket), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"bucket": c.bucket,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -4421,9 +4449,10 @@ func (c *ObjectsPatchCall) Do() (*Object, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "b/{bucket}/o/{object}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{bucket}", url.QueryEscape(c.bucket), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{object}", url.QueryEscape(c.object), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"bucket": c.bucket,
+		"object": c.object,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -4647,9 +4676,10 @@ func (c *ObjectsUpdateCall) Do() (*Object, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "b/{bucket}/o/{object}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{bucket}", url.QueryEscape(c.bucket), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{object}", url.QueryEscape(c.object), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"bucket": c.bucket,
+		"object": c.object,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -4862,8 +4892,9 @@ func (c *ObjectsWatchAllCall) Do() (*Channel, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "b/{bucket}/o/watch")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{bucket}", url.QueryEscape(c.bucket), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"bucket": c.bucket,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)

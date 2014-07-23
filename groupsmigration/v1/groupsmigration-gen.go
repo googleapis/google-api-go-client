@@ -106,8 +106,9 @@ func (c *ArchiveInsertCall) Do() (*Groups, error) {
 	ctype := "application/json"
 	contentLength_, hasMedia_ := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{groupId}", url.QueryEscape(c.groupId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"groupId": c.groupId,
+	})
 	if hasMedia_ {
 		req.ContentLength = contentLength_
 	}

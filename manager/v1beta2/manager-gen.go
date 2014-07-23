@@ -605,10 +605,11 @@ func (c *DeploymentsDeleteCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectId}/regions/{region}/deployments/{deploymentName}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{projectId}", url.QueryEscape(c.projectId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{region}", url.QueryEscape(c.region), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{deploymentName}", url.QueryEscape(c.deploymentName), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"projectId":      c.projectId,
+		"region":         c.region,
+		"deploymentName": c.deploymentName,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -680,10 +681,11 @@ func (c *DeploymentsGetCall) Do() (*Deployment, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectId}/regions/{region}/deployments/{deploymentName}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{projectId}", url.QueryEscape(c.projectId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{region}", url.QueryEscape(c.region), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{deploymentName}", url.QueryEscape(c.deploymentName), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"projectId":      c.projectId,
+		"region":         c.region,
+		"deploymentName": c.deploymentName,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -768,9 +770,10 @@ func (c *DeploymentsInsertCall) Do() (*Deployment, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectId}/regions/{region}/deployments")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{projectId}", url.QueryEscape(c.projectId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{region}", url.QueryEscape(c.region), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"projectId": c.projectId,
+		"region":    c.region,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -871,9 +874,10 @@ func (c *DeploymentsListCall) Do() (*DeploymentsListResponse, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectId}/regions/{region}/deployments")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{projectId}", url.QueryEscape(c.projectId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{region}", url.QueryEscape(c.region), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"projectId": c.projectId,
+		"region":    c.region,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -959,9 +963,10 @@ func (c *TemplatesDeleteCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectId}/templates/{templateName}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{projectId}", url.QueryEscape(c.projectId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{templateName}", url.QueryEscape(c.templateName), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"projectId":    c.projectId,
+		"templateName": c.templateName,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1025,9 +1030,10 @@ func (c *TemplatesGetCall) Do() (*Template, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectId}/templates/{templateName}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{projectId}", url.QueryEscape(c.projectId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{templateName}", url.QueryEscape(c.templateName), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"projectId":    c.projectId,
+		"templateName": c.templateName,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1104,8 +1110,9 @@ func (c *TemplatesInsertCall) Do() (*Template, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectId}/templates")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{projectId}", url.QueryEscape(c.projectId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"projectId": c.projectId,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -1195,8 +1202,9 @@ func (c *TemplatesListCall) Do() (*TemplatesListResponse, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectId}/templates")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{projectId}", url.QueryEscape(c.projectId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"projectId": c.projectId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {

@@ -1476,8 +1476,9 @@ func (c *AppsGetCall) Do() (*App, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "apps/{appId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{appId}", url.QueryEscape(c.appId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"appId": c.appId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1653,8 +1654,9 @@ func (c *ChangesGetCall) Do() (*Change, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "changes/{changeId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{changeId}", url.QueryEscape(c.changeId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"changeId": c.changeId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -2078,9 +2080,10 @@ func (c *ChildrenDeleteCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{folderId}/children/{childId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{folderId}", url.QueryEscape(c.folderId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{childId}", url.QueryEscape(c.childId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"folderId": c.folderId,
+		"childId":  c.childId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -2146,9 +2149,10 @@ func (c *ChildrenGetCall) Do() (*ChildReference, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{folderId}/children/{childId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{folderId}", url.QueryEscape(c.folderId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{childId}", url.QueryEscape(c.childId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"folderId": c.folderId,
+		"childId":  c.childId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -2229,8 +2233,9 @@ func (c *ChildrenInsertCall) Do() (*ChildReference, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{folderId}/children")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{folderId}", url.QueryEscape(c.folderId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"folderId": c.folderId,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -2329,8 +2334,9 @@ func (c *ChildrenListCall) Do() (*ChildList, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{folderId}/children")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{folderId}", url.QueryEscape(c.folderId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"folderId": c.folderId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -2417,9 +2423,10 @@ func (c *CommentsDeleteCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/comments/{commentId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{commentId}", url.QueryEscape(c.commentId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"fileId":    c.fileId,
+		"commentId": c.commentId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -2497,9 +2504,10 @@ func (c *CommentsGetCall) Do() (*Comment, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/comments/{commentId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{commentId}", url.QueryEscape(c.commentId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"fileId":    c.fileId,
+		"commentId": c.commentId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -2584,8 +2592,9 @@ func (c *CommentsInsertCall) Do() (*Comment, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/comments")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"fileId": c.fileId,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -2698,8 +2707,9 @@ func (c *CommentsListCall) Do() (*CommentList, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/comments")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"fileId": c.fileId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -2799,9 +2809,10 @@ func (c *CommentsPatchCall) Do() (*Comment, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/comments/{commentId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{commentId}", url.QueryEscape(c.commentId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"fileId":    c.fileId,
+		"commentId": c.commentId,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -2885,9 +2896,10 @@ func (c *CommentsUpdateCall) Do() (*Comment, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/comments/{commentId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{commentId}", url.QueryEscape(c.commentId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"fileId":    c.fileId,
+		"commentId": c.commentId,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -3040,8 +3052,9 @@ func (c *FilesCopyCall) Do() (*File, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/copy")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"fileId": c.fileId,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -3158,8 +3171,9 @@ func (c *FilesDeleteCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"fileId": c.fileId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -3281,8 +3295,9 @@ func (c *FilesGetCall) Do() (*File, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"fileId": c.fileId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -3883,8 +3898,9 @@ func (c *FilesPatchCall) Do() (*File, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"fileId": c.fileId,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -4022,8 +4038,9 @@ func (c *FilesTouchCall) Do() (*File, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/touch")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"fileId": c.fileId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -4089,8 +4106,9 @@ func (c *FilesTrashCall) Do() (*File, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/trash")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"fileId": c.fileId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -4155,8 +4173,9 @@ func (c *FilesUntrashCall) Do() (*File, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/untrash")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"fileId": c.fileId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -4362,8 +4381,9 @@ func (c *FilesUpdateCall) Do() (*File, error) {
 	urls += "?" + params.Encode()
 	contentLength_, hasMedia_ := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
 	req, _ := http.NewRequest("PUT", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"fileId": c.fileId,
+	})
 	if hasMedia_ {
 		req.ContentLength = contentLength_
 	}
@@ -4549,8 +4569,9 @@ func (c *FilesWatchCall) Do() (*Channel, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/watch")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"fileId": c.fileId,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -4645,9 +4666,10 @@ func (c *ParentsDeleteCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/parents/{parentId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{parentId}", url.QueryEscape(c.parentId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"fileId":   c.fileId,
+		"parentId": c.parentId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -4713,9 +4735,10 @@ func (c *ParentsGetCall) Do() (*ParentReference, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/parents/{parentId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{parentId}", url.QueryEscape(c.parentId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"fileId":   c.fileId,
+		"parentId": c.parentId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -4796,8 +4819,9 @@ func (c *ParentsInsertCall) Do() (*ParentReference, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/parents")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"fileId": c.fileId,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -4866,8 +4890,9 @@ func (c *ParentsListCall) Do() (*ParentList, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/parents")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"fileId": c.fileId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -4936,9 +4961,10 @@ func (c *PermissionsDeleteCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/permissions/{permissionId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{permissionId}", url.QueryEscape(c.permissionId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"fileId":       c.fileId,
+		"permissionId": c.permissionId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -5004,9 +5030,10 @@ func (c *PermissionsGetCall) Do() (*Permission, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/permissions/{permissionId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{permissionId}", url.QueryEscape(c.permissionId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"fileId":       c.fileId,
+		"permissionId": c.permissionId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -5079,8 +5106,9 @@ func (c *PermissionsGetIdForEmailCall) Do() (*PermissionId, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "permissionIds/{email}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{email}", url.QueryEscape(c.email), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"email": c.email,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -5177,8 +5205,9 @@ func (c *PermissionsInsertCall) Do() (*Permission, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/permissions")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"fileId": c.fileId,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -5257,8 +5286,9 @@ func (c *PermissionsListCall) Do() (*PermissionList, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/permissions")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"fileId": c.fileId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -5344,9 +5374,10 @@ func (c *PermissionsPatchCall) Do() (*Permission, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/permissions/{permissionId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{permissionId}", url.QueryEscape(c.permissionId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"fileId":       c.fileId,
+		"permissionId": c.permissionId,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -5447,9 +5478,10 @@ func (c *PermissionsUpdateCall) Do() (*Permission, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/permissions/{permissionId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{permissionId}", url.QueryEscape(c.permissionId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"fileId":       c.fileId,
+		"permissionId": c.permissionId,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -5542,9 +5574,10 @@ func (c *PropertiesDeleteCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/properties/{propertyKey}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{propertyKey}", url.QueryEscape(c.propertyKey), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"fileId":      c.fileId,
+		"propertyKey": c.propertyKey,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -5627,9 +5660,10 @@ func (c *PropertiesGetCall) Do() (*Property, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/properties/{propertyKey}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{propertyKey}", url.QueryEscape(c.propertyKey), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"fileId":      c.fileId,
+		"propertyKey": c.propertyKey,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -5716,8 +5750,9 @@ func (c *PropertiesInsertCall) Do() (*Property, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/properties")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"fileId": c.fileId,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -5786,8 +5821,9 @@ func (c *PropertiesListCall) Do() (*PropertyList, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/properties")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"fileId": c.fileId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -5873,9 +5909,10 @@ func (c *PropertiesPatchCall) Do() (*Property, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/properties/{propertyKey}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{propertyKey}", url.QueryEscape(c.propertyKey), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"fileId":      c.fileId,
+		"propertyKey": c.propertyKey,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -5976,9 +6013,10 @@ func (c *PropertiesUpdateCall) Do() (*Property, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/properties/{propertyKey}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{propertyKey}", url.QueryEscape(c.propertyKey), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"fileId":      c.fileId,
+		"propertyKey": c.propertyKey,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -6073,8 +6111,9 @@ func (c *RealtimeGetCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/realtime")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"fileId": c.fileId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -6167,8 +6206,9 @@ func (c *RealtimeUpdateCall) Do() error {
 	ctype := "application/json"
 	contentLength_, hasMedia_ := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
 	req, _ := http.NewRequest("PUT", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"fileId": c.fileId,
+	})
 	if hasMedia_ {
 		req.ContentLength = contentLength_
 	}
@@ -6255,10 +6295,11 @@ func (c *RepliesDeleteCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/comments/{commentId}/replies/{replyId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{commentId}", url.QueryEscape(c.commentId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{replyId}", url.QueryEscape(c.replyId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"fileId":    c.fileId,
+		"commentId": c.commentId,
+		"replyId":   c.replyId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -6343,10 +6384,11 @@ func (c *RepliesGetCall) Do() (*CommentReply, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/comments/{commentId}/replies/{replyId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{commentId}", url.QueryEscape(c.commentId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{replyId}", url.QueryEscape(c.replyId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"fileId":    c.fileId,
+		"commentId": c.commentId,
+		"replyId":   c.replyId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -6440,9 +6482,10 @@ func (c *RepliesInsertCall) Do() (*CommentReply, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/comments/{commentId}/replies")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{commentId}", url.QueryEscape(c.commentId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"fileId":    c.fileId,
+		"commentId": c.commentId,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -6552,9 +6595,10 @@ func (c *RepliesListCall) Do() (*CommentReplyList, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/comments/{commentId}/replies")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{commentId}", url.QueryEscape(c.commentId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"fileId":    c.fileId,
+		"commentId": c.commentId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -6658,10 +6702,11 @@ func (c *RepliesPatchCall) Do() (*CommentReply, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/comments/{commentId}/replies/{replyId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{commentId}", url.QueryEscape(c.commentId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{replyId}", url.QueryEscape(c.replyId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"fileId":    c.fileId,
+		"commentId": c.commentId,
+		"replyId":   c.replyId,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -6754,10 +6799,11 @@ func (c *RepliesUpdateCall) Do() (*CommentReply, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/comments/{commentId}/replies/{replyId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{commentId}", url.QueryEscape(c.commentId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{replyId}", url.QueryEscape(c.replyId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"fileId":    c.fileId,
+		"commentId": c.commentId,
+		"replyId":   c.replyId,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -6841,9 +6887,10 @@ func (c *RevisionsDeleteCall) Do() error {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/revisions/{revisionId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{revisionId}", url.QueryEscape(c.revisionId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"fileId":     c.fileId,
+		"revisionId": c.revisionId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -6910,9 +6957,10 @@ func (c *RevisionsGetCall) Do() (*Revision, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/revisions/{revisionId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{revisionId}", url.QueryEscape(c.revisionId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"fileId":     c.fileId,
+		"revisionId": c.revisionId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -6986,8 +7034,9 @@ func (c *RevisionsListCall) Do() (*RevisionList, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/revisions")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"fileId": c.fileId,
+	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -7063,9 +7112,10 @@ func (c *RevisionsPatchCall) Do() (*Revision, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/revisions/{revisionId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{revisionId}", url.QueryEscape(c.revisionId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"fileId":     c.fileId,
+		"revisionId": c.revisionId,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -7150,9 +7200,10 @@ func (c *RevisionsUpdateCall) Do() (*Revision, error) {
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/revisions/{revisionId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
-	req.URL.Path = strings.Replace(req.URL.Path, "{fileId}", url.QueryEscape(c.fileId), 1)
-	req.URL.Path = strings.Replace(req.URL.Path, "{revisionId}", url.QueryEscape(c.revisionId), 1)
-	googleapi.SetOpaque(req.URL)
+	googleapi.Expand(req.URL, map[string]string{
+		"fileId":     c.fileId,
+		"revisionId": c.revisionId,
+	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)

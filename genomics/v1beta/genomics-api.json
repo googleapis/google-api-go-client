@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/NJoq7bf7liXb5sEBdtd6WNCh2Iw\"",
+ "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/BweQJBumCL7AJ7M5gEGXXlPajUY\"",
  "discoveryVersion": "v1",
  "id": "genomics:v1beta",
  "name": "genomics",
  "version": "v1beta",
- "revision": "20140715",
+ "revision": "20140717",
  "title": "Genomics API",
  "description": "Provides access to Genomics data.",
  "ownerDomain": "google.com",
@@ -113,7 +113,7 @@
     },
     "genotype": {
      "type": "array",
-     "description": "The genotype of this variant call. Each value represents either the value of the referenceBases field or a 1-based index into alternateBases. If a variant had a referenceBases field of \"T\" and an alternateBases value of [\"A\", \"C\"], and the genotype was [2, 1], that would mean the call represented the heterozygous value \"CA\" for this variant. If the genotype was instead [0, 1], the represented value would be \"TA\". Ordering of the genotype values is important if the phaseset field is present. If a genotype is not called (that is, a \".\" is present in the GT string,) -1 is returned.",
+     "description": "The genotype of this variant call. Each value represents either the value of the referenceBases field or a 1-based index into alternateBases. If a variant had a referenceBases field of \"T\" and an alternateBases value of [\"A\", \"C\"], and the genotype was [2, 1], that would mean the call represented the heterozygous value \"CA\" for this variant. If the genotype was instead [0, 1], the represented value would be \"TA\". Ordering of the genotype values is important if the phaseset field is present. If a genotype is not called (that is, a \".\" is present in the GT string) -1 is returned.",
      "items": {
       "type": "integer",
       "format": "int32"
@@ -140,7 +140,7 @@
     },
     "phaseset": {
      "type": "string",
-     "description": "If this field is present, this variant call's genotype ordering implies the phase of the bases and is consistent with any other variant calls on the same contig which have the same phaseset value. When importing data from VCF, if the genotype data was phased, but no phase set was specified this field will be set to \"DEFAULT_PHASESET\"."
+     "description": "If this field is present, this variant call's genotype ordering implies the phase of the bases and is consistent with any other variant calls on the same contig which have the same phaseset value. When importing data from VCF, if the genotype data was phased but no phase set was specified this field will be set to \"DEFAULT_PHASESET\"."
     }
    }
   },
@@ -375,6 +375,12 @@
      "items": {
       "$ref": "ContigBound"
      }
+    },
+    "metadata": {
+     "type": "array",
+     "items": {
+      "$ref": "Metadata"
+     }
     }
    }
   },
@@ -585,6 +591,49 @@
     "nextPageToken": {
      "type": "string",
      "description": "The continuation token, which is used to page through large result sets. Provide this value in a subsequent request to return the next page of results. This field will be empty if there aren't any additional results."
+    }
+   }
+  },
+  "Metadata": {
+   "id": "Metadata",
+   "type": "object",
+   "description": "Metadata describes a single piece of variant call metadata. These data include a top level key and either a single value string (value) or a list of key-value pairs (info.) Value and info are mutually exclusive.",
+   "externalTypeName": "cloud.genomics.varstore.Metadata",
+   "properties": {
+    "description": {
+     "type": "string",
+     "description": "A textual description of this metadata."
+    },
+    "id": {
+     "type": "string",
+     "description": "User-provided ID field, not enforced by this API. Two or more pieces of structured metadata with identical id and key fields are considered equivalent."
+    },
+    "info": {
+     "type": "object",
+     "description": "Remaining structured metadata key-value pairs.",
+     "additionalProperties": {
+      "type": "array",
+      "description": "A string which maps to an array of values.",
+      "items": {
+       "type": "string"
+      }
+     }
+    },
+    "key": {
+     "type": "string",
+     "description": "The top-level key."
+    },
+    "number": {
+     "type": "string",
+     "description": "The number of values that can be included in a field described by this metadata."
+    },
+    "type": {
+     "type": "string",
+     "description": "The type of data. Possible types include: Integer, Float, Flag, Character, and String."
+    },
+    "value": {
+     "type": "string",
+     "description": "The value field for simple metadata"
     }
    }
   },
@@ -875,17 +924,17 @@
    "properties": {
     "createdAfter": {
      "type": "string",
-     "description": "If specified, only jobs created on or after this date, given in milliseconds since Unix epoch, will be listed.",
+     "description": "If specified, only jobs created on or after this date, given in milliseconds since Unix epoch, will be returned.",
      "format": "int64"
     },
     "createdBefore": {
      "type": "string",
-     "description": "If specified, only jobs created prior to this date, given in milliseconds since Unix epoch, will be listed.",
+     "description": "If specified, only jobs created prior to this date, given in milliseconds since Unix epoch, will be returned.",
      "format": "int64"
     },
     "maxResults": {
      "type": "string",
-     "description": "Specifies the number of results to return in a single page. If unspecified, it will default to 128. The maximum value is 256.",
+     "description": "Specifies the number of results to return in a single page. Defaults to 128. The maximum value is 256.",
      "format": "uint64"
     },
     "pageToken": {
@@ -894,12 +943,12 @@
     },
     "projectId": {
      "type": "string",
-     "description": "The Google Developers Console project number to which the jobs belong.",
+     "description": "Required. Only return jobs which belong to this Google Developers Console project. Only accepts project numbers.",
      "format": "int64"
     },
     "status": {
      "type": "array",
-     "description": "An optional list of Status values to filter the listing.",
+     "description": "Only return jobs which have a matching status.",
      "items": {
       "type": "string",
       "enum": [
@@ -970,7 +1019,7 @@
     },
     "sequenceName": {
      "type": "string",
-     "description": "Restricts the results to a particular reference sequence such as '1', 'chr1', or 'X'. The set of valid references sequences depends on the readsets specified. If set to \"\", only unmapped Reads are returned."
+     "description": "Restricts the results to a particular reference sequence such as '1', 'chr1', or 'X'. The set of valid references sequences depends on the readsets specified. If set to \"*\", only unmapped Reads are returned."
     },
     "sequenceStart": {
      "type": "string",
@@ -1437,7 +1486,7 @@
       },
       "projectId": {
        "type": "string",
-       "description": "Only return datasets which belong to this Google Developers Console project.",
+       "description": "Only return datasets which belong to this Google Developers Console project. Only accepts project numbers.",
        "format": "int64",
        "location": "query"
       }
@@ -1558,7 +1607,7 @@
      "id": "genomics.jobs.search",
      "path": "jobs/search",
      "httpMethod": "POST",
-     "description": "Searches jobs within a project.",
+     "description": "Gets a list of jobs matching the criteria.",
      "request": {
       "$ref": "SearchJobsRequest"
      },
@@ -1570,26 +1619,6 @@
   },
   "reads": {
    "methods": {
-    "get": {
-     "id": "genomics.reads.get",
-     "path": "reads/{readId}",
-     "httpMethod": "GET",
-     "description": "Gets a read by ID.",
-     "parameters": {
-      "readId": {
-       "type": "string",
-       "description": "The ID of the read.",
-       "required": true,
-       "location": "path"
-      }
-     },
-     "parameterOrder": [
-      "readId"
-     ],
-     "response": {
-      "$ref": "Read"
-     }
-    },
     "search": {
      "id": "genomics.reads.search",
      "path": "reads/search",
@@ -1610,18 +1639,6 @@
   },
   "readsets": {
    "methods": {
-    "create": {
-     "id": "genomics.readsets.create",
-     "path": "readsets",
-     "httpMethod": "POST",
-     "description": "Creates a new readset.",
-     "request": {
-      "$ref": "Readset"
-     },
-     "response": {
-      "$ref": "Readset"
-     }
-    },
     "delete": {
      "id": "genomics.readsets.delete",
      "path": "readsets/{readsetId}",
@@ -1706,7 +1723,7 @@
      "parameters": {
       "readsetId": {
        "type": "string",
-       "description": "The ID of the readset to be updated.",
+       "description": "The ID of the readset to be updated. The caller must have WRITE permissions to the dataset associated with this readset.",
        "required": true,
        "location": "path"
       }
@@ -1748,7 +1765,7 @@
      "parameters": {
       "readsetId": {
        "type": "string",
-       "description": "The ID of the readset to be updated.",
+       "description": "The ID of the readset to be updated. The caller must have WRITE permissions to the dataset associated with this readset.",
        "required": true,
        "location": "path"
       }

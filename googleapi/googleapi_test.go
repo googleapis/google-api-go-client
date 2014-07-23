@@ -103,6 +103,100 @@ func TestSetOpaque(t *testing.T) {
 	}
 }
 
+type ExpandTest struct {
+	in         string
+	expansions map[string]string
+	want       string
+}
+
+var expandTests = []ExpandTest{
+	// no expansions
+	{
+		"http://www.golang.org/",
+		map[string]string{},
+		"http://www.golang.org/",
+	},
+	// one expansion, no escaping
+	{
+		"http://www.golang.org/{bucket}/delete",
+		map[string]string{
+			"bucket": "red",
+		},
+		"http://www.golang.org/red/delete",
+	},
+	// one expansion, with hex escapes
+	{
+		"http://www.golang.org/{bucket}/delete",
+		map[string]string{
+			"bucket": "red/blue",
+		},
+		"http://www.golang.org/red%2Fblue/delete",
+	},
+	// one expansion, with space
+	{
+		"http://www.golang.org/{bucket}/delete",
+		map[string]string{
+			"bucket": "red or blue",
+		},
+		"http://www.golang.org/red%20or%20blue/delete",
+	},
+	// expansion not found
+	{
+		"http://www.golang.org/{object}/delete",
+		map[string]string{
+			"bucket": "red or blue",
+		},
+		"http://www.golang.org/{object}/delete",
+	},
+	// multiple expansions
+	{
+		"http://www.golang.org/{one}/{two}/{three}/get",
+		map[string]string{
+			"one":   "ONE",
+			"two":   "TWO",
+			"three": "THREE",
+		},
+		"http://www.golang.org/ONE/TWO/THREE/get",
+	},
+	// utf-8 characters
+	{
+		"http://www.golang.org/{bucket}/get",
+		map[string]string{
+			"bucket": "£100",
+		},
+		"http://www.golang.org/%C2%A3100/get",
+	},
+	// punctuations
+	{
+		"http://www.golang.org/{bucket}/get",
+		map[string]string{
+			"bucket": `/\@:,.`,
+		},
+		"http://www.golang.org/%2F%5C%40%3A%2C./get",
+	},
+	// mis-matched brackets
+	{
+		"http://www.golang.org/{bucket/get",
+		map[string]string{
+			"bucket": "red",
+		},
+		"http://www.golang.org/{bucket/get",
+	},
+}
+
+func TestExpand(t *testing.T) {
+	for i, test := range expandTests {
+		u := url.URL{
+			Path: test.in,
+		}
+		Expand(&u, test.expansions)
+		got := u.Path
+		if got != test.want {
+			t.Errorf("got %q expected %q in test %d", got, test.want, i+1)
+		}
+	}
+}
+
 type CheckResponseTest struct {
 	in       *http.Response
 	bodyText string

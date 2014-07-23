@@ -1233,11 +1233,17 @@ func (meth *Method) generateCode() {
 	pn("req, _ := http.NewRequest(%q, urls, body)", httpMethod)
 	// Replace param values after NewRequest to avoid reencoding them.
 	// E.g. Cloud Storage API requires '%2F' in entity param to be kept, but url.Parse replaces it with '/'.
-	for _, arg := range args.forLocation("path") {
-		pn(`req.URL.Path = strings.Replace(req.URL.Path, "{%s}", %s, 1)`, arg.apiname, arg.cleanExpr("c."))
+	argsForLocation := args.forLocation("path")
+	if len(argsForLocation) > 0 {
+		pn(`googleapi.Expand(req.URL, map[string]string{`)
+		for _, arg := range argsForLocation {
+			pn(`"%s": %s,`, arg.apiname, arg.exprAsString("c."))
+		}
+		pn(`})`)
+	} else {
+		// Just call SetOpaque since we aren't calling Expand
+		pn(`googleapi.SetOpaque(req.URL)`)
 	}
-	// Set opaque to avoid encoding of the parameters in the URL path.
-	pn("googleapi.SetOpaque(req.URL)")
 
 	if meth.supportsMedia() {
 		pn("if hasMedia_ { req.ContentLength = contentLength_ }")
@@ -1408,13 +1414,13 @@ func (a *argument) String() string {
 	return a.goname + " " + a.gotype
 }
 
-func (a *argument) cleanExpr(prefix string) string {
+func (a *argument) exprAsString(prefix string) string {
 	switch a.gotype {
 	case "[]string":
 		log.Printf("TODO(bradfitz): only including the first parameter in path query.")
-		return "url.QueryEscape(" + prefix + a.goname + "[0])"
+		return prefix + a.goname + `[0]`
 	case "string":
-		return "url.QueryEscape(" + prefix + a.goname + ")"
+		return prefix + a.goname
 	case "integer", "int64":
 		return "strconv.FormatInt(" + prefix + a.goname + ", 10)"
 	case "uint64":

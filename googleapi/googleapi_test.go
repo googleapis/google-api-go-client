@@ -291,3 +291,61 @@ func TestCheckResponse(t *testing.T) {
 		}
 	}
 }
+
+type VariantPoint struct {
+	Type        string
+	Coordinates []float64
+}
+
+type VariantTest struct {
+	in     map[string]interface{}
+	result bool
+	want   VariantPoint
+}
+
+var coords = []interface{}{1.0, 2.0}
+
+var variantTests = []VariantTest{
+	{
+		in: map[string]interface{}{
+			"type":        "Point",
+			"coordinates": coords,
+		},
+		result: true,
+		want: VariantPoint{
+			Type:        "Point",
+			Coordinates: []float64{1.0, 2.0},
+		},
+	},
+	{
+		in: map[string]interface{}{
+			"type":  "Point",
+			"bogus": coords,
+		},
+		result: true,
+		want: VariantPoint{
+			Type: "Point",
+		},
+	},
+}
+
+func TestVariantType(t *testing.T) {
+	for _, test := range variantTests {
+		if g := VariantType(test.in); g != test.want.Type {
+			t.Errorf("VariantType(%v): got %v, want %v", test.in, g, test.want.Type)
+		}
+	}
+}
+
+func TestConvertVariant(t *testing.T) {
+	for _, test := range variantTests {
+		g := VariantPoint{}
+		r := ConvertVariant(test.in, &g)
+		if r != test.result {
+			t.Errorf("ConvertVariant(%v): got %v, want %v", test.in, r, test.result)
+		}
+		if !reflect.DeepEqual(g, test.want) {
+			t.Errorf("ConvertVariant(%v): got %v, want %v", test.in, g, test.want)
+		}
+	}
+}

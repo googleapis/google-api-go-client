@@ -355,3 +355,23 @@ func CloseBody(res *http.Response) {
 	res.Body.Close()
 
 }
+
+// VariantType returns the type name of the given variant.
+// If the map doesn't contain the named key or the value is not a []interface{}, "" is returned.
+// This is used to support "variant" APIs that can return one of a number of different types.
+func VariantType(t map[string]interface{}) string {
+	s, _ := t["type"].(string)
+	return s
+}
+
+// ConvertVariant uses the JSON encoder/decoder to fill in the struct 'dst' with the fields found in variant 'v'.
+// This is used to support "variant" APIs that can return one of a number of different types.
+// It reports whether the conversion was successful.
+func ConvertVariant(v map[string]interface{}, dst interface{}) bool {
+	var buf bytes.Buffer
+	err := json.NewEncoder(&buf).Encode(v)
+	if err != nil {
+		return false
+	}
+	return json.Unmarshal(buf.Bytes(), dst) == nil
+}

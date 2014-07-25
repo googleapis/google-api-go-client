@@ -372,7 +372,7 @@ type DisplayRule struct {
 
 type Feature struct {
 	// Geometry: The geometry member of this Feature.
-	Geometry *GeoJsonGeometry `json:"geometry,omitempty"`
+	Geometry GeoJsonGeometry `json:"geometry,omitempty"`
 
 	// Properties: Key/value pairs of this Feature.
 	Properties *GeoJsonProperties `json:"properties,omitempty"`
@@ -440,13 +440,72 @@ type Filter struct {
 	Value interface{} `json:"value,omitempty"`
 }
 
-type GeoJsonGeometry struct {
+type GeoJsonGeometry map[string]interface{}
+
+func (t GeoJsonGeometry) Type() string {
+	return googleapi.VariantType(t)
+}
+
+func (t GeoJsonGeometry) GeometryCollection() (r GeoJsonGeometryCollection, ok bool) {
+	if t.Type() != "GeometryCollection" {
+		return r, false
+	}
+	ok = googleapi.ConvertVariant(map[string]interface{}(t), &r)
+	return r, ok
+}
+
+func (t GeoJsonGeometry) LineString() (r GeoJsonLineString, ok bool) {
+	if t.Type() != "LineString" {
+		return r, false
+	}
+	ok = googleapi.ConvertVariant(map[string]interface{}(t), &r)
+	return r, ok
+}
+
+func (t GeoJsonGeometry) MultiLineString() (r GeoJsonMultiLineString, ok bool) {
+	if t.Type() != "MultiLineString" {
+		return r, false
+	}
+	ok = googleapi.ConvertVariant(map[string]interface{}(t), &r)
+	return r, ok
+}
+
+func (t GeoJsonGeometry) MultiPoint() (r GeoJsonMultiPoint, ok bool) {
+	if t.Type() != "MultiPoint" {
+		return r, false
+	}
+	ok = googleapi.ConvertVariant(map[string]interface{}(t), &r)
+	return r, ok
+}
+
+func (t GeoJsonGeometry) MultiPolygon() (r GeoJsonMultiPolygon, ok bool) {
+	if t.Type() != "MultiPolygon" {
+		return r, false
+	}
+	ok = googleapi.ConvertVariant(map[string]interface{}(t), &r)
+	return r, ok
+}
+
+func (t GeoJsonGeometry) Point() (r GeoJsonPoint, ok bool) {
+	if t.Type() != "Point" {
+		return r, false
+	}
+	ok = googleapi.ConvertVariant(map[string]interface{}(t), &r)
+	return r, ok
+}
+
+func (t GeoJsonGeometry) Polygon() (r GeoJsonPolygon, ok bool) {
+	if t.Type() != "Polygon" {
+		return r, false
+	}
+	ok = googleapi.ConvertVariant(map[string]interface{}(t), &r)
+	return r, ok
 }
 
 type GeoJsonGeometryCollection struct {
 	// Geometries: An array of geometry objects. There must be at least 2
 	// different types of geometries in the array.
-	Geometries []*GeoJsonGeometry `json:"geometries,omitempty"`
+	Geometries []GeoJsonGeometry `json:"geometries,omitempty"`
 
 	// Type: Identifies this object as a GeoJsonGeometryCollection.
 	Type string `json:"type,omitempty"`
@@ -651,7 +710,7 @@ type Map struct {
 	Bbox []float64 `json:"bbox,omitempty"`
 
 	// Contents: The contents of this Map.
-	Contents []*MapItem `json:"contents,omitempty"`
+	Contents []MapItem `json:"contents,omitempty"`
 
 	// CreationTime: The creation time of this map. The value is an RFC 3339
 	// formatted date-time value (e.g. 1970-01-01T00:00:00Z).
@@ -707,7 +766,7 @@ type Map struct {
 }
 
 type MapFolder struct {
-	Contents []*MapItem `json:"contents,omitempty"`
+	Contents []MapItem `json:"contents,omitempty"`
 
 	// DefaultViewport: An array of four numbers (west, south, east, north)
 	// which defines the rectangular bounding box of the default viewport.
@@ -732,7 +791,34 @@ type MapFolder struct {
 	Visibility string `json:"visibility,omitempty"`
 }
 
-type MapItem struct {
+type MapItem map[string]interface{}
+
+func (t MapItem) Type() string {
+	return googleapi.VariantType(t)
+}
+
+func (t MapItem) Folder() (r MapFolder, ok bool) {
+	if t.Type() != "Folder" {
+		return r, false
+	}
+	ok = googleapi.ConvertVariant(map[string]interface{}(t), &r)
+	return r, ok
+}
+
+func (t MapItem) KmlLink() (r MapKmlLink, ok bool) {
+	if t.Type() != "KmlLink" {
+		return r, false
+	}
+	ok = googleapi.ConvertVariant(map[string]interface{}(t), &r)
+	return r, ok
+}
+
+func (t MapItem) Layer() (r MapLayer, ok bool) {
+	if t.Type() != "Layer" {
+		return r, false
+	}
+	ok = googleapi.ConvertVariant(map[string]interface{}(t), &r)
+	return r, ok
 }
 
 type MapKmlLink struct {

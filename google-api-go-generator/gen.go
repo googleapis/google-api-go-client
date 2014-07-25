@@ -459,7 +459,7 @@ func (a *API) GenerateCode() ([]byte, error) {
 	a.PopulateSchemas()
 
 	for _, name := range a.sortedSchemaNames() {
-		a.schemas[name].writeSchemaCode()
+		a.schemas[name].writeSchemaCode(a)
 	}
 
 	for _, meth := range a.APIMethods() {
@@ -633,6 +633,9 @@ func (t *Type) AsGo() string {
 			if s == nil {
 				panic(fmt.Sprintf("in Type.AsGo, _apiName of %q didn't point to a valid schema; json: %s",
 					apiName, prettyJSON(t.m)))
+			}
+			if v := jobj(s.m, "variant"); v != nil {
+				return s.GoName()
 			}
 			return "*" + s.GoName()
 		}
@@ -873,9 +876,9 @@ func (s *Schema) GoReturnType() string {
 	return s.goReturnType
 }
 
-func (s *Schema) writeSchemaCode() {
+func (s *Schema) writeSchemaCode(api *API) {
 	if s.Type().IsStruct() && !s.Type().IsMap() {
-		s.writeSchemaStruct()
+		s.writeSchemaStruct(api)
 		return
 	}
 
@@ -907,7 +910,44 @@ func (s *Schema) writeSchemaCode() {
 	panicf("writeSchemaCode: unsupported type for schema %q", s.apiName)
 }
 
-func (s *Schema) writeSchemaStruct() {
+func (s *Schema) writeVariant(api *API, v map[string]interface{}) {
+	s.api.p("\ntype %s map[string]interface{}\n\n", s.GoName())
+
+	// Write out the "Type" method that identifies the variant type.
+	s.api.p("func (t %s) Type() string {\n", s.GoName())
+	s.api.p("  return googleapi.VariantType(t)\n")
+	s.api.p("}\n\n")
+
+	// Write out helper methods to convert each possible variant.
+	for _, m := range jobjlist(v, "map") {
+		val := jstr(m, "type_value")
+		reftype := jstr(m, "$ref")
+		if val == "" && reftype == "" {
+			log.Printf("TODO variant %s ref %s not yet supported.", val, reftype)
+			continue
+		}
+
+		_, ok := api.schemas[reftype]
+		if !ok {
+			log.Printf("TODO variant %s ref %s not yet supported.", val, reftype)
+			continue
+		}
+
+		s.api.p("func (t %s) %s() (r %s, ok bool) {\n", s.GoName(), initialCap(val), reftype)
+		s.api.p("  if t.Type() != %q {\n", initialCap(val))
+		s.api.p("    return r, false\n")
+		s.api.p("  }\n")
+		s.api.p("  ok = googleapi.ConvertVariant(map[string]interface{}(t), &r)\n")
+		s.api.p("  return r, ok\n")
+		s.api.p("}\n\n")
+	}
+}
+
+func (s *Schema) writeSchemaStruct(api *API) {
+	if v := jobj(s.m, "variant"); v != nil {
+		s.writeVariant(api, v)
+		return
+	}
 	// TODO: description
 	s.api.p("\ntype %s struct {\n", s.GoName())
 	for i, p := range s.properties() {
@@ -1640,6 +1680,18 @@ func jobj(m map[string]interface{}, key string) map[string]interface{} {
 		return m
 	}
 	return nil
+}
+
+func jobjlist(m map[string]interface{}, key string) []map[string]interface{} {
+	si, ok := m[key].([]interface{})
+	if !ok {
+		return nil
+	}
+	var sl []map[string]interface{}
+	for _, si := range si {
+		sl = append(sl, si.(map[string]interface{}))
+	}
+	return sl
 }
 
 func jstrlist(m map[string]interface{}, key string) []string {

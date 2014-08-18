@@ -18,6 +18,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"regexp"
 	"sort"
 	"strings"
 	"unicode"
@@ -213,10 +214,19 @@ func apiFromFile(file string) (*API, error) {
 func writeFile(file string, contents []byte) error {
 	// Don't write it if the contents are identical.
 	existing, err := ioutil.ReadFile(file)
-	if err == nil && bytes.Equal(existing, contents) {
+	if err == nil && (bytes.Equal(existing, contents) || basicallyEqual(existing, contents)) {
 		return nil
 	}
 	return ioutil.WriteFile(file, contents, 0644)
+}
+
+var etagLine = regexp.MustCompile(`(?m)^\s+"etag": ".+\n`)
+
+// basicallyEqual reports whether a and b are equal except for boring
+// differences like ETag updates.
+func basicallyEqual(a, b []byte) bool {
+	return etagLine.Match(a) && etagLine.Match(b) &&
+		bytes.Equal(etagLine.ReplaceAll(a, nil), etagLine.ReplaceAll(b, nil))
 }
 
 func slurpURL(urlStr string) []byte {

@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/Jr_9O66ndvAx3IBfHAhD2JQcRu8\"",
+ "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/zUJIqvQrUB5voAp2b0g24Yt-OQM\"",
  "discoveryVersion": "v1",
  "id": "drive:v2",
  "name": "drive",
  "version": "v2",
- "revision": "20140714",
+ "revision": "20140811",
  "title": "Drive API",
  "description": "The API to interact with Drive.",
  "ownerDomain": "google.com",
@@ -879,7 +879,7 @@
     },
     "appDataContents": {
      "type": "boolean",
-     "description": "Whether this file is in the appdata folder."
+     "description": "Whether this file is in the Application Data folder."
     },
     "copyable": {
      "type": "boolean",

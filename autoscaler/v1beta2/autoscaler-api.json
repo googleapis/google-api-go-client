@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/FBfZWLA1nh_aAuB5Tug73G1xJqs\"",
+ "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/FJuvjX0f1VGUeRzYl7v6jwJPstg\"",
  "discoveryVersion": "v1",
  "id": "autoscaler:v1beta2",
  "name": "autoscaler",
  "version": "v1beta2",
- "revision": "20140710",
+ "revision": "20140731",
  "title": "Google Compute Engine Autoscaler API",
  "description": "The Google Compute Engine Autoscaler API provides autoscaling for groups of Cloud VMs.",
  "ownerDomain": "google.com",
@@ -147,7 +147,18 @@
     },
     "cpuUtilization": {
      "$ref": "AutoscalingPolicyCpuUtilization",
-     "description": "Configuration parameters of CPU based autoscaling policy."
+     "description": "Exactly one utilization policy should be provided. Configuration parameters of CPU based autoscaling policy."
+    },
+    "customMetricUtilizations": {
+     "type": "array",
+     "description": "Configuration parameters of autoscaling based on custom metric.",
+     "items": {
+      "$ref": "AutoscalingPolicyCustomMetricUtilization"
+     }
+    },
+    "loadBalancingUtilization": {
+     "$ref": "AutoscalingPolicyLoadBalancingUtilization",
+     "description": "Configuration parameters of autoscaling based on load balancer."
     },
     "maxNumReplicas": {
      "type": "integer",
@@ -168,7 +179,35 @@
    "properties": {
     "utilizationTarget": {
      "type": "number",
-     "description": "The target utilization that the Autoscaler should maintain. Must be a float value between (0, 1]. If not defined, the default is 0.8.",
+     "description": "The target utilization that the Autoscaler should maintain. It is represented as a fraction of used cores. For example: 6 cores used in 8-core VM are represented here as 0.75. Must be a float value between (0, 1]. If not defined, the default is 0.8.",
+     "format": "double"
+    }
+   }
+  },
+  "AutoscalingPolicyCustomMetricUtilization": {
+   "id": "AutoscalingPolicyCustomMetricUtilization",
+   "type": "object",
+   "description": "Custom utilization metric policy.",
+   "properties": {
+    "metric": {
+     "type": "string",
+     "description": "Identifier of the metric. It should be a Cloud Monitoring metric. The metric can not have negative values. The metric should be an utilization metric (increasing number of VMs handling requests x times should reduce average value of the metric roughly x times). For example you could use: compute.googleapis.com/instance/network/received_bytes_count."
+    },
+    "utilizationTarget": {
+     "type": "number",
+     "description": "Target value of the metric which Autoscaler should maintain. Must be a positive value.",
+     "format": "double"
+    }
+   }
+  },
+  "AutoscalingPolicyLoadBalancingUtilization": {
+   "id": "AutoscalingPolicyLoadBalancingUtilization",
+   "type": "object",
+   "description": "Load balancing utilization policy.",
+   "properties": {
+    "utilizationTarget": {
+     "type": "number",
+     "description": "Fraction of backend capacity utilization (set in HTTP load balancing configuration) that Autoscaler should maintain. Must be a positive float value. If not defined, the default is 0.8. For example if your maxRatePerInstance capacity (in HTTP Load Balancing configuration) is set at 10 and you would like to keep number of instances such that each instance receives 7 QPS on average, set this to 0.7.",
      "format": "double"
     }
    }

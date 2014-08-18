@@ -369,6 +369,9 @@ type Page struct {
 	// Content: The body content of this Page, in HTML.
 	Content string `json:"content,omitempty"`
 
+	// Etag: Etag of the resource.
+	Etag string `json:"etag,omitempty"`
+
 	// Id: The identifier for this resource.
 	Id string `json:"id,omitempty"`
 
@@ -459,6 +462,9 @@ type Post struct {
 
 	// CustomMetaData: The JSON meta-data for the Post.
 	CustomMetaData string `json:"customMetaData,omitempty"`
+
+	// Etag: Etag of the resource.
+	Etag string `json:"etag,omitempty"`
 
 	// Id: The identifier of this Post.
 	Id string `json:"id,omitempty"`
@@ -2488,6 +2494,156 @@ func (c *PagesPatchCall) Do() (*Page, error) {
 	//   "request": {
 	//     "$ref": "Page"
 	//   },
+	//   "response": {
+	//     "$ref": "Page"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/blogger"
+	//   ]
+	// }
+
+}
+
+// method id "blogger.pages.publish":
+
+type PagesPublishCall struct {
+	s      *Service
+	blogId string
+	pageId string
+	opt_   map[string]interface{}
+}
+
+// Publish: Publishes a draft page.
+func (r *PagesService) Publish(blogId string, pageId string) *PagesPublishCall {
+	c := &PagesPublishCall{s: r.s, opt_: make(map[string]interface{})}
+	c.blogId = blogId
+	c.pageId = pageId
+	return c
+}
+
+func (c *PagesPublishCall) Do() (*Page, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/pages/{pageId}/publish")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"blogId": c.blogId,
+		"pageId": c.pageId,
+	})
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Page
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Publishes a draft page.",
+	//   "httpMethod": "POST",
+	//   "id": "blogger.pages.publish",
+	//   "parameterOrder": [
+	//     "blogId",
+	//     "pageId"
+	//   ],
+	//   "parameters": {
+	//     "blogId": {
+	//       "description": "The ID of the blog.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageId": {
+	//       "description": "The ID of the page.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "blogs/{blogId}/pages/{pageId}/publish",
+	//   "response": {
+	//     "$ref": "Page"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/blogger"
+	//   ]
+	// }
+
+}
+
+// method id "blogger.pages.revert":
+
+type PagesRevertCall struct {
+	s      *Service
+	blogId string
+	pageId string
+	opt_   map[string]interface{}
+}
+
+// Revert: Revert a published or scheduled page to draft state.
+func (r *PagesService) Revert(blogId string, pageId string) *PagesRevertCall {
+	c := &PagesRevertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.blogId = blogId
+	c.pageId = pageId
+	return c
+}
+
+func (c *PagesRevertCall) Do() (*Page, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/pages/{pageId}/revert")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"blogId": c.blogId,
+		"pageId": c.pageId,
+	})
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Page
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Revert a published or scheduled page to draft state.",
+	//   "httpMethod": "POST",
+	//   "id": "blogger.pages.revert",
+	//   "parameterOrder": [
+	//     "blogId",
+	//     "pageId"
+	//   ],
+	//   "parameters": {
+	//     "blogId": {
+	//       "description": "The ID of the blog.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageId": {
+	//       "description": "The ID of the page.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "blogs/{blogId}/pages/{pageId}/revert",
 	//   "response": {
 	//     "$ref": "Page"
 	//   },

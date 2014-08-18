@@ -1,10 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/cp0KDkMehu3SqUw99RgMeyF5zdU\"",
+ "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/i_qPP_WIS-3-N2T8CIrQnHeWSiE\"",
  "discoveryVersion": "v1",
  "id": "pubsub:v1beta1",
  "name": "pubsub",
  "version": "v1beta1",
+ "revision": "20140723",
  "title": "Cloud Pub/Sub API",
  "description": "Provides reliable, many-to-many, asynchronous messaging between applications.",
  "ownerDomain": "google.com",
@@ -111,10 +112,12 @@
     },
     "numValue": {
      "type": "string",
+     "description": "An integer value.",
      "format": "int64"
     },
     "strValue": {
-     "type": "string"
+     "type": "string",
+     "description": "A string value."
     }
    }
   },

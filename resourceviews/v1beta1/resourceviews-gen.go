@@ -44,6 +44,12 @@ const (
 	// View and manage your data across Google Cloud Platform services
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
+	// View and manage your Google Compute Engine resources
+	ComputeScope = "https://www.googleapis.com/auth/compute"
+
+	// View your Google Compute Engine resources
+	ComputeReadonlyScope = "https://www.googleapis.com/auth/compute.readonly"
+
 	// View and manage your Google Cloud Platform management resources and
 	// deployment status information
 	NdevCloudmanScope = "https://www.googleapis.com/auth/ndev.cloudman"
@@ -136,7 +142,7 @@ type ResourceView struct {
 	// Description: The detailed description of the resource view.
 	Description string `json:"description,omitempty"`
 
-	// Id: The ID of the resource view. For internal use only.
+	// Id: [Output Only] The ID of the resource view.
 	Id string `json:"id,omitempty"`
 
 	// Kind: Type of the resource.
@@ -172,7 +178,7 @@ type ZoneViewsInsertResponse struct {
 }
 
 type ZoneViewsListResourcesResponse struct {
-	// Members: The resources in the view.
+	// Members: The full URL of resources in the view.
 	Members []string `json:"members,omitempty"`
 
 	// NextPageToken: A token used for pagination.
@@ -277,6 +283,7 @@ func (c *RegionViewsAddresourcesCall) Do() error {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/ndev.cloudman"
 	//   ]
 	// }
@@ -356,6 +363,7 @@ func (c *RegionViewsDeleteCall) Do() error {
 	//   "path": "{projectName}/regions/{region}/resourceViews/{resourceViewName}",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/ndev.cloudman"
 	//   ]
 	// }
@@ -442,6 +450,8 @@ func (c *RegionViewsGetCall) Do() (*ResourceView, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly",
 	//     "https://www.googleapis.com/auth/ndev.cloudman",
 	//     "https://www.googleapis.com/auth/ndev.cloudman.readonly"
 	//   ]
@@ -530,6 +540,7 @@ func (c *RegionViewsInsertCall) Do() (*RegionViewsInsertResponse, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/ndev.cloudman"
 	//   ]
 	// }
@@ -554,8 +565,8 @@ func (r *RegionViewsService) List(projectName string, region string) *RegionView
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Acceptable values are 0 to 500, inclusive.
-// (Default: 50)
+// results to be returned. Acceptable values are 0 to 5000, inclusive.
+// (Default: 5000)
 func (c *RegionViewsListCall) MaxResults(maxResults int64) *RegionViewsListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -611,11 +622,11 @@ func (c *RegionViewsListCall) Do() (*RegionViewsListResponse, error) {
 	//   ],
 	//   "parameters": {
 	//     "maxResults": {
-	//       "default": "50",
-	//       "description": "Maximum count of results to be returned. Acceptable values are 0 to 500, inclusive. (Default: 50)",
+	//       "default": "5000",
+	//       "description": "Maximum count of results to be returned. Acceptable values are 0 to 5000, inclusive. (Default: 5000)",
 	//       "format": "int32",
 	//       "location": "query",
-	//       "maximum": "500",
+	//       "maximum": "5000",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -643,6 +654,8 @@ func (c *RegionViewsListCall) Do() (*RegionViewsListResponse, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly",
 	//     "https://www.googleapis.com/auth/ndev.cloudman",
 	//     "https://www.googleapis.com/auth/ndev.cloudman.readonly"
 	//   ]
@@ -670,8 +683,8 @@ func (r *RegionViewsService) Listresources(projectName string, region string, re
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Acceptable values are 0 to 500, inclusive.
-// (Default: 50)
+// results to be returned. Acceptable values are 0 to 5000, inclusive.
+// (Default: 5000)
 func (c *RegionViewsListresourcesCall) MaxResults(maxResults int64) *RegionViewsListresourcesCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -729,11 +742,11 @@ func (c *RegionViewsListresourcesCall) Do() (*RegionViewsListResourcesResponse, 
 	//   ],
 	//   "parameters": {
 	//     "maxResults": {
-	//       "default": "50",
-	//       "description": "Maximum count of results to be returned. Acceptable values are 0 to 500, inclusive. (Default: 50)",
+	//       "default": "5000",
+	//       "description": "Maximum count of results to be returned. Acceptable values are 0 to 5000, inclusive. (Default: 5000)",
 	//       "format": "int32",
 	//       "location": "query",
-	//       "maximum": "500",
+	//       "maximum": "5000",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -767,6 +780,8 @@ func (c *RegionViewsListresourcesCall) Do() (*RegionViewsListResourcesResponse, 
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly",
 	//     "https://www.googleapis.com/auth/ndev.cloudman",
 	//     "https://www.googleapis.com/auth/ndev.cloudman.readonly"
 	//   ]
@@ -858,6 +873,7 @@ func (c *RegionViewsRemoveresourcesCall) Do() error {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/ndev.cloudman"
 	//   ]
 	// }
@@ -948,6 +964,7 @@ func (c *ZoneViewsAddresourcesCall) Do() error {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/ndev.cloudman"
 	//   ]
 	// }
@@ -1027,6 +1044,7 @@ func (c *ZoneViewsDeleteCall) Do() error {
 	//   "path": "{projectName}/zones/{zone}/resourceViews/{resourceViewName}",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/ndev.cloudman"
 	//   ]
 	// }
@@ -1113,6 +1131,8 @@ func (c *ZoneViewsGetCall) Do() (*ResourceView, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly",
 	//     "https://www.googleapis.com/auth/ndev.cloudman",
 	//     "https://www.googleapis.com/auth/ndev.cloudman.readonly"
 	//   ]
@@ -1201,6 +1221,7 @@ func (c *ZoneViewsInsertCall) Do() (*ZoneViewsInsertResponse, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/ndev.cloudman"
 	//   ]
 	// }
@@ -1225,8 +1246,8 @@ func (r *ZoneViewsService) List(projectName string, zone string) *ZoneViewsListC
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Acceptable values are 0 to 500, inclusive.
-// (Default: 50)
+// results to be returned. Acceptable values are 0 to 5000, inclusive.
+// (Default: 5000)
 func (c *ZoneViewsListCall) MaxResults(maxResults int64) *ZoneViewsListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -1282,11 +1303,11 @@ func (c *ZoneViewsListCall) Do() (*ZoneViewsListResponse, error) {
 	//   ],
 	//   "parameters": {
 	//     "maxResults": {
-	//       "default": "50",
-	//       "description": "Maximum count of results to be returned. Acceptable values are 0 to 500, inclusive. (Default: 50)",
+	//       "default": "5000",
+	//       "description": "Maximum count of results to be returned. Acceptable values are 0 to 5000, inclusive. (Default: 5000)",
 	//       "format": "int32",
 	//       "location": "query",
-	//       "maximum": "500",
+	//       "maximum": "5000",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -1314,6 +1335,8 @@ func (c *ZoneViewsListCall) Do() (*ZoneViewsListResponse, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly",
 	//     "https://www.googleapis.com/auth/ndev.cloudman",
 	//     "https://www.googleapis.com/auth/ndev.cloudman.readonly"
 	//   ]
@@ -1341,8 +1364,8 @@ func (r *ZoneViewsService) Listresources(projectName string, zone string, resour
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Acceptable values are 0 to 500, inclusive.
-// (Default: 50)
+// results to be returned. Acceptable values are 0 to 5000, inclusive.
+// (Default: 5000)
 func (c *ZoneViewsListresourcesCall) MaxResults(maxResults int64) *ZoneViewsListresourcesCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -1400,11 +1423,11 @@ func (c *ZoneViewsListresourcesCall) Do() (*ZoneViewsListResourcesResponse, erro
 	//   ],
 	//   "parameters": {
 	//     "maxResults": {
-	//       "default": "50",
-	//       "description": "Maximum count of results to be returned. Acceptable values are 0 to 500, inclusive. (Default: 50)",
+	//       "default": "5000",
+	//       "description": "Maximum count of results to be returned. Acceptable values are 0 to 5000, inclusive. (Default: 5000)",
 	//       "format": "int32",
 	//       "location": "query",
-	//       "maximum": "500",
+	//       "maximum": "5000",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
@@ -1438,6 +1461,8 @@ func (c *ZoneViewsListresourcesCall) Do() (*ZoneViewsListResourcesResponse, erro
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly",
 	//     "https://www.googleapis.com/auth/ndev.cloudman",
 	//     "https://www.googleapis.com/auth/ndev.cloudman.readonly"
 	//   ]
@@ -1529,6 +1554,7 @@ func (c *ZoneViewsRemoveresourcesCall) Do() error {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/ndev.cloudman"
 	//   ]
 	// }

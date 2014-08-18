@@ -1,13 +1,14 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/LoRIMAKoKzC_3pYWoD_xTQpbqyo\"",
+ "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/AJO4ezPUJU7DJlps27fkVxvYLcI\"",
  "discoveryVersion": "v1",
  "id": "adexchangebuyer:v1.2",
  "name": "adexchangebuyer",
  "canonicalName": "Ad Exchange Buyer",
  "version": "v1.2",
+ "revision": "20140812",
  "title": "Ad Exchange Buyer API",
- "description": "Lets you manage your Ad Exchange Buyer account.",
+ "description": "Accesses your bidding-account information, submits creatives for validation, finds available direct deals, and retrieves performance reports.",
  "ownerDomain": "google.com",
  "ownerName": "Google",
  "icons": {

@@ -761,7 +761,7 @@ type File struct {
 	// editor or viewer.
 	AlternateLink string `json:"alternateLink,omitempty"`
 
-	// AppDataContents: Whether this file is in the appdata folder.
+	// AppDataContents: Whether this file is in the Application Data folder.
 	AppDataContents bool `json:"appDataContents,omitempty"`
 
 	// Copyable: Whether the file can be copied by the current user.

@@ -2107,6 +2107,10 @@ type ScoreSubmission struct {
 	// contain no more than 64 URI-safe characters as defined by section 2.3
 	// of RFC 3986.
 	ScoreTag string `json:"scoreTag,omitempty"`
+
+	// Signature: Signature Values will contain URI-safe characters as
+	// defined by section 2.3 of RFC 3986.
+	Signature string `json:"signature,omitempty"`
 }
 
 type Snapshot struct {

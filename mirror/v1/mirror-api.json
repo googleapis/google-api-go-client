@@ -1,10 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/P_6QqcENeFe4mOWvklmxjxxN35k\"",
+ "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/2W5eGtDxcJnyE2i634mO8QryaN8\"",
  "discoveryVersion": "v1",
  "id": "mirror:v1",
  "name": "mirror",
  "version": "v1",
+ "revision": "20140813",
  "title": "Google Mirror API",
  "description": "API for interacting with Glass users via the timeline.",
  "ownerDomain": "google.com",
@@ -455,7 +456,7 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "The setting's ID. The following IDs are valid:  \n- locale - The key to the user’s language/locale (BCP 47 identifier) that Glassware should use to render localized content."
+     "description": "The setting's ID. The following IDs are valid:  \n- locale - The key to the user’s language/locale (BCP 47 identifier) that Glassware should use to render localized content.  \n- timezone - The key to the user’s current time zone region as defined in the tz database. Example: America/Los_Angeles."
     },
     "kind": {
      "type": "string",
@@ -942,7 +943,7 @@
      "parameters": {
       "id": {
        "type": "string",
-       "description": "The ID of the setting. The following IDs are valid: \n- locale - The key to the user’s language/locale (BCP 47 identifier) that Glassware should use to render localized content.",
+       "description": "The ID of the setting. The following IDs are valid: \n- locale - The key to the user’s language/locale (BCP 47 identifier) that Glassware should use to render localized content. \n- timezone - The key to the user’s current time zone region as defined in the tz database. Example: America/Los_Angeles.",
        "required": true,
        "location": "path"
       }

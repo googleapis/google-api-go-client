@@ -1,10 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"kEk3sFj6Ef5_yR1-H3bAO6qw9mI/Km2zbuxZrnAbsnnH2v5x6aMXpTA\"",
+ "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/v3B487vqAtVVaEae0GJRng5bHjc\"",
  "discoveryVersion": "v1",
  "id": "dfareporting:v1",
  "name": "dfareporting",
  "version": "v1",
+ "revision": "20140707",
  "title": "DFA Reporting API",
  "description": "Lets you create, run and download reports.",
  "ownerDomain": "google.com",

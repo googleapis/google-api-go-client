@@ -1,11 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"5M1WkxnZyJhziV-cW1kdtwscs8E/EnSZa1SHLGZEekBcq4ZvbeJLWQE\"",
+ "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/51VhsU_3cNsKJAzqZ7PMeqX1MEY\"",
  "discoveryVersion": "v1",
  "id": "appstate:v1",
  "name": "appstate",
  "canonicalName": "App State",
  "version": "v1",
+ "revision": "20140812",
  "title": "Google App State API",
  "description": "The Google App State API.",
  "ownerDomain": "google.com",

@@ -437,6 +437,9 @@ type Setting struct {
 	// - locale - The
 	// key to the user’s language/locale (BCP 47 identifier) that
 	// Glassware should use to render localized content.
+	// - timezone - The
+	// key to the user’s current time zone region as defined in the tz
+	// database. Example: America/Los_Angeles.
 	Id string `json:"id,omitempty"`
 
 	// Kind: The type of resource. This is always mirror#setting.
@@ -1368,7 +1371,7 @@ func (c *SettingsGetCall) Do() (*Setting, error) {
 	//   ],
 	//   "parameters": {
 	//     "id": {
-	//       "description": "The ID of the setting. The following IDs are valid: \n- locale - The key to the user’s language/locale (BCP 47 identifier) that Glassware should use to render localized content.",
+	//       "description": "The ID of the setting. The following IDs are valid: \n- locale - The key to the user’s language/locale (BCP 47 identifier) that Glassware should use to render localized content. \n- timezone - The key to the user’s current time zone region as defined in the tz database. Example: America/Los_Angeles.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"

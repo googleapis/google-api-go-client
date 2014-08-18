@@ -1,11 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/vyykkTYdybKkqslsgtBDhFzxmkE\"",
+ "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/3Q4T5rCRWv05dybb5cUgUxFbyZs\"",
  "discoveryVersion": "v1",
  "id": "identitytoolkit:v3",
  "name": "identitytoolkit",
  "canonicalName": "Identity Toolkit",
  "version": "v3",
+ "revision": "20140717",
  "title": "Google Identity Toolkit API",
  "description": "Help the third party sites to implement federated login.",
  "ownerDomain": "google.com",
@@ -76,6 +77,10 @@
      "type": "string",
      "description": "The URI used by the IDP to authenticate the user."
     },
+    "forExistingProvider": {
+     "type": "boolean",
+     "description": "True if the authUri is for user's existing provider."
+    },
     "kind": {
      "type": "string",
      "description": "The fixed string identitytoolkit#CreateAuthUriResponse\".",
@@ -84,13 +89,6 @@
     "providerId": {
      "type": "string",
      "description": "The provider ID of the auth URI."
-    },
-    "providers": {
-     "type": "array",
-     "description": "Existing IDP's for the user.",
-     "items": {
-      "type": "string"
-     }
     },
     "registered": {
      "type": "boolean",
@@ -350,22 +348,27 @@
    "description": "Request to upload user account in batch.",
    "properties": {
     "hashAlgorithm": {
-     "type": "string"
+     "type": "string",
+     "description": "The password hash algorithm."
     },
     "memoryCost": {
      "type": "integer",
+     "description": "Memory cost for hash calculation. Used by scrypt similar algorithms.",
      "format": "int32"
     },
     "rounds": {
      "type": "integer",
+     "description": "Rounds for hash calculation. Used by scrypt and similar algorithms.",
      "format": "int32"
     },
     "saltSeparator": {
      "type": "string",
+     "description": "The salt separator.",
      "format": "byte"
     },
     "signerKey": {
      "type": "string",
+     "description": "The key for to hash the password.",
      "format": "byte"
     },
     "users": {

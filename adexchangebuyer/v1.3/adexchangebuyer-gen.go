@@ -51,6 +51,7 @@ func New(client *http.Client) (*Service, error) {
 	}
 	s := &Service{client: client, BasePath: basePath}
 	s.Accounts = NewAccountsService(s)
+	s.BillingInfo = NewBillingInfoService(s)
 	s.Creatives = NewCreativesService(s)
 	s.DirectDeals = NewDirectDealsService(s)
 	s.PerformanceReport = NewPerformanceReportService(s)
@@ -63,6 +64,8 @@ type Service struct {
 	BasePath string // API endpoint base URL
 
 	Accounts *AccountsService
+
+	BillingInfo *BillingInfoService
 
 	Creatives *CreativesService
 
@@ -79,6 +82,15 @@ func NewAccountsService(s *Service) *AccountsService {
 }
 
 type AccountsService struct {
+	s *Service
+}
+
+func NewBillingInfoService(s *Service) *BillingInfoService {
+	rs := &BillingInfoService{s: s}
+	return rs
+}
+
+type BillingInfoService struct {
 	s *Service
 }
 
@@ -163,6 +175,28 @@ type AccountBidderLocation struct {
 type AccountsList struct {
 	// Items: A list of accounts.
 	Items []*Account `json:"items,omitempty"`
+
+	// Kind: Resource type.
+	Kind string `json:"kind,omitempty"`
+}
+
+type BillingInfo struct {
+	// AccountId: Account id.
+	AccountId int64 `json:"accountId,omitempty"`
+
+	// AccountName: Account name.
+	AccountName string `json:"accountName,omitempty"`
+
+	// BillingId: Billing info id.
+	BillingId []string `json:"billingId,omitempty"`
+
+	// Kind: Resource type.
+	Kind string `json:"kind,omitempty"`
+}
+
+type BillingInfoList struct {
+	// Items: A list of billing info relevant for your account.
+	Items []*BillingInfo `json:"items,omitempty"`
 
 	// Kind: Resource type.
 	Kind string `json:"kind,omitempty"`
@@ -816,6 +850,124 @@ func (c *AccountsUpdateCall) Do() (*Account, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "Account"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer.billingInfo.get":
+
+type BillingInfoGetCall struct {
+	s         *Service
+	accountId int64
+	opt_      map[string]interface{}
+}
+
+// Get: Returns the billing information for one account specified by
+// account ID.
+func (r *BillingInfoService) Get(accountId int64) *BillingInfoGetCall {
+	c := &BillingInfoGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	return c
+}
+
+func (c *BillingInfoGetCall) Do() (*BillingInfo, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "billinginfo/{accountId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"accountId": strconv.FormatInt(c.accountId, 10),
+	})
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *BillingInfo
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the billing information for one account specified by account ID.",
+	//   "httpMethod": "GET",
+	//   "id": "adexchangebuyer.billingInfo.get",
+	//   "parameterOrder": [
+	//     "accountId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "The account id.",
+	//       "format": "int32",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "integer"
+	//     }
+	//   },
+	//   "path": "billinginfo/{accountId}",
+	//   "response": {
+	//     "$ref": "BillingInfo"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer.billingInfo.list":
+
+type BillingInfoListCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// List: Retrieves a list of billing information for all accounts of the
+// authenticated user.
+func (r *BillingInfoService) List() *BillingInfoListCall {
+	c := &BillingInfoListCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+func (c *BillingInfoListCall) Do() (*BillingInfoList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "billinginfo")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *BillingInfoList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a list of billing information for all accounts of the authenticated user.",
+	//   "httpMethod": "GET",
+	//   "id": "adexchangebuyer.billingInfo.list",
+	//   "path": "billinginfo",
+	//   "response": {
+	//     "$ref": "BillingInfoList"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/adexchange.buyer"

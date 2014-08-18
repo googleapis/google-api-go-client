@@ -1,11 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/-0C9cgBAK-bO0svRKvwX8Or1F7I\"",
+ "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/xNgpBqUls7Y0IlwCuXKSgLvZPco\"",
  "discoveryVersion": "v1",
  "id": "sqladmin:v1beta3",
  "name": "sqladmin",
  "canonicalName": "SQL Admin",
  "version": "v1beta3",
+ "revision": "20140507",
  "title": "Cloud SQL Administration API",
  "description": "API for Cloud SQL database instance management.",
  "ownerDomain": "google.com",

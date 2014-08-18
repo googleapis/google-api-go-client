@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/BrZoer-JM4DM9kghr6CWDzq-goM\"",
+ "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/wcehTISyxJwwFY9tLAXuUlmng8s\"",
  "discoveryVersion": "v1",
  "id": "blogger:v3",
  "name": "blogger",
  "version": "v3",
- "revision": "20140711",
+ "revision": "20140730",
  "title": "Blogger API",
  "description": "API for access to the data within Blogger.",
  "ownerDomain": "google.com",
@@ -428,6 +428,10 @@
      "type": "string",
      "description": "The body content of this Page, in HTML."
     },
+    "etag": {
+     "type": "string",
+     "description": "Etag of the resource."
+    },
     "id": {
      "type": "string",
      "description": "The identifier for this resource."
@@ -566,6 +570,10 @@
     "customMetaData": {
      "type": "string",
      "description": "The JSON meta-data for the Post."
+    },
+    "etag": {
+     "type": "string",
+     "description": "Etag of the resource."
     },
     "id": {
      "type": "string",
@@ -1622,6 +1630,66 @@
      "request": {
       "$ref": "Page"
      },
+     "response": {
+      "$ref": "Page"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/blogger"
+     ]
+    },
+    "publish": {
+     "id": "blogger.pages.publish",
+     "path": "blogs/{blogId}/pages/{pageId}/publish",
+     "httpMethod": "POST",
+     "description": "Publishes a draft page.",
+     "parameters": {
+      "blogId": {
+       "type": "string",
+       "description": "The ID of the blog.",
+       "required": true,
+       "location": "path"
+      },
+      "pageId": {
+       "type": "string",
+       "description": "The ID of the page.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "blogId",
+      "pageId"
+     ],
+     "response": {
+      "$ref": "Page"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/blogger"
+     ]
+    },
+    "revert": {
+     "id": "blogger.pages.revert",
+     "path": "blogs/{blogId}/pages/{pageId}/revert",
+     "httpMethod": "POST",
+     "description": "Revert a published or scheduled page to draft state.",
+     "parameters": {
+      "blogId": {
+       "type": "string",
+       "description": "The ID of the blog.",
+       "required": true,
+       "location": "path"
+      },
+      "pageId": {
+       "type": "string",
+       "description": "The ID of the page.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "blogId",
+      "pageId"
+     ],
      "response": {
       "$ref": "Page"
      },

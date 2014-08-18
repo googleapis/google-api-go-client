@@ -1,11 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"kEk3sFj6Ef5_yR1-H3bAO6qw9mI/BJXZBhUL6VndsB8q_Dgu-kIvzFE\"",
+ "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/uMvgRqCygYBIh2d3lXb4f8cUWOw\"",
  "discoveryVersion": "v1",
  "id": "groupsmigration:v1",
  "name": "groupsmigration",
  "canonicalName": "Groups Migration",
  "version": "v1",
+ "revision": "20140416",
  "title": "Groups Migration API",
  "description": "Groups Migration Api.",
  "ownerDomain": "google.com",

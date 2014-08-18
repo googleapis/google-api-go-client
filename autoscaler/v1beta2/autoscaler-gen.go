@@ -134,9 +134,17 @@ type AutoscalingPolicy struct {
 	// seconds.
 	CoolDownPeriodSec int64 `json:"coolDownPeriodSec,omitempty"`
 
-	// CpuUtilization: Configuration parameters of CPU based autoscaling
-	// policy.
+	// CpuUtilization: Exactly one utilization policy should be provided.
+	// Configuration parameters of CPU based autoscaling policy.
 	CpuUtilization *AutoscalingPolicyCpuUtilization `json:"cpuUtilization,omitempty"`
+
+	// CustomMetricUtilizations: Configuration parameters of autoscaling
+	// based on custom metric.
+	CustomMetricUtilizations []*AutoscalingPolicyCustomMetricUtilization `json:"customMetricUtilizations,omitempty"`
+
+	// LoadBalancingUtilization: Configuration parameters of autoscaling
+	// based on load balancer.
+	LoadBalancingUtilization *AutoscalingPolicyLoadBalancingUtilization `json:"loadBalancingUtilization,omitempty"`
 
 	// MaxNumReplicas: The maximum number of replicas that the Autoscaler
 	// can scale up to.
@@ -149,8 +157,34 @@ type AutoscalingPolicy struct {
 
 type AutoscalingPolicyCpuUtilization struct {
 	// UtilizationTarget: The target utilization that the Autoscaler should
-	// maintain. Must be a float value between (0, 1]. If not defined, the
-	// default is 0.8.
+	// maintain. It is represented as a fraction of used cores. For example:
+	// 6 cores used in 8-core VM are represented here as 0.75. Must be a
+	// float value between (0, 1]. If not defined, the default is 0.8.
+	UtilizationTarget float64 `json:"utilizationTarget,omitempty"`
+}
+
+type AutoscalingPolicyCustomMetricUtilization struct {
+	// Metric: Identifier of the metric. It should be a Cloud Monitoring
+	// metric. The metric can not have negative values. The metric should be
+	// an utilization metric (increasing number of VMs handling requests x
+	// times should reduce average value of the metric roughly x times). For
+	// example you could use:
+	// compute.googleapis.com/instance/network/received_bytes_count.
+	Metric string `json:"metric,omitempty"`
+
+	// UtilizationTarget: Target value of the metric which Autoscaler should
+	// maintain. Must be a positive value.
+	UtilizationTarget float64 `json:"utilizationTarget,omitempty"`
+}
+
+type AutoscalingPolicyLoadBalancingUtilization struct {
+	// UtilizationTarget: Fraction of backend capacity utilization (set in
+	// HTTP load balancing configuration) that Autoscaler should maintain.
+	// Must be a positive float value. If not defined, the default is 0.8.
+	// For example if your maxRatePerInstance capacity (in HTTP Load
+	// Balancing configuration) is set at 10 and you would like to keep
+	// number of instances such that each instance receives 7 QPS on
+	// average, set this to 0.7.
 	UtilizationTarget float64 `json:"utilizationTarget,omitempty"`
 }
 

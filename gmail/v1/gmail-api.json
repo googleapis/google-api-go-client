@@ -1,10 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/vaKGq_E3WHXDvRNTWPgS67682B8\"",
+ "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/t6pewSAzwcj9YSpbIObjW2xJOGE\"",
  "discoveryVersion": "v1",
  "id": "gmail:v1",
  "name": "gmail",
  "version": "v1",
+ "revision": "20140728",
  "title": "Gmail API",
  "description": "The Gmail REST API.",
  "ownerDomain": "google.com",
@@ -336,7 +337,7 @@
     },
     "raw": {
      "type": "string",
-     "description": "The entire email message in an RFC 2822 formatted string. Returned in messages.get and drafts.get responses when the format=RAW parameter is supplied.",
+     "description": "The entire email message in an RFC 2822 formatted and URL-safe base64 encoded string. Returned in messages.get and drafts.get responses when the format=RAW parameter is supplied.",
      "format": "byte",
      "annotations": {
       "required": [

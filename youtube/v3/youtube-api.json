@@ -1,11 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/kMIQvX-x3mQnPFOGOYSnPK4w0oU\"",
+ "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/P2eMkJQM500-13h6vk2JDkt0YV4\"",
  "discoveryVersion": "v1",
  "id": "youtube:v3",
  "name": "youtube",
  "canonicalName": "YouTube",
  "version": "v3",
+ "revision": "20140724",
  "title": "YouTube Data API",
  "description": "Programmatic access to YouTube features.",
  "ownerDomain": "google.com",

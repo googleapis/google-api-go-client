@@ -51,9 +51,7 @@ func New(client *http.Client) (*Service, error) {
 	}
 	s := &Service{client: client, BasePath: basePath}
 	s.Accounts = NewAccountsService(s)
-	s.Accountshipping = NewAccountshippingService(s)
 	s.Accountstatuses = NewAccountstatusesService(s)
-	s.Accounttax = NewAccounttaxService(s)
 	s.Datafeeds = NewDatafeedsService(s)
 	s.Datafeedstatuses = NewDatafeedstatusesService(s)
 	s.Inventory = NewInventoryService(s)
@@ -68,11 +66,7 @@ type Service struct {
 
 	Accounts *AccountsService
 
-	Accountshipping *AccountshippingService
-
 	Accountstatuses *AccountstatusesService
-
-	Accounttax *AccounttaxService
 
 	Datafeeds *DatafeedsService
 
@@ -94,30 +88,12 @@ type AccountsService struct {
 	s *Service
 }
 
-func NewAccountshippingService(s *Service) *AccountshippingService {
-	rs := &AccountshippingService{s: s}
-	return rs
-}
-
-type AccountshippingService struct {
-	s *Service
-}
-
 func NewAccountstatusesService(s *Service) *AccountstatusesService {
 	rs := &AccountstatusesService{s: s}
 	return rs
 }
 
 type AccountstatusesService struct {
-	s *Service
-}
-
-func NewAccounttaxService(s *Service) *AccounttaxService {
-	rs := &AccounttaxService{s: s}
-	return rs
-}
-
-type AccounttaxService struct {
 	s *Service
 }
 
@@ -208,167 +184,6 @@ type AccountAdwordsLink struct {
 	Status string `json:"status,omitempty"`
 }
 
-type AccountShipping struct {
-	// AccountId: The ID of the account to which these account shipping
-	// settings belong.
-	AccountId uint64 `json:"accountId,omitempty,string"`
-
-	// CarrierRates: Carrier-based shipping calculations.
-	CarrierRates []*AccountShippingCarrierRate `json:"carrierRates,omitempty"`
-
-	// Kind: Identifies what kind of resource this is. Value: the fixed
-	// string "content#accountShipping".
-	Kind string `json:"kind,omitempty"`
-
-	// LocationGroups: Location groups for shipping.
-	LocationGroups []*AccountShippingLocationGroup `json:"locationGroups,omitempty"`
-
-	// RateTables: Rate tables definitions.
-	RateTables []*AccountShippingRateTable `json:"rateTables,omitempty"`
-
-	// Services: Shipping services describing shipping fees calculation.
-	Services []*AccountShippingShippingService `json:"services,omitempty"`
-}
-
-type AccountShippingCarrierRate struct {
-	// Carrier: The carrier that is responsible for the shipping, such as
-	// "UPS", "FedEx", or "USPS".
-	Carrier string `json:"carrier,omitempty"`
-
-	// CarrierService: The carrier service, such as "Ground" or "2Day".
-	CarrierService string `json:"carrierService,omitempty"`
-
-	// ModifierFlatRate: Additive shipping rate modifier.
-	ModifierFlatRate *Price `json:"modifierFlatRate,omitempty"`
-
-	// ModifierPercent: Multiplicative shipping rate modifier in percent.
-	// Represented as a floating point number without the percentage
-	// character.
-	ModifierPercent string `json:"modifierPercent,omitempty"`
-
-	// Name: The name of the carrier rate.
-	Name string `json:"name,omitempty"`
-
-	// SaleCountry: Sale country for which this carrier rate is valid,
-	// represented as an ISO_3166-1 Alpha-2 code.
-	SaleCountry string `json:"saleCountry,omitempty"`
-
-	// ShippingOrigin: Shipping origin represented as a postal code.
-	ShippingOrigin string `json:"shippingOrigin,omitempty"`
-}
-
-type AccountShippingCondition struct {
-	// DeliveryLocationGroup: Delivery location in terms of a location group
-	// name. A location group with this name must be specified among
-	// location groups.
-	DeliveryLocationGroup string `json:"deliveryLocationGroup,omitempty"`
-
-	// DeliveryLocationId: Delivery location in terms of a location ID. Can
-	// be used to represent administrative areas, smaller country
-	// subdivisions, or cities.
-	DeliveryLocationId int64 `json:"deliveryLocationId,omitempty,string"`
-
-	// DeliveryPostalCode: Delivery location in terms of a postal code
-	// range.
-	DeliveryPostalCode string `json:"deliveryPostalCode,omitempty"`
-
-	// PriceMax: Maximum shipping price. Forms an interval between the
-	// maximum of smaller prices (exclusive) and this price (inclusive).
-	PriceMax *Price `json:"priceMax,omitempty"`
-
-	// ShippingLabel: Shipping label of the product. The products with the
-	// label are matched.
-	ShippingLabel string `json:"shippingLabel,omitempty"`
-
-	// WeightMax: Maximum shipping weight. Forms an interval between the
-	// maximum of smaller weight (exclusive) and this weight (inclusive).
-	WeightMax *Weight `json:"weightMax,omitempty"`
-}
-
-type AccountShippingLocationGroup struct {
-	// Country: The country in which this location group is, represented as
-	// ISO_3166-1 Alpha-2 code.
-	Country string `json:"country,omitempty"`
-
-	// LocationIds: A location ID (also called criteria ID) representing
-	// administrative
-	LocationIds googleapi.Int64s `json:"locationIds,omitempty"`
-
-	// Name: The name of the location group.
-	Name string `json:"name,omitempty"`
-
-	// PostalCodes: A postal code range, that can be either:
-	// - A single
-	// postal code (e.g. 12345)
-	// - A postal code prefix followed by a star
-	// (e.g. 1234*)
-	// - A range of postal codes, separated by a dash (e.g.
-	// 12340-12359)
-	// - A range of postal codes prefixes (e.g. 1234*-1235*).
-	// Prefixes must be of the same length (e.g. 12*-2* is invalid).
-	PostalCodes []string `json:"postalCodes,omitempty"`
-}
-
-type AccountShippingRateTable struct {
-	// Contents: One-dimensional table cells define one condition along the
-	// same dimension.! Bi-dimensional table cells use two dimension with
-	// respectively M and N distinct values and must contain exactly M * N
-	// cells with distinct conditions (for each possible value pairs).
-	Contents []*AccountShippingRateTableCell `json:"contents,omitempty"`
-
-	// Name: The name of the rate table.
-	Name string `json:"name,omitempty"`
-
-	// SaleCountry: Sale country for which this table is valid, represented
-	// as an ISO_3166-1 Alpha-2 code.
-	SaleCountry string `json:"saleCountry,omitempty"`
-}
-
-type AccountShippingRateTableCell struct {
-	// Condition: Conditions for which the cell is valid. All cells in a
-	// table must use the same dimension or pair of dimensions among price,
-	// weight, shipping_label or delivery location. If the cell condition is
-	// not specified, it will act as a catch-all and match all the elements
-	// that are not matched by other cells in this dimension.
-	Condition *AccountShippingCondition `json:"condition,omitempty"`
-
-	// Rate: The rate applicable if the cell conditions are matched.
-	Rate *Price `json:"rate,omitempty"`
-}
-
-type AccountShippingShippingService struct {
-	// Active: Whether the shipping service is available. Defaults to true
-	// if not specified.
-	Active bool `json:"active,omitempty"`
-
-	// CalculationMethod: Calculation method for the "simple" case that
-	// needs no rules.
-	CalculationMethod *AccountShippingShippingServiceCalculationMethod `json:"calculationMethod,omitempty"`
-
-	// Name: The name of this shipping service.
-	Name string `json:"name,omitempty"`
-
-	// SaleCountry: Sale country for which this service can be used,
-	// represented as an ISO_3166-1 Alpha-2 code.
-	SaleCountry string `json:"saleCountry,omitempty"`
-}
-
-type AccountShippingShippingServiceCalculationMethod struct {
-	// CarrierRate: Name of the carrier rate to use for the calculation.
-	CarrierRate string `json:"carrierRate,omitempty"`
-
-	// FlatRate: Fixed price shipping, represented as a floating point
-	// number associated with a currency.
-	FlatRate *Price `json:"flatRate,omitempty"`
-
-	// PercentageRate: Percentage of the price, represented as a floating
-	// point number without the percentage character.
-	PercentageRate string `json:"percentageRate,omitempty"`
-
-	// RateTable: Name of the rate table to use for the calculation.
-	RateTable string `json:"rateTable,omitempty"`
-}
-
 type AccountStatus struct {
 	// AccountId: The ID of the account for which the status is reported.
 	AccountId string `json:"accountId,omitempty"`
@@ -423,39 +238,6 @@ type AccountStatusExampleItem struct {
 
 	// ValueOnLandingPage: The actual value on the landing page.
 	ValueOnLandingPage string `json:"valueOnLandingPage,omitempty"`
-}
-
-type AccountTax struct {
-	// AccountId: The ID of the account to which these account tax settings
-	// belong.
-	AccountId uint64 `json:"accountId,omitempty,string"`
-
-	// Kind: Identifies what kind of resource this is. Value: the fixed
-	// string "content#accountTax".
-	Kind string `json:"kind,omitempty"`
-
-	// Rules: Tax rules.
-	Rules []*AccountTaxTaxRule `json:"rules,omitempty"`
-}
-
-type AccountTaxTaxRule struct {
-	// Country: Country code in which tax is applicable.
-	Country string `json:"country,omitempty"`
-
-	// LocationId: State (or province) is which the tax is applicable,
-	// described by its location id (also called criteria id).
-	LocationId uint64 `json:"locationId,omitempty,string"`
-
-	// RatePercent: Explicit tax rate in percent, represented as a floating
-	// point number without the percentage character. Must not be negative.
-	RatePercent string `json:"ratePercent,omitempty"`
-
-	// ShippingTaxed: If true, shipping charges are also taxed.
-	ShippingTaxed bool `json:"shippingTaxed,omitempty"`
-
-	// UseGlobalRate: Whether the tax rate is taken from a global tax table
-	// or specified explicitly.
-	UseGlobalRate bool `json:"useGlobalRate,omitempty"`
 }
 
 type AccountUser struct {
@@ -706,38 +488,6 @@ type DatafeedStatusExample struct {
 	Value string `json:"value,omitempty"`
 }
 
-type DatafeedsBatchRequest struct {
-	Entrys []*DatafeedsBatchRequestEntry `json:"entrys,omitempty"`
-}
-
-type DatafeedsBatchRequestEntry struct {
-	BatchId int64 `json:"batchId,omitempty"`
-
-	Datafeedsinsertrequest *DatafeedsInsertRequest `json:"datafeedsinsertrequest,omitempty"`
-
-	Datafeedsupdaterequest *DatafeedsUpdateRequest `json:"datafeedsupdaterequest,omitempty"`
-
-	MethodName string `json:"methodName,omitempty"`
-}
-
-type DatafeedsBatchResponse struct {
-	Entrys []*DatafeedsBatchResponseEntry `json:"entrys,omitempty"`
-
-	// Kind: Identifies what kind of resource this is. Value: the fixed
-	// string "content#datafeedsBatchResponse".
-	Kind string `json:"kind,omitempty"`
-}
-
-type DatafeedsBatchResponseEntry struct {
-	BatchId int64 `json:"batchId,omitempty"`
-
-	Datafeedsgetresponse *DatafeedsGetResponse `json:"datafeedsgetresponse,omitempty"`
-
-	Datafeedsinsertresponse *DatafeedsInsertResponse `json:"datafeedsinsertresponse,omitempty"`
-
-	Datafeedsupdateresponse *DatafeedsUpdateResponse `json:"datafeedsupdateresponse,omitempty"`
-}
-
 type DatafeedsCustomBatchRequest struct {
 	Entries []*DatafeedsCustomBatchRequestEntry `json:"entries,omitempty"`
 }
@@ -779,68 +529,12 @@ type DatafeedsCustomBatchResponseEntry struct {
 	Errors *Errors `json:"errors,omitempty"`
 }
 
-type DatafeedsGetResponse struct {
-	// Kind: Identifies what kind of resource this is. Value: the fixed
-	// string "content#datafeedsGetResponse".
-	Kind string `json:"kind,omitempty"`
-
-	Resource *Datafeed `json:"resource,omitempty"`
-}
-
-type DatafeedsInsertRequest struct {
-	Resource *Datafeed `json:"resource,omitempty"`
-}
-
-type DatafeedsInsertResponse struct {
-	// Kind: Identifies what kind of resource this is. Value: the fixed
-	// string "content#datafeedsInsertResponse".
-	Kind string `json:"kind,omitempty"`
-
-	Resource *Datafeed `json:"resource,omitempty"`
-}
-
 type DatafeedsListResponse struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "content#datafeedsListResponse".
 	Kind string `json:"kind,omitempty"`
 
 	Resources []*Datafeed `json:"resources,omitempty"`
-}
-
-type DatafeedsUpdateRequest struct {
-	Resource *Datafeed `json:"resource,omitempty"`
-}
-
-type DatafeedsUpdateResponse struct {
-	// Kind: Identifies what kind of resource this is. Value: the fixed
-	// string "content#datafeedsUpdateResponse".
-	Kind string `json:"kind,omitempty"`
-
-	Resource *Datafeed `json:"resource,omitempty"`
-}
-
-type DatafeedstatusesBatchRequest struct {
-	Entrys []*DatafeedstatusesBatchRequestEntry `json:"entrys,omitempty"`
-}
-
-type DatafeedstatusesBatchRequestEntry struct {
-	BatchId int64 `json:"batchId,omitempty"`
-
-	MethodName string `json:"methodName,omitempty"`
-}
-
-type DatafeedstatusesBatchResponse struct {
-	Entrys []*DatafeedstatusesBatchResponseEntry `json:"entrys,omitempty"`
-
-	// Kind: Identifies what kind of resource this is. Value: the fixed
-	// string "content#datafeedstatusesBatchResponse".
-	Kind string `json:"kind,omitempty"`
-}
-
-type DatafeedstatusesBatchResponseEntry struct {
-	BatchId int64 `json:"batchId,omitempty"`
-
-	Datafeedstatusesgetresponse *DatafeedstatusesGetResponse `json:"datafeedstatusesgetresponse,omitempty"`
 }
 
 type DatafeedstatusesCustomBatchRequest struct {
@@ -879,14 +573,6 @@ type DatafeedstatusesCustomBatchResponseEntry struct {
 
 	// Errors: A list of errors defined if and only if the request failed.
 	Errors *Errors `json:"errors,omitempty"`
-}
-
-type DatafeedstatusesGetResponse struct {
-	// Kind: Identifies what kind of resource this is. Value: the fixed
-	// string "content#datafeedstatusesGetResponse".
-	Kind string `json:"kind,omitempty"`
-
-	Resource *DatafeedStatus `json:"resource,omitempty"`
 }
 
 type DatafeedstatusesListResponse struct {
@@ -1486,14 +1172,6 @@ type ProductstatusesListResponse struct {
 	Resources []*ProductStatus `json:"resources,omitempty"`
 }
 
-type Weight struct {
-	// Unit: The unit of the weight.
-	Unit string `json:"unit,omitempty"`
-
-	// Value: The weight represented as a number.
-	Value string `json:"value,omitempty"`
-}
-
 // method id "content.accounts.custombatch":
 
 type AccountsCustombatchCall struct {
@@ -2054,95 +1732,6 @@ func (c *AccountsUpdateCall) Do() (*Account, error) {
 
 }
 
-// method id "content.accountshipping.patch":
-
-type AccountshippingPatchCall struct {
-	s               *Service
-	merchantId      uint64
-	accountId       uint64
-	accountshipping *AccountShipping
-	opt_            map[string]interface{}
-}
-
-// Patch: Updates the shipping settings of the account. This method
-// supports patch semantics.
-func (r *AccountshippingService) Patch(merchantId uint64, accountId uint64, accountshipping *AccountShipping) *AccountshippingPatchCall {
-	c := &AccountshippingPatchCall{s: r.s, opt_: make(map[string]interface{})}
-	c.merchantId = merchantId
-	c.accountId = accountId
-	c.accountshipping = accountshipping
-	return c
-}
-
-func (c *AccountshippingPatchCall) Do() (*AccountShipping, error) {
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.accountshipping)
-	if err != nil {
-		return nil, err
-	}
-	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/accountshipping/{accountId}")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("PATCH", urls, body)
-	googleapi.Expand(req.URL, map[string]string{
-		"merchantId": strconv.FormatUint(c.merchantId, 10),
-		"accountId":  strconv.FormatUint(c.accountId, 10),
-	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	var ret *AccountShipping
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Updates the shipping settings of the account. This method supports patch semantics.",
-	//   "httpMethod": "PATCH",
-	//   "id": "content.accountshipping.patch",
-	//   "parameterOrder": [
-	//     "merchantId",
-	//     "accountId"
-	//   ],
-	//   "parameters": {
-	//     "accountId": {
-	//       "description": "The ID of the account for which to get/update account shipping settings.",
-	//       "format": "uint64",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "merchantId": {
-	//       "description": "The ID of the managing account.",
-	//       "format": "uint64",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "{merchantId}/accountshipping/{accountId}",
-	//   "request": {
-	//     "$ref": "AccountShipping"
-	//   },
-	//   "response": {
-	//     "$ref": "AccountShipping"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/content"
-	//   ]
-	// }
-
-}
-
 // method id "content.accountstatuses.custombatch":
 
 type AccountstatusesCustombatchCall struct {
@@ -2371,155 +1960,6 @@ func (c *AccountstatusesListCall) Do() (*AccountstatusesListResponse, error) {
 	//   "path": "{merchantId}/accountstatuses",
 	//   "response": {
 	//     "$ref": "AccountstatusesListResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/content"
-	//   ]
-	// }
-
-}
-
-// method id "content.accounttax.patch":
-
-type AccounttaxPatchCall struct {
-	s          *Service
-	merchantId uint64
-	accountId  uint64
-	accounttax *AccountTax
-	opt_       map[string]interface{}
-}
-
-// Patch: Updates the tax settings of the account. This method supports
-// patch semantics.
-func (r *AccounttaxService) Patch(merchantId uint64, accountId uint64, accounttax *AccountTax) *AccounttaxPatchCall {
-	c := &AccounttaxPatchCall{s: r.s, opt_: make(map[string]interface{})}
-	c.merchantId = merchantId
-	c.accountId = accountId
-	c.accounttax = accounttax
-	return c
-}
-
-func (c *AccounttaxPatchCall) Do() (*AccountTax, error) {
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.accounttax)
-	if err != nil {
-		return nil, err
-	}
-	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/accounttax/{accountId}")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("PATCH", urls, body)
-	googleapi.Expand(req.URL, map[string]string{
-		"merchantId": strconv.FormatUint(c.merchantId, 10),
-		"accountId":  strconv.FormatUint(c.accountId, 10),
-	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	var ret *AccountTax
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Updates the tax settings of the account. This method supports patch semantics.",
-	//   "httpMethod": "PATCH",
-	//   "id": "content.accounttax.patch",
-	//   "parameterOrder": [
-	//     "merchantId",
-	//     "accountId"
-	//   ],
-	//   "parameters": {
-	//     "accountId": {
-	//       "description": "The ID of the account for which to get/update account tax settings.",
-	//       "format": "uint64",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "merchantId": {
-	//       "description": "The ID of the managing account.",
-	//       "format": "uint64",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "{merchantId}/accounttax/{accountId}",
-	//   "request": {
-	//     "$ref": "AccountTax"
-	//   },
-	//   "response": {
-	//     "$ref": "AccountTax"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/content"
-	//   ]
-	// }
-
-}
-
-// method id "content.datafeeds.batch":
-
-type DatafeedsBatchCall struct {
-	s                     *Service
-	datafeedsbatchrequest *DatafeedsBatchRequest
-	opt_                  map[string]interface{}
-}
-
-// Batch:
-func (r *DatafeedsService) Batch(datafeedsbatchrequest *DatafeedsBatchRequest) *DatafeedsBatchCall {
-	c := &DatafeedsBatchCall{s: r.s, opt_: make(map[string]interface{})}
-	c.datafeedsbatchrequest = datafeedsbatchrequest
-	return c
-}
-
-func (c *DatafeedsBatchCall) Do() (*DatafeedsBatchResponse, error) {
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.datafeedsbatchrequest)
-	if err != nil {
-		return nil, err
-	}
-	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "datafeedsNativeBatch")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("POST", urls, body)
-	googleapi.SetOpaque(req.URL)
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	var ret *DatafeedsBatchResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "httpMethod": "POST",
-	//   "id": "content.datafeeds.batch",
-	//   "path": "datafeedsNativeBatch",
-	//   "request": {
-	//     "$ref": "DatafeedsBatchRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "DatafeedsBatchResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/content"
@@ -3037,66 +2477,6 @@ func (c *DatafeedsUpdateCall) Do() (*Datafeed, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "Datafeed"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/content"
-	//   ]
-	// }
-
-}
-
-// method id "content.datafeedstatuses.batch":
-
-type DatafeedstatusesBatchCall struct {
-	s                            *Service
-	datafeedstatusesbatchrequest *DatafeedstatusesBatchRequest
-	opt_                         map[string]interface{}
-}
-
-// Batch:
-func (r *DatafeedstatusesService) Batch(datafeedstatusesbatchrequest *DatafeedstatusesBatchRequest) *DatafeedstatusesBatchCall {
-	c := &DatafeedstatusesBatchCall{s: r.s, opt_: make(map[string]interface{})}
-	c.datafeedstatusesbatchrequest = datafeedstatusesbatchrequest
-	return c
-}
-
-func (c *DatafeedstatusesBatchCall) Do() (*DatafeedstatusesBatchResponse, error) {
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.datafeedstatusesbatchrequest)
-	if err != nil {
-		return nil, err
-	}
-	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "datafeedstatusesNativeBatch")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("POST", urls, body)
-	googleapi.SetOpaque(req.URL)
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	var ret *DatafeedstatusesBatchResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "httpMethod": "POST",
-	//   "id": "content.datafeedstatuses.batch",
-	//   "path": "datafeedstatusesNativeBatch",
-	//   "request": {
-	//     "$ref": "DatafeedstatusesBatchRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "DatafeedstatusesBatchResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/content"

@@ -1,10 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/fOUT8ysj7UwsMfXC3MyxMbk09lM\"",
+ "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/XYINYydMW1yxY9sZ7pYYpIG24qI\"",
  "discoveryVersion": "v1",
  "id": "books:v1",
  "name": "books",
  "version": "v1",
+ "revision": "20140507",
  "title": "Books API",
  "description": "Lets you search for books and manage your Google Books library.",
  "ownerDomain": "google.com",

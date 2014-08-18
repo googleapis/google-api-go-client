@@ -4,7 +4,7 @@
 //
 // Usage example:
 //
-//   import "code.google.com/p/google-api-go-client/mapsengine/v1"
+//   import "code.google.com/p/google-api-go-client/mapsengine/exp2"
 //   ...
 //   mapsengineService, err := mapsengine.New(oauthHttpClient)
 package mapsengine
@@ -34,10 +34,10 @@ var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
 
-const apiId = "mapsengine:v1"
+const apiId = "mapsengine:exp2"
 const apiName = "mapsengine"
-const apiVersion = "v1"
-const basePath = "https://www.googleapis.com/mapsengine/v1/"
+const apiVersion = "exp2"
+const basePath = "https://www.googleapis.com/mapsengine/exp2/"
 
 // OAuth2 scopes used by this API.
 const (
@@ -85,6 +85,7 @@ type Service struct {
 func NewAssetsService(s *Service) *AssetsService {
 	rs := &AssetsService{s: s}
 	rs.Parents = NewAssetsParentsService(s)
+	rs.Permissions = NewAssetsPermissionsService(s)
 	return rs
 }
 
@@ -92,6 +93,8 @@ type AssetsService struct {
 	s *Service
 
 	Parents *AssetsParentsService
+
+	Permissions *AssetsPermissionsService
 }
 
 func NewAssetsParentsService(s *Service) *AssetsParentsService {
@@ -103,9 +106,19 @@ type AssetsParentsService struct {
 	s *Service
 }
 
+func NewAssetsPermissionsService(s *Service) *AssetsPermissionsService {
+	rs := &AssetsPermissionsService{s: s}
+	return rs
+}
+
+type AssetsPermissionsService struct {
+	s *Service
+}
+
 func NewLayersService(s *Service) *LayersService {
 	rs := &LayersService{s: s}
 	rs.Parents = NewLayersParentsService(s)
+	rs.Permissions = NewLayersPermissionsService(s)
 	return rs
 }
 
@@ -113,6 +126,8 @@ type LayersService struct {
 	s *Service
 
 	Parents *LayersParentsService
+
+	Permissions *LayersPermissionsService
 }
 
 func NewLayersParentsService(s *Service) *LayersParentsService {
@@ -124,27 +139,61 @@ type LayersParentsService struct {
 	s *Service
 }
 
+func NewLayersPermissionsService(s *Service) *LayersPermissionsService {
+	rs := &LayersPermissionsService{s: s}
+	return rs
+}
+
+type LayersPermissionsService struct {
+	s *Service
+}
+
 func NewMapsService(s *Service) *MapsService {
 	rs := &MapsService{s: s}
+	rs.Permissions = NewMapsPermissionsService(s)
 	return rs
 }
 
 type MapsService struct {
 	s *Service
+
+	Permissions *MapsPermissionsService
+}
+
+func NewMapsPermissionsService(s *Service) *MapsPermissionsService {
+	rs := &MapsPermissionsService{s: s}
+	return rs
+}
+
+type MapsPermissionsService struct {
+	s *Service
 }
 
 func NewProjectsService(s *Service) *ProjectsService {
 	rs := &ProjectsService{s: s}
+	rs.Icons = NewProjectsIconsService(s)
 	return rs
 }
 
 type ProjectsService struct {
+	s *Service
+
+	Icons *ProjectsIconsService
+}
+
+func NewProjectsIconsService(s *Service) *ProjectsIconsService {
+	rs := &ProjectsIconsService{s: s}
+	return rs
+}
+
+type ProjectsIconsService struct {
 	s *Service
 }
 
 func NewRasterCollectionsService(s *Service) *RasterCollectionsService {
 	rs := &RasterCollectionsService{s: s}
 	rs.Parents = NewRasterCollectionsParentsService(s)
+	rs.Permissions = NewRasterCollectionsPermissionsService(s)
 	rs.Rasters = NewRasterCollectionsRastersService(s)
 	return rs
 }
@@ -153,6 +202,8 @@ type RasterCollectionsService struct {
 	s *Service
 
 	Parents *RasterCollectionsParentsService
+
+	Permissions *RasterCollectionsPermissionsService
 
 	Rasters *RasterCollectionsRastersService
 }
@@ -163,6 +214,15 @@ func NewRasterCollectionsParentsService(s *Service) *RasterCollectionsParentsSer
 }
 
 type RasterCollectionsParentsService struct {
+	s *Service
+}
+
+func NewRasterCollectionsPermissionsService(s *Service) *RasterCollectionsPermissionsService {
+	rs := &RasterCollectionsPermissionsService{s: s}
+	return rs
+}
+
+type RasterCollectionsPermissionsService struct {
 	s *Service
 }
 
@@ -179,6 +239,7 @@ func NewRastersService(s *Service) *RastersService {
 	rs := &RastersService{s: s}
 	rs.Files = NewRastersFilesService(s)
 	rs.Parents = NewRastersParentsService(s)
+	rs.Permissions = NewRastersPermissionsService(s)
 	return rs
 }
 
@@ -188,6 +249,8 @@ type RastersService struct {
 	Files *RastersFilesService
 
 	Parents *RastersParentsService
+
+	Permissions *RastersPermissionsService
 }
 
 func NewRastersFilesService(s *Service) *RastersFilesService {
@@ -208,11 +271,21 @@ type RastersParentsService struct {
 	s *Service
 }
 
+func NewRastersPermissionsService(s *Service) *RastersPermissionsService {
+	rs := &RastersPermissionsService{s: s}
+	return rs
+}
+
+type RastersPermissionsService struct {
+	s *Service
+}
+
 func NewTablesService(s *Service) *TablesService {
 	rs := &TablesService{s: s}
 	rs.Features = NewTablesFeaturesService(s)
 	rs.Files = NewTablesFilesService(s)
 	rs.Parents = NewTablesParentsService(s)
+	rs.Permissions = NewTablesPermissionsService(s)
 	return rs
 }
 
@@ -224,6 +297,8 @@ type TablesService struct {
 	Files *TablesFilesService
 
 	Parents *TablesParentsService
+
+	Permissions *TablesPermissionsService
 }
 
 func NewTablesFeaturesService(s *Service) *TablesFeaturesService {
@@ -250,6 +325,15 @@ func NewTablesParentsService(s *Service) *TablesParentsService {
 }
 
 type TablesParentsService struct {
+	s *Service
+}
+
+func NewTablesPermissionsService(s *Service) *TablesPermissionsService {
+	rs := &TablesPermissionsService{s: s}
+	return rs
+}
+
+type TablesPermissionsService struct {
 	s *Service
 }
 
@@ -307,8 +391,7 @@ type Asset struct {
 	// of the Maps Engine help center.
 	Tags []string `json:"tags,omitempty"`
 
-	// Type: The type of asset. One of raster, rasterCollection, table, map,
-	// or layer.
+	// Type: The type of asset.
 	Type string `json:"type,omitempty"`
 }
 
@@ -394,10 +477,26 @@ type FeaturesBatchDeleteRequest struct {
 }
 
 type FeaturesBatchInsertRequest struct {
+	// AllowNormalization: If true, the server will normalize feature
+	// geometries. It is assumed that the South Pole is exterior to any
+	// polygons given. See here for a list of normalizations. If false, the
+	// all feature geometries must be given already normalized. The points
+	// in all LinearRings must be listed in counter-clockwise order, and
+	// LinearRings may not intersect.
+	AllowNormalization bool `json:"allowNormalization,omitempty"`
+
 	Features []*Feature `json:"features,omitempty"`
 }
 
 type FeaturesBatchPatchRequest struct {
+	// AllowNormalization: If true, the server will normalize feature
+	// geometries. It is assumed that the South Pole is exterior to any
+	// polygons given. See here for a list of normalizations. If false, the
+	// all feature geometries must be given already normalized. The points
+	// in all LinearRings must be listed in counter-clockwise order, and
+	// LinearRings may not intersect.
+	AllowNormalization bool `json:"allowNormalization,omitempty"`
+
 	Features []*Feature `json:"features,omitempty"`
 }
 
@@ -555,12 +654,12 @@ type GeoJsonPoint struct {
 }
 
 type GeoJsonPolygon struct {
-	// Coordinates: An array of LinearRings, each of which is an array of
-	// four or more GeoJsonPositions. The first and last coordinates in each
-	// LinearRing must be the same. For polygons with multiple rings, the
-	// first LinearRing is the external ring, with subsequent rings being
-	// interior rings (i.e. hole). All LinearRings must contain
-	// GeoJsonPositions in counter-clockwise order.
+	// Coordinates: An array of LinearRings. A LinearRing is a
+	// GeoJsonLineString which is closed (that is, the first and last
+	// GeoJsonPositions are equal), and which contains at least four
+	// GeoJsonPositions. For polygons with multiple rings, the first
+	// LinearRing is the exterior ring, and any subsequent rings are
+	// interior rings (that is, holes).
 	Coordinates [][][]float64 `json:"coordinates,omitempty"`
 
 	// Type: Identifies this object as a GeoJsonPolygon.
@@ -568,6 +667,17 @@ type GeoJsonPolygon struct {
 }
 
 type GeoJsonProperties struct {
+}
+
+type Icon struct {
+	// Description: The description of this Icon, supplied by the author.
+	Description string `json:"description,omitempty"`
+
+	// Id: An ID used to refer to this Icon.
+	Id string `json:"id,omitempty"`
+
+	// Name: The name of this Icon, supplied by the author.
+	Name string `json:"name,omitempty"`
 }
 
 type IconStyle struct {
@@ -578,6 +688,21 @@ type IconStyle struct {
 	// Stock icon names for valid icon names. For example, to specify
 	// small_red, set name to 'gx_small_red'.
 	Name string `json:"name,omitempty"`
+
+	// ScaledShape: A scalable shape.
+	ScaledShape *ScaledShape `json:"scaledShape,omitempty"`
+
+	// ScalingFunction: The function used to scale shapes. Required when a
+	// scaledShape is specified.
+	ScalingFunction *ScalingFunction `json:"scalingFunction,omitempty"`
+}
+
+type IconsListResponse struct {
+	// Icons: Resources returned.
+	Icons []*Icon `json:"icons,omitempty"`
+
+	// NextPageToken: Next page token.
+	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
 type LabelStyle struct {
@@ -629,18 +754,8 @@ type Layer struct {
 
 	// DraftAccessList: Deprecated: The name of an access list of the Map
 	// Editor type. The user on whose behalf the request is being sent must
-	// be an editor on that access list. Note: Google Maps Engine no longer
-	// uses access lists. For backward compatibility, the API still accepts
-	// access lists for projects that are already using access lists. If you
-	// created a GME account/project after July 14th, 2014, you will not be
-	// able to send API requests that include access lists. The API does not
-	// yet support the new permissions model. When you create a map via the
-	// API without specifying permissions, the account that created the map
-	// is the owner and has effective administrator access. Users can then
-	// use the Maps Engine user interface to adjust the permissions. This is
-	// a temporary workaround until the API supports the new permissions
-	// model. Read Add new users and groups in the Google Maps Engine help
-	// center for more information.
+	// be an editor on that access list. Read About access lists in the
+	// Google Maps Engine help center for more information.
 	DraftAccessList string `json:"draftAccessList,omitempty"`
 
 	// Etag: The ETag, used to refer to the current version of the asset.
@@ -665,8 +780,8 @@ type Layer struct {
 	// PublishedAccessList: Deprecated: The access list to whom view
 	// permissions are granted. The value must be the name of a Maps Engine
 	// access list of the Map Viewer type, and the user must be a viewer on
-	// that list. Read Share data, layers, and maps in the Google Maps
-	// Engine help center for more information.
+	// that list. Read About access lists in the Google Maps Engine help
+	// center for more information.
 	PublishedAccessList string `json:"publishedAccessList,omitempty"`
 
 	// Style: The Styling information for a vector layer.
@@ -736,18 +851,8 @@ type Map struct {
 
 	// DraftAccessList: Deprecated: The name of an access list of the Map
 	// Editor type. The user on whose behalf the request is being sent must
-	// be an editor on that access list. Note: Google Maps Engine no longer
-	// uses access lists. For backward compatibility, the API still accepts
-	// access lists for projects that are already using access lists. If you
-	// created a GME account/project after July 14th, 2014, you will not be
-	// able to send API requests that include access lists. The API does not
-	// yet support the new permissions model. When you create a map via the
-	// API without specifying permissions, the account that created the map
-	// is the owner and has effective administrator access. Users can then
-	// use the Maps Engine user interface to adjust the permissions. This is
-	// a temporary workaround until the API supports the new permissions
-	// model. Read Add new users and groups in the Google Maps Engine help
-	// center for more information.
+	// be an editor on that access list. Read About access lists in the
+	// Google Maps Engine help center for more information.
 	DraftAccessList string `json:"draftAccessList,omitempty"`
 
 	// Etag: The ETag, used to refer to the current version of the asset.
@@ -773,8 +878,8 @@ type Map struct {
 	// PublishedAccessList: Deprecated: The access list to whom view
 	// permissions are granted. The value must be the name of a Maps Engine
 	// access list of the Map Viewer type, and the user must be a viewer on
-	// that list. Read Share data, layers, and maps in the Google Maps
-	// Engine help center for more information.
+	// that list. Read About access lists in the Google Maps Engine help
+	// center for more information.
 	PublishedAccessList string `json:"publishedAccessList,omitempty"`
 
 	// PublishingStatus: The publishing status of this map.
@@ -910,9 +1015,49 @@ type ParentsListResponse struct {
 	Parents []*Parent `json:"parents,omitempty"`
 }
 
+type Permission struct {
+	// Discoverable: True if asset is listed and is searchable by the
+	// public.
+	Discoverable bool `json:"discoverable,omitempty"`
+
+	// EmailAddress: The email address of the user this permission refers
+	// to.
+	EmailAddress string `json:"emailAddress,omitempty"`
+
+	// Id: The ID of the permission. When making a
+	// mapsengine.permissions.batchInsert request, the id or emailAddress
+	// fields must be specified. If both id and emailAddress are provided
+	// they must be consistent.
+	Id string `json:"id,omitempty"`
+
+	// Role: The primary role for this user.
+	Role string `json:"role,omitempty"`
+
+	// Type: The account type. Allowed values are:
+	Type string `json:"type,omitempty"`
+}
+
+type PermissionsBatchInsertRequest struct {
+	// Permissions: The permissions to be added.
+	Permissions []*Permission `json:"permissions,omitempty"`
+}
+
+type PermissionsBatchInsertResponse struct {
+}
+
+type PermissionsGetIdForEmailResponse struct {
+	// Id: The permission ID.
+	Id string `json:"id,omitempty"`
+}
+
+type PermissionsListResponse struct {
+	// Permissions: The set of permissions associated with this asset.
+	Permissions []*Permission `json:"permissions,omitempty"`
+}
+
 type PointStyle struct {
-	// Icon: Icon for the point; if it isn't null, exactly one field in
-	// 'icon' must be set.
+	// Icon: Icon for the point; if it isn't null, exactly one of 'name',
+	// 'id' or 'scaledShape' must be set.
 	Icon *IconStyle `json:"icon,omitempty"`
 
 	// Label: Label style for the point.
@@ -955,8 +1100,8 @@ type Raster struct {
 	Attribution string `json:"attribution,omitempty"`
 
 	// Bbox: A rectangular bounding box which contains all of the data in
-	// this Raster. The numbers represent latitude and longitude in decimal
-	// degrees.
+	// this Raster. The numbers represent latitudes and longitudes in
+	// decimal degrees.
 	Bbox []float64 `json:"bbox,omitempty"`
 
 	// CreationTime: The creation time of this raster. The value is an RFC
@@ -968,18 +1113,8 @@ type Raster struct {
 
 	// DraftAccessList: Deprecated: The name of an access list of the Map
 	// Editor type. The user on whose behalf the request is being sent must
-	// be an editor on that access list. Note: Google Maps Engine no longer
-	// uses access lists. For backward compatibility, the API still accepts
-	// access lists for projects that are already using access lists. If you
-	// created a GME account/project after July 14th, 2014, you will not be
-	// able to send API requests that include access lists. The API does not
-	// yet support the new permissions model. When you create a map via the
-	// API without specifying permissions, the account that created the map
-	// is the owner and has effective administrator access. Users can then
-	// use the Maps Engine user interface to adjust the permissions. This is
-	// a temporary workaround until the API supports the new permissions
-	// model. Read Add new users and groups in the Google Maps Engine help
-	// center for more information.
+	// be an editor on that access list. Read About access lists in the
+	// Google Maps Engine help center for more information.
 	DraftAccessList string `json:"draftAccessList,omitempty"`
 
 	// Etag: The ETag, used to refer to the current version of the asset.
@@ -1034,18 +1169,8 @@ type RasterCollection struct {
 
 	// DraftAccessList: Deprecated: The name of an access list of the Map
 	// Editor type. The user on whose behalf the request is being sent must
-	// be an editor on that access list. Note: Google Maps Engine no longer
-	// uses access lists. For backward compatibility, the API still accepts
-	// access lists for projects that are already using access lists. If you
-	// created a GME account/project after July 14th, 2014, you will not be
-	// able to send API requests that include access lists. The API does not
-	// yet support the new permissions model. When you create a map via the
-	// API without specifying permissions, the account that created the map
-	// is the owner and has effective administrator access. Users can then
-	// use the Maps Engine user interface to adjust the permissions. This is
-	// a temporary workaround until the API supports the new permissions
-	// model. Read Add new users and groups in the Google Maps Engine help
-	// center for more information.
+	// be an editor on that access list. Read About access lists in the
+	// Google Maps Engine help center for more information.
 	DraftAccessList string `json:"draftAccessList,omitempty"`
 
 	// Etag: The ETag, used to refer to the current version of the asset.
@@ -1089,8 +1214,8 @@ type RasterCollectionsListResponse struct {
 
 type RasterCollectionsRaster struct {
 	// Bbox: A rectangular bounding box which contains all of the data in
-	// this Raster. The numbers represent latitude and longitude in decimal
-	// degrees.
+	// this Raster. The numbers represent latitudes and longitudes in
+	// decimal degrees.
 	Bbox []float64 `json:"bbox,omitempty"`
 
 	// CreationTime: The creation time of this raster. The value is an RFC
@@ -1146,10 +1271,47 @@ type RasterCollectionsRastersListResponse struct {
 	Rasters []*RasterCollectionsRaster `json:"rasters,omitempty"`
 }
 
+type RastersListResponse struct {
+	// NextPageToken: Next page token.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Rasters: Resources returned.
+	Rasters []*Raster `json:"rasters,omitempty"`
+}
+
+type ScaledShape struct {
+	// Border: Border color/width of the shape. If not specified the shape
+	// won't have a border.
+	Border *Border `json:"border,omitempty"`
+
+	// Fill: The fill color of the shape. If not specified the shape will be
+	// transparent (although the borders may not be).
+	Fill *Color `json:"fill,omitempty"`
+
+	// Shape: Name of the shape.
+	Shape string `json:"shape,omitempty"`
+}
+
+type ScalingFunction struct {
+	// Column: Name of the numeric column used to scale a shape.
+	Column string `json:"column,omitempty"`
+
+	// ScalingType: The type of scaling function to use. Defaults to SQRT.
+	// Currently only linear and square root scaling are supported.
+	ScalingType string `json:"scalingType,omitempty"`
+
+	// SizeRange: The range of shape sizes, in pixels. For circles, the size
+	// corresponds to the diameter.
+	SizeRange *SizeRange `json:"sizeRange,omitempty"`
+
+	// ValueRange: The range of values to display across the size range.
+	ValueRange *ValueRange `json:"valueRange,omitempty"`
+}
+
 type Schema struct {
-	// Columns: An array of TableColumn objects. The first object in the
-	// array must be named geometry and be of type points, lineStrings,
-	// polygons, or mixedGeometry.
+	// Columns: An array of column objects. The first object in the array
+	// must be named geometry and be of type points, lineStrings, polygons,
+	// or mixedGeometry.
 	Columns []*TableColumn `json:"columns,omitempty"`
 
 	// PrimaryGeometry: The name of the column that contains a feature's
@@ -1161,6 +1323,14 @@ type Schema struct {
 	// PrimaryKey: The name of the column that contains the unique
 	// identifier of a Feature.
 	PrimaryKey string `json:"primaryKey,omitempty"`
+}
+
+type SizeRange struct {
+	// Max: Maximum size, in pixels.
+	Max float64 `json:"max,omitempty"`
+
+	// Min: Minimum size, in pixels.
+	Min float64 `json:"min,omitempty"`
 }
 
 type Table struct {
@@ -1178,18 +1348,8 @@ type Table struct {
 
 	// DraftAccessList: Deprecated: The name of an access list of the Map
 	// Editor type. The user on whose behalf the request is being sent must
-	// be an editor on that access list. Note: Google Maps Engine no longer
-	// uses access lists. For backward compatibility, the API still accepts
-	// access lists for projects that are already using access lists. If you
-	// created a GME account/project after July 14th, 2014, you will not be
-	// able to send API requests that include access lists. The API does not
-	// yet support the new permissions model. When you create a map via the
-	// API without specifying permissions, the account that created the map
-	// is the owner and has effective administrator access. Users can then
-	// use the Maps Engine user interface to adjust the permissions. This is
-	// a temporary workaround until the API supports the new permissions
-	// model. Read Add new users and groups in the Google Maps Engine help
-	// center for more information.
+	// be an editor on that access list. Read About access lists in the
+	// Google Maps Engine help center for more information.
 	DraftAccessList string `json:"draftAccessList,omitempty"`
 
 	// Etag: The ETag, used to refer to the current version of the asset.
@@ -1217,8 +1377,8 @@ type Table struct {
 	// PublishedAccessList: Deprecated: The access list to whom view
 	// permissions are granted. The value must be the name of a Maps Engine
 	// access list of the Map Viewer type, and the user must be a viewer on
-	// that list. Read Share data, layers, and maps in the Google Maps
-	// Engine help center for more information.
+	// that list. Read About access lists in the Google Maps Engine help
+	// center for more information.
 	PublishedAccessList string `json:"publishedAccessList,omitempty"`
 
 	// Schema: The schema for this table.
@@ -1248,6 +1408,14 @@ type TablesListResponse struct {
 
 	// Tables: Resources returned.
 	Tables []*Table `json:"tables,omitempty"`
+}
+
+type ValueRange struct {
+	// Max: Maximum value.
+	Max float64 `json:"max,omitempty"`
+
+	// Min: Minimum value.
+	Min float64 `json:"min,omitempty"`
 }
 
 type VectorStyle struct {
@@ -1425,6 +1593,14 @@ func (c *AssetsListCall) ProjectId(projectId string) *AssetsListCall {
 	return c
 }
 
+// Role sets the optional parameter "role": The role parameter indicates
+// that the response should only contain assets where the current user
+// has the specified level of access.
+func (c *AssetsListCall) Role(role string) *AssetsListCall {
+	c.opt_["role"] = role
+	return c
+}
+
 // Tags sets the optional parameter "tags": A comma separated list of
 // tags. Returned assets will contain all the tags from the list.
 func (c *AssetsListCall) Tags(tags string) *AssetsListCall {
@@ -1469,6 +1645,9 @@ func (c *AssetsListCall) Do() (*AssetsListResponse, error) {
 	}
 	if v, ok := c.opt_["projectId"]; ok {
 		params.Set("projectId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["role"]; ok {
+		params.Set("role", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["tags"]; ok {
 		params.Set("tags", fmt.Sprintf("%v", v))
@@ -1546,6 +1725,21 @@ func (c *AssetsListCall) Do() (*AssetsListResponse, error) {
 	//     },
 	//     "projectId": {
 	//       "description": "The ID of a Maps Engine project, used to filter the response. To list all available projects with their IDs, send a Projects: list request. You can also find your project ID as the value of the DashboardPlace:cid URL parameter when signed in to mapsengine.google.com.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "role": {
+	//       "description": "The role parameter indicates that the response should only contain assets where the current user has the specified level of access.",
+	//       "enum": [
+	//         "owner",
+	//         "reader",
+	//         "writer"
+	//       ],
+	//       "enumDescriptions": [
+	//         "The user can read, write and administer the asset.",
+	//         "The user can read the asset.",
+	//         "The user can read and write the asset."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1675,6 +1869,138 @@ func (c *AssetsParentsListCall) Do() (*ParentsListResponse, error) {
 	//   "path": "assets/{id}/parents",
 	//   "response": {
 	//     "$ref": "ParentsListResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/mapsengine",
+	//     "https://www.googleapis.com/auth/mapsengine.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "mapsengine.assets.permissions.getIdForEmail":
+
+type AssetsPermissionsGetIdForEmailCall struct {
+	s     *Service
+	email string
+	opt_  map[string]interface{}
+}
+
+// GetIdForEmail: Return permission ID given an email address.
+func (r *AssetsPermissionsService) GetIdForEmail(email string) *AssetsPermissionsGetIdForEmailCall {
+	c := &AssetsPermissionsGetIdForEmailCall{s: r.s, opt_: make(map[string]interface{})}
+	c.email = email
+	return c
+}
+
+func (c *AssetsPermissionsGetIdForEmailCall) Do() (*PermissionsGetIdForEmailResponse, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "permissionids/{email}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"email": c.email,
+	})
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *PermissionsGetIdForEmailResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Return permission ID given an email address.",
+	//   "httpMethod": "GET",
+	//   "id": "mapsengine.assets.permissions.getIdForEmail",
+	//   "parameterOrder": [
+	//     "email"
+	//   ],
+	//   "parameters": {
+	//     "email": {
+	//       "description": "The email address to be translated into permission ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "permissionids/{email}",
+	//   "response": {
+	//     "$ref": "PermissionsGetIdForEmailResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/mapsengine",
+	//     "https://www.googleapis.com/auth/mapsengine.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "mapsengine.assets.permissions.list":
+
+type AssetsPermissionsListCall struct {
+	s    *Service
+	id   string
+	opt_ map[string]interface{}
+}
+
+// List: Return all of the permissions for the specified asset.
+func (r *AssetsPermissionsService) List(id string) *AssetsPermissionsListCall {
+	c := &AssetsPermissionsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	return c
+}
+
+func (c *AssetsPermissionsListCall) Do() (*PermissionsListResponse, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "assets/{id}/permissions")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *PermissionsListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Return all of the permissions for the specified asset.",
+	//   "httpMethod": "GET",
+	//   "id": "mapsengine.assets.permissions.list",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The ID of the asset whose permissions will be listed.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "assets/{id}/permissions",
+	//   "response": {
+	//     "$ref": "PermissionsListResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/mapsengine",
@@ -2060,6 +2386,14 @@ func (c *LayersListCall) ProjectId(projectId string) *LayersListCall {
 	return c
 }
 
+// Role sets the optional parameter "role": The role parameter indicates
+// that the response should only contain assets where the current user
+// has the specified level of access.
+func (c *LayersListCall) Role(role string) *LayersListCall {
+	c.opt_["role"] = role
+	return c
+}
+
 // Tags sets the optional parameter "tags": A comma separated list of
 // tags. Returned assets will contain all the tags from the list.
 func (c *LayersListCall) Tags(tags string) *LayersListCall {
@@ -2097,6 +2431,9 @@ func (c *LayersListCall) Do() (*LayersListResponse, error) {
 	}
 	if v, ok := c.opt_["projectId"]; ok {
 		params.Set("projectId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["role"]; ok {
+		params.Set("role", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["tags"]; ok {
 		params.Set("tags", fmt.Sprintf("%v", v))
@@ -2171,6 +2508,21 @@ func (c *LayersListCall) Do() (*LayersListResponse, error) {
 	//     },
 	//     "projectId": {
 	//       "description": "The ID of a Maps Engine project, used to filter the response. To list all available projects with their IDs, send a Projects: list request. You can also find your project ID as the value of the DashboardPlace:cid URL parameter when signed in to mapsengine.google.com.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "role": {
+	//       "description": "The role parameter indicates that the response should only contain assets where the current user has the specified level of access.",
+	//       "enum": [
+	//         "owner",
+	//         "reader",
+	//         "writer"
+	//       ],
+	//       "enumDescriptions": [
+	//         "The user can read, write and administer the asset.",
+	//         "The user can read the asset.",
+	//         "The user can read and write the asset."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2556,6 +2908,152 @@ func (c *LayersParentsListCall) Do() (*ParentsListResponse, error) {
 
 }
 
+// method id "mapsengine.layers.permissions.batchInsert":
+
+type LayersPermissionsBatchInsertCall struct {
+	s                             *Service
+	id                            string
+	permissionsbatchinsertrequest *PermissionsBatchInsertRequest
+	opt_                          map[string]interface{}
+}
+
+// BatchInsert: Add permission entries to an already existing asset.
+//
+// An
+// asset can hold up to 20 different permission entries. Each
+// batchInsert request is atomic.
+func (r *LayersPermissionsService) BatchInsert(id string, permissionsbatchinsertrequest *PermissionsBatchInsertRequest) *LayersPermissionsBatchInsertCall {
+	c := &LayersPermissionsBatchInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	c.permissionsbatchinsertrequest = permissionsbatchinsertrequest
+	return c
+}
+
+func (c *LayersPermissionsBatchInsertCall) Do() (*PermissionsBatchInsertResponse, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.permissionsbatchinsertrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "layers/{id}/permissions/batchInsert")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *PermissionsBatchInsertResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Add permission entries to an already existing asset.\n\nAn asset can hold up to 20 different permission entries. Each batchInsert request is atomic.",
+	//   "httpMethod": "POST",
+	//   "id": "mapsengine.layers.permissions.batchInsert",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The ID of the asset to which permissions will be added.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "layers/{id}/permissions/batchInsert",
+	//   "request": {
+	//     "$ref": "PermissionsBatchInsertRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "PermissionsBatchInsertResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/mapsengine"
+	//   ]
+	// }
+
+}
+
+// method id "mapsengine.layers.permissions.list":
+
+type LayersPermissionsListCall struct {
+	s    *Service
+	id   string
+	opt_ map[string]interface{}
+}
+
+// List: Return all of the permissions for the specified asset.
+func (r *LayersPermissionsService) List(id string) *LayersPermissionsListCall {
+	c := &LayersPermissionsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	return c
+}
+
+func (c *LayersPermissionsListCall) Do() (*PermissionsListResponse, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "layers/{id}/permissions")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *PermissionsListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Return all of the permissions for the specified asset.",
+	//   "httpMethod": "GET",
+	//   "id": "mapsengine.layers.permissions.list",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The ID of the asset whose permissions will be listed.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "layers/{id}/permissions",
+	//   "response": {
+	//     "$ref": "PermissionsListResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/mapsengine",
+	//     "https://www.googleapis.com/auth/mapsengine.readonly"
+	//   ]
+	// }
+
+}
+
 // method id "mapsengine.maps.create":
 
 type MapsCreateCall struct {
@@ -2850,10 +3348,24 @@ func (c *MapsListCall) ProjectId(projectId string) *MapsListCall {
 	return c
 }
 
+// Role sets the optional parameter "role": The role parameter indicates
+// that the response should only contain assets where the current user
+// has the specified level of access.
+func (c *MapsListCall) Role(role string) *MapsListCall {
+	c.opt_["role"] = role
+	return c
+}
+
 // Tags sets the optional parameter "tags": A comma separated list of
 // tags. Returned assets will contain all the tags from the list.
 func (c *MapsListCall) Tags(tags string) *MapsListCall {
 	c.opt_["tags"] = tags
+	return c
+}
+
+// Version sets the optional parameter "version":
+func (c *MapsListCall) Version(version string) *MapsListCall {
+	c.opt_["version"] = version
 	return c
 }
 
@@ -2888,8 +3400,14 @@ func (c *MapsListCall) Do() (*MapsListResponse, error) {
 	if v, ok := c.opt_["projectId"]; ok {
 		params.Set("projectId", fmt.Sprintf("%v", v))
 	}
+	if v, ok := c.opt_["role"]; ok {
+		params.Set("role", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["tags"]; ok {
 		params.Set("tags", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["version"]; ok {
+		params.Set("version", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "maps")
 	urls += "?" + params.Encode()
@@ -2964,8 +3482,35 @@ func (c *MapsListCall) Do() (*MapsListResponse, error) {
 	//       "location": "query",
 	//       "type": "string"
 	//     },
+	//     "role": {
+	//       "description": "The role parameter indicates that the response should only contain assets where the current user has the specified level of access.",
+	//       "enum": [
+	//         "owner",
+	//         "reader",
+	//         "writer"
+	//       ],
+	//       "enumDescriptions": [
+	//         "The user can read, write and administer the asset.",
+	//         "The user can read the asset.",
+	//         "The user can read and write the asset."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "tags": {
 	//       "description": "A comma separated list of tags. Returned assets will contain all the tags from the list.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "version": {
+	//       "enum": [
+	//         "draft",
+	//         "published"
+	//       ],
+	//       "enumDescriptions": [
+	//         "The draft version.",
+	//         "The published version."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -3181,6 +3726,152 @@ func (c *MapsUnpublishCall) Do() (*PublishResponse, error) {
 
 }
 
+// method id "mapsengine.maps.permissions.batchInsert":
+
+type MapsPermissionsBatchInsertCall struct {
+	s                             *Service
+	id                            string
+	permissionsbatchinsertrequest *PermissionsBatchInsertRequest
+	opt_                          map[string]interface{}
+}
+
+// BatchInsert: Add permission entries to an already existing asset.
+//
+// An
+// asset can hold up to 20 different permission entries. Each
+// batchInsert request is atomic.
+func (r *MapsPermissionsService) BatchInsert(id string, permissionsbatchinsertrequest *PermissionsBatchInsertRequest) *MapsPermissionsBatchInsertCall {
+	c := &MapsPermissionsBatchInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	c.permissionsbatchinsertrequest = permissionsbatchinsertrequest
+	return c
+}
+
+func (c *MapsPermissionsBatchInsertCall) Do() (*PermissionsBatchInsertResponse, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.permissionsbatchinsertrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "maps/{id}/permissions/batchInsert")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *PermissionsBatchInsertResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Add permission entries to an already existing asset.\n\nAn asset can hold up to 20 different permission entries. Each batchInsert request is atomic.",
+	//   "httpMethod": "POST",
+	//   "id": "mapsengine.maps.permissions.batchInsert",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The ID of the asset to which permissions will be added.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "maps/{id}/permissions/batchInsert",
+	//   "request": {
+	//     "$ref": "PermissionsBatchInsertRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "PermissionsBatchInsertResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/mapsengine"
+	//   ]
+	// }
+
+}
+
+// method id "mapsengine.maps.permissions.list":
+
+type MapsPermissionsListCall struct {
+	s    *Service
+	id   string
+	opt_ map[string]interface{}
+}
+
+// List: Return all of the permissions for the specified asset.
+func (r *MapsPermissionsService) List(id string) *MapsPermissionsListCall {
+	c := &MapsPermissionsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	return c
+}
+
+func (c *MapsPermissionsListCall) Do() (*PermissionsListResponse, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "maps/{id}/permissions")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *PermissionsListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Return all of the permissions for the specified asset.",
+	//   "httpMethod": "GET",
+	//   "id": "mapsengine.maps.permissions.list",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The ID of the asset whose permissions will be listed.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "maps/{id}/permissions",
+	//   "response": {
+	//     "$ref": "PermissionsListResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/mapsengine",
+	//     "https://www.googleapis.com/auth/mapsengine.readonly"
+	//   ]
+	// }
+
+}
+
 // method id "mapsengine.projects.list":
 
 type ProjectsListCall struct {
@@ -3223,6 +3914,289 @@ func (c *ProjectsListCall) Do() (*ProjectsListResponse, error) {
 	//   "path": "projects",
 	//   "response": {
 	//     "$ref": "ProjectsListResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/mapsengine",
+	//     "https://www.googleapis.com/auth/mapsengine.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "mapsengine.projects.icons.create":
+
+type ProjectsIconsCreateCall struct {
+	s         *Service
+	projectId string
+	icon      *Icon
+	opt_      map[string]interface{}
+	media_    io.Reader
+}
+
+// Create: Create an icon.
+func (r *ProjectsIconsService) Create(projectId string, icon *Icon) *ProjectsIconsCreateCall {
+	c := &ProjectsIconsCreateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.projectId = projectId
+	c.icon = icon
+	return c
+}
+func (c *ProjectsIconsCreateCall) Media(r io.Reader) *ProjectsIconsCreateCall {
+	c.media_ = r
+	return c
+}
+
+func (c *ProjectsIconsCreateCall) Do() (*Icon, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.icon)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/icons")
+	if c.media_ != nil {
+		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
+		params.Set("uploadType", "multipart")
+	}
+	urls += "?" + params.Encode()
+	contentLength_, hasMedia_ := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"projectId": c.projectId,
+	})
+	if hasMedia_ {
+		req.ContentLength = contentLength_
+	}
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Icon
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Create an icon.",
+	//   "httpMethod": "POST",
+	//   "id": "mapsengine.projects.icons.create",
+	//   "mediaUpload": {
+	//     "accept": [
+	//       "*/*"
+	//     ],
+	//     "maxSize": "100KB",
+	//     "protocols": {
+	//       "resumable": {
+	//         "multipart": true,
+	//         "path": "/resumable/upload/mapsengine/exp2/projects/{projectId}/icons"
+	//       },
+	//       "simple": {
+	//         "multipart": true,
+	//         "path": "/upload/mapsengine/exp2/projects/{projectId}/icons"
+	//       }
+	//     }
+	//   },
+	//   "parameterOrder": [
+	//     "projectId"
+	//   ],
+	//   "parameters": {
+	//     "projectId": {
+	//       "description": "The ID of the project.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "projects/{projectId}/icons",
+	//   "request": {
+	//     "$ref": "Icon"
+	//   },
+	//   "response": {
+	//     "$ref": "Icon"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/mapsengine"
+	//   ],
+	//   "supportsMediaUpload": true
+	// }
+
+}
+
+// method id "mapsengine.projects.icons.get":
+
+type ProjectsIconsGetCall struct {
+	s         *Service
+	projectId string
+	id        string
+	opt_      map[string]interface{}
+}
+
+// Get: Return metadata for a specific icon
+func (r *ProjectsIconsService) Get(projectId string, id string) *ProjectsIconsGetCall {
+	c := &ProjectsIconsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.projectId = projectId
+	c.id = id
+	return c
+}
+
+func (c *ProjectsIconsGetCall) Do() (*Icon, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/icons/{id}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"projectId": c.projectId,
+		"id":        c.id,
+	})
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Icon
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Return metadata for a specific icon",
+	//   "httpMethod": "GET",
+	//   "id": "mapsengine.projects.icons.get",
+	//   "parameterOrder": [
+	//     "projectId",
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The ID of the icon.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "projectId": {
+	//       "description": "The ID of the project.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "projects/{projectId}/icons/{id}",
+	//   "response": {
+	//     "$ref": "Icon"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/mapsengine",
+	//     "https://www.googleapis.com/auth/mapsengine.readonly"
+	//   ],
+	//   "supportsMediaDownload": true
+	// }
+
+}
+
+// method id "mapsengine.projects.icons.list":
+
+type ProjectsIconsListCall struct {
+	s         *Service
+	projectId string
+	opt_      map[string]interface{}
+}
+
+// List: Return all icons in the current project
+func (r *ProjectsIconsService) List(projectId string) *ProjectsIconsListCall {
+	c := &ProjectsIconsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.projectId = projectId
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of items to include in a single response page. The maximum
+// supported value is 50.
+func (c *ProjectsIconsListCall) MaxResults(maxResults int64) *ProjectsIconsListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The continuation
+// token, used to page through large result sets. To get the next page
+// of results, set this parameter to the value of nextPageToken from the
+// previous response.
+func (c *ProjectsIconsListCall) PageToken(pageToken string) *ProjectsIconsListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+func (c *ProjectsIconsListCall) Do() (*IconsListResponse, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/icons")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"projectId": c.projectId,
+	})
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *IconsListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Return all icons in the current project",
+	//   "httpMethod": "GET",
+	//   "id": "mapsengine.projects.icons.list",
+	//   "parameterOrder": [
+	//     "projectId"
+	//   ],
+	//   "parameters": {
+	//     "maxResults": {
+	//       "description": "The maximum number of items to include in a single response page. The maximum supported value is 50.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The continuation token, used to page through large result sets. To get the next page of results, set this parameter to the value of nextPageToken from the previous response.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "projectId": {
+	//       "description": "The ID of the project.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "projects/{projectId}/icons",
+	//   "response": {
+	//     "$ref": "IconsListResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/mapsengine",
@@ -3570,6 +4544,14 @@ func (c *RasterCollectionsListCall) ProjectId(projectId string) *RasterCollectio
 	return c
 }
 
+// Role sets the optional parameter "role": The role parameter indicates
+// that the response should only contain assets where the current user
+// has the specified level of access.
+func (c *RasterCollectionsListCall) Role(role string) *RasterCollectionsListCall {
+	c.opt_["role"] = role
+	return c
+}
+
 // Tags sets the optional parameter "tags": A comma separated list of
 // tags. Returned assets will contain all the tags from the list.
 func (c *RasterCollectionsListCall) Tags(tags string) *RasterCollectionsListCall {
@@ -3607,6 +4589,9 @@ func (c *RasterCollectionsListCall) Do() (*RasterCollectionsListResponse, error)
 	}
 	if v, ok := c.opt_["projectId"]; ok {
 		params.Set("projectId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["role"]; ok {
+		params.Set("role", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["tags"]; ok {
 		params.Set("tags", fmt.Sprintf("%v", v))
@@ -3681,6 +4666,21 @@ func (c *RasterCollectionsListCall) Do() (*RasterCollectionsListResponse, error)
 	//     },
 	//     "projectId": {
 	//       "description": "The ID of a Maps Engine project, used to filter the response. To list all available projects with their IDs, send a Projects: list request. You can also find your project ID as the value of the DashboardPlace:cid URL parameter when signed in to mapsengine.google.com.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "role": {
+	//       "description": "The role parameter indicates that the response should only contain assets where the current user has the specified level of access.",
+	//       "enum": [
+	//         "owner",
+	//         "reader",
+	//         "writer"
+	//       ],
+	//       "enumDescriptions": [
+	//         "The user can read, write and administer the asset.",
+	//         "The user can read the asset.",
+	//         "The user can read and write the asset."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3936,6 +4936,152 @@ func (c *RasterCollectionsParentsListCall) Do() (*ParentsListResponse, error) {
 
 }
 
+// method id "mapsengine.rasterCollections.permissions.batchInsert":
+
+type RasterCollectionsPermissionsBatchInsertCall struct {
+	s                             *Service
+	id                            string
+	permissionsbatchinsertrequest *PermissionsBatchInsertRequest
+	opt_                          map[string]interface{}
+}
+
+// BatchInsert: Add permission entries to an already existing asset.
+//
+// An
+// asset can hold up to 20 different permission entries. Each
+// batchInsert request is atomic.
+func (r *RasterCollectionsPermissionsService) BatchInsert(id string, permissionsbatchinsertrequest *PermissionsBatchInsertRequest) *RasterCollectionsPermissionsBatchInsertCall {
+	c := &RasterCollectionsPermissionsBatchInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	c.permissionsbatchinsertrequest = permissionsbatchinsertrequest
+	return c
+}
+
+func (c *RasterCollectionsPermissionsBatchInsertCall) Do() (*PermissionsBatchInsertResponse, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.permissionsbatchinsertrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "rasterCollections/{id}/permissions/batchInsert")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *PermissionsBatchInsertResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Add permission entries to an already existing asset.\n\nAn asset can hold up to 20 different permission entries. Each batchInsert request is atomic.",
+	//   "httpMethod": "POST",
+	//   "id": "mapsengine.rasterCollections.permissions.batchInsert",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The ID of the asset to which permissions will be added.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "rasterCollections/{id}/permissions/batchInsert",
+	//   "request": {
+	//     "$ref": "PermissionsBatchInsertRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "PermissionsBatchInsertResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/mapsengine"
+	//   ]
+	// }
+
+}
+
+// method id "mapsengine.rasterCollections.permissions.list":
+
+type RasterCollectionsPermissionsListCall struct {
+	s    *Service
+	id   string
+	opt_ map[string]interface{}
+}
+
+// List: Return all of the permissions for the specified asset.
+func (r *RasterCollectionsPermissionsService) List(id string) *RasterCollectionsPermissionsListCall {
+	c := &RasterCollectionsPermissionsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	return c
+}
+
+func (c *RasterCollectionsPermissionsListCall) Do() (*PermissionsListResponse, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "rasterCollections/{id}/permissions")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *PermissionsListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Return all of the permissions for the specified asset.",
+	//   "httpMethod": "GET",
+	//   "id": "mapsengine.rasterCollections.permissions.list",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The ID of the asset whose permissions will be listed.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "rasterCollections/{id}/permissions",
+	//   "response": {
+	//     "$ref": "PermissionsListResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/mapsengine",
+	//     "https://www.googleapis.com/auth/mapsengine.readonly"
+	//   ]
+	// }
+
+}
+
 // method id "mapsengine.rasterCollections.rasters.batchDelete":
 
 type RasterCollectionsRastersBatchDeleteCall struct {
@@ -4177,6 +5323,14 @@ func (c *RasterCollectionsRastersListCall) PageToken(pageToken string) *RasterCo
 	return c
 }
 
+// Role sets the optional parameter "role": The role parameter indicates
+// that the response should only contain assets where the current user
+// has the specified level of access.
+func (c *RasterCollectionsRastersListCall) Role(role string) *RasterCollectionsRastersListCall {
+	c.opt_["role"] = role
+	return c
+}
+
 // Tags sets the optional parameter "tags": A comma separated list of
 // tags. Returned assets will contain all the tags from the list.
 func (c *RasterCollectionsRastersListCall) Tags(tags string) *RasterCollectionsRastersListCall {
@@ -4211,6 +5365,9 @@ func (c *RasterCollectionsRastersListCall) Do() (*RasterCollectionsRastersListRe
 	}
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["role"]; ok {
+		params.Set("role", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["tags"]; ok {
 		params.Set("tags", fmt.Sprintf("%v", v))
@@ -4291,6 +5448,21 @@ func (c *RasterCollectionsRastersListCall) Do() (*RasterCollectionsRastersListRe
 	//     },
 	//     "pageToken": {
 	//       "description": "The continuation token, used to page through large result sets. To get the next page of results, set this parameter to the value of nextPageToken from the previous response.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "role": {
+	//       "description": "The role parameter indicates that the response should only contain assets where the current user has the specified level of access.",
+	//       "enum": [
+	//         "owner",
+	//         "reader",
+	//         "writer"
+	//       ],
+	//       "enumDescriptions": [
+	//         "The user can read, write and administer the asset.",
+	//         "The user can read the asset.",
+	//         "The user can read and write the asset."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4427,6 +5599,246 @@ func (c *RastersGetCall) Do() (*Raster, error) {
 	//   "path": "rasters/{id}",
 	//   "response": {
 	//     "$ref": "Raster"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/mapsengine",
+	//     "https://www.googleapis.com/auth/mapsengine.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "mapsengine.rasters.list":
+
+type RastersListCall struct {
+	s         *Service
+	projectId string
+	opt_      map[string]interface{}
+}
+
+// List: Return all rasters readable by the current user.
+func (r *RastersService) List(projectId string) *RastersListCall {
+	c := &RastersListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.projectId = projectId
+	return c
+}
+
+// Bbox sets the optional parameter "bbox": A bounding box, expressed as
+// "west,south,east,north". If set, only assets which intersect this
+// bounding box will be returned.
+func (c *RastersListCall) Bbox(bbox string) *RastersListCall {
+	c.opt_["bbox"] = bbox
+	return c
+}
+
+// CreatedAfter sets the optional parameter "createdAfter": An RFC 3339
+// formatted date-time value (e.g. 1970-01-01T00:00:00Z). Returned
+// assets will have been created at or after this time.
+func (c *RastersListCall) CreatedAfter(createdAfter string) *RastersListCall {
+	c.opt_["createdAfter"] = createdAfter
+	return c
+}
+
+// CreatedBefore sets the optional parameter "createdBefore": An RFC
+// 3339 formatted date-time value (e.g. 1970-01-01T00:00:00Z). Returned
+// assets will have been created at or before this time.
+func (c *RastersListCall) CreatedBefore(createdBefore string) *RastersListCall {
+	c.opt_["createdBefore"] = createdBefore
+	return c
+}
+
+// CreatorEmail sets the optional parameter "creatorEmail": An email
+// address representing a user. Returned assets that have been created
+// by the user associated with the provided email address.
+func (c *RastersListCall) CreatorEmail(creatorEmail string) *RastersListCall {
+	c.opt_["creatorEmail"] = creatorEmail
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of items to include in a single response page. The maximum
+// supported value is 100.
+func (c *RastersListCall) MaxResults(maxResults int64) *RastersListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// ModifiedAfter sets the optional parameter "modifiedAfter": An RFC
+// 3339 formatted date-time value (e.g. 1970-01-01T00:00:00Z). Returned
+// assets will have been modified at or after this time.
+func (c *RastersListCall) ModifiedAfter(modifiedAfter string) *RastersListCall {
+	c.opt_["modifiedAfter"] = modifiedAfter
+	return c
+}
+
+// ModifiedBefore sets the optional parameter "modifiedBefore": An RFC
+// 3339 formatted date-time value (e.g. 1970-01-01T00:00:00Z). Returned
+// assets will have been modified at or before this time.
+func (c *RastersListCall) ModifiedBefore(modifiedBefore string) *RastersListCall {
+	c.opt_["modifiedBefore"] = modifiedBefore
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The continuation
+// token, used to page through large result sets. To get the next page
+// of results, set this parameter to the value of nextPageToken from the
+// previous response.
+func (c *RastersListCall) PageToken(pageToken string) *RastersListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+// Role sets the optional parameter "role": The role parameter indicates
+// that the response should only contain assets where the current user
+// has the specified level of access.
+func (c *RastersListCall) Role(role string) *RastersListCall {
+	c.opt_["role"] = role
+	return c
+}
+
+// Tags sets the optional parameter "tags": A comma separated list of
+// tags. Returned assets will contain all the tags from the list.
+func (c *RastersListCall) Tags(tags string) *RastersListCall {
+	c.opt_["tags"] = tags
+	return c
+}
+
+func (c *RastersListCall) Do() (*RastersListResponse, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("projectId", fmt.Sprintf("%v", c.projectId))
+	if v, ok := c.opt_["bbox"]; ok {
+		params.Set("bbox", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["createdAfter"]; ok {
+		params.Set("createdAfter", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["createdBefore"]; ok {
+		params.Set("createdBefore", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["creatorEmail"]; ok {
+		params.Set("creatorEmail", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["modifiedAfter"]; ok {
+		params.Set("modifiedAfter", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["modifiedBefore"]; ok {
+		params.Set("modifiedBefore", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["role"]; ok {
+		params.Set("role", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["tags"]; ok {
+		params.Set("tags", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "rasters")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *RastersListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Return all rasters readable by the current user.",
+	//   "httpMethod": "GET",
+	//   "id": "mapsengine.rasters.list",
+	//   "parameterOrder": [
+	//     "projectId"
+	//   ],
+	//   "parameters": {
+	//     "bbox": {
+	//       "description": "A bounding box, expressed as \"west,south,east,north\". If set, only assets which intersect this bounding box will be returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "createdAfter": {
+	//       "description": "An RFC 3339 formatted date-time value (e.g. 1970-01-01T00:00:00Z). Returned assets will have been created at or after this time.",
+	//       "format": "date-time",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "createdBefore": {
+	//       "description": "An RFC 3339 formatted date-time value (e.g. 1970-01-01T00:00:00Z). Returned assets will have been created at or before this time.",
+	//       "format": "date-time",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "creatorEmail": {
+	//       "description": "An email address representing a user. Returned assets that have been created by the user associated with the provided email address.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "description": "The maximum number of items to include in a single response page. The maximum supported value is 100.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "modifiedAfter": {
+	//       "description": "An RFC 3339 formatted date-time value (e.g. 1970-01-01T00:00:00Z). Returned assets will have been modified at or after this time.",
+	//       "format": "date-time",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "modifiedBefore": {
+	//       "description": "An RFC 3339 formatted date-time value (e.g. 1970-01-01T00:00:00Z). Returned assets will have been modified at or before this time.",
+	//       "format": "date-time",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageToken": {
+	//       "description": "The continuation token, used to page through large result sets. To get the next page of results, set this parameter to the value of nextPageToken from the previous response.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "projectId": {
+	//       "description": "The ID of a Maps Engine project, used to filter the response. To list all available projects with their IDs, send a Projects: list request. You can also find your project ID as the value of the DashboardPlace:cid URL parameter when signed in to mapsengine.google.com.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "role": {
+	//       "description": "The role parameter indicates that the response should only contain assets where the current user has the specified level of access.",
+	//       "enum": [
+	//         "owner",
+	//         "reader",
+	//         "writer"
+	//       ],
+	//       "enumDescriptions": [
+	//         "The user can read, write and administer the asset.",
+	//         "The user can read the asset.",
+	//         "The user can read and write the asset."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "tags": {
+	//       "description": "A comma separated list of tags. Returned assets will contain all the tags from the list.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "rasters",
+	//   "response": {
+	//     "$ref": "RastersListResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/mapsengine",
@@ -4632,11 +6044,11 @@ func (c *RastersFilesInsertCall) Do() error {
 	//     "protocols": {
 	//       "resumable": {
 	//         "multipart": true,
-	//         "path": "/resumable/upload/mapsengine/v1/rasters/{id}/files"
+	//         "path": "/resumable/upload/mapsengine/exp2/rasters/{id}/files"
 	//       },
 	//       "simple": {
 	//         "multipart": true,
-	//         "path": "/upload/mapsengine/v1/rasters/{id}/files"
+	//         "path": "/upload/mapsengine/exp2/rasters/{id}/files"
 	//       }
 	//     }
 	//   },
@@ -4758,6 +6170,72 @@ func (c *RastersParentsListCall) Do() (*ParentsListResponse, error) {
 	//   "path": "rasters/{id}/parents",
 	//   "response": {
 	//     "$ref": "ParentsListResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/mapsengine",
+	//     "https://www.googleapis.com/auth/mapsengine.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "mapsengine.rasters.permissions.list":
+
+type RastersPermissionsListCall struct {
+	s    *Service
+	id   string
+	opt_ map[string]interface{}
+}
+
+// List: Return all of the permissions for the specified asset.
+func (r *RastersPermissionsService) List(id string) *RastersPermissionsListCall {
+	c := &RastersPermissionsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	return c
+}
+
+func (c *RastersPermissionsListCall) Do() (*PermissionsListResponse, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "rasters/{id}/permissions")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *PermissionsListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Return all of the permissions for the specified asset.",
+	//   "httpMethod": "GET",
+	//   "id": "mapsengine.rasters.permissions.list",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The ID of the asset whose permissions will be listed.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "rasters/{id}/permissions",
+	//   "response": {
+	//     "$ref": "PermissionsListResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/mapsengine",
@@ -5061,6 +6539,14 @@ func (c *TablesListCall) ProjectId(projectId string) *TablesListCall {
 	return c
 }
 
+// Role sets the optional parameter "role": The role parameter indicates
+// that the response should only contain assets where the current user
+// has the specified level of access.
+func (c *TablesListCall) Role(role string) *TablesListCall {
+	c.opt_["role"] = role
+	return c
+}
+
 // Tags sets the optional parameter "tags": A comma separated list of
 // tags. Returned assets will contain all the tags from the list.
 func (c *TablesListCall) Tags(tags string) *TablesListCall {
@@ -5098,6 +6584,9 @@ func (c *TablesListCall) Do() (*TablesListResponse, error) {
 	}
 	if v, ok := c.opt_["projectId"]; ok {
 		params.Set("projectId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["role"]; ok {
+		params.Set("role", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["tags"]; ok {
 		params.Set("tags", fmt.Sprintf("%v", v))
@@ -5172,6 +6661,21 @@ func (c *TablesListCall) Do() (*TablesListResponse, error) {
 	//     },
 	//     "projectId": {
 	//       "description": "The ID of a Maps Engine project, used to filter the response. To list all available projects with their IDs, send a Projects: list request. You can also find your project ID as the value of the DashboardPlace:cid URL parameter when signed in to mapsengine.google.com.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "role": {
+	//       "description": "The role parameter indicates that the response should only contain assets where the current user has the specified level of access.",
+	//       "enum": [
+	//         "owner",
+	//         "reader",
+	//         "writer"
+	//       ],
+	//       "enumDescriptions": [
+	//         "The user can read, write and administer the asset.",
+	//         "The user can read the asset.",
+	//         "The user can read and write the asset."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5408,21 +6912,7 @@ type TablesFeaturesBatchInsertCall struct {
 	opt_                       map[string]interface{}
 }
 
-// BatchInsert: Append features to an existing table.
-//
-// A single
-// batchInsert request can create:
-//
-// - Up to 50 features.
-// - A combined
-// total of 10 000 vertices.
-// Feature limits are documented in the
-// Supported data formats and limits article of the Google Maps Engine
-// help center. Note that free and paid accounts have different
-// limits.
-//
-// For more information about inserting features, read Creating
-// features in the Google Maps Engine developer's guide.
+// BatchInsert: Append the supplied features.
 func (r *TablesFeaturesService) BatchInsert(id string, featuresbatchinsertrequest *FeaturesBatchInsertRequest) *TablesFeaturesBatchInsertCall {
 	c := &TablesFeaturesBatchInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.id = id
@@ -5457,7 +6947,7 @@ func (c *TablesFeaturesBatchInsertCall) Do() error {
 	}
 	return nil
 	// {
-	//   "description": "Append features to an existing table.\n\nA single batchInsert request can create:\n\n- Up to 50 features.\n- A combined total of 10 000 vertices.\nFeature limits are documented in the Supported data formats and limits article of the Google Maps Engine help center. Note that free and paid accounts have different limits.\n\nFor more information about inserting features, read Creating features in the Google Maps Engine developer's guide.",
+	//   "description": "Append the supplied features.",
 	//   "httpMethod": "POST",
 	//   "id": "mapsengine.tables.features.batchInsert",
 	//   "parameterOrder": [
@@ -5491,34 +6981,7 @@ type TablesFeaturesBatchPatchCall struct {
 	opt_                      map[string]interface{}
 }
 
-// BatchPatch: Update the supplied features.
-//
-// A single batchPatch
-// request can update:
-//
-// - Up to 50 features.
-// - A combined total of
-// 10 000 vertices.
-// Feature limits are documented in the Supported
-// data formats and limits article of the Google Maps Engine help
-// center. Note that free and paid accounts have different
-// limits.
-//
-// Feature updates use HTTP PATCH semantics:
-//
-// - A supplied
-// value replaces an existing value (if any) in that field.
-// - Omitted
-// fields remain unchanged.
-// - Complex values in geometries and
-// properties must be replaced as atomic units. For example, providing
-// just the coordinates of a geometry is not allowed; the complete
-// geometry, including type, must be supplied.
-// - Setting a property's
-// value to null deletes that property.
-// For more information about
-// updating features, read Updating features in the Google Maps Engine
-// developer's guide.
+// BatchPatch: Patch the supplied features.
 func (r *TablesFeaturesService) BatchPatch(id string, featuresbatchpatchrequest *FeaturesBatchPatchRequest) *TablesFeaturesBatchPatchCall {
 	c := &TablesFeaturesBatchPatchCall{s: r.s, opt_: make(map[string]interface{})}
 	c.id = id
@@ -5553,7 +7016,7 @@ func (c *TablesFeaturesBatchPatchCall) Do() error {
 	}
 	return nil
 	// {
-	//   "description": "Update the supplied features.\n\nA single batchPatch request can update:\n\n- Up to 50 features.\n- A combined total of 10 000 vertices.\nFeature limits are documented in the Supported data formats and limits article of the Google Maps Engine help center. Note that free and paid accounts have different limits.\n\nFeature updates use HTTP PATCH semantics:\n\n- A supplied value replaces an existing value (if any) in that field.\n- Omitted fields remain unchanged.\n- Complex values in geometries and properties must be replaced as atomic units. For example, providing just the coordinates of a geometry is not allowed; the complete geometry, including type, must be supplied.\n- Setting a property's value to null deletes that property.\nFor more information about updating features, read Updating features in the Google Maps Engine developer's guide.",
+	//   "description": "Patch the supplied features.",
 	//   "httpMethod": "POST",
 	//   "id": "mapsengine.tables.features.batchPatch",
 	//   "parameterOrder": [
@@ -5731,8 +7194,7 @@ func (c *TablesFeaturesListCall) Limit(limit int64) *TablesFeaturesListCall {
 }
 
 // MaxResults sets the optional parameter "maxResults": The maximum
-// number of items to include in the response, used for paging. The
-// maximum supported value is 1000.
+// number of items to include in the response, used for paging.
 func (c *TablesFeaturesListCall) MaxResults(maxResults int64) *TablesFeaturesListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -5859,7 +7321,7 @@ func (c *TablesFeaturesListCall) Do() (*FeaturesListResponse, error) {
 	//       "type": "integer"
 	//     },
 	//     "maxResults": {
-	//       "description": "The maximum number of items to include in the response, used for paging. The maximum supported value is 1000.",
+	//       "description": "The maximum number of items to include in the response, used for paging.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -5980,11 +7442,11 @@ func (c *TablesFilesInsertCall) Do() error {
 	//     "protocols": {
 	//       "resumable": {
 	//         "multipart": true,
-	//         "path": "/resumable/upload/mapsengine/v1/tables/{id}/files"
+	//         "path": "/resumable/upload/mapsengine/exp2/tables/{id}/files"
 	//       },
 	//       "simple": {
 	//         "multipart": true,
-	//         "path": "/upload/mapsengine/v1/tables/{id}/files"
+	//         "path": "/upload/mapsengine/exp2/tables/{id}/files"
 	//       }
 	//     }
 	//   },
@@ -6106,6 +7568,152 @@ func (c *TablesParentsListCall) Do() (*ParentsListResponse, error) {
 	//   "path": "tables/{id}/parents",
 	//   "response": {
 	//     "$ref": "ParentsListResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/mapsengine",
+	//     "https://www.googleapis.com/auth/mapsengine.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "mapsengine.tables.permissions.batchInsert":
+
+type TablesPermissionsBatchInsertCall struct {
+	s                             *Service
+	id                            string
+	permissionsbatchinsertrequest *PermissionsBatchInsertRequest
+	opt_                          map[string]interface{}
+}
+
+// BatchInsert: Add permission entries to an already existing asset.
+//
+// An
+// asset can hold up to 20 different permission entries. Each
+// batchInsert request is atomic.
+func (r *TablesPermissionsService) BatchInsert(id string, permissionsbatchinsertrequest *PermissionsBatchInsertRequest) *TablesPermissionsBatchInsertCall {
+	c := &TablesPermissionsBatchInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	c.permissionsbatchinsertrequest = permissionsbatchinsertrequest
+	return c
+}
+
+func (c *TablesPermissionsBatchInsertCall) Do() (*PermissionsBatchInsertResponse, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.permissionsbatchinsertrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{id}/permissions/batchInsert")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *PermissionsBatchInsertResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Add permission entries to an already existing asset.\n\nAn asset can hold up to 20 different permission entries. Each batchInsert request is atomic.",
+	//   "httpMethod": "POST",
+	//   "id": "mapsengine.tables.permissions.batchInsert",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The ID of the asset to which permissions will be added.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "tables/{id}/permissions/batchInsert",
+	//   "request": {
+	//     "$ref": "PermissionsBatchInsertRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "PermissionsBatchInsertResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/mapsengine"
+	//   ]
+	// }
+
+}
+
+// method id "mapsengine.tables.permissions.list":
+
+type TablesPermissionsListCall struct {
+	s    *Service
+	id   string
+	opt_ map[string]interface{}
+}
+
+// List: Return all of the permissions for the specified asset.
+func (r *TablesPermissionsService) List(id string) *TablesPermissionsListCall {
+	c := &TablesPermissionsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	return c
+}
+
+func (c *TablesPermissionsListCall) Do() (*PermissionsListResponse, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{id}/permissions")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *PermissionsListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Return all of the permissions for the specified asset.",
+	//   "httpMethod": "GET",
+	//   "id": "mapsengine.tables.permissions.list",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The ID of the asset whose permissions will be listed.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "tables/{id}/permissions",
+	//   "response": {
+	//     "$ref": "PermissionsListResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/mapsengine",

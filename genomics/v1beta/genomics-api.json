@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/BweQJBumCL7AJ7M5gEGXXlPajUY\"",
+ "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/SUDnX6OXhxdKPeYmymDZoBwpT40\"",
  "discoveryVersion": "v1",
  "id": "genomics:v1beta",
  "name": "genomics",
  "version": "v1beta",
- "revision": "20140717",
+ "revision": "20140811",
  "title": "Genomics API",
  "description": "Provides access to Genomics data.",
  "ownerDomain": "google.com",
@@ -140,7 +140,7 @@
     },
     "phaseset": {
      "type": "string",
-     "description": "If this field is present, this variant call's genotype ordering implies the phase of the bases and is consistent with any other variant calls on the same contig which have the same phaseset value. When importing data from VCF, if the genotype data was phased but no phase set was specified this field will be set to \"DEFAULT_PHASESET\"."
+     "description": "If this field is present, this variant call's genotype ordering implies the phase of the bases and is consistent with any other variant calls on the same contig which have the same phaseset value. When importing data from VCF, if the genotype data was phased but no phase set was specified this field will be set to \"*\"."
     }
    }
   },
@@ -194,6 +194,23 @@
      "type": "string",
      "description": "An upper bound (inclusive) on the starting coordinate of any variant in the contig.",
      "format": "int64"
+    }
+   }
+  },
+  "CoverageBucket": {
+   "id": "CoverageBucket",
+   "type": "object",
+   "description": "A bucket over which read coverage has been precomputed. A bucket corresponds to a specific range of the reference sequence.",
+   "externalTypeName": "cloud.genomics.readstore.CoverageBucket",
+   "properties": {
+    "meanCoverage": {
+     "type": "number",
+     "description": "The average number of reads which are aligned to each individual reference base in this bucket.",
+     "format": "float"
+    },
+    "range": {
+     "$ref": "GenomicRange",
+     "description": "The genomic coordinate range spanned by this bucket."
     }
    }
   },
@@ -363,6 +380,28 @@
     }
    }
   },
+  "GenomicRange": {
+   "id": "GenomicRange",
+   "type": "object",
+   "description": "An inclusive, exclusive genomic coordinate range over a reference sequence.",
+   "externalTypeName": "cloud.genomics.readstore.GenomicRange",
+   "properties": {
+    "sequenceEnd": {
+     "type": "string",
+     "description": "The end position of the range on the reference, 1-based exclusive. If specified, sequenceName must also be specified.",
+     "format": "uint64"
+    },
+    "sequenceName": {
+     "type": "string",
+     "description": "The reference sequence name, for example \"chr1\", \"1\", or \"chrX\"."
+    },
+    "sequenceStart": {
+     "type": "string",
+     "description": "The start position of the range on the reference, 1-based inclusive. If specified, sequenceName must also be specified.",
+     "format": "uint64"
+    }
+   }
+  },
   "GetVariantsSummaryResponse": {
    "id": "GetVariantsSummaryResponse",
    "type": "object",
@@ -378,6 +417,7 @@
     },
     "metadata": {
      "type": "array",
+     "description": "The metadata associated with this dataset.",
      "items": {
       "$ref": "Metadata"
      }
@@ -414,7 +454,11 @@
     },
     "fileUri": {
      "type": "string",
-     "description": "The file URI that this data was imported from."
+     "description": "[Deprecated] This field is deprecated and will no longer be populated. Please use filename instead."
+    },
+    "filename": {
+     "type": "string",
+     "description": "The name of the file from which this data was imported."
     },
     "headers": {
      "type": "array",
@@ -550,6 +594,7 @@
      "type": "string",
      "description": "The status of this job.",
      "enum": [
+      "canceled",
       "failure",
       "new",
       "pending",
@@ -558,6 +603,7 @@
       "unknownStatus"
      ],
      "enumDescriptions": [
+      "",
       "",
       "",
       "",
@@ -572,6 +618,29 @@
      "items": {
       "type": "string"
      }
+    }
+   }
+  },
+  "ListCoverageBucketsResponse": {
+   "id": "ListCoverageBucketsResponse",
+   "type": "object",
+   "externalTypeName": "cloud.genomics.readstore.ListCoverageBucketsResponse",
+   "properties": {
+    "bucketWidth": {
+     "type": "string",
+     "description": "The length of each coverage bucket in base pairs. Note that buckets at the end of a reference sequence may be shorter. This value is omitted if the bucket width is infinity (the default behaviour, with no range or target_bucket_width).",
+     "format": "uint64"
+    },
+    "coverageBuckets": {
+     "type": "array",
+     "description": "The coverage buckets. The list of buckets is sparse; a bucket with 0 overlapping reads is not returned. A bucket never crosses more than one reference sequence. Each bucket has width bucket_width, unless its end is is the end of the reference sequence.",
+     "items": {
+      "$ref": "CoverageBucket"
+     }
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "The continuation token, which is used to page through large result sets. Provide this value in a subsequent request to return the next page of results. This field will be empty if there aren't any additional results."
     }
    }
   },
@@ -629,7 +698,23 @@
     },
     "type": {
      "type": "string",
-     "description": "The type of data. Possible types include: Integer, Float, Flag, Character, and String."
+     "description": "The type of data. Possible types include: Integer, Float, Flag, Character, and String.",
+     "enum": [
+      "character",
+      "flag",
+      "float",
+      "integer",
+      "string",
+      "unknownType"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
     },
     "value": {
      "type": "string",
@@ -806,11 +891,6 @@
    "description": "A Readset is a collection of Reads.",
    "externalTypeName": "cloud.genomics.readstore.Readset",
    "properties": {
-    "created": {
-     "type": "string",
-     "description": "The date this readset was created, in milliseconds from the epoch.",
-     "format": "int64"
-    },
     "datasetId": {
      "type": "string",
      "description": "The ID of the dataset this readset belongs to."
@@ -829,11 +909,6 @@
     "name": {
      "type": "string",
      "description": "The readset name, typically this is the sample name."
-    },
-    "readCount": {
-     "type": "string",
-     "description": "The number of reads in this readset.",
-     "format": "uint64"
     }
    }
   },
@@ -952,6 +1027,7 @@
      "items": {
       "type": "string",
       "enum": [
+       "canceled",
        "failure",
        "new",
        "pending",
@@ -960,6 +1036,7 @@
        "unknownStatus"
       ],
       "enumDescriptions": [
+       "",
        "",
        "",
        "",
@@ -1198,6 +1275,11 @@
     "datasetId": {
      "type": "string",
      "description": "The ID of the dataset this variant belongs to."
+    },
+    "end": {
+     "type": "string",
+     "description": "The end position (1-based) of this variant. This corresponds to the first base after the last base in the reference allele. So, the length of the reference allele is (end - position). This is useful for variants that don't explicitly give alternate bases, for example large deletions.",
+     "format": "int64"
     },
     "id": {
      "type": "string",
@@ -1525,6 +1607,29 @@
       "https://www.googleapis.com/auth/genomics"
      ]
     },
+    "undelete": {
+     "id": "genomics.datasets.undelete",
+     "path": "datasets/{datasetId}/undelete",
+     "httpMethod": "POST",
+     "description": "Undeletes a dataset by restoring a dataset which was deleted via this API. This operation is only possible for a week after the deletion occurred.",
+     "parameters": {
+      "datasetId": {
+       "type": "string",
+       "description": "The ID of the dataset to be undeleted.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "datasetId"
+     ],
+     "response": {
+      "$ref": "Dataset"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/genomics"
+     ]
+    },
     "update": {
      "id": "genomics.datasets.update",
      "path": "datasets/{datasetId}",
@@ -1579,6 +1684,26 @@
   },
   "jobs": {
    "methods": {
+    "cancel": {
+     "id": "genomics.jobs.cancel",
+     "path": "jobs/{jobId}/cancel",
+     "httpMethod": "POST",
+     "description": "Cancels a job by ID. Note that it is possible for partial results to be generated and stored for cancelled jobs.",
+     "parameters": {
+      "jobId": {
+       "type": "string",
+       "description": "Required. The ID of the job.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "jobId"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/genomics"
+     ]
+    },
     "get": {
      "id": "genomics.jobs.get",
      "path": "jobs/{jobId}",
@@ -1587,7 +1712,7 @@
      "parameters": {
       "jobId": {
        "type": "string",
-       "description": "The ID of the job.",
+       "description": "Required. The ID of the job.",
        "required": true,
        "location": "path"
       }
@@ -1613,7 +1738,11 @@
      },
      "response": {
       "$ref": "SearchJobsResponse"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/genomics",
+      "https://www.googleapis.com/auth/genomics.readonly"
+     ]
     }
    }
   },
@@ -1782,6 +1911,71 @@
      "scopes": [
       "https://www.googleapis.com/auth/genomics"
      ]
+    }
+   },
+   "resources": {
+    "coveragebuckets": {
+     "methods": {
+      "list": {
+       "id": "genomics.readsets.coveragebuckets.list",
+       "path": "readsets/{readsetId}/coveragebuckets",
+       "httpMethod": "GET",
+       "description": "Lists fixed width coverage buckets for a readset, each of which correspond to a range of a reference sequence. Each bucket summarizes coverage information across its corresponding genomic range. Coverage is defined as the number of reads which are aligned to a given base in the reference sequence. Coverage buckets are available at various bucket widths, enabling various coverage \"zoom levels\". The caller must have READ permissions for the target readset.",
+       "parameters": {
+        "maxResults": {
+         "type": "string",
+         "description": "The maximum number of results to return in a single page. If unspecified, defaults to 1024. The maximum value is 2048.",
+         "default": "1024",
+         "format": "uint64",
+         "location": "query"
+        },
+        "pageToken": {
+         "type": "string",
+         "description": "The continuation token, which is used to page through large result sets. To get the next page of results, set this parameter to the value of \"nextPageToken\" from the previous response.",
+         "location": "query"
+        },
+        "range.sequenceEnd": {
+         "type": "string",
+         "description": "The end position of the range on the reference, 1-based exclusive. If specified, sequenceName must also be specified.",
+         "format": "uint64",
+         "location": "query"
+        },
+        "range.sequenceName": {
+         "type": "string",
+         "description": "The reference sequence name, for example \"chr1\", \"1\", or \"chrX\".",
+         "location": "query"
+        },
+        "range.sequenceStart": {
+         "type": "string",
+         "description": "The start position of the range on the reference, 1-based inclusive. If specified, sequenceName must also be specified.",
+         "format": "uint64",
+         "location": "query"
+        },
+        "readsetId": {
+         "type": "string",
+         "description": "Required. The ID of the readset over which coverage is requested.",
+         "required": true,
+         "location": "path"
+        },
+        "targetBucketWidth": {
+         "type": "string",
+         "description": "The desired width of each reported coverage bucket in base pairs. This will be rounded down to the nearest precomputed bucket width; the value of which is returned as bucket_width in the response. Defaults to infinity (each bucket spans an entire reference sequence) or the length of the target range, if specified. The smallest precomputed bucket_width is currently 2048 base pairs; this is subject to change.",
+         "format": "uint64",
+         "location": "query"
+        }
+       },
+       "parameterOrder": [
+        "readsetId"
+       ],
+       "response": {
+        "$ref": "ListCoverageBucketsResponse"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/genomics",
+        "https://www.googleapis.com/auth/genomics.readonly"
+       ]
+      }
+     }
     }
    }
   },

@@ -1,11 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/UUBf3jcU1S7f2gMA7g9Iuwrld9I\"",
+ "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/h4V3iSCdYzfkS1qj8rDB96u3htw\"",
  "discoveryVersion": "v1",
  "id": "androidpublisher:v1",
  "name": "androidpublisher",
  "canonicalName": "Android Publisher",
  "version": "v1",
+ "revision": "20140710",
  "title": "Google Play Android Developer API",
  "description": "Lets Android application developers access their Google Play accounts.",
  "ownerDomain": "google.com",

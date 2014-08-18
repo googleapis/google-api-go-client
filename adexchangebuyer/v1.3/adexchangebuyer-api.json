@@ -1,13 +1,14 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/IppDfK0CjXD9AYpQUEOpRxnDZzg\"",
+ "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/RGPcvGO92y6YyF8hUUCx0o8WiC0\"",
  "discoveryVersion": "v1",
  "id": "adexchangebuyer:v1.3",
  "name": "adexchangebuyer",
  "canonicalName": "Ad Exchange Buyer",
  "version": "v1.3",
+ "revision": "20140812",
  "title": "Ad Exchange Buyer API",
- "description": "Lets you manage your Ad Exchange Buyer account.",
+ "description": "Accesses your bidding-account information, submits creatives for validation, finds available direct deals, and retrieves performance reports.",
  "ownerDomain": "google.com",
  "ownerName": "Google",
  "icons": {
@@ -144,6 +145,53 @@
      "type": "string",
      "description": "Resource type.",
      "default": "adexchangebuyer#accountsList"
+    }
+   }
+  },
+  "BillingInfo": {
+   "id": "BillingInfo",
+   "type": "object",
+   "description": "The configuration data for an Ad Exchange billing info.",
+   "properties": {
+    "accountId": {
+     "type": "integer",
+     "description": "Account id.",
+     "format": "int32"
+    },
+    "accountName": {
+     "type": "string",
+     "description": "Account name."
+    },
+    "billingId": {
+     "type": "array",
+     "description": "Billing info id.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Resource type.",
+     "default": "adexchangebuyer#billingInfo"
+    }
+   }
+  },
+  "BillingInfoList": {
+   "id": "BillingInfoList",
+   "type": "object",
+   "description": "A billing info feed lists Billing Info the Ad Exchange buyer account has access to. Each entry in the feed corresponds to a single billing info.",
+   "properties": {
+    "items": {
+     "type": "array",
+     "description": "A list of billing info relevant for your account.",
+     "items": {
+      "$ref": "BillingInfo"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Resource type.",
+     "default": "adexchangebuyer#billingInfoList"
     }
    }
   },
@@ -867,6 +915,46 @@
      },
      "response": {
       "$ref": "Account"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/adexchange.buyer"
+     ]
+    }
+   }
+  },
+  "billingInfo": {
+   "methods": {
+    "get": {
+     "id": "adexchangebuyer.billingInfo.get",
+     "path": "billinginfo/{accountId}",
+     "httpMethod": "GET",
+     "description": "Returns the billing information for one account specified by account ID.",
+     "parameters": {
+      "accountId": {
+       "type": "integer",
+       "description": "The account id.",
+       "required": true,
+       "format": "int32",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "accountId"
+     ],
+     "response": {
+      "$ref": "BillingInfo"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/adexchange.buyer"
+     ]
+    },
+    "list": {
+     "id": "adexchangebuyer.billingInfo.list",
+     "path": "billinginfo",
+     "httpMethod": "GET",
+     "description": "Retrieves a list of billing information for all accounts of the authenticated user.",
+     "response": {
+      "$ref": "BillingInfoList"
      },
      "scopes": [
       "https://www.googleapis.com/auth/adexchange.buyer"

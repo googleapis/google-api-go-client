@@ -68,14 +68,15 @@ type CreateAuthUriResponse struct {
 	// AuthUri: The URI used by the IDP to authenticate the user.
 	AuthUri string `json:"authUri,omitempty"`
 
+	// ForExistingProvider: True if the authUri is for user's existing
+	// provider.
+	ForExistingProvider bool `json:"forExistingProvider,omitempty"`
+
 	// Kind: The fixed string identitytoolkit#CreateAuthUriResponse".
 	Kind string `json:"kind,omitempty"`
 
 	// ProviderId: The provider ID of the auth URI.
 	ProviderId string `json:"providerId,omitempty"`
-
-	// Providers: Existing IDP's for the user.
-	Providers []string `json:"providers,omitempty"`
 
 	// Registered: Whether the user is registered if the identifier is an
 	// email.
@@ -224,14 +225,21 @@ type IdentitytoolkitRelyingpartySetAccountInfoRequest struct {
 }
 
 type IdentitytoolkitRelyingpartyUploadAccountRequest struct {
+	// HashAlgorithm: The password hash algorithm.
 	HashAlgorithm string `json:"hashAlgorithm,omitempty"`
 
+	// MemoryCost: Memory cost for hash calculation. Used by scrypt similar
+	// algorithms.
 	MemoryCost int64 `json:"memoryCost,omitempty"`
 
+	// Rounds: Rounds for hash calculation. Used by scrypt and similar
+	// algorithms.
 	Rounds int64 `json:"rounds,omitempty"`
 
+	// SaltSeparator: The salt separator.
 	SaltSeparator string `json:"saltSeparator,omitempty"`
 
+	// SignerKey: The key for to hash the password.
 	SignerKey string `json:"signerKey,omitempty"`
 
 	// Users: The account info to be stored.

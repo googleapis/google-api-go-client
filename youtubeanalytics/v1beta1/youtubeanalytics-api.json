@@ -1,11 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"kEk3sFj6Ef5_yR1-H3bAO6qw9mI/zftu6P08mwQ08Bn9saV3KAwwkFg\"",
+ "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/ftj4wM943DrdwThGiQlnCPLSJZc\"",
  "discoveryVersion": "v1",
  "id": "youtubeAnalytics:v1beta1",
  "name": "youtubeAnalytics",
  "canonicalName": "YouTube Analytics",
  "version": "v1beta1",
+ "revision": "20140724",
  "title": "YouTube Analytics API",
  "description": "Retrieve your YouTube Analytics reports.",
  "ownerDomain": "google.com",

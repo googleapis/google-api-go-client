@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/Qrs2SriggaSYO28pp7DFm8wFPbo\"",
+ "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/_57RJ87-RejFO7u1YI3xEG-zluw\"",
  "discoveryVersion": "v1",
  "id": "compute:v1",
  "name": "compute",
  "version": "v1",
- "revision": "20140625",
+ "revision": "20140802",
  "title": "Compute Engine API",
  "description": "API for the Google Compute Engine service.",
  "ownerDomain": "google.com",
@@ -395,7 +395,7 @@
   "AttachedDiskInitializeParams": {
    "id": "AttachedDiskInitializeParams",
    "type": "object",
-   "description": "Initialization parameters for the new disk (Mutually exclusive with 'source', can currently only be specified on the boot disk).",
+   "description": "Initialization parameters for the new disk (input-only). Can only be specified on the boot disk or local SSDs. Mutually exclusive with 'source'.",
    "properties": {
     "diskName": {
      "type": "string",
@@ -444,7 +444,7 @@
     },
     "group": {
      "type": "string",
-     "description": "URL of a zonal Cloud Resource View resource. This resoure view defines the list of instances that serve traffic. Member virtual machine instances from each resource view must live in the same zone as the resource view itself."
+     "description": "URL of a zonal Cloud Resource View resource. This resource view defines the list of instances that serve traffic. Member virtual machine instances from each resource view must live in the same zone as the resource view itself. No two backends in a backend service are allowed to use same Resource View resource."
     },
     "maxRate": {
      "type": "integer",
@@ -514,6 +514,10 @@
      "type": "integer",
      "description": "The TCP port to connect on the backend. The default value is 80.",
      "format": "int32"
+    },
+    "portName": {
+     "type": "string",
+     "description": "Name of backend port. The same name should appear in the resource views referenced by this service. Required."
     },
     "protocol": {
      "type": "string",
@@ -1162,7 +1166,7 @@
     },
     "IPProtocol": {
      "type": "string",
-     "description": "The IP protocol to which this rule applies, valid options are 'TCP', 'UDP', 'ESP', 'AH' or 'SCTP'",
+     "description": "The IP protocol to which this rule applies, valid options are 'TCP', 'UDP', 'ESP', 'AH' or 'SCTP'.",
      "enum": [
       "AH",
       "ESP",
@@ -1203,7 +1207,7 @@
     },
     "portRange": {
      "type": "string",
-     "description": "Applicable only when 'IPProtocol' is 'TCP', 'UDP' or 'SCTP', only packets addressed to ports in the specified range will be forwarded to 'target'. If 'portRange' is left empty (default value), all ports are forwarded. Forwarding rules with the same [IPAddress, IPProtocol] pair must have disjoint port ranges. @pattern: \\d+(?:-\\d+)?"
+     "description": "Applicable only when 'IPProtocol' is 'TCP', 'UDP' or 'SCTP', only packets addressed to ports in the specified range will be forwarded to 'target'. If 'portRange' is left empty (default value), all ports are forwarded. Forwarding rules with the same [IPAddress, IPProtocol] pair must have disjoint port ranges."
     },
     "region": {
      "type": "string",
@@ -1398,7 +1402,7 @@
     },
     "hosts": {
      "type": "array",
-     "description": "The list of host patterns to match. They must be FQDN except that it may start with ?*.? or ?*-?. The ?*? acts like a glob and will match any string of atoms (separated by .?s and -?s) to the left.",
+     "description": "The list of host patterns to match. They must be valid hostnames except that they may start with *. or *-. The * acts like a glob and will match any string of atoms (separated by .s and -s) to the left.",
      "items": {
       "type": "string"
      }
@@ -1924,7 +1928,7 @@
    "properties": {
     "kind": {
      "type": "string",
-     "description": "Identifies what kind of resource this is. Value: the fixed string \"compute#license\".",
+     "description": "Type of resource.",
      "default": "compute#license"
     },
     "name": {
@@ -2678,7 +2682,7 @@
    "properties": {
     "paths": {
      "type": "array",
-     "description": "The list of path patterns to match. Each must start with ?/\" and the only place a \"*\" is allowed is at the end following a \"/\". The string fed to the path matcher does not include any text after the first \"?\" or \"#\", and those chars are not allowed here.",
+     "description": "The list of path patterns to match. Each must start with / and the only place a * is allowed is at the end following a /. The string fed to the path matcher does not include any text after the first ? or #, and those chars are not allowed here.",
      "items": {
       "type": "string"
      }
@@ -2909,7 +2913,8 @@
    "type": "object",
    "properties": {
     "group": {
-     "type": "string"
+     "type": "string",
+     "description": "A URI referencing one of the resource views listed in the backend service."
     }
    }
   },

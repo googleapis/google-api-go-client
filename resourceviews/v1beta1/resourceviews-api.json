@@ -1,10 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/Ork0VN4Xb-PDd9GiQ69V3C5zjl0\"",
+ "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/pVZ6N4zg8YUBo0usXnyYxvGf15U\"",
  "discoveryVersion": "v1",
  "id": "resourceviews:v1beta1",
  "name": "resourceviews",
  "version": "v1beta1",
+ "revision": "20140806",
  "title": "Resource Views API",
  "description": "The Resource View API allows users to create and manage logical sets of Google Compute Engine instances.",
  "ownerDomain": "google.com",
@@ -73,6 +74,12 @@
    "scopes": {
     "https://www.googleapis.com/auth/cloud-platform": {
      "description": "View and manage your data across Google Cloud Platform services"
+    },
+    "https://www.googleapis.com/auth/compute": {
+     "description": "View and manage your Google Compute Engine resources"
+    },
+    "https://www.googleapis.com/auth/compute.readonly": {
+     "description": "View your Google Compute Engine resources"
     },
     "https://www.googleapis.com/auth/ndev.cloudman": {
      "description": "View and manage your Google Cloud Platform management resources and deployment status information"
@@ -189,7 +196,7 @@
     },
     "id": {
      "type": "string",
-     "description": "The ID of the resource view. For internal use only."
+     "description": "[Output Only] The ID of the resource view."
     },
     "kind": {
      "type": "string",
@@ -261,7 +268,7 @@
    "properties": {
     "members": {
      "type": "array",
-     "description": "The resources in the view.",
+     "description": "The full URL of resources in the view.",
      "items": {
       "type": "string"
      }
@@ -343,6 +350,7 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/ndev.cloudman"
      ]
     },
@@ -378,6 +386,7 @@
      ],
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/ndev.cloudman"
      ]
     },
@@ -416,6 +425,8 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly",
       "https://www.googleapis.com/auth/ndev.cloudman",
       "https://www.googleapis.com/auth/ndev.cloudman.readonly"
      ]
@@ -451,6 +462,7 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/ndev.cloudman"
      ]
     },
@@ -462,11 +474,11 @@
      "parameters": {
       "maxResults": {
        "type": "integer",
-       "description": "Maximum count of results to be returned. Acceptable values are 0 to 500, inclusive. (Default: 50)",
-       "default": "50",
+       "description": "Maximum count of results to be returned. Acceptable values are 0 to 5000, inclusive. (Default: 5000)",
+       "default": "5000",
        "format": "int32",
        "minimum": "0",
-       "maximum": "500",
+       "maximum": "5000",
        "location": "query"
       },
       "pageToken": {
@@ -496,6 +508,8 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly",
       "https://www.googleapis.com/auth/ndev.cloudman",
       "https://www.googleapis.com/auth/ndev.cloudman.readonly"
      ]
@@ -508,11 +522,11 @@
      "parameters": {
       "maxResults": {
        "type": "integer",
-       "description": "Maximum count of results to be returned. Acceptable values are 0 to 500, inclusive. (Default: 50)",
-       "default": "50",
+       "description": "Maximum count of results to be returned. Acceptable values are 0 to 5000, inclusive. (Default: 5000)",
+       "default": "5000",
        "format": "int32",
        "minimum": "0",
-       "maximum": "500",
+       "maximum": "5000",
        "location": "query"
       },
       "pageToken": {
@@ -549,6 +563,8 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly",
       "https://www.googleapis.com/auth/ndev.cloudman",
       "https://www.googleapis.com/auth/ndev.cloudman.readonly"
      ]
@@ -588,6 +604,7 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/ndev.cloudman"
      ]
     }
@@ -630,6 +647,7 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/ndev.cloudman"
      ]
     },
@@ -665,6 +683,7 @@
      ],
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/ndev.cloudman"
      ]
     },
@@ -703,6 +722,8 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly",
       "https://www.googleapis.com/auth/ndev.cloudman",
       "https://www.googleapis.com/auth/ndev.cloudman.readonly"
      ]
@@ -738,6 +759,7 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/ndev.cloudman"
      ]
     },
@@ -749,11 +771,11 @@
      "parameters": {
       "maxResults": {
        "type": "integer",
-       "description": "Maximum count of results to be returned. Acceptable values are 0 to 500, inclusive. (Default: 50)",
-       "default": "50",
+       "description": "Maximum count of results to be returned. Acceptable values are 0 to 5000, inclusive. (Default: 5000)",
+       "default": "5000",
        "format": "int32",
        "minimum": "0",
-       "maximum": "500",
+       "maximum": "5000",
        "location": "query"
       },
       "pageToken": {
@@ -783,6 +805,8 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly",
       "https://www.googleapis.com/auth/ndev.cloudman",
       "https://www.googleapis.com/auth/ndev.cloudman.readonly"
      ]
@@ -795,11 +819,11 @@
      "parameters": {
       "maxResults": {
        "type": "integer",
-       "description": "Maximum count of results to be returned. Acceptable values are 0 to 500, inclusive. (Default: 50)",
-       "default": "50",
+       "description": "Maximum count of results to be returned. Acceptable values are 0 to 5000, inclusive. (Default: 5000)",
+       "default": "5000",
        "format": "int32",
        "minimum": "0",
-       "maximum": "500",
+       "maximum": "5000",
        "location": "query"
       },
       "pageToken": {
@@ -836,6 +860,8 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly",
       "https://www.googleapis.com/auth/ndev.cloudman",
       "https://www.googleapis.com/auth/ndev.cloudman.readonly"
      ]
@@ -875,6 +901,7 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/ndev.cloudman"
      ]
     }

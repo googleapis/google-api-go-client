@@ -579,10 +579,11 @@ type Backend struct {
 	// is provided by the client when the resource is created.
 	Description string `json:"description,omitempty"`
 
-	// Group: URL of a zonal Cloud Resource View resource. This resoure view
-	// defines the list of instances that serve traffic. Member virtual
+	// Group: URL of a zonal Cloud Resource View resource. This resource
+	// view defines the list of instances that serve traffic. Member virtual
 	// machine instances from each resource view must live in the same zone
-	// as the resource view itself.
+	// as the resource view itself. No two backends in a backend service are
+	// allowed to use same Resource View resource.
 	Group string `json:"group,omitempty"`
 
 	// MaxRate: The max RPS of the group. Can be used with either balancing
@@ -640,6 +641,10 @@ type BackendService struct {
 	// Port: The TCP port to connect on the backend. The default value is
 	// 80.
 	Port int64 `json:"port,omitempty"`
+
+	// PortName: Name of backend port. The same name should appear in the
+	// resource views referenced by this service. Required.
+	PortName string `json:"portName,omitempty"`
 
 	Protocol string `json:"protocol,omitempty"`
 
@@ -1034,7 +1039,7 @@ type ForwardingRule struct {
 	IPAddress string `json:"IPAddress,omitempty"`
 
 	// IPProtocol: The IP protocol to which this rule applies, valid options
-	// are 'TCP', 'UDP', 'ESP', 'AH' or 'SCTP'
+	// are 'TCP', 'UDP', 'ESP', 'AH' or 'SCTP'.
 	IPProtocol string `json:"IPProtocol,omitempty"`
 
 	// CreationTimestamp: Creation timestamp in RFC3339 text format (output
@@ -1062,7 +1067,6 @@ type ForwardingRule struct {
 	// be forwarded to 'target'. If 'portRange' is left empty (default
 	// value), all ports are forwarded. Forwarding rules with the same
 	// [IPAddress, IPProtocol] pair must have disjoint port ranges.
-	// @pattern: \d+(?:-\d+)?
 	PortRange string `json:"portRange,omitempty"`
 
 	// Region: URL of the region where the regional forwarding rule resides
@@ -1164,10 +1168,10 @@ type HealthStatus struct {
 type HostRule struct {
 	Description string `json:"description,omitempty"`
 
-	// Hosts: The list of host patterns to match. They must be FQDN except
-	// that it may start with ?*.? or ?*-?. The ?*? acts like a glob and
-	// will match any string of atoms (separated by .?s and -?s) to the
-	// left.
+	// Hosts: The list of host patterns to match. They must be valid
+	// hostnames except that they may start with *. or *-. The * acts like a
+	// glob and will match any string of atoms (separated by .s and -s) to
+	// the left.
 	Hosts []string `json:"hosts,omitempty"`
 
 	// PathMatcher: The name of the PathMatcher to match the path portion of
@@ -1498,8 +1502,7 @@ type InstancesScopedListWarningData struct {
 }
 
 type License struct {
-	// Kind: Identifies what kind of resource this is. Value: the fixed
-	// string "compute#license".
+	// Kind: Type of resource.
 	Kind string `json:"kind,omitempty"`
 
 	// Name: Name of the resource; provided by the client when the resource
@@ -1944,10 +1947,10 @@ type PathMatcher struct {
 }
 
 type PathRule struct {
-	// Paths: The list of path patterns to match. Each must start with ?/"
-	// and the only place a "*" is allowed is at the end following a "/".
-	// The string fed to the path matcher does not include any text after
-	// the first "?" or "#", and those chars are not allowed here.
+	// Paths: The list of path patterns to match. Each must start with / and
+	// the only place a * is allowed is at the end following a /. The string
+	// fed to the path matcher does not include any text after the first ?
+	// or #, and those chars are not allowed here.
 	Paths []string `json:"paths,omitempty"`
 
 	// Service: The URL of the BackendService resource if this rule is
@@ -2054,6 +2057,8 @@ type RegionList struct {
 }
 
 type ResourceGroupReference struct {
+	// Group: A URI referencing one of the resource views listed in the
+	// backend service.
 	Group string `json:"group,omitempty"`
 }
 

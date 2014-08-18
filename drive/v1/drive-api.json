@@ -1,10 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"C11OM5Qtr9122-scy_WeqND9D3o/6W-lw1NgBdBwbbd63Z_uzUR9eJU\"",
+ "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/E9F7kr_CIUBLaX_abjaTqq2kNvw\"",
  "discoveryVersion": "v1",
  "id": "drive:v1",
  "name": "drive",
  "version": "v1",
+ "revision": "20140811",
  "title": "Drive API",
  "description": "The API to interact with Drive.",
  "ownerDomain": "google.com",

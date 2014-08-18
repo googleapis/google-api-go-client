@@ -1,11 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/A-1sT-U5SnExq9BpO6mgnwTPLyk\"",
+ "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/Y8lWoeWRwexxTuK_qR4soNIViwU\"",
  "discoveryVersion": "v1",
  "id": "cloudmonitoring:v2beta1",
  "name": "cloudmonitoring",
+ "canonicalName": "Cloud Monitoring",
  "version": "v2beta1",
- "revision": "20140714",
+ "revision": "20140807",
  "title": "Cloud Monitoring API",
  "description": "API for accessing Google Cloud and API monitoring data.",
  "ownerDomain": "google.com",
@@ -14,7 +15,7 @@
   "x16": "http://www.google.com/images/icons/product/search-16.gif",
   "x32": "http://www.google.com/images/icons/product/search-32.gif"
  },
- "documentationLink": "https://developers.google.com/cloud/eap/cloud-monitoring/v2beta1/",
+ "documentationLink": "https://developers.google.com/cloud-monitoring/",
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/cloudmonitoring/v2beta1/projects/",
  "basePath": "/cloudmonitoring/v2beta1/projects/",
@@ -496,7 +497,7 @@
       },
       "metric": {
        "type": "string",
-       "description": "Metric names are protocol-free URLs as listed in the Supported Metrics page. For example, appengine.googleapis.com/http/server/response_count or compute.googleapis.com/instance/disk/read_ops_count.",
+       "description": "Metric names are protocol-free URLs as listed in the Supported Metrics page. For example, compute.googleapis.com/instance/disk/read_ops_count.",
        "required": true,
        "location": "path"
       },
@@ -572,7 +573,7 @@
       },
       "metric": {
        "type": "string",
-       "description": "Metric names are protocol-free URLs as listed in the Supported Metrics page. For example, appengine.googleapis.com/http/server/response_count or compute.googleapis.com/instance/disk/read_ops_count.",
+       "description": "Metric names are protocol-free URLs as listed in the Supported Metrics page. For example, compute.googleapis.com/instance/disk/read_ops_count.",
        "required": true,
        "location": "path"
       },

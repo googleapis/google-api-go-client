@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/_A2ksHJbGyH-D3gN5hD5Jnh5u8Q\"",
+ "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/3jTVaifUosFx3s-Kahm54jf_5Xc\"",
  "discoveryVersion": "v1",
  "id": "games:v1",
  "name": "games",
  "canonicalName": "Games",
  "version": "v1",
- "revision": "20140715",
+ "revision": "20140812",
  "title": "Google Play Game Services API",
  "description": "The API for Google Play Game Services.",
  "ownerDomain": "google.com",
@@ -2473,6 +2473,10 @@
      "type": "string",
      "description": "Additional information about this score. Values will contain no more than 64 URI-safe characters as defined by section 2.3 of RFC 3986.",
      "pattern": "[a-zA-Z0-9-._~]{0,64}"
+    },
+    "signature": {
+     "type": "string",
+     "description": "Signature Values will contain URI-safe characters as defined by section 2.3 of RFC 3986."
     }
    }
   },

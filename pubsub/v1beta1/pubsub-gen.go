@@ -117,8 +117,10 @@ type Label struct {
 	// spanner.google.com/universe
 	Key string `json:"key,omitempty"`
 
+	// NumValue: An integer value.
 	NumValue int64 `json:"numValue,omitempty,string"`
 
+	// StrValue: A string value.
 	StrValue string `json:"strValue,omitempty"`
 }
 

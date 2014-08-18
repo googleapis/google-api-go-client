@@ -261,9 +261,9 @@ type Message struct {
 	// Payload: The parsed email structure in the message parts.
 	Payload *MessagePart `json:"payload,omitempty"`
 
-	// Raw: The entire email message in an RFC 2822 formatted string.
-	// Returned in messages.get and drafts.get responses when the format=RAW
-	// parameter is supplied.
+	// Raw: The entire email message in an RFC 2822 formatted and URL-safe
+	// base64 encoded string. Returned in messages.get and drafts.get
+	// responses when the format=RAW parameter is supplied.
 	Raw string `json:"raw,omitempty"`
 
 	// SizeEstimate: Estimated size in bytes of the message.

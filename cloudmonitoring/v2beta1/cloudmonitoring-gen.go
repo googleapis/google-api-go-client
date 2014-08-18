@@ -1,6 +1,6 @@
 // Package cloudmonitoring provides access to the Cloud Monitoring API.
 //
-// See https://developers.google.com/cloud/eap/cloud-monitoring/v2beta1/
+// See https://developers.google.com/cloud-monitoring/
 //
 // Usage example:
 //
@@ -597,7 +597,7 @@ func (c *TimeseriesListCall) Do() (*ListTimeseriesResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "metric": {
-	//       "description": "Metric names are protocol-free URLs as listed in the Supported Metrics page. For example, appengine.googleapis.com/http/server/response_count or compute.googleapis.com/instance/disk/read_ops_count.",
+	//       "description": "Metric names are protocol-free URLs as listed in the Supported Metrics page. For example, compute.googleapis.com/instance/disk/read_ops_count.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -801,7 +801,7 @@ func (c *TimeseriesDescriptorsListCall) Do() (*ListTimeseriesDescriptorsResponse
 	//       "type": "string"
 	//     },
 	//     "metric": {
-	//       "description": "Metric names are protocol-free URLs as listed in the Supported Metrics page. For example, appengine.googleapis.com/http/server/response_count or compute.googleapis.com/instance/disk/read_ops_count.",
+	//       "description": "Metric names are protocol-free URLs as listed in the Supported Metrics page. For example, compute.googleapis.com/instance/disk/read_ops_count.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"

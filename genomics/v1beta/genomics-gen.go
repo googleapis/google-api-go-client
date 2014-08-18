@@ -159,10 +159,22 @@ type ReadsService struct {
 
 func NewReadsetsService(s *Service) *ReadsetsService {
 	rs := &ReadsetsService{s: s}
+	rs.Coveragebuckets = NewReadsetsCoveragebucketsService(s)
 	return rs
 }
 
 type ReadsetsService struct {
+	s *Service
+
+	Coveragebuckets *ReadsetsCoveragebucketsService
+}
+
+func NewReadsetsCoveragebucketsService(s *Service) *ReadsetsCoveragebucketsService {
+	rs := &ReadsetsCoveragebucketsService{s: s}
+	return rs
+}
+
+type ReadsetsCoveragebucketsService struct {
 	s *Service
 }
 
@@ -212,8 +224,7 @@ type Call struct {
 	// ordering implies the phase of the bases and is consistent with any
 	// other variant calls on the same contig which have the same phaseset
 	// value. When importing data from VCF, if the genotype data was phased
-	// but no phase set was specified this field will be set to
-	// "DEFAULT_PHASESET".
+	// but no phase set was specified this field will be set to "*".
 	Phaseset string `json:"phaseset,omitempty"`
 }
 
@@ -242,6 +253,15 @@ type ContigBound struct {
 	// UpperBound: An upper bound (inclusive) on the starting coordinate of
 	// any variant in the contig.
 	UpperBound int64 `json:"upperBound,omitempty,string"`
+}
+
+type CoverageBucket struct {
+	// MeanCoverage: The average number of reads which are aligned to each
+	// individual reference base in this bucket.
+	MeanCoverage float64 `json:"meanCoverage,omitempty"`
+
+	// Range: The genomic coordinate range spanned by this bucket.
+	Range *GenomicRange `json:"range,omitempty"`
 }
 
 type Dataset struct {
@@ -352,11 +372,26 @@ type ExportVariantsResponse struct {
 	JobId string `json:"jobId,omitempty"`
 }
 
+type GenomicRange struct {
+	// SequenceEnd: The end position of the range on the reference, 1-based
+	// exclusive. If specified, sequenceName must also be specified.
+	SequenceEnd uint64 `json:"sequenceEnd,omitempty,string"`
+
+	// SequenceName: The reference sequence name, for example "chr1", "1",
+	// or "chrX".
+	SequenceName string `json:"sequenceName,omitempty"`
+
+	// SequenceStart: The start position of the range on the reference,
+	// 1-based inclusive. If specified, sequenceName must also be specified.
+	SequenceStart uint64 `json:"sequenceStart,omitempty,string"`
+}
+
 type GetVariantsSummaryResponse struct {
 	// ContigBounds: A list of all contigs used by the variants in a dataset
 	// with associated coordinate upper bounds for each one.
 	ContigBounds []*ContigBound `json:"contigBounds,omitempty"`
 
+	// Metadata: The metadata associated with this dataset.
 	Metadata []*Metadata `json:"metadata,omitempty"`
 }
 
@@ -372,8 +407,12 @@ type HeaderSection struct {
 	// Comments: (@CO) One-line text comments.
 	Comments []string `json:"comments,omitempty"`
 
-	// FileUri: The file URI that this data was imported from.
+	// FileUri: [Deprecated] This field is deprecated and will no longer be
+	// populated. Please use filename instead.
 	FileUri string `json:"fileUri,omitempty"`
+
+	// Filename: The name of the file from which this data was imported.
+	Filename string `json:"filename,omitempty"`
 
 	// Headers: (@HD) The header line.
 	Headers []*Header `json:"headers,omitempty"`
@@ -447,6 +486,26 @@ type Job struct {
 
 	// Warnings: Any warnings that occurred during processing.
 	Warnings []string `json:"warnings,omitempty"`
+}
+
+type ListCoverageBucketsResponse struct {
+	// BucketWidth: The length of each coverage bucket in base pairs. Note
+	// that buckets at the end of a reference sequence may be shorter. This
+	// value is omitted if the bucket width is infinity (the default
+	// behaviour, with no range or target_bucket_width).
+	BucketWidth uint64 `json:"bucketWidth,omitempty,string"`
+
+	// CoverageBuckets: The coverage buckets. The list of buckets is sparse;
+	// a bucket with 0 overlapping reads is not returned. A bucket never
+	// crosses more than one reference sequence. Each bucket has width
+	// bucket_width, unless its end is is the end of the reference sequence.
+	CoverageBuckets []*CoverageBucket `json:"coverageBuckets,omitempty"`
+
+	// NextPageToken: The continuation token, which is used to page through
+	// large result sets. Provide this value in a subsequent request to
+	// return the next page of results. This field will be empty if there
+	// aren't any additional results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
 type ListDatasetsResponse struct {
@@ -611,10 +670,6 @@ type ReadGroup struct {
 }
 
 type Readset struct {
-	// Created: The date this readset was created, in milliseconds from the
-	// epoch.
-	Created int64 `json:"created,omitempty,string"`
-
 	// DatasetId: The ID of the dataset this readset belongs to.
 	DatasetId string `json:"datasetId,omitempty"`
 
@@ -627,9 +682,6 @@ type Readset struct {
 
 	// Name: The readset name, typically this is the sample name.
 	Name string `json:"name,omitempty"`
-
-	// ReadCount: The number of reads in this readset.
-	ReadCount uint64 `json:"readCount,omitempty,string"`
 }
 
 type ReferenceSequence struct {
@@ -864,6 +916,13 @@ type Variant struct {
 
 	// DatasetId: The ID of the dataset this variant belongs to.
 	DatasetId string `json:"datasetId,omitempty"`
+
+	// End: The end position (1-based) of this variant. This corresponds to
+	// the first base after the last base in the reference allele. So, the
+	// length of the reference allele is (end - position). This is useful
+	// for variants that don't explicitly give alternate bases, for example
+	// large deletions.
+	End int64 `json:"end,omitempty,string"`
 
 	// Id: The Google generated ID of the variant, immutable.
 	Id string `json:"id,omitempty"`
@@ -1756,6 +1815,73 @@ func (c *DatasetsPatchCall) Do() (*Dataset, error) {
 
 }
 
+// method id "genomics.datasets.undelete":
+
+type DatasetsUndeleteCall struct {
+	s         *Service
+	datasetId string
+	opt_      map[string]interface{}
+}
+
+// Undelete: Undeletes a dataset by restoring a dataset which was
+// deleted via this API. This operation is only possible for a week
+// after the deletion occurred.
+func (r *DatasetsService) Undelete(datasetId string) *DatasetsUndeleteCall {
+	c := &DatasetsUndeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.datasetId = datasetId
+	return c
+}
+
+func (c *DatasetsUndeleteCall) Do() (*Dataset, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "datasets/{datasetId}/undelete")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"datasetId": c.datasetId,
+	})
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Dataset
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Undeletes a dataset by restoring a dataset which was deleted via this API. This operation is only possible for a week after the deletion occurred.",
+	//   "httpMethod": "POST",
+	//   "id": "genomics.datasets.undelete",
+	//   "parameterOrder": [
+	//     "datasetId"
+	//   ],
+	//   "parameters": {
+	//     "datasetId": {
+	//       "description": "The ID of the dataset to be undeleted.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "datasets/{datasetId}/undelete",
+	//   "response": {
+	//     "$ref": "Dataset"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/genomics"
+	//   ]
+	// }
+
+}
+
 // method id "genomics.datasets.update":
 
 type DatasetsUpdateCall struct {
@@ -1895,6 +2021,65 @@ func (c *ExperimentalJobsCreateCall) Do() (*ExperimentalCreateJobResponse, error
 
 }
 
+// method id "genomics.jobs.cancel":
+
+type JobsCancelCall struct {
+	s     *Service
+	jobId string
+	opt_  map[string]interface{}
+}
+
+// Cancel: Cancels a job by ID. Note that it is possible for partial
+// results to be generated and stored for cancelled jobs.
+func (r *JobsService) Cancel(jobId string) *JobsCancelCall {
+	c := &JobsCancelCall{s: r.s, opt_: make(map[string]interface{})}
+	c.jobId = jobId
+	return c
+}
+
+func (c *JobsCancelCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "jobs/{jobId}/cancel")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"jobId": c.jobId,
+	})
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Cancels a job by ID. Note that it is possible for partial results to be generated and stored for cancelled jobs.",
+	//   "httpMethod": "POST",
+	//   "id": "genomics.jobs.cancel",
+	//   "parameterOrder": [
+	//     "jobId"
+	//   ],
+	//   "parameters": {
+	//     "jobId": {
+	//       "description": "Required. The ID of the job.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "jobs/{jobId}/cancel",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/genomics"
+	//   ]
+	// }
+
+}
+
 // method id "genomics.jobs.get":
 
 type JobsGetCall struct {
@@ -1943,7 +2128,7 @@ func (c *JobsGetCall) Do() (*Job, error) {
 	//   ],
 	//   "parameters": {
 	//     "jobId": {
-	//       "description": "The ID of the job.",
+	//       "description": "Required. The ID of the job.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2014,7 +2199,11 @@ func (c *JobsSearchCall) Do() (*SearchJobsResponse, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "SearchJobsResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/genomics",
+	//     "https://www.googleapis.com/auth/genomics.readonly"
+	//   ]
 	// }
 
 }
@@ -2555,6 +2744,184 @@ func (c *ReadsetsUpdateCall) Do() (*Readset, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/genomics"
+	//   ]
+	// }
+
+}
+
+// method id "genomics.readsets.coveragebuckets.list":
+
+type ReadsetsCoveragebucketsListCall struct {
+	s         *Service
+	readsetId string
+	opt_      map[string]interface{}
+}
+
+// List: Lists fixed width coverage buckets for a readset, each of which
+// correspond to a range of a reference sequence. Each bucket summarizes
+// coverage information across its corresponding genomic range. Coverage
+// is defined as the number of reads which are aligned to a given base
+// in the reference sequence. Coverage buckets are available at various
+// bucket widths, enabling various coverage "zoom levels". The caller
+// must have READ permissions for the target readset.
+func (r *ReadsetsCoveragebucketsService) List(readsetId string) *ReadsetsCoveragebucketsListCall {
+	c := &ReadsetsCoveragebucketsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.readsetId = readsetId
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of results to return in a single page. If unspecified,
+// defaults to 1024. The maximum value is 2048.
+func (c *ReadsetsCoveragebucketsListCall) MaxResults(maxResults uint64) *ReadsetsCoveragebucketsListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The continuation
+// token, which is used to page through large result sets. To get the
+// next page of results, set this parameter to the value of
+// "nextPageToken" from the previous response.
+func (c *ReadsetsCoveragebucketsListCall) PageToken(pageToken string) *ReadsetsCoveragebucketsListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+// RangeSequenceEnd sets the optional parameter "range.sequenceEnd": The
+// end position of the range on the reference, 1-based exclusive. If
+// specified, sequenceName must also be specified.
+func (c *ReadsetsCoveragebucketsListCall) RangeSequenceEnd(rangeSequenceEnd uint64) *ReadsetsCoveragebucketsListCall {
+	c.opt_["range.sequenceEnd"] = rangeSequenceEnd
+	return c
+}
+
+// RangeSequenceName sets the optional parameter "range.sequenceName":
+// The reference sequence name, for example "chr1", "1", or "chrX".
+func (c *ReadsetsCoveragebucketsListCall) RangeSequenceName(rangeSequenceName string) *ReadsetsCoveragebucketsListCall {
+	c.opt_["range.sequenceName"] = rangeSequenceName
+	return c
+}
+
+// RangeSequenceStart sets the optional parameter "range.sequenceStart":
+// The start position of the range on the reference, 1-based inclusive.
+// If specified, sequenceName must also be specified.
+func (c *ReadsetsCoveragebucketsListCall) RangeSequenceStart(rangeSequenceStart uint64) *ReadsetsCoveragebucketsListCall {
+	c.opt_["range.sequenceStart"] = rangeSequenceStart
+	return c
+}
+
+// TargetBucketWidth sets the optional parameter "targetBucketWidth":
+// The desired width of each reported coverage bucket in base pairs.
+// This will be rounded down to the nearest precomputed bucket width;
+// the value of which is returned as bucket_width in the response.
+// Defaults to infinity (each bucket spans an entire reference sequence)
+// or the length of the target range, if specified. The smallest
+// precomputed bucket_width is currently 2048 base pairs; this is
+// subject to change.
+func (c *ReadsetsCoveragebucketsListCall) TargetBucketWidth(targetBucketWidth uint64) *ReadsetsCoveragebucketsListCall {
+	c.opt_["targetBucketWidth"] = targetBucketWidth
+	return c
+}
+
+func (c *ReadsetsCoveragebucketsListCall) Do() (*ListCoverageBucketsResponse, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["range.sequenceEnd"]; ok {
+		params.Set("range.sequenceEnd", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["range.sequenceName"]; ok {
+		params.Set("range.sequenceName", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["range.sequenceStart"]; ok {
+		params.Set("range.sequenceStart", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["targetBucketWidth"]; ok {
+		params.Set("targetBucketWidth", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "readsets/{readsetId}/coveragebuckets")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"readsetId": c.readsetId,
+	})
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *ListCoverageBucketsResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists fixed width coverage buckets for a readset, each of which correspond to a range of a reference sequence. Each bucket summarizes coverage information across its corresponding genomic range. Coverage is defined as the number of reads which are aligned to a given base in the reference sequence. Coverage buckets are available at various bucket widths, enabling various coverage \"zoom levels\". The caller must have READ permissions for the target readset.",
+	//   "httpMethod": "GET",
+	//   "id": "genomics.readsets.coveragebuckets.list",
+	//   "parameterOrder": [
+	//     "readsetId"
+	//   ],
+	//   "parameters": {
+	//     "maxResults": {
+	//       "default": "1024",
+	//       "description": "The maximum number of results to return in a single page. If unspecified, defaults to 1024. The maximum value is 2048.",
+	//       "format": "uint64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageToken": {
+	//       "description": "The continuation token, which is used to page through large result sets. To get the next page of results, set this parameter to the value of \"nextPageToken\" from the previous response.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "range.sequenceEnd": {
+	//       "description": "The end position of the range on the reference, 1-based exclusive. If specified, sequenceName must also be specified.",
+	//       "format": "uint64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "range.sequenceName": {
+	//       "description": "The reference sequence name, for example \"chr1\", \"1\", or \"chrX\".",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "range.sequenceStart": {
+	//       "description": "The start position of the range on the reference, 1-based inclusive. If specified, sequenceName must also be specified.",
+	//       "format": "uint64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "readsetId": {
+	//       "description": "Required. The ID of the readset over which coverage is requested.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "targetBucketWidth": {
+	//       "description": "The desired width of each reported coverage bucket in base pairs. This will be rounded down to the nearest precomputed bucket width; the value of which is returned as bucket_width in the response. Defaults to infinity (each bucket spans an entire reference sequence) or the length of the target range, if specified. The smallest precomputed bucket_width is currently 2048 base pairs; this is subject to change.",
+	//       "format": "uint64",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "readsets/{readsetId}/coveragebuckets",
+	//   "response": {
+	//     "$ref": "ListCoverageBucketsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/genomics",
+	//     "https://www.googleapis.com/auth/genomics.readonly"
 	//   ]
 	// }
 

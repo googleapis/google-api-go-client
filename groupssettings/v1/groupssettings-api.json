@@ -1,10 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"kEk3sFj6Ef5_yR1-H3bAO6qw9mI/jwIJIppaaUqSDha_itkGyYVYL5s\"",
+ "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/-WzKihq8ROq_FQdrGtr_UG9N-4Y\"",
  "discoveryVersion": "v1",
  "id": "groupssettings:v1",
  "name": "groupssettings",
  "version": "v1",
+ "revision": "20140428",
  "title": "Groups Settings API",
  "description": "Lets you manage permission levels and related settings of a group.",
  "ownerDomain": "google.com",

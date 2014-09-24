@@ -365,3 +365,37 @@ func ConvertVariant(v map[string]interface{}, dst interface{}) bool {
 	}
 	return json.Unmarshal(buf.Bytes(), dst) == nil
 }
+
+// A Field names a field to be retrieved with a partial response.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+//
+// Partial responses can dramatically reduce the amount of data that must be sent to your application.
+// In order to request partial responses, you can specify the full list of fields
+// that your application needs by adding the Fields option to your request.
+//
+// Field strings use camelCase with leading lower-case characters to identify fields within the response.
+//
+// For example, if your response has a "NextPageToken" and a slice of "Items" with "Id" fields,
+// you could request just those fields like this:
+//
+//     svc.Events.List().Fields("nextPageToken", "items/id").Do()
+//
+// or if you were also interested in each Item's "Updated" field, you can combine them like this:
+//
+//     svc.Events.List().Fields("nextPageToken", "items(id,updated)").Do()
+//
+// More information about field formatting can be found here:
+// https://developers.google.com/+/api/#fields-syntax
+//
+// Another way to find field names is through the Google API explorer:
+// https://developers.google.com/apis-explorer/#p/
+type Field string
+
+// CombineFields combines fields into a single string.
+func CombineFields(s []Field) string {
+	r := make([]string, len(s))
+	for i, v := range s {
+		r[i] = string(v)
+	}
+	return strings.Join(r, ",")
+}

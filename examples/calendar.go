@@ -49,4 +49,25 @@ func calendarMain(client *http.Client, argv []string) {
 	for k, v := range c.Event {
 		log.Printf("Event[%v]: Background=%v, Foreground=%v", k, v.Background, v.Foreground)
 	}
+
+	listRes, err := svc.CalendarList.List().Fields("items/id").Do()
+	if err != nil {
+		log.Fatalf("Unable to retrieve list of calendars: %v", err)
+	}
+	for _, v := range listRes.Items {
+		log.Printf("Calendar ID: %v\n", v.Id)
+	}
+
+	if len(listRes.Items) > 0 {
+		id := listRes.Items[0].Id
+		res, err := svc.Events.List(id).Fields("items(updated,summary)", "summary", "nextPageToken").Do()
+		if err != nil {
+			log.Fatalf("Unable to retrieve calendar events list: %v", err)
+		}
+		for _, v := range res.Items {
+			log.Printf("Calendar ID %q event: %v: %q\n", id, v.Updated, v.Summary)
+		}
+		log.Printf("Calendar ID %q Summary: %v\n", id, res.Summary)
+		log.Printf("Calendar ID %q next page token: %v\n", id, res.NextPageToken)
+	}
 }

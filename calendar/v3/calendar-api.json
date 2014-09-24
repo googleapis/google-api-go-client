@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/UIR_3EVSB6noa0orJD8b3VE4Hoo\"",
+ "etag": "\"uUWyYHXmEn-ab7WLvo8qNz2S8ws/vWqMsHvvvKs-y7bO-cWrAXLs9SU\"",
  "discoveryVersion": "v1",
  "id": "calendar:v3",
  "name": "calendar",
  "version": "v3",
- "revision": "20140723",
+ "revision": "20140914",
  "title": "Calendar API",
  "description": "Lets you manipulate events and other calendar data.",
  "ownerDomain": "google.com",
@@ -784,6 +784,7 @@
     "additionalGuests": {
      "type": "integer",
      "description": "Number of additional guests. Optional. The default is 0.",
+     "default": "0",
      "format": "int32"
     },
     "comment": {
@@ -811,7 +812,8 @@
     },
     "optional": {
      "type": "boolean",
-     "description": "Whether this is an optional attendee. Optional. The default is False."
+     "description": "Whether this is an optional attendee. Optional. The default is False.",
+     "default": "false"
     },
     "organizer": {
      "type": "boolean",
@@ -819,7 +821,8 @@
     },
     "resource": {
      "type": "boolean",
-     "description": "Whether the attendee is a resource. Read-only. The default is False."
+     "description": "Whether the attendee is a resource. Read-only. The default is False.",
+     "default": "false"
     },
     "responseStatus": {
      "type": "string",
@@ -827,7 +830,8 @@
     },
     "self": {
      "type": "boolean",
-     "description": "Whether this entry represents the calendar on which this copy of the event appears. Read-only. The default is False."
+     "description": "Whether this entry represents the calendar on which this copy of the event appears. Read-only. The default is False.",
+     "default": "false"
     }
    }
   },

@@ -1004,10 +1004,21 @@ func (r *AclService) Delete(calendarId string, ruleId string) *AclDeleteCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AclDeleteCall) Fields(s ...googleapi.Field) *AclDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *AclDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "calendars/{calendarId}/acl/{ruleId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
@@ -1072,10 +1083,21 @@ func (r *AclService) Get(calendarId string, ruleId string) *AclGetCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AclGetCall) Fields(s ...googleapi.Field) *AclGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *AclGetCall) Do() (*AclRule, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "calendars/{calendarId}/acl/{ruleId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -1148,6 +1170,14 @@ func (r *AclService) Insert(calendarId string, aclrule *AclRule) *AclInsertCall 
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AclInsertCall) Fields(s ...googleapi.Field) *AclInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *AclInsertCall) Do() (*AclRule, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.aclrule)
@@ -1157,6 +1187,9 @@ func (c *AclInsertCall) Do() (*AclRule, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "calendars/{calendarId}/acl")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -1264,6 +1297,14 @@ func (c *AclListCall) SyncToken(syncToken string) *AclListCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AclListCall) Fields(s ...googleapi.Field) *AclListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *AclListCall) Do() (*Acl, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1279,6 +1320,9 @@ func (c *AclListCall) Do() (*Acl, error) {
 	}
 	if v, ok := c.opt_["syncToken"]; ok {
 		params.Set("syncToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "calendars/{calendarId}/acl")
 	urls += "?" + params.Encode()
@@ -1369,6 +1413,14 @@ func (r *AclService) Patch(calendarId string, ruleId string, aclrule *AclRule) *
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AclPatchCall) Fields(s ...googleapi.Field) *AclPatchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *AclPatchCall) Do() (*AclRule, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.aclrule)
@@ -1378,6 +1430,9 @@ func (c *AclPatchCall) Do() (*AclRule, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "calendars/{calendarId}/acl/{ruleId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
@@ -1455,6 +1510,14 @@ func (r *AclService) Update(calendarId string, ruleId string, aclrule *AclRule) 
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AclUpdateCall) Fields(s ...googleapi.Field) *AclUpdateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *AclUpdateCall) Do() (*AclRule, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.aclrule)
@@ -1464,6 +1527,9 @@ func (c *AclUpdateCall) Do() (*AclRule, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "calendars/{calendarId}/acl/{ruleId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
@@ -1581,6 +1647,14 @@ func (c *AclWatchCall) SyncToken(syncToken string) *AclWatchCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AclWatchCall) Fields(s ...googleapi.Field) *AclWatchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *AclWatchCall) Do() (*Channel, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
@@ -1601,6 +1675,9 @@ func (c *AclWatchCall) Do() (*Channel, error) {
 	}
 	if v, ok := c.opt_["syncToken"]; ok {
 		params.Set("syncToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "calendars/{calendarId}/acl/watch")
 	urls += "?" + params.Encode()
@@ -1691,10 +1768,21 @@ func (r *CalendarListService) Delete(calendarId string) *CalendarListDeleteCall 
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CalendarListDeleteCall) Fields(s ...googleapi.Field) *CalendarListDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *CalendarListDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/me/calendarList/{calendarId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
@@ -1749,10 +1837,21 @@ func (r *CalendarListService) Get(calendarId string) *CalendarListGetCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CalendarListGetCall) Fields(s ...googleapi.Field) *CalendarListGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *CalendarListGetCall) Do() (*CalendarListEntry, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/me/calendarList/{calendarId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -1825,6 +1924,14 @@ func (c *CalendarListInsertCall) ColorRgbFormat(colorRgbFormat bool) *CalendarLi
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CalendarListInsertCall) Fields(s ...googleapi.Field) *CalendarListInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *CalendarListInsertCall) Do() (*CalendarListEntry, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.calendarlistentry)
@@ -1836,6 +1943,9 @@ func (c *CalendarListInsertCall) Do() (*CalendarListEntry, error) {
 	params.Set("alt", "json")
 	if v, ok := c.opt_["colorRgbFormat"]; ok {
 		params.Set("colorRgbFormat", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/me/calendarList")
 	urls += "?" + params.Encode()
@@ -1955,6 +2065,14 @@ func (c *CalendarListListCall) SyncToken(syncToken string) *CalendarListListCall
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CalendarListListCall) Fields(s ...googleapi.Field) *CalendarListListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *CalendarListListCall) Do() (*CalendarList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1976,6 +2094,9 @@ func (c *CalendarListListCall) Do() (*CalendarList, error) {
 	}
 	if v, ok := c.opt_["syncToken"]; ok {
 		params.Set("syncToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/me/calendarList")
 	urls += "?" + params.Encode()
@@ -2086,6 +2207,14 @@ func (c *CalendarListPatchCall) ColorRgbFormat(colorRgbFormat bool) *CalendarLis
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CalendarListPatchCall) Fields(s ...googleapi.Field) *CalendarListPatchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *CalendarListPatchCall) Do() (*CalendarListEntry, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.calendarlistentry)
@@ -2097,6 +2226,9 @@ func (c *CalendarListPatchCall) Do() (*CalendarListEntry, error) {
 	params.Set("alt", "json")
 	if v, ok := c.opt_["colorRgbFormat"]; ok {
 		params.Set("colorRgbFormat", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/me/calendarList/{calendarId}")
 	urls += "?" + params.Encode()
@@ -2180,6 +2312,14 @@ func (c *CalendarListUpdateCall) ColorRgbFormat(colorRgbFormat bool) *CalendarLi
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CalendarListUpdateCall) Fields(s ...googleapi.Field) *CalendarListUpdateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *CalendarListUpdateCall) Do() (*CalendarListEntry, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.calendarlistentry)
@@ -2191,6 +2331,9 @@ func (c *CalendarListUpdateCall) Do() (*CalendarListEntry, error) {
 	params.Set("alt", "json")
 	if v, ok := c.opt_["colorRgbFormat"]; ok {
 		params.Set("colorRgbFormat", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/me/calendarList/{calendarId}")
 	urls += "?" + params.Encode()
@@ -2323,6 +2466,14 @@ func (c *CalendarListWatchCall) SyncToken(syncToken string) *CalendarListWatchCa
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CalendarListWatchCall) Fields(s ...googleapi.Field) *CalendarListWatchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *CalendarListWatchCall) Do() (*Channel, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
@@ -2349,6 +2500,9 @@ func (c *CalendarListWatchCall) Do() (*Channel, error) {
 	}
 	if v, ok := c.opt_["syncToken"]; ok {
 		params.Set("syncToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/me/calendarList/watch")
 	urls += "?" + params.Encode()
@@ -2453,10 +2607,21 @@ func (r *CalendarsService) Clear(calendarId string) *CalendarsClearCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CalendarsClearCall) Fields(s ...googleapi.Field) *CalendarsClearCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *CalendarsClearCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "calendars/{calendarId}/clear")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -2511,10 +2676,21 @@ func (r *CalendarsService) Delete(calendarId string) *CalendarsDeleteCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CalendarsDeleteCall) Fields(s ...googleapi.Field) *CalendarsDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *CalendarsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "calendars/{calendarId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
@@ -2569,10 +2745,21 @@ func (r *CalendarsService) Get(calendarId string) *CalendarsGetCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CalendarsGetCall) Fields(s ...googleapi.Field) *CalendarsGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *CalendarsGetCall) Do() (*Calendar, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "calendars/{calendarId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -2635,6 +2822,14 @@ func (r *CalendarsService) Insert(calendar *Calendar) *CalendarsInsertCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CalendarsInsertCall) Fields(s ...googleapi.Field) *CalendarsInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *CalendarsInsertCall) Do() (*Calendar, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.calendar)
@@ -2644,6 +2839,9 @@ func (c *CalendarsInsertCall) Do() (*Calendar, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "calendars")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -2699,6 +2897,14 @@ func (r *CalendarsService) Patch(calendarId string, calendar *Calendar) *Calenda
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CalendarsPatchCall) Fields(s ...googleapi.Field) *CalendarsPatchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *CalendarsPatchCall) Do() (*Calendar, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.calendar)
@@ -2708,6 +2914,9 @@ func (c *CalendarsPatchCall) Do() (*Calendar, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "calendars/{calendarId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
@@ -2775,6 +2984,14 @@ func (r *CalendarsService) Update(calendarId string, calendar *Calendar) *Calend
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CalendarsUpdateCall) Fields(s ...googleapi.Field) *CalendarsUpdateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *CalendarsUpdateCall) Do() (*Calendar, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.calendar)
@@ -2784,6 +3001,9 @@ func (c *CalendarsUpdateCall) Do() (*Calendar, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "calendars/{calendarId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
@@ -2849,6 +3069,14 @@ func (r *ChannelsService) Stop(channel *Channel) *ChannelsStopCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ChannelsStopCall) Fields(s ...googleapi.Field) *ChannelsStopCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *ChannelsStopCall) Do() error {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
@@ -2858,6 +3086,9 @@ func (c *ChannelsStopCall) Do() error {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "channels/stop")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -2903,10 +3134,21 @@ func (r *ColorsService) Get() *ColorsGetCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ColorsGetCall) Fields(s ...googleapi.Field) *ColorsGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *ColorsGetCall) Do() (*Colors, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "colors")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -2966,12 +3208,23 @@ func (c *EventsDeleteCall) SendNotifications(sendNotifications bool) *EventsDele
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *EventsDeleteCall) Fields(s ...googleapi.Field) *EventsDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *EventsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	if v, ok := c.opt_["sendNotifications"]; ok {
 		params.Set("sendNotifications", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "calendars/{calendarId}/events/{eventId}")
 	urls += "?" + params.Encode()
@@ -3070,6 +3323,14 @@ func (c *EventsGetCall) TimeZone(timeZone string) *EventsGetCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *EventsGetCall) Fields(s ...googleapi.Field) *EventsGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *EventsGetCall) Do() (*Event, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3082,6 +3343,9 @@ func (c *EventsGetCall) Do() (*Event, error) {
 	}
 	if v, ok := c.opt_["timeZone"]; ok {
 		params.Set("timeZone", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "calendars/{calendarId}/events/{eventId}")
 	urls += "?" + params.Encode()
@@ -3173,6 +3437,14 @@ func (r *EventsService) Import(calendarId string, event *Event) *EventsImportCal
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *EventsImportCall) Fields(s ...googleapi.Field) *EventsImportCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *EventsImportCall) Do() (*Event, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.event)
@@ -3182,6 +3454,9 @@ func (c *EventsImportCall) Do() (*Event, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "calendars/{calendarId}/events/import")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -3266,6 +3541,14 @@ func (c *EventsInsertCall) SendNotifications(sendNotifications bool) *EventsInse
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *EventsInsertCall) Fields(s ...googleapi.Field) *EventsInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *EventsInsertCall) Do() (*Event, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.event)
@@ -3280,6 +3563,9 @@ func (c *EventsInsertCall) Do() (*Event, error) {
 	}
 	if v, ok := c.opt_["sendNotifications"]; ok {
 		params.Set("sendNotifications", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "calendars/{calendarId}/events")
 	urls += "?" + params.Encode()
@@ -3435,6 +3721,14 @@ func (c *EventsInstancesCall) TimeZone(timeZone string) *EventsInstancesCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *EventsInstancesCall) Fields(s ...googleapi.Field) *EventsInstancesCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *EventsInstancesCall) Do() (*Events, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3465,6 +3759,9 @@ func (c *EventsInstancesCall) Do() (*Events, error) {
 	}
 	if v, ok := c.opt_["timeZone"]; ok {
 		params.Set("timeZone", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "calendars/{calendarId}/events/{eventId}/instances")
 	urls += "?" + params.Encode()
@@ -3761,6 +4058,14 @@ func (c *EventsListCall) UpdatedMin(updatedMin string) *EventsListCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *EventsListCall) Fields(s ...googleapi.Field) *EventsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *EventsListCall) Do() (*Events, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3815,6 +4120,9 @@ func (c *EventsListCall) Do() (*Events, error) {
 	}
 	if v, ok := c.opt_["updatedMin"]; ok {
 		params.Set("updatedMin", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "calendars/{calendarId}/events")
 	urls += "?" + params.Encode()
@@ -3994,6 +4302,14 @@ func (c *EventsMoveCall) SendNotifications(sendNotifications bool) *EventsMoveCa
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *EventsMoveCall) Fields(s ...googleapi.Field) *EventsMoveCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *EventsMoveCall) Do() (*Event, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4001,6 +4317,9 @@ func (c *EventsMoveCall) Do() (*Event, error) {
 	params.Set("destination", fmt.Sprintf("%v", c.destinationid))
 	if v, ok := c.opt_["sendNotifications"]; ok {
 		params.Set("sendNotifications", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "calendars/{calendarId}/events/{eventId}/move")
 	urls += "?" + params.Encode()
@@ -4116,6 +4435,14 @@ func (c *EventsPatchCall) SendNotifications(sendNotifications bool) *EventsPatch
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *EventsPatchCall) Fields(s ...googleapi.Field) *EventsPatchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *EventsPatchCall) Do() (*Event, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.event)
@@ -4133,6 +4460,9 @@ func (c *EventsPatchCall) Do() (*Event, error) {
 	}
 	if v, ok := c.opt_["sendNotifications"]; ok {
 		params.Set("sendNotifications", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "calendars/{calendarId}/events/{eventId}")
 	urls += "?" + params.Encode()
@@ -4234,6 +4564,14 @@ func (c *EventsQuickAddCall) SendNotifications(sendNotifications bool) *EventsQu
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *EventsQuickAddCall) Fields(s ...googleapi.Field) *EventsQuickAddCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *EventsQuickAddCall) Do() (*Event, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4241,6 +4579,9 @@ func (c *EventsQuickAddCall) Do() (*Event, error) {
 	params.Set("text", fmt.Sprintf("%v", c.text))
 	if v, ok := c.opt_["sendNotifications"]; ok {
 		params.Set("sendNotifications", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "calendars/{calendarId}/events/quickAdd")
 	urls += "?" + params.Encode()
@@ -4348,6 +4689,14 @@ func (c *EventsUpdateCall) SendNotifications(sendNotifications bool) *EventsUpda
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *EventsUpdateCall) Fields(s ...googleapi.Field) *EventsUpdateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *EventsUpdateCall) Do() (*Event, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.event)
@@ -4365,6 +4714,9 @@ func (c *EventsUpdateCall) Do() (*Event, error) {
 	}
 	if v, ok := c.opt_["sendNotifications"]; ok {
 		params.Set("sendNotifications", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "calendars/{calendarId}/events/{eventId}")
 	urls += "?" + params.Encode()
@@ -4631,6 +4983,14 @@ func (c *EventsWatchCall) UpdatedMin(updatedMin string) *EventsWatchCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *EventsWatchCall) Fields(s ...googleapi.Field) *EventsWatchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *EventsWatchCall) Do() (*Channel, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
@@ -4690,6 +5050,9 @@ func (c *EventsWatchCall) Do() (*Channel, error) {
 	}
 	if v, ok := c.opt_["updatedMin"]; ok {
 		params.Set("updatedMin", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "calendars/{calendarId}/events/watch")
 	urls += "?" + params.Encode()
@@ -4861,6 +5224,14 @@ func (r *FreebusyService) Query(freebusyrequest *FreeBusyRequest) *FreebusyQuery
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FreebusyQueryCall) Fields(s ...googleapi.Field) *FreebusyQueryCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *FreebusyQueryCall) Do() (*FreeBusyResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.freebusyrequest)
@@ -4870,6 +5241,9 @@ func (c *FreebusyQueryCall) Do() (*FreeBusyResponse, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "freeBusy")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -4923,10 +5297,21 @@ func (r *SettingsService) Get(setting string) *SettingsGetCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SettingsGetCall) Fields(s ...googleapi.Field) *SettingsGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *SettingsGetCall) Do() (*Setting, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/me/settings/{setting}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -5018,6 +5403,14 @@ func (c *SettingsListCall) SyncToken(syncToken string) *SettingsListCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SettingsListCall) Fields(s ...googleapi.Field) *SettingsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *SettingsListCall) Do() (*Settings, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5030,6 +5423,9 @@ func (c *SettingsListCall) Do() (*Settings, error) {
 	}
 	if v, ok := c.opt_["syncToken"]; ok {
 		params.Set("syncToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/me/settings")
 	urls += "?" + params.Encode()
@@ -5131,6 +5527,14 @@ func (c *SettingsWatchCall) SyncToken(syncToken string) *SettingsWatchCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SettingsWatchCall) Fields(s ...googleapi.Field) *SettingsWatchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *SettingsWatchCall) Do() (*Channel, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
@@ -5148,6 +5552,9 @@ func (c *SettingsWatchCall) Do() (*Channel, error) {
 	}
 	if v, ok := c.opt_["syncToken"]; ok {
 		params.Set("syncToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/me/settings/watch")
 	urls += "?" + params.Encode()

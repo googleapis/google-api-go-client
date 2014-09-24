@@ -1226,6 +1226,14 @@ func (meth *Method) generateCode() {
 		p("}\n")
 	}
 
+	pn("\n// Fields allows partial responses to be retrieved.")
+	pn("// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse")
+	pn("// for more information.")
+	pn("func (c *%s) Fields(s ...googleapi.Field) *%s {", callName, callName)
+	pn(`c.opt_["fields"] = googleapi.CombineFields(s)`)
+	pn("return c")
+	pn("}")
+
 	pn("\nfunc (c *%s) Do() (%serror) {", callName, retTypeComma)
 
 	nilRet := ""
@@ -1256,7 +1264,9 @@ func (meth *Method) generateCode() {
 		pn("for _, v := range c.%s { params.Add(%q, fmt.Sprintf(\"%%v\", v)) }",
 			p.name, p.name)
 	}
-	for _, p := range meth.OptParams() {
+	opts := meth.OptParams()
+	opts = append(opts, &Param{name: "fields"})
+	for _, p := range opts {
 		pn("if v, ok := c.opt_[%q]; ok { params.Set(%q, fmt.Sprintf(\"%%v\", v)) }",
 			p.name, p.name)
 	}

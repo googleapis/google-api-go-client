@@ -117,6 +117,14 @@ func (c *MetricDescriptorsListCall) PageToken(pageToken string) *MetricDescripto
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MetricDescriptorsListCall) Fields(s ...googleapi.Field) *MetricDescriptorsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *MetricDescriptorsListCall) Do() (*ListMetricResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -126,6 +134,9 @@ func (c *MetricDescriptorsListCall) Do() (*ListMetricResponse, error) {
 	}
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/metricDescriptors")
 	urls += "?" + params.Encode()

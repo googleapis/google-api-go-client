@@ -361,6 +361,14 @@ func (c *MetricDescriptorsListCall) Query(query string) *MetricDescriptorsListCa
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MetricDescriptorsListCall) Fields(s ...googleapi.Field) *MetricDescriptorsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *MetricDescriptorsListCall) Do() (*ListMetricDescriptorsResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -373,6 +381,9 @@ func (c *MetricDescriptorsListCall) Do() (*ListMetricDescriptorsResponse, error)
 	}
 	if v, ok := c.opt_["query"]; ok {
 		params.Set("query", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/metricDescriptors")
 	urls += "?" + params.Encode()
@@ -529,6 +540,14 @@ func (c *TimeseriesListCall) Timespan(timespan string) *TimeseriesListCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TimeseriesListCall) Fields(s ...googleapi.Field) *TimeseriesListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *TimeseriesListCall) Do() (*ListTimeseriesResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -548,6 +567,9 @@ func (c *TimeseriesListCall) Do() (*ListTimeseriesResponse, error) {
 	}
 	if v, ok := c.opt_["timespan"]; ok {
 		params.Set("timespan", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/timeseries/{metric}")
 	urls += "?" + params.Encode()
@@ -733,6 +755,14 @@ func (c *TimeseriesDescriptorsListCall) Timespan(timespan string) *TimeseriesDes
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TimeseriesDescriptorsListCall) Fields(s ...googleapi.Field) *TimeseriesDescriptorsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *TimeseriesDescriptorsListCall) Do() (*ListTimeseriesDescriptorsResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -752,6 +782,9 @@ func (c *TimeseriesDescriptorsListCall) Do() (*ListTimeseriesDescriptorsResponse
 	}
 	if v, ok := c.opt_["timespan"]; ok {
 		params.Set("timespan", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/timeseriesDescriptors/{metric}")
 	urls += "?" + params.Encode()

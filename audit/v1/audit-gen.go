@@ -226,6 +226,14 @@ func (c *ActivitiesListCall) StartTime(startTime string) *ActivitiesListCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ActivitiesListCall) Fields(s ...googleapi.Field) *ActivitiesListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *ActivitiesListCall) Do() (*Activities, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -256,6 +264,9 @@ func (c *ActivitiesListCall) Do() (*Activities, error) {
 	}
 	if v, ok := c.opt_["startTime"]; ok {
 		params.Set("startTime", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{customerId}/{applicationId}")
 	urls += "?" + params.Encode()

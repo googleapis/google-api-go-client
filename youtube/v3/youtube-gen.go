@@ -3076,6 +3076,14 @@ func (r *ActivitiesService) Insert(part string, activity *Activity) *ActivitiesI
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ActivitiesInsertCall) Fields(s ...googleapi.Field) *ActivitiesInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *ActivitiesInsertCall) Do() (*Activity, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.activity)
@@ -3086,6 +3094,9 @@ func (c *ActivitiesInsertCall) Do() (*Activity, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("part", fmt.Sprintf("%v", c.part))
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "activities")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -3228,6 +3239,14 @@ func (c *ActivitiesListCall) RegionCode(regionCode string) *ActivitiesListCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ActivitiesListCall) Fields(s ...googleapi.Field) *ActivitiesListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *ActivitiesListCall) Do() (*ActivityListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3256,6 +3275,9 @@ func (c *ActivitiesListCall) Do() (*ActivityListResponse, error) {
 	}
 	if v, ok := c.opt_["regionCode"]; ok {
 		params.Set("regionCode", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "activities")
 	urls += "?" + params.Encode()
@@ -3399,6 +3421,14 @@ func (c *ChannelBannersInsertCall) Media(r io.Reader) *ChannelBannersInsertCall 
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ChannelBannersInsertCall) Fields(s ...googleapi.Field) *ChannelBannersInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *ChannelBannersInsertCall) Do() (*ChannelBannerResource, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channelbannerresource)
@@ -3410,6 +3440,9 @@ func (c *ChannelBannersInsertCall) Do() (*ChannelBannerResource, error) {
 	params.Set("alt", "json")
 	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
 		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "channelBanners/insert")
 	if c.media_ != nil {
@@ -3498,11 +3531,22 @@ func (r *ChannelSectionsService) Delete(id string) *ChannelSectionsDeleteCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ChannelSectionsDeleteCall) Fields(s ...googleapi.Field) *ChannelSectionsDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *ChannelSectionsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("id", fmt.Sprintf("%v", c.id))
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "channelSections")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
@@ -3605,6 +3649,14 @@ func (c *ChannelSectionsInsertCall) OnBehalfOfContentOwnerChannel(onBehalfOfCont
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ChannelSectionsInsertCall) Fields(s ...googleapi.Field) *ChannelSectionsInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *ChannelSectionsInsertCall) Do() (*ChannelSection, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channelsection)
@@ -3620,6 +3672,9 @@ func (c *ChannelSectionsInsertCall) Do() (*ChannelSection, error) {
 	}
 	if v, ok := c.opt_["onBehalfOfContentOwnerChannel"]; ok {
 		params.Set("onBehalfOfContentOwnerChannel", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "channelSections")
 	urls += "?" + params.Encode()
@@ -3740,6 +3795,14 @@ func (c *ChannelSectionsListCall) OnBehalfOfContentOwner(onBehalfOfContentOwner 
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ChannelSectionsListCall) Fields(s ...googleapi.Field) *ChannelSectionsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *ChannelSectionsListCall) Do() (*ChannelSectionListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3756,6 +3819,9 @@ func (c *ChannelSectionsListCall) Do() (*ChannelSectionListResponse, error) {
 	}
 	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
 		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "channelSections")
 	urls += "?" + params.Encode()
@@ -3840,6 +3906,14 @@ func (r *ChannelSectionsService) Update(part string, channelsection *ChannelSect
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ChannelSectionsUpdateCall) Fields(s ...googleapi.Field) *ChannelSectionsUpdateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *ChannelSectionsUpdateCall) Do() (*ChannelSection, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channelsection)
@@ -3850,6 +3924,9 @@ func (c *ChannelSectionsUpdateCall) Do() (*ChannelSection, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("part", fmt.Sprintf("%v", c.part))
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "channelSections")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
@@ -3999,6 +4076,14 @@ func (c *ChannelsListCall) PageToken(pageToken string) *ChannelsListCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ChannelsListCall) Fields(s ...googleapi.Field) *ChannelsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *ChannelsListCall) Do() (*ChannelListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4030,6 +4115,9 @@ func (c *ChannelsListCall) Do() (*ChannelListResponse, error) {
 	}
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "channels")
 	urls += "?" + params.Encode()
@@ -4159,6 +4247,14 @@ func (c *ChannelsUpdateCall) OnBehalfOfContentOwner(onBehalfOfContentOwner strin
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ChannelsUpdateCall) Fields(s ...googleapi.Field) *ChannelsUpdateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *ChannelsUpdateCall) Do() (*Channel, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
@@ -4171,6 +4267,9 @@ func (c *ChannelsUpdateCall) Do() (*Channel, error) {
 	params.Set("part", fmt.Sprintf("%v", c.part))
 	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
 		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "channels")
 	urls += "?" + params.Encode()
@@ -4267,6 +4366,14 @@ func (c *GuideCategoriesListCall) RegionCode(regionCode string) *GuideCategories
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *GuideCategoriesListCall) Fields(s ...googleapi.Field) *GuideCategoriesListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *GuideCategoriesListCall) Do() (*GuideCategoryListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4280,6 +4387,9 @@ func (c *GuideCategoriesListCall) Do() (*GuideCategoryListResponse, error) {
 	}
 	if v, ok := c.opt_["regionCode"]; ok {
 		params.Set("regionCode", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "guideCategories")
 	urls += "?" + params.Encode()
@@ -4365,6 +4475,14 @@ func (c *I18nLanguagesListCall) Hl(hl string) *I18nLanguagesListCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *I18nLanguagesListCall) Fields(s ...googleapi.Field) *I18nLanguagesListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *I18nLanguagesListCall) Do() (*I18nLanguageListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4372,6 +4490,9 @@ func (c *I18nLanguagesListCall) Do() (*I18nLanguageListResponse, error) {
 	params.Set("part", fmt.Sprintf("%v", c.part))
 	if v, ok := c.opt_["hl"]; ok {
 		params.Set("hl", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "i18nLanguages")
 	urls += "?" + params.Encode()
@@ -4447,6 +4568,14 @@ func (c *I18nRegionsListCall) Hl(hl string) *I18nRegionsListCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *I18nRegionsListCall) Fields(s ...googleapi.Field) *I18nRegionsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *I18nRegionsListCall) Do() (*I18nRegionListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4454,6 +4583,9 @@ func (c *I18nRegionsListCall) Do() (*I18nRegionListResponse, error) {
 	params.Set("part", fmt.Sprintf("%v", c.part))
 	if v, ok := c.opt_["hl"]; ok {
 		params.Set("hl", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "i18nRegions")
 	urls += "?" + params.Encode()
@@ -4582,6 +4714,14 @@ func (c *LiveBroadcastsBindCall) StreamId(streamId string) *LiveBroadcastsBindCa
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LiveBroadcastsBindCall) Fields(s ...googleapi.Field) *LiveBroadcastsBindCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *LiveBroadcastsBindCall) Do() (*LiveBroadcast, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4596,6 +4736,9 @@ func (c *LiveBroadcastsBindCall) Do() (*LiveBroadcast, error) {
 	}
 	if v, ok := c.opt_["streamId"]; ok {
 		params.Set("streamId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "liveBroadcasts/bind")
 	urls += "?" + params.Encode()
@@ -4760,9 +4903,17 @@ func (c *LiveBroadcastsControlCall) OnBehalfOfContentOwnerChannel(onBehalfOfCont
 // Walltime sets the optional parameter "walltime": The walltime
 // parameter specifies the wall clock time at which the specified slate
 // change will occur. The value is specified in ISO 8601
-// (YYYY-MM-DDThh:mm:ss.sZ) format.
+// (YYYY-MM-DDThh:mm:ss.sssZ) format.
 func (c *LiveBroadcastsControlCall) Walltime(walltime string) *LiveBroadcastsControlCall {
 	c.opt_["walltime"] = walltime
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LiveBroadcastsControlCall) Fields(s ...googleapi.Field) *LiveBroadcastsControlCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -4786,6 +4937,9 @@ func (c *LiveBroadcastsControlCall) Do() (*LiveBroadcast, error) {
 	}
 	if v, ok := c.opt_["walltime"]; ok {
 		params.Set("walltime", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "liveBroadcasts/control")
 	urls += "?" + params.Encode()
@@ -4848,7 +5002,7 @@ func (c *LiveBroadcastsControlCall) Do() (*LiveBroadcast, error) {
 	//       "type": "string"
 	//     },
 	//     "walltime": {
-	//       "description": "The walltime parameter specifies the wall clock time at which the specified slate change will occur. The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.",
+	//       "description": "The walltime parameter specifies the wall clock time at which the specified slate change will occur. The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sssZ) format.",
 	//       "format": "date-time",
 	//       "location": "query",
 	//       "type": "string"
@@ -4927,6 +5081,14 @@ func (c *LiveBroadcastsDeleteCall) OnBehalfOfContentOwnerChannel(onBehalfOfConte
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LiveBroadcastsDeleteCall) Fields(s ...googleapi.Field) *LiveBroadcastsDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *LiveBroadcastsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4937,6 +5099,9 @@ func (c *LiveBroadcastsDeleteCall) Do() error {
 	}
 	if v, ok := c.opt_["onBehalfOfContentOwnerChannel"]; ok {
 		params.Set("onBehalfOfContentOwnerChannel", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "liveBroadcasts")
 	urls += "?" + params.Encode()
@@ -5049,6 +5214,14 @@ func (c *LiveBroadcastsInsertCall) OnBehalfOfContentOwnerChannel(onBehalfOfConte
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LiveBroadcastsInsertCall) Fields(s ...googleapi.Field) *LiveBroadcastsInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *LiveBroadcastsInsertCall) Do() (*LiveBroadcast, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.livebroadcast)
@@ -5064,6 +5237,9 @@ func (c *LiveBroadcastsInsertCall) Do() (*LiveBroadcast, error) {
 	}
 	if v, ok := c.opt_["onBehalfOfContentOwnerChannel"]; ok {
 		params.Set("onBehalfOfContentOwnerChannel", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "liveBroadcasts")
 	urls += "?" + params.Encode()
@@ -5229,6 +5405,14 @@ func (c *LiveBroadcastsListCall) PageToken(pageToken string) *LiveBroadcastsList
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LiveBroadcastsListCall) Fields(s ...googleapi.Field) *LiveBroadcastsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *LiveBroadcastsListCall) Do() (*LiveBroadcastListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5254,6 +5438,9 @@ func (c *LiveBroadcastsListCall) Do() (*LiveBroadcastListResponse, error) {
 	}
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "liveBroadcasts")
 	urls += "?" + params.Encode()
@@ -5423,6 +5610,14 @@ func (c *LiveBroadcastsTransitionCall) OnBehalfOfContentOwnerChannel(onBehalfOfC
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LiveBroadcastsTransitionCall) Fields(s ...googleapi.Field) *LiveBroadcastsTransitionCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *LiveBroadcastsTransitionCall) Do() (*LiveBroadcast, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5435,6 +5630,9 @@ func (c *LiveBroadcastsTransitionCall) Do() (*LiveBroadcast, error) {
 	}
 	if v, ok := c.opt_["onBehalfOfContentOwnerChannel"]; ok {
 		params.Set("onBehalfOfContentOwnerChannel", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "liveBroadcasts/transition")
 	urls += "?" + params.Encode()
@@ -5580,6 +5778,14 @@ func (c *LiveBroadcastsUpdateCall) OnBehalfOfContentOwnerChannel(onBehalfOfConte
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LiveBroadcastsUpdateCall) Fields(s ...googleapi.Field) *LiveBroadcastsUpdateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *LiveBroadcastsUpdateCall) Do() (*LiveBroadcast, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.livebroadcast)
@@ -5595,6 +5801,9 @@ func (c *LiveBroadcastsUpdateCall) Do() (*LiveBroadcast, error) {
 	}
 	if v, ok := c.opt_["onBehalfOfContentOwnerChannel"]; ok {
 		params.Set("onBehalfOfContentOwnerChannel", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "liveBroadcasts")
 	urls += "?" + params.Encode()
@@ -5716,6 +5925,14 @@ func (c *LiveStreamsDeleteCall) OnBehalfOfContentOwnerChannel(onBehalfOfContentO
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LiveStreamsDeleteCall) Fields(s ...googleapi.Field) *LiveStreamsDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *LiveStreamsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5726,6 +5943,9 @@ func (c *LiveStreamsDeleteCall) Do() error {
 	}
 	if v, ok := c.opt_["onBehalfOfContentOwnerChannel"]; ok {
 		params.Set("onBehalfOfContentOwnerChannel", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "liveStreams")
 	urls += "?" + params.Encode()
@@ -5840,6 +6060,14 @@ func (c *LiveStreamsInsertCall) OnBehalfOfContentOwnerChannel(onBehalfOfContentO
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LiveStreamsInsertCall) Fields(s ...googleapi.Field) *LiveStreamsInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *LiveStreamsInsertCall) Do() (*LiveStream, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.livestream)
@@ -5855,6 +6083,9 @@ func (c *LiveStreamsInsertCall) Do() (*LiveStream, error) {
 	}
 	if v, ok := c.opt_["onBehalfOfContentOwnerChannel"]; ok {
 		params.Set("onBehalfOfContentOwnerChannel", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "liveStreams")
 	urls += "?" + params.Encode()
@@ -6013,6 +6244,14 @@ func (c *LiveStreamsListCall) PageToken(pageToken string) *LiveStreamsListCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LiveStreamsListCall) Fields(s ...googleapi.Field) *LiveStreamsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *LiveStreamsListCall) Do() (*LiveStreamListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -6035,6 +6274,9 @@ func (c *LiveStreamsListCall) Do() (*LiveStreamListResponse, error) {
 	}
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "liveStreams")
 	urls += "?" + params.Encode()
@@ -6181,6 +6423,14 @@ func (c *LiveStreamsUpdateCall) OnBehalfOfContentOwnerChannel(onBehalfOfContentO
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LiveStreamsUpdateCall) Fields(s ...googleapi.Field) *LiveStreamsUpdateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *LiveStreamsUpdateCall) Do() (*LiveStream, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.livestream)
@@ -6196,6 +6446,9 @@ func (c *LiveStreamsUpdateCall) Do() (*LiveStream, error) {
 	}
 	if v, ok := c.opt_["onBehalfOfContentOwnerChannel"]; ok {
 		params.Set("onBehalfOfContentOwnerChannel", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "liveStreams")
 	urls += "?" + params.Encode()
@@ -6270,11 +6523,22 @@ func (r *PlaylistItemsService) Delete(id string) *PlaylistItemsDeleteCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PlaylistItemsDeleteCall) Fields(s ...googleapi.Field) *PlaylistItemsDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *PlaylistItemsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("id", fmt.Sprintf("%v", c.id))
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "playlistItems")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
@@ -6349,6 +6613,14 @@ func (c *PlaylistItemsInsertCall) OnBehalfOfContentOwner(onBehalfOfContentOwner 
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PlaylistItemsInsertCall) Fields(s ...googleapi.Field) *PlaylistItemsInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *PlaylistItemsInsertCall) Do() (*PlaylistItem, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.playlistitem)
@@ -6361,6 +6633,9 @@ func (c *PlaylistItemsInsertCall) Do() (*PlaylistItem, error) {
 	params.Set("part", fmt.Sprintf("%v", c.part))
 	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
 		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "playlistItems")
 	urls += "?" + params.Encode()
@@ -6495,6 +6770,14 @@ func (c *PlaylistItemsListCall) VideoId(videoId string) *PlaylistItemsListCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PlaylistItemsListCall) Fields(s ...googleapi.Field) *PlaylistItemsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *PlaylistItemsListCall) Do() (*PlaylistItemListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -6517,6 +6800,9 @@ func (c *PlaylistItemsListCall) Do() (*PlaylistItemListResponse, error) {
 	}
 	if v, ok := c.opt_["videoId"]; ok {
 		params.Set("videoId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "playlistItems")
 	urls += "?" + params.Encode()
@@ -6617,6 +6903,14 @@ func (r *PlaylistItemsService) Update(part string, playlistitem *PlaylistItem) *
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PlaylistItemsUpdateCall) Fields(s ...googleapi.Field) *PlaylistItemsUpdateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *PlaylistItemsUpdateCall) Do() (*PlaylistItem, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.playlistitem)
@@ -6627,6 +6921,9 @@ func (c *PlaylistItemsUpdateCall) Do() (*PlaylistItem, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("part", fmt.Sprintf("%v", c.part))
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "playlistItems")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
@@ -6710,6 +7007,14 @@ func (c *PlaylistsDeleteCall) OnBehalfOfContentOwner(onBehalfOfContentOwner stri
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PlaylistsDeleteCall) Fields(s ...googleapi.Field) *PlaylistsDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *PlaylistsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -6717,6 +7022,9 @@ func (c *PlaylistsDeleteCall) Do() error {
 	params.Set("id", fmt.Sprintf("%v", c.id))
 	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
 		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "playlists")
 	urls += "?" + params.Encode()
@@ -6825,6 +7133,14 @@ func (c *PlaylistsInsertCall) OnBehalfOfContentOwnerChannel(onBehalfOfContentOwn
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PlaylistsInsertCall) Fields(s ...googleapi.Field) *PlaylistsInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *PlaylistsInsertCall) Do() (*Playlist, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.playlist)
@@ -6840,6 +7156,9 @@ func (c *PlaylistsInsertCall) Do() (*Playlist, error) {
 	}
 	if v, ok := c.opt_["onBehalfOfContentOwnerChannel"]; ok {
 		params.Set("onBehalfOfContentOwnerChannel", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "playlists")
 	urls += "?" + params.Encode()
@@ -7007,6 +7326,14 @@ func (c *PlaylistsListCall) PageToken(pageToken string) *PlaylistsListCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PlaylistsListCall) Fields(s ...googleapi.Field) *PlaylistsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *PlaylistsListCall) Do() (*PlaylistListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -7032,6 +7359,9 @@ func (c *PlaylistsListCall) Do() (*PlaylistListResponse, error) {
 	}
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "playlists")
 	urls += "?" + params.Encode()
@@ -7155,6 +7485,14 @@ func (c *PlaylistsUpdateCall) OnBehalfOfContentOwner(onBehalfOfContentOwner stri
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PlaylistsUpdateCall) Fields(s ...googleapi.Field) *PlaylistsUpdateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *PlaylistsUpdateCall) Do() (*Playlist, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.playlist)
@@ -7167,6 +7505,9 @@ func (c *PlaylistsUpdateCall) Do() (*Playlist, error) {
 	params.Set("part", fmt.Sprintf("%v", c.part))
 	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
 		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "playlists")
 	urls += "?" + params.Encode()
@@ -7499,6 +7840,14 @@ func (c *SearchListCall) VideoType(videoType string) *SearchListCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SearchListCall) Fields(s ...googleapi.Field) *SearchListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *SearchListCall) Do() (*SearchListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -7587,6 +7936,9 @@ func (c *SearchListCall) Do() (*SearchListResponse, error) {
 	}
 	if v, ok := c.opt_["videoType"]; ok {
 		params.Set("videoType", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "search")
 	urls += "?" + params.Encode()
@@ -7919,11 +8271,22 @@ func (r *SubscriptionsService) Delete(id string) *SubscriptionsDeleteCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SubscriptionsDeleteCall) Fields(s ...googleapi.Field) *SubscriptionsDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *SubscriptionsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("id", fmt.Sprintf("%v", c.id))
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "subscriptions")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
@@ -7979,6 +8342,14 @@ func (r *SubscriptionsService) Insert(part string, subscription *Subscription) *
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SubscriptionsInsertCall) Fields(s ...googleapi.Field) *SubscriptionsInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *SubscriptionsInsertCall) Do() (*Subscription, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.subscription)
@@ -7989,6 +8360,9 @@ func (c *SubscriptionsInsertCall) Do() (*Subscription, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("part", fmt.Sprintf("%v", c.part))
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "subscriptions")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -8167,6 +8541,14 @@ func (c *SubscriptionsListCall) PageToken(pageToken string) *SubscriptionsListCa
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SubscriptionsListCall) Fields(s ...googleapi.Field) *SubscriptionsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *SubscriptionsListCall) Do() (*SubscriptionListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -8201,6 +8583,9 @@ func (c *SubscriptionsListCall) Do() (*SubscriptionListResponse, error) {
 	}
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "subscriptions")
 	urls += "?" + params.Encode()
@@ -8349,6 +8734,14 @@ func (c *ThumbnailsSetCall) Media(r io.Reader) *ThumbnailsSetCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ThumbnailsSetCall) Fields(s ...googleapi.Field) *ThumbnailsSetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *ThumbnailsSetCall) Do() (*ThumbnailSetResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -8356,6 +8749,9 @@ func (c *ThumbnailsSetCall) Do() (*ThumbnailSetResponse, error) {
 	params.Set("videoId", fmt.Sprintf("%v", c.videoId))
 	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
 		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "thumbnails/set")
 	if c.media_ != nil {
@@ -8478,6 +8874,14 @@ func (c *VideoCategoriesListCall) RegionCode(regionCode string) *VideoCategories
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *VideoCategoriesListCall) Fields(s ...googleapi.Field) *VideoCategoriesListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *VideoCategoriesListCall) Do() (*VideoCategoryListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -8491,6 +8895,9 @@ func (c *VideoCategoriesListCall) Do() (*VideoCategoryListResponse, error) {
 	}
 	if v, ok := c.opt_["regionCode"]; ok {
 		params.Set("regionCode", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "videoCategories")
 	urls += "?" + params.Encode()
@@ -8588,6 +8995,14 @@ func (c *VideosDeleteCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string)
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *VideosDeleteCall) Fields(s ...googleapi.Field) *VideosDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *VideosDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -8595,6 +9010,9 @@ func (c *VideosDeleteCall) Do() error {
 	params.Set("id", fmt.Sprintf("%v", c.id))
 	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
 		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "videos")
 	urls += "?" + params.Encode()
@@ -8674,6 +9092,14 @@ func (c *VideosGetRatingCall) OnBehalfOfContentOwner(onBehalfOfContentOwner stri
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *VideosGetRatingCall) Fields(s ...googleapi.Field) *VideosGetRatingCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *VideosGetRatingCall) Do() (*VideoGetRatingResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -8681,6 +9107,9 @@ func (c *VideosGetRatingCall) Do() (*VideoGetRatingResponse, error) {
 	params.Set("id", fmt.Sprintf("%v", c.id))
 	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
 		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "videos/getRating")
 	urls += "?" + params.Encode()
@@ -8826,6 +9255,14 @@ func (c *VideosInsertCall) Media(r io.Reader) *VideosInsertCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *VideosInsertCall) Fields(s ...googleapi.Field) *VideosInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *VideosInsertCall) Do() (*Video, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.video)
@@ -8850,6 +9287,9 @@ func (c *VideosInsertCall) Do() (*Video, error) {
 	}
 	if v, ok := c.opt_["stabilize"]; ok {
 		params.Set("stabilize", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "videos")
 	if c.media_ != nil {
@@ -9063,6 +9503,14 @@ func (c *VideosListCall) VideoCategoryId(videoCategoryId string) *VideosListCall
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *VideosListCall) Fields(s ...googleapi.Field) *VideosListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *VideosListCall) Do() (*VideoListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -9094,6 +9542,9 @@ func (c *VideosListCall) Do() (*VideoListResponse, error) {
 	}
 	if v, ok := c.opt_["videoCategoryId"]; ok {
 		params.Set("videoCategoryId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "videos")
 	urls += "?" + params.Encode()
@@ -9242,6 +9693,14 @@ func (c *VideosRateCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *VideosRateCall) Fields(s ...googleapi.Field) *VideosRateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *VideosRateCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -9250,6 +9709,9 @@ func (c *VideosRateCall) Do() error {
 	params.Set("rating", fmt.Sprintf("%v", c.rating))
 	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
 		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "videos/rate")
 	urls += "?" + params.Encode()
@@ -9347,6 +9809,14 @@ func (c *VideosUpdateCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string)
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *VideosUpdateCall) Fields(s ...googleapi.Field) *VideosUpdateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *VideosUpdateCall) Do() (*Video, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.video)
@@ -9359,6 +9829,9 @@ func (c *VideosUpdateCall) Do() (*Video, error) {
 	params.Set("part", fmt.Sprintf("%v", c.part))
 	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
 		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "videos")
 	urls += "?" + params.Encode()
@@ -9451,6 +9924,14 @@ func (c *WatermarksSetCall) Media(r io.Reader) *WatermarksSetCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *WatermarksSetCall) Fields(s ...googleapi.Field) *WatermarksSetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *WatermarksSetCall) Do() error {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.invideobranding)
@@ -9463,6 +9944,9 @@ func (c *WatermarksSetCall) Do() error {
 	params.Set("channelId", fmt.Sprintf("%v", c.channelId))
 	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
 		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "watermarks/set")
 	if c.media_ != nil {
@@ -9569,6 +10053,14 @@ func (c *WatermarksUnsetCall) OnBehalfOfContentOwner(onBehalfOfContentOwner stri
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *WatermarksUnsetCall) Fields(s ...googleapi.Field) *WatermarksUnsetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *WatermarksUnsetCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -9576,6 +10068,9 @@ func (c *WatermarksUnsetCall) Do() error {
 	params.Set("channelId", fmt.Sprintf("%v", c.channelId))
 	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
 		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "watermarks/unset")
 	urls += "?" + params.Encode()

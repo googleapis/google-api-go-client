@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/zUJIqvQrUB5voAp2b0g24Yt-OQM\"",
+ "etag": "\"uUWyYHXmEn-ab7WLvo8qNz2S8ws/-2NkK8k7_hT4MS2pNsIOEUlM2A0\"",
  "discoveryVersion": "v1",
  "id": "drive:v2",
  "name": "drive",
  "version": "v2",
- "revision": "20140811",
+ "revision": "20140916",
  "title": "Drive API",
  "description": "The API to interact with Drive.",
  "ownerDomain": "google.com",
@@ -875,7 +875,7 @@
    "properties": {
     "alternateLink": {
      "type": "string",
-     "description": "A link for opening the file in using a relevant Google editor or viewer."
+     "description": "A link for opening the file in a relevant Google editor or viewer."
     },
     "appDataContents": {
      "type": "boolean",
@@ -887,7 +887,7 @@
     },
     "createdDate": {
      "type": "string",
-     "description": "Create time for this file (formatted ISO8601 timestamp).",
+     "description": "Create time for this file (formatted RFC 3339 timestamp).",
      "format": "date-time"
     },
     "defaultOpenWithLink": {
@@ -1241,6 +1241,27 @@
      "description": "A monotonically increasing version number for the file. This reflects every change made to the file on the server, even those not visible to the requesting user.",
      "format": "int64"
     },
+    "videoMediaMetadata": {
+     "type": "object",
+     "description": "Metadata about video media. This will only be present for video types.",
+     "properties": {
+      "durationMillis": {
+       "type": "string",
+       "description": "The duration of the video in milliseconds.",
+       "format": "int64"
+      },
+      "height": {
+       "type": "integer",
+       "description": "The height of the video in pixels.",
+       "format": "int32"
+      },
+      "width": {
+       "type": "integer",
+       "description": "The width of the video in pixels.",
+       "format": "int32"
+      }
+     }
+    },
     "webContentLink": {
      "type": "string",
      "description": "A link for downloading the content of the file in a browser using cookie based authentication. In cases where the content is shared publicly, the content can be downloaded without any credentials."
@@ -1372,7 +1393,7 @@
     },
     "emailAddress": {
      "type": "string",
-     "description": "The email address of the user this permission refers to. This is an output-only field which is present when the permission type is user and the given user's Google+ profile privacy settings allow exposing their email address."
+     "description": "The email address of the user this permission refers to. This is an output-only field which is present when the permission type is user."
     },
     "etag": {
      "type": "string",
@@ -2335,7 +2356,7 @@
       },
       "pinned": {
        "type": "boolean",
-       "description": "Whether to pin the head revision of the new copy.",
+       "description": "Whether to pin the head revision of the new copy. A file can have a maximum of 200 pinned revisions.",
        "default": "false",
        "location": "query"
       },
@@ -2484,7 +2505,7 @@
       },
       "pinned": {
        "type": "boolean",
-       "description": "Whether to pin the head revision of the uploaded file.",
+       "description": "Whether to pin the head revision of the uploaded file. A file can have a maximum of 200 pinned revisions.",
        "default": "false",
        "location": "query"
       },
@@ -2638,7 +2659,7 @@
       },
       "newRevision": {
        "type": "boolean",
-       "description": "Whether a blob upload should create a new revision. If false, the blob data in the current head revision is replaced. If not set or true, a new blob is created as head revision, and previous revisions are preserved (causing increased use of the user's data storage quota).",
+       "description": "Whether a blob upload should create a new revision. If false, the blob data in the current head revision is replaced. If true or not set, a new blob is created as head revision, and previous revisions are preserved (causing increased use of the user's data storage quota).",
        "default": "true",
        "location": "query"
       },
@@ -2655,7 +2676,7 @@
       },
       "pinned": {
        "type": "boolean",
-       "description": "Whether to pin the new revision.",
+       "description": "Whether to pin the new revision. A file can have a maximum of 200 pinned revisions.",
        "default": "false",
        "location": "query"
       },
@@ -2811,7 +2832,7 @@
       },
       "newRevision": {
        "type": "boolean",
-       "description": "Whether a blob upload should create a new revision. If false, the blob data in the current head revision is replaced. If not set or true, a new blob is created as head revision, and previous revisions are preserved (causing increased use of the user's data storage quota).",
+       "description": "Whether a blob upload should create a new revision. If false, the blob data in the current head revision is replaced. If true or not set, a new blob is created as head revision, and previous revisions are preserved (causing increased use of the user's data storage quota).",
        "default": "true",
        "location": "query"
       },
@@ -2828,7 +2849,7 @@
       },
       "pinned": {
        "type": "boolean",
-       "description": "Whether to pin the new revision.",
+       "description": "Whether to pin the new revision. A file can have a maximum of 200 pinned revisions.",
        "default": "false",
        "location": "query"
       },

@@ -647,6 +647,14 @@ func (r *TripsService) Search(tripssearchrequest *TripsSearchRequest) *TripsSear
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TripsSearchCall) Fields(s ...googleapi.Field) *TripsSearchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *TripsSearchCall) Do() (*TripsSearchResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.tripssearchrequest)
@@ -656,6 +664,9 @@ func (c *TripsSearchCall) Do() (*TripsSearchResponse, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "search")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)

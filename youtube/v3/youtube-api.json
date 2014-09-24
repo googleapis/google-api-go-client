@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/P2eMkJQM500-13h6vk2JDkt0YV4\"",
+ "etag": "\"uUWyYHXmEn-ab7WLvo8qNz2S8ws/3kbeo8dbfJy5lT2_hpLO-AsyQJ0\"",
  "discoveryVersion": "v1",
  "id": "youtube:v3",
  "name": "youtube",
  "canonicalName": "YouTube",
  "version": "v3",
- "revision": "20140724",
+ "revision": "20140905",
  "title": "YouTube Data API",
  "description": "Programmatic access to YouTube features.",
  "ownerDomain": "google.com",
@@ -5919,7 +5919,7 @@
       },
       "walltime": {
        "type": "string",
-       "description": "The walltime parameter specifies the wall clock time at which the specified slate change will occur. The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.",
+       "description": "The walltime parameter specifies the wall clock time at which the specified slate change will occur. The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sssZ) format.",
        "format": "date-time",
        "location": "query"
       }

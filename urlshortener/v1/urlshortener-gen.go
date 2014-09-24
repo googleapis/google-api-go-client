@@ -190,6 +190,14 @@ func (c *UrlGetCall) Projection(projection string) *UrlGetCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UrlGetCall) Fields(s ...googleapi.Field) *UrlGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *UrlGetCall) Do() (*Url, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -197,6 +205,9 @@ func (c *UrlGetCall) Do() (*Url, error) {
 	params.Set("shortUrl", fmt.Sprintf("%v", c.shortUrl))
 	if v, ok := c.opt_["projection"]; ok {
 		params.Set("projection", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "url")
 	urls += "?" + params.Encode()
@@ -269,6 +280,14 @@ func (r *UrlService) Insert(url *Url) *UrlInsertCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UrlInsertCall) Fields(s ...googleapi.Field) *UrlInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *UrlInsertCall) Do() (*Url, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.url)
@@ -278,6 +297,9 @@ func (c *UrlInsertCall) Do() (*Url, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "url")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -342,6 +364,14 @@ func (c *UrlListCall) StartToken(startToken string) *UrlListCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UrlListCall) Fields(s ...googleapi.Field) *UrlListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *UrlListCall) Do() (*UrlHistory, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -351,6 +381,9 @@ func (c *UrlListCall) Do() (*UrlHistory, error) {
 	}
 	if v, ok := c.opt_["start-token"]; ok {
 		params.Set("start-token", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "url/history")
 	urls += "?" + params.Encode()

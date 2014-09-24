@@ -178,6 +178,12 @@ type ActivityEventsParameters struct {
 	// IntValue: Integral value of the parameter.
 	IntValue int64 `json:"intValue,omitempty,string"`
 
+	// MultiIntValue: Multi-int value of the parameter.
+	MultiIntValue googleapi.Int64s `json:"multiIntValue,omitempty"`
+
+	// MultiValue: Multi-string value of the parameter.
+	MultiValue []string `json:"multiValue,omitempty"`
+
 	// Name: The name of the parameter.
 	Name string `json:"name,omitempty"`
 
@@ -407,6 +413,14 @@ func (c *ActivitiesListCall) StartTime(startTime string) *ActivitiesListCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ActivitiesListCall) Fields(s ...googleapi.Field) *ActivitiesListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *ActivitiesListCall) Do() (*Activities, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -434,6 +448,9 @@ func (c *ActivitiesListCall) Do() (*Activities, error) {
 	}
 	if v, ok := c.opt_["startTime"]; ok {
 		params.Set("startTime", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "activity/users/{userKey}/applications/{applicationName}")
 	urls += "?" + params.Encode()
@@ -615,6 +632,14 @@ func (c *ActivitiesWatchCall) StartTime(startTime string) *ActivitiesWatchCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ActivitiesWatchCall) Fields(s ...googleapi.Field) *ActivitiesWatchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *ActivitiesWatchCall) Do() (*Channel, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
@@ -647,6 +672,9 @@ func (c *ActivitiesWatchCall) Do() (*Channel, error) {
 	}
 	if v, ok := c.opt_["startTime"]; ok {
 		params.Set("startTime", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "activity/users/{userKey}/applications/{applicationName}/watch")
 	urls += "?" + params.Encode()
@@ -771,6 +799,14 @@ func (r *ChannelsService) Stop(channel *Channel) *ChannelsStopCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ChannelsStopCall) Fields(s ...googleapi.Field) *ChannelsStopCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *ChannelsStopCall) Do() error {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
@@ -780,6 +816,9 @@ func (c *ChannelsStopCall) Do() error {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "/admin/reports_v1/channels/stop")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -849,6 +888,14 @@ func (c *CustomerUsageReportsGetCall) Parameters(parameters string) *CustomerUsa
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CustomerUsageReportsGetCall) Fields(s ...googleapi.Field) *CustomerUsageReportsGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *CustomerUsageReportsGetCall) Do() (*UsageReports, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -861,6 +908,9 @@ func (c *CustomerUsageReportsGetCall) Do() (*UsageReports, error) {
 	}
 	if v, ok := c.opt_["parameters"]; ok {
 		params.Set("parameters", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "usage/dates/{date}")
 	urls += "?" + params.Encode()
@@ -980,6 +1030,14 @@ func (c *UserUsageReportGetCall) Parameters(parameters string) *UserUsageReportG
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UserUsageReportGetCall) Fields(s ...googleapi.Field) *UserUsageReportGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *UserUsageReportGetCall) Do() (*UsageReports, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -998,6 +1056,9 @@ func (c *UserUsageReportGetCall) Do() (*UsageReports, error) {
 	}
 	if v, ok := c.opt_["parameters"]; ok {
 		params.Set("parameters", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "usage/users/{userKey}/dates/{date}")
 	urls += "?" + params.Encode()

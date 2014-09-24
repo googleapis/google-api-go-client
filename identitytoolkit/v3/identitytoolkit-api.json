@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/3Q4T5rCRWv05dybb5cUgUxFbyZs\"",
+ "etag": "\"uUWyYHXmEn-ab7WLvo8qNz2S8ws/zVUSgAlpBKN8kedTmeeniVwh5g4\"",
  "discoveryVersion": "v1",
  "id": "identitytoolkit:v3",
  "name": "identitytoolkit",
  "canonicalName": "Identity Toolkit",
  "version": "v3",
- "revision": "20140717",
+ "revision": "20140916",
  "title": "Google Identity Toolkit API",
  "description": "Help the third party sites to implement federated login.",
  "ownerDomain": "google.com",
@@ -76,6 +76,10 @@
     "authUri": {
      "type": "string",
      "description": "The URI used by the IDP to authenticate the user."
+    },
+    "captchaRequired": {
+     "type": "boolean",
+     "description": "True if captcha is required."
     },
     "forExistingProvider": {
      "type": "boolean",
@@ -861,7 +865,7 @@
      "id": "identitytoolkit.relyingparty.resetPassword",
      "path": "resetPassword",
      "httpMethod": "POST",
-     "description": "Set account info for a user.",
+     "description": "Reset password for a user.",
      "request": {
       "$ref": "IdentitytoolkitRelyingpartyResetPasswordRequest"
      },

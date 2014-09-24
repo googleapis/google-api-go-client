@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/E9F7kr_CIUBLaX_abjaTqq2kNvw\"",
+ "etag": "\"uUWyYHXmEn-ab7WLvo8qNz2S8ws/dDDUnbb9qFgWGjzL5FcOsUokWaA\"",
  "discoveryVersion": "v1",
  "id": "drive:v1",
  "name": "drive",
  "version": "v1",
- "revision": "20140811",
+ "revision": "20140916",
  "title": "Drive API",
  "description": "The API to interact with Drive.",
  "ownerDomain": "google.com",
@@ -83,7 +83,7 @@
    "properties": {
     "createdDate": {
      "type": "string",
-     "description": "Create time for this file (formatted ISO8601 timestamp).",
+     "description": "Create time for this file (formatted RFC 3339 timestamp).",
      "format": "date-time"
     },
     "description": {
@@ -321,7 +321,7 @@
       },
       "newRevision": {
        "type": "boolean",
-       "description": "Whether a blob upload should create a new revision. If false, the blob data in the current head revision is replaced. If not set or true, a new blob is created as head revision, and previous revisions are preserved (causing increased use of the user's data storage quota).",
+       "description": "Whether a blob upload should create a new revision. If false, the blob data in the current head revision is replaced. If true or not set, a new blob is created as head revision, and previous revisions are preserved (causing increased use of the user's data storage quota).",
        "default": "true",
        "location": "query"
       },
@@ -365,7 +365,7 @@
       },
       "newRevision": {
        "type": "boolean",
-       "description": "Whether a blob upload should create a new revision. If false, the blob data in the current head revision is replaced. If not set or true, a new blob is created as head revision, and previous revisions are preserved (causing increased use of the user's data storage quota).",
+       "description": "Whether a blob upload should create a new revision. If false, the blob data in the current head revision is replaced. If true or not set, a new blob is created as head revision, and previous revisions are preserved (causing increased use of the user's data storage quota).",
        "default": "true",
        "location": "query"
       },

@@ -198,6 +198,14 @@ func (c *TokeninfoCall) Id_token(id_token string) *TokeninfoCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TokeninfoCall) Fields(s ...googleapi.Field) *TokeninfoCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *TokeninfoCall) Do() (*Tokeninfo, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -207,6 +215,9 @@ func (c *TokeninfoCall) Do() (*Tokeninfo, error) {
 	}
 	if v, ok := c.opt_["id_token"]; ok {
 		params.Set("id_token", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "oauth2/v2/tokeninfo")
 	urls += "?" + params.Encode()
@@ -260,10 +271,21 @@ func (r *UserinfoService) Get() *UserinfoGetCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UserinfoGetCall) Fields(s ...googleapi.Field) *UserinfoGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *UserinfoGetCall) Do() (*Userinfoplus, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "oauth2/v2/userinfo")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -312,10 +334,21 @@ func (r *UserinfoV2MeService) Get() *UserinfoV2MeGetCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UserinfoV2MeGetCall) Fields(s ...googleapi.Field) *UserinfoV2MeGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *UserinfoV2MeGetCall) Do() (*Userinfoplus, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "userinfo/v2/me")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)

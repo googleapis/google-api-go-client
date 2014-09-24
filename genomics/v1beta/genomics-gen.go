@@ -67,6 +67,7 @@ func New(client *http.Client) (*Service, error) {
 	s.Reads = NewReadsService(s)
 	s.Readsets = NewReadsetsService(s)
 	s.Variants = NewVariantsService(s)
+	s.Variantsets = NewVariantsetsService(s)
 	return s, nil
 }
 
@@ -89,6 +90,8 @@ type Service struct {
 	Readsets *ReadsetsService
 
 	Variants *VariantsService
+
+	Variantsets *VariantsetsService
 }
 
 func NewBeaconsService(s *Service) *BeaconsService {
@@ -187,6 +190,15 @@ type VariantsService struct {
 	s *Service
 }
 
+func NewVariantsetsService(s *Service) *VariantsetsService {
+	rs := &VariantsetsService{s: s}
+	return rs
+}
+
+type VariantsetsService struct {
+	s *Service
+}
+
 type Beacon struct {
 	// Exists: True if the allele exists on any variant call, false
 	// otherwise.
@@ -194,21 +206,21 @@ type Beacon struct {
 }
 
 type Call struct {
-	// CallsetId: The ID of the callset this variant call belongs to.
-	CallsetId string `json:"callsetId,omitempty"`
+	// CallSetId: The ID of the call set this variant call belongs to.
+	CallSetId string `json:"callSetId,omitempty"`
 
-	// CallsetName: The name of the callset this variant call belongs to.
-	CallsetName string `json:"callsetName,omitempty"`
+	// CallSetName: The name of the call set this variant call belongs to.
+	CallSetName string `json:"callSetName,omitempty"`
 
 	// Genotype: The genotype of this variant call. Each value represents
 	// either the value of the referenceBases field or a 1-based index into
-	// alternateBases. If a variant had a referenceBases field of "T" and an
+	// alternateBases. If a variant had a referenceBases value of T and an
 	// alternateBases value of ["A", "C"], and the genotype was [2, 1], that
-	// would mean the call represented the heterozygous value "CA" for this
+	// would mean the call represented the heterozygous value CA for this
 	// variant. If the genotype was instead [0, 1], the represented value
-	// would be "TA". Ordering of the genotype values is important if the
-	// phaseset field is present. If a genotype is not called (that is, a
-	// "." is present in the GT string) -1 is returned.
+	// would be TA. Ordering of the genotype values is important if the
+	// phaseset is present. If a genotype is not called (that is, a . is
+	// present in the GT string) -1 is returned.
 	Genotype []int64 `json:"genotype,omitempty"`
 
 	// GenotypeLikelihood: The genotype likelihoods for this variant call.
@@ -222,21 +234,19 @@ type Call struct {
 
 	// Phaseset: If this field is present, this variant call's genotype
 	// ordering implies the phase of the bases and is consistent with any
-	// other variant calls on the same contig which have the same phaseset
-	// value. When importing data from VCF, if the genotype data was phased
-	// but no phase set was specified this field will be set to "*".
+	// other variant calls in the same reference sequence which have the
+	// same phaseset value. When importing data from VCF, if the genotype
+	// data was phased but no phase set was specified this field will be set
+	// to *.
 	Phaseset string `json:"phaseset,omitempty"`
 }
 
-type Callset struct {
-	// Created: The date this callset was created in milliseconds from the
+type CallSet struct {
+	// Created: The date this call set was created in milliseconds from the
 	// epoch.
 	Created int64 `json:"created,omitempty,string"`
 
-	// DatasetId: The ID of the dataset this callset belongs to.
-	DatasetId string `json:"datasetId,omitempty"`
-
-	// Id: The Google generated ID of the callset, immutable.
+	// Id: The Google generated ID of the call set, immutable.
 	Id string `json:"id,omitempty"`
 
 	// Info: A map of additional callset information.
@@ -244,15 +254,12 @@ type Callset struct {
 
 	// Name: The callset name.
 	Name string `json:"name,omitempty"`
-}
 
-type ContigBound struct {
-	// Contig: The contig the bound is associate with.
-	Contig string `json:"contig,omitempty"`
+	// SampleId: The sample ID this call set corresponds to.
+	SampleId string `json:"sampleId,omitempty"`
 
-	// UpperBound: An upper bound (inclusive) on the starting coordinate of
-	// any variant in the contig.
-	UpperBound int64 `json:"upperBound,omitempty,string"`
+	// VariantSetIds: The IDs of the variant sets this call set belongs to.
+	VariantSetIds []string `json:"variantSetIds,omitempty"`
 }
 
 type CoverageBucket struct {
@@ -283,34 +290,54 @@ type Dataset struct {
 
 type ExperimentalCreateJobRequest struct {
 	// Align: Specifies whether or not to run the alignment pipeline. At
-	// least one of align or call_variants must be provided.
+	// least one of align or callVariants must be provided.
 	Align bool `json:"align,omitempty"`
 
 	// CallVariants: Specifies whether or not to run the variant calling
 	// pipeline. If specified, alignment will be performed first and the
 	// aligned BAMs will passed as input to the variant caller. At least one
-	// of align or call_variants must be provided.
+	// of align or callVariants must be provided.
 	CallVariants bool `json:"callVariants,omitempty"`
 
 	// GcsOutputPath: Specifies where to copy the results of certain
-	// pipelines. This shoud be in the form of "gs://bucket/path".
+	// pipelines. This should be in the form of gs://bucket/path.
 	GcsOutputPath string `json:"gcsOutputPath,omitempty"`
+
+	// LibraryName: For alignment from FASTQ files, this specifies the
+	// library name.
+	LibraryName string `json:"libraryName,omitempty"`
 
 	// PairedSourceUris: A list of Google Cloud Storage URIs of paired end
 	// .fastq files to operate upon. If specified, this represents the
 	// second file of each paired .fastq file. The first file of each pair
-	// should be specified in "sourceUris".
+	// should be specified in sourceUris.
 	PairedSourceUris []string `json:"pairedSourceUris,omitempty"`
+
+	// PlatformName: For alignment from FASTQ files, this specifies the
+	// platform name.
+	PlatformName string `json:"platformName,omitempty"`
+
+	// PlatformUnit: For alignment from FASTQ files, this specifies the
+	// platform unit.
+	PlatformUnit string `json:"platformUnit,omitempty"`
 
 	// ProjectId: Required. The Google Cloud Project ID with which to
 	// associate the request.
 	ProjectId int64 `json:"projectId,omitempty,string"`
 
+	// ReadGroupId: For alignment from FASTQ files, this specifies the read
+	// group ID.
+	ReadGroupId string `json:"readGroupId,omitempty"`
+
+	// SampleName: For alignment from FASTQ files, this specifies the sample
+	// name.
+	SampleName string `json:"sampleName,omitempty"`
+
 	// SourceUris: A list of Google Cloud Storage URIs of data files to
 	// operate upon. These can be .bam, interleaved .fastq, or paired
 	// .fastq. If specifying paired .fastq files, the first of each pair of
 	// files should be listed here, and the second of each pair should be
-	// listed in "pairedSourceUris".
+	// listed in pairedSourceUris.
 	SourceUris []string `json:"sourceUris,omitempty"`
 }
 
@@ -327,11 +354,16 @@ type ExportReadsetsRequest struct {
 	ExportUri string `json:"exportUri,omitempty"`
 
 	// ProjectId: The Google Developers Console project number that owns
-	// this export. This is the project that will be billed.
+	// this export.
 	ProjectId int64 `json:"projectId,omitempty,string"`
 
 	// ReadsetIds: The IDs of the readsets to export.
 	ReadsetIds []string `json:"readsetIds,omitempty"`
+
+	// ReferenceNames: The reference names to export. If this is not
+	// specified, all reference sequences, including unmapped reads, are
+	// exported. Use * to export only unmapped reads.
+	ReferenceNames []string `json:"referenceNames,omitempty"`
 }
 
 type ExportReadsetsResponse struct {
@@ -341,30 +373,31 @@ type ExportReadsetsResponse struct {
 
 type ExportVariantsRequest struct {
 	// BigqueryDataset: The BigQuery dataset to export data to. Note that
-	// this is distinct from the Genomics concept of "dataset". The caller
-	// must have WRITE access to this BigQuery dataset.
+	// this is distinct from the Genomics concept of "dataset".
 	BigqueryDataset string `json:"bigqueryDataset,omitempty"`
 
-	// BigqueryTable: The BigQuery table to export data to. The caller must
-	// have WRITE access to this BigQuery table.
+	// BigqueryTable: The BigQuery table to export data to. If the table
+	// doesn't exist, it will be created. If it already exists, it will be
+	// overwritten.
 	BigqueryTable string `json:"bigqueryTable,omitempty"`
 
-	// CallsetIds: If provided, only variant call information from the
-	// specified callsets will be exported. By default all variant calls are
-	// exported.
-	CallsetIds []string `json:"callsetIds,omitempty"`
-
-	// DatasetId: Required. The ID of the dataset that contains variant data
-	// which should be exported. The caller must have READ access to this
-	// dataset.
-	DatasetId string `json:"datasetId,omitempty"`
+	// CallSetIds: If provided, only variant call information from the
+	// specified call sets will be exported. By default all variant calls
+	// are exported.
+	CallSetIds []string `json:"callSetIds,omitempty"`
 
 	// Format: The format for the exported data.
 	Format string `json:"format,omitempty"`
 
-	// ProjectId: The Google Cloud project number that owns this export.
-	// This is the project that will be billed.
+	// ProjectId: The Google Cloud project number that owns the destination
+	// BigQuery dataset. The caller must have WRITE access to this project.
+	// This project will also own the resulting export job.
 	ProjectId int64 `json:"projectId,omitempty,string"`
+
+	// VariantSetId: Required. The ID of the variant set that contains
+	// variant data which should be exported. The caller must have READ
+	// access to this variant set.
+	VariantSetId string `json:"variantSetId,omitempty"`
 }
 
 type ExportVariantsResponse struct {
@@ -377,22 +410,13 @@ type GenomicRange struct {
 	// exclusive. If specified, sequenceName must also be specified.
 	SequenceEnd uint64 `json:"sequenceEnd,omitempty,string"`
 
-	// SequenceName: The reference sequence name, for example "chr1", "1",
-	// or "chrX".
+	// SequenceName: The reference sequence name, for example chr1, 1, or
+	// chrX.
 	SequenceName string `json:"sequenceName,omitempty"`
 
 	// SequenceStart: The start position of the range on the reference,
 	// 1-based inclusive. If specified, sequenceName must also be specified.
 	SequenceStart uint64 `json:"sequenceStart,omitempty,string"`
-}
-
-type GetVariantsSummaryResponse struct {
-	// ContigBounds: A list of all contigs used by the variants in a dataset
-	// with associated coordinate upper bounds for each one.
-	ContigBounds []*ContigBound `json:"contigBounds,omitempty"`
-
-	// Metadata: The metadata associated with this dataset.
-	Metadata []*Metadata `json:"metadata,omitempty"`
 }
 
 type Header struct {
@@ -443,14 +467,17 @@ type ImportReadsetsResponse struct {
 }
 
 type ImportVariantsRequest struct {
-	// DatasetId: Required. The dataset to which variant data should be
-	// imported.
-	DatasetId string `json:"datasetId,omitempty"`
+	// Format: The format of the variant data being imported.
+	Format string `json:"format,omitempty"`
 
 	// SourceUris: A list of URIs pointing at VCF files in Google Cloud
 	// Storage. See the VCF Specification for more details on the input
 	// format.
 	SourceUris []string `json:"sourceUris,omitempty"`
+
+	// VariantSetId: Required. The variant set to which variant data should
+	// be imported.
+	VariantSetId string `json:"variantSetId,omitempty"`
 }
 
 type ImportVariantsResponse struct {
@@ -481,6 +508,9 @@ type Job struct {
 	// job belongs.
 	ProjectId int64 `json:"projectId,omitempty,string"`
 
+	// Request: A summarized representation of the original service request.
+	Request *JobRequest `json:"request,omitempty"`
+
 	// Status: The status of this job.
 	Status string `json:"status,omitempty"`
 
@@ -488,17 +518,30 @@ type Job struct {
 	Warnings []string `json:"warnings,omitempty"`
 }
 
+type JobRequest struct {
+	// Destination: The data destination of the request, for example, a
+	// Google BigQuery Table or Dataset ID.
+	Destination []string `json:"destination,omitempty"`
+
+	// Source: The data source of the request, for example, a Google Cloud
+	// Storage object path or Readset ID.
+	Source []string `json:"source,omitempty"`
+
+	// Type: The original request type.
+	Type string `json:"type,omitempty"`
+}
+
 type ListCoverageBucketsResponse struct {
 	// BucketWidth: The length of each coverage bucket in base pairs. Note
 	// that buckets at the end of a reference sequence may be shorter. This
 	// value is omitted if the bucket width is infinity (the default
-	// behaviour, with no range or target_bucket_width).
+	// behaviour, with no range or targetBucketWidth).
 	BucketWidth uint64 `json:"bucketWidth,omitempty,string"`
 
 	// CoverageBuckets: The coverage buckets. The list of buckets is sparse;
 	// a bucket with 0 overlapping reads is not returned. A bucket never
 	// crosses more than one reference sequence. Each bucket has width
-	// bucket_width, unless its end is is the end of the reference sequence.
+	// bucketWidth, unless its end is the end of the reference sequence.
 	CoverageBuckets []*CoverageBucket `json:"coverageBuckets,omitempty"`
 
 	// NextPageToken: The continuation token, which is used to page through
@@ -684,6 +727,15 @@ type Readset struct {
 	Name string `json:"name,omitempty"`
 }
 
+type ReferenceBound struct {
+	// ReferenceName: The reference the bound is associate with.
+	ReferenceName string `json:"referenceName,omitempty"`
+
+	// UpperBound: An upper bound (inclusive) on the starting coordinate of
+	// any variant in the reference sequence.
+	UpperBound int64 `json:"upperBound,omitempty,string"`
+}
+
 type ReferenceSequence struct {
 	// AssemblyId: (AS) Genome assembly identifier.
 	AssemblyId string `json:"assemblyId,omitempty"`
@@ -705,27 +757,27 @@ type ReferenceSequence struct {
 	Uri string `json:"uri,omitempty"`
 }
 
-type SearchCallsetsRequest struct {
-	// DatasetIds: Restrict the query to callsets within the given datasets.
-	// At least one ID must be provided.
-	DatasetIds []string `json:"datasetIds,omitempty"`
-
-	// MaxResults: The maximum number of callsets to return.
-	MaxResults uint64 `json:"maxResults,omitempty,string"`
-
-	// Name: Only return callsets for which a substring of the name matches
+type SearchCallSetsRequest struct {
+	// Name: Only return call sets for which a substring of the name matches
 	// this string.
 	Name string `json:"name,omitempty"`
 
+	// PageSize: The maximum number of call sets to return.
+	PageSize int64 `json:"pageSize,omitempty"`
+
 	// PageToken: The continuation token, which is used to page through
 	// large result sets. To get the next page of results, set this
-	// parameter to the value of "nextPageToken" from the previous response.
+	// parameter to the value of nextPageToken from the previous response.
 	PageToken string `json:"pageToken,omitempty"`
+
+	// VariantSetIds: Restrict the query to call sets within the given
+	// variant sets. At least one ID must be provided.
+	VariantSetIds []string `json:"variantSetIds,omitempty"`
 }
 
-type SearchCallsetsResponse struct {
-	// Callsets: The list of matching callsets.
-	Callsets []*Callset `json:"callsets,omitempty"`
+type SearchCallSetsResponse struct {
+	// CallSets: The list of matching call sets.
+	CallSets []*CallSet `json:"callSets,omitempty"`
 
 	// NextPageToken: The continuation token, which is used to page through
 	// large result sets. Provide this value in a subsequent request to
@@ -749,11 +801,11 @@ type SearchJobsRequest struct {
 
 	// PageToken: The continuation token which is used to page through large
 	// result sets. To get the next page of results, set this parameter to
-	// the value of the "nextPageToken" from the previous response.
+	// the value of the nextPageToken from the previous response.
 	PageToken string `json:"pageToken,omitempty"`
 
 	// ProjectId: Required. Only return jobs which belong to this Google
-	// Developers Console project. Only accepts project numbers.
+	// Developers
 	ProjectId int64 `json:"projectId,omitempty,string"`
 
 	// Status: Only return jobs which have a matching status.
@@ -773,12 +825,12 @@ type SearchJobsResponse struct {
 
 type SearchReadsRequest struct {
 	// MaxResults: Specifies number of results to return in a single page.
-	// If unspecified, it will default to 256. The maximum value is 1024.
+	// If unspecified, it will default to 256. The maximum value is 2048.
 	MaxResults uint64 `json:"maxResults,omitempty,string"`
 
 	// PageToken: The continuation token, which is used to page through
 	// large result sets. To get the next page of results, set this
-	// parameter to the value of "nextPageToken" from the previous response.
+	// parameter to the value of nextPageToken from the previous response.
 	PageToken string `json:"pageToken,omitempty"`
 
 	// ReadsetIds: The readsets within which to search for reads. At least
@@ -788,19 +840,19 @@ type SearchReadsRequest struct {
 	ReadsetIds []string `json:"readsetIds,omitempty"`
 
 	// SequenceEnd: The end position (1-based, inclusive) of the target
-	// range. If specified, "sequenceName" must also be specified. Defaults
-	// to the end of the target reference sequence, if any.
+	// range. If specified, sequenceName must also be specified. Defaults to
+	// the end of the target reference sequence, if any.
 	SequenceEnd uint64 `json:"sequenceEnd,omitempty,string"`
 
 	// SequenceName: Restricts the results to a particular reference
-	// sequence such as '1', 'chr1', or 'X'. The set of valid references
-	// sequences depends on the readsets specified. If set to "*", only
-	// unmapped Reads are returned.
+	// sequence such as 1, chr1, or X. The set of valid references sequences
+	// depends on the readsets specified. If set to *, only unmapped Reads
+	// are returned.
 	SequenceName string `json:"sequenceName,omitempty"`
 
 	// SequenceStart: The start position (1-based, inclusive) of the target
-	// range. If specified, "sequenceName" must also be specified. Defaults
-	// to the start of the target reference sequence, if any.
+	// range. If specified, sequenceName must also be specified. Defaults to
+	// the start of the target reference sequence, if any.
 	SequenceStart uint64 `json:"sequenceStart,omitempty,string"`
 }
 
@@ -824,7 +876,7 @@ type SearchReadsetsRequest struct {
 	DatasetIds []string `json:"datasetIds,omitempty"`
 
 	// MaxResults: Specifies number of results to return in a single page.
-	// If unspecified, it will default to 128. The maximum value is 256.
+	// If unspecified, it will default to 128. The maximum value is 1024.
 	MaxResults uint64 `json:"maxResults,omitempty,string"`
 
 	// Name: Only return readsets for which a substring of the name matches
@@ -833,7 +885,7 @@ type SearchReadsetsRequest struct {
 
 	// PageToken: The continuation token, which is used to page through
 	// large result sets. To get the next page of results, set this
-	// parameter to the value of "nextPageToken" from the previous response.
+	// parameter to the value of nextPageToken from the previous response.
 	PageToken string `json:"pageToken,omitempty"`
 }
 
@@ -848,42 +900,67 @@ type SearchReadsetsResponse struct {
 	Readsets []*Readset `json:"readsets,omitempty"`
 }
 
-type SearchVariantsRequest struct {
-	// CallsetIds: Only return variant calls which belong to callsets with
-	// these ids. Leaving this blank returns all variant calls. At most one
-	// of callsetNames or callsetIds should be provided.
-	CallsetIds []string `json:"callsetIds,omitempty"`
+type SearchVariantSetsRequest struct {
+	// DatasetIds: Exactly one dataset ID must be provided here. Only
+	// variant sets which belong to this dataset will be returned.
+	DatasetIds []string `json:"datasetIds,omitempty"`
 
-	// CallsetNames: Only return variant calls which belong to callsets
-	// which have exactly these names. Leaving this blank returns all
-	// variant calls. At most one of callsetNames or callsetIds should be
-	// provided.
-	CallsetNames []string `json:"callsetNames,omitempty"`
-
-	// Contig: Required. Only return variants on this contig.
-	Contig string `json:"contig,omitempty"`
-
-	// DatasetId: Required. The ID of the dataset to search.
-	DatasetId string `json:"datasetId,omitempty"`
-
-	// EndPosition: Required. The end of the window (1-based, inclusive) for
-	// which overlapping variants should be returned.
-	EndPosition int64 `json:"endPosition,omitempty,string"`
-
-	// MaxResults: The maximum number of variants to return.
-	MaxResults uint64 `json:"maxResults,omitempty,string"`
+	// PageSize: The maximum number of variant sets to return in a request.
+	PageSize int64 `json:"pageSize,omitempty"`
 
 	// PageToken: The continuation token, which is used to page through
 	// large result sets. To get the next page of results, set this
-	// parameter to the value of "nextPageToken" from the previous response.
+	// parameter to the value of nextPageToken from the previous response.
+	PageToken string `json:"pageToken,omitempty"`
+}
+
+type SearchVariantSetsResponse struct {
+	// NextPageToken: The continuation token, which is used to page through
+	// large result sets. Provide this value in a subsequent request to
+	// return the next page of results. This field will be empty if there
+	// aren't any additional results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// VariantSets: The variant sets belonging to the requested dataset.
+	VariantSets []*VariantSet `json:"variantSets,omitempty"`
+}
+
+type SearchVariantsRequest struct {
+	// CallSetIds: Only return variant calls which belong to call sets with
+	// these ids. Leaving this blank returns all variant calls.
+	CallSetIds []string `json:"callSetIds,omitempty"`
+
+	// End: Required. The end of the window (0-based, exclusive) for which
+	// overlapping variants should be returned.
+	End int64 `json:"end,omitempty,string"`
+
+	// MaxCalls: The maximum number of calls to return. However, at least
+	// one variant will always be returned, even if it has more calls than
+	// this limit.
+	MaxCalls int64 `json:"maxCalls,omitempty"`
+
+	// PageSize: The maximum number of variants to return.
+	PageSize int64 `json:"pageSize,omitempty"`
+
+	// PageToken: The continuation token, which is used to page through
+	// large result sets. To get the next page of results, set this
+	// parameter to the value of nextPageToken from the previous response.
 	PageToken string `json:"pageToken,omitempty"`
 
-	// StartPosition: Required. The beginning of the window (1-based,
-	// inclusive) for which overlapping variants should be returned.
-	StartPosition int64 `json:"startPosition,omitempty,string"`
+	// ReferenceName: Required. Only return variants in this reference
+	// sequence.
+	ReferenceName string `json:"referenceName,omitempty"`
+
+	// Start: Required. The beginning of the window (0-based, inclusive) for
+	// which overlapping variants should be returned.
+	Start int64 `json:"start,omitempty,string"`
 
 	// VariantName: Only return variants which have exactly this name.
 	VariantName string `json:"variantName,omitempty"`
+
+	// VariantSetIds: Exactly one variant set ID must be provided. Only
+	// variants from this variant set will be returned.
+	VariantSetIds []string `json:"variantSetIds,omitempty"`
 }
 
 type SearchVariantsResponse struct {
@@ -906,21 +983,14 @@ type Variant struct {
 	// variant.
 	Calls []*Call `json:"calls,omitempty"`
 
-	// Contig: The contig on which this variant occurs. (such as 'chr20' or
-	// 'X')
-	Contig string `json:"contig,omitempty"`
-
 	// Created: The date this variant was created, in milliseconds from the
 	// epoch.
 	Created int64 `json:"created,omitempty,string"`
 
-	// DatasetId: The ID of the dataset this variant belongs to.
-	DatasetId string `json:"datasetId,omitempty"`
-
-	// End: The end position (1-based) of this variant. This corresponds to
+	// End: The end position (0-based) of this variant. This corresponds to
 	// the first base after the last base in the reference allele. So, the
-	// length of the reference allele is (end - position). This is useful
-	// for variants that don't explicitly give alternate bases, for example
+	// length of the reference allele is (end - start). This is useful for
+	// variants that don't explicitly give alternate bases, for example
 	// large deletions.
 	End int64 `json:"end,omitempty,string"`
 
@@ -933,28 +1003,50 @@ type Variant struct {
 	// Names: Names for the variant, for example a RefSNP ID.
 	Names []string `json:"names,omitempty"`
 
-	// Position: The position at which this variant occurs (1-based). This
-	// corresponds to the first base of the string of reference bases.
-	Position int64 `json:"position,omitempty,string"`
-
 	// ReferenceBases: The reference bases for this variant. They start at
 	// the given position.
 	ReferenceBases string `json:"referenceBases,omitempty"`
+
+	// ReferenceName: The reference on which this variant occurs. (such as
+	// chr20 or X)
+	ReferenceName string `json:"referenceName,omitempty"`
+
+	// Start: The position at which this variant occurs (0-based). This
+	// corresponds to the first base of the string of reference bases.
+	Start int64 `json:"start,omitempty,string"`
+
+	// VariantSetId: The ID of the variant set this variant belongs to.
+	VariantSetId string `json:"variantSetId,omitempty"`
+}
+
+type VariantSet struct {
+	// DatasetId: The dataset to which this variant set belongs. Immutable.
+	DatasetId string `json:"datasetId,omitempty"`
+
+	// Id: The Google-generated ID of the variant set. Immutable.
+	Id string `json:"id,omitempty"`
+
+	// Metadata: The metadata associated with this variant set.
+	Metadata []*Metadata `json:"metadata,omitempty"`
+
+	// ReferenceBounds: A list of all references used by the variants in a
+	// variant set with associated coordinate upper bounds for each one.
+	ReferenceBounds []*ReferenceBound `json:"referenceBounds,omitempty"`
 }
 
 // method id "genomics.beacons.get":
 
 type BeaconsGetCall struct {
-	s         *Service
-	datasetId string
-	opt_      map[string]interface{}
+	s            *Service
+	variantSetId string
+	opt_         map[string]interface{}
 }
 
 // Get: This is an experimental API that provides a Global Alliance for
 // Genomics and Health Beacon. It may change at any time.
-func (r *BeaconsService) Get(datasetId string) *BeaconsGetCall {
+func (r *BeaconsService) Get(variantSetId string) *BeaconsGetCall {
 	c := &BeaconsGetCall{s: r.s, opt_: make(map[string]interface{})}
-	c.datasetId = datasetId
+	c.variantSetId = variantSetId
 	return c
 }
 
@@ -965,17 +1057,25 @@ func (c *BeaconsGetCall) Allele(allele string) *BeaconsGetCall {
 	return c
 }
 
-// Contig sets the optional parameter "contig": Required. The contig to
-// query over.
-func (c *BeaconsGetCall) Contig(contig string) *BeaconsGetCall {
-	c.opt_["contig"] = contig
+// Position sets the optional parameter "position": Required. The
+// 0-based position to query.
+func (c *BeaconsGetCall) Position(position int64) *BeaconsGetCall {
+	c.opt_["position"] = position
 	return c
 }
 
-// Position sets the optional parameter "position": Required. The
-// 1-based position to query at.
-func (c *BeaconsGetCall) Position(position int64) *BeaconsGetCall {
-	c.opt_["position"] = position
+// ReferenceName sets the optional parameter "referenceName": Required.
+// The reference to query over.
+func (c *BeaconsGetCall) ReferenceName(referenceName string) *BeaconsGetCall {
+	c.opt_["referenceName"] = referenceName
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BeaconsGetCall) Fields(s ...googleapi.Field) *BeaconsGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -986,17 +1086,20 @@ func (c *BeaconsGetCall) Do() (*Beacon, error) {
 	if v, ok := c.opt_["allele"]; ok {
 		params.Set("allele", fmt.Sprintf("%v", v))
 	}
-	if v, ok := c.opt_["contig"]; ok {
-		params.Set("contig", fmt.Sprintf("%v", v))
-	}
 	if v, ok := c.opt_["position"]; ok {
 		params.Set("position", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "beacons/{datasetId}")
+	if v, ok := c.opt_["referenceName"]; ok {
+		params.Set("referenceName", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "beacons/{variantSetId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
-		"datasetId": c.datasetId,
+		"variantSetId": c.variantSetId,
 	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -1017,7 +1120,7 @@ func (c *BeaconsGetCall) Do() (*Beacon, error) {
 	//   "httpMethod": "GET",
 	//   "id": "genomics.beacons.get",
 	//   "parameterOrder": [
-	//     "datasetId"
+	//     "variantSetId"
 	//   ],
 	//   "parameters": {
 	//     "allele": {
@@ -1025,25 +1128,25 @@ func (c *BeaconsGetCall) Do() (*Beacon, error) {
 	//       "location": "query",
 	//       "type": "string"
 	//     },
-	//     "contig": {
-	//       "description": "Required. The contig to query over.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "datasetId": {
-	//       "description": "The ID of the dataset to query over. It must be public. Private datasets will return an unauthorized exception.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
 	//     "position": {
-	//       "description": "Required. The 1-based position to query at.",
+	//       "description": "Required. The 0-based position to query.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
+	//     },
+	//     "referenceName": {
+	//       "description": "Required. The reference to query over.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "variantSetId": {
+	//       "description": "The ID of the variant set to query over. It must be public. Private variant sets will return an unauthorized exception.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "beacons/{datasetId}",
+	//   "path": "beacons/{variantSetId}",
 	//   "response": {
 	//     "$ref": "Beacon"
 	//   }
@@ -1055,18 +1158,26 @@ func (c *BeaconsGetCall) Do() (*Beacon, error) {
 
 type CallsetsCreateCall struct {
 	s       *Service
-	callset *Callset
+	callset *CallSet
 	opt_    map[string]interface{}
 }
 
-// Create: Creates a new callset.
-func (r *CallsetsService) Create(callset *Callset) *CallsetsCreateCall {
+// Create: Creates a new call set.
+func (r *CallsetsService) Create(callset *CallSet) *CallsetsCreateCall {
 	c := &CallsetsCreateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.callset = callset
 	return c
 }
 
-func (c *CallsetsCreateCall) Do() (*Callset, error) {
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CallsetsCreateCall) Fields(s ...googleapi.Field) *CallsetsCreateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *CallsetsCreateCall) Do() (*CallSet, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.callset)
 	if err != nil {
@@ -1075,6 +1186,9 @@ func (c *CallsetsCreateCall) Do() (*Callset, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "callsets")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -1089,21 +1203,21 @@ func (c *CallsetsCreateCall) Do() (*Callset, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Callset
+	var ret *CallSet
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new callset.",
+	//   "description": "Creates a new call set.",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.callsets.create",
 	//   "path": "callsets",
 	//   "request": {
-	//     "$ref": "Callset"
+	//     "$ref": "CallSet"
 	//   },
 	//   "response": {
-	//     "$ref": "Callset"
+	//     "$ref": "CallSet"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/genomics"
@@ -1116,14 +1230,22 @@ func (c *CallsetsCreateCall) Do() (*Callset, error) {
 
 type CallsetsDeleteCall struct {
 	s         *Service
-	callsetId string
+	callSetId string
 	opt_      map[string]interface{}
 }
 
-// Delete: Deletes a callset.
-func (r *CallsetsService) Delete(callsetId string) *CallsetsDeleteCall {
+// Delete: Deletes a call set.
+func (r *CallsetsService) Delete(callSetId string) *CallsetsDeleteCall {
 	c := &CallsetsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
-	c.callsetId = callsetId
+	c.callSetId = callSetId
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CallsetsDeleteCall) Fields(s ...googleapi.Field) *CallsetsDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -1131,11 +1253,14 @@ func (c *CallsetsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "callsets/{callsetId}")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "callsets/{callSetId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
-		"callsetId": c.callsetId,
+		"callSetId": c.callSetId,
 	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -1148,21 +1273,21 @@ func (c *CallsetsDeleteCall) Do() error {
 	}
 	return nil
 	// {
-	//   "description": "Deletes a callset.",
+	//   "description": "Deletes a call set.",
 	//   "httpMethod": "DELETE",
 	//   "id": "genomics.callsets.delete",
 	//   "parameterOrder": [
-	//     "callsetId"
+	//     "callSetId"
 	//   ],
 	//   "parameters": {
-	//     "callsetId": {
+	//     "callSetId": {
 	//       "description": "The ID of the callset to be deleted.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "callsets/{callsetId}",
+	//   "path": "callsets/{callSetId}",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/genomics"
 	//   ]
@@ -1174,26 +1299,37 @@ func (c *CallsetsDeleteCall) Do() error {
 
 type CallsetsGetCall struct {
 	s         *Service
-	callsetId string
+	callSetId string
 	opt_      map[string]interface{}
 }
 
-// Get: Gets a callset by ID.
-func (r *CallsetsService) Get(callsetId string) *CallsetsGetCall {
+// Get: Gets a call set by ID.
+func (r *CallsetsService) Get(callSetId string) *CallsetsGetCall {
 	c := &CallsetsGetCall{s: r.s, opt_: make(map[string]interface{})}
-	c.callsetId = callsetId
+	c.callSetId = callSetId
 	return c
 }
 
-func (c *CallsetsGetCall) Do() (*Callset, error) {
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CallsetsGetCall) Fields(s ...googleapi.Field) *CallsetsGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *CallsetsGetCall) Do() (*CallSet, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "callsets/{callsetId}")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "callsets/{callSetId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
-		"callsetId": c.callsetId,
+		"callSetId": c.callSetId,
 	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -1204,29 +1340,29 @@ func (c *CallsetsGetCall) Do() (*Callset, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Callset
+	var ret *CallSet
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a callset by ID.",
+	//   "description": "Gets a call set by ID.",
 	//   "httpMethod": "GET",
 	//   "id": "genomics.callsets.get",
 	//   "parameterOrder": [
-	//     "callsetId"
+	//     "callSetId"
 	//   ],
 	//   "parameters": {
-	//     "callsetId": {
+	//     "callSetId": {
 	//       "description": "The ID of the callset.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "callsets/{callsetId}",
+	//   "path": "callsets/{callSetId}",
 	//   "response": {
-	//     "$ref": "Callset"
+	//     "$ref": "CallSet"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/genomics",
@@ -1240,20 +1376,28 @@ func (c *CallsetsGetCall) Do() (*Callset, error) {
 
 type CallsetsPatchCall struct {
 	s         *Service
-	callsetId string
-	callset   *Callset
+	callSetId string
+	callset   *CallSet
 	opt_      map[string]interface{}
 }
 
-// Patch: Updates a callset. This method supports patch semantics.
-func (r *CallsetsService) Patch(callsetId string, callset *Callset) *CallsetsPatchCall {
+// Patch: Updates a call set. This method supports patch semantics.
+func (r *CallsetsService) Patch(callSetId string, callset *CallSet) *CallsetsPatchCall {
 	c := &CallsetsPatchCall{s: r.s, opt_: make(map[string]interface{})}
-	c.callsetId = callsetId
+	c.callSetId = callSetId
 	c.callset = callset
 	return c
 }
 
-func (c *CallsetsPatchCall) Do() (*Callset, error) {
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CallsetsPatchCall) Fields(s ...googleapi.Field) *CallsetsPatchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *CallsetsPatchCall) Do() (*CallSet, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.callset)
 	if err != nil {
@@ -1262,11 +1406,14 @@ func (c *CallsetsPatchCall) Do() (*Callset, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "callsets/{callsetId}")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "callsets/{callSetId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
-		"callsetId": c.callsetId,
+		"callSetId": c.callSetId,
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
@@ -1278,32 +1425,32 @@ func (c *CallsetsPatchCall) Do() (*Callset, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Callset
+	var ret *CallSet
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a callset. This method supports patch semantics.",
+	//   "description": "Updates a call set. This method supports patch semantics.",
 	//   "httpMethod": "PATCH",
 	//   "id": "genomics.callsets.patch",
 	//   "parameterOrder": [
-	//     "callsetId"
+	//     "callSetId"
 	//   ],
 	//   "parameters": {
-	//     "callsetId": {
+	//     "callSetId": {
 	//       "description": "The ID of the callset to be updated.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "callsets/{callsetId}",
+	//   "path": "callsets/{callSetId}",
 	//   "request": {
-	//     "$ref": "Callset"
+	//     "$ref": "CallSet"
 	//   },
 	//   "response": {
-	//     "$ref": "Callset"
+	//     "$ref": "CallSet"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/genomics"
@@ -1316,18 +1463,26 @@ func (c *CallsetsPatchCall) Do() (*Callset, error) {
 
 type CallsetsSearchCall struct {
 	s                     *Service
-	searchcallsetsrequest *SearchCallsetsRequest
+	searchcallsetsrequest *SearchCallSetsRequest
 	opt_                  map[string]interface{}
 }
 
-// Search: Gets a list of callsets matching the criteria.
-func (r *CallsetsService) Search(searchcallsetsrequest *SearchCallsetsRequest) *CallsetsSearchCall {
+// Search: Gets a list of call sets matching the criteria.
+func (r *CallsetsService) Search(searchcallsetsrequest *SearchCallSetsRequest) *CallsetsSearchCall {
 	c := &CallsetsSearchCall{s: r.s, opt_: make(map[string]interface{})}
 	c.searchcallsetsrequest = searchcallsetsrequest
 	return c
 }
 
-func (c *CallsetsSearchCall) Do() (*SearchCallsetsResponse, error) {
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CallsetsSearchCall) Fields(s ...googleapi.Field) *CallsetsSearchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *CallsetsSearchCall) Do() (*SearchCallSetsResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.searchcallsetsrequest)
 	if err != nil {
@@ -1336,6 +1491,9 @@ func (c *CallsetsSearchCall) Do() (*SearchCallsetsResponse, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "callsets/search")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -1350,21 +1508,21 @@ func (c *CallsetsSearchCall) Do() (*SearchCallsetsResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *SearchCallsetsResponse
+	var ret *SearchCallSetsResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a list of callsets matching the criteria.",
+	//   "description": "Gets a list of call sets matching the criteria.",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.callsets.search",
 	//   "path": "callsets/search",
 	//   "request": {
-	//     "$ref": "SearchCallsetsRequest"
+	//     "$ref": "SearchCallSetsRequest"
 	//   },
 	//   "response": {
-	//     "$ref": "SearchCallsetsResponse"
+	//     "$ref": "SearchCallSetsResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/genomics",
@@ -1378,20 +1536,28 @@ func (c *CallsetsSearchCall) Do() (*SearchCallsetsResponse, error) {
 
 type CallsetsUpdateCall struct {
 	s         *Service
-	callsetId string
-	callset   *Callset
+	callSetId string
+	callset   *CallSet
 	opt_      map[string]interface{}
 }
 
-// Update: Updates a callset.
-func (r *CallsetsService) Update(callsetId string, callset *Callset) *CallsetsUpdateCall {
+// Update: Updates a call set.
+func (r *CallsetsService) Update(callSetId string, callset *CallSet) *CallsetsUpdateCall {
 	c := &CallsetsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
-	c.callsetId = callsetId
+	c.callSetId = callSetId
 	c.callset = callset
 	return c
 }
 
-func (c *CallsetsUpdateCall) Do() (*Callset, error) {
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CallsetsUpdateCall) Fields(s ...googleapi.Field) *CallsetsUpdateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *CallsetsUpdateCall) Do() (*CallSet, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.callset)
 	if err != nil {
@@ -1400,11 +1566,14 @@ func (c *CallsetsUpdateCall) Do() (*Callset, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "callsets/{callsetId}")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "callsets/{callSetId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
-		"callsetId": c.callsetId,
+		"callSetId": c.callSetId,
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
@@ -1416,32 +1585,32 @@ func (c *CallsetsUpdateCall) Do() (*Callset, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Callset
+	var ret *CallSet
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a callset.",
+	//   "description": "Updates a call set.",
 	//   "httpMethod": "PUT",
 	//   "id": "genomics.callsets.update",
 	//   "parameterOrder": [
-	//     "callsetId"
+	//     "callSetId"
 	//   ],
 	//   "parameters": {
-	//     "callsetId": {
+	//     "callSetId": {
 	//       "description": "The ID of the callset to be updated.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "callsets/{callsetId}",
+	//   "path": "callsets/{callSetId}",
 	//   "request": {
-	//     "$ref": "Callset"
+	//     "$ref": "CallSet"
 	//   },
 	//   "response": {
-	//     "$ref": "Callset"
+	//     "$ref": "CallSet"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/genomics"
@@ -1465,6 +1634,14 @@ func (r *DatasetsService) Create(dataset *Dataset) *DatasetsCreateCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *DatasetsCreateCall) Fields(s ...googleapi.Field) *DatasetsCreateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *DatasetsCreateCall) Do() (*Dataset, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.dataset)
@@ -1474,6 +1651,9 @@ func (c *DatasetsCreateCall) Do() (*Dataset, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "datasets")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -1526,10 +1706,21 @@ func (r *DatasetsService) Delete(datasetId string) *DatasetsDeleteCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *DatasetsDeleteCall) Fields(s ...googleapi.Field) *DatasetsDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *DatasetsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "datasets/{datasetId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
@@ -1584,10 +1775,21 @@ func (r *DatasetsService) Get(datasetId string) *DatasetsGetCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *DatasetsGetCall) Fields(s ...googleapi.Field) *DatasetsGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *DatasetsGetCall) Do() (*Dataset, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "datasets/{datasetId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -1658,7 +1860,7 @@ func (c *DatasetsListCall) MaxResults(maxResults uint64) *DatasetsListCall {
 // PageToken sets the optional parameter "pageToken": The continuation
 // token, which is used to page through large result sets. To get the
 // next page of results, set this parameter to the value of
-// "nextPageToken" from the previous response.
+// nextPageToken from the previous response.
 func (c *DatasetsListCall) PageToken(pageToken string) *DatasetsListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -1669,6 +1871,14 @@ func (c *DatasetsListCall) PageToken(pageToken string) *DatasetsListCall {
 // accepts project numbers.
 func (c *DatasetsListCall) ProjectId(projectId int64) *DatasetsListCall {
 	c.opt_["projectId"] = projectId
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *DatasetsListCall) Fields(s ...googleapi.Field) *DatasetsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -1684,6 +1894,9 @@ func (c *DatasetsListCall) Do() (*ListDatasetsResponse, error) {
 	}
 	if v, ok := c.opt_["projectId"]; ok {
 		params.Set("projectId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "datasets")
 	urls += "?" + params.Encode()
@@ -1716,7 +1929,7 @@ func (c *DatasetsListCall) Do() (*ListDatasetsResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "pageToken": {
-	//       "description": "The continuation token, which is used to page through large result sets. To get the next page of results, set this parameter to the value of \"nextPageToken\" from the previous response.",
+	//       "description": "The continuation token, which is used to page through large result sets. To get the next page of results, set this parameter to the value of nextPageToken from the previous response.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1756,6 +1969,14 @@ func (r *DatasetsService) Patch(datasetId string, dataset *Dataset) *DatasetsPat
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *DatasetsPatchCall) Fields(s ...googleapi.Field) *DatasetsPatchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *DatasetsPatchCall) Do() (*Dataset, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.dataset)
@@ -1765,6 +1986,9 @@ func (c *DatasetsPatchCall) Do() (*Dataset, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "datasets/{datasetId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
@@ -1832,10 +2056,21 @@ func (r *DatasetsService) Undelete(datasetId string) *DatasetsUndeleteCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *DatasetsUndeleteCall) Fields(s ...googleapi.Field) *DatasetsUndeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *DatasetsUndeleteCall) Do() (*Dataset, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "datasets/{datasetId}/undelete")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -1899,6 +2134,14 @@ func (r *DatasetsService) Update(datasetId string, dataset *Dataset) *DatasetsUp
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *DatasetsUpdateCall) Fields(s ...googleapi.Field) *DatasetsUpdateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *DatasetsUpdateCall) Do() (*Dataset, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.dataset)
@@ -1908,6 +2151,9 @@ func (c *DatasetsUpdateCall) Do() (*Dataset, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "datasets/{datasetId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
@@ -1974,6 +2220,14 @@ func (r *ExperimentalJobsService) Create(experimentalcreatejobrequest *Experimen
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ExperimentalJobsCreateCall) Fields(s ...googleapi.Field) *ExperimentalJobsCreateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *ExperimentalJobsCreateCall) Do() (*ExperimentalCreateJobResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.experimentalcreatejobrequest)
@@ -1983,6 +2237,9 @@ func (c *ExperimentalJobsCreateCall) Do() (*ExperimentalCreateJobResponse, error
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "experimental/jobs/create")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -2037,10 +2294,21 @@ func (r *JobsService) Cancel(jobId string) *JobsCancelCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *JobsCancelCall) Fields(s ...googleapi.Field) *JobsCancelCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *JobsCancelCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "jobs/{jobId}/cancel")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -2095,10 +2363,21 @@ func (r *JobsService) Get(jobId string) *JobsGetCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *JobsGetCall) Fields(s ...googleapi.Field) *JobsGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *JobsGetCall) Do() (*Job, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "jobs/{jobId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -2161,6 +2440,14 @@ func (r *JobsService) Search(searchjobsrequest *SearchJobsRequest) *JobsSearchCa
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *JobsSearchCall) Fields(s ...googleapi.Field) *JobsSearchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *JobsSearchCall) Do() (*SearchJobsResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.searchjobsrequest)
@@ -2170,6 +2457,9 @@ func (c *JobsSearchCall) Do() (*SearchJobsResponse, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "jobs/search")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -2232,6 +2522,14 @@ func (r *ReadsService) Search(searchreadsrequest *SearchReadsRequest) *ReadsSear
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ReadsSearchCall) Fields(s ...googleapi.Field) *ReadsSearchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *ReadsSearchCall) Do() (*SearchReadsResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.searchreadsrequest)
@@ -2241,6 +2539,9 @@ func (c *ReadsSearchCall) Do() (*SearchReadsResponse, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "reads/search")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -2294,10 +2595,21 @@ func (r *ReadsetsService) Delete(readsetId string) *ReadsetsDeleteCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ReadsetsDeleteCall) Fields(s ...googleapi.Field) *ReadsetsDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *ReadsetsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "readsets/{readsetId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
@@ -2356,6 +2668,14 @@ func (r *ReadsetsService) Export(exportreadsetsrequest *ExportReadsetsRequest) *
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ReadsetsExportCall) Fields(s ...googleapi.Field) *ReadsetsExportCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *ReadsetsExportCall) Do() (*ExportReadsetsResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.exportreadsetsrequest)
@@ -2365,6 +2685,9 @@ func (c *ReadsetsExportCall) Do() (*ExportReadsetsResponse, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "readsets/export")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -2418,10 +2741,21 @@ func (r *ReadsetsService) Get(readsetId string) *ReadsetsGetCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ReadsetsGetCall) Fields(s ...googleapi.Field) *ReadsetsGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *ReadsetsGetCall) Do() (*Readset, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "readsets/{readsetId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -2488,6 +2822,14 @@ func (r *ReadsetsService) Import(importreadsetsrequest *ImportReadsetsRequest) *
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ReadsetsImportCall) Fields(s ...googleapi.Field) *ReadsetsImportCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *ReadsetsImportCall) Do() (*ImportReadsetsResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.importreadsetsrequest)
@@ -2497,6 +2839,9 @@ func (c *ReadsetsImportCall) Do() (*ImportReadsetsResponse, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "readsets/import")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -2552,6 +2897,14 @@ func (r *ReadsetsService) Patch(readsetId string, readset *Readset) *ReadsetsPat
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ReadsetsPatchCall) Fields(s ...googleapi.Field) *ReadsetsPatchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *ReadsetsPatchCall) Do() (*Readset, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.readset)
@@ -2561,6 +2914,9 @@ func (c *ReadsetsPatchCall) Do() (*Readset, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "readsets/{readsetId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
@@ -2626,6 +2982,14 @@ func (r *ReadsetsService) Search(searchreadsetsrequest *SearchReadsetsRequest) *
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ReadsetsSearchCall) Fields(s ...googleapi.Field) *ReadsetsSearchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *ReadsetsSearchCall) Do() (*SearchReadsetsResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.searchreadsetsrequest)
@@ -2635,6 +2999,9 @@ func (c *ReadsetsSearchCall) Do() (*SearchReadsetsResponse, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "readsets/search")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -2690,6 +3057,14 @@ func (r *ReadsetsService) Update(readsetId string, readset *Readset) *ReadsetsUp
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ReadsetsUpdateCall) Fields(s ...googleapi.Field) *ReadsetsUpdateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *ReadsetsUpdateCall) Do() (*Readset, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.readset)
@@ -2699,6 +3074,9 @@ func (c *ReadsetsUpdateCall) Do() (*Readset, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "readsets/{readsetId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
@@ -2781,7 +3159,7 @@ func (c *ReadsetsCoveragebucketsListCall) MaxResults(maxResults uint64) *Readset
 // PageToken sets the optional parameter "pageToken": The continuation
 // token, which is used to page through large result sets. To get the
 // next page of results, set this parameter to the value of
-// "nextPageToken" from the previous response.
+// nextPageToken from the previous response.
 func (c *ReadsetsCoveragebucketsListCall) PageToken(pageToken string) *ReadsetsCoveragebucketsListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -2796,7 +3174,7 @@ func (c *ReadsetsCoveragebucketsListCall) RangeSequenceEnd(rangeSequenceEnd uint
 }
 
 // RangeSequenceName sets the optional parameter "range.sequenceName":
-// The reference sequence name, for example "chr1", "1", or "chrX".
+// The reference sequence name, for example chr1, 1, or chrX.
 func (c *ReadsetsCoveragebucketsListCall) RangeSequenceName(rangeSequenceName string) *ReadsetsCoveragebucketsListCall {
 	c.opt_["range.sequenceName"] = rangeSequenceName
 	return c
@@ -2813,13 +3191,21 @@ func (c *ReadsetsCoveragebucketsListCall) RangeSequenceStart(rangeSequenceStart 
 // TargetBucketWidth sets the optional parameter "targetBucketWidth":
 // The desired width of each reported coverage bucket in base pairs.
 // This will be rounded down to the nearest precomputed bucket width;
-// the value of which is returned as bucket_width in the response.
+// the value of which is returned as bucketWidth in the response.
 // Defaults to infinity (each bucket spans an entire reference sequence)
 // or the length of the target range, if specified. The smallest
-// precomputed bucket_width is currently 2048 base pairs; this is
-// subject to change.
+// precomputed bucketWidth is currently 2048 base pairs; this is subject
+// to change.
 func (c *ReadsetsCoveragebucketsListCall) TargetBucketWidth(targetBucketWidth uint64) *ReadsetsCoveragebucketsListCall {
 	c.opt_["targetBucketWidth"] = targetBucketWidth
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ReadsetsCoveragebucketsListCall) Fields(s ...googleapi.Field) *ReadsetsCoveragebucketsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -2844,6 +3230,9 @@ func (c *ReadsetsCoveragebucketsListCall) Do() (*ListCoverageBucketsResponse, er
 	}
 	if v, ok := c.opt_["targetBucketWidth"]; ok {
 		params.Set("targetBucketWidth", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "readsets/{readsetId}/coveragebuckets")
 	urls += "?" + params.Encode()
@@ -2881,7 +3270,7 @@ func (c *ReadsetsCoveragebucketsListCall) Do() (*ListCoverageBucketsResponse, er
 	//       "type": "string"
 	//     },
 	//     "pageToken": {
-	//       "description": "The continuation token, which is used to page through large result sets. To get the next page of results, set this parameter to the value of \"nextPageToken\" from the previous response.",
+	//       "description": "The continuation token, which is used to page through large result sets. To get the next page of results, set this parameter to the value of nextPageToken from the previous response.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2892,7 +3281,7 @@ func (c *ReadsetsCoveragebucketsListCall) Do() (*ListCoverageBucketsResponse, er
 	//       "type": "string"
 	//     },
 	//     "range.sequenceName": {
-	//       "description": "The reference sequence name, for example \"chr1\", \"1\", or \"chrX\".",
+	//       "description": "The reference sequence name, for example chr1, 1, or chrX.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2909,7 +3298,7 @@ func (c *ReadsetsCoveragebucketsListCall) Do() (*ListCoverageBucketsResponse, er
 	//       "type": "string"
 	//     },
 	//     "targetBucketWidth": {
-	//       "description": "The desired width of each reported coverage bucket in base pairs. This will be rounded down to the nearest precomputed bucket width; the value of which is returned as bucket_width in the response. Defaults to infinity (each bucket spans an entire reference sequence) or the length of the target range, if specified. The smallest precomputed bucket_width is currently 2048 base pairs; this is subject to change.",
+	//       "description": "The desired width of each reported coverage bucket in base pairs. This will be rounded down to the nearest precomputed bucket width; the value of which is returned as bucketWidth in the response. Defaults to infinity (each bucket spans an entire reference sequence) or the length of the target range, if specified. The smallest precomputed bucketWidth is currently 2048 base pairs; this is subject to change.",
 	//       "format": "uint64",
 	//       "location": "query",
 	//       "type": "string"
@@ -2942,6 +3331,14 @@ func (r *VariantsService) Create(variant *Variant) *VariantsCreateCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *VariantsCreateCall) Fields(s ...googleapi.Field) *VariantsCreateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *VariantsCreateCall) Do() (*Variant, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.variant)
@@ -2951,6 +3348,9 @@ func (c *VariantsCreateCall) Do() (*Variant, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "variants")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -3003,10 +3403,21 @@ func (r *VariantsService) Delete(variantId string) *VariantsDeleteCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *VariantsDeleteCall) Fields(s ...googleapi.Field) *VariantsDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *VariantsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "variants/{variantId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
@@ -3061,6 +3472,14 @@ func (r *VariantsService) Export(exportvariantsrequest *ExportVariantsRequest) *
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *VariantsExportCall) Fields(s ...googleapi.Field) *VariantsExportCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *VariantsExportCall) Do() (*ExportVariantsResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.exportvariantsrequest)
@@ -3070,6 +3489,9 @@ func (c *VariantsExportCall) Do() (*ExportVariantsResponse, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "variants/export")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -3123,10 +3545,21 @@ func (r *VariantsService) Get(variantId string) *VariantsGetCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *VariantsGetCall) Fields(s ...googleapi.Field) *VariantsGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *VariantsGetCall) Do() (*Variant, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "variants/{variantId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -3174,74 +3607,6 @@ func (c *VariantsGetCall) Do() (*Variant, error) {
 
 }
 
-// method id "genomics.variants.getSummary":
-
-type VariantsGetSummaryCall struct {
-	s    *Service
-	opt_ map[string]interface{}
-}
-
-// GetSummary: Gets a summary of all the variant data in a dataset.
-func (r *VariantsService) GetSummary() *VariantsGetSummaryCall {
-	c := &VariantsGetSummaryCall{s: r.s, opt_: make(map[string]interface{})}
-	return c
-}
-
-// DatasetId sets the optional parameter "datasetId": Required. The ID
-// of the dataset to get variant summary information for.
-func (c *VariantsGetSummaryCall) DatasetId(datasetId string) *VariantsGetSummaryCall {
-	c.opt_["datasetId"] = datasetId
-	return c
-}
-
-func (c *VariantsGetSummaryCall) Do() (*GetVariantsSummaryResponse, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	if v, ok := c.opt_["datasetId"]; ok {
-		params.Set("datasetId", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "variants/summary")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	var ret *GetVariantsSummaryResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Gets a summary of all the variant data in a dataset.",
-	//   "httpMethod": "GET",
-	//   "id": "genomics.variants.getSummary",
-	//   "parameters": {
-	//     "datasetId": {
-	//       "description": "Required. The ID of the dataset to get variant summary information for.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "variants/summary",
-	//   "response": {
-	//     "$ref": "GetVariantsSummaryResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/genomics",
-	//     "https://www.googleapis.com/auth/genomics.readonly"
-	//   ]
-	// }
-
-}
-
 // method id "genomics.variants.import":
 
 type VariantsImportCall struct {
@@ -3251,10 +3616,20 @@ type VariantsImportCall struct {
 }
 
 // Import: Creates variant data by asynchronously importing the provided
-// information.
+// information. If the destination variant set already contains data,
+// new variants will be merged according to the behavior of
+// mergeVariants.
 func (r *VariantsService) Import(importvariantsrequest *ImportVariantsRequest) *VariantsImportCall {
 	c := &VariantsImportCall{s: r.s, opt_: make(map[string]interface{})}
 	c.importvariantsrequest = importvariantsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *VariantsImportCall) Fields(s ...googleapi.Field) *VariantsImportCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -3267,6 +3642,9 @@ func (c *VariantsImportCall) Do() (*ImportVariantsResponse, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "variants/import")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -3287,7 +3665,7 @@ func (c *VariantsImportCall) Do() (*ImportVariantsResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates variant data by asynchronously importing the provided information.",
+	//   "description": "Creates variant data by asynchronously importing the provided information. If the destination variant set already contains data, new variants will be merged according to the behavior of mergeVariants.",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.variants.import",
 	//   "path": "variants/import",
@@ -3299,82 +3677,6 @@ func (c *VariantsImportCall) Do() (*ImportVariantsResponse, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/devstorage.read_write",
-	//     "https://www.googleapis.com/auth/genomics"
-	//   ]
-	// }
-
-}
-
-// method id "genomics.variants.patch":
-
-type VariantsPatchCall struct {
-	s         *Service
-	variantId string
-	variant   *Variant
-	opt_      map[string]interface{}
-}
-
-// Patch: Updates a variant. This method supports patch semantics.
-func (r *VariantsService) Patch(variantId string, variant *Variant) *VariantsPatchCall {
-	c := &VariantsPatchCall{s: r.s, opt_: make(map[string]interface{})}
-	c.variantId = variantId
-	c.variant = variant
-	return c
-}
-
-func (c *VariantsPatchCall) Do() (*Variant, error) {
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.variant)
-	if err != nil {
-		return nil, err
-	}
-	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "variants/{variantId}")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("PATCH", urls, body)
-	googleapi.Expand(req.URL, map[string]string{
-		"variantId": c.variantId,
-	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	var ret *Variant
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Updates a variant. This method supports patch semantics.",
-	//   "httpMethod": "PATCH",
-	//   "id": "genomics.variants.patch",
-	//   "parameterOrder": [
-	//     "variantId"
-	//   ],
-	//   "parameters": {
-	//     "variantId": {
-	//       "description": "The ID of the variant to be updated..",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "variants/{variantId}",
-	//   "request": {
-	//     "$ref": "Variant"
-	//   },
-	//   "response": {
-	//     "$ref": "Variant"
-	//   },
-	//   "scopes": [
 	//     "https://www.googleapis.com/auth/genomics"
 	//   ]
 	// }
@@ -3396,6 +3698,14 @@ func (r *VariantsService) Search(searchvariantsrequest *SearchVariantsRequest) *
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *VariantsSearchCall) Fields(s ...googleapi.Field) *VariantsSearchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *VariantsSearchCall) Do() (*SearchVariantsResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.searchvariantsrequest)
@@ -3405,6 +3715,9 @@ func (c *VariantsSearchCall) Do() (*SearchVariantsResponse, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "variants/search")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -3452,11 +3765,21 @@ type VariantsUpdateCall struct {
 	opt_      map[string]interface{}
 }
 
-// Update: Updates a variant.
+// Update: Updates a variant's names and info fields. All other
+// modifications are silently ignored. Returns the modified variant
+// without its calls.
 func (r *VariantsService) Update(variantId string, variant *Variant) *VariantsUpdateCall {
 	c := &VariantsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.variantId = variantId
 	c.variant = variant
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *VariantsUpdateCall) Fields(s ...googleapi.Field) *VariantsUpdateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -3469,6 +3792,9 @@ func (c *VariantsUpdateCall) Do() (*Variant, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "variants/{variantId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
@@ -3491,7 +3817,7 @@ func (c *VariantsUpdateCall) Do() (*Variant, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a variant.",
+	//   "description": "Updates a variant's names and info fields. All other modifications are silently ignored. Returns the modified variant without its calls.",
 	//   "httpMethod": "PUT",
 	//   "id": "genomics.variants.update",
 	//   "parameterOrder": [
@@ -3499,7 +3825,7 @@ func (c *VariantsUpdateCall) Do() (*Variant, error) {
 	//   ],
 	//   "parameters": {
 	//     "variantId": {
-	//       "description": "The ID of the variant to be updated..",
+	//       "description": "The ID of the variant to be updated.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -3514,6 +3840,311 @@ func (c *VariantsUpdateCall) Do() (*Variant, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/genomics"
+	//   ]
+	// }
+
+}
+
+// method id "genomics.variantsets.delete":
+
+type VariantsetsDeleteCall struct {
+	s            *Service
+	variantSetId string
+	opt_         map[string]interface{}
+}
+
+// Delete: Deletes the contents of a variant set. The variant set object
+// is not deleted.
+func (r *VariantsetsService) Delete(variantSetId string) *VariantsetsDeleteCall {
+	c := &VariantsetsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.variantSetId = variantSetId
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *VariantsetsDeleteCall) Fields(s ...googleapi.Field) *VariantsetsDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *VariantsetsDeleteCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "variantsets/{variantSetId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"variantSetId": c.variantSetId,
+	})
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Deletes the contents of a variant set. The variant set object is not deleted.",
+	//   "httpMethod": "DELETE",
+	//   "id": "genomics.variantsets.delete",
+	//   "parameterOrder": [
+	//     "variantSetId"
+	//   ],
+	//   "parameters": {
+	//     "variantSetId": {
+	//       "description": "The ID of the variant set to be deleted.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "variantsets/{variantSetId}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/genomics"
+	//   ]
+	// }
+
+}
+
+// method id "genomics.variantsets.get":
+
+type VariantsetsGetCall struct {
+	s            *Service
+	variantSetId string
+	opt_         map[string]interface{}
+}
+
+// Get: Gets a variant set by ID.
+func (r *VariantsetsService) Get(variantSetId string) *VariantsetsGetCall {
+	c := &VariantsetsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.variantSetId = variantSetId
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *VariantsetsGetCall) Fields(s ...googleapi.Field) *VariantsetsGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *VariantsetsGetCall) Do() (*VariantSet, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "variantsets/{variantSetId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"variantSetId": c.variantSetId,
+	})
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *VariantSet
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a variant set by ID.",
+	//   "httpMethod": "GET",
+	//   "id": "genomics.variantsets.get",
+	//   "parameterOrder": [
+	//     "variantSetId"
+	//   ],
+	//   "parameters": {
+	//     "variantSetId": {
+	//       "description": "Required. The ID of the variant set.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "variantsets/{variantSetId}",
+	//   "response": {
+	//     "$ref": "VariantSet"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/genomics",
+	//     "https://www.googleapis.com/auth/genomics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "genomics.variantsets.mergeVariants":
+
+type VariantsetsMergeVariantsCall struct {
+	s            *Service
+	variantSetId string
+	variant      *Variant
+	opt_         map[string]interface{}
+}
+
+// MergeVariants: Merges the given variants with existing variants. Each
+// variant will be merged with an existing variant that matches its
+// reference sequence, start, end, reference bases, and alternative
+// bases. If no such variant exists, a new one will be created.
+//
+// When
+// variants are merged, the call information from the new variant is
+// added to the existing variant, and other fields (such as key/value
+// pairs) are discarded.
+func (r *VariantsetsService) MergeVariants(variantSetId string, variant *Variant) *VariantsetsMergeVariantsCall {
+	c := &VariantsetsMergeVariantsCall{s: r.s, opt_: make(map[string]interface{})}
+	c.variantSetId = variantSetId
+	c.variant = variant
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *VariantsetsMergeVariantsCall) Fields(s ...googleapi.Field) *VariantsetsMergeVariantsCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *VariantsetsMergeVariantsCall) Do() error {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.variant)
+	if err != nil {
+		return err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "variantsets/{variantSetId}/mergeVariants")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"variantSetId": c.variantSetId,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Merges the given variants with existing variants. Each variant will be merged with an existing variant that matches its reference sequence, start, end, reference bases, and alternative bases. If no such variant exists, a new one will be created.\n\nWhen variants are merged, the call information from the new variant is added to the existing variant, and other fields (such as key/value pairs) are discarded.",
+	//   "httpMethod": "POST",
+	//   "id": "genomics.variantsets.mergeVariants",
+	//   "parameterOrder": [
+	//     "variantSetId"
+	//   ],
+	//   "parameters": {
+	//     "variantSetId": {
+	//       "description": "The destination variant set.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "variantsets/{variantSetId}/mergeVariants",
+	//   "request": {
+	//     "$ref": "Variant"
+	//   }
+	// }
+
+}
+
+// method id "genomics.variantsets.search":
+
+type VariantsetsSearchCall struct {
+	s                        *Service
+	searchvariantsetsrequest *SearchVariantSetsRequest
+	opt_                     map[string]interface{}
+}
+
+// Search: Returns a list of all variant sets matching search criteria.
+func (r *VariantsetsService) Search(searchvariantsetsrequest *SearchVariantSetsRequest) *VariantsetsSearchCall {
+	c := &VariantsetsSearchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.searchvariantsetsrequest = searchvariantsetsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *VariantsetsSearchCall) Fields(s ...googleapi.Field) *VariantsetsSearchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *VariantsetsSearchCall) Do() (*SearchVariantSetsResponse, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.searchvariantsetsrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "variantsets/search")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *SearchVariantSetsResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a list of all variant sets matching search criteria.",
+	//   "httpMethod": "POST",
+	//   "id": "genomics.variantsets.search",
+	//   "path": "variantsets/search",
+	//   "request": {
+	//     "$ref": "SearchVariantSetsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "SearchVariantSetsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/genomics",
+	//     "https://www.googleapis.com/auth/genomics.readonly"
 	//   ]
 	// }
 

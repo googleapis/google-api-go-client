@@ -1,18 +1,18 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/RGJYQuXi3YgpRZREcgoQjlfnboc\"",
+ "etag": "\"uUWyYHXmEn-ab7WLvo8qNz2S8ws/felj7I871vlrqAVQPYXOGxWarDc\"",
  "discoveryVersion": "v1",
  "id": "dfareporting:v1.1",
  "name": "dfareporting",
  "version": "v1.1",
- "revision": "20140707",
+ "revision": "20140910",
  "title": "DFA Reporting API",
  "description": "Lets you create, run and download reports.",
  "ownerDomain": "google.com",
  "ownerName": "Google",
  "icons": {
-  "x16": "http://www.google.com/images/icons/product/doubleclick-16.gif",
-  "x32": "http://www.google.com/images/icons/product/doubleclick-32.gif"
+  "x16": "https://www.google.com/images/icons/product/doubleclick-16.gif",
+  "x32": "https://www.google.com/images/icons/product/doubleclick-32.gif"
  },
  "documentationLink": "https://developers.google.com/doubleclick-advertisers/reporting/",
  "protocol": "rest",

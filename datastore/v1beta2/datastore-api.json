@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/2BYNDaZqMjLdfTtg3EL0oL8j6oI\"",
+ "etag": "\"uUWyYHXmEn-ab7WLvo8qNz2S8ws/LDhSkY4UxrCPhfQmh9G4U2uaRlU\"",
  "discoveryVersion": "v1",
  "id": "datastore:v1beta2",
  "name": "datastore",
  "version": "v1beta2",
- "revision": "20140613",
+ "revision": "20140916",
  "title": "Google Cloud Datastore API",
  "description": "API for accessing Google Cloud Datastore.",
  "ownerDomain": "google.com",
@@ -71,6 +71,9 @@
  "auth": {
   "oauth2": {
    "scopes": {
+    "https://www.googleapis.com/auth/cloud-platform": {
+     "description": "View and manage your data across Google Cloud Platform services"
+    },
     "https://www.googleapis.com/auth/datastore": {
      "description": "View and manage your Google Cloud Datastore data"
     },
@@ -194,6 +197,7 @@
   "CompositeFilter": {
    "id": "CompositeFilter",
    "type": "object",
+   "description": "A filter that merges the multiple other filters using the given operation.",
    "externalTypeName": "apphosting.client.datastoreservice.proto.CompositeFilter",
    "properties": {
     "filters": {
@@ -218,6 +222,7 @@
   "Entity": {
    "id": "Entity",
    "type": "object",
+   "description": "An entity.",
    "externalTypeName": "apphosting.client.datastoreservice.proto.Entity",
    "properties": {
     "key": {
@@ -237,6 +242,7 @@
   "EntityResult": {
    "id": "EntityResult",
    "type": "object",
+   "description": "The result of fetching an entity from the datastore.",
    "externalTypeName": "apphosting.client.datastoreservice.proto.EntityResult",
    "properties": {
     "entity": {
@@ -248,6 +254,7 @@
   "Filter": {
    "id": "Filter",
    "type": "object",
+   "description": "A holder for any type of filter. Exactly one field should be specified.",
    "externalTypeName": "apphosting.client.datastoreservice.proto.Filter",
    "properties": {
     "compositeFilter": {
@@ -263,6 +270,7 @@
   "GqlQuery": {
    "id": "GqlQuery",
    "type": "object",
+   "description": "A GQL query.",
    "externalTypeName": "apphosting.client.datastoreservice.proto.GqlQuery",
    "properties": {
     "allowLiteral": {
@@ -284,13 +292,15 @@
      }
     },
     "queryString": {
-     "type": "string"
+     "type": "string",
+     "description": "The query string."
     }
    }
   },
   "GqlQueryArg": {
    "id": "GqlQueryArg",
    "type": "object",
+   "description": "A binding argument for a GQL query.",
    "externalTypeName": "apphosting.client.datastoreservice.proto.GqlQueryArg",
    "properties": {
     "cursor": {
@@ -309,6 +319,7 @@
   "Key": {
    "id": "Key",
    "type": "object",
+   "description": "A unique identifier for an entity.",
    "externalTypeName": "apphosting.client.datastoreservice.proto.Key",
    "properties": {
     "partitionId": {
@@ -348,6 +359,7 @@
   "KindExpression": {
    "id": "KindExpression",
    "type": "object",
+   "description": "A representation of a kind.",
    "externalTypeName": "apphosting.client.datastoreservice.proto.KindExpression",
    "properties": {
     "name": {
@@ -408,6 +420,7 @@
   "Mutation": {
    "id": "Mutation",
    "type": "object",
+   "description": "A set of changes to apply.",
    "externalTypeName": "apphosting.client.datastoreservice.proto.Mutation",
    "properties": {
     "delete": {
@@ -473,6 +486,7 @@
   "PartitionId": {
    "id": "PartitionId",
    "type": "object",
+   "description": "An identifier for a particular subset of entities.\n\nEntities are partitioned into various subsets, each used by different datasets and different namespaces within a dataset and so forth.",
    "externalTypeName": "apphosting.client.datastoreservice.proto.PartitionId",
    "properties": {
     "datasetId": {
@@ -488,6 +502,7 @@
   "Property": {
    "id": "Property",
    "type": "object",
+   "description": "An entity property.",
    "externalTypeName": "apphosting.client.datastoreservice.proto.Property",
    "properties": {
     "blobKeyValue": {
@@ -551,6 +566,7 @@
   "PropertyExpression": {
    "id": "PropertyExpression",
    "type": "object",
+   "description": "A representation of a property in a projection.",
    "externalTypeName": "apphosting.client.datastoreservice.proto.PropertyExpression",
    "properties": {
     "aggregationFunction": {
@@ -572,6 +588,7 @@
   "PropertyFilter": {
    "id": "PropertyFilter",
    "type": "object",
+   "description": "A filter on a specific property.",
    "externalTypeName": "apphosting.client.datastoreservice.proto.PropertyFilter",
    "properties": {
     "operator": {
@@ -607,6 +624,7 @@
   "PropertyOrder": {
    "id": "PropertyOrder",
    "type": "object",
+   "description": "The desired order for a specific property.",
    "externalTypeName": "apphosting.client.datastoreservice.proto.PropertyOrder",
    "properties": {
     "direction": {
@@ -630,6 +648,7 @@
   "PropertyReference": {
    "id": "PropertyReference",
    "type": "object",
+   "description": "A reference to a property relative to the kind expressions.",
    "externalTypeName": "apphosting.client.datastoreservice.proto.PropertyReference",
    "properties": {
     "name": {
@@ -641,6 +660,7 @@
   "Query": {
    "id": "Query",
    "type": "object",
+   "description": "A query.",
    "externalTypeName": "apphosting.client.datastoreservice.proto.Query",
    "properties": {
     "endCursor": {
@@ -700,11 +720,12 @@
   "QueryResultBatch": {
    "id": "QueryResultBatch",
    "type": "object",
+   "description": "A batch of results produced by a query.",
    "externalTypeName": "apphosting.client.datastoreservice.proto.QueryResultBatch",
    "properties": {
     "endCursor": {
      "type": "string",
-     "description": "A cursor that points to the position after the last result in the batch. May be absent.",
+     "description": "A cursor that points to the position after the last result in the batch. May be absent. TODO(arfuller): Once all plans produce cursors update documentation here.",
      "format": "byte"
     },
     "entityResultType": {
@@ -849,6 +870,7 @@
   "Value": {
    "id": "Value",
    "type": "object",
+   "description": "A message that can hold any of the supported value types and associated metadata.",
    "externalTypeName": "apphosting.client.datastoreservice.proto.Value",
    "properties": {
     "blobKeyValue": {
@@ -936,6 +958,7 @@
       "$ref": "AllocateIdsResponse"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/datastore",
       "https://www.googleapis.com/auth/userinfo.email"
      ]
@@ -963,6 +986,7 @@
       "$ref": "BeginTransactionResponse"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/datastore",
       "https://www.googleapis.com/auth/userinfo.email"
      ]
@@ -990,6 +1014,7 @@
       "$ref": "CommitResponse"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/datastore",
       "https://www.googleapis.com/auth/userinfo.email"
      ]
@@ -1017,6 +1042,7 @@
       "$ref": "LookupResponse"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/datastore",
       "https://www.googleapis.com/auth/userinfo.email"
      ]
@@ -1044,6 +1070,7 @@
       "$ref": "RollbackResponse"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/datastore",
       "https://www.googleapis.com/auth/userinfo.email"
      ]
@@ -1071,6 +1098,7 @@
       "$ref": "RunQueryResponse"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/datastore",
       "https://www.googleapis.com/auth/userinfo.email"
      ]

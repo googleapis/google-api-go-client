@@ -1,18 +1,18 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/Naei1N35n6IisOZs1QqGp-c-62k\"",
+ "etag": "\"uUWyYHXmEn-ab7WLvo8qNz2S8ws/HuoHzxwZuMSucTevJLq_0v1_DM0\"",
  "discoveryVersion": "v1",
  "id": "bigquery:v2",
  "name": "bigquery",
  "version": "v2",
- "revision": "20140808",
+ "revision": "20140908",
  "title": "BigQuery API",
  "description": "A data platform for customers to create, manage, share and query data.",
  "ownerDomain": "google.com",
  "ownerName": "Google",
  "icons": {
-  "x16": "http://www.google.com/images/icons/product/search-16.gif",
-  "x32": "http://www.google.com/images/icons/product/search-32.gif"
+  "x16": "https://www.google.com/images/icons/product/search-16.gif",
+  "x32": "https://www.google.com/images/icons/product/search-32.gif"
  },
  "documentationLink": "https://developers.google.com/bigquery/docs/overview",
  "protocol": "rest",
@@ -122,6 +122,10 @@
        "userByEmail": {
         "type": "string",
         "description": "[Pick one] An email address of a user to grant access to. For example: fred@example.com."
+       },
+       "view": {
+        "$ref": "TableReference",
+        "description": "[Pick one] A view from a different dataset to grant access to. Queries executed against that view will have read access to tables in this dataset. The role field is not required when this field is set. If that view is updated by any user, access to the view needs to be granted again via an update operation."
        }
       }
      }
@@ -877,7 +881,7 @@
     },
     "preserveNulls": {
      "type": "boolean",
-     "description": "[Deprecated] If set to false, maps null values in the query response to the column's default value. Only specify if you have older code that can not handle null values in the query response. The default value is true. This flag is deprecated and will be ignored in a future version of BigQuery."
+     "description": "[Deprecated] This property is deprecated."
     },
     "query": {
      "type": "string",
@@ -1614,7 +1618,7 @@
      "id": "bigquery.jobs.list",
      "path": "projects/{projectId}/jobs",
      "httpMethod": "GET",
-     "description": "Lists all the Jobs in the specified project that were started by the user.",
+     "description": "Lists all the Jobs in the specified project that were started by the user. The job list returns in reverse chronological order of when the jobs were created, starting with the most recent job created.",
      "parameters": {
       "allUsers": {
        "type": "boolean",

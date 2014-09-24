@@ -211,6 +211,14 @@ func (c *DataGetCall) StartIndex(startIndex int64) *DataGetCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *DataGetCall) Fields(s ...googleapi.Field) *DataGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *DataGetCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -236,6 +244,9 @@ func (c *DataGetCall) Do() error {
 	}
 	if v, ok := c.opt_["start-index"]; ok {
 		params.Set("start-index", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "data")
 	urls += "?" + params.Encode()
@@ -364,6 +375,14 @@ func (c *ManagementAccountsListCall) StartIndex(startIndex int64) *ManagementAcc
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ManagementAccountsListCall) Fields(s ...googleapi.Field) *ManagementAccountsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *ManagementAccountsListCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -373,6 +392,9 @@ func (c *ManagementAccountsListCall) Do() error {
 	}
 	if v, ok := c.opt_["start-index"]; ok {
 		params.Set("start-index", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts")
 	urls += "?" + params.Encode()
@@ -450,6 +472,14 @@ func (c *ManagementGoalsListCall) StartIndex(startIndex int64) *ManagementGoalsL
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ManagementGoalsListCall) Fields(s ...googleapi.Field) *ManagementGoalsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *ManagementGoalsListCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -459,6 +489,9 @@ func (c *ManagementGoalsListCall) Do() error {
 	}
 	if v, ok := c.opt_["start-index"]; ok {
 		params.Set("start-index", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/goals")
 	urls += "?" + params.Encode()
@@ -561,6 +594,14 @@ func (c *ManagementProfilesListCall) StartIndex(startIndex int64) *ManagementPro
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ManagementProfilesListCall) Fields(s ...googleapi.Field) *ManagementProfilesListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *ManagementProfilesListCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -570,6 +611,9 @@ func (c *ManagementProfilesListCall) Do() error {
 	}
 	if v, ok := c.opt_["start-index"]; ok {
 		params.Set("start-index", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles")
 	urls += "?" + params.Encode()
@@ -660,6 +704,14 @@ func (c *ManagementSegmentsListCall) StartIndex(startIndex int64) *ManagementSeg
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ManagementSegmentsListCall) Fields(s ...googleapi.Field) *ManagementSegmentsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *ManagementSegmentsListCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -669,6 +721,9 @@ func (c *ManagementSegmentsListCall) Do() error {
 	}
 	if v, ok := c.opt_["start-index"]; ok {
 		params.Set("start-index", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "management/segments")
 	urls += "?" + params.Encode()
@@ -742,6 +797,14 @@ func (c *ManagementWebpropertiesListCall) StartIndex(startIndex int64) *Manageme
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ManagementWebpropertiesListCall) Fields(s ...googleapi.Field) *ManagementWebpropertiesListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *ManagementWebpropertiesListCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -751,6 +814,9 @@ func (c *ManagementWebpropertiesListCall) Do() error {
 	}
 	if v, ok := c.opt_["start-index"]; ok {
 		params.Set("start-index", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties")
 	urls += "?" + params.Encode()

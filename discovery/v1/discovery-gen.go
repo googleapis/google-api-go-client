@@ -462,10 +462,21 @@ func (r *ApisService) GetRest(api string, version string) *ApisGetRestCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ApisGetRestCall) Fields(s ...googleapi.Field) *ApisGetRestCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *ApisGetRestCall) Do() (*RestDescription, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "apis/{api}/{version}/rest")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -544,6 +555,14 @@ func (c *ApisListCall) Preferred(preferred bool) *ApisListCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ApisListCall) Fields(s ...googleapi.Field) *ApisListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *ApisListCall) Do() (*DirectoryList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -553,6 +572,9 @@ func (c *ApisListCall) Do() (*DirectoryList, error) {
 	}
 	if v, ok := c.opt_["preferred"]; ok {
 		params.Set("preferred", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "apis")
 	urls += "?" + params.Encode()

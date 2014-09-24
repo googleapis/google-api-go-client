@@ -350,7 +350,17 @@ type ElectoralDistrict struct {
 }
 
 type GeographicDivision struct {
-	// AlsoKnownAs: Any other valid OCD IDs that refer to the same division.
+	// AlsoKnownAs: Any other valid OCD IDs that refer to the same
+	// division.
+	//
+	// Because OCD IDs are meant to be human-readable and at
+	// least somewhat predictable, there are occasionally several
+	// identifiers for a single division. These identifiers are defined to
+	// be equivalent to one another, and one is always indicated as the
+	// primary identifier. The primary identifier will be returned in ocd_id
+	// above, and any other equivalent valid identifiers will be returned in
+	// this list.
+	//
 	// For example, if this division's OCD ID is
 	// ocd-division/country:us/district:dc, this will contain
 	// ocd-division/country:us/state:dc.
@@ -549,6 +559,8 @@ type VoterInfoResponse struct {
 	// voter and may be used instead of placing the ballot in the mail.
 	PollingLocations []*PollingLocation `json:"pollingLocations,omitempty"`
 
+	PrecinctId string `json:"precinctId,omitempty"`
+
 	// State: Local Election Information for the state that the voter votes
 	// in. For the US, there will only be one element in this array.
 	State []*AdministrationRegion `json:"state,omitempty"`
@@ -585,12 +597,23 @@ func (c *DivisionsSearchCall) Query(query string) *DivisionsSearchCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *DivisionsSearchCall) Fields(s ...googleapi.Field) *DivisionsSearchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *DivisionsSearchCall) Do() (*DivisionSearchResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	if v, ok := c.opt_["query"]; ok {
 		params.Set("query", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "representatives/division_search")
 	urls += "?" + params.Encode()
@@ -642,10 +665,21 @@ func (r *ElectionsService) ElectionQuery() *ElectionsElectionQueryCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ElectionsElectionQueryCall) Fields(s ...googleapi.Field) *ElectionsElectionQueryCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *ElectionsElectionQueryCall) Do() (*ElectionsQueryResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "elections")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -701,6 +735,14 @@ func (c *ElectionsVoterInfoQueryCall) OfficialOnly(officialOnly bool) *Elections
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ElectionsVoterInfoQueryCall) Fields(s ...googleapi.Field) *ElectionsVoterInfoQueryCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *ElectionsVoterInfoQueryCall) Do() (*VoterInfoResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.voterinforequest)
@@ -712,6 +754,9 @@ func (c *ElectionsVoterInfoQueryCall) Do() (*VoterInfoResponse, error) {
 	params.Set("alt", "json")
 	if v, ok := c.opt_["officialOnly"]; ok {
 		params.Set("officialOnly", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "voterinfo/{electionId}/lookup")
 	urls += "?" + params.Encode()
@@ -810,6 +855,14 @@ func (c *RepresentativesRepresentativeInfoQueryCall) Recursive(recursive bool) *
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RepresentativesRepresentativeInfoQueryCall) Fields(s ...googleapi.Field) *RepresentativesRepresentativeInfoQueryCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *RepresentativesRepresentativeInfoQueryCall) Do() (*RepresentativeInfoResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.representativeinforequest)
@@ -827,6 +880,9 @@ func (c *RepresentativesRepresentativeInfoQueryCall) Do() (*RepresentativeInfoRe
 	}
 	if v, ok := c.opt_["recursive"]; ok {
 		params.Set("recursive", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "representatives/lookup")
 	urls += "?" + params.Encode()

@@ -91,6 +91,12 @@ const (
 
 	// Manage data access permissions for users on your domain
 	AdminDirectoryUserSecurityScope = "https://www.googleapis.com/auth/admin.directory.user.security"
+
+	// View and manage the provisioning of user schemas on your domain
+	AdminDirectoryUserschemaScope = "https://www.googleapis.com/auth/admin.directory.userschema"
+
+	// View user schemas on your domain
+	AdminDirectoryUserschemaReadonlyScope = "https://www.googleapis.com/auth/admin.directory.userschema.readonly"
 )
 
 func New(client *http.Client) (*Service, error) {
@@ -106,6 +112,7 @@ func New(client *http.Client) (*Service, error) {
 	s.Mobiledevices = NewMobiledevicesService(s)
 	s.Notifications = NewNotificationsService(s)
 	s.Orgunits = NewOrgunitsService(s)
+	s.Schemas = NewSchemasService(s)
 	s.Tokens = NewTokensService(s)
 	s.Users = NewUsersService(s)
 	s.VerificationCodes = NewVerificationCodesService(s)
@@ -131,6 +138,8 @@ type Service struct {
 	Notifications *NotificationsService
 
 	Orgunits *OrgunitsService
+
+	Schemas *SchemasService
 
 	Tokens *TokensService
 
@@ -220,6 +229,15 @@ func NewOrgunitsService(s *Service) *OrgunitsService {
 }
 
 type OrgunitsService struct {
+	s *Service
+}
+
+func NewSchemasService(s *Service) *SchemasService {
+	rs := &SchemasService{s: s}
+	return rs
+}
+
+type SchemasService struct {
 	s *Service
 }
 
@@ -457,7 +475,7 @@ type ChromeOsDevice struct {
 	// SupportEndDate: Final date the device will be supported (Read-only)
 	SupportEndDate string `json:"supportEndDate,omitempty"`
 
-	// WillAutoRenew: Will Chromebook auto reniew after support end date
+	// WillAutoRenew: Will Chromebook auto renew after support end date
 	// (Read-only)
 	WillAutoRenew bool `json:"willAutoRenew,omitempty"`
 }
@@ -769,6 +787,80 @@ type OrgUnits struct {
 	OrganizationUnits []*OrgUnit `json:"organizationUnits,omitempty"`
 }
 
+type Schema struct {
+	// Etag: ETag of the resource.
+	Etag string `json:"etag,omitempty"`
+
+	// Fields: Fields of Schema
+	Fields []*SchemaFieldSpec `json:"fields,omitempty"`
+
+	// Kind: Kind of resource this is.
+	Kind string `json:"kind,omitempty"`
+
+	// SchemaId: Unique identifier of Schema (Read-only)
+	SchemaId string `json:"schemaId,omitempty"`
+
+	// SchemaName: Schema name
+	SchemaName string `json:"schemaName,omitempty"`
+}
+
+type SchemaFieldSpec struct {
+	// Etag: ETag of the resource.
+	Etag string `json:"etag,omitempty"`
+
+	// FieldId: Unique identifier of Field (Read-only)
+	FieldId string `json:"fieldId,omitempty"`
+
+	// FieldName: Name of the field.
+	FieldName string `json:"fieldName,omitempty"`
+
+	// FieldType: Type of the field.
+	FieldType string `json:"fieldType,omitempty"`
+
+	// Indexed: Boolean specifying whether the field is indexed or not.
+	Indexed bool `json:"indexed,omitempty"`
+
+	// Kind: Kind of resource this is.
+	Kind string `json:"kind,omitempty"`
+
+	// MultiValued: Boolean specifying whether this is a multi-valued field
+	// or not.
+	MultiValued bool `json:"multiValued,omitempty"`
+
+	// NumericIndexingSpec: Indexing spec for a numeric field. By default,
+	// only exact match queries will be supported for numeric fields.
+	// Setting the numericIndexingSpec allows range queries to be supported.
+	NumericIndexingSpec *SchemaFieldSpecNumericIndexingSpec `json:"numericIndexingSpec,omitempty"`
+
+	// ReadAccessType: Read ACLs on the field specifying who can view values
+	// of this field. Valid values are "ALL_DOMAIN_USERS" and
+	// "ADMINS_AND_SELF".
+	ReadAccessType string `json:"readAccessType,omitempty"`
+}
+
+type SchemaFieldSpecNumericIndexingSpec struct {
+	// MaxValue: Maximum value of this field. This is meant to be indicative
+	// rather than enforced. Values outside this range will still be
+	// indexed, but search may not be as performant.
+	MaxValue float64 `json:"maxValue,omitempty"`
+
+	// MinValue: Minimum value of this field. This is meant to be indicative
+	// rather than enforced. Values outside this range will still be
+	// indexed, but search may not be as performant.
+	MinValue float64 `json:"minValue,omitempty"`
+}
+
+type Schemas struct {
+	// Etag: ETag of the resource.
+	Etag string `json:"etag,omitempty"`
+
+	// Kind: Kind of resource this is.
+	Kind string `json:"kind,omitempty"`
+
+	// Schemas: List of UserSchema objects.
+	Schemas []*Schema `json:"schemas,omitempty"`
+}
+
 type Token struct {
 	// Anonymous: Whether the application is registered with Google. The
 	// value is true if the application has an anonymous Client ID.
@@ -827,6 +919,9 @@ type User struct {
 
 	// CreationTime: User's Google account creation time. (Read-only)
 	CreationTime string `json:"creationTime,omitempty"`
+
+	// CustomSchemas: Custom fields of the user.
+	CustomSchemas map[string]UserCustomProperties `json:"customSchemas,omitempty"`
 
 	// CustomerId: CustomerId of User (Read-only)
 	CustomerId string `json:"customerId,omitempty"`
@@ -951,6 +1046,9 @@ type UserAddress struct {
 	Type string `json:"type,omitempty"`
 }
 
+type UserCustomProperties struct {
+}
+
 type UserEmail struct {
 	// Address: Email id of the user.
 	Address string `json:"address,omitempty"`
@@ -965,7 +1063,7 @@ type UserEmail struct {
 	// Type: Each entry can have a type which indicates standard types of
 	// that entry. For example email could be of home, work etc. In addition
 	// to the standard type, an entry can have a custom type and can take
-	// any value Such typess should have the CUSTOM value as type and also
+	// any value Such types should have the CUSTOM value as type and also
 	// have a customType value.
 	Type string `json:"type,omitempty"`
 }
@@ -991,12 +1089,12 @@ type UserIm struct {
 	// Im: Instant messenger id.
 	Im string `json:"im,omitempty"`
 
-	// Primary: If this is user's priamry im. Only one entry could be marked
+	// Primary: If this is user's primary im. Only one entry could be marked
 	// as primary.
 	Primary bool `json:"primary,omitempty"`
 
 	// Protocol: Protocol used in the instant messenger. It should be one of
-	// the values from ImProtocolTypes map. Simalar to type, it can take a
+	// the values from ImProtocolTypes map. Similar to type, it can take a
 	// CUSTOM value and specify the custom name in customProtocol field.
 	Protocol string `json:"protocol,omitempty"`
 
@@ -1050,7 +1148,7 @@ type UserOrganization struct {
 	// Primary: If it user's primary organization.
 	Primary bool `json:"primary,omitempty"`
 
-	// Symbol: Symobol of the organization.
+	// Symbol: Symbol of the organization.
 	Symbol string `json:"symbol,omitempty"`
 
 	// Title: Title (designation) of the user in the organization.
@@ -1189,10 +1287,21 @@ func (r *AspsService) Delete(userKey string, codeId int64) *AspsDeleteCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AspsDeleteCall) Fields(s ...googleapi.Field) *AspsDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *AspsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/{userKey}/asps/{codeId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
@@ -1258,10 +1367,21 @@ func (r *AspsService) Get(userKey string, codeId int64) *AspsGetCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AspsGetCall) Fields(s ...googleapi.Field) *AspsGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *AspsGetCall) Do() (*Asp, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/{userKey}/asps/{codeId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -1332,10 +1452,21 @@ func (r *AspsService) List(userKey string) *AspsListCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AspsListCall) Fields(s ...googleapi.Field) *AspsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *AspsListCall) Do() (*Asps, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/{userKey}/asps")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -1397,6 +1528,14 @@ func (r *ChannelsService) Stop(channel *Channel) *ChannelsStopCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ChannelsStopCall) Fields(s ...googleapi.Field) *ChannelsStopCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *ChannelsStopCall) Do() error {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
@@ -1406,6 +1545,9 @@ func (c *ChannelsStopCall) Do() error {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "/admin/directory_v1/channels/stop")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -1464,12 +1606,23 @@ func (c *ChromeosdevicesGetCall) Projection(projection string) *ChromeosdevicesG
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ChromeosdevicesGetCall) Fields(s ...googleapi.Field) *ChromeosdevicesGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *ChromeosdevicesGetCall) Do() (*ChromeOsDevice, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	if v, ok := c.opt_["projection"]; ok {
 		params.Set("projection", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "customer/{customerId}/devices/chromeos/{deviceId}")
 	urls += "?" + params.Encode()
@@ -1599,6 +1752,14 @@ func (c *ChromeosdevicesListCall) SortOrder(sortOrder string) *ChromeosdevicesLi
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ChromeosdevicesListCall) Fields(s ...googleapi.Field) *ChromeosdevicesListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *ChromeosdevicesListCall) Do() (*ChromeOsDevices, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1620,6 +1781,9 @@ func (c *ChromeosdevicesListCall) Do() (*ChromeOsDevices, error) {
 	}
 	if v, ok := c.opt_["sortOrder"]; ok {
 		params.Set("sortOrder", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "customer/{customerId}/devices/chromeos")
 	urls += "?" + params.Encode()
@@ -1760,6 +1924,14 @@ func (c *ChromeosdevicesPatchCall) Projection(projection string) *Chromeosdevice
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ChromeosdevicesPatchCall) Fields(s ...googleapi.Field) *ChromeosdevicesPatchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *ChromeosdevicesPatchCall) Do() (*ChromeOsDevice, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.chromeosdevice)
@@ -1771,6 +1943,9 @@ func (c *ChromeosdevicesPatchCall) Do() (*ChromeOsDevice, error) {
 	params.Set("alt", "json")
 	if v, ok := c.opt_["projection"]; ok {
 		params.Set("projection", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "customer/{customerId}/devices/chromeos/{deviceId}")
 	urls += "?" + params.Encode()
@@ -1869,6 +2044,14 @@ func (c *ChromeosdevicesUpdateCall) Projection(projection string) *Chromeosdevic
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ChromeosdevicesUpdateCall) Fields(s ...googleapi.Field) *ChromeosdevicesUpdateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *ChromeosdevicesUpdateCall) Do() (*ChromeOsDevice, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.chromeosdevice)
@@ -1880,6 +2063,9 @@ func (c *ChromeosdevicesUpdateCall) Do() (*ChromeOsDevice, error) {
 	params.Set("alt", "json")
 	if v, ok := c.opt_["projection"]; ok {
 		params.Set("projection", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "customer/{customerId}/devices/chromeos/{deviceId}")
 	urls += "?" + params.Encode()
@@ -1967,10 +2153,21 @@ func (r *GroupsService) Delete(groupKey string) *GroupsDeleteCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *GroupsDeleteCall) Fields(s ...googleapi.Field) *GroupsDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *GroupsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "groups/{groupKey}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
@@ -2025,10 +2222,21 @@ func (r *GroupsService) Get(groupKey string) *GroupsGetCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *GroupsGetCall) Fields(s ...googleapi.Field) *GroupsGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *GroupsGetCall) Do() (*Group, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "groups/{groupKey}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -2091,6 +2299,14 @@ func (r *GroupsService) Insert(group *Group) *GroupsInsertCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *GroupsInsertCall) Fields(s ...googleapi.Field) *GroupsInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *GroupsInsertCall) Do() (*Group, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.group)
@@ -2100,6 +2316,9 @@ func (c *GroupsInsertCall) Do() (*Group, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "groups")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -2188,6 +2407,14 @@ func (c *GroupsListCall) UserKey(userKey string) *GroupsListCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *GroupsListCall) Fields(s ...googleapi.Field) *GroupsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *GroupsListCall) Do() (*Groups, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2206,6 +2433,9 @@ func (c *GroupsListCall) Do() (*Groups, error) {
 	}
 	if v, ok := c.opt_["userKey"]; ok {
 		params.Set("userKey", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "groups")
 	urls += "?" + params.Encode()
@@ -2287,6 +2517,14 @@ func (r *GroupsService) Patch(groupKey string, group *Group) *GroupsPatchCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *GroupsPatchCall) Fields(s ...googleapi.Field) *GroupsPatchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *GroupsPatchCall) Do() (*Group, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.group)
@@ -2296,6 +2534,9 @@ func (c *GroupsPatchCall) Do() (*Group, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "groups/{groupKey}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
@@ -2363,6 +2604,14 @@ func (r *GroupsService) Update(groupKey string, group *Group) *GroupsUpdateCall 
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *GroupsUpdateCall) Fields(s ...googleapi.Field) *GroupsUpdateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *GroupsUpdateCall) Do() (*Group, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.group)
@@ -2372,6 +2621,9 @@ func (c *GroupsUpdateCall) Do() (*Group, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "groups/{groupKey}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
@@ -2439,10 +2691,21 @@ func (r *GroupsAliasesService) Delete(groupKey string, alias string) *GroupsAlia
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *GroupsAliasesDeleteCall) Fields(s ...googleapi.Field) *GroupsAliasesDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *GroupsAliasesDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "groups/{groupKey}/aliases/{alias}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
@@ -2507,6 +2770,14 @@ func (r *GroupsAliasesService) Insert(groupKey string, alias *Alias) *GroupsAlia
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *GroupsAliasesInsertCall) Fields(s ...googleapi.Field) *GroupsAliasesInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *GroupsAliasesInsertCall) Do() (*Alias, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.alias)
@@ -2516,6 +2787,9 @@ func (c *GroupsAliasesInsertCall) Do() (*Alias, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "groups/{groupKey}/aliases")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -2581,10 +2855,21 @@ func (r *GroupsAliasesService) List(groupKey string) *GroupsAliasesListCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *GroupsAliasesListCall) Fields(s ...googleapi.Field) *GroupsAliasesListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *GroupsAliasesListCall) Do() (*Aliases, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "groups/{groupKey}/aliases")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -2650,10 +2935,21 @@ func (r *MembersService) Delete(groupKey string, memberKey string) *MembersDelet
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MembersDeleteCall) Fields(s ...googleapi.Field) *MembersDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *MembersDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "groups/{groupKey}/members/{memberKey}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
@@ -2719,10 +3015,21 @@ func (r *MembersService) Get(groupKey string, memberKey string) *MembersGetCall 
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MembersGetCall) Fields(s ...googleapi.Field) *MembersGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *MembersGetCall) Do() (*Member, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "groups/{groupKey}/members/{memberKey}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -2797,6 +3104,14 @@ func (r *MembersService) Insert(groupKey string, member *Member) *MembersInsertC
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MembersInsertCall) Fields(s ...googleapi.Field) *MembersInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *MembersInsertCall) Do() (*Member, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.member)
@@ -2806,6 +3121,9 @@ func (c *MembersInsertCall) Do() (*Member, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "groups/{groupKey}/members")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -2893,6 +3211,14 @@ func (c *MembersListCall) Roles(roles string) *MembersListCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MembersListCall) Fields(s ...googleapi.Field) *MembersListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *MembersListCall) Do() (*Members, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2905,6 +3231,9 @@ func (c *MembersListCall) Do() (*Members, error) {
 	}
 	if v, ok := c.opt_["roles"]; ok {
 		params.Set("roles", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "groups/{groupKey}/members")
 	urls += "?" + params.Encode()
@@ -2992,6 +3321,14 @@ func (r *MembersService) Patch(groupKey string, memberKey string, member *Member
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MembersPatchCall) Fields(s ...googleapi.Field) *MembersPatchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *MembersPatchCall) Do() (*Member, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.member)
@@ -3001,6 +3338,9 @@ func (c *MembersPatchCall) Do() (*Member, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "groups/{groupKey}/members/{memberKey}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
@@ -3079,6 +3419,14 @@ func (r *MembersService) Update(groupKey string, memberKey string, member *Membe
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MembersUpdateCall) Fields(s ...googleapi.Field) *MembersUpdateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *MembersUpdateCall) Do() (*Member, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.member)
@@ -3088,6 +3436,9 @@ func (c *MembersUpdateCall) Do() (*Member, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "groups/{groupKey}/members/{memberKey}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
@@ -3166,6 +3517,14 @@ func (r *MobiledevicesService) Action(customerId string, resourceId string, mobi
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MobiledevicesActionCall) Fields(s ...googleapi.Field) *MobiledevicesActionCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *MobiledevicesActionCall) Do() error {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.mobiledeviceaction)
@@ -3175,6 +3534,9 @@ func (c *MobiledevicesActionCall) Do() error {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "customer/{customerId}/devices/mobile/{resourceId}/action")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -3244,10 +3606,21 @@ func (r *MobiledevicesService) Delete(customerId string, resourceId string) *Mob
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MobiledevicesDeleteCall) Fields(s ...googleapi.Field) *MobiledevicesDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *MobiledevicesDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "customer/{customerId}/devices/mobile/{resourceId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
@@ -3319,12 +3692,23 @@ func (c *MobiledevicesGetCall) Projection(projection string) *MobiledevicesGetCa
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MobiledevicesGetCall) Fields(s ...googleapi.Field) *MobiledevicesGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *MobiledevicesGetCall) Do() (*MobileDevice, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	if v, ok := c.opt_["projection"]; ok {
 		params.Set("projection", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "customer/{customerId}/devices/mobile/{resourceId}")
 	urls += "?" + params.Encode()
@@ -3454,6 +3838,14 @@ func (c *MobiledevicesListCall) SortOrder(sortOrder string) *MobiledevicesListCa
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MobiledevicesListCall) Fields(s ...googleapi.Field) *MobiledevicesListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *MobiledevicesListCall) Do() (*MobileDevices, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3475,6 +3867,9 @@ func (c *MobiledevicesListCall) Do() (*MobileDevices, error) {
 	}
 	if v, ok := c.opt_["sortOrder"]; ok {
 		params.Set("sortOrder", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "customer/{customerId}/devices/mobile")
 	urls += "?" + params.Encode()
@@ -3609,10 +4004,21 @@ func (r *NotificationsService) Delete(customer string, notificationId string) *N
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *NotificationsDeleteCall) Fields(s ...googleapi.Field) *NotificationsDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *NotificationsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "customer/{customer}/notifications/{notificationId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
@@ -3677,10 +4083,21 @@ func (r *NotificationsService) Get(customer string, notificationId string) *Noti
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *NotificationsGetCall) Fields(s ...googleapi.Field) *NotificationsGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *NotificationsGetCall) Do() (*Notification, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "customer/{customer}/notifications/{notificationId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -3772,6 +4189,14 @@ func (c *NotificationsListCall) PageToken(pageToken string) *NotificationsListCa
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *NotificationsListCall) Fields(s ...googleapi.Field) *NotificationsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *NotificationsListCall) Do() (*Notifications, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3784,6 +4209,9 @@ func (c *NotificationsListCall) Do() (*Notifications, error) {
 	}
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "customer/{customer}/notifications")
 	urls += "?" + params.Encode()
@@ -3866,6 +4294,14 @@ func (r *NotificationsService) Patch(customer string, notificationId string, not
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *NotificationsPatchCall) Fields(s ...googleapi.Field) *NotificationsPatchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *NotificationsPatchCall) Do() (*Notification, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.notification)
@@ -3875,6 +4311,9 @@ func (c *NotificationsPatchCall) Do() (*Notification, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "customer/{customer}/notifications/{notificationId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
@@ -3952,6 +4391,14 @@ func (r *NotificationsService) Update(customer string, notificationId string, no
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *NotificationsUpdateCall) Fields(s ...googleapi.Field) *NotificationsUpdateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *NotificationsUpdateCall) Do() (*Notification, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.notification)
@@ -3961,6 +4408,9 @@ func (c *NotificationsUpdateCall) Do() (*Notification, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "customer/{customer}/notifications/{notificationId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
@@ -4036,10 +4486,21 @@ func (r *OrgunitsService) Delete(customerId string, orgUnitPath []string) *Orgun
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrgunitsDeleteCall) Fields(s ...googleapi.Field) *OrgunitsDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *OrgunitsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "customer/{customerId}/orgunits{/orgUnitPath*}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
@@ -4105,10 +4566,21 @@ func (r *OrgunitsService) Get(customerId string, orgUnitPath []string) *Orgunits
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrgunitsGetCall) Fields(s ...googleapi.Field) *OrgunitsGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *OrgunitsGetCall) Do() (*OrgUnit, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "customer/{customerId}/orgunits{/orgUnitPath*}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -4182,6 +4654,14 @@ func (r *OrgunitsService) Insert(customerId string, orgunit *OrgUnit) *OrgunitsI
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrgunitsInsertCall) Fields(s ...googleapi.Field) *OrgunitsInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *OrgunitsInsertCall) Do() (*OrgUnit, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.orgunit)
@@ -4191,6 +4671,9 @@ func (c *OrgunitsInsertCall) Do() (*OrgUnit, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "customer/{customerId}/orgunits")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -4270,6 +4753,14 @@ func (c *OrgunitsListCall) Type(type_ string) *OrgunitsListCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrgunitsListCall) Fields(s ...googleapi.Field) *OrgunitsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *OrgunitsListCall) Do() (*OrgUnits, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4279,6 +4770,9 @@ func (c *OrgunitsListCall) Do() (*OrgUnits, error) {
 	}
 	if v, ok := c.opt_["type"]; ok {
 		params.Set("type", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "customer/{customerId}/orgunits")
 	urls += "?" + params.Encode()
@@ -4366,6 +4860,14 @@ func (r *OrgunitsService) Patch(customerId string, orgUnitPath []string, orgunit
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrgunitsPatchCall) Fields(s ...googleapi.Field) *OrgunitsPatchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *OrgunitsPatchCall) Do() (*OrgUnit, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.orgunit)
@@ -4375,6 +4877,9 @@ func (c *OrgunitsPatchCall) Do() (*OrgUnit, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "customer/{customerId}/orgunits{/orgUnitPath*}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
@@ -4453,6 +4958,14 @@ func (r *OrgunitsService) Update(customerId string, orgUnitPath []string, orguni
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrgunitsUpdateCall) Fields(s ...googleapi.Field) *OrgunitsUpdateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *OrgunitsUpdateCall) Do() (*OrgUnit, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.orgunit)
@@ -4462,6 +4975,9 @@ func (c *OrgunitsUpdateCall) Do() (*OrgUnit, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "customer/{customerId}/orgunits{/orgUnitPath*}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
@@ -4521,6 +5037,530 @@ func (c *OrgunitsUpdateCall) Do() (*OrgUnit, error) {
 
 }
 
+// method id "directory.schemas.delete":
+
+type SchemasDeleteCall struct {
+	s          *Service
+	customerId string
+	schemaKey  string
+	opt_       map[string]interface{}
+}
+
+// Delete: Delete schema
+func (r *SchemasService) Delete(customerId string, schemaKey string) *SchemasDeleteCall {
+	c := &SchemasDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.customerId = customerId
+	c.schemaKey = schemaKey
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SchemasDeleteCall) Fields(s ...googleapi.Field) *SchemasDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *SchemasDeleteCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "customer/{customerId}/schemas/{schemaKey}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"customerId": c.customerId,
+		"schemaKey":  c.schemaKey,
+	})
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Delete schema",
+	//   "httpMethod": "DELETE",
+	//   "id": "directory.schemas.delete",
+	//   "parameterOrder": [
+	//     "customerId",
+	//     "schemaKey"
+	//   ],
+	//   "parameters": {
+	//     "customerId": {
+	//       "description": "Immutable id of the Google Apps account",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "schemaKey": {
+	//       "description": "Name or immutable Id of the schema",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "customer/{customerId}/schemas/{schemaKey}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.directory.userschema"
+	//   ]
+	// }
+
+}
+
+// method id "directory.schemas.get":
+
+type SchemasGetCall struct {
+	s          *Service
+	customerId string
+	schemaKey  string
+	opt_       map[string]interface{}
+}
+
+// Get: Retrieve schema
+func (r *SchemasService) Get(customerId string, schemaKey string) *SchemasGetCall {
+	c := &SchemasGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.customerId = customerId
+	c.schemaKey = schemaKey
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SchemasGetCall) Fields(s ...googleapi.Field) *SchemasGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *SchemasGetCall) Do() (*Schema, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "customer/{customerId}/schemas/{schemaKey}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"customerId": c.customerId,
+		"schemaKey":  c.schemaKey,
+	})
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Schema
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieve schema",
+	//   "httpMethod": "GET",
+	//   "id": "directory.schemas.get",
+	//   "parameterOrder": [
+	//     "customerId",
+	//     "schemaKey"
+	//   ],
+	//   "parameters": {
+	//     "customerId": {
+	//       "description": "Immutable id of the Google Apps account",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "schemaKey": {
+	//       "description": "Name or immutable Id of the schema",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "customer/{customerId}/schemas/{schemaKey}",
+	//   "response": {
+	//     "$ref": "Schema"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.directory.userschema",
+	//     "https://www.googleapis.com/auth/admin.directory.userschema.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "directory.schemas.insert":
+
+type SchemasInsertCall struct {
+	s          *Service
+	customerId string
+	schema     *Schema
+	opt_       map[string]interface{}
+}
+
+// Insert: Create schema.
+func (r *SchemasService) Insert(customerId string, schema *Schema) *SchemasInsertCall {
+	c := &SchemasInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.customerId = customerId
+	c.schema = schema
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SchemasInsertCall) Fields(s ...googleapi.Field) *SchemasInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *SchemasInsertCall) Do() (*Schema, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.schema)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "customer/{customerId}/schemas")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"customerId": c.customerId,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Schema
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Create schema.",
+	//   "httpMethod": "POST",
+	//   "id": "directory.schemas.insert",
+	//   "parameterOrder": [
+	//     "customerId"
+	//   ],
+	//   "parameters": {
+	//     "customerId": {
+	//       "description": "Immutable id of the Google Apps account",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "customer/{customerId}/schemas",
+	//   "request": {
+	//     "$ref": "Schema"
+	//   },
+	//   "response": {
+	//     "$ref": "Schema"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.directory.userschema"
+	//   ]
+	// }
+
+}
+
+// method id "directory.schemas.list":
+
+type SchemasListCall struct {
+	s          *Service
+	customerId string
+	opt_       map[string]interface{}
+}
+
+// List: Retrieve all schemas for a customer
+func (r *SchemasService) List(customerId string) *SchemasListCall {
+	c := &SchemasListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.customerId = customerId
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SchemasListCall) Fields(s ...googleapi.Field) *SchemasListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *SchemasListCall) Do() (*Schemas, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "customer/{customerId}/schemas")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"customerId": c.customerId,
+	})
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Schemas
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieve all schemas for a customer",
+	//   "httpMethod": "GET",
+	//   "id": "directory.schemas.list",
+	//   "parameterOrder": [
+	//     "customerId"
+	//   ],
+	//   "parameters": {
+	//     "customerId": {
+	//       "description": "Immutable id of the Google Apps account",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "customer/{customerId}/schemas",
+	//   "response": {
+	//     "$ref": "Schemas"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.directory.userschema",
+	//     "https://www.googleapis.com/auth/admin.directory.userschema.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "directory.schemas.patch":
+
+type SchemasPatchCall struct {
+	s          *Service
+	customerId string
+	schemaKey  string
+	schema     *Schema
+	opt_       map[string]interface{}
+}
+
+// Patch: Update schema. This method supports patch semantics.
+func (r *SchemasService) Patch(customerId string, schemaKey string, schema *Schema) *SchemasPatchCall {
+	c := &SchemasPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.customerId = customerId
+	c.schemaKey = schemaKey
+	c.schema = schema
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SchemasPatchCall) Fields(s ...googleapi.Field) *SchemasPatchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *SchemasPatchCall) Do() (*Schema, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.schema)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "customer/{customerId}/schemas/{schemaKey}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"customerId": c.customerId,
+		"schemaKey":  c.schemaKey,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Schema
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Update schema. This method supports patch semantics.",
+	//   "httpMethod": "PATCH",
+	//   "id": "directory.schemas.patch",
+	//   "parameterOrder": [
+	//     "customerId",
+	//     "schemaKey"
+	//   ],
+	//   "parameters": {
+	//     "customerId": {
+	//       "description": "Immutable id of the Google Apps account",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "schemaKey": {
+	//       "description": "Name or immutable Id of the schema.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "customer/{customerId}/schemas/{schemaKey}",
+	//   "request": {
+	//     "$ref": "Schema"
+	//   },
+	//   "response": {
+	//     "$ref": "Schema"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.directory.userschema"
+	//   ]
+	// }
+
+}
+
+// method id "directory.schemas.update":
+
+type SchemasUpdateCall struct {
+	s          *Service
+	customerId string
+	schemaKey  string
+	schema     *Schema
+	opt_       map[string]interface{}
+}
+
+// Update: Update schema
+func (r *SchemasService) Update(customerId string, schemaKey string, schema *Schema) *SchemasUpdateCall {
+	c := &SchemasUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.customerId = customerId
+	c.schemaKey = schemaKey
+	c.schema = schema
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SchemasUpdateCall) Fields(s ...googleapi.Field) *SchemasUpdateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *SchemasUpdateCall) Do() (*Schema, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.schema)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "customer/{customerId}/schemas/{schemaKey}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"customerId": c.customerId,
+		"schemaKey":  c.schemaKey,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Schema
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Update schema",
+	//   "httpMethod": "PUT",
+	//   "id": "directory.schemas.update",
+	//   "parameterOrder": [
+	//     "customerId",
+	//     "schemaKey"
+	//   ],
+	//   "parameters": {
+	//     "customerId": {
+	//       "description": "Immutable id of the Google Apps account",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "schemaKey": {
+	//       "description": "Name or immutable Id of the schema.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "customer/{customerId}/schemas/{schemaKey}",
+	//   "request": {
+	//     "$ref": "Schema"
+	//   },
+	//   "response": {
+	//     "$ref": "Schema"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.directory.userschema"
+	//   ]
+	// }
+
+}
+
 // method id "directory.tokens.delete":
 
 type TokensDeleteCall struct {
@@ -4538,10 +5578,21 @@ func (r *TokensService) Delete(userKey string, clientId string) *TokensDeleteCal
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TokensDeleteCall) Fields(s ...googleapi.Field) *TokensDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *TokensDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/{userKey}/tokens/{clientId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
@@ -4606,10 +5657,21 @@ func (r *TokensService) Get(userKey string, clientId string) *TokensGetCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TokensGetCall) Fields(s ...googleapi.Field) *TokensGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *TokensGetCall) Do() (*Token, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/{userKey}/tokens/{clientId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -4680,10 +5742,21 @@ func (r *TokensService) List(userKey string) *TokensListCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TokensListCall) Fields(s ...googleapi.Field) *TokensListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *TokensListCall) Do() (*Tokens, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/{userKey}/tokens")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -4745,10 +5818,21 @@ func (r *UsersService) Delete(userKey string) *UsersDeleteCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UsersDeleteCall) Fields(s ...googleapi.Field) *UsersDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *UsersDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/{userKey}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
@@ -4803,10 +5887,52 @@ func (r *UsersService) Get(userKey string) *UsersGetCall {
 	return c
 }
 
+// CustomFieldMask sets the optional parameter "customFieldMask":
+// Comma-separated list of schema names. All fields from these schemas
+// are fetched. This should only be set when projection=custom.
+func (c *UsersGetCall) CustomFieldMask(customFieldMask string) *UsersGetCall {
+	c.opt_["customFieldMask"] = customFieldMask
+	return c
+}
+
+// Projection sets the optional parameter "projection": What subset of
+// fields to fetch for this user.
+func (c *UsersGetCall) Projection(projection string) *UsersGetCall {
+	c.opt_["projection"] = projection
+	return c
+}
+
+// ViewType sets the optional parameter "viewType": Whether to fetch the
+// ADMIN_VIEW or DOMAIN_PUBLIC view of the user.
+func (c *UsersGetCall) ViewType(viewType string) *UsersGetCall {
+	c.opt_["viewType"] = viewType
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UsersGetCall) Fields(s ...googleapi.Field) *UsersGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *UsersGetCall) Do() (*User, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["customFieldMask"]; ok {
+		params.Set("customFieldMask", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["projection"]; ok {
+		params.Set("projection", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["viewType"]; ok {
+		params.Set("viewType", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/{userKey}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -4835,10 +5961,45 @@ func (c *UsersGetCall) Do() (*User, error) {
 	//     "userKey"
 	//   ],
 	//   "parameters": {
+	//     "customFieldMask": {
+	//       "description": "Comma-separated list of schema names. All fields from these schemas are fetched. This should only be set when projection=custom.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "projection": {
+	//       "default": "basic",
+	//       "description": "What subset of fields to fetch for this user.",
+	//       "enum": [
+	//         "basic",
+	//         "custom",
+	//         "full"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Do not include any custom fields for the user.",
+	//         "Include custom fields from schemas mentioned in customFieldMask.",
+	//         "Include all fields associated with this user."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "userKey": {
 	//       "description": "Email or immutable Id of the user",
 	//       "location": "path",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "viewType": {
+	//       "default": "admin_view",
+	//       "description": "Whether to fetch the ADMIN_VIEW or DOMAIN_PUBLIC view of the user.",
+	//       "enum": [
+	//         "admin_view",
+	//         "domain_public"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Fetches the ADMIN_VIEW of the user.",
+	//         "Fetches the DOMAIN_PUBLIC view of the user."
+	//       ],
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -4869,6 +6030,14 @@ func (r *UsersService) Insert(user *User) *UsersInsertCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UsersInsertCall) Fields(s ...googleapi.Field) *UsersInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *UsersInsertCall) Do() (*User, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.user)
@@ -4878,6 +6047,9 @@ func (c *UsersInsertCall) Do() (*User, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -4929,6 +6101,14 @@ func (r *UsersService) List() *UsersListCall {
 	return c
 }
 
+// CustomFieldMask sets the optional parameter "customFieldMask":
+// Comma-separated list of schema names. All fields from these schemas
+// are fetched. This should only be set when projection=custom.
+func (c *UsersListCall) CustomFieldMask(customFieldMask string) *UsersListCall {
+	c.opt_["customFieldMask"] = customFieldMask
+	return c
+}
+
 // Customer sets the optional parameter "customer": Immutable id of the
 // Google Apps account. In case of multi-domain, to fetch all users for
 // a customer, fill this field instead of domain.
@@ -4973,10 +6153,17 @@ func (c *UsersListCall) PageToken(pageToken string) *UsersListCall {
 	return c
 }
 
+// Projection sets the optional parameter "projection": What subset of
+// fields to fetch for this user.
+func (c *UsersListCall) Projection(projection string) *UsersListCall {
+	c.opt_["projection"] = projection
+	return c
+}
+
 // Query sets the optional parameter "query": Query string search.
-// Should be of the form "" where field can be any of supported fields,
-// operators can be one of '=' for exact match or ':' for prefix match.
-// For prefix match, the value should always be followed by a *.
+// Should be of the form "". Complete documentation is at
+// https://developers.google.com/admin-sdk/directory/v1/guides/search-use
+// rs
 func (c *UsersListCall) Query(query string) *UsersListCall {
 	c.opt_["query"] = query
 	return c
@@ -4996,10 +6183,28 @@ func (c *UsersListCall) SortOrder(sortOrder string) *UsersListCall {
 	return c
 }
 
+// ViewType sets the optional parameter "viewType": Whether to fetch the
+// ADMIN_VIEW or DOMAIN_PUBLIC view of the user.
+func (c *UsersListCall) ViewType(viewType string) *UsersListCall {
+	c.opt_["viewType"] = viewType
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UsersListCall) Fields(s ...googleapi.Field) *UsersListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *UsersListCall) Do() (*Users, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["customFieldMask"]; ok {
+		params.Set("customFieldMask", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["customer"]; ok {
 		params.Set("customer", fmt.Sprintf("%v", v))
 	}
@@ -5018,6 +6223,9 @@ func (c *UsersListCall) Do() (*Users, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
+	if v, ok := c.opt_["projection"]; ok {
+		params.Set("projection", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["query"]; ok {
 		params.Set("query", fmt.Sprintf("%v", v))
 	}
@@ -5026,6 +6234,12 @@ func (c *UsersListCall) Do() (*Users, error) {
 	}
 	if v, ok := c.opt_["sortOrder"]; ok {
 		params.Set("sortOrder", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["viewType"]; ok {
+		params.Set("viewType", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users")
 	urls += "?" + params.Encode()
@@ -5050,6 +6264,11 @@ func (c *UsersListCall) Do() (*Users, error) {
 	//   "httpMethod": "GET",
 	//   "id": "directory.users.list",
 	//   "parameters": {
+	//     "customFieldMask": {
+	//       "description": "Comma-separated list of schema names. All fields from these schemas are fetched. This should only be set when projection=custom.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "customer": {
 	//       "description": "Immutable id of the Google Apps account. In case of multi-domain, to fetch all users for a customer, fill this field instead of domain.",
 	//       "location": "query",
@@ -5107,8 +6326,24 @@ func (c *UsersListCall) Do() (*Users, error) {
 	//       "location": "query",
 	//       "type": "string"
 	//     },
+	//     "projection": {
+	//       "default": "basic",
+	//       "description": "What subset of fields to fetch for this user.",
+	//       "enum": [
+	//         "basic",
+	//         "custom",
+	//         "full"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Do not include any custom fields for the user.",
+	//         "Include custom fields from schemas mentioned in customFieldMask.",
+	//         "Include all fields associated with this user."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "query": {
-	//       "description": "Query string search. Should be of the form \"\" where field can be any of supported fields, operators can be one of '=' for exact match or ':' for prefix match. For prefix match, the value should always be followed by a *.",
+	//       "description": "Query string search. Should be of the form \"\". Complete documentation is at https://developers.google.com/admin-sdk/directory/v1/guides/search-users",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5126,6 +6361,20 @@ func (c *UsersListCall) Do() (*Users, error) {
 	//       "enumDescriptions": [
 	//         "Ascending order.",
 	//         "Descending order."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "viewType": {
+	//       "default": "admin_view",
+	//       "description": "Whether to fetch the ADMIN_VIEW or DOMAIN_PUBLIC view of the user.",
+	//       "enum": [
+	//         "admin_view",
+	//         "domain_public"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Fetches the ADMIN_VIEW of the user.",
+	//         "Fetches the DOMAIN_PUBLIC view of the user."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -5161,6 +6410,14 @@ func (r *UsersService) MakeAdmin(userKey string, usermakeadmin *UserMakeAdmin) *
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UsersMakeAdminCall) Fields(s ...googleapi.Field) *UsersMakeAdminCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *UsersMakeAdminCall) Do() error {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.usermakeadmin)
@@ -5170,6 +6427,9 @@ func (c *UsersMakeAdminCall) Do() error {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/{userKey}/makeAdmin")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -5230,6 +6490,14 @@ func (r *UsersService) Patch(userKey string, user *User) *UsersPatchCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UsersPatchCall) Fields(s ...googleapi.Field) *UsersPatchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *UsersPatchCall) Do() (*User, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.user)
@@ -5239,6 +6507,9 @@ func (c *UsersPatchCall) Do() (*User, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/{userKey}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
@@ -5306,6 +6577,14 @@ func (r *UsersService) Undelete(userKey string, userundelete *UserUndelete) *Use
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UsersUndeleteCall) Fields(s ...googleapi.Field) *UsersUndeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *UsersUndeleteCall) Do() error {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.userundelete)
@@ -5315,6 +6594,9 @@ func (c *UsersUndeleteCall) Do() error {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/{userKey}/undelete")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -5375,6 +6657,14 @@ func (r *UsersService) Update(userKey string, user *User) *UsersUpdateCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UsersUpdateCall) Fields(s ...googleapi.Field) *UsersUpdateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *UsersUpdateCall) Do() (*User, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.user)
@@ -5384,6 +6674,9 @@ func (c *UsersUpdateCall) Do() (*User, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/{userKey}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
@@ -5449,6 +6742,14 @@ func (r *UsersService) Watch(channel *Channel) *UsersWatchCall {
 	return c
 }
 
+// CustomFieldMask sets the optional parameter "customFieldMask":
+// Comma-separated list of schema names. All fields from these schemas
+// are fetched. This should only be set when projection=custom.
+func (c *UsersWatchCall) CustomFieldMask(customFieldMask string) *UsersWatchCall {
+	c.opt_["customFieldMask"] = customFieldMask
+	return c
+}
+
 // Customer sets the optional parameter "customer": Immutable id of the
 // Google Apps account. In case of multi-domain, to fetch all users for
 // a customer, fill this field instead of domain.
@@ -5493,10 +6794,17 @@ func (c *UsersWatchCall) PageToken(pageToken string) *UsersWatchCall {
 	return c
 }
 
+// Projection sets the optional parameter "projection": What subset of
+// fields to fetch for this user.
+func (c *UsersWatchCall) Projection(projection string) *UsersWatchCall {
+	c.opt_["projection"] = projection
+	return c
+}
+
 // Query sets the optional parameter "query": Query string search.
-// Should be of the form "" where field can be any of supported fields,
-// operators can be one of '=' for exact match or ':' for prefix match.
-// For prefix match, the value should always be followed by a *.
+// Should be of the form "". Complete documentation is at
+// https://developers.google.com/admin-sdk/directory/v1/guides/search-use
+// rs
 func (c *UsersWatchCall) Query(query string) *UsersWatchCall {
 	c.opt_["query"] = query
 	return c
@@ -5516,6 +6824,21 @@ func (c *UsersWatchCall) SortOrder(sortOrder string) *UsersWatchCall {
 	return c
 }
 
+// ViewType sets the optional parameter "viewType": Whether to fetch the
+// ADMIN_VIEW or DOMAIN_PUBLIC view of the user.
+func (c *UsersWatchCall) ViewType(viewType string) *UsersWatchCall {
+	c.opt_["viewType"] = viewType
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UsersWatchCall) Fields(s ...googleapi.Field) *UsersWatchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *UsersWatchCall) Do() (*Channel, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
@@ -5525,6 +6848,9 @@ func (c *UsersWatchCall) Do() (*Channel, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["customFieldMask"]; ok {
+		params.Set("customFieldMask", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["customer"]; ok {
 		params.Set("customer", fmt.Sprintf("%v", v))
 	}
@@ -5543,6 +6869,9 @@ func (c *UsersWatchCall) Do() (*Channel, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
+	if v, ok := c.opt_["projection"]; ok {
+		params.Set("projection", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["query"]; ok {
 		params.Set("query", fmt.Sprintf("%v", v))
 	}
@@ -5551,6 +6880,12 @@ func (c *UsersWatchCall) Do() (*Channel, error) {
 	}
 	if v, ok := c.opt_["sortOrder"]; ok {
 		params.Set("sortOrder", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["viewType"]; ok {
+		params.Set("viewType", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/watch")
 	urls += "?" + params.Encode()
@@ -5576,6 +6911,11 @@ func (c *UsersWatchCall) Do() (*Channel, error) {
 	//   "httpMethod": "POST",
 	//   "id": "directory.users.watch",
 	//   "parameters": {
+	//     "customFieldMask": {
+	//       "description": "Comma-separated list of schema names. All fields from these schemas are fetched. This should only be set when projection=custom.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "customer": {
 	//       "description": "Immutable id of the Google Apps account. In case of multi-domain, to fetch all users for a customer, fill this field instead of domain.",
 	//       "location": "query",
@@ -5633,8 +6973,24 @@ func (c *UsersWatchCall) Do() (*Channel, error) {
 	//       "location": "query",
 	//       "type": "string"
 	//     },
+	//     "projection": {
+	//       "default": "basic",
+	//       "description": "What subset of fields to fetch for this user.",
+	//       "enum": [
+	//         "basic",
+	//         "custom",
+	//         "full"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Do not include any custom fields for the user.",
+	//         "Include custom fields from schemas mentioned in customFieldMask.",
+	//         "Include all fields associated with this user."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "query": {
-	//       "description": "Query string search. Should be of the form \"\" where field can be any of supported fields, operators can be one of '=' for exact match or ':' for prefix match. For prefix match, the value should always be followed by a *.",
+	//       "description": "Query string search. Should be of the form \"\". Complete documentation is at https://developers.google.com/admin-sdk/directory/v1/guides/search-users",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5652,6 +7008,20 @@ func (c *UsersWatchCall) Do() (*Channel, error) {
 	//       "enumDescriptions": [
 	//         "Ascending order.",
 	//         "Descending order."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "viewType": {
+	//       "default": "admin_view",
+	//       "description": "Whether to fetch the ADMIN_VIEW or DOMAIN_PUBLIC view of the user.",
+	//       "enum": [
+	//         "admin_view",
+	//         "domain_public"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Fetches the ADMIN_VIEW of the user.",
+	//         "Fetches the DOMAIN_PUBLIC view of the user."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -5691,10 +7061,21 @@ func (r *UsersAliasesService) Delete(userKey string, alias string) *UsersAliases
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UsersAliasesDeleteCall) Fields(s ...googleapi.Field) *UsersAliasesDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *UsersAliasesDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/{userKey}/aliases/{alias}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
@@ -5760,6 +7141,14 @@ func (r *UsersAliasesService) Insert(userKey string, alias *Alias) *UsersAliases
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UsersAliasesInsertCall) Fields(s ...googleapi.Field) *UsersAliasesInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *UsersAliasesInsertCall) Do() (*Alias, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.alias)
@@ -5769,6 +7158,9 @@ func (c *UsersAliasesInsertCall) Do() (*Alias, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/{userKey}/aliases")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -5842,12 +7234,23 @@ func (c *UsersAliasesListCall) Event(event string) *UsersAliasesListCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UsersAliasesListCall) Fields(s ...googleapi.Field) *UsersAliasesListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *UsersAliasesListCall) Do() (*Aliases, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	if v, ok := c.opt_["event"]; ok {
 		params.Set("event", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/{userKey}/aliases")
 	urls += "?" + params.Encode()
@@ -5936,6 +7339,14 @@ func (c *UsersAliasesWatchCall) Event(event string) *UsersAliasesWatchCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UsersAliasesWatchCall) Fields(s ...googleapi.Field) *UsersAliasesWatchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *UsersAliasesWatchCall) Do() (*Channel, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
@@ -5947,6 +7358,9 @@ func (c *UsersAliasesWatchCall) Do() (*Channel, error) {
 	params.Set("alt", "json")
 	if v, ok := c.opt_["event"]; ok {
 		params.Set("event", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/{userKey}/aliases/watch")
 	urls += "?" + params.Encode()
@@ -6031,10 +7445,21 @@ func (r *UsersPhotosService) Delete(userKey string) *UsersPhotosDeleteCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UsersPhotosDeleteCall) Fields(s ...googleapi.Field) *UsersPhotosDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *UsersPhotosDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/{userKey}/photos/thumbnail")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
@@ -6089,10 +7514,21 @@ func (r *UsersPhotosService) Get(userKey string) *UsersPhotosGetCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UsersPhotosGetCall) Fields(s ...googleapi.Field) *UsersPhotosGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *UsersPhotosGetCall) Do() (*UserPhoto, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/{userKey}/photos/thumbnail")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -6158,6 +7594,14 @@ func (r *UsersPhotosService) Patch(userKey string, userphoto *UserPhoto) *UsersP
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UsersPhotosPatchCall) Fields(s ...googleapi.Field) *UsersPhotosPatchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *UsersPhotosPatchCall) Do() (*UserPhoto, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.userphoto)
@@ -6167,6 +7611,9 @@ func (c *UsersPhotosPatchCall) Do() (*UserPhoto, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/{userKey}/photos/thumbnail")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
@@ -6234,6 +7681,14 @@ func (r *UsersPhotosService) Update(userKey string, userphoto *UserPhoto) *Users
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UsersPhotosUpdateCall) Fields(s ...googleapi.Field) *UsersPhotosUpdateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *UsersPhotosUpdateCall) Do() (*UserPhoto, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.userphoto)
@@ -6243,6 +7698,9 @@ func (c *UsersPhotosUpdateCall) Do() (*UserPhoto, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/{userKey}/photos/thumbnail")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
@@ -6308,10 +7766,21 @@ func (r *VerificationCodesService) Generate(userKey string) *VerificationCodesGe
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *VerificationCodesGenerateCall) Fields(s ...googleapi.Field) *VerificationCodesGenerateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *VerificationCodesGenerateCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/{userKey}/verificationCodes/generate")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -6367,10 +7836,21 @@ func (r *VerificationCodesService) Invalidate(userKey string) *VerificationCodes
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *VerificationCodesInvalidateCall) Fields(s ...googleapi.Field) *VerificationCodesInvalidateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *VerificationCodesInvalidateCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/{userKey}/verificationCodes/invalidate")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -6426,10 +7906,21 @@ func (r *VerificationCodesService) List(userKey string) *VerificationCodesListCa
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *VerificationCodesListCall) Fields(s ...googleapi.Field) *VerificationCodesListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *VerificationCodesListCall) Do() (*VerificationCodes, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/{userKey}/verificationCodes")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)

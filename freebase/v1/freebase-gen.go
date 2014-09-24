@@ -175,6 +175,14 @@ func (c *ReconcileCall) Prop(prop string) *ReconcileCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ReconcileCall) Fields(s ...googleapi.Field) *ReconcileCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *ReconcileCall) Do() (*ReconcileGet, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -196,6 +204,9 @@ func (c *ReconcileCall) Do() (*ReconcileGet, error) {
 	}
 	if v, ok := c.opt_["prop"]; ok {
 		params.Set("prop", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "reconcile")
 	urls += "?" + params.Encode()
@@ -442,6 +453,14 @@ func (c *SearchCall) Without(without string) *SearchCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SearchCall) Fields(s ...googleapi.Field) *SearchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *SearchCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -514,6 +533,9 @@ func (c *SearchCall) Do() error {
 	}
 	if v, ok := c.opt_["without"]; ok {
 		params.Set("without", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "search")
 	urls += "?" + params.Encode()

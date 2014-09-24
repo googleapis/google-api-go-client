@@ -1,18 +1,18 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/sAW4O9TJFjBOU_nyFti74xIcDhI\"",
+ "etag": "\"uUWyYHXmEn-ab7WLvo8qNz2S8ws/Dam2iHq0kOgu8qnsdYB9fhgy5SY\"",
  "discoveryVersion": "v1",
  "id": "admin:email_migration_v2",
  "name": "admin",
  "version": "email_migration_v2",
- "revision": "20140130",
+ "revision": "20140903",
  "title": "Email Migration API v2",
  "description": "Email Migration API lets you migrate emails of users to Google backends.",
  "ownerDomain": "google.com",
  "ownerName": "Google",
  "icons": {
-  "x16": "http://www.google.com/images/icons/product/search-16.gif",
-  "x32": "http://www.google.com/images/icons/product/search-32.gif"
+  "x16": "https://www.google.com/images/icons/product/googlemail-16.png",
+  "x32": "https://www.google.com/images/icons/product/googlemail-32.png"
  },
  "documentationLink": "https://developers.google.com/admin-sdk/email-migration/v2/",
  "protocol": "rest",

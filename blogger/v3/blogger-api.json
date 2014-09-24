@@ -1,18 +1,18 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/wcehTISyxJwwFY9tLAXuUlmng8s\"",
+ "etag": "\"uUWyYHXmEn-ab7WLvo8qNz2S8ws/I7tzOwxkXmchrTG5SGJOMVoYTBw\"",
  "discoveryVersion": "v1",
  "id": "blogger:v3",
  "name": "blogger",
  "version": "v3",
- "revision": "20140730",
+ "revision": "20140827",
  "title": "Blogger API",
  "description": "API for access to the data within Blogger.",
  "ownerDomain": "google.com",
  "ownerName": "Google",
  "icons": {
-  "x16": "http://www.google.com/images/icons/product/blogger-16.png",
-  "x32": "http://www.google.com/images/icons/product/blogger-32.png"
+  "x16": "https://www.google.com/images/icons/product/blogger-16.png",
+  "x32": "https://www.google.com/images/icons/product/blogger-32.png"
  },
  "documentationLink": "https://developers.google.com/blogger/docs/3.0/getting_started",
  "labels": [
@@ -493,8 +493,7 @@
    "properties": {
     "blogId": {
      "type": "string",
-     "description": "Blog Id",
-     "format": "int64"
+     "description": "Blog Id"
     },
     "counts": {
      "type": "array",

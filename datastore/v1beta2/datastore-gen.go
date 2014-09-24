@@ -41,6 +41,9 @@ const basePath = "https://www.googleapis.com/datastore/v1beta2/datasets/"
 
 // OAuth2 scopes used by this API.
 const (
+	// View and manage your data across Google Cloud Platform services
+	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
+
 	// View and manage your Google Cloud Datastore data
 	DatastoreScope = "https://www.googleapis.com/auth/datastore"
 
@@ -181,6 +184,7 @@ type GqlQuery struct {
 	// numbered argument. The inverse must also be true.
 	NumberArgs []*GqlQueryArg `json:"numberArgs,omitempty"`
 
+	// QueryString: The query string.
 	QueryString string `json:"queryString,omitempty"`
 }
 
@@ -427,7 +431,8 @@ type Query struct {
 
 type QueryResultBatch struct {
 	// EndCursor: A cursor that points to the position after the last result
-	// in the batch. May be absent.
+	// in the batch. May be absent. TODO(arfuller): Once all plans produce
+	// cursors update documentation here.
 	EndCursor string `json:"endCursor,omitempty"`
 
 	// EntityResultType: The result type for every entity in entityResults.
@@ -568,6 +573,14 @@ func (r *DatasetsService) AllocateIds(datasetId string, allocateidsrequest *Allo
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *DatasetsAllocateIdsCall) Fields(s ...googleapi.Field) *DatasetsAllocateIdsCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *DatasetsAllocateIdsCall) Do() (*AllocateIdsResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.allocateidsrequest)
@@ -577,6 +590,9 @@ func (c *DatasetsAllocateIdsCall) Do() (*AllocateIdsResponse, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{datasetId}/allocateIds")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -621,6 +637,7 @@ func (c *DatasetsAllocateIdsCall) Do() (*AllocateIdsResponse, error) {
 	//     "$ref": "AllocateIdsResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/datastore",
 	//     "https://www.googleapis.com/auth/userinfo.email"
 	//   ]
@@ -645,6 +662,14 @@ func (r *DatasetsService) BeginTransaction(datasetId string, begintransactionreq
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *DatasetsBeginTransactionCall) Fields(s ...googleapi.Field) *DatasetsBeginTransactionCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *DatasetsBeginTransactionCall) Do() (*BeginTransactionResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.begintransactionrequest)
@@ -654,6 +679,9 @@ func (c *DatasetsBeginTransactionCall) Do() (*BeginTransactionResponse, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{datasetId}/beginTransaction")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -698,6 +726,7 @@ func (c *DatasetsBeginTransactionCall) Do() (*BeginTransactionResponse, error) {
 	//     "$ref": "BeginTransactionResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/datastore",
 	//     "https://www.googleapis.com/auth/userinfo.email"
 	//   ]
@@ -723,6 +752,14 @@ func (r *DatasetsService) Commit(datasetId string, commitrequest *CommitRequest)
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *DatasetsCommitCall) Fields(s ...googleapi.Field) *DatasetsCommitCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *DatasetsCommitCall) Do() (*CommitResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.commitrequest)
@@ -732,6 +769,9 @@ func (c *DatasetsCommitCall) Do() (*CommitResponse, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{datasetId}/commit")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -776,6 +816,7 @@ func (c *DatasetsCommitCall) Do() (*CommitResponse, error) {
 	//     "$ref": "CommitResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/datastore",
 	//     "https://www.googleapis.com/auth/userinfo.email"
 	//   ]
@@ -800,6 +841,14 @@ func (r *DatasetsService) Lookup(datasetId string, lookuprequest *LookupRequest)
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *DatasetsLookupCall) Fields(s ...googleapi.Field) *DatasetsLookupCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *DatasetsLookupCall) Do() (*LookupResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.lookuprequest)
@@ -809,6 +858,9 @@ func (c *DatasetsLookupCall) Do() (*LookupResponse, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{datasetId}/lookup")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -853,6 +905,7 @@ func (c *DatasetsLookupCall) Do() (*LookupResponse, error) {
 	//     "$ref": "LookupResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/datastore",
 	//     "https://www.googleapis.com/auth/userinfo.email"
 	//   ]
@@ -877,6 +930,14 @@ func (r *DatasetsService) Rollback(datasetId string, rollbackrequest *RollbackRe
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *DatasetsRollbackCall) Fields(s ...googleapi.Field) *DatasetsRollbackCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *DatasetsRollbackCall) Do() (*RollbackResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.rollbackrequest)
@@ -886,6 +947,9 @@ func (c *DatasetsRollbackCall) Do() (*RollbackResponse, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{datasetId}/rollback")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -930,6 +994,7 @@ func (c *DatasetsRollbackCall) Do() (*RollbackResponse, error) {
 	//     "$ref": "RollbackResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/datastore",
 	//     "https://www.googleapis.com/auth/userinfo.email"
 	//   ]
@@ -954,6 +1019,14 @@ func (r *DatasetsService) RunQuery(datasetId string, runqueryrequest *RunQueryRe
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *DatasetsRunQueryCall) Fields(s ...googleapi.Field) *DatasetsRunQueryCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *DatasetsRunQueryCall) Do() (*RunQueryResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.runqueryrequest)
@@ -963,6 +1036,9 @@ func (c *DatasetsRunQueryCall) Do() (*RunQueryResponse, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{datasetId}/runQuery")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -1007,6 +1083,7 @@ func (c *DatasetsRunQueryCall) Do() (*RunQueryResponse, error) {
 	//     "$ref": "RunQueryResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/datastore",
 	//     "https://www.googleapis.com/auth/userinfo.email"
 	//   ]

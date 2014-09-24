@@ -525,6 +525,14 @@ func (c *CseListCall) Start(start int64) *CseListCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CseListCall) Fields(s ...googleapi.Field) *CseListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *CseListCall) Do() (*Search, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -622,6 +630,9 @@ func (c *CseListCall) Do() (*Search, error) {
 	}
 	if v, ok := c.opt_["start"]; ok {
 		params.Set("start", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1")
 	urls += "?" + params.Encode()

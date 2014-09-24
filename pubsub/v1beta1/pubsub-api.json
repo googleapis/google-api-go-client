@@ -1,18 +1,18 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/i_qPP_WIS-3-N2T8CIrQnHeWSiE\"",
+ "etag": "\"uUWyYHXmEn-ab7WLvo8qNz2S8ws/ywePitQXGabB9vHcCh_sNtCXjDU\"",
  "discoveryVersion": "v1",
  "id": "pubsub:v1beta1",
  "name": "pubsub",
  "version": "v1beta1",
- "revision": "20140723",
+ "revision": "20140919",
  "title": "Cloud Pub/Sub API",
  "description": "Provides reliable, many-to-many, asynchronous messaging between applications.",
  "ownerDomain": "google.com",
  "ownerName": "Google",
  "icons": {
-  "x16": "http://www.google.com/images/icons/product/search-16.gif",
-  "x32": "http://www.google.com/images/icons/product/search-32.gif"
+  "x16": "https://www.google.com/images/icons/product/search-16.gif",
+  "x32": "https://www.google.com/images/icons/product/search-32.gif"
  },
  "documentationLink": "https://developers.google.com/pubsub/v1beta1",
  "labels": [
@@ -164,7 +164,7 @@
    "properties": {
     "ackDeadlineSeconds": {
      "type": "integer",
-     "description": "The new Ack deadline. Must be \u003e= 1.",
+     "description": "The new Ack deadline. Must be \u003e= 0.",
      "format": "int32"
     },
     "ackId": {

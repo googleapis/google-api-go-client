@@ -153,12 +153,23 @@ func (r *DetectionsService) List(q []string) *DetectionsListCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *DetectionsListCall) Fields(s ...googleapi.Field) *DetectionsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *DetectionsListCall) Do() (*DetectionsListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	for _, v := range c.q {
 		params.Add("q", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/detect")
 	urls += "?" + params.Encode()
@@ -222,12 +233,23 @@ func (c *LanguagesListCall) Target(target string) *LanguagesListCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LanguagesListCall) Fields(s ...googleapi.Field) *LanguagesListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *LanguagesListCall) Do() (*LanguagesListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	if v, ok := c.opt_["target"]; ok {
 		params.Set("target", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/languages")
 	urls += "?" + params.Encode()
@@ -303,6 +325,14 @@ func (c *TranslationsListCall) Source(source string) *TranslationsListCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TranslationsListCall) Fields(s ...googleapi.Field) *TranslationsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *TranslationsListCall) Do() (*TranslationsListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -319,6 +349,9 @@ func (c *TranslationsListCall) Do() (*TranslationsListResponse, error) {
 	}
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2")
 	urls += "?" + params.Encode()

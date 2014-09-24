@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/VH4aAJWm6pYrUeX36N3yLBZe3nA\"",
+ "etag": "\"uUWyYHXmEn-ab7WLvo8qNz2S8ws/WKtj4perod7wdCJHRIDRqG7zj-U\"",
  "discoveryVersion": "v1",
  "id": "content:v2",
  "name": "content",
  "canonicalName": "Shopping Content",
  "version": "v2",
- "revision": "20140813",
+ "revision": "20140916",
  "title": "Content API for Shopping",
  "description": "Manage product items, inventory, and Merchant Center accounts for Google Shopping.",
  "ownerDomain": "google.com",
@@ -618,14 +618,14 @@
      }
     },
     "itemsTotal": {
-     "type": "integer",
+     "type": "string",
      "description": "The number of items in the feed that were processed.",
-     "format": "int32"
+     "format": "uint64"
     },
     "itemsValid": {
-     "type": "integer",
+     "type": "string",
      "description": "The number of items in the feed that were valid.",
-     "format": "int32"
+     "format": "uint64"
     },
     "kind": {
      "type": "string",
@@ -655,9 +655,9 @@
      "description": "The code of the error, e.g., \"validation/invalid_value\"."
     },
     "count": {
-     "type": "integer",
+     "type": "string",
      "description": "The number of occurrences of the error in the feed.",
-     "format": "uint32"
+     "format": "uint64"
     },
     "examples": {
      "type": "array",
@@ -682,9 +682,9 @@
      "description": "The ID of the example item."
     },
     "lineNumber": {
-     "type": "integer",
+     "type": "string",
      "description": "Line number in the data feed where the example is found.",
-     "format": "int32"
+     "format": "uint64"
     },
     "value": {
      "type": "string",
@@ -1082,7 +1082,7 @@
     "pointsValue": {
      "type": "string",
      "description": "The retailer's loyalty points in absolute value.",
-     "format": "uint64"
+     "format": "int64"
     },
     "ratio": {
      "type": "number",
@@ -1284,11 +1284,6 @@
      "type": "string",
      "description": "The material of which the item is made."
     },
-    "merchantMultipackQuantity": {
-     "type": "string",
-     "description": "The number of identical products in a merchant-defined multipack.",
-     "format": "uint64"
-    },
     "mobileLink": {
      "type": "string",
      "description": "Link to a mobile-optimized version of the landing page."
@@ -1296,6 +1291,11 @@
     "mpn": {
      "type": "string",
      "description": "Manufacturer Part Number (MPN) of the item."
+    },
+    "multipack": {
+     "type": "string",
+     "description": "The number of identical products in a merchant-defined multipack.",
+     "format": "int64"
     },
     "offerId": {
      "type": "string",
@@ -1336,6 +1336,10 @@
      "items": {
       "$ref": "ProductShipping"
      }
+    },
+    "shippingLabel": {
+     "type": "string",
+     "description": "The shipping label of the product, used to group product in account-level shipping rules."
     },
     "shippingWeight": {
      "$ref": "ProductShippingWeight",
@@ -1382,11 +1386,11 @@
      }
     },
     "unitPricingBaseMeasure": {
-     "type": "string",
+     "$ref": "ProductUnitPricingBaseMeasure",
      "description": "The preference of the denominator of the unit price."
     },
     "unitPricingMeasure": {
-     "type": "string",
+     "$ref": "ProductUnitPricingMeasure",
      "description": "The measure and dimension of an item."
     },
     "validatedDestinations": {
@@ -1469,7 +1473,7 @@
     "months": {
      "type": "string",
      "description": "The number of installments the buyer has to pay.",
-     "format": "uint64"
+     "format": "int64"
     }
    }
   },
@@ -1480,6 +1484,19 @@
     "country": {
      "type": "string",
      "description": "The two-letter ISO 3166 country code for the country to which an item will ship."
+    },
+    "locationGroupName": {
+     "type": "string",
+     "description": "The location where the shipping is applicable, represented by a location group name."
+    },
+    "locationId": {
+     "type": "string",
+     "description": "The numeric id of a location that the shipping rate applies to as defined in the AdWords API.",
+     "format": "int64"
+    },
+    "postalCode": {
+     "type": "string",
+     "description": "The postal code range that the shipping rate applies to, represented by a postal code, a postal code prefix using * wildcard, a range between two postal codes or two postal code prefixes of equal length."
     },
     "price": {
      "$ref": "Price",
@@ -1608,6 +1625,15 @@
      "type": "string",
      "description": "The country within which the item is taxed, specified with a two-letter ISO 3166 country code."
     },
+    "locationId": {
+     "type": "string",
+     "description": "The numeric id of a location that the tax rate applies to as defined in the Adwords API (https://developers.google.com/adwords/api/docs/appendix/geotargeting).",
+     "format": "int64"
+    },
+    "postalCode": {
+     "type": "string",
+     "description": "The postal code range that the tax rate applies to, represented by a ZIP code, a ZIP code prefix using * wildcard, a range between two ZIP codes or two ZIP code prefixes of equal length. Examples: 94114, 94*, 94002-95460, 94*-95*."
+    },
     "rate": {
      "type": "number",
      "description": "The percentage of tax rate that applies to the item price.",
@@ -1620,6 +1646,36 @@
     "taxShip": {
      "type": "boolean",
      "description": "Set to true if tax is charged on shipping."
+    }
+   }
+  },
+  "ProductUnitPricingBaseMeasure": {
+   "id": "ProductUnitPricingBaseMeasure",
+   "type": "object",
+   "properties": {
+    "unit": {
+     "type": "string",
+     "description": "The unit of the denominator."
+    },
+    "value": {
+     "type": "string",
+     "description": "The denominator of the unit price.",
+     "format": "int64"
+    }
+   }
+  },
+  "ProductUnitPricingMeasure": {
+   "id": "ProductUnitPricingMeasure",
+   "type": "object",
+   "properties": {
+    "unit": {
+     "type": "string",
+     "description": "The unit of the measure."
+    },
+    "value": {
+     "type": "number",
+     "description": "The measure of an item.",
+     "format": "double"
     }
    }
   },

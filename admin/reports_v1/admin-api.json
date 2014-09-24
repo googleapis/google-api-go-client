@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/1CnyuAQi1v-9K692tzB6A2cyPVk\"",
+ "etag": "\"uUWyYHXmEn-ab7WLvo8qNz2S8ws/kIY0aqiDkZ24yMy88cSNtVuMbHk\"",
  "discoveryVersion": "v1",
  "id": "admin:reports_v1",
  "name": "admin",
  "canonicalName": "reports",
  "version": "reports_v1",
- "revision": "20140725",
+ "revision": "20140912",
  "title": "Admin Reports API",
  "description": "Allows the administrators of Google Apps customers to fetch reports about the usage, collaboration, security and risk for their users.",
  "ownerDomain": "google.com",
@@ -163,6 +163,21 @@
            "type": "string",
            "description": "Integral value of the parameter.",
            "format": "int64"
+          },
+          "multiIntValue": {
+           "type": "array",
+           "description": "Multi-int value of the parameter.",
+           "items": {
+            "type": "string",
+            "format": "int64"
+           }
+          },
+          "multiValue": {
+           "type": "array",
+           "description": "Multi-string value of the parameter.",
+           "items": {
+            "type": "string"
+           }
           },
           "name": {
            "type": "string",

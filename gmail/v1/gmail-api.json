@@ -1,18 +1,18 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/t6pewSAzwcj9YSpbIObjW2xJOGE\"",
+ "etag": "\"uUWyYHXmEn-ab7WLvo8qNz2S8ws/5fnY39OGLjxI_epC657MRv3fFjE\"",
  "discoveryVersion": "v1",
  "id": "gmail:v1",
  "name": "gmail",
  "version": "v1",
- "revision": "20140728",
+ "revision": "20140902",
  "title": "Gmail API",
  "description": "The Gmail REST API.",
  "ownerDomain": "google.com",
  "ownerName": "Google",
  "icons": {
-  "x16": "http://www.google.com/images/icons/product/googlemail-16.png",
-  "x32": "http://www.google.com/images/icons/product/googlemail-32.png"
+  "x16": "https://www.google.com/images/icons/product/googlemail-16.png",
+  "x32": "https://www.google.com/images/icons/product/googlemail-32.png"
  },
  "documentationLink": "https://developers.google.com/gmail/api/",
  "protocol": "rest",
@@ -602,10 +602,12 @@
          "default": "full",
          "enum": [
           "full",
+          "metadata",
           "minimal",
           "raw"
          ],
          "enumDescriptions": [
+          "",
           "",
           "",
           ""
@@ -1065,10 +1067,12 @@
          "default": "full",
          "enum": [
           "full",
+          "metadata",
           "minimal",
           "raw"
          ],
          "enumDescriptions": [
+          "",
           "",
           "",
           ""
@@ -1080,6 +1084,12 @@
          "description": "The ID of the message to retrieve.",
          "required": true,
          "location": "path"
+        },
+        "metadataHeaders": {
+         "type": "string",
+         "description": "When given and format is METADATA, only include headers specified.",
+         "repeated": true,
+         "location": "query"
         },
         "userId": {
          "type": "string",
@@ -1106,8 +1116,21 @@
        "id": "gmail.users.messages.import",
        "path": "{userId}/messages/import",
        "httpMethod": "POST",
-       "description": "Directly imports a message into only this user's mailbox, similar to receiving via SMTP. Does not send a message.",
+       "description": "Imports a message into only this user's mailbox, with standard email delivery scanning and classification similar to receiving via SMTP. Does not send a message.",
        "parameters": {
+        "internalDateSource": {
+         "type": "string",
+         "description": "Source for Gmail's internal date of the message.",
+         "enum": [
+          "dateHeader",
+          "receivedTime"
+         ],
+         "enumDescriptions": [
+          "",
+          ""
+         ],
+         "location": "query"
+        },
         "userId": {
          "type": "string",
          "description": "The user's email address. The special value me can be used to indicate the authenticated user.",
@@ -1151,8 +1174,21 @@
        "id": "gmail.users.messages.insert",
        "path": "{userId}/messages",
        "httpMethod": "POST",
-       "description": "Directly inserts a message into only this user's mailbox. Does not send a message.",
+       "description": "Directly inserts a message into only this user's mailbox similar to IMAP APPEND, bypassing most scanning and classification. Does not send a message.",
        "parameters": {
+        "internalDateSource": {
+         "type": "string",
+         "description": "Source for Gmail's internal date of the message.",
+         "enum": [
+          "dateHeader",
+          "receivedTime"
+         ],
+         "enumDescriptions": [
+          "",
+          ""
+         ],
+         "location": "query"
+        },
         "userId": {
          "type": "string",
          "description": "The user's email address. The special value me can be used to indicate the authenticated user.",

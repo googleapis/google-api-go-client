@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/xNgpBqUls7Y0IlwCuXKSgLvZPco\"",
+ "etag": "\"uUWyYHXmEn-ab7WLvo8qNz2S8ws/9fwQA8H2k5NmzsvEUWIyM_KlxbQ\"",
  "discoveryVersion": "v1",
  "id": "sqladmin:v1beta3",
  "name": "sqladmin",
  "canonicalName": "SQL Admin",
  "version": "v1beta3",
- "revision": "20140507",
+ "revision": "20140827",
  "title": "Cloud SQL Administration API",
  "description": "API for Cloud SQL database instance management.",
  "ownerDomain": "google.com",
@@ -207,7 +207,7 @@
    "properties": {
     "binLogCoordinates": {
      "$ref": "BinLogCoordinates",
-     "description": "Binary log coordinates, if specified, indentify the the position up to which the source instance should be cloned. If not specified, the source instance is cloned up to the most recent binary log coordintes."
+     "description": "Binary log coordinates, if specified, indentify the position up to which the source instance should be cloned. If not specified, the source instance is cloned up to the most recent binary log coordinates."
     },
     "destinationInstanceName": {
      "type": "string",
@@ -231,7 +231,7 @@
    "properties": {
     "name": {
      "type": "string",
-     "description": "The name of the flag. These flags are passed at instance startup, so include both MySQL server options and MySQL system variables. Flags should be specified with underscores, not hyphens. Refer to the official MySQL documentation on server options and system variables for descriptions of what these flags do. Acceptable values are:  event_scheduler on or off (Note: The event scheduler will only work reliably if the instance activationPolicy is set to ALWAYS.) general_log on or off group_concat_max_len 4..17179869184 innodb_flush_log_at_trx_commit 0..2 innodb_lock_wait_timeout 1..1073741824 log_bin_trust_function_creators on or off log_output Can be either TABLE or NONE, FILE is not supported. log_queries_not_using_indexes on or off long_query_time 0..30000000 lower_case_table_names 0..2 max_allowed_packet 16384..1073741824 read_only on or off skip_show_database on or off slow_query_log on or off wait_timeout 1..31536000"
+     "description": "The name of the flag. These flags are passed at instance startup, so include both MySQL server options and MySQL system variables. Flags should be specified with underscores, not hyphens. Refer to the official MySQL documentation on server options and system variables for descriptions of what these flags do. Acceptable values are:  character_set_server utf8 or utf8mb4 event_scheduler on or off (Note: The event scheduler will only work reliably if the instance activationPolicy is set to ALWAYS) general_log on or off group_concat_max_len 4..17179869184 innodb_flush_log_at_trx_commit 0..2 innodb_lock_wait_timeout 1..1073741824 log_bin_trust_function_creators on or off log_output Can be either TABLE or NONE, FILE is not supported log_queries_not_using_indexes on or off long_query_time 0..30000000 lower_case_table_names 0..2 max_allowed_packet 16384..1073741824 read_only on or off skip_show_database on or off slow_query_log on or off. If set to on, you must also set the log_output flag to TABLE to receive logs. wait_timeout 1..31536000"
     },
     "value": {
      "type": "string",
@@ -251,7 +251,7 @@
     },
     "databaseVersion": {
      "type": "string",
-     "description": "The database engine type and version. Can be MYSQL_5_5 or MYSQL_5_6. Defaults to MYSQL_5_5. The databaseVersion can not be changed after instance creation."
+     "description": "The database engine type and version. Can be MYSQL_5_5 or MYSQL_5_6. Defaults to MYSQL_5_5. The databaseVersion cannot be changed after instance creation."
     },
     "etag": {
      "type": "string",
@@ -267,6 +267,10 @@
       ]
      }
     },
+    "instanceType": {
+     "type": "string",
+     "description": "The instance type. This can be one of the following.\nCLOUD_SQL_INSTANCE: Regular Cloud SQL instance.\nREAD_REPLICA_INSTANCE: Cloud SQL instance acting as a read-replica."
+    },
     "ipAddresses": {
      "type": "array",
      "description": "The assigned IP addresses for the instance.",
@@ -278,6 +282,10 @@
      "type": "string",
      "description": "This is always sql#instance.",
      "default": "sql#instance"
+    },
+    "masterInstanceName": {
+     "type": "string",
+     "description": "The name of the instance which will act as master in the replication setup."
     },
     "maxDiskSize": {
      "type": "string",
@@ -297,6 +305,13 @@
     "region": {
      "type": "string",
      "description": "The geographical region. Can be us-east1, us-central, asia-east1 or europe-west1. Defaults to us-central. The region can not be changed after instance creation."
+    },
+    "replicaNames": {
+     "type": "array",
+     "description": "The replicas of the instance.",
+     "items": {
+      "type": "string"
+     }
     },
     "serverCaCert": {
      "$ref": "SslCert",
@@ -637,6 +652,22 @@
     }
    }
   },
+  "InstancesPromoteReplicaResponse": {
+   "id": "InstancesPromoteReplicaResponse",
+   "type": "object",
+   "description": "Database promote read replica response.",
+   "properties": {
+    "kind": {
+     "type": "string",
+     "description": "This is always sql#instancesPromoteReplica.",
+     "default": "sql#instancesPromoteReplica"
+    },
+    "operation": {
+     "type": "string",
+     "description": "An identifier that uniquely identifies the operation. You can use this identifier to retrieve the Operations resource that has information about the operation."
+    }
+   }
+  },
   "InstancesResetSslConfigResponse": {
    "id": "InstancesResetSslConfigResponse",
    "type": "object",
@@ -762,7 +793,7 @@
    "properties": {
     "followGaeApplication": {
      "type": "string",
-     "description": "The AppEngine application to follow, it must be in the same region as the Cloud SQL instance."
+     "description": "The App Engine application to follow, it must be in the same region as the Cloud SQL instance."
     },
     "kind": {
      "type": "string",
@@ -841,7 +872,7 @@
     },
     "authorizedGaeApplications": {
      "type": "array",
-     "description": "The AppEngine app ids that can access this instance.",
+     "description": "The App Engine app IDs that can access this instance.",
      "items": {
       "type": "string"
      }
@@ -860,6 +891,10 @@
       "$ref": "DatabaseFlags"
      }
     },
+    "databaseReplicationEnabled": {
+     "type": "boolean",
+     "description": "Configuration specific to read replica instance. Indicates whether replication is enabled or not."
+    },
     "ipConfiguration": {
      "$ref": "IpConfiguration",
      "description": "The settings for IP Management. This allows to enable or disable the instance IP and manage which external networks can connect to the instance."
@@ -871,7 +906,7 @@
     },
     "locationPreference": {
      "$ref": "LocationPreference",
-     "description": "The location preference settings. This allows the instance to be located as near as possible to either an AppEngine app or GCE zone for better perfomance."
+     "description": "The location preference settings. This allows the instance to be located as near as possible to either an App Engine app or GCE zone for better performance."
     },
     "pricingPlan": {
      "type": "string",
@@ -1086,7 +1121,7 @@
      "id": "sql.backupRuns.get",
      "path": "projects/{project}/instances/{instance}/backupRuns/{backupConfiguration}",
      "httpMethod": "GET",
-     "description": "Retrieves a resource containing information about a backup run.",
+     "description": "Retrieves information about a specified backup run for a Cloud SQL instance.",
      "parameters": {
       "backupConfiguration": {
        "type": "string",
@@ -1130,7 +1165,7 @@
      "id": "sql.backupRuns.list",
      "path": "projects/{project}/instances/{instance}/backupRuns",
      "httpMethod": "GET",
-     "description": "Lists all backup runs associated with a given instance and configuration in the reverse chronological order of the enqueued time.",
+     "description": "Lists all backup runs associated with a Cloud SQL instance.",
      "parameters": {
       "backupConfiguration": {
        "type": "string",
@@ -1182,7 +1217,7 @@
      "id": "sql.flags.list",
      "path": "flags",
      "httpMethod": "GET",
-     "description": "List all available database flags for Google Cloud SQL instances.",
+     "description": "Lists all database flags that can be set for Google Cloud SQL instances.",
      "response": {
       "$ref": "FlagsListResponse"
      },
@@ -1198,7 +1233,7 @@
      "id": "sql.instances.clone",
      "path": "projects/{project}/instances/clone",
      "httpMethod": "POST",
-     "description": "Creates a Cloud SQL instance as a clone of the source instance.",
+     "description": "Creates a Cloud SQL instance as a clone of a source instance.",
      "parameters": {
       "project": {
        "type": "string",
@@ -1287,7 +1322,7 @@
      "id": "sql.instances.get",
      "path": "projects/{project}/instances/{instance}",
      "httpMethod": "GET",
-     "description": "Retrieves a resource containing information about a Cloud SQL instance.",
+     "description": "Retrieves information about a Cloud SQL instance.",
      "parameters": {
       "instance": {
        "type": "string",
@@ -1317,7 +1352,7 @@
      "id": "sql.instances.import",
      "path": "projects/{project}/instances/{instance}/import",
      "httpMethod": "POST",
-     "description": "Imports data into a Cloud SQL instance from a MySQL dump file in Google Cloud Storage.",
+     "description": "Imports data into a Cloud SQL instance from a MySQL dump file stored in a Google Cloud Storage bucket.",
      "parameters": {
       "instance": {
        "type": "string",
@@ -1376,7 +1411,7 @@
      "id": "sql.instances.list",
      "path": "projects/{project}/instances",
      "httpMethod": "GET",
-     "description": "Lists instances under a given project in the alphabetical order of the instance name.",
+     "description": "Lists instances for a given project, in alphabetical order by instance name.",
      "parameters": {
       "maxResults": {
        "type": "integer",
@@ -1410,7 +1445,7 @@
      "id": "sql.instances.patch",
      "path": "projects/{project}/instances/{instance}",
      "httpMethod": "PATCH",
-     "description": "Updates settings of a Cloud SQL instance. Caution: This is not a partial update, so you must include values for all the settings that you want to retain. For partial updates, use patch.. This method supports patch semantics.",
+     "description": "Updates the settings of a Cloud SQL instance. This method supports patch semantics.",
      "parameters": {
       "instance": {
        "type": "string",
@@ -1439,11 +1474,41 @@
       "https://www.googleapis.com/auth/sqlservice.admin"
      ]
     },
+    "promoteReplica": {
+     "id": "sql.instances.promoteReplica",
+     "path": "projects/{project}/instances/{instance}/promoteReplica",
+     "httpMethod": "POST",
+     "description": "Promotes the read replica instance to be a stand-alone Cloud SQL instance.",
+     "parameters": {
+      "instance": {
+       "type": "string",
+       "description": "Cloud SQL read replica instance name.",
+       "required": true,
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "ID of the project that contains the read replica.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "instance"
+     ],
+     "response": {
+      "$ref": "InstancesPromoteReplicaResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/sqlservice.admin"
+     ]
+    },
     "resetSslConfig": {
      "id": "sql.instances.resetSslConfig",
      "path": "projects/{project}/instances/{instance}/resetSslConfig",
      "httpMethod": "POST",
-     "description": "Deletes all client certificates and generates a new server SSL certificate for the instance. The changes will not take effect until the instance is restarted. Existing instances without a server certificate will need to call this once to set a server certificate.",
+     "description": "Deletes all client certificates and generates a new server SSL certificate for a Cloud SQL instance.",
      "parameters": {
       "instance": {
        "type": "string",
@@ -1547,7 +1612,7 @@
      "id": "sql.instances.setRootPassword",
      "path": "projects/{project}/instances/{instance}/setRootPassword",
      "httpMethod": "POST",
-     "description": "Sets the password for the root user.",
+     "description": "Sets the password for the root user of the specified Cloud SQL instance.",
      "parameters": {
       "instance": {
        "type": "string",
@@ -1580,7 +1645,7 @@
      "id": "sql.instances.update",
      "path": "projects/{project}/instances/{instance}",
      "httpMethod": "PUT",
-     "description": "Updates settings of a Cloud SQL instance. Caution: This is not a partial update, so you must include values for all the settings that you want to retain. For partial updates, use patch.",
+     "description": "Updates the settings of a Cloud SQL instance.",
      "parameters": {
       "instance": {
        "type": "string",
@@ -1618,7 +1683,7 @@
      "id": "sql.operations.get",
      "path": "projects/{project}/instances/{instance}/operations/{operation}",
      "httpMethod": "GET",
-     "description": "Retrieves an instance operation that has been performed on an instance.",
+     "description": "Retrieves information about a specific operation that was performed on a Cloud SQL instance.",
      "parameters": {
       "instance": {
        "type": "string",
@@ -1655,7 +1720,7 @@
      "id": "sql.operations.list",
      "path": "projects/{project}/instances/{instance}/operations",
      "httpMethod": "GET",
-     "description": "Lists all instance operations that have been performed on the given Cloud SQL instance in the reverse chronological order of the start time.",
+     "description": "Lists all operations that have been performed on a Cloud SQL instance.",
      "parameters": {
       "instance": {
        "type": "string",
@@ -1700,7 +1765,7 @@
      "id": "sql.sslCerts.delete",
      "path": "projects/{project}/instances/{instance}/sslCerts/{sha1Fingerprint}",
      "httpMethod": "DELETE",
-     "description": "Deletes the SSL certificate. The change will not take effect until the instance is restarted.",
+     "description": "Deletes an SSL certificate from a Cloud SQL instance.",
      "parameters": {
       "instance": {
        "type": "string",
@@ -1737,7 +1802,7 @@
      "id": "sql.sslCerts.get",
      "path": "projects/{project}/instances/{instance}/sslCerts/{sha1Fingerprint}",
      "httpMethod": "GET",
-     "description": "Retrieves a particular SSL certificate. Does not include the private key (required for usage). The private key must be saved from the response to initial creation.",
+     "description": "Retrieves an SSL certificate as specified by its SHA-1 fingerprint.",
      "parameters": {
       "instance": {
        "type": "string",
@@ -1774,7 +1839,7 @@
      "id": "sql.sslCerts.insert",
      "path": "projects/{project}/instances/{instance}/sslCerts",
      "httpMethod": "POST",
-     "description": "Creates an SSL certificate and returns it along with the private key and server certificate authority. The new certificate will not be usable until the instance is restarted.",
+     "description": "Creates an SSL certificate and returns the certificate, the associated private key, and the server certificate authority.",
      "parameters": {
       "instance": {
        "type": "string",
@@ -1807,7 +1872,7 @@
      "id": "sql.sslCerts.list",
      "path": "projects/{project}/instances/{instance}/sslCerts",
      "httpMethod": "GET",
-     "description": "Lists all of the current SSL certificates for the instance.",
+     "description": "Lists all of the current SSL certificates defined for a Cloud SQL instance.",
      "parameters": {
       "instance": {
        "type": "string",
@@ -1841,7 +1906,7 @@
      "id": "sql.tiers.list",
      "path": "projects/{project}/tiers",
      "httpMethod": "GET",
-     "description": "Lists all available service tiers for Google Cloud SQL, for example D1, D2. For related information, see Pricing.",
+     "description": "Lists service tiers that can be used to create Google Cloud SQL instances.",
      "parameters": {
       "project": {
        "type": "string",

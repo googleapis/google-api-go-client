@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/AkKfj_VobDSmBnmnOhpr3xrQcUQ\"",
+ "etag": "\"uUWyYHXmEn-ab7WLvo8qNz2S8ws/iGUA1MFJvjag5CPQwb2aT371UTs\"",
  "discoveryVersion": "v1",
  "id": "manager:v1beta2",
  "name": "manager",
  "version": "v1beta2",
- "revision": "20140728",
+ "revision": "20140915",
  "title": "Deployment Manager API",
  "description": "The Deployment Manager API allows users to declaratively configure, deploy and run complex solutions on the Google Cloud Platform.",
  "ownerDomain": "google.com",
@@ -430,6 +430,9 @@
     "portRange": {
      "type": "string"
     },
+    "sessionAffinity": {
+     "type": "string"
+    },
     "targetModules": {
      "type": "array",
      "items": {
@@ -639,6 +642,10 @@
      "type": "string",
      "description": "The size of the created disk in gigabytes.",
      "format": "int64"
+    },
+    "diskType": {
+     "type": "string",
+     "description": "Name of the disk type resource describing which disk type to use to create the disk. For example 'pd-ssd' or 'pd-standard'. Default is 'pd-standard'"
     },
     "sourceImage": {
      "type": "string",

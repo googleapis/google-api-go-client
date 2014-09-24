@@ -1075,10 +1075,21 @@ func (r *AclService) Delete(activityId string, userId string) *AclDeleteCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AclDeleteCall) Fields(s ...googleapi.Field) *AclDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *AclDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "activities/{activityId}/acl/{userId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
@@ -1142,10 +1153,21 @@ func (r *ActivitiesService) Delete(activityId string) *ActivitiesDeleteCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ActivitiesDeleteCall) Fields(s ...googleapi.Field) *ActivitiesDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *ActivitiesDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "activities/{activityId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
@@ -1223,6 +1245,14 @@ func (c *ActivitiesListCall) PageToken(pageToken string) *ActivitiesListCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ActivitiesListCall) Fields(s ...googleapi.Field) *ActivitiesListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *ActivitiesListCall) Do() (*ActivityList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1235,6 +1265,9 @@ func (c *ActivitiesListCall) Do() (*ActivityList, error) {
 	}
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "people/{userId}/activities/{collection}")
 	urls += "?" + params.Encode()
@@ -1334,10 +1367,21 @@ func (r *ActivityVisibilityService) Get(activityId string) *ActivityVisibilityGe
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ActivityVisibilityGetCall) Fields(s ...googleapi.Field) *ActivityVisibilityGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *ActivityVisibilityGetCall) Do() (*Visibility, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "activities/{activityId}/visibility")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -1403,6 +1447,14 @@ func (r *ActivityVisibilityService) Patch(activityId string, visibility *Visibil
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ActivityVisibilityPatchCall) Fields(s ...googleapi.Field) *ActivityVisibilityPatchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *ActivityVisibilityPatchCall) Do() (*Visibility, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.visibility)
@@ -1412,6 +1464,9 @@ func (c *ActivityVisibilityPatchCall) Do() (*Visibility, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "activities/{activityId}/visibility")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
@@ -1479,6 +1534,14 @@ func (r *ActivityVisibilityService) Update(activityId string, visibility *Visibi
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ActivityVisibilityUpdateCall) Fields(s ...googleapi.Field) *ActivityVisibilityUpdateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *ActivityVisibilityUpdateCall) Do() (*Visibility, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.visibility)
@@ -1488,6 +1551,9 @@ func (c *ActivityVisibilityUpdateCall) Do() (*Visibility, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "activities/{activityId}/visibility")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
@@ -1555,10 +1621,21 @@ func (r *BadgesService) Get(userId string, badgeId int64) *BadgesGetCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BadgesGetCall) Fields(s ...googleapi.Field) *BadgesGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *BadgesGetCall) Do() (*Badge, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "people/{userId}/badges/{badgeId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -1630,10 +1707,21 @@ func (r *BadgesService) List(userId string) *BadgesListCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BadgesListCall) Fields(s ...googleapi.Field) *BadgesListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *BadgesListCall) Do() (*BadgeList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "people/{userId}/badges")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -1696,10 +1784,21 @@ func (r *CommentsService) Delete(commentId string) *CommentsDeleteCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CommentsDeleteCall) Fields(s ...googleapi.Field) *CommentsDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *CommentsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "comments/{commentId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
@@ -1761,12 +1860,23 @@ func (c *CommentsGetCall) Hl(hl string) *CommentsGetCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CommentsGetCall) Fields(s ...googleapi.Field) *CommentsGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *CommentsGetCall) Do() (*Comment, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	if v, ok := c.opt_["hl"]; ok {
 		params.Set("hl", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "comments/{commentId}")
 	urls += "?" + params.Encode()
@@ -1837,6 +1947,14 @@ func (r *CommentsService) Insert(activityId string, comment *Comment) *CommentsI
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CommentsInsertCall) Fields(s ...googleapi.Field) *CommentsInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *CommentsInsertCall) Do() (*Comment, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.comment)
@@ -1846,6 +1964,9 @@ func (c *CommentsInsertCall) Do() (*Comment, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "activities/{activityId}/comments")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -1938,6 +2059,14 @@ func (c *CommentsListCall) PageToken(pageToken string) *CommentsListCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CommentsListCall) Fields(s ...googleapi.Field) *CommentsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *CommentsListCall) Do() (*CommentList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1953,6 +2082,9 @@ func (c *CommentsListCall) Do() (*CommentList, error) {
 	}
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "activities/{activityId}/comments")
 	urls += "?" + params.Encode()
@@ -2054,12 +2186,23 @@ func (c *CommunitiesGetCall) Hl(hl string) *CommunitiesGetCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CommunitiesGetCall) Fields(s ...googleapi.Field) *CommunitiesGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *CommunitiesGetCall) Do() (*Community, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	if v, ok := c.opt_["hl"]; ok {
 		params.Set("hl", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "communities/{communityId}")
 	urls += "?" + params.Encode()
@@ -2151,6 +2294,14 @@ func (c *CommunitiesListCall) OrderBy(orderBy string) *CommunitiesListCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CommunitiesListCall) Fields(s ...googleapi.Field) *CommunitiesListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *CommunitiesListCall) Do() (*CommunityList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2163,6 +2314,9 @@ func (c *CommunitiesListCall) Do() (*CommunityList, error) {
 	}
 	if v, ok := c.opt_["orderBy"]; ok {
 		params.Set("orderBy", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "people/{userId}/communities")
 	urls += "?" + params.Encode()
@@ -2253,10 +2407,21 @@ func (r *CommunityFollowService) Delete(communityId int64, userId string) *Commu
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CommunityFollowDeleteCall) Fields(s ...googleapi.Field) *CommunityFollowDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *CommunityFollowDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "communities/{communityId}/followers/{userId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
@@ -2322,10 +2487,21 @@ func (r *CommunityFollowService) Insert(communityId int64, userId string) *Commu
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CommunityFollowInsertCall) Fields(s ...googleapi.Field) *CommunityFollowInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *CommunityFollowInsertCall) Do() (*CommunityMembers, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "communities/{communityId}/followers/{userId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -2398,10 +2574,21 @@ func (r *CommunityMembersService) Delete(communityId int64, userId string) *Comm
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CommunityMembersDeleteCall) Fields(s ...googleapi.Field) *CommunityMembersDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *CommunityMembersDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "communities/{communityId}/members/{userId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
@@ -2474,12 +2661,23 @@ func (c *CommunityMembersGetCall) Hl(hl string) *CommunityMembersGetCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CommunityMembersGetCall) Fields(s ...googleapi.Field) *CommunityMembersGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *CommunityMembersGetCall) Do() (*CommunityMembers, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	if v, ok := c.opt_["hl"]; ok {
 		params.Set("hl", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "communities/{communityId}/members/{userId}")
 	urls += "?" + params.Encode()
@@ -2559,10 +2757,21 @@ func (r *CommunityMembersService) Insert(communityId int64, userId string) *Comm
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CommunityMembersInsertCall) Fields(s ...googleapi.Field) *CommunityMembersInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *CommunityMembersInsertCall) Do() (*CommunityMembers, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "communities/{communityId}/members/{userId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -2664,6 +2873,14 @@ func (c *CommunityMembersListCall) PageToken(pageToken string) *CommunityMembers
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CommunityMembersListCall) Fields(s ...googleapi.Field) *CommunityMembersListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *CommunityMembersListCall) Do() (*CommunityMembersList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2679,6 +2896,9 @@ func (c *CommunityMembersListCall) Do() (*CommunityMembersList, error) {
 	}
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "communities/{communityId}/members")
 	urls += "?" + params.Encode()
@@ -2769,10 +2989,21 @@ func (r *CommunityMessagesService) Delete(communityId int64, topicId int64, mess
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CommunityMessagesDeleteCall) Fields(s ...googleapi.Field) *CommunityMessagesDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *CommunityMessagesDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "communities/{communityId}/topics/{topicId}/messages/{messageId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
@@ -2850,6 +3081,14 @@ func (r *CommunityMessagesService) Insert(communityId int64, topicId int64, comm
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CommunityMessagesInsertCall) Fields(s ...googleapi.Field) *CommunityMessagesInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *CommunityMessagesInsertCall) Do() (*CommunityMessage, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.communitymessage)
@@ -2859,6 +3098,9 @@ func (c *CommunityMessagesInsertCall) Do() (*CommunityMessage, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "communities/{communityId}/topics/{topicId}/messages")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -2957,6 +3199,14 @@ func (c *CommunityMessagesListCall) PageToken(pageToken string) *CommunityMessag
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CommunityMessagesListCall) Fields(s ...googleapi.Field) *CommunityMessagesListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *CommunityMessagesListCall) Do() (*CommunityMessageList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2969,6 +3219,9 @@ func (c *CommunityMessagesListCall) Do() (*CommunityMessageList, error) {
 	}
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "communities/{communityId}/topics/{topicId}/messages")
 	urls += "?" + params.Encode()
@@ -3064,6 +3317,14 @@ func (r *CommunityPollCommentsService) Insert(communityId int64, pollId string, 
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CommunityPollCommentsInsertCall) Fields(s ...googleapi.Field) *CommunityPollCommentsInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *CommunityPollCommentsInsertCall) Do() (*CommunityPollComment, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.communitypollcomment)
@@ -3073,6 +3334,9 @@ func (c *CommunityPollCommentsInsertCall) Do() (*CommunityPollComment, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "communities/{communityId}/polls/{pollId}/comments")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -3170,6 +3434,14 @@ func (c *CommunityPollCommentsListCall) PageToken(pageToken string) *CommunityPo
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CommunityPollCommentsListCall) Fields(s ...googleapi.Field) *CommunityPollCommentsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *CommunityPollCommentsListCall) Do() (*CommunityPollCommentList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3182,6 +3454,9 @@ func (c *CommunityPollCommentsListCall) Do() (*CommunityPollCommentList, error) 
 	}
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "communities/{communityId}/polls/{pollId}/comments")
 	urls += "?" + params.Encode()
@@ -3275,6 +3550,14 @@ func (r *CommunityPollVotesService) Insert(communityId int64, pollId string, com
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CommunityPollVotesInsertCall) Fields(s ...googleapi.Field) *CommunityPollVotesInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *CommunityPollVotesInsertCall) Do() (*CommunityPollVote, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.communitypollvote)
@@ -3284,6 +3567,9 @@ func (c *CommunityPollVotesInsertCall) Do() (*CommunityPollVote, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "communities/{communityId}/polls/{pollId}/votes")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -3367,12 +3653,23 @@ func (c *CommunityPollsGetCall) Hl(hl string) *CommunityPollsGetCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CommunityPollsGetCall) Fields(s ...googleapi.Field) *CommunityPollsGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *CommunityPollsGetCall) Do() (*CommunityPoll, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	if v, ok := c.opt_["hl"]; ok {
 		params.Set("hl", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "communities/{communityId}/polls/{pollId}")
 	urls += "?" + params.Encode()
@@ -3471,6 +3768,14 @@ func (c *CommunityPollsListCall) PageToken(pageToken string) *CommunityPollsList
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CommunityPollsListCall) Fields(s ...googleapi.Field) *CommunityPollsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *CommunityPollsListCall) Do() (*CommunityPollList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3483,6 +3788,9 @@ func (c *CommunityPollsListCall) Do() (*CommunityPollList, error) {
 	}
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "communities/{communityId}/polls")
 	urls += "?" + params.Encode()
@@ -3571,12 +3879,23 @@ func (c *CommunityRelatedListCall) Hl(hl string) *CommunityRelatedListCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CommunityRelatedListCall) Fields(s ...googleapi.Field) *CommunityRelatedListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *CommunityRelatedListCall) Do() (*CommunityList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	if v, ok := c.opt_["hl"]; ok {
 		params.Set("hl", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "communities/{communityId}/related")
 	urls += "?" + params.Encode()
@@ -3648,10 +3967,21 @@ func (r *CommunityTopicsService) Delete(communityId int64, topicId int64) *Commu
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CommunityTopicsDeleteCall) Fields(s ...googleapi.Field) *CommunityTopicsDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *CommunityTopicsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "communities/{communityId}/topics/{topicId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
@@ -3725,12 +4055,23 @@ func (c *CommunityTopicsGetCall) Hl(hl string) *CommunityTopicsGetCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CommunityTopicsGetCall) Fields(s ...googleapi.Field) *CommunityTopicsGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *CommunityTopicsGetCall) Do() (*CommunityTopic, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	if v, ok := c.opt_["hl"]; ok {
 		params.Set("hl", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "communities/{communityId}/topics/{topicId}")
 	urls += "?" + params.Encode()
@@ -3818,6 +4159,14 @@ func (c *CommunityTopicsInsertCall) IsShout(isShout bool) *CommunityTopicsInsert
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CommunityTopicsInsertCall) Fields(s ...googleapi.Field) *CommunityTopicsInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *CommunityTopicsInsertCall) Do() (*CommunityTopic, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.communitytopic)
@@ -3829,6 +4178,9 @@ func (c *CommunityTopicsInsertCall) Do() (*CommunityTopic, error) {
 	params.Set("alt", "json")
 	if v, ok := c.opt_["isShout"]; ok {
 		params.Set("isShout", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "communities/{communityId}/topics")
 	urls += "?" + params.Encode()
@@ -3922,6 +4274,14 @@ func (c *CommunityTopicsListCall) PageToken(pageToken string) *CommunityTopicsLi
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CommunityTopicsListCall) Fields(s ...googleapi.Field) *CommunityTopicsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *CommunityTopicsListCall) Do() (*CommunityTopicList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3934,6 +4294,9 @@ func (c *CommunityTopicsListCall) Do() (*CommunityTopicList, error) {
 	}
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "communities/{communityId}/topics")
 	urls += "?" + params.Encode()
@@ -4016,10 +4379,21 @@ func (r *CountersService) List(userId string) *CountersListCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CountersListCall) Fields(s ...googleapi.Field) *CountersListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *CountersListCall) Do() (*Counters, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "people/{userId}/counters")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -4082,6 +4456,14 @@ func (r *ScrapsService) Insert(activity *Activity) *ScrapsInsertCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ScrapsInsertCall) Fields(s ...googleapi.Field) *ScrapsInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *ScrapsInsertCall) Do() (*Activity, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.activity)
@@ -4091,6 +4473,9 @@ func (c *ScrapsInsertCall) Do() (*Activity, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "activities/scraps")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)

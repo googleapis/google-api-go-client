@@ -856,12 +856,23 @@ func (c *AdvertisersGetCall) AdvertiserId(advertiserId string) *AdvertisersGetCa
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersGetCall) Fields(s ...googleapi.Field) *AdvertisersGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *AdvertisersGetCall) Do() (*Advertiser, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	if v, ok := c.opt_["advertiserId"]; ok {
 		params.Set("advertiserId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{role}/{roleId}/advertiser")
 	urls += "?" + params.Encode()
@@ -1005,6 +1016,14 @@ func (c *AdvertisersListCall) RelationshipStatus(relationshipStatus string) *Adv
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersListCall) Fields(s ...googleapi.Field) *AdvertisersListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *AdvertisersListCall) Do() (*Advertisers, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1029,6 +1048,9 @@ func (c *AdvertisersListCall) Do() (*Advertisers, error) {
 	}
 	if v, ok := c.opt_["relationshipStatus"]; ok {
 		params.Set("relationshipStatus", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{role}/{roleId}/advertisers")
 	urls += "?" + params.Encode()
@@ -1176,6 +1198,14 @@ func (c *CcOffersListCall) Projection(projection string) *CcOffersListCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CcOffersListCall) Fields(s ...googleapi.Field) *CcOffersListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *CcOffersListCall) Do() (*CcOffers, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1185,6 +1215,9 @@ func (c *CcOffersListCall) Do() (*CcOffers, error) {
 	}
 	if v, ok := c.opt_["projection"]; ok {
 		params.Set("projection", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "publishers/{publisher}/ccOffers")
 	urls += "?" + params.Encode()
@@ -1396,6 +1429,14 @@ func (c *EventsListCall) Type(type_ string) *EventsListCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *EventsListCall) Fields(s ...googleapi.Field) *EventsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *EventsListCall) Do() (*Events, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1447,6 +1488,9 @@ func (c *EventsListCall) Do() (*Events, error) {
 	}
 	if v, ok := c.opt_["type"]; ok {
 		params.Set("type", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{role}/{roleId}/events")
 	urls += "?" + params.Encode()
@@ -1646,10 +1690,21 @@ func (r *LinksService) Get(role string, roleId string, linkId int64) *LinksGetCa
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LinksGetCall) Fields(s ...googleapi.Field) *LinksGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *LinksGetCall) Do() (*Link, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{role}/{roleId}/link/{linkId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -1737,6 +1792,14 @@ func (r *LinksService) Insert(role string, roleId string, link *Link) *LinksInse
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LinksInsertCall) Fields(s ...googleapi.Field) *LinksInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *LinksInsertCall) Do() (*Link, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.link)
@@ -1746,6 +1809,9 @@ func (c *LinksInsertCall) Do() (*Link, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{role}/{roleId}/link")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -1918,6 +1984,14 @@ func (c *LinksListCall) StartDateMin(startDateMin string) *LinksListCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LinksListCall) Fields(s ...googleapi.Field) *LinksListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *LinksListCall) Do() (*Links, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1960,6 +2034,9 @@ func (c *LinksListCall) Do() (*Links, error) {
 	}
 	if v, ok := c.opt_["startDateMin"]; ok {
 		params.Set("startDateMin", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{role}/{roleId}/links")
 	urls += "?" + params.Encode()
@@ -2157,12 +2234,23 @@ func (c *PublishersGetCall) PublisherId(publisherId string) *PublishersGetCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PublishersGetCall) Fields(s ...googleapi.Field) *PublishersGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *PublishersGetCall) Do() (*Publisher, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	if v, ok := c.opt_["publisherId"]; ok {
 		params.Set("publisherId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{role}/{roleId}/publisher")
 	urls += "?" + params.Encode()
@@ -2306,6 +2394,14 @@ func (c *PublishersListCall) RelationshipStatus(relationshipStatus string) *Publ
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PublishersListCall) Fields(s ...googleapi.Field) *PublishersListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *PublishersListCall) Do() (*Publishers, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2330,6 +2426,9 @@ func (c *PublishersListCall) Do() (*Publishers, error) {
 	}
 	if v, ok := c.opt_["relationshipStatus"]; ok {
 		params.Set("relationshipStatus", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{role}/{roleId}/publishers")
 	urls += "?" + params.Encode()
@@ -2547,6 +2646,14 @@ func (c *ReportsGetCall) Status(status string) *ReportsGetCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ReportsGetCall) Fields(s ...googleapi.Field) *ReportsGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *ReportsGetCall) Do() (*Report, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2583,6 +2690,9 @@ func (c *ReportsGetCall) Do() (*Report, error) {
 	}
 	if v, ok := c.opt_["status"]; ok {
 		params.Set("status", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{role}/{roleId}/report/{reportType}")
 	urls += "?" + params.Encode()

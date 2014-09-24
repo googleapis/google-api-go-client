@@ -353,13 +353,17 @@ type AcquisitionTime struct {
 
 type Asset struct {
 	// Bbox: A rectangular bounding box which contains all of the data in
-	// this asset. The numbers represent latitude and longitude in decimal
-	// degrees.
+	// this asset. The box is expressed as \"west, south, east, north\". The
+	// numbers represent latitude and longitude in decimal degrees.
 	Bbox []float64 `json:"bbox,omitempty"`
 
 	// CreationTime: The creation time of this asset. The value is an RFC
 	// 3339-formatted date-time value (for example, 1970-01-01T00:00:00Z).
 	CreationTime string `json:"creationTime,omitempty"`
+
+	// CreatorEmail: The email address of the creator of this asset. This is
+	// only returned on GET requests and not LIST requests.
+	CreatorEmail string `json:"creatorEmail,omitempty"`
 
 	// Description: The asset's description.
 	Description string `json:"description,omitempty"`
@@ -374,6 +378,10 @@ type Asset struct {
 	// an RFC 3339-formatted date-time value (for example,
 	// 1970-01-01T00:00:00Z).
 	LastModifiedTime string `json:"lastModifiedTime,omitempty"`
+
+	// LastModifierEmail: The email address of the last modifier of this
+	// asset. This is only returned on GET requests and not LIST requests.
+	LastModifierEmail string `json:"lastModifierEmail,omitempty"`
 
 	// Name: The asset's name.
 	Name string `json:"name,omitempty"`
@@ -391,8 +399,13 @@ type Asset struct {
 	// of the Maps Engine help center.
 	Tags []string `json:"tags,omitempty"`
 
-	// Type: The type of asset.
+	// Type: The type of asset. One of raster, rasterCollection, table, map,
+	// or layer.
 	Type string `json:"type,omitempty"`
+
+	// WritersCanEditPermissions: If true, WRITERs of the asset are able to
+	// edit the asset permissions.
+	WritersCanEditPermissions bool `json:"writersCanEditPermissions,omitempty"`
 }
 
 type AssetsListResponse struct {
@@ -477,27 +490,27 @@ type FeaturesBatchDeleteRequest struct {
 }
 
 type FeaturesBatchInsertRequest struct {
-	// AllowNormalization: If true, the server will normalize feature
-	// geometries. It is assumed that the South Pole is exterior to any
-	// polygons given. See here for a list of normalizations. If false, the
-	// all feature geometries must be given already normalized. The points
-	// in all LinearRings must be listed in counter-clockwise order, and
-	// LinearRings may not intersect.
-	AllowNormalization bool `json:"allowNormalization,omitempty"`
-
 	Features []*Feature `json:"features,omitempty"`
+
+	// NormalizeGeometries: If true, the server will normalize feature
+	// geometries. It is assumed that the South Pole is exterior to any
+	// polygons given. See here for a list of normalizations. If false, all
+	// feature geometries must be given already normalized. The points in
+	// all LinearRings must be listed in counter-clockwise order, and
+	// LinearRings may not intersect.
+	NormalizeGeometries bool `json:"normalizeGeometries,omitempty"`
 }
 
 type FeaturesBatchPatchRequest struct {
-	// AllowNormalization: If true, the server will normalize feature
-	// geometries. It is assumed that the South Pole is exterior to any
-	// polygons given. See here for a list of normalizations. If false, the
-	// all feature geometries must be given already normalized. The points
-	// in all LinearRings must be listed in counter-clockwise order, and
-	// LinearRings may not intersect.
-	AllowNormalization bool `json:"allowNormalization,omitempty"`
-
 	Features []*Feature `json:"features,omitempty"`
+
+	// NormalizeGeometries: If true, the server will normalize feature
+	// geometries. It is assumed that the South Pole is exterior to any
+	// polygons given. See here for a list of normalizations. If false, all
+	// feature geometries must be given already normalized. The points in
+	// all LinearRings must be listed in counter-clockwise order, and
+	// LinearRings may not intersect.
+	NormalizeGeometries bool `json:"normalizeGeometries,omitempty"`
 }
 
 type FeaturesListResponse struct {
@@ -731,22 +744,32 @@ type LabelStyle struct {
 
 type Layer struct {
 	// Bbox: A rectangular bounding box which contains all of the data in
-	// this Layer. The numbers represent latitude and longitude in decimal
-	// degrees.
+	// this Layer. The box is expressed as \"west, south, east, north\". The
+	// numbers represent latitude and longitude in decimal degrees.
 	Bbox []float64 `json:"bbox,omitempty"`
 
 	// CreationTime: The creation time of this layer. The value is an RFC
 	// 3339 formatted date-time value (e.g. 1970-01-01T00:00:00Z).
 	CreationTime string `json:"creationTime,omitempty"`
 
-	// DatasourceType: The type of the datasources used to build this Layer.
+	// CreatorEmail: The email address of the creator of this layer. This is
+	// only returned on GET requests and not LIST requests.
+	CreatorEmail string `json:"creatorEmail,omitempty"`
+
+	// DatasourceType: Deprecated: The type of the datasources used to build
+	// this Layer. Note: This has been replaced by layerType, but is still
+	// available for now to maintain backward compatibility.
 	DatasourceType string `json:"datasourceType,omitempty"`
 
-	// Datasources: An array of datasources used to build this Layer. If
+	// Datasources: An array of datasources used to build this layer. If
+	// layerType is "image", or layerType is not specified and
 	// datasourceType is "image", then each element in this array is a
-	// reference to an Image or RasterCollection. If datasourceType is
-	// "table" then each element in this array is a reference to a Vector
-	// Table.
+	// reference to an Image or RasterCollection. If layerType is "vector",
+	// or layerType is not specified and datasourceType is "table" then each
+	// element in this array is a reference to a Vector Table. Note:
+	// Datasources are returned in response to a get request but not a list
+	// request. After requesting a list of layers, you'll need to send a get
+	// request to retrieve the datasources for each layer.
 	Datasources []*Datasource `json:"datasources,omitempty"`
 
 	// Description: The description of this Layer, supplied by the author.
@@ -754,8 +777,14 @@ type Layer struct {
 
 	// DraftAccessList: Deprecated: The name of an access list of the Map
 	// Editor type. The user on whose behalf the request is being sent must
-	// be an editor on that access list. Read About access lists in the
-	// Google Maps Engine help center for more information.
+	// be an editor on that access list. Note: Google Maps Engine no longer
+	// uses access lists. Instead, each asset has its own list of
+	// permissions. For backward compatibility, the API still accepts access
+	// lists for projects that are already using access lists. If you
+	// created a GME account/project after July 14th, 2014, you will not be
+	// able to send API requests that include access lists. Note: This is an
+	// input field only. It is not returned in response to a list or get
+	// request.
 	DraftAccessList string `json:"draftAccessList,omitempty"`
 
 	// Etag: The ETag, used to refer to the current version of the asset.
@@ -767,6 +796,16 @@ type Layer struct {
 	// LastModifiedTime: The last modified time of this layer. The value is
 	// an RFC 3339 formatted date-time value (e.g. 1970-01-01T00:00:00Z).
 	LastModifiedTime string `json:"lastModifiedTime,omitempty"`
+
+	// LastModifierEmail: The email address of the last modifier of this
+	// layer. This is only returned on GET requests and not LIST requests.
+	LastModifierEmail string `json:"lastModifierEmail,omitempty"`
+
+	// LayerType: The type of the datasources used to build this Layer. This
+	// should be used instead of datasourceType. At least one of layerType
+	// and datasourceType and must be specified, but layerType takes
+	// precedence.
+	LayerType string `json:"layerType,omitempty"`
 
 	// Name: The name of this Layer, supplied by the author.
 	Name string `json:"name,omitempty"`
@@ -780,15 +819,30 @@ type Layer struct {
 	// PublishedAccessList: Deprecated: The access list to whom view
 	// permissions are granted. The value must be the name of a Maps Engine
 	// access list of the Map Viewer type, and the user must be a viewer on
-	// that list. Read About access lists in the Google Maps Engine help
-	// center for more information.
+	// that list. Note: Google Maps Engine no longer uses access lists.
+	// Instead, each asset has its own list of permissions. For backward
+	// compatibility, the API still accepts access lists for projects that
+	// are already using access lists. If you created a GME account/project
+	// after July 14th, 2014, you will not be able to send API requests that
+	// include access lists. Note: This is an input field only. It is not
+	// returned in response to a list or get request.
 	PublishedAccessList string `json:"publishedAccessList,omitempty"`
 
-	// Style: The Styling information for a vector layer.
+	// PublishingStatus: The publishing status of this layer.
+	PublishingStatus string `json:"publishingStatus,omitempty"`
+
+	// Style: The styling information for a vector layer. Note: Style
+	// information is returned in response to a get request but not a list
+	// request. After requesting a list of layers, you'll need to send a get
+	// request to retrieve the VectorStyles for each layer.
 	Style *VectorStyle `json:"style,omitempty"`
 
 	// Tags: Tags of this Layer.
 	Tags []string `json:"tags,omitempty"`
+
+	// WritersCanEditPermissions: If true, WRITERs of the asset are able to
+	// edit the asset permissions.
+	WritersCanEditPermissions bool `json:"writersCanEditPermissions,omitempty"`
 }
 
 type LayersListResponse struct {
@@ -830,8 +884,8 @@ type LineStyleStroke struct {
 
 type Map struct {
 	// Bbox: A rectangular bounding box which contains all of the data in
-	// this Map. The numbers represent latitude and longitude in decimal
-	// degrees.
+	// this Map. The box is expressed as \"west, south, east, north\". The
+	// numbers represent latitude and longitude in decimal degrees.
 	Bbox []float64 `json:"bbox,omitempty"`
 
 	// Contents: The contents of this Map.
@@ -840,6 +894,10 @@ type Map struct {
 	// CreationTime: The creation time of this map. The value is an RFC 3339
 	// formatted date-time value (e.g. 1970-01-01T00:00:00Z).
 	CreationTime string `json:"creationTime,omitempty"`
+
+	// CreatorEmail: The email address of the creator of this map. This is
+	// only returned on GET requests and not LIST requests.
+	CreatorEmail string `json:"creatorEmail,omitempty"`
 
 	// DefaultViewport: An array of four numbers (west, south, east, north)
 	// which defines the rectangular bounding box of the default viewport.
@@ -851,8 +909,14 @@ type Map struct {
 
 	// DraftAccessList: Deprecated: The name of an access list of the Map
 	// Editor type. The user on whose behalf the request is being sent must
-	// be an editor on that access list. Read About access lists in the
-	// Google Maps Engine help center for more information.
+	// be an editor on that access list. Note: Google Maps Engine no longer
+	// uses access lists. Instead, each asset has its own list of
+	// permissions. For backward compatibility, the API still accepts access
+	// lists for projects that are already using access lists. If you
+	// created a GME account/project after July 14th, 2014, you will not be
+	// able to send API requests that include access lists. Note: This is an
+	// input field only. It is not returned in response to a list or get
+	// request.
 	DraftAccessList string `json:"draftAccessList,omitempty"`
 
 	// Etag: The ETag, used to refer to the current version of the asset.
@@ -864,6 +928,10 @@ type Map struct {
 	// LastModifiedTime: The last modified time of this map. The value is an
 	// RFC 3339 formatted date-time value (e.g. 1970-01-01T00:00:00Z).
 	LastModifiedTime string `json:"lastModifiedTime,omitempty"`
+
+	// LastModifierEmail: The email address of the last modifier of this
+	// map. This is only returned on GET requests and not LIST requests.
+	LastModifierEmail string `json:"lastModifierEmail,omitempty"`
 
 	// Name: The name of this Map, supplied by the author.
 	Name string `json:"name,omitempty"`
@@ -878,8 +946,13 @@ type Map struct {
 	// PublishedAccessList: Deprecated: The access list to whom view
 	// permissions are granted. The value must be the name of a Maps Engine
 	// access list of the Map Viewer type, and the user must be a viewer on
-	// that list. Read About access lists in the Google Maps Engine help
-	// center for more information.
+	// that list. Note: Google Maps Engine no longer uses access lists.
+	// Instead, each asset has its own list of permissions. For backward
+	// compatibility, the API still accepts access lists for projects that
+	// are already using access lists. If you created a GME account/project
+	// after July 14th, 2014, you will not be able to send API requests that
+	// include access lists. This is an input field only. It is not returned
+	// in response to a list or get request.
 	PublishedAccessList string `json:"publishedAccessList,omitempty"`
 
 	// PublishingStatus: The publishing status of this map.
@@ -892,6 +965,10 @@ type Map struct {
 	// this Map. Currently may only contain "published". The
 	// publishingStatus field should be used instead.
 	Versions []string `json:"versions,omitempty"`
+
+	// WritersCanEditPermissions: If true, WRITERs of the asset are able to
+	// edit the asset permissions.
+	WritersCanEditPermissions bool `json:"writersCanEditPermissions,omitempty"`
 }
 
 type MapFolder struct {
@@ -1016,38 +1093,39 @@ type ParentsListResponse struct {
 }
 
 type Permission struct {
-	// Discoverable: True if asset is listed and is searchable by the
-	// public.
+	// Discoverable: Indicates whether a public asset is listed and can be
+	// found via a web search (value true), or is visible only to people who
+	// have a link to the asset (value false).
 	Discoverable bool `json:"discoverable,omitempty"`
 
-	// EmailAddress: The email address of the user this permission refers
-	// to.
-	EmailAddress string `json:"emailAddress,omitempty"`
-
-	// Id: The ID of the permission. When making a
-	// mapsengine.permissions.batchInsert request, the id or emailAddress
-	// fields must be specified. If both id and emailAddress are provided
-	// they must be consistent.
+	// Id: The unique identifier of the permission. This could be the email
+	// address of the user or group this permission refers to, or the string
+	// "anyone" for public permissions.
 	Id string `json:"id,omitempty"`
 
-	// Role: The primary role for this user.
+	// Role: The type of access granted to this user or group.
 	Role string `json:"role,omitempty"`
 
-	// Type: The account type. Allowed values are:
+	// Type: The account type.
 	Type string `json:"type,omitempty"`
 }
 
-type PermissionsBatchInsertRequest struct {
-	// Permissions: The permissions to be added.
+type PermissionsBatchDeleteRequest struct {
+	// Ids: An array of permission ids to be removed. This could be the
+	// email address of the user or group this permission refers to, or the
+	// string "anyone" for public permissions.
+	Ids []string `json:"ids,omitempty"`
+}
+
+type PermissionsBatchDeleteResponse struct {
+}
+
+type PermissionsBatchUpdateRequest struct {
+	// Permissions: The permissions to be inserted or updated.
 	Permissions []*Permission `json:"permissions,omitempty"`
 }
 
-type PermissionsBatchInsertResponse struct {
-}
-
-type PermissionsGetIdForEmailResponse struct {
-	// Id: The permission ID.
-	Id string `json:"id,omitempty"`
+type PermissionsBatchUpdateResponse struct {
 }
 
 type PermissionsListResponse struct {
@@ -1092,6 +1170,64 @@ type ProjectsListResponse struct {
 type PublishResponse struct {
 }
 
+type PublishedLayer struct {
+	// Description: The description of this Layer, supplied by the author.
+	Description string `json:"description,omitempty"`
+
+	// Id: A globally unique ID, used to refer to this Layer.
+	Id string `json:"id,omitempty"`
+
+	// LayerType: The type of the datasources used to build this Layer. This
+	// should be used instead of datasourceType. At least one of layerType
+	// and datasourceType and must be specified, but layerType takes
+	// precedence.
+	LayerType string `json:"layerType,omitempty"`
+
+	// Name: The name of this Layer, supplied by the author.
+	Name string `json:"name,omitempty"`
+
+	// ProjectId: The ID of the project that this Layer is in.
+	ProjectId string `json:"projectId,omitempty"`
+}
+
+type PublishedLayersListResponse struct {
+	// Layers: Resources returned.
+	Layers []*PublishedLayer `json:"layers,omitempty"`
+
+	// NextPageToken: Next page token.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+}
+
+type PublishedMap struct {
+	// Contents: The contents of this Map.
+	Contents []MapItem `json:"contents,omitempty"`
+
+	// DefaultViewport: An array of four numbers (west, south, east, north)
+	// which defines the rectangular bounding box of the default viewport.
+	// The numbers represent latitude and longitude in decimal degrees.
+	DefaultViewport []float64 `json:"defaultViewport,omitempty"`
+
+	// Description: The description of this Map, supplied by the author.
+	Description string `json:"description,omitempty"`
+
+	// Id: A globally unique ID, used to refer to this Map.
+	Id string `json:"id,omitempty"`
+
+	// Name: The name of this Map, supplied by the author.
+	Name string `json:"name,omitempty"`
+
+	// ProjectId: The ID of the project that this Map is in.
+	ProjectId string `json:"projectId,omitempty"`
+}
+
+type PublishedMapsListResponse struct {
+	// Maps: Resources returned.
+	Maps []*PublishedMap `json:"maps,omitempty"`
+
+	// NextPageToken: Next page token.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+}
+
 type Raster struct {
 	// AcquisitionTime: The acquisition time of this Raster.
 	AcquisitionTime *AcquisitionTime `json:"acquisitionTime,omitempty"`
@@ -1100,21 +1236,31 @@ type Raster struct {
 	Attribution string `json:"attribution,omitempty"`
 
 	// Bbox: A rectangular bounding box which contains all of the data in
-	// this Raster. The numbers represent latitudes and longitudes in
-	// decimal degrees.
+	// this Raster. The box is expressed as \"west, south, east, north\".
+	// The numbers represent latitudes and longitudes in decimal degrees.
 	Bbox []float64 `json:"bbox,omitempty"`
 
 	// CreationTime: The creation time of this raster. The value is an RFC
 	// 3339 formatted date-time value (e.g. 1970-01-01T00:00:00Z).
 	CreationTime string `json:"creationTime,omitempty"`
 
+	// CreatorEmail: The email address of the creator of this raster. This
+	// is only returned on GET requests and not LIST requests.
+	CreatorEmail string `json:"creatorEmail,omitempty"`
+
 	// Description: The description of this Raster, supplied by the author.
 	Description string `json:"description,omitempty"`
 
 	// DraftAccessList: Deprecated: The name of an access list of the Map
 	// Editor type. The user on whose behalf the request is being sent must
-	// be an editor on that access list. Read About access lists in the
-	// Google Maps Engine help center for more information.
+	// be an editor on that access list. Note: Google Maps Engine no longer
+	// uses access lists. Instead, each asset has its own list of
+	// permissions. For backward compatibility, the API still accepts access
+	// lists for projects that are already using access lists. If you
+	// created a GME account/project after July 14th, 2014, you will not be
+	// able to send API requests that include access lists. Note: This is an
+	// input field only. It is not returned in response to a list or get
+	// request.
 	DraftAccessList string `json:"draftAccessList,omitempty"`
 
 	// Etag: The ETag, used to refer to the current version of the asset.
@@ -1129,6 +1275,10 @@ type Raster struct {
 	// LastModifiedTime: The last modified time of this raster. The value is
 	// an RFC 3339 formatted date-time value (e.g. 1970-01-01T00:00:00Z).
 	LastModifiedTime string `json:"lastModifiedTime,omitempty"`
+
+	// LastModifierEmail: The email address of the last modifier of this
+	// raster. This is only returned on GET requests and not LIST requests.
+	LastModifierEmail string `json:"lastModifierEmail,omitempty"`
 
 	// MaskType: The mask processing type of this Raster.
 	MaskType string `json:"maskType,omitempty"`
@@ -1147,21 +1297,34 @@ type Raster struct {
 
 	// Tags: Tags of this Raster.
 	Tags []string `json:"tags,omitempty"`
+
+	// WritersCanEditPermissions: If true, WRITERs of the asset are able to
+	// edit the asset permissions.
+	WritersCanEditPermissions bool `json:"writersCanEditPermissions,omitempty"`
 }
 
 type RasterCollection struct {
 	// Attribution: The name of the attribution to be used for this
-	// RasterCollection.
+	// RasterCollection. Note: Attribution is returned in response to a get
+	// request but not a list request. After requesting a list of raster
+	// collections, you'll need to send a get request to retrieve the
+	// attribution for each raster collection.
 	Attribution string `json:"attribution,omitempty"`
 
 	// Bbox: A rectangular bounding box which contains all of the data in
-	// this RasterCollection. The numbers represent latitude and longitude
-	// in decimal degrees.
+	// this RasterCollection. The box is expressed as \"west, south, east,
+	// north\". The numbers represent latitude and longitude in decimal
+	// degrees.
 	Bbox []float64 `json:"bbox,omitempty"`
 
 	// CreationTime: The creation time of this RasterCollection. The value
 	// is an RFC 3339 formatted date-time value (e.g. 1970-01-01T00:00:00Z).
 	CreationTime string `json:"creationTime,omitempty"`
+
+	// CreatorEmail: The email address of the creator of this raster
+	// collection. This is only returned on GET requests and not LIST
+	// requests.
+	CreatorEmail string `json:"creatorEmail,omitempty"`
 
 	// Description: The description of this RasterCollection, supplied by
 	// the author.
@@ -1169,8 +1332,14 @@ type RasterCollection struct {
 
 	// DraftAccessList: Deprecated: The name of an access list of the Map
 	// Editor type. The user on whose behalf the request is being sent must
-	// be an editor on that access list. Read About access lists in the
-	// Google Maps Engine help center for more information.
+	// be an editor on that access list. Note: Google Maps Engine no longer
+	// uses access lists. Instead, each asset has its own list of
+	// permissions. For backward compatibility, the API still accepts access
+	// lists for projects that are already using access lists. If you
+	// created a GME account/project after July 14th, 2014, you will not be
+	// able to send API requests that include access lists. Note: This is an
+	// input field only. It is not returned in response to a list or get
+	// request.
 	DraftAccessList string `json:"draftAccessList,omitempty"`
 
 	// Etag: The ETag, used to refer to the current version of the asset.
@@ -1183,6 +1352,11 @@ type RasterCollection struct {
 	// The value is an RFC 3339 formatted date-time value (e.g.
 	// 1970-01-01T00:00:00Z).
 	LastModifiedTime string `json:"lastModifiedTime,omitempty"`
+
+	// LastModifierEmail: The email address of the last modifier of this
+	// raster collection. This is only returned on GET requests and not LIST
+	// requests.
+	LastModifierEmail string `json:"lastModifierEmail,omitempty"`
 
 	// Mosaic: True if this RasterCollection is a mosaic.
 	Mosaic bool `json:"mosaic,omitempty"`
@@ -1202,6 +1376,10 @@ type RasterCollection struct {
 
 	// Tags: Tags of this RasterCollection.
 	Tags []string `json:"tags,omitempty"`
+
+	// WritersCanEditPermissions: If true, WRITERs of the asset are able to
+	// edit the asset permissions.
+	WritersCanEditPermissions bool `json:"writersCanEditPermissions,omitempty"`
 }
 
 type RasterCollectionsListResponse struct {
@@ -1214,8 +1392,8 @@ type RasterCollectionsListResponse struct {
 
 type RasterCollectionsRaster struct {
 	// Bbox: A rectangular bounding box which contains all of the data in
-	// this Raster. The numbers represent latitudes and longitudes in
-	// decimal degrees.
+	// this Raster. The box is expressed as \"west, south, east, north\".
+	// The numbers represent latitudes and longitudes in decimal degrees.
 	Bbox []float64 `json:"bbox,omitempty"`
 
 	// CreationTime: The creation time of this raster. The value is an RFC
@@ -1309,9 +1487,9 @@ type ScalingFunction struct {
 }
 
 type Schema struct {
-	// Columns: An array of column objects. The first object in the array
-	// must be named geometry and be of type points, lineStrings, polygons,
-	// or mixedGeometry.
+	// Columns: An array of TableColumn objects. The first object in the
+	// array must be named geometry and be of type points, lineStrings,
+	// polygons, or mixedGeometry.
 	Columns []*TableColumn `json:"columns,omitempty"`
 
 	// PrimaryGeometry: The name of the column that contains a feature's
@@ -1335,21 +1513,31 @@ type SizeRange struct {
 
 type Table struct {
 	// Bbox: A rectangular bounding box which contains all of the data in
-	// this table. The numbers represent latitude and longitude in decimal
-	// degrees.
+	// this Table. The box is expressed as \"west, south, east, north\". The
+	// numbers represent latitude and longitude in decimal degrees.
 	Bbox []float64 `json:"bbox,omitempty"`
 
 	// CreationTime: The creation time of this table. The value is an RFC
 	// 3339 formatted date-time value (e.g. 1970-01-01T00:00:00Z).
 	CreationTime string `json:"creationTime,omitempty"`
 
+	// CreatorEmail: The email address of the creator of this table. This is
+	// only returned on GET requests and not LIST requests.
+	CreatorEmail string `json:"creatorEmail,omitempty"`
+
 	// Description: The description of this table, supplied by the author.
 	Description string `json:"description,omitempty"`
 
 	// DraftAccessList: Deprecated: The name of an access list of the Map
 	// Editor type. The user on whose behalf the request is being sent must
-	// be an editor on that access list. Read About access lists in the
-	// Google Maps Engine help center for more information.
+	// be an editor on that access list. Note: Google Maps Engine no longer
+	// uses access lists. Instead, each asset has its own list of
+	// permissions. For backward compatibility, the API still accepts access
+	// lists for projects that are already using access lists. If you
+	// created a GME account/project after July 14th, 2014, you will not be
+	// able to send API requests that include access lists. Note: This is an
+	// input field only. It is not returned in response to a list or get
+	// request.
 	DraftAccessList string `json:"draftAccessList,omitempty"`
 
 	// Etag: The ETag, used to refer to the current version of the asset.
@@ -1365,6 +1553,10 @@ type Table struct {
 	// an RFC 3339 formatted date-time value (e.g. 1970-01-01T00:00:00Z).
 	LastModifiedTime string `json:"lastModifiedTime,omitempty"`
 
+	// LastModifierEmail: The email address of the last modifier of this
+	// table. This is only returned on GET requests and not LIST requests.
+	LastModifierEmail string `json:"lastModifierEmail,omitempty"`
+
 	// Name: The name of this table, supplied by the author.
 	Name string `json:"name,omitempty"`
 
@@ -1377,11 +1569,19 @@ type Table struct {
 	// PublishedAccessList: Deprecated: The access list to whom view
 	// permissions are granted. The value must be the name of a Maps Engine
 	// access list of the Map Viewer type, and the user must be a viewer on
-	// that list. Read About access lists in the Google Maps Engine help
-	// center for more information.
+	// that list. Note: Google Maps Engine no longer uses access lists.
+	// Instead, each asset has its own list of permissions. For backward
+	// compatibility, the API still accepts access lists for projects that
+	// are already using access lists. If you created a GME account/project
+	// after July 14th, 2014, you will not be able to send API requests that
+	// include access lists. Note: This is an input field only. It is not
+	// returned in response to a list or get request.
 	PublishedAccessList string `json:"publishedAccessList,omitempty"`
 
-	// Schema: The schema for this table.
+	// Schema: The schema for this table. Note: The schema is returned in
+	// response to a get request but not a list request. After requesting a
+	// list of tables, you'll need to send a get request to retrieve the
+	// schema for each table.
 	Schema *Schema `json:"schema,omitempty"`
 
 	// SourceEncoding: Encoding of the uploaded files. Valid values include
@@ -1392,6 +1592,10 @@ type Table struct {
 	// More information about tags can be found in the Tagging data article
 	// of the Maps Engine help center.
 	Tags []string `json:"tags,omitempty"`
+
+	// WritersCanEditPermissions: If true, WRITERs of the asset are able to
+	// edit the asset permissions.
+	WritersCanEditPermissions bool `json:"writersCanEditPermissions,omitempty"`
 }
 
 type TableColumn struct {
@@ -1454,10 +1658,21 @@ func (r *AssetsService) Get(id string) *AssetsGetCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AssetsGetCall) Fields(s ...googleapi.Field) *AssetsGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *AssetsGetCall) Do() (*Asset, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "assets/{id}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -1601,6 +1816,13 @@ func (c *AssetsListCall) Role(role string) *AssetsListCall {
 	return c
 }
 
+// Search sets the optional parameter "search": An unstructured search
+// string used to filter the set of results based on asset metadata.
+func (c *AssetsListCall) Search(search string) *AssetsListCall {
+	c.opt_["search"] = search
+	return c
+}
+
 // Tags sets the optional parameter "tags": A comma separated list of
 // tags. Returned assets will contain all the tags from the list.
 func (c *AssetsListCall) Tags(tags string) *AssetsListCall {
@@ -1608,10 +1830,20 @@ func (c *AssetsListCall) Tags(tags string) *AssetsListCall {
 	return c
 }
 
-// Type sets the optional parameter "type": An asset type restriction.
-// If set, only resources of this type will be returned.
+// Type sets the optional parameter "type": A comma separated list of
+// asset types. Returned assets will have one of the types from the
+// provided list. Supported values are 'map', 'layer',
+// 'rasterCollection' and 'table'.
 func (c *AssetsListCall) Type(type_ string) *AssetsListCall {
 	c.opt_["type"] = type_
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AssetsListCall) Fields(s ...googleapi.Field) *AssetsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -1649,11 +1881,17 @@ func (c *AssetsListCall) Do() (*AssetsListResponse, error) {
 	if v, ok := c.opt_["role"]; ok {
 		params.Set("role", fmt.Sprintf("%v", v))
 	}
+	if v, ok := c.opt_["search"]; ok {
+		params.Set("search", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["tags"]; ok {
 		params.Set("tags", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["type"]; ok {
 		params.Set("type", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "assets")
 	urls += "?" + params.Encode()
@@ -1743,25 +1981,18 @@ func (c *AssetsListCall) Do() (*AssetsListResponse, error) {
 	//       "location": "query",
 	//       "type": "string"
 	//     },
+	//     "search": {
+	//       "description": "An unstructured search string used to filter the set of results based on asset metadata.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "tags": {
 	//       "description": "A comma separated list of tags. Returned assets will contain all the tags from the list.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "type": {
-	//       "description": "An asset type restriction. If set, only resources of this type will be returned.",
-	//       "enum": [
-	//         "layer",
-	//         "map",
-	//         "rasterCollection",
-	//         "table"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Return layers.",
-	//         "Return maps.",
-	//         "Return raster collections.",
-	//         "Return tables."
-	//       ],
+	//       "description": "A comma separated list of asset types. Returned assets will have one of the types from the provided list. Supported values are 'map', 'layer', 'rasterCollection' and 'table'.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -1810,6 +2041,14 @@ func (c *AssetsParentsListCall) PageToken(pageToken string) *AssetsParentsListCa
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AssetsParentsListCall) Fields(s ...googleapi.Field) *AssetsParentsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *AssetsParentsListCall) Do() (*ParentsListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1819,6 +2058,9 @@ func (c *AssetsParentsListCall) Do() (*ParentsListResponse, error) {
 	}
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "assets/{id}/parents")
 	urls += "?" + params.Encode()
@@ -1878,72 +2120,6 @@ func (c *AssetsParentsListCall) Do() (*ParentsListResponse, error) {
 
 }
 
-// method id "mapsengine.assets.permissions.getIdForEmail":
-
-type AssetsPermissionsGetIdForEmailCall struct {
-	s     *Service
-	email string
-	opt_  map[string]interface{}
-}
-
-// GetIdForEmail: Return permission ID given an email address.
-func (r *AssetsPermissionsService) GetIdForEmail(email string) *AssetsPermissionsGetIdForEmailCall {
-	c := &AssetsPermissionsGetIdForEmailCall{s: r.s, opt_: make(map[string]interface{})}
-	c.email = email
-	return c
-}
-
-func (c *AssetsPermissionsGetIdForEmailCall) Do() (*PermissionsGetIdForEmailResponse, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "permissionids/{email}")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	googleapi.Expand(req.URL, map[string]string{
-		"email": c.email,
-	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	var ret *PermissionsGetIdForEmailResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Return permission ID given an email address.",
-	//   "httpMethod": "GET",
-	//   "id": "mapsengine.assets.permissions.getIdForEmail",
-	//   "parameterOrder": [
-	//     "email"
-	//   ],
-	//   "parameters": {
-	//     "email": {
-	//       "description": "The email address to be translated into permission ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "permissionids/{email}",
-	//   "response": {
-	//     "$ref": "PermissionsGetIdForEmailResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/mapsengine",
-	//     "https://www.googleapis.com/auth/mapsengine.readonly"
-	//   ]
-	// }
-
-}
-
 // method id "mapsengine.assets.permissions.list":
 
 type AssetsPermissionsListCall struct {
@@ -1959,10 +2135,21 @@ func (r *AssetsPermissionsService) List(id string) *AssetsPermissionsListCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AssetsPermissionsListCall) Fields(s ...googleapi.Field) *AssetsPermissionsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *AssetsPermissionsListCall) Do() (*PermissionsListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "assets/{id}/permissions")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -2025,10 +2212,21 @@ func (r *LayersService) CancelProcessing(id string) *LayersCancelProcessingCall 
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LayersCancelProcessingCall) Fields(s ...googleapi.Field) *LayersCancelProcessingCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *LayersCancelProcessingCall) Do() (*ProcessResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "layers/{id}/cancelProcessing")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -2097,6 +2295,14 @@ func (c *LayersCreateCall) Process(process bool) *LayersCreateCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LayersCreateCall) Fields(s ...googleapi.Field) *LayersCreateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *LayersCreateCall) Do() (*Layer, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.layer)
@@ -2108,6 +2314,9 @@ func (c *LayersCreateCall) Do() (*Layer, error) {
 	params.Set("alt", "json")
 	if v, ok := c.opt_["process"]; ok {
 		params.Set("process", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "layers")
 	urls += "?" + params.Encode()
@@ -2168,10 +2377,21 @@ func (r *LayersService) Delete(id string) *LayersDeleteCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LayersDeleteCall) Fields(s ...googleapi.Field) *LayersDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *LayersDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "layers/{id}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
@@ -2226,9 +2446,21 @@ func (r *LayersService) Get(id string) *LayersGetCall {
 	return c
 }
 
-// Version sets the optional parameter "version":
+// Version sets the optional parameter "version": Deprecated: The
+// version parameter indicates which version of the layer should be
+// returned. When version is set to published, the published version of
+// the layer will be returned. Please use the layers.getPublished
+// endpoint instead.
 func (c *LayersGetCall) Version(version string) *LayersGetCall {
 	c.opt_["version"] = version
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LayersGetCall) Fields(s ...googleapi.Field) *LayersGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -2238,6 +2470,9 @@ func (c *LayersGetCall) Do() (*Layer, error) {
 	params.Set("alt", "json")
 	if v, ok := c.opt_["version"]; ok {
 		params.Set("version", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "layers/{id}")
 	urls += "?" + params.Encode()
@@ -2274,6 +2509,7 @@ func (c *LayersGetCall) Do() (*Layer, error) {
 	//       "type": "string"
 	//     },
 	//     "version": {
+	//       "description": "Deprecated: The version parameter indicates which version of the layer should be returned. When version is set to published, the published version of the layer will be returned. Please use the layers.getPublished endpoint instead.",
 	//       "enum": [
 	//         "draft",
 	//         "published"
@@ -2289,6 +2525,83 @@ func (c *LayersGetCall) Do() (*Layer, error) {
 	//   "path": "layers/{id}",
 	//   "response": {
 	//     "$ref": "Layer"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/mapsengine",
+	//     "https://www.googleapis.com/auth/mapsengine.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "mapsengine.layers.getPublished":
+
+type LayersGetPublishedCall struct {
+	s    *Service
+	id   string
+	opt_ map[string]interface{}
+}
+
+// GetPublished: Return the published metadata for a particular layer.
+func (r *LayersService) GetPublished(id string) *LayersGetPublishedCall {
+	c := &LayersGetPublishedCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LayersGetPublishedCall) Fields(s ...googleapi.Field) *LayersGetPublishedCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *LayersGetPublishedCall) Do() (*PublishedLayer, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "layers/{id}/published")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *PublishedLayer
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Return the published metadata for a particular layer.",
+	//   "httpMethod": "GET",
+	//   "id": "mapsengine.layers.getPublished",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The ID of the layer.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "layers/{id}/published",
+	//   "response": {
+	//     "$ref": "PublishedLayer"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/mapsengine",
@@ -2376,6 +2689,12 @@ func (c *LayersListCall) PageToken(pageToken string) *LayersListCall {
 	return c
 }
 
+// ProcessingStatus sets the optional parameter "processingStatus":
+func (c *LayersListCall) ProcessingStatus(processingStatus string) *LayersListCall {
+	c.opt_["processingStatus"] = processingStatus
+	return c
+}
+
 // ProjectId sets the optional parameter "projectId": The ID of a Maps
 // Engine project, used to filter the response. To list all available
 // projects with their IDs, send a Projects: list request. You can also
@@ -2394,10 +2713,25 @@ func (c *LayersListCall) Role(role string) *LayersListCall {
 	return c
 }
 
+// Search sets the optional parameter "search": An unstructured search
+// string used to filter the set of results based on asset metadata.
+func (c *LayersListCall) Search(search string) *LayersListCall {
+	c.opt_["search"] = search
+	return c
+}
+
 // Tags sets the optional parameter "tags": A comma separated list of
 // tags. Returned assets will contain all the tags from the list.
 func (c *LayersListCall) Tags(tags string) *LayersListCall {
 	c.opt_["tags"] = tags
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LayersListCall) Fields(s ...googleapi.Field) *LayersListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -2429,14 +2763,23 @@ func (c *LayersListCall) Do() (*LayersListResponse, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
+	if v, ok := c.opt_["processingStatus"]; ok {
+		params.Set("processingStatus", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["projectId"]; ok {
 		params.Set("projectId", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["role"]; ok {
 		params.Set("role", fmt.Sprintf("%v", v))
 	}
+	if v, ok := c.opt_["search"]; ok {
+		params.Set("search", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["tags"]; ok {
 		params.Set("tags", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "layers")
 	urls += "?" + params.Encode()
@@ -2506,6 +2849,24 @@ func (c *LayersListCall) Do() (*LayersListResponse, error) {
 	//       "location": "query",
 	//       "type": "string"
 	//     },
+	//     "processingStatus": {
+	//       "enum": [
+	//         "complete",
+	//         "failed",
+	//         "notReady",
+	//         "processing",
+	//         "ready"
+	//       ],
+	//       "enumDescriptions": [
+	//         "The layer has completed processing.",
+	//         "The layer has failed processing.",
+	//         "The layer is not ready for processing.",
+	//         "The layer is processing.",
+	//         "The layer is ready for processing."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "projectId": {
 	//       "description": "The ID of a Maps Engine project, used to filter the response. To list all available projects with their IDs, send a Projects: list request. You can also find your project ID as the value of the DashboardPlace:cid URL parameter when signed in to mapsengine.google.com.",
 	//       "location": "query",
@@ -2526,6 +2887,11 @@ func (c *LayersListCall) Do() (*LayersListResponse, error) {
 	//       "location": "query",
 	//       "type": "string"
 	//     },
+	//     "search": {
+	//       "description": "An unstructured search string used to filter the set of results based on asset metadata.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "tags": {
 	//       "description": "A comma separated list of tags. Returned assets will contain all the tags from the list.",
 	//       "location": "query",
@@ -2535,6 +2901,123 @@ func (c *LayersListCall) Do() (*LayersListResponse, error) {
 	//   "path": "layers",
 	//   "response": {
 	//     "$ref": "LayersListResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/mapsengine",
+	//     "https://www.googleapis.com/auth/mapsengine.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "mapsengine.layers.listPublished":
+
+type LayersListPublishedCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// ListPublished: Return all published layers readable by the current
+// user.
+func (r *LayersService) ListPublished() *LayersListPublishedCall {
+	c := &LayersListPublishedCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of items to include in a single response page. The maximum
+// supported value is 100.
+func (c *LayersListPublishedCall) MaxResults(maxResults int64) *LayersListPublishedCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The continuation
+// token, used to page through large result sets. To get the next page
+// of results, set this parameter to the value of nextPageToken from the
+// previous response.
+func (c *LayersListPublishedCall) PageToken(pageToken string) *LayersListPublishedCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+// ProjectId sets the optional parameter "projectId": The ID of a Maps
+// Engine project, used to filter the response. To list all available
+// projects with their IDs, send a Projects: list request. You can also
+// find your project ID as the value of the DashboardPlace:cid URL
+// parameter when signed in to mapsengine.google.com.
+func (c *LayersListPublishedCall) ProjectId(projectId string) *LayersListPublishedCall {
+	c.opt_["projectId"] = projectId
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LayersListPublishedCall) Fields(s ...googleapi.Field) *LayersListPublishedCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *LayersListPublishedCall) Do() (*PublishedLayersListResponse, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["projectId"]; ok {
+		params.Set("projectId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "layers/published")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *PublishedLayersListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Return all published layers readable by the current user.",
+	//   "httpMethod": "GET",
+	//   "id": "mapsengine.layers.listPublished",
+	//   "parameters": {
+	//     "maxResults": {
+	//       "description": "The maximum number of items to include in a single response page. The maximum supported value is 100.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The continuation token, used to page through large result sets. To get the next page of results, set this parameter to the value of nextPageToken from the previous response.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "projectId": {
+	//       "description": "The ID of a Maps Engine project, used to filter the response. To list all available projects with their IDs, send a Projects: list request. You can also find your project ID as the value of the DashboardPlace:cid URL parameter when signed in to mapsengine.google.com.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "layers/published",
+	//   "response": {
+	//     "$ref": "PublishedLayersListResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/mapsengine",
@@ -2561,6 +3044,14 @@ func (r *LayersService) Patch(id string, layer *Layer) *LayersPatchCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LayersPatchCall) Fields(s ...googleapi.Field) *LayersPatchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *LayersPatchCall) Do() error {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.layer)
@@ -2570,6 +3061,9 @@ func (c *LayersPatchCall) Do() error {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "layers/{id}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
@@ -2628,10 +3122,21 @@ func (r *LayersService) Process(id string) *LayersProcessCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LayersProcessCall) Fields(s ...googleapi.Field) *LayersProcessCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *LayersProcessCall) Do() (*ProcessResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "layers/{id}/process")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -2693,10 +3198,33 @@ func (r *LayersService) Publish(id string) *LayersPublishCall {
 	return c
 }
 
+// Force sets the optional parameter "force": If set to true, the API
+// will allow publication of the layer even if it's out of date. If not
+// true, you'll need to reprocess any out-of-date layer before
+// publishing.
+func (c *LayersPublishCall) Force(force bool) *LayersPublishCall {
+	c.opt_["force"] = force
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LayersPublishCall) Fields(s ...googleapi.Field) *LayersPublishCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *LayersPublishCall) Do() (*PublishResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["force"]; ok {
+		params.Set("force", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "layers/{id}/publish")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -2725,6 +3253,11 @@ func (c *LayersPublishCall) Do() (*PublishResponse, error) {
 	//     "id"
 	//   ],
 	//   "parameters": {
+	//     "force": {
+	//       "description": "If set to true, the API will allow publication of the layer even if it's out of date. If not true, you'll need to reprocess any out-of-date layer before publishing.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "id": {
 	//       "description": "The ID of the layer.",
 	//       "location": "path",
@@ -2758,10 +3291,21 @@ func (r *LayersService) Unpublish(id string) *LayersUnpublishCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LayersUnpublishCall) Fields(s ...googleapi.Field) *LayersUnpublishCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *LayersUnpublishCall) Do() (*PublishResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "layers/{id}/unpublish")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -2840,6 +3384,14 @@ func (c *LayersParentsListCall) PageToken(pageToken string) *LayersParentsListCa
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LayersParentsListCall) Fields(s ...googleapi.Field) *LayersParentsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *LayersParentsListCall) Do() (*ParentsListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2849,6 +3401,9 @@ func (c *LayersParentsListCall) Do() (*ParentsListResponse, error) {
 	}
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "layers/{id}/parents")
 	urls += "?" + params.Encode()
@@ -2908,37 +3463,45 @@ func (c *LayersParentsListCall) Do() (*ParentsListResponse, error) {
 
 }
 
-// method id "mapsengine.layers.permissions.batchInsert":
+// method id "mapsengine.layers.permissions.batchDelete":
 
-type LayersPermissionsBatchInsertCall struct {
+type LayersPermissionsBatchDeleteCall struct {
 	s                             *Service
 	id                            string
-	permissionsbatchinsertrequest *PermissionsBatchInsertRequest
+	permissionsbatchdeleterequest *PermissionsBatchDeleteRequest
 	opt_                          map[string]interface{}
 }
 
-// BatchInsert: Add permission entries to an already existing asset.
-//
-// An
-// asset can hold up to 20 different permission entries. Each
-// batchInsert request is atomic.
-func (r *LayersPermissionsService) BatchInsert(id string, permissionsbatchinsertrequest *PermissionsBatchInsertRequest) *LayersPermissionsBatchInsertCall {
-	c := &LayersPermissionsBatchInsertCall{s: r.s, opt_: make(map[string]interface{})}
+// BatchDelete: Remove permission entries from an already existing
+// asset.
+func (r *LayersPermissionsService) BatchDelete(id string, permissionsbatchdeleterequest *PermissionsBatchDeleteRequest) *LayersPermissionsBatchDeleteCall {
+	c := &LayersPermissionsBatchDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.id = id
-	c.permissionsbatchinsertrequest = permissionsbatchinsertrequest
+	c.permissionsbatchdeleterequest = permissionsbatchdeleterequest
 	return c
 }
 
-func (c *LayersPermissionsBatchInsertCall) Do() (*PermissionsBatchInsertResponse, error) {
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LayersPermissionsBatchDeleteCall) Fields(s ...googleapi.Field) *LayersPermissionsBatchDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *LayersPermissionsBatchDeleteCall) Do() (*PermissionsBatchDeleteResponse, error) {
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.permissionsbatchinsertrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.permissionsbatchdeleterequest)
 	if err != nil {
 		return nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "layers/{id}/permissions/batchInsert")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "layers/{id}/permissions/batchDelete")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
@@ -2954,15 +3517,106 @@ func (c *LayersPermissionsBatchInsertCall) Do() (*PermissionsBatchInsertResponse
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *PermissionsBatchInsertResponse
+	var ret *PermissionsBatchDeleteResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Add permission entries to an already existing asset.\n\nAn asset can hold up to 20 different permission entries. Each batchInsert request is atomic.",
+	//   "description": "Remove permission entries from an already existing asset.",
 	//   "httpMethod": "POST",
-	//   "id": "mapsengine.layers.permissions.batchInsert",
+	//   "id": "mapsengine.layers.permissions.batchDelete",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The ID of the asset from which permissions will be removed.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "layers/{id}/permissions/batchDelete",
+	//   "request": {
+	//     "$ref": "PermissionsBatchDeleteRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "PermissionsBatchDeleteResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/mapsengine"
+	//   ]
+	// }
+
+}
+
+// method id "mapsengine.layers.permissions.batchUpdate":
+
+type LayersPermissionsBatchUpdateCall struct {
+	s                             *Service
+	id                            string
+	permissionsbatchupdaterequest *PermissionsBatchUpdateRequest
+	opt_                          map[string]interface{}
+}
+
+// BatchUpdate: Add or update permission entries to an already existing
+// asset.
+//
+// An asset can hold up to 20 different permission entries. Each
+// batchInsert request is atomic.
+func (r *LayersPermissionsService) BatchUpdate(id string, permissionsbatchupdaterequest *PermissionsBatchUpdateRequest) *LayersPermissionsBatchUpdateCall {
+	c := &LayersPermissionsBatchUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	c.permissionsbatchupdaterequest = permissionsbatchupdaterequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LayersPermissionsBatchUpdateCall) Fields(s ...googleapi.Field) *LayersPermissionsBatchUpdateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *LayersPermissionsBatchUpdateCall) Do() (*PermissionsBatchUpdateResponse, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.permissionsbatchupdaterequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "layers/{id}/permissions/batchUpdate")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *PermissionsBatchUpdateResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Add or update permission entries to an already existing asset.\n\nAn asset can hold up to 20 different permission entries. Each batchInsert request is atomic.",
+	//   "httpMethod": "POST",
+	//   "id": "mapsengine.layers.permissions.batchUpdate",
 	//   "parameterOrder": [
 	//     "id"
 	//   ],
@@ -2974,12 +3628,12 @@ func (c *LayersPermissionsBatchInsertCall) Do() (*PermissionsBatchInsertResponse
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "layers/{id}/permissions/batchInsert",
+	//   "path": "layers/{id}/permissions/batchUpdate",
 	//   "request": {
-	//     "$ref": "PermissionsBatchInsertRequest"
+	//     "$ref": "PermissionsBatchUpdateRequest"
 	//   },
 	//   "response": {
-	//     "$ref": "PermissionsBatchInsertResponse"
+	//     "$ref": "PermissionsBatchUpdateResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/mapsengine"
@@ -3003,10 +3657,21 @@ func (r *LayersPermissionsService) List(id string) *LayersPermissionsListCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LayersPermissionsListCall) Fields(s ...googleapi.Field) *LayersPermissionsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *LayersPermissionsListCall) Do() (*PermissionsListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "layers/{id}/permissions")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -3069,6 +3734,14 @@ func (r *MapsService) Create(map_ *Map) *MapsCreateCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MapsCreateCall) Fields(s ...googleapi.Field) *MapsCreateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *MapsCreateCall) Do() (*Map, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.map_)
@@ -3078,6 +3751,9 @@ func (c *MapsCreateCall) Do() (*Map, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "maps")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -3130,10 +3806,21 @@ func (r *MapsService) Delete(id string) *MapsDeleteCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MapsDeleteCall) Fields(s ...googleapi.Field) *MapsDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *MapsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "maps/{id}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
@@ -3188,9 +3875,21 @@ func (r *MapsService) Get(id string) *MapsGetCall {
 	return c
 }
 
-// Version sets the optional parameter "version":
+// Version sets the optional parameter "version": Deprecated: The
+// version parameter indicates which version of the map should be
+// returned. When version is set to published, the published version of
+// the map will be returned. Please use the maps.getPublished endpoint
+// instead.
 func (c *MapsGetCall) Version(version string) *MapsGetCall {
 	c.opt_["version"] = version
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MapsGetCall) Fields(s ...googleapi.Field) *MapsGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -3200,6 +3899,9 @@ func (c *MapsGetCall) Do() (*Map, error) {
 	params.Set("alt", "json")
 	if v, ok := c.opt_["version"]; ok {
 		params.Set("version", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "maps/{id}")
 	urls += "?" + params.Encode()
@@ -3236,6 +3938,7 @@ func (c *MapsGetCall) Do() (*Map, error) {
 	//       "type": "string"
 	//     },
 	//     "version": {
+	//       "description": "Deprecated: The version parameter indicates which version of the map should be returned. When version is set to published, the published version of the map will be returned. Please use the maps.getPublished endpoint instead.",
 	//       "enum": [
 	//         "draft",
 	//         "published"
@@ -3251,6 +3954,83 @@ func (c *MapsGetCall) Do() (*Map, error) {
 	//   "path": "maps/{id}",
 	//   "response": {
 	//     "$ref": "Map"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/mapsengine",
+	//     "https://www.googleapis.com/auth/mapsengine.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "mapsengine.maps.getPublished":
+
+type MapsGetPublishedCall struct {
+	s    *Service
+	id   string
+	opt_ map[string]interface{}
+}
+
+// GetPublished: Return the published metadata for a particular map.
+func (r *MapsService) GetPublished(id string) *MapsGetPublishedCall {
+	c := &MapsGetPublishedCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MapsGetPublishedCall) Fields(s ...googleapi.Field) *MapsGetPublishedCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *MapsGetPublishedCall) Do() (*PublishedMap, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "maps/{id}/published")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *PublishedMap
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Return the published metadata for a particular map.",
+	//   "httpMethod": "GET",
+	//   "id": "mapsengine.maps.getPublished",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The ID of the map.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "maps/{id}/published",
+	//   "response": {
+	//     "$ref": "PublishedMap"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/mapsengine",
@@ -3338,6 +4118,12 @@ func (c *MapsListCall) PageToken(pageToken string) *MapsListCall {
 	return c
 }
 
+// ProcessingStatus sets the optional parameter "processingStatus":
+func (c *MapsListCall) ProcessingStatus(processingStatus string) *MapsListCall {
+	c.opt_["processingStatus"] = processingStatus
+	return c
+}
+
 // ProjectId sets the optional parameter "projectId": The ID of a Maps
 // Engine project, used to filter the response. To list all available
 // projects with their IDs, send a Projects: list request. You can also
@@ -3356,6 +4142,13 @@ func (c *MapsListCall) Role(role string) *MapsListCall {
 	return c
 }
 
+// Search sets the optional parameter "search": An unstructured search
+// string used to filter the set of results based on asset metadata.
+func (c *MapsListCall) Search(search string) *MapsListCall {
+	c.opt_["search"] = search
+	return c
+}
+
 // Tags sets the optional parameter "tags": A comma separated list of
 // tags. Returned assets will contain all the tags from the list.
 func (c *MapsListCall) Tags(tags string) *MapsListCall {
@@ -3363,9 +4156,21 @@ func (c *MapsListCall) Tags(tags string) *MapsListCall {
 	return c
 }
 
-// Version sets the optional parameter "version":
+// Version sets the optional parameter "version": Deprecated: The
+// version parameter indicates which version of the maps should be
+// returned. When version is set to published this parameter will filter
+// the result set to include only maps that are published. Please use
+// the maps.listPublished endpoint instead.
 func (c *MapsListCall) Version(version string) *MapsListCall {
 	c.opt_["version"] = version
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MapsListCall) Fields(s ...googleapi.Field) *MapsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -3397,17 +4202,26 @@ func (c *MapsListCall) Do() (*MapsListResponse, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
+	if v, ok := c.opt_["processingStatus"]; ok {
+		params.Set("processingStatus", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["projectId"]; ok {
 		params.Set("projectId", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["role"]; ok {
 		params.Set("role", fmt.Sprintf("%v", v))
 	}
+	if v, ok := c.opt_["search"]; ok {
+		params.Set("search", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["tags"]; ok {
 		params.Set("tags", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["version"]; ok {
 		params.Set("version", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "maps")
 	urls += "?" + params.Encode()
@@ -3477,6 +4291,22 @@ func (c *MapsListCall) Do() (*MapsListResponse, error) {
 	//       "location": "query",
 	//       "type": "string"
 	//     },
+	//     "processingStatus": {
+	//       "enum": [
+	//         "complete",
+	//         "failed",
+	//         "notReady",
+	//         "processing"
+	//       ],
+	//       "enumDescriptions": [
+	//         "The map has completed processing.",
+	//         "The map has failed processing.",
+	//         "The map is not ready for processing.",
+	//         "The map is processing."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "projectId": {
 	//       "description": "The ID of a Maps Engine project, used to filter the response. To list all available projects with their IDs, send a Projects: list request. You can also find your project ID as the value of the DashboardPlace:cid URL parameter when signed in to mapsengine.google.com.",
 	//       "location": "query",
@@ -3497,12 +4327,18 @@ func (c *MapsListCall) Do() (*MapsListResponse, error) {
 	//       "location": "query",
 	//       "type": "string"
 	//     },
+	//     "search": {
+	//       "description": "An unstructured search string used to filter the set of results based on asset metadata.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "tags": {
 	//       "description": "A comma separated list of tags. Returned assets will contain all the tags from the list.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "version": {
+	//       "description": "Deprecated: The version parameter indicates which version of the maps should be returned. When version is set to published this parameter will filter the result set to include only maps that are published. Please use the maps.listPublished endpoint instead.",
 	//       "enum": [
 	//         "draft",
 	//         "published"
@@ -3518,6 +4354,123 @@ func (c *MapsListCall) Do() (*MapsListResponse, error) {
 	//   "path": "maps",
 	//   "response": {
 	//     "$ref": "MapsListResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/mapsengine",
+	//     "https://www.googleapis.com/auth/mapsengine.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "mapsengine.maps.listPublished":
+
+type MapsListPublishedCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// ListPublished: Return all published maps readable by the current
+// user.
+func (r *MapsService) ListPublished() *MapsListPublishedCall {
+	c := &MapsListPublishedCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of items to include in a single response page. The maximum
+// supported value is 100.
+func (c *MapsListPublishedCall) MaxResults(maxResults int64) *MapsListPublishedCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The continuation
+// token, used to page through large result sets. To get the next page
+// of results, set this parameter to the value of nextPageToken from the
+// previous response.
+func (c *MapsListPublishedCall) PageToken(pageToken string) *MapsListPublishedCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+// ProjectId sets the optional parameter "projectId": The ID of a Maps
+// Engine project, used to filter the response. To list all available
+// projects with their IDs, send a Projects: list request. You can also
+// find your project ID as the value of the DashboardPlace:cid URL
+// parameter when signed in to mapsengine.google.com.
+func (c *MapsListPublishedCall) ProjectId(projectId string) *MapsListPublishedCall {
+	c.opt_["projectId"] = projectId
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MapsListPublishedCall) Fields(s ...googleapi.Field) *MapsListPublishedCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *MapsListPublishedCall) Do() (*PublishedMapsListResponse, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["projectId"]; ok {
+		params.Set("projectId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "maps/published")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *PublishedMapsListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Return all published maps readable by the current user.",
+	//   "httpMethod": "GET",
+	//   "id": "mapsengine.maps.listPublished",
+	//   "parameters": {
+	//     "maxResults": {
+	//       "description": "The maximum number of items to include in a single response page. The maximum supported value is 100.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The continuation token, used to page through large result sets. To get the next page of results, set this parameter to the value of nextPageToken from the previous response.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "projectId": {
+	//       "description": "The ID of a Maps Engine project, used to filter the response. To list all available projects with their IDs, send a Projects: list request. You can also find your project ID as the value of the DashboardPlace:cid URL parameter when signed in to mapsengine.google.com.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "maps/published",
+	//   "response": {
+	//     "$ref": "PublishedMapsListResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/mapsengine",
@@ -3544,6 +4497,14 @@ func (r *MapsService) Patch(id string, map_ *Map) *MapsPatchCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MapsPatchCall) Fields(s ...googleapi.Field) *MapsPatchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *MapsPatchCall) Do() error {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.map_)
@@ -3553,6 +4514,9 @@ func (c *MapsPatchCall) Do() error {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "maps/{id}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
@@ -3611,10 +4575,32 @@ func (r *MapsService) Publish(id string) *MapsPublishCall {
 	return c
 }
 
+// Force sets the optional parameter "force": If set to true, the API
+// will allow publication of the map even if it's out of date. If false,
+// the map must have a processingStatus of complete before publishing.
+func (c *MapsPublishCall) Force(force bool) *MapsPublishCall {
+	c.opt_["force"] = force
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MapsPublishCall) Fields(s ...googleapi.Field) *MapsPublishCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *MapsPublishCall) Do() (*PublishResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["force"]; ok {
+		params.Set("force", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "maps/{id}/publish")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -3643,6 +4629,11 @@ func (c *MapsPublishCall) Do() (*PublishResponse, error) {
 	//     "id"
 	//   ],
 	//   "parameters": {
+	//     "force": {
+	//       "description": "If set to true, the API will allow publication of the map even if it's out of date. If false, the map must have a processingStatus of complete before publishing.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "id": {
 	//       "description": "The ID of the map.",
 	//       "location": "path",
@@ -3676,10 +4667,21 @@ func (r *MapsService) Unpublish(id string) *MapsUnpublishCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MapsUnpublishCall) Fields(s ...googleapi.Field) *MapsUnpublishCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *MapsUnpublishCall) Do() (*PublishResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "maps/{id}/unpublish")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -3726,37 +4728,45 @@ func (c *MapsUnpublishCall) Do() (*PublishResponse, error) {
 
 }
 
-// method id "mapsengine.maps.permissions.batchInsert":
+// method id "mapsengine.maps.permissions.batchDelete":
 
-type MapsPermissionsBatchInsertCall struct {
+type MapsPermissionsBatchDeleteCall struct {
 	s                             *Service
 	id                            string
-	permissionsbatchinsertrequest *PermissionsBatchInsertRequest
+	permissionsbatchdeleterequest *PermissionsBatchDeleteRequest
 	opt_                          map[string]interface{}
 }
 
-// BatchInsert: Add permission entries to an already existing asset.
-//
-// An
-// asset can hold up to 20 different permission entries. Each
-// batchInsert request is atomic.
-func (r *MapsPermissionsService) BatchInsert(id string, permissionsbatchinsertrequest *PermissionsBatchInsertRequest) *MapsPermissionsBatchInsertCall {
-	c := &MapsPermissionsBatchInsertCall{s: r.s, opt_: make(map[string]interface{})}
+// BatchDelete: Remove permission entries from an already existing
+// asset.
+func (r *MapsPermissionsService) BatchDelete(id string, permissionsbatchdeleterequest *PermissionsBatchDeleteRequest) *MapsPermissionsBatchDeleteCall {
+	c := &MapsPermissionsBatchDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.id = id
-	c.permissionsbatchinsertrequest = permissionsbatchinsertrequest
+	c.permissionsbatchdeleterequest = permissionsbatchdeleterequest
 	return c
 }
 
-func (c *MapsPermissionsBatchInsertCall) Do() (*PermissionsBatchInsertResponse, error) {
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MapsPermissionsBatchDeleteCall) Fields(s ...googleapi.Field) *MapsPermissionsBatchDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *MapsPermissionsBatchDeleteCall) Do() (*PermissionsBatchDeleteResponse, error) {
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.permissionsbatchinsertrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.permissionsbatchdeleterequest)
 	if err != nil {
 		return nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "maps/{id}/permissions/batchInsert")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "maps/{id}/permissions/batchDelete")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
@@ -3772,15 +4782,106 @@ func (c *MapsPermissionsBatchInsertCall) Do() (*PermissionsBatchInsertResponse, 
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *PermissionsBatchInsertResponse
+	var ret *PermissionsBatchDeleteResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Add permission entries to an already existing asset.\n\nAn asset can hold up to 20 different permission entries. Each batchInsert request is atomic.",
+	//   "description": "Remove permission entries from an already existing asset.",
 	//   "httpMethod": "POST",
-	//   "id": "mapsengine.maps.permissions.batchInsert",
+	//   "id": "mapsengine.maps.permissions.batchDelete",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The ID of the asset from which permissions will be removed.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "maps/{id}/permissions/batchDelete",
+	//   "request": {
+	//     "$ref": "PermissionsBatchDeleteRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "PermissionsBatchDeleteResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/mapsengine"
+	//   ]
+	// }
+
+}
+
+// method id "mapsengine.maps.permissions.batchUpdate":
+
+type MapsPermissionsBatchUpdateCall struct {
+	s                             *Service
+	id                            string
+	permissionsbatchupdaterequest *PermissionsBatchUpdateRequest
+	opt_                          map[string]interface{}
+}
+
+// BatchUpdate: Add or update permission entries to an already existing
+// asset.
+//
+// An asset can hold up to 20 different permission entries. Each
+// batchInsert request is atomic.
+func (r *MapsPermissionsService) BatchUpdate(id string, permissionsbatchupdaterequest *PermissionsBatchUpdateRequest) *MapsPermissionsBatchUpdateCall {
+	c := &MapsPermissionsBatchUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	c.permissionsbatchupdaterequest = permissionsbatchupdaterequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MapsPermissionsBatchUpdateCall) Fields(s ...googleapi.Field) *MapsPermissionsBatchUpdateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *MapsPermissionsBatchUpdateCall) Do() (*PermissionsBatchUpdateResponse, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.permissionsbatchupdaterequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "maps/{id}/permissions/batchUpdate")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *PermissionsBatchUpdateResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Add or update permission entries to an already existing asset.\n\nAn asset can hold up to 20 different permission entries. Each batchInsert request is atomic.",
+	//   "httpMethod": "POST",
+	//   "id": "mapsengine.maps.permissions.batchUpdate",
 	//   "parameterOrder": [
 	//     "id"
 	//   ],
@@ -3792,12 +4893,12 @@ func (c *MapsPermissionsBatchInsertCall) Do() (*PermissionsBatchInsertResponse, 
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "maps/{id}/permissions/batchInsert",
+	//   "path": "maps/{id}/permissions/batchUpdate",
 	//   "request": {
-	//     "$ref": "PermissionsBatchInsertRequest"
+	//     "$ref": "PermissionsBatchUpdateRequest"
 	//   },
 	//   "response": {
-	//     "$ref": "PermissionsBatchInsertResponse"
+	//     "$ref": "PermissionsBatchUpdateResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/mapsengine"
@@ -3821,10 +4922,21 @@ func (r *MapsPermissionsService) List(id string) *MapsPermissionsListCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MapsPermissionsListCall) Fields(s ...googleapi.Field) *MapsPermissionsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *MapsPermissionsListCall) Do() (*PermissionsListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "maps/{id}/permissions")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -3885,10 +4997,21 @@ func (r *ProjectsService) List() *ProjectsListCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsListCall) Fields(s ...googleapi.Field) *ProjectsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *ProjectsListCall) Do() (*ProjectsListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -3945,6 +5068,14 @@ func (c *ProjectsIconsCreateCall) Media(r io.Reader) *ProjectsIconsCreateCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsIconsCreateCall) Fields(s ...googleapi.Field) *ProjectsIconsCreateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *ProjectsIconsCreateCall) Do() (*Icon, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.icon)
@@ -3954,6 +5085,9 @@ func (c *ProjectsIconsCreateCall) Do() (*Icon, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/icons")
 	if c.media_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
@@ -4038,7 +5172,7 @@ type ProjectsIconsGetCall struct {
 	opt_      map[string]interface{}
 }
 
-// Get: Return metadata for a specific icon
+// Get: Return an icon or its associated metadata
 func (r *ProjectsIconsService) Get(projectId string, id string) *ProjectsIconsGetCall {
 	c := &ProjectsIconsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectId = projectId
@@ -4046,10 +5180,21 @@ func (r *ProjectsIconsService) Get(projectId string, id string) *ProjectsIconsGe
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsIconsGetCall) Fields(s ...googleapi.Field) *ProjectsIconsGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *ProjectsIconsGetCall) Do() (*Icon, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/icons/{id}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -4072,7 +5217,7 @@ func (c *ProjectsIconsGetCall) Do() (*Icon, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Return metadata for a specific icon",
+	//   "description": "Return an icon or its associated metadata",
 	//   "httpMethod": "GET",
 	//   "id": "mapsengine.projects.icons.get",
 	//   "parameterOrder": [
@@ -4138,6 +5283,14 @@ func (c *ProjectsIconsListCall) PageToken(pageToken string) *ProjectsIconsListCa
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsIconsListCall) Fields(s ...googleapi.Field) *ProjectsIconsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *ProjectsIconsListCall) Do() (*IconsListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4147,6 +5300,9 @@ func (c *ProjectsIconsListCall) Do() (*IconsListResponse, error) {
 	}
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/icons")
 	urls += "?" + params.Encode()
@@ -4221,10 +5377,21 @@ func (r *RasterCollectionsService) CancelProcessing(id string) *RasterCollection
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RasterCollectionsCancelProcessingCall) Fields(s ...googleapi.Field) *RasterCollectionsCancelProcessingCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *RasterCollectionsCancelProcessingCall) Do() (*ProcessResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasterCollections/{id}/cancelProcessing")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -4286,6 +5453,14 @@ func (r *RasterCollectionsService) Create(rastercollection *RasterCollection) *R
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RasterCollectionsCreateCall) Fields(s ...googleapi.Field) *RasterCollectionsCreateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *RasterCollectionsCreateCall) Do() (*RasterCollection, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.rastercollection)
@@ -4295,6 +5470,9 @@ func (c *RasterCollectionsCreateCall) Do() (*RasterCollection, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasterCollections")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -4347,10 +5525,21 @@ func (r *RasterCollectionsService) Delete(id string) *RasterCollectionsDeleteCal
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RasterCollectionsDeleteCall) Fields(s ...googleapi.Field) *RasterCollectionsDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *RasterCollectionsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasterCollections/{id}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
@@ -4405,10 +5594,21 @@ func (r *RasterCollectionsService) Get(id string) *RasterCollectionsGetCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RasterCollectionsGetCall) Fields(s ...googleapi.Field) *RasterCollectionsGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *RasterCollectionsGetCall) Do() (*RasterCollection, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasterCollections/{id}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -4534,6 +5734,12 @@ func (c *RasterCollectionsListCall) PageToken(pageToken string) *RasterCollectio
 	return c
 }
 
+// ProcessingStatus sets the optional parameter "processingStatus":
+func (c *RasterCollectionsListCall) ProcessingStatus(processingStatus string) *RasterCollectionsListCall {
+	c.opt_["processingStatus"] = processingStatus
+	return c
+}
+
 // ProjectId sets the optional parameter "projectId": The ID of a Maps
 // Engine project, used to filter the response. To list all available
 // projects with their IDs, send a Projects: list request. You can also
@@ -4552,10 +5758,25 @@ func (c *RasterCollectionsListCall) Role(role string) *RasterCollectionsListCall
 	return c
 }
 
+// Search sets the optional parameter "search": An unstructured search
+// string used to filter the set of results based on asset metadata.
+func (c *RasterCollectionsListCall) Search(search string) *RasterCollectionsListCall {
+	c.opt_["search"] = search
+	return c
+}
+
 // Tags sets the optional parameter "tags": A comma separated list of
 // tags. Returned assets will contain all the tags from the list.
 func (c *RasterCollectionsListCall) Tags(tags string) *RasterCollectionsListCall {
 	c.opt_["tags"] = tags
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RasterCollectionsListCall) Fields(s ...googleapi.Field) *RasterCollectionsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -4587,14 +5808,23 @@ func (c *RasterCollectionsListCall) Do() (*RasterCollectionsListResponse, error)
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
+	if v, ok := c.opt_["processingStatus"]; ok {
+		params.Set("processingStatus", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["projectId"]; ok {
 		params.Set("projectId", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["role"]; ok {
 		params.Set("role", fmt.Sprintf("%v", v))
 	}
+	if v, ok := c.opt_["search"]; ok {
+		params.Set("search", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["tags"]; ok {
 		params.Set("tags", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasterCollections")
 	urls += "?" + params.Encode()
@@ -4664,6 +5894,24 @@ func (c *RasterCollectionsListCall) Do() (*RasterCollectionsListResponse, error)
 	//       "location": "query",
 	//       "type": "string"
 	//     },
+	//     "processingStatus": {
+	//       "enum": [
+	//         "complete",
+	//         "failed",
+	//         "notReady",
+	//         "processing",
+	//         "ready"
+	//       ],
+	//       "enumDescriptions": [
+	//         "The raster collection has completed processing.",
+	//         "The raster collection has failed processing.",
+	//         "The raster collection is not ready for processing.",
+	//         "The raster collection is processing.",
+	//         "The raster collection is ready for processing."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "projectId": {
 	//       "description": "The ID of a Maps Engine project, used to filter the response. To list all available projects with their IDs, send a Projects: list request. You can also find your project ID as the value of the DashboardPlace:cid URL parameter when signed in to mapsengine.google.com.",
 	//       "location": "query",
@@ -4681,6 +5929,11 @@ func (c *RasterCollectionsListCall) Do() (*RasterCollectionsListResponse, error)
 	//         "The user can read the asset.",
 	//         "The user can read and write the asset."
 	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "search": {
+	//       "description": "An unstructured search string used to filter the set of results based on asset metadata.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4719,6 +5972,14 @@ func (r *RasterCollectionsService) Patch(id string, rastercollection *RasterColl
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RasterCollectionsPatchCall) Fields(s ...googleapi.Field) *RasterCollectionsPatchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *RasterCollectionsPatchCall) Do() error {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.rastercollection)
@@ -4728,6 +5989,9 @@ func (c *RasterCollectionsPatchCall) Do() error {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasterCollections/{id}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
@@ -4786,10 +6050,21 @@ func (r *RasterCollectionsService) Process(id string) *RasterCollectionsProcessC
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RasterCollectionsProcessCall) Fields(s ...googleapi.Field) *RasterCollectionsProcessCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *RasterCollectionsProcessCall) Do() (*ProcessResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasterCollections/{id}/process")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -4868,6 +6143,14 @@ func (c *RasterCollectionsParentsListCall) PageToken(pageToken string) *RasterCo
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RasterCollectionsParentsListCall) Fields(s ...googleapi.Field) *RasterCollectionsParentsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *RasterCollectionsParentsListCall) Do() (*ParentsListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4877,6 +6160,9 @@ func (c *RasterCollectionsParentsListCall) Do() (*ParentsListResponse, error) {
 	}
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasterCollections/{id}/parents")
 	urls += "?" + params.Encode()
@@ -4936,37 +6222,45 @@ func (c *RasterCollectionsParentsListCall) Do() (*ParentsListResponse, error) {
 
 }
 
-// method id "mapsengine.rasterCollections.permissions.batchInsert":
+// method id "mapsengine.rasterCollections.permissions.batchDelete":
 
-type RasterCollectionsPermissionsBatchInsertCall struct {
+type RasterCollectionsPermissionsBatchDeleteCall struct {
 	s                             *Service
 	id                            string
-	permissionsbatchinsertrequest *PermissionsBatchInsertRequest
+	permissionsbatchdeleterequest *PermissionsBatchDeleteRequest
 	opt_                          map[string]interface{}
 }
 
-// BatchInsert: Add permission entries to an already existing asset.
-//
-// An
-// asset can hold up to 20 different permission entries. Each
-// batchInsert request is atomic.
-func (r *RasterCollectionsPermissionsService) BatchInsert(id string, permissionsbatchinsertrequest *PermissionsBatchInsertRequest) *RasterCollectionsPermissionsBatchInsertCall {
-	c := &RasterCollectionsPermissionsBatchInsertCall{s: r.s, opt_: make(map[string]interface{})}
+// BatchDelete: Remove permission entries from an already existing
+// asset.
+func (r *RasterCollectionsPermissionsService) BatchDelete(id string, permissionsbatchdeleterequest *PermissionsBatchDeleteRequest) *RasterCollectionsPermissionsBatchDeleteCall {
+	c := &RasterCollectionsPermissionsBatchDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.id = id
-	c.permissionsbatchinsertrequest = permissionsbatchinsertrequest
+	c.permissionsbatchdeleterequest = permissionsbatchdeleterequest
 	return c
 }
 
-func (c *RasterCollectionsPermissionsBatchInsertCall) Do() (*PermissionsBatchInsertResponse, error) {
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RasterCollectionsPermissionsBatchDeleteCall) Fields(s ...googleapi.Field) *RasterCollectionsPermissionsBatchDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *RasterCollectionsPermissionsBatchDeleteCall) Do() (*PermissionsBatchDeleteResponse, error) {
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.permissionsbatchinsertrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.permissionsbatchdeleterequest)
 	if err != nil {
 		return nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "rasterCollections/{id}/permissions/batchInsert")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "rasterCollections/{id}/permissions/batchDelete")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
@@ -4982,15 +6276,106 @@ func (c *RasterCollectionsPermissionsBatchInsertCall) Do() (*PermissionsBatchIns
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *PermissionsBatchInsertResponse
+	var ret *PermissionsBatchDeleteResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Add permission entries to an already existing asset.\n\nAn asset can hold up to 20 different permission entries. Each batchInsert request is atomic.",
+	//   "description": "Remove permission entries from an already existing asset.",
 	//   "httpMethod": "POST",
-	//   "id": "mapsengine.rasterCollections.permissions.batchInsert",
+	//   "id": "mapsengine.rasterCollections.permissions.batchDelete",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The ID of the asset from which permissions will be removed.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "rasterCollections/{id}/permissions/batchDelete",
+	//   "request": {
+	//     "$ref": "PermissionsBatchDeleteRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "PermissionsBatchDeleteResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/mapsengine"
+	//   ]
+	// }
+
+}
+
+// method id "mapsengine.rasterCollections.permissions.batchUpdate":
+
+type RasterCollectionsPermissionsBatchUpdateCall struct {
+	s                             *Service
+	id                            string
+	permissionsbatchupdaterequest *PermissionsBatchUpdateRequest
+	opt_                          map[string]interface{}
+}
+
+// BatchUpdate: Add or update permission entries to an already existing
+// asset.
+//
+// An asset can hold up to 20 different permission entries. Each
+// batchInsert request is atomic.
+func (r *RasterCollectionsPermissionsService) BatchUpdate(id string, permissionsbatchupdaterequest *PermissionsBatchUpdateRequest) *RasterCollectionsPermissionsBatchUpdateCall {
+	c := &RasterCollectionsPermissionsBatchUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	c.permissionsbatchupdaterequest = permissionsbatchupdaterequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RasterCollectionsPermissionsBatchUpdateCall) Fields(s ...googleapi.Field) *RasterCollectionsPermissionsBatchUpdateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *RasterCollectionsPermissionsBatchUpdateCall) Do() (*PermissionsBatchUpdateResponse, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.permissionsbatchupdaterequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "rasterCollections/{id}/permissions/batchUpdate")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *PermissionsBatchUpdateResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Add or update permission entries to an already existing asset.\n\nAn asset can hold up to 20 different permission entries. Each batchInsert request is atomic.",
+	//   "httpMethod": "POST",
+	//   "id": "mapsengine.rasterCollections.permissions.batchUpdate",
 	//   "parameterOrder": [
 	//     "id"
 	//   ],
@@ -5002,12 +6387,12 @@ func (c *RasterCollectionsPermissionsBatchInsertCall) Do() (*PermissionsBatchIns
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "rasterCollections/{id}/permissions/batchInsert",
+	//   "path": "rasterCollections/{id}/permissions/batchUpdate",
 	//   "request": {
-	//     "$ref": "PermissionsBatchInsertRequest"
+	//     "$ref": "PermissionsBatchUpdateRequest"
 	//   },
 	//   "response": {
-	//     "$ref": "PermissionsBatchInsertResponse"
+	//     "$ref": "PermissionsBatchUpdateResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/mapsengine"
@@ -5031,10 +6416,21 @@ func (r *RasterCollectionsPermissionsService) List(id string) *RasterCollections
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RasterCollectionsPermissionsListCall) Fields(s ...googleapi.Field) *RasterCollectionsPermissionsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *RasterCollectionsPermissionsListCall) Do() (*PermissionsListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasterCollections/{id}/permissions")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -5103,6 +6499,14 @@ func (r *RasterCollectionsRastersService) BatchDelete(id string, rastercollectio
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RasterCollectionsRastersBatchDeleteCall) Fields(s ...googleapi.Field) *RasterCollectionsRastersBatchDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *RasterCollectionsRastersBatchDeleteCall) Do() (*RasterCollectionsRastersBatchDeleteResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.rastercollectionsrasterbatchdeleterequest)
@@ -5112,6 +6516,9 @@ func (c *RasterCollectionsRastersBatchDeleteCall) Do() (*RasterCollectionsRaster
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasterCollections/{id}/rasters/batchDelete")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -5184,6 +6591,14 @@ func (r *RasterCollectionsRastersService) BatchInsert(id string, rastercollectio
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RasterCollectionsRastersBatchInsertCall) Fields(s ...googleapi.Field) *RasterCollectionsRastersBatchInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *RasterCollectionsRastersBatchInsertCall) Do() (*RasterCollectionsRastersBatchInsertResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.rastercollectionsrastersbatchinsertrequest)
@@ -5193,6 +6608,9 @@ func (c *RasterCollectionsRastersBatchInsertCall) Do() (*RasterCollectionsRaster
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasterCollections/{id}/rasters/batchInsert")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -5331,10 +6749,25 @@ func (c *RasterCollectionsRastersListCall) Role(role string) *RasterCollectionsR
 	return c
 }
 
+// Search sets the optional parameter "search": An unstructured search
+// string used to filter the set of results based on asset metadata.
+func (c *RasterCollectionsRastersListCall) Search(search string) *RasterCollectionsRastersListCall {
+	c.opt_["search"] = search
+	return c
+}
+
 // Tags sets the optional parameter "tags": A comma separated list of
 // tags. Returned assets will contain all the tags from the list.
 func (c *RasterCollectionsRastersListCall) Tags(tags string) *RasterCollectionsRastersListCall {
 	c.opt_["tags"] = tags
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RasterCollectionsRastersListCall) Fields(s ...googleapi.Field) *RasterCollectionsRastersListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -5369,8 +6802,14 @@ func (c *RasterCollectionsRastersListCall) Do() (*RasterCollectionsRastersListRe
 	if v, ok := c.opt_["role"]; ok {
 		params.Set("role", fmt.Sprintf("%v", v))
 	}
+	if v, ok := c.opt_["search"]; ok {
+		params.Set("search", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["tags"]; ok {
 		params.Set("tags", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasterCollections/{id}/rasters")
 	urls += "?" + params.Encode()
@@ -5466,6 +6905,11 @@ func (c *RasterCollectionsRastersListCall) Do() (*RasterCollectionsRastersListRe
 	//       "location": "query",
 	//       "type": "string"
 	//     },
+	//     "search": {
+	//       "description": "An unstructured search string used to filter the set of results based on asset metadata.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "tags": {
 	//       "description": "A comma separated list of tags. Returned assets will contain all the tags from the list.",
 	//       "location": "query",
@@ -5499,10 +6943,21 @@ func (r *RastersService) Delete(id string) *RastersDeleteCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RastersDeleteCall) Fields(s ...googleapi.Field) *RastersDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *RastersDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasters/{id}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
@@ -5557,10 +7012,21 @@ func (r *RastersService) Get(id string) *RastersGetCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RastersGetCall) Fields(s ...googleapi.Field) *RastersGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *RastersGetCall) Do() (*Raster, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasters/{id}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -5688,6 +7154,12 @@ func (c *RastersListCall) PageToken(pageToken string) *RastersListCall {
 	return c
 }
 
+// ProcessingStatus sets the optional parameter "processingStatus":
+func (c *RastersListCall) ProcessingStatus(processingStatus string) *RastersListCall {
+	c.opt_["processingStatus"] = processingStatus
+	return c
+}
+
 // Role sets the optional parameter "role": The role parameter indicates
 // that the response should only contain assets where the current user
 // has the specified level of access.
@@ -5696,10 +7168,25 @@ func (c *RastersListCall) Role(role string) *RastersListCall {
 	return c
 }
 
+// Search sets the optional parameter "search": An unstructured search
+// string used to filter the set of results based on asset metadata.
+func (c *RastersListCall) Search(search string) *RastersListCall {
+	c.opt_["search"] = search
+	return c
+}
+
 // Tags sets the optional parameter "tags": A comma separated list of
 // tags. Returned assets will contain all the tags from the list.
 func (c *RastersListCall) Tags(tags string) *RastersListCall {
 	c.opt_["tags"] = tags
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RastersListCall) Fields(s ...googleapi.Field) *RastersListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -5732,11 +7219,20 @@ func (c *RastersListCall) Do() (*RastersListResponse, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
+	if v, ok := c.opt_["processingStatus"]; ok {
+		params.Set("processingStatus", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["role"]; ok {
 		params.Set("role", fmt.Sprintf("%v", v))
 	}
+	if v, ok := c.opt_["search"]; ok {
+		params.Set("search", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["tags"]; ok {
 		params.Set("tags", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasters")
 	urls += "?" + params.Encode()
@@ -5809,6 +7305,24 @@ func (c *RastersListCall) Do() (*RastersListResponse, error) {
 	//       "location": "query",
 	//       "type": "string"
 	//     },
+	//     "processingStatus": {
+	//       "enum": [
+	//         "complete",
+	//         "failed",
+	//         "notReady",
+	//         "processing",
+	//         "ready"
+	//       ],
+	//       "enumDescriptions": [
+	//         "The raster has completed processing.",
+	//         "The raster has failed processing.",
+	//         "The raster is not ready for processing.",
+	//         "The raster is processing.",
+	//         "The raster is ready for processing."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "projectId": {
 	//       "description": "The ID of a Maps Engine project, used to filter the response. To list all available projects with their IDs, send a Projects: list request. You can also find your project ID as the value of the DashboardPlace:cid URL parameter when signed in to mapsengine.google.com.",
 	//       "location": "query",
@@ -5827,6 +7341,11 @@ func (c *RastersListCall) Do() (*RastersListResponse, error) {
 	//         "The user can read the asset.",
 	//         "The user can read and write the asset."
 	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "search": {
+	//       "description": "An unstructured search string used to filter the set of results based on asset metadata.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5865,6 +7384,14 @@ func (r *RastersService) Patch(id string, raster *Raster) *RastersPatchCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RastersPatchCall) Fields(s ...googleapi.Field) *RastersPatchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *RastersPatchCall) Do() error {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.raster)
@@ -5874,6 +7401,9 @@ func (c *RastersPatchCall) Do() error {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasters/{id}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
@@ -5917,6 +7447,82 @@ func (c *RastersPatchCall) Do() error {
 
 }
 
+// method id "mapsengine.rasters.process":
+
+type RastersProcessCall struct {
+	s    *Service
+	id   string
+	opt_ map[string]interface{}
+}
+
+// Process: Process a raster asset.
+func (r *RastersService) Process(id string) *RastersProcessCall {
+	c := &RastersProcessCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RastersProcessCall) Fields(s ...googleapi.Field) *RastersProcessCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *RastersProcessCall) Do() (*ProcessResponse, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "rasters/{id}/process")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *ProcessResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Process a raster asset.",
+	//   "httpMethod": "POST",
+	//   "id": "mapsengine.rasters.process",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The ID of the raster.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "rasters/{id}/process",
+	//   "response": {
+	//     "$ref": "ProcessResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/mapsengine"
+	//   ]
+	// }
+
+}
+
 // method id "mapsengine.rasters.upload":
 
 type RastersUploadCall struct {
@@ -5932,6 +7538,14 @@ func (r *RastersService) Upload(raster *Raster) *RastersUploadCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RastersUploadCall) Fields(s ...googleapi.Field) *RastersUploadCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *RastersUploadCall) Do() (*Raster, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.raster)
@@ -5941,6 +7555,9 @@ func (c *RastersUploadCall) Do() (*Raster, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasters/upload")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -6000,11 +7617,22 @@ func (c *RastersFilesInsertCall) Media(r io.Reader) *RastersFilesInsertCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RastersFilesInsertCall) Fields(s ...googleapi.Field) *RastersFilesInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *RastersFilesInsertCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("filename", fmt.Sprintf("%v", c.filename))
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasters/{id}/files")
 	if c.media_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
@@ -6111,6 +7739,14 @@ func (c *RastersParentsListCall) PageToken(pageToken string) *RastersParentsList
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RastersParentsListCall) Fields(s ...googleapi.Field) *RastersParentsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *RastersParentsListCall) Do() (*ParentsListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -6120,6 +7756,9 @@ func (c *RastersParentsListCall) Do() (*ParentsListResponse, error) {
 	}
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasters/{id}/parents")
 	urls += "?" + params.Encode()
@@ -6179,6 +7818,185 @@ func (c *RastersParentsListCall) Do() (*ParentsListResponse, error) {
 
 }
 
+// method id "mapsengine.rasters.permissions.batchDelete":
+
+type RastersPermissionsBatchDeleteCall struct {
+	s                             *Service
+	id                            string
+	permissionsbatchdeleterequest *PermissionsBatchDeleteRequest
+	opt_                          map[string]interface{}
+}
+
+// BatchDelete: Remove permission entries from an already existing
+// asset.
+func (r *RastersPermissionsService) BatchDelete(id string, permissionsbatchdeleterequest *PermissionsBatchDeleteRequest) *RastersPermissionsBatchDeleteCall {
+	c := &RastersPermissionsBatchDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	c.permissionsbatchdeleterequest = permissionsbatchdeleterequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RastersPermissionsBatchDeleteCall) Fields(s ...googleapi.Field) *RastersPermissionsBatchDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *RastersPermissionsBatchDeleteCall) Do() (*PermissionsBatchDeleteResponse, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.permissionsbatchdeleterequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "rasters/{id}/permissions/batchDelete")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *PermissionsBatchDeleteResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Remove permission entries from an already existing asset.",
+	//   "httpMethod": "POST",
+	//   "id": "mapsengine.rasters.permissions.batchDelete",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The ID of the asset from which permissions will be removed.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "rasters/{id}/permissions/batchDelete",
+	//   "request": {
+	//     "$ref": "PermissionsBatchDeleteRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "PermissionsBatchDeleteResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/mapsengine"
+	//   ]
+	// }
+
+}
+
+// method id "mapsengine.rasters.permissions.batchUpdate":
+
+type RastersPermissionsBatchUpdateCall struct {
+	s                             *Service
+	id                            string
+	permissionsbatchupdaterequest *PermissionsBatchUpdateRequest
+	opt_                          map[string]interface{}
+}
+
+// BatchUpdate: Add or update permission entries to an already existing
+// asset.
+//
+// An asset can hold up to 20 different permission entries. Each
+// batchInsert request is atomic.
+func (r *RastersPermissionsService) BatchUpdate(id string, permissionsbatchupdaterequest *PermissionsBatchUpdateRequest) *RastersPermissionsBatchUpdateCall {
+	c := &RastersPermissionsBatchUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	c.permissionsbatchupdaterequest = permissionsbatchupdaterequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RastersPermissionsBatchUpdateCall) Fields(s ...googleapi.Field) *RastersPermissionsBatchUpdateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *RastersPermissionsBatchUpdateCall) Do() (*PermissionsBatchUpdateResponse, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.permissionsbatchupdaterequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "rasters/{id}/permissions/batchUpdate")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *PermissionsBatchUpdateResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Add or update permission entries to an already existing asset.\n\nAn asset can hold up to 20 different permission entries. Each batchInsert request is atomic.",
+	//   "httpMethod": "POST",
+	//   "id": "mapsengine.rasters.permissions.batchUpdate",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The ID of the asset to which permissions will be added.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "rasters/{id}/permissions/batchUpdate",
+	//   "request": {
+	//     "$ref": "PermissionsBatchUpdateRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "PermissionsBatchUpdateResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/mapsengine"
+	//   ]
+	// }
+
+}
+
 // method id "mapsengine.rasters.permissions.list":
 
 type RastersPermissionsListCall struct {
@@ -6194,10 +8012,21 @@ func (r *RastersPermissionsService) List(id string) *RastersPermissionsListCall 
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RastersPermissionsListCall) Fields(s ...googleapi.Field) *RastersPermissionsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *RastersPermissionsListCall) Do() (*PermissionsListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasters/{id}/permissions")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -6260,6 +8089,14 @@ func (r *TablesService) Create(table *Table) *TablesCreateCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TablesCreateCall) Fields(s ...googleapi.Field) *TablesCreateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *TablesCreateCall) Do() (*Table, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.table)
@@ -6269,6 +8106,9 @@ func (c *TablesCreateCall) Do() (*Table, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -6321,10 +8161,21 @@ func (r *TablesService) Delete(id string) *TablesDeleteCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TablesDeleteCall) Fields(s ...googleapi.Field) *TablesDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *TablesDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{id}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
@@ -6385,12 +8236,23 @@ func (c *TablesGetCall) Version(version string) *TablesGetCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TablesGetCall) Fields(s ...googleapi.Field) *TablesGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *TablesGetCall) Do() (*Table, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	if v, ok := c.opt_["version"]; ok {
 		params.Set("version", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{id}")
 	urls += "?" + params.Encode()
@@ -6529,6 +8391,12 @@ func (c *TablesListCall) PageToken(pageToken string) *TablesListCall {
 	return c
 }
 
+// ProcessingStatus sets the optional parameter "processingStatus":
+func (c *TablesListCall) ProcessingStatus(processingStatus string) *TablesListCall {
+	c.opt_["processingStatus"] = processingStatus
+	return c
+}
+
 // ProjectId sets the optional parameter "projectId": The ID of a Maps
 // Engine project, used to filter the response. To list all available
 // projects with their IDs, send a Projects: list request. You can also
@@ -6547,10 +8415,25 @@ func (c *TablesListCall) Role(role string) *TablesListCall {
 	return c
 }
 
+// Search sets the optional parameter "search": An unstructured search
+// string used to filter the set of results based on asset metadata.
+func (c *TablesListCall) Search(search string) *TablesListCall {
+	c.opt_["search"] = search
+	return c
+}
+
 // Tags sets the optional parameter "tags": A comma separated list of
 // tags. Returned assets will contain all the tags from the list.
 func (c *TablesListCall) Tags(tags string) *TablesListCall {
 	c.opt_["tags"] = tags
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TablesListCall) Fields(s ...googleapi.Field) *TablesListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -6582,14 +8465,23 @@ func (c *TablesListCall) Do() (*TablesListResponse, error) {
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
+	if v, ok := c.opt_["processingStatus"]; ok {
+		params.Set("processingStatus", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["projectId"]; ok {
 		params.Set("projectId", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["role"]; ok {
 		params.Set("role", fmt.Sprintf("%v", v))
 	}
+	if v, ok := c.opt_["search"]; ok {
+		params.Set("search", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["tags"]; ok {
 		params.Set("tags", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables")
 	urls += "?" + params.Encode()
@@ -6659,6 +8551,24 @@ func (c *TablesListCall) Do() (*TablesListResponse, error) {
 	//       "location": "query",
 	//       "type": "string"
 	//     },
+	//     "processingStatus": {
+	//       "enum": [
+	//         "complete",
+	//         "failed",
+	//         "notReady",
+	//         "processing",
+	//         "ready"
+	//       ],
+	//       "enumDescriptions": [
+	//         "The table has completed processing.",
+	//         "The table has failed processing.",
+	//         "The table is not ready for processing.",
+	//         "The table is processing.",
+	//         "The table is ready for processing."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "projectId": {
 	//       "description": "The ID of a Maps Engine project, used to filter the response. To list all available projects with their IDs, send a Projects: list request. You can also find your project ID as the value of the DashboardPlace:cid URL parameter when signed in to mapsengine.google.com.",
 	//       "location": "query",
@@ -6676,6 +8586,11 @@ func (c *TablesListCall) Do() (*TablesListResponse, error) {
 	//         "The user can read the asset.",
 	//         "The user can read and write the asset."
 	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "search": {
+	//       "description": "An unstructured search string used to filter the set of results based on asset metadata.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6714,6 +8629,14 @@ func (r *TablesService) Patch(id string, table *Table) *TablesPatchCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TablesPatchCall) Fields(s ...googleapi.Field) *TablesPatchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *TablesPatchCall) Do() error {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.table)
@@ -6723,6 +8646,9 @@ func (c *TablesPatchCall) Do() error {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{id}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
@@ -6766,6 +8692,82 @@ func (c *TablesPatchCall) Do() error {
 
 }
 
+// method id "mapsengine.tables.process":
+
+type TablesProcessCall struct {
+	s    *Service
+	id   string
+	opt_ map[string]interface{}
+}
+
+// Process: Process a table asset.
+func (r *TablesService) Process(id string) *TablesProcessCall {
+	c := &TablesProcessCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TablesProcessCall) Fields(s ...googleapi.Field) *TablesProcessCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *TablesProcessCall) Do() (*ProcessResponse, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{id}/process")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *ProcessResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Process a table asset.",
+	//   "httpMethod": "POST",
+	//   "id": "mapsengine.tables.process",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The ID of the table.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "tables/{id}/process",
+	//   "response": {
+	//     "$ref": "ProcessResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/mapsengine"
+	//   ]
+	// }
+
+}
+
 // method id "mapsengine.tables.upload":
 
 type TablesUploadCall struct {
@@ -6788,6 +8790,14 @@ func (r *TablesService) Upload(table *Table) *TablesUploadCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TablesUploadCall) Fields(s ...googleapi.Field) *TablesUploadCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *TablesUploadCall) Do() (*Table, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.table)
@@ -6797,6 +8807,9 @@ func (c *TablesUploadCall) Do() (*Table, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/upload")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -6851,6 +8864,14 @@ func (r *TablesFeaturesService) BatchDelete(id string, featuresbatchdeletereques
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TablesFeaturesBatchDeleteCall) Fields(s ...googleapi.Field) *TablesFeaturesBatchDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *TablesFeaturesBatchDeleteCall) Do() error {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.featuresbatchdeleterequest)
@@ -6860,6 +8881,9 @@ func (c *TablesFeaturesBatchDeleteCall) Do() error {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{id}/features/batchDelete")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -6912,11 +8936,33 @@ type TablesFeaturesBatchInsertCall struct {
 	opt_                       map[string]interface{}
 }
 
-// BatchInsert: Append the supplied features.
+// BatchInsert: Append features to an existing table.
+//
+// A single
+// batchInsert request can create:
+//
+// - Up to 50 features.
+// - A combined
+// total of 10 000 vertices.
+// Feature limits are documented in the
+// Supported data formats and limits article of the Google Maps Engine
+// help center. Note that free and paid accounts have different
+// limits.
+//
+// For more information about inserting features, read Creating
+// features in the Google Maps Engine developer's guide.
 func (r *TablesFeaturesService) BatchInsert(id string, featuresbatchinsertrequest *FeaturesBatchInsertRequest) *TablesFeaturesBatchInsertCall {
 	c := &TablesFeaturesBatchInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.id = id
 	c.featuresbatchinsertrequest = featuresbatchinsertrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TablesFeaturesBatchInsertCall) Fields(s ...googleapi.Field) *TablesFeaturesBatchInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -6929,6 +8975,9 @@ func (c *TablesFeaturesBatchInsertCall) Do() error {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{id}/features/batchInsert")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -6947,7 +8996,7 @@ func (c *TablesFeaturesBatchInsertCall) Do() error {
 	}
 	return nil
 	// {
-	//   "description": "Append the supplied features.",
+	//   "description": "Append features to an existing table.\n\nA single batchInsert request can create:\n\n- Up to 50 features.\n- A combined total of 10 000 vertices.\nFeature limits are documented in the Supported data formats and limits article of the Google Maps Engine help center. Note that free and paid accounts have different limits.\n\nFor more information about inserting features, read Creating features in the Google Maps Engine developer's guide.",
 	//   "httpMethod": "POST",
 	//   "id": "mapsengine.tables.features.batchInsert",
 	//   "parameterOrder": [
@@ -6981,11 +9030,46 @@ type TablesFeaturesBatchPatchCall struct {
 	opt_                      map[string]interface{}
 }
 
-// BatchPatch: Patch the supplied features.
+// BatchPatch: Update the supplied features.
+//
+// A single batchPatch
+// request can update:
+//
+// - Up to 50 features.
+// - A combined total of
+// 10 000 vertices.
+// Feature limits are documented in the Supported
+// data formats and limits article of the Google Maps Engine help
+// center. Note that free and paid accounts have different
+// limits.
+//
+// Feature updates use HTTP PATCH semantics:
+//
+// - A supplied
+// value replaces an existing value (if any) in that field.
+// - Omitted
+// fields remain unchanged.
+// - Complex values in geometries and
+// properties must be replaced as atomic units. For example, providing
+// just the coordinates of a geometry is not allowed; the complete
+// geometry, including type, must be supplied.
+// - Setting a property's
+// value to null deletes that property.
+// For more information about
+// updating features, read Updating features in the Google Maps Engine
+// developer's guide.
 func (r *TablesFeaturesService) BatchPatch(id string, featuresbatchpatchrequest *FeaturesBatchPatchRequest) *TablesFeaturesBatchPatchCall {
 	c := &TablesFeaturesBatchPatchCall{s: r.s, opt_: make(map[string]interface{})}
 	c.id = id
 	c.featuresbatchpatchrequest = featuresbatchpatchrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TablesFeaturesBatchPatchCall) Fields(s ...googleapi.Field) *TablesFeaturesBatchPatchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -6998,6 +9082,9 @@ func (c *TablesFeaturesBatchPatchCall) Do() error {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{id}/features/batchPatch")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -7016,7 +9103,7 @@ func (c *TablesFeaturesBatchPatchCall) Do() error {
 	}
 	return nil
 	// {
-	//   "description": "Patch the supplied features.",
+	//   "description": "Update the supplied features.\n\nA single batchPatch request can update:\n\n- Up to 50 features.\n- A combined total of 10 000 vertices.\nFeature limits are documented in the Supported data formats and limits article of the Google Maps Engine help center. Note that free and paid accounts have different limits.\n\nFeature updates use HTTP PATCH semantics:\n\n- A supplied value replaces an existing value (if any) in that field.\n- Omitted fields remain unchanged.\n- Complex values in geometries and properties must be replaced as atomic units. For example, providing just the coordinates of a geometry is not allowed; the complete geometry, including type, must be supplied.\n- Setting a property's value to null deletes that property.\nFor more information about updating features, read Updating features in the Google Maps Engine developer's guide.",
 	//   "httpMethod": "POST",
 	//   "id": "mapsengine.tables.features.batchPatch",
 	//   "parameterOrder": [
@@ -7073,6 +9160,14 @@ func (c *TablesFeaturesGetCall) Version(version string) *TablesFeaturesGetCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TablesFeaturesGetCall) Fields(s ...googleapi.Field) *TablesFeaturesGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *TablesFeaturesGetCall) Do() (*Feature, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -7082,6 +9177,9 @@ func (c *TablesFeaturesGetCall) Do() (*Feature, error) {
 	}
 	if v, ok := c.opt_["version"]; ok {
 		params.Set("version", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{tableId}/features/{id}")
 	urls += "?" + params.Encode()
@@ -7194,7 +9292,8 @@ func (c *TablesFeaturesListCall) Limit(limit int64) *TablesFeaturesListCall {
 }
 
 // MaxResults sets the optional parameter "maxResults": The maximum
-// number of items to include in the response, used for paging.
+// number of items to include in the response, used for paging. The
+// maximum supported value is 1000.
 func (c *TablesFeaturesListCall) MaxResults(maxResults int64) *TablesFeaturesListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -7239,6 +9338,14 @@ func (c *TablesFeaturesListCall) Where(where string) *TablesFeaturesListCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TablesFeaturesListCall) Fields(s ...googleapi.Field) *TablesFeaturesListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *TablesFeaturesListCall) Do() (*FeaturesListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -7269,6 +9376,9 @@ func (c *TablesFeaturesListCall) Do() (*FeaturesListResponse, error) {
 	}
 	if v, ok := c.opt_["where"]; ok {
 		params.Set("where", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{id}/features")
 	urls += "?" + params.Encode()
@@ -7321,7 +9431,7 @@ func (c *TablesFeaturesListCall) Do() (*FeaturesListResponse, error) {
 	//       "type": "integer"
 	//     },
 	//     "maxResults": {
-	//       "description": "The maximum number of items to include in the response, used for paging.",
+	//       "description": "The maximum number of items to include in the response, used for paging. The maximum supported value is 1000.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -7398,11 +9508,22 @@ func (c *TablesFilesInsertCall) Media(r io.Reader) *TablesFilesInsertCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TablesFilesInsertCall) Fields(s ...googleapi.Field) *TablesFilesInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *TablesFilesInsertCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("filename", fmt.Sprintf("%v", c.filename))
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{id}/files")
 	if c.media_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
@@ -7509,6 +9630,14 @@ func (c *TablesParentsListCall) PageToken(pageToken string) *TablesParentsListCa
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TablesParentsListCall) Fields(s ...googleapi.Field) *TablesParentsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *TablesParentsListCall) Do() (*ParentsListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -7518,6 +9647,9 @@ func (c *TablesParentsListCall) Do() (*ParentsListResponse, error) {
 	}
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{id}/parents")
 	urls += "?" + params.Encode()
@@ -7577,37 +9709,45 @@ func (c *TablesParentsListCall) Do() (*ParentsListResponse, error) {
 
 }
 
-// method id "mapsengine.tables.permissions.batchInsert":
+// method id "mapsengine.tables.permissions.batchDelete":
 
-type TablesPermissionsBatchInsertCall struct {
+type TablesPermissionsBatchDeleteCall struct {
 	s                             *Service
 	id                            string
-	permissionsbatchinsertrequest *PermissionsBatchInsertRequest
+	permissionsbatchdeleterequest *PermissionsBatchDeleteRequest
 	opt_                          map[string]interface{}
 }
 
-// BatchInsert: Add permission entries to an already existing asset.
-//
-// An
-// asset can hold up to 20 different permission entries. Each
-// batchInsert request is atomic.
-func (r *TablesPermissionsService) BatchInsert(id string, permissionsbatchinsertrequest *PermissionsBatchInsertRequest) *TablesPermissionsBatchInsertCall {
-	c := &TablesPermissionsBatchInsertCall{s: r.s, opt_: make(map[string]interface{})}
+// BatchDelete: Remove permission entries from an already existing
+// asset.
+func (r *TablesPermissionsService) BatchDelete(id string, permissionsbatchdeleterequest *PermissionsBatchDeleteRequest) *TablesPermissionsBatchDeleteCall {
+	c := &TablesPermissionsBatchDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.id = id
-	c.permissionsbatchinsertrequest = permissionsbatchinsertrequest
+	c.permissionsbatchdeleterequest = permissionsbatchdeleterequest
 	return c
 }
 
-func (c *TablesPermissionsBatchInsertCall) Do() (*PermissionsBatchInsertResponse, error) {
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TablesPermissionsBatchDeleteCall) Fields(s ...googleapi.Field) *TablesPermissionsBatchDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *TablesPermissionsBatchDeleteCall) Do() (*PermissionsBatchDeleteResponse, error) {
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.permissionsbatchinsertrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.permissionsbatchdeleterequest)
 	if err != nil {
 		return nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{id}/permissions/batchInsert")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{id}/permissions/batchDelete")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
@@ -7623,15 +9763,106 @@ func (c *TablesPermissionsBatchInsertCall) Do() (*PermissionsBatchInsertResponse
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *PermissionsBatchInsertResponse
+	var ret *PermissionsBatchDeleteResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Add permission entries to an already existing asset.\n\nAn asset can hold up to 20 different permission entries. Each batchInsert request is atomic.",
+	//   "description": "Remove permission entries from an already existing asset.",
 	//   "httpMethod": "POST",
-	//   "id": "mapsengine.tables.permissions.batchInsert",
+	//   "id": "mapsengine.tables.permissions.batchDelete",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The ID of the asset from which permissions will be removed.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "tables/{id}/permissions/batchDelete",
+	//   "request": {
+	//     "$ref": "PermissionsBatchDeleteRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "PermissionsBatchDeleteResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/mapsengine"
+	//   ]
+	// }
+
+}
+
+// method id "mapsengine.tables.permissions.batchUpdate":
+
+type TablesPermissionsBatchUpdateCall struct {
+	s                             *Service
+	id                            string
+	permissionsbatchupdaterequest *PermissionsBatchUpdateRequest
+	opt_                          map[string]interface{}
+}
+
+// BatchUpdate: Add or update permission entries to an already existing
+// asset.
+//
+// An asset can hold up to 20 different permission entries. Each
+// batchInsert request is atomic.
+func (r *TablesPermissionsService) BatchUpdate(id string, permissionsbatchupdaterequest *PermissionsBatchUpdateRequest) *TablesPermissionsBatchUpdateCall {
+	c := &TablesPermissionsBatchUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	c.permissionsbatchupdaterequest = permissionsbatchupdaterequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TablesPermissionsBatchUpdateCall) Fields(s ...googleapi.Field) *TablesPermissionsBatchUpdateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *TablesPermissionsBatchUpdateCall) Do() (*PermissionsBatchUpdateResponse, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.permissionsbatchupdaterequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{id}/permissions/batchUpdate")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"id": c.id,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *PermissionsBatchUpdateResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Add or update permission entries to an already existing asset.\n\nAn asset can hold up to 20 different permission entries. Each batchInsert request is atomic.",
+	//   "httpMethod": "POST",
+	//   "id": "mapsengine.tables.permissions.batchUpdate",
 	//   "parameterOrder": [
 	//     "id"
 	//   ],
@@ -7643,12 +9874,12 @@ func (c *TablesPermissionsBatchInsertCall) Do() (*PermissionsBatchInsertResponse
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "tables/{id}/permissions/batchInsert",
+	//   "path": "tables/{id}/permissions/batchUpdate",
 	//   "request": {
-	//     "$ref": "PermissionsBatchInsertRequest"
+	//     "$ref": "PermissionsBatchUpdateRequest"
 	//   },
 	//   "response": {
-	//     "$ref": "PermissionsBatchInsertResponse"
+	//     "$ref": "PermissionsBatchUpdateResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/mapsengine"
@@ -7672,10 +9903,21 @@ func (r *TablesPermissionsService) List(id string) *TablesPermissionsListCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TablesPermissionsListCall) Fields(s ...googleapi.Field) *TablesPermissionsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *TablesPermissionsListCall) Do() (*PermissionsListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{id}/permissions")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)

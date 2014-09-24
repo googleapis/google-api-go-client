@@ -241,11 +241,22 @@ func (r *BatchReportDefinitionsService) List(onBehalfOfContentOwner string) *Bat
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BatchReportDefinitionsListCall) Fields(s ...googleapi.Field) *BatchReportDefinitionsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *BatchReportDefinitionsListCall) Do() (*BatchReportDefinitionList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", c.onBehalfOfContentOwner))
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "batchReportDefinitions")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -308,12 +319,23 @@ func (r *BatchReportsService) List(batchReportDefinitionId string, onBehalfOfCon
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BatchReportsListCall) Fields(s ...googleapi.Field) *BatchReportsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *BatchReportsListCall) Do() (*BatchReportList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("batchReportDefinitionId", fmt.Sprintf("%v", c.batchReportDefinitionId))
 	params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", c.onBehalfOfContentOwner))
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "batchReports")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -437,6 +459,14 @@ func (c *ReportsQueryCall) StartIndex(startIndex int64) *ReportsQueryCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ReportsQueryCall) Fields(s ...googleapi.Field) *ReportsQueryCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *ReportsQueryCall) Do() (*ResultTable, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -459,6 +489,9 @@ func (c *ReportsQueryCall) Do() (*ResultTable, error) {
 	}
 	if v, ok := c.opt_["start-index"]; ok {
 		params.Set("start-index", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "reports")
 	urls += "?" + params.Encode()

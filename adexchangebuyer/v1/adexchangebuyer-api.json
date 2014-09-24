@@ -1,19 +1,19 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/i3M0e8Ed8AaqZfjhj-Y7kpaqBfc\"",
+ "etag": "\"uUWyYHXmEn-ab7WLvo8qNz2S8ws/bCrngnv7JtIETg5qek5ney_qxpk\"",
  "discoveryVersion": "v1",
  "id": "adexchangebuyer:v1",
  "name": "adexchangebuyer",
  "canonicalName": "Ad Exchange Buyer",
  "version": "v1",
- "revision": "20140812",
+ "revision": "20140904",
  "title": "Ad Exchange Buyer API",
  "description": "Accesses your bidding-account information, submits creatives for validation, finds available direct deals, and retrieves performance reports.",
  "ownerDomain": "google.com",
  "ownerName": "Google",
  "icons": {
-  "x16": "http://www.google.com/images/icons/product/doubleclick-16.gif",
-  "x32": "http://www.google.com/images/icons/product/doubleclick-32.gif"
+  "x16": "https://www.google.com/images/icons/product/doubleclick-16.gif",
+  "x32": "https://www.google.com/images/icons/product/doubleclick-32.gif"
  },
  "documentationLink": "https://developers.google.com/ad-exchange/buyer-rest",
  "protocol": "rest",
@@ -315,78 +315,6 @@
      "description": "Continuation token used to page through creatives. To retrieve the next page of results, set the next request's \"pageToken\" value to this."
     }
    }
-  },
-  "DirectDeal": {
-   "id": "DirectDeal",
-   "type": "object",
-   "description": "The configuration data for an Ad Exchange direct deal.",
-   "properties": {
-    "accountId": {
-     "type": "integer",
-     "description": "The account id of the buyer this deal is for.",
-     "format": "int32"
-    },
-    "advertiser": {
-     "type": "string",
-     "description": "The name of the advertiser this deal is for."
-    },
-    "currencyCode": {
-     "type": "string",
-     "description": "The currency code that applies to the fixed_cpm value. If not set then assumed to be USD."
-    },
-    "endTime": {
-     "type": "string",
-     "description": "End time for when this deal stops being active. If not set then this deal is valid until manually disabled by the publisher. In seconds since the epoch.",
-     "format": "int64"
-    },
-    "fixedCpm": {
-     "type": "string",
-     "description": "The fixed price for this direct deal. In cpm micros of currency according to currency_code.",
-     "format": "int64"
-    },
-    "id": {
-     "type": "string",
-     "description": "Deal id.",
-     "format": "int64"
-    },
-    "kind": {
-     "type": "string",
-     "description": "Resource type.",
-     "default": "adexchangebuyer#directDeal"
-    },
-    "name": {
-     "type": "string",
-     "description": "Deal name."
-    },
-    "sellerNetwork": {
-     "type": "string",
-     "description": "The name of the publisher offering this direct deal."
-    },
-    "startTime": {
-     "type": "string",
-     "description": "Start time for when this deal becomes active. If not set then this deal is active immediately upon creation. In seconds since the epoch.",
-     "format": "int64"
-    }
-   }
-  },
-  "DirectDealsList": {
-   "id": "DirectDealsList",
-   "type": "object",
-   "description": "A direct deals feed lists Direct Deals the Ad Exchange buyer account has access to. This includes direct deals set up for the buyer account as well as its merged stream seats.",
-   "properties": {
-    "directDeals": {
-     "type": "array",
-     "description": "A list of direct deals relevant for your account.",
-     "items": {
-      "$ref": "DirectDeal"
-     }
-    },
-    "kind": {
-     "type": "string",
-     "description": "Resource type.",
-     "default": "adexchangebuyer#directDealsList"
-    }
-   }
   }
  },
  "resources": {
@@ -562,46 +490,6 @@
      },
      "response": {
       "$ref": "CreativesList"
-     },
-     "scopes": [
-      "https://www.googleapis.com/auth/adexchange.buyer"
-     ]
-    }
-   }
-  },
-  "directDeals": {
-   "methods": {
-    "get": {
-     "id": "adexchangebuyer.directDeals.get",
-     "path": "directdeals/{id}",
-     "httpMethod": "GET",
-     "description": "Gets one direct deal by ID.",
-     "parameters": {
-      "id": {
-       "type": "string",
-       "description": "The direct deal id",
-       "required": true,
-       "format": "int64",
-       "location": "path"
-      }
-     },
-     "parameterOrder": [
-      "id"
-     ],
-     "response": {
-      "$ref": "DirectDeal"
-     },
-     "scopes": [
-      "https://www.googleapis.com/auth/adexchange.buyer"
-     ]
-    },
-    "list": {
-     "id": "adexchangebuyer.directDeals.list",
-     "path": "directdeals",
-     "httpMethod": "GET",
-     "description": "Retrieves the authenticated user's list of direct deals.",
-     "response": {
-      "$ref": "DirectDealsList"
      },
      "scopes": [
       "https://www.googleapis.com/auth/adexchange.buyer"

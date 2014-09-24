@@ -1571,12 +1571,23 @@ func (c *BookshelvesGetCall) Source(source string) *BookshelvesGetCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BookshelvesGetCall) Fields(s ...googleapi.Field) *BookshelvesGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *BookshelvesGetCall) Do() (*Bookshelf, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/{userId}/bookshelves/{shelf}")
 	urls += "?" + params.Encode()
@@ -1659,12 +1670,23 @@ func (c *BookshelvesListCall) Source(source string) *BookshelvesListCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BookshelvesListCall) Fields(s ...googleapi.Field) *BookshelvesListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *BookshelvesListCall) Do() (*Bookshelves, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/{userId}/bookshelves")
 	urls += "?" + params.Encode()
@@ -1763,6 +1785,14 @@ func (c *BookshelvesVolumesListCall) StartIndex(startIndex int64) *BookshelvesVo
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BookshelvesVolumesListCall) Fields(s ...googleapi.Field) *BookshelvesVolumesListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *BookshelvesVolumesListCall) Do() (*Volumes, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1778,6 +1808,9 @@ func (c *BookshelvesVolumesListCall) Do() (*Volumes, error) {
 	}
 	if v, ok := c.opt_["startIndex"]; ok {
 		params.Set("startIndex", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/{userId}/bookshelves/{shelf}/volumes")
 	urls += "?" + params.Encode()
@@ -1898,6 +1931,14 @@ func (c *CloudloadingAddBookCall) Upload_client_token(upload_client_token string
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CloudloadingAddBookCall) Fields(s ...googleapi.Field) *CloudloadingAddBookCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *CloudloadingAddBookCall) Do() (*BooksCloudloadingResource, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1913,6 +1954,9 @@ func (c *CloudloadingAddBookCall) Do() (*BooksCloudloadingResource, error) {
 	}
 	if v, ok := c.opt_["upload_client_token"]; ok {
 		params.Set("upload_client_token", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "cloudloading/addBook")
 	urls += "?" + params.Encode()
@@ -1983,11 +2027,22 @@ func (r *CloudloadingService) DeleteBook(volumeId string) *CloudloadingDeleteBoo
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CloudloadingDeleteBookCall) Fields(s ...googleapi.Field) *CloudloadingDeleteBookCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *CloudloadingDeleteBookCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("volumeId", fmt.Sprintf("%v", c.volumeId))
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "cloudloading/deleteBook")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -2040,6 +2095,14 @@ func (r *CloudloadingService) UpdateBook(bookscloudloadingresource *BooksCloudlo
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CloudloadingUpdateBookCall) Fields(s ...googleapi.Field) *CloudloadingUpdateBookCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *CloudloadingUpdateBookCall) Do() (*BooksCloudloadingResource, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.bookscloudloadingresource)
@@ -2049,6 +2112,9 @@ func (c *CloudloadingUpdateBookCall) Do() (*BooksCloudloadingResource, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "cloudloading/updateBook")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -2117,6 +2183,14 @@ func (c *LayersGetCall) Source(source string) *LayersGetCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LayersGetCall) Fields(s ...googleapi.Field) *LayersGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *LayersGetCall) Do() (*Layersummary, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2126,6 +2200,9 @@ func (c *LayersGetCall) Do() (*Layersummary, error) {
 	}
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/{volumeId}/layersummary/{summaryId}")
 	urls += "?" + params.Encode()
@@ -2234,6 +2311,14 @@ func (c *LayersListCall) Source(source string) *LayersListCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LayersListCall) Fields(s ...googleapi.Field) *LayersListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *LayersListCall) Do() (*Layersummaries, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2249,6 +2334,9 @@ func (c *LayersListCall) Do() (*Layersummaries, error) {
 	}
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/{volumeId}/layersummary")
 	urls += "?" + params.Encode()
@@ -2384,6 +2472,14 @@ func (c *LayersAnnotationDataGetCall) W(w int64) *LayersAnnotationDataGetCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LayersAnnotationDataGetCall) Fields(s ...googleapi.Field) *LayersAnnotationDataGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *LayersAnnotationDataGetCall) Do() (*Annotationdata, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2406,6 +2502,9 @@ func (c *LayersAnnotationDataGetCall) Do() (*Annotationdata, error) {
 	}
 	if v, ok := c.opt_["w"]; ok {
 		params.Set("w", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/{volumeId}/layers/{layerId}/data/{annotationDataId}")
 	urls += "?" + params.Encode()
@@ -2603,6 +2702,14 @@ func (c *LayersAnnotationDataListCall) W(w int64) *LayersAnnotationDataListCall 
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LayersAnnotationDataListCall) Fields(s ...googleapi.Field) *LayersAnnotationDataListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *LayersAnnotationDataListCall) Do() (*Annotationsdata, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2637,6 +2744,9 @@ func (c *LayersAnnotationDataListCall) Do() (*Annotationsdata, error) {
 	}
 	if v, ok := c.opt_["w"]; ok {
 		params.Set("w", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/{volumeId}/layers/{layerId}/data")
 	urls += "?" + params.Encode()
@@ -2791,6 +2901,14 @@ func (c *LayersVolumeAnnotationsGetCall) Source(source string) *LayersVolumeAnno
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LayersVolumeAnnotationsGetCall) Fields(s ...googleapi.Field) *LayersVolumeAnnotationsGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *LayersVolumeAnnotationsGetCall) Do() (*Volumeannotation, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2800,6 +2918,9 @@ func (c *LayersVolumeAnnotationsGetCall) Do() (*Volumeannotation, error) {
 	}
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/{volumeId}/layers/{layerId}/annotations/{annotationId}")
 	urls += "?" + params.Encode()
@@ -2981,6 +3102,14 @@ func (c *LayersVolumeAnnotationsListCall) VolumeAnnotationsVersion(volumeAnnotat
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LayersVolumeAnnotationsListCall) Fields(s ...googleapi.Field) *LayersVolumeAnnotationsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *LayersVolumeAnnotationsListCall) Do() (*Volumeannotations, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3021,6 +3150,9 @@ func (c *LayersVolumeAnnotationsListCall) Do() (*Volumeannotations, error) {
 	}
 	if v, ok := c.opt_["volumeAnnotationsVersion"]; ok {
 		params.Set("volumeAnnotationsVersion", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/{volumeId}/layers/{layerId}")
 	urls += "?" + params.Encode()
@@ -3177,6 +3309,14 @@ func (c *MyconfigReleaseDownloadAccessCall) Source(source string) *MyconfigRelea
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MyconfigReleaseDownloadAccessCall) Fields(s ...googleapi.Field) *MyconfigReleaseDownloadAccessCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *MyconfigReleaseDownloadAccessCall) Do() (*DownloadAccesses, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3190,6 +3330,9 @@ func (c *MyconfigReleaseDownloadAccessCall) Do() (*DownloadAccesses, error) {
 	}
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "myconfig/releaseDownloadAccess")
 	urls += "?" + params.Encode()
@@ -3288,6 +3431,14 @@ func (c *MyconfigRequestAccessCall) Locale(locale string) *MyconfigRequestAccess
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MyconfigRequestAccessCall) Fields(s ...googleapi.Field) *MyconfigRequestAccessCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *MyconfigRequestAccessCall) Do() (*RequestAccess, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3301,6 +3452,9 @@ func (c *MyconfigRequestAccessCall) Do() (*RequestAccess, error) {
 	}
 	if v, ok := c.opt_["locale"]; ok {
 		params.Set("locale", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "myconfig/requestAccess")
 	urls += "?" + params.Encode()
@@ -3435,6 +3589,14 @@ func (c *MyconfigSyncVolumeLicensesCall) VolumeIds(volumeIds string) *MyconfigSy
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MyconfigSyncVolumeLicensesCall) Fields(s ...googleapi.Field) *MyconfigSyncVolumeLicensesCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *MyconfigSyncVolumeLicensesCall) Do() (*Volumes, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3453,6 +3615,9 @@ func (c *MyconfigSyncVolumeLicensesCall) Do() (*Volumes, error) {
 	}
 	if v, ok := c.opt_["volumeIds"]; ok {
 		params.Set("volumeIds", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "myconfig/syncVolumeLicenses")
 	urls += "?" + params.Encode()
@@ -3562,12 +3727,23 @@ func (c *MylibraryAnnotationsDeleteCall) Source(source string) *MylibraryAnnotat
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MylibraryAnnotationsDeleteCall) Fields(s ...googleapi.Field) *MylibraryAnnotationsDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *MylibraryAnnotationsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/annotations/{annotationId}")
 	urls += "?" + params.Encode()
@@ -3635,12 +3811,23 @@ func (c *MylibraryAnnotationsGetCall) Source(source string) *MylibraryAnnotation
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MylibraryAnnotationsGetCall) Fields(s ...googleapi.Field) *MylibraryAnnotationsGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *MylibraryAnnotationsGetCall) Do() (*Annotation, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/annotations/{annotationId}")
 	urls += "?" + params.Encode()
@@ -3723,6 +3910,14 @@ func (c *MylibraryAnnotationsInsertCall) Source(source string) *MylibraryAnnotat
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MylibraryAnnotationsInsertCall) Fields(s ...googleapi.Field) *MylibraryAnnotationsInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *MylibraryAnnotationsInsertCall) Do() (*Annotation, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.annotation)
@@ -3737,6 +3932,9 @@ func (c *MylibraryAnnotationsInsertCall) Do() (*Annotation, error) {
 	}
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/annotations")
 	urls += "?" + params.Encode()
@@ -3880,6 +4078,14 @@ func (c *MylibraryAnnotationsListCall) VolumeId(volumeId string) *MylibraryAnnot
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MylibraryAnnotationsListCall) Fields(s ...googleapi.Field) *MylibraryAnnotationsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *MylibraryAnnotationsListCall) Do() (*Annotations, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3916,6 +4122,9 @@ func (c *MylibraryAnnotationsListCall) Do() (*Annotations, error) {
 	}
 	if v, ok := c.opt_["volumeId"]; ok {
 		params.Set("volumeId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/annotations")
 	urls += "?" + params.Encode()
@@ -4029,6 +4238,14 @@ func (r *MylibraryAnnotationsService) Summary(layerIds []string, volumeId string
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MylibraryAnnotationsSummaryCall) Fields(s ...googleapi.Field) *MylibraryAnnotationsSummaryCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *MylibraryAnnotationsSummaryCall) Do() (*AnnotationsSummary, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4036,6 +4253,9 @@ func (c *MylibraryAnnotationsSummaryCall) Do() (*AnnotationsSummary, error) {
 	params.Set("volumeId", fmt.Sprintf("%v", c.volumeId))
 	for _, v := range c.layerIds {
 		params.Add("layerIds", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/annotations/summary")
 	urls += "?" + params.Encode()
@@ -4113,6 +4333,14 @@ func (c *MylibraryAnnotationsUpdateCall) Source(source string) *MylibraryAnnotat
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MylibraryAnnotationsUpdateCall) Fields(s ...googleapi.Field) *MylibraryAnnotationsUpdateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *MylibraryAnnotationsUpdateCall) Do() (*Annotation, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.annotation)
@@ -4124,6 +4352,9 @@ func (c *MylibraryAnnotationsUpdateCall) Do() (*Annotation, error) {
 	params.Set("alt", "json")
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/annotations/{annotationId}")
 	urls += "?" + params.Encode()
@@ -4204,6 +4435,14 @@ func (c *MylibraryBookshelvesAddVolumeCall) Source(source string) *MylibraryBook
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MylibraryBookshelvesAddVolumeCall) Fields(s ...googleapi.Field) *MylibraryBookshelvesAddVolumeCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *MylibraryBookshelvesAddVolumeCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4211,6 +4450,9 @@ func (c *MylibraryBookshelvesAddVolumeCall) Do() error {
 	params.Set("volumeId", fmt.Sprintf("%v", c.volumeId))
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/bookshelves/{shelf}/addVolume")
 	urls += "?" + params.Encode()
@@ -4285,12 +4527,23 @@ func (c *MylibraryBookshelvesClearVolumesCall) Source(source string) *MylibraryB
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MylibraryBookshelvesClearVolumesCall) Fields(s ...googleapi.Field) *MylibraryBookshelvesClearVolumesCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *MylibraryBookshelvesClearVolumesCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/bookshelves/{shelf}/clearVolumes")
 	urls += "?" + params.Encode()
@@ -4359,12 +4612,23 @@ func (c *MylibraryBookshelvesGetCall) Source(source string) *MylibraryBookshelve
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MylibraryBookshelvesGetCall) Fields(s ...googleapi.Field) *MylibraryBookshelvesGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *MylibraryBookshelvesGetCall) Do() (*Bookshelf, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/bookshelves/{shelf}")
 	urls += "?" + params.Encode()
@@ -4438,12 +4702,23 @@ func (c *MylibraryBookshelvesListCall) Source(source string) *MylibraryBookshelv
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MylibraryBookshelvesListCall) Fields(s ...googleapi.Field) *MylibraryBookshelvesListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *MylibraryBookshelvesListCall) Do() (*Bookshelves, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/bookshelves")
 	urls += "?" + params.Encode()
@@ -4511,6 +4786,14 @@ func (c *MylibraryBookshelvesMoveVolumeCall) Source(source string) *MylibraryBoo
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MylibraryBookshelvesMoveVolumeCall) Fields(s ...googleapi.Field) *MylibraryBookshelvesMoveVolumeCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *MylibraryBookshelvesMoveVolumeCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4519,6 +4802,9 @@ func (c *MylibraryBookshelvesMoveVolumeCall) Do() error {
 	params.Set("volumePosition", fmt.Sprintf("%v", c.volumePosition))
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/bookshelves/{shelf}/moveVolume")
 	urls += "?" + params.Encode()
@@ -4603,6 +4889,14 @@ func (c *MylibraryBookshelvesRemoveVolumeCall) Source(source string) *MylibraryB
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MylibraryBookshelvesRemoveVolumeCall) Fields(s ...googleapi.Field) *MylibraryBookshelvesRemoveVolumeCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *MylibraryBookshelvesRemoveVolumeCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4610,6 +4904,9 @@ func (c *MylibraryBookshelvesRemoveVolumeCall) Do() error {
 	params.Set("volumeId", fmt.Sprintf("%v", c.volumeId))
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/bookshelves/{shelf}/removeVolume")
 	urls += "?" + params.Encode()
@@ -4726,6 +5023,14 @@ func (c *MylibraryBookshelvesVolumesListCall) StartIndex(startIndex int64) *Myli
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MylibraryBookshelvesVolumesListCall) Fields(s ...googleapi.Field) *MylibraryBookshelvesVolumesListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *MylibraryBookshelvesVolumesListCall) Do() (*Volumes, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4750,6 +5055,9 @@ func (c *MylibraryBookshelvesVolumesListCall) Do() (*Volumes, error) {
 	}
 	if v, ok := c.opt_["startIndex"]; ok {
 		params.Set("startIndex", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/bookshelves/{shelf}/volumes")
 	urls += "?" + params.Encode()
@@ -4873,6 +5181,14 @@ func (c *MylibraryReadingpositionsGetCall) Source(source string) *MylibraryReadi
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MylibraryReadingpositionsGetCall) Fields(s ...googleapi.Field) *MylibraryReadingpositionsGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *MylibraryReadingpositionsGetCall) Do() (*ReadingPosition, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4882,6 +5198,9 @@ func (c *MylibraryReadingpositionsGetCall) Do() (*ReadingPosition, error) {
 	}
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/readingpositions/{volumeId}")
 	urls += "?" + params.Encode()
@@ -4986,6 +5305,14 @@ func (c *MylibraryReadingpositionsSetPositionCall) Source(source string) *Mylibr
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MylibraryReadingpositionsSetPositionCall) Fields(s ...googleapi.Field) *MylibraryReadingpositionsSetPositionCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *MylibraryReadingpositionsSetPositionCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5003,6 +5330,9 @@ func (c *MylibraryReadingpositionsSetPositionCall) Do() error {
 	}
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/readingpositions/{volumeId}/setPosition")
 	urls += "?" + params.Encode()
@@ -5156,6 +5486,14 @@ func (c *PromoofferAcceptCall) VolumeId(volumeId string) *PromoofferAcceptCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PromoofferAcceptCall) Fields(s ...googleapi.Field) *PromoofferAcceptCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *PromoofferAcceptCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5183,6 +5521,9 @@ func (c *PromoofferAcceptCall) Do() error {
 	}
 	if v, ok := c.opt_["volumeId"]; ok {
 		params.Set("volumeId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "promooffer/accept")
 	urls += "?" + params.Encode()
@@ -5307,6 +5648,14 @@ func (c *PromoofferDismissCall) Serial(serial string) *PromoofferDismissCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PromoofferDismissCall) Fields(s ...googleapi.Field) *PromoofferDismissCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *PromoofferDismissCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5331,6 +5680,9 @@ func (c *PromoofferDismissCall) Do() error {
 	}
 	if v, ok := c.opt_["serial"]; ok {
 		params.Set("serial", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "promooffer/dismiss")
 	urls += "?" + params.Encode()
@@ -5445,6 +5797,14 @@ func (c *PromoofferGetCall) Serial(serial string) *PromoofferGetCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PromoofferGetCall) Fields(s ...googleapi.Field) *PromoofferGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *PromoofferGetCall) Do() (*Offers, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5466,6 +5826,9 @@ func (c *PromoofferGetCall) Do() (*Offers, error) {
 	}
 	if v, ok := c.opt_["serial"]; ok {
 		params.Set("serial", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "promooffer/get")
 	urls += "?" + params.Encode()
@@ -5575,6 +5938,14 @@ func (c *VolumesGetCall) Source(source string) *VolumesGetCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *VolumesGetCall) Fields(s ...googleapi.Field) *VolumesGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *VolumesGetCall) Do() (*Volume, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5590,6 +5961,9 @@ func (c *VolumesGetCall) Do() (*Volume, error) {
 	}
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/{volumeId}")
 	urls += "?" + params.Encode()
@@ -5762,6 +6136,14 @@ func (c *VolumesListCall) StartIndex(startIndex int64) *VolumesListCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *VolumesListCall) Fields(s ...googleapi.Field) *VolumesListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *VolumesListCall) Do() (*Volumes, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5802,6 +6184,9 @@ func (c *VolumesListCall) Do() (*Volumes, error) {
 	}
 	if v, ok := c.opt_["startIndex"]; ok {
 		params.Set("startIndex", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes")
 	urls += "?" + params.Encode()
@@ -6003,6 +6388,14 @@ func (c *VolumesAssociatedListCall) Source(source string) *VolumesAssociatedList
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *VolumesAssociatedListCall) Fields(s ...googleapi.Field) *VolumesAssociatedListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *VolumesAssociatedListCall) Do() (*Volumes, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -6015,6 +6408,9 @@ func (c *VolumesAssociatedListCall) Do() (*Volumes, error) {
 	}
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/{volumeId}/associated")
 	urls += "?" + params.Encode()
@@ -6142,6 +6538,14 @@ func (c *VolumesMybooksListCall) StartIndex(startIndex int64) *VolumesMybooksLis
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *VolumesMybooksListCall) Fields(s ...googleapi.Field) *VolumesMybooksListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *VolumesMybooksListCall) Do() (*Volumes, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -6163,6 +6567,9 @@ func (c *VolumesMybooksListCall) Do() (*Volumes, error) {
 	}
 	if v, ok := c.opt_["startIndex"]; ok {
 		params.Set("startIndex", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/mybooks")
 	urls += "?" + params.Encode()
@@ -6292,6 +6699,14 @@ func (c *VolumesRecommendedListCall) Source(source string) *VolumesRecommendedLi
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *VolumesRecommendedListCall) Fields(s ...googleapi.Field) *VolumesRecommendedListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *VolumesRecommendedListCall) Do() (*Volumes, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -6301,6 +6716,9 @@ func (c *VolumesRecommendedListCall) Do() (*Volumes, error) {
 	}
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/recommended")
 	urls += "?" + params.Encode()
@@ -6379,6 +6797,14 @@ func (c *VolumesRecommendedRateCall) Source(source string) *VolumesRecommendedRa
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *VolumesRecommendedRateCall) Fields(s ...googleapi.Field) *VolumesRecommendedRateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *VolumesRecommendedRateCall) Do() (*BooksVolumesRecommendedRateResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -6390,6 +6816,9 @@ func (c *VolumesRecommendedRateCall) Do() (*BooksVolumesRecommendedRateResponse,
 	}
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/recommended/rate")
 	urls += "?" + params.Encode()
@@ -6517,6 +6946,14 @@ func (c *VolumesUseruploadedListCall) VolumeId(volumeId string) *VolumesUseruplo
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *VolumesUseruploadedListCall) Fields(s ...googleapi.Field) *VolumesUseruploadedListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *VolumesUseruploadedListCall) Do() (*Volumes, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -6538,6 +6975,9 @@ func (c *VolumesUseruploadedListCall) Do() (*Volumes, error) {
 	}
 	if v, ok := c.opt_["volumeId"]; ok {
 		params.Set("volumeId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/useruploaded")
 	urls += "?" + params.Encode()

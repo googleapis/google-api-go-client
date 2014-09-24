@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/pVZ6N4zg8YUBo0usXnyYxvGf15U\"",
+ "etag": "\"uUWyYHXmEn-ab7WLvo8qNz2S8ws/2oa8SMSfpFS6UKNS3wRm4F3v1wQ\"",
  "discoveryVersion": "v1",
  "id": "resourceviews:v1beta1",
  "name": "resourceviews",
  "version": "v1beta1",
- "revision": "20140806",
+ "revision": "20140904",
  "title": "Resource Views API",
  "description": "The Resource View API allows users to create and manage logical sets of Google Compute Engine instances.",
  "ownerDomain": "google.com",

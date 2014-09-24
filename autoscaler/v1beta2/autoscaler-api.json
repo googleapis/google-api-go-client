@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/FJuvjX0f1VGUeRzYl7v6jwJPstg\"",
+ "etag": "\"uUWyYHXmEn-ab7WLvo8qNz2S8ws/OGrwqagtFyzrQU63rEsuM0hbVC4\"",
  "discoveryVersion": "v1",
  "id": "autoscaler:v1beta2",
  "name": "autoscaler",
  "version": "v1beta2",
- "revision": "20140731",
+ "revision": "20140909",
  "title": "Google Compute Engine Autoscaler API",
  "description": "The Google Compute Engine Autoscaler API provides autoscaling for groups of Cloud VMs.",
  "ownerDomain": "google.com",
@@ -104,6 +104,11 @@
      "description": "[Output Only] Unique identifier for the resource; defined by the server.",
      "format": "uint64"
     },
+    "kind": {
+     "type": "string",
+     "description": "Type of resource.",
+     "default": "compute#autoscaler"
+    },
     "name": {
      "type": "string",
      "description": "Name of the Autoscaler resource. Must be unique per project and zone."
@@ -128,6 +133,11 @@
      "items": {
       "$ref": "Autoscaler"
      }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Type of resource.",
+     "default": "compute#autoscalerList"
     },
     "nextPageToken": {
      "type": "string",
@@ -197,6 +207,10 @@
      "type": "number",
      "description": "Target value of the metric which Autoscaler should maintain. Must be a positive value.",
      "format": "double"
+    },
+    "utilizationTargetType": {
+     "type": "string",
+     "description": "Defines type in which utilization_target is expressed."
     }
    }
   },

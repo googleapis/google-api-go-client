@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/hOhaAoDk9cE9xZLdvYDGAPiddf8\"",
+ "etag": "\"uUWyYHXmEn-ab7WLvo8qNz2S8ws/JayrKKEnIqmNj16l21fqKTyl5PU\"",
  "discoveryVersion": "v1",
  "id": "admin:directory_v1",
  "name": "admin",
  "canonicalName": "directory",
  "version": "directory_v1",
- "revision": "20140715",
+ "revision": "20140919",
  "title": "Admin Directory API",
  "description": "The Admin SDK Directory API lets you view and manage enterprise resources such as users and groups, administrative notifications, security features, and more.",
  "ownerDomain": "google.com",
@@ -121,6 +121,12 @@
     },
     "https://www.googleapis.com/auth/admin.directory.user.security": {
      "description": "Manage data access permissions for users on your domain"
+    },
+    "https://www.googleapis.com/auth/admin.directory.userschema": {
+     "description": "View and manage the provisioning of user schemas on your domain"
+    },
+    "https://www.googleapis.com/auth/admin.directory.userschema.readonly": {
+     "description": "View user schemas on your domain"
     }
    }
   }
@@ -403,7 +409,7 @@
     },
     "willAutoRenew": {
      "type": "boolean",
-     "description": "Will Chromebook auto reniew after support end date (Read-only)"
+     "description": "Will Chromebook auto renew after support end date (Read-only)"
     }
    }
   },
@@ -919,6 +925,147 @@
     }
    }
   },
+  "Schema": {
+   "id": "Schema",
+   "type": "object",
+   "description": "JSON template for Schema resource in Directory API.",
+   "properties": {
+    "etag": {
+     "type": "string",
+     "description": "ETag of the resource."
+    },
+    "fields": {
+     "type": "array",
+     "description": "Fields of Schema",
+     "items": {
+      "$ref": "SchemaFieldSpec"
+     },
+     "annotations": {
+      "required": [
+       "directory.schemas.insert",
+       "directory.schemas.update"
+      ]
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Kind of resource this is.",
+     "default": "admin#directory#schema"
+    },
+    "schemaId": {
+     "type": "string",
+     "description": "Unique identifier of Schema (Read-only)"
+    },
+    "schemaName": {
+     "type": "string",
+     "description": "Schema name",
+     "annotations": {
+      "required": [
+       "directory.schemas.insert"
+      ]
+     }
+    }
+   }
+  },
+  "SchemaFieldSpec": {
+   "id": "SchemaFieldSpec",
+   "type": "object",
+   "description": "JSON template for FieldSpec resource for Schemas in Directory API.",
+   "properties": {
+    "etag": {
+     "type": "string",
+     "description": "ETag of the resource."
+    },
+    "fieldId": {
+     "type": "string",
+     "description": "Unique identifier of Field (Read-only)"
+    },
+    "fieldName": {
+     "type": "string",
+     "description": "Name of the field.",
+     "annotations": {
+      "required": [
+       "directory.schemas.insert",
+       "directory.schemas.update"
+      ]
+     }
+    },
+    "fieldType": {
+     "type": "string",
+     "description": "Type of the field.",
+     "annotations": {
+      "required": [
+       "directory.schemas.insert",
+       "directory.schemas.update"
+      ]
+     }
+    },
+    "indexed": {
+     "type": "boolean",
+     "description": "Boolean specifying whether the field is indexed or not.",
+     "default": "true"
+    },
+    "kind": {
+     "type": "string",
+     "description": "Kind of resource this is.",
+     "default": "admin#directory#schema#fieldspec"
+    },
+    "multiValued": {
+     "type": "boolean",
+     "description": "Boolean specifying whether this is a multi-valued field or not.",
+     "annotations": {
+      "required": [
+       "directory.schemas.insert",
+       "directory.schemas.update"
+      ]
+     }
+    },
+    "numericIndexingSpec": {
+     "type": "object",
+     "description": "Indexing spec for a numeric field. By default, only exact match queries will be supported for numeric fields. Setting the numericIndexingSpec allows range queries to be supported.",
+     "properties": {
+      "maxValue": {
+       "type": "number",
+       "description": "Maximum value of this field. This is meant to be indicative rather than enforced. Values outside this range will still be indexed, but search may not be as performant.",
+       "format": "double"
+      },
+      "minValue": {
+       "type": "number",
+       "description": "Minimum value of this field. This is meant to be indicative rather than enforced. Values outside this range will still be indexed, but search may not be as performant.",
+       "format": "double"
+      }
+     }
+    },
+    "readAccessType": {
+     "type": "string",
+     "description": "Read ACLs on the field specifying who can view values of this field. Valid values are \"ALL_DOMAIN_USERS\" and \"ADMINS_AND_SELF\".",
+     "default": "ALL_DOMAIN_USERS"
+    }
+   }
+  },
+  "Schemas": {
+   "id": "Schemas",
+   "type": "object",
+   "description": "JSON response template for List Schema operation in Directory API.",
+   "properties": {
+    "etag": {
+     "type": "string",
+     "description": "ETag of the resource."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Kind of resource this is.",
+     "default": "admin#directory#schemas"
+    },
+    "schemas": {
+     "type": "array",
+     "description": "List of UserSchema objects.",
+     "items": {
+      "$ref": "Schema"
+     }
+    }
+   }
+  },
   "Token": {
    "id": "Token",
    "type": "object",
@@ -988,7 +1135,7 @@
   "User": {
    "id": "User",
    "type": "object",
-   "description": "JSON template for User object in Apps Directory API.",
+   "description": "JSON template for User object in Directory API.",
    "properties": {
     "addresses": {
      "type": "any"
@@ -1012,6 +1159,13 @@
      "type": "string",
      "description": "User's Google account creation time. (Read-only)",
      "format": "date-time"
+    },
+    "customSchemas": {
+     "type": "object",
+     "description": "Custom fields of the user.",
+     "additionalProperties": {
+      "$ref": "UserCustomProperties"
+     }
     },
     "customerId": {
      "type": "string",
@@ -1192,6 +1346,14 @@
     }
    }
   },
+  "UserCustomProperties": {
+   "id": "UserCustomProperties",
+   "type": "object",
+   "description": "JSON template for a set of custom properties (i.e. all fields in a particular schema)",
+   "additionalProperties": {
+    "type": "any"
+   }
+  },
   "UserEmail": {
    "id": "UserEmail",
    "type": "object",
@@ -1211,7 +1373,7 @@
     },
     "type": {
      "type": "string",
-     "description": "Each entry can have a type which indicates standard types of that entry. For example email could be of home, work etc. In addition to the standard type, an entry can have a custom type and can take any value Such typess should have the CUSTOM value as type and also have a customType value."
+     "description": "Each entry can have a type which indicates standard types of that entry. For example email could be of home, work etc. In addition to the standard type, an entry can have a custom type and can take any value Such types should have the CUSTOM value as type and also have a customType value."
     }
    }
   },
@@ -1253,11 +1415,11 @@
     },
     "primary": {
      "type": "boolean",
-     "description": "If this is user's priamry im. Only one entry could be marked as primary."
+     "description": "If this is user's primary im. Only one entry could be marked as primary."
     },
     "protocol": {
      "type": "string",
-     "description": "Protocol used in the instant messenger. It should be one of the values from ImProtocolTypes map. Simalar to type, it can take a CUSTOM value and specify the custom name in customProtocol field."
+     "description": "Protocol used in the instant messenger. It should be one of the values from ImProtocolTypes map. Similar to type, it can take a CUSTOM value and specify the custom name in customProtocol field."
     },
     "type": {
      "type": "string",
@@ -1349,7 +1511,7 @@
     },
     "symbol": {
      "type": "string",
-     "description": "Symobol of the organization."
+     "description": "Symbol of the organization."
     },
     "title": {
      "type": "string",
@@ -2889,6 +3051,184 @@
     }
    }
   },
+  "schemas": {
+   "methods": {
+    "delete": {
+     "id": "directory.schemas.delete",
+     "path": "customer/{customerId}/schemas/{schemaKey}",
+     "httpMethod": "DELETE",
+     "description": "Delete schema",
+     "parameters": {
+      "customerId": {
+       "type": "string",
+       "description": "Immutable id of the Google Apps account",
+       "required": true,
+       "location": "path"
+      },
+      "schemaKey": {
+       "type": "string",
+       "description": "Name or immutable Id of the schema",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "customerId",
+      "schemaKey"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/admin.directory.userschema"
+     ]
+    },
+    "get": {
+     "id": "directory.schemas.get",
+     "path": "customer/{customerId}/schemas/{schemaKey}",
+     "httpMethod": "GET",
+     "description": "Retrieve schema",
+     "parameters": {
+      "customerId": {
+       "type": "string",
+       "description": "Immutable id of the Google Apps account",
+       "required": true,
+       "location": "path"
+      },
+      "schemaKey": {
+       "type": "string",
+       "description": "Name or immutable Id of the schema",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "customerId",
+      "schemaKey"
+     ],
+     "response": {
+      "$ref": "Schema"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/admin.directory.userschema",
+      "https://www.googleapis.com/auth/admin.directory.userschema.readonly"
+     ]
+    },
+    "insert": {
+     "id": "directory.schemas.insert",
+     "path": "customer/{customerId}/schemas",
+     "httpMethod": "POST",
+     "description": "Create schema.",
+     "parameters": {
+      "customerId": {
+       "type": "string",
+       "description": "Immutable id of the Google Apps account",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "customerId"
+     ],
+     "request": {
+      "$ref": "Schema"
+     },
+     "response": {
+      "$ref": "Schema"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/admin.directory.userschema"
+     ]
+    },
+    "list": {
+     "id": "directory.schemas.list",
+     "path": "customer/{customerId}/schemas",
+     "httpMethod": "GET",
+     "description": "Retrieve all schemas for a customer",
+     "parameters": {
+      "customerId": {
+       "type": "string",
+       "description": "Immutable id of the Google Apps account",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "customerId"
+     ],
+     "response": {
+      "$ref": "Schemas"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/admin.directory.userschema",
+      "https://www.googleapis.com/auth/admin.directory.userschema.readonly"
+     ]
+    },
+    "patch": {
+     "id": "directory.schemas.patch",
+     "path": "customer/{customerId}/schemas/{schemaKey}",
+     "httpMethod": "PATCH",
+     "description": "Update schema. This method supports patch semantics.",
+     "parameters": {
+      "customerId": {
+       "type": "string",
+       "description": "Immutable id of the Google Apps account",
+       "required": true,
+       "location": "path"
+      },
+      "schemaKey": {
+       "type": "string",
+       "description": "Name or immutable Id of the schema.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "customerId",
+      "schemaKey"
+     ],
+     "request": {
+      "$ref": "Schema"
+     },
+     "response": {
+      "$ref": "Schema"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/admin.directory.userschema"
+     ]
+    },
+    "update": {
+     "id": "directory.schemas.update",
+     "path": "customer/{customerId}/schemas/{schemaKey}",
+     "httpMethod": "PUT",
+     "description": "Update schema",
+     "parameters": {
+      "customerId": {
+       "type": "string",
+       "description": "Immutable id of the Google Apps account",
+       "required": true,
+       "location": "path"
+      },
+      "schemaKey": {
+       "type": "string",
+       "description": "Name or immutable Id of the schema.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "customerId",
+      "schemaKey"
+     ],
+     "request": {
+      "$ref": "Schema"
+     },
+     "response": {
+      "$ref": "Schema"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/admin.directory.userschema"
+     ]
+    }
+   }
+  },
   "tokens": {
    "methods": {
     "delete": {
@@ -3001,11 +3341,46 @@
      "httpMethod": "GET",
      "description": "retrieve user",
      "parameters": {
+      "customFieldMask": {
+       "type": "string",
+       "description": "Comma-separated list of schema names. All fields from these schemas are fetched. This should only be set when projection=custom.",
+       "location": "query"
+      },
+      "projection": {
+       "type": "string",
+       "description": "What subset of fields to fetch for this user.",
+       "default": "basic",
+       "enum": [
+        "basic",
+        "custom",
+        "full"
+       ],
+       "enumDescriptions": [
+        "Do not include any custom fields for the user.",
+        "Include custom fields from schemas mentioned in customFieldMask.",
+        "Include all fields associated with this user."
+       ],
+       "location": "query"
+      },
       "userKey": {
        "type": "string",
        "description": "Email or immutable Id of the user",
        "required": true,
        "location": "path"
+      },
+      "viewType": {
+       "type": "string",
+       "description": "Whether to fetch the ADMIN_VIEW or DOMAIN_PUBLIC view of the user.",
+       "default": "admin_view",
+       "enum": [
+        "admin_view",
+        "domain_public"
+       ],
+       "enumDescriptions": [
+        "Fetches the ADMIN_VIEW of the user.",
+        "Fetches the DOMAIN_PUBLIC view of the user."
+       ],
+       "location": "query"
       }
      },
      "parameterOrder": [
@@ -3040,6 +3415,11 @@
      "httpMethod": "GET",
      "description": "Retrieve either deleted users or all users in a domain (paginated)",
      "parameters": {
+      "customFieldMask": {
+       "type": "string",
+       "description": "Comma-separated list of schema names. All fields from these schemas are fetched. This should only be set when projection=custom.",
+       "location": "query"
+      },
       "customer": {
        "type": "string",
        "description": "Immutable id of the Google Apps account. In case of multi-domain, to fetch all users for a customer, fill this field instead of domain.",
@@ -3097,9 +3477,25 @@
        "description": "Token to specify next page in the list",
        "location": "query"
       },
+      "projection": {
+       "type": "string",
+       "description": "What subset of fields to fetch for this user.",
+       "default": "basic",
+       "enum": [
+        "basic",
+        "custom",
+        "full"
+       ],
+       "enumDescriptions": [
+        "Do not include any custom fields for the user.",
+        "Include custom fields from schemas mentioned in customFieldMask.",
+        "Include all fields associated with this user."
+       ],
+       "location": "query"
+      },
       "query": {
        "type": "string",
-       "description": "Query string search. Should be of the form \"\" where field can be any of supported fields, operators can be one of '=' for exact match or ':' for prefix match. For prefix match, the value should always be followed by a *.",
+       "description": "Query string search. Should be of the form \"\". Complete documentation is at https://developers.google.com/admin-sdk/directory/v1/guides/search-users",
        "location": "query"
       },
       "showDeleted": {
@@ -3117,6 +3513,20 @@
        "enumDescriptions": [
         "Ascending order.",
         "Descending order."
+       ],
+       "location": "query"
+      },
+      "viewType": {
+       "type": "string",
+       "description": "Whether to fetch the ADMIN_VIEW or DOMAIN_PUBLIC view of the user.",
+       "default": "admin_view",
+       "enum": [
+        "admin_view",
+        "domain_public"
+       ],
+       "enumDescriptions": [
+        "Fetches the ADMIN_VIEW of the user.",
+        "Fetches the DOMAIN_PUBLIC view of the user."
        ],
        "location": "query"
       }
@@ -3234,6 +3644,11 @@
      "httpMethod": "POST",
      "description": "Watch for changes in users list",
      "parameters": {
+      "customFieldMask": {
+       "type": "string",
+       "description": "Comma-separated list of schema names. All fields from these schemas are fetched. This should only be set when projection=custom.",
+       "location": "query"
+      },
       "customer": {
        "type": "string",
        "description": "Immutable id of the Google Apps account. In case of multi-domain, to fetch all users for a customer, fill this field instead of domain.",
@@ -3291,9 +3706,25 @@
        "description": "Token to specify next page in the list",
        "location": "query"
       },
+      "projection": {
+       "type": "string",
+       "description": "What subset of fields to fetch for this user.",
+       "default": "basic",
+       "enum": [
+        "basic",
+        "custom",
+        "full"
+       ],
+       "enumDescriptions": [
+        "Do not include any custom fields for the user.",
+        "Include custom fields from schemas mentioned in customFieldMask.",
+        "Include all fields associated with this user."
+       ],
+       "location": "query"
+      },
       "query": {
        "type": "string",
-       "description": "Query string search. Should be of the form \"\" where field can be any of supported fields, operators can be one of '=' for exact match or ':' for prefix match. For prefix match, the value should always be followed by a *.",
+       "description": "Query string search. Should be of the form \"\". Complete documentation is at https://developers.google.com/admin-sdk/directory/v1/guides/search-users",
        "location": "query"
       },
       "showDeleted": {
@@ -3311,6 +3742,20 @@
        "enumDescriptions": [
         "Ascending order.",
         "Descending order."
+       ],
+       "location": "query"
+      },
+      "viewType": {
+       "type": "string",
+       "description": "Whether to fetch the ADMIN_VIEW or DOMAIN_PUBLIC view of the user.",
+       "default": "admin_view",
+       "enum": [
+        "admin_view",
+        "domain_public"
+       ],
+       "enumDescriptions": [
+        "Fetches the ADMIN_VIEW of the user.",
+        "Fetches the DOMAIN_PUBLIC view of the user."
        ],
        "location": "query"
       }

@@ -1,19 +1,19 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/RGPcvGO92y6YyF8hUUCx0o8WiC0\"",
+ "etag": "\"uUWyYHXmEn-ab7WLvo8qNz2S8ws/uHjNEd1_7g346IAEietALP-Pc6M\"",
  "discoveryVersion": "v1",
  "id": "adexchangebuyer:v1.3",
  "name": "adexchangebuyer",
  "canonicalName": "Ad Exchange Buyer",
  "version": "v1.3",
- "revision": "20140812",
+ "revision": "20140904",
  "title": "Ad Exchange Buyer API",
  "description": "Accesses your bidding-account information, submits creatives for validation, finds available direct deals, and retrieves performance reports.",
  "ownerDomain": "google.com",
  "ownerName": "Google",
  "icons": {
-  "x16": "http://www.google.com/images/icons/product/doubleclick-16.gif",
-  "x32": "http://www.google.com/images/icons/product/doubleclick-32.gif"
+  "x16": "https://www.google.com/images/icons/product/doubleclick-16.gif",
+  "x32": "https://www.google.com/images/icons/product/doubleclick-32.gif"
  },
  "documentationLink": "https://developers.google.com/ad-exchange/buyer-rest",
  "protocol": "rest",
@@ -164,7 +164,7 @@
     },
     "billingId": {
      "type": "array",
-     "description": "Billing info id.",
+     "description": "A list of adgroup IDs associated with this particular account. These IDs may show up as part of a realtime bidding BidRequest, which indicates a bid request for this account.",
      "items": {
       "type": "string"
      }
@@ -307,7 +307,7 @@
     },
     "filteringReasons": {
      "type": "object",
-     "description": "The filtering reasons for the creative. Read-only. This field should not be set in requests.",
+     "description": "The filtering reasons for the creative. If this feature is not enabled, please ask your technical account manager. Read-only. This field should not be set in requests.",
      "properties": {
       "date": {
        "type": "string",
@@ -471,6 +471,10 @@
      "description": "The minimum price for this direct deal. In cpm micros of currency according to currency_code. If set, then this deal is eligible for the private exchange tier of buying (below fixed price priority, run as a second price auction).",
      "format": "int64"
     },
+    "publisherBlocksOverriden": {
+     "type": "boolean",
+     "description": "If true, the publisher has opted to have their blocks ignored when a creative is bid with for this deal."
+    },
     "sellerNetwork": {
      "type": "string",
      "description": "The name of the publisher offering this direct deal."
@@ -618,6 +622,11 @@
    "id": "PretargetingConfig",
    "type": "object",
    "properties": {
+    "billingId": {
+     "type": "string",
+     "description": "The id for billing purposes, provided for reference. Leave this field blank for insert requests; the id will be generated automatically.",
+     "format": "int64"
+    },
     "configId": {
      "type": "string",
      "description": "The config id; generated automatically. Leave this field blank for insert requests.",

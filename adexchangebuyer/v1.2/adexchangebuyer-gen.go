@@ -52,7 +52,6 @@ func New(client *http.Client) (*Service, error) {
 	s := &Service{client: client, BasePath: basePath}
 	s.Accounts = NewAccountsService(s)
 	s.Creatives = NewCreativesService(s)
-	s.DirectDeals = NewDirectDealsService(s)
 	return s, nil
 }
 
@@ -63,8 +62,6 @@ type Service struct {
 	Accounts *AccountsService
 
 	Creatives *CreativesService
-
-	DirectDeals *DirectDealsService
 }
 
 func NewAccountsService(s *Service) *AccountsService {
@@ -82,15 +79,6 @@ func NewCreativesService(s *Service) *CreativesService {
 }
 
 type CreativesService struct {
-	s *Service
-}
-
-func NewDirectDealsService(s *Service) *DirectDealsService {
-	rs := &DirectDealsService{s: s}
-	return rs
-}
-
-type DirectDealsService struct {
 	s *Service
 }
 
@@ -249,60 +237,6 @@ type CreativesList struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
-type DirectDeal struct {
-	// AccountId: The account id of the buyer this deal is for.
-	AccountId int64 `json:"accountId,omitempty"`
-
-	// Advertiser: The name of the advertiser this deal is for.
-	Advertiser string `json:"advertiser,omitempty"`
-
-	// CurrencyCode: The currency code that applies to the fixed_cpm value.
-	// If not set then assumed to be USD.
-	CurrencyCode string `json:"currencyCode,omitempty"`
-
-	// EndTime: End time for when this deal stops being active. If not set
-	// then this deal is valid until manually disabled by the publisher. In
-	// seconds since the epoch.
-	EndTime int64 `json:"endTime,omitempty,string"`
-
-	// FixedCpm: The fixed price for this direct deal. In cpm micros of
-	// currency according to currency_code. If set, then this deal is
-	// eligible for the fixed price tier of buying (highest priority, pay
-	// exactly the configured fixed price).
-	FixedCpm int64 `json:"fixedCpm,omitempty,string"`
-
-	// Id: Deal id.
-	Id int64 `json:"id,omitempty,string"`
-
-	// Kind: Resource type.
-	Kind string `json:"kind,omitempty"`
-
-	// Name: Deal name.
-	Name string `json:"name,omitempty"`
-
-	// PrivateExchangeMinCpm: The minimum price for this direct deal. In cpm
-	// micros of currency according to currency_code. If set, then this deal
-	// is eligible for the private exchange tier of buying (below fixed
-	// price priority, run as a second price auction).
-	PrivateExchangeMinCpm int64 `json:"privateExchangeMinCpm,omitempty,string"`
-
-	// SellerNetwork: The name of the publisher offering this direct deal.
-	SellerNetwork string `json:"sellerNetwork,omitempty"`
-
-	// StartTime: Start time for when this deal becomes active. If not set
-	// then this deal is active immediately upon creation. In seconds since
-	// the epoch.
-	StartTime int64 `json:"startTime,omitempty,string"`
-}
-
-type DirectDealsList struct {
-	// DirectDeals: A list of direct deals relevant for your account.
-	DirectDeals []*DirectDeal `json:"directDeals,omitempty"`
-
-	// Kind: Resource type.
-	Kind string `json:"kind,omitempty"`
-}
-
 // method id "adexchangebuyer.accounts.get":
 
 type AccountsGetCall struct {
@@ -318,10 +252,21 @@ func (r *AccountsService) Get(id int64) *AccountsGetCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsGetCall) Fields(s ...googleapi.Field) *AccountsGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *AccountsGetCall) Do() (*Account, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{id}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -382,10 +327,21 @@ func (r *AccountsService) List() *AccountsListCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsListCall) Fields(s ...googleapi.Field) *AccountsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *AccountsListCall) Do() (*AccountsList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -437,6 +393,14 @@ func (r *AccountsService) Patch(id int64, account *Account) *AccountsPatchCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsPatchCall) Fields(s ...googleapi.Field) *AccountsPatchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *AccountsPatchCall) Do() (*Account, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.account)
@@ -446,6 +410,9 @@ func (c *AccountsPatchCall) Do() (*Account, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{id}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
@@ -514,6 +481,14 @@ func (r *AccountsService) Update(id int64, account *Account) *AccountsUpdateCall
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsUpdateCall) Fields(s ...googleapi.Field) *AccountsUpdateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *AccountsUpdateCall) Do() (*Account, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.account)
@@ -523,6 +498,9 @@ func (c *AccountsUpdateCall) Do() (*Account, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{id}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
@@ -592,10 +570,21 @@ func (r *CreativesService) Get(accountId int64, buyerCreativeId string) *Creativ
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CreativesGetCall) Fields(s ...googleapi.Field) *CreativesGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *CreativesGetCall) Do() (*Creative, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "creatives/{accountId}/{buyerCreativeId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -666,6 +655,14 @@ func (r *CreativesService) Insert(creative *Creative) *CreativesInsertCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CreativesInsertCall) Fields(s ...googleapi.Field) *CreativesInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *CreativesInsertCall) Do() (*Creative, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.creative)
@@ -675,6 +672,9 @@ func (c *CreativesInsertCall) Do() (*Creative, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "creatives")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -750,6 +750,14 @@ func (c *CreativesListCall) StatusFilter(statusFilter string) *CreativesListCall
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CreativesListCall) Fields(s ...googleapi.Field) *CreativesListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *CreativesListCall) Do() (*CreativesList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -762,6 +770,9 @@ func (c *CreativesListCall) Do() (*CreativesList, error) {
 	}
 	if v, ok := c.opt_["statusFilter"]; ok {
 		params.Set("statusFilter", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "creatives")
 	urls += "?" + params.Encode()
@@ -818,122 +829,6 @@ func (c *CreativesListCall) Do() (*CreativesList, error) {
 	//   "path": "creatives",
 	//   "response": {
 	//     "$ref": "CreativesList"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/adexchange.buyer"
-	//   ]
-	// }
-
-}
-
-// method id "adexchangebuyer.directDeals.get":
-
-type DirectDealsGetCall struct {
-	s    *Service
-	id   int64
-	opt_ map[string]interface{}
-}
-
-// Get: Gets one direct deal by ID.
-func (r *DirectDealsService) Get(id int64) *DirectDealsGetCall {
-	c := &DirectDealsGetCall{s: r.s, opt_: make(map[string]interface{})}
-	c.id = id
-	return c
-}
-
-func (c *DirectDealsGetCall) Do() (*DirectDeal, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "directdeals/{id}")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	googleapi.Expand(req.URL, map[string]string{
-		"id": strconv.FormatInt(c.id, 10),
-	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	var ret *DirectDeal
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Gets one direct deal by ID.",
-	//   "httpMethod": "GET",
-	//   "id": "adexchangebuyer.directDeals.get",
-	//   "parameterOrder": [
-	//     "id"
-	//   ],
-	//   "parameters": {
-	//     "id": {
-	//       "description": "The direct deal id",
-	//       "format": "int64",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "directdeals/{id}",
-	//   "response": {
-	//     "$ref": "DirectDeal"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/adexchange.buyer"
-	//   ]
-	// }
-
-}
-
-// method id "adexchangebuyer.directDeals.list":
-
-type DirectDealsListCall struct {
-	s    *Service
-	opt_ map[string]interface{}
-}
-
-// List: Retrieves the authenticated user's list of direct deals.
-func (r *DirectDealsService) List() *DirectDealsListCall {
-	c := &DirectDealsListCall{s: r.s, opt_: make(map[string]interface{})}
-	return c
-}
-
-func (c *DirectDealsListCall) Do() (*DirectDealsList, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "directdeals")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	var ret *DirectDealsList
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Retrieves the authenticated user's list of direct deals.",
-	//   "httpMethod": "GET",
-	//   "id": "adexchangebuyer.directDeals.list",
-	//   "path": "directdeals",
-	//   "response": {
-	//     "$ref": "DirectDealsList"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/adexchange.buyer"

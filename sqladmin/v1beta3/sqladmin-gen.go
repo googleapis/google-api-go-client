@@ -214,9 +214,9 @@ type BinLogCoordinates struct {
 
 type CloneContext struct {
 	// BinLogCoordinates: Binary log coordinates, if specified, indentify
-	// the the position up to which the source instance should be cloned. If
-	// not specified, the source instance is cloned up to the most recent
-	// binary log coordintes.
+	// the position up to which the source instance should be cloned. If not
+	// specified, the source instance is cloned up to the most recent binary
+	// log coordinates.
 	BinLogCoordinates *BinLogCoordinates `json:"binLogCoordinates,omitempty"`
 
 	// DestinationInstanceName: Name of the Cloud SQL instance to be created
@@ -236,16 +236,18 @@ type DatabaseFlags struct {
 	// variables. Flags should be specified with underscores, not hyphens.
 	// Refer to the official MySQL documentation on server options and
 	// system variables for descriptions of what these flags do. Acceptable
-	// values are:  event_scheduler on or off (Note: The event scheduler
-	// will only work reliably if the instance activationPolicy is set to
-	// ALWAYS.) general_log on or off group_concat_max_len 4..17179869184
-	// innodb_flush_log_at_trx_commit 0..2 innodb_lock_wait_timeout
-	// 1..1073741824 log_bin_trust_function_creators on or off log_output
-	// Can be either TABLE or NONE, FILE is not supported.
-	// log_queries_not_using_indexes on or off long_query_time 0..30000000
-	// lower_case_table_names 0..2 max_allowed_packet 16384..1073741824
-	// read_only on or off skip_show_database on or off slow_query_log on or
-	// off wait_timeout 1..31536000
+	// values are:  character_set_server utf8 or utf8mb4 event_scheduler on
+	// or off (Note: The event scheduler will only work reliably if the
+	// instance activationPolicy is set to ALWAYS) general_log on or off
+	// group_concat_max_len 4..17179869184 innodb_flush_log_at_trx_commit
+	// 0..2 innodb_lock_wait_timeout 1..1073741824
+	// log_bin_trust_function_creators on or off log_output Can be either
+	// TABLE or NONE, FILE is not supported log_queries_not_using_indexes on
+	// or off long_query_time 0..30000000 lower_case_table_names 0..2
+	// max_allowed_packet 16384..1073741824 read_only on or off
+	// skip_show_database on or off slow_query_log on or off. If set to on,
+	// you must also set the log_output flag to TABLE to receive logs.
+	// wait_timeout 1..31536000
 	Name string `json:"name,omitempty"`
 
 	// Value: The value of the flag. Booleans should be set using 1 for
@@ -260,7 +262,7 @@ type DatabaseInstance struct {
 
 	// DatabaseVersion: The database engine type and version. Can be
 	// MYSQL_5_5 or MYSQL_5_6. Defaults to MYSQL_5_5. The databaseVersion
-	// can not be changed after instance creation.
+	// cannot be changed after instance creation.
 	DatabaseVersion string `json:"databaseVersion,omitempty"`
 
 	// Etag: HTTP 1.1 Entity tag for the resource.
@@ -270,11 +272,23 @@ type DatabaseInstance struct {
 	// project ID.
 	Instance string `json:"instance,omitempty"`
 
+	// InstanceType: The instance type. This can be one of the
+	// following.
+	// CLOUD_SQL_INSTANCE: Regular Cloud SQL
+	// instance.
+	// READ_REPLICA_INSTANCE: Cloud SQL instance acting as a
+	// read-replica.
+	InstanceType string `json:"instanceType,omitempty"`
+
 	// IpAddresses: The assigned IP addresses for the instance.
 	IpAddresses []*IpMapping `json:"ipAddresses,omitempty"`
 
 	// Kind: This is always sql#instance.
 	Kind string `json:"kind,omitempty"`
+
+	// MasterInstanceName: The name of the instance which will act as master
+	// in the replication setup.
+	MasterInstanceName string `json:"masterInstanceName,omitempty"`
 
 	// MaxDiskSize: The maximum disk size of the instance in bytes.
 	MaxDiskSize int64 `json:"maxDiskSize,omitempty,string"`
@@ -287,6 +301,9 @@ type DatabaseInstance struct {
 	// asia-east1 or europe-west1. Defaults to us-central. The region can
 	// not be changed after instance creation.
 	Region string `json:"region,omitempty"`
+
+	// ReplicaNames: The replicas of the instance.
+	ReplicaNames []string `json:"replicaNames,omitempty"`
 
 	// ServerCaCert: SSL configuration.
 	ServerCaCert *SslCert `json:"serverCaCert,omitempty"`
@@ -510,6 +527,16 @@ type InstancesListResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+type InstancesPromoteReplicaResponse struct {
+	// Kind: This is always sql#instancesPromoteReplica.
+	Kind string `json:"kind,omitempty"`
+
+	// Operation: An identifier that uniquely identifies the operation. You
+	// can use this identifier to retrieve the Operations resource that has
+	// information about the operation.
+	Operation string `json:"operation,omitempty"`
+}
+
 type InstancesResetSslConfigResponse struct {
 	// Kind: This is always sql#instancesResetSslConfig.
 	Kind string `json:"kind,omitempty"`
@@ -587,8 +614,8 @@ type IpMapping struct {
 }
 
 type LocationPreference struct {
-	// FollowGaeApplication: The AppEngine application to follow, it must be
-	// in the same region as the Cloud SQL instance.
+	// FollowGaeApplication: The App Engine application to follow, it must
+	// be in the same region as the Cloud SQL instance.
 	FollowGaeApplication string `json:"followGaeApplication,omitempty"`
 
 	// Kind: This is always sql#locationPreference.
@@ -640,8 +667,8 @@ type Settings struct {
 	// activated upon receiving requests.
 	ActivationPolicy string `json:"activationPolicy,omitempty"`
 
-	// AuthorizedGaeApplications: The AppEngine app ids that can access this
-	// instance.
+	// AuthorizedGaeApplications: The App Engine app IDs that can access
+	// this instance.
 	AuthorizedGaeApplications []string `json:"authorizedGaeApplications,omitempty"`
 
 	// BackupConfiguration: The daily backup configuration for the instance.
@@ -649,6 +676,10 @@ type Settings struct {
 
 	// DatabaseFlags: The database flags passed to the instance at startup.
 	DatabaseFlags []*DatabaseFlags `json:"databaseFlags,omitempty"`
+
+	// DatabaseReplicationEnabled: Configuration specific to read replica
+	// instance. Indicates whether replication is enabled or not.
+	DatabaseReplicationEnabled bool `json:"databaseReplicationEnabled,omitempty"`
 
 	// IpConfiguration: The settings for IP Management. This allows to
 	// enable or disable the instance IP and manage which external networks
@@ -659,8 +690,8 @@ type Settings struct {
 	Kind string `json:"kind,omitempty"`
 
 	// LocationPreference: The location preference settings. This allows the
-	// instance to be located as near as possible to either an AppEngine app
-	// or GCE zone for better perfomance.
+	// instance to be located as near as possible to either an App Engine
+	// app or GCE zone for better performance.
 	LocationPreference *LocationPreference `json:"locationPreference,omitempty"`
 
 	// PricingPlan: The pricing plan for this instance. This can be either
@@ -794,7 +825,8 @@ type BackupRunsGetCall struct {
 	opt_                map[string]interface{}
 }
 
-// Get: Retrieves a resource containing information about a backup run.
+// Get: Retrieves information about a specified backup run for a Cloud
+// SQL instance.
 func (r *BackupRunsService) Get(project string, instance string, backupConfiguration string, dueTime string) *BackupRunsGetCall {
 	c := &BackupRunsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -804,11 +836,22 @@ func (r *BackupRunsService) Get(project string, instance string, backupConfigura
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BackupRunsGetCall) Fields(s ...googleapi.Field) *BackupRunsGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *BackupRunsGetCall) Do() (*BackupRun, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("dueTime", fmt.Sprintf("%v", c.dueTime))
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/{instance}/backupRuns/{backupConfiguration}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -832,7 +875,7 @@ func (c *BackupRunsGetCall) Do() (*BackupRun, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves a resource containing information about a backup run.",
+	//   "description": "Retrieves information about a specified backup run for a Cloud SQL instance.",
 	//   "httpMethod": "GET",
 	//   "id": "sql.backupRuns.get",
 	//   "parameterOrder": [
@@ -888,9 +931,7 @@ type BackupRunsListCall struct {
 	opt_                map[string]interface{}
 }
 
-// List: Lists all backup runs associated with a given instance and
-// configuration in the reverse chronological order of the enqueued
-// time.
+// List: Lists all backup runs associated with a Cloud SQL instance.
 func (r *BackupRunsService) List(project string, instance string, backupConfiguration string) *BackupRunsListCall {
 	c := &BackupRunsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -914,6 +955,14 @@ func (c *BackupRunsListCall) PageToken(pageToken string) *BackupRunsListCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BackupRunsListCall) Fields(s ...googleapi.Field) *BackupRunsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *BackupRunsListCall) Do() (*BackupRunsListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -924,6 +973,9 @@ func (c *BackupRunsListCall) Do() (*BackupRunsListResponse, error) {
 	}
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/{instance}/backupRuns")
 	urls += "?" + params.Encode()
@@ -947,7 +999,7 @@ func (c *BackupRunsListCall) Do() (*BackupRunsListResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists all backup runs associated with a given instance and configuration in the reverse chronological order of the enqueued time.",
+	//   "description": "Lists all backup runs associated with a Cloud SQL instance.",
 	//   "httpMethod": "GET",
 	//   "id": "sql.backupRuns.list",
 	//   "parameterOrder": [
@@ -1004,10 +1056,18 @@ type FlagsListCall struct {
 	opt_ map[string]interface{}
 }
 
-// List: List all available database flags for Google Cloud SQL
+// List: Lists all database flags that can be set for Google Cloud SQL
 // instances.
 func (r *FlagsService) List() *FlagsListCall {
 	c := &FlagsListCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FlagsListCall) Fields(s ...googleapi.Field) *FlagsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -1015,6 +1075,9 @@ func (c *FlagsListCall) Do() (*FlagsListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "flags")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -1034,7 +1097,7 @@ func (c *FlagsListCall) Do() (*FlagsListResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "List all available database flags for Google Cloud SQL instances.",
+	//   "description": "Lists all database flags that can be set for Google Cloud SQL instances.",
 	//   "httpMethod": "GET",
 	//   "id": "sql.flags.list",
 	//   "path": "flags",
@@ -1057,12 +1120,19 @@ type InstancesCloneCall struct {
 	opt_                  map[string]interface{}
 }
 
-// Clone: Creates a Cloud SQL instance as a clone of the source
-// instance.
+// Clone: Creates a Cloud SQL instance as a clone of a source instance.
 func (r *InstancesService) Clone(project string, instancesclonerequest *InstancesCloneRequest) *InstancesCloneCall {
 	c := &InstancesCloneCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
 	c.instancesclonerequest = instancesclonerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InstancesCloneCall) Fields(s ...googleapi.Field) *InstancesCloneCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -1075,6 +1145,9 @@ func (c *InstancesCloneCall) Do() (*InstancesCloneResponse, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/clone")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -1097,7 +1170,7 @@ func (c *InstancesCloneCall) Do() (*InstancesCloneResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a Cloud SQL instance as a clone of the source instance.",
+	//   "description": "Creates a Cloud SQL instance as a clone of a source instance.",
 	//   "httpMethod": "POST",
 	//   "id": "sql.instances.clone",
 	//   "parameterOrder": [
@@ -1142,10 +1215,21 @@ func (r *InstancesService) Delete(project string, instance string) *InstancesDel
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InstancesDeleteCall) Fields(s ...googleapi.Field) *InstancesDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *InstancesDeleteCall) Do() (*InstancesDeleteResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/{instance}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
@@ -1220,6 +1304,14 @@ func (r *InstancesService) Export(project string, instance string, instancesexpo
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InstancesExportCall) Fields(s ...googleapi.Field) *InstancesExportCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *InstancesExportCall) Do() (*InstancesExportResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancesexportrequest)
@@ -1229,6 +1321,9 @@ func (c *InstancesExportCall) Do() (*InstancesExportResponse, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/{instance}/export")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -1296,8 +1391,7 @@ type InstancesGetCall struct {
 	opt_     map[string]interface{}
 }
 
-// Get: Retrieves a resource containing information about a Cloud SQL
-// instance.
+// Get: Retrieves information about a Cloud SQL instance.
 func (r *InstancesService) Get(project string, instance string) *InstancesGetCall {
 	c := &InstancesGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -1305,10 +1399,21 @@ func (r *InstancesService) Get(project string, instance string) *InstancesGetCal
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InstancesGetCall) Fields(s ...googleapi.Field) *InstancesGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *InstancesGetCall) Do() (*DatabaseInstance, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/{instance}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -1331,7 +1436,7 @@ func (c *InstancesGetCall) Do() (*DatabaseInstance, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves a resource containing information about a Cloud SQL instance.",
+	//   "description": "Retrieves information about a Cloud SQL instance.",
 	//   "httpMethod": "GET",
 	//   "id": "sql.instances.get",
 	//   "parameterOrder": [
@@ -1374,12 +1479,20 @@ type InstancesImportCall struct {
 }
 
 // Import: Imports data into a Cloud SQL instance from a MySQL dump file
-// in Google Cloud Storage.
+// stored in a Google Cloud Storage bucket.
 func (r *InstancesService) Import(project string, instance string, instancesimportrequest *InstancesImportRequest) *InstancesImportCall {
 	c := &InstancesImportCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
 	c.instance = instance
 	c.instancesimportrequest = instancesimportrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InstancesImportCall) Fields(s ...googleapi.Field) *InstancesImportCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -1392,6 +1505,9 @@ func (c *InstancesImportCall) Do() (*InstancesImportResponse, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/{instance}/import")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -1415,7 +1531,7 @@ func (c *InstancesImportCall) Do() (*InstancesImportResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Imports data into a Cloud SQL instance from a MySQL dump file in Google Cloud Storage.",
+	//   "description": "Imports data into a Cloud SQL instance from a MySQL dump file stored in a Google Cloud Storage bucket.",
 	//   "httpMethod": "POST",
 	//   "id": "sql.instances.import",
 	//   "parameterOrder": [
@@ -1467,6 +1583,14 @@ func (r *InstancesService) Insert(project string, databaseinstance *DatabaseInst
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InstancesInsertCall) Fields(s ...googleapi.Field) *InstancesInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *InstancesInsertCall) Do() (*InstancesInsertResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.databaseinstance)
@@ -1476,6 +1600,9 @@ func (c *InstancesInsertCall) Do() (*InstancesInsertResponse, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -1534,8 +1661,8 @@ type InstancesListCall struct {
 	opt_    map[string]interface{}
 }
 
-// List: Lists instances under a given project in the alphabetical order
-// of the instance name.
+// List: Lists instances for a given project, in alphabetical order by
+// instance name.
 func (r *InstancesService) List(project string) *InstancesListCall {
 	c := &InstancesListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -1557,6 +1684,14 @@ func (c *InstancesListCall) PageToken(pageToken string) *InstancesListCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InstancesListCall) Fields(s ...googleapi.Field) *InstancesListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *InstancesListCall) Do() (*InstancesListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1566,6 +1701,9 @@ func (c *InstancesListCall) Do() (*InstancesListResponse, error) {
 	}
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances")
 	urls += "?" + params.Encode()
@@ -1588,7 +1726,7 @@ func (c *InstancesListCall) Do() (*InstancesListResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists instances under a given project in the alphabetical order of the instance name.",
+	//   "description": "Lists instances for a given project, in alphabetical order by instance name.",
 	//   "httpMethod": "GET",
 	//   "id": "sql.instances.list",
 	//   "parameterOrder": [
@@ -1634,15 +1772,21 @@ type InstancesPatchCall struct {
 	opt_             map[string]interface{}
 }
 
-// Patch: Updates settings of a Cloud SQL instance. Caution: This is not
-// a partial update, so you must include values for all the settings
-// that you want to retain. For partial updates, use patch.. This method
+// Patch: Updates the settings of a Cloud SQL instance. This method
 // supports patch semantics.
 func (r *InstancesService) Patch(project string, instance string, databaseinstance *DatabaseInstance) *InstancesPatchCall {
 	c := &InstancesPatchCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
 	c.instance = instance
 	c.databaseinstance = databaseinstance
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InstancesPatchCall) Fields(s ...googleapi.Field) *InstancesPatchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -1655,6 +1799,9 @@ func (c *InstancesPatchCall) Do() (*InstancesUpdateResponse, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/{instance}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
@@ -1678,7 +1825,7 @@ func (c *InstancesPatchCall) Do() (*InstancesUpdateResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates settings of a Cloud SQL instance. Caution: This is not a partial update, so you must include values for all the settings that you want to retain. For partial updates, use patch.. This method supports patch semantics.",
+	//   "description": "Updates the settings of a Cloud SQL instance. This method supports patch semantics.",
 	//   "httpMethod": "PATCH",
 	//   "id": "sql.instances.patch",
 	//   "parameterOrder": [
@@ -1713,6 +1860,93 @@ func (c *InstancesPatchCall) Do() (*InstancesUpdateResponse, error) {
 
 }
 
+// method id "sql.instances.promoteReplica":
+
+type InstancesPromoteReplicaCall struct {
+	s        *Service
+	project  string
+	instance string
+	opt_     map[string]interface{}
+}
+
+// PromoteReplica: Promotes the read replica instance to be a
+// stand-alone Cloud SQL instance.
+func (r *InstancesService) PromoteReplica(project string, instance string) *InstancesPromoteReplicaCall {
+	c := &InstancesPromoteReplicaCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.instance = instance
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InstancesPromoteReplicaCall) Fields(s ...googleapi.Field) *InstancesPromoteReplicaCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *InstancesPromoteReplicaCall) Do() (*InstancesPromoteReplicaResponse, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/{instance}/promoteReplica")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project":  c.project,
+		"instance": c.instance,
+	})
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *InstancesPromoteReplicaResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Promotes the read replica instance to be a stand-alone Cloud SQL instance.",
+	//   "httpMethod": "POST",
+	//   "id": "sql.instances.promoteReplica",
+	//   "parameterOrder": [
+	//     "project",
+	//     "instance"
+	//   ],
+	//   "parameters": {
+	//     "instance": {
+	//       "description": "Cloud SQL read replica instance name.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "ID of the project that contains the read replica.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "projects/{project}/instances/{instance}/promoteReplica",
+	//   "response": {
+	//     "$ref": "InstancesPromoteReplicaResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/sqlservice.admin"
+	//   ]
+	// }
+
+}
+
 // method id "sql.instances.resetSslConfig":
 
 type InstancesResetSslConfigCall struct {
@@ -1723,10 +1957,7 @@ type InstancesResetSslConfigCall struct {
 }
 
 // ResetSslConfig: Deletes all client certificates and generates a new
-// server SSL certificate for the instance. The changes will not take
-// effect until the instance is restarted. Existing instances without a
-// server certificate will need to call this once to set a server
-// certificate.
+// server SSL certificate for a Cloud SQL instance.
 func (r *InstancesService) ResetSslConfig(project string, instance string) *InstancesResetSslConfigCall {
 	c := &InstancesResetSslConfigCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -1734,10 +1965,21 @@ func (r *InstancesService) ResetSslConfig(project string, instance string) *Inst
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InstancesResetSslConfigCall) Fields(s ...googleapi.Field) *InstancesResetSslConfigCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *InstancesResetSslConfigCall) Do() (*InstancesResetSslConfigResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/{instance}/resetSslConfig")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -1760,7 +2002,7 @@ func (c *InstancesResetSslConfigCall) Do() (*InstancesResetSslConfigResponse, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes all client certificates and generates a new server SSL certificate for the instance. The changes will not take effect until the instance is restarted. Existing instances without a server certificate will need to call this once to set a server certificate.",
+	//   "description": "Deletes all client certificates and generates a new server SSL certificate for a Cloud SQL instance.",
 	//   "httpMethod": "POST",
 	//   "id": "sql.instances.resetSslConfig",
 	//   "parameterOrder": [
@@ -1809,10 +2051,21 @@ func (r *InstancesService) Restart(project string, instance string) *InstancesRe
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InstancesRestartCall) Fields(s ...googleapi.Field) *InstancesRestartCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *InstancesRestartCall) Do() (*InstancesRestartResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/{instance}/restart")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -1888,12 +2141,23 @@ func (r *InstancesService) RestoreBackup(project string, instance string, backup
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InstancesRestoreBackupCall) Fields(s ...googleapi.Field) *InstancesRestoreBackupCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *InstancesRestoreBackupCall) Do() (*InstancesRestoreBackupResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("backupConfiguration", fmt.Sprintf("%v", c.backupConfigurationid))
 	params.Set("dueTime", fmt.Sprintf("%v", c.dueTime))
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/{instance}/restoreBackup")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -1972,12 +2236,21 @@ type InstancesSetRootPasswordCall struct {
 	opt_                           map[string]interface{}
 }
 
-// SetRootPassword: Sets the password for the root user.
+// SetRootPassword: Sets the password for the root user of the specified
+// Cloud SQL instance.
 func (r *InstancesService) SetRootPassword(project string, instance string, instancesetrootpasswordrequest *InstanceSetRootPasswordRequest) *InstancesSetRootPasswordCall {
 	c := &InstancesSetRootPasswordCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
 	c.instance = instance
 	c.instancesetrootpasswordrequest = instancesetrootpasswordrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InstancesSetRootPasswordCall) Fields(s ...googleapi.Field) *InstancesSetRootPasswordCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -1990,6 +2263,9 @@ func (c *InstancesSetRootPasswordCall) Do() (*InstancesSetRootPasswordResponse, 
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/{instance}/setRootPassword")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -2013,7 +2289,7 @@ func (c *InstancesSetRootPasswordCall) Do() (*InstancesSetRootPasswordResponse, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the password for the root user.",
+	//   "description": "Sets the password for the root user of the specified Cloud SQL instance.",
 	//   "httpMethod": "POST",
 	//   "id": "sql.instances.setRootPassword",
 	//   "parameterOrder": [
@@ -2058,14 +2334,20 @@ type InstancesUpdateCall struct {
 	opt_             map[string]interface{}
 }
 
-// Update: Updates settings of a Cloud SQL instance. Caution: This is
-// not a partial update, so you must include values for all the settings
-// that you want to retain. For partial updates, use patch.
+// Update: Updates the settings of a Cloud SQL instance.
 func (r *InstancesService) Update(project string, instance string, databaseinstance *DatabaseInstance) *InstancesUpdateCall {
 	c := &InstancesUpdateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
 	c.instance = instance
 	c.databaseinstance = databaseinstance
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InstancesUpdateCall) Fields(s ...googleapi.Field) *InstancesUpdateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -2078,6 +2360,9 @@ func (c *InstancesUpdateCall) Do() (*InstancesUpdateResponse, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/{instance}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
@@ -2101,7 +2386,7 @@ func (c *InstancesUpdateCall) Do() (*InstancesUpdateResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates settings of a Cloud SQL instance. Caution: This is not a partial update, so you must include values for all the settings that you want to retain. For partial updates, use patch.",
+	//   "description": "Updates the settings of a Cloud SQL instance.",
 	//   "etagRequired": true,
 	//   "httpMethod": "PUT",
 	//   "id": "sql.instances.update",
@@ -2147,8 +2432,8 @@ type OperationsGetCall struct {
 	opt_      map[string]interface{}
 }
 
-// Get: Retrieves an instance operation that has been performed on an
-// instance.
+// Get: Retrieves information about a specific operation that was
+// performed on a Cloud SQL instance.
 func (r *OperationsService) Get(project string, instance string, operation string) *OperationsGetCall {
 	c := &OperationsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -2157,10 +2442,21 @@ func (r *OperationsService) Get(project string, instance string, operation strin
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OperationsGetCall) Fields(s ...googleapi.Field) *OperationsGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *OperationsGetCall) Do() (*InstanceOperation, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/{instance}/operations/{operation}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -2184,7 +2480,7 @@ func (c *OperationsGetCall) Do() (*InstanceOperation, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves an instance operation that has been performed on an instance.",
+	//   "description": "Retrieves information about a specific operation that was performed on a Cloud SQL instance.",
 	//   "httpMethod": "GET",
 	//   "id": "sql.operations.get",
 	//   "parameterOrder": [
@@ -2232,9 +2528,8 @@ type OperationsListCall struct {
 	opt_     map[string]interface{}
 }
 
-// List: Lists all instance operations that have been performed on the
-// given Cloud SQL instance in the reverse chronological order of the
-// start time.
+// List: Lists all operations that have been performed on a Cloud SQL
+// instance.
 func (r *OperationsService) List(project string, instance string) *OperationsListCall {
 	c := &OperationsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -2257,6 +2552,14 @@ func (c *OperationsListCall) PageToken(pageToken string) *OperationsListCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OperationsListCall) Fields(s ...googleapi.Field) *OperationsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *OperationsListCall) Do() (*OperationsListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2266,6 +2569,9 @@ func (c *OperationsListCall) Do() (*OperationsListResponse, error) {
 	}
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/{instance}/operations")
 	urls += "?" + params.Encode()
@@ -2289,7 +2595,7 @@ func (c *OperationsListCall) Do() (*OperationsListResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists all instance operations that have been performed on the given Cloud SQL instance in the reverse chronological order of the start time.",
+	//   "description": "Lists all operations that have been performed on a Cloud SQL instance.",
 	//   "httpMethod": "GET",
 	//   "id": "sql.operations.list",
 	//   "parameterOrder": [
@@ -2342,8 +2648,7 @@ type SslCertsDeleteCall struct {
 	opt_            map[string]interface{}
 }
 
-// Delete: Deletes the SSL certificate. The change will not take effect
-// until the instance is restarted.
+// Delete: Deletes an SSL certificate from a Cloud SQL instance.
 func (r *SslCertsService) Delete(project string, instance string, sha1Fingerprint string) *SslCertsDeleteCall {
 	c := &SslCertsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -2352,10 +2657,21 @@ func (r *SslCertsService) Delete(project string, instance string, sha1Fingerprin
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SslCertsDeleteCall) Fields(s ...googleapi.Field) *SslCertsDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *SslCertsDeleteCall) Do() (*SslCertsDeleteResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/{instance}/sslCerts/{sha1Fingerprint}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
@@ -2379,7 +2695,7 @@ func (c *SslCertsDeleteCall) Do() (*SslCertsDeleteResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes the SSL certificate. The change will not take effect until the instance is restarted.",
+	//   "description": "Deletes an SSL certificate from a Cloud SQL instance.",
 	//   "httpMethod": "DELETE",
 	//   "id": "sql.sslCerts.delete",
 	//   "parameterOrder": [
@@ -2428,9 +2744,8 @@ type SslCertsGetCall struct {
 	opt_            map[string]interface{}
 }
 
-// Get: Retrieves a particular SSL certificate. Does not include the
-// private key (required for usage). The private key must be saved from
-// the response to initial creation.
+// Get: Retrieves an SSL certificate as specified by its SHA-1
+// fingerprint.
 func (r *SslCertsService) Get(project string, instance string, sha1Fingerprint string) *SslCertsGetCall {
 	c := &SslCertsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -2439,10 +2754,21 @@ func (r *SslCertsService) Get(project string, instance string, sha1Fingerprint s
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SslCertsGetCall) Fields(s ...googleapi.Field) *SslCertsGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *SslCertsGetCall) Do() (*SslCert, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/{instance}/sslCerts/{sha1Fingerprint}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -2466,7 +2792,7 @@ func (c *SslCertsGetCall) Do() (*SslCert, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves a particular SSL certificate. Does not include the private key (required for usage). The private key must be saved from the response to initial creation.",
+	//   "description": "Retrieves an SSL certificate as specified by its SHA-1 fingerprint.",
 	//   "httpMethod": "GET",
 	//   "id": "sql.sslCerts.get",
 	//   "parameterOrder": [
@@ -2515,14 +2841,21 @@ type SslCertsInsertCall struct {
 	opt_                  map[string]interface{}
 }
 
-// Insert: Creates an SSL certificate and returns it along with the
-// private key and server certificate authority. The new certificate
-// will not be usable until the instance is restarted.
+// Insert: Creates an SSL certificate and returns the certificate, the
+// associated private key, and the server certificate authority.
 func (r *SslCertsService) Insert(project string, instance string, sslcertsinsertrequest *SslCertsInsertRequest) *SslCertsInsertCall {
 	c := &SslCertsInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
 	c.instance = instance
 	c.sslcertsinsertrequest = sslcertsinsertrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SslCertsInsertCall) Fields(s ...googleapi.Field) *SslCertsInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -2535,6 +2868,9 @@ func (c *SslCertsInsertCall) Do() (*SslCertsInsertResponse, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/{instance}/sslCerts")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
@@ -2558,7 +2894,7 @@ func (c *SslCertsInsertCall) Do() (*SslCertsInsertResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates an SSL certificate and returns it along with the private key and server certificate authority. The new certificate will not be usable until the instance is restarted.",
+	//   "description": "Creates an SSL certificate and returns the certificate, the associated private key, and the server certificate authority.",
 	//   "httpMethod": "POST",
 	//   "id": "sql.sslCerts.insert",
 	//   "parameterOrder": [
@@ -2602,7 +2938,8 @@ type SslCertsListCall struct {
 	opt_     map[string]interface{}
 }
 
-// List: Lists all of the current SSL certificates for the instance.
+// List: Lists all of the current SSL certificates defined for a Cloud
+// SQL instance.
 func (r *SslCertsService) List(project string, instance string) *SslCertsListCall {
 	c := &SslCertsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -2610,10 +2947,21 @@ func (r *SslCertsService) List(project string, instance string) *SslCertsListCal
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SslCertsListCall) Fields(s ...googleapi.Field) *SslCertsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *SslCertsListCall) Do() (*SslCertsListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/{instance}/sslCerts")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -2636,7 +2984,7 @@ func (c *SslCertsListCall) Do() (*SslCertsListResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists all of the current SSL certificates for the instance.",
+	//   "description": "Lists all of the current SSL certificates defined for a Cloud SQL instance.",
 	//   "httpMethod": "GET",
 	//   "id": "sql.sslCerts.list",
 	//   "parameterOrder": [
@@ -2676,11 +3024,19 @@ type TiersListCall struct {
 	opt_    map[string]interface{}
 }
 
-// List: Lists all available service tiers for Google Cloud SQL, for
-// example D1, D2. For related information, see Pricing.
+// List: Lists service tiers that can be used to create Google Cloud SQL
+// instances.
 func (r *TiersService) List(project string) *TiersListCall {
 	c := &TiersListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TiersListCall) Fields(s ...googleapi.Field) *TiersListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -2688,6 +3044,9 @@ func (c *TiersListCall) Do() (*TiersListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/tiers")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -2709,7 +3068,7 @@ func (c *TiersListCall) Do() (*TiersListResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists all available service tiers for Google Cloud SQL, for example D1, D2. For related information, see Pricing.",
+	//   "description": "Lists service tiers that can be used to create Google Cloud SQL instances.",
 	//   "httpMethod": "GET",
 	//   "id": "sql.tiers.list",
 	//   "parameterOrder": [

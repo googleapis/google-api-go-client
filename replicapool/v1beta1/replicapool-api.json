@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/MU2uMG1apLmVn-PBkLrFG-V1Qes\"",
+ "etag": "\"uUWyYHXmEn-ab7WLvo8qNz2S8ws/23e47jzhtet3mpIUahkbF_tHUFw\"",
  "discoveryVersion": "v1",
  "id": "replicapool:v1beta1",
  "name": "replicapool",
  "version": "v1beta1",
- "revision": "20140727",
+ "revision": "20140912",
  "title": "Replica Pool API",
  "description": "The Replica Pool API allows users to declaratively provision and manage groups of Google Compute Engine instances based on a common template.",
  "ownerDomain": "google.com",
@@ -335,6 +335,10 @@
      "type": "string",
      "description": "The size of the created disk in gigabytes.",
      "format": "int64"
+    },
+    "diskType": {
+     "type": "string",
+     "description": "Name of the disk type resource describing which disk type to use to create the disk. For example 'pd-ssd' or 'pd-standard'. Default is 'pd-standard'"
     },
     "sourceImage": {
      "type": "string",

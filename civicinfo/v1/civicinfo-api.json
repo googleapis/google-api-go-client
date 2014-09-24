@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/9quV6UzbWGUUsFsJkffU4NX0-gU\"",
+ "etag": "\"uUWyYHXmEn-ab7WLvo8qNz2S8ws/8e9yfjQviGE-Eza63-qXipcXCgI\"",
  "discoveryVersion": "v1",
  "id": "civicinfo:v1",
  "name": "civicinfo",
  "canonicalName": "Civic Info",
  "version": "v1",
- "revision": "20140630",
+ "revision": "20140814",
  "title": "Google Civic Information API",
  "description": "An API for accessing civic information.",
  "ownerDomain": "google.com",
@@ -437,7 +437,7 @@
    "properties": {
     "alsoKnownAs": {
      "type": "array",
-     "description": "Any other valid OCD IDs that refer to the same division. For example, if this division's OCD ID is ocd-division/country:us/district:dc, this will contain ocd-division/country:us/state:dc.",
+     "description": "Any other valid OCD IDs that refer to the same division.\n\nBecause OCD IDs are meant to be human-readable and at least somewhat predictable, there are occasionally several identifiers for a single division. These identifiers are defined to be equivalent to one another, and one is always indicated as the primary identifier. The primary identifier will be returned in ocd_id above, and any other equivalent valid identifiers will be returned in this list.\n\nFor example, if this division's OCD ID is ocd-division/country:us/district:dc, this will contain ocd-division/country:us/state:dc.",
      "items": {
       "type": "string"
      }
@@ -495,7 +495,7 @@
   "Official": {
    "id": "Official",
    "type": "object",
-   "description": "Information about a official holding an elected office.",
+   "description": "Information about a person holding an elected office.",
    "properties": {
     "address": {
      "type": "array",
@@ -746,6 +746,9 @@
      "items": {
       "$ref": "PollingLocation"
      }
+    },
+    "precinctId": {
+     "type": "string"
     },
     "state": {
      "type": "array",

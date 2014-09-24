@@ -343,10 +343,21 @@ func (r *CustomFieldDefService) List(teamId string) *CustomFieldDefListCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CustomFieldDefListCall) Fields(s ...googleapi.Field) *CustomFieldDefListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *CustomFieldDefListCall) Do() (*CustomFieldDefListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{teamId}/custom_fields")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -411,10 +422,21 @@ func (r *JobsService) Get(teamId string, jobId uint64) *JobsGetCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *JobsGetCall) Fields(s ...googleapi.Field) *JobsGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *JobsGetCall) Do() (*Job, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{teamId}/jobs/{jobId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -533,6 +555,14 @@ func (c *JobsInsertCall) Note(note string) *JobsInsertCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *JobsInsertCall) Fields(s ...googleapi.Field) *JobsInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *JobsInsertCall) Do() (*Job, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.job)
@@ -560,6 +590,9 @@ func (c *JobsInsertCall) Do() (*Job, error) {
 	}
 	if v, ok := c.opt_["note"]; ok {
 		params.Set("note", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{teamId}/jobs")
 	urls += "?" + params.Encode()
@@ -703,6 +736,14 @@ func (c *JobsListCall) PageToken(pageToken string) *JobsListCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *JobsListCall) Fields(s ...googleapi.Field) *JobsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *JobsListCall) Do() (*JobListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -715,6 +756,9 @@ func (c *JobsListCall) Do() (*JobListResponse, error) {
 	}
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{teamId}/jobs")
 	urls += "?" + params.Encode()
@@ -869,6 +913,14 @@ func (c *JobsPatchCall) Title(title string) *JobsPatchCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *JobsPatchCall) Fields(s ...googleapi.Field) *JobsPatchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *JobsPatchCall) Do() (*Job, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.job)
@@ -907,6 +959,9 @@ func (c *JobsPatchCall) Do() (*Job, error) {
 	}
 	if v, ok := c.opt_["title"]; ok {
 		params.Set("title", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{teamId}/jobs/{jobId}")
 	urls += "?" + params.Encode()
@@ -1123,6 +1178,14 @@ func (c *JobsUpdateCall) Title(title string) *JobsUpdateCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *JobsUpdateCall) Fields(s ...googleapi.Field) *JobsUpdateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *JobsUpdateCall) Do() (*Job, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.job)
@@ -1161,6 +1224,9 @@ func (c *JobsUpdateCall) Do() (*Job, error) {
 	}
 	if v, ok := c.opt_["title"]; ok {
 		params.Set("title", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{teamId}/jobs/{jobId}")
 	urls += "?" + params.Encode()
@@ -1320,6 +1386,14 @@ func (c *LocationListCall) PageToken(pageToken string) *LocationListCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LocationListCall) Fields(s ...googleapi.Field) *LocationListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *LocationListCall) Do() (*LocationListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1330,6 +1404,9 @@ func (c *LocationListCall) Do() (*LocationListResponse, error) {
 	}
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{teamId}/workers/{workerEmail}/locations")
 	urls += "?" + params.Encode()
@@ -1422,10 +1499,21 @@ func (r *ScheduleService) Get(teamId string, jobId uint64) *ScheduleGetCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ScheduleGetCall) Fields(s ...googleapi.Field) *ScheduleGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *ScheduleGetCall) Do() (*Schedule, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{teamId}/jobs/{jobId}/schedule")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
@@ -1531,6 +1619,14 @@ func (c *SchedulePatchCall) StartTime(startTime uint64) *SchedulePatchCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SchedulePatchCall) Fields(s ...googleapi.Field) *SchedulePatchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *SchedulePatchCall) Do() (*Schedule, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.schedule)
@@ -1551,6 +1647,9 @@ func (c *SchedulePatchCall) Do() (*Schedule, error) {
 	}
 	if v, ok := c.opt_["startTime"]; ok {
 		params.Set("startTime", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{teamId}/jobs/{jobId}/schedule")
 	urls += "?" + params.Encode()
@@ -1682,6 +1781,14 @@ func (c *ScheduleUpdateCall) StartTime(startTime uint64) *ScheduleUpdateCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ScheduleUpdateCall) Fields(s ...googleapi.Field) *ScheduleUpdateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *ScheduleUpdateCall) Do() (*Schedule, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.schedule)
@@ -1702,6 +1809,9 @@ func (c *ScheduleUpdateCall) Do() (*Schedule, error) {
 	}
 	if v, ok := c.opt_["startTime"]; ok {
 		params.Set("startTime", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{teamId}/jobs/{jobId}/schedule")
 	urls += "?" + params.Encode()
@@ -1800,10 +1910,21 @@ func (r *WorkerService) List(teamId string) *WorkerListCall {
 	return c
 }
 
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *WorkerListCall) Fields(s ...googleapi.Field) *WorkerListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
 func (c *WorkerListCall) Do() (*WorkerListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{teamId}/workers")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)

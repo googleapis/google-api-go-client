@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/_57RJ87-RejFO7u1YI3xEG-zluw\"",
+ "etag": "\"uUWyYHXmEn-ab7WLvo8qNz2S8ws/qK3Hzetd9eo6XriEgifky4rzxKI\"",
  "discoveryVersion": "v1",
  "id": "compute:v1",
  "name": "compute",
  "version": "v1",
- "revision": "20140802",
+ "revision": "20140827",
  "title": "Compute Engine API",
  "description": "API for the Google Compute Engine service.",
  "ownerDomain": "google.com",
@@ -790,6 +790,11 @@
      "type": "string",
      "description": "Creation timestamp in RFC3339 text format (output only)."
     },
+    "defaultDiskSizeGb": {
+     "type": "string",
+     "description": "Server defined default disk size in gb (output only).",
+     "format": "int64"
+    },
     "deprecated": {
      "$ref": "DeprecationStatus",
      "description": "The deprecation status associated with this disk type."
@@ -1389,6 +1394,11 @@
     "ipAddress": {
      "type": "string",
      "description": "The IP address represented by this resource."
+    },
+    "port": {
+     "type": "integer",
+     "description": "The port on the instance.",
+     "format": "int32"
     }
    }
   },
@@ -1926,6 +1936,10 @@
    "type": "object",
    "description": "A license resource.",
    "properties": {
+    "chargesUseFee": {
+     "type": "boolean",
+     "description": "If true, the customer will be charged license fee for running software that contains this license on an instance."
+    },
     "kind": {
      "type": "string",
      "description": "Type of resource.",
